@@ -1,0 +1,401 @@
+{
+  "roots": [
+    "tools.launch_packaged_installer",
+    "tools.import_component_release",
+    "tools.installation_runtime_update"
+  ],
+  "modules": [
+    "tools.cas",
+    "tools.core_b_preflight",
+    "tools.eva2_canary_cutover",
+    "tools.eva2_quiescent_cutover",
+    "tools.import_component_release",
+    "tools.installation_document_connection",
+    "tools.installation_document_promotion",
+    "tools.installation_document_restore",
+    "tools.installation_external_restore",
+    "tools.installation_fresh_start",
+    "tools.installation_gateway_binding",
+    "tools.installation_gateway_start",
+    "tools.installation_gateway_verification",
+    "tools.installation_memory_start",
+    "tools.installation_memory_verification",
+    "tools.installation_recovery_materializer",
+    "tools.installation_recovery_package",
+    "tools.installation_restore_verification",
+    "tools.installation_runtime_authorization",
+    "tools.installation_runtime_start",
+    "tools.installation_runtime_update",
+    "tools.installation_target_provisioning",
+    "tools.installer_browser_gateway",
+    "tools.installer_browser_module",
+    "tools.installer_optional_capabilities",
+    "tools.installer_portable_restore",
+    "tools.installer_restore_wizard",
+    "tools.installer_runtime_access",
+    "tools.installer_runtime_materialization",
+    "tools.installer_target_bindings",
+    "tools.installer_target_workflow",
+    "tools.installer_voice_module",
+    "tools.launch_packaged_installer",
+    "tools.managed_b_render",
+    "tools.object_keyring",
+    "tools.packaged_installer_target",
+    "tools.portable_export",
+    "tools.portable_object_materializer",
+    "tools.portable_object_verifier",
+    "tools.portable_restore",
+    "tools.portable_runtime_archive",
+    "tools.portable_runtime_restore",
+    "tools.portable_transport",
+    "tools.portable_v2_export",
+    "tools.portable_v2_profile",
+    "tools.portable_v2_reader",
+    "tools.portable_v2_restore",
+    "tools.portable_v2_validation",
+    "tools.postgres_portable_export",
+    "tools.prepare_mcp_autonomy_access",
+    "tools.provision_workspace_provider",
+    "tools.read_eva_portable_archive",
+    "tools.restore_runtime_guard",
+    "tools.workspace_provider_access"
+  ],
+  "edges": {
+    "tools.installer_prepared_restore": [
+      "tools.installer_prepared_components",
+      "tools.installer_prepared_restore_config",
+      "tools.installer_restore_wizard"
+    ],
+    "tools.restore_runtime_guard": [
+      "tools.eva2_quiescent_cutover"
+    ],
+    "tools.installation_runtime_start": [
+      "tools.eva2_quiescent_cutover",
+      "tools.installation_document_connection",
+      "tools.restore_runtime_guard"
+    ],
+    "tools.portable_runtime_archive": [
+      "tools.portable_export",
+      "tools.portable_restore",
+      "tools.portable_v2_export",
+      "tools.portable_v2_profile",
+      "tools.portable_v2_validation",
+      "tools.postgres_portable_export",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.portable_object_materializer": [
+      "tools.cas",
+      "tools.portable_object_verifier"
+    ],
+    "tools.build_managed_b_offline_candidate": [
+      "tools.managed_b_candidate.base_image",
+      "tools.managed_b_candidate.build_context",
+      "tools.managed_b_candidate.candidate_image",
+      "tools.managed_b_candidate.private_receipt",
+      "tools.managed_b_candidate.wheelhouse",
+      "tools.prepare_managed_b_candidate_context"
+    ],
+    "tools.portable_v2_restore": [
+      "tools.portable_object_materializer",
+      "tools.portable_restore",
+      "tools.portable_v2_profile",
+      "tools.portable_v2_reader"
+    ],
+    "tools.telegram_test_launch": [
+      "tools.telegram_test_preflight"
+    ],
+    "tools.installer_portable_restore": [
+      "tools.installation_recovery_materializer",
+      "tools.installation_recovery_package",
+      "tools.portable_object_materializer",
+      "tools.portable_object_verifier",
+      "tools.portable_restore",
+      "tools.portable_runtime_archive",
+      "tools.portable_runtime_restore",
+      "tools.portable_transport",
+      "tools.portable_v2_profile",
+      "tools.portable_v2_reader",
+      "tools.portable_v2_restore",
+      "tools.postgres_portable_export",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.capture_telegram_test_receipt": [
+      "tools.telegram_test_preflight"
+    ],
+    "tools.installation_document_restore": [
+      "tools.installation_recovery_package",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.portable_v2_profile": [
+      "tools.postgres_portable_export"
+    ],
+    "tools.portable_export": [
+      "tools.postgres_portable_export"
+    ],
+    "tools.managed_b_render": [
+      "tools.core_b_preflight"
+    ],
+    "tools.installation_gateway_start": [
+      "tools.installation_document_connection",
+      "tools.installation_external_restore",
+      "tools.installation_gateway_binding",
+      "tools.installation_recovery_package",
+      "tools.portable_transport",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.installer_prepared_components": [
+      "tools.installation_document_connection",
+      "tools.installation_external_restore",
+      "tools.installation_gateway_start",
+      "tools.installation_recovery_materializer",
+      "tools.installer_document_components",
+      "tools.installer_gateway_target",
+      "tools.installer_prepared_restore_config"
+    ],
+    "tools.check_two_builder_reproducibility": [
+      "tools.managed_b_candidate.private_receipt"
+    ],
+    "tools.installation_source_snapshot": [
+      "tools.eva2_quiescent_cutover",
+      "tools.installation_gateway_snapshot"
+    ],
+    "tools.installer_target_bindings": [
+      "tools.installer_optional_capabilities",
+      "tools.managed_b_render"
+    ],
+    "tools.installation_recovery_package": [
+      "tools.portable_runtime_archive",
+      "tools.portable_transport",
+      "tools.portable_v2_reader",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.installer_document_components": [
+      "tools.installation_document_connection",
+      "tools.installation_document_promotion",
+      "tools.installation_document_restore",
+      "tools.installation_gateway_binding",
+      "tools.installation_recovery_package",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.stage_installer_package": [
+      "tools.installer_browser_module"
+    ],
+    "tools.portable_v2_validation": [
+      "tools.portable_restore",
+      "tools.portable_v2_profile",
+      "tools.postgres_portable_export"
+    ],
+    "tools.installation_restore_verification": [
+      "tools.installation_document_connection",
+      "tools.installation_document_promotion",
+      "tools.installation_external_restore",
+      "tools.installation_gateway_start",
+      "tools.installation_gateway_verification",
+      "tools.installation_memory_start",
+      "tools.installation_memory_verification",
+      "tools.installation_recovery_package",
+      "tools.installation_runtime_authorization",
+      "tools.restore_runtime_guard"
+    ],
+    "tools.installation_external_restore": [
+      "tools.installation_recovery_package",
+      "tools.portable_transport",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.installation_runtime_authorization": [
+      "tools.eva2_quiescent_cutover",
+      "tools.installation_gateway_start",
+      "tools.installation_recovery_package",
+      "tools.restore_runtime_guard"
+    ],
+    "tools.prepare_mcp_autonomy_access": [
+      "tools.workspace_provider_access"
+    ],
+    "tools.switch_eva2_canary": [
+      "tools.eva2_canary_cutover"
+    ],
+    "tools.run_managed_b_required_tests": [
+      "tools.managed_b_candidate.private_receipt",
+      "tools.managed_b_candidate.wheelhouse",
+      "tools.run_gate",
+      "tools.run_managed_b_browser_release_subgate"
+    ],
+    "tools.portable_v2_reader": [
+      "tools.portable_v2_profile",
+      "tools.portable_v2_validation",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.installation_memory_start": [
+      "tools.installation_document_connection",
+      "tools.installation_external_restore",
+      "tools.installation_gateway_start",
+      "tools.installation_recovery_package",
+      "tools.installation_runtime_authorization"
+    ],
+    "tools.installation_runtime_update": [
+      "tools.installation_document_connection"
+    ],
+    "tools.installation_target_provisioning": [
+      "tools.installation_document_connection"
+    ],
+    "tools.repository_inventory": [
+      "tools.living_core_source_provenance"
+    ],
+    "tools.prove_installer_codex_model_verification": [
+      "tools.installer_provider_verification_cli"
+    ],
+    "tools.run_legacy_memory_trial": [
+      "tools.legacy_memory_trial"
+    ],
+    "tools.installation_recovery_materializer": [
+      "tools.installation_recovery_package",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.installation_document_promotion": [
+      "tools.installation_document_connection",
+      "tools.installation_document_restore",
+      "tools.installation_recovery_package"
+    ],
+    "tools.installer_restore_wizard": [
+      "tools.installation_document_connection",
+      "tools.installation_document_promotion",
+      "tools.installation_document_restore",
+      "tools.installation_external_restore",
+      "tools.installation_gateway_binding",
+      "tools.installation_gateway_start",
+      "tools.installation_restore_verification",
+      "tools.installation_runtime_start",
+      "tools.installation_runtime_update",
+      "tools.installer_portable_restore",
+      "tools.object_keyring",
+      "tools.packaged_installer_target",
+      "tools.restore_runtime_guard"
+    ],
+    "tools.installation_memory_verification": [
+      "tools.installation_external_restore",
+      "tools.installation_recovery_package",
+      "tools.portable_transport",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.prove_installer_agentmail_verification": [
+      "tools.installer_provider_verification_cli"
+    ],
+    "tools.installation_gateway_binding": [
+      "tools.installation_recovery_package",
+      "tools.portable_transport",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.portable_v2_export": [
+      "tools.portable_export",
+      "tools.portable_v2_profile",
+      "tools.portable_v2_reader",
+      "tools.portable_v2_validation",
+      "tools.postgres_portable_export"
+    ],
+    "tools.eva2_quiescent_cutover": [
+      "tools.eva2_canary_cutover",
+      "tools.managed_b_render"
+    ],
+    "tools.run_gate": [
+      "tools.verify_source_bindings"
+    ],
+    "tools.installer_runtime_access": [
+      "tools.installer_target_bindings"
+    ],
+    "tools.launch_packaged_installer": [
+      "tools.installer_restore_wizard"
+    ],
+    "tools.build_telegram_test_image": [
+      "tools.prepare_managed_b_candidate_context"
+    ],
+    "tools.portable_runtime_restore": [
+      "tools.portable_runtime_archive",
+      "tools.portable_v2_restore"
+    ],
+    "tools.installer_browser_gateway": [
+      "tools.prepare_mcp_autonomy_access",
+      "tools.provision_workspace_provider"
+    ],
+    "tools.installer_prepared_restore_config": [
+      "tools.installation_document_connection",
+      "tools.installation_external_restore",
+      "tools.installation_gateway_start",
+      "tools.installation_gateway_verification",
+      "tools.installation_memory_start",
+      "tools.installation_runtime_authorization",
+      "tools.portable_runtime_restore",
+      "tools.restore_runtime_guard"
+    ],
+    "tools.installation_fresh_start": [
+      "tools.eva2_quiescent_cutover",
+      "tools.installation_document_connection",
+      "tools.installation_target_provisioning"
+    ],
+    "tools.installation_document_connection": [
+      "tools.installation_document_restore",
+      "tools.installation_gateway_binding",
+      "tools.installation_recovery_package",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.installer_gateway_target": [
+      "tools.installation_document_connection",
+      "tools.installation_gateway_start"
+    ],
+    "tools.prove_installer_telegram_verification": [
+      "tools.installer_provider_verification_cli"
+    ],
+    "tools.portable_object_verifier": [
+      "tools.cas"
+    ],
+    "tools.portable_transport_cli": [
+      "tools.portable_transport"
+    ],
+    "tools.installation_gateway_verification": [
+      "tools.installation_document_connection",
+      "tools.installation_gateway_start",
+      "tools.installation_recovery_package",
+      "tools.portable_transport",
+      "tools.read_eva_portable_archive"
+    ],
+    "tools.reseal_managed_b_release_input_authority": [
+      "tools.managed_b_candidate.release_inputs"
+    ],
+    "tools.import_eva1_memory": [
+      "tools.legacy_memory_trial",
+      "tools.run_legacy_memory_trial"
+    ],
+    "tools.installer_target_workflow": [
+      "tools.installation_fresh_start",
+      "tools.installation_target_provisioning",
+      "tools.installer_runtime_access",
+      "tools.installer_runtime_materialization",
+      "tools.installer_target_bindings"
+    ],
+    "tools.packaged_installer_target": [
+      "tools.core_b_preflight",
+      "tools.installer_browser_gateway",
+      "tools.installer_browser_module",
+      "tools.installer_runtime_materialization",
+      "tools.installer_target_workflow",
+      "tools.installer_voice_module",
+      "tools.managed_b_render",
+      "tools.provision_workspace_provider"
+    ],
+    "tools.read_eva_portable_archive": [],
+    "tools.portable_transport": [],
+    "tools.postgres_portable_export": [],
+    "tools.portable_restore": [],
+    "tools.import_component_release": [],
+    "tools.cas": [],
+    "tools.core_b_preflight": [],
+    "tools.eva2_canary_cutover": [],
+    "tools.installer_optional_capabilities": [],
+    "tools.installer_runtime_materialization": [],
+    "tools.workspace_provider_access": [],
+    "tools.provision_workspace_provider": [],
+    "tools.installer_browser_module": [],
+    "tools.installer_voice_module": [],
+    "tools.object_keyring": []
+  },
+  "method": "AST imports plus literal wizard launch; import reachability is not whole-CLI execution"
+}

@@ -1,0 +1,589 @@
+{
+  "contract": "EvaE33AdapterInstallationReview/v1",
+  "card": "E3.3",
+  "status": "completed_semantic_review_only",
+  "checkedAt": "2026-10-17T09:29:19.179457+00:00",
+  "sourceRevision": "84c64c88cac390d1d19624a726d829e7ca62d5f1",
+  "alreadyWorking": "E3.1 registreert bron/images; E3.2 heeft 136 kernbestanden beoordeeld met negen concrete E4-besluiten.",
+  "gapClosed": "Versioned semantic adapter/operator review, generated/reference/delegated dispositions, actual dynamic consumer and photo-library decision; no feature rebuild.",
+  "reusedE32": {
+    "path": "development/evidence/reassessment/e32-core-review-20261017.json",
+    "sha256": "8667802cc01cf34a839b901dc53309c4049e04777bec29604a32e72dd1ffbca3",
+    "independentReview": "development/reviews/e32-core-review-20261017.json",
+    "reviewSha256": "14ebdcc7c67c5b3e2d80cbabbcf60f5f5acc502269cc0623627e8224135d5cfe",
+    "coreFiles": 136,
+    "finiteDecisions": 9,
+    "rerun": false
+  },
+  "fileRegister": {
+    "path": "development/evidence/reassessment/e33-file-dispositions-20261017.json",
+    "sha256": "f1dc7e7b96ac30ce7b9df6a9f4e81506d3931eed091deaced1255d2b8f3ae61c",
+    "scope": {
+      "registeredFiles": 1027,
+      "modes": {
+        "excluded_by_policy": 3,
+        "configuration_or_reference_contract": 52,
+        "full_content": 470,
+        "reference_fixture_or_operations_boundary": 30,
+        "dependency_or_generated_provenance": 39,
+        "exact_prior_full_read": 17,
+        "delegated_speech_interface": 102,
+        "reference_license_provenance": 3,
+        "generated_provenance": 8,
+        "versioned_protocol_contract_reference": 193,
+        "superseded_optional_transport_reference": 11,
+        "operator_reference_boundary": 94,
+        "hybrid_full_algorithms_protocol_provenance": 1,
+        "vendor_provenance": 4
+      },
+      "notFullContentRead": 557
+    }
+  },
+  "subreviews": [
+    {
+      "path": "development/evidence/reassessment/e33-action-chain-operations-review-20261017.json",
+      "sha256": "5a73a2b2ca2ab58d12911b460bd66c29e61c597a5c5b4e79d417a36ba904da10",
+      "files": 12
+    },
+    {
+      "path": "development/evidence/reassessment/e33-installation-effects-review-20261017.json",
+      "sha256": "500abaa8e6c3903d499bc91c17b1de8d30b084b832f4b824004d6380d3c8d0bc",
+      "files": 10
+    },
+    {
+      "path": "development/evidence/reassessment/e33-installer-cli-review-20261017.json",
+      "sha256": "051ce66539ce7bf79c2552a76de2b91aa20e0a2add6d5246ac30ee9a353542ae",
+      "files": 12
+    },
+    {
+      "path": "development/evidence/reassessment/e33-interface-adapters-review-20261017.json",
+      "sha256": "bf8d8808e9e283774efef18d8769184b0e0f26ba66e3f6cfa6416a577b4d0a73",
+      "files": 139
+    },
+    {
+      "path": "development/evidence/reassessment/e33-operator-support-review-20261017.json",
+      "sha256": "4f7a66ec4a4e306704e20181b5444f6925ed47936a7f64658941c195f63fea29",
+      "files": 15
+    },
+    {
+      "path": "development/evidence/reassessment/e33-owner-browser-boundaries-review-20261017.json",
+      "sha256": "e14bafe26004bacc31c9ef23d835de76e20a8908ee93724c5a897a4c2eca2708",
+      "files": 25
+    },
+    {
+      "path": "development/evidence/reassessment/e33-portable-boundaries-review-20261017.json",
+      "sha256": "14a68d6cafdad71d1a1f9f9a603063120376f16b0f5060bdbfc3289f7579ec7c",
+      "files": 9
+    },
+    {
+      "path": "development/evidence/reassessment/e33-product-frontend-review-20261017.json",
+      "sha256": "b2c5731569db45b059cbd0c8bcb0ede02a372e5b6c8022792a6722b6cab4b842",
+      "files": 12
+    },
+    {
+      "path": "development/evidence/reassessment/e33-project-stylesheet-review-20261017.json",
+      "sha256": "505b19f5f59268b6a38865dc528d3f56250f258dcc097d4464d57ca6ffb5f85e",
+      "files": 1
+    },
+    {
+      "path": "development/evidence/reassessment/e33-root-source-review-20261017.json",
+      "sha256": "5ca468c2cca764f22548e0a50675bfe1f8e1e34e74d4a6ef3fa66e018c2e2917",
+      "files": 172
+    },
+    {
+      "path": "development/evidence/reassessment/e33-state-adapters-review-20261017.json",
+      "sha256": "85e7c0bb9b5ef744296deffb44b2c01968c57202b74c5edb29c1d97f3f2203ff",
+      "files": 76
+    }
+  ],
+  "consumerChains": [
+    {
+      "entry": "Daily Eva: bootstrap/runtime → existing application → postgres/projection/model/connectors",
+      "decision": "Retain one identity, scoped memory/outbox/goals and existing generic action executor. E3.2 behavior review reused. No second planner, memory or life daemon."
+    },
+    {
+      "entry": "start-installer.py → launcher → bundled interpreter → wizard → packaged target → installer workflows",
+      "decision": "Retain actual installed/operator callbacks and dependency closure, distinct from daily worker. Four prepared restore helpers remain callable but not automatically wired by packaged wizard."
+    },
+    {
+      "entry": "Approved component producer/evaluation → final assessment → import_component_release → installation_runtime_update",
+      "decision": "Retain existing AIDE-inspired evaluation/application seams. Existing constrained source strategies are not proof arbitrary autonomous upgrades already work. E4.5 remains open; no competing platform or new tests."
+    },
+    {
+      "entry": "Product main.jsx/owner views → local-owner proxy → core API; project dashboard → canonical execution-workboard JSON",
+      "decision": "Retain separate product/project navigation. /progress is not current product navigation; historical cockpit capability ladder not canonical completion. One unreachable PeopleOverview is UI-01 cleanup."
+    },
+    {
+      "entry": "Schema installer → ordered Alembic chain → PG catalog → portable readers/export/data and object verification",
+      "decision": "Retain all 17 revisions, staged state/identity/budgets and data transitions; exact frozen provenance gaps recorded, not silently repinned."
+    },
+    {
+      "entry": "MCP model dispatch → installed receiving gateway; optional own Chrome bridge/proxy → Playwright extension",
+      "decision": "External MCP standard mismatch and internal legacy compatibility must be resolved together at E4.2. Autonomous owner-browser recipe remains optional; shared existing tab still needs extension grant; no blanket approval bypass."
+    },
+    {
+      "entry": "Telegram standalone SQLite ingress/reply journal → one core; proactive delivery → original private recipient",
+      "decision": "Installed JS checks returned original chat/message/text; optional Python adapter gap is separate. No Eva1 agent loop. WhatsApp account absent; optional phone proof not claimed."
+    }
+  ],
+  "photoDependency": {
+    "decision": "temporary_retain_then_replace_only_after_equivalence",
+    "evidence": "development/evidence/reassessment/e33-photo-runtime-metadata-20261017.json",
+    "sha256": "7a286d5f201fb51ba13656c1d1b7441b787ed880d371a01133f90564ce831b3e",
+    "actualConfiguredLibrary": "/home/administrator/project/Bottie/src/brain/llm.js",
+    "usedExports": [
+      "chatComplete",
+      "imageMsg"
+    ],
+    "modelProfile": "gpt-6-astra / medium",
+    "Eva1AgentStarted": false,
+    "replacementRequirement": "Native existing-provider image request must preserve picture/message metadata, original recipient, same identity/audience, no tool retries and current provider route before old library dependency is removed. No new vision platform needed.",
+    "technicalLimit": "Library static imports include old config/database/OAuth utilities. This is a dependency and possible load-side effect, not evidence an Eva1 agent is running."
+  },
+  "finiteDecisions": [
+    {
+      "id": "CHAIN-01",
+      "card": "E4.4",
+      "decision": "Retain explicit optional/reference execution family and exact historical signed registry contract",
+      "evidence": [
+        "src/eva/operations/action_chain_provider_registry.py:260",
+        "src/eva/operations/action_chain_dispatch_common.py:252"
+      ],
+      "reason": "Operation-neutral Action aliases preserve historical ReadProviderRegistryRelease/v1 bytes. Existing common helpers already remove repeated execution mechanics; further consolidation/deletion needs a proven replacement and stored/release compatibility evidence, currently absent. No new product task recommended."
+    },
+    {
+      "id": "IN-01",
+      "card": "E4.2",
+      "status": "required_not_implemented_conditional_static_mismatch",
+      "title": "Use one canonical tool-catalog ordering through prepared document connection, promotion and verification",
+      "evidence": [
+        {
+          "path": "src/tools/installation_document_restore.py",
+          "line": 141,
+          "fact": "Preserved gateway catalog ordered by original_name before logical hash."
+        },
+        {
+          "path": "src/tools/installation_document_connection.py",
+          "line": 350,
+          "fact": "Live tool list sorted by name when catalog_gateway_id is selected."
+        },
+        {
+          "path": "src/tools/installation_document_promotion.py",
+          "line": 165,
+          "fact": "Same provider live list compared as returned without corresponding sort."
+        },
+        {
+          "path": "src/tools/installation_restore_verification.py",
+          "line": 81,
+          "fact": "Promoted provider live list again compared without corresponding sort."
+        }
+      ],
+      "condition": "Provider returns identical valid tool definitions in a different order from preserved sorted gateway inventory. Read-only connection succeeds, but later promotion/verification can fail exact list hash after old target stopped/disconnected and new writable target started.",
+      "decision": "Share the exact existing conditional catalog canonicalization across all three stages; preserve tool definitions, expected logical hash, no-retry partial-state receipts and existing transaction/guard boundary.",
+      "limit": "Complete static source contradiction; no restore, provider request or runtime failure executed/measured."
+    },
+    {
+      "id": "CLI-01",
+      "card": "E4.4",
+      "decision": "Retain packaged operator route as executable source, distinct from daily core and from programmatic restore helpers",
+      "evidence": [
+        "start-installer.py:8",
+        "src/tools/launch_packaged_installer.py:56",
+        "src/tools/installer_restore_wizard.py:190",
+        "src/tools/installer_prepared_restore.py:54"
+      ],
+      "reason": "Few/no daily-core imports cannot justify historical/dead classification; subprocess/packaged launch is the real consumer. Four prepared helpers remain callable source with explicit integration limits. No feature task, source extraction or O2.3/HUE acceptance reopened."
+    },
+    {
+      "id": "IF-01",
+      "card": "E4.2",
+      "status": "required_not_implemented",
+      "title": "Restore standard MCP tool methods with explicit own-bridge compatibility",
+      "evidence": [
+        {
+          "path": "src/eva/adapters/connectors/mcp_gateway.py",
+          "line": 700,
+          "method": "src/tools/call"
+        },
+        {
+          "path": "src/eva/adapters/connectors/home_assistant_mcp.py",
+          "line": 85,
+          "method": "src/tools/list"
+        },
+        {
+          "path": "src/eva/adapters/connectors/home_assistant_mcp.py",
+          "line": 90,
+          "method": "src/tools/call"
+        },
+        {
+          "path": "development/tests/connectors/test_mcp_gateway.py",
+          "line": 628,
+          "reason": "Test mirrors wrong wire prefix"
+        },
+        {
+          "path": "deploy/chrome-bridge/server.mjs",
+          "line": 52,
+          "reason": "Own bridge accepts same src/tools prefix; coordinator inspected current consumer"
+        }
+      ],
+      "primaryContract": "https://modelcontextprotocol.io/specification/2025-06-18/server/tools",
+      "contractFacts": "Exact declared 2025-06-18 MCP uses tools/list and tools/call. Repository paths are not RPC method names.",
+      "migration": "Correct external standards boundary; coordinate existing internal bridge/proxy/workspace/gateway consumers as one finite compatibility migration. Preserve current in-flight request/result hashes and exact saved receipts; do not blindly replay calls. Existing wire wrappers may need temporary explicit version handling.",
+      "verificationBoundary": "Static mismatch now also grounded in current receiving container source metadata; no network dispatch, user failure, outage or live tool execution was measured.",
+      "installedUpstreamEvidence": {
+        "artifact": "development/evidence/reassessment/e33-mcp-wire-runtime-metadata-20261017.json",
+        "artifactSha256": "d52495256cb49f6a999eaafe893e208a03f0acf9a78f8dba46ea6b80c2b157ef",
+        "container": "eva2-mcp-gateway",
+        "sourcePath": "/app/mcpgateway/main.py",
+        "sourceSha256": "ce9a769b1224812fddb1a905cff4025a19411f2760e6ac2abf08d1f3ab3b01fe",
+        "methodDispatchLines": [
+          11339,
+          11519
+        ],
+        "fact": "Active receiving gateway source dispatches tools/list and tools/call; coordinator verified src/tools prefix absent. Existing own Chrome bridge separately accepts legacy src/tools prefix.",
+        "reviewMode": "reference_metadata_not_full_content"
+      }
+    },
+    {
+      "id": "IF-02",
+      "card": "E4.2",
+      "status": "required_not_implemented_optional_python_adapter",
+      "title": "Bind optional Python Telegram reply acceptance to original chat/message/text",
+      "evidence": {
+        "path": "src/eva/adapters/connectors/telegram.py",
+        "function": "TelegramBotApiAdapter.send_reply",
+        "gap": "Only positive returned message_id is checked; receipt string uses requested chat_id without checking actual result.chat/reply_to_message/text."
+      },
+      "existingReference": "TelegramProactiveDelivery._deliver_text and installed deploy/telegram-bridge/standalone.mjs already verify actual original chat/reply/text.",
+      "decision": "Use same exact acceptance checks in the existing optional Python adapter; preserve one send attempt and uncertain-delivery journal. No new channel or receipt store.",
+      "limit": "Static supported-adapter contract gap; installed standalone JS route is not claimed broken."
+    },
+    {
+      "id": "IF-03",
+      "card": "E4.2",
+      "status": "required_not_implemented",
+      "title": "Make offered ready/unbound budget recovery confirmation actionable",
+      "evidence": [
+        {
+          "path": "src/eva/adapters/api/installer_budget_api.py",
+          "line": 45,
+          "fact": "render enables confirmation for staged OR ready without capability binding"
+        },
+        {
+          "path": "src/eva/adapters/api/installer_budget_api.py",
+          "line": 68,
+          "fact": "click guard immediately returns for every phase other than staged"
+        }
+      ],
+      "decision": "Align existing confirmation click guard with server-supported ready/unbound recovery state and current hash binding; verify recovery can complete once without changing budget semantics.",
+      "verificationBoundary": "Static contradictory branches; no browser mutation or live installer transition executed."
+    },
+    {
+      "id": "SU-01",
+      "card": "E4.4",
+      "status": "required_not_implemented_static_missing_resources",
+      "title": "Bind frozen portable exporter callbacks to current schema and standalone reader resources",
+      "evidence": [
+        {
+          "path": "src/tools/portable_export.py",
+          "line": 595,
+          "fact": "Default schema root is repository/schemas, currently absent; deploy/schemas exists."
+        },
+        {
+          "path": "src/tools/portable_export.py",
+          "line": 626,
+          "fact": "Mandatory standalone reader is repository/tools/read_eva_portable_archive.py, currently absent; src/tools/read_eva_portable_archive.py exists."
+        },
+        {
+          "path": "src/tools/portable_v2_export.py",
+          "line": 148,
+          "fact": "Current-v2 export calls publish_portable_archive without schema override; mandatory reader path has no override."
+        }
+      ],
+      "decision": "Correct both existing resource bindings using current repository/package ownership, preserving frozen schema hashes and mandatory standalone validator. Verify affected v1/v2 export resource resolution as part of existing E4.4; do not bypass reader or change sealed schemas.",
+      "limit": "Filesystem existence and complete callback source review only; no export or private source database opened. Runtime-v3 _schemas already points to deploy/schemas, so no v3 failure asserted."
+    },
+    {
+      "id": "SU-02",
+      "card": "E4.3",
+      "status": "required_not_implemented_bounded_input",
+      "title": "Reject oversized portable transport header before reading its declared bytes",
+      "evidence": [
+        {
+          "path": "src/tools/portable_transport.py",
+          "line": 483,
+          "fact": "Four-byte untrusted header length decoded."
+        },
+        {
+          "path": "src/tools/portable_transport.py",
+          "line": 484,
+          "fact": "read(header_length) occurs before _parse_header enforces MAX_HEADER_BYTES=16384."
+        }
+      ],
+      "decision": "Enforce existing positive MAX_HEADER_BYTES limit immediately after length decode and before read; keep exact truncation/canonical/AAD/authentication validation.",
+      "limit": "Static missing pre-read bound; no hostile file, memory measurement, cryptographic operation or import/restore performed."
+    },
+    {
+      "id": "SU-03",
+      "card": "E4.4",
+      "status": "required_not_implemented_runtime_test_ownership",
+      "title": "Separate production-reused operational helper ownership from unconditional acceptance-checker import",
+      "evidence": [
+        {
+          "path": "development/validation/release-acceptance/v2/run_physical_acceptance.py",
+          "line": 48,
+          "fact": "Module computes check_acceptance.py dependency."
+        },
+        {
+          "path": "development/validation/release-acceptance/v2/run_physical_acceptance.py",
+          "line": 59,
+          "fact": "Dynamic _helper module import executes checker unconditionally."
+        },
+        {
+          "path": "src/tools/provision_workspace_provider.py",
+          "line": 42,
+          "fact": "Exact helper is a real workspace/browser installer consumer, not merely historical test."
+        }
+      ],
+      "decision": "Preserve reviewed operational helper behavior in existing runtime/operator ownership; remove production need to import acceptance checker through a bounded E4.4 migration. Until then explicitly include both dynamic source dependencies in package consumer/provenance registry. Keep independent checker criteria/cases bytes exact; no acceptance redesign or new agent/module platform.",
+      "verificationBoundary": "Selected20-function transitive closure has no checker Name use. Checker metadata hash only; no criteria content, scripts or model/provider requests executed."
+    },
+    {
+      "id": "SU-04",
+      "card": "E4.4",
+      "status": "required_not_implemented_static_source_pin_mismatch",
+      "title": "Restore exact reviewed operational helper source/pin binding for current workspace/browser consumers",
+      "evidence": [
+        {
+          "path": "src/tools/provision_workspace_provider.py",
+          "line": 26,
+          "fact": "HELPER_SHA256 pinned to a8dc2a31ea327a54f70850669c0c2c3f3b40893a7bb80863df6bdeb09527d3be."
+        },
+        {
+          "path": "development/validation/release-acceptance/v2/run_physical_acceptance.py",
+          "fact": "Actual current/HEAD/E3.1 SHAe733a44871860fb48cbc91dc89372272bb06c0a3c6872ec0c2efb44c3992b589; no CRLF or dirty-file difference."
+        },
+        {
+          "path": "src/tools/provision_workspace_provider.py",
+          "line": 42,
+          "fact": "_helper rejects different digest before dynamic exec_module; installer_browser_gateway.prepare_browser_gateway_files calls helper as prerequisite."
+        }
+      ],
+      "decision": "Resolve intended reviewed runtime-helper source and package producer with exact hash; preserve criteria/cases, selected operational semantics and current no-adoption/credential boundaries. Align explicit provenance after review or move bounded operational ownership per SU-03; never simply waive/disable pin or blindly repin arbitrary changed helper.",
+      "verificationBoundary": "Hash metadata and direct code guard prove current checkout source/pin disagreement. No _helper import, deployment, script or user failure measured; packaged bytes require their own explicit source binding."
+    },
+    {
+      "id": "PORTABLE-01",
+      "card": "E4.4",
+      "relatedDecision": "STATE-01",
+      "decision": "Restore exact canonical-schema provenance/pins without silently rewriting sealed v1 bytes",
+      "status": "required_not_implemented_pending_independent_review",
+      "evidence": [
+        "src/tools/read_eva_portable_archive.py:38",
+        "src/tools/read_eva_portable_archive.py:715",
+        "src/tools/portable_export.py:218",
+        "src/tools/portable_export.py:223"
+      ],
+      "impact": "Current tracked portable-record and reader-output manifest bytes (also HEAD, LF-only) differ from both reader/export expected pins; exact hashes above. Default _schema_payloads rejects those resources before publication. Frozen v1 contract/profile/object schema pins do match. This is a source reproducibility/default export boundary gap, not measured installed outage; no archive export/test or sealed source modification performed. Resolve with original supported schema authority/explicit compatible transition under existing E4.4, not a blind hash update."
+    },
+    {
+      "id": "UI-01",
+      "card": "E4.1",
+      "status": "bounded_cleanup_candidate_not_implemented",
+      "path": "development/tools/project-dashboard/src/main.jsx",
+      "line": 359,
+      "title": "Remove unreachable local PeopleOverview component after file registration",
+      "proof": "PeopleOverview is local, not exported, has no invocation/reference in current entire frontend source; current memory branch renders OwnerMemoryView plus MemorySources. It alone calls old people-memory endpoint. No low-import/age/size inference.",
+      "decision": "Delete only this unreachable local component during existing E4.1 cleanup; do not remove backend route solely from this local finding."
+    },
+    {
+      "id": "STATE-01",
+      "card": "E4.4",
+      "title": "Restore verifiable generated-catalog provenance without altering sealed criteria",
+      "status": "required_not_implemented",
+      "evidence": [
+        "src/tools/materialize_4d_schema_artifacts.py:20",
+        "src/tools/materialize_4d_schema_artifacts.py:53",
+        "src/eva/adapters/postgres/catalog.py:22",
+        "src/eva/adapters/postgres/catalog_generated.py:1"
+      ],
+      "diagnostic": {
+        "command": "python3 src/tools/materialize_4d_schema_artifacts.py --check",
+        "exitCode": 1,
+        "expectedFreezeSha256": "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38",
+        "actualWorkingAndHeadFreezeSha256": "2bb23d486038dcdaf26607ad2dba9c38b13b4cc799a6644cd1fffb1bb20a626a",
+        "crlfCount": 0
+      },
+      "impact": "Generator stops before reconstructing outputs from current tracked freeze. This proves a reproducibility/provenance gap, not an installed database outage. Preserve frozen bytes and establish correct historical input/explicit transition in existing maintenance card."
+    },
+    {
+      "id": "STATE-02",
+      "card": "E4.2",
+      "title": "Fence ordinary semantic facts when their known authoritative source becomes unavailable",
+      "status": "required_not_implemented_pending_independent_review",
+      "evidence": [
+        "src/eva/adapters/projection/hindsight.py:501",
+        "src/eva/adapters/projection/hindsight.py:514",
+        "src/eva/adapters/projection/hindsight.py:525",
+        "src/eva/adapters/postgres/people_memory_overview.py:414",
+        "src/eva/adapters/postgres/people_memory_overview.py:487",
+        "development/tests/projection/test_hindsight.py:1971"
+      ],
+      "impact": "During a cached recall, source resolver can exclude erased/expired PG source while ordinary world/experience facts retain their derived text. Observation and typed-learning paths already reject absent sources. Existing projection test explicitly models erased/expired source but keeps recall unchanged. Limit repair to exact known source authority; distinguish genuinely imported legacy references and resolver failure; no household incident claimed."
+    },
+    {
+      "id": "STATE-03",
+      "card": "E4.2",
+      "title": "Use current participant identity in private recent-conversation labels",
+      "status": "required_not_implemented_pending_independent_review",
+      "evidence": [
+        "src/eva/adapters/postgres/conversation_journal.py:854",
+        "src/eva/adapters/postgres/telegram_pairing.py",
+        "src/eva/adapters/postgres/private_owner.py"
+      ],
+      "impact": "Every private ingress is labeled Jaap even when its exact scoped principal is a different verified participant. The query remains principal-scoped: no cross-person content leak demonstrated. Derive an authorized participant label or neutral label on existing context path; no new identity store."
+    },
+    {
+      "id": "OP-01",
+      "card": "E4.2",
+      "status": "required_not_implemented",
+      "title": "Separate generic installer selection persistence from optional voice module",
+      "evidence": [
+        "src/eva/operations/installer_connector_selection.py:3",
+        "src/eva/operations/installer_voice_selection.py"
+      ],
+      "decision": "Reuse existing installer_identity_storage for generic read/save support rather than generic connector selection importing voice-selection private helpers. Coordinate optional voice boundary; no voice edits in E3.3."
+    },
+    {
+      "id": "OP-02",
+      "card": "E4.2",
+      "status": "bounded_cleanup_not_implemented",
+      "title": "Separate runtime helpers from operator/development package contents",
+      "evidence": [
+        "deploy/living-core/Dockerfile",
+        "pyproject.toml",
+        "src/eva/operations/component_release_publisher.py",
+        "src/eva/operations/reviewed_component_application.py",
+        "src/tools/installation_runtime_update.py",
+        "src/tools/eva2_quiescent_cutover.py"
+      ],
+      "decision": "Keep the 54-module real installer/operator dependency closure. Extract only daily shared runtime helpers behind operations/contracts before narrowing product package/image content; do not delete tools on import count or call old Eva1 CLI. Package staging remains a separate operator artifact."
+    },
+    {
+      "id": "OP-03",
+      "card": "E4.4",
+      "status": "required_not_implemented",
+      "title": "Reconcile fresh-build recipes/default model policy with actual supported runtime",
+      "evidence": [
+        "deploy/living-core/workspace-create-only/Dockerfile",
+        "deploy/living-core/workspace-create-only/start-atomic-workspace.sh",
+        "deploy/living-core/workspace-create-only/mcp-server.mjs",
+        "deploy/living-core/stack.compose.yml",
+        "deploy/living-core/managed-b.compose.yml",
+        "deploy/living-core/hindsight.compose.yml"
+      ],
+      "decision": "Workspace Dockerfile destination /opt/atomic disagrees with runtime /opt/eva2/atomic and filesystem SDK paths; default model recipes still name old model profiles. Reuse E3.2 B03/B04 and reconcile exact selected recipe/role policy; actual running images/overrides are separate. No claim deployed services are broken or wrong-model calls occurred."
+    }
+  ],
+  "repairGroups": {
+    "E4.1": [
+      "UI-01"
+    ],
+    "E4.2": [
+      "STATE-02",
+      "STATE-03",
+      "IF-01",
+      "IF-02",
+      "IF-03",
+      "IN-01",
+      "OP-01",
+      "OP-02"
+    ],
+    "E4.3": [
+      "SU-02"
+    ],
+    "E4.4": [
+      "STATE-01",
+      "PORTABLE-01",
+      "SU-01",
+      "OP-03",
+      "SU-03",
+      "SU-04"
+    ],
+    "retentionDecisions": [
+      "CHAIN-01",
+      "CLI-01"
+    ],
+    "newProductCards": 0,
+    "reusedE32DecisionsNotDuplicated": 9
+  },
+  "verification": {
+    "e31InventoryUnchanged": true,
+    "fileDispositions": 1027,
+    "jsonSyntaxChecked": {
+      "files": 259,
+      "errors": []
+    },
+    "operatorClosureModules": 54,
+    "operatorClosureUnreviewed": [],
+    "dynamicHelperAddendum": {
+      "report": "development/evidence/reassessment/e33-operator-support-review-20261017.json",
+      "mode": "partial_runtime_helper",
+      "scope": "Only 20 operational functions plus two embedded transport scripts; protected criteria/cases not read. Unconditional checker import metadata and stale HELPER_SHA256 become SU-03/SU-04.",
+      "wholeFileFullRead": false,
+      "currentHelperPinMatches": false
+    },
+    "existingFocusedChecks": [
+      {
+        "name": "dashboard generated asset consistency",
+        "result": "pass",
+        "evidence": "e33-interface-adapters-review-20261017.json",
+        "repeat": false
+      },
+      {
+        "name": "schema materializer current frozen input",
+        "result": "fails_before_materialization",
+        "evidence": "STATE-01",
+        "repeat": false
+      }
+    ],
+    "runtimeMetadata": [
+      "e33-photo-runtime-metadata-20261017.json",
+      "e33-mcp-wire-runtime-metadata-20261017.json"
+    ],
+    "notExecuted": [
+      "Whole test suite",
+      "Paid Eva model comparison",
+      "Installer/export/recovery execution",
+      "Tool dispatch or house action",
+      "Speech/source/deployment change"
+    ],
+    "operatorClosureReading": {
+      "full_content": 53,
+      "hybrid_algorithms_protocol_provenance": 1,
+      "allModuleAlgorithmsCovered": true,
+      "wholeCliExecutionClaim": false
+    },
+    "allRootConsumerRecordsBound": true,
+    "schemaClassification": "193 JSON protocol contracts have specific manifest references where present, otherwise explicit contract-family reference; no all-generated-by-4d claim."
+  },
+  "installation": {
+    "required": false,
+    "reason": "E3.3 is review-only. Existing installation retained; dashboard directly consumes updated canonical repository board. No product source change to install.",
+    "runtimeQualityPass": false,
+    "familyAcceptance": false
+  },
+  "usage": {
+    "startedAt": "2026-10-17T09:07:35.648657+00:00",
+    "measuredUntil": "2026-10-17T09:29:19.179457+00:00",
+    "elapsedSeconds": 1303.531,
+    "EvaRuntimeModelCalls": 0,
+    "EvaRuntimeToolsWithEffects": 0,
+    "developmentModelTokens": null,
+    "developmentCredits": null,
+    "note": "Coordinator and two assigned source reviewers. Native read-only source/metadata inspection; no new competitor matrix. Unknown credits are not estimated."
+  },
+  "wholeProjectCompleted": false,
+  "nextExistingTask": "E3.4",
+  "independentReview": "development/reviews/e33-adapters-installation-review-20261017.json"
+}

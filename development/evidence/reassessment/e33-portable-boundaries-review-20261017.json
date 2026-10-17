@@ -1,0 +1,1044 @@
+{
+  "contract": "EvaPortableBoundariesSemanticReview/v1",
+  "card": "E3.3",
+  "status": "complete_semantic_scope_pending_bundle_review",
+  "checkedAt": "2026-10-17T09:26:42.822028+00:00",
+  "sourceRevision": "84c64c88cac390d1d19624a726d829e7ca62d5f1",
+  "scopeCount": 9,
+  "summary": {
+    "fullContent": 8,
+    "hybridFullAlgorithmsProtocolProvenance": 1,
+    "pending": 0,
+    "activeOperatorDependencies": 9
+  },
+  "files": [
+    {
+      "path": "src/tools/installer_portable_restore.py",
+      "sha256": "0383dd569c93fc184a3d862fd3069169a3c8854d0e8a84de7486fe003456c88d",
+      "bytes": 40964,
+      "lines": 624,
+      "reviewMode": "full_content",
+      "readRanges": [
+        [
+          1,
+          624
+        ]
+      ],
+      "protocolProvenanceRanges": [],
+      "coverage": "All lines semantically read; no AST-only full-read claim.",
+      "role": "Current wizard preview/one-use confirmation and guarded multi-version restore orchestrator",
+      "classification": "active_operator_restore_or_export_dependency",
+      "stateOwner": "Existing PostgreSQL source rows/events, restore authority and installed runtime/components; generic readback is projection only",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_restore_wizard.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installation_runtime_package.py",
+          "line": 20,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installer_activation_boundary.py",
+          "line": 16,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 7,
+      "completeConsumersKey": "src/tools/installer_portable_restore.py",
+      "decision": "retain",
+      "decisionReason": "Retain direct installer_restore_wizard consumer. Authenticated staged local bytes are revalidated before serializable empty-target restore; authority/lineage guards recur, external imports/documents/activation remain distinct receipts, startup follows commit and failures preserve inactive material.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "decisionIds": [],
+      "inventorySha256": "0383dd569c93fc184a3d862fd3069169a3c8854d0e8a84de7486fe003456c88d",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_product_change"
+    },
+    {
+      "path": "src/tools/portable_restore.py",
+      "sha256": "6bcfb683aa6e5221de9de02f3bbed5b926e807f6f94bf37fd4a401d78e0f8d55",
+      "bytes": 54343,
+      "lines": 1236,
+      "reviewMode": "full_content",
+      "readRanges": [
+        [
+          1,
+          1236
+        ]
+      ],
+      "protocolProvenanceRanges": [],
+      "coverage": "All lines semantically read; no AST-only full-read claim.",
+      "role": "Typed canonical record decoding and empty-target transaction writer",
+      "classification": "active_operator_restore_or_export_dependency",
+      "stateOwner": "Existing PostgreSQL source rows/events, restore authority and installed runtime/components; generic readback is projection only",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 28,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_runtime_archive.py",
+          "line": 23,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_restore.py",
+          "line": 12,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 11,
+      "completeConsumersKey": "src/tools/portable_restore.py",
+      "decision": "retain",
+      "decisionReason": "Despite future wording in docstring, current installer/v2 consumers call this boundary. Entire archive validates before DB insertion; connector bindings become reauthorization_required, old model/read/effect attempts retain audit history with unusable credentials. Keep rollback/empty-target/authorization checks; no replay authority from restore.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "decisionIds": [],
+      "inventorySha256": "6bcfb683aa6e5221de9de02f3bbed5b926e807f6f94bf37fd4a401d78e0f8d55",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_product_change"
+    },
+    {
+      "path": "src/tools/portable_v2_restore.py",
+      "sha256": "46f15e74dcb42499477137bd7e2946709038367d859a8cdd488d2dba8bb9aaf2",
+      "bytes": 5563,
+      "lines": 92,
+      "reviewMode": "full_content",
+      "readRanges": [
+        [
+          1,
+          92
+        ]
+      ],
+      "protocolProvenanceRanges": [],
+      "coverage": "All lines semantically read; no AST-only full-read claim.",
+      "role": "Restore current-work extension and derive checkpoints inside held target transaction",
+      "classification": "active_operator_restore_or_export_dependency",
+      "stateOwner": "Existing PostgreSQL source rows/events, restore authority and installed runtime/components; generic readback is projection only",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 337,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 299,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 559,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 6,
+      "completeConsumersKey": "src/tools/portable_v2_restore.py",
+      "decision": "retain",
+      "decisionReason": "Retain same canonical decoder and authoritative event-derived checkpoints, topological FK insert order, schema-head/empty target check, fresh forgetting authority before/after inserts. Database remains held/closed until separate verified activation.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "decisionIds": [],
+      "inventorySha256": "46f15e74dcb42499477137bd7e2946709038367d859a8cdd488d2dba8bb9aaf2",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_product_change"
+    },
+    {
+      "path": "src/tools/portable_v2_reader.py",
+      "sha256": "4a707455aac6126ee956ec68b552df0943970ebef29bfd32b413e2d331dd30ad",
+      "bytes": 6553,
+      "lines": 106,
+      "reviewMode": "full_content",
+      "readRanges": [
+        [
+          1,
+          106
+        ]
+      ],
+      "protocolProvenanceRanges": [],
+      "coverage": "All lines semantically read; no AST-only full-read claim.",
+      "role": "Strict current-work envelope around unchanged canonical v1 archive",
+      "classification": "active_operator_restore_or_export_dependency",
+      "stateOwner": "Existing PostgreSQL source rows/events, restore authority and installed runtime/components; generic readback is projection only",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installation_recovery_package.py",
+          "line": 25,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 160,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_export.py",
+          "line": 172,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 5,
+      "completeConsumersKey": "src/tools/portable_v2_reader.py",
+      "decision": "retain",
+      "decisionReason": "Retain full file/hash/profile closure, canonical subarchive validation, current principal dependency extension and later bound byte reread. Current records do not supersede source authority or give runtime permission.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "decisionIds": [],
+      "inventorySha256": "4a707455aac6126ee956ec68b552df0943970ebef29bfd32b413e2d331dd30ad",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_product_change"
+    },
+    {
+      "path": "src/tools/portable_v2_validation.py",
+      "sha256": "3f05ede21f26fab586e1cb14ccb3d06371bc5fd240073bba2b16d382ca4a3d4d",
+      "bytes": 8948,
+      "lines": 154,
+      "reviewMode": "full_content",
+      "readRanges": [
+        [
+          1,
+          154
+        ]
+      ],
+      "protocolProvenanceRanges": [],
+      "coverage": "All lines semantically read; no AST-only full-read claim.",
+      "role": "Validate current operational/delegated work and exact identity/source closure",
+      "classification": "active_operator_restore_or_export_dependency",
+      "stateOwner": "Existing PostgreSQL source rows/events, restore authority and installed runtime/components; generic readback is projection only",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/portable_runtime_archive.py",
+          "line": 26,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_export.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_reader.py",
+          "line": 20,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 3,
+      "completeConsumersKey": "src/tools/portable_v2_validation.py",
+      "decision": "retain",
+      "decisionReason": "Retain scoped contiguous events/projection rebuild and same existing delegated validator. Document slot joins original ingress/admitted goal/owner binding; no new store or planner.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "decisionIds": [],
+      "inventorySha256": "3f05ede21f26fab586e1cb14ccb3d06371bc5fd240073bba2b16d382ca4a3d4d",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_product_change"
+    },
+    {
+      "path": "src/tools/portable_v2_profile.py",
+      "sha256": "8ac85e1f88c247f594973b119c451a7503163749c91718d2eaad60f55a017d90",
+      "bytes": 3463,
+      "lines": 81,
+      "reviewMode": "full_content",
+      "readRanges": [
+        [
+          1,
+          81
+        ]
+      ],
+      "protocolProvenanceRanges": [],
+      "coverage": "All lines semantically read; no AST-only full-read claim.",
+      "role": "Executable runtime schema profile for post-freeze operational additions",
+      "classification": "active_operator_restore_or_export_dependency",
+      "stateOwner": "Existing PostgreSQL source rows/events, restore authority and installed runtime/components; generic readback is projection only",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 179,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 298,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_runtime_archive.py",
+          "line": 25,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 8,
+      "completeConsumersKey": "src/tools/portable_v2_profile.py",
+      "decision": "retain",
+      "decisionReason": "Retain generated-in-memory specs from current authoritative tables with pinned profile hash/schema head. Complete v1 subarchive and explicit external requirements remain separate; no misleading merged historical/current schema.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "decisionIds": [],
+      "inventorySha256": "8ac85e1f88c247f594973b119c451a7503163749c91718d2eaad60f55a017d90",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_product_change"
+    },
+    {
+      "path": "src/tools/portable_runtime_restore.py",
+      "sha256": "69b368fe02bb0ff922e0445c9292e90d541cfbe91e0a62e7c43ce960cbb3e82d",
+      "bytes": 3828,
+      "lines": 70,
+      "reviewMode": "full_content",
+      "readRanges": [
+        [
+          1,
+          70
+        ]
+      ],
+      "protocolProvenanceRanges": [],
+      "coverage": "All lines semantically read; no AST-only full-read claim.",
+      "role": "Preserve externally verified runtime identity alongside held database restore",
+      "classification": "active_operator_restore_or_export_dependency",
+      "stateOwner": "Existing PostgreSQL source rows/events, restore authority and installed runtime/components; generic readback is projection only",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 105,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 365,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 547,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 8,
+      "completeConsumersKey": "src/tools/portable_runtime_restore.py",
+      "decision": "retain",
+      "decisionReason": "Retain current caller transaction/new private destination/OS ownership checks and inactive identity write. Filesystem artifacts can remain after DB rollback and must be inspected, not overwritten or retried silently.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "decisionIds": [],
+      "inventorySha256": "69b368fe02bb0ff922e0445c9292e90d541cfbe91e0a62e7c43ce960cbb3e82d",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_product_change"
+    },
+    {
+      "path": "src/tools/restore_runtime_guard.py",
+      "sha256": "fb7d0b1a3476479a37deeb9dd4da5e416d7000912f5c06cce192e7a88f8b1327",
+      "bytes": 7932,
+      "lines": 137,
+      "reviewMode": "full_content",
+      "readRanges": [
+        [
+          1,
+          137
+        ]
+      ],
+      "protocolProvenanceRanges": [],
+      "coverage": "All lines semantically read; no AST-only full-read claim.",
+      "role": "Fresh approved source/target writer pins and actual DB lineage guard",
+      "classification": "active_operator_restore_or_export_dependency",
+      "stateOwner": "Existing PostgreSQL source rows/events, restore authority and installed runtime/components; generic readback is projection only",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installation_restore_verification.py",
+          "line": 101,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_restore_verification.py",
+          "line": 138,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_runtime_authorization.py",
+          "line": 21,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 10,
+      "completeConsumersKey": "src/tools/restore_runtime_guard.py",
+      "decision": "retain",
+      "decisionReason": "Retain real prepared/source configuration and point-in-time Docker state checks. Shared DSN mount discovery is intentionally limited to same source path and Docker clients; it is not a universal distributed writer lock.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "decisionIds": [],
+      "inventorySha256": "fb7d0b1a3476479a37deeb9dd4da5e416d7000912f5c06cce192e7a88f8b1327",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_product_change"
+    },
+    {
+      "path": "src/tools/read_eva_portable_archive.py",
+      "sha256": "9f0c88db155e3b4f93d4180c0f2995e00f53203788c146ebb8882cb82cc10ab1",
+      "bytes": 115189,
+      "lines": 2657,
+      "reviewMode": "hybrid_full_algorithms_protocol_provenance",
+      "readRanges": [
+        [
+          1,
+          947
+        ],
+        [
+          1062,
+          2027
+        ],
+        [
+          2109,
+          2657
+        ]
+      ],
+      "protocolProvenanceRanges": [
+        [
+          948,
+          1061
+        ],
+        [
+          2028,
+          2108
+        ]
+      ],
+      "coverage": "All executable validation/derivation/CLI algorithms read semantically. Two static protocol assignments verified by hashes/AST/data closure; no full literal token-read claim.",
+      "role": "Standalone stdlib canonical archive validator/readback derivation and executable CLI",
+      "classification": "active_operator_restore_or_export_dependency",
+      "stateOwner": "Existing PostgreSQL source rows/events, restore authority and installed runtime/components; generic readback is projection only",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installation_document_connection.py",
+          "line": 19,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_document_restore.py",
+          "line": 25,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_external_restore.py",
+          "line": 22,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 18,
+      "completeConsumersKey": "src/tools/read_eva_portable_archive.py",
+      "decision": "retain_with_existing_provenance_correction",
+      "decisionReason": "Retain active installer/current-reader imports and isolated export subprocess. Full algorithm read, protocol tables provenance-reviewed; binds exact canonical schemas, rows, FKs/source closure/head/object hashes and derives readbacks before atomic publication. Same protocol pin gap as STATE-01 requires E4.4 provenance correction.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "decisionIds": [
+        "PORTABLE-01"
+      ],
+      "inventorySha256": "9f0c88db155e3b4f93d4180c0f2995e00f53203788c146ebb8882cb82cc10ab1",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_product_change"
+    }
+  ],
+  "completeConsumerMap": {
+    "method": "AST imports/from-module plus literals; isolated subprocess reader path recorded separately after content trace",
+    "scanManifestSha256": "38d6e9437f13eacac60dd2f16aadbc8e30f6728c767246749b16d09cb6dfe27f",
+    "mapSha256": "a22d0108c37cd973664775429839603c1b3f278263bf2d185fe3b12c0bb24b4e",
+    "sites": {
+      "src/tools/installer_portable_restore.py": [
+        {
+          "path": "src/tools/installer_restore_wizard.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installation_runtime_package.py",
+          "line": 20,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installer_activation_boundary.py",
+          "line": 16,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installer_installation_recovery.py",
+          "line": 16,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installer_portable_restore.py",
+          "line": 9,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installer_runtime_archive.py",
+          "line": 10,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_portable_v2_current_work.py",
+          "line": 23,
+          "kind": "python_import"
+        }
+      ],
+      "src/tools/portable_restore.py": [
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 28,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_runtime_archive.py",
+          "line": 23,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_restore.py",
+          "line": 12,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_validation.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_portable_restore.py",
+          "line": 11,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_portable_restore_connector.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_portable_restore_effect.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_portable_restore_full_schema.py",
+          "line": 30,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_portable_restore_model.py",
+          "line": 15,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_portable_restore_object_boundary.py",
+          "line": 19,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_portable_restore_read.py",
+          "line": 14,
+          "kind": "python_import"
+        }
+      ],
+      "src/tools/portable_v2_restore.py": [
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 337,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 299,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 559,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_runtime_restore.py",
+          "line": 7,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installation_runtime_package.py",
+          "line": 104,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installer_runtime_archive.py",
+          "line": 58,
+          "kind": "python_import"
+        }
+      ],
+      "src/tools/portable_v2_reader.py": [
+        {
+          "path": "src/tools/installation_recovery_package.py",
+          "line": 25,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 160,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_export.py",
+          "line": 172,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_restore.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_portable_v2_current_work.py",
+          "line": 25,
+          "kind": "python_import"
+        }
+      ],
+      "src/tools/portable_v2_validation.py": [
+        {
+          "path": "src/tools/portable_runtime_archive.py",
+          "line": 26,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_export.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_reader.py",
+          "line": 20,
+          "kind": "python_import"
+        }
+      ],
+      "src/tools/portable_v2_profile.py": [
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 179,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 298,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_runtime_archive.py",
+          "line": 25,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_export.py",
+          "line": 18,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_reader.py",
+          "line": 16,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_restore.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_restore.py",
+          "line": 35,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_validation.py",
+          "line": 14,
+          "kind": "python_import"
+        }
+      ],
+      "src/tools/portable_runtime_restore.py": [
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 105,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 365,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 547,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_prepared_restore_config.py",
+          "line": 111,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installation_runtime_package.py",
+          "line": 105,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installer_runtime_archive.py",
+          "line": 59,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installer_runtime_archive.py",
+          "line": 133,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installer_runtime_archive.py",
+          "line": 149,
+          "kind": "literal_module_path"
+        }
+      ],
+      "src/tools/restore_runtime_guard.py": [
+        {
+          "path": "src/tools/installation_restore_verification.py",
+          "line": 101,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_restore_verification.py",
+          "line": 138,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_runtime_authorization.py",
+          "line": 21,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_runtime_start.py",
+          "line": 16,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_prepared_restore_config.py",
+          "line": 16,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_restore_wizard.py",
+          "line": 16,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installation_restore_verification.py",
+          "line": 73,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_restore_runtime_guard.py",
+          "line": 6,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_restore_runtime_guard.py",
+          "line": 164,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_restore_runtime_guard.py",
+          "line": 177,
+          "kind": "python_import"
+        }
+      ],
+      "src/tools/read_eva_portable_archive.py": [
+        {
+          "path": "src/tools/installation_document_connection.py",
+          "line": 19,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_document_restore.py",
+          "line": 25,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_external_restore.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_gateway_binding.py",
+          "line": 19,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_gateway_start.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_gateway_verification.py",
+          "line": 18,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_memory_verification.py",
+          "line": 21,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_recovery_materializer.py",
+          "line": 19,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installation_recovery_package.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_document_components.py",
+          "line": 12,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 26,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_portable_restore.py",
+          "line": 153,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_runtime_archive.py",
+          "line": 30,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_v2_reader.py",
+          "line": 12,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installer_object_restore.py",
+          "line": 8,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installer_portable_restore.py",
+          "line": 11,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/portable_export.py",
+          "line": 625,
+          "kind": "isolated_python_subprocess_validator"
+        },
+        {
+          "path": "src/tools/portable_transport_cli.py",
+          "line": 90,
+          "kind": "fixed_reader_path"
+        }
+      ]
+    },
+    "limitations": "Static sites are candidates; algorithmic/callback traces establish real current consumers. No archive/source data, private runtime files or protected end cases opened or executed."
+  },
+  "protocolProvenance": {
+    "readerLiteralAssignments": [
+      {
+        "name": "_FOREIGN_KEY_DSL",
+        "lines": [
+          948,
+          1061
+        ],
+        "sha256": "a260dede854690cf7bb76972aa641e8e0ae32f63f328a607be1424d1ae281dd1",
+        "method": "Static triple-string plus strip(); parsed 112 FK entries equal exactly 112 canonical generated catalog FK relationships: zero missing/extra/unparsed. Consumer _foreign_keys/_validate_foreign_keys fully read."
+      },
+      {
+        "name": "_PENDING_VARIANTS",
+        "lines": [
+          2028,
+          2108
+        ],
+        "sha256": "879685fbbdd31f41d6fa9d09d42ab4baa35f3046d49ee3a9eefe940a2bd9f4de",
+        "method": "Static 9 tuples; no calls/comprehensions/lambdas. Only references three already-read pending-state sets. All tuple arities6 and all source tables canonical. Consumer _derive_pending fully read."
+      }
+    ],
+    "canonicalCatalog": {
+      "path": "src/eva/adapters/postgres/catalog_generated.py",
+      "sha256": "ac40abb7faa532cae9759bd4ef9936d33d8cc4abf090642f7f7e61ed24e75039",
+      "method": "AST literal JSON decoded only for FK metadata equality; full generated literal content not token-read"
+    },
+    "schemas": [
+      {
+        "path": "deploy/schemas/portable/v1/contracts/manifest.json",
+        "sha256": "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5",
+        "headSha256": "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5",
+        "expectedReaderAndExportSha256": "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5",
+        "pinMatches": true,
+        "reviewMode": "byte_provenance_only",
+        "crlfCount": 0
+      },
+      {
+        "path": "deploy/schemas/portable/v1/contracts/canonical-json-profile-v1.json",
+        "sha256": "d3cd8347c77de4a57c4ad7834b8ba170516b420c9abd5079dac1442d0a9d0ad9",
+        "headSha256": "d3cd8347c77de4a57c4ad7834b8ba170516b420c9abd5079dac1442d0a9d0ad9",
+        "expectedReaderAndExportSha256": "d3cd8347c77de4a57c4ad7834b8ba170516b420c9abd5079dac1442d0a9d0ad9",
+        "pinMatches": true,
+        "reviewMode": "byte_provenance_only",
+        "crlfCount": 0
+      },
+      {
+        "path": "deploy/schemas/portable/record-schema-manifest-v1.json",
+        "sha256": "44ad41ecd42f98c1226eacb2c09d0f63e21c63096ffe9144495f229fede0c9d2",
+        "headSha256": "44ad41ecd42f98c1226eacb2c09d0f63e21c63096ffe9144495f229fede0c9d2",
+        "expectedReaderAndExportSha256": "de2e302c8d260707563a8c16af1a6dfc2a3932507013dddb79d7780a3e36dc68",
+        "pinMatches": false,
+        "reviewMode": "byte_provenance_only",
+        "crlfCount": 0
+      },
+      {
+        "path": "deploy/schemas/portable/generic-reader-output-schema-manifest-v1.json",
+        "sha256": "656cd93989ed3bc90fb68bc68266d5e55ec57d61543bf8017a90deba4895c801",
+        "headSha256": "656cd93989ed3bc90fb68bc68266d5e55ec57d61543bf8017a90deba4895c801",
+        "expectedReaderAndExportSha256": "5b26d3b51a556b4b214b4d2d1cd664fb5532064d5eb0c7c7db70e833c320e876",
+        "pinMatches": false,
+        "reviewMode": "byte_provenance_only",
+        "crlfCount": 0
+      },
+      {
+        "path": "deploy/schemas/portable/object-manifest-record-v1.schema.json",
+        "sha256": "1e951976fa1021893bb5bc3812a98997560b7fcf636d0e69573e4444ec4930a8",
+        "headSha256": "1e951976fa1021893bb5bc3812a98997560b7fcf636d0e69573e4444ec4930a8",
+        "expectedReaderAndExportSha256": "1e951976fa1021893bb5bc3812a98997560b7fcf636d0e69573e4444ec4930a8",
+        "pinMatches": true,
+        "reviewMode": "byte_provenance_only",
+        "crlfCount": 0
+      }
+    ],
+    "generator": "No generator claimed for manually maintained standalone reader. Its static protocol tables preserve schema-bound compatibility; catalog generator provenance reused STATE-01."
+  },
+  "semanticTraces": [
+    {
+      "purpose": "real wizard and operator CLI consumers",
+      "sources": [
+        "src/tools/installer_restore_wizard.py:14",
+        "src/tools/installer_portable_restore.py:152",
+        "src/tools/installer_portable_restore.py:279",
+        "src/tools/installer_portable_restore.py:521"
+      ],
+      "trace": "Private trusted configuration composes InstallerPortableRestore. Prepare authenticates/local-stages archive, validates exact records/objects/authority/empty target and returns10-minute one-use confirmation. Execute revalidates same bytes/digest and current authority; retained-material exceptions report partial effects and discard token. This is current operator execution, not daily core/autonomy evidence."
+    },
+    {
+      "purpose": "canonical reader isolated subprocess and protocol evolution",
+      "sources": [
+        "src/tools/portable_export.py:178",
+        "src/tools/portable_export.py:551",
+        "src/tools/portable_export.py:625",
+        "src/tools/read_eva_portable_archive.py:2511",
+        "src/tools/read_eva_portable_archive.py:2624",
+        "src/tools/portable_v2_reader.py:64"
+      ],
+      "trace": "Export embeds separately pinned v1 contract schemas and invokes standalone stdlib reader with -I --validate-only before publish; V2 preserves same full v1 child and adds current source records with strict profile/hash closure. Reader is also executable CLI and shared safe file validator used by document/installation restore. PORTABLE-01 bounds concrete source pin mismatch."
+    },
+    {
+      "purpose": "one state source across restoration",
+      "sources": [
+        "src/tools/portable_v2_validation.py:79",
+        "src/tools/portable_v2_restore.py:74",
+        "src/tools/portable_v2_restore.py:80",
+        "src/tools/portable_runtime_restore.py:54"
+      ],
+      "trace": "Current work spec/result/owner/source identities remain authoritative, operational checkpoints rebuild from validated contiguous events, private return/document slot joins original ingress and admitted goal. Restore creates transactionally held closed target; restored credentials/attempts never authorize old external calls. Identity preserved inactive with explicit filesystem residue limitations."
+    },
+    {
+      "purpose": "actual writer lineage versus import/start/acceptance",
+      "sources": [
+        "src/tools/restore_runtime_guard.py:1",
+        "src/tools/restore_runtime_guard.py:56",
+        "src/tools/installer_portable_restore.py:334",
+        "src/tools/installer_portable_restore.py:592"
+      ],
+      "trace": "Approved exact stopped no-restart source/target writers and database lineage reread before mutation/commit boundaries. Shared DSN detection is point-in-time and limited, not universal lock. External/document/gateway promotion and release callbacks validate distinct receipts; core startup follows commit with readiness receipt, which still does not equal family acceptance."
+    }
+  ],
+  "finiteDecisions": [
+    {
+      "id": "PORTABLE-01",
+      "card": "E4.4",
+      "relatedDecision": "STATE-01",
+      "decision": "Restore exact canonical-schema provenance/pins without silently rewriting sealed v1 bytes",
+      "status": "required_not_implemented_pending_independent_review",
+      "evidence": [
+        "src/tools/read_eva_portable_archive.py:38",
+        "src/tools/read_eva_portable_archive.py:715",
+        "src/tools/portable_export.py:218",
+        "src/tools/portable_export.py:223"
+      ],
+      "impact": "Current tracked portable-record and reader-output manifest bytes (also HEAD, LF-only) differ from both reader/export expected pins; exact hashes above. Default _schema_payloads rejects those resources before publication. Frozen v1 contract/profile/object schema pins do match. This is a source reproducibility/default export boundary gap, not measured installed outage; no archive export/test or sealed source modification performed. Resolve with original supported schema authority/explicit compatible transition under existing E4.4, not a blind hash update."
+    }
+  ],
+  "referencesReadForTraceOnly": [
+    {
+      "path": "src/tools/portable_export.py",
+      "sha256": "4e6d88f297250334f966efc2abafcc0ba6999d9f7462807ab6e8f9c06d9e9e3b",
+      "reviewMode": "reference_purpose",
+      "readRanges": [
+        [
+          66,
+          87
+        ],
+        [
+          179,
+          253
+        ],
+        [
+          549,
+          575
+        ],
+        [
+          576,
+          647
+        ]
+      ],
+      "purpose": "Actual schema packaging/subprocess consumer trace only; root owns remainder."
+    }
+  ],
+  "verification": {
+    "scopeCurrentHashMatchesInventory": true,
+    "sourceChanges": 0,
+    "installationChanges": 0,
+    "testsRun": 0,
+    "modelCalls": 0,
+    "providerCalls": 0,
+    "archiveDataRead": 0,
+    "dockerCommandsExecuted": 0,
+    "workingTreePreserved": true
+  },
+  "usage": {
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "elapsedSeconds": null,
+    "evaRuntimeCost": 0
+  },
+  "wholeProjectCompleted": false,
+  "familyAcceptance": false
+}

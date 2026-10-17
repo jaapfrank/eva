@@ -1,0 +1,916 @@
+{
+  "contract": "EvaInstallerCliSemanticReview/v1",
+  "card": "E3.3",
+  "status": "complete_semantic_scope_pending_bundle_review",
+  "checkedAt": "2026-10-17T09:23:14.468182+00:00",
+  "sourceRevision": "84c64c88cac390d1d19624a726d829e7ca62d5f1",
+  "scopeCount": 12,
+  "summary": {
+    "fullContent": 12,
+    "activePackagedOperatorHandoff": 8,
+    "programmaticRestoreComposition": 4,
+    "pending": 0
+  },
+  "files": [
+    {
+      "path": "src/tools/launch_packaged_installer.py",
+      "sha256": "06970a9efcace6c34d7922dfcd038e55d3a3a61a67f1614cd425c78b9fb88f1e",
+      "bytes": 3441,
+      "lines": 69,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read; AST used separately for consumer indexing, not a quality/full-read substitute.",
+      "role": "Pin bundled interpreter/environment and exec existing operator wizard",
+      "classification": "active_packaged_operator_handoff",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 91,
+          "kind": "literal_module_or_package_path"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        },
+        {
+          "path": "development/tests/bootstrap/test_installer_browser_module.py",
+          "line": 223,
+          "kind": "literal_module_or_package_path"
+        }
+      ],
+      "consumerSiteCount": 5,
+      "completeConsumersKey": "src/tools/launch_packaged_installer.py",
+      "stateOwner": "Existing installer confirmed plan/target receipts, portable restore session and installed state owners; no second planner/memory",
+      "decision": "retain",
+      "decisionReason": "start-installer.py imports main; command uses bundled Python3.12.14 with sanitized Python environment; verifies local staging lock checksum, which is not release authorization.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "inventorySha256": "06970a9efcace6c34d7922dfcd038e55d3a3a61a67f1614cd425c78b9fb88f1e",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_source_or_install_change"
+    },
+    {
+      "path": "src/tools/packaged_installer_target.py",
+      "sha256": "f75ab3529eb3d2a6e8186cbb32d3c7c3c314a45b92b34b654452baa056a6af49",
+      "bytes": 36534,
+      "lines": 561,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read; AST used separately for consumer indexing, not a quality/full-read substitute.",
+      "role": "Derive trusted fresh target from verified local development package and confirmed choices",
+      "classification": "active_packaged_operator_handoff",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_restore_wizard.py",
+          "line": 193,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        },
+        {
+          "path": "development/tests/operations/test_packaged_installer_target.py",
+          "line": 8,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 6,
+      "completeConsumersKey": "src/tools/packaged_installer_target.py",
+      "stateOwner": "Existing installer confirmed plan/target receipts, portable restore session and installed state owners; no second planner/memory",
+      "decision": "retain",
+      "decisionReason": "wizard main selects only staging.development_candidate branch. Verified selected providers, source authority, new identity/ports/subnets and optional gateway/browser/voice callbacks build existing target workflow; development_only/unsupported_fixture remain explicit.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "inventorySha256": "f75ab3529eb3d2a6e8186cbb32d3c7c3c314a45b92b34b654452baa056a6af49",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_source_or_install_change"
+    },
+    {
+      "path": "src/tools/installer_restore_wizard.py",
+      "sha256": "b45769a6e9ddefd9e1148396e6f4a07773b442092e452945c5bc123e47b78441",
+      "bytes": 12974,
+      "lines": 208,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read; AST used separately for consumer indexing, not a quality/full-read substitute.",
+      "role": "Executable CLI for existing wizard and trusted private restore/update config",
+      "classification": "active_packaged_operator_handoff",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_prepared_restore.py",
+          "line": 8,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/launch_packaged_installer.py",
+          "line": 56,
+          "kind": "literal_module_or_package_path"
+        },
+        {
+          "path": "src/tools/launch_packaged_installer.py",
+          "line": 25,
+          "kind": "literal_module_or_package_path"
+        }
+      ],
+      "consumerSiteCount": 11,
+      "completeConsumersKey": "src/tools/installer_restore_wizard.py",
+      "stateOwner": "Existing installer confirmed plan/target receipts, portable restore session and installed state owners; no second planner/memory",
+      "decision": "retain",
+      "decisionReason": "-m entrypoint main parses restore/update/workspace, dispatches local-development candidate only when staging says so, otherwise ordinary wizard. --restore-config builds existing portable restore callbacks from trusted private settings with guarded source/target.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "inventorySha256": "b45769a6e9ddefd9e1148396e6f4a07773b442092e452945c5bc123e47b78441",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_source_or_install_change"
+    },
+    {
+      "path": "src/tools/installer_target_workflow.py",
+      "sha256": "74da948f9fb003ab167003a8da1835e0f8dbf29bba8747563c0c8e6f3add5608",
+      "bytes": 13032,
+      "lines": 236,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read; AST used separately for consumer indexing, not a quality/full-read substitute.",
+      "role": "Durable exclusive target preparation and optional fresh-start handoff",
+      "classification": "active_packaged_operator_handoff",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/packaged_installer_target.py",
+          "line": 27,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        },
+        {
+          "path": "development/tests/operations/test_installer_target_workflow.py",
+          "line": 7,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 3,
+      "completeConsumersKey": "src/tools/installer_target_workflow.py",
+      "stateOwner": "Existing installer confirmed plan/target receipts, portable restore session and installed state owners; no second planner/memory",
+      "decision": "retain",
+      "decisionReason": "Rebuild current plan before boundaries, bind release/secrets/budgets, claim unique attempt receipt, materialize/bind/access/validate/provision/schema then optionally fresh-start. Runtime ready differs from prepared and failure retains needs_inspection; no implicit repeat.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "inventorySha256": "74da948f9fb003ab167003a8da1835e0f8dbf29bba8747563c0c8e6f3add5608",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_source_or_install_change"
+    },
+    {
+      "path": "src/tools/installer_runtime_materialization.py",
+      "sha256": "7c7391b1bb6df428b74d9bf0369511a31f0cfe9bc43dc396358ae8808f60fa99",
+      "bytes": 7839,
+      "lines": 142,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read; AST used separately for consumer indexing, not a quality/full-read substitute.",
+      "role": "Create new bounded private runtime inputs and budget/database/lease files",
+      "classification": "active_packaged_operator_handoff",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_target_workflow.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/packaged_installer_target.py",
+          "line": 26,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "consumerSiteCount": 6,
+      "completeConsumersKey": "src/tools/installer_runtime_materialization.py",
+      "stateOwner": "Existing installer confirmed plan/target receipts, portable restore session and installed state owners; no second planner/memory",
+      "decision": "retain",
+      "decisionReason": "Confirmed plan/secret generations/budgets and optional explicit model authority bind exact new target-only files; new passwords and DSNs map trusted descriptors. Receipt materialized keeps runtime ownership/start/restore checks pending.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "inventorySha256": "7c7391b1bb6df428b74d9bf0369511a31f0cfe9bc43dc396358ae8808f60fa99",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_source_or_install_change"
+    },
+    {
+      "path": "src/tools/installer_target_bindings.py",
+      "sha256": "fc9bfef84719f0a776cdf311a95118d7632112a60290bac6a766f7c5581fb3a9",
+      "bytes": 9119,
+      "lines": 164,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read; AST used separately for consumer indexing, not a quality/full-read substitute.",
+      "role": "Project maintained isolated graph onto exact new resources and selected bind paths",
+      "classification": "active_packaged_operator_handoff",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_runtime_access.py",
+          "line": 16,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_target_workflow.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "consumerSiteCount": 5,
+      "completeConsumersKey": "src/tools/installer_target_bindings.py",
+      "stateOwner": "Existing installer confirmed plan/target receipts, portable restore session and installed state owners; no second planner/memory",
+      "decision": "retain",
+      "decisionReason": "Check receipt hashes and actual DSN/service mapping; explicit trusted extras or source read-only authority only; writable binds remain new root; pending returns no candidate graph. File selection does not establish runtime readiness.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "inventorySha256": "fc9bfef84719f0a776cdf311a95118d7632112a60290bac6a766f7c5581fb3a9",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_source_or_install_change"
+    },
+    {
+      "path": "src/tools/installer_runtime_access.py",
+      "sha256": "f17e6131f154046d8a184744e496f4fad4c42fb159519214f56bff27954ba9af",
+      "bytes": 10180,
+      "lines": 175,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read; AST used separately for consumer indexing, not a quality/full-read substitute.",
+      "role": "Establish effective runtime readers on new input copies and preserve original authority",
+      "classification": "active_packaged_operator_handoff",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_target_workflow.py",
+          "line": 144,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        },
+        {
+          "path": "development/tests/operations/test_installer_runtime_access.py",
+          "line": 8,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 5,
+      "completeConsumersKey": "src/tools/installer_runtime_access.py",
+      "stateOwner": "Existing installer confirmed plan/target receipts, portable restore session and installed state owners; no second planner/memory",
+      "decision": "retain",
+      "decisionReason": "Trusted numeric effective users required; no linked/unbounded files; per-reader copies or shared writer rules; source model refresh authority directory remains original and private without chown/copy. Access established is not services started.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "inventorySha256": "f17e6131f154046d8a184744e496f4fad4c42fb159519214f56bff27954ba9af",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_source_or_install_change"
+    },
+    {
+      "path": "src/tools/installer_prepared_restore_config.py",
+      "sha256": "721c65a29182075ee5bb054d6a5bcab7425d4ead061eeee769747fc2e8b24e40",
+      "bytes": 12987,
+      "lines": 212,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read; AST used separately for consumer indexing, not a quality/full-read substitute.",
+      "role": "Bind prepared stopped target identities and approved source lineage to restore config",
+      "classification": "operator_programmatic_restore_composition",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_prepared_components.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_prepared_restore.py",
+          "line": 80,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "consumerSiteCount": 6,
+      "completeConsumersKey": "src/tools/installer_prepared_restore_config.py",
+      "stateOwner": "Existing installer confirmed plan/target receipts, portable restore session and installed state owners; no second planner/memory",
+      "decision": "retain",
+      "decisionReason": "Requires exact prepared workflow/resource/plan, actual container/database identity, DSN connection lineage and original approval. Components/activation missing stay pending; identity destination must be new and mounted; not restore execution.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "inventorySha256": "721c65a29182075ee5bb054d6a5bcab7425d4ead061eeee769747fc2e8b24e40",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_source_or_install_change"
+    },
+    {
+      "path": "src/tools/installer_prepared_restore.py",
+      "sha256": "6917a84730da4dc2c3417ad84b0ee9835075ca495cbf7f4e812074f2dcef0ec8",
+      "bytes": 5579,
+      "lines": 111,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read; AST used separately for consumer indexing, not a quality/full-read substitute.",
+      "role": "Keep single lazy prepared-target restore workflow/one-use confirmation session",
+      "classification": "operator_programmatic_restore_composition",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        },
+        {
+          "path": "development/tests/operations/test_installer_prepared_restore.py",
+          "line": 8,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 2,
+      "completeConsumersKey": "src/tools/installer_prepared_restore.py",
+      "stateOwner": "Existing installer confirmed plan/target receipts, portable restore session and installed state owners; no second planner/memory",
+      "decision": "retain",
+      "decisionReason": "Trusted preparation/config_builder callable composes prepare/execute/close. PreparedRestoreConfigurationBuilder derives same target config and components once; failed attempt cannot silently provision second target. No ordinary packaged-wizard caller found for this helper.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "inventorySha256": "6917a84730da4dc2c3417ad84b0ee9835075ca495cbf7f4e812074f2dcef0ec8",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_source_or_install_change"
+    },
+    {
+      "path": "src/tools/installer_prepared_components.py",
+      "sha256": "7736a202fde2a38f786732bccaa35e2987bc7ab7028bc154007ef51e7423dec8",
+      "bytes": 8027,
+      "lines": 124,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read; AST used separately for consumer indexing, not a quality/full-read substitute.",
+      "role": "Join stopped prepared gateway/document components under original approved writers",
+      "classification": "operator_programmatic_restore_composition",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_prepared_restore.py",
+          "line": 79,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        },
+        {
+          "path": "development/tests/operations/test_installer_prepared_components.py",
+          "line": 5,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 5,
+      "completeConsumersKey": "src/tools/installer_prepared_components.py",
+      "stateOwner": "Existing installer confirmed plan/target receipts, portable restore session and installed state owners; no second planner/memory",
+      "decision": "retain",
+      "decisionReason": "Matches prepared plan/network/images, exact credentials/owners and stopped no-restart external writers before creating new gateway; failures retain resources; no activation or import claimed.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "inventorySha256": "7736a202fde2a38f786732bccaa35e2987bc7ab7028bc154007ef51e7423dec8",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_source_or_install_change"
+    },
+    {
+      "path": "src/tools/installer_document_components.py",
+      "sha256": "d3d7654d0aeed19c692cc9305446108e43f71b0d3b0f5ddee86ecd6a0502f524",
+      "bytes": 6985,
+      "lines": 108,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read; AST used separately for consumer indexing, not a quality/full-read substitute.",
+      "role": "Translate saved relative document layouts into existing restore callbacks",
+      "classification": "operator_programmatic_restore_composition",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_prepared_components.py",
+          "line": 12,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        },
+        {
+          "path": "development/tests/operations/test_installer_document_components.py",
+          "line": 5,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 3,
+      "completeConsumersKey": "src/tools/installer_document_components.py",
+      "stateOwner": "Existing installer confirmed plan/target receipts, portable restore session and installed state owners; no second planner/memory",
+      "decision": "retain",
+      "decisionReason": "Saved inventory roles/coverage/catalog hashes and journal layout constrain all documents; trusted host image/owner/network/credential inputs remain separate; pure builder never creates/imports data.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "inventorySha256": "d3d7654d0aeed19c692cc9305446108e43f71b0d3b0f5ddee86ecd6a0502f524",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_source_or_install_change"
+    },
+    {
+      "path": "src/tools/installer_optional_capabilities.py",
+      "sha256": "f5d3e19434c77b493a985e6869d7fc58583be1c934b671a6000f3fe9776cb11a",
+      "bytes": 3347,
+      "lines": 71,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read; AST used separately for consumer indexing, not a quality/full-read substitute.",
+      "role": "Remove skipped optional provider services/environment/mounts from copied graph",
+      "classification": "active_packaged_operator_handoff",
+      "consumerEvidence": [
+        {
+          "path": "src/tools/installer_target_bindings.py",
+          "line": 69,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        },
+        {
+          "path": "development/tests/operations/test_installer_optional_capabilities.py",
+          "line": 5,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 4,
+      "completeConsumersKey": "src/tools/installer_optional_capabilities.py",
+      "stateOwner": "Existing installer confirmed plan/target receipts, portable restore session and installed state owners; no second planner/memory",
+      "decision": "retain",
+      "decisionReason": "Requires same confirmed current plan hash and ready/skipped decisions; bounded maintained Telegram/HA binding rules with retained dependency check. Email/connectors prepared through their selected routes, no new credentials or consumer invention.",
+      "existingCards": [
+        "E4.4"
+      ],
+      "inventorySha256": "f5d3e19434c77b493a985e6869d7fc58583be1c934b671a6000f3fe9776cb11a",
+      "changedSinceInventory": false,
+      "installedEvidence": [],
+      "implementation": "review_only_no_source_or_install_change"
+    }
+  ],
+  "completeConsumerMap": {
+    "method": "AST imports including from tools import module plus literal module/path candidates; package directory inclusion explicitly recorded",
+    "scanManifestSha256": "38d6e9437f13eacac60dd2f16aadbc8e30f6728c767246749b16d09cb6dfe27f",
+    "mapSha256": "96fffdc849d67b9b3163b5b88238d2e3291273684e25facfa799d92d0664f226",
+    "sites": {
+      "src/tools/launch_packaged_installer.py": [
+        {
+          "path": "start-installer.py",
+          "line": 8,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 91,
+          "kind": "literal_module_or_package_path"
+        },
+        {
+          "path": "development/tests/bootstrap/test_installer_browser_module.py",
+          "line": 223,
+          "kind": "literal_module_or_package_path"
+        },
+        {
+          "path": "development/tests/operations/test_launch_packaged_installer.py",
+          "line": 6,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "src/tools/packaged_installer_target.py": [
+        {
+          "path": "src/tools/installer_restore_wizard.py",
+          "line": 193,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_packaged_installer_target.py",
+          "line": 8,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_packaged_installer_target.py",
+          "line": 58,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_packaged_installer_target.py",
+          "line": 99,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_packaged_installer_target.py",
+          "line": 144,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "src/tools/installer_restore_wizard.py": [
+        {
+          "path": "src/tools/installer_prepared_restore.py",
+          "line": 8,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/launch_packaged_installer.py",
+          "line": 56,
+          "kind": "literal_module_or_package_path"
+        },
+        {
+          "path": "src/tools/launch_packaged_installer.py",
+          "line": 25,
+          "kind": "literal_module_or_package_path"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 92,
+          "kind": "literal_module_or_package_path"
+        },
+        {
+          "path": "development/tests/bootstrap/test_installer_browser_module.py",
+          "line": 224,
+          "kind": "literal_module_or_package_path"
+        },
+        {
+          "path": "development/tests/operations/test_launch_packaged_installer.py",
+          "line": 11,
+          "kind": "literal_module_or_package_path"
+        },
+        {
+          "path": "development/tests/operations/test_launch_packaged_installer.py",
+          "line": 44,
+          "kind": "literal_module_or_package_path"
+        },
+        {
+          "path": "development/tests/operations/test_launch_packaged_installer.py",
+          "line": 33,
+          "kind": "literal_module_or_package_path"
+        },
+        {
+          "path": "development/tests/portable/test_installer_restore_composition.py",
+          "line": 4,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_installer_runtime_archive.py",
+          "line": 95,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "src/tools/installer_target_workflow.py": [
+        {
+          "path": "src/tools/packaged_installer_target.py",
+          "line": 27,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_target_workflow.py",
+          "line": 7,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "src/tools/installer_runtime_materialization.py": [
+        {
+          "path": "src/tools/installer_target_workflow.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/packaged_installer_target.py",
+          "line": 26,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_runtime_materialization.py",
+          "line": 10,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_runtime_materialization.py",
+          "line": 87,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_target_bindings.py",
+          "line": 10,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "src/tools/installer_target_bindings.py": [
+        {
+          "path": "src/tools/installer_runtime_access.py",
+          "line": 16,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_target_workflow.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_runtime_access.py",
+          "line": 7,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_target_bindings.py",
+          "line": 11,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "src/tools/installer_runtime_access.py": [
+        {
+          "path": "src/tools/installer_target_workflow.py",
+          "line": 144,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_runtime_access.py",
+          "line": 8,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_runtime_access.py",
+          "line": 59,
+          "kind": "literal_module_or_package_path"
+        },
+        {
+          "path": "development/tests/operations/test_installer_target_workflow.py",
+          "line": 28,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "src/tools/installer_prepared_restore_config.py": [
+        {
+          "path": "src/tools/installer_prepared_components.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/installer_prepared_restore.py",
+          "line": 80,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_prepared_restore.py",
+          "line": 74,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_prepared_restore.py",
+          "line": 103,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_prepared_restore_config.py",
+          "line": 9,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "src/tools/installer_prepared_restore.py": [
+        {
+          "path": "development/tests/operations/test_installer_prepared_restore.py",
+          "line": 8,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "src/tools/installer_prepared_components.py": [
+        {
+          "path": "src/tools/installer_prepared_restore.py",
+          "line": 79,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_prepared_components.py",
+          "line": 5,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_prepared_restore.py",
+          "line": 74,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_prepared_restore.py",
+          "line": 103,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "src/tools/installer_document_components.py": [
+        {
+          "path": "src/tools/installer_prepared_components.py",
+          "line": 12,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_document_components.py",
+          "line": 5,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ],
+      "src/tools/installer_optional_capabilities.py": [
+        {
+          "path": "src/tools/installer_target_bindings.py",
+          "line": 69,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_installer_optional_capabilities.py",
+          "line": 5,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/operations/test_packaged_installer_target.py",
+          "line": 147,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/stage_installer_package.py",
+          "line": 18,
+          "kind": "packaged_tracked_src_directory_inclusion"
+        }
+      ]
+    },
+    "limitation": "Imports and literal candidates do not establish execution. Packaged argv/execvpe and callback factories were semantically traced. No private runtime/secret files read, model calls or Docker executed."
+  },
+  "handoffs": [
+    {
+      "purpose": "package to executable operator entrypoint",
+      "sourceLocations": [
+        "start-installer.py:7",
+        "src/tools/stage_installer_package.py:18",
+        "src/tools/stage_installer_package.py:91",
+        "src/tools/launch_packaged_installer.py:17",
+        "src/tools/launch_packaged_installer.py:59"
+      ],
+      "trace": "Tracked src/deploy inputs and start-installer.py enter package; root launcher imports tools launcher, validates canonical package/bundled interpreter/selected local platform checksum, sanitizes Python environment, checks exact Python then execvpe -m tools.installer_restore_wizard. A local checksum is not public release authorization; platform support is not inferred."
+    },
+    {
+      "purpose": "wizard branch to current target execution",
+      "sourceLocations": [
+        "src/tools/installer_restore_wizard.py:174",
+        "src/tools/packaged_installer_target.py:554",
+        "src/tools/packaged_installer_target.py:258",
+        "src/tools/installer_target_workflow.py:94"
+      ],
+      "trace": "main with no restore config chooses trusted local-development candidate only if staging says so; verified package and confirmed plan factory create preparation. Plan is rebound at boundaries and only one durable attempt proceeds through files, graph, reader access, offline config validator, actual target preparation/schema and optional fresh startup. Failure retains target; no auto new target. Daily Eva processes later consume this prepared graph but do not import CLI as their planner."
+    },
+    {
+      "purpose": "private authority and runtime reader handoff",
+      "sourceLocations": [
+        "src/tools/packaged_installer_target.py:42",
+        "src/tools/installer_runtime_materialization.py:82",
+        "src/tools/installer_target_bindings.py:121",
+        "src/tools/installer_runtime_access.py:118"
+      ],
+      "trace": "Registered existing lease producer identifies original owner authority directory or explicit native owner fallback; only access lease/consumer auth is materialized. Existing authority directory remains source-owned so atomic auth replacement is visible; target files get validated effective runtime ownership. No authority or source storage silently rewritten."
+    },
+    {
+      "purpose": "explicit restore config versus prepared helper integration",
+      "sourceLocations": [
+        "src/tools/installer_restore_wizard.py:198",
+        "src/tools/installer_restore_wizard.py:19",
+        "src/tools/installer_prepared_restore.py:54",
+        "src/tools/installer_prepared_restore.py:77"
+      ],
+      "trace": "Actual --restore-config operator branch calls configured_restore_workflow, which composes same portable restore with traffic closed, pinned runtime guards, optional external/document/gateway/promotion/activation callbacks and cleanup. PreparedInstallerRestore/ConfigurationBuilder has a valid trusted programmatic route and ordinary test consumers, but no packaged main import to that helper was found. It must not be reported as automatic full restore wiring."
+    },
+    {
+      "purpose": "data/component ownership and optional selection",
+      "sourceLocations": [
+        "src/tools/installer_prepared_restore_config.py:65",
+        "src/tools/installer_prepared_components.py:28",
+        "src/tools/installer_document_components.py:22",
+        "src/tools/installer_optional_capabilities.py:23"
+      ],
+      "trace": "Prepared target actual container/database lineage and independently approved source/credential/profile settings join saved relative document inventory. All retained document artifacts/journals need exact coverage; read-only connect and write promotion callbacks stay distinct. Skipped options remove only declared maintained consumers, preserving dependencies. Existing voice callbacks only read for handoff; no voice changes."
+    }
+  ],
+  "finiteDecisions": [
+    {
+      "id": "CLI-01",
+      "card": "E4.4",
+      "decision": "Retain packaged operator route as executable source, distinct from daily core and from programmatic restore helpers",
+      "evidence": [
+        "start-installer.py:8",
+        "src/tools/launch_packaged_installer.py:56",
+        "src/tools/installer_restore_wizard.py:190",
+        "src/tools/installer_prepared_restore.py:54"
+      ],
+      "reason": "Few/no daily-core imports cannot justify historical/dead classification; subprocess/packaged launch is the real consumer. Four prepared helpers remain callable source with explicit integration limits. No feature task, source extraction or O2.3/HUE acceptance reopened."
+    }
+  ],
+  "referencesReadForTraceOnly": [
+    {
+      "path": "start-installer.py",
+      "sha256": "6f6ef1207d25627cb47eb35877fb1263fcb554c2df535c7c715da6eb9d1b1351",
+      "reviewMode": "reference_purpose",
+      "purpose": "Entry/import/package handoff only; no complete module quality assertion"
+    },
+    {
+      "path": "src/tools/stage_installer_package.py",
+      "sha256": "e0b2d76856786adb89942f968bb16e38b78053d7d3cacdab6195188760e6286d",
+      "reviewMode": "reference_purpose",
+      "purpose": "Entry/import/package handoff only; no complete module quality assertion"
+    }
+  ],
+  "verification": {
+    "scopeCurrentHashMatchesInventory": true,
+    "sourceChanges": 0,
+    "installationChanges": 0,
+    "builds": 0,
+    "testsRun": 0,
+    "modelCalls": 0,
+    "providerCalls": 0,
+    "dockerCommandsExecuted": 0,
+    "workingTreePreserved": true
+  },
+  "usage": {
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "elapsedSeconds": null,
+    "evaRuntimeCost": 0
+  },
+  "wholeProjectCompleted": false,
+  "familyAcceptance": false
+}

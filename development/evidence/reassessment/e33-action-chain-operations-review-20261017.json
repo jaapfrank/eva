@@ -1,0 +1,1001 @@
+{
+  "contract": "EvaActionChainOperationsSemanticReview/v1",
+  "card": "E3.3",
+  "checkedAt": "2026-10-17T09:20:47.602590+00:00",
+  "status": "complete_semantic_scope_pending_bundle_review",
+  "sourceRevision": "84c64c88cac390d1d19624a726d829e7ca62d5f1",
+  "scope": "src/eva/operations/action_chain_*.py",
+  "scopeCount": 12,
+  "summary": {
+    "fullContent": 12,
+    "generatedProvenance": 0,
+    "referenceExecutionLibrary": 12,
+    "pending": 0
+  },
+  "files": [
+    {
+      "path": "src/eva/operations/action_chain_dispatch_common.py",
+      "sha256": "5cb7868e68b774e44b7bce2f5d53e021c1001240e2034a44176e4861ee1ffe97",
+      "bytes": 26273,
+      "lines": 767,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read in tool output; AST used only for complete consumer candidate indexing.",
+      "role": "Shared dispatch authority graph, immutable grant/envelope material, durable call-start and single connector process/result path",
+      "stateOwner": "Existing eva_effects rows and operational timeline; no independent planner or memory",
+      "classification": "maintained_optional_reference_execution_library",
+      "classificationBasis": "Named production-code importers remain inside this family; executable roots discovered in ordinary tests/release validation. No bootstrap/API/CLI execution wiring for these 12 found in current source search. Current bootstrap cancellation uses PostgreSQL controls separately. This is a source-use finding, not proof of installed execution or safe deletion.",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/action_chain_effect_authority.py",
+          "line": 28,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_authorizer.py",
+          "line": 28,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_dispatcher.py",
+          "line": 44,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 9,
+      "completeConsumersKey": "src/eva/operations/action_chain_dispatch_common.py",
+      "inventorySha256": "5cb7868e68b774e44b7bce2f5d53e021c1001240e2034a44176e4861ee1ffe97",
+      "changedSinceInventory": false,
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "decision": "retain_reference_library",
+      "decisionReason": "Retained release tests and durable stored attempts depend on exact authority/readback semantics. Shared mechanics are already factored; size/few imports does not justify another framework or deletion.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/operations/action_chain_effect_authority.py",
+      "sha256": "361c1de959bf4ca46f39cabf73e4f2414fb8676689ac1ca5ec7e92a0300c205d",
+      "bytes": 8468,
+      "lines": 217,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read in tool output; AST used only for complete consumer candidate indexing.",
+      "role": "Pure release/operation-bound effect permit and exact existing-attempt validation",
+      "stateOwner": "Existing eva_effects rows and operational timeline; no independent planner or memory",
+      "classification": "maintained_optional_reference_execution_library",
+      "classificationBasis": "Named production-code importers remain inside this family; executable roots discovered in ordinary tests/release validation. No bootstrap/API/CLI execution wiring for these 12 found in current source search. Current bootstrap cancellation uses PostgreSQL controls separately. This is a source-use finding, not proof of installed execution or safe deletion.",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/action_chain_effect_authorizer.py",
+          "line": 34,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_dispatcher.py",
+          "line": 50,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 2,
+      "completeConsumersKey": "src/eva/operations/action_chain_effect_authority.py",
+      "inventorySha256": "361c1de959bf4ca46f39cabf73e4f2414fb8676689ac1ca5ec7e92a0300c205d",
+      "changedSinceInventory": false,
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "decision": "retain_reference_library",
+      "decisionReason": "Retained release tests and durable stored attempts depend on exact authority/readback semantics. Shared mechanics are already factored; size/few imports does not justify another framework or deletion.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/operations/action_chain_effect_authorizer.py",
+      "sha256": "70a1b084840994928c828fc71f67b3a2e2672e2528b24f35cd82e8c43c4c9ec7",
+      "bytes": 8467,
+      "lines": 217,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read in tool output; AST used only for complete consumer candidate indexing.",
+      "role": "Live catalog/activation/binding validation and atomic prepared-to-dispatch-authorized effect fence",
+      "stateOwner": "Existing eva_effects rows and operational timeline; no independent planner or memory",
+      "classification": "maintained_optional_reference_execution_library",
+      "classificationBasis": "Named production-code importers remain inside this family; executable roots discovered in ordinary tests/release validation. No bootstrap/API/CLI execution wiring for these 12 found in current source search. Current bootstrap cancellation uses PostgreSQL controls separately. This is a source-use finding, not proof of installed execution or safe deletion.",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/action_chain_effect_dispatcher.py",
+          "line": 55,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_authorizer.py",
+          "line": 30,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_cancellations.py",
+          "line": 27,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 5,
+      "completeConsumersKey": "src/eva/operations/action_chain_effect_authorizer.py",
+      "inventorySha256": "70a1b084840994928c828fc71f67b3a2e2672e2528b24f35cd82e8c43c4c9ec7",
+      "changedSinceInventory": false,
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "decision": "retain_reference_library",
+      "decisionReason": "Retained release tests and durable stored attempts depend on exact authority/readback semantics. Shared mechanics are already factored; size/few imports does not justify another framework or deletion.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/operations/action_chain_effect_dispatcher.py",
+      "sha256": "5a432d59087a9a1fcac809aaed6b88dafc9d1617bd7103a47e812c00d98e5655",
+      "bytes": 15004,
+      "lines": 388,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read in tool output; AST used only for complete consumer candidate indexing.",
+      "role": "Recheck current effect authority, release pins/deadline, then commit irreversible call-start before returning callable bytes",
+      "stateOwner": "Existing eva_effects rows and operational timeline; no independent planner or memory",
+      "classification": "maintained_optional_reference_execution_library",
+      "classificationBasis": "Named production-code importers remain inside this family; executable roots discovered in ordinary tests/release validation. No bootstrap/API/CLI execution wiring for these 12 found in current source search. Current bootstrap cancellation uses PostgreSQL controls separately. This is a source-use finding, not proof of installed execution or safe deletion.",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/action_chain_effect_executor.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_advances.py",
+          "line": 51,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_cancellations.py",
+          "line": 30,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 7,
+      "completeConsumersKey": "src/eva/operations/action_chain_effect_dispatcher.py",
+      "inventorySha256": "5a432d59087a9a1fcac809aaed6b88dafc9d1617bd7103a47e812c00d98e5655",
+      "changedSinceInventory": false,
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "decision": "retain_reference_library",
+      "decisionReason": "Retained release tests and durable stored attempts depend on exact authority/readback semantics. Shared mechanics are already factored; size/few imports does not justify another framework or deletion.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/operations/action_chain_effect_executor.py",
+      "sha256": "ed3f4658e6a8761951fc8bf00bb3c85f5c792164a32ac57b6324e00ff0980906",
+      "bytes": 2233,
+      "lines": 66,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read in tool output; AST used only for complete consumer candidate indexing.",
+      "role": "Thin effect executor binding dispatcher, subprocess connector runner and authoritative result store",
+      "stateOwner": "Existing eva_effects rows and operational timeline; no independent planner or memory",
+      "classification": "maintained_optional_reference_execution_library",
+      "classificationBasis": "Named production-code importers remain inside this family; executable roots discovered in ordinary tests/release validation. No bootstrap/API/CLI execution wiring for these 12 found in current source search. Current bootstrap cancellation uses PostgreSQL controls separately. This is a source-use finding, not proof of installed execution or safe deletion.",
+      "consumerEvidence": [
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_advances.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_advances.py",
+          "line": 48,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_dispatcher.py",
+          "line": 14,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 7,
+      "completeConsumersKey": "src/eva/operations/action_chain_effect_executor.py",
+      "inventorySha256": "ed3f4658e6a8761951fc8bf00bb3c85f5c792164a32ac57b6324e00ff0980906",
+      "changedSinceInventory": false,
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "decision": "retain_reference_library",
+      "decisionReason": "Retained release tests and durable stored attempts depend on exact authority/readback semantics. Shared mechanics are already factored; size/few imports does not justify another framework or deletion.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/operations/action_chain_effect_readback_authorizer.py",
+      "sha256": "a2594c978982e65690090607bb53c8f69c30bddede019db9e63893f8f78dbdb4",
+      "bytes": 14637,
+      "lines": 336,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read in tool output; AST used only for complete consumer candidate indexing.",
+      "role": "Independent effect_verify read authority bound to accepted original effect and immutable request",
+      "stateOwner": "Existing eva_effects rows and operational timeline; no independent planner or memory",
+      "classification": "maintained_optional_reference_execution_library",
+      "classificationBasis": "Named production-code importers remain inside this family; executable roots discovered in ordinary tests/release validation. No bootstrap/API/CLI execution wiring for these 12 found in current source search. Current bootstrap cancellation uses PostgreSQL controls separately. This is a source-use finding, not proof of installed execution or safe deletion.",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_dispatcher.py",
+          "line": 39,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readback_dispatcher.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readback_results.py",
+          "line": 31,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 4,
+      "completeConsumersKey": "src/eva/operations/action_chain_effect_readback_authorizer.py",
+      "inventorySha256": "a2594c978982e65690090607bb53c8f69c30bddede019db9e63893f8f78dbdb4",
+      "changedSinceInventory": false,
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "decision": "retain_reference_library",
+      "decisionReason": "Retained release tests and durable stored attempts depend on exact authority/readback semantics. Shared mechanics are already factored; size/few imports does not justify another framework or deletion.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/operations/action_chain_effect_readback_dispatcher.py",
+      "sha256": "feefb9b019be4752904864f5f82eaade72325676b11f7285f6d46d5b48b16227",
+      "bytes": 13250,
+      "lines": 318,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read in tool output; AST used only for complete consumer candidate indexing.",
+      "role": "Recheck accepted effect/readback scope and release, commit read call-start before exposing original readback bytes",
+      "stateOwner": "Existing eva_effects rows and operational timeline; no independent planner or memory",
+      "classification": "maintained_optional_reference_execution_library",
+      "classificationBasis": "Named production-code importers remain inside this family; executable roots discovered in ordinary tests/release validation. No bootstrap/API/CLI execution wiring for these 12 found in current source search. Current bootstrap cancellation uses PostgreSQL controls separately. This is a source-use finding, not proof of installed execution or safe deletion.",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_executor.py",
+          "line": 23,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_advances.py",
+          "line": 54,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readback_dispatcher.py",
+          "line": 25,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 5,
+      "completeConsumersKey": "src/eva/operations/action_chain_effect_readback_dispatcher.py",
+      "inventorySha256": "feefb9b019be4752904864f5f82eaade72325676b11f7285f6d46d5b48b16227",
+      "changedSinceInventory": false,
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "decision": "retain_reference_library",
+      "decisionReason": "Retained release tests and durable stored attempts depend on exact authority/readback semantics. Shared mechanics are already factored; size/few imports does not justify another framework or deletion.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/operations/action_chain_effect_readback_executor.py",
+      "sha256": "fd2726c7aa09194ee5b700d47538a49fce88d99aa102bc288da1d88e4d64091b",
+      "bytes": 2337,
+      "lines": 74,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read in tool output; AST used only for complete consumer candidate indexing.",
+      "role": "Thin readback executor using shared process/result path; receipt remains separate from verified physical outcome",
+      "stateOwner": "Existing eva_effects rows and operational timeline; no independent planner or memory",
+      "classification": "maintained_optional_reference_execution_library",
+      "classificationBasis": "Named production-code importers remain inside this family; executable roots discovered in ordinary tests/release validation. No bootstrap/API/CLI execution wiring for these 12 found in current source search. Current bootstrap cancellation uses PostgreSQL controls separately. This is a source-use finding, not proof of installed execution or safe deletion.",
+      "consumerEvidence": [
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readback_executor.py",
+          "line": 11,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readback_executor.py",
+          "line": 21,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_playwright_mcp_action_chain.py",
+          "line": 66,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 3,
+      "completeConsumersKey": "src/eva/operations/action_chain_effect_readback_executor.py",
+      "inventorySha256": "fd2726c7aa09194ee5b700d47538a49fce88d99aa102bc288da1d88e4d64091b",
+      "changedSinceInventory": false,
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "decision": "retain_reference_library",
+      "decisionReason": "Retained release tests and durable stored attempts depend on exact authority/readback semantics. Shared mechanics are already factored; size/few imports does not justify another framework or deletion.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/operations/action_chain_provider_registry.py",
+      "sha256": "f3441e667f39f26d406a411beae3347c1cc5bd30d61b2af878cccede2bb336f9",
+      "bytes": 14207,
+      "lines": 380,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read in tool output; AST used only for complete consumer candidate indexing.",
+      "role": "Verified release provenance selects canonical provider artifact, executable/command target pins and immutable profiles",
+      "stateOwner": "Existing eva_effects rows and operational timeline; no independent planner or memory",
+      "classification": "maintained_optional_reference_execution_library",
+      "classificationBasis": "Named production-code importers remain inside this family; executable roots discovered in ordinary tests/release validation. No bootstrap/API/CLI execution wiring for these 12 found in current source search. Current bootstrap cancellation uses PostgreSQL controls separately. This is a source-use finding, not proof of installed execution or safe deletion.",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/action_chain_effect_authority.py",
+          "line": 24,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_dispatcher.py",
+          "line": 58,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_authorizer.py",
+          "line": 38,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 8,
+      "completeConsumersKey": "src/eva/operations/action_chain_provider_registry.py",
+      "inventorySha256": "f3441e667f39f26d406a411beae3347c1cc5bd30d61b2af878cccede2bb336f9",
+      "changedSinceInventory": false,
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "decision": "retain_reference_library",
+      "decisionReason": "Retained release tests and durable stored attempts depend on exact authority/readback semantics. Shared mechanics are already factored; size/few imports does not justify another framework or deletion.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/operations/action_chain_read_authorizer.py",
+      "sha256": "29ccbc50be6b3f34bf9724d1da60bf19097059934209bf174d64988b474eba5b",
+      "bytes": 11658,
+      "lines": 318,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read in tool output; AST used only for complete consumer candidate indexing.",
+      "role": "Current live catalog authority and prepared read become one exact authorized attempt without provider I/O",
+      "stateOwner": "Existing eva_effects rows and operational timeline; no independent planner or memory",
+      "classification": "maintained_optional_reference_execution_library",
+      "classificationBasis": "Named production-code importers remain inside this family; executable roots discovered in ordinary tests/release validation. No bootstrap/API/CLI execution wiring for these 12 found in current source search. Current bootstrap cancellation uses PostgreSQL controls separately. This is a source-use finding, not proof of installed execution or safe deletion.",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_authorizer.py",
+          "line": 39,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_dispatcher.py",
+          "line": 46,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_read_dispatcher.py",
+          "line": 50,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 6,
+      "completeConsumersKey": "src/eva/operations/action_chain_read_authorizer.py",
+      "inventorySha256": "29ccbc50be6b3f34bf9724d1da60bf19097059934209bf174d64988b474eba5b",
+      "changedSinceInventory": false,
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "decision": "retain_reference_library",
+      "decisionReason": "Retained release tests and durable stored attempts depend on exact authority/readback semantics. Shared mechanics are already factored; size/few imports does not justify another framework or deletion.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/operations/action_chain_read_dispatcher.py",
+      "sha256": "53287a0730c03978394758dad13e9e9eb680680d0718bf532f0d6dbe9d465e98",
+      "bytes": 13841,
+      "lines": 352,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read in tool output; AST used only for complete consumer candidate indexing.",
+      "role": "Rebuild exact release-bound read initialize/invoke and commit call-start; replay gets no call material",
+      "stateOwner": "Existing eva_effects rows and operational timeline; no independent planner or memory",
+      "classification": "maintained_optional_reference_execution_library",
+      "classificationBasis": "Named production-code importers remain inside this family; executable roots discovered in ordinary tests/release validation. No bootstrap/API/CLI execution wiring for these 12 found in current source search. Current bootstrap cancellation uses PostgreSQL controls separately. This is a source-use finding, not proof of installed execution or safe deletion.",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_dispatcher.py",
+          "line": 51,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_read_executor.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_read_advances.py",
+          "line": 36,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 5,
+      "completeConsumersKey": "src/eva/operations/action_chain_read_dispatcher.py",
+      "inventorySha256": "53287a0730c03978394758dad13e9e9eb680680d0718bf532f0d6dbe9d465e98",
+      "changedSinceInventory": false,
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "decision": "retain_reference_library",
+      "decisionReason": "Retained release tests and durable stored attempts depend on exact authority/readback semantics. Shared mechanics are already factored; size/few imports does not justify another framework or deletion.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/operations/action_chain_read_executor.py",
+      "sha256": "e2a5d9d772cef056558baf4033a9f703f2f5b82807b12a8dd1da42841a0af299",
+      "bytes": 2185,
+      "lines": 66,
+      "reviewMode": "full_content",
+      "coverage": "All lines semantically read in tool output; AST used only for complete consumer candidate indexing.",
+      "role": "Thin read executor binding dispatcher, subprocess connector runner and authoritative read result store",
+      "stateOwner": "Existing eva_effects rows and operational timeline; no independent planner or memory",
+      "classification": "maintained_optional_reference_execution_library",
+      "classificationBasis": "Named production-code importers remain inside this family; executable roots discovered in ordinary tests/release validation. No bootstrap/API/CLI execution wiring for these 12 found in current source search. Current bootstrap cancellation uses PostgreSQL controls separately. This is a source-use finding, not proof of installed execution or safe deletion.",
+      "consumerEvidence": [
+        {
+          "path": "development/tests/postgres/test_action_chain_read_dispatcher.py",
+          "line": 15,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_read_dispatcher.py",
+          "line": 40,
+          "kind": "python_import"
+        }
+      ],
+      "consumerSiteCount": 2,
+      "completeConsumersKey": "src/eva/operations/action_chain_read_executor.py",
+      "inventorySha256": "e2a5d9d772cef056558baf4033a9f703f2f5b82807b12a8dd1da42841a0af299",
+      "changedSinceInventory": false,
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "decision": "retain_reference_library",
+      "decisionReason": "Retained release tests and durable stored attempts depend on exact authority/readback semantics. Shared mechanics are already factored; size/few imports does not justify another framework or deletion.",
+      "existingCards": [
+        "E4.4"
+      ]
+    }
+  ],
+  "completeConsumerMap": {
+    "method": "AST imports and exact module/path string literals in current src/deploy/development/tests Python; no protected fixture contents executed or expanded",
+    "scanManifestSha256": "f838693de857d2301bb18412aa6bb915f583cc60e374de4d568f3c3e798a85e4",
+    "mapSha256": "ac75d69dc9ed81efe143023cdf23d7bd67ec84efa7ccdf260d5a503e38d928fb",
+    "sites": {
+      "src/eva/operations/action_chain_dispatch_common.py": [
+        {
+          "path": "src/eva/operations/action_chain_effect_authority.py",
+          "line": 28,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_authorizer.py",
+          "line": 28,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_dispatcher.py",
+          "line": 44,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_executor.py",
+          "line": 19,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_dispatcher.py",
+          "line": 43,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_executor.py",
+          "line": 20,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_read_authorizer.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_read_dispatcher.py",
+          "line": 40,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_read_executor.py",
+          "line": 19,
+          "kind": "python_import"
+        }
+      ],
+      "src/eva/operations/action_chain_effect_authority.py": [
+        {
+          "path": "src/eva/operations/action_chain_effect_authorizer.py",
+          "line": 34,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_dispatcher.py",
+          "line": 50,
+          "kind": "python_import"
+        }
+      ],
+      "src/eva/operations/action_chain_effect_authorizer.py": [
+        {
+          "path": "src/eva/operations/action_chain_effect_dispatcher.py",
+          "line": 55,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_authorizer.py",
+          "line": 30,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_cancellations.py",
+          "line": 27,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_dispatcher.py",
+          "line": 31,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_playwright_mcp_action_chain.py",
+          "line": 63,
+          "kind": "python_import"
+        }
+      ],
+      "src/eva/operations/action_chain_effect_dispatcher.py": [
+        {
+          "path": "src/eva/operations/action_chain_effect_executor.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_advances.py",
+          "line": 51,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_cancellations.py",
+          "line": 30,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_controls.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_dispatcher.py",
+          "line": 34,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readbacks.py",
+          "line": 33,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_stop_requests.py",
+          "line": 28,
+          "kind": "python_import"
+        }
+      ],
+      "src/eva/operations/action_chain_effect_executor.py": [
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_advances.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_advances.py",
+          "line": 48,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_dispatcher.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_dispatcher.py",
+          "line": 37,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_stop_requests.py",
+          "line": 31,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_stop_requests.py",
+          "line": 224,
+          "kind": "code_literal_module_reference"
+        },
+        {
+          "path": "development/tests/postgres/test_playwright_mcp_action_chain.py",
+          "line": 60,
+          "kind": "python_import"
+        }
+      ],
+      "src/eva/operations/action_chain_effect_readback_authorizer.py": [
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_dispatcher.py",
+          "line": 39,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readback_dispatcher.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readback_results.py",
+          "line": 31,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readbacks.py",
+          "line": 30,
+          "kind": "python_import"
+        }
+      ],
+      "src/eva/operations/action_chain_effect_readback_dispatcher.py": [
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_executor.py",
+          "line": 23,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_advances.py",
+          "line": 54,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readback_dispatcher.py",
+          "line": 25,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readback_executor.py",
+          "line": 18,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readback_results.py",
+          "line": 28,
+          "kind": "python_import"
+        }
+      ],
+      "src/eva/operations/action_chain_effect_readback_executor.py": [
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readback_executor.py",
+          "line": 11,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_readback_executor.py",
+          "line": 21,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_playwright_mcp_action_chain.py",
+          "line": 66,
+          "kind": "python_import"
+        }
+      ],
+      "src/eva/operations/action_chain_provider_registry.py": [
+        {
+          "path": "src/eva/operations/action_chain_effect_authority.py",
+          "line": 24,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_dispatcher.py",
+          "line": 58,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_authorizer.py",
+          "line": 38,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_read_authorizer.py",
+          "line": 19,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_read_dispatcher.py",
+          "line": 46,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_authorizer.py",
+          "line": 33,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_read_authorizer.py",
+          "line": 24,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_playwright_mcp_action_chain.py",
+          "line": 69,
+          "kind": "python_import"
+        }
+      ],
+      "src/eva/operations/action_chain_read_authorizer.py": [
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_authorizer.py",
+          "line": 39,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_dispatcher.py",
+          "line": 46,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_read_dispatcher.py",
+          "line": 50,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_read_authorizer.py",
+          "line": 27,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_read_dispatcher.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_read_dispatcher.py",
+          "line": 33,
+          "kind": "python_import"
+        }
+      ],
+      "src/eva/operations/action_chain_read_dispatcher.py": [
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_dispatcher.py",
+          "line": 51,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_read_executor.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_read_advances.py",
+          "line": 36,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_read_dispatcher.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_read_dispatcher.py",
+          "line": 36,
+          "kind": "python_import"
+        }
+      ],
+      "src/eva/operations/action_chain_read_executor.py": [
+        {
+          "path": "development/tests/postgres/test_action_chain_read_dispatcher.py",
+          "line": 15,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_read_dispatcher.py",
+          "line": 40,
+          "kind": "python_import"
+        }
+      ]
+    },
+    "limitations": "Import/literal sites are candidates; symbol getattr/plugin strings constructed from fragments may escape static search. No direct CLI/daemon binding found; do not claim impossibility or dead code."
+  },
+  "semanticTraces": [
+    {
+      "purpose": "dynamic composition",
+      "evidence": [
+        "src/eva/operations/action_chain_dispatch_common.py:79",
+        "src/eva/operations/action_chain_dispatch_common.py:169",
+        "src/eva/operations/action_chain_effect_executor.py:39",
+        "src/eva/operations/action_chain_read_executor.py:39",
+        "src/eva/operations/action_chain_effect_readback_executor.py:42"
+      ],
+      "trace": "Subclass factories select exact authorizer/dispatcher/result store; shared execute_connector_once first loads terminal result, claims once, returns replay without process material, runs a single runner and records result. Durable marker precedes process I/O."
+    },
+    {
+      "purpose": "release and credential ownership",
+      "evidence": [
+        "src/eva/operations/action_chain_provider_registry.py:158",
+        "src/eva/operations/action_chain_provider_registry.py:251",
+        "src/eva/operations/action_chain_dispatch_common.py:528"
+      ],
+      "trace": "Verified release provenance hashes exact canonical artifact, profile binds manifest/program/target pins and worker identity; deterministic attempts/grants bind original episode, generation, operation, resource, payload, policy and deadline. Credential descriptor references remain opaque; no secret bytes read or persisted by this review."
+    },
+    {
+      "purpose": "effect receipt to independent readback",
+      "evidence": [
+        "src/eva/operations/action_chain_effect_readback_authorizer.py:128",
+        "src/eva/operations/action_chain_effect_readback_authorizer.py:303",
+        "src/eva/operations/action_chain_effect_readback_dispatcher.py:147"
+      ],
+      "trace": "Accepted original effect is required before effect_verify read admission; request bytes/hash, current independent read activation/binding/resource, original effect identity and release pins revalidate. Provider acceptance alone is not physical verification or completed family outcome."
+    },
+    {
+      "purpose": "CLI and daily-route distinction",
+      "evidence": [
+        "pyproject.toml:29",
+        "src/tools/run_managed_b_required_tests.py:383",
+        "src/tools/run_managed_b_required_tests.py:397",
+        "src/tools/run_managed_b_browser_release_subgate.py:42",
+        "src/eva/bootstrap/runtime.py:67"
+      ],
+      "trace": "Packaging exposes modules without project script entry for this family. Test runner selects explicit PostgreSQL action-chain/release browser test groups, whose normal test import sites consume these executors; no direct bootstrap/API/CLI path to these 12 was found. Runtime imports existing effect cancellation controls, not these execution classes. E3.2 core report reused; core code not semantically reread."
+    }
+  ],
+  "finiteDecisions": [
+    {
+      "id": "CHAIN-01",
+      "card": "E4.4",
+      "decision": "Retain explicit optional/reference execution family and exact historical signed registry contract",
+      "evidence": [
+        "src/eva/operations/action_chain_provider_registry.py:260",
+        "src/eva/operations/action_chain_dispatch_common.py:252"
+      ],
+      "reason": "Operation-neutral Action aliases preserve historical ReadProviderRegistryRelease/v1 bytes. Existing common helpers already remove repeated execution mechanics; further consolidation/deletion needs a proven replacement and stored/release compatibility evidence, currently absent. No new product task recommended."
+    }
+  ],
+  "verification": {
+    "modelCalls": 0,
+    "providerCalls": 0,
+    "connectorProcessesStarted": 0,
+    "testsRun": 0,
+    "productSourceChanges": 0,
+    "installationChanges": 0,
+    "workingTreePreserved": true,
+    "scopeCurrentHashMatchesInventory": true
+  },
+  "usage": {
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "runtimeCost": 0
+  },
+  "wholeProjectCompleted": false,
+  "familyAcceptance": false
+}

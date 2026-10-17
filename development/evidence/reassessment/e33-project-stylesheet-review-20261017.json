@@ -1,0 +1,114 @@
+{
+  "contract": "EvaE33ProjectStylesheetSemanticReview/v1",
+  "card": "E3.3",
+  "status": "complete_semantic_review_only",
+  "checkedAt": "2026-10-17T09:30:36.567637+00:00",
+  "scopeCount": 1,
+  "files": [
+    {
+      "path": "development/tools/project-dashboard/src/project-dashboard.css",
+      "sha256": "d16b461936a4adcb27553c65aaf4c7eac028c986a3214fdd6d5e2f89aebe3ee3",
+      "e31Sha256": "d16b461936a4adcb27553c65aaf4c7eac028c986a3214fdd6d5e2f89aebe3ee3",
+      "sourceDeltaFromE31": "unchanged",
+      "bytes": 57991,
+      "lines": 276,
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "readEvidence": {
+        "method": "Six untruncated explicit character chunks from current UTF-8 source; ASCII source gives exact byte/character equivalence.",
+        "characterRangesZeroBasedHalfOpen": [
+          [
+            0,
+            10000
+          ],
+          [
+            10000,
+            20000
+          ],
+          [
+            20000,
+            30000
+          ],
+          [
+            30000,
+            40000
+          ],
+          [
+            40000,
+            50000
+          ],
+          [
+            50000,
+            57991
+          ]
+        ],
+        "lineCoverageOneBasedInclusive": [
+          [
+            1,
+            276
+          ]
+        ],
+        "currentHashRecheckedAfterReading": true
+      },
+      "role": "Authored project-dashboard layout, typography, responsive tables/cards/navigation, task/status/evidence presentation and keyboard-focus styles",
+      "classification": "active_authored_project_frontend_stylesheet",
+      "consumerEvidence": [
+        {
+          "path": "development/tools/project-dashboard/src/project-dashboard.jsx",
+          "line": 3,
+          "kind": "authored_stylesheet_import"
+        },
+        {
+          "path": "development/tools/project-dashboard/src/project-dashboard.jsx",
+          "line": 17,
+          "kind": "ProjectLayout_project_app_wrapper"
+        },
+        {
+          "path": "development/tools/project-dashboard/src/project-work-list.jsx",
+          "line": 85,
+          "kind": "rendered_checklist_rows_class_consumer"
+        }
+      ],
+      "decision": "retain",
+      "existingCards": [
+        "E4.4"
+      ],
+      "decisionReason": "Current project frontend imports and renders matching selectors. Cascade includes original overview/matrix styles followed by increasingly specific compact owner/project/work-list and responsive rules; later overrides affect current layout, so repeated selectors do not prove removable code. Styles consume class/attribute state from existing React/workboard data and add no completion/acceptance logic, source store, planner, requests or remote URLs. No visual defect or deletion proved.",
+      "semanticCoverage": [
+        "Base project frame/sidebar/topbar/navigation/modal and focus-visible rules; responsive layout at1600/1200/1150/1100/1050/1000/900/800/700/650/600 widths.",
+        "Capability/matrix/outcome/detail/evidence presentation, later completion/overview/kanban/component-row overrides and sticky/mobile horizontal table behavior.",
+        "Current small-task/checklist controls, status classes, comparison results/history metrics and HUE overview selectors; CSS alone does not prove underlying work complete or accepted."
+      ]
+    }
+  ],
+  "referenceConsumerMetadata": [
+    {
+      "path": "development/tools/project-dashboard/src/project-dashboard.jsx",
+      "sha256": "b54c022699c4347299dbb008462e6a10323cf727629a829d454dc788ee00b7df",
+      "reviewMode": "reference_purpose",
+      "purpose": "Exact import/rendered-selector consumer positions only; complete React review belongs to existing frontend/root reports."
+    },
+    {
+      "path": "development/tools/project-dashboard/src/project-work-list.jsx",
+      "sha256": "f8d673de17c3dfe6fb15f59ad83b654351991f9368b1db3bab4cdd1b227daec9",
+      "reviewMode": "reference_purpose",
+      "purpose": "Exact import/rendered-selector consumer positions only; complete React review belongs to existing frontend/root reports."
+    }
+  ],
+  "verification": {
+    "styleSourceChanges": 0,
+    "productSourceChanges": 0,
+    "visualOrBrowserTests": 0,
+    "builds": 0,
+    "runtimeCalls": 0,
+    "modelCalls": 0,
+    "installationChanges": 0,
+    "workingTreePreserved": true
+  },
+  "usage": {
+    "developmentTokens": null,
+    "developmentCredits": null
+  },
+  "wholeProjectCompleted": false,
+  "familyAcceptance": false
+}

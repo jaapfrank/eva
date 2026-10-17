@@ -838,20 +838,20 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-17T09:07:35.648657+00:00",
+  "lastUpdated": "2026-10-17T09:32:44.849948+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E3.3",
+  "activeTaskId": "E3.4",
   "currentWork": {
-    "id": "E3.3",
-    "title": "Adapters, installatie en dynamisch gebruik beoordelen",
-    "status": "in_progress",
-    "doneWhen": "Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit.",
-    "nextAction": "Beoordeel de resterende E3.3-bronnen en echte import-/registratie-/build-/installatieconsumenten; hergebruik E3.2 en beoordeel gegenereerde/vendored inhoud op herkomst. Geen spraakwijzigingen.",
-    "checkedAt": "2026-10-17T09:07:35.648657+00:00",
+    "id": "E3.4",
+    "title": "Tests, documentatie en historie op noodzaak beoordelen",
+    "status": "planned",
+    "doneWhen": "Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd.",
+    "nextAction": "Gebruik exacte hashes en eerdere leesregistraties; beoordeel beschermd bewijs apart en maak geen nieuwe algemene geschiedenisronde.",
+    "checkedAt": "2026-10-17T09:32:44.849948+00:00",
     "ownerActionRequired": false,
-    "area": "adapter and installation review",
-    "outcome": "Een versiegebonden beoordeling met echte consumenten, begrensde E4-besluiten en onderbouwd behoud/vervanging van oude fotoprovider.",
+    "area": "development references and documentation review",
+    "outcome": "Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd.",
     "countedAsProductTask": false
   },
   "historicalWorkboard": {
@@ -1635,6 +1635,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E3.3 · Adapters en installatie beoordeeld",
+            "state": "investigated",
+            "checkedAt": "2026-10-17T09:32:44.849948+00:00",
+            "summary": "E3.3 afgerond: 1.027 paden met gecontroleerde lees-/consumerbeschikking;470 volledige lezingen,53+1hybride operatorclosure en expliciete dynamische helpergrens. E3.2 exact hergebruikt. Foto-provider tijdelijk onderbouwd behouden; Eva1-agent blijft gestopt. Beide onafhankelijke reviews GO. Geen product- of spraakcode gewijzigd.",
+            "remaining": "E3.4 volgt; de vastgelegde E4-correcties zijn nog niet uitgevoerd. Deze review is geen nieuwe gezinsfunctie of volledige productacceptatie.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e33-adapters-installation-review-20261017.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [
+              "E3.3"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "familyAcceptance": false,
+            "completionScope": "Versioned adapter/operator/frontend/build/migration review; source implementation and family acceptance remain separate."
+          },
+          {
             "title": "E3.2 · Actieve kerncode inhoudelijk beoordeeld",
             "state": "investigated",
             "checkedAt": "2026-10-16T23:26:42.505625+00:00",
@@ -2204,47 +2221,46 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E3.2 · Actieve kerncode inhoudelijk beoordeeld",
+          "title": "E3.3 · Adapters en installatie beoordeeld",
           "state": "investigated",
-          "checkedAt": "2026-10-16T23:26:42.505625+00:00",
-          "summary": "136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.",
-          "remaining": "De negen vastgelegde vereenvoudigingsbesluiten zijn nog niet uitgevoerd; ze horen bij de bestaande E4-kaarten. E3.3/E3.4 en gezinsacceptatie blijven open.",
-          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e32-core-review-20261017.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/e32-core-review-20261017.json",
+          "checkedAt": "2026-10-17T09:32:44.849948+00:00",
+          "summary": "E3.3 afgerond: 1.027 paden met gecontroleerde lees-/consumerbeschikking;470 volledige lezingen,53+1hybride operatorclosure en expliciete dynamische helpergrens. E3.2 exact hergebruikt. Foto-provider tijdelijk onderbouwd behouden; Eva1-agent blijft gestopt. Beide onafhankelijke reviews GO. Geen product- of spraakcode gewijzigd.",
+          "remaining": "E3.4 volgt; de vastgelegde E4-correcties zijn nog niet uitgevoerd. Deze review is geen nieuwe gezinsfunctie of volledige productacceptatie.",
+          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e33-adapters-installation-review-20261017.json",
           "maintenanceRepair": true,
           "newProductFunctionCompleted": false,
           "completedTaskIds": [
-            "E3.2"
+            "E3.3"
           ],
           "smallTaskCountsUnchanged": false,
           "familyAcceptance": false,
-          "completionScope": "136-file semantic core review only; source quality and household behavior not automatically accepted."
+          "completionScope": "Versioned adapter/operator/frontend/build/migration review; source implementation and family acceptance remain separate."
         },
         "now": {
-          "title": "E3.3 · Adapters, installatie en dynamisch gebruik beoordelen",
-          "taskId": "E3.3",
-          "status": "in_progress",
-          "summary": "Nu bezig: actieve adapters, frontend en installatie-/migratieconsumenten beoordelen. E3.2 wordt hergebruikt; gegenereerde inhoud en historische tools krijgen een passende reviewvorm.",
-          "doneWhen": "Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit."
+          "title": "E3.4 · Tests, documentatie en historie op noodzaak beoordelen",
+          "taskId": "E3.4",
+          "status": "planned",
+          "summary": "E3.3 afgerond; volgende bestaande taak is E3.4. Tests, documentatie en historie beoordelen vóór gerichte E4-opruiming. Nog niet gestart; geen spraakwerk.",
+          "doneWhen": "Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd."
         },
         "next": {
-          "title": "E3.4 · Tests, documentatie en historie beoordelen",
-          "state": "Na E3.3",
-          "summary": "Bestaande volgende taak; geen nieuwe plannen of concurrentenseries.",
+          "title": "E4 · Gerichte correcties uit E3.2/E3.3",
+          "state": "Na E3.4",
+          "summary": "Bestaande afrondingskaarten uitvoeren; geen nieuwe plannen, functies of concurrentenseries.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Geen handeling nodig",
-          "detail": "Codex rondt E3.3 af. Spraak blijft bij de andere uitvoerder; WhatsApp-nummer blijft uitgesteld.",
-          "steps": [],
-          "blocksIndependentWork": false
+          "title": "Geen handeling nodig voor E3.3",
+          "detail": "E3.3 is afgerond. E3.4 en de concrete E4-correcties zijn werk voor Codex. Het optionele eigen WhatsApp-nummer blijft apart open.",
+          "required": false
         },
-        "checkedAt": "2026-10-17T09:07:35.648657+00:00",
-        "reviewedAt": "2026-10-16T17:36:14.550321+00:00",
+        "checkedAt": "2026-10-17T09:32:44.849948+00:00",
+        "reviewedAt": "2026-10-17T09:32:44.849948+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-16T16:23:00.574395+00:00",
-      "checkedAt": "2026-10-16T23:26:42.505625+00:00",
+      "reviewedAt": "2026-10-17T09:32:44.849948+00:00",
+      "checkedAt": "2026-10-17T09:32:44.849948+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2365,7 +2381,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-17T00:57:21.757383+00:00",
+      "lastUpdatedAt": "2026-10-17T09:32:44.849948+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2399,7 +2415,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-17T09:07:35.648657+00:00",
+      "updatedAt": "2026-10-17T09:32:44.849948+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -2408,7 +2424,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E3.3",
+        "currentStep": "E3.4",
         "steps": [
           {
             "number": 1,
@@ -4807,14 +4823,14 @@
               {
                 "id": "E3.3",
                 "title": "Adapters, installatie en dynamisch gebruik beoordelen",
-                "status": "in_progress",
+                "status": "completed",
                 "kind": "afronden",
                 "doneWhen": "Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Bestaande adapters en installaties werken; de oude fotobibliotheek is als tijdelijke afhankelijkheid bekend.",
-                "gap": "Actuele import-/runtime-/buildconsumenten zijn nog niet volledig per bestand vastgesteld.",
-                "nextAction": "Beoordeel de resterende E3.3-bronnen en echte import-/registratie-/build-/installatieconsumenten; hergebruik E3.2 en beoordeel gegenereerde/vendored inhoud op herkomst. Geen spraakwijzigingen.",
+                "gap": "Bronbeoordeling afgerond; concrete correcties horen bij bestaande E4-kaarten en zijn nog niet uitgevoerd.",
+                "nextAction": "Geen herhaalde E3.3-proef. Eerst E3.4, daarna begrensde E4-correcties uitvoeren met bestaande criteria.",
                 "files": [
                   "src/eva/adapters",
                   "src/eva/providers",
@@ -4827,19 +4843,10 @@
                 ],
                 "assignment": {
                   "coordinator": "Codex",
-                  "activeWorkers": [
-                    {
-                      "id": "e33_state_adapters",
-                      "scope": "PostgreSQL/projection review only"
-                    },
-                    {
-                      "id": "e33_interface_adapters",
-                      "scope": "Other adapters/providers/connectors review only"
-                    }
-                  ]
+                  "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-17T09:07:35.648657+00:00",
+                "checkedAt": "2026-10-17T09:32:44.849948+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -4874,6 +4881,32 @@
                   "scopeEstimate": "1027 geregistreerde paden, waaronder gegenereerde schema/tokenizer/frontendbestanden en historische tools. Alleen actieve productbron volledig lezen; behouden referenties en generated/vendorprovenance afzonderlijk toetsen. Geen modelruntimeproef. Ontwikkeltokens/credits onbekend.",
                   "outcome": "Een versiegebonden beoordeling met echte consumenten, begrensde E4-besluiten en onderbouwd behoud/vervanging van oude fotoprovider.",
                   "userUse": "De bestaande kaart toont concreet beoordeelde installatie/adapters en resterende vereenvoudiging; geen nieuwe gezinsfunctie uit audit alleen."
+                },
+                "reviewProgress": {
+                  "phase": "completed",
+                  "registeredPaths": 1027,
+                  "fullContentRead": 470,
+                  "operatorClosure": {
+                    "full_content": 53,
+                    "hybrid": 1
+                  },
+                  "independentVerdict": "GO",
+                  "newProductFunction": false,
+                  "speechChanged": false
+                },
+                "completedAt": "2026-10-17T09:32:44.849948+00:00",
+                "completionEvidence": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+                "independentReview": "development/reviews/e33-adapters-installation-review-20261017.json",
+                "result": "E3.3 afgerond: 1.027 paden met gecontroleerde lees-/consumerbeschikking;470 volledige lezingen,53+1hybride operatorclosure en expliciete dynamische helpergrens. E3.2 exact hergebruikt. Foto-provider tijdelijk onderbouwd behouden; Eva1-agent blijft gestopt. Beide onafhankelijke reviews GO. Geen product- of spraakcode gewijzigd.",
+                "installationState": "review_only_no_product_source_change",
+                "semanticReview": {
+                  "registry": "development/evidence/reassessment/e33-file-dispositions-20261017.json",
+                  "registrySha256": "f1dc7e7b96ac30ce7b9df6a9f4e81506d3931eed091deaced1255d2b8f3ae61c",
+                  "subreports": 11,
+                  "reusedE32": true,
+                  "sourceChanges": false,
+                  "familyAcceptance": false,
+                  "newProductCards": 0
                 }
               },
               {
@@ -4961,12 +4994,23 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-17T09:32:44.849948+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                   "steps": [],
                   "blocksIndependentWork": false
+                },
+                "reviewInput": {
+                  "E3.3": {
+                    "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+                    "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086",
+                    "decisions": [
+                      "UI-01"
+                    ],
+                    "implementationStarted": false,
+                    "newTasks": 0
+                  }
                 }
               },
               {
@@ -4991,7 +5035,7 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-17T09:32:44.849948+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -5010,7 +5054,23 @@
                     "B04"
                   ],
                   "implementationStarted": false,
-                  "newTasks": 0
+                  "newTasks": 0,
+                  "E3.3": {
+                    "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+                    "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086",
+                    "decisions": [
+                      "STATE-02",
+                      "STATE-03",
+                      "IF-01",
+                      "IF-02",
+                      "IF-03",
+                      "IN-01",
+                      "OP-01",
+                      "OP-02"
+                    ],
+                    "implementationStarted": false,
+                    "newTasks": 0
+                  }
                 }
               },
               {
@@ -5036,7 +5096,7 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-17T09:32:44.849948+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -5046,7 +5106,16 @@
                 "reviewInput": {
                   "source": "development/evidence/reassessment/e32-core-review-20261017.json",
                   "measuredRuntimeImprovement": false,
-                  "note": "E3.2 levert geen token-/snelheidswinst. Gebruik alleen concrete gewijzigde E4-routes voor relevante voor/na-metingen; geen nieuwe concurrentenmatrix."
+                  "note": "E3.2 levert geen token-/snelheidswinst. Gebruik alleen concrete gewijzigde E4-routes voor relevante voor/na-metingen; geen nieuwe concurrentenmatrix.",
+                  "E3.3": {
+                    "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+                    "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086",
+                    "decisions": [
+                      "SU-02"
+                    ],
+                    "implementationStarted": false,
+                    "newTasks": 0
+                  }
                 }
               },
               {
@@ -5074,7 +5143,7 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-17T09:32:44.849948+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -5088,7 +5157,21 @@
                     "B03"
                   ],
                   "implementationStarted": false,
-                  "newTasks": 0
+                  "newTasks": 0,
+                  "E3.3": {
+                    "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+                    "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086",
+                    "decisions": [
+                      "STATE-01",
+                      "PORTABLE-01",
+                      "SU-01",
+                      "OP-03",
+                      "SU-03",
+                      "SU-04"
+                    ],
+                    "implementationStarted": false,
+                    "newTasks": 0
+                  }
                 }
               },
               {
@@ -5132,6 +5215,13 @@
                   "steps": [],
                   "blocksIndependentWork": false,
                   "readyWhen": "Nog bouwtaak. Geen handmatige patch of installatiestap van jou gevraagd; eventueel ontbrekend opgeslagen bereik wordt één keer begrijpelijk ingesteld."
+                },
+                "reviewInput": {
+                  "E3.3": {
+                    "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+                    "note": "Existing component evaluation/application chain retained; constrained strategies do not prove complete autonomous upgrades. Preserve original E4.5 full-cycle criterion.",
+                    "newTasks": 0
+                  }
                 }
               }
             ]
@@ -5208,7 +5298,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Beoordeel de resterende E3.3-bronnen en echte import-/registratie-/build-/installatieconsumenten; hergebruik E3.2 en beoordeel gegenereerde/vendored inhoud op herkomst. Geen spraakwijzigingen.",
+        "nextAction": "Gebruik exacte hashes en eerdere leesregistraties; beoordeel beschermd bewijs apart en maak geen nieuwe algemene geschiedenisronde.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5217,7 +5307,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-17T09:07:35.648657+00:00",
+        "updatedAt": "2026-10-17T09:32:44.849948+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -5390,7 +5480,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E3.3",
+      "currentStep": "E3.4",
       "steps": [
         {
           "number": 1,
@@ -7789,14 +7879,14 @@
             {
               "id": "E3.3",
               "title": "Adapters, installatie en dynamisch gebruik beoordelen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "afronden",
               "doneWhen": "Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Bestaande adapters en installaties werken; de oude fotobibliotheek is als tijdelijke afhankelijkheid bekend.",
-              "gap": "Actuele import-/runtime-/buildconsumenten zijn nog niet volledig per bestand vastgesteld.",
-              "nextAction": "Beoordeel de resterende E3.3-bronnen en echte import-/registratie-/build-/installatieconsumenten; hergebruik E3.2 en beoordeel gegenereerde/vendored inhoud op herkomst. Geen spraakwijzigingen.",
+              "gap": "Bronbeoordeling afgerond; concrete correcties horen bij bestaande E4-kaarten en zijn nog niet uitgevoerd.",
+              "nextAction": "Geen herhaalde E3.3-proef. Eerst E3.4, daarna begrensde E4-correcties uitvoeren met bestaande criteria.",
               "files": [
                 "src/eva/adapters",
                 "src/eva/providers",
@@ -7809,19 +7899,10 @@
               ],
               "assignment": {
                 "coordinator": "Codex",
-                "activeWorkers": [
-                  {
-                    "id": "e33_state_adapters",
-                    "scope": "PostgreSQL/projection review only"
-                  },
-                  {
-                    "id": "e33_interface_adapters",
-                    "scope": "Other adapters/providers/connectors review only"
-                  }
-                ]
+                "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-17T09:07:35.648657+00:00",
+              "checkedAt": "2026-10-17T09:32:44.849948+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -7856,6 +7937,32 @@
                 "scopeEstimate": "1027 geregistreerde paden, waaronder gegenereerde schema/tokenizer/frontendbestanden en historische tools. Alleen actieve productbron volledig lezen; behouden referenties en generated/vendorprovenance afzonderlijk toetsen. Geen modelruntimeproef. Ontwikkeltokens/credits onbekend.",
                 "outcome": "Een versiegebonden beoordeling met echte consumenten, begrensde E4-besluiten en onderbouwd behoud/vervanging van oude fotoprovider.",
                 "userUse": "De bestaande kaart toont concreet beoordeelde installatie/adapters en resterende vereenvoudiging; geen nieuwe gezinsfunctie uit audit alleen."
+              },
+              "reviewProgress": {
+                "phase": "completed",
+                "registeredPaths": 1027,
+                "fullContentRead": 470,
+                "operatorClosure": {
+                  "full_content": 53,
+                  "hybrid": 1
+                },
+                "independentVerdict": "GO",
+                "newProductFunction": false,
+                "speechChanged": false
+              },
+              "completedAt": "2026-10-17T09:32:44.849948+00:00",
+              "completionEvidence": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+              "independentReview": "development/reviews/e33-adapters-installation-review-20261017.json",
+              "result": "E3.3 afgerond: 1.027 paden met gecontroleerde lees-/consumerbeschikking;470 volledige lezingen,53+1hybride operatorclosure en expliciete dynamische helpergrens. E3.2 exact hergebruikt. Foto-provider tijdelijk onderbouwd behouden; Eva1-agent blijft gestopt. Beide onafhankelijke reviews GO. Geen product- of spraakcode gewijzigd.",
+              "installationState": "review_only_no_product_source_change",
+              "semanticReview": {
+                "registry": "development/evidence/reassessment/e33-file-dispositions-20261017.json",
+                "registrySha256": "f1dc7e7b96ac30ce7b9df6a9f4e81506d3931eed091deaced1255d2b8f3ae61c",
+                "subreports": 11,
+                "reusedE32": true,
+                "sourceChanges": false,
+                "familyAcceptance": false,
+                "newProductCards": 0
               }
             },
             {
@@ -7943,12 +8050,23 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-17T09:32:44.849948+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                 "steps": [],
                 "blocksIndependentWork": false
+              },
+              "reviewInput": {
+                "E3.3": {
+                  "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+                  "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086",
+                  "decisions": [
+                    "UI-01"
+                  ],
+                  "implementationStarted": false,
+                  "newTasks": 0
+                }
               }
             },
             {
@@ -7973,7 +8091,7 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-17T09:32:44.849948+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -7992,7 +8110,23 @@
                   "B04"
                 ],
                 "implementationStarted": false,
-                "newTasks": 0
+                "newTasks": 0,
+                "E3.3": {
+                  "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+                  "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086",
+                  "decisions": [
+                    "STATE-02",
+                    "STATE-03",
+                    "IF-01",
+                    "IF-02",
+                    "IF-03",
+                    "IN-01",
+                    "OP-01",
+                    "OP-02"
+                  ],
+                  "implementationStarted": false,
+                  "newTasks": 0
+                }
               }
             },
             {
@@ -8018,7 +8152,7 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-17T09:32:44.849948+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -8028,7 +8162,16 @@
               "reviewInput": {
                 "source": "development/evidence/reassessment/e32-core-review-20261017.json",
                 "measuredRuntimeImprovement": false,
-                "note": "E3.2 levert geen token-/snelheidswinst. Gebruik alleen concrete gewijzigde E4-routes voor relevante voor/na-metingen; geen nieuwe concurrentenmatrix."
+                "note": "E3.2 levert geen token-/snelheidswinst. Gebruik alleen concrete gewijzigde E4-routes voor relevante voor/na-metingen; geen nieuwe concurrentenmatrix.",
+                "E3.3": {
+                  "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+                  "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086",
+                  "decisions": [
+                    "SU-02"
+                  ],
+                  "implementationStarted": false,
+                  "newTasks": 0
+                }
               }
             },
             {
@@ -8056,7 +8199,7 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-17T09:32:44.849948+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -8070,7 +8213,21 @@
                   "B03"
                 ],
                 "implementationStarted": false,
-                "newTasks": 0
+                "newTasks": 0,
+                "E3.3": {
+                  "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+                  "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086",
+                  "decisions": [
+                    "STATE-01",
+                    "PORTABLE-01",
+                    "SU-01",
+                    "OP-03",
+                    "SU-03",
+                    "SU-04"
+                  ],
+                  "implementationStarted": false,
+                  "newTasks": 0
+                }
               }
             },
             {
@@ -8114,6 +8271,13 @@
                 "steps": [],
                 "blocksIndependentWork": false,
                 "readyWhen": "Nog bouwtaak. Geen handmatige patch of installatiestap van jou gevraagd; eventueel ontbrekend opgeslagen bereik wordt één keer begrijpelijk ingesteld."
+              },
+              "reviewInput": {
+                "E3.3": {
+                  "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+                  "note": "Existing component evaluation/application chain retained; constrained strategies do not prove complete autonomous upgrades. Preserve original E4.5 full-cycle criterion.",
+                  "newTasks": 0
+                }
               }
             }
           ]
@@ -8190,7 +8354,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Beoordeel de resterende E3.3-bronnen en echte import-/registratie-/build-/installatieconsumenten; hergebruik E3.2 en beoordeel gegenereerde/vendored inhoud op herkomst. Geen spraakwijzigingen.",
+      "nextAction": "Gebruik exacte hashes en eerdere leesregistraties; beoordeel beschermd bewijs apart en maak geen nieuwe algemene geschiedenisronde.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -8199,7 +8363,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-17T09:07:35.648657+00:00",
+      "updatedAt": "2026-10-17T09:32:44.849948+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -9401,7 +9565,7 @@
       "nextExistingTask": "E3.3"
     }
   },
-  "updatedAt": "2026-10-17T09:07:35.648657+00:00",
+  "updatedAt": "2026-10-17T09:32:44.849948+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -9437,5 +9601,6 @@
       "path": "development/design/product/continuous-development-task-scope-20261017.json",
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
-  ]
+  ],
+  "lastUpdatedAt": "2026-10-17T09:32:44.849948+00:00"
 }

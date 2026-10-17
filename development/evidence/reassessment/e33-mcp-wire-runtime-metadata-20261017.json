@@ -1,0 +1,157 @@
+{
+  "contract": "EvaE33McpWireRuntimeMetadata/v1",
+  "checkedAt": "2026-10-17T09:20:54.860130+00:00",
+  "container": "eva2-mcp-gateway",
+  "source": {
+    "path": "/app/mcpgateway/main.py",
+    "sha256": "ce9a769b1224812fddb1a905cff4025a19411f2760e6ac2abf08d1f3ab3b01fe",
+    "methodLines": [
+      [
+        8313,
+        "@utility_router.post(\"/_internal/mcp/tools/list/\")"
+      ],
+      [
+        8314,
+        "@utility_router.post(\"/_internal/mcp/tools/list\")"
+      ],
+      [
+        8316,
+        "\"\"\"Handle trusted server-scoped tools/list requests forwarded from the Rust runtime."
+      ],
+      [
+        8319,
+        "request: Trusted internal MCP tools/list request."
+      ],
+      [
+        8322,
+        "MCP tools/list response payload for the requested virtual server."
+      ],
+      [
+        8337,
+        "method=\"tools/list\","
+      ],
+      [
+        9395,
+        "@utility_router.post(\"/_internal/mcp/tools/list/authz/\")"
+      ],
+      [
+        9396,
+        "@utility_router.post(\"/_internal/mcp/tools/list/authz\")"
+      ],
+      [
+        9398,
+        "\"\"\"Authorize trusted server-scoped tools/list requests for the Rust direct-DB path."
+      ],
+      [
+        9409,
+        "method=\"tools/list\","
+      ],
+      [
+        10337,
+        "\"\"\"Execute the hot-path ``tools/call`` branch without the generic RPC method switch."
+      ],
+      [
+        10344,
+        "params: Parsed tools/call params payload."
+      ],
+      [
+        10350,
+        "Serialized MCP tools/call result payload."
+      ],
+      [
+        10762,
+        "@utility_router.post(\"/_internal/mcp/tools/call/\")"
+      ],
+      [
+        10763,
+        "@utility_router.post(\"/_internal/mcp/tools/call\")"
+      ],
+      [
+        10765,
+        "\"\"\"Handle trusted tools/call requests forwarded from the local Rust runtime."
+      ],
+      [
+        10768,
+        "request: Trusted internal MCP tools/call request."
+      ],
+      [
+        10795,
+        "if not isinstance(body, dict) or body.get(\"method\") != \"tools/call\":"
+      ],
+      [
+        10819,
+        "method=\"tools/call\","
+      ],
+      [
+        10829,
+        "await _ensure_rpc_permission(user, db, \"tools.execute\", \"tools/call\", request=request)"
+      ],
+      [
+        10885,
+        "@utility_router.post(\"/_internal/mcp/tools/call/resolve/\")"
+      ],
+      [
+        10886,
+        "@utility_router.post(\"/_internal/mcp/tools/call/resolve\")"
+      ],
+      [
+        10888,
+        "\"\"\"Resolve a Rust-direct MCP tools/call execution plan without executing the tool."
+      ],
+      [
+        10891,
+        "request: Trusted internal MCP tools/call resolve request."
+      ],
+      [
+        10917,
+        "if not isinstance(body, dict) or body.get(\"method\") != \"tools/call\":"
+      ],
+      [
+        10947,
+        "await _ensure_rpc_permission(user, db, \"tools.execute\", \"tools/call\", request=request)"
+      ],
+      [
+        11065,
+        "@utility_router.post(\"/_internal/mcp/tools/call/metric/\")"
+      ],
+      [
+        11066,
+        "@utility_router.post(\"/_internal/mcp/tools/call/metric\")"
+      ],
+      [
+        11068,
+        "\"\"\"Record buffered tool/server metrics for a Rust-direct `tools/call`."
+      ],
+      [
+        11140,
+        "\"\"\"Handle tools/list and list_tools RPC methods with shared logic."
+      ],
+      [
+        11339,
+        "elif method == \"tools/list\":"
+      ],
+      [
+        11519,
+        "elif method == \"tools/call\":  # pylint: disable=too-many-nested-blocks"
+      ],
+      [
+        11522,
+        "# (before method routing) to apply to ALL methods, not just tools/call"
+      ],
+      [
+        11534,
+        "# Release transaction after tools/call completes"
+      ],
+      [
+        11711,
+        "# This allows both old format (method=tool_name) and new format (method=tools/call)"
+      ],
+      [
+        11714,
+        "# Get authorization context (same as tools/call)"
+      ]
+    ]
+  },
+  "readOnly": true,
+  "providerCalls": 0
+}

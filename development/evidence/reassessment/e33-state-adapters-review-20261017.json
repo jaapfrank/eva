@@ -1,0 +1,4029 @@
+{
+  "contract": "EvaStateAdaptersSemanticReview/v1",
+  "card": "E3.3",
+  "status": "complete_semantic_scope_pending_bundle_review",
+  "checkedAt": "2026-10-17T09:18:58.058836+00:00",
+  "sourceRevision": "84c64c88cac390d1d19624a726d829e7ca62d5f1",
+  "scopePrefixes": [
+    "src/eva/adapters/postgres",
+    "src/eva/adapters/projection"
+  ],
+  "scopeCount": 76,
+  "summary": {
+    "fullContent": 75,
+    "generatedProvenance": 1,
+    "pendingFullContent": 0,
+    "activeComposed": 48,
+    "optionalExecutionAndCurrentStopValidation": 20,
+    "referencePackages": 2,
+    "schemaMigrationExportInfrastructure": 5,
+    "generatedSchemaResources": 1
+  },
+  "coreReuse": {
+    "path": "development/evidence/reassessment/e32-core-review-20261017.json",
+    "sha256": "8667802cc01cf34a839b901dc53309c4049e04777bec29604a32e72dd1ffbca3",
+    "mode": "completed E3.2 report reused; no core source reread"
+  },
+  "consumerMap": {
+    "path": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+    "sha256": "3f42b16e0f1f3fa1f6221674452c6475ef6e8ffdf75f325f898cbd7b5ec9810f",
+    "limitation": "Candidates from imports/literals are not execution. Active/reference classification follows semantic review. dependencies.json lacks bootstrap-to-bootstrap edges and was not used to claim dead code."
+  },
+  "files": [
+    {
+      "path": "src/eva/adapters/postgres/__init__.py",
+      "sha256": "07b08b570ee3acc0ce9cf5b87d28ba459c841c8126910f619adf3ff8e2b22d8a",
+      "bytes": 74,
+      "lines": 1,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Canonical PostgreSQL repository adapter placeholder for tranche 4B.",
+      "owner": "Package reference compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/catalog.py",
+          "line": 18,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/component_application_runtime.py",
+          "line": 329,
+          "kind": "code_literal_module_reference"
+        },
+        {
+          "path": "src/eva/operations/component_native_work_producer.py",
+          "line": 878,
+          "kind": "code_literal_module_reference"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 47,
+      "inventorySha256": "07b08b570ee3acc0ce9cf5b87d28ba459c841c8126910f619adf3ff8e2b22d8a",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Retain import namespace/documentation; no state owner or second implementation is introduced.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "reference_package",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_effect_advance_validation.py",
+      "sha256": "b53b3b63539d71da19de5eee540e12f03bf93e9377e86a5844013c4cb32f6db1",
+      "bytes": 4666,
+      "lines": 125,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Rebuild the exact physical proof that may complete one effect step.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_result_validation.py",
+          "line": 17,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/support/postgres_action_chain_effect_advances.py",
+          "line": 14,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 2,
+      "inventorySha256": "b53b3b63539d71da19de5eee540e12f03bf93e9377e86a5844013c4cb32f6db1",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_effect_cancellations.py",
+      "sha256": "803bb78898b2e6c017370dc2d585a1bf2ff0d1473ed19bca7982ab3bafc07aed",
+      "bytes": 17922,
+      "lines": 441,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Owner-bound cancellation before an action-chain effect reaches provider I/O.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_stop_requests.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/action_chain_effect_controls.py",
+          "line": 18,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_cancellations.py",
+          "line": 13,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 5,
+      "inventorySha256": "803bb78898b2e6c017370dc2d585a1bf2ff0d1473ed19bca7982ab3bafc07aed",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_effect_progress_validation.py",
+      "sha256": "0692e928cd7396d24b35f0737cacff17f7ff4248ad8ae539625cfca5fb3e09d3",
+      "bytes": 6725,
+      "lines": 180,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Reload validation for proof-driven effect completion and dependency release.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_ledger.py",
+          "line": 28,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 1,
+      "inventorySha256": "0692e928cd7396d24b35f0737cacff17f7ff4248ad8ae539625cfca5fb3e09d3",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_effect_readback_validation.py",
+      "sha256": "a215148a88db32aa85974c46af72fb0677101a137eb8b5d61aae15c2503ec174",
+      "bytes": 25280,
+      "lines": 632,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Corruption-sensitive validation for prepared effect verification reads.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_readbacks.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_result_validation.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_read_results.py",
+          "line": 20,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 8,
+      "inventorySha256": "a215148a88db32aa85974c46af72fb0677101a137eb8b5d61aae15c2503ec174",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_effect_readbacks.py",
+      "sha256": "4b902e22f8de9110bd4e0c4f6040d7f8d9bade36ebd860aba638f9c0302b9feb",
+      "bytes": 9266,
+      "lines": 214,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Prepare one authority-separated effect verification read.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_authorizer.py",
+          "line": 20,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_dispatcher.py",
+          "line": 20,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_executor.py",
+          "line": 12,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 8,
+      "inventorySha256": "4b902e22f8de9110bd4e0c4f6040d7f8d9bade36ebd860aba638f9c0302b9feb",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_effect_result_validation.py",
+      "sha256": "f03ce7563c55fe1efca2ee39d5a89b8d5f75d99262368faac47870841574762d",
+      "bytes": 27239,
+      "lines": 705,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Reload validation for one durable action-chain effect-provider result.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_state_validation.py",
+          "line": 7,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_validation.py",
+          "line": 12,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 2,
+      "inventorySha256": "f03ce7563c55fe1efca2ee39d5a89b8d5f75d99262368faac47870841574762d",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_effect_results.py",
+      "sha256": "46e2cd3ce7e7ecae7410a9f83df9f83b97138887fbc6f54adb88f334a4d58671",
+      "bytes": 20066,
+      "lines": 501,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Atomically retain one claimed action-chain effect-provider result.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/action_chain_effect_executor.py",
+          "line": 12,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_advances.py",
+          "line": 32,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_dispatcher.py",
+          "line": 16,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 6,
+      "inventorySha256": "46e2cd3ce7e7ecae7410a9f83df9f83b97138887fbc6f54adb88f334a4d58671",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_effect_state_validation.py",
+      "sha256": "ad22880a4c56d939fbe3884cd9848df7d4096386e77d849f309eb7c52f0d9639",
+      "bytes": 6790,
+      "lines": 166,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Reconstruct one effect's authorized state from current durable rows.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_validation.py",
+          "line": 15,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 1,
+      "inventorySha256": "ad22880a4c56d939fbe3884cd9848df7d4096386e77d849f309eb7c52f0d9639",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_effect_stop_requests.py",
+      "sha256": "342c43773a17afd052119d601948453d0c30e922a75978fd6c0d620c4aff9e50",
+      "bytes": 23186,
+      "lines": 577,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Durably record an owner stop request after an effect call has started.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/action_chain_effect_controls.py",
+          "line": 22,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_advances.py",
+          "line": 23,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_stop_requests.py",
+          "line": 17,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 5,
+      "inventorySha256": "342c43773a17afd052119d601948453d0c30e922a75978fd6c0d620c4aff9e50",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_effect_validation.py",
+      "sha256": "1fbf1744665adafd5687414203fc92f4fa200174432a85c115a1ff21d740fc53",
+      "bytes": 29980,
+      "lines": 715,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Corruption-sensitive reload validation for prepared action-chain effects.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_ledger.py",
+          "line": 16,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 1,
+      "inventorySha256": "1fbf1744665adafd5687414203fc92f4fa200174432a85c115a1ff21d740fc53",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_effects.py",
+      "sha256": "e3d712d43db8534adb8c6635f46e1cf56d488dfd0e502d40c854cfdd5b9ff13c",
+      "bytes": 22482,
+      "lines": 501,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Prepare one durable action-chain effect without dispatching a provider.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_cancellations.py",
+          "line": 23,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_results.py",
+          "line": 15,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_stop_requests.py",
+          "line": 26,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 14,
+      "inventorySha256": "e3d712d43db8534adb8c6635f46e1cf56d488dfd0e502d40c854cfdd5b9ff13c",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_leases.py",
+      "sha256": "1bc49cbe6a3a1293cc75a58ce15d9365d8d9e638af30e07723912ed06d701eb0",
+      "bytes": 17273,
+      "lines": 479,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Crash-safe worker leases for admitted action chains; no capability execution.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_cancellations.py",
+          "line": 29,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effects.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_reads.py",
+          "line": 14,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 12,
+      "inventorySha256": "1bc49cbe6a3a1293cc75a58ce15d9365d8d9e638af30e07723912ed06d701eb0",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_ledger.py",
+      "sha256": "a210b23889f071dff651046f3e41b9123339d7ccafa4ae6521bb2f0df97a4675",
+      "bytes": 50881,
+      "lines": 1247,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Atomic PostgreSQL admission and reload for bounded action chains.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_cancellations.py",
+          "line": 24,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_readbacks.py",
+          "line": 20,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_results.py",
+          "line": 16,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 33,
+      "inventorySha256": "a210b23889f071dff651046f3e41b9123339d7ccafa4ae6521bb2f0df97a4675",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_read_advance_validation.py",
+      "sha256": "79d6b982fd09a600c998c574178a18dc75bc3beac0b6c99c29799cdb410f7a44",
+      "bytes": 9507,
+      "lines": 256,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Reload validation for read-proof-driven action-chain step advances.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_ledger.py",
+          "line": 25,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 1,
+      "inventorySha256": "79d6b982fd09a600c998c574178a18dc75bc3beac0b6c99c29799cdb410f7a44",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_read_result_validation.py",
+      "sha256": "867352c0c615c8c269e21836ce8013be77d20b89cd999b89399a25409abd9274",
+      "bytes": 8961,
+      "lines": 224,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Reload validation for a terminal action-chain provider-read projection.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_read_validation.py",
+          "line": 13,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 1,
+      "inventorySha256": "867352c0c615c8c269e21836ce8013be77d20b89cd999b89399a25409abd9274",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_read_results.py",
+      "sha256": "a783bb701e245564dd7ffa7d57f1760367993d5c0b19a0320a0441b87746194e",
+      "bytes": 20281,
+      "lines": 499,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Atomically retain one claimed action-chain provider-read result.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/action_chain_effect_readback_executor.py",
+          "line": 15,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_read_executor.py",
+          "line": 12,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_action_chain_effect_advances.py",
+          "line": 40,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 7,
+      "inventorySha256": "a783bb701e245564dd7ffa7d57f1760367993d5c0b19a0320a0441b87746194e",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_read_validation.py",
+      "sha256": "d1132f893073b2e097f194b1661cd7ab47b03806087440a5d5ea3ece2a77de95",
+      "bytes": 26847,
+      "lines": 618,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Corruption-sensitive reload validation for durable action-chain reads.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_readback_validation.py",
+          "line": 12,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_ledger.py",
+          "line": 22,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 2,
+      "inventorySha256": "d1132f893073b2e097f194b1661cd7ab47b03806087440a5d5ea3ece2a77de95",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_reads.py",
+      "sha256": "15566fd1e71ba98265ddf03b5432d10f033c213823cf097c8a2ee08bf31bc0bf",
+      "bytes": 21685,
+      "lines": 489,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Prepare one durable action-chain read intent without dispatching a provider.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_read_results.py",
+          "line": 23,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_read_authorizer.py",
+          "line": 29,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/action_chain_read_dispatcher.py",
+          "line": 56,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 10,
+      "inventorySha256": "15566fd1e71ba98265ddf03b5432d10f033c213823cf097c8a2ee08bf31bc0bf",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_result_common.py",
+      "sha256": "41d8b9936ceb0b5bb0a2dca16b0705843317fdc0fbf3b8eb9d407aeaaaa11839",
+      "bytes": 3222,
+      "lines": 81,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Shared durable mechanics for terminal read and effect results.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_results.py",
+          "line": 26,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_read_results.py",
+          "line": 31,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 2,
+      "inventorySha256": "41d8b9936ceb0b5bb0a2dca16b0705843317fdc0fbf3b8eb9d407aeaaaa11839",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/action_chain_validation_common.py",
+      "sha256": "9132e072a5567e579c37b1566d54cc42c18cf0f5808f064110046a07018fe848",
+      "bytes": 8021,
+      "lines": 210,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Shared validation of the durable claim preceding a read or effect.",
+      "owner": "Action-chain optional execution/control compatibility",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_progress_validation.py",
+          "line": 12,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_result_validation.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_validation.py",
+          "line": 18,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 8,
+      "inventorySha256": "9132e072a5567e579c37b1566d54cc42c18cf0f5808f064110046a07018fe848",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep immutable spec/lease/call/readback/cancellation validation as one proof boundary. Current runtime stop controls consume this family; optional execution and migration consumers are not proof of daily installed use.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "optional_execution_and_current_stop_validation",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/background_model_journal.py",
+      "sha256": "2f1a037b7356bcb43e796cacb32672ca7d2873409b7619ba132560680bf9c9a1",
+      "bytes": 2803,
+      "lines": 53,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Per-work model accounting without inventing a second user ingress.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_runner.py",
+          "line": 15,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/component_application_runtime.py",
+          "line": 240,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/component_application_runtime.py",
+          "line": 329,
+          "kind": "code_literal_module_reference"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 7,
+      "inventorySha256": "2f1a037b7356bcb43e796cacb32672ca7d2873409b7619ba132560680bf9c9a1",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/background_work_progress.py",
+      "sha256": "d1a5b28811d835e0cc6fb49bfa48841a93b6aff647e7ddeff33cd605517a2684",
+      "bytes": 8042,
+      "lines": 171,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Task-owned planning checkpoints on the existing operational timeline.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_digital_runner.py",
+          "line": 16,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+          "line": 517,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 6,
+      "inventorySha256": "d1a5b28811d835e0cc6fb49bfa48841a93b6aff647e7ddeff33cd605517a2684",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/catalog.py",
+      "sha256": "dafc4c47b931ab7e6421eec206aec710e200f9543e30378f83918796205b9339",
+      "bytes": 18304,
+      "lines": 487,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "SQLAlchemy Core mirror of the sealed tranche 4D PostgreSQL catalog.",
+      "owner": "Schema and migration compatibility infrastructure",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_advance_validation.py",
+          "line": 10,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_cancellations.py",
+          "line": 30,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_readback_validation.py",
+          "line": 15,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 51,
+      "inventorySha256": "dafc4c47b931ab7e6421eec206aec710e200f9543e30378f83918796205b9339",
+      "changedSinceInventory": false,
+      "decision": "retain_with_existing_card_correction",
+      "decisionReason": "Keep distinct base 4B, sealed 4D and current extension roles; Alembic owns production DDL, portable export and install verification use these metadata. No deletion justified by historical tranche name.",
+      "decisionIds": [
+        "STATE-01"
+      ],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "schema_migration_export_infrastructure",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/catalog_generated.py",
+      "sha256": "ac40abb7faa532cae9759bd4ef9936d33d8cc4abf090642f7f7e61ed24e75039",
+      "bytes": 386091,
+      "lines": 9,
+      "category": "generated_catalog",
+      "reviewMode": "generated_provenance",
+      "fullContentRead": false,
+      "responsibility": "Generated from noor-4d-schema-export-freeze-v1.json; do not edit.",
+      "owner": "Schema and migration compatibility infrastructure",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/catalog.py",
+          "line": 19,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_portable_export_end_to_end.py",
+          "line": 12,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/portable/test_portable_p1_regressions.py",
+          "line": 16,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 10,
+      "inventorySha256": "ac40abb7faa532cae9759bd4ef9936d33d8cc4abf090642f7f7e61ed24e75039",
+      "changedSinceInventory": false,
+      "decision": "retain_with_existing_card_correction",
+      "decisionReason": "Keep distinct base 4B, sealed 4D and current extension roles; Alembic owns production DDL, portable export and install verification use these metadata. No deletion justified by historical tranche name.",
+      "decisionIds": [
+        "STATE-01"
+      ],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "different"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "different"
+        }
+      ],
+      "coverage": "literal payload intentionally not read token-by-token; generator/schema/source/consumers reviewed",
+      "classification": "generated_schema_resource",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/commerce.py",
+      "sha256": "18902bc7a77078044dda8748b3aaa8a8e509ac0c20f9bc07a569395edd46d4b4",
+      "bytes": 24357,
+      "lines": 589,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Append-only commercial publication state separate from product creation.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 72,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_commerce_store.py",
+          "line": 6,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/tools/live_paid_fulfillment_gate.py",
+          "line": 25,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 3,
+      "inventorySha256": "18902bc7a77078044dda8748b3aaa8a8e509ac0c20f9bc07a569395edd46d4b4",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/completed_contribution.py",
+      "sha256": "9ee11a924c0407060f274423c2164b300b67826320d029e81e33fba65722c3d6",
+      "bytes": 10838,
+      "lines": 188,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Register a model-selected, independently read private contribution atomically.",
+      "owner": "Existing owner initiative context/decision/source/result timeline",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/completed_contributions.py",
+          "line": 7,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_completed_contribution.py",
+          "line": 5,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 2,
+      "inventorySha256": "9ee11a924c0407060f274423c2164b300b67826320d029e81e33fba65722c3d6",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep same adopted intent, bounded exact-owner context and source outcomes, current mandate and later owner feedback. Native sources feed the next existing review; historical exploration path is compatibility, not new daily-execution evidence.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/component_improvement_actions.py",
+      "sha256": "41c8a252d41ef623e0158144f63205156c83c30dfe03cfc09dcaa0122426eafc",
+      "bytes": 32475,
+      "lines": 446,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Scoped component drafts, evaluations and independently approved application.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/initiative_source_outcomes.py",
+          "line": 15,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_digital_runner.py",
+          "line": 17,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 18,
+      "inventorySha256": "41c8a252d41ef623e0158144f63205156c83c30dfe03cfc09dcaa0122426eafc",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/connection.py",
+      "sha256": "ccd736796a9dc9395bf1ea361b1ae8cf8bbfabba923c29914ba6f8437eec6349",
+      "bytes": 1344,
+      "lines": 36,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "One explicit SQLAlchemy driver choice for Eva's PostgreSQL connections.",
+      "owner": "Schema and migration compatibility infrastructure",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_work_service.py",
+          "line": 28,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 42,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/telegram_ingress.py",
+          "line": 26,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 19,
+      "inventorySha256": "ccd736796a9dc9395bf1ea361b1ae8cf8bbfabba923c29914ba6f8437eec6349",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep distinct base 4B, sealed 4D and current extension roles; Alembic owns production DDL, portable export and install verification use these metadata. No deletion justified by historical tranche name.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "schema_migration_export_infrastructure",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/connector_results.py",
+      "sha256": "bd8372d78e4b420f32f3e3c83d80584a336fc4d9b3ee940f7faac98b4830baf8",
+      "bytes": 37146,
+      "lines": 602,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Bounded views of captured MCP output on the existing operation timeline.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/connectors/home_assistant_api.py",
+          "line": 233,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/connectors/home_assistant_api.py",
+          "line": 249,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/connectors/mcp_gateway.py",
+          "line": 498,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 37,
+      "inventorySha256": "bd8372d78e4b420f32f3e3c83d80584a336fc4d9b3ee940f7faac98b4830baf8",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/conversation_actions.py",
+      "sha256": "81d3db94ca0dff8d29deea3feb8513b2fba8e8fc04cd2d58134dc2e72ec6be25",
+      "bytes": 149778,
+      "lines": 3551,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Durable model-chosen conversation actions backed by the operational timeline.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/initiative_execution.py",
+          "line": 280,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/initiative_execution.py",
+          "line": 314,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/initiative_execution.py",
+          "line": 438,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 35,
+      "inventorySha256": "81d3db94ca0dff8d29deea3feb8513b2fba8e8fc04cd2d58134dc2e72ec6be25",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/conversation_journal.py",
+      "sha256": "5a298b8f869b11d7a63a3ac3e7171b55d9d712263235a575a6974ae286bc855c",
+      "bytes": 50379,
+      "lines": 1009,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "PostgreSQL-backed active conversation history for the Living Core.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/background_model_journal.py",
+          "line": 6,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/connector_results.py",
+          "line": 283,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/connector_results.py",
+          "line": 365,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 83,
+      "inventorySha256": "5a298b8f869b11d7a63a3ac3e7171b55d9d712263235a575a6974ae286bc855c",
+      "changedSinceInventory": false,
+      "decision": "retain_with_existing_card_correction",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [
+        "STATE-03"
+      ],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/current_catalog.py",
+      "sha256": "e920ad751655945eca554743a6ff83d2f644d654d023e6cc3a4bf8c2b85b6859",
+      "bytes": 11635,
+      "lines": 263,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Current Alembic metadata projected over the sealed historical 4D catalog.",
+      "owner": "Schema and migration compatibility infrastructure",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/delegated_work.py",
+          "line": 17,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/delegated_work_delivery.py",
+          "line": 18,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/foreign_key_catalog.py",
+          "line": 16,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 59,
+      "inventorySha256": "e920ad751655945eca554743a6ff83d2f644d654d023e6cc3a4bf8c2b85b6859",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep distinct base 4B, sealed 4D and current extension roles; Alembic owns production DDL, portable export and install verification use these metadata. No deletion justified by historical tranche name.",
+      "decisionIds": [
+        "STATE-01"
+      ],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "different"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "different"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "schema_migration_export_infrastructure",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/delegated_work.py",
+      "sha256": "b5deeec16ce3e8d5552aabff94a53adc2a1a8e4a52b84699484d23e8189f4e08",
+      "bytes": 92617,
+      "lines": 1899,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Durable PostgreSQL handoff and at-most-once fence for bounded child work.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/delegated_work_delivery.py",
+          "line": 181,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/initiative_execution.py",
+          "line": 367,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/initiative_source_outcomes.py",
+          "line": 16,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 67,
+      "inventorySha256": "b5deeec16ce3e8d5552aabff94a53adc2a1a8e4a52b84699484d23e8189f4e08",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/delegated_work_actions.py",
+      "sha256": "63acbe0726ad57e2fa83c493327a2d2e9f5910f5aa131412d855370f66516d08",
+      "bytes": 38167,
+      "lines": 508,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Typed conversation tools for the existing owner-bound delegated worker.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_work_result_reader.py",
+          "line": 5,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/household_work.py",
+          "line": 20,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 53,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 21,
+      "inventorySha256": "63acbe0726ad57e2fa83c493327a2d2e9f5910f5aa131412d855370f66516d08",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/delegated_work_delivery.py",
+      "sha256": "af361ef240d97a3ce7e7b6f8f14096bef5e17ea9caf397b25ccf46bd26a6751c",
+      "bytes": 35703,
+      "lines": 555,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Atomic destination sidecars on the existing operational timeline.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/delegated_work.py",
+          "line": 31,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/dashboard_work_context.py",
+          "line": 10,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_delivery.py",
+          "line": 34,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 13,
+      "inventorySha256": "af361ef240d97a3ce7e7b6f8f14096bef5e17ea9caf397b25ccf46bd26a6751c",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/delivery.py",
+      "sha256": "a3fd76881282222e3a20672b9c5586293cf08b0045cfc2afb8d54bfcb3f316e5",
+      "bytes": 9510,
+      "lines": 238,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Append-only PostgreSQL state for connector-neutral fan-out delivery.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/conversation_actions.py",
+          "line": 16,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_delivery_store.py",
+          "line": 6,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 2,
+      "inventorySha256": "a3fd76881282222e3a20672b9c5586293cf08b0045cfc2afb8d54bfcb3f316e5",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/durable_goals.py",
+      "sha256": "ba2a1f06c4ec636c26f7603960d802a87ddd78e402d1e5c66f99e60ca3d831ec",
+      "bytes": 31582,
+      "lines": 739,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Append-only PostgreSQL repository for bounded durable goals.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/conversation_actions.py",
+          "line": 17,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_delivery.py",
+          "line": 58,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 55,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 17,
+      "inventorySha256": "ba2a1f06c4ec636c26f7603960d802a87ddd78e402d1e5c66f99e60ca3d831ec",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "different"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "different"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+      "sha256": "a22eb53197a1f84cbca14fe7d3ed5fe3927b3465d427396b3a144a03e261a70a",
+      "bytes": 40196,
+      "lines": 789,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Provider-neutral durable execution for model-chosen external tools.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/connector_results.py",
+          "line": 282,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/connector_results.py",
+          "line": 319,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/conversation_actions.py",
+          "line": 221,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 54,
+      "inventorySha256": "a22eb53197a1f84cbca14fe7d3ed5fe3927b3465d427396b3a144a03e261a70a",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/foreign_key_catalog.py",
+      "sha256": "1ed182ca283697099bf094b83b656b42d8c380a2597430255b1566a5f8fc3d15",
+      "bytes": 7662,
+      "lines": 189,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Exact PostgreSQL foreign-key drift checks for Eva's cyclic catalog.",
+      "owner": "Schema and migration compatibility infrastructure",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/operations/install_schema.py",
+          "line": 27,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_delegated_work_migration.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_foreign_key_catalog.py",
+          "line": 3,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 3,
+      "inventorySha256": "1ed182ca283697099bf094b83b656b42d8c380a2597430255b1566a5f8fc3d15",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep distinct base 4B, sealed 4D and current extension roles; Alembic owns production DDL, portable export and install verification use these metadata. No deletion justified by historical tranche name.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "schema_migration_export_infrastructure",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/household_work_destination.py",
+      "sha256": "32455d18e72e4ca06ef069e566d59d58c02ab49da12ba5eaa268691de97785bf",
+      "bytes": 8319,
+      "lines": 146,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Explicit household announcement destinations on the existing task timeline.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/delegated_work.py",
+          "line": 272,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/household_digital_work.py",
+          "line": 185,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/household_work.py",
+          "line": 102,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 14,
+      "inventorySha256": "32455d18e72e4ca06ef069e566d59d58c02ab49da12ba5eaa268691de97785bf",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/household_work_sessions.py",
+      "sha256": "42b01515a26fa5c7ea673ef3183ffc0598b63501619750d3226edc9bae4f4db3",
+      "bytes": 21724,
+      "lines": 424,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Server-issued household work sessions on the existing operational journal.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/delegated_work.py",
+          "line": 205,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/delegated_work.py",
+          "line": 231,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/delegated_work.py",
+          "line": 261,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 14,
+      "inventorySha256": "42b01515a26fa5c7ea673ef3183ffc0598b63501619750d3226edc9bae4f4db3",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_adoption.py",
+      "sha256": "35beb8b25323beb3ef6491728d8bf093a8774a2d9ab1be5412a975bf414ab729",
+      "bytes": 5812,
+      "lines": 100,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Shared durable admission for model-chosen private initiatives.",
+      "owner": "Existing owner initiative context/decision/source/result timeline",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/completed_contribution.py",
+          "line": 7,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/sensory_events.py",
+          "line": 1101,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 1920,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 5,
+      "inventorySha256": "35beb8b25323beb3ef6491728d8bf093a8774a2d9ab1be5412a975bf414ab729",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep same adopted intent, bounded exact-owner context and source outcomes, current mandate and later owner feedback. Native sources feed the next existing review; historical exploration path is compatibility, not new daily-execution evidence.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_attention.py",
+      "sha256": "7f975799ea63203a24be6b7f88e6907e308d9c62e7f66939d6528386b6220932",
+      "bytes": 6090,
+      "lines": 103,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Model-selected attention on the existing sensory timeline, without another planner.",
+      "owner": "Existing owner initiative context/decision/source/result timeline",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/sensory_events.py",
+          "line": 120,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/sensory_events.py",
+          "line": 251,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/sensory_events.py",
+          "line": 408,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 6,
+      "inventorySha256": "7f975799ea63203a24be6b7f88e6907e308d9c62e7f66939d6528386b6220932",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep same adopted intent, bounded exact-owner context and source outcomes, current mandate and later owner feedback. Native sources feed the next existing review; historical exploration path is compatibility, not new daily-execution evidence.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_context.py",
+      "sha256": "01e05673caa80a54d0c8aee20e6f3f039fb4cc2fc9bc7500b243280939d6b97b",
+      "bytes": 7701,
+      "lines": 151,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Bounded retained context for one private initiative review, never live proof.",
+      "owner": "Existing owner initiative context/decision/source/result timeline",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/sensory_events.py",
+          "line": 205,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_initiative_context.py",
+          "line": 10,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 2,
+      "inventorySha256": "01e05673caa80a54d0c8aee20e6f3f039fb4cc2fc9bc7500b243280939d6b97b",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep same adopted intent, bounded exact-owner context and source outcomes, current mandate and later owner feedback. Native sources feed the next existing review; historical exploration path is compatibility, not new daily-execution evidence.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_delivery.py",
+      "sha256": "39916f50ffa89479228c91e68dacb23eaa1e0dfe774f328ed26aa247cf5be4f8",
+      "bytes": 5835,
+      "lines": 108,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Deliver newly completed owner initiatives through the existing private transport.",
+      "owner": "Existing owner initiative context/decision/source/result timeline",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 2222,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_completed_contribution.py",
+          "line": 49,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_completed_contribution.py",
+          "line": 50,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 6,
+      "inventorySha256": "39916f50ffa89479228c91e68dacb23eaa1e0dfe774f328ed26aa247cf5be4f8",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep same adopted intent, bounded exact-owner context and source outcomes, current mandate and later owner feedback. Native sources feed the next existing review; historical exploration path is compatibility, not new daily-execution evidence.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "sha256": "3ccccb2b8a87c1b4b062e2dd4d002f5599bdfc23170f7ba24fd8b78283c8b3a3",
+      "bytes": 49201,
+      "lines": 770,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Current zero-new-cost authority over the existing native work journal.",
+      "owner": "Existing owner initiative context/decision/source/result timeline",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/initiative_source_outcomes.py",
+          "line": 18,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/owner_initiatives.py",
+          "line": 336,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/native_initiative_work.py",
+          "line": 10,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 23,
+      "inventorySha256": "3ccccb2b8a87c1b4b062e2dd4d002f5599bdfc23170f7ba24fd8b78283c8b3a3",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep same adopted intent, bounded exact-owner context and source outcomes, current mandate and later owner feedback. Native sources feed the next existing review; historical exploration path is compatibility, not new daily-execution evidence.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_source_outcomes.py",
+      "sha256": "2b52fa55808f2225ec1aa0146bbc923d01cb1edbee286d36d95fb3523def7576",
+      "bytes": 21075,
+      "lines": 326,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Read retained native source observations for the next private decision.",
+      "owner": "Existing owner initiative context/decision/source/result timeline",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 987,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_initiative_source_outcomes.py",
+          "line": 13,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 2,
+      "inventorySha256": "2b52fa55808f2225ec1aa0146bbc923d01cb1edbee286d36d95fb3523def7576",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep same adopted intent, bounded exact-owner context and source outcomes, current mandate and later owner feedback. Native sources feed the next existing review; historical exploration path is compatibility, not new daily-execution evidence.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/mcp_connector_registry.py",
+      "sha256": "f70c007717ce3fae21c0df12792f45cf08cb3ed629b4a63e21b0aca6ef3768d1",
+      "bytes": 26768,
+      "lines": 511,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Owner-scoped immutable MCP bindings on the existing operational timeline.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/providers/mcp_autonomy.py",
+          "line": 23,
+          "kind": "python_import"
+        },
+        {
+          "path": "deploy/gateway/au006-activation/phase1_core_readonly_check.py",
+          "line": 6,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/connectors/test_mcp_registration_tools.py",
+          "line": 192,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 7,
+      "inventorySha256": "f70c007717ce3fae21c0df12792f45cf08cb3ed629b4a63e21b0aca6ef3768d1",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/memory_outbox.py",
+      "sha256": "14e38a635c7893e021ed7c4d3d4265a8e97cfc37acd88780490e1d77b02e695f",
+      "bytes": 33563,
+      "lines": 717,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Durable PostgreSQL outbox for asynchronous Hindsight retention.",
+      "owner": "Authoritative scoped source and replaceable semantic projection",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/initiative_execution.py",
+          "line": 703,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/people_memory_overview.py",
+          "line": 15,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_memory.py",
+          "line": 11,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 23,
+      "inventorySha256": "14e38a635c7893e021ed7c4d3d4265a8e97cfc37acd88780490e1d77b02e695f",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep existing source/outbox/retention/alias/projection owner boundary; source hashes, current consent and original principal remain authoritative. Apply STATE-02 only to known source eligibility; no second memory.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/operational_timeline.py",
+      "sha256": "192a91439d861824bcae40c5b1c6ecb1a77a52154e0240d10fd79111b4e5473c",
+      "bytes": 33482,
+      "lines": 902,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Append-only PostgreSQL timeline and rebuildable checkpoint projection.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_advance_validation.py",
+          "line": 11,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_cancellations.py",
+          "line": 31,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/action_chain_effect_progress_validation.py",
+          "line": 11,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 227,
+      "inventorySha256": "192a91439d861824bcae40c5b1c6ecb1a77a52154e0240d10fd79111b4e5473c",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/owner_initiatives.py",
+      "sha256": "d9b541773e163d54b00f7070b9b2272204adb8c930cec19e96cbf9454db05aa8",
+      "bytes": 20765,
+      "lines": 341,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Owner control of existing personal-work timelines; no second task store.",
+      "owner": "Existing owner initiative context/decision/source/result timeline",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/completed_contributions.py",
+          "line": 8,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 229,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+          "line": 393,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 8,
+      "inventorySha256": "d9b541773e163d54b00f7070b9b2272204adb8c930cec19e96cbf9454db05aa8",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep same adopted intent, bounded exact-owner context and source outcomes, current mandate and later owner feedback. Native sources feed the next existing review; historical exploration path is compatibility, not new daily-execution evidence.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/people_memory_overview.py",
+      "sha256": "f37786097bf6a774574ec80fccef8fd14f57c76ac84fb08dc4bf8f18e4e03c77",
+      "bytes": 60666,
+      "lines": 1107,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Bounded, validated PostgreSQL projection for the people/memory cockpit.",
+      "owner": "Authoritative scoped source and replaceable semantic projection",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/private_owner.py",
+          "line": 11,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/private_conversation_resources.py",
+          "line": 9,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 49,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 17,
+      "inventorySha256": "f37786097bf6a774574ec80fccef8fd14f57c76ac84fb08dc4bf8f18e4e03c77",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep existing source/outbox/retention/alias/projection owner boundary; source hashes, current consent and original principal remain authoritative. Apply STATE-02 only to known source eligibility; no second memory.",
+      "decisionIds": [
+        "STATE-02"
+      ],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "different"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/private_memory_aliases.py",
+      "sha256": "2e29752fc5cb360753ba167c8a777eb69a4ca93c9b19ed289262566fca8241e1",
+      "bytes": 304,
+      "lines": 7,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Current private memory aliases, resolved from live owner authority.",
+      "owner": "Authoritative scoped source and replaceable semantic projection",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/private_conversation_resources.py",
+          "line": 8,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_private_memory_alias_authority.py",
+          "line": 6,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 2,
+      "inventorySha256": "2e29752fc5cb360753ba167c8a777eb69a4ca93c9b19ed289262566fca8241e1",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep existing source/outbox/retention/alias/projection owner boundary; source hashes, current consent and original principal remain authoritative. Apply STATE-02 only to known source eligibility; no second memory.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/private_owner.py",
+      "sha256": "776fcd1de60db564df72e02f98135ff0145152b9801d76c391e4e6c810d756b3",
+      "bytes": 3407,
+      "lines": 78,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Fresh private owner authority shared by memory and authorized task routes.",
+      "owner": "Current principal/audience authorization and private source binding",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/private_memory_aliases.py",
+          "line": 2,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 1921,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/providers/private_owner_authority.py",
+          "line": 3,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 7,
+      "inventorySha256": "776fcd1de60db564df72e02f98135ff0145152b9801d76c391e4e6c810d756b3",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep current verified principal, original source identity and explicit audience scope; pair/group consent and stop/erasure have distinct lifetimes.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/private_work_return.py",
+      "sha256": "399823f0a32498ea5e3d42ac7f580e10e582d52b0e94f005604d861f82599a61",
+      "bytes": 17192,
+      "lines": 282,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Session-scoped returns over the existing work and operational journals.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/scheduled_work_failure.py",
+          "line": 13,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/dashboard_work_context.py",
+          "line": 9,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+          "line": 432,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 7,
+      "inventorySha256": "399823f0a32498ea5e3d42ac7f580e10e582d52b0e94f005604d861f82599a61",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "different"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/procedure_reference_host.py",
+      "sha256": "bbf8a0482df1e892690251e622275bc01af54b35084e7daa01d90c4b12b8c29e",
+      "bytes": 9502,
+      "lines": 161,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Resolve existing durable save receipts; never redispatch their effects.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/providers/procedure_reference_actions.py",
+          "line": 8,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_procedure_reference_host.py",
+          "line": 202,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/providers/test_procedure_reference_actions.py",
+          "line": 119,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 3,
+      "inventorySha256": "bbf8a0482df1e892690251e622275bc01af54b35084e7daa01d90c4b12b8c29e",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/programming_actions.py",
+      "sha256": "59d2638ab3a9f5406f0a93e0cc536a32cb48ee42dd01a3b9a12f82571a71fa61",
+      "bytes": 10677,
+      "lines": 184,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "General programming tools within the existing durable digital task.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 15,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_digital_runner.py",
+          "line": 18,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/operations/component_native_work_producer.py",
+          "line": 612,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 7,
+      "inventorySha256": "59d2638ab3a9f5406f0a93e0cc536a32cb48ee42dd01a3b9a12f82571a71fa61",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/runtime_resource_usage.py",
+      "sha256": "d0e85af60a3439a88c6127444008d38e6bc7099ff1ca81e26047ae0506953d44",
+      "bytes": 60609,
+      "lines": 1378,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Durable admission for installation-scoped background resource budgets.",
+      "owner": "Authoritative scoped source and replaceable semantic projection",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/household_initiative.py",
+          "line": 51,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/native_initiative_work.py",
+          "line": 120,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 45,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 10,
+      "inventorySha256": "d0e85af60a3439a88c6127444008d38e6bc7099ff1ca81e26047ae0506953d44",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep existing source/outbox/retention/alias/projection owner boundary; source hashes, current consent and original principal remain authoritative. Apply STATE-02 only to known source eligibility; no second memory.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/saved_work_artifacts.py",
+      "sha256": "fdd5602833fa6de5fd3f468b79e338a4676bc2736a388fef8df6ad8f50ae2614",
+      "bytes": 6883,
+      "lines": 116,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Materialize a completed task's referenced documents from verified save receipts.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/delegated_work_delivery.py",
+          "line": 213,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/delegated_work_delivery.py",
+          "line": 370,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/delegated_work_delivery.py",
+          "line": 542,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 4,
+      "inventorySha256": "fdd5602833fa6de5fd3f468b79e338a4676bc2736a388fef8df6ad8f50ae2614",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/scheduled_work.py",
+      "sha256": "465dabf85586b1069e02302e8dd81f5afa607775854172e4a91f1000a661abd2",
+      "bytes": 30285,
+      "lines": 504,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Durable one-shot admission times for the existing owner work service.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/dashboard_work_overview.py",
+          "line": 7,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+          "line": 121,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/household_work_corrections.py",
+          "line": 6,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 14,
+      "inventorySha256": "465dabf85586b1069e02302e8dd81f5afa607775854172e4a91f1000a661abd2",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/scheduled_work_failure.py",
+      "sha256": "482e7f28883337c84e7431c5e96ef9f5389d31a3ec4e1b2c6807896c06b414c9",
+      "bytes": 6688,
+      "lines": 130,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Admission-bound scheduled failures for existing private completion transports.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/delegated_work_delivery.py",
+          "line": 164,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/private_work_return.py",
+          "line": 30,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/scheduled_work.py",
+          "line": 102,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 5,
+      "inventorySha256": "482e7f28883337c84e7431c5e96ef9f5389d31a3ec4e1b2c6807896c06b414c9",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "different"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/schema.py",
+      "sha256": "23c16da5fb5b72d1b7b3ec543e838b23bb8cd84a079207a848d1b82d1e0d80ef",
+      "bytes": 12258,
+      "lines": 330,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "SQLAlchemy Core metadata for the tranche 4B canonical slice.",
+      "owner": "Schema and migration compatibility infrastructure",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/catalog.py",
+          "line": 18,
+          "kind": "python_import"
+        },
+        {
+          "path": "deploy/migrations/versions/4d_0003_core_continuity.py",
+          "line": 15,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/dbos/conftest.py",
+          "line": 20,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 9,
+      "inventorySha256": "23c16da5fb5b72d1b7b3ec543e838b23bb8cd84a079207a848d1b82d1e0d80ef",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep distinct base 4B, sealed 4D and current extension roles; Alembic owns production DDL, portable export and install verification use these metadata. No deletion justified by historical tranche name.",
+      "decisionIds": [
+        "STATE-01"
+      ],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "schema_migration_export_infrastructure",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/scope.py",
+      "sha256": "b48ec5abf4d75e55f714a539e6bb036e8bcd444124b038a1af7ed58365b8636c",
+      "bytes": 3708,
+      "lines": 106,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Fail-closed PostgreSQL transaction-local tenant context.",
+      "owner": "Current principal/audience authorization and private source binding",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/action_chain_ledger.py",
+          "line": 38,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/conversation_journal.py",
+          "line": 25,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/delegated_work.py",
+          "line": 21,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 31,
+      "inventorySha256": "b48ec5abf4d75e55f714a539e6bb036e8bcd444124b038a1af7ed58365b8636c",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep current verified principal, original source identity and explicit audience scope; pair/group consent and stop/erasure have distinct lifetimes.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/scoped_connector_results.py",
+      "sha256": "3cc610125af6b6bdeafa7e227567f12e872f8ff27da6db1b5352ca196a51de6b",
+      "bytes": 3829,
+      "lines": 87,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Expose same-turn saved bytes without granting private connector authority.",
+      "owner": "Current scoped ingress/action/connector/reply persistence",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/providers/mcp_autonomy.py",
+          "line": 180,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/connectors/test_scoped_connector_results.py",
+          "line": 9,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 2,
+      "inventorySha256": "3cc610125af6b6bdeafa7e227567f12e872f8ff27da6db1b5352ca196a51de6b",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep bounded canonical ingress/reply, exact once-only dispatch/result capture and current audience/owner authority. Optional commerce/programming/components remain opt-in adapters with receipt/readback boundaries, not a new planner.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/scoped_delegated_work_actions.py",
+      "sha256": "d6ff4b44a57260c3d8589a1ade77f543fbdb1b69b739bebe31ce570d1f0c5a20",
+      "bytes": 3978,
+      "lines": 83,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "One descriptor namespace; choose the existing service by admitted audience.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/household_continuity.py",
+          "line": 8,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/household_work_corrections.py",
+          "line": 94,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/recent_activity.py",
+          "line": 98,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 8,
+      "inventorySha256": "d6ff4b44a57260c3d8589a1ade77f543fbdb1b69b739bebe31ce570d1f0c5a20",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/sensory_events.py",
+      "sha256": "a75a8709e5deecdaab4938073a5bb4a138b9897a2b5b5163d157abd6abf64dbf",
+      "bytes": 90037,
+      "lines": 1625,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Append-only persistence for normalized connector sensory events.",
+      "owner": "Existing owner initiative context/decision/source/result timeline",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/household_initiative.py",
+          "line": 9,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 71,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_household_observation_initiative.py",
+          "line": 13,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 13,
+      "inventorySha256": "a75a8709e5deecdaab4938073a5bb4a138b9897a2b5b5163d157abd6abf64dbf",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep same adopted intent, bounded exact-owner context and source outcomes, current mandate and later owner feedback. Native sources feed the next existing review; historical exploration path is compatibility, not new daily-execution evidence.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/telegram_group_consent.py",
+      "sha256": "23fc74a6ee5f90049f3f368f06cc0ff4ba385b99699de20a0633014f1776f86f",
+      "bytes": 7212,
+      "lines": 190,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Append-only per-person Telegram group-consent state.",
+      "owner": "Current principal/audience authorization and private source binding",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/delegated_digital_composition.py",
+          "line": 185,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 56,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/telegram_ingress.py",
+          "line": 22,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 6,
+      "inventorySha256": "23fc74a6ee5f90049f3f368f06cc0ff4ba385b99699de20a0633014f1776f86f",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep current verified principal, original source identity and explicit audience scope; pair/group consent and stop/erasure have distinct lifetimes.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/telegram_group_observation.py",
+      "sha256": "5664b33f2da865119cedd88ce515c55edd71dee2660322f4fa5691e1ce8920bd",
+      "bytes": 5870,
+      "lines": 160,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Durable, expiring proof that Eva1 saw one sender inside one Telegram group.",
+      "owner": "Current principal/audience authorization and private source binding",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 59,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_operational_timeline.py",
+          "line": 37,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 2,
+      "inventorySha256": "5664b33f2da865119cedd88ce515c55edd71dee2660322f4fa5691e1ce8920bd",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep current verified principal, original source identity and explicit audience scope; pair/group consent and stop/erasure have distinct lifetimes.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/telegram_ingress.py",
+      "sha256": "e2ca46ebdaf636e9e080d0b2d3734c86e90e331e875e04e26af1207ba28100c3",
+      "bytes": 15594,
+      "lines": 405,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Durable admission and ambiguity-safe delivery for Telegram ingress.",
+      "owner": "Current principal/audience authorization and private source binding",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/bootstrap/telegram_ingress.py",
+          "line": 21,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_delegated_work_store.py",
+          "line": 39,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_operational_timeline.py",
+          "line": 32,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 3,
+      "inventorySha256": "e2ca46ebdaf636e9e080d0b2d3734c86e90e331e875e04e26af1207ba28100c3",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep current verified principal, original source identity and explicit audience scope; pair/group consent and stop/erasure have distinct lifetimes.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/telegram_pairing.py",
+      "sha256": "643dae35a642f5d32e2b86d177e3fb4cce796100b45f707413ea9abe821c9b21",
+      "bytes": 14460,
+      "lines": 345,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Durable two-sided Telegram account pairing on Eva's operational timeline.",
+      "owner": "Current principal/audience authorization and private source binding",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/delegated_work_delivery.py",
+          "line": 19,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/runtime.py",
+          "line": 153,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/telegram_ingress.py",
+          "line": 25,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 8,
+      "inventorySha256": "643dae35a642f5d32e2b86d177e3fb4cce796100b45f707413ea9abe821c9b21",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep current verified principal, original source identity and explicit audience scope; pair/group consent and stop/erasure have distinct lifetimes.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/voice_requests.py",
+      "sha256": "adc7c1352a680102e0f72cb699195882b35cc8e28c0d3894e529cebd42361bf0",
+      "bytes": 9245,
+      "lines": 188,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Durable, request-specific cancellation for native household voice.",
+      "owner": "Current principal/audience authorization and private source binding",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/conversation_journal.py",
+          "line": 827,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/household_voice.py",
+          "line": 105,
+          "kind": "python_import"
+        },
+        {
+          "path": "development/tests/postgres/test_native_task_continuity.py",
+          "line": 288,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 13,
+      "inventorySha256": "adc7c1352a680102e0f72cb699195882b35cc8e28c0d3894e529cebd42361bf0",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep current verified principal, original source identity and explicit audience scope; pair/group consent and stop/erasure have distinct lifetimes.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/work_corrections.py",
+      "sha256": "0002ffa9f92387e39007a8843054378da1367d5f0ba9ef58477a203b257e70dd",
+      "bytes": 3221,
+      "lines": 69,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Owner corrections retained with a digital execution across explicit resumptions.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/scheduled_work.py",
+          "line": 193,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_digital_runner.py",
+          "line": 679,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+          "line": 513,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 16,
+      "inventorySha256": "0002ffa9f92387e39007a8843054378da1367d5f0ba9ef58477a203b257e70dd",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/postgres/work_failure_notice.py",
+      "sha256": "33fc0b775fa9086eada725455dfa47807e800ca2833674d3aee28ef75d27e89c",
+      "bytes": 1437,
+      "lines": 27,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "One installation-scoped activation watermark prevents historical failure bursts.",
+      "owner": "Same admitted work and original audience across execution/status/delivery",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/postgres/delegated_work_delivery.py",
+          "line": 11,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/adapters/postgres/private_work_return.py",
+          "line": 7,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/household_work.py",
+          "line": 9,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 5,
+      "inventorySha256": "33fc0b775fa9086eada725455dfa47807e800ca2833674d3aee28ef75d27e89c",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Keep original spec and audience, durable leases, cancellation and exact successors on existing work rows/timeline. Progress is a report, received result awaits review, delivery receipt is not heard/accepted proof.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/projection/__init__.py",
+      "sha256": "301224c86e1602034bc7a5f4e6601c7ea6ccb7aa83c2fa7a7021e21e9300e419",
+      "bytes": 656,
+      "lines": 25,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "External semantic-memory adapters.",
+      "owner": "Package reference compatibility",
+      "consumerEvidence": [
+        {
+          "path": "development/tests/projection/test_hindsight.py",
+          "line": 1873,
+          "kind": "code_literal_module_reference"
+        },
+        {
+          "path": "development/tests/projection/test_hindsight.py",
+          "line": 1904,
+          "kind": "code_literal_module_reference"
+        },
+        {
+          "path": "development/tests/projection/test_hindsight.py",
+          "line": 1925,
+          "kind": "code_literal_module_reference"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 3,
+      "inventorySha256": "301224c86e1602034bc7a5f4e6601c7ea6ccb7aa83c2fa7a7021e21e9300e419",
+      "changedSinceInventory": false,
+      "decision": "retain",
+      "decisionReason": "Retain import namespace/documentation; no state owner or second implementation is introduced.",
+      "decisionIds": [],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "identical"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "reference_package",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.4"
+      ]
+    },
+    {
+      "path": "src/eva/adapters/projection/hindsight.py",
+      "sha256": "2910ef79d1e8ef4d9a1298054e647c96310307c1cc750eb7d007d6e00c9ad6b2",
+      "bytes": 98083,
+      "lines": 2055,
+      "category": "adapter_persistence_or_projection",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "responsibility": "Thin HTTP adapter for Eva's self-hosted Hindsight memory engine.",
+      "owner": "Authoritative scoped source and replaceable semantic projection",
+      "consumerEvidence": [
+        {
+          "path": "src/eva/adapters/projection/__init__.py",
+          "line": 3,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/native_voice.py",
+          "line": 14,
+          "kind": "python_import"
+        },
+        {
+          "path": "src/eva/bootstrap/private_conversation_resources.py",
+          "line": 10,
+          "kind": "python_import"
+        }
+      ],
+      "completeConsumerMap": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "consumerSiteCount": 23,
+      "inventorySha256": "2910ef79d1e8ef4d9a1298054e647c96310307c1cc750eb7d007d6e00c9ad6b2",
+      "changedSinceInventory": false,
+      "decision": "retain_with_existing_card_correction",
+      "decisionReason": "Keep existing source/outbox/retention/alias/projection owner boundary; source hashes, current consent and original principal remain authoritative. Apply STATE-02 only to known source eligibility; no second memory.",
+      "decisionIds": [
+        "STATE-02"
+      ],
+      "implementation": "review_only_no_product_change",
+      "installedEvidence": [
+        {
+          "service": "eva2-managed-b-slot3-core",
+          "state": "identical"
+        },
+        {
+          "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "state": "different"
+        }
+      ],
+      "coverage": "all non-generated lines read semantically; no AST-only full-read claim",
+      "classification": "active_composed_adapter",
+      "classificationLimit": "Source composition and named callers; installedEvidence is E3.1 snapshot metadata, not a new runtime use/acceptance claim.",
+      "existingCards": [
+        "E4.2"
+      ]
+    }
+  ],
+  "finiteDecisions": [
+    {
+      "id": "STATE-01",
+      "card": "E4.4",
+      "title": "Restore verifiable generated-catalog provenance without altering sealed criteria",
+      "status": "required_not_implemented",
+      "evidence": [
+        "src/tools/materialize_4d_schema_artifacts.py:20",
+        "src/tools/materialize_4d_schema_artifacts.py:53",
+        "src/eva/adapters/postgres/catalog.py:22",
+        "src/eva/adapters/postgres/catalog_generated.py:1"
+      ],
+      "diagnostic": {
+        "command": "python3 src/tools/materialize_4d_schema_artifacts.py --check",
+        "exitCode": 1,
+        "expectedFreezeSha256": "f70eb25013ff84e464e4ef2a448b2e63fe23a8c11d91d4d57a54d3e431dc9d38",
+        "actualWorkingAndHeadFreezeSha256": "2bb23d486038dcdaf26607ad2dba9c38b13b4cc799a6644cd1fffb1bb20a626a",
+        "crlfCount": 0
+      },
+      "impact": "Generator stops before reconstructing outputs from current tracked freeze. This proves a reproducibility/provenance gap, not an installed database outage. Preserve frozen bytes and establish correct historical input/explicit transition in existing maintenance card."
+    },
+    {
+      "id": "STATE-02",
+      "card": "E4.2",
+      "title": "Fence ordinary semantic facts when their known authoritative source becomes unavailable",
+      "status": "required_not_implemented_pending_independent_review",
+      "evidence": [
+        "src/eva/adapters/projection/hindsight.py:501",
+        "src/eva/adapters/projection/hindsight.py:514",
+        "src/eva/adapters/projection/hindsight.py:525",
+        "src/eva/adapters/postgres/people_memory_overview.py:414",
+        "src/eva/adapters/postgres/people_memory_overview.py:487",
+        "development/tests/projection/test_hindsight.py:1971"
+      ],
+      "impact": "During a cached recall, source resolver can exclude erased/expired PG source while ordinary world/experience facts retain their derived text. Observation and typed-learning paths already reject absent sources. Existing projection test explicitly models erased/expired source but keeps recall unchanged. Limit repair to exact known source authority; distinguish genuinely imported legacy references and resolver failure; no household incident claimed."
+    },
+    {
+      "id": "STATE-03",
+      "card": "E4.2",
+      "title": "Use current participant identity in private recent-conversation labels",
+      "status": "required_not_implemented_pending_independent_review",
+      "evidence": [
+        "src/eva/adapters/postgres/conversation_journal.py:854",
+        "src/eva/adapters/postgres/telegram_pairing.py",
+        "src/eva/adapters/postgres/private_owner.py"
+      ],
+      "impact": "Every private ingress is labeled Jaap even when its exact scoped principal is a different verified participant. The query remains principal-scoped: no cross-person content leak demonstrated. Derive an authorized participant label or neutral label on existing context path; no new identity store."
+    }
+  ],
+  "retention": {
+    "deletionApproved": [],
+    "sourceChanges": 0,
+    "voiceChanges": 0,
+    "installationChanges": 0
+  },
+  "usage": {
+    "development": {
+      "credits": null,
+      "tokens": null,
+      "elapsedSeconds": null,
+      "toolCalls": null
+    },
+    "evaRuntime": {
+      "modelCalls": 0,
+      "providerCalls": 0,
+      "toolEffects": 0
+    }
+  },
+  "wholeProjectCompleted": false,
+  "familyAcceptance": false,
+  "generatedProvenance": {
+    "path": "src/eva/adapters/postgres/catalog_generated.py",
+    "generator": {
+      "path": "src/tools/materialize_4d_schema_artifacts.py",
+      "sha256": "5ce9a05932fb18c9ac2a50290a27aa105d0a3ba4689152029bbcf343cd309351",
+      "reviewMode": "full_content"
+    },
+    "source": {
+      "path": "development/design/vertical/noor-4d-schema-export-freeze-v1.json",
+      "sha256": "2bb23d486038dcdaf26607ad2dba9c38b13b4cc799a6644cd1fffb1bb20a626a",
+      "reviewMode": "byte_provenance_only_protected_source_unchanged"
+    },
+    "provenance": "Repo-owned byte-sealed design generator decodes and verifies bound embedded bytes; no third-party vendoring/license inference. STATE-01 records failed input pin reproduction.",
+    "consumerPurpose": [
+      "catalog.py builds SQLAlchemy table metadata from CATALOG_SPEC, preserving sealed predicates/types",
+      "src/tools/postgres_portable_export.py consumes generated metadata for export integrity",
+      "Current catalog/migrations extend frozen base; do not merge their separate migration ownership."
+    ]
+  },
+  "semanticTraces": [
+    {
+      "purpose": "feedback to later choice",
+      "sources": [
+        "src/eva/adapters/postgres/owner_initiatives.py",
+        "src/eva/adapters/postgres/sensory_events.py:1063",
+        "src/eva/adapters/postgres/initiative_attention.py"
+      ],
+      "trace": "Owner feedback appends to the original intent; recent_initiatives rereads latest PERSONAL_INITIATIVE_FEEDBACK for exact owner into bounded next-review context. Due attention preserves exact original source and cancels replaced/stopped choices. This demonstrates a later-use source route, not measured improved behavior."
+    },
+    {
+      "purpose": "same intent to progress/current status",
+      "sources": [
+        "src/eva/adapters/postgres/delegated_work.py:1718",
+        "src/eva/adapters/postgres/background_work_progress.py",
+        "src/eva/adapters/postgres/delegated_work_actions.py",
+        "src/eva/adapters/postgres/owner_initiatives.py",
+        "src/eva/adapters/postgres/household_work_destination.py"
+      ],
+      "trace": "Original typed spec/work_id and principal/audience are retained across leases, exact successors, progress timeline, owner/household listing and workboard. Stopped/ambiguous/received-awaiting-review remain distinct; explicit delivery selection does not silently change source ownership."
+    },
+    {
+      "purpose": "adapter-owned typed completion/readback",
+      "sources": [
+        "src/eva/adapters/postgres/connector_results.py",
+        "src/eva/adapters/postgres/procedure_reference_host.py",
+        "src/eva/adapters/postgres/saved_work_artifacts.py",
+        "src/eva/adapters/postgres/initiative_source_outcomes.py"
+      ],
+      "trace": "Raw capture chunks and local pages bind owner/hash/call; local data does not claim fresh external verification. Registered saved-artifact resolution and exact source outcomes are adapter-owned inputs. Reuse E3.2 B02/APP03; receipt text alone does not prove the requested outcome."
+    },
+    {
+      "purpose": "continuous-development source ownership",
+      "sources": [
+        "src/eva/adapters/postgres/component_improvement_actions.py",
+        "src/eva/adapters/postgres/completed_contribution.py",
+        "src/eva/adapters/postgres/memory_outbox.py"
+      ],
+      "trace": "Design/continuous-development documents are retained source inputs and exact selected component workflows; existing timeline/outbox owns state. No second memory, planner or permanent agent added."
+    }
+  ],
+  "scopeValidation": {
+    "expected": 76,
+    "actual": 76,
+    "allHashesUnchangedSinceSemanticRead": true,
+    "currentVsInventoryChanges": [],
+    "workingTreeVsHead": "Existing dirty edits were included in current semantic reads; equality with E3.1 does not mean clean Git. No source reset or write.",
+    "fullReadReuse": "No previous semantic reads substituted without same source SHA; E3.2 report reused for completed core scope."
+  }
+}

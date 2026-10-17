@@ -1,0 +1,19 @@
+{
+  "contract": "EvaPhotoProviderMetadata/v1",
+  "method": "Read only selected service metadata and PHOTO_PROVIDER_MODULE; environment secrets/content not retained.",
+  "services": [
+    {
+      "service": "eva2-telegram.service",
+      "active": "active",
+      "fragment": "/etc/systemd/system/eva2-telegram.service",
+      "environmentFiles": [],
+      "photoModules": [
+        {
+          "path": "/home/administrator/project/Bottie/src/brain/llm.js",
+          "exists": true,
+          "sha256": "9390dbc97d282a406a8d1a631c3b29f7aadfe7628419a1ed785ad4dcccc65ed6"
+        }
+      ]
+    }
+  ]
+}

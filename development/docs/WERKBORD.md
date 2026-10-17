@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-E3.3 · Adapters, installatie en dynamisch gebruik beoordelen
+E3.4 · Tests, documentatie en historie op noodzaak beoordelen
 
-Nu bezig: actieve adapters, frontend en installatie-/migratieconsumenten beoordelen. E3.2 wordt hergebruikt; gegenereerde inhoud en historische tools krijgen een passende reviewvorm.
+E3.3 afgerond; volgende bestaande taak is E3.4. Tests, documentatie en historie beoordelen vóór gerichte E4-opruiming. Nog niet gestart; geen spraakwerk.
 
-Klaar wanneer: Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit.
+Klaar wanneer: Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd.
 
 ## Afmaakvolgorde
 
@@ -101,7 +101,7 @@ Klaar wanneer: Actieve adapters, frontend, deploy-, build-, installatie- en migr
 | E2.7 · Eva laat haar eigen geschiedenis correct terugvinden | ● Open | Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw. |
 | E3.1 · Alle bestanden en hun rol registreren | ✓ Afgerond | Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review. |
 | E3.2 · Actieve kerncode inhoudelijk beoordelen | ✓ Afgerond | Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur. |
-| E3.3 · Adapters, installatie en dynamisch gebruik beoordelen | ● Open | Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit. |
+| E3.3 · Adapters, installatie en dynamisch gebruik beoordelen | ✓ Afgerond | Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit. |
 | E3.4 · Tests, documentatie en historie op noodzaak beoordelen | ● Open | Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd. |
 | E4.1 · Bewezen dode en dubbele bestanden opruimen | ● Open | De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen. |
 | E4.2 · Omslachtige code en modulegrenzen vereenvoudigen | ● Open | De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite. |
@@ -112,7 +112,7 @@ Klaar wanneer: Actieve adapters, frontend, deploy-, build-, installatie- en migr
 
 ## Van jou
 
-Codex rondt E3.3 af. Spraak blijft bij de andere uitvoerder; WhatsApp-nummer blijft uitgesteld.
+E3.3 is afgerond. E3.4 en de concrete E4-correcties zijn werk voor Codex. Het optionele eigen WhatsApp-nummer blijft apart open.
 
 ## Historie
 
