@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-17T10:01:27.869694+00:00",
+  "lastUpdated": "2026-10-17T10:08:30.732228+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E2.7",
@@ -847,12 +847,9 @@
     "title": "Eva laat haar eigen geschiedenis correct terugvinden",
     "status": "planned",
     "doneWhen": "Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw.",
-    "nextAction": "Na E3.3/E3.4 de werkelijk ontbrekende reader-/portoverdracht realiseren, met hergebruik van bestaande bronnen, bronhashes en authority; eerst één gewone tekstvraag correct afmaken.",
-    "checkedAt": "2026-10-17T10:01:27.869694+00:00",
-    "ownerActionRequired": false,
-    "area": "existing scoped activity/history reader",
-    "outcome": "Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw.",
-    "countedAsProductTask": true
+    "nextAction": "Verbind de ontbrekende persoonsgebonden geschiedenisreaders; hergebruik de al bestaande openbare dagselectie.",
+    "checkedAt": "2026-10-17T10:08:30.732228+00:00",
+    "ownerActionRequired": false
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -1635,6 +1632,20 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Initiatiefbeoordeling hervat; oude blokkade opgelost",
+            "state": "installed",
+            "checkedAt": "2026-10-17T10:08:30.732228+00:00",
+            "summary": "Oude vastgelopen beoordeling via bestaande herstelroute afgesloten; onbekend verbruik behouden, niets herhaald. Daarna heeft Eva zelf een nieuwe gewone afweging afgerond en bewust stilte gekozen. Geen spraak- of codewijziging.",
+            "remaining": "Dit bewijst hervatte afweging, geen nieuwe nuttige bijdrage of gezinsacceptatie. E2.7 en de bestaande E4-correcties blijven open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/initiative-review-recovery-20261017.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/initiative-review-recovery-20261017.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "smallTaskCountsUnchanged": true,
+            "familyAcceptance": false,
+            "completionScope": "Operational recovery of one failed review; ordinary autonomous evaluation resumed. No software installation was needed."
+          },
+          {
             "title": "E3.4 · Tests, documenten en historie beoordeeld; E3 afgerond",
             "state": "investigated",
             "checkedAt": "2026-10-17T10:01:27.869694+00:00",
@@ -2238,46 +2249,43 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E3.4 · Tests, documenten en historie beoordeeld; E3 afgerond",
-          "state": "investigated",
-          "checkedAt": "2026-10-17T10:01:27.869694+00:00",
-          "summary": "E3.4 afgerond: alle3.733 overige paden hebben een gemotiveerde review-/referentiebeschikking; E3 totaal4.896. E3.2/E3.3 exact hergebruikt. Vier documentatieverwarringen opgelost, drie oorspronkelijke versies exact bewaard. Twaalf correctieclusters uit bestaande bevindingen; geen nieuwe producttaken of proeven. Beide reviewers GO.",
-          "remaining": "De twaalf bestaande correctieclusters zijn nog niet uitgevoerd. E2.7 is volgende; gezamenlijke gezinsacceptatie blijft open.",
-          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e34-tests-docs-history-review-20261017.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/e34-tests-docs-history-review-20261017.json",
+          "title": "Initiatiefbeoordeling hervat; oude blokkade opgelost",
+          "state": "installed",
+          "checkedAt": "2026-10-17T10:08:30.732228+00:00",
+          "summary": "Oude vastgelopen beoordeling via bestaande herstelroute afgesloten; onbekend verbruik behouden, niets herhaald. Daarna heeft Eva zelf een nieuwe gewone afweging afgerond en bewust stilte gekozen. Geen spraak- of codewijziging.",
+          "remaining": "Dit bewijst hervatte afweging, geen nieuwe nuttige bijdrage of gezinsacceptatie. E2.7 en de bestaande E4-correcties blijven open.",
+          "source": "/home/administrator/project/Eva2/development/evidence/product/initiative-review-recovery-20261017.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/initiative-review-recovery-20261017.json",
           "maintenanceRepair": true,
           "newProductFunctionCompleted": false,
-          "completedTaskIds": [
-            "E3.4"
-          ],
-          "smallTaskCountsUnchanged": false,
+          "smallTaskCountsUnchanged": true,
           "familyAcceptance": false,
-          "completionScope": "Review/dispositions and documentation authority; no runtime repair or household acceptance."
+          "completionScope": "Operational recovery of one failed review; ordinary autonomous evaluation resumed. No software installation was needed."
         },
         "now": {
-          "title": "E2.7 · Eva laat haar eigen geschiedenis correct terugvinden",
           "taskId": "E2.7",
+          "title": "Eva laat haar eigen geschiedenis correct terugvinden",
           "status": "planned",
-          "summary": "Volgende bestaande gebruikersuitkomst: eigen privéwerk, initiatief, interesses en leeruitkomsten samen correct terugvinden. De openbare kalenderdagreader bestaat en wordt hergebruikt. Nog niet gestart; spraak bij andere uitvoerder.",
+          "summary": "Initiatiefblokkade opgelost; gewone afweging heeft weer zelfstandig gedraaid. Volgende bouwuitkomst: eigen geschiedenis samen terugvinden.",
           "doneWhen": "Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw."
         },
         "next": {
-          "title": "E4 · Twaalf gerichte correctieclusters",
-          "state": "Na de volgende bestaande gebruikersuitkomst",
-          "summary": "Vastgelegde E3.2/E3.3-bevindingen onder bestaande E4-kaarten; geen nieuwe vergelijkingsserie.",
+          "title": "Bestaande E4-correcties",
+          "state": "Na E2.7",
+          "summary": "Voer alleen de begrensde correcties uit de afgeronde E3-beoordeling uit.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Geen handeling nodig voor E3.4",
-          "detail": "E3 is beoordeeld. E2.7 en de bestaande E4-correcties zijn werk voor Codex. Alleen het optionele eigen WhatsApp-nummer staat los hiervan nog open.",
+          "title": "Geen handeling nodig voor de initiatiefblokkade",
+          "detail": "Hersteld en gewone afweging hervat. Het oude verbruik blijft onbekend. Een eigen WhatsApp-nummer blijft een losse optionele eigenaaractie.",
           "required": false
         },
-        "checkedAt": "2026-10-17T10:01:27.869694+00:00",
-        "reviewedAt": "2026-10-17T10:01:27.869694+00:00",
+        "checkedAt": "2026-10-17T10:08:30.732228+00:00",
+        "reviewedAt": "2026-10-17T10:08:30.732228+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-17T10:01:27.869694+00:00",
-      "checkedAt": "2026-10-17T10:01:27.869694+00:00",
+      "reviewedAt": "2026-10-17T10:08:30.732228+00:00",
+      "checkedAt": "2026-10-17T10:08:30.732228+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -5103,7 +5111,7 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-17T10:01:27.869694+00:00",
+                "checkedAt": "2026-10-17T10:08:30.732228+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -5156,6 +5164,20 @@
                     "newTasks": 0,
                     "implementationStarted": false
                   }
+                },
+                "runtimeIncident": {
+                  "status": "resolved",
+                  "resolvedAt": "2026-10-17T10:08:30.732228+00:00",
+                  "beforePhase": "will_usage_uncertain",
+                  "failureType": "ConversationModelError",
+                  "providerUsageError": false,
+                  "productCodeChangeRequired": false,
+                  "source": "development/evidence/product/initiative-review-recovery-20261017.json",
+                  "oldUsage": "unknown",
+                  "replayed": false,
+                  "ordinaryReviewPhase": "will_decided",
+                  "ordinaryReviewState": "silence",
+                  "newProductTasks": 0
                 }
               },
               {
@@ -5407,7 +5429,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Na E3.3/E3.4 de werkelijk ontbrekende reader-/portoverdracht realiseren, met hergebruik van bestaande bronnen, bronhashes en authority; eerst één gewone tekstvraag correct afmaken.",
+        "nextAction": "Verbind de ontbrekende persoonsgebonden geschiedenisreaders; hergebruik de al bestaande openbare dagselectie.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5416,7 +5438,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-17T10:01:27.869694+00:00",
+        "updatedAt": "2026-10-17T10:08:30.732228+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-17T10:01:27.869694+00:00",
@@ -8255,7 +8277,7 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-17T10:01:27.869694+00:00",
+              "checkedAt": "2026-10-17T10:08:30.732228+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -8308,6 +8330,20 @@
                   "newTasks": 0,
                   "implementationStarted": false
                 }
+              },
+              "runtimeIncident": {
+                "status": "resolved",
+                "resolvedAt": "2026-10-17T10:08:30.732228+00:00",
+                "beforePhase": "will_usage_uncertain",
+                "failureType": "ConversationModelError",
+                "providerUsageError": false,
+                "productCodeChangeRequired": false,
+                "source": "development/evidence/product/initiative-review-recovery-20261017.json",
+                "oldUsage": "unknown",
+                "replayed": false,
+                "ordinaryReviewPhase": "will_decided",
+                "ordinaryReviewState": "silence",
+                "newProductTasks": 0
               }
             },
             {
@@ -8559,7 +8595,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Na E3.3/E3.4 de werkelijk ontbrekende reader-/portoverdracht realiseren, met hergebruik van bestaande bronnen, bronhashes en authority; eerst één gewone tekstvraag correct afmaken.",
+      "nextAction": "Verbind de ontbrekende persoonsgebonden geschiedenisreaders; hergebruik de al bestaande openbare dagselectie.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -8568,7 +8604,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-17T10:01:27.869694+00:00",
+      "updatedAt": "2026-10-17T10:08:30.732228+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-17T10:01:27.869694+00:00",
@@ -9774,7 +9810,7 @@
       "nextExistingTask": "E3.3"
     }
   },
-  "updatedAt": "2026-10-17T10:01:27.869694+00:00",
+  "updatedAt": "2026-10-17T10:08:30.732228+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

@@ -1,0 +1,55 @@
+{
+  "contract": "EvaRuntimeRecoveryOutcome/v1",
+  "checkedAt": "2026-10-17T10:08:30.732228+00:00",
+  "outcome": "resolved",
+  "existingRoute": "Existing owner-bound initiative review abandonment API and ordinary background scheduler; no new recovery implementation.",
+  "before": {
+    "updatedAt": "2026-10-15T15:06:57+00:00",
+    "phase": "will_usage_uncertain",
+    "state": "attention",
+    "reason": "autonomous_provider_usage_unverified",
+    "blocker": "review_needs_help",
+    "failureType": "ConversationModelError",
+    "providerUsageError": false,
+    "exactProviderFailureCause": "unknown"
+  },
+  "recovery": {
+    "updatedAt": "2026-10-17T10:04:14+00:00",
+    "disposition": "abandoned",
+    "usage": "unknown",
+    "replayed": false,
+    "ownerCardsBefore": 14,
+    "ownerCardsAfter": 14,
+    "checkpointRevisionBefore": 4,
+    "guard": "Existing owner binding, exact revision and effect-free event-history checks."
+  },
+  "ordinaryRuntimeAfter": {
+    "updatedAt": "2026-10-17T10:06:12+00:00",
+    "phase": "will_decided",
+    "state": "silence",
+    "blocker": null,
+    "forcedTrigger": false,
+    "newWorkClaimed": false
+  },
+  "changes": {
+    "productCode": false,
+    "speech": false,
+    "containerRestart": false,
+    "operationalState": "Only the old failed review was closed through the existing guarded API.",
+    "dashboard": "Canonical workboard and existing owner initiative projection."
+  },
+  "limitations": [
+    "Original failed call usage remains unknown and its exact provider cause was not recorded.",
+    "A completed silence decision confirms resumed evaluation, not a new useful contribution or family acceptance.",
+    "Existing E4.2 cleanup clusters and the full project remain open."
+  ],
+  "consumption": {
+    "recoveryModelCalls": 0,
+    "ordinaryEvaluationObserved": true,
+    "ordinaryEvaluationTokenTotal": null,
+    "developmentTokenTotal": null,
+    "creditCost": null,
+    "method": "Existing runtime cycle observed; no new comparison or synthetic model trial."
+  },
+  "review": "development/reviews/initiative-review-recovery-20261017.json"
+}

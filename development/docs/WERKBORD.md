@@ -4,9 +4,9 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-E2.7 · Eva laat haar eigen geschiedenis correct terugvinden
+Eva laat haar eigen geschiedenis correct terugvinden
 
-Volgende bestaande gebruikersuitkomst: eigen privéwerk, initiatief, interesses en leeruitkomsten samen correct terugvinden. De openbare kalenderdagreader bestaat en wordt hergebruikt. Nog niet gestart; spraak bij andere uitvoerder.
+Initiatiefblokkade opgelost; gewone afweging heeft weer zelfstandig gedraaid. Volgende bouwuitkomst: eigen geschiedenis samen terugvinden.
 
 Klaar wanneer: Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw.
 
@@ -112,7 +112,7 @@ Klaar wanneer: Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhand
 
 ## Van jou
 
-E3 is beoordeeld. E2.7 en de bestaande E4-correcties zijn werk voor Codex. Alleen het optionele eigen WhatsApp-nummer staat los hiervan nog open.
+Hersteld en gewone afweging hervat. Het oude verbruik blijft onbekend. Een eigen WhatsApp-nummer blijft een losse optionele eigenaaractie.
 
 ## Historie
 
