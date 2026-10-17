@@ -2681,9 +2681,9 @@
                 "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                 "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                 "blocker": null,
-                "latestEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
-                "checkedAt": "2026-10-05T10:07:13.191653+00:00",
-                "remaining": "Eén gedeelde functie afronden; resultaten en resterende apparaatcontroles staan hieronder per speaker.",
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+                "checkedAt": "2026-10-17T10:36:56.527047+00:00",
+                "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
                 "ownerTrial": {
                   "status": "continuous_conversation_works_fluency_gap",
                   "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -2691,17 +2691,20 @@
                   "blocksIndependentWork": false,
                   "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                 },
-                "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
-                "ownerActionRequired": false,
+                "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                "ownerActionRequired": true,
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
-                  "steps": []
+                  "availableNow": true,
+                  "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                  "steps": [
+                    "Praat kort met Eva op beide speakers.",
+                    "Onderbreek haar een keer en controleer het vervolg.",
+                    "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                  ]
                 },
                 "assignment": {
                   "activeWorkers": []
                 },
-                "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
                 "deviceChecks": [
                   {
                     "title": "Doorpraten via woonkamer-speaker",
@@ -2710,9 +2713,9 @@
                     "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                     "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                     "blocker": null,
-                    "latestEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
-                    "checkedAt": "2026-10-05T10:07:13.191653+00:00",
-                    "remaining": "Doorpraten is door Jaap bevestigd. Late herkenningsstart en traag woordtempo zijn technisch gecorrigeerd en geïnstalleerd. Natuurlijke ervaring en actuele wachttijd nog door Jaap te beoordelen.",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+                    "checkedAt": "2026-10-17T10:36:56.527047+00:00",
+                    "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
                     "ownerTrial": {
                       "status": "continuous_conversation_works_fluency_gap",
                       "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -2720,19 +2723,29 @@
                       "blocksIndependentWork": false,
                       "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                     },
-                    "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
-                    "ownerActionRequired": false,
+                    "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                    "ownerActionRequired": true,
                     "ownerInstructions": {
-                      "availableNow": false,
-                      "readyWhen": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
-                      "steps": []
+                      "availableNow": true,
+                      "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                      "steps": [
+                        "Praat kort met Eva op beide speakers.",
+                        "Onderbreek haar een keer en controleer het vervolg.",
+                        "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                      ]
                     },
                     "assignment": {
                       "activeWorkers": []
                     },
-                    "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
                     "sourceTaskId": "C3.1",
-                    "device": "Woonkamer"
+                    "device": "Woonkamer",
+                    "voiceResumption20261017": {
+                      "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                      "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
+                      "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
+                      "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+                    },
+                    "technicalStatus": "installed_verified"
                   },
                   {
                     "title": "Doorpraten via tweede speaker",
@@ -2740,26 +2753,45 @@
                     "kind": "aansluiten",
                     "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
                     "owner": "Codex",
-                    "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
-                    "ownerActionRequired": false,
+                    "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                    "ownerActionRequired": true,
                     "ownerInstructions": {
-                      "availableNow": false,
-                      "readyWhen": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
-                      "steps": []
+                      "availableNow": true,
+                      "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                      "steps": [
+                        "Praat kort met Eva op beide speakers.",
+                        "Onderbreek haar een keer en controleer het vervolg.",
+                        "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                      ]
                     },
                     "blocker": null,
-                    "checkedAt": "2026-10-01T17:14:58.487433+00:00",
-                    "latestEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
-                    "remaining": "Dezelfde native route geïnstalleerd; echte audio, expliciet stoppen en volgend antwoord gecontroleerd. Gewone conversatie/microfoononderbreking nog open; proef wacht op werkende woonkamerroute. Mute blijft behouden.",
+                    "checkedAt": "2026-10-17T10:36:56.527047+00:00",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+                    "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
                     "assignment": {
                       "activeWorkers": []
                     },
-                    "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
                     "sourceTaskId": "C3.2",
-                    "device": "Tweede speaker"
+                    "device": "Tweede speaker",
+                    "voiceResumption20261017": {
+                      "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                      "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
+                      "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
+                      "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+                    },
+                    "technicalStatus": "installed_verified"
                   }
                 ],
-                "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld."
+                "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
+                "voiceMaintenanceEvidence": "development/evidence/product/subscription-voice-20261013/playback-activity-20261017.json",
+                "voiceActivityEvidence": "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json",
+                "voiceResumption20261017": {
+                  "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                  "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden. Spraakonderhoud 17 oktober: idle-afsluiting tijdens afspelen hersteld en geïnstalleerd; 98 gerichte checks geslaagd. Fysieke apparaatacceptatie blijft afzonderlijk. Dagoverzicht leest nu de gevraagde lokale kalenderdag; 28 databasechecks en twee kernproeven gecontroleerd. Openbare bron- en dekkingsgrenzen blijven gelden.",
+                  "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
+                  "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+                },
+                "technicalStatus": "installed_verified"
               },
               {
                 "id": "C3.3",
@@ -2801,7 +2833,7 @@
                 "kind": "verbeteren",
                 "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                 "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-                "latestEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
                 "ownerTrial": {
                   "status": "partial_with_false_interruptions_and_stop_failure",
                   "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -2811,19 +2843,22 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
-                "ownerActionRequired": false,
+                "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                "ownerActionRequired": true,
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
-                  "steps": []
+                  "availableNow": true,
+                  "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                  "steps": [
+                    "Praat kort met Eva op beide speakers.",
+                    "Onderbreek haar een keer en controleer het vervolg.",
+                    "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                  ]
                 },
-                "checkedAt": "2026-10-05T09:43:15.051580+00:00",
-                "remaining": "Eén gedeelde functie afronden; resultaten en resterende apparaatcontroles staan hieronder per speaker.",
+                "checkedAt": "2026-10-17T10:36:56.527047+00:00",
+                "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
                 "assignment": {
                   "activeWorkers": []
                 },
-                "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
                 "deviceChecks": [
                   {
                     "title": "Onderbreken op woonkamer-speaker",
@@ -2831,7 +2866,7 @@
                     "kind": "verbeteren",
                     "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                     "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-                    "latestEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
                     "ownerTrial": {
                       "status": "partial_with_false_interruptions_and_stop_failure",
                       "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -2841,21 +2876,31 @@
                       "currentCandidateStatus": "not_yet_assessed",
                       "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                     },
-                    "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
-                    "ownerActionRequired": false,
+                    "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                    "ownerActionRequired": true,
                     "ownerInstructions": {
-                      "availableNow": false,
-                      "readyWhen": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
-                      "steps": []
+                      "availableNow": true,
+                      "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                      "steps": [
+                        "Praat kort met Eva op beide speakers.",
+                        "Onderbreek haar een keer en controleer het vervolg.",
+                        "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                      ]
                     },
-                    "checkedAt": "2026-10-05T09:43:15.051580+00:00",
-                    "remaining": "Correcties geïnstalleerd en technisch gecontroleerd. Echte geluidgevoeligheid en stoppen met de knop in de kamer nog beoordelen; C4.1 niet volledig geaccepteerd.",
+                    "checkedAt": "2026-10-17T10:36:56.527047+00:00",
+                    "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
                     "assignment": {
                       "activeWorkers": []
                     },
-                    "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
                     "sourceTaskId": "C4.1",
-                    "device": "Woonkamer"
+                    "device": "Woonkamer",
+                    "voiceResumption20261017": {
+                      "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                      "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
+                      "previousEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
+                      "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+                    },
+                    "technicalStatus": "installed_verified"
                   },
                   {
                     "title": "Onderbreken op tweede speaker",
@@ -2863,31 +2908,48 @@
                     "kind": "verbeteren",
                     "doneWhen": "Hetzelfde gedrag werkt op het tweede apparaat.",
                     "owner": "Codex /root",
-                    "latestEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
                     "ownerTrial": {
                       "status": "deferred_until_woonkamer_works",
                       "steps": [],
                       "expected": "Beoordelen na werkende woonkamerconversatie; geen herhaling van een bekende falende route.",
                       "blocksIndependentWork": false
                     },
-                    "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
-                    "ownerActionRequired": false,
+                    "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                    "ownerActionRequired": true,
                     "ownerInstructions": {
-                      "availableNow": false,
-                      "readyWhen": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
-                      "steps": []
+                      "availableNow": true,
+                      "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                      "steps": [
+                        "Praat kort met Eva op beide speakers.",
+                        "Onderbreek haar een keer en controleer het vervolg.",
+                        "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                      ]
                     },
-                    "checkedAt": "2026-10-01T17:14:58.487433+00:00",
-                    "remaining": "Dezelfde native route geïnstalleerd; echte audio, expliciet stoppen en volgend antwoord gecontroleerd. Gewone conversatie/microfoononderbreking nog open; proef wacht op werkende woonkamerroute. Mute blijft behouden.",
+                    "checkedAt": "2026-10-17T10:36:56.527047+00:00",
+                    "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
                     "assignment": {
                       "activeWorkers": []
                     },
-                    "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
                     "sourceTaskId": "C4.2",
-                    "device": "Tweede speaker"
+                    "device": "Tweede speaker",
+                    "voiceResumption20261017": {
+                      "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                      "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
+                      "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
+                      "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+                    },
+                    "technicalStatus": "installed_verified"
                   }
                 ],
-                "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld."
+                "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
+                "voiceResumption20261017": {
+                  "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                  "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
+                  "previousEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
+                  "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+                },
+                "technicalStatus": "installed_verified"
               },
               {
                 "id": "C4.3",
@@ -5870,9 +5932,9 @@
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
               "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
               "blocker": null,
-              "latestEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
-              "checkedAt": "2026-10-05T10:07:13.191653+00:00",
-              "remaining": "Eén gedeelde functie afronden; resultaten en resterende apparaatcontroles staan hieronder per speaker.",
+              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+              "checkedAt": "2026-10-17T10:36:56.527047+00:00",
+              "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
               "ownerTrial": {
                 "status": "continuous_conversation_works_fluency_gap",
                 "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -5880,17 +5942,20 @@
                 "blocksIndependentWork": false,
                 "currentCandidateStatus": "fluency_correction_not_yet_assessed"
               },
-              "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
-              "ownerActionRequired": false,
+              "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
-                "steps": []
+                "availableNow": true,
+                "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                "steps": [
+                  "Praat kort met Eva op beide speakers.",
+                  "Onderbreek haar een keer en controleer het vervolg.",
+                  "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                ]
               },
               "assignment": {
                 "activeWorkers": []
               },
-              "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
               "deviceChecks": [
                 {
                   "title": "Doorpraten via woonkamer-speaker",
@@ -5899,9 +5964,9 @@
                   "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                   "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                   "blocker": null,
-                  "latestEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
-                  "checkedAt": "2026-10-05T10:07:13.191653+00:00",
-                  "remaining": "Doorpraten is door Jaap bevestigd. Late herkenningsstart en traag woordtempo zijn technisch gecorrigeerd en geïnstalleerd. Natuurlijke ervaring en actuele wachttijd nog door Jaap te beoordelen.",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+                  "checkedAt": "2026-10-17T10:36:56.527047+00:00",
+                  "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
                   "ownerTrial": {
                     "status": "continuous_conversation_works_fluency_gap",
                     "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -5909,19 +5974,29 @@
                     "blocksIndependentWork": false,
                     "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                   },
-                  "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
-                  "ownerActionRequired": false,
+                  "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                  "ownerActionRequired": true,
                   "ownerInstructions": {
-                    "availableNow": false,
-                    "readyWhen": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
-                    "steps": []
+                    "availableNow": true,
+                    "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                    "steps": [
+                      "Praat kort met Eva op beide speakers.",
+                      "Onderbreek haar een keer en controleer het vervolg.",
+                      "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                    ]
                   },
                   "assignment": {
                     "activeWorkers": []
                   },
-                  "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
                   "sourceTaskId": "C3.1",
-                  "device": "Woonkamer"
+                  "device": "Woonkamer",
+                  "voiceResumption20261017": {
+                    "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                    "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
+                    "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
+                    "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+                  },
+                  "technicalStatus": "installed_verified"
                 },
                 {
                   "title": "Doorpraten via tweede speaker",
@@ -5929,26 +6004,45 @@
                   "kind": "aansluiten",
                   "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
                   "owner": "Codex",
-                  "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
-                  "ownerActionRequired": false,
+                  "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                  "ownerActionRequired": true,
                   "ownerInstructions": {
-                    "availableNow": false,
-                    "readyWhen": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
-                    "steps": []
+                    "availableNow": true,
+                    "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                    "steps": [
+                      "Praat kort met Eva op beide speakers.",
+                      "Onderbreek haar een keer en controleer het vervolg.",
+                      "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                    ]
                   },
                   "blocker": null,
-                  "checkedAt": "2026-10-01T17:14:58.487433+00:00",
-                  "latestEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
-                  "remaining": "Dezelfde native route geïnstalleerd; echte audio, expliciet stoppen en volgend antwoord gecontroleerd. Gewone conversatie/microfoononderbreking nog open; proef wacht op werkende woonkamerroute. Mute blijft behouden.",
+                  "checkedAt": "2026-10-17T10:36:56.527047+00:00",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+                  "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
                   "assignment": {
                     "activeWorkers": []
                   },
-                  "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
                   "sourceTaskId": "C3.2",
-                  "device": "Tweede speaker"
+                  "device": "Tweede speaker",
+                  "voiceResumption20261017": {
+                    "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                    "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
+                    "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
+                    "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+                  },
+                  "technicalStatus": "installed_verified"
                 }
               ],
-              "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld."
+              "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
+              "voiceMaintenanceEvidence": "development/evidence/product/subscription-voice-20261013/playback-activity-20261017.json",
+              "voiceActivityEvidence": "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json",
+              "voiceResumption20261017": {
+                "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden. Spraakonderhoud 17 oktober: idle-afsluiting tijdens afspelen hersteld en geïnstalleerd; 98 gerichte checks geslaagd. Fysieke apparaatacceptatie blijft afzonderlijk. Dagoverzicht leest nu de gevraagde lokale kalenderdag; 28 databasechecks en twee kernproeven gecontroleerd. Openbare bron- en dekkingsgrenzen blijven gelden.",
+                "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
+                "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+              },
+              "technicalStatus": "installed_verified"
             },
             {
               "id": "C3.3",
@@ -5990,7 +6084,7 @@
               "kind": "verbeteren",
               "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
               "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-              "latestEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
+              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
               "ownerTrial": {
                 "status": "partial_with_false_interruptions_and_stop_failure",
                 "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -6000,19 +6094,22 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
-              "ownerActionRequired": false,
+              "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
-                "steps": []
+                "availableNow": true,
+                "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                "steps": [
+                  "Praat kort met Eva op beide speakers.",
+                  "Onderbreek haar een keer en controleer het vervolg.",
+                  "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                ]
               },
-              "checkedAt": "2026-10-05T09:43:15.051580+00:00",
-              "remaining": "Eén gedeelde functie afronden; resultaten en resterende apparaatcontroles staan hieronder per speaker.",
+              "checkedAt": "2026-10-17T10:36:56.527047+00:00",
+              "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
               "assignment": {
                 "activeWorkers": []
               },
-              "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
               "deviceChecks": [
                 {
                   "title": "Onderbreken op woonkamer-speaker",
@@ -6020,7 +6117,7 @@
                   "kind": "verbeteren",
                   "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                   "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-                  "latestEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
                   "ownerTrial": {
                     "status": "partial_with_false_interruptions_and_stop_failure",
                     "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -6030,21 +6127,31 @@
                     "currentCandidateStatus": "not_yet_assessed",
                     "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                   },
-                  "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
-                  "ownerActionRequired": false,
+                  "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                  "ownerActionRequired": true,
                   "ownerInstructions": {
-                    "availableNow": false,
-                    "readyWhen": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
-                    "steps": []
+                    "availableNow": true,
+                    "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                    "steps": [
+                      "Praat kort met Eva op beide speakers.",
+                      "Onderbreek haar een keer en controleer het vervolg.",
+                      "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                    ]
                   },
-                  "checkedAt": "2026-10-05T09:43:15.051580+00:00",
-                  "remaining": "Correcties geïnstalleerd en technisch gecontroleerd. Echte geluidgevoeligheid en stoppen met de knop in de kamer nog beoordelen; C4.1 niet volledig geaccepteerd.",
+                  "checkedAt": "2026-10-17T10:36:56.527047+00:00",
+                  "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
                   "assignment": {
                     "activeWorkers": []
                   },
-                  "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
                   "sourceTaskId": "C4.1",
-                  "device": "Woonkamer"
+                  "device": "Woonkamer",
+                  "voiceResumption20261017": {
+                    "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                    "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
+                    "previousEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
+                    "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+                  },
+                  "technicalStatus": "installed_verified"
                 },
                 {
                   "title": "Onderbreken op tweede speaker",
@@ -6052,31 +6159,48 @@
                   "kind": "verbeteren",
                   "doneWhen": "Hetzelfde gedrag werkt op het tweede apparaat.",
                   "owner": "Codex /root",
-                  "latestEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
                   "ownerTrial": {
                     "status": "deferred_until_woonkamer_works",
                     "steps": [],
                     "expected": "Beoordelen na werkende woonkamerconversatie; geen herhaling van een bekende falende route.",
                     "blocksIndependentWork": false
                   },
-                  "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
-                  "ownerActionRequired": false,
+                  "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                  "ownerActionRequired": true,
                   "ownerInstructions": {
-                    "availableNow": false,
-                    "readyWhen": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
-                    "steps": []
+                    "availableNow": true,
+                    "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                    "steps": [
+                      "Praat kort met Eva op beide speakers.",
+                      "Onderbreek haar een keer en controleer het vervolg.",
+                      "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                    ]
                   },
-                  "checkedAt": "2026-10-01T17:14:58.487433+00:00",
-                  "remaining": "Dezelfde native route geïnstalleerd; echte audio, expliciet stoppen en volgend antwoord gecontroleerd. Gewone conversatie/microfoononderbreking nog open; proef wacht op werkende woonkamerroute. Mute blijft behouden.",
+                  "checkedAt": "2026-10-17T10:36:56.527047+00:00",
+                  "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
                   "assignment": {
                     "activeWorkers": []
                   },
-                  "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
                   "sourceTaskId": "C4.2",
-                  "device": "Tweede speaker"
+                  "device": "Tweede speaker",
+                  "voiceResumption20261017": {
+                    "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                    "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
+                    "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
+                    "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+                  },
+                  "technicalStatus": "installed_verified"
                 }
               ],
-              "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld."
+              "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
+              "voiceResumption20261017": {
+                "previousParking": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                "previousNextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
+                "previousEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
+                "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
+              },
+              "technicalStatus": "installed_verified"
             },
             {
               "id": "C4.3",
@@ -9139,6 +9263,31 @@
         "evidence": "development/evidence/product/subscription-voice-20261013/activity-and-updates-20261016.json",
         "summary": "Kern-tussenreacties klinken tijdens verder werken; alleen spreken veroorzaakt geen modelescalatie. Eén opvraag combineert directe openbare handelingen met de bestaande taaklijst.173 controles en geïnstalleerde tweebeurtenspraakproef geslaagd.",
         "remaining": "Dagvraag circa25s in één proef; geen volledige privé-/initiatiefdaghistorie. Fysieke natuurlijkheid door eigenaar beoordelen."
+      },
+      "voiceCompletion20261017": {
+        "status": "installed_technically_verified_owner_listening_pending",
+        "ownerAuthorization": "Owner explicitly requested all four remaining voice items completed.",
+        "existing": "Single core and memory; calendar day reader; approved speech transport; installed playback idle fix.",
+        "gaps": [
+          "Useful receipt contents and exact activity states/time selection",
+          "Latency of source-backed voice answers",
+          "Natural core-authored intermediate speech and faithful rendering",
+          "Automated speaker lifecycle and actual device readiness with explicit physical acceptance boundary"
+        ],
+        "doneWhen": "Bounded changes independently reviewed, focused regressions pass, installed on actual current images, live core latency/quality observed, both speaker transport checks recorded; do not substitute software tests for human hearing.",
+        "ownership": "Voice coordinator and two workers; preserve other executor currentWork and private E2.7 scope.",
+        "ownerActionRequired": true,
+        "runtimeChanged": true,
+        "checkedAt": "2026-10-17T10:41:22.511166+00:00",
+        "evidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+        "testsPassed": 147,
+        "ownerAction": "Kort gesprek op beide speakers: eerste woorden, onderbreken/hervatten en dankje doei beoordelen.",
+        "concurrentIntegration": "E2.7 privégeschiedenisinstallatie behouden; alleen ontbrekende beoordeelde voicemodules op de werkelijk nieuwe images aangebracht.",
+        "result": "Geïnstalleerd: rijkere eigen activiteit met echte actiedatum/status/resultaat, snellere bronlezing, inhoudelijke spraakinstructies, behoud van nog onuitgesproken antwoord bij lege ruis en correcte afscheidsovergang.147 gerichte checks en vier synthetische spraakbeurten geslaagd. Beide apparaten verbonden; echte luisterbeoordeling blijft open.",
+        "syntheticAudioTurnsPassed": 4,
+        "ownerAcceptance": false,
+        "knownDevelopmentTokens": 65358,
+        "latencyLimit": "Bronlezing1.9–2.7s versus7–8s; volledige kernproef23.5s versus28.2s, losse metingen met variabele geheugen/providerlast."
       }
     },
     "aideRetainedResume20261013": {

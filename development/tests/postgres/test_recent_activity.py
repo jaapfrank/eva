@@ -12,19 +12,21 @@ from eva.bootstrap.recent_activity import RecentActivityActions
 from eva.application.conversation import ConversationActionCall
 
 
-def action(x, turn, *, failed=False, completed_at=None):
+def action(x, turn, *, failed=False, completed_at=None, observation=None, receipt_output=None):
     scope=external_timeline_scope(turn.tenant_id,turn.installation_id,'fixture')
     timeline=PostgresOperationalTimeline(x.server.store._engine,scope)
     thread=PostgresExternalConversationTools._thread_id(turn,'read_home_assistant_inventory',0)
     state=timeline.create_thread(thread_id=thread,checkpoint_id=thread+':admitted',
         occurred_at=x.clock[0],event_type='TOOL_REQUEST_ADMITTED',data={
             'action_call_id':'fixture','action_name':'read_home_assistant_inventory',
-            'action_arguments':{},'receipt_output':{},'source_message_id':turn.message_id,
-            'conversation_id':turn.conversation_id,'principal_id':turn.principal_id})
+            'action_arguments':{},'receipt_output':receipt_output or {},'source_message_id':turn.message_id,
+            'conversation_id':turn.conversation_id,'principal_id':turn.principal_id,
+            **({'observation_output_key':'inventory'} if observation is not None else {})})
     timeline.transition(thread_id=thread,expected_revision=state.revision,
         checkpoint_id=thread+':done',phase='verified',status='completed',
         event_type='RECOVERY_FAILED' if failed else 'STATE_VERIFIED',
-        occurred_at=completed_at or x.clock[0],data={'proof':{'evidence':{'fixture':True}}})
+        occurred_at=completed_at or x.clock[0],data={'proof':{'evidence':{'fixture':True,
+            **({'observation':observation} if observation is not None else {})}}})
 
 
 def test_cross_device_activity_keeps_original_time_and_failed_status(database):
@@ -186,3 +188,117 @@ def test_calendar_activity_excludes_confirmed_private_shadow(database, monkeypat
     assert len(result['records'])==1
     assert result['records'][0]['occurred_at']==public.occurred_at
     assert 'PRIVATE' not in str(result)
+
+
+def test_cross_midnight_completion_contains_verified_result(database, monkeypatch):
+    from datetime import UTC, datetime, timedelta
+    monkeypatch.setenv('EVA_CONVERSATION_TIMEZONE','UTC')
+    x=setup(database,'activity-actual-day')
+    x.clock[0]=datetime(2026,8,26,23,59,58,tzinfo=UTC)
+    source=other(x)
+    old=exchange(x,source,'Lees de apparaten','Antwoord')
+    observation={'total':2,'entities':[{'entity_id':'light.study','name':'Bureaulamp'},
+                                      {'entity_id':'light.hall','name':'Ganglamp'}]}
+    action(x,old,completed_at=x.clock[0]+timedelta(seconds=2),observation=observation)
+    x.clock[0]+=timedelta(seconds=4)
+    turn=source.turn(str(uuid4()),'Wat deed je vandaag?')
+    result=HouseholdConversationContext(x.server).recent(turn,activity=True,local_date='2026-08-27')
+    assert len(result['records'])==1
+    record=result['records'][0]['actions']['records'][0]
+    assert record['lifecycle']=='finished' and record['recorded_status']=='verified'
+    assert record['activity_at']=='2026-08-27T00:00:01Z'
+    assert 'Bureaulamp' in record['result']['fragment']
+    assert record['result']['truncated'] is False
+
+
+@pytest.mark.parametrize(('last_event','lifecycle','recorded'), [
+    ('TOOL_REQUEST_ADMITTED','admitted','admitted_only'),
+    ('TOOL_PREPARED','running','admitted_only'),
+    ('TOOL_EXECUTED','executed_unconfirmed','admitted_only'),
+    ('STATE_VERIFIED','finished','verified'),
+    ('STATE_VERIFICATION_TIMED_OUT','finished','timed_out'),
+])
+def test_activity_lifecycle_comes_from_recorded_events(database, last_event, lifecycle, recorded):
+    x=setup(database,'activity-lifecycle-'+last_event)
+    old=exchange(x,x.service,'Doe een actie','Antwoord')
+    timeline=PostgresOperationalTimeline(database,external_timeline_scope(old.tenant_id,old.installation_id,'fixture'))
+    thread=PostgresExternalConversationTools._thread_id(old,'read_home_assistant_inventory',0)
+    state=timeline.create_thread(thread_id=thread,checkpoint_id=thread+':admitted',
+        occurred_at=x.clock[0],event_type='TOOL_REQUEST_ADMITTED',data={
+            'action_call_id':'fixture','action_name':'read_home_assistant_inventory',
+            'action_arguments':{},'receipt_output':{},'source_message_id':old.message_id,
+            'conversation_id':old.conversation_id,'principal_id':old.principal_id})
+    if last_event!='TOOL_REQUEST_ADMITTED':
+        timeline.transition(thread_id=thread,expected_revision=state.revision,checkpoint_id=thread+':next',
+            phase='fixture',status='waiting_for_proof',event_type=last_event,occurred_at=x.clock[0],
+            data={'dispatch':{'accepted':True}} if last_event=='TOOL_EXECUTED' else {})
+    turn=other(x).turn(str(uuid4()),'Wat deed je?')
+    row=HouseholdConversationContext(x.server).recent(turn,activity=True)['records'][0]['actions']['records'][0]
+    assert row['lifecycle']==lifecycle and row['recorded_status']==recorded
+    assert row['result'] is None
+
+
+def test_activity_result_fragments_are_bounded_and_exclude_raw_receipt_metadata(database):
+    from eva.contracts.canonical_json import canonical_sha256
+    x=setup(database,'activity-preview-budget')
+    observation={'summary':'Bevestigd resultaat '+('x'*4000)}
+    for index in range(6):
+        old=exchange(x,x.service,'Lees '+str(index),'Antwoord')
+        action(x,old,observation=observation,receipt_output={'private_configuration':'SECRET_METADATA'})
+    turn=other(x).turn(str(uuid4()),'Wat deed je?')
+    result=HouseholdConversationContext(x.server).recent(turn,activity=True)
+    previews=[r['actions']['records'][0]['result'] for r in result['records']]
+    assert sum(len(p['fragment']) for p in previews)==6000
+    assert all(len(p['fragment'])<=1200 and p['truncated'] and p['untrusted'] for p in previews)
+    assert all(p['source_sha256']==canonical_sha256(observation) for p in previews)
+    assert 'SECRET_METADATA' not in str(result)
+
+
+def test_failed_receipt_does_not_expose_unverified_observation(database):
+    x=setup(database,'activity-preview-failed')
+    old=exchange(x,x.service,'Lees','Antwoord')
+    action(x,old,failed=True,observation={'unconfirmed':'MUST_NOT_APPEAR'})
+    turn=other(x).turn(str(uuid4()),'Wat deed je?')
+    result=HouseholdConversationContext(x.server).recent(turn,activity=True)
+    assert result['records'][0]['actions']['records'][0]['result'] is None
+    assert 'MUST_NOT_APPEAR' not in str(result)
+
+
+def test_cross_midnight_action_after_private_confirmation_is_excluded(database, monkeypatch):
+    from datetime import UTC, datetime, timedelta
+    monkeypatch.setenv('EVA_CONVERSATION_TIMEZONE','UTC')
+    x=setup(database,'activity-day-confirmation')
+    x.clock[0]=datetime(2026,8,26,23,59,58,tzinfo=UTC)
+    source=other(x)
+    old=exchange(x,source,'Oorspronkelijk openbaar','Antwoord')
+    action(x,old,completed_at=x.clock[0]+timedelta(seconds=2),observation={'private':'HIDDEN'})
+    timeline=PostgresOperationalTimeline(database,x.server.store.scope)
+    confirmed=x.clock[0]+timedelta(seconds=1)
+    timeline.create_thread(thread_id='voice-identity:'+source.binding['session_id'],
+        checkpoint_id='fixture-confirmed',occurred_at=confirmed,event_type='VOICE_IDENTITY_CONFIRMED',
+        phase='confirmed',status='completed',data={'speaker_confirmed_at':confirmed.strftime('%Y-%m-%dT%H:%M:%SZ')})
+    x.clock[0]+=timedelta(seconds=4)
+    turn=other(x).turn(str(uuid4()),'Wat deed je vandaag?')
+    result=HouseholdConversationContext(x.server).recent(turn,activity=True,local_date='2026-08-27')
+    assert result['records']==[]
+
+
+def test_activity_receipt_tampering_fails_before_content_is_returned(database):
+    import sqlalchemy as sa
+    from eva.adapters.postgres.operational_timeline import operational_events, OperationalTimelineError
+    x=setup(database,'activity-tampered-proof')
+    old=exchange(x,x.service,'Lees','Antwoord');action(x,old,observation={'summary':'Original'})
+    thread=PostgresExternalConversationTools._thread_id(old,'read_home_assistant_inventory',0)
+    with database.begin() as connection:
+        payload=connection.execute(sa.select(operational_events.c.payload).where(
+            operational_events.c.thread_id==thread, operational_events.c.event_type=='STATE_VERIFIED')).scalar_one()
+        payload['data']['proof']['evidence']['observation']={'summary':'FORGED'}
+        # Corruption fixture in the disposable test database only. Ordinary
+        # writers cannot mutate this append-only table at all.
+        connection.exec_driver_sql('ALTER TABLE eva_core.operational_events DISABLE TRIGGER USER')
+        connection.execute(sa.update(operational_events).where(operational_events.c.thread_id==thread,
+            operational_events.c.event_type=='STATE_VERIFIED').values(payload=payload))
+        connection.exec_driver_sql('ALTER TABLE eva_core.operational_events ENABLE TRIGGER USER')
+    turn=other(x).turn(str(uuid4()),'Wat deed je?')
+    with pytest.raises(OperationalTimelineError):
+        HouseholdConversationContext(x.server).recent(turn,activity=True)

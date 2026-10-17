@@ -35,11 +35,11 @@ Klaar wanneer: De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd
 | --- | --- | --- |
 | C1.1 · Begroeting versnellen | ✓ Afgerond | Eenvoudig hallo sneller dan de huidige circa5s; inhoudelijke antwoordtijd en verbruik vastgelegd. |
 | C1.2 · Telegram-tussenvraag vóór onderzoeksresultaat | ✓ Afgerond | Gewone tussenvraag komt vóór onderzoek terug en beide antwoorden horen bij hun eigen vraag. |
-| C3.1 · Doorpraten via beide speakers | Geparkeerd | Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt. |
+| C3.1 · Doorpraten via beide speakers | ● Open | Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt. |
 | ↳ Apparaatcontrole: Woonkamer | planned | Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt. |
 | ↳ Apparaatcontrole: Tweede speaker | planned | Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker. |
 | C3.3 · Onderzoeksresultaat terug op juiste speaker | ✓ Afgerond | Werkelijke uitkomst komt terug bij de oorspronkelijke speaker; geen privé-inhoud. |
-| C4.1 · Onderbreken op beide speakers | Geparkeerd | Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan. |
+| C4.1 · Onderbreken op beide speakers | ● Open | Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan. |
 | ↳ Apparaatcontrole: Woonkamer | planned | Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan. |
 | ↳ Apparaatcontrole: Tweede speaker | planned | Hetzelfde gedrag werkt op het tweede apparaat. |
 | C4.3 · Optioneel: stoppen en doorpraten op telefoon | Geparkeerd | Een lopende gesproken reactie stoppen en gesprek vervolgen; aangenomen werk alleen stoppen op verzoek. |

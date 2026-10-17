@@ -494,3 +494,38 @@ async def test_renderer_playback_keeps_listener_alive_until_settled(monkeypatch,
         watcher.cancel()
         await asyncio.gather(watcher,return_exceptions=True)
         await session.aclose()
+
+
+@pytest.mark.parametrize('text', [
+    ('Dit is een afgeronde zin.  '*90),
+    ('woord zonder zinsgrens '*130),
+    ('x'*1600),
+])
+def test_speech_parts_preserve_exact_text_and_transport_bound(text):
+    from eva.voice_service.codex_media import speech_parts
+    parts=list(speech_parts(text))
+    assert ''.join(parts)==text
+    assert all(0<len(part)<=1500 for part in parts)
+    if ' ' in text:
+        assert all(part[-1].isspace() for part in parts[:-1])
+    if '.' in text:
+        assert all(part.rstrip().endswith('.') for part in parts[:-1])
+
+
+@pytest.mark.asyncio
+async def test_long_speech_uses_sentence_boundaries_and_each_completion():
+    session=CodexMediaSession({},None,lambda:None,render_only=True)
+    session.started.set();sent=[]
+    class Voice:
+        async def say(self,text):
+            sent.append(text)
+            asyncio.get_running_loop().call_soon(session._speech_waiter.set_result,None)
+        async def close(self):pass
+    session.voice=Voice()
+    text='Een complete zin met haar oorspronkelijke spaties.  '*70
+    try:
+        handle=session.say(text)
+        await asyncio.wait_for(handle.task,1)
+        assert len(sent)>1 and ''.join(sent)==text
+        assert all(part.rstrip().endswith('.') for part in sent)
+    finally:await session.aclose()

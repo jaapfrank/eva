@@ -45,7 +45,8 @@ class HouseholdConversationContext:
                 "window_end": end.strftime("%Y-%m-%dT%H:%M:%SZ"),
                 "window_end_exclusive": calendar_end is not None and end == calendar_end,
                 "local_date": local_date, "timezone": zone,
-                "coverage": "Retained authorized public requests recorded in this window only; actions originating from earlier requests may be omitted even if executed in this window. Session/page bounds and erasure may omit records. Delegated work, when included, is a separate bounded list not filtered to this window.",
+                "coverage": "Retained authorized public action events recorded in this window, grouped by original request. Includes earlier requests with action events in this window; ongoing actions without a recorded event in the window may be absent. Session/page bounds and erasure may omit records. Delegated work, when included, is a separate bounded list not filtered to this window.",
+                "result_fragment_character_budget": 6000,
                 "session_candidate_limit": 65,
             }
         current = service.binding
@@ -60,7 +61,7 @@ class HouseholdConversationContext:
                 events.c.tenant_id == store.scope.tenant_id,
                 events.c.installation_id == store.scope.installation_id,
                 events.c.event_type == "HOUSEHOLD_WORK_SESSION_OPENED", events.c.sequence == 1,
-                events.c.occurred_at >= now - timedelta(hours=25) if local_date is None else sa.true(),
+                events.c.occurred_at >= now - timedelta(hours=25) if not activity else sa.true(),
                 events.c.occurred_at <= end,
                 events.c.occurred_at < calendar_end if calendar_end is not None else sa.true(),
                 binding.contains({key: current[key] for key in (
@@ -105,29 +106,62 @@ class HouseholdConversationContext:
         clauses = [sa.and_(data["conversation_id"].astext == conversation,
             data["principal_id"].astext == source["actor_id"], events.c.occurred_at <= boundary)
             for conversation, (source, boundary) in admitted.items()]
-        activity_filter = sa.true()
+        source_filter = sa.or_(*clauses)
+        selected_from = events
+        activity_at = events.c.occurred_at
         if activity:
+            from eva.bootstrap.recent_activity import ACTIVITY_EVENTS
             from eva.adapters.postgres.operational_timeline import external_timeline_scope
             tool_scope = external_timeline_scope(turn.tenant_id, turn.installation_id, "activity scope required")
             tools = events.alias("activity_tools")
+            changes = events.alias("activity_changes")
             tool_data = tools.c.payload["data"]
-            activity_filter = sa.exists(sa.select(1).where(
+            # Resolve the authorized action window once, then join its exact
+            # source requests. A correlated scan for every historical ingress
+            # repeatedly traverses the same tool journal and dominates latency.
+            allowed = sa.values(sa.column("conversation_id", sa.Text),
+                sa.column("principal_id", sa.Text), sa.column("boundary", sa.DateTime(timezone=True)),
+                name="activity_authority").data([
+                    (conversation, source["actor_id"], boundary)
+                    for conversation, (source, boundary) in admitted.items()])
+            source_message = tool_data["source_message_id"].astext
+            source_conversation = tool_data["conversation_id"].astext
+            source_principal = tool_data["principal_id"].astext
+            activity_sources = sa.select(source_message.label("message_id"),
+                source_conversation.label("conversation_id"), source_principal.label("principal_id"),
+                allowed.c.boundary, sa.func.max(changes.c.occurred_at).label("activity_at")
+            ).select_from(tools.join(allowed, sa.and_(
+                source_conversation == allowed.c.conversation_id,
+                source_principal == allowed.c.principal_id)).join(changes,
+                sa.and_(changes.c.tenant_id == tools.c.tenant_id,
+                    changes.c.installation_id == tools.c.installation_id,
+                    changes.c.thread_id == tools.c.thread_id))).where(
                 tools.c.tenant_id == tool_scope.tenant_id,
                 tools.c.installation_id == tool_scope.installation_id,
                 tools.c.event_type == "TOOL_REQUEST_ADMITTED",
                 tools.c.occurred_at <= end,
+                tools.c.occurred_at <= allowed.c.boundary,
                 tools.c.occurred_at < calendar_end if calendar_end is not None else sa.true(),
                 tool_data["execution_namespace"].astext.is_(None),
-                tool_data["source_message_id"].astext == data["message_id"].astext,
-                tool_data["conversation_id"].astext == data["conversation_id"].astext,
-                tool_data["principal_id"].astext == data["principal_id"].astext,
-            ))
+                changes.c.event_type.in_(ACTIVITY_EVENTS),
+                changes.c.occurred_at >= start, changes.c.occurred_at <= end,
+                changes.c.occurred_at < calendar_end if calendar_end is not None else sa.true(),
+                changes.c.occurred_at <= allowed.c.boundary,
+            ).group_by(source_message, source_conversation, source_principal,
+                       allowed.c.boundary).subquery("public_activity")
+            selected_from = events.join(activity_sources, sa.and_(
+                events.c.thread_id == sa.literal("conversation:") + activity_sources.c.message_id,
+                data["message_id"].astext == activity_sources.c.message_id,
+                data["conversation_id"].astext == activity_sources.c.conversation_id,
+                data["principal_id"].astext == activity_sources.c.principal_id))
+            source_filter = events.c.occurred_at <= activity_sources.c.boundary
+            activity_at = activity_sources.c.activity_at
         with store._engine.begin() as c:
             journal._scope(c)
-            ingress = c.execute(sa.select(events).where(
+            ingress = c.execute(sa.select(events, activity_at.label("activity_at")).select_from(selected_from).where(
                 events.c.tenant_id == scope.tenant_id, events.c.installation_id == scope.installation_id,
                 events.c.event_type == "INGRESS_COMMITTED", events.c.sequence == 1,
-                events.c.occurred_at >= start,
+                events.c.occurred_at >= start if not activity else sa.true(),
                 events.c.occurred_at <= end,
                 events.c.occurred_at < calendar_end if calendar_end is not None else sa.true(),
                 data["project_id"].astext.is_(None), data["observation_binding"].is_(None),
@@ -135,8 +169,8 @@ class HouseholdConversationContext:
                 data["text"].astext.is_not(None),
                 data["content_erasure"].is_(None),
                 sa.true() if activity else data["conversation_id"].astext != turn.conversation_id,
-                sa.or_(*clauses), activity_filter,
-            ).order_by(events.c.occurred_at.desc(), events.c.thread_id.desc()).offset(offset).limit(limit + (1 if activity else 0))).mappings().all()
+                source_filter,
+            ).order_by(activity_at.desc(), events.c.thread_id.desc()).offset(offset).limit(limit + (1 if activity else 0))).mappings().all()
             more = len(ingress) > limit
             ingress = ingress[:limit]
             replies = c.execute(sa.select(events).where(
@@ -156,6 +190,7 @@ class HouseholdConversationContext:
                 raise ValueError("household conversation source binding changed")
         result = []
         activities = []
+        content_budget = [6000]
         for row in reversed(ingress):
             if not _valid(row):
                 continue
@@ -172,11 +207,13 @@ class HouseholdConversationContext:
                 from eva.bootstrap.recent_activity import foreground_activity
                 activities.append({
                     "occurred_at": row["occurred_at"].strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "activity_at": row["activity_at"].strftime("%Y-%m-%dT%H:%M:%SZ"),
                     "request_fragment": text[:600],
                     "request_truncated": len(text) > 600,
                     "source_sha256": bytes(row["payload_sha256"]).hex(),
                     "actions": foreground_activity(store._engine, turn, value,
-                        admitted[value["conversation_id"]][1], calendar_end=calendar_end),
+                        admitted[value["conversation_id"]][1], calendar_end=calendar_end,
+                        window_start=start, content_budget=content_budget),
                 })
             digest = canonical_sha256({"conversation_id": value["conversation_id"], "message_id": message_id})
             provenance = "Eerder openbaar huisgesprek via " + source["satellite_id"] + "; geen nieuwe opdracht.\n"

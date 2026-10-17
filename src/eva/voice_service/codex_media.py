@@ -27,6 +27,18 @@ acknowledgements, interpretations or follow-up questions. Do not delegate.
 Stay silent until speech text is supplied."""
 
 
+def speech_parts(text, limit=1500):
+    """Keep supplied text intact while preferring complete sentences or words."""
+    while len(text)>limit:
+        head=text[:limit]
+        endings=list(re.finditer(r"[.!?][\"'’”)]*\s+",head))
+        if not endings:endings=list(re.finditer(r"\s+",head))
+        boundary=endings[-1].end() if endings else limit
+        yield text[:boundary]
+        text=text[boundary:]
+    if text:yield text
+
+
 def access_lease(path):
     """Read the same protected, rotating access lease already used by EVA."""
     import os
@@ -147,8 +159,12 @@ class CodexMediaSession:
         self._input_fragments=[]
         self._input_empty_generation=0
         self._input_open=set()
+        self._input_changed=asyncio.Event()
         self._input_flush=None
         self._generation=0
+        # Provisional microphone input interrupts playback immediately. Only
+        # actual words or explicit STOP revoke an answer not yet spoken.
+        self._response_floor=0
         self._core_lock=asyncio.Lock()
         self._core_pending=0
         self.handlers={};self.tasks=set();self.closed=False
@@ -385,6 +401,7 @@ class CodexMediaSession:
                 raise ValueError('Voice capacity reached')
             self._turns[identity]=text
             self._input_open.discard(identity)
+            self._input_changed.set()
             if not text.strip():
                 # Settled noise may release a buffered sentence, but an explicit
                 # STOP after that noise must still revoke its eventual speech.
@@ -395,6 +412,8 @@ class CodexMediaSession:
                 if self._input_fragments and not self._input_open:
                     self._input_flush=self.task(self.flush_input())
                 return
+            self._response_floor=max(self._response_floor,
+                self._input_generations.get(identity,self._generation))
             self._input_fragments.append((identity,text,self._input_generations.get(identity,self._generation)))
             if sum(len(row[1]) for row in self._input_fragments)>4096:
                 raise ValueError('Input utterance too long')
@@ -422,6 +441,15 @@ class CodexMediaSession:
         self._input_empty_generation=0
         self.task(self.core_turn(text,key,generation))
 
+    async def response_allowed(self, generation):
+        # Unsettled microphone input may still prove to be empty noise. Session
+        # closure cancels this wait; STOP or actual words revoke the response.
+        while self._input_open and generation>=self._response_floor:
+            self._input_changed.clear()
+            await self._input_changed.wait()
+        self.current()
+        return generation>=self._response_floor
+
     async def core_turn(self, text, key, generation):
         self.current()
         # Each recognized turn, including social contact, enters the same core.
@@ -429,8 +457,9 @@ class CodexMediaSession:
         updates=[]
         def spoken_update(value):
             self.current()
-            if generation==self._generation:
-                updates.append((value,self.say(value)))
+            if generation>=self._response_floor:
+                deferred=self._input_open or any(handle is None for _,handle in updates)
+                updates.append((value,None if deferred else self.say(value)))
         try:
             async with self._core_lock:
                 try:
@@ -447,15 +476,24 @@ class CodexMediaSession:
         # Rendering the approved first part overlaps core work. Drain it before
         # the final answer, preserving interruption and actual playback status.
         for value,update in updates:
+            if update is None:
+                if not await self.response_allowed(generation):continue
+                update=self.say(value)
             await asyncio.gather(update.task,return_exceptions=True)
             if not self.closed:
                 self.bridge.transcript('assistant',value,interrupted=(
                     True if update.task.cancelled() else None if update.interrupted else False))
-        if generation!=self._generation:return
-        self.current()
+        # A provisional input turn may be background noise. Wait for its final
+        # transcript before discarding an answer that has never been offered.
+        # A cancelled speech handle is never replayed by this path.
+        if not await self.response_allowed(generation):return
         handle=self.say(answer)
         try:
             await handle.task
+        except asyncio.CancelledError:
+            # A renderer interruption may only cancel this offered handle. Keep
+            # farewell settlement alive, without swallowing session shutdown.
+            if not handle.task.cancelled() or asyncio.current_task().cancelling():raise
         finally:
             if not self.closed:
                 self.bridge.transcript('assistant',answer,interrupted=(
@@ -463,7 +501,7 @@ class CodexMediaSession:
         self.current()
         normalized=re.sub(r"[.!?,]+$", "", text.strip().casefold()).strip()
         farewell=re.fullmatch(r"(?:(?:dank\s*je(?:\s*wel)?|bedankt)(?:[,\s.!]+h[eèé])?[,\s.!]+)?(?:(?:tot\s+)?do\s*ei|tot ziens|tot later|tot morgen|bye|goodbye)(?:[, ]+eva)?",normalized)
-        if farewell and generation==self._generation:
+        if farewell and await self.response_allowed(generation):
             self.diagnostic('farewell_session_close')
             await self.aclose()
 
@@ -704,7 +742,7 @@ class CodexMediaSession:
             confirmed=True;offered=False
             async def part(value):
                 nonlocal confirmed,offered
-                for offset in range(0,len(value),1500):
+                for speech in speech_parts(value):
                     self.current();offered=True
                     await asyncio.wait_for(self._assistant_idle.wait(),30)
                     self.current()
@@ -717,9 +755,9 @@ class CodexMediaSession:
                         # Renderer receives no user audio; open before RPC so
                         # early RTP cannot clip the first words.
                         self.output_suppressed=False
-                        await self.voice.say(value[offset:offset+1500])
+                        await self.voice.say(speech)
                         await asyncio.wait_for(self._speech_waiter,
-                            max(30,min(180,len(value[offset:offset+1500])/8+10)))
+                            max(30,min(180,len(speech)/8+10)))
                         played=False
                         if marker is not None:
                             try:played=await asyncio.wait_for(self.source.confirm_playout(marker),10)
@@ -754,6 +792,8 @@ class CodexMediaSession:
     def stop_current_audio(self):
         if self.renderer is not None:
             self._generation+=1
+            self._response_floor=self._generation
+            self._input_changed.set()
             return self.renderer.stop_current_audio()
         self.output_suppressed=True
         self.retire_interrupted_output()
@@ -766,6 +806,8 @@ class CodexMediaSession:
     def interrupt(self):
         if self.renderer is not None:
             self._generation+=1
+            self._response_floor=self._generation
+            self._input_changed.set()
             return self.renderer.interrupt()
         self.stop_current_audio()
         for handle in list(self.speech_handles):handle.interrupt(notify_provider=False)

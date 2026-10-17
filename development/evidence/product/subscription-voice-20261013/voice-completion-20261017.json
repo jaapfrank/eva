@@ -1,0 +1,346 @@
+{
+  "recorded_at": "2026-10-17T10:41:22.511166+00:00",
+  "status": "installed_technically_verified_owner_listening_pending",
+  "owner_request": "Complete activity context, latency, natural speech and both-speaker checks, preserving one Eva.",
+  "changes": [
+    "Public action history now contains validated bounded observation fragments and precise lifecycle states.",
+    "Activity uses actual recorded action times, including completion of an earlier-day request.",
+    "Grouped exact-source database joins avoid repeated journal scans; no memory cache, second store or extra model.",
+    "Core-authored speech favors useful content and direct source-backed follow-up over empty lookup announcements.",
+    "Empty input noise preserves an unspoken final answer and approved first part. New words and STOP still revoke old speech.",
+    "Farewell settles provisional input before closing; cancelled audio is not replayed.",
+    "Long approved speech splits on sentence/word boundaries while preserving all text."
+  ],
+  "boundaries": [
+    "Public observations only after retained source, current authority, erasure, original actor and receipt validation.",
+    "Original request and action times remain separate; verified transport does not prove business success.",
+    "1200 characters per result and6000 per page; paging/session bounds remain explicit.",
+    "No claim that pending audio was heard; absolute lifetime/STOP and cancellation remain enforced.",
+    "Concurrent private-history integration was preserved; its separate implementation/acceptance belongs to E2.7."
+  ],
+  "validation": {
+    "database_tests_passed": 38,
+    "audio_regressions_passed": 109,
+    "independent_review": "review_cursor: activity source and both grouped joins, voice instruction changes and final media hash approved; two discovered audio edge cases repaired before installation.",
+    "baseline_regressions": "New cross-midnight/result regression failed before fix; installed-image empty-noise probe discarded one completed unspoken answer.",
+    "fixture_limits": "Isolated tmpfs PostgreSQL with current schema fixtures and exact candidate public modules. Early exact-base attempts failed only because current schema fixtures and old image metadata differed; no production schema change.",
+    "runtime_changes": [
+      {
+        "name": "eva2-managed-b-slot3-core",
+        "base": "sha256:c697abb96a6430e725246325a0555e4085acb42dd209a1e664179a28b1a7b53c",
+        "candidate": "sha256:e010b5755cba79ff45d7a9d4e1f4e5688cb4d8727d3dd4165d29d772a67ff891",
+        "source_verified": true,
+        "configuration_preserved": true
+      },
+      {
+        "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "base": "sha256:f75384b9585648b9fe7f61fa1a1f0b15325c6837bc88710a907c7927597a5a51",
+        "candidate": "sha256:532d77958a6a5be6908ba6136de85d0ffe109eb2b748844c9a50076c4dbef46f",
+        "source_verified": true,
+        "configuration_preserved": true
+      },
+      {
+        "name": "eva2-household-speaker-1",
+        "base": "sha256:df94c0d798e0b543f3f2c9a855066debe216204341f2b4daf07d8a370e973259",
+        "candidate": "sha256:f4132a4ec5dec1b8365a4ed35b5451fc6b3195c3047b00a58d6987a4462a3a06",
+        "source_verified": true,
+        "configuration_preserved": true
+      },
+      {
+        "name": "eva2-owner-voice-media-1",
+        "base": "sha256:e96f0fe9190133f5613e12bafc6ba71881608b594c2c237258302e6e56a6bb61",
+        "candidate": "sha256:26642665c2c4ca5e8afafde95921d642d768ebf335875dc48f514d5b0052d4d7",
+        "source_verified": true,
+        "configuration_preserved": true
+      }
+    ]
+  },
+  "latency": {
+    "baseline_component_ms": [
+      6155,
+      7453,
+      8280
+    ],
+    "candidate_same_day_full_page_ms": [
+      1866,
+      2046,
+      2698
+    ],
+    "candidate_same_day_records": [
+      9,
+      9,
+      9
+    ],
+    "baseline_core_ms": 28156,
+    "candidate_core_ms": 23475,
+    "baseline_model_calls": [
+      {
+        "elapsed_ms": 5114,
+        "action": {
+          "name": "read_recent_activity",
+          "arguments": {
+            "local_date": "2026-10-16",
+            "offset": 0
+          }
+        },
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 6800,
+          "output_tokens": 52
+        }
+      },
+      {
+        "elapsed_ms": 5049,
+        "action": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 11493,
+          "output_tokens": 80
+        }
+      }
+    ],
+    "candidate_model_calls": [
+      {
+        "elapsed_ms": 3681,
+        "action": {
+          "name": "read_recent_activity",
+          "arguments": {
+            "local_date": "2026-10-16",
+            "offset": 0
+          }
+        },
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 6187,
+          "output_tokens": 52
+        }
+      },
+      {
+        "elapsed_ms": 6808,
+        "action": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 14906,
+          "output_tokens": 113
+        }
+      }
+    ],
+    "limit": "Small sequential samples with uncontrolled shared memory/provider load; no p95 or universal speed claim. Core timing excludes acoustic input/output; memory still took6.7–7.9s in the two core probes."
+  },
+  "renderer": {
+    "ready_ms": 10040,
+    "turns": [
+      {
+        "word_sequence_equal": true,
+        "signal_samples": 84480,
+        "first_audio_ms": 1677,
+        "elapsed_ms": 5482,
+        "playback_unconfirmed": true
+      },
+      {
+        "word_sequence_equal": true,
+        "signal_samples": 228480,
+        "first_audio_ms": 957,
+        "elapsed_ms": 7988,
+        "playback_unconfirmed": true
+      },
+      {
+        "word_sequence_equal": true,
+        "signal_samples": 223680,
+        "first_audio_ms": 592,
+        "elapsed_ms": 7822,
+        "playback_unconfirmed": true
+      }
+    ],
+    "physical_audio": false,
+    "microphone_used": false,
+    "device_ack_simulated": false,
+    "provider_sessions": 1,
+    "speech_requests": 3
+  },
+  "physical_acceptance": {
+    "requested": true,
+    "owner_response": null,
+    "both_speakers_listened_by_assistant": false
+  },
+  "source_sha256": {
+    "bootstrap/recent_activity.py": "2f49860157d4aedf7d6970607296bc6b86e723df07b0780d1534fe9df40b7385",
+    "bootstrap/household_continuity.py": "80247df9f40f0b951727046e462324098007ccc650a72f0d8d4acfd53dbc0b1f",
+    "application/voice_context.py": "64e4039fba34b6ee2f1b325201b74808cdac1f46a9bcf055136f8414eb9fd7ef",
+    "voice_service/codex_media.py": "edd39601ce241cadf377a9d9eb87f7acb9e9f558059b3a2008744f48934dc552"
+  },
+  "consumption": {
+    "renderer_provider_sessions": 1,
+    "renderer_speech_requests": 3,
+    "credits": null,
+    "full_audio_probe": {
+      "measured_model_requests": 4,
+      "known_tokens": 25675,
+      "phase_ms": [
+        3496,
+        1833,
+        1649,
+        2695
+      ],
+      "voice_provider_sessions": 2,
+      "credits": null
+    },
+    "normal_Eva_runtime_usage": "not included; no fabricated zero-cost claim",
+    "measured_core_model_requests": 8,
+    "measured_core_known_tokens": 65358,
+    "invalidated_full_audio_attempt": {
+      "completed_core_turns": 2,
+      "next_request_failed_during_other_executor_restart": true,
+      "voice_provider_sessions": 2,
+      "model_usage": null,
+      "credits": null
+    },
+    "scope": "Development validation only; includes measured completed provider phases above. Invalidated attempt, voice inference accounting and assistant development consumption are incomplete/unknown. Ordinary household runtime is excluded."
+  },
+  "concurrent_installation": "Stale core manifest was rejected before replacement. Rebased only household_continuity and voice_context onto newly installed actual core/worker images; preserved E2.7 recent_activity and all other code/configuration.",
+  "operational_observation": "Two media readiness RemoteProtocolError exceptions occurred during the coordinated core restart, at10:32:55Z and10:33:00Z; core started10:32:58Z. Subsequent current readiness checks succeed; no startup error or service restart loop.",
+  "remaining": "Owner listening on both physical speakers; subjective naturalness and acoustic first-word/noise behavior cannot be certified by synthetic tests. Shared memory/provider latency remains variable; optimization is measured, no universal response-time promise.",
+  "speaker_readiness": {
+    "recorded_at": "2026-10-17T10:40:55.181829+00:00",
+    "services": {
+      "core": {
+        "image_sha256": "sha256:ef5c974bee436f02760478bfd5e80cbb8557cda9b78e317a5617c94933970a78",
+        "running": true,
+        "health": "healthy",
+        "restart_count": 0,
+        "has_restarted": false,
+        "startup_logs_checked": true,
+        "startup_error_pattern_detected": false,
+        "module_sha256": {
+          "bootstrap/household_continuity.py": "80247df9f40f0b951727046e462324098007ccc650a72f0d8d4acfd53dbc0b1f",
+          "bootstrap/recent_activity.py": "2f49860157d4aedf7d6970607296bc6b86e723df07b0780d1534fe9df40b7385",
+          "application/voice_context.py": "64e4039fba34b6ee2f1b325201b74808cdac1f46a9bcf055136f8414eb9fd7ef"
+        },
+        "module_matches_working_tree": {
+          "bootstrap/household_continuity.py": true,
+          "bootstrap/recent_activity.py": true,
+          "application/voice_context.py": true
+        }
+      },
+      "worker": {
+        "image_sha256": "sha256:c91be5a306cf317478ec5c7244e03f7b500f2a7048ffae61bfee763f5de4d842",
+        "running": true,
+        "health": "healthy",
+        "restart_count": 0,
+        "has_restarted": false,
+        "startup_logs_checked": true,
+        "startup_error_pattern_detected": false,
+        "module_sha256": {
+          "bootstrap/household_continuity.py": "80247df9f40f0b951727046e462324098007ccc650a72f0d8d4acfd53dbc0b1f",
+          "bootstrap/recent_activity.py": "2f49860157d4aedf7d6970607296bc6b86e723df07b0780d1534fe9df40b7385",
+          "application/voice_context.py": "64e4039fba34b6ee2f1b325201b74808cdac1f46a9bcf055136f8414eb9fd7ef"
+        },
+        "module_matches_working_tree": {
+          "bootstrap/household_continuity.py": true,
+          "bootstrap/recent_activity.py": true,
+          "application/voice_context.py": true
+        }
+      },
+      "speaker": {
+        "image_sha256": "sha256:f4132a4ec5dec1b8365a4ed35b5451fc6b3195c3047b00a58d6987a4462a3a06",
+        "running": true,
+        "health": "not_configured",
+        "restart_count": 0,
+        "has_restarted": false,
+        "startup_logs_checked": true,
+        "startup_error_pattern_detected": false,
+        "module_sha256": {
+          "voice_service/codex_media.py": "edd39601ce241cadf377a9d9eb87f7acb9e9f558059b3a2008744f48934dc552"
+        },
+        "module_matches_working_tree": {
+          "voice_service/codex_media.py": true
+        }
+      },
+      "media": {
+        "image_sha256": "sha256:26642665c2c4ca5e8afafde95921d642d768ebf335875dc48f514d5b0052d4d7",
+        "running": true,
+        "health": "not_configured",
+        "restart_count": 0,
+        "has_restarted": false,
+        "startup_logs_checked": true,
+        "startup_error_pattern_detected": false,
+        "module_sha256": {
+          "voice_service/codex_media.py": "edd39601ce241cadf377a9d9eb87f7acb9e9f558059b3a2008744f48934dc552"
+        },
+        "module_matches_working_tree": {
+          "voice_service/codex_media.py": true
+        },
+        "startup_completed": true,
+        "post_startup_error_pattern_detected": true,
+        "post_startup_asgi_request_exception": true,
+        "post_startup_error_classification": "Known transient readiness HTTP failures during core replacement; classified by coordinator against restart timestamps. Current binding readiness checked independently below.",
+        "classification_source": "coordinator_restart_correlation"
+      }
+    },
+    "speakers": {
+      "configured_devices": 2,
+      "speaker_bindings_ready": [
+        true,
+        true
+      ],
+      "listener_sockets": 1,
+      "established_speaker_transport_sockets": 2,
+      "voice_engine": "codex",
+      "physical_audio_played": false,
+      "microphone_recording_started": false
+    },
+    "scope": "Read-only readiness, source hashes, process health and transport counts; no acoustic or heard-word assertion. Error flags are bounded log-pattern checks. Prior media ASGI failures are retained and classified separately from current readiness."
+  },
+  "full_audio_integration": {
+    "ready_ms": 11360,
+    "turns": [
+      {
+        "turn": 0,
+        "elapsed_ms": 19957,
+        "first_audio_ms": 19942,
+        "audio_samples": 10080
+      },
+      {
+        "turn": 1,
+        "elapsed_ms": 20228,
+        "first_audio_ms": 24,
+        "audio_samples": 113280
+      },
+      {
+        "turn": 2,
+        "elapsed_ms": 15910,
+        "first_audio_ms": 12983,
+        "audio_samples": 53280
+      },
+      {
+        "turn": 3,
+        "elapsed_ms": 14639,
+        "first_audio_ms": 11982,
+        "audio_samples": 49920
+      }
+    ],
+    "core_results": 4,
+    "closed_after_farewell": true,
+    "clear_count": 7,
+    "physical_audio": false,
+    "synthetic_microphone": true,
+    "corrected_word_recalled": true,
+    "all_four_inputs_recognized": true,
+    "one_core_session": true,
+    "first_reply_deliberately_interrupted": true,
+    "renderer_final_answers_match_core": true,
+    "physical_device_playback_proven": false,
+    "scope": "Synthetic PCM through real listener, same installed core image in a temporary HTTP instance with background work disabled, real renderer, local sink. No household microphone or physical speaker used.",
+    "timing_limit": "Turn1 first_audio_ms is carry-over from deliberately interrupted previous output, not response latency. Other turn times include injected speech duration and provider processing; no stable latency benchmark.",
+    "interrupted_first_attempt": "A concurrent core installation terminated the third request after two completed turns. Its session then lost renewal; preserved as invalidated integration attempt. Repeated on an isolated instance of the same actual image."
+  },
+  "activity_source_commit": "944dcc64 (concurrent E2.7 commit included reviewed public result/lifecycle and per-action grouped query changes)"
+}
