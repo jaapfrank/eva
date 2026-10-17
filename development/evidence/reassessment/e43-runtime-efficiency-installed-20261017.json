@@ -1,0 +1,264 @@
+{
+  "contract": "EvaE43InstalledEfficiency/v1",
+  "taskId": "E4.3",
+  "status": "installed_bounded_efficiency_improvement",
+  "checkedAt": "2026-10-17T11:45:59.861234+00:00",
+  "referenceRevision": "c4f04a2e556a3cf064a2e145c90f7122e5cab653",
+  "predeclaredProtocol": "development/evidence/reassessment/e43-efficiency-protocol-20261017.json",
+  "scope": {
+    "fixedCleanupCluster": "C09/SU-02",
+    "modelChange": "Return the first maximum possible overlap from the existing receipt view search; same strict greater-than tie order and exact request bytes. Four added lines; no prompt, schema, provider, memory, planner or speech route change.",
+    "operatorChange": "Enforce the existing1..16384-byte header bound immediately after uint32 decode and before reading the body. Two added lines; existing error type/text and authenticated crypto unchanged.",
+    "newProductTasks": 0,
+    "newPlatforms": 0
+  },
+  "measurements": {
+    "preparation": "development/evidence/reassessment/e43-preparation-measurement-20261017.json",
+    "portableHeader": "development/evidence/reassessment/e43-header-measurement-20261017.json",
+    "preparationCases": [
+      {
+        "case": "wrapped-source",
+        "samplesMicroseconds": {
+          "reference": [
+            829631.498,
+            1019754.948,
+            878269.881,
+            852966.282,
+            937328.104
+          ],
+          "candidate": [
+            25895.355,
+            20525.353,
+            21565.761,
+            19436.611,
+            16399.884
+          ]
+        },
+        "medianMicroseconds": {
+          "reference": 878269.881,
+          "candidate": 20525.353
+        },
+        "preparationSpeedup": 42.78951407072025,
+        "sameWholeInputBytes": true,
+        "sameSourceBytes": true,
+        "inputBytes": 3954,
+        "localO200kTokens": 971,
+        "inputSha256": "c9f291b89c70a5c11f8427da75b033f2faabf170d1605676629166e0e8fa878e",
+        "humanAssistance": 0,
+        "modelCalls": 0,
+        "externalToolActions": 0
+      },
+      {
+        "case": "saved-artifact",
+        "samplesMicroseconds": {
+          "reference": [
+            31284.792,
+            31244.524,
+            30698.387,
+            24643.503,
+            23424.698
+          ],
+          "candidate": [
+            17823.258,
+            17645.711,
+            18137.805,
+            16978.065,
+            12889.394
+          ]
+        },
+        "medianMicroseconds": {
+          "reference": 30698.387,
+          "candidate": 17645.711
+        },
+        "preparationSpeedup": 1.7397081364417677,
+        "sameWholeInputBytes": true,
+        "sameSourceBytes": true,
+        "inputBytes": 4635,
+        "localO200kTokens": 1472,
+        "inputSha256": "7a1a947c5b87b1b5c6869edb1f6cec497d184d7efbc5c3b5150fe712a97de1f6",
+        "humanAssistance": 0,
+        "modelCalls": 0,
+        "externalToolActions": 0
+      },
+      {
+        "case": "short",
+        "samplesMicroseconds": {
+          "reference": [
+            376.365,
+            367.002,
+            370.044,
+            362.777,
+            424.003
+          ],
+          "candidate": [
+            384.308,
+            377.833,
+            378.512,
+            368.316,
+            374.358
+          ]
+        },
+        "medianMicroseconds": {
+          "reference": 370.044,
+          "candidate": 377.833
+        },
+        "preparationSpeedup": 0.9793850722409105,
+        "sameWholeInputBytes": true,
+        "sameSourceBytes": true,
+        "inputBytes": 923,
+        "localO200kTokens": 203,
+        "inputSha256": "32eb1cb52c3d8a941619d1717a013c257acf179f8ec07eeb6d1c3c1cd012b6d7",
+        "humanAssistance": 0,
+        "modelCalls": 0,
+        "externalToolActions": 0
+      }
+    ],
+    "differentialCases": {
+      "developer": 300,
+      "independentReviewer": 345,
+      "mismatches": 0
+    },
+    "headerSummary": {
+      "oneMiBRejected": {
+        "bytesReadBefore": 1048588,
+        "bytesReadAfter": 12,
+        "medianPythonPeakBefore": 1055770,
+        "medianPythonPeakAfter": 6613,
+        "medianMillisecondsBefore": 0.3733,
+        "medianMillisecondsAfter": 0.165
+      },
+      "firstOversizeRejected": {
+        "bytesReadBefore": 16397,
+        "bytesReadAfter": 12,
+        "medianPythonPeakBefore": 23547,
+        "medianPythonPeakAfter": 6581
+      },
+      "validAuthenticated1024": {
+        "bytesReadBefore": 1438,
+        "bytesReadAfter": 1438,
+        "sameOutputSha256": true,
+        "sameReturnedHeaderSha256": true
+      },
+      "errorsPreservedAllSixCases": true,
+      "repetitionsPerVariantPerCase": 5
+    }
+  },
+  "quality": {
+    "wholePreparedProviderInputByteIdentical": true,
+    "sourceBytesUnchanged": true,
+    "sameSchemasOriginPersonStopAndLatestState": true,
+    "validDecryptionIdentical": true,
+    "guardBeforeAllocation": true,
+    "affectedRouteTests": {
+      "passed": 145,
+      "seconds": 48.98,
+      "includesNewHeaderCases": 10,
+      "includesNewPreparationCases": 3,
+      "scope": "New tests plus existing catalogue-model-view and connector-result suites; existing SDK serialization and reference/privacy/status checks. No paid provider."
+    },
+    "independentReview": "development/reviews/e43-runtime-efficiency-review-20261017.json"
+  },
+  "installation": {
+    "checkedAt": "2026-10-17T11:45:23.496907+00:00",
+    "updateStatus": "running_with_retained_mounts",
+    "containers": [
+      {
+        "service": "core",
+        "image": "sha256:539f4d389577285b758f0852205e3eabce578f23419e27df66876d52cb8d33e3",
+        "healthy": true,
+        "modelModuleSha256": "8e4bf71ea4b7354077f7a7fd8d818a8bba55e99bac6d69af2b436485568d856f",
+        "sealedExecutionSources": 68,
+        "sameReviewedSources": true,
+        "startedAt": "2026-10-17T11:44:26.794818938Z"
+      },
+      {
+        "service": "worker",
+        "image": "sha256:e0a0e2833ec779cbd9f96af1bf0da90009cd84a370f913d57470a3d8ba45ea21",
+        "healthy": true,
+        "modelModuleSha256": "8e4bf71ea4b7354077f7a7fd8d818a8bba55e99bac6d69af2b436485568d856f",
+        "sealedExecutionSources": 68,
+        "sameReviewedSources": true,
+        "startedAt": "2026-10-17T11:44:38.374835678Z"
+      }
+    ],
+    "operatorModule": {
+      "path": "src/tools/portable_transport.py",
+      "loadedFromCurrentHostCheckout": true,
+      "sha256": "46803240fd1a3a43c98ebd227e41bca0001b4a42a5aebdef4e08e9e3f4549162",
+      "containerModule": false
+    },
+    "speechContainersObservedOnly": [
+      {
+        "name": "eva2-owner-voice-media-1",
+        "image": "sha256:70f78914727e57e6eb98bce8aa2f7a43e5a18bee1eeff085a2f7a3f31300d088",
+        "startedAt": "2026-10-17T11:25:16.599364634Z"
+      },
+      {
+        "name": "eva2-household-speaker-1",
+        "image": "sha256:d93cf6ad2a0173d08ec45beac8c7d18df5a672db5ecdfda55e69c2181b7df8c5",
+        "startedAt": "2026-10-17T11:25:13.317527174Z"
+      }
+    ],
+    "speechModificationByThisTask": false,
+    "ownerReadRoutes": [
+      {
+        "path": "/internal/v1/dashboard/components",
+        "httpStatus": 200,
+        "contract": "EvaComponentObservations/v1"
+      },
+      {
+        "path": "/internal/v1/dashboard/memory-sources",
+        "httpStatus": 200,
+        "contract": "EvaOwnerMemorySources/v1"
+      },
+      {
+        "path": "/internal/v1/dashboard/work",
+        "httpStatus": 200,
+        "contract": "EvaDelegatedWorkOwnerResult/v1"
+      }
+    ],
+    "ownerReadRouteEvidence": "Three actual owner-loopback GET requests completed200 during deployment; no model request."
+  },
+  "referenceInstallationParity": [
+    {
+      "container": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "measuredMethodsMatchInstalled": true
+    },
+    {
+      "container": "eva2-managed-b-slot3-core",
+      "measuredMethodsMatchInstalled": true
+    }
+  ],
+  "accounting": {
+    "experimentProviderCalls": 0,
+    "experimentExternalToolActions": 0,
+    "experimentProviderReportedTokens": null,
+    "experimentHumanAssistance": {
+      "value": 0,
+      "scope": "Synthetic preparation/decryption tasks; not family use"
+    },
+    "developmentModelTokens": null,
+    "developmentCreditCosts": null,
+    "developmentToolCalls": null,
+    "developmentElapsed": "Wall timestamps retained in protocol/installation; complete billed development usage unavailable.",
+    "ordinaryEvaAutonomyUsage": "Unmeasured and separate from the0-provider-call experiment."
+  },
+  "limitations": [
+    "Preparation CPU time only: no total answer/task latency or superior answer quality measured; input is exactly preserved, not compressed further.",
+    "Short context has no demonstrated gain:370.044 to377.833 microseconds. Retained source and saved artifact workload medians improved in5 alternating paired samples each.",
+    "Local o200k token estimates are unchanged and are not provider-reported or billed tokens. No token or credit saving claimed.",
+    "The earlier E2.7 observation remains42,952 input tokens,246 output tokens,3 model attempts and25.19s. This bounded CPU improvement does not establish that this whole ordinary question now costs fewer tokens or has lower total latency.",
+    "Synthetic authenticated decryption preserves exact output/header; two existing whole-archive tests fail before transport because portable_export._schema_payloads still expects root schemas instead of development/schemas. This existing packaging defect belongs to existing E4.4; whole archive export/restore not claimed.",
+    "Fixture error and interrupted excessively repetitive reference warmup occurred before a completed timing set and remain recorded in the protocol/private logs; no result substituted.",
+    "No fresh family acceptance, physical speaker test, protected benchmark, model series, or new autonomous improvement claimed."
+  ],
+  "nextTask": "E4.4",
+  "fullProjectCompleted": false,
+  "selectedCommitVerification": {
+    "tree": "83f4ce61a4e6a095a86e87fb013289cd6b86d8a5",
+    "passed": 13,
+    "exitCode": 0,
+    "seconds": 5.511,
+    "purpose": "Verify exact selected commit without unrelated WSL voice changes. No provider call."
+  }
+}

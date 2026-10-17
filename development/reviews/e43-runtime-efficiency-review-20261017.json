@@ -1,0 +1,47 @@
+{
+  "contract": "EvaE43BundledReview/v1",
+  "taskId": "E4.3",
+  "reviewedAt": "2026-10-17T11:45:59.861234+00:00",
+  "decision": "GO_bounded_lossless_change",
+  "independentReviewer": "/root/e33_state_adapters",
+  "independentArtifact": "development/reviews/e43-overlap-review-20261017.json",
+  "independentReviewFindings": [
+    "345 exact coordinate/size results equal to original; first maximum cannot be improved and strict greater-than preserves ties.",
+    "Both overlays bound to their actual installed-before module hashes; only same4added overlap lines applied. Relevant4preparation methods match measured reference/candidate ASTs.",
+    "All5sample medians/order/exact input checks reviewed; tokenizer outside timed region. Short-case negative result retained.",
+    "145passed log and receipt reconstruction/latest origin/status/stop/schema/request isolation checks reviewed.",
+    "Fixture calibration and interrupted warmup disclosed; no total-latency or billed-token claim."
+  ],
+  "coordinatorHeaderReview": {
+    "decision": "GO",
+    "change": "Exactly2guard lines before header read using existing MAX_HEADER_BYTES,error class/message; crypto/AAD/authentication unchanged.",
+    "tenBoundCasesPassed": true,
+    "sixMeasuredCasesPreserveErrorsOrPlaintext": true,
+    "existingFullArchiveSchemaFailurePreservedFor": "E4.4"
+  },
+  "deploymentChecked": {
+    "status": "running_with_retained_mounts",
+    "coreWorkerHealthy": true,
+    "sameReviewedExecutionSourceHashes": 68,
+    "retainedMounts": true,
+    "ownerReadEndpoints200": 3,
+    "speechChangesByThisTask": false
+  },
+  "limitations": [
+    "Preparation CPU time only: no total answer/task latency or superior answer quality measured; input is exactly preserved, not compressed further.",
+    "Short context has no demonstrated gain:370.044 to377.833 microseconds. Retained source and saved artifact workload medians improved in5 alternating paired samples each.",
+    "Local o200k token estimates are unchanged and are not provider-reported or billed tokens. No token or credit saving claimed.",
+    "The earlier E2.7 observation remains42,952 input tokens,246 output tokens,3 model attempts and25.19s. This bounded CPU improvement does not establish that this whole ordinary question now costs fewer tokens or has lower total latency.",
+    "Synthetic authenticated decryption preserves exact output/header; two existing whole-archive tests fail before transport because portable_export._schema_payloads still expects root schemas instead of development/schemas. This existing packaging defect belongs to existing E4.4; whole archive export/restore not claimed.",
+    "Fixture error and interrupted excessively repetitive reference warmup occurred before a completed timing set and remain recorded in the protocol/private logs; no result substituted.",
+    "No fresh family acceptance, physical speaker test, protected benchmark, model series, or new autonomous improvement claimed."
+  ],
+  "outcome": "development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json",
+  "selectedCommitVerification": {
+    "tree": "83f4ce61a4e6a095a86e87fb013289cd6b86d8a5",
+    "passed": 13,
+    "exitCode": 0,
+    "seconds": 5.511,
+    "purpose": "Verify exact selected commit without unrelated WSL voice changes. No provider call."
+  }
+}

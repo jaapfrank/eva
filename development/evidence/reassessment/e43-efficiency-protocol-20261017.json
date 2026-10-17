@@ -1,0 +1,59 @@
+{
+  "contract": "EvaE43PredeclaredEfficiencyProtocol/v1",
+  "createdAt": "2026-10-17T11:34:32.245758+00:00",
+  "taskId": "E4.3",
+  "referenceRevision": "c4f04a2e556a3cf064a2e145c90f7122e5cab653",
+  "referenceSource": {
+    "path": "src/eva/adapters/model/pydantic_conversation.py",
+    "sha256": "19d46603d8c511ceb82b840bc2ed18ae027f38735db538eb153d44d0a27d8ad6"
+  },
+  "scope": [
+    "Fixed C09/SU-02: existing positive16384-byte header bound before length-based read.",
+    "One lossless early exit in existing receipt context preparation after first maximal overlap; no new representation, dropped data, cache, model or tool route."
+  ],
+  "qualityGates": [
+    "Same exact whole prepared provider input bytes, including instructions, tool schemas, origin/person source data, receipts, failure/stop fields and reference hashes.",
+    "Same overlap result and tie ordering against unchanged original, including Unicode, escaped text, repetitions, partial spans, empty/small input and no-match.",
+    "No mutation, cross-request reuse or shared private state. Existing privacy, cancellation and receipt tests remain intact.",
+    "Portable valid authenticated archive yields same validated contents; malformed size stops before body read; bad passphrase/truncation/AAD/canonical checks retain behavior."
+  ],
+  "measurements": {
+    "workloads": [
+      "ordinary source/tool result with repeated literal in JSON envelope",
+      "retained saved artifact with readback wrapper",
+      "short ordinary context with no long repeated text"
+    ],
+    "warmupRuns": 1,
+    "timedRunsPerVersionPerWorkload": 5,
+    "ordering": "Alternate reference and candidate to reduce drift; no rerun to chase a greener score.",
+    "record": [
+      "median and individual preparation microseconds",
+      "prepared input bytes and local tokenizer count",
+      "model/tool calls initiated by benchmark",
+      "quality exact-equality and source mutation check",
+      "portable bytes read and elapsed/memory measurements where measurable"
+    ],
+    "adoption": "Adopt only exact output equality for all cases plus positive reproducible relevant preparation gain; a noisy/regressing ordinary workload is explicitly reported. Do not turn CPU-time gain into a claim of total task/answer latency or fewer billed tokens."
+  },
+  "budget": {
+    "candidateVariants": 1,
+    "externalModelCalls": 0,
+    "externalToolActions": 0,
+    "purpose": "Measure deterministic work before any provider call; exact same request input does not need another paid model answer for this implementation-equivalence decision.",
+    "developmentCredits": "unknown"
+  },
+  "independence": "Other executor reviews early-exit proof and fixed header behavior; developer does not modify protected final-evaluation data or scores.",
+  "speechChanges": false,
+  "fixtureCalibration": {
+    "recordedAt": "2026-10-17T11:38:25.604994+00:00",
+    "initialFixtureError": "A2048-character source did not cross the existing retained-document projection threshold; enlarged stored source only. No provider call or performance result.",
+    "abortedMeasurement": "The highly repetitive8192-character wrapper made the original implementation consume excessive deterministic CPU before one complete trial set. Interrupted; partial log retained, no score or timing substituted.",
+    "boundedFinalPages": {
+      "storedSource": "unchanged >=64KiB synthetic source for the existing retention contract",
+      "literalPageCharacters": 512,
+      "wrapperPageCharacters": 1024,
+      "timedRunsPerVersionPerWorkload": 5
+    },
+    "unchanged": "Original algorithm reference, one candidate, all exact byte/quality/privacy gates, three task shapes and five alternating samples. No criteria weakened or candidate search."
+  }
+}

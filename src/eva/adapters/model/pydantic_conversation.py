@@ -1012,6 +1012,7 @@ class PydanticConversationModel:
 
             def overlap(left: str, right: str) -> tuple[int, int, int]:
                 best = (0, 0, 0)
+                maximum_overlap = min(len(left), len(right))
                 # Seeds only find candidates; the whole matched span is compared.
                 # Missing a shorter overlap leaves its exact text literal.
                 for position in range(0, len(right) - 63, 64):
@@ -1032,6 +1033,9 @@ class PydanticConversationModel:
                         size = found + end - source_start
                         if size > best[2]:
                             best = (source_start, target_start, size)
+                            # No later match can be longer; ties retain this first match.
+                            if size == maximum_overlap:
+                                return best
                         found = left.find(seed, found + 1)
                 return best
 

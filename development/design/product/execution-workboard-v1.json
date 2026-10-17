@@ -838,17 +838,17 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-17T11:16:40.392200+00:00",
+  "lastUpdated": "2026-10-17T11:45:59.861234+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.3",
+  "activeTaskId": "E4.4",
   "currentWork": {
-    "id": "E4.3",
-    "title": "Runtime-efficiëntie verbeteren zonder dommer gedrag",
+    "id": "E4.4",
+    "title": "Modules en updates onderhoudbaar opleveren",
     "status": "planned",
-    "doneWhen": "Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend.",
-    "nextAction": "Gebruik de concrete E3-verbruiksoorzaken en bestaande AIDE²-route waar passend; geen nieuwe concurrentenmatrix of algemeen optimalisatieplatform.",
-    "checkedAt": "2026-10-17T11:16:40.392200+00:00",
+    "doneWhen": "Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten.",
+    "nextAction": "Werk bestaande C10–C12 af: pakket-/builddefaults, portable/schemaresources (inclusief aangetoond oud schemas-pad) en operationele bronbinding. Gebruik vaste E3-besluiten en bestaande continue-ontwikkelafspraken; geen extra platform of licentiewijziging.",
+    "checkedAt": "2026-10-17T11:45:59.861234+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1632,6 +1632,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E4.3 · Verliesloze contextvoorbereiding versneld",
+            "state": "installed",
+            "checkedAt": "2026-10-17T11:45:59.861234+00:00",
+            "summary": "Gemeten voorbereiding878→21ms en31→18ms met bytegelijke modelinvoer. Korte context geen winst; geen token-/totale antwoordwinst bewezen. C09-headergrens vóór lezen. Kern/worker gezond geïnstalleerd,145 tests en onafhankelijke review geslaagd.",
+            "remaining": "E4.4/E4.5 en gezamenlijke gezinsacceptatie blijven open. Bestaand portable schemapadprobleem staat concreet bij E4.4.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e43-runtime-efficiency-review-20261017.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [
+              "E4.3"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "familyAcceptance": false,
+            "completionScope": "Measured deterministic preparation and header-read efficiency; no model quality lead, billed saving, whole-archive restore or physical speech claim."
+          },
+          {
             "title": "E4.2 · Zeven vaste vereenvoudigingsclusters afgewerkt",
             "state": "installed",
             "checkedAt": "2026-10-17T11:16:40.392200+00:00",
@@ -2339,46 +2356,46 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E4.2 · Zeven vaste vereenvoudigingsclusters afgewerkt",
+          "title": "E4.3 · Verliesloze contextvoorbereiding versneld",
           "state": "installed",
-          "checkedAt": "2026-10-17T11:16:40.392200+00:00",
-          "summary": "Kern en worker bijgewerkt met behoud van gegevens en ander WSL-werk. Type-/bron-/persoonsbewijs, gedeelde configuratie, providergrenzen en modelrollen aangescherpt. Gerichte tests en gebundelde review geslaagd.",
-          "remaining": "E4.3–E4.5 en de gezamenlijke gezinsacceptatie blijven open. Onderhoud is geen nieuwe gezinsfunctie.",
-          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e42-module-boundaries-installed-20261017.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/e42-module-boundaries-review-20261017.json",
+          "checkedAt": "2026-10-17T11:45:59.861234+00:00",
+          "summary": "Gemeten voorbereiding878→21ms en31→18ms met bytegelijke modelinvoer. Korte context geen winst; geen token-/totale antwoordwinst bewezen. C09-headergrens vóór lezen. Kern/worker gezond geïnstalleerd,145 tests en onafhankelijke review geslaagd.",
+          "remaining": "E4.4/E4.5 en gezamenlijke gezinsacceptatie blijven open. Bestaand portable schemapadprobleem staat concreet bij E4.4.",
+          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e43-runtime-efficiency-review-20261017.json",
           "maintenanceRepair": true,
           "newProductFunctionCompleted": false,
           "completedTaskIds": [
-            "E4.2"
+            "E4.3"
           ],
           "smallTaskCountsUnchanged": false,
           "familyAcceptance": false,
-          "completionScope": "Fixed C02–C08 maintenance; runtime and idle browser bridge installed; host operator entrypoints updated; no fresh installation/restore or physical audio claim."
+          "completionScope": "Measured deterministic preparation and header-read efficiency; no model quality lead, billed saving, whole-archive restore or physical speech claim."
         },
         "now": {
-          "taskId": "E4.3",
-          "title": "Runtime-efficiëntie verbeteren zonder dommer gedrag",
+          "taskId": "E4.4",
+          "title": "Modules en updates onderhoudbaar opleveren",
           "status": "planned",
-          "summary": "E4.2 geïnstalleerd en afgerond; volgende bestaande kaart is gerichte runtime-efficiëntie.",
-          "doneWhen": "Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend."
+          "summary": "Werk bestaande C10–C12 af: pakket-/builddefaults, portable/schemaresources (inclusief aangetoond oud schemas-pad) en operationele bronbinding. Gebruik vaste E3-besluiten en bestaande continue-ontwikkelafspraken; geen extra platform of licentiewijziging.",
+          "doneWhen": "Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten."
         },
         "next": {
-          "title": "E4.4 · Modules en installatiegrenzen afronden",
-          "state": "Na E4.3",
-          "summary": "Bestaande gesloten E3-module-/pakketbesluiten afwerken.",
+          "title": "E4.5 · Eigen verbetering zelfstandig installeren",
+          "state": "Na E4.4",
+          "summary": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Geen handeling nodig voor E4.2",
-          "detail": "Koppeling van beide speakers naar dezelfde Eva-kern alleen-lezen bevestigd. Spraak blijft bij Codex in WSL. Eigen WhatsApp-nummer kan later.",
+          "title": "Geen handeling nodig voor E4.3/E4.4",
+          "detail": "Gerichte efficiëntieverbetering draait. Spraak blijft bij Codex in WSL. Eigen WhatsApp-nummer kan later.",
           "required": false
         },
-        "checkedAt": "2026-10-17T11:16:40.392200+00:00",
-        "reviewedAt": "2026-10-17T11:16:40.392200+00:00",
+        "checkedAt": "2026-10-17T11:45:59.861234+00:00",
+        "reviewedAt": "2026-10-17T11:45:59.861234+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-17T11:16:40.392200+00:00",
-      "checkedAt": "2026-10-17T11:16:40.392200+00:00",
+      "checkedAt": "2026-10-17T11:45:59.861234+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2499,7 +2516,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-17T11:16:40.392200+00:00",
+      "lastUpdatedAt": "2026-10-17T11:45:59.861234+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2533,7 +2550,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-17T11:16:40.392200+00:00",
+      "updatedAt": "2026-10-17T11:45:59.861234+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -5447,14 +5464,14 @@
               {
                 "id": "E4.3",
                 "title": "Runtime-efficiëntie verbeteren zonder dommer gedrag",
-                "status": "planned",
+                "status": "completed",
                 "kind": "afronden",
                 "doneWhen": "Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Er zijn echte usagegegevens, bronbundeling en een bestaande geïsoleerde verbeterroute.",
-                "gap": "Bestaande portable headergrens vóór het inlezen afdwingen. Meet efficiëntie alleen voor de werkelijk gewijzigde route met behoud van kwaliteit; de review zelf levert geen runtimewinst.",
-                "nextAction": "Gebruik de concrete E3-verbruiksoorzaken en bestaande AIDE²-route waar passend; geen nieuwe concurrentenmatrix of algemeen optimalisatieplatform.",
+                "gap": "",
+                "nextAction": "Afgerond. Vervolg bestaande E4.4 voor module-/pakket-/updategrenzen; geen nieuwe vergelijkingsserie.",
                 "files": [
                   "src/eva/adapters/model",
                   "src/eva/application",
@@ -5467,10 +5484,10 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-17T10:01:27.869694+00:00",
+                "checkedAt": "2026-10-17T11:45:59.861234+00:00",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "availableNow": true,
+                  "readyWhen": "Geen handeling nodig. Deze verliesloze versnelling werkt binnen de bestaande kern; spraak blijft bij Codex in WSL.",
                   "steps": [],
                   "blocksIndependentWork": false
                 },
@@ -5484,7 +5501,7 @@
                     "decisions": [
                       "SU-02"
                     ],
-                    "implementationStarted": false,
+                    "implementationStarted": true,
                     "newTasks": 0
                   },
                   "E3.4": {
@@ -5496,7 +5513,7 @@
                       "C09"
                     ],
                     "newTasks": 0,
-                    "implementationStarted": false
+                    "implementationStarted": true
                   }
                 },
                 "e27RuntimeFinding": {
@@ -5506,6 +5523,31 @@
                   "modelAttempts": 3,
                   "questionClientSeconds": 25.19,
                   "consequence": "Reduce existing catalog/context/provider overhead here; preserve quality, coverage and privacy. No new task or comparison series."
+                },
+                "result": "Bestaande contextvoorbereiding sneller met exact dezelfde volledige modelinvoer:878→21ms en31→18ms in gemeten taken; korte context geen winst. C09-headergrens vóór lezen; kern/worker geïnstalleerd, hosthelper bijgewerkt.145 tests en onafhankelijke review geslaagd. Geen token- of totale antwoordwinst geclaimd.",
+                "efficiencyLimits": [
+                  "Preparation CPU time only: no total answer/task latency or superior answer quality measured; input is exactly preserved, not compressed further.",
+                  "Short context has no demonstrated gain:370.044 to377.833 microseconds. Retained source and saved artifact workload medians improved in5 alternating paired samples each.",
+                  "Local o200k token estimates are unchanged and are not provider-reported or billed tokens. No token or credit saving claimed.",
+                  "The earlier E2.7 observation remains42,952 input tokens,246 output tokens,3 model attempts and25.19s. This bounded CPU improvement does not establish that this whole ordinary question now costs fewer tokens or has lower total latency."
+                ],
+                "completionEvidence": "development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json",
+                "independentReview": "development/reviews/e43-runtime-efficiency-review-20261017.json",
+                "completedAt": "2026-10-17T11:45:59.861234+00:00",
+                "cleanupExecution": {
+                  "fixedListComplete": true,
+                  "clusters": [
+                    {
+                      "id": "C09",
+                      "status": "completed",
+                      "evidence": "development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json"
+                    }
+                  ],
+                  "newTasks": 0,
+                  "installedCoreWorker": true,
+                  "hostOperatorUpdated": true,
+                  "speechChanged": false,
+                  "familyAcceptance": false
                 }
               },
               {
@@ -5518,7 +5560,7 @@
                 "ownerActionRequired": false,
                 "existing": "Bestaande installer, locks, adapters en runtime-updatepad worden hergebruikt.",
                 "gap": "Drie clusters: package/build/modeldefaults; portable/schemaresources en exacte provenance; operationele helper los van testchecker met juiste bronbinding. Tijdelijke fotobibliotheek pas vervangen na bewezen gelijke werking; geen Eva1-agent.",
-                "nextAction": "Werk uitsluitend aangetoonde E3-gaten af, inclusief tijdelijke oude runtime-afhankelijkheden; geen extra microservices of ongevraagde licentiewijziging.",
+                "nextAction": "Werk bestaande C10–C12 af: pakket-/builddefaults, portable/schemaresources (inclusief aangetoond oud schemas-pad) en operationele bronbinding. Gebruik vaste E3-besluiten en bestaande continue-ontwikkelafspraken; geen extra platform of licentiewijziging.",
                 "files": [
                   "src/eva/contracts",
                   "src/eva/bootstrap",
@@ -5533,7 +5575,7 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-17T10:01:27.869694+00:00",
+                "checkedAt": "2026-10-17T11:45:59.861234+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -5575,6 +5617,13 @@
                     "newTasks": 0,
                     "implementationStarted": false
                   }
+                },
+                "existingSchemaLayoutFinding": {
+                  "source": "development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json",
+                  "function": "src/tools/portable_export.py::_schema_payloads",
+                  "failure": "Two existing portable whole-archive tests fail before encryption because default root schemas path is absent; actual resources are development/schemas.",
+                  "scope": "Reuse existing C10/C11 packaging/schema-resource repair; no new product task.",
+                  "status": "open"
                 }
               },
               {
@@ -5701,7 +5750,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.2 afgerond en geïnstalleerd. Volgende bestaande kaart E4.3: gerichte runtime-efficiëntie met behoud van kwaliteit; geen nieuwe vergelijkingsserie.",
+        "nextAction": "Werk bestaande C10–C12 af: pakket-/builddefaults, portable/schemaresources (inclusief aangetoond oud schemas-pad) en operationele bronbinding. Gebruik vaste E3-besluiten en bestaande continue-ontwikkelafspraken; geen extra platform of licentiewijziging.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5710,10 +5759,10 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-17T11:16:40.392200+00:00",
+        "updatedAt": "2026-10-17T11:45:59.861234+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
-          "updatedAt": "2026-10-17T11:16:40.392200+00:00",
+          "updatedAt": "2026-10-17T11:45:59.861234+00:00",
           "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
           "phases": [
             {
@@ -5784,7 +5833,7 @@
                 "E4.4",
                 "E4.5"
               ],
-              "currentGap": "E4.1 en E4.2 afgerond. E4.3–E4.5 en daarna gebundelde E5-oplevering/gezinsacceptatie blijven open."
+              "currentGap": "E4.1–E4.3 afgerond. E4.4/E4.5 en daarna gebundelde E5-oplevering/gezinsacceptatie blijven open. De gemeten CPU-winst bewijst geen lagere tokens of totale antwoordtijd."
             },
             {
               "id": "E5",
@@ -8793,14 +8842,14 @@
             {
               "id": "E4.3",
               "title": "Runtime-efficiëntie verbeteren zonder dommer gedrag",
-              "status": "planned",
+              "status": "completed",
               "kind": "afronden",
               "doneWhen": "Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Er zijn echte usagegegevens, bronbundeling en een bestaande geïsoleerde verbeterroute.",
-              "gap": "Bestaande portable headergrens vóór het inlezen afdwingen. Meet efficiëntie alleen voor de werkelijk gewijzigde route met behoud van kwaliteit; de review zelf levert geen runtimewinst.",
-              "nextAction": "Gebruik de concrete E3-verbruiksoorzaken en bestaande AIDE²-route waar passend; geen nieuwe concurrentenmatrix of algemeen optimalisatieplatform.",
+              "gap": "",
+              "nextAction": "Afgerond. Vervolg bestaande E4.4 voor module-/pakket-/updategrenzen; geen nieuwe vergelijkingsserie.",
               "files": [
                 "src/eva/adapters/model",
                 "src/eva/application",
@@ -8813,10 +8862,10 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-17T10:01:27.869694+00:00",
+              "checkedAt": "2026-10-17T11:45:59.861234+00:00",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "availableNow": true,
+                "readyWhen": "Geen handeling nodig. Deze verliesloze versnelling werkt binnen de bestaande kern; spraak blijft bij Codex in WSL.",
                 "steps": [],
                 "blocksIndependentWork": false
               },
@@ -8830,7 +8879,7 @@
                   "decisions": [
                     "SU-02"
                   ],
-                  "implementationStarted": false,
+                  "implementationStarted": true,
                   "newTasks": 0
                 },
                 "E3.4": {
@@ -8842,7 +8891,7 @@
                     "C09"
                   ],
                   "newTasks": 0,
-                  "implementationStarted": false
+                  "implementationStarted": true
                 }
               },
               "e27RuntimeFinding": {
@@ -8852,6 +8901,31 @@
                 "modelAttempts": 3,
                 "questionClientSeconds": 25.19,
                 "consequence": "Reduce existing catalog/context/provider overhead here; preserve quality, coverage and privacy. No new task or comparison series."
+              },
+              "result": "Bestaande contextvoorbereiding sneller met exact dezelfde volledige modelinvoer:878→21ms en31→18ms in gemeten taken; korte context geen winst. C09-headergrens vóór lezen; kern/worker geïnstalleerd, hosthelper bijgewerkt.145 tests en onafhankelijke review geslaagd. Geen token- of totale antwoordwinst geclaimd.",
+              "efficiencyLimits": [
+                "Preparation CPU time only: no total answer/task latency or superior answer quality measured; input is exactly preserved, not compressed further.",
+                "Short context has no demonstrated gain:370.044 to377.833 microseconds. Retained source and saved artifact workload medians improved in5 alternating paired samples each.",
+                "Local o200k token estimates are unchanged and are not provider-reported or billed tokens. No token or credit saving claimed.",
+                "The earlier E2.7 observation remains42,952 input tokens,246 output tokens,3 model attempts and25.19s. This bounded CPU improvement does not establish that this whole ordinary question now costs fewer tokens or has lower total latency."
+              ],
+              "completionEvidence": "development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json",
+              "independentReview": "development/reviews/e43-runtime-efficiency-review-20261017.json",
+              "completedAt": "2026-10-17T11:45:59.861234+00:00",
+              "cleanupExecution": {
+                "fixedListComplete": true,
+                "clusters": [
+                  {
+                    "id": "C09",
+                    "status": "completed",
+                    "evidence": "development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json"
+                  }
+                ],
+                "newTasks": 0,
+                "installedCoreWorker": true,
+                "hostOperatorUpdated": true,
+                "speechChanged": false,
+                "familyAcceptance": false
               }
             },
             {
@@ -8864,7 +8938,7 @@
               "ownerActionRequired": false,
               "existing": "Bestaande installer, locks, adapters en runtime-updatepad worden hergebruikt.",
               "gap": "Drie clusters: package/build/modeldefaults; portable/schemaresources en exacte provenance; operationele helper los van testchecker met juiste bronbinding. Tijdelijke fotobibliotheek pas vervangen na bewezen gelijke werking; geen Eva1-agent.",
-              "nextAction": "Werk uitsluitend aangetoonde E3-gaten af, inclusief tijdelijke oude runtime-afhankelijkheden; geen extra microservices of ongevraagde licentiewijziging.",
+              "nextAction": "Werk bestaande C10–C12 af: pakket-/builddefaults, portable/schemaresources (inclusief aangetoond oud schemas-pad) en operationele bronbinding. Gebruik vaste E3-besluiten en bestaande continue-ontwikkelafspraken; geen extra platform of licentiewijziging.",
               "files": [
                 "src/eva/contracts",
                 "src/eva/bootstrap",
@@ -8879,7 +8953,7 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-17T10:01:27.869694+00:00",
+              "checkedAt": "2026-10-17T11:45:59.861234+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -8921,6 +8995,13 @@
                   "newTasks": 0,
                   "implementationStarted": false
                 }
+              },
+              "existingSchemaLayoutFinding": {
+                "source": "development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json",
+                "function": "src/tools/portable_export.py::_schema_payloads",
+                "failure": "Two existing portable whole-archive tests fail before encryption because default root schemas path is absent; actual resources are development/schemas.",
+                "scope": "Reuse existing C10/C11 packaging/schema-resource repair; no new product task.",
+                "status": "open"
               }
             },
             {
@@ -9047,7 +9128,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.2 afgerond en geïnstalleerd. Volgende bestaande kaart E4.3: gerichte runtime-efficiëntie met behoud van kwaliteit; geen nieuwe vergelijkingsserie.",
+      "nextAction": "Werk bestaande C10–C12 af: pakket-/builddefaults, portable/schemaresources (inclusief aangetoond oud schemas-pad) en operationele bronbinding. Gebruik vaste E3-besluiten en bestaande continue-ontwikkelafspraken; geen extra platform of licentiewijziging.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -9056,10 +9137,10 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-17T11:16:40.392200+00:00",
+      "updatedAt": "2026-10-17T11:45:59.861234+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
-        "updatedAt": "2026-10-17T11:16:40.392200+00:00",
+        "updatedAt": "2026-10-17T11:45:59.861234+00:00",
         "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
         "phases": [
           {
@@ -9130,7 +9211,7 @@
               "E4.4",
               "E4.5"
             ],
-            "currentGap": "E4.1 en E4.2 afgerond. E4.3–E4.5 en daarna gebundelde E5-oplevering/gezinsacceptatie blijven open."
+            "currentGap": "E4.1–E4.3 afgerond. E4.4/E4.5 en daarna gebundelde E5-oplevering/gezinsacceptatie blijven open. De gemeten CPU-winst bewijst geen lagere tokens of totale antwoordtijd."
           },
           {
             "id": "E5",
@@ -10340,7 +10421,7 @@
       "nextExistingTask": "E3.3"
     }
   },
-  "updatedAt": "2026-10-17T11:16:40.392200+00:00",
+  "updatedAt": "2026-10-17T11:45:59.861234+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -10377,5 +10458,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-17T11:16:40.392200+00:00"
+  "lastUpdatedAt": "2026-10-17T11:45:59.861234+00:00"
 }

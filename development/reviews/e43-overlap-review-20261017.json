@@ -1,0 +1,15 @@
+{
+  "contract": "EvaE43IndependentOverlapReview/v1",
+  "status": "GO_for_overlap_only",
+  "beforeSha256": "19d46603d8c511ceb82b840bc2ed18ae027f38735db538eb153d44d0a27d8ad6",
+  "currentWholeFileSha256": "1b2b922303a8040656765c2980351d0f91bcd501a89c5355a8f0fc01c181b3cd",
+  "method": "Extract and compile only the actual nested overlap functions via AST, no provider/module execution; compare exact returned coordinates and size.",
+  "cases": 345,
+  "mismatches": 0,
+  "proof": "Every compared equal span lies within both strings, so its size is at most min(len(left),len(right)). When the first newly best span attains that bound no later candidate can be longer; original strict-greater update preserves the first tie. Seed selection, character coordinates, escaped modes, proof/authority and payload generation remain unchanged.",
+  "limits": [
+    "Whole phase request equality/performance delegated to coordinator measurement; this independently tests actual overlap coordinate equivalence.",
+    "Whole-file diff also includes voice_context import in _instructions outside this optimization; not reviewed as part of overlap candidate."
+  ],
+  "resultsSha256": "227061469787eae710f43affc0a5fc9f759e36a4410e8c89fef52dfed5451e91"
+}

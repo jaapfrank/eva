@@ -1,0 +1,108 @@
+{
+  "contract": "EvaE43PreparationMeasurement/v1",
+  "referenceSha256": "19d46603d8c511ceb82b840bc2ed18ae027f38735db538eb153d44d0a27d8ad6",
+  "rows": [
+    {
+      "case": "wrapped-source",
+      "samplesMicroseconds": {
+        "reference": [
+          829631.498,
+          1019754.948,
+          878269.881,
+          852966.282,
+          937328.104
+        ],
+        "candidate": [
+          25895.355,
+          20525.353,
+          21565.761,
+          19436.611,
+          16399.884
+        ]
+      },
+      "medianMicroseconds": {
+        "reference": 878269.881,
+        "candidate": 20525.353
+      },
+      "preparationSpeedup": 42.78951407072025,
+      "sameWholeInputBytes": true,
+      "sameSourceBytes": true,
+      "inputBytes": 3954,
+      "localO200kTokens": 971,
+      "inputSha256": "c9f291b89c70a5c11f8427da75b033f2faabf170d1605676629166e0e8fa878e",
+      "humanAssistance": 0,
+      "modelCalls": 0,
+      "externalToolActions": 0
+    },
+    {
+      "case": "saved-artifact",
+      "samplesMicroseconds": {
+        "reference": [
+          31284.792,
+          31244.524,
+          30698.387,
+          24643.503,
+          23424.698
+        ],
+        "candidate": [
+          17823.258,
+          17645.711,
+          18137.805,
+          16978.065,
+          12889.394
+        ]
+      },
+      "medianMicroseconds": {
+        "reference": 30698.387,
+        "candidate": 17645.711
+      },
+      "preparationSpeedup": 1.7397081364417677,
+      "sameWholeInputBytes": true,
+      "sameSourceBytes": true,
+      "inputBytes": 4635,
+      "localO200kTokens": 1472,
+      "inputSha256": "7a1a947c5b87b1b5c6869edb1f6cec497d184d7efbc5c3b5150fe712a97de1f6",
+      "humanAssistance": 0,
+      "modelCalls": 0,
+      "externalToolActions": 0
+    },
+    {
+      "case": "short",
+      "samplesMicroseconds": {
+        "reference": [
+          376.365,
+          367.002,
+          370.044,
+          362.777,
+          424.003
+        ],
+        "candidate": [
+          384.308,
+          377.833,
+          378.512,
+          368.316,
+          374.358
+        ]
+      },
+      "medianMicroseconds": {
+        "reference": 370.044,
+        "candidate": 377.833
+      },
+      "preparationSpeedup": 0.9793850722409105,
+      "sameWholeInputBytes": true,
+      "sameSourceBytes": true,
+      "inputBytes": 923,
+      "localO200kTokens": 203,
+      "inputSha256": "32eb1cb52c3d8a941619d1717a013c257acf179f8ec07eeb6d1c3c1cd012b6d7",
+      "humanAssistance": 0,
+      "modelCalls": 0,
+      "externalToolActions": 0
+    }
+  ],
+  "differentialOverlapCases": 300,
+  "allDifferentialCasesEqual": true,
+  "providerCalls": 0,
+  "providerReportedTokens": null,
+  "localTokenizerCaveat": "Pinned o200k_base envelope estimate; not the private model tokenizer and not billed-token savings.",
+  "endToEndAnswerLatency": "not measured; only deterministic preparation time"
+}

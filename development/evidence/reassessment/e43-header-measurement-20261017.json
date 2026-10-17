@@ -1,0 +1,1525 @@
+{
+  "contract": "EvaE43TransportHeaderMeasurement/v1",
+  "repetitions": 5,
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "allocation_limit_bytes": 1048576
+  },
+  "measurement": "Instrument actual file read requests/returned bytes; tracemalloc Python peak only; monotonic perf_counter_ns elapsed for whole decrypt function. Five before then five after samples per case, not randomized; microsecond timing is descriptive only.",
+  "limits": [
+    "No RSS/native allocator peak claim, including OpenSSL/scrypt allocations.",
+    "No 4GiB allocation: uint32max exercised only by guarded ordinary unit test, not baseline benchmark.",
+    "Valid case authenticates/decrypts synthetic 1024-byte plaintext, no archive unpack/restore or family data.",
+    "No valid-input speedup claim; intended gain is rejection before oversized body read."
+  ],
+  "cases": [
+    {
+      "case": "valid_authenticated_1024",
+      "input_bytes": 1438,
+      "variants": {
+        "before": {
+          "samples": [
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                },
+                {
+                  "requested": 16,
+                  "returned": 16
+                },
+                {
+                  "requested": 1024,
+                  "returned": 1024
+                }
+              ],
+              "bytes_read": 1438,
+              "maximum_read_request": 1024,
+              "python_peak_bytes": 16890,
+              "elapsed_ns": 176504999,
+              "error": null,
+              "output_sha256": "92f1cfa86a68f235cfdc74eb81f9e75fadcf1f34eeb621708759f0d033fc1c15",
+              "returned_header_sha256": "e9793889100d8aa14f433f86703c13f2a74063a4af86762b6b5f0e5e869ddc59"
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                },
+                {
+                  "requested": 16,
+                  "returned": 16
+                },
+                {
+                  "requested": 1024,
+                  "returned": 1024
+                }
+              ],
+              "bytes_read": 1438,
+              "maximum_read_request": 1024,
+              "python_peak_bytes": 16642,
+              "elapsed_ns": 206696451,
+              "error": null,
+              "output_sha256": "92f1cfa86a68f235cfdc74eb81f9e75fadcf1f34eeb621708759f0d033fc1c15",
+              "returned_header_sha256": "e9793889100d8aa14f433f86703c13f2a74063a4af86762b6b5f0e5e869ddc59"
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                },
+                {
+                  "requested": 16,
+                  "returned": 16
+                },
+                {
+                  "requested": 1024,
+                  "returned": 1024
+                }
+              ],
+              "bytes_read": 1438,
+              "maximum_read_request": 1024,
+              "python_peak_bytes": 16618,
+              "elapsed_ns": 211545316,
+              "error": null,
+              "output_sha256": "92f1cfa86a68f235cfdc74eb81f9e75fadcf1f34eeb621708759f0d033fc1c15",
+              "returned_header_sha256": "e9793889100d8aa14f433f86703c13f2a74063a4af86762b6b5f0e5e869ddc59"
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                },
+                {
+                  "requested": 16,
+                  "returned": 16
+                },
+                {
+                  "requested": 1024,
+                  "returned": 1024
+                }
+              ],
+              "bytes_read": 1438,
+              "maximum_read_request": 1024,
+              "python_peak_bytes": 16594,
+              "elapsed_ns": 179714357,
+              "error": null,
+              "output_sha256": "92f1cfa86a68f235cfdc74eb81f9e75fadcf1f34eeb621708759f0d033fc1c15",
+              "returned_header_sha256": "e9793889100d8aa14f433f86703c13f2a74063a4af86762b6b5f0e5e869ddc59"
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                },
+                {
+                  "requested": 16,
+                  "returned": 16
+                },
+                {
+                  "requested": 1024,
+                  "returned": 1024
+                }
+              ],
+              "bytes_read": 1438,
+              "maximum_read_request": 1024,
+              "python_peak_bytes": 16570,
+              "elapsed_ns": 169710339,
+              "error": null,
+              "output_sha256": "92f1cfa86a68f235cfdc74eb81f9e75fadcf1f34eeb621708759f0d033fc1c15",
+              "returned_header_sha256": "e9793889100d8aa14f433f86703c13f2a74063a4af86762b6b5f0e5e869ddc59"
+            }
+          ],
+          "median_elapsed_ns": 179714357,
+          "median_python_peak_bytes": 16618
+        },
+        "after": {
+          "samples": [
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                },
+                {
+                  "requested": 16,
+                  "returned": 16
+                },
+                {
+                  "requested": 1024,
+                  "returned": 1024
+                }
+              ],
+              "bytes_read": 1438,
+              "maximum_read_request": 1024,
+              "python_peak_bytes": 16544,
+              "elapsed_ns": 204759656,
+              "error": null,
+              "output_sha256": "92f1cfa86a68f235cfdc74eb81f9e75fadcf1f34eeb621708759f0d033fc1c15",
+              "returned_header_sha256": "e9793889100d8aa14f433f86703c13f2a74063a4af86762b6b5f0e5e869ddc59"
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                },
+                {
+                  "requested": 16,
+                  "returned": 16
+                },
+                {
+                  "requested": 1024,
+                  "returned": 1024
+                }
+              ],
+              "bytes_read": 1438,
+              "maximum_read_request": 1024,
+              "python_peak_bytes": 16504,
+              "elapsed_ns": 191903475,
+              "error": null,
+              "output_sha256": "92f1cfa86a68f235cfdc74eb81f9e75fadcf1f34eeb621708759f0d033fc1c15",
+              "returned_header_sha256": "e9793889100d8aa14f433f86703c13f2a74063a4af86762b6b5f0e5e869ddc59"
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                },
+                {
+                  "requested": 16,
+                  "returned": 16
+                },
+                {
+                  "requested": 1024,
+                  "returned": 1024
+                }
+              ],
+              "bytes_read": 1438,
+              "maximum_read_request": 1024,
+              "python_peak_bytes": 16472,
+              "elapsed_ns": 146190191,
+              "error": null,
+              "output_sha256": "92f1cfa86a68f235cfdc74eb81f9e75fadcf1f34eeb621708759f0d033fc1c15",
+              "returned_header_sha256": "e9793889100d8aa14f433f86703c13f2a74063a4af86762b6b5f0e5e869ddc59"
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                },
+                {
+                  "requested": 16,
+                  "returned": 16
+                },
+                {
+                  "requested": 1024,
+                  "returned": 1024
+                }
+              ],
+              "bytes_read": 1438,
+              "maximum_read_request": 1024,
+              "python_peak_bytes": 16448,
+              "elapsed_ns": 144315969,
+              "error": null,
+              "output_sha256": "92f1cfa86a68f235cfdc74eb81f9e75fadcf1f34eeb621708759f0d033fc1c15",
+              "returned_header_sha256": "e9793889100d8aa14f433f86703c13f2a74063a4af86762b6b5f0e5e869ddc59"
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                },
+                {
+                  "requested": 16,
+                  "returned": 16
+                },
+                {
+                  "requested": 1024,
+                  "returned": 1024
+                }
+              ],
+              "bytes_read": 1438,
+              "maximum_read_request": 1024,
+              "python_peak_bytes": 16424,
+              "elapsed_ns": 155819004,
+              "error": null,
+              "output_sha256": "92f1cfa86a68f235cfdc74eb81f9e75fadcf1f34eeb621708759f0d033fc1c15",
+              "returned_header_sha256": "e9793889100d8aa14f433f86703c13f2a74063a4af86762b6b5f0e5e869ddc59"
+            }
+          ],
+          "median_elapsed_ns": 155819004,
+          "median_python_peak_bytes": 16472
+        }
+      }
+    },
+    {
+      "case": "valid_header_truncated_ciphertext",
+      "input_bytes": 1437,
+      "variants": {
+        "before": {
+          "samples": [
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                }
+              ],
+              "bytes_read": 398,
+              "maximum_read_request": 386,
+              "python_peak_bytes": 11276,
+              "elapsed_ns": 686359,
+              "error": "transport ciphertext length differs from header",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                }
+              ],
+              "bytes_read": 398,
+              "maximum_read_request": 386,
+              "python_peak_bytes": 11212,
+              "elapsed_ns": 667911,
+              "error": "transport ciphertext length differs from header",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                }
+              ],
+              "bytes_read": 398,
+              "maximum_read_request": 386,
+              "python_peak_bytes": 11196,
+              "elapsed_ns": 672594,
+              "error": "transport ciphertext length differs from header",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                }
+              ],
+              "bytes_read": 398,
+              "maximum_read_request": 386,
+              "python_peak_bytes": 11172,
+              "elapsed_ns": 697898,
+              "error": "transport ciphertext length differs from header",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                }
+              ],
+              "bytes_read": 398,
+              "maximum_read_request": 386,
+              "python_peak_bytes": 11156,
+              "elapsed_ns": 698836,
+              "error": "transport ciphertext length differs from header",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            }
+          ],
+          "median_elapsed_ns": 686359,
+          "median_python_peak_bytes": 11196
+        },
+        "after": {
+          "samples": [
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                }
+              ],
+              "bytes_read": 398,
+              "maximum_read_request": 386,
+              "python_peak_bytes": 11132,
+              "elapsed_ns": 725532,
+              "error": "transport ciphertext length differs from header",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                }
+              ],
+              "bytes_read": 398,
+              "maximum_read_request": 386,
+              "python_peak_bytes": 11116,
+              "elapsed_ns": 647303,
+              "error": "transport ciphertext length differs from header",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                }
+              ],
+              "bytes_read": 398,
+              "maximum_read_request": 386,
+              "python_peak_bytes": 11100,
+              "elapsed_ns": 680122,
+              "error": "transport ciphertext length differs from header",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                }
+              ],
+              "bytes_read": 398,
+              "maximum_read_request": 386,
+              "python_peak_bytes": 11084,
+              "elapsed_ns": 739957,
+              "error": "transport ciphertext length differs from header",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 386,
+                  "returned": 386
+                }
+              ],
+              "bytes_read": 398,
+              "maximum_read_request": 386,
+              "python_peak_bytes": 11076,
+              "elapsed_ns": 633526,
+              "error": "transport ciphertext length differs from header",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            }
+          ],
+          "median_elapsed_ns": 680122,
+          "median_python_peak_bytes": 11100
+        }
+      }
+    },
+    {
+      "case": "zero_length",
+      "input_bytes": 12,
+      "variants": {
+        "before": {
+          "samples": [
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 0,
+                  "returned": 0
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 7145,
+              "elapsed_ns": 195884,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 0,
+                  "returned": 0
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 7089,
+              "elapsed_ns": 171077,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 0,
+                  "returned": 0
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 7081,
+              "elapsed_ns": 180151,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 0,
+                  "returned": 0
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 7065,
+              "elapsed_ns": 222915,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 0,
+                  "returned": 0
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 7057,
+              "elapsed_ns": 209881,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            }
+          ],
+          "median_elapsed_ns": 195884,
+          "median_python_peak_bytes": 7081
+        },
+        "after": {
+          "samples": [
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6529,
+              "elapsed_ns": 164541,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6521,
+              "elapsed_ns": 158362,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6521,
+              "elapsed_ns": 201836,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6521,
+              "elapsed_ns": 209269,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6521,
+              "elapsed_ns": 217223,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            }
+          ],
+          "median_elapsed_ns": 201836,
+          "median_python_peak_bytes": 6521
+        }
+      }
+    },
+    {
+      "case": "maximum_admitted_invalid_json",
+      "input_bytes": 16396,
+      "variants": {
+        "before": {
+          "samples": [
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16384,
+                  "returned": 16384
+                }
+              ],
+              "bytes_read": 16396,
+              "maximum_read_request": 16384,
+              "python_peak_bytes": 41689,
+              "elapsed_ns": 295504,
+              "error": "transport header is not valid JSON",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16384,
+                  "returned": 16384
+                }
+              ],
+              "bytes_read": 16396,
+              "maximum_read_request": 16384,
+              "python_peak_bytes": 41641,
+              "elapsed_ns": 264557,
+              "error": "transport header is not valid JSON",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16384,
+                  "returned": 16384
+                }
+              ],
+              "bytes_read": 16396,
+              "maximum_read_request": 16384,
+              "python_peak_bytes": 41641,
+              "elapsed_ns": 257683,
+              "error": "transport header is not valid JSON",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16384,
+                  "returned": 16384
+                }
+              ],
+              "bytes_read": 16396,
+              "maximum_read_request": 16384,
+              "python_peak_bytes": 41641,
+              "elapsed_ns": 259774,
+              "error": "transport header is not valid JSON",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16384,
+                  "returned": 16384
+                }
+              ],
+              "bytes_read": 16396,
+              "maximum_read_request": 16384,
+              "python_peak_bytes": 41641,
+              "elapsed_ns": 298568,
+              "error": "transport header is not valid JSON",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            }
+          ],
+          "median_elapsed_ns": 264557,
+          "median_python_peak_bytes": 41641
+        },
+        "after": {
+          "samples": [
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16384,
+                  "returned": 16384
+                }
+              ],
+              "bytes_read": 16396,
+              "maximum_read_request": 16384,
+              "python_peak_bytes": 41641,
+              "elapsed_ns": 267760,
+              "error": "transport header is not valid JSON",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16384,
+                  "returned": 16384
+                }
+              ],
+              "bytes_read": 16396,
+              "maximum_read_request": 16384,
+              "python_peak_bytes": 41641,
+              "elapsed_ns": 275217,
+              "error": "transport header is not valid JSON",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16384,
+                  "returned": 16384
+                }
+              ],
+              "bytes_read": 16396,
+              "maximum_read_request": 16384,
+              "python_peak_bytes": 41641,
+              "elapsed_ns": 281258,
+              "error": "transport header is not valid JSON",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16384,
+                  "returned": 16384
+                }
+              ],
+              "bytes_read": 16396,
+              "maximum_read_request": 16384,
+              "python_peak_bytes": 41641,
+              "elapsed_ns": 270418,
+              "error": "transport header is not valid JSON",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16384,
+                  "returned": 16384
+                }
+              ],
+              "bytes_read": 16396,
+              "maximum_read_request": 16384,
+              "python_peak_bytes": 41641,
+              "elapsed_ns": 265874,
+              "error": "transport header is not valid JSON",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            }
+          ],
+          "median_elapsed_ns": 270418,
+          "median_python_peak_bytes": 41641
+        }
+      }
+    },
+    {
+      "case": "first_oversize",
+      "input_bytes": 16397,
+      "variants": {
+        "before": {
+          "samples": [
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16385,
+                  "returned": 16385
+                }
+              ],
+              "bytes_read": 16397,
+              "maximum_read_request": 16385,
+              "python_peak_bytes": 23595,
+              "elapsed_ns": 259282,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16385,
+                  "returned": 16385
+                }
+              ],
+              "bytes_read": 16397,
+              "maximum_read_request": 16385,
+              "python_peak_bytes": 23547,
+              "elapsed_ns": 194568,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16385,
+                  "returned": 16385
+                }
+              ],
+              "bytes_read": 16397,
+              "maximum_read_request": 16385,
+              "python_peak_bytes": 23547,
+              "elapsed_ns": 211064,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16385,
+                  "returned": 16385
+                }
+              ],
+              "bytes_read": 16397,
+              "maximum_read_request": 16385,
+              "python_peak_bytes": 23547,
+              "elapsed_ns": 199852,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 16385,
+                  "returned": 16385
+                }
+              ],
+              "bytes_read": 16397,
+              "maximum_read_request": 16385,
+              "python_peak_bytes": 23547,
+              "elapsed_ns": 190688,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            }
+          ],
+          "median_elapsed_ns": 199852,
+          "median_python_peak_bytes": 23547
+        },
+        "after": {
+          "samples": [
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6581,
+              "elapsed_ns": 231417,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6581,
+              "elapsed_ns": 172004,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6581,
+              "elapsed_ns": 168893,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6581,
+              "elapsed_ns": 163864,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6581,
+              "elapsed_ns": 173105,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            }
+          ],
+          "median_elapsed_ns": 172004,
+          "median_python_peak_bytes": 6581
+        }
+      }
+    },
+    {
+      "case": "one_mib_oversize",
+      "input_bytes": 1048588,
+      "variants": {
+        "before": {
+          "samples": [
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 1048576,
+                  "returned": 1048576
+                }
+              ],
+              "bytes_read": 1048588,
+              "maximum_read_request": 1048576,
+              "python_peak_bytes": 1055818,
+              "elapsed_ns": 371297,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 1048576,
+                  "returned": 1048576
+                }
+              ],
+              "bytes_read": 1048588,
+              "maximum_read_request": 1048576,
+              "python_peak_bytes": 1055770,
+              "elapsed_ns": 330805,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 1048576,
+                  "returned": 1048576
+                }
+              ],
+              "bytes_read": 1048588,
+              "maximum_read_request": 1048576,
+              "python_peak_bytes": 1055770,
+              "elapsed_ns": 373269,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 1048576,
+                  "returned": 1048576
+                }
+              ],
+              "bytes_read": 1048588,
+              "maximum_read_request": 1048576,
+              "python_peak_bytes": 1055770,
+              "elapsed_ns": 392746,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                },
+                {
+                  "requested": 1048576,
+                  "returned": 1048576
+                }
+              ],
+              "bytes_read": 1048588,
+              "maximum_read_request": 1048576,
+              "python_peak_bytes": 1055770,
+              "elapsed_ns": 396759,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            }
+          ],
+          "median_elapsed_ns": 373269,
+          "median_python_peak_bytes": 1055770
+        },
+        "after": {
+          "samples": [
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6613,
+              "elapsed_ns": 214496,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6613,
+              "elapsed_ns": 162606,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6613,
+              "elapsed_ns": 255276,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6613,
+              "elapsed_ns": 160918,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            },
+            {
+              "reads": [
+                {
+                  "requested": 8,
+                  "returned": 8
+                },
+                {
+                  "requested": 4,
+                  "returned": 4
+                }
+              ],
+              "bytes_read": 12,
+              "maximum_read_request": 8,
+              "python_peak_bytes": 6613,
+              "elapsed_ns": 165025,
+              "error": "transport header length is invalid",
+              "output_sha256": null,
+              "returned_header_sha256": null
+            }
+          ],
+          "median_elapsed_ns": 165025,
+          "median_python_peak_bytes": 6613
+        }
+      }
+    }
+  ]
+}

@@ -481,6 +481,8 @@ def _decrypt_to_file(
             if len(length_raw) != HEADER_LENGTH_BYTES:
                 raise PortableTransportError("transport header is truncated")
             header_length = struct.unpack(">I", length_raw)[0]
+            if not 1 <= header_length <= MAX_HEADER_BYTES:
+                raise PortableTransportError("transport header length is invalid")
             header = input_handle.read(header_length)
             salt, nonce, plaintext_bytes, plaintext_sha256 = _parse_header(header)
             ciphertext_start = len(MAGIC) + HEADER_LENGTH_BYTES + header_length
