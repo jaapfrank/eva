@@ -2,6 +2,7 @@
 from collections import deque
 import asyncio
 import time
+from weakref import WeakSet
 from av import AudioFrame, AudioResampler
 from livekit import rtc
 
@@ -20,6 +21,41 @@ class SpeakerSource:
         self.epoch=0
         self.audible_frames=0
         self.changed=asyncio.Event()
+        self._input_fences=set()
+        self._input_observed=WeakSet()
+        self._input_deliveries=0
+        self._input_resume_at=0.0
+        self._input_was_suppressed=False
+
+    @property
+    def input_suppressed(self):
+        """The native room microphone must not feed speaker echo back to ASR.
+
+        This is a temporary half-duplex boundary, not acoustic cancellation.
+        Local wakeword/STOP/mute controls use the separate wire control path.
+        Browser audio keeps its existing echo cancellation and input behavior.
+        """
+        suppressed=hasattr(self.sink,'wire') and (self._input_deliveries>0
+            or bool(self._input_fences) or time.monotonic()<self._input_resume_at)
+        if suppressed!=self._input_was_suppressed:
+            self._input_was_suppressed=suppressed
+            self.diagnostic('speaker_input_gate',suppressed=suppressed)
+        return suppressed
+
+    def _fence_input(self):
+        if not hasattr(self.sink,'wire'):return
+        segment=getattr(self.sink,'segment',None)
+        for task in (getattr(segment,'task',None),getattr(self.sink,'barrier',None)):
+            if task is None or task in self._input_observed:continue
+            self._input_observed.add(task)
+            self._input_fences.add(task)
+            def settled(done):
+                # Failure/cancellation is not a physical stop receipt. Keep the
+                # microphone fenced until the failed session is closed.
+                if done.cancelled() or done.exception() is not None:return
+                self._input_fences.discard(done)
+                self._input_resume_at=max(self._input_resume_at,time.monotonic()+.3)
+            task.add_done_callback(settled)
 
     def _buffer_leading(self, output):
         self.leading.append(output)
@@ -44,6 +80,7 @@ class SpeakerSource:
         async def deliver(output):
             if epoch != self.epoch:return False
             started=time.monotonic()
+            self._input_deliveries+=1
             try:
                 await self.sink.capture_frame(output)
             except Exception:
@@ -51,6 +88,11 @@ class SpeakerSource:
                 # frame is cancelled, not a fatal failure of the conversation.
                 if epoch == self.epoch:raise
                 return False
+            finally:
+                # The native render task waits for FINISHED or STOPPED, rather
+                # than merely provider completion or a local queue flush.
+                self._fence_input()
+                self._input_deliveries-=1
             if epoch != self.epoch:return False
             self.max_capture_ms=max(self.max_capture_ms,(time.monotonic()-started)*1000)
             self.segment_samples+=output.samples_per_channel
@@ -94,7 +136,7 @@ class SpeakerSource:
         self.epoch+=1
         self.last_frame_at=None
         self.leading.clear();self.active=False;self.quiet_samples=0
-        self.sink.clear_buffer();self.changed.set()
+        self.sink.clear_buffer();self._fence_input();self.changed.set()
 
     def playback_marker(self):
         return self.epoch,self.audible_frames

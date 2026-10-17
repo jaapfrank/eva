@@ -2294,3 +2294,24 @@ def test_missing_imported_legacy_source_does_not_invent_native_erasure(hindsight
     assert "original_source" not in second.confirmed_facts[0].value
     assert second.recall.excluded_reasons == {}
 
+
+@pytest.mark.parametrize("missing_metadata", [None, {}])
+def test_shared_recall_skips_unproven_legacy_fact_without_losing_valid_fallback(
+    hindsight_server, missing_metadata,
+):
+    base_url, state = hindsight_server
+    engine, _doc, query, _grants, _metadata = _household_memory_fixture(base_url, state)
+    valid = state.group_recall_response["results"][0]
+    valid["scores"]["final"] = 0.009
+    unproven = {**valid, "id": "legacy-without-authority", "text": "Unproven household content",
+                "scores": {"final": 0.014}, "metadata": missing_metadata}
+    state.group_recall_response["results"] = [unproven, valid]
+    result = engine.recall_for_presence(query)
+    assert [fact.value["text"] for fact in result.confirmed_facts] == [valid["text"]]
+    assert result.recall.excluded_reasons == {
+        "hindsight:legacy-without-authority": "missing_shared_source_authority"}
+    state.group_recall_response["results"] = [unproven]
+    result = engine.recall_for_presence(query)
+    assert result.confirmed_facts == ()
+    assert result.recall.excluded_reasons == {
+        "hindsight:legacy-without-authority": "missing_shared_source_authority"}

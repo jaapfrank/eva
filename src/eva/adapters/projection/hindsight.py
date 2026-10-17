@@ -1547,8 +1547,9 @@ class HindsightMemoryEngine:
         # source fact. All existing scope, time and privacy checks still apply.
         best_candidate_id = next(
             (item["id"] for item in results
-             if item.get("type") != "observation"
-             or isinstance(item.get("_eva_source_metadata"), dict)),
+             if (isinstance(item.get("_eva_source_metadata"), dict)
+                 if item.get("type") == "observation"
+                 else not (group_recall or household_recall) or bool(item.get("metadata")))),
             None,
         )
 
@@ -1591,6 +1592,14 @@ class HindsightMemoryEngine:
                 raise HindsightProjectionProtocolError(
                     "Hindsight returned an invalid semantic memory"
                 )
+            if (group_recall or household_recall) and not metadata:
+                # Some historical source facts have no authority metadata at all.
+                # They are unavailable memory, not evidence for another audience.
+                # Never infer their owner from a retrieval tag or let them occupy
+                # the low-score fallback ahead of a verifiable source. Explicit
+                # contradictory/partial authority still fails closed below.
+                excluded_reasons[f"hindsight:{memory_id}"] = "missing_shared_source_authority"
+                continue
             score_floor = self._config.minimum_final_score
             if (
                 observation_binding_sha256 is not None

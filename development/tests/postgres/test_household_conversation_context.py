@@ -140,3 +140,28 @@ def test_erased_recent_records_do_not_hide_older_valid_context(database):
     found=HouseholdConversationContext(x.server).recent(turn)
     assert any("Nog geldige vraag" in item.text for item in found)
     assert not any("Verwijderde proef" in item.text for item in found)
+
+
+def test_cross_session_context_preserves_session_provenance_without_identifying_current_speaker(database):
+    x=setup(database,'context-source-session')
+    exchange(x,x.service,'Eerste openbare uitspraak','Eerste antwoord')
+    exchange(x,x.service,'Tweede openbare uitspraak','Tweede antwoord')
+    x.service.current('close')
+    second=x.server.session(**x.args,session_id=x.server.open_session(**x.args)['session_id'])
+    assert second.binding['conversation_id']!=x.service.binding['conversation_id']
+    exchange(x,second,'Uitspraak uit ander gesprek','Ander antwoord')
+    current=other(x)
+    turn=current.turn(str(uuid4()),'Wat bespraken we?')
+    found=HouseholdConversationContext(x.server).recent(turn)
+    prefixes=[message.text.split('\n',1)[0] for message in found]
+    by_content={message.text.split('\n',1)[1]:message.text.split('\n',1)[0] for message in found}
+    assert by_content['Eerste openbare uitspraak']==by_content['Tweede openbare uitspraak']
+    assert by_content['Eerste openbare uitspraak']!=by_content['Uitspraak uit ander gesprek']
+    assert by_content['Uitspraak uit ander gesprek']==by_content['Ander antwoord']
+    assert all('andere sessie' in prefix and 'huidige gesprekspartner niet vastgesteld' in prefix
+               for prefix in prefixes)
+    assert all(message.source_turn_sha256 and message.occurred_at for message in found)
+    from eva.application.conversation import RecentConversationMessage
+    live=(RecentConversationMessage('Gebruiker','Huidige uitspraak',turn.occurred_at),)
+    merged=with_household_continuity(SimpleNamespace(_household_conversation_context=HouseholdConversationContext(x.server)),turn,live)
+    assert merged[-1]==live[0]

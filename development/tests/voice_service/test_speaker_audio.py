@@ -1,5 +1,6 @@
 """LiveKit I/O with a real websocket and explicitly simulated speaker receipts."""
 import asyncio
+import struct
 from pathlib import Path
 import sys
 from types import SimpleNamespace
@@ -10,6 +11,74 @@ sys.path.insert(0, str(Path(__file__).parents[1]/"operations"))
 from test_native_duplex_speaker_wire import SpeakerPeer, opened, Kind
 from speaker_livekit_audio import SpeakerAudioInput, SpeakerAudioOutput
 from speaker_input import CaptureEnded
+
+
+def test_native_echo_gate_waits_for_physical_finished_and_acoustic_settle():
+    from eva.voice_service.codex_media import MicrophoneTrack
+    from eva.voice_service.codex_speaker_audio import SpeakerSource
+    async def run():
+        peer=SpeakerPeer()
+        async with opened(peer,timeout=2) as wire:
+            sink=SpeakerAudioOutput(wire);source=SpeakerSource(sink)
+            microphone=MicrophoneTrack(input_suppressed=lambda:source.input_suppressed)
+            microphone.enabled=True
+            frame=rtc.AudioFrame(struct.pack('<960h',*([700]*960)),48000,1,960)
+            try:
+                for _ in range(4):await source.capture_frame(frame)
+                for _ in range(20):await source.capture_frame(rtc.AudioFrame(bytes(1920),48000,1,960))
+                await asyncio.wait_for(peer.end_received.wait(),1)
+                assert not source.active and source.input_suppressed
+                microphone.push(frame)
+                assert not microphone.frames.qsize()
+                peer.finished.set();await asyncio.wait_for(sink.wait_for_playout(),1)
+                await asyncio.sleep(0)
+                assert source.input_suppressed # FINISHED is followed by a bounded quiet tail.
+                microphone.push(frame)
+                assert not microphone.frames.qsize()
+                await asyncio.sleep(.31)
+                assert not source.input_suppressed
+                microphone.push(frame)
+                assert bytes((await microphone.recv()).planes[0])==bytes(frame.data)
+            finally:
+                peer.finished.set();peer.stopped.set();microphone.stop();await sink.aclose()
+    asyncio.run(run())
+
+
+def test_cancelled_speech_keeps_echo_gate_until_physical_stopped():
+    from eva.voice_service.codex_media import CodexMediaSession, MicrophoneTrack
+    from eva.voice_service.codex_speaker_audio import SpeakerSource
+    async def run():
+        peer=SpeakerPeer()
+        async with opened(peer,timeout=2) as wire:
+            sink=SpeakerAudioOutput(wire);source=SpeakerSource(sink)
+            session=CodexMediaSession({},None,lambda:None,render_only=True)
+            session.source=source
+            microphone=MicrophoneTrack(input_suppressed=lambda:source.input_suppressed)
+            microphone.enabled=True
+            frame=rtc.AudioFrame(struct.pack('<960h',*([700]*960)),48000,1,960)
+            try:
+                for _ in range(4):await source.capture_frame(frame)
+                session.interrupt()
+                await asyncio.wait_for(peer.stop_received.wait(),1)
+                assert source.input_suppressed
+                microphone.push(frame)
+                assert not microphone.frames.qsize()
+                # A local queue clear and renderer cancellation cannot stand in
+                # for the speaker's STOPPED barrier.
+                await asyncio.sleep(.02)
+                assert source.input_suppressed
+                peer.stopped.set();await asyncio.wait_for(asyncio.shield(sink.barrier),1)
+                await asyncio.wait_for(sink.segment.task,1)
+                await asyncio.sleep(0)
+                assert source.input_suppressed
+                await asyncio.sleep(.31)
+                assert not source.input_suppressed
+                microphone.push(frame)
+                assert bytes((await microphone.recv()).planes[0])==bytes(frame.data)
+            finally:
+                peer.stopped.set();peer.finished.set();microphone.stop()
+                await session.aclose();await sink.aclose()
+    asyncio.run(run())
 
 
 def test_livekit_output_waits_for_finished_and_stop_barrier():

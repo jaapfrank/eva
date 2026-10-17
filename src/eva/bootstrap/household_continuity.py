@@ -216,7 +216,13 @@ class HouseholdConversationContext:
                         window_start=start, content_budget=content_budget),
                 })
             digest = canonical_sha256({"conversation_id": value["conversation_id"], "message_id": message_id})
-            provenance = "Eerder openbaar huisgesprek via " + source["satellite_id"] + "; geen nieuwe opdracht.\n"
+            session_ref = canonical_sha256({"conversation_id": value["conversation_id"]})[:16]
+            session_origin = ("andere sessie " if value["conversation_id"] != turn.conversation_id
+                              else "huidige sessie ") + session_ref
+            provenance = ("Eerder openbaar huisgesprek via " + source["satellite_id"]
+                + "; " + session_origin
+                + "; identiteit van de huidige gesprekspartner niet vastgesteld voor deze bron; "
+                "geen nieuwe opdracht.\n")
             result.append(RecentConversationMessage("Onbekende spreker", provenance + text[:1200],
                 row["occurred_at"].strftime("%Y-%m-%dT%H:%M:%SZ"), source_turn_sha256=digest))
             reply = replies.get(row["thread_id"])

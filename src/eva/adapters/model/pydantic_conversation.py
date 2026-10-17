@@ -2474,10 +2474,14 @@ class PydanticConversationModel:
                 if name not in self._discoverable_action_names
                 or name in _CONNECTOR_DISCOVERY_ACTIONS
             )
-        offer_tools = completed_action is None or bool(available_actions)
+        # A spoken thinking turn is delivery, not a completed memory lookup.
+        # Keep the existing one-search opportunity until substantive work starts.
+        offer_memory = not receipts or all(
+            receipt.call.name == SPEAK_DESCRIPTOR.name for receipt in receipts)
+        offer_tools = offer_memory or bool(available_actions)
         pydantic_catalog = (
             tuple(
-                ([_MEMORY_SEARCH_TOOL] if completed_action is None else [])
+                ([_MEMORY_SEARCH_TOOL] if offer_memory else [])
                 + [action_tools[name] for name in available_actions]
             )
             if offer_tools
@@ -2626,7 +2630,7 @@ class PydanticConversationModel:
             usages.append(usage)
             timings.append(timing)
         allowed_actions = set(available_actions)
-        if completed_action is None:
+        if offer_memory:
             allowed_actions.add(MEMORY_SEARCH_ACTION)
         if action_call is not None and action_call.name not in allowed_actions:
             raise ConversationModelError(

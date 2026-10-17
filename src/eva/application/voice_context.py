@@ -27,12 +27,14 @@ STOP_DESCRIPTOR = ConversationToolDescriptor(
 SPEAK_AND_CONTINUE = "speak_and_continue"
 SPEAK_DESCRIPTOR = ConversationToolDescriptor(
     name=SPEAK_AND_CONTINUE,
-    description=("Geef in een live stemgesprek een kort, inhoudelijk eerste antwoorddeel "
-                 "terwijl je daarna verder antwoordt of de echte tools gebruikt. Dit is "
+    description=("Geef in een live stemgesprek een kort eerste antwoorddeel of een natuurlijke "
+                 "denkreactie wanneer je nog iets moet afwegen of opzoeken. Formuleer die zelf "
+                 "vanuit dit gesprek; wissel niet mechanisch een lijst wachtzinnen af. Dit is "
                  "definitieve spraak, geen concept. Gebruik alleen al bekende inhoud of "
                  "een concrete bedoeling; beweer nooit dat een actie is uitgevoerd of "
                  "een resultaat is gevonden zonder een ontvangen bewijs. Geen vaste "
-                 "opvulzin. Hoogstens eenmaal per beurt, maximaal 35 woorden. Voor een "
+                 "opvulzin of onnodige aankondiging bij een direct antwoord. Hoogstens eenmaal "
+                 "per beurt, maximaal 35 woorden. Voor een "
                  "kort volledig antwoord gebruik je gewoon het eindantwoord."),
     input_schema={"type": "object", "properties": {"text": {"type": "string"}},
                   "required": ["text"], "additionalProperties": False},
@@ -93,10 +95,15 @@ class VoiceContext:
             "Vertel wat je deed, ontdekte en wat nog loopt; vertaal technische bronlabels naar "
             "gewone taal zonder onzekerheid weg te laten. Verzin geen belevenissen of gevoelens. "
             "Sluit aan op wat de ander net vertelde; stel alleen een vervolgvraag als het antwoord "
-            "je helpt die persoon of diens bedoeling te begrijpen. Een korte denkpauze mag. "
-            "Gebruik speak_and_continue alleen voor een bruikbaar eerste antwoorddeel of een "
-            "concrete afweging die bij deze vraag hoort. Laat een tussenreactie weg als die alleen "
-            "aankondigt dat je gaat kijken, navragen of wachten; geef dan het inhoudelijke antwoord. "
+            "je helpt die persoon of diens bedoeling te begrijpen. Als je iets niet weet of "
+            "niet meer terugvindt, zeg dat eenvoudig en concreet; gebruik geen formele "
+            "betrouwbaarheidsverklaring. Een korte denkpauze mag. Voorkom een lange stilte: "
+            "als je antwoord nog een opzoekstap of verdere afweging nodig heeft, geef via "
+            "speak_and_continue eerst een kort eerste antwoorddeel of een kleine natuurlijke "
+            "denkreactie. Formuleer die vanuit deze vraag en de "
+            "recente reacties; verval niet in dezelfde openingszin, een vaste afwisseling of "
+            "een technische voortgangsmelding. Soms is één aarzelend woord genoeg, soms een "
+            "korte gedachte. Bij een direct antwoord is geen tussenreactie nodig. "
             "Afspeelstatus beschrijft alleen aflevering: onbevestigd betekent niet "
             "onderbroken of gehoord. Een nieuwe vraag stopt geen lopend werk; gebruik "
             "stop_spoken_task bij een expliciete stop of onverenigbare doelcorrectie.",

@@ -1084,6 +1084,8 @@ class LivingConversation:
         if initiative is not None:
             self_context = (*self_context, initiative.instructions())
         memory_searched = False
+        memory_receipt = None
+        memory_receipt_index = 0
         action_input_repaired = False
         input_rejection_prompt = ""
         seen_call_ids = {item.call.call_id for item in receipts}
@@ -1100,7 +1102,13 @@ class LivingConversation:
                 available_names = tuple(name for name in available_names if name not in deferred_actions)
             checkpoint()
             repairing_input = completed is not None and completed.output.get("status") == "invalid_input"
-            prior_actions = receipts if repairing_input else receipts[:-1]
+            prior_actions = (receipts if repairing_input or (
+                completed is not None and completed not in receipts) else receipts[:-1])
+            if memory_receipt is not None and completed is not memory_receipt:
+                # Retain retrieval in model history without counting it as a
+                # durable work step. A later spoken update must not reopen search.
+                prior_actions = list(prior_actions)
+                prior_actions.insert(min(memory_receipt_index, len(prior_actions)), memory_receipt)
             history = {"prior_actions": tuple(prior_actions)} if prior_actions else {}
             # Routing uses actual receipts, never channel names or greeting regexes.
             # Acknowledging durable work and searching memory stay on the contact
@@ -1175,7 +1183,7 @@ class LivingConversation:
                 raise ConversationConflict("conversation model reused a completed call ID")
             seen_call_ids.add(call.call_id)
             if call.name == MEMORY_SEARCH_ACTION:
-                if memory_searched or receipts:
+                if memory_searched or any(item.call.name != SPEAK_AND_CONTINUE for item in receipts):
                     raise RuntimeError("conversation memory search is unavailable")
                 arguments = call.arguments
                 query_text = arguments.get("query_text")
@@ -1206,6 +1214,8 @@ class LivingConversation:
                     },
                 )
                 memory_searched = True
+                memory_receipt = completed
+                memory_receipt_index = len(receipts)
                 continue
             if voice is not None and call.name == SPEAK_AND_CONTINUE and call.name in available_names:
                 completed = voice.speak_and_continue(call)

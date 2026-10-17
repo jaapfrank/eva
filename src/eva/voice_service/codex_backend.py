@@ -142,7 +142,7 @@ class EvaVoiceBackend:
             status = error.response.status_code if isinstance(error,httpx.HTTPStatusError) else None
             self.diagnostic('core_failure', error_type=type(error).__name__, status=status)
             self.notify({'type':'work_failed','message_id':str(uuid5(UUID(self.session_id),key))})
-            result = 'Ik kan hier nu geen betrouwbaar antwoord op geven. Een eventueel gestarte taak kan nog lopen.'
+            result = 'Sorry, ik raakte de draad even kwijt. Wil je dat nog eens zeggen?'
         except ValueError:
             raise web.HTTPServiceUnavailable(text='EVA voice response unavailable') from None
         response = web.StreamResponse(headers={'Content-Type':'text/event-stream','Cache-Control':'no-store'})

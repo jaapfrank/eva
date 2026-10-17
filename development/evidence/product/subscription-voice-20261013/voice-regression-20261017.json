@@ -1,0 +1,407 @@
+{
+  "recordedAt": "2026-10-17T11:21:02.838262+00:00",
+  "status": "regression_corrections_installed_quality_open",
+  "ownerAccepted": false,
+  "scope": "Reopened C3.1/C4.1 after an owner conversation rejected the prior technical completion; natural phrasing and timely thinking reactions included.",
+  "ownerReport": {
+    "reportedAt": "2026-10-17T10:55:16.617204+00:00",
+    "status": "owner_rejected_installed_conversation",
+    "symptoms": [
+      "very slow",
+      "answers unrelated to questions",
+      "computerlike uncertainty",
+      "too few natural thinking reactions"
+    ]
+  },
+  "realConversationDiagnosis": {
+    "sessionWindowLocal": "2026-10-17 12:50:05–12:51:59 Europe/Amsterdam",
+    "admittedInputs": 8,
+    "coreFinals": 7,
+    "renderedTurns": 4,
+    "selfSpeechAdmitted": {
+      "twoExactCorrespondencesWords": [
+        11,
+        9
+      ],
+      "onePartialFallbackCorrespondence": true,
+      "occursDuringPlayback": true,
+      "consequence": "Own output became a new question, consuming core turns and superseding real answers. A tail delay alone cannot prevent it."
+    },
+    "memoryFailure": "A retrieved legacy source with empty authority metadata displaced the valid shared-memory fallback and triggered HindsightMemoryScopeError.",
+    "crossSessionConfusion": "Household conversation context did not explicitly distinguish a different session or an unknown current speaker; six earlier developer probe sources also contaminated activity/history."
+  },
+  "changes": [
+    "Native microphone input is drained and discarded from first physical output until successful FINISHED/STOPPED acknowledgement plus 300 ms. A failed/cancelled delivery does not reopen input. Browser duplex unchanged.",
+    "Exception fallback now uses a short ordinary conversational repair request without a reliability declaration or unverified task claim.",
+    "Shared recall excludes entirely unproven legacy facts before fallback ranking. Partial or explicitly contradictory authority still fails closed.",
+    "Household context labels source conversation hash, current/different session and missing speaker identity; source timestamps and scope retained.",
+    "Voice instructions request plain uncertainty and context-dependent thinking reactions without a rotating stock phrase list.",
+    "A spoken thinking reaction retains the single memory-search opportunity; memory-search history survives a later spoken update without reopening search or shifting durable work steps."
+  ],
+  "probeCleanup": {
+    "exactOwnSyntheticSources": 6,
+    "selection": "Exact synthetic session and durable source binding, reviewed private manifest; existing document erasure route.",
+    "manifestSha256": "523bb7c9587bf58c17ae7d1225b6bf957af53c9038beb9708cae08c03c8dca32",
+    "privateBackupRetained": true,
+    "storageRemoved": 6,
+    "journalContentsErased": 12,
+    "outboxContentsErased": 6,
+    "exactHindsightDocumentsAbsent": 6,
+    "realOwnerEventsHashUnchanged": 23,
+    "allDerivedObservationsOrCachesAbsentClaimed": false
+  },
+  "verification": {
+    "audio": {
+      "passed": 125,
+      "groups": [
+        {
+          "scope": "Affected voice/media/core/farewell/source/wire tests, excluding separate native TLS controls",
+          "passed": 119,
+          "seconds": 36.33
+        },
+        {
+          "scope": "Existing native wakeword/STOP/MUTE/authority lifecycle tests with real local TLS and simulated device receipts",
+          "passed": 6,
+          "seconds": 7.49
+        }
+      ],
+      "network": "none",
+      "testHarnessNote": "Installed image lacks openssl executable. Initial native TLS fixture setup failed; host OpenSSL executable alone was ABI-incompatible during certificate generation. Final six controls passed using host binary with its matching host libssl/libcrypto/config read-only; only openssl subprocess sees these libraries. Runtime Python libraries unchanged."
+    },
+    "application": {
+      "passed": 44,
+      "seconds": 4.34,
+      "scope": "conversation, voice context and thinking-flow; installed-image baseline plus exact candidate overlays"
+    },
+    "postgres": {
+      "passed": 39,
+      "seconds": 38.25,
+      "scope": "Household conversation context against disposable PostgreSQL; result captured in tool output"
+    },
+    "workingTreeMemory": {
+      "passed": 105,
+      "seconds": 47.04,
+      "limitation": "Includes other executor work; not proof of exact installed bytes."
+    },
+    "suiteCountsAreNotSummed": "Overlapping suites and repeated controls are reported separately.",
+    "finalInstalledThinking": {
+      "passed": 4,
+      "scope": "Final installed image, no source overlays or network; stricter repeated-search rejection and offered-tool assertion.",
+      "seconds": 1.66
+    },
+    "readOnlyRecallReplay": {
+      "baselineMs": 4478,
+      "baselineResult": "HindsightMemoryScopeError",
+      "candidateMs": 5427,
+      "candidateResult": "authorized source retained, no scope error",
+      "requestsPerAttempt": 2,
+      "speedupProven": false
+    },
+    "independentReviews": [
+      "Audio receipt failure/cancel fence reviewed and repaired.",
+      "Both SPEAK→MEMORY and MEMORY→SPEAK orderings reviewed; memory receipt must remain in history.",
+      "Six-source cleanup independently verified read-only.",
+      "E4.2 rebase reviewed: current conversation already had these four hunks; preserve other executor deadline and HA changes."
+    ],
+    "harnessFailuresRetained": [
+      "Initial native TLS tests lacked a compatible openssl harness; final six tests passed with host binary and matching libraries read-only.",
+      "Final test strengthening first used the wrong exception import, then expected an adapter message where the SDK rejected first; corrected test asserts typed model failure plus absent memory tool. No production code changed for these harness failures.",
+      "The alternate-backend check first omitted the image dependency PYTHONPATH and then pytest_asyncio under disabled plugin autoload; corrected the harness without changing runtime dependencies."
+    ],
+    "exactCandidateSharedRecallAndSearch": {
+      "passed": 26,
+      "seconds": 14.31
+    },
+    "alternateBackendFallback": {
+      "scope": "Existing alternate HTTP-backend and single-core tests, network none, actual speaker image with one backend text overlay.",
+      "passedUnchangedControls": 52,
+      "correctedExpectedPhraseCasesPassed": 2,
+      "correctedCasesSeconds": 0.4,
+      "suiteRuntimeBeforeExpectationUpdateSeconds": 19.35,
+      "note": "Two assertions still expected the removed task-state fallback. Updated only that phrase expectation and reran those two cases. Existing backend test file was already an untracked pending file; preserved its other tests."
+    }
+  },
+  "latencyExperiment": {
+    "cpuRerankerThreadsCompared": [
+      2,
+      4
+    ],
+    "modelRequests": 0,
+    "measuredRuns": 8,
+    "result": "No consistent four-thread gain; keep existing two-thread configuration.",
+    "hindsightConfigurationChanged": false
+  },
+  "modelProbeUsage": {
+    "kind": "development_only_not_persisted",
+    "successfulRequests": 4,
+    "inputTokens": 10168,
+    "outputTokens": 164,
+    "totalTokens": 10332,
+    "credits": null,
+    "latencyMs": [
+      3340,
+      2108,
+      2273,
+      3583
+    ],
+    "toolProposals": 2,
+    "toolExecutions": 0,
+    "preModelHarnessFailureRequests": 0,
+    "runtimeUserConversationsTriggered": 0,
+    "observedThinkingReactions": 0,
+    "limitation": "Both activity probes chose the activity tool directly; these calls do not prove frequency or natural timing of thinking reactions."
+  },
+  "installation": {
+    "services": [
+      {
+        "slug": "core",
+        "base": "sha256:50f52fbb69972cf3124c0e6e909a10d13c09217cbcd104d1c21c33b008abb513",
+        "candidate": "sha256:9e9175ba9bc7c68272086f0b159f0af168b4afe6b49b67cd4c30c5a9e07fd4ae",
+        "hashes": {
+          "bootstrap/household_continuity.py": "8c46ccb9723b0dc17850343e32f8cb7e29b9c254d3d0d455198dbd4c51a715a2",
+          "application/voice_context.py": "198169c26bad2a6fde6589cbf663e7421cb6fa08a463e74b5289de13e60ea15d",
+          "adapters/projection/hindsight.py": "6e1611625b751b6a17af11ff155ded8271614d22c214afc4d0a3023f444ce009",
+          "application/conversation.py": "4668132ed2fa0887375399d70d499915dbf1438a07ddb61285ddccb06afc2895",
+          "adapters/model/pydantic_conversation.py": "538379e5e9a9f5f007f41b3545922b12878633415b7f4f001a6ef7afa3bc75f0"
+        },
+        "running": true,
+        "source_verified": true,
+        "configuration_preserved": true
+      },
+      {
+        "slug": "worker",
+        "base": "sha256:ab06c34704b8d466a5b187c991a254574f7dd7361fac4eb3af6506649d5725f9",
+        "candidate": "sha256:531743dd176a59e9258e2bcffa517119af294666f9a1141f66effc01c3f29d9c",
+        "hashes": {
+          "bootstrap/household_continuity.py": "8c46ccb9723b0dc17850343e32f8cb7e29b9c254d3d0d455198dbd4c51a715a2",
+          "application/voice_context.py": "198169c26bad2a6fde6589cbf663e7421cb6fa08a463e74b5289de13e60ea15d",
+          "adapters/projection/hindsight.py": "6e1611625b751b6a17af11ff155ded8271614d22c214afc4d0a3023f444ce009",
+          "application/conversation.py": "4668132ed2fa0887375399d70d499915dbf1438a07ddb61285ddccb06afc2895",
+          "adapters/model/pydantic_conversation.py": "538379e5e9a9f5f007f41b3545922b12878633415b7f4f001a6ef7afa3bc75f0"
+        },
+        "running": true,
+        "source_verified": true,
+        "configuration_preserved": true
+      },
+      {
+        "slug": "speaker",
+        "base": "sha256:57659ceb13a5abf11e7eb3dfe211a5eb438767c030a39d7e9bb2c00a6bfff0d2",
+        "candidate": "sha256:d93cf6ad2a0173d08ec45beac8c7d18df5a672db5ecdfda55e69c2181b7df8c5",
+        "hashes": {
+          "codex_media.py": "e135ad901ed169cbb0e272271708c6712921d4a041cea15a783208052122837d",
+          "codex_speaker_audio.py": "4a90832cf449984b2c5e30f9b0ecb0773f930133ae278f617356aa1ab35525c9",
+          "codex_backend.py": "6e0836919a4e4886b7d1c0e9ae8789407d909cd95df7e0567bf79fd7537d8576"
+        },
+        "running": true,
+        "source_verified": true,
+        "configuration_preserved": true
+      },
+      {
+        "slug": "media",
+        "base": "sha256:269860795f3af4b146d534305f018ac0d07ec5f9b77e2cb14610a64927e25f1a",
+        "candidate": "sha256:70f78914727e57e6eb98bce8aa2f7a43e5a18bee1eeff085a2f7a3f31300d088",
+        "hashes": {
+          "codex_media.py": "e135ad901ed169cbb0e272271708c6712921d4a041cea15a783208052122837d",
+          "codex_speaker_audio.py": "4a90832cf449984b2c5e30f9b0ecb0773f930133ae278f617356aa1ab35525c9",
+          "codex_backend.py": "6e0836919a4e4886b7d1c0e9ae8789407d909cd95df7e0567bf79fd7537d8576"
+        },
+        "running": true,
+        "source_verified": true,
+        "configuration_preserved": true
+      }
+    ],
+    "configurationPreserved": true,
+    "rebase": "Initial guard stopped installation after concurrent E4.2 deployment. Merged only reviewed changes onto actual new images; retained other executor changes.",
+    "health": [
+      {
+        "service": "core",
+        "image": "sha256:9e9175ba9bc7c68272086f0b159f0af168b4afe6b49b67cd4c30c5a9e07fd4ae",
+        "running": true,
+        "health": "healthy",
+        "restarts": 0
+      },
+      {
+        "service": "worker",
+        "image": "sha256:531743dd176a59e9258e2bcffa517119af294666f9a1141f66effc01c3f29d9c",
+        "running": true,
+        "health": "healthy",
+        "restarts": 0
+      },
+      {
+        "service": "speaker",
+        "image": "sha256:d93cf6ad2a0173d08ec45beac8c7d18df5a672db5ecdfda55e69c2181b7df8c5",
+        "running": true,
+        "health": "not_configured",
+        "restarts": 0
+      },
+      {
+        "service": "media",
+        "image": "sha256:70f78914727e57e6eb98bce8aa2f7a43e5a18bee1eeff085a2f7a3f31300d088",
+        "running": true,
+        "health": "not_configured",
+        "restarts": 0
+      }
+    ],
+    "initialAudioOverlays": [
+      {
+        "slug": "speaker",
+        "base": "sha256:f4132a4ec5dec1b8365a4ed35b5451fc6b3195c3047b00a58d6987a4462a3a06",
+        "candidate": "sha256:57659ceb13a5abf11e7eb3dfe211a5eb438767c030a39d7e9bb2c00a6bfff0d2",
+        "hashes": {
+          "codex_media.py": "e135ad901ed169cbb0e272271708c6712921d4a041cea15a783208052122837d",
+          "codex_speaker_audio.py": "4a90832cf449984b2c5e30f9b0ecb0773f930133ae278f617356aa1ab35525c9"
+        },
+        "running": true,
+        "source_verified": true,
+        "configuration_preserved": true
+      },
+      {
+        "slug": "media",
+        "base": "sha256:26642665c2c4ca5e8afafde95921d642d768ebf335875dc48f514d5b0052d4d7",
+        "candidate": "sha256:269860795f3af4b146d534305f018ac0d07ec5f9b77e2cb14610a64927e25f1a",
+        "hashes": {
+          "codex_media.py": "e135ad901ed169cbb0e272271708c6712921d4a041cea15a783208052122837d",
+          "codex_speaker_audio.py": "4a90832cf449984b2c5e30f9b0ecb0773f930133ae278f617356aa1ab35525c9"
+        },
+        "running": true,
+        "source_verified": true,
+        "configuration_preserved": true
+      }
+    ],
+    "initialAudioReadiness": {
+      "recorded_at": "2026-10-17T11:18:27.199336+00:00",
+      "services": {
+        "speaker": {
+          "image_sha256": "sha256:57659ceb13a5abf11e7eb3dfe211a5eb438767c030a39d7e9bb2c00a6bfff0d2",
+          "matches_installed_manifest": true,
+          "running": true,
+          "health": "not_configured",
+          "restart_count": 0,
+          "startup_logs_checked": true,
+          "startup_error_pattern_detected": false,
+          "startup_completed": true,
+          "source_matches_installed_manifest": true
+        },
+        "media": {
+          "image_sha256": "sha256:269860795f3af4b146d534305f018ac0d07ec5f9b77e2cb14610a64927e25f1a",
+          "matches_installed_manifest": true,
+          "running": true,
+          "health": "not_configured",
+          "restart_count": 0,
+          "startup_logs_checked": true,
+          "startup_error_pattern_detected": false,
+          "startup_completed": true,
+          "source_matches_installed_manifest": true,
+          "post_startup_readiness_errors": {
+            "count": 2,
+            "first_at": "2026-10-17T11:18:10.464397800Z",
+            "last_at": "2026-10-17T11:18:15.486834846Z",
+            "exception_classes": [
+              "ConnectError",
+              "RemoteProtocolError"
+            ],
+            "classification": "Transient core-readiness HTTP failures during concurrent core replacement; core StartedAt 11:18:11.200960313Z. Current browser readiness verified separately."
+          },
+          "current_browser_readiness": {
+            "http_status": 200,
+            "ready": true
+          }
+        }
+      },
+      "speakers": {
+        "configured_devices": 2,
+        "bindings": [
+          {
+            "ready": true
+          },
+          {
+            "ready": true
+          }
+        ],
+        "listener_sockets": 1,
+        "established_transport_sockets": 2
+      },
+      "scope": {
+        "read_only": true,
+        "physical_audio_played": false,
+        "microphone_recording_started": false,
+        "provider_or_model_calls": false,
+        "physical_session_started": false,
+        "acoustic_quality_verified": false,
+        "core_deployment_status_not_assessed": true
+      },
+      "completed_at": "2026-10-17T11:19:14.316434+00:00"
+    },
+    "finalAudioReadiness": {
+      "recorded_at": "2026-10-17T11:25:51.428453+00:00",
+      "services": {
+        "speaker": {
+          "image_sha256": "sha256:d93cf6ad2a0173d08ec45beac8c7d18df5a672db5ecdfda55e69c2181b7df8c5",
+          "matches_installed_manifest": true,
+          "running": true,
+          "health": "not_configured",
+          "restart_count": 0,
+          "startup_logs_checked": true,
+          "error_pattern_detected_since_start": false,
+          "startup_completed": true,
+          "module_sha256": {
+            "codex_media.py": "e135ad901ed169cbb0e272271708c6712921d4a041cea15a783208052122837d",
+            "codex_speaker_audio.py": "4a90832cf449984b2c5e30f9b0ecb0773f930133ae278f617356aa1ab35525c9",
+            "codex_backend.py": "6e0836919a4e4886b7d1c0e9ae8789407d909cd95df7e0567bf79fd7537d8576"
+          },
+          "source_matches_installed_manifests": true
+        },
+        "media": {
+          "image_sha256": "sha256:70f78914727e57e6eb98bce8aa2f7a43e5a18bee1eeff085a2f7a3f31300d088",
+          "matches_installed_manifest": true,
+          "running": true,
+          "health": "not_configured",
+          "restart_count": 0,
+          "startup_logs_checked": true,
+          "error_pattern_detected_since_start": false,
+          "startup_completed": true,
+          "module_sha256": {
+            "codex_media.py": "e135ad901ed169cbb0e272271708c6712921d4a041cea15a783208052122837d",
+            "codex_speaker_audio.py": "4a90832cf449984b2c5e30f9b0ecb0773f930133ae278f617356aa1ab35525c9",
+            "codex_backend.py": "6e0836919a4e4886b7d1c0e9ae8789407d909cd95df7e0567bf79fd7537d8576"
+          },
+          "source_matches_installed_manifests": true,
+          "browser_readiness": {
+            "http_status": 200,
+            "ready": true
+          }
+        }
+      },
+      "speakers": {
+        "configured_devices": 2,
+        "bindings": [
+          {
+            "ready": true
+          },
+          {
+            "ready": true
+          }
+        ],
+        "listener_sockets": 1,
+        "established_transport_sockets": 2
+      },
+      "scope": {
+        "read_only": true,
+        "physical_audio_played": false,
+        "microphone_recording_started": false,
+        "provider_or_model_calls": false,
+        "physical_session_started": false,
+        "acoustic_quality_verified": false,
+        "core_deployment_status_not_assessed": true
+      },
+      "completed_at": "2026-10-17T11:25:55.555308+00:00"
+    }
+  },
+  "remaining": [
+    "Ordinary spoken barge-in during native output is temporarily unavailable. Separate wakeword, STOP and MUTE controls remain. C4.1 is not complete.",
+    "No new physical playback or microphone session was run; room echo suppression, first words and acoustic quality are not accepted.",
+    "End-to-end speed and natural frequency/timing of thinking reactions remain unproven; the source recall itself is still several seconds.",
+    "No claim of full removal of derived semantic observations or process-local caches; only six exact own probe documents were verified erased."
+  ],
+  "privacy": "No raw household transcript, microphone recording, credentials, source identifiers or private backup contents in this artifact."
+}

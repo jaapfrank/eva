@@ -2754,9 +2754,9 @@
                 "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                 "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                 "blocker": null,
-                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
-                "checkedAt": "2026-10-17T10:36:56.527047+00:00",
-                "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                "checkedAt": "2026-10-17T11:22:17.788805+00:00",
+                "remaining": "Echt gesprek beoordelen op relevante antwoorden, beginwoorden, snelheid en natuurlijke denkreacties. Technische proeven bewijzen dit nog niet.",
                 "ownerTrial": {
                   "status": "continuous_conversation_works_fluency_gap",
                   "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -2764,15 +2764,15 @@
                   "blocksIndependentWork": false,
                   "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                 },
-                "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                "nextAction": "Beoordeel één kort gewoon gesprek met de geïnstalleerde bescherming; onderbreken kan voorlopig alleen via Eva of STOP.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": true,
-                  "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                  "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
                   "steps": [
-                    "Praat kort met Eva op beide speakers.",
-                    "Onderbreek haar een keer en controleer het vervolg.",
-                    "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                    "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+                    "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+                    "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
                   ]
                 },
                 "assignment": {
@@ -2786,9 +2786,9 @@
                     "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                     "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                     "blocker": null,
-                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
-                    "checkedAt": "2026-10-17T10:36:56.527047+00:00",
-                    "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                    "checkedAt": "2026-10-17T11:22:17.788805+00:00",
+                    "remaining": "Echt gesprek beoordelen op relevante antwoorden, beginwoorden, snelheid en natuurlijke denkreacties. Technische proeven bewijzen dit nog niet.",
                     "ownerTrial": {
                       "status": "continuous_conversation_works_fluency_gap",
                       "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -2796,15 +2796,15 @@
                       "blocksIndependentWork": false,
                       "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                     },
-                    "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                    "nextAction": "Beoordeel één kort gewoon gesprek met de geïnstalleerde bescherming; onderbreken kan voorlopig alleen via Eva of STOP.",
                     "ownerActionRequired": true,
                     "ownerInstructions": {
                       "availableNow": true,
-                      "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                      "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
                       "steps": [
-                        "Praat kort met Eva op beide speakers.",
-                        "Onderbreek haar een keer en controleer het vervolg.",
-                        "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                        "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+                        "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+                        "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
                       ]
                     },
                     "assignment": {
@@ -2818,7 +2818,7 @@
                       "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                       "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                     },
-                    "technicalStatus": "installed_verified"
+                    "technicalStatus": "installed_regression_corrections_quality_open"
                   },
                   {
                     "title": "Doorpraten via tweede speaker",
@@ -2826,21 +2826,21 @@
                     "kind": "aansluiten",
                     "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
                     "owner": "Codex",
-                    "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                    "nextAction": "Beoordeel één kort gewoon gesprek met de geïnstalleerde bescherming; onderbreken kan voorlopig alleen via Eva of STOP.",
                     "ownerActionRequired": true,
                     "ownerInstructions": {
                       "availableNow": true,
-                      "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                      "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
                       "steps": [
-                        "Praat kort met Eva op beide speakers.",
-                        "Onderbreek haar een keer en controleer het vervolg.",
-                        "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                        "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+                        "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+                        "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
                       ]
                     },
                     "blocker": null,
-                    "checkedAt": "2026-10-17T10:36:56.527047+00:00",
-                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
-                    "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
+                    "checkedAt": "2026-10-17T11:22:17.788805+00:00",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                    "remaining": "Echt gesprek beoordelen op relevante antwoorden, beginwoorden, snelheid en natuurlijke denkreacties. Technische proeven bewijzen dit nog niet.",
                     "assignment": {
                       "activeWorkers": []
                     },
@@ -2852,7 +2852,7 @@
                       "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
                       "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                     },
-                    "technicalStatus": "installed_verified"
+                    "technicalStatus": "installed_regression_corrections_quality_open"
                   }
                 ],
                 "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
@@ -2864,7 +2864,22 @@
                   "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                   "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                 },
-                "technicalStatus": "installed_verified"
+                "technicalStatus": "installed_regression_corrections_quality_open",
+                "ownerRegression20261017": {
+                  "reportedAt": "2026-10-17T10:55:16.617204+00:00",
+                  "status": "regression_corrections_installed_quality_open",
+                  "originalStatus": "owner_rejected_installed_conversation",
+                  "report": "Eigenaar meldt het slechtste gesprek tot nu toe: zeer traag, slechte antwoorden en antwoorden die niet bij de vragen passen.",
+                  "latestOwnerRequest": "Geen computerachtige betrouwbaarheidsverklaringen; eenvoudige onzekerheid en passende, gevarieerde denkreacties tijdens wachten.",
+                  "updatedAt": "2026-10-17T11:22:17.788805+00:00",
+                  "qualityAccepted": false,
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                  "installed": "Native bescherming tegen eigen afspeelspraak, herstel gedeelde geheugenbronselectie, expliciete herkomst per gesprek en natuurlijke formulering/denkreactie met intacte geheugenzoeking.",
+                  "cleanup": "Zes exacte eigen ontwikkelproefbronnen via bestaande wisroute verwijderd; alle 23 echte eigenaarevents ongewijzigd geverifieerd.",
+                  "limitation": "Native speakers luisteren tijdelijk om de beurt: gewoon door Eva heen praten werkt niet; apart wekwoord/STOP/MUTE blijven. Snelheid en natuurlijk ritme nog niet fysiek beoordeeld.",
+                  "nextAction": "Beoordeel echte gespreksrelevantie, beginwoorden en ritme met de geïnstalleerde bescherming; herstel gewone gesproken onderbreking pas met bewezen echo-onderscheiding.",
+                  "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie."
+                }
               },
               {
                 "id": "C3.3",
@@ -2906,7 +2921,7 @@
                 "kind": "verbeteren",
                 "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                 "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
                 "ownerTrial": {
                   "status": "partial_with_false_interruptions_and_stop_failure",
                   "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -2916,19 +2931,15 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
-                "ownerActionRequired": true,
+                "nextAction": "Eerst gewone gesproken onderbreking zonder eigen-spraakecho herstellen; niet als afgerond ter eigenaaracceptatie aanbieden.",
+                "ownerActionRequired": false,
                 "ownerInstructions": {
-                  "availableNow": true,
-                  "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
-                  "steps": [
-                    "Praat kort met Eva op beide speakers.",
-                    "Onderbreek haar een keer en controleer het vervolg.",
-                    "Sluit af met dankje doei en meld alleen wat nog misgaat."
-                  ]
+                  "availableNow": false,
+                  "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
+                  "steps": []
                 },
-                "checkedAt": "2026-10-17T10:36:56.527047+00:00",
-                "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
+                "checkedAt": "2026-10-17T11:22:17.788805+00:00",
+                "remaining": "Gewone gesproken onderbreking tijdens Eva-spraak tijdelijk niet beschikbaar; afzonderlijk wekwoord/STOP/MUTE behouden. Echo-onderscheiding en fysieke acceptatie blijven open.",
                 "assignment": {
                   "activeWorkers": []
                 },
@@ -2939,7 +2950,7 @@
                     "kind": "verbeteren",
                     "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                     "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
                     "ownerTrial": {
                       "status": "partial_with_false_interruptions_and_stop_failure",
                       "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -2949,19 +2960,15 @@
                       "currentCandidateStatus": "not_yet_assessed",
                       "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                     },
-                    "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
-                    "ownerActionRequired": true,
+                    "nextAction": "Eerst gewone gesproken onderbreking zonder eigen-spraakecho herstellen; niet als afgerond ter eigenaaracceptatie aanbieden.",
+                    "ownerActionRequired": false,
                     "ownerInstructions": {
-                      "availableNow": true,
-                      "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
-                      "steps": [
-                        "Praat kort met Eva op beide speakers.",
-                        "Onderbreek haar een keer en controleer het vervolg.",
-                        "Sluit af met dankje doei en meld alleen wat nog misgaat."
-                      ]
+                      "availableNow": false,
+                      "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
+                      "steps": []
                     },
-                    "checkedAt": "2026-10-17T10:36:56.527047+00:00",
-                    "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
+                    "checkedAt": "2026-10-17T11:22:17.788805+00:00",
+                    "remaining": "Gewone gesproken onderbreking tijdens Eva-spraak tijdelijk niet beschikbaar; afzonderlijk wekwoord/STOP/MUTE behouden. Echo-onderscheiding en fysieke acceptatie blijven open.",
                     "assignment": {
                       "activeWorkers": []
                     },
@@ -2973,7 +2980,7 @@
                       "previousEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
                       "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                     },
-                    "technicalStatus": "installed_verified"
+                    "technicalStatus": "limited_native_half_duplex"
                   },
                   {
                     "title": "Onderbreken op tweede speaker",
@@ -2981,26 +2988,22 @@
                     "kind": "verbeteren",
                     "doneWhen": "Hetzelfde gedrag werkt op het tweede apparaat.",
                     "owner": "Codex /root",
-                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
                     "ownerTrial": {
                       "status": "deferred_until_woonkamer_works",
                       "steps": [],
                       "expected": "Beoordelen na werkende woonkamerconversatie; geen herhaling van een bekende falende route.",
                       "blocksIndependentWork": false
                     },
-                    "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
-                    "ownerActionRequired": true,
+                    "nextAction": "Eerst gewone gesproken onderbreking zonder eigen-spraakecho herstellen; niet als afgerond ter eigenaaracceptatie aanbieden.",
+                    "ownerActionRequired": false,
                     "ownerInstructions": {
-                      "availableNow": true,
-                      "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
-                      "steps": [
-                        "Praat kort met Eva op beide speakers.",
-                        "Onderbreek haar een keer en controleer het vervolg.",
-                        "Sluit af met dankje doei en meld alleen wat nog misgaat."
-                      ]
+                      "availableNow": false,
+                      "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
+                      "steps": []
                     },
-                    "checkedAt": "2026-10-17T10:36:56.527047+00:00",
-                    "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
+                    "checkedAt": "2026-10-17T11:22:17.788805+00:00",
+                    "remaining": "Gewone gesproken onderbreking tijdens Eva-spraak tijdelijk niet beschikbaar; afzonderlijk wekwoord/STOP/MUTE behouden. Echo-onderscheiding en fysieke acceptatie blijven open.",
                     "assignment": {
                       "activeWorkers": []
                     },
@@ -3012,7 +3015,7 @@
                       "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
                       "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                     },
-                    "technicalStatus": "installed_verified"
+                    "technicalStatus": "limited_native_half_duplex"
                   }
                 ],
                 "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
@@ -3022,7 +3025,22 @@
                   "previousEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
                   "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                 },
-                "technicalStatus": "installed_verified"
+                "technicalStatus": "limited_native_half_duplex",
+                "ownerRegression20261017": {
+                  "reportedAt": "2026-10-17T10:55:16.617204+00:00",
+                  "status": "regression_corrections_installed_quality_open",
+                  "originalStatus": "owner_rejected_installed_conversation",
+                  "report": "Eigenaar meldt het slechtste gesprek tot nu toe: zeer traag, slechte antwoorden en antwoorden die niet bij de vragen passen.",
+                  "latestOwnerRequest": "Geen computerachtige betrouwbaarheidsverklaringen; eenvoudige onzekerheid en passende, gevarieerde denkreacties tijdens wachten.",
+                  "updatedAt": "2026-10-17T11:22:17.788805+00:00",
+                  "qualityAccepted": false,
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                  "installed": "Native bescherming tegen eigen afspeelspraak, herstel gedeelde geheugenbronselectie, expliciete herkomst per gesprek en natuurlijke formulering/denkreactie met intacte geheugenzoeking.",
+                  "cleanup": "Zes exacte eigen ontwikkelproefbronnen via bestaande wisroute verwijderd; alle 23 echte eigenaarevents ongewijzigd geverifieerd.",
+                  "limitation": "Native speakers luisteren tijdelijk om de beurt: gewoon door Eva heen praten werkt niet; apart wekwoord/STOP/MUTE blijven. Snelheid en natuurlijk ritme nog niet fysiek beoordeeld.",
+                  "nextAction": "Beoordeel echte gespreksrelevantie, beginwoorden en ritme met de geïnstalleerde bescherming; herstel gewone gesproken onderbreking pas met bewezen echo-onderscheiding.",
+                  "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie."
+                }
               },
               {
                 "id": "C4.3",
@@ -6082,9 +6100,9 @@
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
               "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
               "blocker": null,
-              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
-              "checkedAt": "2026-10-17T10:36:56.527047+00:00",
-              "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
+              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+              "checkedAt": "2026-10-17T11:22:17.788805+00:00",
+              "remaining": "Echt gesprek beoordelen op relevante antwoorden, beginwoorden, snelheid en natuurlijke denkreacties. Technische proeven bewijzen dit nog niet.",
               "ownerTrial": {
                 "status": "continuous_conversation_works_fluency_gap",
                 "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -6092,15 +6110,15 @@
                 "blocksIndependentWork": false,
                 "currentCandidateStatus": "fluency_correction_not_yet_assessed"
               },
-              "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+              "nextAction": "Beoordeel één kort gewoon gesprek met de geïnstalleerde bescherming; onderbreken kan voorlopig alleen via Eva of STOP.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
-                "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
                 "steps": [
-                  "Praat kort met Eva op beide speakers.",
-                  "Onderbreek haar een keer en controleer het vervolg.",
-                  "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                  "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+                  "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+                  "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
                 ]
               },
               "assignment": {
@@ -6114,9 +6132,9 @@
                   "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                   "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
                   "blocker": null,
-                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
-                  "checkedAt": "2026-10-17T10:36:56.527047+00:00",
-                  "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                  "checkedAt": "2026-10-17T11:22:17.788805+00:00",
+                  "remaining": "Echt gesprek beoordelen op relevante antwoorden, beginwoorden, snelheid en natuurlijke denkreacties. Technische proeven bewijzen dit nog niet.",
                   "ownerTrial": {
                     "status": "continuous_conversation_works_fluency_gap",
                     "reportedAt": "2026-10-05T09:57:36.657632+00:00",
@@ -6124,15 +6142,15 @@
                     "blocksIndependentWork": false,
                     "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                   },
-                  "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                  "nextAction": "Beoordeel één kort gewoon gesprek met de geïnstalleerde bescherming; onderbreken kan voorlopig alleen via Eva of STOP.",
                   "ownerActionRequired": true,
                   "ownerInstructions": {
                     "availableNow": true,
-                    "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                    "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
                     "steps": [
-                      "Praat kort met Eva op beide speakers.",
-                      "Onderbreek haar een keer en controleer het vervolg.",
-                      "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                      "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+                      "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+                      "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
                     ]
                   },
                   "assignment": {
@@ -6146,7 +6164,7 @@
                     "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                     "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                   },
-                  "technicalStatus": "installed_verified"
+                  "technicalStatus": "installed_regression_corrections_quality_open"
                 },
                 {
                   "title": "Doorpraten via tweede speaker",
@@ -6154,21 +6172,21 @@
                   "kind": "aansluiten",
                   "doneWhen": "Dezelfde volledige gespreksroute werkt op de tweede fysieke speaker.",
                   "owner": "Codex",
-                  "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
+                  "nextAction": "Beoordeel één kort gewoon gesprek met de geïnstalleerde bescherming; onderbreken kan voorlopig alleen via Eva of STOP.",
                   "ownerActionRequired": true,
                   "ownerInstructions": {
                     "availableNow": true,
-                    "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
+                    "readyWhen": "Beide speakers verbonden; kern- en audioreparaties geïnstalleerd.",
                     "steps": [
-                      "Praat kort met Eva op beide speakers.",
-                      "Onderbreek haar een keer en controleer het vervolg.",
-                      "Sluit af met dankje doei en meld alleen wat nog misgaat."
+                      "Voer een kort gesprek en let op aansluiting op je vraag, beginwoorden en stiltes.",
+                      "Gebruik voorlopig Eva of STOP om haar antwoord te onderbreken.",
+                      "Meld alleen concreet wat nog misgaat; natuurlijke vloeiendheid is nog niet bevestigd."
                     ]
                   },
                   "blocker": null,
-                  "checkedAt": "2026-10-17T10:36:56.527047+00:00",
-                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
-                  "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
+                  "checkedAt": "2026-10-17T11:22:17.788805+00:00",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                  "remaining": "Echt gesprek beoordelen op relevante antwoorden, beginwoorden, snelheid en natuurlijke denkreacties. Technische proeven bewijzen dit nog niet.",
                   "assignment": {
                     "activeWorkers": []
                   },
@@ -6180,7 +6198,7 @@
                     "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
                     "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                   },
-                  "technicalStatus": "installed_verified"
+                  "technicalStatus": "installed_regression_corrections_quality_open"
                 }
               ],
               "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
@@ -6192,7 +6210,22 @@
                 "previousEvidence": "development/evidence/product/c3-fluency-installed-20261005.json",
                 "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
               },
-              "technicalStatus": "installed_verified"
+              "technicalStatus": "installed_regression_corrections_quality_open",
+              "ownerRegression20261017": {
+                "reportedAt": "2026-10-17T10:55:16.617204+00:00",
+                "status": "regression_corrections_installed_quality_open",
+                "originalStatus": "owner_rejected_installed_conversation",
+                "report": "Eigenaar meldt het slechtste gesprek tot nu toe: zeer traag, slechte antwoorden en antwoorden die niet bij de vragen passen.",
+                "latestOwnerRequest": "Geen computerachtige betrouwbaarheidsverklaringen; eenvoudige onzekerheid en passende, gevarieerde denkreacties tijdens wachten.",
+                "updatedAt": "2026-10-17T11:22:17.788805+00:00",
+                "qualityAccepted": false,
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                "installed": "Native bescherming tegen eigen afspeelspraak, herstel gedeelde geheugenbronselectie, expliciete herkomst per gesprek en natuurlijke formulering/denkreactie met intacte geheugenzoeking.",
+                "cleanup": "Zes exacte eigen ontwikkelproefbronnen via bestaande wisroute verwijderd; alle 23 echte eigenaarevents ongewijzigd geverifieerd.",
+                "limitation": "Native speakers luisteren tijdelijk om de beurt: gewoon door Eva heen praten werkt niet; apart wekwoord/STOP/MUTE blijven. Snelheid en natuurlijk ritme nog niet fysiek beoordeeld.",
+                "nextAction": "Beoordeel echte gespreksrelevantie, beginwoorden en ritme met de geïnstalleerde bescherming; herstel gewone gesproken onderbreking pas met bewezen echo-onderscheiding.",
+                "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie."
+              }
             },
             {
               "id": "C3.3",
@@ -6234,7 +6267,7 @@
               "kind": "verbeteren",
               "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
               "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
               "ownerTrial": {
                 "status": "partial_with_false_interruptions_and_stop_failure",
                 "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -6244,19 +6277,15 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
-              "ownerActionRequired": true,
+              "nextAction": "Eerst gewone gesproken onderbreking zonder eigen-spraakecho herstellen; niet als afgerond ter eigenaaracceptatie aanbieden.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
-                "steps": [
-                  "Praat kort met Eva op beide speakers.",
-                  "Onderbreek haar een keer en controleer het vervolg.",
-                  "Sluit af met dankje doei en meld alleen wat nog misgaat."
-                ]
+                "availableNow": false,
+                "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
+                "steps": []
               },
-              "checkedAt": "2026-10-17T10:36:56.527047+00:00",
-              "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
+              "checkedAt": "2026-10-17T11:22:17.788805+00:00",
+              "remaining": "Gewone gesproken onderbreking tijdens Eva-spraak tijdelijk niet beschikbaar; afzonderlijk wekwoord/STOP/MUTE behouden. Echo-onderscheiding en fysieke acceptatie blijven open.",
               "assignment": {
                 "activeWorkers": []
               },
@@ -6267,7 +6296,7 @@
                   "kind": "verbeteren",
                   "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                   "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
-                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
                   "ownerTrial": {
                     "status": "partial_with_false_interruptions_and_stop_failure",
                     "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -6277,19 +6306,15 @@
                     "currentCandidateStatus": "not_yet_assessed",
                     "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                   },
-                  "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
-                  "ownerActionRequired": true,
+                  "nextAction": "Eerst gewone gesproken onderbreking zonder eigen-spraakecho herstellen; niet als afgerond ter eigenaaracceptatie aanbieden.",
+                  "ownerActionRequired": false,
                   "ownerInstructions": {
-                    "availableNow": true,
-                    "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
-                    "steps": [
-                      "Praat kort met Eva op beide speakers.",
-                      "Onderbreek haar een keer en controleer het vervolg.",
-                      "Sluit af met dankje doei en meld alleen wat nog misgaat."
-                    ]
+                    "availableNow": false,
+                    "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
+                    "steps": []
                   },
-                  "checkedAt": "2026-10-17T10:36:56.527047+00:00",
-                  "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
+                  "checkedAt": "2026-10-17T11:22:17.788805+00:00",
+                  "remaining": "Gewone gesproken onderbreking tijdens Eva-spraak tijdelijk niet beschikbaar; afzonderlijk wekwoord/STOP/MUTE behouden. Echo-onderscheiding en fysieke acceptatie blijven open.",
                   "assignment": {
                     "activeWorkers": []
                   },
@@ -6301,7 +6326,7 @@
                     "previousEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
                     "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                   },
-                  "technicalStatus": "installed_verified"
+                  "technicalStatus": "limited_native_half_duplex"
                 },
                 {
                   "title": "Onderbreken op tweede speaker",
@@ -6309,26 +6334,22 @@
                   "kind": "verbeteren",
                   "doneWhen": "Hetzelfde gedrag werkt op het tweede apparaat.",
                   "owner": "Codex /root",
-                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-completion-20261017.json",
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
                   "ownerTrial": {
                     "status": "deferred_until_woonkamer_works",
                     "steps": [],
                     "expected": "Beoordelen na werkende woonkamerconversatie; geen herhaling van een bekende falende route.",
                     "blocksIndependentWork": false
                   },
-                  "nextAction": "Beoordeel de geïnstalleerde versie in één kort gesprek op beide speakers. Eerste woorden, onderbreken/hervatten en afscheid controleren; technische controles zijn afgerond.",
-                  "ownerActionRequired": true,
+                  "nextAction": "Eerst gewone gesproken onderbreking zonder eigen-spraakecho herstellen; niet als afgerond ter eigenaaracceptatie aanbieden.",
+                  "ownerActionRequired": false,
                   "ownerInstructions": {
-                    "availableNow": true,
-                    "readyWhen": "Nieuwe versie geïnstalleerd; beide speakerverbindingen gereed.",
-                    "steps": [
-                      "Praat kort met Eva op beide speakers.",
-                      "Onderbreek haar een keer en controleer het vervolg.",
-                      "Sluit af met dankje doei en meld alleen wat nog misgaat."
-                    ]
+                    "availableNow": false,
+                    "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
+                    "steps": []
                   },
-                  "checkedAt": "2026-10-17T10:36:56.527047+00:00",
-                  "remaining": "Werkelijke luisterervaring op dit apparaat; softwarecontrole en actuele verbinding/autorisatie geslaagd.",
+                  "checkedAt": "2026-10-17T11:22:17.788805+00:00",
+                  "remaining": "Gewone gesproken onderbreking tijdens Eva-spraak tijdelijk niet beschikbaar; afzonderlijk wekwoord/STOP/MUTE behouden. Echo-onderscheiding en fysieke acceptatie blijven open.",
                   "assignment": {
                     "activeWorkers": []
                   },
@@ -6340,7 +6361,7 @@
                     "previousEvidence": "development/evidence/product/c3-second-speaker-20261001.json",
                     "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
                   },
-                  "technicalStatus": "installed_verified"
+                  "technicalStatus": "limited_native_half_duplex"
                 }
               ],
               "completionRule": "Beide apparaatcontroles geslaagd; dezelfde functie wordt één keer gebouwd en één keer als taak geteld.",
@@ -6350,7 +6371,22 @@
                 "previousEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json",
                 "authorization": "Eigenaar heeft voice hervat en expliciet alle vier open punten laten afmaken."
               },
-              "technicalStatus": "installed_verified"
+              "technicalStatus": "limited_native_half_duplex",
+              "ownerRegression20261017": {
+                "reportedAt": "2026-10-17T10:55:16.617204+00:00",
+                "status": "regression_corrections_installed_quality_open",
+                "originalStatus": "owner_rejected_installed_conversation",
+                "report": "Eigenaar meldt het slechtste gesprek tot nu toe: zeer traag, slechte antwoorden en antwoorden die niet bij de vragen passen.",
+                "latestOwnerRequest": "Geen computerachtige betrouwbaarheidsverklaringen; eenvoudige onzekerheid en passende, gevarieerde denkreacties tijdens wachten.",
+                "updatedAt": "2026-10-17T11:22:17.788805+00:00",
+                "qualityAccepted": false,
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+                "installed": "Native bescherming tegen eigen afspeelspraak, herstel gedeelde geheugenbronselectie, expliciete herkomst per gesprek en natuurlijke formulering/denkreactie met intacte geheugenzoeking.",
+                "cleanup": "Zes exacte eigen ontwikkelproefbronnen via bestaande wisroute verwijderd; alle 23 echte eigenaarevents ongewijzigd geverifieerd.",
+                "limitation": "Native speakers luisteren tijdelijk om de beurt: gewoon door Eva heen praten werkt niet; apart wekwoord/STOP/MUTE blijven. Snelheid en natuurlijk ritme nog niet fysiek beoordeeld.",
+                "nextAction": "Beoordeel echte gespreksrelevantie, beginwoorden en ritme met de geïnstalleerde bescherming; herstel gewone gesproken onderbreking pas met bewezen echo-onderscheiding.",
+                "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie."
+              }
             },
             {
               "id": "C4.3",
@@ -9515,6 +9551,21 @@
         "ownerAcceptance": false,
         "knownDevelopmentTokens": 65358,
         "latencyLimit": "Bronlezing1.9–2.7s versus7–8s; volledige kernproef23.5s versus28.2s, losse metingen met variabele geheugen/providerlast."
+      },
+      "ownerRegression20261017": {
+        "reportedAt": "2026-10-17T10:55:16.617204+00:00",
+        "status": "regression_corrections_installed_quality_open",
+        "originalStatus": "owner_rejected_installed_conversation",
+        "report": "Eigenaar meldt het slechtste gesprek tot nu toe: zeer traag, slechte antwoorden en antwoorden die niet bij de vragen passen.",
+        "latestOwnerRequest": "Geen computerachtige betrouwbaarheidsverklaringen; eenvoudige onzekerheid en passende, gevarieerde denkreacties tijdens wachten.",
+        "updatedAt": "2026-10-17T11:22:17.788805+00:00",
+        "qualityAccepted": false,
+        "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-regression-20261017.json",
+        "installed": "Native bescherming tegen eigen afspeelspraak, herstel gedeelde geheugenbronselectie, expliciete herkomst per gesprek en natuurlijke formulering/denkreactie met intacte geheugenzoeking.",
+        "cleanup": "Zes exacte eigen ontwikkelproefbronnen via bestaande wisroute verwijderd; alle 23 echte eigenaarevents ongewijzigd geverifieerd.",
+        "limitation": "Native speakers luisteren tijdelijk om de beurt: gewoon door Eva heen praten werkt niet; apart wekwoord/STOP/MUTE blijven. Snelheid en natuurlijk ritme nog niet fysiek beoordeeld.",
+        "nextAction": "Beoordeel echte gespreksrelevantie, beginwoorden en ritme met de geïnstalleerde bescherming; herstel gewone gesproken onderbreking pas met bewezen echo-onderscheiding.",
+        "scope": "C3.1/C4.1 blijven open. Technische controles en gereedstaande verbindingen zijn geen gebruikersacceptatie."
       }
     },
     "aideRetainedResume20261013": {

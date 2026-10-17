@@ -63,7 +63,7 @@ def access_lease(path):
 
 
 class MicrophoneTrack(AudioStreamTrack):
-    def __init__(self, on_overrun=None):
+    def __init__(self, on_overrun=None, input_suppressed=None):
         super().__init__()
         # Native capture starts immediately after the wakeword, before ICE and
         # account negotiation. Retain at most 45 seconds (~4.3 MB) during setup.
@@ -75,6 +75,8 @@ class MicrophoneTrack(AudioStreamTrack):
         self.dropped_frames = 0
         self.on_overrun = on_overrun
         self._last_overrun_report = None
+        self.input_suppressed=input_suppressed or (lambda:False)
+        self.echo_frames_discarded=0
 
     async def recv(self):
         if self.started is None:
@@ -104,6 +106,11 @@ class MicrophoneTrack(AudioStreamTrack):
         data=bytes(frame.data)
         if frame.sample_rate!=48000 or frame.num_channels!=1 or len(data)!=1920:
             raise ValueError('Microphone format differs')
+        if self.input_suppressed():
+            # Keep draining the physical capture, but never queue its playback
+            # echo for later recognition. Already captured opening words remain.
+            self.echo_frames_discarded+=1
+            return
         # A short capture/transport scheduling burst must not terminate the
         # conversation. Bound live latency by dropping the oldest queued frame,
         # keeping the newest microphone audio. Startup speech remains buffered.
@@ -251,7 +258,8 @@ class CodexMediaSession:
             self.renderer.prewarm()
         self.peer=RTCPeerConnection();self.microphone=MicrophoneTrack(
             lambda dropped, queued: self.diagnostic('microphone_overrun',
-                dropped_frames=dropped, queued_frames=queued))
+                dropped_frames=dropped, queued_frames=queued),
+            input_suppressed=lambda: bool(getattr(self.source,'input_suppressed',False)))
         self.peer.addTrack(self.microphone)
         self.channel=self.peer.createDataChannel('oai-events')
         async def gather():
@@ -468,7 +476,7 @@ class CodexMediaSession:
                     self.current()
                     self.diagnostic('core_reply_failed',error_type=type(error).__name__)
                     self.bridge.notify({'type':'work_failed','message_id':str(uuid5(UUID(self.bridge.session_id),key))})
-                    answer='Ik kan hier nu geen betrouwbaar antwoord op geven. Een eventueel gestarte taak kan nog lopen.'
+                    answer='Sorry, ik raakte de draad even kwijt. Wil je dat nog eens zeggen?'
                 self.current()
                 self.bridge.transcript('user',text)
         finally:

@@ -175,7 +175,8 @@ async def test_transient_core_error_keeps_voice_alive_without_claiming_success()
     turn(s,'turn.done','one','Voer de taak uit')
     await settle(s)
     assert not s.closed and len(spoken)==1
-    assert 'geen betrouwbaar antwoord' in spoken[0] and 'private detail' not in spoken[0]
+    assert 'de draad even kwijt' in spoken[0] and 'private detail' not in spoken[0]
+    assert 'taak' not in spoken[0]
     await s.aclose()
 
 

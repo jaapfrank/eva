@@ -37,6 +37,75 @@ async def test_microphone_recovers_after_capture_burst_without_closing():
     assert bytes((await source.recv()).planes[0])==bytes(pcm(700).data)
     source.stop()
 
+
+@pytest.mark.asyncio
+async def test_native_echo_gate_starts_before_first_output_and_drains_without_losing_prior_words():
+    entered=asyncio.Event();release=asyncio.Event();played=asyncio.Event()
+    class Sink:
+        wire=object()
+        segment=None
+        async def capture_frame(self,frame):
+            entered.set();await release.wait()
+            if self.segment is None:
+                self.segment=SimpleNamespace(task=asyncio.create_task(played.wait()))
+        def clear_buffer(self):pass
+    sink=Sink();output=SpeakerSource(sink)
+    microphone=MicrophoneTrack(input_suppressed=lambda:output.input_suppressed)
+    microphone.enabled=True
+    microphone.push(pcm(400)) # Words captured before the greeting remain valid.
+    sending=asyncio.create_task(output.capture_frame(pcm(700)))
+    try:
+        await asyncio.wait_for(entered.wait(),1)
+        assert output.input_suppressed and sink.segment is None
+        for _ in range(100):microphone.push(pcm(700))
+        assert microphone.echo_frames_discarded==100 and microphone.frames.qsize()==1
+        assert bytes((await microphone.recv()).planes[0])==bytes(pcm(400).data)
+        assert not any(bytes((await microphone.recv()).planes[0]))
+        release.set();await asyncio.wait_for(sending,1)
+        assert output.input_suppressed
+    finally:
+        release.set();played.set();await asyncio.gather(sending,return_exceptions=True)
+        if sink.segment:await sink.segment.task
+        microphone.stop()
+
+
+@pytest.mark.asyncio
+async def test_browser_sink_does_not_disable_simultaneous_microphone_audio():
+    class Sink:
+        async def capture_frame(self,frame):pass
+    output=SpeakerSource(Sink())
+    microphone=MicrophoneTrack(input_suppressed=lambda:output.input_suppressed)
+    microphone.enabled=True
+    try:
+        await output.capture_frame(pcm(700))
+        microphone.push(pcm(400))
+        assert not output.input_suppressed
+        assert bytes((await microphone.recv()).planes[0])==bytes(pcm(400).data)
+    finally:microphone.stop()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('failure', ['cancelled','exception'])
+async def test_native_echo_gate_never_treats_failed_playback_as_a_physical_ack(failure):
+    completion=asyncio.get_running_loop().create_future()
+    class Sink:
+        wire=object()
+        segment=SimpleNamespace(task=completion)
+        async def capture_frame(self,frame):pass
+    output=SpeakerSource(Sink())
+    microphone=MicrophoneTrack(input_suppressed=lambda:output.input_suppressed)
+    microphone.enabled=True
+    try:
+        await output.capture_frame(pcm(700))
+        if failure=='cancelled':completion.cancel()
+        else:completion.set_exception(RuntimeError('Missing physical receipt'))
+        await asyncio.sleep(.31)
+        assert output.input_suppressed
+        microphone.push(pcm(700))
+        assert not microphone.frames.qsize()
+        assert not any(bytes((await microphone.recv()).planes[0]))
+    finally:microphone.stop()
+
 @pytest.mark.asyncio
 async def test_native_speaker_does_not_play_endless_silence_and_honors_stop():
     class Sink:
