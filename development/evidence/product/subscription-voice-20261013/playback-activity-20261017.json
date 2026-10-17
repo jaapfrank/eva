@@ -1,0 +1,75 @@
+{
+  "checkedAt": "2026-10-17T01:00:33.951919+00:00",
+  "status": "installed_targeted_regression_passed_owner_observation_pending",
+  "scope": "Existing voice session lifetime only; one core and renderer route retained.",
+  "problem": "Listener idle time was refreshed during core work but not while its renderer spoke. A long approved answer could trigger idle closure or leave too little user-response time.",
+  "changes": [
+    "Count unfinished renderer speech handles as activity within existing bounded speech lifecycle.",
+    "Refresh listener activity after playback completion or cancellation; closed sessions stay closed.",
+    "Preserve current authorization check, interruption semantics and absolute 1800s maximum."
+  ],
+  "tests": {
+    "beforeFix": {
+      "newRegressionsFailed": 3,
+      "existingPassed": 95
+    },
+    "afterFix": {
+      "passed": 98,
+      "failed": 0
+    },
+    "mode": "Existing seven-file voice suite in network-disabled dependency image; real say handles, controlled monotonic clock, synthetic renderer events.",
+    "cases": [
+      "Active renderer playback after core work finishes does not idle-close.",
+      "Completed or cancelled speech starts a fresh normal listening interval.",
+      "Done/removed speech handles do not indefinitely retain the session.",
+      "Absolute lifetime still closes and cancels active playback."
+    ],
+    "independentReview": "distinctive_eva_review: no material blockers, source and regression review."
+  },
+  "runtime": [
+    {
+      "name": "eva2-household-speaker-1",
+      "slug": "speaker",
+      "project": "eva2-household-speaker",
+      "service": "speaker",
+      "base": "sha256:ffe4c4166aa5d299ff214ac11930dde8191434eecf1b7072bb328b515a11871c",
+      "candidate": "sha256:df94c0d798e0b543f3f2c9a855066debe216204341f2b4daf07d8a370e973259",
+      "source_sha256": "2eddfe8ed179e7853a318dbc5943e88df9ad8218c9485dac3bb5f9ab587c517d",
+      "running": true,
+      "source_verified": true,
+      "configuration_preserved": true,
+      "restart_count": 0,
+      "startup_traceback_seen": false
+    },
+    {
+      "name": "eva2-owner-voice-media-1",
+      "slug": "media",
+      "project": "eva2-owner-voice",
+      "service": "media",
+      "base": "sha256:52a56600329bca113b3d3e8888234cad5e8728aca3290eff08e3d20c4722ebc1",
+      "candidate": "sha256:e96f0fe9190133f5613e12bafc6ba71881608b594c2c237258302e6e56a6bb61",
+      "source_sha256": "2eddfe8ed179e7853a318dbc5943e88df9ad8218c9485dac3bb5f9ab587c517d",
+      "running": true,
+      "source_verified": true,
+      "configuration_preserved": true,
+      "restart_count": 0,
+      "startup_traceback_seen": false
+    }
+  ],
+  "sourceSha256": {
+    "src/eva/voice_service/codex_media.py": "2eddfe8ed179e7853a318dbc5943e88df9ad8218c9485dac3bb5f9ab587c517d",
+    "development/tests/voice_service/test_codex_media.py": "314b52ef64d80cdaa46f4cab38e6f0419d8e88cd996cebdecf2d50a708c50bb6"
+  },
+  "installation": "One reviewed module over actual immutable current images in speaker and private voice media; service configuration preserved. Neither service had a running Codex transport before replacement.",
+  "usage": {
+    "liveModelRequests": 0,
+    "paidProviderProbes": 0,
+    "developmentTokenUsage": "unknown"
+  },
+  "limits": [
+    "Controlled-time regression, not a measured long physical household conversation.",
+    "No new audio-quality, recognition, response-speed or family-acceptance claim.",
+    "Activity calendar-day and bounded result-content findings recorded separately; not changed by this fix."
+  ],
+  "privacy": "No private transcripts, audio, credentials or session identities in this record."
+}

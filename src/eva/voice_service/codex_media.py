@@ -615,9 +615,11 @@ class CodexMediaSession:
             await asyncio.sleep(1)
             self.current()
             now=time.monotonic()
-            # Waiting for an admitted foreground answer is not user inactivity.
+            # Waiting for an admitted answer or its playback is not inactivity.
             # The absolute session limit and authority checks still apply.
-            if getattr(self.state, 'active', None):
+            output=self.renderer if self.renderer is not None else self
+            if (getattr(self.state, 'active', None)
+                    or any(not handle.done() for handle in output.speech_handles)):
                 self.last_activity=now
             if now-started>=1800 or now-self.last_activity>=120:
                 self.diagnostic('lifetime_expired',
@@ -683,8 +685,16 @@ class CodexMediaSession:
         await self.room.local_participant.publish_transcription(rtc.Transcription(participant_identity=participant,
             track_sid=track_id,segments=[rtc.TranscriptionSegment(id=identity,text=text,start_time=0,end_time=0,final=True,language='nl')]))
 
+    def speech_settled(self, task):
+        # Give the listener its full idle window after playback or interruption,
+        # including completion between watchdog ticks. Never reopen a session.
+        if not self.closed:self.last_activity=time.monotonic()
+
     def say(self,text,**_):
-        if self.renderer is not None:return self.renderer.say(text,**_)
+        if self.renderer is not None:
+            handle=self.renderer.say(text,**_)
+            handle.task.add_done_callback(self.speech_settled)
+            return handle
         def interrupted():
             # Revoking a saved result must stop its media, not just its waiter.
             # Cancelling a queued offer must not silence somebody else's answer.
@@ -734,6 +744,7 @@ class CodexMediaSession:
                     if self.render_only:self.output_suppressed=True
         handle.task=self.task(send());self.speech_handles.add(handle)
         handle.task.add_done_callback(lambda _:self.speech_handles.discard(handle))
+        handle.task.add_done_callback(self.speech_settled)
         return handle
 
     def clear_user_turn(self):

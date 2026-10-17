@@ -442,3 +442,55 @@ def test_transport_diagnostics_only_log_known_protocol_states():
     session.transport_diagnostic("test")
     assert events == [{"connectionState": "connected", "iceConnectionState": "failed",
                        "signalingState": "unknown"}]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('ending', ['completed', 'cancelled', 'absolute_limit'])
+async def test_renderer_playback_keeps_listener_alive_until_settled(monkeypatch, ending):
+    from eva.voice_service import codex_media
+    now=[1000.0]
+    monkeypatch.setattr(codex_media, 'time', SimpleNamespace(monotonic=lambda:now[0]))
+    session=CodexMediaSession({}, SimpleNamespace(active={}), lambda:None)
+    renderer=CodexMediaSession({}, session.state, session.current, render_only=True)
+    session.renderer=renderer
+    renderer.started.set()
+    entered=asyncio.Event()
+    class Voice:
+        thread='test'
+        async def say(self, text):entered.set()
+        async def close(self):pass
+    renderer.voice=Voice()
+    handle=session.say('Een toegelaten antwoord.')
+    await entered.wait()
+    session.last_activity=879.0
+    watcher=asyncio.create_task(session.watch_lifetime())
+    try:
+        await asyncio.sleep(1.1)
+        assert not session.closed
+        assert session.last_activity==1000.0
+        if ending=='absolute_limit':
+            now[0]=2801.0
+            await asyncio.wait_for(watcher,2)
+            assert session.closed
+            assert handle.task.cancelled()
+            return
+        # Completion between watchdog ticks must start a fresh listening window.
+        now[0]=1110.0
+        if ending=='cancelled':
+            session.interrupt()
+        else:
+            renderer._speech_waiter.set_result(None)
+        await asyncio.gather(handle.task,return_exceptions=True)
+        await asyncio.sleep(0)
+        assert session.last_activity==1110.0
+        assert not renderer.speech_handles
+        now[0]=1229.0
+        await asyncio.sleep(1.1)
+        assert not session.closed
+        now[0]=1231.0
+        await asyncio.wait_for(watcher,2)
+        assert session.closed
+    finally:
+        watcher.cancel()
+        await asyncio.gather(watcher,return_exceptions=True)
+        await session.aclose()
