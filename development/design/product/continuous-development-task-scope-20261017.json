@@ -1,0 +1,24 @@
+{
+  "contract": "EvaWorkboardScopeExtension/v1",
+  "id": "continuous-development-20261017",
+  "createdAt": "2026-10-17T00:57:21.757383+00:00",
+  "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+  "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+  "ownerAuthorized": true,
+  "authorization": "Owner asked to review eva-continuous-development-20261017.md and add tasks where necessary. Only uncovered user outcomes added; existing accepted tasks and original doneWhen preserved.",
+  "meaning": "Frozen initial scope only; live status is solely execution-workboard-v1.json. No new plan or permanent agent.",
+  "tasks": [
+    {
+      "id": "E2.7",
+      "title": "Eva laat haar eigen geschiedenis correct terugvinden",
+      "status": "planned",
+      "doneWhen": "Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw."
+    },
+    {
+      "id": "E4.5",
+      "title": "Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken",
+      "status": "planned",
+      "doneWhen": "Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering."
+    }
+  ]
+}

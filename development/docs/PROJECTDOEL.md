@@ -125,6 +125,20 @@ AIDE, AIDE², Eva's implementatie en daadwerkelijk Eva-bewijs. Stilte of overcap
 maakt betaalde modelaanvragen niet gratis. Achtergrondwerk wijkt voor gesprek en stopt
 op verzoek; er komt geen tweede permanente levensdaemon of optimalisatieplatform bij.
 
+De uitwerking [blijvende ontwikkeling](eva-continuous-development-20261017.md) verduidelijkt
+de bestaande kringloop. E2.7 verbindt de toegelaten eigen activiteit, open werk en
+leeruitkomsten via bestaande bronlezers, met echte tijden en status. Geen tweede
+autobiografische opslag en geen volledige historie in iedere prompt.
+
+E4.5 sluit de zelfstandige software-onderhoudsketen voor eerst één omkeerbare
+wijzigingsklasse: Eva kiest vanuit een echt tekort of ontwikkelkans, maakt de
+kandidaat, laat onafhankelijk beoordelen, past bewezen winst toe via de bestaande
+release-/installatieroute en controleert later gebruik. Installatiefout of regressie
+leidt tot gegevensveilig behoud/herstel van de goede versie. Een werkende sandboxpatch
+of eerdere capabilityproef bewijst deze hele keten niet. Binnen het bestaande geldig
+ingestelde bereik volgt geen nieuwe eigenaarvraag per kleine stap. Ruimer automatisch
+wijzigingsbereik groeit later op bewijs en maakt deze eerste oplevering niet eindeloos.
+
 ## Bestaande basis en bewijsgrens
 
 De Pythonkern, PostgreSQL met Hindsight-projectie, gedeelde uitvoering, initiatief-

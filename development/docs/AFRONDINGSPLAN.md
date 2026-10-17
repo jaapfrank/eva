@@ -133,6 +133,13 @@ zelfchat, geen extra Business Platform-abonnement en geen wijzigingen aan speake
 E2.6 blijft open tot de werkelijke account-/belroute en oorspronkelijke tekst-
 terugmelding zijn bevestigd. Dit optionele account blokkeert het andere werk niet.
 
+De aanvulling van 17 oktober [blijvende ontwikkeling](eva-continuous-development-20261017.md)
+krijgt één afzonderlijke E2.7-uitkomst: dezelfde toegelaten activiteit, eigen opdrachten,
+initiatief, interesses en leeruitkomsten samen kunnen terugvinden en kort beschrijven.
+De bestaande reader is beperkt tot openbare sessies en afgelopen 24 uur; een lokale
+kalenderdag, privégeschiedenis en andere brondekking vragen de ontbrekende overdracht.
+E3.3/E3.4 beoordelen die eerst. Geen nieuwe geheugenbank of spraakherbouw.
+
 ## E3 — Alle bestanden beoordeelbaar maken
 
 ### Eén complete, herleidbare inventaris
@@ -255,6 +262,16 @@ verbeterideeën staan apart als vervolgwerk. De echte kernroutes zijn behouden,
 module-/updateafspraken en gemeten efficiëntie zijn vastgelegd. Het streven naar
 perfecte code houdt de release niet oneindig open.
 
+E4.5 is de afzonderlijke gebruikersuitkomst uit het eigenaarsontwerp van 17 oktober:
+één echte omkeerbare softwareverbetering zelfstandig van aanleiding via onafhankelijke
+beoordeling tot installatie, gedragscontrole en later gebruik brengen. Hergebruik de
+bestaande component-/release-/updaterketen; sluit de ontbrekende automatische herstel-
+overdracht gegevensveilig. Geen tweede updater, permanente onderhoudsagent of routine
+van terugzetten bij iedere ontwikkelwijziging. De eerste klasse bevat geen destructieve
+datamigratie; herstelbewijs vraagt geen kunstmatige storing in het gezin. E4.4 blijft
+het onderhoudscontract, E4.5 bewijst de uitvoering. Bestaande HUE6/L3-acceptaties blijven
+binnen hun oorspronkelijke scope geldig. Beide nieuwe kaarten gaan mee in E5/F2.
+
 ## E5 — Eén gezamenlijke oplevering
 
 1. Stel één kandidaat samen uit de werkelijk actuele bron, dependencies, configuratie,
@@ -302,12 +319,16 @@ Een afgebakende kleine taak, opschoning of zelfstandige review sluit het hele go
 
 ## Bijhouden zonder nieuwe ondoorgrondelijke lijsten
 
-De 18 concrete kaarten uit dit bestaande plan zijn nu geregistreerd als E1.1–E1.3,
-E2.1–E2.6, E3.1–E3.4, E4.1–E4.4 en E5.1. Ze staan onder dezelfde vijf fasen in
+De oorspronkelijke 18 concrete kaarten zijn geregistreerd als E1.1–E1.3,
+E2.1–E2.6, E3.1–E3.4, E4.1–E4.4 en E5.1. Het ontwerp van 17 oktober voegt alleen
+E2.7 (eigen geschiedenis) en E4.5 (zelfstandig softwareonderhoud) toe aan diezelfde
+fasen; de oorspronkelijke criteria en afrondingen veranderen niet. Ze staan onder dezelfde vijf fasen in
 **Taken per onderdeel**. De zeven bestaande open kaarten blijven behouden; HUE5/HUE6
 worden niet opnieuw aangemaakt. F2.1/F2.2 blijven de echte gezinsproef en acceptatie.
 De historische 45/52 wordt hierdoor 45/70 geregistreerde taken; het werk is zichtbaar
-gemaakt, geen bestaande afronding ingetrokken. Status staat alleen in het werkbord;
+gemaakt, geen bestaande afronding ingetrokken. De twee expliciete nieuwe uitkomsten
+brengen de geregistreerde scope van 70 op 72; geen voltooide taak is heropend.
+Status staat alleen in het werkbord;
 het scopebestand bewaart uitsluitend de oorspronkelijke nieuwe eindvoorwaarden.
 
 

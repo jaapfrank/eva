@@ -1,0 +1,111 @@
+{
+  "contract": "EvaContinuousDevelopmentCoverage/v1",
+  "checkedAt": "2026-10-17T00:57:59.719062+00:00",
+  "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+  "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+  "assessment": "Aligned with existing housemate goal; strengthens continuity and closes practical use/self-maintenance handoffs rather than adding a second agent/planner. It does not prove competitive lead or unlimited self-improvement.",
+  "newTasks": [
+    "E2.7",
+    "E4.5"
+  ],
+  "originalTasksReopened": [],
+  "mapping": [
+    {
+      "topic": "Own activity, actual time and result truth",
+      "cards": [
+        "E2.7"
+      ],
+      "basis": [
+        "src/eva/bootstrap/recent_activity.py:18",
+        "src/eva/bootstrap/recent_activity.py:46",
+        "src/eva/bootstrap/recent_activity.py:69"
+      ],
+      "gap": "Existing reader is household-only and last24h plus task list; not all authorized private/initiative/learning history."
+    },
+    {
+      "topic": "Continuous responsibility and self-chosen interests",
+      "cards": [
+        "E3.3",
+        "E3.4",
+        "E4.2",
+        "E5.1",
+        "F2.1",
+        "F2.2"
+      ],
+      "gap": "Trace remaining handoffs during already planned review. Existing seven-day acceptance covers real progression/help; no separate interest engine or production quota."
+    },
+    {
+      "topic": "Experience changes later choices",
+      "cards": [
+        "E3.3",
+        "E4.2",
+        "E5.1",
+        "F2.1",
+        "F2.2"
+      ],
+      "gap": "Reuse HUE/source/feedback context; repair only a demonstrated handoff. Original accepted trials are not restarted."
+    },
+    {
+      "topic": "Autonomous production maintenance and recovery",
+      "cards": [
+        "E4.4",
+        "E4.5"
+      ],
+      "basis": [
+        "src/eva/operations/component_application_runtime.py:552",
+        "src/tools/installation_runtime_update.py:77",
+        "src/tools/installation_runtime_update.py:151"
+      ],
+      "gap": "Existing application calls updater; failure records incomplete state but has no automatic production recovery. Repo rollback is not production rollback."
+    },
+    {
+      "topic": "Quality, human help, economic value and spending",
+      "cards": [
+        "E4.3",
+        "E5.1",
+        "F2.1",
+        "F2.2"
+      ],
+      "gap": "Measure actual useful outcomes and guidance; no mandatory earning quota, unmeasured savings or new competitor series."
+    }
+  ],
+  "notExpanded": [
+    "No new permanent agent, planner, memory or updater.",
+    "No new voice implementation; its executor retains ownership.",
+    "No reopening E3.2/HUE5/HUE6/L3 criteria.",
+    "No unlimited automatic dependency/host-authority/data migration scope.",
+    "Wider future maintenance classes follow real evidence and do not indefinitely block first delivery."
+  ],
+  "priorTextPreservation": [
+    {
+      "path": "development/docs/PROJECTDOEL.md",
+      "previousFileSha256": "f82d024534a17a1085458fe00aef3b1d6d6e9a610cc96ee3da98c0d90e8aa0de",
+      "previousText": "## Bestaande basis en bewijsgrens"
+    },
+    {
+      "path": "development/docs/AFRONDINGSPLAN.md",
+      "previousFileSha256": "9ad7d1014dda8ac8b7815f1e1f7f79850d9373b2e2e3db907930b49d46381a3d",
+      "previousText": "## E3 — Alle bestanden beoordeelbaar maken"
+    },
+    {
+      "path": "development/docs/AFRONDINGSPLAN.md",
+      "previousFileSha256": "63b445ece2c8f870a5c77cb10d5a97a9c70a1ec9ec3c78ce0bbe85308aecfcd6",
+      "previousText": "## E5 — Eén gezamenlijke oplevering"
+    },
+    {
+      "path": "development/docs/AFRONDINGSPLAN.md",
+      "previousFileSha256": "c50b0d4496cf88bd66c1c55c27391a10fb2cd5070e1611fa559e614c30fdb52d",
+      "previousText": "De 18 concrete kaarten uit dit bestaande plan zijn nu geregistreerd als E1.1–E1.3,\nE2.1–E2.6, E3.1–E3.4, E4.1–E4.4 en E5.1."
+    },
+    {
+      "path": "development/docs/AFRONDINGSPLAN.md",
+      "previousFileSha256": "cca413795414a9f585a69be4c3994d1b7c2f46759ab704e12e5ac940a017ee6b",
+      "previousText": "gemaakt, geen bestaande afronding ingetrokken. Status staat alleen in het werkbord;"
+    }
+  ],
+  "previousSourceRevision": "3f2784d84beeee7310c60d36f06c0903a7873e61",
+  "runtimeMutations": 0,
+  "newProductImplementation": false,
+  "modelRuntimeCalls": 0,
+  "developmentCredits": null
+}

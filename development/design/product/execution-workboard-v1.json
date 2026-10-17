@@ -2234,7 +2234,7 @@
         "next": {
           "title": "E3.3 · Adapters en installatie inhoudelijk beoordelen",
           "state": "Eerstvolgende uitvoerbare taak",
-          "summary": "Gebruik de kernbesluiten en beoordeel de resterende adapters, frontend, installatie- en buildconsumenten. Geen nieuwe plannen of kernherlezing.",
+          "summary": "E3.3 blijft eerstvolgend. Het nieuwe ontwerp is gedekt door bestaande samenhang-/gezinskaarten plus E2.7 (eigen geschiedenis) en E4.5 (zelfstandig softwareonderhoud). Geen nieuwe bouwfase.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
@@ -2243,7 +2243,7 @@
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-16T23:26:42.505625+00:00",
+        "checkedAt": "2026-10-17T00:57:21.757383+00:00",
         "reviewedAt": "2026-10-16T17:36:14.550321+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -2369,7 +2369,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-16T23:26:42.505625+00:00",
+      "lastUpdatedAt": "2026-10-17T00:57:21.757383+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2403,7 +2403,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-16T23:26:42.505625+00:00",
+      "updatedAt": "2026-10-17T00:57:21.757383+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -4617,6 +4617,41 @@
                 "blocker": "Eva heeft nog geen eigen telefoonnummer/WhatsApp-account. Dit blokkeert de echte aansluiting en belproef, niet ander uitvoerbaar projectwerk.",
                 "parked": true,
                 "parkedReason": "Eigenaar regelt Eva’s eigen nummer later (17 oktober 2026); verder werken aan uitvoerbare kaarten."
+              },
+              {
+                "id": "E2.7",
+                "title": "Eva laat haar eigen geschiedenis correct terugvinden",
+                "status": "planned",
+                "kind": "bouwen",
+                "doneWhen": "Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "RecentActivityActions combineert beperkte openbare foregroundhistorie over 24 uur met de bestaande gedeelde takenlijst. Andere bronlezers voor privéwerk/initiatief/leren bestaan afzonderlijk.",
+                "gap": "Eén persoonsgebonden leesroute over die bestaande bronnen ontbreekt; een kalenderdag is niet hetzelfde als de afgelopen 24 uur. E2.3/E2.4 leveren afzonderlijke bediening, niet deze algemene inhoudelijke bronlezing.",
+                "nextAction": "Na E3.3/E3.4 de werkelijk ontbrekende reader-/portoverdracht realiseren, met hergebruik van bestaande bronnen, bronhashes en authority; eerst één gewone tekstvraag correct afmaken.",
+                "files": [
+                  "src/eva/bootstrap/recent_activity.py",
+                  "src/eva/adapters/postgres",
+                  "src/eva/bootstrap/dashboard_work_context.py",
+                  "src/eva/application/conversation.py"
+                ],
+                "dependsOn": [
+                  "E3.4"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "continuous-development-20261017",
+                "checkedAt": "2026-10-17T00:57:21.757383+00:00",
+                "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+                "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+                "effort": "Middelgroot; verbind bestaande readers. Omvang hangt af van E3.3-brondekking; geen token- of creditbelofte.",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "steps": [],
+                  "blocksIndependentWork": false,
+                  "readyWhen": "Nog bouwtaak. Na oplevering kun je in je gewone chat vragen wat Eva vandaag werkelijk heeft gedaan; geen aparte spraakproef nodig."
+                }
               }
             ]
           },
@@ -4814,6 +4849,17 @@
                   ],
                   "scope": "Beoordeel de resterende adapters/frontend/build/migratiebestanden en werkelijke consumers. Gebruik de vastgelegde identityresource- en workerbuildbevindingen; voer geen nieuwe kernschouw uit.",
                   "newTasks": 0
+                },
+                "continuousDevelopmentInput": {
+                  "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+                  "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+                  "traceOnly": [
+                    "actual experience and counterevidence to later choice",
+                    "same responsibility/interest to next step and current result",
+                    "candidate to independent acceptance to exact active version and recovery"
+                  ],
+                  "reuse": "E3.2 stays completed; reuse its exact hashbound core review. Inspect only remaining adapter/install/context handoffs.",
+                  "noNewExampleFunction": true
                 }
               },
               {
@@ -4849,6 +4895,17 @@
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                   "steps": [],
                   "blocksIndependentWork": false
+                },
+                "continuousDevelopmentInput": {
+                  "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+                  "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+                  "traceOnly": [
+                    "actual experience and counterevidence to later choice",
+                    "same responsibility/interest to next step and current result",
+                    "candidate to independent acceptance to exact active version and recovery"
+                  ],
+                  "reuse": "E3.2 stays completed; reuse its exact hashbound core review. Inspect only remaining adapter/install/context handoffs.",
+                  "noNewExampleFunction": true
                 }
               }
             ]
@@ -5019,6 +5076,49 @@
                   "implementationStarted": false,
                   "newTasks": 0
                 }
+              },
+              {
+                "id": "E4.5",
+                "title": "Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken",
+                "status": "planned",
+                "kind": "bouwen",
+                "doneWhen": "Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering.",
+                "owner": "Codex",
+                "ownerActionRequired": false,
+                "existing": "ComponentImprovementActions, onafhankelijke FinalComponentAssessments, releasepublisher, ReviewedComponentApplications, ComponentApplicationRuntime en de image-updater zijn al verbonden. Bestaande capability-/agentverbeterproeven houden hun oorspronkelijke beperkte bewijs.",
+                "gap": "De gehele automatische software-onderhoudsketen is niet bewezen. De updater bewaart bij fouten incomplete_inspect_retained_installation maar herstelt de productie-installatie niet automatisch; lokale repositoryrollback is iets anders. E4.4 beschrijft onderhoud/updatecontracten, niet deze zelfstandige eindgebruikersuitkomst.",
+                "nextAction": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
+                "files": [
+                  "src/eva/operations/component_final_assessment.py",
+                  "src/eva/operations/component_release_publisher.py",
+                  "src/eva/operations/reviewed_component_application.py",
+                  "src/eva/operations/component_application_runtime.py",
+                  "src/tools/installation_runtime_update.py"
+                ],
+                "dependsOn": [
+                  "E4.4"
+                ],
+                "assignment": {
+                  "activeWorkers": []
+                },
+                "scopeOrigin": "continuous-development-20261017",
+                "checkedAt": "2026-10-17T00:57:21.757383+00:00",
+                "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+                "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+                "effort": "Middelgroot tot groot; bestaande keten hergebruiken. Eén wijzigingsklasse, geen onbeperkte automatische installatie of nieuwe vergelijkingsserie. Kosten onbekend.",
+                "limits": [
+                  "Geen wijziging van beoordelaar, hostautoriteit of eigen bevoegdheid door de kandidaat.",
+                  "Actieve bron/image/config vlak voor toepassing controleren; actuele wijzigingen van anderen bewaren.",
+                  "Geen destructieve datamigratie of kunstmatige storing in het gezin voor deze eerste klasse.",
+                  "Voorgrond/stop en bestaande budgetten blijven leidend; geen nieuwe permanente levensdaemon.",
+                  "Ruimer automatisch updatebereik is later gebruik/vervolg, geen eindeloze voorwaarde voor deze kaart."
+                ],
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "steps": [],
+                  "blocksIndependentWork": false,
+                  "readyWhen": "Nog bouwtaak. Geen handmatige patch of installatiestap van jou gevraagd; eventueel ontbrekend opgeslagen bereik wordt één keer begrijpelijk ingesteld."
+                }
               }
             ]
           },
@@ -5066,7 +5166,9 @@
                   "E4.1",
                   "E4.2",
                   "E4.3",
-                  "E4.4"
+                  "E4.4",
+                  "E2.7",
+                  "E4.5"
                 ],
                 "assignment": {
                   "activeWorkers": []
@@ -5101,7 +5203,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-16T23:26:42.505625+00:00",
+        "updatedAt": "2026-10-17T00:57:21.757383+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -5137,7 +5239,8 @@
                 "E2.3",
                 "E2.4",
                 "E2.5",
-                "E2.6"
+                "E2.6",
+                "E2.7"
               ],
               "existingTaskIds": [
                 "C3.1",
@@ -5149,7 +5252,7 @@
             {
               "id": "E3",
               "title": "Alle bestanden inventariseren en beoordelen",
-              "status": "planned",
+              "status": "in_progress",
               "finish": "Per bestand rol, exacte versie, reviewstatus, consumenten en onderbouwd besluit; actieve code inhoudelijk beoordeeld; beschermde historie onderscheiden.",
               "taskIds": [
                 "E3.1",
@@ -5167,7 +5270,8 @@
                 "E4.1",
                 "E4.2",
                 "E4.3",
-                "E4.4"
+                "E4.4",
+                "E4.5"
               ]
             },
             {
@@ -5236,6 +5340,36 @@
               "HUE6.1"
             ],
             "newTasksAdded": false
+          },
+          "continuousDevelopmentCoverage": {
+            "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+            "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+            "newTaskIds": [
+              "E2.7",
+              "E4.5"
+            ],
+            "existingCoverage": [
+              "E3.3",
+              "E3.4",
+              "E4.2",
+              "E4.3",
+              "E4.4",
+              "E5.1",
+              "F2.1",
+              "F2.2"
+            ],
+            "notReopened": [
+              "E3.2",
+              "HUE5.1",
+              "HUE6.1",
+              "L3.4",
+              "L3.5",
+              "L3.6",
+              "L3.7"
+            ],
+            "order": "E3.3/E3.4 remain next. E2.7 after source review; E4.5 after E4.4; both before existing E5/F2.",
+            "widerSelfMaintenance": "Only widen automatic changes after real evidence in the first class; no unlimited new release gate.",
+            "economicValue": "Actual time/cost/help may be assessed during ordinary use; no mandatory revenue or commercial project quota."
           }
         }
       }
@@ -7447,6 +7581,41 @@
               "blocker": "Eva heeft nog geen eigen telefoonnummer/WhatsApp-account. Dit blokkeert de echte aansluiting en belproef, niet ander uitvoerbaar projectwerk.",
               "parked": true,
               "parkedReason": "Eigenaar regelt Eva’s eigen nummer later (17 oktober 2026); verder werken aan uitvoerbare kaarten."
+            },
+            {
+              "id": "E2.7",
+              "title": "Eva laat haar eigen geschiedenis correct terugvinden",
+              "status": "planned",
+              "kind": "bouwen",
+              "doneWhen": "Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "RecentActivityActions combineert beperkte openbare foregroundhistorie over 24 uur met de bestaande gedeelde takenlijst. Andere bronlezers voor privéwerk/initiatief/leren bestaan afzonderlijk.",
+              "gap": "Eén persoonsgebonden leesroute over die bestaande bronnen ontbreekt; een kalenderdag is niet hetzelfde als de afgelopen 24 uur. E2.3/E2.4 leveren afzonderlijke bediening, niet deze algemene inhoudelijke bronlezing.",
+              "nextAction": "Na E3.3/E3.4 de werkelijk ontbrekende reader-/portoverdracht realiseren, met hergebruik van bestaande bronnen, bronhashes en authority; eerst één gewone tekstvraag correct afmaken.",
+              "files": [
+                "src/eva/bootstrap/recent_activity.py",
+                "src/eva/adapters/postgres",
+                "src/eva/bootstrap/dashboard_work_context.py",
+                "src/eva/application/conversation.py"
+              ],
+              "dependsOn": [
+                "E3.4"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "continuous-development-20261017",
+              "checkedAt": "2026-10-17T00:57:21.757383+00:00",
+              "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+              "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+              "effort": "Middelgroot; verbind bestaande readers. Omvang hangt af van E3.3-brondekking; geen token- of creditbelofte.",
+              "ownerInstructions": {
+                "availableNow": false,
+                "steps": [],
+                "blocksIndependentWork": false,
+                "readyWhen": "Nog bouwtaak. Na oplevering kun je in je gewone chat vragen wat Eva vandaag werkelijk heeft gedaan; geen aparte spraakproef nodig."
+              }
             }
           ]
         },
@@ -7644,6 +7813,17 @@
                 ],
                 "scope": "Beoordeel de resterende adapters/frontend/build/migratiebestanden en werkelijke consumers. Gebruik de vastgelegde identityresource- en workerbuildbevindingen; voer geen nieuwe kernschouw uit.",
                 "newTasks": 0
+              },
+              "continuousDevelopmentInput": {
+                "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+                "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+                "traceOnly": [
+                  "actual experience and counterevidence to later choice",
+                  "same responsibility/interest to next step and current result",
+                  "candidate to independent acceptance to exact active version and recovery"
+                ],
+                "reuse": "E3.2 stays completed; reuse its exact hashbound core review. Inspect only remaining adapter/install/context handoffs.",
+                "noNewExampleFunction": true
               }
             },
             {
@@ -7679,6 +7859,17 @@
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
                 "steps": [],
                 "blocksIndependentWork": false
+              },
+              "continuousDevelopmentInput": {
+                "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+                "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+                "traceOnly": [
+                  "actual experience and counterevidence to later choice",
+                  "same responsibility/interest to next step and current result",
+                  "candidate to independent acceptance to exact active version and recovery"
+                ],
+                "reuse": "E3.2 stays completed; reuse its exact hashbound core review. Inspect only remaining adapter/install/context handoffs.",
+                "noNewExampleFunction": true
               }
             }
           ]
@@ -7849,6 +8040,49 @@
                 "implementationStarted": false,
                 "newTasks": 0
               }
+            },
+            {
+              "id": "E4.5",
+              "title": "Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken",
+              "status": "planned",
+              "kind": "bouwen",
+              "doneWhen": "Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering.",
+              "owner": "Codex",
+              "ownerActionRequired": false,
+              "existing": "ComponentImprovementActions, onafhankelijke FinalComponentAssessments, releasepublisher, ReviewedComponentApplications, ComponentApplicationRuntime en de image-updater zijn al verbonden. Bestaande capability-/agentverbeterproeven houden hun oorspronkelijke beperkte bewijs.",
+              "gap": "De gehele automatische software-onderhoudsketen is niet bewezen. De updater bewaart bij fouten incomplete_inspect_retained_installation maar herstelt de productie-installatie niet automatisch; lokale repositoryrollback is iets anders. E4.4 beschrijft onderhoud/updatecontracten, niet deze zelfstandige eindgebruikersuitkomst.",
+              "nextAction": "Na E3 en E4.4 één bestaande omkeerbare wijzigingsklasse kiezen vanuit een echt bevonden tekort. Sluit alleen ontbrekende overdrachten, gedragscontrole en gegevensveilige herstelactie in de bestaande release-/installatieroute; geen tweede updater of algemene nieuwe onderhoudsagent.",
+              "files": [
+                "src/eva/operations/component_final_assessment.py",
+                "src/eva/operations/component_release_publisher.py",
+                "src/eva/operations/reviewed_component_application.py",
+                "src/eva/operations/component_application_runtime.py",
+                "src/tools/installation_runtime_update.py"
+              ],
+              "dependsOn": [
+                "E4.4"
+              ],
+              "assignment": {
+                "activeWorkers": []
+              },
+              "scopeOrigin": "continuous-development-20261017",
+              "checkedAt": "2026-10-17T00:57:21.757383+00:00",
+              "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+              "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+              "effort": "Middelgroot tot groot; bestaande keten hergebruiken. Eén wijzigingsklasse, geen onbeperkte automatische installatie of nieuwe vergelijkingsserie. Kosten onbekend.",
+              "limits": [
+                "Geen wijziging van beoordelaar, hostautoriteit of eigen bevoegdheid door de kandidaat.",
+                "Actieve bron/image/config vlak voor toepassing controleren; actuele wijzigingen van anderen bewaren.",
+                "Geen destructieve datamigratie of kunstmatige storing in het gezin voor deze eerste klasse.",
+                "Voorgrond/stop en bestaande budgetten blijven leidend; geen nieuwe permanente levensdaemon.",
+                "Ruimer automatisch updatebereik is later gebruik/vervolg, geen eindeloze voorwaarde voor deze kaart."
+              ],
+              "ownerInstructions": {
+                "availableNow": false,
+                "steps": [],
+                "blocksIndependentWork": false,
+                "readyWhen": "Nog bouwtaak. Geen handmatige patch of installatiestap van jou gevraagd; eventueel ontbrekend opgeslagen bereik wordt één keer begrijpelijk ingesteld."
+              }
             }
           ]
         },
@@ -7896,7 +8130,9 @@
                 "E4.1",
                 "E4.2",
                 "E4.3",
-                "E4.4"
+                "E4.4",
+                "E2.7",
+                "E4.5"
               ],
               "assignment": {
                 "activeWorkers": []
@@ -7931,7 +8167,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-16T23:26:42.505625+00:00",
+      "updatedAt": "2026-10-17T00:57:21.757383+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -7967,7 +8203,8 @@
               "E2.3",
               "E2.4",
               "E2.5",
-              "E2.6"
+              "E2.6",
+              "E2.7"
             ],
             "existingTaskIds": [
               "C3.1",
@@ -7979,7 +8216,7 @@
           {
             "id": "E3",
             "title": "Alle bestanden inventariseren en beoordelen",
-            "status": "planned",
+            "status": "in_progress",
             "finish": "Per bestand rol, exacte versie, reviewstatus, consumenten en onderbouwd besluit; actieve code inhoudelijk beoordeeld; beschermde historie onderscheiden.",
             "taskIds": [
               "E3.1",
@@ -7997,7 +8234,8 @@
               "E4.1",
               "E4.2",
               "E4.3",
-              "E4.4"
+              "E4.4",
+              "E4.5"
             ]
           },
           {
@@ -8066,12 +8304,43 @@
             "HUE6.1"
           ],
           "newTasksAdded": false
+        },
+        "continuousDevelopmentCoverage": {
+          "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+          "sourceSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+          "newTaskIds": [
+            "E2.7",
+            "E4.5"
+          ],
+          "existingCoverage": [
+            "E3.3",
+            "E3.4",
+            "E4.2",
+            "E4.3",
+            "E4.4",
+            "E5.1",
+            "F2.1",
+            "F2.2"
+          ],
+          "notReopened": [
+            "E3.2",
+            "HUE5.1",
+            "HUE6.1",
+            "L3.4",
+            "L3.5",
+            "L3.6",
+            "L3.7"
+          ],
+          "order": "E3.3/E3.4 remain next. E2.7 after source review; E4.5 after E4.4; both before existing E5/F2.",
+          "widerSelfMaintenance": "Only widen automatic changes after real evidence in the first class; no unlimited new release gate.",
+          "economicValue": "Actual time/cost/help may be assessed during ordinary use; no mandatory revenue or commercial project quota."
         }
       }
     },
     "goalRevision": {
       "document": "development/docs/PROJECTDOEL.md",
-      "currentEvidence": "development/evidence/reassessment/repository-root-20261013.json"
+      "currentEvidence": "development/evidence/reassessment/repository-root-20261013.json",
+      "scopeClarification": "development/evidence/reassessment/continuous-development-coverage-20261017.json"
     },
     "currentRuntime": {
       "recordedAt": "2026-10-13T05:19:28.211424+00:00",
@@ -9088,9 +9357,19 @@
       "summary": "136/136 inhoudelijk beoordeeld;9 eindige E4-besluiten. Geen runtimecode, installatie, spraak of taakomvang gewijzigd.",
       "sourceDigest": "66c89749314074774ff64d2931c935172ff0566e6c4853ec316a6284c4203bfd",
       "newProductFunctionCompleted": false
+    },
+    "continuousDevelopmentCoverage20261017": {
+      "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+      "coverage": "development/evidence/reassessment/continuous-development-coverage-20261017.json",
+      "addedTaskIds": [
+        "E2.7",
+        "E4.5"
+      ],
+      "implementationStarted": false,
+      "nextExistingTask": "E3.3"
     }
   },
-  "updatedAt": "2026-10-16T23:26:42.505625+00:00",
+  "updatedAt": "2026-10-17T00:57:21.757383+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -9120,6 +9399,11 @@
       "id": "finalization-20261015",
       "path": "development/design/product/finalization-task-scope-20261015.json",
       "sha256": "5c37c38b3c87133a65ddbdbc595a09cf98be09a7e65a05104ade2a5011d4aac5"
+    },
+    {
+      "id": "continuous-development-20261017",
+      "path": "development/design/product/continuous-development-task-scope-20261017.json",
+      "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ]
 }
