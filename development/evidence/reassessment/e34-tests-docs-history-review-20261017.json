@@ -1,0 +1,148 @@
+{
+  "contract": "EvaE34TestsDocsHistoryReview/v1",
+  "card": "E3.4",
+  "status": "completed_review_only",
+  "startedAt": "2026-10-17T09:52:09.746714+00:00",
+  "checkedAt": "2026-10-17T09:59:52.504126+00:00",
+  "sourceRevision": "16e27c4e0aecf44ec4d2226f26d5c62710e59d61",
+  "originalDoneWhen": "Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd.",
+  "scope": {
+    "registeredFiles": 3733,
+    "parts": {
+      "current_documents_design_and_protected_validation": 41,
+      "tests_fixture_metadata": 652,
+      "history_evidence_reviews_benchmark": 3040
+    },
+    "coverageExact": true,
+    "missing": [],
+    "duplicatePaths": [],
+    "wholeE3RegisteredCoverage": {
+      "E3.2": 136,
+      "E3.3": 1027,
+      "E3.4": 3733,
+      "total": 4896
+    },
+    "fullContentReadClaimForAll3733": false,
+    "historyReread": false,
+    "protectedCriteriaRead": false
+  },
+  "subreviews": [
+    {
+      "path": "development/evidence/reassessment/e34-documentation-design-review-20261017.json",
+      "sha256": "0b680ae325c8b5f4cd6d86106da1d6a250ebef0b46254a9beca1bfb2b5702954"
+    },
+    {
+      "path": "development/evidence/reassessment/e34-tests-review-20261017.json",
+      "sha256": "366ddee243885cc68eec7f4ed8d522fe2f830c0626b20b9ef799ab6a860f5565"
+    },
+    {
+      "path": "development/evidence/reassessment/e34-history-evidence-review-20261017.json",
+      "sha256": "7c6cf5f4faba554e059803d348cf21e663392d22f5a038df0fc485a7b2903a6e"
+    }
+  ],
+  "reuse": [
+    {
+      "path": "development/evidence/reassessment/e32-core-review-20261017.json",
+      "sha256": "8667802cc01cf34a839b901dc53309c4049e04777bec29604a32e72dd1ffbca3",
+      "reopened": false
+    },
+    {
+      "path": "development/reviews/e32-core-review-20261017.json",
+      "sha256": "14ebdcc7c67c5b3e2d80cbabbcf60f5f5acc502269cc0623627e8224135d5cfe",
+      "reopened": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+      "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086",
+      "reopened": false
+    },
+    {
+      "path": "development/reviews/e33-adapters-installation-review-20261017.json",
+      "sha256": "e44d027facf960cabe3454423d80d28b40fc71400f9a1fe6b99f5cbc21037d48",
+      "reopened": false
+    }
+  ],
+  "checkoutDelta": {
+    "path": "development/evidence/reassessment/e34-checkout-delta-20261017.json",
+    "sha256": "0e190aa444ce8f70a735ed3dcd2c924c5d13f89f5ea96cac9f3953bbc4b0b258",
+    "newSnapshotWritten": false
+  },
+  "finiteCleanupLedger": {
+    "path": "development/evidence/reassessment/e34-finite-cleanup-decisions-20261017.json",
+    "sha256": "2bde42357dbf33cddf0ebca6918528e9c95745f9434ad1c247f02e21d43efa90",
+    "clusters": 12,
+    "newProductTasks": 0,
+    "testRegressionsAreAliasesNotNewRepairs": true,
+    "oldEvidenceRetained": true,
+    "conditionalPhotoBoundaryRetained": true
+  },
+  "documentContradictionsResolved": [
+    {
+      "path": "development/docs/OPEN_SOURCE_COMPONENTEN.md",
+      "problem": "Historical maintenance text directs readers to archived AGENTS and old automatic competitor reruns.",
+      "resolution": "Current authority links and dated-reference interpretation; old content exact in snapshot."
+    },
+    {
+      "path": "development/docs/aide-quality-recovery-20261013.md",
+      "problem": "Old recovery continuation can look like a live HUE6 task.",
+      "resolution": "Explicit closed dated failure/usage record, no HUE6 reopening; original exact in snapshot."
+    },
+    {
+      "path": "development/docs/AFRONDINGSPLAN.md",
+      "problem": "Public local-day reader described as missing after another executor installed it.",
+      "resolution": "Reuse exact calendar delivery/current source bindings; E2.7 remains only the combined scoped history transfer. Original task doneWhen unchanged."
+    },
+    {
+      "path": "README.md",
+      "problem": "13October findings could be read as current queue.",
+      "resolution": "Clarify dated record versus single current goal/architecture/plan/board."
+    }
+  ],
+  "noDeletionWithoutProof": {
+    "decision": "Retain historical tests/fixtures/failure/criteria evidence; only previous E3.3 UI-01 is proven cleanup candidate.",
+    "duplicateHashesAreNotDuplicateResponsibilities": true,
+    "historicalUnreadSources": "Original24 incomplete source versions remain explicitly qualified;22 occur in3040 history scope. No old unread version promoted by a differently dated current file."
+  },
+  "continuousDevelopmentCoverage": {
+    "sourceDocument": "development/docs/eva-continuous-development-20261017.md",
+    "sha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+    "readFully": true,
+    "decisions": [
+      "Experience/counterevidence→later choice: E3.2 APP-04 and E3.3 STATE-02 preserve source/trust; ordinary-family proof E5/F2, not closed HUE reruns.",
+      "Same interest/responsibility→next step/current outcome: existing E1/HUE work retained; E2.7 connects activity reading, E5/F2 assesses days of continuity. No fixed hobby/doorbell/bin program.",
+      "Candidate→independent acceptance→active version/recovery: E3.3 dynamic helper and build findings in E4.4, original full reversible update outcome E4.5. No second updater."
+    ],
+    "newPlanOrCards": false
+  },
+  "verification": {
+    "scopeHashAndPurposeChecks": true,
+    "toolRegistryPinsMatch": 4,
+    "originalTaskCriteriaUnchanged": true,
+    "archiveOriginalsPreserved": 3,
+    "oldPruning857Recoverable": "independent history subreview checks Gitblob presence/size, no undeclared SHA recomputation claim",
+    "testsCollectedOrExecuted": false,
+    "EvaModelCalls": 0,
+    "deploymentOrContainerChanges": false,
+    "speechSourceOrConfigChanges": false,
+    "wholeRuntimeQualityPass": false
+  },
+  "installation": {
+    "required": false,
+    "reason": "Documentation authority and review outcome only; no product source change. Existing dashboard consumes canonical board.",
+    "newFamilyFunction": false,
+    "familyAcceptance": false
+  },
+  "usage": {
+    "EvaRuntimeModelCalls": 0,
+    "EvaRuntimeEffectCalls": 0,
+    "developmentCredits": null,
+    "developmentTokens": null,
+    "startedAt": "2026-10-17T09:52:09.746714+00:00",
+    "checkedAt": "2026-10-17T09:59:52.504126+00:00",
+    "elapsedSeconds": 462.757,
+    "claim": "Coordinator plus two bounded reviewers; unknown credits not estimated."
+  },
+  "wholeProjectCompleted": false,
+  "nextExistingTask": "E2.7",
+  "independentReview": "development/reviews/e34-tests-docs-history-review-20261017.json"
+}

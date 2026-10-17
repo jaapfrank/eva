@@ -1,0 +1,984 @@
+{
+  "contract": "EvaE34DocumentationDesignReview/v1",
+  "card": "E3.4",
+  "checkedAt": "2026-10-17T09:58:49.892577+00:00",
+  "status": "complete_pending_independent_bundle_review",
+  "scope": {
+    "registeredFiles": 41,
+    "reviewModes": {
+      "full_content_current_or_dated_authority": 20,
+      "closed_protocol_fixture_provenance_metadata": 6,
+      "canonical_or_generated_work_projection": 2,
+      "owner_scope_manifest_metadata": 1,
+      "delegated_speech_metadata": 1,
+      "excluded_output_hash_policy_preserved": 2,
+      "read_register_provenance": 1,
+      "protected_metadata_only": 8
+    },
+    "newlyReadOwnerDesign": "development/docs/eva-continuous-development-20261017.md"
+  },
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "1378975f1908ef58fdc002d325e30d67e1155c3117e7bf46126772223ea5d650",
+      "hashExclusion": null,
+      "e31Sha256": "1378975f1908ef58fdc002d325e30d67e1155c3117e7bf46126772223ea5d650",
+      "e31Delta": "unchanged",
+      "bytes": 6117,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Current owner execution rules; no archived instruction becomes a new task.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "README.md",
+          "line": null,
+          "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "README.md",
+      "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+      "hashExclusion": null,
+      "e31Sha256": "b24d1e4c663231b76e4b050fb4704273fb4f2ea5168173582b06e20bfe60edbc",
+      "e31Delta": "changed_since_E31",
+      "bytes": 1667,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Repository entrypoint and current authority navigation.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/CONTRIBUTING.md",
+          "line": null,
+          "sha256": "552a485804f854c97b90379db062e14373511386574a26795d72eb323a99d605",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/architecture/component-catalog-v1.json",
+      "sha256": "1cf6a42616a99d4b9c8c3e9a969db714f0c6db448a564776829c9c5f4d3b67c4",
+      "hashExclusion": null,
+      "e31Sha256": "1cf6a42616a99d4b9c8c3e9a969db714f0c6db448a564776829c9c5f4d3b67c4",
+      "e31Delta": "unchanged",
+      "bytes": 24788,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Ownership and verification-pattern catalog; lifecycle/blockers and upstream dates are versioned descriptions, not canonical task status.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "src/tools/check_component_catalog.py",
+          "line": 428,
+          "sha256": "41a893a6a593f2efdc5aaf6d9119f98c82198d7a8a827c3b388159452c631862",
+          "kind": "source_consumer_reference"
+        },
+        {
+          "path": "deploy/release/managed-b-release-input-authority-v1.json",
+          "line": 511,
+          "sha256": "5ab275bffc194b3a64de9c3697b78dd37f056daf5582b8fb6a59cd28d64b84c4",
+          "kind": "source_consumer_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/architecture/evidence-tool-registry-v1.json",
+      "sha256": "f1ba4ad58d63ab4948dd14839a254fe9a0b755e5efe5d212fb24de80c3af0be8",
+      "hashExclusion": null,
+      "e31Sha256": "f1ba4ad58d63ab4948dd14839a254fe9a0b755e5efe5d212fb24de80c3af0be8",
+      "e31Delta": "unchanged",
+      "bytes": 3796,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Four bounded evidence tools, invocation/risk/quarantine policy and exact source pins.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "src/tools/check_component_catalog.py",
+          "line": 215,
+          "sha256": "41a893a6a593f2efdc5aaf6d9119f98c82198d7a8a827c3b388159452c631862",
+          "kind": "source_consumer_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/architecture/package-boundaries-v1.json",
+      "sha256": "5c67fef0b81382b1cdd31b3a4886c8a45482808a8b850a45e31620534a908d05",
+      "hashExclusion": null,
+      "e31Sha256": "5c67fef0b81382b1cdd31b3a4886c8a45482808a8b850a45e31620534a908d05",
+      "e31Delta": "unchanged",
+      "bytes": 6771,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Active architecture-check import constraints; do not weaken to hide known E3.2 findings.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "src/tools/check_architecture.py",
+          "line": 487,
+          "sha256": "f851639f93f26d5f774b8d033c346320caf58e7e884767ff92f32d122a0d2691",
+          "kind": "source_consumer_reference"
+        },
+        {
+          "path": "src/tools/run_gate.py",
+          "line": 117,
+          "sha256": "4bdf974470d140a69a8bd0e021fe4bd03c151aa375430e1e70423df422e735df",
+          "kind": "source_consumer_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/fixtures/noor-client-ack-key-v1.json",
+      "sha256": "330476faf5f2317d0edfaa991cc7dd344711353188d6c504f9629a780d5f4e93",
+      "hashExclusion": null,
+      "e31Sha256": "330476faf5f2317d0edfaa991cc7dd344711353188d6c504f9629a780d5f4e93",
+      "e31Delta": "unchanged",
+      "bytes": 654,
+      "reviewMode": "closed_protocol_fixture_provenance_metadata",
+      "fullContentRead": false,
+      "responsibility": "Frozen fixture/export/crash/model source-contract input; exact content hash retained, no fixture values/cases disclosed or newly executed.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_sealed_contract_fixture",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/platform/platform-design-v1.json",
+      "sha256": "c1316912edee8461a905bf6077f07ab086e33e4253d48c799b7d77dc24001e03",
+      "hashExclusion": null,
+      "e31Sha256": "c1316912edee8461a905bf6077f07ab086e33e4253d48c799b7d77dc24001e03",
+      "e31Delta": "unchanged",
+      "bytes": 4616,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Versioned design/fixture or operator validation reference; no current runtime capability or work assignment inferred.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/platform/process-budgets-v1.json",
+      "sha256": "d1d7fe3d2408be84893e8b6ff8e46ddb40ed3e46caf37a1389e039a03694c39b",
+      "hashExclusion": null,
+      "e31Sha256": "d1d7fe3d2408be84893e8b6ff8e46ddb40ed3e46caf37a1389e039a03694c39b",
+      "e31Delta": "unchanged",
+      "bytes": 2540,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Versioned design/fixture or operator validation reference; no current runtime capability or work assignment inferred.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/platform/trust-boundaries-v1.json",
+      "sha256": "0febc614e270d7fa9d4baf800740f59d8c181c0b1d49620131eecdf8a293bbbb",
+      "hashExclusion": null,
+      "e31Sha256": "0febc614e270d7fa9d4baf800740f59d8c181c0b1d49620131eecdf8a293bbbb",
+      "e31Delta": "unchanged",
+      "bytes": 5811,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Versioned design/fixture or operator validation reference; no current runtime capability or work assignment inferred.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/product/execution-workboard-v1.json",
+      "sha256": "1bed802ee73276512b443cc2a548e5baef22a2990108c1aafacf86c618b82e79",
+      "hashExclusion": null,
+      "e31Sha256": "e7bc074010304256943809e812a02c6e92393acfc34b61312e5bcc2b44cb6dea",
+      "e31Delta": "changed_since_E31",
+      "bytes": 612760,
+      "reviewMode": "canonical_or_generated_work_projection",
+      "fullContentRead": false,
+      "responsibility": "Only workboardJSON owns task state; human board/dashboard are generated projections, no separate task queue.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "src/tools/check_current_workboard.py",
+          "line": null,
+          "sha256": "a9469828e1f3af70207632e4e380021c14e367b457dff6a2da4f635b65946b90",
+          "kind": "declared_authority_or_contract_reference"
+        },
+        {
+          "path": "development/tools/project-dashboard/project-server.mjs",
+          "line": null,
+          "sha256": "fa04affccb344ea3c52a13bd1ad0ff291954d8eea9044f2311b0ad4720ff8dde",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_single_status_authority",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/product/finalization-task-scope-20261015.json",
+      "sha256": "5c37c38b3c87133a65ddbdbc595a09cf98be09a7e65a05104ade2a5011d4aac5",
+      "hashExclusion": null,
+      "e31Sha256": "5c37c38b3c87133a65ddbdbc595a09cf98be09a7e65a05104ade2a5011d4aac5",
+      "e31Delta": "unchanged",
+      "bytes": 7970,
+      "reviewMode": "owner_scope_manifest_metadata",
+      "fullContentRead": false,
+      "responsibility": "Original owner scope/end conditions consumed by current-workboard validation; no changed accepted doneWhen.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_original_task_scope",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/product/human-understanding-engine-owner-proposal-20261011.txt",
+      "sha256": "38a756ba844db4c40e99ea1d5f14ac105b374747a68f4247d1438a9fe8936263",
+      "hashExclusion": null,
+      "e31Sha256": "38a756ba844db4c40e99ea1d5f14ac105b374747a68f4247d1438a9fe8936263",
+      "e31Delta": "unchanged",
+      "bytes": 12231,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Versioned design/fixture or operator validation reference; no current runtime capability or work assignment inferred.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/product/optional-scope-decisions.json",
+      "sha256": "111e51c22ec699734a8c78f4e876d89d3a0d0e2e9aa84ba22bcdfb6451b371a1",
+      "hashExclusion": null,
+      "e31Sha256": "111e51c22ec699734a8c78f4e876d89d3a0d0e2e9aa84ba22bcdfb6451b371a1",
+      "e31Delta": "unchanged",
+      "bytes": 1290,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Versioned design/fixture or operator validation reference; no current runtime capability or work assignment inferred.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/product/voice-improvement-plan-20261015.json",
+      "sha256": "f47d73cc4bbdac36d84935030770eae0e58e79bdda830423ce36b6e681a01805",
+      "hashExclusion": null,
+      "e31Sha256": "f47d73cc4bbdac36d84935030770eae0e58e79bdda830423ce36b6e681a01805",
+      "e31Delta": "unchanged",
+      "bytes": 21736,
+      "reviewMode": "delegated_speech_metadata",
+      "fullContentRead": false,
+      "responsibility": "Speech plan owned by other executor; no code/configuration/install/acceptance change.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_other_executor_ownership",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/vertical/noor-4d-concurrency-crash-schedules-v1.json",
+      "sha256": "820826e5a9c55962db0d0c6047e53af2312f9973284ebabaebc82f6f0bb7c236",
+      "hashExclusion": null,
+      "e31Sha256": "820826e5a9c55962db0d0c6047e53af2312f9973284ebabaebc82f6f0bb7c236",
+      "e31Delta": "unchanged",
+      "bytes": 3337714,
+      "reviewMode": "closed_protocol_fixture_provenance_metadata",
+      "fullContentRead": false,
+      "responsibility": "Frozen fixture/export/crash/model source-contract input; exact content hash retained, no fixture values/cases disclosed or newly executed.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_sealed_contract_fixture",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/vertical/noor-4d-connector-provider-fixtures-v1.json",
+      "sha256": "c49b5e527963cb593445e9f486b4cbf7f77dc92f0996b5a86a254ffc01404143",
+      "hashExclusion": null,
+      "e31Sha256": "c49b5e527963cb593445e9f486b4cbf7f77dc92f0996b5a86a254ffc01404143",
+      "e31Delta": "unchanged",
+      "bytes": 1532466,
+      "reviewMode": "closed_protocol_fixture_provenance_metadata",
+      "fullContentRead": false,
+      "responsibility": "Frozen fixture/export/crash/model source-contract input; exact content hash retained, no fixture values/cases disclosed or newly executed.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_sealed_contract_fixture",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/vertical/noor-4d-execution-profile-v1.json",
+      "sha256": "672febff928c0c186c24f8958c3430be94a93914dbc93c588395e3dfafa8a373",
+      "hashExclusion": null,
+      "e31Sha256": "672febff928c0c186c24f8958c3430be94a93914dbc93c588395e3dfafa8a373",
+      "e31Delta": "unchanged",
+      "bytes": 87032,
+      "reviewMode": "closed_protocol_fixture_provenance_metadata",
+      "fullContentRead": false,
+      "responsibility": "Frozen fixture/export/crash/model source-contract input; exact content hash retained, no fixture values/cases disclosed or newly executed.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_sealed_contract_fixture",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/vertical/noor-4d-model-vectors-v1.json",
+      "sha256": "3b7b4feaa371862dcbbbec524a3ed717b8d720626980fd50b2b1f3fabc10463c",
+      "hashExclusion": null,
+      "e31Sha256": "3b7b4feaa371862dcbbbec524a3ed717b8d720626980fd50b2b1f3fabc10463c",
+      "e31Delta": "unchanged",
+      "bytes": 1026767,
+      "reviewMode": "closed_protocol_fixture_provenance_metadata",
+      "fullContentRead": false,
+      "responsibility": "Frozen fixture/export/crash/model source-contract input; exact content hash retained, no fixture values/cases disclosed or newly executed.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_sealed_contract_fixture",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/design/vertical/noor-4d-schema-export-freeze-v1.json",
+      "sha256": "2bb23d486038dcdaf26607ad2dba9c38b13b4cc799a6644cd1fffb1bb20a626a",
+      "hashExclusion": null,
+      "e31Sha256": "2bb23d486038dcdaf26607ad2dba9c38b13b4cc799a6644cd1fffb1bb20a626a",
+      "e31Delta": "unchanged",
+      "bytes": 1107528,
+      "reviewMode": "closed_protocol_fixture_provenance_metadata",
+      "fullContentRead": false,
+      "responsibility": "Frozen fixture/export/crash/model source-contract input; exact content hash retained, no fixture values/cases disclosed or newly executed.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_sealed_contract_fixture",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/AFRONDINGSPLAN.md",
+      "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+      "hashExclusion": null,
+      "e31Sha256": "ebf45e7e68a8821bba529c812eb810328983f8df7472a2330d9380cb990da533",
+      "e31Delta": "changed_since_E31",
+      "bytes": 28629,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Existing bounded finalization phases and original acceptance; public local-day reader reuse corrected.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/PROJECTDOEL.md",
+          "line": null,
+          "sha256": "04caa2f38f55359e1ec9d11b766de9c760953d7014620aab1b379542222474b0",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/ARCHITECTUUR.md",
+      "sha256": "9ee65d45e79184d822535fafea1d3250c1347cf69c778eb1890a9bff697023fe",
+      "hashExclusion": null,
+      "e31Sha256": "9ee65d45e79184d822535fafea1d3250c1347cf69c778eb1890a9bff697023fe",
+      "e31Delta": "unchanged",
+      "bytes": 16359,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Current responsibility/port/one-core boundaries; read semantically, E3.2/E3.3 implementation judgments reused.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/PROJECTDOEL.md",
+          "line": null,
+          "sha256": "04caa2f38f55359e1ec9d11b766de9c760953d7014620aab1b379542222474b0",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/CONTRIBUTING.md",
+      "sha256": "552a485804f854c97b90379db062e14373511386574a26795d72eb323a99d605",
+      "hashExclusion": null,
+      "e31Sha256": "552a485804f854c97b90379db062e14373511386574a26795d72eb323a99d605",
+      "e31Delta": "unchanged",
+      "bytes": 989,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Contributor workflow and private data/source boundaries.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "README.md",
+          "line": null,
+          "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/OPEN_SOURCE_COMPONENTEN.md",
+      "sha256": "d193bc1d7072b1c9653047587805fea942905e6f5cc0bb6249bfd212a679dd54",
+      "hashExclusion": null,
+      "e31Sha256": "eaa04d128a0913ab5251bc16722f5f8697756bd32184ea64a22e5395663611c4",
+      "e31Delta": "changed_since_E31",
+      "bytes": 21546,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Dated dependency/choice evidence; current rules now link to current authority rather than archived AGENTS.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "README.md",
+          "line": null,
+          "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/PROJECTDOEL.md",
+      "sha256": "04caa2f38f55359e1ec9d11b766de9c760953d7014620aab1b379542222474b0",
+      "hashExclusion": null,
+      "e31Sha256": "ad5e699b964877eb56e751213d51136c0042a06ed866cd9dae2009ccdd998918",
+      "e31Delta": "changed_since_E31",
+      "bytes": 18244,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Single entire-housemate outcome and project close condition.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "README.md",
+          "line": null,
+          "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/WERKBORD.md",
+      "sha256": "48d22d57d48c87df1664add4fe46849dfd9391477a164221c846627af935e49a",
+      "hashExclusion": null,
+      "e31Sha256": "023cd167f7826f8df4bd04b41c023f944828eec180e22af1c350bc3a27e5adee",
+      "e31Delta": "changed_since_E31",
+      "bytes": 21449,
+      "reviewMode": "canonical_or_generated_work_projection",
+      "fullContentRead": false,
+      "responsibility": "Only workboardJSON owns task state; human board/dashboard are generated projections, no separate task queue.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "README.md",
+          "line": null,
+          "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+          "kind": "declared_authority_or_contract_reference"
+        },
+        {
+          "path": "src/tools/check_current_workboard.py",
+          "line": 113,
+          "sha256": "a9469828e1f3af70207632e4e380021c14e367b457dff6a2da4f635b65946b90",
+          "kind": "source_consumer_reference"
+        }
+      ],
+      "decision": "retain_single_status_authority",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/aide-quality-recovery-20261013.md",
+      "sha256": "a513ee0072ac599422558e45ac09e359967a811fb68c934a5ef164e57a069cc9",
+      "hashExclusion": null,
+      "e31Sha256": "1ef814b144b3227354b1d17f4ea8c4c835a63bc04448fd4277b698ec1645eacf",
+      "e31Delta": "changed_since_E31",
+      "bytes": 5286,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Closed recovery/failure/usage evidence; historical continuations must not restart HUE6.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "README.md",
+          "line": null,
+          "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/eva-repository-inventory.generated.json",
+      "sha256": null,
+      "hashExclusion": "self_describing_output",
+      "e31Sha256": null,
+      "e31Delta": "excluded_policy_preserved",
+      "bytes": null,
+      "reviewMode": "excluded_output_hash_policy_preserved",
+      "fullContentRead": false,
+      "responsibility": "Versioned design/fixture or operator validation reference; no current runtime capability or work assignment inferred.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "README.md",
+          "line": null,
+          "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_immutable_snapshot_or_self_output",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/mcp-catalog-extension.md",
+      "sha256": "0b4004228088faf3b40e1bc894b689b0431eb06a8b8d46e7aa2d186c28c08845",
+      "hashExclusion": null,
+      "e31Sha256": "0b4004228088faf3b40e1bc894b689b0431eb06a8b8d46e7aa2d186c28c08845",
+      "e31Delta": "unchanged",
+      "bytes": 2122,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Optional catalog configuration/receipt contract, not a new registry or authority.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "README.md",
+          "line": null,
+          "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/project-reassessment-20261013.md",
+      "sha256": "6fc47d0a8fb91553360dc5d3b44eadb3e18c152f2a02506750bdac99c052d3df",
+      "hashExclusion": null,
+      "e31Sha256": "6fc47d0a8fb91553360dc5d3b44eadb3e18c152f2a02506750bdac99c052d3df",
+      "e31Delta": "unchanged",
+      "bytes": 8731,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Dated13October findings/pruning history, not current uncompleted HUE tasks.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "README.md",
+          "line": null,
+          "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/reading-register-20261013.json",
+      "sha256": "248d2f35461f9008d47d51dd8e6977a934ecccb9e7eea55674fabbc15fa6d801",
+      "hashExclusion": null,
+      "e31Sha256": "248d2f35461f9008d47d51dd8e6977a934ecccb9e7eea55674fabbc15fa6d801",
+      "e31Delta": "unchanged",
+      "bytes": 983547,
+      "reviewMode": "read_register_provenance",
+      "fullContentRead": false,
+      "responsibility": "490 historical source versions/466 complete/24 not fully read retained as original claims; exact hash reuse only. No fresh history reading inferred.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "src/tools/repository_inventory.py",
+          "line": null,
+          "sha256": "b72ad66b2ed6af2c9ea9f1fe4741108c2a7fd521e17769e7a156c98971bc83e3",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "preserve_original_read_qualifications",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/repository-pruning-20261013.md",
+      "sha256": "5ee09aaf30a1bb45d92e47ee1d65d416fbe4c80cb9d2ad762655ed12732cb4d0",
+      "hashExclusion": null,
+      "e31Sha256": "5ee09aaf30a1bb45d92e47ee1d65d416fbe4c80cb9d2ad762655ed12732cb4d0",
+      "e31Delta": "unchanged",
+      "bytes": 2444,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Exact already-executed857-file removal rationale and Git recovery limits.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "README.md",
+          "line": null,
+          "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/docs/repository-registration-20261017.md",
+      "sha256": null,
+      "hashExclusion": "self_describing_output",
+      "e31Sha256": null,
+      "e31Delta": "excluded_policy_preserved",
+      "bytes": null,
+      "reviewMode": "excluded_output_hash_policy_preserved",
+      "fullContentRead": false,
+      "responsibility": "Versioned design/fixture or operator validation reference; no current runtime capability or work assignment inferred.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "README.md",
+          "line": null,
+          "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_immutable_snapshot_or_self_output",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/identity-proposals/eva-soul-voorstel.md",
+      "sha256": "ffbe3ea0d4bd069b621427f5fe92d0f30bccdbff177a0502468550c64d170ed6",
+      "hashExclusion": null,
+      "e31Sha256": "ffbe3ea0d4bd069b621427f5fe92d0f30bccdbff177a0502468550c64d170ed6",
+      "e31Delta": "unchanged",
+      "bytes": 320,
+      "reviewMode": "full_content_current_or_dated_authority",
+      "fullContentRead": true,
+      "responsibility": "Versioned design/fixture or operator validation reference; no current runtime capability or work assignment inferred.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "retain_with_explicit_authority_role",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/validation/release-acceptance/v1/README.md",
+      "sha256": "006bc263ab4e8cdf353559382466254b0f3104aa5dbfe27e67d4a4597d67582c",
+      "hashExclusion": null,
+      "e31Sha256": "006bc263ab4e8cdf353559382466254b0f3104aa5dbfe27e67d4a4597d67582c",
+      "e31Delta": "unchanged",
+      "bytes": 2836,
+      "reviewMode": "protected_metadata_only",
+      "fullContentRead": false,
+      "responsibility": "Independent acceptance helper/criteria reference. No hidden cases or checker content read; E3.3 operation-only20-function helper review reused separately, not promoted to full-file review.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "preserve_independent_criteria_bytes",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/validation/release-acceptance/v1/check_acceptance.py",
+      "sha256": "70c76e3aa4338a3ed5eaf110e9b5b707fe299c83dce314c9dd97c4c0b6e8b889",
+      "hashExclusion": null,
+      "e31Sha256": "70c76e3aa4338a3ed5eaf110e9b5b707fe299c83dce314c9dd97c4c0b6e8b889",
+      "e31Delta": "unchanged",
+      "bytes": 23523,
+      "reviewMode": "protected_metadata_only",
+      "fullContentRead": false,
+      "responsibility": "Independent acceptance helper/criteria reference. No hidden cases or checker content read; E3.3 operation-only20-function helper review reused separately, not promoted to full-file review.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "preserve_independent_criteria_bytes",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/validation/release-acceptance/v1/generate_source_authority.py",
+      "sha256": "e16452f76d0b685e521a4d6bcdebdb7f09c65ea9fcde6755bd0ff5156d8a1e53",
+      "hashExclusion": null,
+      "e31Sha256": "e16452f76d0b685e521a4d6bcdebdb7f09c65ea9fcde6755bd0ff5156d8a1e53",
+      "e31Delta": "unchanged",
+      "bytes": 10669,
+      "reviewMode": "protected_metadata_only",
+      "fullContentRead": false,
+      "responsibility": "Independent acceptance helper/criteria reference. No hidden cases or checker content read; E3.3 operation-only20-function helper review reused separately, not promoted to full-file review.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "preserve_independent_criteria_bytes",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/validation/release-acceptance/v1/test_acceptance.py",
+      "sha256": "f3fcd5a09ad3715294963ae00e4bbb3da1b13c6daf9fb84d55168dd993ce649b",
+      "hashExclusion": null,
+      "e31Sha256": "f3fcd5a09ad3715294963ae00e4bbb3da1b13c6daf9fb84d55168dd993ce649b",
+      "e31Delta": "unchanged",
+      "bytes": 18784,
+      "reviewMode": "protected_metadata_only",
+      "fullContentRead": false,
+      "responsibility": "Independent acceptance helper/criteria reference. No hidden cases or checker content read; E3.3 operation-only20-function helper review reused separately, not promoted to full-file review.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "preserve_independent_criteria_bytes",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/validation/release-acceptance/v2/README.md",
+      "sha256": "b414b34c0b2ec994fc1118c88c5db645a799a86cb0df5672d392d56b83570871",
+      "hashExclusion": null,
+      "e31Sha256": "b414b34c0b2ec994fc1118c88c5db645a799a86cb0df5672d392d56b83570871",
+      "e31Delta": "unchanged",
+      "bytes": 5646,
+      "reviewMode": "protected_metadata_only",
+      "fullContentRead": false,
+      "responsibility": "Independent acceptance helper/criteria reference. No hidden cases or checker content read; E3.3 operation-only20-function helper review reused separately, not promoted to full-file review.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "preserve_independent_criteria_bytes",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/validation/release-acceptance/v2/check_acceptance.py",
+      "sha256": "cfdadecd6d2140c7f802d167ec4ace5b938d061c33deb3fa4b8ac8bc08d172c6",
+      "hashExclusion": null,
+      "e31Sha256": "cfdadecd6d2140c7f802d167ec4ace5b938d061c33deb3fa4b8ac8bc08d172c6",
+      "e31Delta": "unchanged",
+      "bytes": 43163,
+      "reviewMode": "protected_metadata_only",
+      "fullContentRead": false,
+      "responsibility": "Independent acceptance helper/criteria reference. No hidden cases or checker content read; E3.3 operation-only20-function helper review reused separately, not promoted to full-file review.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "preserve_independent_criteria_bytes",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/validation/release-acceptance/v2/run_physical_acceptance.py",
+      "sha256": "e733a44871860fb48cbc91dc89372272bb06c0a3c6872ec0c2efb44c3992b589",
+      "hashExclusion": null,
+      "e31Sha256": "e733a44871860fb48cbc91dc89372272bb06c0a3c6872ec0c2efb44c3992b589",
+      "e31Delta": "unchanged",
+      "bytes": 72347,
+      "reviewMode": "protected_metadata_only",
+      "fullContentRead": false,
+      "responsibility": "Independent acceptance helper/criteria reference. No hidden cases or checker content read; E3.3 operation-only20-function helper review reused separately, not promoted to full-file review.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "preserve_independent_criteria_bytes",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    },
+    {
+      "path": "development/validation/release-acceptance/v2/test_acceptance.py",
+      "sha256": "dd06b9089ff51396d93c0b99448c6aa930bc46fb314c58396adeccc8780fc1c1",
+      "hashExclusion": null,
+      "e31Sha256": "dd06b9089ff51396d93c0b99448c6aa930bc46fb314c58396adeccc8780fc1c1",
+      "e31Delta": "unchanged",
+      "bytes": 58796,
+      "reviewMode": "protected_metadata_only",
+      "fullContentRead": false,
+      "responsibility": "Independent acceptance helper/criteria reference. No hidden cases or checker content read; E3.3 operation-only20-function helper review reused separately, not promoted to full-file review.",
+      "consumerOrReferencePurpose": [
+        {
+          "path": "development/docs/AFRONDINGSPLAN.md",
+          "line": null,
+          "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+          "kind": "declared_authority_or_contract_reference"
+        }
+      ],
+      "decision": "preserve_independent_criteria_bytes",
+      "execution": "review_or_document_authority_clarification_only",
+      "familyAcceptance": false
+    }
+  ],
+  "postBaselineFullReads": [
+    {
+      "path": "development/docs/eva-continuous-development-20261017.md",
+      "sha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+      "reviewMode": "full_content",
+      "fullContentRead": true,
+      "authority": "Design input, not a second task plan. Existing E2.7 and E4.5 own added scope; no automatic new platform or example-specific tasks."
+    }
+  ],
+  "documentChanges": {
+    "snapshot": "development/archive/history/20261017-e34-document-authority/snapshot.json",
+    "snapshotSha256": "09321e9bd161b195ddcf2f8005f31e8de2f84665b590d335115433d7308b2a5b",
+    "paths": [
+      "README.md",
+      "development/docs/AFRONDINGSPLAN.md",
+      "development/docs/OPEN_SOURCE_COMPONENTEN.md",
+      "development/docs/aide-quality-recovery-20261013.md"
+    ],
+    "meaning": "Only current authority/date/reuse clarification; old source bytes exact, criteria/results/failures unchanged."
+  },
+  "actualCalendarReaderReuse": {
+    "source": "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json",
+    "sha256": "eb23cecc096856632263059ceb1dad828ba02e7a18a99c48a405c771de3a40f5",
+    "sourceHashBindingsAllCurrent": true,
+    "retested": false,
+    "scope": "Other executor installed optional public local-day reader; full private/initiative/interest/learning merge remains E2.7."
+  },
+  "verification": {
+    "toolRegistryPins": 4,
+    "toolRegistryPinMismatches": 0,
+    "currentAuthorityMarkdownLinksMissing": 0,
+    "fullHistoryReread": false,
+    "protectedCasesRead": false,
+    "speechChanges": false,
+    "productSourceChanges": false
+  }
+}

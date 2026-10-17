@@ -13,7 +13,11 @@ Start with the [project goal](development/docs/PROJECTDOEL.md),
 [architecture](development/docs/ARCHITECTUUR.md) and
 [current workboard](development/docs/WERKBORD.md).
 The [repository reassessment](development/docs/project-reassessment-20261013.md)
-records actual gaps and retain/archive decisions.
+records the dated findings of 13 October, not the current task queue. Dated designs,
+comparisons and recovery reports preserve evidence; their old instructions do not
+restart work. Current decisions come from AGENTS.md, the goal, architecture,
+finalization plan and the canonical workboard. E3.2/E3.3 reviews remain versioned
+inputs to the existing cleanup cards, rather than new feature plans.
 
 The Python application uses `src/eva` and `pyproject.toml`. The installer entrypoint
 is `start-installer.py`. The retired Eva1 application and duplicate source backups

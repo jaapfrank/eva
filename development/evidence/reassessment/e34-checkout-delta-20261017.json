@@ -1,0 +1,658 @@
+{
+  "contract": "EvaE34CheckoutDelta/v1",
+  "checkpointAt": "2026-10-17T09:59:52.504126+00:00",
+  "sourceRevision": "16e27c4e0aecf44ec4d2226f26d5c62710e59d61",
+  "inventoryReference": "development/docs/eva-repository-inventory.generated.json",
+  "inventorySha256": "5f1d3ac9be606c07cc3dcbda1c8ead05f82bb95772e58bd47b48c60f7f9c3339",
+  "checkpointSummary": {
+    "files": 4934,
+    "present": 4934,
+    "tracked": 4827,
+    "untracked": 107,
+    "ignoredProjectFiles": 6,
+    "reviewStatuses": {
+      "excluded_by_policy": 18,
+      "enumerated": 4389,
+      "exact_prior_full_read": 447,
+      "protected_metadata_only": 80
+    },
+    "categories": {
+      "repository-config": 5,
+      "documentation": 23,
+      "deployment": 493,
+      "historical-reference": 408,
+      "design-or-fixture": 91,
+      "historical-evidence": 2597,
+      "verification": 652,
+      "development-tool": 228,
+      "optional-connector": 19,
+      "product-runtime": 406,
+      "generated-build-output": 4,
+      "vendored-source": 8
+    },
+    "excludedDirectories": 113,
+    "tombstones": 0
+  },
+  "deltaCounts": {
+    "added": 38,
+    "removed": 0,
+    "changed": 12
+  },
+  "files": [
+    {
+      "path": "development/archive/history/20261017-e34-document-authority/AFRONDINGSPLAN.md",
+      "delta": "added",
+      "sha256": "56f5398f46b9ffa5992927cda9d5b7b450b5ad0a509496d20679539697bc5ef3",
+      "hashExclusion": null,
+      "reviewMode": "exact_preserved_doc_predecessor_or_manifest",
+      "decision": "retain_original_before_authority_clarification",
+      "references": [
+        "development/archive/history/20261017-e34-document-authority/snapshot.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/archive/history/20261017-e34-document-authority/OPEN_SOURCE_COMPONENTEN.md",
+      "delta": "added",
+      "sha256": "eaa04d128a0913ab5251bc16722f5f8697756bd32184ea64a22e5395663611c4",
+      "hashExclusion": null,
+      "reviewMode": "exact_preserved_doc_predecessor_or_manifest",
+      "decision": "retain_original_before_authority_clarification",
+      "references": [
+        "development/archive/history/20261017-e34-document-authority/snapshot.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/archive/history/20261017-e34-document-authority/aide-quality-recovery-20261013.md",
+      "delta": "added",
+      "sha256": "1ef814b144b3227354b1d17f4ea8c4c835a63bc04448fd4277b698ec1645eacf",
+      "hashExclusion": null,
+      "reviewMode": "exact_preserved_doc_predecessor_or_manifest",
+      "decision": "retain_original_before_authority_clarification",
+      "references": [
+        "development/archive/history/20261017-e34-document-authority/snapshot.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/archive/history/20261017-e34-document-authority/snapshot.json",
+      "delta": "added",
+      "sha256": "09321e9bd161b195ddcf2f8005f31e8de2f84665b590d335115433d7308b2a5b",
+      "hashExclusion": null,
+      "reviewMode": "exact_preserved_doc_predecessor_or_manifest",
+      "decision": "retain_original_before_authority_clarification",
+      "references": [
+        "development/archive/history/20261017-e34-document-authority/snapshot.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/design/product/continuous-development-task-scope-20261017.json",
+      "delta": "added",
+      "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4",
+      "hashExclusion": null,
+      "reviewMode": "owner_scope_extension_reference",
+      "decision": "retain_existing_E27_E45_scope_no_new_tasks",
+      "references": [
+        "development/docs/eva-continuous-development-20261017.md"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/docs/e32-core-review-20261017.md",
+      "delta": "added",
+      "sha256": "b69fa33bf84db003d8b1010425cdff9239893d58c494afc3745c2dbdbafbff9e",
+      "hashExclusion": null,
+      "reviewMode": "current_fullread_or_exact_review_document",
+      "decision": "retain_current_authority_or_versioned_review",
+      "references": [
+        "development/evidence/reassessment/e34-documentation-design-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/docs/e33-adapters-installation-review-20261017.md",
+      "delta": "added",
+      "sha256": "1a76430d7503e3b87cdf7bf877d9e1c68484faf4a093acd86fb58094755dee8d",
+      "hashExclusion": null,
+      "reviewMode": "current_fullread_or_exact_review_document",
+      "decision": "retain_current_authority_or_versioned_review",
+      "references": [
+        "development/evidence/reassessment/e34-documentation-design-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/docs/eva-continuous-development-20261017.md",
+      "delta": "added",
+      "sha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+      "hashExclusion": null,
+      "reviewMode": "current_fullread_or_exact_review_document",
+      "decision": "retain_current_authority_or_versioned_review",
+      "references": [
+        "development/evidence/reassessment/e34-documentation-design-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json",
+      "delta": "added",
+      "sha256": "eb23cecc096856632263059ceb1dad828ba02e7a18a99c48a405c771de3a40f5",
+      "hashExclusion": null,
+      "reviewMode": "delegated_speech_metadata",
+      "decision": "retain_other_executor_work_unchanged",
+      "references": [
+        "development/evidence/product/subscription-voice-20261013/playback-activity-20261017.json",
+        "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/product/subscription-voice-20261013/playback-activity-20261017.json",
+      "delta": "added",
+      "sha256": "0ad9bc13a2de9eafb2c42af443401dea09094c2a5aeedbaa5a4c641d9709c730",
+      "hashExclusion": null,
+      "reviewMode": "delegated_speech_metadata",
+      "decision": "retain_other_executor_work_unchanged",
+      "references": [
+        "development/evidence/product/subscription-voice-20261013/playback-activity-20261017.json",
+        "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/continuous-development-coverage-20261017.json",
+      "delta": "added",
+      "sha256": "b7d3529b46bd5e4f1d27175c6895d1b60818642cf1e33929c3d6d1e6a6b61451",
+      "hashExclusion": null,
+      "reviewMode": "owner_scope_extension_reference",
+      "decision": "retain_existing_E27_E45_scope_no_new_tasks",
+      "references": [
+        "development/docs/eva-continuous-development-20261017.md"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e32-application-review-20261017.json",
+      "delta": "added",
+      "sha256": "d883510e3b792126030a78507baee7bc3025e4efff8d5597eb32dd88c9cb0da0",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e32-core-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e32-bootstrap-review-20261017.json",
+      "delta": "added",
+      "sha256": "0f1d6194ee9437b54f98b545dfc6da38b1698d34b1327a8c95922f93dc316778",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e32-core-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e32-contracts-domain-review-20261017.json",
+      "delta": "added",
+      "sha256": "ce0c5ecc1be7423b5bb2bc9e4cfe0645f650beedb6f3c374fcc01a00c69a2c95",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e32-core-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e32-core-consumers-20261017.json",
+      "delta": "added",
+      "sha256": "5de8f8d95f26b71720921c3ca77b90d86afcc4af25e7cfad17a1454b4c36c1de",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e32-core-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e32-core-diagnostics-20261017.json",
+      "delta": "added",
+      "sha256": "2f4410e2e9ef3d9c13b9af40ca1e08bc1a467baf2a28613375d70921b54b33ce",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e32-core-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e32-core-review-20261017.json",
+      "delta": "added",
+      "sha256": "8667802cc01cf34a839b901dc53309c4049e04777bec29604a32e72dd1ffbca3",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e32-core-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-action-chain-operations-review-20261017.json",
+      "delta": "added",
+      "sha256": "5a73a2b2ca2ab58d12911b460bd66c29e61c597a5c5b4e79d417a36ba904da10",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+      "delta": "added",
+      "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-file-dispositions-20261017.json",
+      "delta": "added",
+      "sha256": "f1dc7e7b96ac30ce7b9df6a9f4e81506d3931eed091deaced1255d2b8f3ae61c",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-import-consumers-20261017.json",
+      "delta": "added",
+      "sha256": "3f42b16e0f1f3fa1f6221674452c6475ef6e8ffdf75f325f898cbd7b5ec9810f",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-installation-effects-review-20261017.json",
+      "delta": "added",
+      "sha256": "500abaa8e6c3903d499bc91c17b1de8d30b084b832f4b824004d6380d3c8d0bc",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-installer-cli-review-20261017.json",
+      "delta": "added",
+      "sha256": "051ce66539ce7bf79c2552a76de2b91aa20e0a2add6d5246ac30ee9a353542ae",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-interface-adapters-review-20261017.json",
+      "delta": "added",
+      "sha256": "bf8d8808e9e283774efef18d8769184b0e0f26ba66e3f6cfa6416a577b4d0a73",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-mcp-wire-runtime-metadata-20261017.json",
+      "delta": "added",
+      "sha256": "d52495256cb49f6a999eaafe893e208a03f0acf9a78f8dba46ea6b80c2b157ef",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-operator-consumers-20261017.json",
+      "delta": "added",
+      "sha256": "20177599d4a9570696333ba5d30410dd63b9d8668bb9364f763ccdabbb6fd02d",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-operator-support-review-20261017.json",
+      "delta": "added",
+      "sha256": "4f7a66ec4a4e306704e20181b5444f6925ed47936a7f64658941c195f63fea29",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-owner-browser-boundaries-review-20261017.json",
+      "delta": "added",
+      "sha256": "e14bafe26004bacc31c9ef23d835de76e20a8908ee93724c5a897a4c2eca2708",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-photo-runtime-metadata-20261017.json",
+      "delta": "added",
+      "sha256": "7a286d5f201fb51ba13656c1d1b7441b787ed880d371a01133f90564ce831b3e",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-portable-boundaries-review-20261017.json",
+      "delta": "added",
+      "sha256": "14a68d6cafdad71d1a1f9f9a603063120376f16b0f5060bdbfc3289f7579ec7c",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-product-frontend-review-20261017.json",
+      "delta": "added",
+      "sha256": "b2c5731569db45b059cbd0c8bcb0ede02a372e5b6c8022792a6722b6cab4b842",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-project-stylesheet-review-20261017.json",
+      "delta": "added",
+      "sha256": "505b19f5f59268b6a38865dc528d3f56250f258dcc097d4464d57ca6ffb5f85e",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-root-source-review-20261017.json",
+      "delta": "added",
+      "sha256": "5ca468c2cca764f22548e0a50675bfe1f8e1e34e74d4a6ef3fa66e018c2e2917",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e33-state-adapters-review-20261017.json",
+      "delta": "added",
+      "sha256": "85e7c0bb9b5ef744296deffb44b2c01968c57202b74c5edb29c1d97f3f2203ff",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e34-history-evidence-review-20261017.json",
+      "delta": "added",
+      "sha256": "7c6cf5f4faba554e059803d348cf21e663392d22f5a038df0fc485a7b2903a6e",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e34-tests-docs-history-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/evidence/reassessment/e34-tests-review-20261017.json",
+      "delta": "added",
+      "sha256": "366ddee243885cc68eec7f4ed8d522fe2f830c0626b20b9ef799ab6a860f5565",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e34-tests-docs-history-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/reviews/e32-core-review-20261017.json",
+      "delta": "added",
+      "sha256": "14ebdcc7c67c5b3e2d80cbabbcf60f5f5acc502269cc0623627e8224135d5cfe",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e32-core-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/reviews/e33-adapters-installation-review-20261017.json",
+      "delta": "added",
+      "sha256": "e44d027facf960cabe3454423d80d28b40fc71400f9a1fe6b99f5cbc21037d48",
+      "hashExclusion": null,
+      "reviewMode": "versioned_review_or_evidence_metadata",
+      "decision": "retain_prior_review_evidence_or_current_audit_output",
+      "references": [
+        "development/evidence/reassessment/e33-adapters-installation-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "README.md",
+      "delta": "changed",
+      "sha256": "7bff5f081b23e1e7abb76676314c4b60d9ddaf4d0d6e023359dfbf590d141d63",
+      "hashExclusion": null,
+      "reviewMode": "current_fullread_repository_entrypoint",
+      "decision": "retain_clarified_current_authority",
+      "references": [
+        "development/evidence/reassessment/e34-documentation-design-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/design/product/execution-workboard-v1.json",
+      "delta": "changed",
+      "sha256": "1bed802ee73276512b443cc2a548e5baef22a2990108c1aafacf86c618b82e79",
+      "hashExclusion": null,
+      "reviewMode": "mutable_canonical_projection_checkpoint",
+      "decision": "update_on_actual_start_and_completion",
+      "references": [
+        "src/tools/check_current_workboard.py"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/docs/AFRONDINGSPLAN.md",
+      "delta": "changed",
+      "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d",
+      "hashExclusion": null,
+      "reviewMode": "current_fullread_or_exact_review_document",
+      "decision": "retain_current_authority_or_versioned_review",
+      "references": [
+        "development/evidence/reassessment/e34-documentation-design-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/docs/OPEN_SOURCE_COMPONENTEN.md",
+      "delta": "changed",
+      "sha256": "d193bc1d7072b1c9653047587805fea942905e6f5cc0bb6249bfd212a679dd54",
+      "hashExclusion": null,
+      "reviewMode": "current_fullread_or_exact_review_document",
+      "decision": "retain_current_authority_or_versioned_review",
+      "references": [
+        "development/evidence/reassessment/e34-documentation-design-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/docs/PROJECTDOEL.md",
+      "delta": "changed",
+      "sha256": "04caa2f38f55359e1ec9d11b766de9c760953d7014620aab1b379542222474b0",
+      "hashExclusion": null,
+      "reviewMode": "current_fullread_or_exact_review_document",
+      "decision": "retain_current_authority_or_versioned_review",
+      "references": [
+        "development/evidence/reassessment/e34-documentation-design-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/docs/WERKBORD.md",
+      "delta": "changed",
+      "sha256": "48d22d57d48c87df1664add4fe46849dfd9391477a164221c846627af935e49a",
+      "hashExclusion": null,
+      "reviewMode": "mutable_canonical_projection_checkpoint",
+      "decision": "update_on_actual_start_and_completion",
+      "references": [
+        "src/tools/check_current_workboard.py"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/docs/aide-quality-recovery-20261013.md",
+      "delta": "changed",
+      "sha256": "a513ee0072ac599422558e45ac09e359967a811fb68c934a5ef164e57a069cc9",
+      "hashExclusion": null,
+      "reviewMode": "current_fullread_or_exact_review_document",
+      "decision": "retain_current_authority_or_versioned_review",
+      "references": [
+        "development/evidence/reassessment/e34-documentation-design-review-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/tests/postgres/test_recent_activity.py",
+      "delta": "changed",
+      "sha256": "f897378fcbaeb27c792866db5b438aeea8cd48192fb86765ec0f3a840838a0d1",
+      "hashExclusion": null,
+      "reviewMode": "other_executor_shared_core_evidence_reused",
+      "decision": "retain_current_calendar_day_delivery",
+      "references": [
+        "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "development/tests/voice_service/test_codex_media.py",
+      "delta": "changed",
+      "sha256": "314b52ef64d80cdaa46f4cab38e6f0419d8e88cd996cebdecf2d50a708c50bb6",
+      "hashExclusion": null,
+      "reviewMode": "delegated_speech_metadata",
+      "decision": "retain_other_executor_work_unchanged",
+      "references": [
+        "development/evidence/product/subscription-voice-20261013/playback-activity-20261017.json",
+        "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "src/eva/bootstrap/household_continuity.py",
+      "delta": "changed",
+      "sha256": "88e9b18f228dd837631a9ad183f89d2d218873bfc4ff3d8d60fff9d13c99cec2",
+      "hashExclusion": null,
+      "reviewMode": "other_executor_shared_core_evidence_reused",
+      "decision": "retain_current_calendar_day_delivery",
+      "references": [
+        "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "src/eva/bootstrap/recent_activity.py",
+      "delta": "changed",
+      "sha256": "1629279ae1f35cc47384741e14f0e8b85985a9451862265b426c3ccc6a7308c9",
+      "hashExclusion": null,
+      "reviewMode": "other_executor_shared_core_evidence_reused",
+      "decision": "retain_current_calendar_day_delivery",
+      "references": [
+        "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    },
+    {
+      "path": "src/eva/voice_service/codex_media.py",
+      "delta": "changed",
+      "sha256": "2eddfe8ed179e7853a318dbc5943e88df9ad8218c9485dac3bb5f9ab587c517d",
+      "hashExclusion": null,
+      "reviewMode": "delegated_speech_metadata",
+      "decision": "retain_other_executor_work_unchanged",
+      "references": [
+        "development/evidence/product/subscription-voice-20261013/playback-activity-20261017.json",
+        "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json"
+      ],
+      "fullContentReadClaim": false
+    }
+  ],
+  "subsequentSelfOutputs": [
+    "development/evidence/reassessment/e34-documentation-design-review-20261017.json",
+    "development/evidence/reassessment/e34-finite-cleanup-decisions-20261017.json",
+    "development/evidence/reassessment/e34-checkout-delta-20261017.json",
+    "development/evidence/reassessment/e34-tests-docs-history-review-20261017.json",
+    "development/docs/e34-tests-docs-history-review-20261017.md",
+    "development/reviews/e34-tests-docs-history-review-20261017.json"
+  ],
+  "finalizationProjectionPolicy": "Canonical JSON and generated human workboard change once more after independent verdict. Their checkpoint hashes are provenance, not an assertion finalization leaves mutable status bytes unchanged. This artifact does not regenerate or alter E3.1.",
+  "voiceSourceModifiedByThisTask": false,
+  "privateExclusionsPreserved": true
+}

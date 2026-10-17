@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-E3.4 · Tests, documentatie en historie op noodzaak beoordelen
+E2.7 · Eva laat haar eigen geschiedenis correct terugvinden
 
-E3.3 afgerond; volgende bestaande taak is E3.4. Tests, documentatie en historie beoordelen vóór gerichte E4-opruiming. Nog niet gestart; geen spraakwerk.
+Volgende bestaande gebruikersuitkomst: eigen privéwerk, initiatief, interesses en leeruitkomsten samen correct terugvinden. De openbare kalenderdagreader bestaat en wordt hergebruikt. Nog niet gestart; spraak bij andere uitvoerder.
 
-Klaar wanneer: Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd.
+Klaar wanneer: Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw.
 
 ## Afmaakvolgorde
 
@@ -102,7 +102,7 @@ Klaar wanneer: Alle overige bestanden in de E3-scope hebben een reviewvorm, cons
 | E3.1 · Alle bestanden en hun rol registreren | ✓ Afgerond | Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review. |
 | E3.2 · Actieve kerncode inhoudelijk beoordelen | ✓ Afgerond | Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur. |
 | E3.3 · Adapters, installatie en dynamisch gebruik beoordelen | ✓ Afgerond | Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit. |
-| E3.4 · Tests, documentatie en historie op noodzaak beoordelen | ● Open | Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd. |
+| E3.4 · Tests, documentatie en historie op noodzaak beoordelen | ✓ Afgerond | Alle overige bestanden in de E3-scope hebben een reviewvorm, consumer of referentiedoel en gemotiveerd behoud-/wijzigingsbesluit. Tegenstrijdige actieve documenten worden opgelost; foutbewijs en beschermde eindcriteria blijven intact. De eindige opruim-/refactorlijst is vastgelegd. |
 | E4.1 · Bewezen dode en dubbele bestanden opruimen | ● Open | De vaste E3-verwijderlijst is afgewerkt of per bestand onderbouwd herzien naar behouden. Verwijderde paden/hashes/herkomst blijven geregistreerd; echte consumers en gegevens blijven werken. Geen verwijdering op ouderdom alleen. |
 | E4.2 · Omslachtige code en modulegrenzen vereenvoudigen | ● Open | De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite. |
 | E4.3 · Runtime-efficiëntie verbeteren zonder dommer gedrag | ● Open | Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend. |
@@ -112,7 +112,7 @@ Klaar wanneer: Alle overige bestanden in de E3-scope hebben een reviewvorm, cons
 
 ## Van jou
 
-E3.3 is afgerond. E3.4 en de concrete E4-correcties zijn werk voor Codex. Het optionele eigen WhatsApp-nummer blijft apart open.
+E3 is beoordeeld. E2.7 en de bestaande E4-correcties zijn werk voor Codex. Alleen het optionele eigen WhatsApp-nummer staat los hiervan nog open.
 
 ## Historie
 

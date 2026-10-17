@@ -1,4 +1,11 @@
-# HUE6.1 — bestaande kandidaat beoordelen na toegangsherstel
+# HUE6.1 — historisch herstelverslag van 13 oktober 2026
+
+Dit is afgesloten fout- en verbruiksbewijs, geen huidige herstelopdracht. De hieronder
+beschreven budgetten en vervolgstappen horen uitsluitend bij die oude uitvoering.
+HUE6 is later binnen haar oorspronkelijke scope afgerond; heropen die proef niet.
+Voor huidig werk gelden [PROJECTDOEL](PROJECTDOEL.md) en het
+[canonieke werkbord](../design/product/execution-workboard-v1.json).
+De oorspronkelijke documentversie is [exact bewaard](../archive/history/20261017-e34-document-authority/snapshot.json).
 
 De door Eva gemaakte kandidaat be64adcb… blijft ongewijzigd. De vorige hervatting
 faalde vóór de evaluatiewerker door verkeerde eigendom van de geïsoleerde

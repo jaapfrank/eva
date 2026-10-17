@@ -1,0 +1,188 @@
+{
+  "contract": "EvaE3FiniteCleanupDecisions/v1",
+  "status": "fixed_review_inputs_not_implemented",
+  "sources": [
+    {
+      "path": "development/evidence/reassessment/e32-core-review-20261017.json",
+      "sha256": "8667802cc01cf34a839b901dc53309c4049e04777bec29604a32e72dd1ffbca3"
+    },
+    {
+      "path": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+      "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086"
+    }
+  ],
+  "clusters": [
+    {
+      "id": "C01",
+      "card": "E4.1",
+      "title": "Verwijder alleen bewezen ongebruikte lokale PeopleOverview",
+      "sourceDecisions": [
+        "E3.3:UI-01"
+      ],
+      "status": "required_not_implemented",
+      "newProductTask": false,
+      "scopeRule": "Only cited defects/ownership transition and affected existing regressions; no whole-platform rewrite or unchanged reruns."
+    },
+    {
+      "id": "C02",
+      "card": "E4.2",
+      "title": "Behoud JSON-typebetekenis in schema/proof-gelijkheid",
+      "sourceDecisions": [
+        "E3.2:APP-01"
+      ],
+      "status": "required_not_implemented",
+      "newProductTask": false,
+      "scopeRule": "Only cited defects/ownership transition and affected existing regressions; no whole-platform rewrite or unchanged reruns."
+    },
+    {
+      "id": "C03",
+      "card": "E4.2",
+      "title": "Behoud bronstatus, inferentietrust en juiste persoon in geheugencontext",
+      "sourceDecisions": [
+        "E3.2:APP-04",
+        "E3.3:STATE-02",
+        "E3.3:STATE-03"
+      ],
+      "status": "required_not_implemented",
+      "newProductTask": false,
+      "scopeRule": "Only cited defects/ownership transition and affected existing regressions; no whole-platform rewrite or unchanged reruns."
+    },
+    {
+      "id": "C04",
+      "card": "E4.2",
+      "title": "Maak protocoladvies, standaard-MCP en completionbewijs adaptereigendom",
+      "sourceDecisions": [
+        "E3.2:APP-02",
+        "E3.2:B02",
+        "E3.3:IF-01"
+      ],
+      "status": "required_not_implemented",
+      "newProductTask": false,
+      "scopeRule": "Only cited defects/ownership transition and affected existing regressions; no whole-platform rewrite or unchanged reruns."
+    },
+    {
+      "id": "C05",
+      "card": "E4.2",
+      "title": "Verplaats gedeelde target-/installervalidatie naar de neutrale eigenaar",
+      "sourceDecisions": [
+        "E3.2:APP-03",
+        "E3.3:OP-01"
+      ],
+      "status": "required_not_implemented",
+      "newProductTask": false,
+      "scopeRule": "Only cited defects/ownership transition and affected existing regressions; no whole-platform rewrite or unchanged reruns."
+    },
+    {
+      "id": "C06",
+      "card": "E4.2",
+      "title": "Scheid workerinstellingen/runtimehelpers van UI- en operatorinhoud",
+      "sourceDecisions": [
+        "E3.2:B01",
+        "E3.3:OP-02"
+      ],
+      "status": "required_not_implemented",
+      "newProductTask": false,
+      "scopeRule": "Only cited defects/ownership transition and affected existing regressions; no whole-platform rewrite or unchanged reruns."
+    },
+    {
+      "id": "C07",
+      "card": "E4.2",
+      "title": "Corrigeer bestaande optionele reply-, budgetherstel- en catalogusoverdrachten",
+      "sourceDecisions": [
+        "E3.3:IF-02",
+        "E3.3:IF-03",
+        "E3.3:IN-01"
+      ],
+      "status": "required_not_implemented",
+      "newProductTask": false,
+      "scopeRule": "Only cited defects/ownership transition and affected existing regressions; no whole-platform rewrite or unchanged reruns."
+    },
+    {
+      "id": "C08",
+      "card": "E4.2",
+      "title": "Houd Sol contact-only en inhoudelijk bronwerk op Astra",
+      "sourceDecisions": [
+        "E3.2:B04"
+      ],
+      "status": "required_not_implemented",
+      "newProductTask": false,
+      "scopeRule": "Only cited defects/ownership transition and affected existing regressions; no whole-platform rewrite or unchanged reruns."
+    },
+    {
+      "id": "C09",
+      "card": "E4.3",
+      "title": "Controleer bestaande portable headergrens vóór het inlezen",
+      "sourceDecisions": [
+        "E3.3:SU-02"
+      ],
+      "status": "required_not_implemented",
+      "newProductTask": false,
+      "scopeRule": "Only cited defects/ownership transition and affected existing regressions; no whole-platform rewrite or unchanged reruns."
+    },
+    {
+      "id": "C10",
+      "card": "E4.4",
+      "title": "Maak package-data, worker-/workspacebouw en modeldefaults reproduceerbaar",
+      "sourceDecisions": [
+        "E3.2:APP-05",
+        "E3.2:B03",
+        "E3.3:OP-03"
+      ],
+      "status": "required_not_implemented",
+      "newProductTask": false,
+      "scopeRule": "Only cited defects/ownership transition and affected existing regressions; no whole-platform rewrite or unchanged reruns."
+    },
+    {
+      "id": "C11",
+      "card": "E4.4",
+      "title": "Herstel portable/schemaresource- en provenancebinding zonder criteriawijziging",
+      "sourceDecisions": [
+        "E3.3:STATE-01",
+        "E3.3:PORTABLE-01",
+        "E3.3:SU-01"
+      ],
+      "status": "required_not_implemented",
+      "newProductTask": false,
+      "scopeRule": "Only cited defects/ownership transition and affected existing regressions; no whole-platform rewrite or unchanged reruns."
+    },
+    {
+      "id": "C12",
+      "card": "E4.4",
+      "title": "Scheid operationele helper van testchecker en herstel exacte bronbinding",
+      "sourceDecisions": [
+        "E3.3:SU-03",
+        "E3.3:SU-04"
+      ],
+      "status": "required_not_implemented",
+      "newProductTask": false,
+      "scopeRule": "Only cited defects/ownership transition and affected existing regressions; no whole-platform rewrite or unchanged reruns."
+    }
+  ],
+  "testAliases": {
+    "TEST-01": "E3.3:IF-01",
+    "TEST-02": "E3.3:STATE-02"
+  },
+  "retentions": [
+    "E3.3:CHAIN-01",
+    "E3.3:CLI-01",
+    "All E3.4 original error/UNKNOWN/review/criterion/archive evidence retained; no new deletion proved."
+  ],
+  "conditionalPhotoDependency": {
+    "card": "E4.4",
+    "source": "E3.3:photoDependency",
+    "decision": "Retain existing library until equivalent native photo/provider boundary preserves existing use and receipts; Eva1 agent stays stopped.",
+    "newTask": false
+  },
+  "existingUserOutcomes": {
+    "E2.7": "One scoped existing-source activity/history reader; reuse public calendar-day implementation.",
+    "E4.5": "Original autonomous reversible improvement/apply/recovery/later-use chain, no new updater."
+  },
+  "newProductTasks": 0,
+  "constraints": [
+    "Original task IDs/end conditions and existing accepted HUE results unchanged.",
+    "New ideas do not grow this list without a concrete owner-authorized requirement or demonstrated delivery blocker.",
+    "No protected criterion changes or new competitor series.",
+    "Speech/audio implementation remains other executor ownership."
+  ],
+  "usageClaims": "No runtime efficiency/quality win measured by a review."
+}

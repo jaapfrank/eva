@@ -1,0 +1,28 @@
+{
+  "contract": "EvaE34DocumentAuthoritySnapshot/v1",
+  "capturedAt": "2026-10-17T09:55:13.938904+00:00",
+  "sourceRevision": "16e27c4e0aecf44ec4d2226f26d5c62710e59d61",
+  "files": [
+    {
+      "path": "development/docs/OPEN_SOURCE_COMPONENTEN.md",
+      "snapshot": "development/archive/history/20261017-e34-document-authority/OPEN_SOURCE_COMPONENTEN.md",
+      "sha256": "eaa04d128a0913ab5251bc16722f5f8697756bd32184ea64a22e5395663611c4",
+      "bytes": 21282,
+      "reason": "Exact original before documentation authority clarification; results, budgets, criteria and failures retained unchanged."
+    },
+    {
+      "path": "development/docs/aide-quality-recovery-20261013.md",
+      "snapshot": "development/archive/history/20261017-e34-document-authority/aide-quality-recovery-20261013.md",
+      "sha256": "1ef814b144b3227354b1d17f4ea8c4c835a63bc04448fd4277b698ec1645eacf",
+      "bytes": 4788,
+      "reason": "Exact original before documentation authority clarification; results, budgets, criteria and failures retained unchanged."
+    },
+    {
+      "path": "development/docs/AFRONDINGSPLAN.md",
+      "snapshot": "development/archive/history/20261017-e34-document-authority/AFRONDINGSPLAN.md",
+      "sha256": "56f5398f46b9ffa5992927cda9d5b7b450b5ad0a509496d20679539697bc5ef3",
+      "bytes": 28319,
+      "reason": "Exact prior plan before recognizing already delivered public local-day reader; no task criterion changed."
+    }
+  ]
+}

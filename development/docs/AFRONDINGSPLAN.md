@@ -136,9 +136,12 @@ terugmelding zijn bevestigd. Dit optionele account blokkeert het andere werk nie
 De aanvulling van 17 oktober [blijvende ontwikkeling](eva-continuous-development-20261017.md)
 krijgt één afzonderlijke E2.7-uitkomst: dezelfde toegelaten activiteit, eigen opdrachten,
 initiatief, interesses en leeruitkomsten samen kunnen terugvinden en kort beschrijven.
-De bestaande reader is beperkt tot openbare sessies en afgelopen 24 uur; een lokale
-kalenderdag, privégeschiedenis en andere brondekking vragen de ontbrekende overdracht.
-E3.3/E3.4 beoordelen die eerst. Geen nieuwe geheugenbank of spraakherbouw.
+De oorspronkelijke reader was beperkt tot openbare sessies en de afgelopen 24 uur.
+De [openbare kalenderdaguitbreiding van 17 oktober](../evidence/product/subscription-voice-20261013/calendar-activity-20261017.json)
+is inmiddels geïnstalleerd en gericht gecontroleerd door de andere uitvoerder; die
+selectie wordt hergebruikt. De gezamenlijke persoonsgebonden overdracht van privéwerk,
+initiatief, interesses en leeruitkomsten blijft E2.7. E3.3/E3.4 beoordelen de bestaande
+consumers eerst. Geen nieuwe geheugenbank, dubbele dagselectie of spraakherbouw.
 
 ## E3 — Alle bestanden beoordeelbaar maken
 

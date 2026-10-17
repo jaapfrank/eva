@@ -2,12 +2,15 @@
 
 Historische beslisstand: 1 september 2026. Statusverwijzingen bijgewerkt op 12 september 2026.
 
-## Actuele status lezen
+## Deze historische momentopname gebruiken
 
-De onderstaande oude keuzes, versies en proeven blijven historisch bewijs.
-Voor huidige uitvoering geldt [development/docs/WERKBORD.md](WERKBORD.md); voor hergebruik en
-onderhoud gelden [AGENTS.md](../archive/history/root/AGENTS.md#onderhouden-opensource-en-bestaande-besluiten)
-en de [bestaande dependencykeuzes](../archive/history/eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md).
+De onderstaande keuzes, versies, proeven en onderhoudsregels gelden voor de genoemde
+oude meetdata. Ze zijn geen huidige uitvoeropdracht of verplichting tot een nieuwe
+vergelijkingsserie. Voor huidig werk gelden [AGENTS.md](../../AGENTS.md),
+[PROJECTDOEL](PROJECTDOEL.md), [AFRONDINGSPLAN](AFRONDINGSPLAN.md) en het
+[canonieke werkbord](../design/product/execution-workboard-v1.json).
+De [oude dependencykeuzes](../archive/history/eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md)
+blijven referentie. De versie van vóór deze verduidelijking is [exact bewaard](../archive/history/20261017-e34-document-authority/snapshot.json).
 Een versie die ooit is onderzocht, is niet automatisch geïnstalleerd of de
 nieuwste beschikbare versie. Hier is geen nieuwe upstream- of CVE-controle gedaan.
 
