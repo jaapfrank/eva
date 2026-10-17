@@ -1,0 +1,658 @@
+{
+  "contract": "EvaVoiceLatencyFollowup/v1",
+  "recorded_at": "2026-10-17T13:20:45.668423+00:00",
+  "owner_instruction": "oke ga door",
+  "status": "targeted_improvements_installed_interrupt_latency_and_owner_acceptance_open",
+  "scope": "Continue the existing single Eva voice path; preserve scoped memory, identity, core authority, stop, literal rendering and device acknowledgement.",
+  "starting_evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-repair-20261017.json",
+  "changes": {
+    "warm_start": {
+      "before_readiness": [
+        "Existing SDK deferred response-resource import",
+        "Existing hash-verified local input tokenizer"
+      ],
+      "network_or_auth_in_warmup": false,
+      "added_model_calls": 0,
+      "observed_first_model_admission_ms": 402,
+      "observed_first_provider_enter_ms": 636,
+      "candidate_offline_preload_ms": 1419,
+      "candidate_first_two_provider_lifecycle_ms": [
+        27,
+        7
+      ],
+      "tokenizer_preloaded": true,
+      "limit": "Moves local initialization before voice readiness; not a measured end-to-end owner reply improvement."
+    },
+    "memory": {
+      "enabled": true,
+      "route": "Pinned existing LocalSTCrossEncoder, per-instance exact-batch numerical memoization",
+      "cache": {
+        "entries": 64,
+        "max_scores_per_entry": 256,
+        "servable_ttl_seconds": 30,
+        "max_batch_input_bytes": 2097152,
+        "raw_query_or_document_storage": false,
+        "namespace": "model instance and active model/config tuple",
+        "concurrent_misses": "unchanged existing worker limit; no lock over inference"
+      },
+      "inputs": "Exact ordered query and date/context/document strings; changed query, candidate text, order or model/config misses. No batching or ranking changes.",
+      "fresh_retrieval_and_host_authorization": true,
+      "baseline": {
+        "results": [
+          {
+            "index": 0,
+            "elapsed_ms": 2519,
+            "selected_ids": "608b0e08dfb0fe1b792fa6f486acf7493c04b61488c5eb63ae90b2618fc02b05",
+            "facts": 1,
+            "requests": [
+              {
+                "method": "POST",
+                "endpoint": "recall",
+                "start_ms": 3,
+                "elapsed_ms": 2508,
+                "result_count": 17,
+                "query_hash": "bf386a548ff6d631e6d4e14d85711461bdf9a4e74a57993b1ef458b7b8f60f3c"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "elapsed_ms": 2405,
+            "selected_ids": "608b0e08dfb0fe1b792fa6f486acf7493c04b61488c5eb63ae90b2618fc02b05",
+            "facts": 1,
+            "requests": [
+              {
+                "method": "POST",
+                "endpoint": "recall",
+                "start_ms": 2522,
+                "elapsed_ms": 2396,
+                "result_count": 17,
+                "query_hash": "bf386a548ff6d631e6d4e14d85711461bdf9a4e74a57993b1ef458b7b8f60f3c"
+              }
+            ]
+          }
+        ],
+        "semantic_recall_requests": 2,
+        "mutations": 0,
+        "scope": {
+          "actual_installed_core": true,
+          "full_household_recall": true,
+          "style_and_authority_unchanged": true,
+          "same_real_query_twice": true,
+          "provider_model_generation": 0,
+          "production_edits": 0
+        },
+        "server_stages_ms": [
+          {
+            "embedding": 23,
+            "retrieval": 255,
+            "rerank32": 2205
+          },
+          {
+            "embedding": 14,
+            "retrieval": 211,
+            "rerank32": 2148
+          }
+        ],
+        "installed_hindsight_sha256": "6e1611625b751b6a17af11ff155ded8271614d22c214afc4d0a3023f444ce009",
+        "queue_limit": "Dedicated existing2worker executor; runtime queue wait not separately instrumented; rerank log includes elapsed walltime.",
+        "recommendation": "No adapter patch supported: host overhead9–11ms and one HTTP call; preserve retrieval. Earlier FP32 ONNX/batching results do not establish production improvement."
+      },
+      "offline_comparison": {
+        "measurements": [
+          {
+            "case": "baseline",
+            "elapsed_ms": 1925.258,
+            "pairs": 32,
+            "exact_scores": true,
+            "max_difference": 0.0
+          },
+          {
+            "case": "miss",
+            "elapsed_ms": 1885.412,
+            "pairs": 32,
+            "exact_scores": true,
+            "max_difference": 0.0
+          },
+          {
+            "case": "hit",
+            "elapsed_ms": 0.442,
+            "pairs": 32,
+            "exact_scores": true,
+            "max_difference": 0.0
+          },
+          {
+            "case": "baseline_warm",
+            "elapsed_ms": 2075.941,
+            "pairs": 32,
+            "exact_scores": true,
+            "max_difference": 0.0
+          }
+        ],
+        "network": "none",
+        "cpu": 4,
+        "memory_gb": 8
+      },
+      "post_install": {
+        "results": [
+          {
+            "index": 0,
+            "elapsed_ms": 3747,
+            "selected_ids": "608b0e08dfb0fe1b792fa6f486acf7493c04b61488c5eb63ae90b2618fc02b05",
+            "ordered_facts_sha256": "f36d72ea197163243e89a78d96ffd4bf585d319505fbc28ccb5f49feeb9fa38d",
+            "facts": 1,
+            "requests": [
+              {
+                "method": "POST",
+                "endpoint": "recall",
+                "start_ms": 2,
+                "elapsed_ms": 3738,
+                "result_count": 17,
+                "query_hash": "bf386a548ff6d631e6d4e14d85711461bdf9a4e74a57993b1ef458b7b8f60f3c"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "elapsed_ms": 304,
+            "selected_ids": "608b0e08dfb0fe1b792fa6f486acf7493c04b61488c5eb63ae90b2618fc02b05",
+            "ordered_facts_sha256": "f36d72ea197163243e89a78d96ffd4bf585d319505fbc28ccb5f49feeb9fa38d",
+            "facts": 1,
+            "requests": [
+              {
+                "method": "POST",
+                "endpoint": "recall",
+                "start_ms": 3749,
+                "elapsed_ms": 296,
+                "result_count": 17,
+                "query_hash": "bf386a548ff6d631e6d4e14d85711461bdf9a4e74a57993b1ef458b7b8f60f3c"
+              }
+            ]
+          }
+        ],
+        "semantic_recall_requests": 2,
+        "mutations": 0
+      },
+      "selected_facts_match_baseline": true,
+      "post_install_order_and_complete_fact_values_equal": true,
+      "limits": [
+        "Only exact repeated batches within30seconds benefit; new or changed questions retain full inference cost.",
+        "No general cache hit-rate claim.",
+        "No raw query/document cache, durable memory write or new semantic memory."
+      ]
+    },
+    "audio": {
+      "route": "Existing render-only admission and RTP receiver",
+      "source_sha256": "560a0daa28c0e84683fab099a646e6d7a99afc3632f6c2fd9dfa9479b10fe11e",
+      "quiet_pcm_after_terminal_ms": 300,
+      "maximum_drain_wait_seconds": 3,
+      "stop_route_unchanged": true,
+      "normal_turn_added_delay": false,
+      "unexpected_turn_during_drain": "Monotonic revision/idle checks keep output muted and close before offering next text, including created+done between wakeups.",
+      "no_new_prefix_clipping": "New speech is offered only after drain, with gate already open for its earliest RTP.",
+      "device_ack_still_required": true,
+      "tests": {
+        "result": "passed",
+        "count": 102,
+        "seconds": 33.85,
+        "network": "none",
+        "provider_calls": 0,
+        "physical_audio": false,
+        "overlay": "/app/eva/voice_service/codex_media.py",
+        "command": "python -m pytest -q -p no:cacheprovider /tests/test_codex_media.py /tests/test_single_core_voice.py",
+        "new_cases": [
+          "postterminal-muted-tail with signal after quiet wake",
+          "no drain during following normal offer",
+          "all-silent actual PCM accepted",
+          "missing PCM timeout closes",
+          "continuous signal timeout closes",
+          "unknown active turn during drain closes",
+          "unknown created+done during drain closes"
+        ],
+        "container_command": "sudo -n docker run --rm --network none --entrypoint python --mount type=bind,src=/home/administrator/project/Eva2/src/eva/voice_service/codex_media.py,dst=/app/eva/voice_service/codex_media.py,readonly --mount type=bind,src=/home/administrator/project/Eva2/development/tests/voice_service,dst=/tests,readonly sha256:b07e2dccf49d3d51070e36eee0c951567fa48da477f4d794b51c315b89ba81e4 -m pytest -q -p no:cacheprovider /tests/test_codex_media.py /tests/test_single_core_voice.py"
+      },
+      "probes": [
+        {
+          "attempt": 1,
+          "provider_sessions": 1,
+          "speech_requests": 4,
+          "token_usage": null,
+          "physical_audio": false,
+          "microphone_used": false,
+          "core_calls": 0,
+          "elapsed_ms": 30638,
+          "cases": [
+            {
+              "candidate_stop_pending": false,
+              "pending_before_interrupt": true,
+              "active_turn_before_interrupt": false,
+              "old_terminal_ms": 8597,
+              "next_speech_request_ms": 8599,
+              "next_first_signal_ms": 9409,
+              "stop_requests": 0,
+              "stop_ack_ms": [],
+              "word_sequence_equal": true,
+              "actual_word_count": 7,
+              "signal_samples": 80640,
+              "playback_unconfirmed": true
+            },
+            {
+              "candidate_stop_pending": true,
+              "pending_before_interrupt": true,
+              "active_turn_before_interrupt": false,
+              "old_terminal_ms": 3078,
+              "next_speech_request_ms": 3081,
+              "next_first_signal_ms": 3096,
+              "stop_requests": 1,
+              "stop_ack_ms": [
+                2
+              ],
+              "word_sequence_equal": true,
+              "actual_word_count": 7,
+              "signal_samples": 159360,
+              "playback_unconfirmed": true
+            }
+          ]
+        },
+        {
+          "attempt": 2,
+          "provider_sessions": 1,
+          "speech_requests": 1,
+          "token_usage": null,
+          "physical_audio": false,
+          "microphone_used": false,
+          "core_calls": 0,
+          "outcome": "rejected",
+          "reason": "Early pending STOP produced no created/terminal identity; existing 30 s fence timed out without admitting the next request."
+        },
+        {
+          "attempt": 3,
+          "provider_sessions": 1,
+          "speech_requests": 4,
+          "token_usage": null,
+          "physical_audio": false,
+          "microphone_used": false,
+          "core_calls": 0,
+          "elapsed_ms": 32992,
+          "cases": [
+            {
+              "candidate_stop_pending": true,
+              "drain_quiet_ms": 300,
+              "drained_old_signal_ms": 4960,
+              "pending_before_interrupt": true,
+              "active_turn_before_interrupt": false,
+              "old_terminal_ms": 7608,
+              "next_speech_request_ms": 7893,
+              "next_first_signal_ms": 8828,
+              "stop_requests": 1,
+              "stop_ack_ms": [
+                695
+              ],
+              "word_sequence_equal": true,
+              "actual_word_count": 7,
+              "signal_samples": 78720,
+              "playback_unconfirmed": true
+            },
+            {
+              "candidate_stop_pending": true,
+              "drain_quiet_ms": 300,
+              "drained_old_signal_ms": 5080,
+              "pending_before_interrupt": false,
+              "active_turn_before_interrupt": true,
+              "old_terminal_ms": 6584,
+              "next_speech_request_ms": 6873,
+              "next_first_signal_ms": 8095,
+              "stop_requests": 1,
+              "stop_ack_ms": [
+                3
+              ],
+              "word_sequence_equal": true,
+              "actual_word_count": 7,
+              "signal_samples": 77760,
+              "playback_unconfirmed": true
+            }
+          ]
+        }
+      ],
+      "independent_review": {
+        "result": "GO",
+        "reviewer": "review_cursor",
+        "module_sha256": "560a0daa28c0e84683fab099a646e6d7a99afc3632f6c2fd9dfa9479b10fe11e"
+      },
+      "limits": [
+        "Old provider turns continued 6.584–7.608 s despite STOP acknowledgement in the final bounded probe.",
+        "The prototype waited for received muted silence before the next render request; the two following seven-word transcripts matched, with 77760–78720 signal samples. This is not independent acoustic transcription or physical playback confirmation.",
+        "Immediate pending STOP was rejected: one case had suspicious early/doubled signal; another never supplied a terminal event.",
+        "Production candidate keeps the original STOP route and adds only the measured tail-drain principle, with stronger consecutive-silence/event-race tests. The exact final source was verified offline, not with another paid session.",
+        "The remaining roughly eight-second interrupt-to-next-signal delay and native spoken barge-in are unresolved."
+      ]
+    }
+  },
+  "rejected_alternatives": {
+    "early_pending_stop": "One probe leaked/suspected stale audio; another produced no turn identity or terminal and hit the30second existing fence. Not installed.",
+    "deferred_stop": "Old renderer still completed6.584–7.608seconds after interrupt despite acknowledgement. No new STOP path installed.",
+    "replace_renderer": {
+      "timestamp": "2026-10-17T13:18:58.294382+00:00",
+      "result": "NO_GO",
+      "reason": "No demonstrated speed improvement: fresh renderer first audio took 9604 ms after interruption, compared with approximately eight seconds in the prior bounded drain probe. Stop this experiment; no production implementation.",
+      "baseline": {
+        "image": "sha256:e160afcbccfba1b8b3ad8dccc3854800b579412277b811c3412f5087f2e4c9dd",
+        "speaker_started": "2026-10-17T13:17:20.232027447Z",
+        "script": "replace_renderer_probe.py",
+        "authorized_max_sessions": 2
+      },
+      "module_sha256": "560a0daa28c0e84683fab099a646e6d7a99afc3632f6c2fd9dfa9479b10fe11e",
+      "probe_script_sha256": "3693ab96225ea71d0cf19eb3ed6818e1a09fc04cb017584f82fb26c4c29102f4",
+      "replacement_measurement": {
+        "pending_before_interrupt": true,
+        "active_before_interrupt": false,
+        "old_close_ms": 15,
+        "new_ready_ms": 8731,
+        "next_offer_ms": 8731,
+        "next_first_signal_ms": 9604,
+        "signal_before_offer": false,
+        "word_sequence_equal": true,
+        "next_completed_turns": 1,
+        "next_signal_samples": 71040,
+        "old_process_closed": true,
+        "old_peer_closed": true,
+        "old_tasks_closed": true,
+        "old_audio_received_after_close": 0,
+        "playback_unconfirmed": true,
+        "physical_stop_ack": null,
+        "stages": [
+          {
+            "renderer": "old",
+            "stage": "account_start",
+            "after_interrupt_ms": null
+          },
+          {
+            "renderer": "old",
+            "stage": "account_ready",
+            "after_interrupt_ms": null
+          },
+          {
+            "renderer": "old",
+            "stage": "voice_answer_ready",
+            "after_interrupt_ms": null
+          },
+          {
+            "renderer": "old",
+            "stage": "media_ready",
+            "after_interrupt_ms": null
+          },
+          {
+            "renderer": "new",
+            "stage": "account_start",
+            "after_interrupt_ms": 18
+          },
+          {
+            "renderer": "new",
+            "stage": "account_ready",
+            "after_interrupt_ms": 645
+          },
+          {
+            "renderer": "new",
+            "stage": "voice_answer_ready",
+            "after_interrupt_ms": 8389
+          },
+          {
+            "renderer": "new",
+            "stage": "media_ready",
+            "after_interrupt_ms": 8731
+          }
+        ]
+      },
+      "replacement_usage": {
+        "provider_sessions_attempted": 2,
+        "provider_sessions_ready": 2,
+        "speech_requests": 2,
+        "core_requests": 0,
+        "token_usage": null,
+        "physical_audio": false,
+        "microphone_used": false,
+        "durable_memory_writes": 0,
+        "elapsed_ms": 21357
+      },
+      "limits": [
+        "Single bounded replacement case; not a latency distribution or physical acoustic test.",
+        "Old app-server process, peer and owned tasks closed before the fresh renderer started; zero observed old receiver frames afterward. This is local transport closure evidence, not confirmation of a physical speaker STOP receipt or provider billing termination.",
+        "Normal production listener registers renderer close to close the listener too. A replacement is not a drop-in operation; shared source clearing, old-handle callbacks and device acknowledgement would require separate lifecycle integration.",
+        "Same software sink and handoff-disabled backend reused. No physical microphone/device, core request, durable memory or production source mutation.",
+        "No further experiments under this task."
+      ],
+      "development_usage_total_including_prior_interrupt_probes": {
+        "realtime_sessions_attempted": 5,
+        "append_speech_requests": 11,
+        "tokens": null,
+        "credits": null
+      }
+    }
+  },
+  "validation": {
+    "distinct_targeted_software_tests_passed": 177,
+    "groups": [
+      {
+        "suite": "Shared Codex provider",
+        "passed": 56,
+        "network": "none",
+        "seconds": 6.18
+      },
+      {
+        "suite": "Existing pinned Hindsight GC/warmup and new score cache integration",
+        "passed": 19,
+        "network": "none",
+        "seconds": 0.082,
+        "new_cache_and_pinned_seam_tests": 8
+      },
+      {
+        "suite": "Codex media and single-core voice",
+        "passed": 102,
+        "network": "none",
+        "seconds": 33.85
+      }
+    ],
+    "readiness": {
+      "recorded_at": "2026-10-17T13:18:31.093420+00:00",
+      "services": {
+        "core": {
+          "image": "sha256:3845005761721b000b1fa2e6ad747a0d392c7ecb326f9be074b07620888c3cb8",
+          "running": true,
+          "health": "healthy",
+          "restart_count": 0,
+          "imports": {
+            "adapters/model/openai_codex_provider.py": {
+              "import_path": "/opt/eva/src/eva/adapters/model/openai_codex_provider.py",
+              "sha256": "77396b2a3ac8ba0b460feefc79c0ff3ced0adaa4222a09542af4f34b19913d95"
+            },
+            "bootstrap/runtime.py": {
+              "import_path": "/opt/eva/src/eva/bootstrap/runtime.py",
+              "sha256": "9885d31ecf77d094cebb35818108b7d61f1655a4334e0a61fb11ef93376ef01a"
+            }
+          },
+          "matches_manifest": true
+        },
+        "speaker": {
+          "image": "sha256:e160afcbccfba1b8b3ad8dccc3854800b579412277b811c3412f5087f2e4c9dd",
+          "running": true,
+          "health": "not_configured",
+          "restart_count": 0,
+          "imports": {
+            "voice_service/codex_media.py": {
+              "import_path": "/app/eva/voice_service/codex_media.py",
+              "sha256": "560a0daa28c0e84683fab099a646e6d7a99afc3632f6c2fd9dfa9479b10fe11e"
+            }
+          },
+          "matches_manifest": true
+        },
+        "media": {
+          "image": "sha256:775541481c61b8a3611d5b9a039511a5406eca68d3567f8159bb87bdb37c0ab3",
+          "running": true,
+          "health": "not_configured",
+          "restart_count": 0,
+          "imports": {
+            "voice_service/codex_media.py": {
+              "import_path": "/app/eva/voice_service/codex_media.py",
+              "sha256": "560a0daa28c0e84683fab099a646e6d7a99afc3632f6c2fd9dfa9479b10fe11e"
+            }
+          },
+          "matches_manifest": true
+        },
+        "memory": {
+          "image": "sha256:3490eb37db88f3ec92f28bd3b50b7c9e16650a24ee92384eb28aeabe8957679f",
+          "running": true,
+          "health": "healthy",
+          "matches_manifest": true
+        }
+      },
+      "scope": {
+        "read_only": true,
+        "provider_calls": 0,
+        "physical_audio": false,
+        "microphone_started": false
+      },
+      "speakers": {
+        "configured_devices": 2,
+        "bindings_ready": [
+          true,
+          true
+        ],
+        "listener_sockets": 1,
+        "established_transport_sockets": 2
+      },
+      "browser_readiness": {
+        "http_status": 200,
+        "ready": true
+      }
+    },
+    "physical_conversation_test": false,
+    "owner_accepted": false
+  },
+  "deployment": {
+    "services": [
+      {
+        "slug": "memory",
+        "name": "eva2-managed-b-slot3-hindsight-1",
+        "base": "sha256:fc1efcd7102e753673b7e0e6fd613f107d58d1c769d015a2d9ef10ca8dd7995d",
+        "candidate": "sha256:3490eb37db88f3ec92f28bd3b50b7c9e16650a24ee92384eb28aeabe8957679f",
+        "original_hashes": {
+          "cross_encoder.py": "3f12569a3d24fc2f1a1b4d4af1367b42c5ad8c349b1b3dd4c90f0ca82cbe4adf"
+        },
+        "hashes": {
+          "cross_encoder.py": "456d9e8e718ad922a4a7a7434e5555735baadb242e539091263ea1b82f869c87"
+        },
+        "pre_install_guard": {
+          "active_voice_leases": 0,
+          "active_delegated_work": 0,
+          "active_memory_outbox": 0,
+          "active_hindsight_operations": 0
+        },
+        "source_verified": true,
+        "configuration_preserved": true,
+        "health": "healthy",
+        "installed_at": "2026-10-17T13:11:27.97568181Z"
+      },
+      {
+        "slug": "core",
+        "name": "eva2-managed-b-slot3-core",
+        "base": "sha256:1379485748e0bf5709fd3d6829fcba6e3e1448d3675c231c29e3d225bc387ab3",
+        "candidate": "sha256:3845005761721b000b1fa2e6ad747a0d392c7ecb326f9be074b07620888c3cb8",
+        "original_hashes": {
+          "adapters/model/openai_codex_provider.py": "ff927f65935cd217b8217b823d87b2bf8496726d77b42d6c8681c094a7eb92f1",
+          "bootstrap/runtime.py": "7c505156ea43772b01ce1a9336d6bac77f6dcc9ed7ca3f33257221eeac30ad80"
+        },
+        "hashes": {
+          "adapters/model/openai_codex_provider.py": "77396b2a3ac8ba0b460feefc79c0ff3ced0adaa4222a09542af4f34b19913d95",
+          "bootstrap/runtime.py": "9885d31ecf77d094cebb35818108b7d61f1655a4334e0a61fb11ef93376ef01a"
+        },
+        "pre_install_guard": {
+          "active_voice_leases": 0,
+          "active_delegated_work": 0,
+          "active_memory_outbox": 0
+        },
+        "source_verified": true,
+        "configuration_preserved": true,
+        "health": "healthy",
+        "installed_at": "2026-10-17T13:18:00.012855232Z"
+      },
+      {
+        "slug": "speaker",
+        "name": "eva2-household-speaker-1",
+        "base": "sha256:b07e2dccf49d3d51070e36eee0c951567fa48da477f4d794b51c315b89ba81e4",
+        "candidate": "sha256:e160afcbccfba1b8b3ad8dccc3854800b579412277b811c3412f5087f2e4c9dd",
+        "original_hashes": {
+          "voice_service/codex_media.py": "3543bea6d5683ea2057d24f9acec7c15afbda14d9b9e17b9332677ef2742411d"
+        },
+        "hashes": {
+          "voice_service/codex_media.py": "560a0daa28c0e84683fab099a646e6d7a99afc3632f6c2fd9dfa9479b10fe11e"
+        },
+        "pre_install_guard": {
+          "active_voice_leases": 0,
+          "active_delegated_work": 0,
+          "active_memory_outbox": 0
+        },
+        "source_verified": true,
+        "configuration_preserved": true,
+        "health": null,
+        "installed_at": "2026-10-17T13:17:20.232027447Z"
+      },
+      {
+        "slug": "media",
+        "name": "eva2-owner-voice-media-1",
+        "base": "sha256:6e37427debd93bb8921a2405b1fce9fa962b5c7c3ee5b711c2fd51dc1a2333cc",
+        "candidate": "sha256:775541481c61b8a3611d5b9a039511a5406eca68d3567f8159bb87bdb37c0ab3",
+        "original_hashes": {
+          "voice_service/codex_media.py": "3543bea6d5683ea2057d24f9acec7c15afbda14d9b9e17b9332677ef2742411d"
+        },
+        "hashes": {
+          "voice_service/codex_media.py": "560a0daa28c0e84683fab099a646e6d7a99afc3632f6c2fd9dfa9479b10fe11e"
+        },
+        "pre_install_guard": {
+          "active_voice_leases": 0,
+          "active_delegated_work": 0,
+          "active_memory_outbox": 0
+        },
+        "source_verified": true,
+        "configuration_preserved": true,
+        "health": null,
+        "installed_at": "2026-10-17T13:17:27.772690739Z"
+      }
+    ],
+    "existing_configuration_preserved_except_memory_opt_in": true,
+    "active_voice_before_each_replacement": 0,
+    "memory_and_core_waited_for_delegated_and_memory_work_idle": true,
+    "speaker_media_do_not_restart_delegated_worker": true,
+    "concurrent_core_update": "Another executor replaced the core while this work was prepared. The guard rejected the old base; the overlay was rebuilt on actual image137948... which extends the prior base by one layer. Both changed modules remained byte-identical to the originally tested candidate after applying the same small patch.",
+    "permanent_maintenance_lock": false
+  },
+  "development_probe_usage": {
+    "text_model_requests": 2,
+    "text_model": "gpt-6-sol",
+    "reasoning_effort": "none",
+    "input_tokens": 6271,
+    "output_tokens": 37,
+    "total_tokens": 6308,
+    "realtime_sessions_attempted": 5,
+    "speech_requests": 11,
+    "realtime_tokens": null,
+    "credits": null,
+    "actual_readonly_memory_recalls": 8,
+    "durable_test_conversations": 0,
+    "physical_microphone_or_speaker_used": false,
+    "owner_runtime_usage": "Excluded; these isolated probes are development usage. Background work was not counted as a test.",
+    "turn_elapsed_seconds_at_review": 1635
+  },
+  "remaining": [
+    "Interrupted playback still waited approximately8seconds for a new response in the bounded probe; resetting the renderer took9.604seconds and was rejected.",
+    "New or changed memory queries still incur full retrieval/ranking; no universal response-time promise.",
+    "Native spoken barge-in, physical conversational rhythm and owner acceptance are not established by software-sink checks.",
+    "The existing core lease closes a voice session during sufficiently long core unavailability; no authority guard was weakened."
+  ],
+  "privacy": "No household text, source IDs, account secrets, microphone audio or raw private logs in this evidence; private measurement data remains in protected scratch files.",
+  "independent_review": {
+    "result": "GO_for_installed_scope",
+    "reviewer": "review_cursor",
+    "reviewed_at": "2026-10-17T13:22:38.600636+00:00",
+    "scope": "177 distinct tests, usage totals, exact-repeat-only memory benefit, bounded audio correctness evidence, rejected alternatives, source/configuration receipts and open owner acceptance reviewed; no material overclaim or private content found. Speaker/media readiness verified; they do not have Docker healthchecks."
+  }
+}

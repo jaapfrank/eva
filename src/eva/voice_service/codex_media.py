@@ -25,6 +25,8 @@ exactly in Dutch with a warm, natural delivery. Do not answer questions in that
 text. Speak only the literal supplied text. Do not add introductions, fillers,
 acknowledgements, interpretations or follow-up questions. Do not delegate.
 Stay silent until speech text is supplied."""
+RENDER_TAIL_TIMEOUT = 3
+RENDER_TAIL_QUIET_SAMPLES = 14400  # 300 ms of received mono PCM at 48 kHz.
 
 
 def speech_parts(text, limit=1500):
@@ -187,8 +189,12 @@ class CodexMediaSession:
         self._awaiting_speech_turn=False
         self._pending_speech_retired=False
         self._assistant_turns=set()
+        self._assistant_turn_revision=0
         self._ended_assistant_turns={}
         self._assistant_idle=asyncio.Event();self._assistant_idle.set()
+        self._render_drain_needed=False
+        self._render_quiet_samples=0
+        self._render_audio_changed=asyncio.Event()
         self.output_suppressed=render_only
         self.last_activity=time.monotonic()
         self.peer=None;self.voice=None;self.bridge=None;self.room=None
@@ -354,6 +360,8 @@ class CodexMediaSession:
                     identity=turn.get('id')
                     if identity in self._ended_assistant_turns:return
                     if isinstance(identity,str) and identity:
+                        self._assistant_turn_revision+=1
+                        if self._render_drain_needed:self._render_audio_changed.set()
                         self._assistant_turns.add(identity);self._assistant_idle.clear()
                         if self._awaiting_speech_turn:
                             self._awaiting_speech_turn=False
@@ -740,6 +748,10 @@ class CodexMediaSession:
                 signal=max((abs(v) for v in output.data),default=0)>80
                 if self.output_suppressed:
                     self.audio_suppressed+=1
+                    if self._render_drain_needed:
+                        self._render_quiet_samples=(0 if signal else
+                            self._render_quiet_samples+output.samples_per_channel)
+                        self._render_audio_changed.set()
                     if signal:
                         self.suppressed_signal_frames+=1
                         self.last_suppressed_signal_at=time.monotonic()
@@ -767,6 +779,27 @@ class CodexMediaSession:
         # including completion between watchdog ticks. Never reopen a session.
         if not self.closed:self.last_activity=time.monotonic()
 
+    async def drain_interrupted_output(self):
+        if not self._render_drain_needed:return
+        # A data-channel terminal can precede the last RTP audio. Keep it muted
+        # until actual consecutive silence arrives after that terminal. Earlier
+        # silence, STOP admission and a missing audio stream prove nothing.
+        self._render_quiet_samples=0
+        self._render_audio_changed.clear()
+        revision=self._assistant_turn_revision
+        self.diagnostic('render_tail_drain_started')
+        async with asyncio.timeout(RENDER_TAIL_TIMEOUT):
+            while True:
+                if (not self._assistant_idle.is_set()
+                        or self._assistant_turn_revision!=revision):
+                    raise ValueError('Unexpected renderer turn during output drain')
+                if self._render_quiet_samples>=RENDER_TAIL_QUIET_SAMPLES:break
+                self._render_audio_changed.clear()
+                await self._render_audio_changed.wait()
+                self.current()
+        self._render_drain_needed=False
+        self.diagnostic('render_tail_drain_finished')
+
     def say(self,text,**_):
         if self.renderer is not None:
             handle=self.renderer.say(text,**_)
@@ -785,6 +818,7 @@ class CodexMediaSession:
                     self.current();offered=True
                     await asyncio.wait_for(self._assistant_idle.wait(),30)
                     self.current()
+                    await self.drain_interrupted_output()
                     marker=(self.source.playback_marker()
                         if hasattr(self.source,'playback_marker') else None)
                     self._speech_turn=None
@@ -842,6 +876,9 @@ class CodexMediaSession:
             self._response_floor=self._generation
             self._input_changed.set()
             return self.renderer.stop_current_audio()
+        if self.render_only and (self._assistant_turns or
+                self._awaiting_speech_turn or self._speaking_handle is not None):
+            self._render_drain_needed=True
         self.output_suppressed=True
         self.retire_interrupted_output()
         if self.source:self.source.clear_queue()

@@ -2,6 +2,7 @@ import asyncio
 import struct
 from types import SimpleNamespace
 import pytest
+from av import AudioFrame
 from livekit import rtc
 from eva.voice_service.codex_media import MicrophoneTrack, CodexMediaSession
 from eva.voice_service.codex_speaker_audio import SpeakerSource
@@ -9,6 +10,23 @@ from eva.voice_service.codex_speaker_audio import SpeakerSource
 def pcm(value=0,rate=48000):
     count=rate//50
     return rtc.AudioFrame(struct.pack('<'+'h'*count,*([value]*count)),rate,1,count)
+
+
+class RenderTrack:
+    """Feed real PCM through the relay without a provider or physical output."""
+    def __init__(self):
+        self.frames=asyncio.Queue();self.pending=False
+
+    async def recv(self):
+        if self.pending:self.frames.task_done()
+        value=await self.frames.get();self.pending=True
+        frame=AudioFrame(format='s16',layout='mono',samples=960)
+        frame.sample_rate=48000;frame.planes[0].update(bytes(pcm(value).data))
+        return frame
+
+    async def feed(self,*values):
+        for value in values:self.frames.put_nowait(value)
+        await asyncio.wait_for(self.frames.join(),1)
 
 @pytest.mark.asyncio
 async def test_microphone_uses_silence_until_ready_and_bounds_stale_audio():
@@ -303,7 +321,7 @@ async def test_user_interruption_cancels_old_offer_without_poisoning_next_offer(
 @pytest.mark.parametrize('interruption', ['input', 'stop', 'revoke'])
 async def test_interruption_before_render_turn_identity_fences_next_offer(
         rpc_acknowledged, interruption):
-    sent=asyncio.Queue();rpc_pending=asyncio.Event()
+    sent=asyncio.Queue();rpc_pending=asyncio.Event();draining=asyncio.Event()
     class Voice:
         thread='test'
         async def say(self,text):
@@ -313,6 +331,8 @@ async def test_interruption_before_render_turn_identity_fences_next_offer(
         async def close(self):pass
     renderer=CodexMediaSession({},None,lambda:None,render_only=True)
     renderer.voice=Voice();renderer.started.set()
+    renderer.diagnostic=lambda stage,**_:draining.set() if stage=='render_tail_drain_started' else None
+    track=RenderTrack();renderer.task(renderer.play(track))
     listener=CodexMediaSession({},None,lambda:None);listener.renderer=renderer
     old=renderer.say('Old')
     assert await asyncio.wait_for(sent.get(),1)=='Old'
@@ -332,6 +352,8 @@ async def test_interruption_before_render_turn_identity_fences_next_offer(
     assert sent.empty() and renderer.output_suppressed
     assert renderer._speech_turn is None and not new.done()
     provider_turn(renderer,'turn.done','old-delayed')
+    await asyncio.wait_for(draining.wait(),1)
+    await track.feed(*([0]*15))
     assert await asyncio.wait_for(sent.get(),1)=='New'
     # Keep the existing early-RTP route for this freshly admitted offer.
     assert not renderer.output_suppressed
@@ -343,6 +365,117 @@ async def test_interruption_before_render_turn_identity_fences_next_offer(
     await asyncio.wait_for(new.task,1)
     assert not renderer.closed
     await listener.aclose()
+
+
+@pytest.mark.asyncio
+async def test_interrupted_rtp_tail_is_drained_before_next_offer_without_clipping_new_audio():
+    sent=asyncio.Queue();draining=asyncio.Event();played=[]
+    class Voice:
+        thread='test'
+        async def say(self,text):await sent.put(text)
+        async def request(self,*args):pass
+        async def close(self):pass
+    class Source:
+        async def capture_frame(self,frame):played.append(bytes(frame.data))
+        def clear_queue(self):played.clear()
+    renderer=CodexMediaSession({},None,lambda:None,render_only=True)
+    renderer.voice=Voice();renderer.source=Source();renderer.started.set()
+    renderer.diagnostic=lambda stage,**_:draining.set() if stage=='render_tail_drain_started' else None
+    track=RenderTrack();renderer.task(renderer.play(track))
+    try:
+        old=renderer.say('Old');assert await sent.get()=='Old'
+        provider_turn(renderer,'turn.created','old')
+        old.interrupt();await asyncio.gather(old.task,return_exceptions=True)
+        new=renderer.say('New')
+        await track.feed(*([0]*20))  # Preterminal silence cannot attest its tail.
+        assert sent.empty()
+        provider_turn(renderer,'turn.done','old')
+        await asyncio.wait_for(draining.wait(),1)
+        assert renderer._render_quiet_samples==0 and sent.empty()
+        # Fifteen quiet frames wake the waiter, but signal arriving before it
+        # resumes invalidates that quiet period. All these frames stay muted.
+        await track.feed(*([0]*15),700,*([0]*14))
+        assert sent.empty() and not played and renderer.output_suppressed
+        await track.feed(0)
+        assert await asyncio.wait_for(sent.get(),1)=='New'
+        # Open before new turn.created: its earliest RTP contains opening words.
+        await track.feed(900)
+        assert played==[bytes(pcm(900).data)]
+        provider_turn(renderer,'turn.created','new')
+        provider_turn(renderer,'turn.done','new',text='New')
+        await asyncio.wait_for(new.task,1)
+        draining.clear()
+        following=renderer.say('Following')
+        assert await asyncio.wait_for(sent.get(),1)=='Following'
+        assert not draining.is_set()  # Ordinary following turns have no drain.
+        provider_turn(renderer,'turn.created','following')
+        provider_turn(renderer,'turn.done','following',text='Following')
+        await asyncio.wait_for(following.task,1)
+    finally:await renderer.aclose()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('tail', ['missing','signal','silent'])
+async def test_interrupted_render_requires_received_quiet_pcm_or_closes(monkeypatch,tail):
+    from eva.voice_service import codex_media
+    monkeypatch.setattr(codex_media,'RENDER_TAIL_TIMEOUT',.05)
+    sent=asyncio.Queue();draining=asyncio.Event();closed=asyncio.Event()
+    class Voice:
+        async def say(self,text):await sent.put(text)
+        async def close(self):closed.set()
+    renderer=CodexMediaSession({},None,lambda:None,render_only=True)
+    renderer.voice=Voice();renderer.started.set()
+    renderer.diagnostic=lambda stage,**_:draining.set() if stage=='render_tail_drain_started' else None
+    track=RenderTrack();renderer.task(renderer.play(track))
+    try:
+        old=renderer.say('Old');assert await sent.get()=='Old'
+        old.interrupt();await asyncio.gather(old.task,return_exceptions=True)
+        provider_turn(renderer,'turn.created','old')
+        provider_turn(renderer,'turn.done','old')
+        new=renderer.say('New');await asyncio.wait_for(draining.wait(),1)
+        if tail=='silent':
+            await track.feed(*([0]*15))
+            assert await asyncio.wait_for(sent.get(),1)=='New'
+            provider_turn(renderer,'turn.created','new')
+            provider_turn(renderer,'turn.done','new',text='New')
+            await asyncio.wait_for(new.task,1)
+            assert not renderer.closed
+        else:
+            if tail=='signal':await track.feed(*([700]*30))
+            with pytest.raises(TimeoutError):await asyncio.wait_for(new.task,1)
+            await asyncio.wait_for(closed.wait(),1)
+            assert sent.empty() and renderer.closed and renderer.output_suppressed
+    finally:await renderer.aclose()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('unknown_finished', [False,True])
+async def test_new_provider_turn_during_tail_drain_never_binds_next_offer(unknown_finished):
+    sent=asyncio.Queue();draining=asyncio.Event();closed=asyncio.Event()
+    class Voice:
+        async def say(self,text):await sent.put(text)
+        async def close(self):closed.set()
+    renderer=CodexMediaSession({},None,lambda:None,render_only=True)
+    renderer.voice=Voice();renderer.started.set()
+    renderer.diagnostic=lambda stage,**_:draining.set() if stage=='render_tail_drain_started' else None
+    track=RenderTrack();renderer.task(renderer.play(track))
+    try:
+        old=renderer.say('Old');assert await sent.get()=='Old'
+        old.interrupt();await asyncio.gather(old.task,return_exceptions=True)
+        provider_turn(renderer,'turn.created','old')
+        provider_turn(renderer,'turn.done','old')
+        new=renderer.say('New');await asyncio.wait_for(draining.wait(),1)
+        await track.feed(*([0]*14))
+        provider_turn(renderer,'turn.created','unknown')
+        if unknown_finished:provider_turn(renderer,'turn.done','unknown')
+        # created+done may both arrive before the drain resumes; an idle flag
+        # alone cannot prove that its earlier silence belongs to this epoch.
+        assert renderer.output_suppressed
+        with pytest.raises(ValueError,match='Unexpected renderer turn'):
+            await asyncio.wait_for(new.task,1)
+        await asyncio.wait_for(closed.wait(),1)
+        assert renderer.closed and renderer.output_suppressed and sent.empty()
+    finally:await renderer.aclose()
 
 
 @pytest.mark.asyncio

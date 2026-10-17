@@ -1877,6 +1877,10 @@ def create_runtime_app() -> FastAPI:
         component_observer=configured_component_observer(),
     )
     if household_voice is not None and settings.household_voice_session_enabled:
+        from eva.adapters.model.openai_codex_provider import warm_codex_dependencies
+        warm_codex_dependencies()
+        from eva.adapters.model.pydantic_conversation import _input_tokenizer
+        _input_tokenizer()
         from eva.adapters.api.household_voice_session import install_household_voice_session
         install_household_voice_session(app, runtime=runtime, authority=household_voice,
                                         work_server=household_work_server)

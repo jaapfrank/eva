@@ -59,3 +59,52 @@ Build this second one-file overlay on the verified GC image, retaining the
 original `cross_encoder.py`. The first measured real recall after activation
 must be checked as well as warm recalls. This moves work into startup; it does
 not promise a shorter overall boot or eliminate every cold-start cost.
+
+## Reuse exact local reranker computations
+
+`rerank_cache_patch.py` pins the installed `cross_encoder.py` and embeds the
+adjacent `rerank_score_cache.py` helper. It is disabled unless
+`EVA_HINDSIGHT_EXACT_RERANK_CACHE=1`. Keep both patch files together during build;
+copy only the resulting upstream module into the image. Existing GC and warmup
+patches are independent and remain unchanged.
+
+This is arithmetic reuse, not a recall-result cache. Every recall still performs
+fresh retrieval, ranking aggregation and the existing host source/authority
+validation. Each local model instance retains at most 64 salted hashes of whole,
+ordered input batches and immutable numeric scores. A hit expires for use after
+30 seconds; expiry cleanup is lazy, on the next eligible call. No query or document
+strings are retained in the cache. Entries contain at most 256 scores; batches
+larger than 2 MiB of UTF-8 input bypass caching. Changed query/document/order or
+model instance, device, FP16, batch/bucketing or PyTorch thread configuration
+causes a miss. The pinned inference model/configuration must otherwise remain
+immutable; this is not a hot model-weight replacement facility.
+
+Misses run the original inference method unchanged, including its existing
+cleanup. Cache locks never cover inference, preserving the existing bounded
+worker concurrency. Concurrent identical misses may both compute. Returned
+score lists cannot mutate retained values. Restarting the process clears all
+entries; no database, disk cache, new provider or background service is added.
+
+Build against the exact currently installed Hindsight image, using:
+
+```sh
+python3 deploy/living-core/hindsight-gc/rerank_cache_patch.py /private/build/cross_encoder.py
+EVA_RERANK_UPSTREAM_SOURCE=/private/original/cross_encoder.py \
+  python3 deploy/living-core/hindsight-gc/test_rerank_score_cache.py
+```
+
+The source variable enables seam tests against the actual pinned class, including
+unchanged uncached inference and default-off dispatch. Without it, that test is
+explicitly skipped. Before installation, compare actual full candidate batches
+in an isolated current-image container with the same read-only weights, CPU/RAM
+limits and model configuration. Preserve all existing service configuration;
+only the verified image and explicit opt-in change. Apply the idle checks and
+rollback rules above, then verify full fresh recall/source validation after
+installation. Disabling the opt-in or restoring the prior image removes reuse
+without changing memory data.
+
+The measured example had identical 32-pair inputs on two real traces; isolated
+scores were exactly equal, with roughly 1.9–2.1 seconds for inference versus
+0.44 milliseconds for a hit. This proves one repeat case, not general hit rate
+or end-to-end voice latency. First calls and changed batches have no inference
+saving. Keep original ordering; do not sort inputs to manufacture hits.

@@ -44,6 +44,15 @@ FailureCategory = Literal[
 ]
 
 
+def warm_codex_dependencies() -> None:
+    """Load the existing SDK before voice readiness, without auth or network I/O."""
+    from importlib import import_module
+    for module in ("openai", "openai.resources.responses",
+                   "pydantic_ai.models.openai", "pydantic_ai.native_tools",
+                   "pydantic_ai.profiles.openai", "pydantic_ai.providers.openai"):
+        import_module(module)
+
+
 class CodexProviderError(RuntimeError):
     """A provider failure whose message is safe to expose to product code."""
 
