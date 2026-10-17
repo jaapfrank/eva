@@ -1,0 +1,195 @@
+{
+  "checkedAt": "2026-10-17T01:09:37.700535+00:00",
+  "status": "installed_targeted_checks_and_public_core_probe_passed",
+  "scope": "Optional calendar selection in existing public household activity reader; same shared voice/core/memory route.",
+  "changes": [
+    "Optional local_date uses configured conversation timezone and local midnight boundaries, including23/25hour days.",
+    "Strict dates, no future day and at most31days lookback; existing retention and authority remain unchanged.",
+    "Pinned page window and exclusive next-midnight receipt cutoff; default24h and ordinary conversation continuity retained.",
+    "Coverage explicitly identifies request-time selection, absent earlier-request actions and separate bounded task list.",
+    "Summary instructions prohibit unsupported universal absence claims from partial records."
+  ],
+  "tests": {
+    "baselineNewFailures": 3,
+    "baselineExistingPassed": 12,
+    "finalPassed": 28,
+    "finalFailed": 0,
+    "mode": "Disposable PostgreSQL, network none, temporary storage; production schema/data not used for regression fixtures.",
+    "covered": [
+      "Yesterday when requested late the following day",
+      "DST23/25hour UTC windows",
+      "Exact start/end midnight and receipt finishing next day",
+      "Invalid/future/out-of-lookback dates",
+      "Pinned pagination and complete empty-result metadata",
+      "Erased requests and private-confirmed shadow excluded",
+      "Existing public source/device/current-authority checks"
+    ],
+    "independentReview": "distinctive_eva_review: authority/privacy/date boundaries approved; requested coverage clarification applied and checked by coordinator.",
+    "finalTextOnlyChange": "After DB suite, completion guidance additionally limits absence claims. Two real-provider public probes checked date selection and resulting summary scope; no query logic changed."
+  },
+  "firstInstalledProbe": {
+    "completed": true,
+    "elapsed_ms": 27154,
+    "model_calls": [
+      {
+        "action": {
+          "name": "read_recent_activity",
+          "arguments": {
+            "local_date": "2026-10-16",
+            "offset": 0
+          }
+        },
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 6714,
+          "output_tokens": 52
+        }
+      },
+      {
+        "action": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 11367,
+          "output_tokens": 81
+        }
+      }
+    ],
+    "activity_receipts": [
+      {
+        "status": "verified",
+        "window_start": "2026-10-15T22:00:00Z",
+        "window_end": "2026-10-16T22:00:00Z",
+        "local_date": "2026-10-16",
+        "timezone": "Europe/Amsterdam",
+        "next_offset": null,
+        "page_limit_reached": false
+      }
+    ],
+    "finished_actions": [
+      {
+        "name": "read_recent_activity",
+        "status": "verified"
+      }
+    ]
+  },
+  "firstProbeFinding": "Date selection correct; answer contained an unqualified absence claim about house changes. Retained as the reason for the final prompt clarification.",
+  "finalCandidateProbe": {
+    "completed": true,
+    "elapsed_ms": 21864,
+    "model_calls": [
+      {
+        "action": {
+          "name": "read_recent_activity",
+          "arguments": {
+            "local_date": "2026-10-16",
+            "offset": 0
+          }
+        },
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 6653,
+          "output_tokens": 52
+        }
+      },
+      {
+        "action": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 11346,
+          "output_tokens": 80
+        }
+      }
+    ],
+    "activity_receipts": [
+      {
+        "status": "verified",
+        "window_start": "2026-10-15T22:00:00Z",
+        "window_end": "2026-10-16T22:00:00Z",
+        "local_date": "2026-10-16",
+        "timezone": "Europe/Amsterdam",
+        "next_offset": null,
+        "page_limit_reached": false
+      }
+    ],
+    "finished_actions": [
+      {
+        "name": "read_recent_activity",
+        "status": "verified"
+      }
+    ]
+  },
+  "finalProbeAssessment": "Correct requested date and first-person activity summary; negative claims restricted to retrieved actions and shown task list. This single observation is not a general guarantee of model wording.",
+  "probeEnvironment": "Ephemeral composition using actual installed base configuration, background workers disabled; ordinary synthetic public question through household voice endpoint. Second probe used reviewed final candidate image; that exact image was then installed.",
+  "runtime": [
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "slug": "core",
+      "project": "eva2-managed-b-slot3",
+      "service": "core",
+      "base": "sha256:408d5b5a022ebdb4f12792a73575b822ae05cc8833d421b603d59c597a81335a",
+      "candidate": "sha256:8258015bdb4c866617e3b9d522dbe4484189c6e57ceed515f592f9e9fc5dd8da",
+      "hashes": {
+        "bootstrap/recent_activity.py": "1629279ae1f35cc47384741e14f0e8b85985a9451862265b426c3ccc6a7308c9"
+      },
+      "compose_files": "/var/lib/eva2/voice-session/calendar-activity-20261017/core.candidate.json",
+      "running": true,
+      "source_verified": true,
+      "configuration_preserved": true,
+      "health": "healthy",
+      "restart_count": 0,
+      "verified_module_hashes": {
+        "src/eva/bootstrap/recent_activity.py": "1629279ae1f35cc47384741e14f0e8b85985a9451862265b426c3ccc6a7308c9",
+        "src/eva/bootstrap/household_continuity.py": "88e9b18f228dd837631a9ad183f89d2d218873bfc4ff3d8d60fff9d13c99cec2"
+      }
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "slug": "worker",
+      "project": "eva2-managed-b-slot3",
+      "service": "delegated-work-worker",
+      "base": "sha256:6cc33f282bc7daed39a8546ff3d155d9d7f8c8ed79256f63d2e6206742f90c9e",
+      "candidate": "sha256:f294e403addda761a47a243fa3d0b1747b8fc84d69ec9e1c7eac176b1652408a",
+      "hashes": {
+        "bootstrap/recent_activity.py": "1629279ae1f35cc47384741e14f0e8b85985a9451862265b426c3ccc6a7308c9"
+      },
+      "compose_files": "/var/lib/eva2/voice-session/calendar-activity-20261017/worker.candidate.json",
+      "running": true,
+      "source_verified": true,
+      "configuration_preserved": true,
+      "health": "healthy",
+      "restart_count": 0,
+      "verified_module_hashes": {
+        "src/eva/bootstrap/recent_activity.py": "1629279ae1f35cc47384741e14f0e8b85985a9451862265b426c3ccc6a7308c9",
+        "src/eva/bootstrap/household_continuity.py": "88e9b18f228dd837631a9ad183f89d2d218873bfc4ff3d8d60fff9d13c99cec2"
+      }
+    }
+  ],
+  "sourceSha256": {
+    "src/eva/bootstrap/recent_activity.py": "1629279ae1f35cc47384741e14f0e8b85985a9451862265b426c3ccc6a7308c9",
+    "src/eva/bootstrap/household_continuity.py": "88e9b18f228dd837631a9ad183f89d2d218873bfc4ff3d8d60fff9d13c99cec2",
+    "development/tests/postgres/test_recent_activity.py": "f897378fcbaeb27c792866db5b438aeea8cd48192fb86765ec0f3a840838a0d1"
+  },
+  "usage": {
+    "developmentValidationModelRequests": 4,
+    "knownRegisteredTokens": 36345,
+    "creditCost": null,
+    "fullRuntimeIncludingMemory": "unknown",
+    "audioProviderCalls": 0
+  },
+  "limits": [
+    "Text through voice core only, not acoustic/device-quality measurement.",
+    "One probe per wording variant; elapsed times are not a latency benchmark.",
+    "Coverage remains bounded public requests and separate shared tasks; private/initiative full life history and bounded receipt-content expansion remain separate.",
+    "An action originating before selected day may be omitted; completed work and unknown outcomes remain distinguished."
+  ],
+  "privacy": "No raw household text, private replies, credentials, session identities or audio in this evidence.",
+  "testDatabaseRemoved": true
+}

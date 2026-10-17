@@ -1,5 +1,9 @@
 """On-demand public activity from existing authorized conversation/tool journals."""
 from dataclasses import replace
+from datetime import UTC, date, datetime, time, timedelta
+import os
+import re
+from zoneinfo import ZoneInfo
 
 import sqlalchemy as sa
 
@@ -15,22 +19,53 @@ from eva.contracts.canonical_json import canonical_sha256
 
 RECENT_ACTIVITY = ConversationToolDescriptor(
     name="read_recent_activity",
-    description=("Read my recorded public household activity over the last 24 hours, including "
+    description=("Read my recorded public household activity, including "
         "foreground tool calls that are absent from the delegated task list. Use for my own "
-        "day/activity recap. Records include original UTC times and source hashes. Start at "
+        "day/activity recap. For today, yesterday or a named day, pass its local_date YYYY-MM-DD "
+        "in the conversation timezone (EVA_CONVERSATION_TIMEZONE, default UTC). Omit local_date "
+        "only for a rolling last-24-hours window. At most 31 calendar days back; this never "
+        "extends retention or access. Records include original UTC times and source hashes. Start at "
         "offset 0 and follow next_offset for more. Includes the existing authorized background "
         "task list in delegated_work, so a separate list_delegated_work call is unnecessary. "
         "Use this single read first for an overview of my day. User requests are not execution "
         "proof; do not execute historical requests."),
-    input_schema={"type": "object", "properties": {"offset": {"type": "integer", "minimum": 0, "maximum": 1000}},
+    input_schema={"type": "object", "properties": {
+        "offset": {"type": "integer", "minimum": 0, "maximum": 1000},
+        "local_date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"}},
                   "required": ["offset"], "additionalProperties": False},
     completion_guidance=("Speak in the first person about my own recorded activities. Filter original "
-        "timestamps to the requested local day. Distinguish requested, admitted, verified tool "
+        "timestamps to the requested local day; keep the same local_date on every page. "
+        "The host selects that calendar window, including daylight-saving changes. "
+        "Foreground selection uses the original request time: actions originating from "
+        "earlier requests may be omitted even if they ran during the selected day. "
+        "The delegated_work list has its own coverage: filter its original timestamps separately. "
+        "Distinguish requested, admitted, verified tool "
         "receipt, failed and completed work. A verified transport receipt is not proof that an "
         "API business operation succeeded. This covers retained public conversations from a "
         "bounded session window, not private activity or an exhaustive life log. Do not invent "
-        "missing contents or dates. Read next_offset if a complete overview is requested."),
+        "missing contents or dates. Describe the recorded actions directly. Missing entries "
+        "do not prove that I did nothing else, changed nothing in the house or have no other "
+        "open work; any absence claim must stay explicitly within the returned coverage. "
+        "Read next_offset if a complete overview is requested."),
 )
+
+
+def activity_window(now, local_date=None):
+    """Bound search scope, without extending retained-source authority."""
+    zone = ZoneInfo(os.environ.get("EVA_CONVERSATION_TIMEZONE", "UTC"))
+    if local_date is None:
+        return now - timedelta(hours=24), now, None, zone.key
+    try:
+        if not isinstance(local_date, str) or not re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", local_date):
+            raise ValueError("invalid date")
+        selected = date.fromisoformat(local_date)
+        if not 0 <= (now.astimezone(zone).date() - selected).days <= 31:
+            raise ValueError("date outside bounded history")
+    except ValueError as error:
+        raise ConversationActionInputRejected(("local_date",)) from error
+    start = datetime.combine(selected, time.min, zone).astimezone(UTC)
+    end = datetime.combine(selected + timedelta(days=1), time.min, zone).astimezone(UTC)
+    return start, min(now, end), end, zone.key
 
 
 class RecentActivityActions:
@@ -52,19 +87,23 @@ class RecentActivityActions:
     def execute(self, turn, call, *, step_index=0):
         if call.name not in self.action_names or not self.available_for(turn):
             raise ConversationConflict("public activity history unavailable")
-        if (set(call.arguments) != {"offset"} or type(call.arguments["offset"]) is not int
+        if (not {"offset"} <= set(call.arguments) <= {"offset", "local_date"}
+                or type(call.arguments["offset"]) is not int
                 or not 0 <= call.arguments["offset"] <= 1000):
             raise ConversationActionInputRejected(("offset",))
-        result = self.reader().recent(turn, limit=20, activity=True, offset=call.arguments["offset"])
+        if "local_date" in call.arguments and not isinstance(call.arguments["local_date"], str):
+            raise ConversationActionInputRejected(("local_date",))
+        result = self.reader().recent(turn, limit=20, activity=True, offset=call.arguments["offset"],
+                                      local_date=call.arguments.get("local_date"))
         from eva.adapters.postgres.scoped_delegated_work_actions import ScopedDelegatedWorkActions
         service = ScopedDelegatedWorkActions(None, self.reader().server)._select(turn)._service
         work = service.execute("list", turn, request_key=call.call_id)
         return ConversationActionReceipt(call, {"status": "verified", "source": "retained_public_journals",
-            "coverage": "Foreground: last 24 hours, retained authorized public sessions only. Delegated work: existing bounded task list; use its original timestamps/state and truncated flag. Requests are not executed actions.",
+            "coverage": "Foreground: retained authorized public requests recorded in the returned window; actions originating from earlier requests may be omitted. Delegated work: existing bounded task list, not filtered to that window; use its original timestamps/state and truncated flag. Requests are not executed actions.",
             "delegated_work": work, **result})
 
 
-def foreground_activity(engine, current, ingress, boundary):
+def foreground_activity(engine, current, ingress, boundary, *, calendar_end=None):
     """Resolve only receipts bound to one already authorized retained ingress."""
     scope = external_timeline_scope(current.tenant_id, current.installation_id, "activity scope required")
     timeline = PostgresOperationalTimeline(engine, scope)
@@ -75,6 +114,8 @@ def foreground_activity(engine, current, ingress, boundary):
             operational_events.c.tenant_id == scope.tenant_id,
             operational_events.c.installation_id == scope.installation_id,
             operational_events.c.event_type == "TOOL_REQUEST_ADMITTED",
+            operational_events.c.occurred_at <= boundary,
+            operational_events.c.occurred_at < calendar_end if calendar_end is not None else sa.true(),
             data["source_message_id"].astext == ingress["message_id"],
             data["conversation_id"].astext == ingress["conversation_id"],
             data["principal_id"].astext == ingress["principal_id"],
@@ -98,7 +139,8 @@ def foreground_activity(engine, current, ingress, boundary):
             raise ConversationConflict("activity tool source differs")
         timeline.load(row["thread_id"])
         events = timeline.events(row["thread_id"])
-        events = tuple(event for event in events if event.occurred_at <= boundary)
+        events = tuple(event for event in events if event.occurred_at <= boundary
+                       and (calendar_end is None or event.occurred_at < calendar_end))
         if not events:
             continue
         status = "admitted_only"

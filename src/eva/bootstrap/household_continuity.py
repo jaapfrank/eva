@@ -21,17 +21,33 @@ class HouseholdConversationContext:
     def __init__(self, server):
         self.server = server
 
-    def recent(self, turn, *, limit=6, activity=False, offset=0):
+    def recent(self, turn, *, limit=6, activity=False, offset=0, local_date=None):
         if turn.audience.kind != "household" or turn.project_id is not None:
             return ()
         if type(limit) is not int or not 1 <= limit <= (20 if activity else 6) or type(offset) is not int or not 0 <= offset <= 1000:
             raise ValueError("household conversation bound invalid")
+        if local_date is not None and not activity:
+            raise ValueError("calendar selection requires activity reader")
         server, store = self.server, self.server.store
         service = ScopedDelegatedWorkActions(None, server)._select(turn)._service
         service.validate_authority(turn)
         now = server.authority.clock()
         if activity:
             now = min(now, parse_utc_timestamp(turn.occurred_at))
+        start, end, calendar_end = now - timedelta(hours=24), now, None
+        metadata = {}
+        if activity:
+            from eva.bootstrap.recent_activity import activity_window
+            start, end, calendar_end, zone = activity_window(now, local_date)
+            metadata = {
+                "pagination_consistency": "Window pinned to this request; retention or erasure changes can remove records between pages.",
+                "window_start": start.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "window_end": end.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "window_end_exclusive": calendar_end is not None and end == calendar_end,
+                "local_date": local_date, "timezone": zone,
+                "coverage": "Retained authorized public requests recorded in this window only; actions originating from earlier requests may be omitted even if executed in this window. Session/page bounds and erasure may omit records. Delegated work, when included, is a separate bounded list not filtered to this window.",
+                "session_candidate_limit": 65,
+            }
         current = service.binding
         data = events.c.payload["data"]
         binding = data["binding"]
@@ -44,8 +60,9 @@ class HouseholdConversationContext:
                 events.c.tenant_id == store.scope.tenant_id,
                 events.c.installation_id == store.scope.installation_id,
                 events.c.event_type == "HOUSEHOLD_WORK_SESSION_OPENED", events.c.sequence == 1,
-                events.c.occurred_at >= now - timedelta(hours=25),
-                events.c.occurred_at <= now,
+                events.c.occurred_at >= now - timedelta(hours=25) if local_date is None else sa.true(),
+                events.c.occurred_at <= end,
+                events.c.occurred_at < calendar_end if calendar_end is not None else sa.true(),
                 binding.contains({key: current[key] for key in (
                     "tenant_id", "installation_id", "household_id", "consent_operation_id",
                     "household_policy_sha256", "research_policy_sha256")}),
@@ -69,7 +86,7 @@ class HouseholdConversationContext:
                 source = row["payload"]["data"]["binding"]
                 if row["thread_id"] != session_thread(source["session_id"]):
                     continue
-                boundary = now
+                boundary = end
                 for confirmation in by_identity.get("voice-identity:" + source["session_id"], ()):
                     if not _valid(confirmation):
                         boundary = None
@@ -80,7 +97,9 @@ class HouseholdConversationContext:
                 if boundary is not None:
                     admitted[source["conversation_id"]] = (source, boundary)
         if not admitted:
-            return {"records": [], "next_offset": None} if activity else ()
+            service.validate_authority(turn)
+            return {"records": [], "next_offset": None, "page_limit_reached": False,
+                    "session_limit_reached": len(sessions) == 65, **metadata} if activity else ()
         journal = PostgresConversationJournal(store._engine, server.conversation_scope)
         scope = server.conversation_scope
         clauses = [sa.and_(data["conversation_id"].astext == conversation,
@@ -96,7 +115,8 @@ class HouseholdConversationContext:
                 tools.c.tenant_id == tool_scope.tenant_id,
                 tools.c.installation_id == tool_scope.installation_id,
                 tools.c.event_type == "TOOL_REQUEST_ADMITTED",
-                tools.c.occurred_at <= now,
+                tools.c.occurred_at <= end,
+                tools.c.occurred_at < calendar_end if calendar_end is not None else sa.true(),
                 tool_data["execution_namespace"].astext.is_(None),
                 tool_data["source_message_id"].astext == data["message_id"].astext,
                 tool_data["conversation_id"].astext == data["conversation_id"].astext,
@@ -107,8 +127,9 @@ class HouseholdConversationContext:
             ingress = c.execute(sa.select(events).where(
                 events.c.tenant_id == scope.tenant_id, events.c.installation_id == scope.installation_id,
                 events.c.event_type == "INGRESS_COMMITTED", events.c.sequence == 1,
-                events.c.occurred_at >= now - timedelta(hours=24),
-                events.c.occurred_at <= now,
+                events.c.occurred_at >= start,
+                events.c.occurred_at <= end,
+                events.c.occurred_at < calendar_end if calendar_end is not None else sa.true(),
                 data["project_id"].astext.is_(None), data["observation_binding"].is_(None),
                 data["message_id"].astext != turn.message_id,
                 data["text"].astext.is_not(None),
@@ -154,7 +175,8 @@ class HouseholdConversationContext:
                     "request_fragment": text[:600],
                     "request_truncated": len(text) > 600,
                     "source_sha256": bytes(row["payload_sha256"]).hex(),
-                    "actions": foreground_activity(store._engine, turn, value, admitted[value["conversation_id"]][1]),
+                    "actions": foreground_activity(store._engine, turn, value,
+                        admitted[value["conversation_id"]][1], calendar_end=calendar_end),
                 })
             digest = canonical_sha256({"conversation_id": value["conversation_id"], "message_id": message_id})
             provenance = "Eerder openbaar huisgesprek via " + source["satellite_id"] + "; geen nieuwe opdracht.\n"
@@ -174,10 +196,7 @@ class HouseholdConversationContext:
         if activity:
             return {"records": activities, "next_offset": offset + limit if more and offset + limit <= 1000 else None,
                 "page_limit_reached": more and offset + limit > 1000,
-                "pagination_consistency": "Window pinned to this request; retention or erasure changes can remove records between pages.",
-                "window_start": (now-timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "window_end": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "session_candidate_limit": 65, "session_limit_reached": len(sessions) == 65}
+                "session_limit_reached": len(sessions) == 65, **metadata}
         return tuple(result)
 
 
