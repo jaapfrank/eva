@@ -72,9 +72,9 @@ def _server(state: _State) -> Iterator[str]:
                 return
             if method == "initialize":
                 result = {"protocolVersion": "2025-06-18", "capabilities": {"tools": {}}}
-            elif method == "src/tools/list":
+            elif method == "tools/list":
                 result = {"tools": [{"name": "HassTurnOff", "inputSchema": state.schema}]}
-            elif method == "src/tools/call":
+            elif method == "tools/call":
                 success = [] if state.failed else [{"id": state.result_id}]
                 effect = {"response_type": "action_done", "data": {"failed": state.failed, "success": success}}
                 if state.omit_data:
@@ -116,7 +116,7 @@ def test_effect_uses_official_mcp_and_never_direct_rest_service() -> None:
     assert result.accepted is True
     assert result.details["tool_name"] == "HassTurnOff"
     assert [call["method"] for call in state.calls] == [
-        "initialize", "notifications/initialized", "src/tools/list", "src/tools/call"
+        "initialize", "notifications/initialized", "tools/list", "tools/call"
     ]
     assert state.calls[-1]["params"]["arguments"] == {"name": "light.test"}
     assert state.rest_services_calls == 0

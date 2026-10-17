@@ -851,7 +851,7 @@ class PostgresConversationJournal(PostgresScopedRole):
                         request_id=message_id[len(prefix):], reply_sha256=digest)
             messages.append(
                 RecentConversationMessage(
-                    role=("Onbekende spreker" if household else "Jaap")
+                    role=("Onbekende spreker" if household else "Gebruiker")
                          if row.event_type == "INGRESS_COMMITTED" else "Eva",
                     text=text,
                     occurred_at=row.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),

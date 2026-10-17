@@ -14,8 +14,8 @@ import stat
 import threading
 import uuid
 
-from tools.import_component_release import canonical, checked_evidence, digest, load_object
-from tools.installation_runtime_update import image_update_services
+from eva.operations.component_release_import import canonical, checked_evidence, digest, load_object
+from eva.operations.image_update import image_update_services
 
 
 _ID = re.compile(r"[0-9a-f]{64}\Z")

@@ -19,6 +19,8 @@ import tempfile
 from contextlib import closing
 import uuid
 
+from tools.installation_document_catalog import canonical_document_catalog
+
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.component_evaluation import _capture
 from tools.installation_recovery_package import read_installation_package
@@ -156,7 +158,7 @@ def _preserved_gateway_catalog(raw: bytes, gateway_id: str) -> list[dict]:
             if decoded is not None and not (key == "annotations" and decoded == {}):
                 tool[key] = decoded
         tools.append(tool)
-    return tools
+    return canonical_document_catalog(tools, {"catalog_gateway_id": gateway_id})
 
 
 def _validate_sources(root, package, config):

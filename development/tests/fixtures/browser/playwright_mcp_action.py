@@ -172,13 +172,13 @@ class PlaywrightMcpClickAdapter:
             _require_server(initialized)
             session.complete_initialization(initialized)
             session.notify_initialized()
-            tools = session.request(request_id=2, method="src/tools/list", params={})
+            tools = session.request(request_id=2, method="tools/list", params={})
             _require_tools(tools)
             _require_click_tool(tools)
             navigate = _require_text_result(
                 session.request(
                     request_id=3,
-                    method="src/tools/call",
+                    method="tools/call",
                     params={
                         "name": "browser_navigate",
                         "arguments": {"url": page_url},
@@ -190,7 +190,7 @@ class PlaywrightMcpClickAdapter:
             snapshot = _require_text_result(
                 session.request(
                     request_id=4,
-                    method="src/tools/call",
+                    method="tools/call",
                     params={"name": "browser_snapshot", "arguments": {"depth": 8}},
                 ),
                 stage="snapshot",
@@ -202,7 +202,7 @@ class PlaywrightMcpClickAdapter:
             clicked = _require_text_result(
                 session.request(
                     request_id=5,
-                    method="src/tools/call",
+                    method="tools/call",
                     params={
                         "name": "browser_click",
                         "arguments": {

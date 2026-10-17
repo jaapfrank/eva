@@ -103,11 +103,11 @@ class McpReadOnlyStreamableHttpAdapter:
             _require_initialize_result(initialized)
             session.complete_initialization(initialized)
             session.notify_initialized()
-            tools = session.request(request_id=2, method="src/tools/list", params={})
+            tools = session.request(request_id=2, method="tools/list", params={})
             _require_admitted_tool(tools, self._import)
             result = session.request(
                 request_id=3,
-                method="src/tools/call",
+                method="tools/call",
                 params={"name": self._import.tool_name, "arguments": arguments},
             )
             structured_content = _require_structured_result(result)

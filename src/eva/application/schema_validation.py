@@ -8,6 +8,14 @@ from __future__ import annotations
 
 from eva.application.conversation import ConversationConflict
 from eva.contracts.base import MAX_CONTRACT_BYTES, JsonValue
+from eva.contracts.canonical_json import canonical_json_bytes
+
+
+def _same_json_value(value: JsonValue, expected: JsonValue) -> bool:
+    try:
+        return canonical_json_bytes(value) == canonical_json_bytes(expected)
+    except (TypeError, ValueError):
+        return False
 
 
 def validate_schema_value(
@@ -19,10 +27,11 @@ def validate_schema_value(
 ) -> None:
     if not isinstance(schema, dict):
         raise ConversationConflict(f"{path} schema is invalid")
-    if "const" in schema and value != schema["const"]:
+    if "const" in schema and not _same_json_value(value, schema["const"]):
         raise ConversationConflict(f"{path} differs from the sealed value")
     if "enum" in schema and (
-        not isinstance(schema["enum"], list) or value not in schema["enum"]
+        not isinstance(schema["enum"], list)
+        or not any(_same_json_value(value, candidate) for candidate in schema["enum"])
     ):
         raise ConversationConflict(f"{path} is outside the admitted values")
     kind = schema.get("type")

@@ -222,3 +222,46 @@ def test_repository_cannot_widen_recall_subject_scope() -> None:
     )
     with pytest.raises(InvalidMemoryAssertion, match="widened"):
         MemoryAuthority(repository).recall_for_presence(query)
+
+
+@pytest.mark.parametrize("trust,wire_trust,qualifier", [
+    ("confirmed_direct_user", "direct_user", None),
+    ("verified_external", "verified_external", None),
+    ("model_inference_unconfirmed", "host_policy", "afgeleid patroon; niet als bewezen feit behandelen"),
+    ("legacy_unverified", "host_policy", "historische Eva1-herinnering; onbevestigd"),
+])
+@pytest.mark.parametrize("value", [{"text": "Synthetic preference"}, ["synthetic", True], None])
+def test_presence_preserves_semantic_trust_through_model_context(tmp_path, trust, wire_trust, qualifier, value):
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.application.conversation import IdentityProfile
+
+    fact = _fact(trust=trust, value=value)
+    repository = _Repository((RecalledMemoryFact(fact, (_source(),), "scoped-current"),))
+    query = RecallCurrentFacts(recall_id="recall:semantic-trust", installation_id=INSTALLATION_ID,
+        tenant_id=TENANT_ID, principal_id=PRINCIPAL_ID,
+        audience=MemoryAudience.private_person(principal_id=PRINCIPAL_ID),
+        conversation_id="conversation:synthetic", project_id=None, query_purpose="reply",
+        requested_valid_at=NOW, scope={"kind": "person", "principal_id": PRINCIPAL_ID},
+        subject_ids=(PRINCIPAL_ID,), query_text="Synthetic preference")
+    memory = MemoryAuthority(repository).recall_for_presence(query)
+    confirmed = memory.confirmed_facts[0]
+    assert confirmed.trust == wire_trust
+    assert memory.recall.selected[0].trust == trust
+    assert confirmed.source_ref == _source().source_ref
+    assert confirmed.evidence_ref == EVIDENCE_ID
+    if qualifier is None:
+        assert confirmed.value == value
+    else:
+        assert confirmed.value["semantic_trust"] == trust
+        if isinstance(value, dict):
+            assert {key: confirmed.value[key] for key in value} == value
+        else:
+            assert confirmed.value["value"] == value
+    # Formatting only: no credentials, provider request or model execution.
+    model = PydanticConversationModel(auth_file=tmp_path / "unused.json")
+    context = model._instructions(IdentityProfile("Eva", "Synthetic identity", ("Be honest",)), memory, ())
+    if qualifier is not None:
+        assert qualifier in context
+    else:
+        assert ("directe gebruiker" if wire_trust == "direct_user" else "geverifieerde bron") in context
+    assert fact.value == value

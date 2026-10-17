@@ -458,12 +458,19 @@ class MemoryAuthority:
                     ranking_reason=item.ranking_reason,
                 )
             )
+            value = fact.value
+            if fact.trust in {"model_inference_unconfirmed", "legacy_unverified"}:
+                # The Presence wire enum uses host_policy for these facts; keep
+                # their original uncertainty visible to the existing model view.
+                value = {**value, "semantic_trust": fact.trust} if isinstance(value, dict) else {
+                    "value": value, "semantic_trust": fact.trust,
+                }
             confirmed.append(
                 ConfirmedFact(
                     fact_id=fact.fact_id,
                     subject=fact.subject_id,
                     predicate=fact.predicate,
-                    value=fact.value,
+                    value=value,
                     source_ref=source.source_ref,
                     evidence_ref=evidence_ref,
                     observed_at=fact.observed_at,

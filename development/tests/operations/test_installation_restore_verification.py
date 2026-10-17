@@ -164,3 +164,25 @@ def test_memory_data_failure_never_starts_the_api(composition):
     with pytest.raises(ValueError):
         subject.verify_restored_installation(**args)
     assert "memory_start" not in state["calls"]
+
+
+@pytest.mark.parametrize("changed", [False, True])
+def test_promoted_gateway_catalog_retains_sorted_snapshot_identity(documents, monkeypatch, changed):
+    args, _ = documents
+    prep = args["preparation_configuration"]["providers"][0]
+    prep["catalog_gateway_id"] = "saved-provider"
+    preserved = [{"name": "a", "description": "read"}, {"name": "z", "description": "write"}]
+    prep["logical_catalog_sha256"] = canonical_sha256(preserved)
+    received = list(reversed(deepcopy(preserved)))
+    if changed:
+        received[0]["description"] = "different"
+    previous = subject._command
+    monkeypatch.setattr(subject, "_command", lambda command, **kwargs:
+        json.dumps(received) if command[3] == "python3" else previous(command, **kwargs))
+    if changed:
+        with pytest.raises(ValueError, match="catalog differs"):
+            subject.verify_promoted_documents(**args)
+    else:
+        result = subject.verify_promoted_documents(**args)
+        assert result["all_verified"] is True
+        assert result["providers"][0]["catalog_sha256"] == prep["logical_catalog_sha256"]

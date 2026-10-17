@@ -12,6 +12,8 @@ from pathlib import Path
 import re
 import stat
 
+from tools.installation_document_catalog import canonical_document_catalog
+
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.component_evaluation import _capture
 from tools.installation_document_restore import validate_document_configuration, _validate_sources
@@ -346,15 +348,14 @@ def connect_document_providers(package_root, *, preparation_configuration,
             _verify_running(container_id, config, prep, mounts, alias=alias)
             receipt["services_started"] = True
             observed = json.loads(_command(["docker", "exec", container_id, "python3", "-c", _CATALOG], deadline=40))
-            if isinstance(observed, list) and "catalog_gateway_id" in prep:
-                observed = sorted(observed, key=lambda tool: tool["name"])
+            observed = canonical_document_catalog(observed, prep)
             if not isinstance(observed, list) or canonical_sha256(observed) != prep["logical_catalog_sha256"]:
                 raise ValueError("running document provider catalog differs from preserved catalog")
             guard()
             _inspect_network(config["network_id"])
             _verify_running(container_id, config, prep, mounts, alias=alias)
             item.update(status="connected_read_only", provider_verified=True, documents_verified=False,
-                        catalog_sha256=canonical_sha256(observed), verification_scope="MCP initialization and src/tools/list catalog only")
+                        catalog_sha256=canonical_sha256(observed), verification_scope="MCP initialization and tools/list catalog only")
             material = json.loads(_command(["docker", "exec", container_id, "node", "--input-type=module",
                 "-e", _VERIFY_MATERIAL], deadline=20 + 10 * len(prep["project_keys"])))
             _validate_material_report(material, prep, receipts[config["preparation_index"]])

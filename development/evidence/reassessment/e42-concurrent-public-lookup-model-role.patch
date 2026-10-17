@@ -1,0 +1,13 @@
+--- a/src/eva/bootstrap/public_lookup.py
++++ b/src/eva/bootstrap/public_lookup.py
+@@ -188,8 +188,8 @@
+     from pathlib import Path
+     from eva.adapters.model.public_lookup import PublicLookupModel
+     model = PublicLookupModel(auth_file=Path(settings.conversation_auth_file),
+-        model=settings.conversation_contact_model,
+-        reasoning_effort=settings.conversation_contact_reasoning_effort,
++        model=settings.conversation_model,
++        reasoning_effort=settings.conversation_reasoning_effort,
+         resource_budget=settings.runtime_resource_budget,
+         research_timeout_seconds=20, research_maximum_tool_calls=2)
+     return PublicLookupActions(engine, model, delegated_actions)

@@ -13,7 +13,7 @@ from eva.operations.component_evaluation import (
     CandidateRequest, ComponentEvaluator, EvaluationConfig, validate_saved_artifact_target,
 )
 from eva.operations.reviewed_component_application import _artifact, _identifier, _path, _save
-from tools.import_component_release import canonical, digest, load_object
+from eva.operations.component_release_import import canonical, digest, load_object
 
 _TERMINAL = {"rejected", "awaiting_independent_answer_assessment", "cancelled", "unconfirmed", "application_requested"}
 _METRICS = {"hard_failures", "included_references", "context_bytes", "input_tokens",

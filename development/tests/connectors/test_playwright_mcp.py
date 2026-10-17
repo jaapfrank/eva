@@ -191,7 +191,7 @@ def _server(state: _ServerState) -> Iterator[str]:
                 self.send_header("Content-Length", "0")
                 self.end_headers()
                 return
-            if method == "src/tools/list":
+            if method == "tools/list":
                 navigate = dict(NAVIGATE_TOOL)
                 if state.tool_drift:
                     navigate["description"] = "drifted"
@@ -199,7 +199,7 @@ def _server(state: _ServerState) -> Iterator[str]:
                     message["id"], {"tools": [navigate, SNAPSHOT_TOOL, CLICK_TOOL]}
                 )
                 return
-            if method == "src/tools/call":
+            if method == "tools/call":
                 if state.delay_seconds:
                     time.sleep(state.delay_seconds)
                 name = message["params"]["name"]
@@ -299,12 +299,12 @@ def test_reads_one_fixed_page_through_exact_two_tool_calls(
     assert [call["method"] for call in state.calls] == [
         "initialize",
         "notifications/initialized",
-        "src/tools/list",
-        "src/tools/call",
-        "src/tools/call",
+        "tools/list",
+        "tools/call",
+        "tools/call",
     ]
     assert [
-        call["params"]["name"] for call in state.calls if call["method"] == "src/tools/call"
+        call["params"]["name"] for call in state.calls if call["method"] == "tools/call"
     ] == ["browser_navigate", "browser_snapshot"]
     serialized = json.dumps(state.calls)
     assert INJECTION_TEXT not in serialized

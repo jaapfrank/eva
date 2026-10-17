@@ -6,6 +6,8 @@ identity, native retained-material and catalog checks establish their state.
 from pathlib import Path
 import json
 
+from tools.installation_document_catalog import canonical_document_catalog
+
 from eva.contracts.canonical_json import canonical_sha256
 from tools.installation_document_connection import (
     _command, _input_mounts, _inspect_network, _verify_running,
@@ -78,7 +80,8 @@ def verify_promoted_documents(package_root, *, preparation_configuration,
             _verify_stopped(item["old_container_id"], config, preparation, disconnected=True)
         inspect()
         catalog = json.loads(_command(["docker", "exec", item["container_id"], "python3", "-c", _CATALOG], deadline=40))
-        if not isinstance(catalog, list) or canonical_sha256(catalog) != preparation["logical_catalog_sha256"]:
+        catalog = canonical_document_catalog(catalog, preparation)
+        if canonical_sha256(catalog) != preparation["logical_catalog_sha256"]:
             raise ValueError("promoted provider catalog differs")
         material = json.loads(_command(["docker", "exec", item["container_id"], "node", "--input-type=module",
             "-e", _VERIFY_MATERIAL], deadline=20+10*len(preparation["project_keys"])))

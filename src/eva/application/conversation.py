@@ -17,6 +17,7 @@ from typing import Callable, Iterator, Literal, Protocol
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
 from eva.application.memory_audience import MemoryAudience
 from eva.application.conversation_media import ConversationMediaContext
+from eva.contracts.tool_deadlines import maximum_tool_execution_seconds
 from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.identity import IdentityPack
 
@@ -627,7 +628,7 @@ class ConversationToolPreparation:
             raise ValueError("prepared conversation tool configuration is invalid")
         if set(self.receipt_output) & {"contract", "durable", "proof", "status"}:
             raise ValueError("prepared conversation receipt uses reserved fields")
-        maximum_execution_seconds = 125 if self.tool_name == "research.public_sources" else 60
+        maximum_execution_seconds = maximum_tool_execution_seconds(self.tool_name)
         if not 1 <= self.execution_timeout_seconds <= maximum_execution_seconds:
             raise ValueError("prepared conversation execution timeout is invalid")
         if not 1 <= self.verification_timeout_seconds <= 60:

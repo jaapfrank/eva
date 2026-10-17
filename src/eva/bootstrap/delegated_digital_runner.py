@@ -8,8 +8,10 @@ from contextlib import suppress, nullcontext
 from datetime import UTC, datetime, timedelta
 import hashlib
 import json
-from urllib.parse import unquote, urlsplit
 
+from eva.adapters.connectors.delegated_completion import (
+    completed_tool_evidence, recoverable_completion_context,
+)
 from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
 from eva.adapters.model.contracts import ConversationModelDeadlineExceeded
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
@@ -277,15 +279,7 @@ class BackgroundConnectorActions:
 
     @staticmethod
     def can_continue_after(turn, receipt):
-        if _recoverable_read_error(receipt):
-            return True
-        from eva.adapters.postgres.connector_results import READER_PREFIX
-        return (receipt.call.name == "use_connector_tool"
-                and isinstance(receipt.call.arguments.get("tool_id"), str)
-                and receipt.call.arguments["tool_id"].startswith(READER_PREFIX)
-                and receipt.output.get("source") == "stored_connector_result"
-                and receipt.output.get("status") == "selection_invalid"
-                and receipt.output.get("external_state_verified") is False)
+        return recoverable_completion_context(receipt)
 
     def archive_model_context(self, turn, index):
         # Recheck the running task grant/cancellation before this host-only copy.
@@ -349,183 +343,9 @@ class BackgroundConnectorActions:
         return receipt
 
 
-def _automation_config_target(arguments):
-    """Recognize one existing REST configuration resource, not a device rule."""
-    if arguments.get("transport") != "rest" or not isinstance(arguments.get("path"), str):
-        return None
-    parsed = urlsplit(arguments["path"])
-    path = unquote(parsed.path)
-    prefix = "/api/config/automation/config/"
-    identifier = path[len(prefix):] if path.startswith(prefix) else ""
-    if (parsed.scheme or parsed.netloc or parsed.fragment or not identifier
-            or "/" in identifier or identifier in {".", ".."}):
-        return None
-    return path
-
-
-def _full_automation_readback(arguments, result):
-    """A full configuration read is evidence of readback, not semantic equality."""
-    if (arguments.get("method") != "GET" or arguments.get("response_pointer") != ""
-            or arguments.get("offset") != 0 or urlsplit(arguments["path"]).query
-            or result.get("truncated") is not False or "selection_error" in result
-            or result.get("next_offset") is not None):
-        return False
-    try:
-        value = json.loads(result["response_json"])
-    except (KeyError, TypeError, ValueError):
-        return False
-    return isinstance(value, dict) and type(result.get("total")) is int and result["total"] == len(value)
-
-
-def _automation_batch_readbacks(receipt):
-    """Accept only full requested configuration rows from the existing reader."""
-    arguments, output = receipt.call.arguments, receipt.output
-    if (output.get("status") != "verified"
-            or arguments.get("section") != "automation_configurations"
-            or arguments.get("offset") != 0):
-        return set()
-    requested = arguments.get("automation_ids")
-    inventory = output.get("inventory")
-    if not isinstance(requested, list) or not isinstance(inventory, dict):
-        return set()
-    rows = inventory.get("automations")
-    if not isinstance(rows, list):
-        return set()
-    targets = set()
-    for row in rows:
-        if not isinstance(row, dict):
-            continue
-        identifier = row.get("automation_id")
-        if (not isinstance(identifier, str) or identifier not in requested
-                or row.get("configuration_read") is not True
-                or not isinstance(row.get("coverage"), dict)
-                or row["coverage"].get("complete") is not True
-                or row.get("truncated", False) is not False):
-            continue
-        try:
-            configuration = json.loads(row["configuration_json"])
-        except (KeyError, TypeError, ValueError):
-            continue
-        if isinstance(configuration, dict):
-            targets.add("/api/config/automation/config/" + identifier)
-    return targets
-
-
-def _recoverable_read_error(receipt):
-    proof = receipt.output.get("proof")
-    evidence = proof.get("evidence") if isinstance(proof, dict) else None
-    return (receipt.output.get("status") == "failed"
-            and receipt.output.get("recoverable_read_error") is True
-            and isinstance(evidence, dict)
-            and evidence.get("source") in {"mcp_gateway_read_error", "home_assistant_inventory_read_error"}
-            and evidence.get("operation_kind") == "read")
-
-
 def _has_completed_tool_evidence(receipts):
-    """Discovery is useful context, but cannot alone prove completed work."""
-    component_positions = [index for index, receipt in enumerate(receipts)
-                           if receipt.call.name in {DRAFT, EVALUATE, PREPARE, COMPARE}]
-    if component_positions:
-        index = component_positions[-1]
-        component = receipts[index]
-        expected = component.output.get("operation_result")
-        if component.call.name == COMPARE and (
-                component.output.get("status") != "verified"
-                or not isinstance(expected, dict)
-                or expected.get("contract") != "EvaComponentDevelopmentSelection/v1"
-                or expected.get("state") not in {"candidate_selected", "baseline_retained"}):
-            return False
-        saved = False
-        for receipt in receipts[index + 1:]:
-            if (receipt.call.name != "save_workspace_document"
-                    or receipt.output.get("status") != "verified"):
-                continue
-            arguments = {key: value for key, value in receipt.call.arguments.items()
-                         if key not in {"content", "component_step"} or value is not None}
-            if "component_step" in arguments and "content" not in arguments:
-                step = arguments["component_step"]
-                saved = (type(step) is int and step >= 0
-                         and step == component.output.get("component_step"))
-            elif "content" in arguments and "component_step" not in arguments:
-                try:
-                    saved = isinstance(expected, dict) and json.loads(arguments["content"]) == expected
-                except (TypeError, ValueError):
-                    pass
-            if saved:
-                break
-        if not saved:
-            return False
-    completed = False
-    last_home_assistant_success = None
-    last_procedure_success = None
-    pending_automation_readbacks = set()
-    for receipt in receipts:
-        if BackgroundConnectorActions.can_continue_after(None, receipt):
-            # A recoverable read failure is context, not completed work. A later
-            # verified result in the same admitted execution may resolve it.
-            completed = False
-            continue
-        output = receipt.output
-        if receipt.call.name in {"save_work_progress", "get_delegated_work", PROGRAMMING_LIST}:
-            # Planning and reading a predecessor are context, not new completed work.
-            continue
-        if receipt.call.name == "read_home_assistant_inventory":
-            if output.get("status") != "verified":
-                return False
-            pending_automation_readbacks.difference_update(_automation_batch_readbacks(receipt))
-            completed = True
-        elif receipt.call.name == "home_assistant_request":
-            if output.get("status") != "verified":
-                return False
-            result = output.get("result")
-            if not isinstance(result, dict) or type(result.get("success")) is not bool:
-                return False
-            last_home_assistant_success = result["success"]
-            completed = completed or last_home_assistant_success
-            target = _automation_config_target(receipt.call.arguments)
-            if target is not None and last_home_assistant_success:
-                if receipt.call.arguments.get("method") in {"POST", "PUT", "PATCH"}:
-                    pending_automation_readbacks.add(target)
-                elif _full_automation_readback(receipt.call.arguments, result):
-                    pending_automation_readbacks.discard(target)
-        elif receipt.call.name in {"list_reusable_procedures", "resolve_reusable_procedure", "designate_reusable_procedure", "run_reusable_procedure"}:
-            if output.get("status") != "verified":
-                return False
-            output = output.get("operation_result", {})
-            if output.get("contract") != "ProcedureReferenceAction/v1":
-                return False
-            status = output.get("status")
-            if receipt.call.name == "list_reusable_procedures":
-                if status != "candidates":
-                    return False
-            elif receipt.call.name == "designate_reusable_procedure":
-                if status != "designated" or not output.get("reference"):
-                    return False
-                completed = True
-            elif receipt.call.name == "run_reusable_procedure":
-                if status not in {"execution_completed", "execution_failed"}:
-                    return False
-                last_procedure_success = status == "execution_completed"
-                completed = completed or last_procedure_success
-            elif status == "resolved":
-                if not output.get("references"):
-                    return False
-                completed = True
-            elif status != "unavailable":
-                return False
-        elif receipt.call.name in {PROGRAMMING_CALL, PROGRAMMING_WRITE, PROGRAMMING_START}:
-            result = output.get("programming_result", {})
-            if output.get("status") != "verified" or result.get("isError") is not False:
-                return False
-            if programming_tool_name(receipt.call) not in {
-                    "start_process", "interact_with_process", "list_sessions", "list_processes"}:
-                completed = True
-        elif output.get("status") == "verified":
-            completed = True
-        else:
-            return False
-    return (completed and last_home_assistant_success is not False
-            and last_procedure_success is not False and not pending_automation_readbacks)
+    """Use adapter-owned completion/readback interpretation for stored receipts."""
+    return completed_tool_evidence(receipts)
 
 
 class DelegatedDigitalRunner:

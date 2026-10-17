@@ -1918,7 +1918,8 @@ def test_recall_diagnostic_failure_does_not_discard_memory(hindsight_server, mon
     assert "PRIVATE-DIAGNOSTIC-ERROR" not in caplog.text
 
 
-def test_original_private_source_is_deduplicated_and_revalidated_on_cache_hit(hindsight_server):
+@pytest.mark.parametrize("source_state", ["absent", "error"])
+def test_original_private_source_is_deduplicated_and_revalidated_on_cache_hit(hindsight_server, source_state):
     base_url, state = hindsight_server
     doc = _conversation_document()
     metadata = {
@@ -1946,6 +1947,8 @@ def test_original_private_source_is_deduplicated_and_revalidated_on_cache_hit(hi
 
     def sources(query, references):
         calls.append((query, references))
+        if not available[0] and source_state == "error":
+            raise RuntimeError("synthetic resolver outage")
         return (dict(original),) if available[0] else ()
 
     engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url),
@@ -1963,7 +1966,20 @@ def test_original_private_source_is_deduplicated_and_revalidated_on_cache_hit(hi
     second = engine.recall_for_presence_fast(_query())
     assert len(calls) == 2 and len(state.requests) == requests
     assert all("original_source" not in fact.value for fact in second.confirmed_facts)
-    assert first.recall == second.recall
+    if source_state == "absent":
+        assert second.confirmed_facts == ()
+        assert second.recall.selected == []
+        assert second.recall.admitted_fact_ids_sha256 == canonical_sha256([])
+        assert second.recall.excluded_reasons == {
+            fact.fact_id: "known_source_unavailable" for fact in first.confirmed_facts}
+    else:
+        # An unavailable resolver has not proved a known source erased/expired.
+        assert second.recall == first.recall
+        assert len(second.confirmed_facts) == 2
+    available[0] = True
+    restored = engine.recall_for_presence_fast(_query())
+    assert restored.confirmed_facts == first.confirmed_facts
+    assert len(state.requests) == requests
 
 
 def test_original_private_source_never_crosses_project(hindsight_server):
@@ -2257,3 +2273,24 @@ def test_reflection_receipt_preserves_settled_operation_on_readback_loss(monkeyp
             f"{error_type.__module__}.{error_type.__qualname__}".encode()
         ).hexdigest()
     assert "private" not in json.dumps(asdict(receipt))
+
+
+def test_missing_imported_legacy_source_does_not_invent_native_erasure(hindsight_server):
+    base_url, state = hindsight_server
+    state.group_recall_response = {"results": [{
+        "id": "imported-legacy", "text": "Synthetic historical preference", "type": "world",
+        "mentioned_at": NOW, "scores": {"final": 1.0}, "metadata": {
+            "principal_id": PRINCIPAL, "source_ref": "eva1-memory:source:rows:0-49",
+            "evidence_ref": "eva1:import:synthetic", "privacy_class": "internal",
+            "trust": "legacy_unverified"},
+    }]}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url),
+        private_source_resolver=lambda _query, _refs: ())
+    first = engine.recall_for_presence_fast(_query())
+    second = engine.recall_for_presence_fast(_query())
+    assert len(first.confirmed_facts) == len(second.confirmed_facts) == 1
+    assert second.confirmed_facts[0].value["semantic_trust"] == "legacy_unverified"
+    assert second.recall.selected[0].trust == "legacy_unverified"
+    assert "original_source" not in second.confirmed_facts[0].value
+    assert second.recall.excluded_reasons == {}
+

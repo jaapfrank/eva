@@ -5,8 +5,8 @@ from pathlib import Path
 import re
 import subprocess
 from eva.operations.reviewed_component_application import _artifact, _path, _save, _verify_release
-from tools.import_component_release import prepare, canonical, digest
-from tools.installation_runtime_update import image_update_services
+from eva.operations.component_release_import import prepare, canonical, digest
+from eva.operations.image_update import image_update_services
 
 class ComponentReleasePublisher:
     def __init__(self, config, *, run=subprocess.run):

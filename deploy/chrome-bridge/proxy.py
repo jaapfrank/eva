@@ -98,7 +98,7 @@ class Handler(BaseHTTPRequestHandler):
         connection = UnixConnection('localhost', timeout=2)
         healthy = False
         try:
-            request = {'jsonrpc': '2.0', 'id': 'health', 'method': 'src/tools/list', 'params': {}}
+            request = {'jsonrpc': '2.0', 'id': 'health', 'method': 'tools/list', 'params': {}}
             connection.request('POST', '/mcp', json.dumps(request), {
                 'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json'})
             response = connection.getresponse()

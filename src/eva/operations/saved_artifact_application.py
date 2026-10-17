@@ -33,7 +33,7 @@ def publication_plan(package):
 def verify_saved_release(review_id, release):
     # Imported lazily: the existing application queue calls this discriminator.
     from eva.operations.reviewed_component_application import _artifact, _path
-    from tools.import_component_release import canonical, checked_evidence, digest
+    from eva.operations.component_release_import import canonical, checked_evidence, digest
     if set(release) != {"kind", "package", "review", "publication", "update_receipt"}:
         raise ValueError("saved release configuration differs")
     paths, objects = {}, {}

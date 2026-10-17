@@ -384,7 +384,7 @@ async def serve_openai_delegated_work(
 
     digital_settings = None
     if settings.digital_enabled:
-        from eva.bootstrap.runtime import RuntimeSettings
+        from eva.bootstrap.runtime_settings import RuntimeSettings
         digital_settings = RuntimeSettings.from_environment()
         if not digital_settings.delegated_digital_enabled:
             raise ValueError("digital worker and runtime settings differ")
@@ -438,7 +438,7 @@ def check_openai_delegated_work(
     engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
     try:
         if selected.digital_enabled:
-            from eva.bootstrap.runtime import RuntimeSettings
+            from eva.bootstrap.runtime_settings import RuntimeSettings
             from eva.bootstrap.delegated_digital_composition import build_digital_runner
             runtime_settings = RuntimeSettings.from_environment()
             if (not runtime_settings.delegated_digital_enabled or

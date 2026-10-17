@@ -79,7 +79,7 @@ def test_clicks_exactly_one_release_owned_button() -> None:
         "browser_click",
     )
     tool_calls = [
-        call["params"] for call in state.calls if call["method"] == "src/tools/call"
+        call["params"] for call in state.calls if call["method"] == "tools/call"
     ]
     assert tool_calls == [
         {"name": "browser_navigate", "arguments": {"url": PAGE_URL}},

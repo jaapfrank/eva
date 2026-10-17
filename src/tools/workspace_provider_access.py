@@ -57,7 +57,7 @@ def check_catalog(helper, token: str, catalog: dict) -> None:
 
 def check_readback(helper, token: str, catalog: dict, expected_sha256: str) -> None:
     reply = helper._gateway_request(provider.GATEWAY, "POST", "/rpc", token=token,
-        payload={"jsonrpc": "2.0", "id": "workspace-access-check", "method": "src/tools/call",
+        payload={"jsonrpc": "2.0", "id": "workspace-access-check", "method": "tools/call",
                  "params": {"name": catalog["tools"][0]["observe_tool_name"],
                             "arguments": {"path": "/proof-state/startcontrole.txt"}}})
     if reply.get("error") or reply.get("result", {}).get("isError"):

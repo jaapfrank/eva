@@ -625,7 +625,7 @@ def test_execute_and_independent_observe_use_gateway_rpc_twice() -> None:
         assert observation.observed == {"text": "koperen maan"}
         assert observation.evidence["source"] == "mcp_gateway_readback"
         assert len(handler.calls) == 2
-        assert all(call["method"] == "src/tools/call" for call in handler.calls)
+        assert all(call["method"] == "tools/call" for call in handler.calls)
         assert all(call["params"]["name"] == "proof-echo" for call in handler.calls)
         assert handler.calls[0]["id"] != handler.calls[1]["id"]
 

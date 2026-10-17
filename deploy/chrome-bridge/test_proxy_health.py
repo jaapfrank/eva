@@ -22,7 +22,7 @@ class HealthTests(unittest.TestCase):
             def close(self):pass
         with patch.object(proxy,'UnixConnection',Connection),patch.object(proxy,'TOKEN','test-only'):
             handler=self.handler();handler.do_GET()
-        self.assertEqual(handler.status,200);self.assertEqual(calls[0]['method'],'src/tools/list')
+        self.assertEqual(handler.status,200);self.assertEqual(calls[0]['method'],'tools/list')
 
     def test_missing_bridge_is_unhealthy_and_nonlocal_health_is_denied(self):
         class Connection:

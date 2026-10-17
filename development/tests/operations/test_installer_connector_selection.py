@@ -5,7 +5,7 @@ from eva.operations.installer_connector_selection import confirm_connectors,load
 
 
 def test_scope_is_explicit_preserved_and_can_be_changed(tmp_path):
-    caps=tmp_path/'caps';caps.mkdir(mode=0o700);evidence=tmp_path/'development/evidence';evidence.mkdir(mode=0o700)
+    caps=tmp_path/'caps';caps.mkdir(mode=0o700);evidence=tmp_path/'development/evidence';evidence.mkdir(mode=0o700, parents=True)
     flow=InstallerCapabilityWorkflow(caps);verifier=SimpleNamespace(capability_workflow=flow,evidence_workspace=evidence)
     with pytest.raises(ValueError):confirm_connectors(verifier,public_https=True,local_networks=[])
     flow.select(step_id='adaptive_connector',wanted=True)
@@ -25,7 +25,7 @@ def test_confirmed_scope_can_be_skipped_through_ordinary_api(tmp_path):
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
     from eva.adapters.api.installer_capability_api import register_installer_capability_routes,INSTALLER_CAPABILITY_SCRIPT
-    caps=tmp_path/'caps';caps.mkdir(mode=0o700);evidence=tmp_path/'development/evidence';evidence.mkdir(mode=0o700)
+    caps=tmp_path/'caps';caps.mkdir(mode=0o700);evidence=tmp_path/'development/evidence';evidence.mkdir(mode=0o700, parents=True)
     flow=InstallerCapabilityWorkflow(caps)
     verifier=SimpleNamespace(capability_workflow=flow,evidence_workspace=evidence)
     flow.select(step_id='adaptive_connector',wanted=True)
@@ -40,3 +40,29 @@ def test_confirmed_scope_can_be_skipped_through_ordinary_api(tmp_path):
     flow.record_verification(step_id='model_provider',outcome='ready',evidence_sha256='a'*64)
     response=TestClient(app).post('/internal/v1/onboarding/capabilities/select',json={'step_id':'model_provider','wanted':False})
     assert response.status_code==409
+
+
+def test_connector_receipts_preserve_bytes_and_reject_symlink(tmp_path):
+    import hashlib
+    from eva.contracts.canonical_json import canonical_json_bytes
+    from eva.operations.installer_connector_selection import _read, _save
+    workspace = tmp_path / "evidence"
+    workspace.mkdir(mode=0o700)
+    verifier = SimpleNamespace(evidence_workspace=workspace)
+    payload = {"contract": "EvaInstallerConnectorScope/v1", "scope": {
+        "public_https": True, "local_networks": []}, "installed": False, "provider_access_verified": False}
+    raw = canonical_json_bytes(payload)
+    digest = hashlib.sha256(raw).hexdigest()
+    assert _save(verifier, payload) == digest
+    assert _save(verifier, payload) == digest
+    assert (workspace / (digest + ".json")).read_bytes() == raw
+    assert _read(verifier, digest) == payload
+    (workspace / (digest + ".json")).unlink()
+    original = tmp_path / "retained.json"
+    original.write_bytes(raw)
+    original.chmod(0o600)
+    (workspace / (digest + ".json")).symlink_to(original)
+    with pytest.raises(Exception, match="private regular file"):
+        _save(verifier, payload)
+    with pytest.raises(Exception, match="private regular file"):
+        _read(verifier, digest)

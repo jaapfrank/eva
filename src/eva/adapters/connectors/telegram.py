@@ -334,13 +334,23 @@ class TelegramBotApiAdapter:
             "sendMessage",
             {
                 "chat_id": message.chat_id,
-                "reply_parameters": {"message_id": message.message_id},
+                "reply_parameters": {"message_id": message.message_id, "allow_sending_without_reply": False},
                 "text": text,
             },
         )
         message_id = result.get("message_id") if isinstance(result, dict) else None
-        if type(message_id) is not int or message_id < 1:
-            raise RuntimeError("Telegram sendMessage receipt is invalid")
+        chat = result.get("chat") if isinstance(result, dict) else None
+        original = result.get("reply_to_message") if isinstance(result, dict) else None
+        if (type(message_id) is not int or message_id < 1
+                or not isinstance(chat, dict) or type(chat.get("id")) is not int
+                or str(chat["id"]) != message.chat_id
+                or chat.get("type") not in (
+                    {"group", "supergroup"} if message.chat_id.startswith("-") else {"private"})
+                or not isinstance(original, dict)
+                or type(original.get("message_id")) is not int
+                or original["message_id"] != message.message_id
+                or result.get("text") != text):
+            raise RuntimeError("Telegram sendMessage receipt does not prove the exact reply")
         return f"telegram:{message.chat_id}:{message_id}"
 
     def send_reply_draft(self, message: TelegramInboundMessage, text: str) -> None:

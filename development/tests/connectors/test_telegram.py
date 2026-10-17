@@ -198,7 +198,7 @@ def test_bot_api_poll_send_and_living_core_contract_are_bounded() -> None:
                 else:
                     response = {"ok": True, "result": True}
             elif self.path.endswith("/sendMessage"):
-                response = {"ok": True, "result": {"message_id": 9001}}
+                response = {"ok": True, "result": {"message_id": 9001, "chat": {"id": int(payload["chat_id"]), "type": "private"}, "text": payload["text"], "reply_to_message": {"message_id": payload["reply_parameters"]["message_id"]}}}
             else:
                 bounded_stream = payload["text"] == "Begrens dit antwoord."
                 padded_final = payload["text"] == "Weiger een niet-canonieke final."
@@ -303,7 +303,7 @@ def test_bot_api_poll_send_and_living_core_contract_are_bounded() -> None:
         assert isinstance(first_draft["draft_id"], int)
         assert 1 <= first_draft["draft_id"] <= 2_147_483_647
         assert second_draft == {**first_draft, "text": "Hoi"}
-        assert captured[3][1]["reply_parameters"] == {"message_id": 501}
+        assert captured[3][1]["reply_parameters"] == {"message_id": 501, "allow_sending_without_reply": False}
         assert captured[4][1]["principal_id"] == "person:jaap"
         assert captured[5][1] == captured[4][1]
         assert captured[4][1]["audience"] == {
@@ -442,3 +442,43 @@ def test_overlapping_saved_results_keep_original_questions_over_http():
         server.shutdown()
         thread.join(timeout=5)
         server.server_close()
+
+
+@pytest.mark.parametrize("chat_id,chat_type", [("42", "private"), ("-42", "group"), ("-42", "supergroup")])
+def test_foreground_reply_proves_exact_destination_and_original_question(monkeypatch, chat_id, chat_type):
+    from datetime import UTC, datetime
+    from eva.application.telegram_ingress import TelegramInboundMessage
+    message = TelegramInboundMessage(1, chat_id, 101, 42, datetime.now(UTC).replace(microsecond=0), "question")
+    api = TelegramBotApiAdapter(bot_token="123456:fixture")
+    calls = []
+    def send(method, payload):
+        calls.append(payload)
+        return {"message_id": 7, "chat": {"id": int(chat_id), "type": chat_type},
+                "reply_to_message": {"message_id": 101}, "text": payload["text"]}
+    monkeypatch.setattr(api, "_call", send)
+    assert api.send_reply(message, "answer") == f"telegram:{chat_id}:7"
+    assert calls == [{"chat_id": chat_id, "reply_parameters": {
+        "message_id": 101, "allow_sending_without_reply": False}, "text": "answer"}]
+
+
+@pytest.mark.parametrize("changed", [
+    {"message_id": True}, {"message_id": 0}, {"chat": None},
+    {"chat": {"id": 43, "type": "private"}}, {"chat": {"id": "42", "type": "private"}},
+    {"chat": {"id": 42, "type": "group"}}, {"reply_to_message": None},
+    {"reply_to_message": {"message_id": 102}}, {"reply_to_message": {"message_id": True}},
+    {"text": "other answer"},
+])
+def test_foreground_uncertain_reply_never_resends(monkeypatch, changed):
+    from datetime import UTC, datetime
+    from eva.application.telegram_ingress import TelegramInboundMessage
+    message = TelegramInboundMessage(1, "42", 101, 42, datetime.now(UTC).replace(microsecond=0), "question")
+    api = TelegramBotApiAdapter(bot_token="123456:fixture")
+    calls = []
+    def send(method, payload):
+        calls.append(method)
+        return {"message_id": 7, "chat": {"id": 42, "type": "private"},
+                "reply_to_message": {"message_id": 101}, "text": "answer"} | changed
+    monkeypatch.setattr(api, "_call", send)
+    with pytest.raises(RuntimeError, match="does not prove"):
+        api.send_reply(message, "answer")
+    assert calls == ["sendMessage"]

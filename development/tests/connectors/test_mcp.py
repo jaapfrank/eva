@@ -55,7 +55,7 @@ def _mcp_server(state: _ServerState) -> Iterator[str]:
                 self.send_header("Content-Length", "0")
                 self.end_headers()
                 return
-            if method == "src/tools/list":
+            if method == "tools/list":
                 input_schema = _input_schema()
                 if state.schema_drift:
                     input_schema = {**input_schema, "required": ["other"]}
@@ -72,7 +72,7 @@ def _mcp_server(state: _ServerState) -> Iterator[str]:
                     },
                 )
                 return
-            if method == "src/tools/call":
+            if method == "tools/call":
                 if state.delay_call_seconds:
                     time.sleep(state.delay_call_seconds)
                 structured_content: dict[str, str] = {"value": "weather: clear"}
@@ -186,8 +186,8 @@ def test_calls_one_fixed_tool_over_real_streamable_http(
     assert [call[0]["method"] for call in state.calls] == [
         "initialize",
         "notifications/initialized",
-        "src/tools/list",
-        "src/tools/call",
+        "tools/list",
+        "tools/call",
     ]
     for message, headers in state.calls:
         serialized = json.dumps(message)
@@ -212,7 +212,7 @@ def test_rejects_schema_drift_before_tool_call() -> None:
     assert [call[0]["method"] for call in state.calls] == [
         "initialize",
         "notifications/initialized",
-        "src/tools/list",
+        "tools/list",
     ]
 
 

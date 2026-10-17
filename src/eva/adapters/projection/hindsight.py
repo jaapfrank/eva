@@ -426,6 +426,14 @@ class HindsightMemoryEngine:
             MAX_LEARNING_RECORDS, is_human_understanding_reference,
             validate_human_understanding_context,
         )
+        # Only a source previously resolved under current host authority is
+        # known here. A missing imported legacy reference is not deletion proof.
+        known_source_references = set()
+        for fact in memory.confirmed_facts:
+            source = fact.value.get("original_source") if isinstance(fact.value, dict) else None
+            if isinstance(source, dict) and all(isinstance(source.get(key), str)
+                    for key in ("principal_id", "source_ref", "evidence_ref")):
+                known_source_references.add((source["principal_id"], source["source_ref"], source["evidence_ref"]))
         facts = tuple(fact.model_copy(update={"value": {
             key: value for key, value in fact.value.items()
             if key not in {"original_source", "learning_context", "observation_sources"}
@@ -452,6 +460,7 @@ class HindsightMemoryEngine:
             else:
                 references.append(primary)
         available = {}
+        sources_resolved = False
         if self._private_source_resolver is not None and query.audience.kind == "private_person":
             try:
                 sources = self._private_source_resolver(query, tuple(dict.fromkeys(references)))
@@ -472,6 +481,7 @@ class HindsightMemoryEngine:
                         raise HindsightProjectionProtocolError("original source scope differs")
                     _canonical_timestamp(item["occurred_at"])
                     available[reference] = item
+                sources_resolved = True
             except Exception:
                 _LOGGER.debug("Original private memory sources unavailable")
                 available = {}
@@ -500,6 +510,11 @@ class HindsightMemoryEngine:
 
         for fact, reference in zip(facts, primary_references, strict=True):
             learning = is_human_understanding_reference(reference[2])
+            if (query.audience.kind == "private_person" and sources_resolved
+                    and not learning and fact.fact_id not in observation_references
+                    and reference in known_source_references and reference not in observation_available):
+                excluded[fact.fact_id] = "known_source_unavailable"
+                continue
             if fact.fact_id in observation_references and query.audience.kind == "private_person":
                 contributing = observation_references[fact.fact_id]
                 if not contributing or any(item not in observation_available for item in contributing):

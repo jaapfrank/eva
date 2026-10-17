@@ -1,0 +1,670 @@
+{
+  "contract": "EvaE42ModuleBoundariesInstalled/v1",
+  "createdAt": "2026-10-17T11:16:15.914248+00:00",
+  "taskId": "E4.2",
+  "sourceRevision": "7c3acb40ce3fdf0856f37ea702ab8cc32516ec75",
+  "status": "installed_technically_completed",
+  "fixedReviewInputs": [
+    {
+      "path": "development/evidence/reassessment/e32-core-review-20261017.json",
+      "sha256": "8667802cc01cf34a839b901dc53309c4049e04777bec29604a32e72dd1ffbca3"
+    },
+    {
+      "path": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+      "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086"
+    },
+    {
+      "path": "development/evidence/reassessment/e34-tests-docs-history-review-20261017.json",
+      "sha256": "e31962e51f20ae44c406a0fb9176381378317149f6b84757e56c43a65285163c"
+    },
+    {
+      "path": "development/evidence/reassessment/e34-finite-cleanup-decisions-20261017.json",
+      "sha256": "2bde42357dbf33cddf0ebca6918528e9c95745f9434ad1c247f02e21d43efa90"
+    }
+  ],
+  "clusters": [
+    {
+      "id": "C02",
+      "decisions": [
+        "APP-01"
+      ],
+      "state": "completed",
+      "result": "Typegevoelige JSON-gelijkheid voor bewijs, const en enum."
+    },
+    {
+      "id": "C03",
+      "decisions": [
+        "APP-04",
+        "STATE-02",
+        "STATE-03"
+      ],
+      "state": "completed",
+      "result": "Oorspronkelijke onzekerheid zichtbaar; eerder opgeloste bron bij cachegebruik hercontroleren; neutraal persoonslabel."
+    },
+    {
+      "id": "C04",
+      "decisions": [
+        "APP-02",
+        "B02",
+        "IF-01"
+      ],
+      "state": "completed",
+      "result": "Eén bestaande deadlinehelper; HA-protocoltekst en completion/readback-interpretatie bij adapters; standaard MCP met expliciete eigen legacy-ontvangst."
+    },
+    {
+      "id": "C05",
+      "decisions": [
+        "APP-03",
+        "OP-01"
+      ],
+      "state": "completed",
+      "result": "Gedeelde pure targetvalidatie en connectoropslag zonder operations-/spraakomweg."
+    },
+    {
+      "id": "C06",
+      "decisions": [
+        "B01",
+        "OP-02"
+      ],
+      "state": "completed",
+      "result": "Gedeelde instellingen zonder volledige app-compositie; gerichte uitvoerbronpinnen; dagelijkse releasehelpers bij operations met operatorfacades."
+    },
+    {
+      "id": "C07",
+      "decisions": [
+        "IF-02",
+        "IF-03",
+        "IN-01"
+      ],
+      "state": "completed",
+      "result": "Exacte Telegram-replybinding, hervatte budgetbevestiging en dezelfde historische gatewaycatalogusidentiteit."
+    },
+    {
+      "id": "C08",
+      "decisions": [
+        "B04"
+      ],
+      "state": "completed",
+      "result": "Publieke broninterpretatie gebruikt bestaande Astra/medium-werkroute; Sol/none blijft eenvoudig contact."
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "deploy/chrome-bridge/proxy.py",
+      "sha256": "76d8658d841ec9d2ca8e6a035638919fb6d776c7c1fe6e7efc4635e4a8caaaf8"
+    },
+    {
+      "path": "deploy/chrome-bridge/server.mjs",
+      "sha256": "d2025111cd0eba5b2086cd7517a77635190c6311d97682dcacf430b94afb6ab8"
+    },
+    {
+      "path": "deploy/chrome-bridge/test_proxy_health.py",
+      "sha256": "95c11e955b45d83fcbec0153880221ea04016f88a0ea524567e4b404d9bc8116"
+    },
+    {
+      "path": "deploy/living-core/document-provider-health.py",
+      "sha256": "6f292c24bed8b1e4e1ea266d0cf9b741bc8147aa0131502d8cd1962018780dba"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_access.py",
+      "sha256": "a83da8522fbbca5779b25350279cb0a7d3324f1307b617c8e1b1772c879d725b"
+    },
+    {
+      "path": "src/eva/adapters/api/installer_budget_api.py",
+      "sha256": "1ce4f789ba7bb503625a63e8806f50cf6d1b214d230ceb8df6c9aac07722ce93"
+    },
+    {
+      "path": "src/eva/adapters/connectors/delegated_completion.py",
+      "sha256": "4556cc394c453728bc5beee17f0bc3504be77bd44af4eb07cd749c04546cfeda"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_api.py",
+      "sha256": "f5f2cd2e4acdf54bb66214378ed929b381237af6af3fef75bcd85a2f44deb075"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_completion.py",
+      "sha256": "a80bfa361c0068bdb67d04bb5f623b117167a0e54f89b0ffe26635a9e2003f03"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_mcp.py",
+      "sha256": "5cfce9169a71b4d4a9ff7e5e8b2390165eef233e404344aec09d9ddbcfa8ef9a"
+    },
+    {
+      "path": "src/eva/adapters/connectors/mcp_gateway.py",
+      "sha256": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8"
+    },
+    {
+      "path": "src/eva/adapters/connectors/telegram.py",
+      "sha256": "d231a5f2d266936f2f0baf7385321091428eb41bb40e067c51db5f0a5a232f48"
+    },
+    {
+      "path": "src/eva/adapters/postgres/conversation_journal.py",
+      "sha256": "c1d74db361391720dc802dd1fb623737f212cc832766a3c91b2cd66b141c4e80"
+    },
+    {
+      "path": "src/eva/adapters/projection/hindsight.py",
+      "sha256": "6e1611625b751b6a17af11ff155ded8271614d22c214afc4d0a3023f444ce009"
+    },
+    {
+      "path": "src/eva/application/component_improvements.py",
+      "sha256": "36fb8e01bdde0d09b2045959bdffeb1b5ad4bd26f1b43a61c570b9593f8bb19e"
+    },
+    {
+      "path": "src/eva/application/conversation.py",
+      "sha256": "4668132ed2fa0887375399d70d499915dbf1438a07ddb61285ddccb06afc2895"
+    },
+    {
+      "path": "src/eva/application/memory.py",
+      "sha256": "55b279493284f1ec27ce81a5dbba084a505e9d787f6b79620062d193e8d160f7"
+    },
+    {
+      "path": "src/eva/application/orchestration.py",
+      "sha256": "1f01b62c25f96425a8255b57f74efc618cec724637373823ea69c9f022c42870"
+    },
+    {
+      "path": "src/eva/application/schema_validation.py",
+      "sha256": "fce588f02099aec05b4f5978fd563d470c613073817c2e4ffbe93f2ec2c62ec4"
+    },
+    {
+      "path": "src/eva/bootstrap/__init__.py",
+      "sha256": "4bef84085d7be4e857246d58640b5436735ab5a93d4d880f50cd2a9e866b1e6a"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_digital_composition.py",
+      "sha256": "a17e86af58d4c1bf042c8609a8ada177e2f125548d4e7675397e8319364c35a4"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_digital_profile.py",
+      "sha256": "4fa279f15560e18e83bed5e2642d2a049c46c26f0e464f4999f48c3f9bd5f3f3"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "4b25273432ab91c2963be42695ea018ada9cddd0330806d905ed81637f6078b5"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_work_service.py",
+      "sha256": "e8bf8a0a1bc3266a6f06b45a0825365b59294125936639040d7c30bf60cfe5cd"
+    },
+    {
+      "path": "src/eva/bootstrap/public_lookup.py",
+      "sha256": "d6cdd3c37aca75ac3ce6442a8b21191782a3d4a00baf05474ed73599ea23f58d"
+    },
+    {
+      "path": "src/eva/bootstrap/runtime.py",
+      "sha256": "7c505156ea43772b01ce1a9336d6bac77f6dcc9ed7ca3f33257221eeac30ad80"
+    },
+    {
+      "path": "src/eva/bootstrap/runtime_settings.py",
+      "sha256": "d606ea3cd120d1e3384788d1e07c2e4a33ec10eb6316c6339d2cd772eb541546"
+    },
+    {
+      "path": "src/eva/contracts/component_target.py",
+      "sha256": "2a9a23f532ae12aa1cca74b5ea1b295b88b20c35e3e77ca4e6c12e6dd0095381"
+    },
+    {
+      "path": "src/eva/contracts/dashboard_access_token.py",
+      "sha256": "f61c6df2b0180291c2551c6ea13f9a40af069eff32b9ce27fd49fc86677549b9"
+    },
+    {
+      "path": "src/eva/contracts/tool_deadlines.py",
+      "sha256": "7a05c3f92011de772ca34435168281a5488011e834cee5bf8be5520904088bef"
+    },
+    {
+      "path": "src/eva/operations/component_application_runtime.py",
+      "sha256": "b0d9216c6d8b87f9894cd6691d1c8a3a3d77e407c9e49a50f160811335094b65"
+    },
+    {
+      "path": "src/eva/operations/component_evaluation.py",
+      "sha256": "5846b418c9cad15aad844aee42a03bc5e338d7ce2005729c762adbf5fdd80598"
+    },
+    {
+      "path": "src/eva/operations/component_final_assessment.py",
+      "sha256": "402799ef1b2b7692809f57327e0f443964414f61fb27047017f4686397041e02"
+    },
+    {
+      "path": "src/eva/operations/component_release_import.py",
+      "sha256": "da0d21984d6e3a80350a19f636132d126c5c655b419e659a711587815db0d82d"
+    },
+    {
+      "path": "src/eva/operations/component_release_publisher.py",
+      "sha256": "3c9084347116edc4fb2a5a567054400fff828fe640abcb8da9cfaf6167e33c18"
+    },
+    {
+      "path": "src/eva/operations/image_update.py",
+      "sha256": "ddb3c7fad01f94698d745a2a0eb45d3caae54e19c371948ca6e42ecd4b5356f9"
+    },
+    {
+      "path": "src/eva/operations/installer_connector_selection.py",
+      "sha256": "46bd3f97dbce76afbb86e14948f9360fc5602557c7f29347a31888c2dfec38cc"
+    },
+    {
+      "path": "src/eva/operations/reviewed_component_application.py",
+      "sha256": "39bc2d74ca2aa58b4e4e004087cecbeb85f9454c79ee20b95fcf9ddf67c1eaad"
+    },
+    {
+      "path": "src/eva/operations/runtime_image_update.py",
+      "sha256": "c978cb0b7a9e0a579aa36ae5c9d4b44c81b6381149ed8516730b30d0a357bd26"
+    },
+    {
+      "path": "src/eva/operations/saved_artifact_application.py",
+      "sha256": "526b0a3521ad2e6e41a98f2e4e032ba76d4d3df27b600f2678d81c50f5aba4e0"
+    },
+    {
+      "path": "src/tools/import_component_release.py",
+      "sha256": "648a3b6c7eced474cf2218283d7c1fdb4a6824eac305fee8ba72c8da918dcfda"
+    },
+    {
+      "path": "src/tools/installation_document_catalog.py",
+      "sha256": "bca56c5fc26038639fda7824376ed2f99003f8fbfb45af56b79b2f47917dd2e1"
+    },
+    {
+      "path": "src/tools/installation_document_connection.py",
+      "sha256": "735c7ac592ecdbdf2e862dc76d82e4007d040a63c12ab226f2415a26aa784749"
+    },
+    {
+      "path": "src/tools/installation_document_promotion.py",
+      "sha256": "2ce0e83e78ebddef097615d76b54ddec7ca938c581e77b003a62f0528d7f1d25"
+    },
+    {
+      "path": "src/tools/installation_document_restore.py",
+      "sha256": "3fd26881c0f1342b39f92b45baf87e1f629e8d750a3de9651f94adc1718d7ed9"
+    },
+    {
+      "path": "src/tools/installation_restore_verification.py",
+      "sha256": "379a04e8b6d284c93577a8bf322ad1586d24c9d2e40c9b707805dcce48771534"
+    },
+    {
+      "path": "src/tools/installation_runtime_update.py",
+      "sha256": "c5233b3328a3b547862596ac74d3a2d85c4bfa3a44482a12e3a4c6e884dc2e2e"
+    },
+    {
+      "path": "src/tools/provision_workspace_provider.py",
+      "sha256": "e088f7790e46e6b2fb901173e53b97c65e3c8e92101328f4439a2d7f0348e794"
+    },
+    {
+      "path": "src/tools/workspace_provider_access.py",
+      "sha256": "d4d774afb52158adff0cdc3ccf51f5693d633a6f7821102b9f6cc124fa4022fd"
+    }
+  ],
+  "installation": {
+    "strategy": "One targeted image-only update on exact current core/worker images, retained volumes, no rollback/replay. Existing host command entrypoints use the updated repository modules.",
+    "images": [
+      {
+        "role": "core",
+        "base": "sha256:ef5c974bee436f02760478bfd5e80cbb8557cda9b78e317a5617c94933970a78",
+        "image": "sha256:50f52fbb69972cf3124c0e6e909a10d13c09217cbcd104d1c21c33b008abb513",
+        "seconds": 2.5481717700022273
+      },
+      {
+        "role": "worker",
+        "base": "sha256:c91be5a306cf317478ec5c7244e03f7b500f2a7048ffae61bfee763f5de4d842",
+        "image": "sha256:ab06c34704b8d466a5b187c991a254574f7dd7361fac4eb3af6506649d5725f9",
+        "seconds": 2.170290856010979
+      }
+    ],
+    "runtime": {
+      "containers": [
+        {
+          "name": "eva2-managed-b-slot3-core",
+          "image": "sha256:50f52fbb69972cf3124c0e6e909a10d13c09217cbcd104d1c21c33b008abb513",
+          "status": "running",
+          "health": "healthy",
+          "started": "2026-10-17T11:12:21.074281902Z"
+        },
+        {
+          "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "image": "sha256:ab06c34704b8d466a5b187c991a254574f7dd7361fac4eb3af6506649d5725f9",
+          "status": "running",
+          "health": "healthy",
+          "started": "2026-10-17T11:12:32.61443336Z"
+        },
+        {
+          "name": "eva2-owner-voice-media-1",
+          "image": "sha256:26642665c2c4ca5e8afafde95921d642d768ebf335875dc48f514d5b0052d4d7",
+          "status": "running",
+          "health": null,
+          "started": "2026-10-17T10:31:49.528940376Z"
+        },
+        {
+          "name": "eva2-household-speaker-1",
+          "image": "sha256:f4132a4ec5dec1b8365a4ed35b5451fc6b3195c3047b00a58d6987a4462a3a06",
+          "status": "running",
+          "health": null,
+          "started": "2026-10-17T10:31:44.099357915Z"
+        }
+      ],
+      "speech_containers_unchanged": true,
+      "read_only_owner_routes": [
+        {
+          "path": "/internal/v1/dashboard/components",
+          "status": 200,
+          "seconds": 0.095,
+          "contract": "EvaComponentObservations/v1"
+        },
+        {
+          "path": "/internal/v1/dashboard/memory-sources",
+          "status": 200,
+          "seconds": 0.172,
+          "contract": "EvaOwnerMemorySources/v1"
+        },
+        {
+          "path": "/internal/v1/dashboard/work",
+          "status": 200,
+          "seconds": 0.521,
+          "contract": "EvaDelegatedWorkOwnerResult/v1"
+        }
+      ]
+    },
+    "overlay": [
+      {
+        "path": "src/eva/adapters/api/dashboard_access.py",
+        "method": "exact_before",
+        "repository_sha256": "a83da8522fbbca5779b25350279cb0a7d3324f1307b617c8e1b1772c879d725b",
+        "installed_sha256": "a83da8522fbbca5779b25350279cb0a7d3324f1307b617c8e1b1772c879d725b"
+      },
+      {
+        "path": "src/eva/adapters/api/installer_budget_api.py",
+        "method": "exact_before",
+        "repository_sha256": "1ce4f789ba7bb503625a63e8806f50cf6d1b214d230ceb8df6c9aac07722ce93",
+        "installed_sha256": "1ce4f789ba7bb503625a63e8806f50cf6d1b214d230ceb8df6c9aac07722ce93"
+      },
+      {
+        "path": "src/eva/adapters/connectors/delegated_completion.py",
+        "method": "new_shared_runtime_dependency",
+        "repository_sha256": "4556cc394c453728bc5beee17f0bc3504be77bd44af4eb07cd749c04546cfeda",
+        "installed_sha256": "4556cc394c453728bc5beee17f0bc3504be77bd44af4eb07cd749c04546cfeda"
+      },
+      {
+        "path": "src/eva/adapters/connectors/home_assistant_api.py",
+        "method": "exact_before",
+        "repository_sha256": "f5f2cd2e4acdf54bb66214378ed929b381237af6af3fef75bcd85a2f44deb075",
+        "installed_sha256": "f5f2cd2e4acdf54bb66214378ed929b381237af6af3fef75bcd85a2f44deb075"
+      },
+      {
+        "path": "src/eva/adapters/connectors/home_assistant_completion.py",
+        "method": "new_shared_runtime_dependency",
+        "repository_sha256": "a80bfa361c0068bdb67d04bb5f623b117167a0e54f89b0ffe26635a9e2003f03",
+        "installed_sha256": "a80bfa361c0068bdb67d04bb5f623b117167a0e54f89b0ffe26635a9e2003f03"
+      },
+      {
+        "path": "src/eva/adapters/connectors/telegram.py",
+        "method": "exact_before",
+        "repository_sha256": "d231a5f2d266936f2f0baf7385321091428eb41bb40e067c51db5f0a5a232f48",
+        "installed_sha256": "d231a5f2d266936f2f0baf7385321091428eb41bb40e067c51db5f0a5a232f48"
+      },
+      {
+        "path": "src/eva/adapters/postgres/conversation_journal.py",
+        "method": "exact_before",
+        "repository_sha256": "c1d74db361391720dc802dd1fb623737f212cc832766a3c91b2cd66b141c4e80",
+        "installed_sha256": "c1d74db361391720dc802dd1fb623737f212cc832766a3c91b2cd66b141c4e80"
+      },
+      {
+        "path": "src/eva/adapters/projection/hindsight.py",
+        "method": "three_way_preserved_installed_delta",
+        "repository_sha256": "6e1611625b751b6a17af11ff155ded8271614d22c214afc4d0a3023f444ce009",
+        "installed_sha256": "98d51d23672495047859136e4387b20ebcbf6f3b20cde87f23b73b21da0a91c6"
+      },
+      {
+        "path": "src/eva/application/component_improvements.py",
+        "method": "exact_before",
+        "repository_sha256": "36fb8e01bdde0d09b2045959bdffeb1b5ad4bd26f1b43a61c570b9593f8bb19e",
+        "installed_sha256": "36fb8e01bdde0d09b2045959bdffeb1b5ad4bd26f1b43a61c570b9593f8bb19e"
+      },
+      {
+        "path": "src/eva/application/conversation.py",
+        "method": "exact_before",
+        "repository_sha256": "4668132ed2fa0887375399d70d499915dbf1438a07ddb61285ddccb06afc2895",
+        "installed_sha256": "4668132ed2fa0887375399d70d499915dbf1438a07ddb61285ddccb06afc2895"
+      },
+      {
+        "path": "src/eva/application/memory.py",
+        "method": "exact_before",
+        "repository_sha256": "55b279493284f1ec27ce81a5dbba084a505e9d787f6b79620062d193e8d160f7",
+        "installed_sha256": "55b279493284f1ec27ce81a5dbba084a505e9d787f6b79620062d193e8d160f7"
+      },
+      {
+        "path": "src/eva/application/orchestration.py",
+        "method": "earliest_agent_snapshot_three_way",
+        "repository_sha256": "1f01b62c25f96425a8255b57f74efc618cec724637373823ea69c9f022c42870",
+        "installed_sha256": "1f01b62c25f96425a8255b57f74efc618cec724637373823ea69c9f022c42870"
+      },
+      {
+        "path": "src/eva/application/schema_validation.py",
+        "method": "exact_before",
+        "repository_sha256": "fce588f02099aec05b4f5978fd563d470c613073817c2e4ffbe93f2ec2c62ec4",
+        "installed_sha256": "fce588f02099aec05b4f5978fd563d470c613073817c2e4ffbe93f2ec2c62ec4"
+      },
+      {
+        "path": "src/eva/bootstrap/__init__.py",
+        "method": "exact_before",
+        "repository_sha256": "4bef84085d7be4e857246d58640b5436735ab5a93d4d880f50cd2a9e866b1e6a",
+        "installed_sha256": "4bef84085d7be4e857246d58640b5436735ab5a93d4d880f50cd2a9e866b1e6a"
+      },
+      {
+        "path": "src/eva/bootstrap/delegated_digital_composition.py",
+        "method": "exact_before",
+        "repository_sha256": "a17e86af58d4c1bf042c8609a8ada177e2f125548d4e7675397e8319364c35a4",
+        "installed_sha256": "a17e86af58d4c1bf042c8609a8ada177e2f125548d4e7675397e8319364c35a4"
+      },
+      {
+        "path": "src/eva/bootstrap/delegated_digital_profile.py",
+        "method": "exact_before",
+        "repository_sha256": "4fa279f15560e18e83bed5e2642d2a049c46c26f0e464f4999f48c3f9bd5f3f3",
+        "installed_sha256": "4fa279f15560e18e83bed5e2642d2a049c46c26f0e464f4999f48c3f9bd5f3f3"
+      },
+      {
+        "path": "src/eva/bootstrap/delegated_digital_runner.py",
+        "method": "exact_before",
+        "repository_sha256": "4b25273432ab91c2963be42695ea018ada9cddd0330806d905ed81637f6078b5",
+        "installed_sha256": "4b25273432ab91c2963be42695ea018ada9cddd0330806d905ed81637f6078b5"
+      },
+      {
+        "path": "src/eva/bootstrap/delegated_work_service.py",
+        "method": "exact_before",
+        "repository_sha256": "e8bf8a0a1bc3266a6f06b45a0825365b59294125936639040d7c30bf60cfe5cd",
+        "installed_sha256": "e8bf8a0a1bc3266a6f06b45a0825365b59294125936639040d7c30bf60cfe5cd"
+      },
+      {
+        "path": "src/eva/bootstrap/public_lookup.py",
+        "method": "exact_before",
+        "repository_sha256": "d6cdd3c37aca75ac3ce6442a8b21191782a3d4a00baf05474ed73599ea23f58d",
+        "installed_sha256": "d6cdd3c37aca75ac3ce6442a8b21191782a3d4a00baf05474ed73599ea23f58d"
+      },
+      {
+        "path": "src/eva/bootstrap/runtime.py",
+        "method": "exact_before",
+        "repository_sha256": "7c505156ea43772b01ce1a9336d6bac77f6dcc9ed7ca3f33257221eeac30ad80",
+        "installed_sha256": "7c505156ea43772b01ce1a9336d6bac77f6dcc9ed7ca3f33257221eeac30ad80"
+      },
+      {
+        "path": "src/eva/bootstrap/runtime_settings.py",
+        "method": "new_shared_runtime_dependency",
+        "repository_sha256": "d606ea3cd120d1e3384788d1e07c2e4a33ec10eb6316c6339d2cd772eb541546",
+        "installed_sha256": "d606ea3cd120d1e3384788d1e07c2e4a33ec10eb6316c6339d2cd772eb541546"
+      },
+      {
+        "path": "src/eva/contracts/component_target.py",
+        "method": "new_shared_runtime_dependency",
+        "repository_sha256": "2a9a23f532ae12aa1cca74b5ea1b295b88b20c35e3e77ca4e6c12e6dd0095381",
+        "installed_sha256": "2a9a23f532ae12aa1cca74b5ea1b295b88b20c35e3e77ca4e6c12e6dd0095381"
+      },
+      {
+        "path": "src/eva/contracts/dashboard_access_token.py",
+        "method": "new_shared_runtime_dependency",
+        "repository_sha256": "f61c6df2b0180291c2551c6ea13f9a40af069eff32b9ce27fd49fc86677549b9",
+        "installed_sha256": "f61c6df2b0180291c2551c6ea13f9a40af069eff32b9ce27fd49fc86677549b9"
+      },
+      {
+        "path": "src/eva/contracts/tool_deadlines.py",
+        "method": "new_shared_runtime_dependency",
+        "repository_sha256": "7a05c3f92011de772ca34435168281a5488011e834cee5bf8be5520904088bef",
+        "installed_sha256": "7a05c3f92011de772ca34435168281a5488011e834cee5bf8be5520904088bef"
+      },
+      {
+        "path": "src/eva/operations/component_application_runtime.py",
+        "method": "three_way_preserved_installed_delta",
+        "repository_sha256": "b0d9216c6d8b87f9894cd6691d1c8a3a3d77e407c9e49a50f160811335094b65",
+        "installed_sha256": "082684852c1f74146e07b6e62ee040f43563449ecabb92f25fd2feb404c5b2d7"
+      },
+      {
+        "path": "src/eva/operations/component_evaluation.py",
+        "method": "exact_before",
+        "repository_sha256": "5846b418c9cad15aad844aee42a03bc5e338d7ce2005729c762adbf5fdd80598",
+        "installed_sha256": "5846b418c9cad15aad844aee42a03bc5e338d7ce2005729c762adbf5fdd80598"
+      },
+      {
+        "path": "src/eva/operations/component_final_assessment.py",
+        "method": "exact_before",
+        "repository_sha256": "402799ef1b2b7692809f57327e0f443964414f61fb27047017f4686397041e02",
+        "installed_sha256": "402799ef1b2b7692809f57327e0f443964414f61fb27047017f4686397041e02"
+      },
+      {
+        "path": "src/eva/operations/component_release_import.py",
+        "method": "new_shared_runtime_dependency",
+        "repository_sha256": "da0d21984d6e3a80350a19f636132d126c5c655b419e659a711587815db0d82d",
+        "installed_sha256": "da0d21984d6e3a80350a19f636132d126c5c655b419e659a711587815db0d82d"
+      },
+      {
+        "path": "src/eva/operations/component_release_publisher.py",
+        "method": "three_way_preserved_installed_delta",
+        "repository_sha256": "3c9084347116edc4fb2a5a567054400fff828fe640abcb8da9cfaf6167e33c18",
+        "installed_sha256": "c93a95df963243adb5b0bbd0dcc2f07b157795c0a5939b56768c3ae2b7484d57"
+      },
+      {
+        "path": "src/eva/operations/image_update.py",
+        "method": "new_shared_runtime_dependency",
+        "repository_sha256": "ddb3c7fad01f94698d745a2a0eb45d3caae54e19c371948ca6e42ecd4b5356f9",
+        "installed_sha256": "ddb3c7fad01f94698d745a2a0eb45d3caae54e19c371948ca6e42ecd4b5356f9"
+      },
+      {
+        "path": "src/eva/operations/reviewed_component_application.py",
+        "method": "three_way_preserved_installed_delta",
+        "repository_sha256": "39bc2d74ca2aa58b4e4e004087cecbeb85f9454c79ee20b95fcf9ddf67c1eaad",
+        "installed_sha256": "e54e2f4e7c9ea21ebe059150e940be08a2fa3e70452ac524abf917549d320c44",
+        "root_layout_compatibility": "Shared importer and verifier use current src/eva root path; prior caller used historical eva2 prefix."
+      },
+      {
+        "path": "src/eva/operations/runtime_image_update.py",
+        "method": "new_shared_runtime_dependency",
+        "repository_sha256": "c978cb0b7a9e0a579aa36ae5c9d4b44c81b6381149ed8516730b30d0a357bd26",
+        "installed_sha256": "c978cb0b7a9e0a579aa36ae5c9d4b44c81b6381149ed8516730b30d0a357bd26"
+      },
+      {
+        "path": "src/eva/operations/saved_artifact_application.py",
+        "method": "exact_before",
+        "repository_sha256": "526b0a3521ad2e6e41a98f2e4e032ba76d4d3df27b600f2678d81c50f5aba4e0",
+        "installed_sha256": "526b0a3521ad2e6e41a98f2e4e032ba76d4d3df27b600f2678d81c50f5aba4e0"
+      }
+    ],
+    "receiptState": "running_with_retained_mounts",
+    "installationSeconds": 58.83,
+    "executionSourcesIdentical": true,
+    "sealedSourceCount": 68,
+    "chromeBridge": {
+      "state": "disconnected",
+      "busy": false,
+      "seconds": 11.056328980019316
+    },
+    "chromeLiveCatalogs": [
+      {
+        "method": "tools/list",
+        "status": 200,
+        "toolCount": 7
+      },
+      {
+        "method": "src/tools/list",
+        "status": 200,
+        "toolCount": 7
+      }
+    ],
+    "optionalOperatorBoundary": "Installer/operator source is updated at the existing WSL command paths; optional restore/promotion or a fresh installation was not executed. The33-module image overlay does not pretend to install the whole optional installer closure; packaging remains E4.4."
+  },
+  "verification": {
+    "coreFocused": "435 distinct selected ordinary Python cases have passed across initial401 successes and corrected fixture reruns; no final failed cases. Overlapping reruns are not additional cases.",
+    "stateFocused": "72 passed in8.99s; fake journal connection, no new PostgreSQL isolation claim.",
+    "adapterFocused": "258 passed;1 existing optional artifact-container experiment skipped; source/provider fixtures use local synthetic servers. Overlaps across groups are not summed.",
+    "bridge": "1 synthetic protocol test plus2 proxy tests passed; two actual read-only catalogs200.",
+    "failuresRetained": [
+      "Two new wrapper defects found by independent pre-install review: missing CLI json import and missing default capture arguments; fixed and targeted CLI/default-runner checks passed.",
+      "First state journal fake omitted engine.url; fixed; first adapter Telegram fake used noncanonical microseconds and existing fixtures missed mkdir parents; fixed.",
+      "Root first run had32 monkeypatch-fixture errors after module relocation and2 pre-existing positional historical-grant assumptions; ordinary fixture seams corrected, exact grant8runs/6tools assertions retained; unchanged production grant AST independently confirmed.",
+      "One corrected fixture still invoked main on the shared implementation instead of the operator facade; changed only ordinary test call; final CLI import/apply test passed."
+    ],
+    "installedReadRoutes": "Owner components, canonical memory sources and work list each HTTP200; no model request.",
+    "independentReview": "development/reviews/e42-module-boundaries-review-20261017.json",
+    "publishedSourceProjection": "110 passed,1 explicit optional concurrent-public-lookup skip in3.50s; scoped HEAD+owned-delta source, without other executor untracked files. This is a publication-boundary check, not additional distinct runtime success.",
+    "sourceWhitespace": "Diff checked with only existing extraction EOF blank-line preservation ignored; no trailing-space or conflict markers accepted."
+  },
+  "voiceIntegration": {
+    "otherExecutor": "Codex CLI in WSL; not visible in desktop chat list",
+    "inspectionOnly": true,
+    "sameCoreUrl": "http://127.0.0.1:44710",
+    "identityAndRoles": {
+      "same_signed_identity": true,
+      "same_installation": true,
+      "model_roles": {
+        "contact": "gpt-6-sol",
+        "contact_reasoning": "none",
+        "work": "gpt-6-astra",
+        "work_reasoning": "medium"
+      }
+    },
+    "ownerMediaCoreReady": {
+      "status": 200,
+      "contract": "EvaVoiceSessionReady/v1",
+      "private_work_returns": true
+    },
+    "householdCoreReady": {
+      "core_url": "http://127.0.0.1:44710",
+      "devices_checked": 2,
+      "readiness": [
+        {
+          "status": 200,
+          "contract": "EvaHouseholdVoiceSessionReady/v1",
+          "household_work_returns": true
+        },
+        {
+          "status": 200,
+          "contract": "EvaHouseholdVoiceSessionReady/v1",
+          "household_work_returns": true
+        }
+      ]
+    },
+    "trace": [
+      "voice_service.codex_media → EvaVoiceBackend.dispatch → configured CoreClient/HouseholdCoreClient",
+      "household_voice_session → stream_voice_turn(runtime=the existing runtime) → runtime.respond/after_response",
+      "runtime uses the existing signed identity, scoped memory and durable worker; transport cannot select a new authority"
+    ],
+    "speechFilesChanged": [],
+    "speechContainersRestarted": false,
+    "limits": [
+      "Read-only deployed source/configuration, identity and two device readiness checks; no physical conversation, latency, audio or end-to-end cross-channel family test.",
+      "Different permitted person/household audiences remain intentional; same core does not imply sharing private Telegram memory with a public speaker."
+    ]
+  },
+  "usage": {
+    "evaRuntimeModelCallsInitiatedByThisWork": 0,
+    "newComparisonSeries": 0,
+    "creditCosts": "unknown",
+    "developmentModelTokensAndToolCalls": "not fully measured; not estimated",
+    "ordinaryAutonomousRuntimeUsage": "separate existing autonomous activity, not measured by these source/interface checks"
+  },
+  "limits": [
+    "This is the fixed E4.2 maintenance result, not a new family feature or full project acceptance.",
+    "STATE-02 fixes demonstrated cached, previously exactly resolved native source loss. Never-resolved imported legacy and resolver outages are explicitly distinguished; no broader fresh-source inference claim.",
+    "The generic worker delegates existing completion interpretation to the connector-adapter boundary. It does not prove semantic quality merely from a verified transport.",
+    "Installed deltas preserve the actual older operations variants and unrelated uncommitted WSL work. Source overlays and hashes are recorded rather than claiming every repository byte is installed.",
+    "No speaker firmware, speech source, speech configuration or speech installation changed."
+  ],
+  "nextTask": "E4.3",
+  "newTasks": 0,
+  "familyAcceptance": false,
+  "sourcePublicationBoundary": {
+    "concurrentExistingSource": "src/eva/bootstrap/public_lookup.py",
+    "ownership": "Concurrent WSL executor retains its pre-existing untracked public-lookup/model implementation; it is not taken over or committed as new E4.2 code.",
+    "ownDelta": "development/evidence/reassessment/e42-concurrent-public-lookup-model-role.patch",
+    "implementedAndInstalled": true,
+    "provenance": "Two existing configuration fields changed to the work model and work reasoning; exact pre-existing body preserved.",
+    "ordinaryRegression": "Actual installed/current optional route tested without a model request. Clean-checkout test skips explicitly when that concurrent optional base is not present."
+  }
+}

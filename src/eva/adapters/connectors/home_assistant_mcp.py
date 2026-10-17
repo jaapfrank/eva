@@ -82,12 +82,12 @@ def call_assist_effect(
         raise HomeAssistantMcpError("Home Assistant MCP initialization differs")
     headers["MCP-Protocol-Version"] = _PROTOCOL
     post({"jsonrpc": "2.0", "method": "notifications/initialized"}, status=202)
-    tools = post({"jsonrpc": "2.0", "id": 2, "method": "src/tools/list", "params": {}}).get("tools")
+    tools = post({"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}}).get("tools")
     matches = [item for item in tools if isinstance(item, dict) and item.get("name") == tool_name] if isinstance(tools, list) else []
     if len(matches) != 1 or canonical_sha256(matches[0].get("inputSchema")) != _EFFECT_SCHEMA_SHA256:
         raise HomeAssistantMcpError("Home Assistant MCP effect schema drifted")
     called = post({
-        "jsonrpc": "2.0", "id": 3, "method": "src/tools/call",
+        "jsonrpc": "2.0", "id": 3, "method": "tools/call",
         "params": {"name": tool_name, "arguments": {"name": entity_id}},
     })
     content = called.get("content")

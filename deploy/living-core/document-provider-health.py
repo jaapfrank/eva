@@ -12,7 +12,7 @@ def check():
         if response.status != 200 or response.read(16) != b"ok":
             raise RuntimeError("HTTP liveness failed")
     binding = hashlib.sha256(Path("/run/eva2/atomic-binding.json").read_bytes()).hexdigest()
-    body = json.dumps({"jsonrpc": "2.0", "id": "health", "method": "src/tools/list", "params": {}}).encode()
+    body = json.dumps({"jsonrpc": "2.0", "id": "health", "method": "tools/list", "params": {}}).encode()
     request = Request("http://127.0.0.1:9000/mcp", data=body, headers={
         "Content-Type": "application/json", "Accept": "application/json, text/event-stream",
         "MCP-Protocol-Version": "2024-11-05"})

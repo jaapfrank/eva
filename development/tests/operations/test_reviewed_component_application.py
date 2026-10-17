@@ -7,7 +7,7 @@ import time
 import pytest
 
 from eva.operations.reviewed_component_application import ReviewedComponentApplications
-from tools import import_component_release as importer
+from eva.operations import component_release_import as importer
 
 
 REVIEW_ID, REQUEST_ID = "a" * 64, "b" * 64

@@ -552,7 +552,7 @@ class ComponentApplicationRuntime:
     def apply_release(self, release):
         if release.get("kind") == "saved_artifact":
             return self._apply_saved_artifact(release)
-        from tools.installation_runtime_update import update_runtime
+        from eva.operations.runtime_image_update import update_runtime
         from eva.operations.component_evaluation import _capture
         def command(argv, *, deadline=15, limit=1024 * 1024):
             result = _capture(argv, deadline=deadline, limit=limit)

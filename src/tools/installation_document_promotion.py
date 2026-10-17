@@ -9,6 +9,8 @@ import json
 from pathlib import Path
 import re
 
+from tools.installation_document_catalog import canonical_document_catalog
+
 from eva.contracts.canonical_json import canonical_sha256
 from tools.installation_document_connection import (
     _command, _input_mounts, _inspect_network, _verify_running, _provider_command,
@@ -162,7 +164,8 @@ def promote_document_providers(package_root, *, preparation_configuration,
             _verify_running(new_id, replacement, prep, mounts, alias=alias, writable=True)
             receipt["services_started"] = True
             catalog = json.loads(_command(["docker", "exec", new_id, "python3", "-c", _CATALOG], deadline=40))
-            if not isinstance(catalog, list) or canonical_sha256(catalog) != prep["logical_catalog_sha256"]:
+            catalog = canonical_document_catalog(catalog, prep)
+            if canonical_sha256(catalog) != prep["logical_catalog_sha256"]:
                 raise ValueError("writable document provider catalog differs")
             material = json.loads(_command(["docker", "exec", new_id, "node", "--input-type=module",
                 "-e", _VERIFY_MATERIAL], deadline=20 + 10 * len(prep["project_keys"])))

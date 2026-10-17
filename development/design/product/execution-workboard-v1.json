@@ -838,17 +838,17 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-17T10:56:30.393935+00:00",
+  "lastUpdated": "2026-10-17T11:16:40.392200+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.2",
+  "activeTaskId": "E4.3",
   "currentWork": {
-    "id": "E4.2",
-    "title": "Omslachtige code en modulegrenzen vereenvoudigen",
+    "id": "E4.3",
+    "title": "Runtime-efficiëntie verbeteren zonder dommer gedrag",
     "status": "planned",
-    "doneWhen": "De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite.",
-    "nextAction": "Pak eerst aantoonbare herhaling/fouten met gebruikers- of verbruiksgevolg aan; koppel iedere wijziging aan een E3-besluit.",
-    "checkedAt": "2026-10-17T10:56:30.393935+00:00",
+    "doneWhen": "Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend.",
+    "nextAction": "Gebruik de concrete E3-verbruiksoorzaken en bestaande AIDE²-route waar passend; geen nieuwe concurrentenmatrix of algemeen optimalisatieplatform.",
+    "checkedAt": "2026-10-17T11:16:40.392200+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1632,6 +1632,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E4.2 · Zeven vaste vereenvoudigingsclusters afgewerkt",
+            "state": "installed",
+            "checkedAt": "2026-10-17T11:16:40.392200+00:00",
+            "summary": "Kern en worker bijgewerkt met behoud van gegevens en ander WSL-werk. Type-/bron-/persoonsbewijs, gedeelde configuratie, providergrenzen en modelrollen aangescherpt. Gerichte tests en gebundelde review geslaagd.",
+            "remaining": "E4.3–E4.5 en de gezamenlijke gezinsacceptatie blijven open. Onderhoud is geen nieuwe gezinsfunctie.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e42-module-boundaries-installed-20261017.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e42-module-boundaries-review-20261017.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [
+              "E4.2"
+            ],
+            "smallTaskCountsUnchanged": false,
+            "familyAcceptance": false,
+            "completionScope": "Fixed C02–C08 maintenance; runtime and idle browser bridge installed; host operator entrypoints updated; no fresh installation/restore or physical audio claim."
+          },
+          {
             "title": "E4.1 · Vaste lijst met dode code afgewerkt",
             "state": "installed",
             "checkedAt": "2026-10-17T10:56:30.393935+00:00",
@@ -1914,6 +1931,32 @@
             "completionScope": "E2.2 own people/memory controls only"
           },
           {
+            "title": "Voice · Opgeslagen gegevens lokaal uitlezen",
+            "state": "installed",
+            "checkedAt": "2026-10-16T11:04:34.933091+00:00",
+            "summary": "Gedeelde spraak leest nu eigen opgeslagen gegevens zonder extra connectorrechten. Drie bronpagina’s en vijf lokale leesstappen geverifieerd; geen dubbele bronaanvragen. Onnodige modelwissel verwijderd: 56 versus 87 seconden in afzonderlijke synthetische proeven. 129 tests geslaagd.",
+            "remaining": "56 seconden blijft te lang; geen algemene snelheidsclaim of fysieke spraakacceptatie. GPU-geheugenfout en soms ontbrekende eerste woorden blijven open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/local-reader-20261016.json",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "maintenanceRepair": true,
+            "familyAcceptance": false
+          },
+          {
+            "title": "Voice · Vervolgpagina’s van huisinventaris hersteld",
+            "state": "installed",
+            "checkedAt": "2026-10-16T10:47:37.028678+00:00",
+            "summary": "Broncursor blijft behouden naast de opgeslagen preview. Pagina’s 50 en 100 werkelijk opgehaald; 60 gerichte tests geslaagd; kern/werker gezond en beide speakerbindings gereed.",
+            "remaining": "Geen snelheidswinst bewezen: kandidaatantwoord 54 seconden met herhaalstappen. Terugkerende CUDA-geheugenfout en ontbrekende eerste woorden blijven open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/inventory-cursor-20261016.json",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "maintenanceRepair": true,
+            "familyAcceptance": false
+          },
+          {
             "title": "E2.1 · Eén Eva-beheeromgeving geïnstalleerd",
             "state": "installed",
             "checkedAt": "2026-10-16T10:44:14.870759+00:00",
@@ -1945,6 +1988,19 @@
             "maintenanceRepair": false,
             "familyAcceptance": false,
             "completionScope": "I1.2 technical with retained genuine owner feedback"
+          },
+          {
+            "title": "Voice na computerherstart weer verbonden",
+            "state": "installed",
+            "checkedAt": "2026-10-15T22:09:08.164117+00:00",
+            "summary": "Verouderde gateway- en browserpaden hersteld. Kern en werker gezond; beide speakerbindings bereikbaar. Twee synthetische zinnen gaven audio na 0,97 en 0,83 seconde. Geen fysieke luisterproef of totale antwoordtijdmeting.",
+            "remaining": "Totale gesprekslatency en soms ontbrekende eerste woorden blijven open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/reboot-recovery-20261016.json",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "smallTaskCountsUnchanged": true,
+            "maintenanceRepair": true,
+            "familyAcceptance": false
           },
           {
             "title": "E1.3 · Eigen bijdrage uitgevoerd en privé afgeleverd",
@@ -2283,46 +2339,46 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E4.1 · Vaste lijst met dode code afgewerkt",
+          "title": "E4.2 · Zeven vaste vereenvoudigingsclusters afgewerkt",
           "state": "installed",
-          "checkedAt": "2026-10-17T10:56:30.393935+00:00",
-          "summary": "Alleen bewezen onbereikbare PeopleOverview verwijderd:28 regels, geen volledige bestanden. Werkende personen-/geheugenbediening behouden. Eén build geslaagd; alle6 uitvoerbestanden bytegelijk en HTML/assets gelijk aan de draaiende installatie. Onafhankelijke review GO.",
-          "remaining": "E4.2–E4.5 en gezamenlijke gezinsacceptatie blijven open. Deze onderhoudstaak is geen nieuwe gezinsfunctie.",
-          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e41-proven-dead-code-cleanup-20261017.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/e41-proven-dead-code-cleanup-review-20261017.json",
+          "checkedAt": "2026-10-17T11:16:40.392200+00:00",
+          "summary": "Kern en worker bijgewerkt met behoud van gegevens en ander WSL-werk. Type-/bron-/persoonsbewijs, gedeelde configuratie, providergrenzen en modelrollen aangescherpt. Gerichte tests en gebundelde review geslaagd.",
+          "remaining": "E4.3–E4.5 en de gezamenlijke gezinsacceptatie blijven open. Onderhoud is geen nieuwe gezinsfunctie.",
+          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e42-module-boundaries-installed-20261017.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e42-module-boundaries-review-20261017.json",
           "maintenanceRepair": true,
           "newProductFunctionCompleted": false,
           "completedTaskIds": [
-            "E4.1"
+            "E4.2"
           ],
           "smallTaskCountsUnchanged": false,
           "familyAcceptance": false,
-          "completionScope": "Fixed C01/UI-01 source cleanup only; running assets already byte-equivalent, no restart needed."
+          "completionScope": "Fixed C02–C08 maintenance; runtime and idle browser bridge installed; host operator entrypoints updated; no fresh installation/restore or physical audio claim."
         },
         "now": {
-          "taskId": "E4.2",
-          "title": "Omslachtige code en modulegrenzen vereenvoudigen",
+          "taskId": "E4.3",
+          "title": "Runtime-efficiëntie verbeteren zonder dommer gedrag",
           "status": "planned",
-          "summary": "E4.1 afgerond. Hierna de vastgelegde E3-vereenvoudigingsclusters uitvoeren; spraak blijft bij de andere uitvoerder.",
-          "doneWhen": "De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite."
+          "summary": "E4.2 geïnstalleerd en afgerond; volgende bestaande kaart is gerichte runtime-efficiëntie.",
+          "doneWhen": "Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend."
         },
         "next": {
-          "title": "E4.3 · Efficiëntie verbeteren",
-          "state": "Na E4.2",
-          "summary": "Bestaande concrete verbruiks- en prestatiebevindingen aanpakken met behoud van kwaliteit.",
+          "title": "E4.4 · Modules en installatiegrenzen afronden",
+          "state": "Na E4.3",
+          "summary": "Bestaande gesloten E3-module-/pakketbesluiten afwerken.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Geen handeling nodig voor E4.1",
-          "detail": "De opgeruimde code was onbereikbaar. De gewone Eva-bediening blijft bruikbaar; voor optioneel WhatsApp volgt jouw eigen Eva-nummer later.",
+          "title": "Geen handeling nodig voor E4.2",
+          "detail": "Koppeling van beide speakers naar dezelfde Eva-kern alleen-lezen bevestigd. Spraak blijft bij Codex in WSL. Eigen WhatsApp-nummer kan later.",
           "required": false
         },
-        "checkedAt": "2026-10-17T10:56:30.393935+00:00",
-        "reviewedAt": "2026-10-17T10:56:30.393935+00:00",
+        "checkedAt": "2026-10-17T11:16:40.392200+00:00",
+        "reviewedAt": "2026-10-17T11:16:40.392200+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-17T10:56:30.393935+00:00",
-      "checkedAt": "2026-10-17T10:56:30.393935+00:00",
+      "reviewedAt": "2026-10-17T11:16:40.392200+00:00",
+      "checkedAt": "2026-10-17T11:16:40.392200+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2443,7 +2499,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-17T10:01:27.869694+00:00",
+      "lastUpdatedAt": "2026-10-17T11:16:40.392200+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2477,7 +2533,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-17T10:01:27.869694+00:00",
+      "updatedAt": "2026-10-17T11:16:40.392200+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -4799,17 +4855,17 @@
                     "newTasks": 0
                   }
                 },
-                "completedAt": "2026-10-17T10:39:00.807444+00:00",
-                "completionEvidence": "development/evidence/product/e27-own-activity-history-installed-20261017.json",
-                "independentReview": "development/reviews/e27-own-activity-history-review-20261017.json",
-                "result": "Geïnstalleerde gezamenlijke eigen geschiedenis, via gewone privéchat werkelijk gebruikt; tijd/status/bron/paginering en persoonsgrenzen gecontroleerd.",
                 "progress": {
                   "built": true,
                   "installed": true,
                   "ordinaryChatVerified": true,
                   "independentReview": "GO",
                   "ownerAcceptance": false
-                }
+                },
+                "completedAt": "2026-10-17T10:39:00.807444+00:00",
+                "completionEvidence": "development/evidence/product/e27-own-activity-history-installed-20261017.json",
+                "independentReview": "development/reviews/e27-own-activity-history-review-20261017.json",
+                "result": "Geïnstalleerde gezamenlijke eigen geschiedenis, via gewone privéchat werkelijk gebruikt; tijd/status/bron/paginering en persoonsgrenzen gecontroleerd."
               }
             ],
             "gap": "Alle verplichte bedieningsuitkomsten geïnstalleerd; optioneel WhatsApp wacht op eigen Eva-nummer."
@@ -5225,14 +5281,14 @@
               {
                 "id": "E4.2",
                 "title": "Omslachtige code en modulegrenzen vereenvoudigen",
-                "status": "planned",
+                "status": "completed",
                 "kind": "afronden",
                 "doneWhen": "De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Modulegrenzen en historische bevindingen bestaan.",
-                "gap": "Zeven gerichte clusters: typegelijkheid; bron/trust/persoon; protocol/completion; neutrale validatie; worker/runtimegrenzen; bestaande reply-/budget-/catalogusoverdracht; modelrollen. Alleen vastgelegde E3.2/E3.3-bevindingen.",
-                "nextAction": "Pak eerst aantoonbare herhaling/fouten met gebruikers- of verbruiksgevolg aan; koppel iedere wijziging aan een E3-besluit.",
+                "gap": "",
+                "nextAction": "Afgerond. Vervolg uitsluitend de bestaande E4.3-efficiëntiekaart.",
                 "files": [
                   "src/eva",
                   "development/design/architecture"
@@ -5244,12 +5300,12 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-17T10:08:30.732228+00:00",
+                "checkedAt": "2026-10-17T11:16:40.392200+00:00",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "availableNow": true,
                   "steps": [],
-                  "blocksIndependentWork": false
+                  "blocksIndependentWork": false,
+                  "readyWhen": "Geen handeling nodig. Gebruik Eva gewoon; deze taak verandert de bestaande spraakbediening niet."
                 },
                 "reviewInput": {
                   "source": "development/evidence/reassessment/e32-core-review-20261017.json",
@@ -5262,7 +5318,7 @@
                     "B02",
                     "B04"
                   ],
-                  "implementationStarted": false,
+                  "implementationStarted": true,
                   "newTasks": 0,
                   "E3.3": {
                     "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
@@ -5277,7 +5333,7 @@
                       "OP-01",
                       "OP-02"
                     ],
-                    "implementationStarted": false,
+                    "implementationStarted": true,
                     "newTasks": 0
                   },
                   "E3.4": {
@@ -5295,22 +5351,79 @@
                       "C08"
                     ],
                     "newTasks": 0,
-                    "implementationStarted": false
+                    "implementationStarted": true
                   }
                 },
                 "runtimeIncident": {
-                  "status": "resolved",
-                  "resolvedAt": "2026-10-17T10:08:30.732228+00:00",
                   "beforePhase": "will_usage_uncertain",
                   "failureType": "ConversationModelError",
                   "providerUsageError": false,
                   "productCodeChangeRequired": false,
+                  "newProductTasks": 0,
+                  "status": "resolved",
+                  "resolvedAt": "2026-10-17T10:08:30.732228+00:00",
                   "source": "development/evidence/product/initiative-review-recovery-20261017.json",
                   "oldUsage": "unknown",
                   "replayed": false,
                   "ordinaryReviewPhase": "will_decided",
-                  "ordinaryReviewState": "silence",
-                  "newProductTasks": 0
+                  "ordinaryReviewState": "silence"
+                },
+                "completedAt": "2026-10-17T11:16:40.392200+00:00",
+                "result": "Zeven vaste E3-clusters afgewerkt. Gedeelde grenzen vereenvoudigd; geheugen-/replybewijs verbeterd. Kern en worker gericht geïnstalleerd, actuele routes gecontroleerd; browserbrug bijgewerkt. Beide speakers wijzen naar dezelfde kern en ondertekende identiteit; spraak ongemoeid.",
+                "completionEvidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json",
+                "independentReview": "development/reviews/e42-module-boundaries-review-20261017.json",
+                "cleanupExecution": {
+                  "fixedListComplete": true,
+                  "clusters": [
+                    {
+                      "id": "C02",
+                      "status": "completed",
+                      "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                    },
+                    {
+                      "id": "C03",
+                      "status": "completed",
+                      "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                    },
+                    {
+                      "id": "C04",
+                      "status": "completed",
+                      "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                    },
+                    {
+                      "id": "C05",
+                      "status": "completed",
+                      "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                    },
+                    {
+                      "id": "C06",
+                      "status": "completed",
+                      "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                    },
+                    {
+                      "id": "C07",
+                      "status": "completed",
+                      "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                    },
+                    {
+                      "id": "C08",
+                      "status": "completed",
+                      "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                    }
+                  ],
+                  "newTasks": 0,
+                  "installedCoreWorker": true,
+                  "speechChanged": false,
+                  "familyAcceptance": false
+                },
+                "voiceIntegrationInspection": {
+                  "source": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json",
+                  "sameCore": true,
+                  "sameSignedIdentity": true,
+                  "deviceReadinessChecks": 2,
+                  "physicalAudioTest": false,
+                  "otherExecutor": "Codex CLI in WSL",
+                  "speechChanged": false
                 }
               },
               {
@@ -5570,7 +5683,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Pak eerst aantoonbare herhaling/fouten met gebruikers- of verbruiksgevolg aan; koppel iedere wijziging aan een E3-besluit.",
+        "nextAction": "E4.2 afgerond en geïnstalleerd. Volgende bestaande kaart E4.3: gerichte runtime-efficiëntie met behoud van kwaliteit; geen nieuwe vergelijkingsserie.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5579,10 +5692,10 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-17T10:56:30.393935+00:00",
+        "updatedAt": "2026-10-17T11:16:40.392200+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
-          "updatedAt": "2026-10-17T10:01:27.869694+00:00",
+          "updatedAt": "2026-10-17T11:16:40.392200+00:00",
           "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
           "phases": [
             {
@@ -5653,7 +5766,7 @@
                 "E4.4",
                 "E4.5"
               ],
-              "currentGap": "E4.1 vaste verwijderlijst afgerond. E4.2–E4.5 blijven open; uitsluitend bestaande clusters en zelfstandige onderhoudsuitkomst uitvoeren."
+              "currentGap": "E4.1 en E4.2 afgerond. E4.3–E4.5 en daarna gebundelde E5-oplevering/gezinsacceptatie blijven open."
             },
             {
               "id": "E5",
@@ -8070,17 +8183,17 @@
                   "newTasks": 0
                 }
               },
-              "completedAt": "2026-10-17T10:39:00.807444+00:00",
-              "completionEvidence": "development/evidence/product/e27-own-activity-history-installed-20261017.json",
-              "independentReview": "development/reviews/e27-own-activity-history-review-20261017.json",
-              "result": "Geïnstalleerde gezamenlijke eigen geschiedenis, via gewone privéchat werkelijk gebruikt; tijd/status/bron/paginering en persoonsgrenzen gecontroleerd.",
               "progress": {
                 "built": true,
                 "installed": true,
                 "ordinaryChatVerified": true,
                 "independentReview": "GO",
                 "ownerAcceptance": false
-              }
+              },
+              "completedAt": "2026-10-17T10:39:00.807444+00:00",
+              "completionEvidence": "development/evidence/product/e27-own-activity-history-installed-20261017.json",
+              "independentReview": "development/reviews/e27-own-activity-history-review-20261017.json",
+              "result": "Geïnstalleerde gezamenlijke eigen geschiedenis, via gewone privéchat werkelijk gebruikt; tijd/status/bron/paginering en persoonsgrenzen gecontroleerd."
             }
           ],
           "gap": "Alle verplichte bedieningsuitkomsten geïnstalleerd; optioneel WhatsApp wacht op eigen Eva-nummer."
@@ -8496,14 +8609,14 @@
             {
               "id": "E4.2",
               "title": "Omslachtige code en modulegrenzen vereenvoudigen",
-              "status": "planned",
+              "status": "completed",
               "kind": "afronden",
               "doneWhen": "De vaste E3-refactorlijst is afgewerkt: dubbele productverantwoordelijkheden en aangetoonde omwegen zijn verminderd, adapters blijven vervangbaar en gewijzigde contractgrenzen zijn helder. Kernroutes blijven behouden. Geen massale stijlrewrite.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Modulegrenzen en historische bevindingen bestaan.",
-              "gap": "Zeven gerichte clusters: typegelijkheid; bron/trust/persoon; protocol/completion; neutrale validatie; worker/runtimegrenzen; bestaande reply-/budget-/catalogusoverdracht; modelrollen. Alleen vastgelegde E3.2/E3.3-bevindingen.",
-              "nextAction": "Pak eerst aantoonbare herhaling/fouten met gebruikers- of verbruiksgevolg aan; koppel iedere wijziging aan een E3-besluit.",
+              "gap": "",
+              "nextAction": "Afgerond. Vervolg uitsluitend de bestaande E4.3-efficiëntiekaart.",
               "files": [
                 "src/eva",
                 "development/design/architecture"
@@ -8515,12 +8628,12 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-17T10:08:30.732228+00:00",
+              "checkedAt": "2026-10-17T11:16:40.392200+00:00",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "availableNow": true,
                 "steps": [],
-                "blocksIndependentWork": false
+                "blocksIndependentWork": false,
+                "readyWhen": "Geen handeling nodig. Gebruik Eva gewoon; deze taak verandert de bestaande spraakbediening niet."
               },
               "reviewInput": {
                 "source": "development/evidence/reassessment/e32-core-review-20261017.json",
@@ -8533,7 +8646,7 @@
                   "B02",
                   "B04"
                 ],
-                "implementationStarted": false,
+                "implementationStarted": true,
                 "newTasks": 0,
                 "E3.3": {
                   "source": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
@@ -8548,7 +8661,7 @@
                     "OP-01",
                     "OP-02"
                   ],
-                  "implementationStarted": false,
+                  "implementationStarted": true,
                   "newTasks": 0
                 },
                 "E3.4": {
@@ -8566,22 +8679,79 @@
                     "C08"
                   ],
                   "newTasks": 0,
-                  "implementationStarted": false
+                  "implementationStarted": true
                 }
               },
               "runtimeIncident": {
-                "status": "resolved",
-                "resolvedAt": "2026-10-17T10:08:30.732228+00:00",
                 "beforePhase": "will_usage_uncertain",
                 "failureType": "ConversationModelError",
                 "providerUsageError": false,
                 "productCodeChangeRequired": false,
+                "newProductTasks": 0,
+                "status": "resolved",
+                "resolvedAt": "2026-10-17T10:08:30.732228+00:00",
                 "source": "development/evidence/product/initiative-review-recovery-20261017.json",
                 "oldUsage": "unknown",
                 "replayed": false,
                 "ordinaryReviewPhase": "will_decided",
-                "ordinaryReviewState": "silence",
-                "newProductTasks": 0
+                "ordinaryReviewState": "silence"
+              },
+              "completedAt": "2026-10-17T11:16:40.392200+00:00",
+              "result": "Zeven vaste E3-clusters afgewerkt. Gedeelde grenzen vereenvoudigd; geheugen-/replybewijs verbeterd. Kern en worker gericht geïnstalleerd, actuele routes gecontroleerd; browserbrug bijgewerkt. Beide speakers wijzen naar dezelfde kern en ondertekende identiteit; spraak ongemoeid.",
+              "completionEvidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json",
+              "independentReview": "development/reviews/e42-module-boundaries-review-20261017.json",
+              "cleanupExecution": {
+                "fixedListComplete": true,
+                "clusters": [
+                  {
+                    "id": "C02",
+                    "status": "completed",
+                    "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                  },
+                  {
+                    "id": "C03",
+                    "status": "completed",
+                    "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                  },
+                  {
+                    "id": "C04",
+                    "status": "completed",
+                    "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                  },
+                  {
+                    "id": "C05",
+                    "status": "completed",
+                    "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                  },
+                  {
+                    "id": "C06",
+                    "status": "completed",
+                    "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                  },
+                  {
+                    "id": "C07",
+                    "status": "completed",
+                    "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                  },
+                  {
+                    "id": "C08",
+                    "status": "completed",
+                    "evidence": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json"
+                  }
+                ],
+                "newTasks": 0,
+                "installedCoreWorker": true,
+                "speechChanged": false,
+                "familyAcceptance": false
+              },
+              "voiceIntegrationInspection": {
+                "source": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json",
+                "sameCore": true,
+                "sameSignedIdentity": true,
+                "deviceReadinessChecks": 2,
+                "physicalAudioTest": false,
+                "otherExecutor": "Codex CLI in WSL",
+                "speechChanged": false
               }
             },
             {
@@ -8841,7 +9011,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Pak eerst aantoonbare herhaling/fouten met gebruikers- of verbruiksgevolg aan; koppel iedere wijziging aan een E3-besluit.",
+      "nextAction": "E4.2 afgerond en geïnstalleerd. Volgende bestaande kaart E4.3: gerichte runtime-efficiëntie met behoud van kwaliteit; geen nieuwe vergelijkingsserie.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -8850,10 +9020,10 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-17T10:56:30.393935+00:00",
+      "updatedAt": "2026-10-17T11:16:40.392200+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
-        "updatedAt": "2026-10-17T10:01:27.869694+00:00",
+        "updatedAt": "2026-10-17T11:16:40.392200+00:00",
         "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
         "phases": [
           {
@@ -8924,7 +9094,7 @@
               "E4.4",
               "E4.5"
             ],
-            "currentGap": "E4.1 vaste verwijderlijst afgerond. E4.2–E4.5 blijven open; uitsluitend bestaande clusters en zelfstandige onderhoudsuitkomst uitvoeren."
+            "currentGap": "E4.1 en E4.2 afgerond. E4.3–E4.5 en daarna gebundelde E5-oplevering/gezinsacceptatie blijven open."
           },
           {
             "id": "E5",
@@ -10064,6 +10234,43 @@
       "wholeProjectComplete": false,
       "checkedAt": "2026-10-16T10:44:14.870759+00:00"
     },
+    "continuousDevelopmentDesign20261017": {
+      "status": "completed_design_only",
+      "requestedBy": "owner",
+      "requestedOutcome": "Gedetailleerd ontwerp voor één blijvende, nuttige Eva die zelfstandig leert, innoveert en beheerd verbetert, voortbouwend op bestaande code en eerlijk vergeleken met actuele alternatieven.",
+      "document": "development/docs/eva-continuous-development-20261017.md",
+      "scope": "Design and bounded primary-source desk research only; no runtime changes, no new competitor benchmark series.",
+      "existingRoute": "Python/PostgreSQL/Hindsight; existing initiative, personal interests, durable work and AIDE-inspired improvement route.",
+      "concreteGap": "Sustained household value and complete autonomous improvement-to-production lifecycle are not established by the existing bounded component evidence.",
+      "doneWhen": "A source-grounded Dutch design describes existing capability, exact technical gaps, phased existing-card integration, independent evaluation and rollback, competitive limits, and measurable household benefit.",
+      "relatedTaskIds": [
+        "E3.2",
+        "E3.3",
+        "E3.4",
+        "E4.2",
+        "E4.3",
+        "E4.4",
+        "E5.1",
+        "F2.1",
+        "F2.2"
+      ],
+      "ownerActionRequired": false,
+      "checkedAt": "2026-10-16T23:27:32.289822+00:00",
+      "documentSha256": "a1731089ea651276852dd9afb1ec39bf61999fe1a2f0e06e21d7ec6b4c902d21",
+      "result": "Dutch technical design delivered: preserve existing core, link lived experience to later behavior, sustain responsibility and interests, reuse proven candidate-to-application pipeline, add bounded production observation/recovery, and assess household value against current primary-source alternatives.",
+      "implementationStarted": false,
+      "runtimeChanged": false,
+      "newProductTasks": 0,
+      "independentReview": {
+        "technical": "review_cursor: no material corrections; existing application chain, limited later-use evidence and rollback boundary confirmed.",
+        "productAndComparison": "distinctive_eva_review: no material corrections; no rebuild, no production quota or unsupported superiority claims."
+      },
+      "checks": [
+        "All local document links resolve.",
+        "Current task and original acceptance conditions retained.",
+        "Design scope only; no runtime probe required."
+      ]
+    },
     "e32CoreReview20261017": {
       "evidence": "development/evidence/reassessment/e32-core-review-20261017.json",
       "review": "development/reviews/e32-core-review-20261017.json",
@@ -10082,7 +10289,7 @@
       "nextExistingTask": "E3.3"
     }
   },
-  "updatedAt": "2026-10-17T10:56:30.393935+00:00",
+  "updatedAt": "2026-10-17T11:16:40.392200+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -10119,5 +10326,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-17T10:01:27.869694+00:00"
+  "lastUpdatedAt": "2026-10-17T11:16:40.392200+00:00"
 }

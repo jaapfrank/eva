@@ -1,6 +1,26 @@
 """Explicit optional connector scope, bound to the existing installer journal."""
 import ipaddress
-from eva.operations.installer_voice_selection import _read, _save
+import hashlib
+import json
+import re
+from eva.contracts.canonical_json import canonical_json_bytes
+from eva.operations.installer_identity_storage import read_private_artifact, write_private_once
+
+
+def _read(verifier, digest):
+    if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
+        raise ValueError("connector evidence identity invalid")
+    raw = read_private_artifact(verifier.evidence_workspace / (digest + ".json"), label="connector selection")
+    if hashlib.sha256(raw).hexdigest() != digest:
+        raise ValueError("connector evidence changed")
+    return json.loads(raw)
+
+
+def _save(verifier, payload):
+    raw = canonical_json_bytes(payload)
+    digest = hashlib.sha256(raw).hexdigest()
+    write_private_once(verifier.evidence_workspace / (digest + ".json"), raw)
+    return digest
 
 
 def connector_scope(public_https, local_networks):

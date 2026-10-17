@@ -9,7 +9,9 @@ from datetime import UTC, datetime, timedelta
 import time
 from typing import Literal, Protocol
 
+from eva.contracts.tool_deadlines import maximum_tool_execution_seconds
 from eva.contracts.base import JsonValue, validate_json_value
+from eva.contracts.canonical_json import canonical_json_bytes
 from eva.application.conversation import ConversationModelUsage
 
 
@@ -113,7 +115,7 @@ class ToolRequest:
             raise ValueError("tool configuration hash is invalid")
         if not 1 <= self.verification_timeout_seconds <= 60:
             raise ValueError("verification timeout must be within 1..60 seconds")
-        maximum_execution_seconds = 125 if self.tool_name == "research.public_sources" else 60
+        maximum_execution_seconds = maximum_tool_execution_seconds(self.tool_name)
         if not 1 <= self.execution_timeout_seconds <= maximum_execution_seconds:
             raise ValueError("execution timeout exceeds the tool deadline")
         if not 25 <= self.poll_interval_milliseconds <= 2_000:
@@ -338,7 +340,7 @@ class VerifiedToolOrchestrator:
                     "expected": request.expected_proof,
                     "observed": observation.observed,
                 }
-                if observation.observed != request.expected_proof:
+                if canonical_json_bytes(observation.observed) != canonical_json_bytes(request.expected_proof):
                     state = await self._transition(
                         state,
                         request,

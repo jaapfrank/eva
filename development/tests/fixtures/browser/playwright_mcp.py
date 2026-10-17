@@ -134,11 +134,11 @@ class PlaywrightMcpReadAdapter:
             _require_server(initialized)
             session.complete_initialization(initialized)
             session.notify_initialized()
-            tools = session.request(request_id=2, method="src/tools/list", params={})
+            tools = session.request(request_id=2, method="tools/list", params={})
             _require_tools(tools)
             navigate = session.request(
                 request_id=3,
-                method="src/tools/call",
+                method="tools/call",
                 params={
                     "name": "browser_navigate",
                     "arguments": {"url": self._profile.page_url},
@@ -154,7 +154,7 @@ class PlaywrightMcpReadAdapter:
             )
             snapshot = session.request(
                 request_id=4,
-                method="src/tools/call",
+                method="tools/call",
                 params={
                     "name": "browser_snapshot",
                     "arguments": {"depth": self._profile.snapshot_depth},

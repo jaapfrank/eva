@@ -1122,7 +1122,8 @@ def test_configured_envelope_completes_learning_path_and_final_answer(monkeypatc
 
     grant = None
     if historical:
-        grant = runner.profile.historical_grants[0].model_copy(update={"capability_ids": list(names)})
+        grant = next(g for g in runner.profile.historical_grants
+                     if g.maximum_model_runs == 8 and g.maximum_tool_calls == 6).model_copy(update={"capability_ids": list(names)})
     spec = _budget_spec(runner.profile, previous, grant=grant)
     runner.model, runner.connector_tools = LearningModel(), (LearningTools(),)
     outcome = asyncio.run(runner.run(spec, call_id="call:complete-path"))
@@ -1149,7 +1150,9 @@ def test_new_envelope_resumes_exact_old_grant_without_replaying_completed_effect
     source, previous, store, tools, _, runner, _ = fixture()
     settings, bundle = configuration()
     current = replace(build_digital_profile(settings, bundle), capability_ids=Tools.action_names)
-    grant = current.historical_grants[variant].model_copy(update={"capability_ids": list(Tools.action_names)})
+    legacy = tuple(g for g in current.historical_grants
+                   if g.maximum_model_runs == 8 and g.maximum_tool_calls == 6)
+    grant = legacy[variant].model_copy(update={"capability_ids": list(Tools.action_names)})
     old_profile = replace(runner.profile, maximum_input_tokens=grant.maximum_input_tokens,
         maximum_output_tokens=grant.maximum_output_tokens)
     old = _budget_spec(old_profile, previous, grant=grant)

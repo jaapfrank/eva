@@ -13,7 +13,7 @@ import pytest
 from eva.bootstrap.delegated_digital_runner import _TaskModel
 from eva.operations import component_evaluation as evaluation
 from eva.operations.component_evaluation import CandidateRequest, ComponentEvaluator, EvaluationConfig, WORK_STRATEGY_PATH
-from tools import import_component_release as importer
+from eva.operations import component_release_import as importer
 from tests.operations.test_import_component_release import release_factory, prepare, save_package
 
 
@@ -153,7 +153,8 @@ def test_real_importer_applies_valid_literal_to_disposable_checkout_without_runn
         "--receipt", str(receipt_file), "--apply"])
     # Git metadata is supplied by the existing isolated release fixture; the
     # actual importer validates bindings/bytes, reserves receipt and writes source.
-    importer.main()
+    from tools.import_component_release import main
+    main()
     capsys.readouterr()
     assert release["target"].read_bytes() == candidate.encode()
     receipt = json.loads(receipt_file.read_text())

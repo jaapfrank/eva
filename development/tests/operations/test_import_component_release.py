@@ -5,7 +5,7 @@ import json
 
 import pytest
 
-from tools import import_component_release as importer
+from eva.operations import component_release_import as importer
 
 
 CONTEXT_PATH = "adapters/postgres/delegated_work_actions.py"
@@ -232,7 +232,7 @@ def test_package_digest_cannot_be_rebound_implicitly(release_factory):
 @pytest.mark.parametrize("folder", ["evidence", "reviews"])
 def test_historical_evidence_uses_exact_relocated_bytes(tmp_path, monkeypatch, folder):
     root = tmp_path / "checkout"
-    monkeypatch.setattr(importer, "__file__", str(root / "src/tools/import_component_release.py"))
+    monkeypatch.setattr(importer, "__file__", str(root / "src/eva/operations/component_release_import.py"))
     old = root / "eva2" / folder / "result.json"
     current = root / "development" / folder / "result.json"
     current.parent.mkdir(parents=True)
@@ -246,7 +246,7 @@ def test_historical_evidence_uses_exact_relocated_bytes(tmp_path, monkeypatch, f
 
 def test_historical_evidence_does_not_redirect_existing_bytes(tmp_path, monkeypatch):
     root = tmp_path / "checkout"
-    monkeypatch.setattr(importer, "__file__", str(root / "src/tools/import_component_release.py"))
+    monkeypatch.setattr(importer, "__file__", str(root / "src/eva/operations/component_release_import.py"))
     old = root / "eva2/evidence/result.json"
     current = root / "development/evidence/result.json"
     old.parent.mkdir(parents=True)
@@ -261,7 +261,7 @@ def test_historical_evidence_does_not_redirect_existing_bytes(tmp_path, monkeypa
 @pytest.mark.parametrize("relative", ["src/private.json", "evidence/../src/private.json"])
 def test_historical_evidence_does_not_redirect_other_paths(tmp_path, monkeypatch, relative):
     root = tmp_path / "checkout"
-    monkeypatch.setattr(importer, "__file__", str(root / "src/tools/import_component_release.py"))
+    monkeypatch.setattr(importer, "__file__", str(root / "src/eva/operations/component_release_import.py"))
     with pytest.raises(FileNotFoundError):
         importer.checked_evidence(tmp_path / "review.json",
                                  {"path": str(root / "eva2" / relative), "sha256": importer.digest(b'new')})

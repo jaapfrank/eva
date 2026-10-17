@@ -121,7 +121,7 @@ def draft_component_content(arguments, raw, *, parent=None, source_target=None):
     if lineage is not None:
         result["candidate_lineage"] = lineage
     if source_target is not None:
-        from eva.operations.component_evaluation import validate_saved_artifact_target
+        from eva.contracts.component_target import validate_saved_artifact_target
         result["source_target"] = validate_saved_artifact_target(source_target,
             relative_path=arguments["path"], baseline_sha256=before)
         result["baseline_content"] = installed_source
@@ -163,7 +163,7 @@ def prepare_component_release(draft, report):
         "guidance": "Bewaar dit exacte pakket met de documenttool. Verwachte winst is geen meting; "
             "een nul-exitcode is geen installatiebesluit. Noem de resterende beoordeling expliciet."}
     if "source_target" in draft:
-        from eva.operations.component_evaluation import validate_saved_artifact_target
+        from eva.contracts.component_target import validate_saved_artifact_target
         payload["source_target"] = validate_saved_artifact_target(draft["source_target"],
             relative_path=draft["path"], baseline_sha256=draft["source_sha256"])
         content = draft.get("baseline_content")

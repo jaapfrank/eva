@@ -28,6 +28,7 @@ INSTALLER_BUDGET_SCRIPT = r"""
   const confirm = document.getElementById('budget-confirm');
   const result = document.getElementById('budget-result');
   let current = null;
+  function confirmable(status) { return status && (status.phase === 'staged' || (status.phase === 'ready' && !status.capability_bound)); }
   function message(text) { result.textContent = text; }
   function lock(value) { fields.forEach((field) => { field.disabled = value; }); }
   function render(status) {
@@ -42,7 +43,7 @@ INSTALLER_BUDGET_SCRIPT = r"""
       message('Kies begrensde maxima. Nul euro betekent: geen autonome externe uitgaven.'); return;
     }
     lock(true); stage.disabled = true;
-    if (status.phase === 'staged' || (status.phase === 'ready' && !status.capability_bound)) {
+    if (confirmable(status)) {
       confirm.disabled = false; message('Limieten teruggevonden. Bevestig ze apart.'); return;
     }
     confirm.disabled = true; message('De limieten zijn bevestigd en aan het installatieplan gebonden.');
@@ -65,7 +66,7 @@ INSTALLER_BUDGET_SCRIPT = r"""
     catch (_error) { message('Deze limieten zijn ongeldig of konden niet veilig worden bewaard.'); }
   });
   confirm.addEventListener('click', async () => {
-    if (!current || current.phase !== 'staged' || !window.confirm('Wil je deze harde limieten bevestigen?')) return;
+    if (!enabled || !current?.enabled || !confirmable(current) || !window.confirm('Wil je deze harde limieten bevestigen?')) return;
     try { message('Limieten bevestigen…'); await post('/internal/v1/onboarding/budgets/confirm', {budget_sha256: current.budget_sha256, confirmation: 'LIMIETEN BEVESTIGEN'}); await refresh(); window.dispatchEvent(new Event('eva-installer-state-changed')); }
     catch (_error) { message('De limieten konden niet worden bevestigd.'); }
   });

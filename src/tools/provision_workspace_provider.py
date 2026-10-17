@@ -201,7 +201,7 @@ def provision(expected_plan: dict) -> dict:
         content = "Eva's duurzame werkmap is voorbereid.\n"
         def call(name, arguments):
             reply = h._gateway_request(GATEWAY, "POST", "/rpc", token=token,
-                payload={"jsonrpc": "2.0", "id": "workspace-preparation", "method": "src/tools/call", "params": {"name": selected[name]["name"], "arguments": arguments}})
+                payload={"jsonrpc": "2.0", "id": "workspace-preparation", "method": "tools/call", "params": {"name": selected[name]["name"], "arguments": arguments}})
             if reply.get("error") or reply["result"].get("isError"):
                 raise RuntimeError("workspace preparation call failed")
             return reply["result"]
