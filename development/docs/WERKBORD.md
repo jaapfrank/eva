@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-E3.2 · Actieve kerncode inhoudelijk beoordeeld
+E3.3 · Adapters, installatie en dynamisch gebruik beoordelen
 
-136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.
+Nu bezig: actieve adapters, frontend en installatie-/migratieconsumenten beoordelen. E3.2 wordt hergebruikt; gegenereerde inhoud en historische tools krijgen een passende reviewvorm.
 
-Klaar wanneer: Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.
+Klaar wanneer: Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit.
 
 ## Afmaakvolgorde
 
@@ -112,7 +112,7 @@ Klaar wanneer: Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk b
 
 ## Van jou
 
-E3.2 is afgerond. E3.3 is de volgende taak voor Codex. Het eigen WhatsApp-nummer komt later; spraak blijft bij de andere uitvoerder.
+Codex rondt E3.3 af. Spraak blijft bij de andere uitvoerder; WhatsApp-nummer blijft uitgesteld.
 
 ## Historie
 

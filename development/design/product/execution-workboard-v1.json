@@ -838,24 +838,20 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-16T23:26:42.505625+00:00",
+  "lastUpdated": "2026-10-17T09:07:35.648657+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E3.2",
+  "activeTaskId": "E3.3",
   "currentWork": {
-    "id": "E3.2",
-    "title": "Actieve kerncode inhoudelijk beoordelen",
-    "status": "completed",
-    "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur.",
-    "nextAction": "Gebruik de vastgelegde E3.2-besluiten bij E3.3/E3.4 en bestaande E4.2/E4.4; geen herhaling van deze volledige kernlezing zonder relevante bronwijziging.",
+    "id": "E3.3",
+    "title": "Adapters, installatie en dynamisch gebruik beoordelen",
+    "status": "in_progress",
+    "doneWhen": "Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit.",
+    "nextAction": "Beoordeel de resterende E3.3-bronnen en echte import-/registratie-/build-/installatieconsumenten; hergebruik E3.2 en beoordeel gegenereerde/vendored inhoud op herkomst. Geen spraakwijzigingen.",
+    "checkedAt": "2026-10-17T09:07:35.648657+00:00",
     "ownerActionRequired": false,
-    "checkedAt": "2026-10-16T23:26:42.505625+00:00",
-    "completedAt": "2026-10-16T23:26:42.505625+00:00",
-    "completionEvidence": "development/evidence/reassessment/e32-core-review-20261017.json",
-    "independentReview": "development/reviews/e32-core-review-20261017.json",
-    "result": "136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.",
-    "area": "core semantic review",
-    "outcome": "136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.",
+    "area": "adapter and installation review",
+    "outcome": "Een versiegebonden beoordeling met echte consumenten, begrensde E4-besluiten en onderbouwd behoud/vervanging van oude fotoprovider.",
     "countedAsProductTask": false
   },
   "historicalWorkboard": {
@@ -2225,25 +2221,25 @@
           "completionScope": "136-file semantic core review only; source quality and household behavior not automatically accepted."
         },
         "now": {
-          "title": "E3.2 · Actieve kerncode inhoudelijk beoordeeld",
-          "taskId": "E3.2",
-          "status": "completed",
-          "summary": "136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.",
-          "doneWhen": "Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur."
+          "title": "E3.3 · Adapters, installatie en dynamisch gebruik beoordelen",
+          "taskId": "E3.3",
+          "status": "in_progress",
+          "summary": "Nu bezig: actieve adapters, frontend en installatie-/migratieconsumenten beoordelen. E3.2 wordt hergebruikt; gegenereerde inhoud en historische tools krijgen een passende reviewvorm.",
+          "doneWhen": "Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit."
         },
         "next": {
-          "title": "E3.3 · Adapters en installatie inhoudelijk beoordelen",
-          "state": "Eerstvolgende uitvoerbare taak",
-          "summary": "E3.3 blijft eerstvolgend. Het nieuwe ontwerp is gedekt door bestaande samenhang-/gezinskaarten plus E2.7 (eigen geschiedenis) en E4.5 (zelfstandig softwareonderhoud). Geen nieuwe bouwfase.",
+          "title": "E3.4 · Tests, documentatie en historie beoordelen",
+          "state": "Na E3.3",
+          "summary": "Bestaande volgende taak; geen nieuwe plannen of concurrentenseries.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
           "title": "Geen handeling nodig",
-          "detail": "E3.2 is afgerond. E3.3 is de volgende taak voor Codex. Het eigen WhatsApp-nummer komt later; spraak blijft bij de andere uitvoerder.",
+          "detail": "Codex rondt E3.3 af. Spraak blijft bij de andere uitvoerder; WhatsApp-nummer blijft uitgesteld.",
           "steps": [],
           "blocksIndependentWork": false
         },
-        "checkedAt": "2026-10-17T00:57:21.757383+00:00",
+        "checkedAt": "2026-10-17T09:07:35.648657+00:00",
         "reviewedAt": "2026-10-16T17:36:14.550321+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -2403,7 +2399,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-17T00:57:21.757383+00:00",
+      "updatedAt": "2026-10-17T09:07:35.648657+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -2412,7 +2408,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E3.2",
+        "currentStep": "E3.3",
         "steps": [
           {
             "number": 1,
@@ -4811,14 +4807,14 @@
               {
                 "id": "E3.3",
                 "title": "Adapters, installatie en dynamisch gebruik beoordelen",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "afronden",
                 "doneWhen": "Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Bestaande adapters en installaties werken; de oude fotobibliotheek is als tijdelijke afhankelijkheid bekend.",
                 "gap": "Actuele import-/runtime-/buildconsumenten zijn nog niet volledig per bestand vastgesteld.",
-                "nextAction": "Controleer module voor module de E3-bestandslijst en verbind besluiten aan echte entrypoints, manifests en installatie.",
+                "nextAction": "Beoordeel de resterende E3.3-bronnen en echte import-/registratie-/build-/installatieconsumenten; hergebruik E3.2 en beoordeel gegenereerde/vendored inhoud op herkomst. Geen spraakwijzigingen.",
                 "files": [
                   "src/eva/adapters",
                   "src/eva/providers",
@@ -4830,10 +4826,20 @@
                   "E3.1"
                 ],
                 "assignment": {
-                  "activeWorkers": []
+                  "coordinator": "Codex",
+                  "activeWorkers": [
+                    {
+                      "id": "e33_state_adapters",
+                      "scope": "PostgreSQL/projection review only"
+                    },
+                    {
+                      "id": "e33_interface_adapters",
+                      "scope": "Other adapters/providers/connectors review only"
+                    }
+                  ]
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+                "checkedAt": "2026-10-17T09:07:35.648657+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -4860,6 +4866,14 @@
                   ],
                   "reuse": "E3.2 stays completed; reuse its exact hashbound core review. Inspect only remaining adapter/install/context handoffs.",
                   "noNewExampleFunction": true
+                },
+                "execution": {
+                  "startedAt": "2026-10-17T09:07:35.648657+00:00",
+                  "alreadyWorks": "E3.1 registreert bron/images; E3.2 heeft 136 kernbestanden beoordeeld met negen concrete E4-besluiten.",
+                  "concreteGap": "Actieve adapters en dynamische/installatieconsumenten plus frontend/migraties missen volledige inhoudelijke/provenancebeoordeling.",
+                  "scopeEstimate": "1027 geregistreerde paden, waaronder gegenereerde schema/tokenizer/frontendbestanden en historische tools. Alleen actieve productbron volledig lezen; behouden referenties en generated/vendorprovenance afzonderlijk toetsen. Geen modelruntimeproef. Ontwikkeltokens/credits onbekend.",
+                  "outcome": "Een versiegebonden beoordeling met echte consumenten, begrensde E4-besluiten en onderbouwd behoud/vervanging van oude fotoprovider.",
+                  "userUse": "De bestaande kaart toont concreet beoordeelde installatie/adapters en resterende vereenvoudiging; geen nieuwe gezinsfunctie uit audit alleen."
                 }
               },
               {
@@ -5194,7 +5208,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E3.3 · Adapters, frontend en installatie inhoudelijk beoordelen. E3.2 is afgerond; negen concrete besluiten blijven bij bestaande E4.2/E4.4. Spraak blijft bij de andere uitvoerder.",
+        "nextAction": "Beoordeel de resterende E3.3-bronnen en echte import-/registratie-/build-/installatieconsumenten; hergebruik E3.2 en beoordeel gegenereerde/vendored inhoud op herkomst. Geen spraakwijzigingen.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5203,7 +5217,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-17T00:57:21.757383+00:00",
+        "updatedAt": "2026-10-17T09:07:35.648657+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -5376,7 +5390,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E3.2",
+      "currentStep": "E3.3",
       "steps": [
         {
           "number": 1,
@@ -7775,14 +7789,14 @@
             {
               "id": "E3.3",
               "title": "Adapters, installatie en dynamisch gebruik beoordelen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "afronden",
               "doneWhen": "Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Bestaande adapters en installaties werken; de oude fotobibliotheek is als tijdelijke afhankelijkheid bekend.",
               "gap": "Actuele import-/runtime-/buildconsumenten zijn nog niet volledig per bestand vastgesteld.",
-              "nextAction": "Controleer module voor module de E3-bestandslijst en verbind besluiten aan echte entrypoints, manifests en installatie.",
+              "nextAction": "Beoordeel de resterende E3.3-bronnen en echte import-/registratie-/build-/installatieconsumenten; hergebruik E3.2 en beoordeel gegenereerde/vendored inhoud op herkomst. Geen spraakwijzigingen.",
               "files": [
                 "src/eva/adapters",
                 "src/eva/providers",
@@ -7794,10 +7808,20 @@
                 "E3.1"
               ],
               "assignment": {
-                "activeWorkers": []
+                "coordinator": "Codex",
+                "activeWorkers": [
+                  {
+                    "id": "e33_state_adapters",
+                    "scope": "PostgreSQL/projection review only"
+                  },
+                  {
+                    "id": "e33_interface_adapters",
+                    "scope": "Other adapters/providers/connectors review only"
+                  }
+                ]
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-15T07:56:55.051091+00:00",
+              "checkedAt": "2026-10-17T09:07:35.648657+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
@@ -7824,6 +7848,14 @@
                 ],
                 "reuse": "E3.2 stays completed; reuse its exact hashbound core review. Inspect only remaining adapter/install/context handoffs.",
                 "noNewExampleFunction": true
+              },
+              "execution": {
+                "startedAt": "2026-10-17T09:07:35.648657+00:00",
+                "alreadyWorks": "E3.1 registreert bron/images; E3.2 heeft 136 kernbestanden beoordeeld met negen concrete E4-besluiten.",
+                "concreteGap": "Actieve adapters en dynamische/installatieconsumenten plus frontend/migraties missen volledige inhoudelijke/provenancebeoordeling.",
+                "scopeEstimate": "1027 geregistreerde paden, waaronder gegenereerde schema/tokenizer/frontendbestanden en historische tools. Alleen actieve productbron volledig lezen; behouden referenties en generated/vendorprovenance afzonderlijk toetsen. Geen modelruntimeproef. Ontwikkeltokens/credits onbekend.",
+                "outcome": "Een versiegebonden beoordeling met echte consumenten, begrensde E4-besluiten en onderbouwd behoud/vervanging van oude fotoprovider.",
+                "userUse": "De bestaande kaart toont concreet beoordeelde installatie/adapters en resterende vereenvoudiging; geen nieuwe gezinsfunctie uit audit alleen."
               }
             },
             {
@@ -8158,7 +8190,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E3.3 · Adapters, frontend en installatie inhoudelijk beoordelen. E3.2 is afgerond; negen concrete besluiten blijven bij bestaande E4.2/E4.4. Spraak blijft bij de andere uitvoerder.",
+      "nextAction": "Beoordeel de resterende E3.3-bronnen en echte import-/registratie-/build-/installatieconsumenten; hergebruik E3.2 en beoordeel gegenereerde/vendored inhoud op herkomst. Geen spraakwijzigingen.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -8167,7 +8199,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-17T00:57:21.757383+00:00",
+      "updatedAt": "2026-10-17T09:07:35.648657+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-16T16:23:00.574395+00:00",
@@ -9369,7 +9401,7 @@
       "nextExistingTask": "E3.3"
     }
   },
-  "updatedAt": "2026-10-17T00:57:21.757383+00:00",
+  "updatedAt": "2026-10-17T09:07:35.648657+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
