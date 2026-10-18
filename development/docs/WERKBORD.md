@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Zeven dagen gewoon gezinsgebruik
 
-Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.
+E5.1 is technisch afgerond. De gezinsproef is beschikbaar en blokkeert ander werk niet. Van de zeven resterende kaarten is nu geen bouwkaart zelfstandig uitvoerbaar voor deze uitvoerder: spraak ligt bij de andere Codex, WhatsApp wacht op het uitgestelde nummer, de vergelijkingsserie blijft geparkeerd.
 
 Klaar wanneer: Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.
 
@@ -112,7 +112,7 @@ Klaar wanneer: Technisch gereed gemelde eindkandidaat zeven dagen in het gezin p
 
 ## Van jou
 
-E5.1 is technisch opgeleverd. Gebruik zeven dagen de bestaande Telegramchat of Eva-beheer. Meld wanneer je begint en noteer nuttige hulp, gemiste opvolging, hinder en benodigde aansporingen. Geen herhaling van geaccepteerde deelproeven. Spraak blijft bij de andere uitvoerder.
+Gebruik Eva2 normaal voor F2.1 en meld concrete ervaringen; dit blokkeert onafhankelijk werk niet. Spraak blijft bij de andere WSL-uitvoerder. Het WhatsApp-nummer mag later zoals afgesproken. Geen extra account-, spraak- of vergelijkingshandeling gevraagd.
 
 ## Historie
 

@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-18T02:24:39.871399+00:00",
+  "lastUpdated": "2026-10-18T02:47:54.513488+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "F2.1",
@@ -847,8 +847,8 @@
     "title": "Zeven dagen gezinsgebruik",
     "status": "planned",
     "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
-    "nextAction": "Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.",
-    "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+    "nextAction": "F2.1 is beschikbaar; normale ervaringen verzamelen. Geen zelfstandig uitvoerbare open kernbouwkaart op dit moment. Spraak bij de andere WSL-uitvoerder; uitgestelde en geparkeerde opties blijven zichtbaar.",
+    "checkedAt": "2026-10-18T02:47:54.513488+00:00",
     "ownerActionRequired": true
   },
   "historicalWorkboard": {
@@ -2410,26 +2410,26 @@
           "taskId": "F2.1",
           "title": "Zeven dagen gewoon gezinsgebruik",
           "status": "planned",
-          "summary": "Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.",
+          "summary": "E5.1 is technisch afgerond. De gezinsproef is beschikbaar en blokkeert ander werk niet. Van de zeven resterende kaarten is nu geen bouwkaart zelfstandig uitvoerbaar voor deze uitvoerder: spraak ligt bij de andere Codex, WhatsApp wacht op het uitgestelde nummer, de vergelijkingsserie blijft geparkeerd.",
           "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen."
         },
         "next": {
-          "title": "F2.2 · Jouw eindoordeel",
-          "state": "Na zeven werkelijke gebruiksdagen",
-          "summary": "Concrete hulp, dagelijkse continuïteit, eigen leven, timing/hinder en benodigde begeleiding beoordelen.",
+          "title": "Wie pakt het resterende werk op?",
+          "state": "Verantwoordelijkheid per bestaande kaart",
+          "summary": "Andere WSL-Codex: C3.1/C4.1 spraak. Optioneel geparkeerd: C4.3 telefoonspraak en P2.1 vergelijking. Uitgesteld door eigenaar: E2.6 WhatsApp-nummer. Gezin/eigenaar: F2.1 gebruik en F2.2 oordeel. Geen zelfstandig uitvoerbare kernbouwkaart blijft liggen.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
           "title": "Gebruik Eva normaal; korte concrete ervaringen zijn genoeg",
-          "detail": "E5.1 is technisch opgeleverd. Gebruik zeven dagen de bestaande Telegramchat of Eva-beheer. Meld wanneer je begint en noteer nuttige hulp, gemiste opvolging, hinder en benodigde aansporingen. Geen herhaling van geaccepteerde deelproeven. Spraak blijft bij de andere uitvoerder.",
+          "detail": "Gebruik Eva2 normaal voor F2.1 en meld concrete ervaringen; dit blokkeert onafhankelijk werk niet. Spraak blijft bij de andere WSL-uitvoerder. Het WhatsApp-nummer mag later zoals afgesproken. Geen extra account-, spraak- of vergelijkingshandeling gevraagd.",
           "required": true
         },
-        "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+        "checkedAt": "2026-10-18T02:47:54.513488+00:00",
         "reviewedAt": "2026-10-18T02:24:39.871399+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-18T02:24:39.871399+00:00",
-      "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+      "checkedAt": "2026-10-18T02:47:54.513488+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2555,7 +2555,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-18T02:24:39.871399+00:00",
+      "lastUpdatedAt": "2026-10-18T02:47:54.513488+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2589,7 +2589,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-18T02:24:39.871399+00:00",
+      "updatedAt": "2026-10-18T02:47:54.513488+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -2808,7 +2808,7 @@
                 "status": "planned",
                 "kind": "aansluiten",
                 "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
-                "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
+                "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
                 "blocker": null,
                 "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
                 "checkedAt": "2026-10-17T13:21:29.304952+00:00",
@@ -2820,7 +2820,7 @@
                   "blocksIndependentWork": false,
                   "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                 },
-                "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
+                "nextAction": "De andere WSL-uitvoerder rondt tempo, vloeiendheid en de echte gespreksroute af. Deze uitvoerder wijzigt geen spraakcode of installatie. Bestaand bewijs en open fysieke beoordeling behouden.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": true,
@@ -3002,7 +3002,9 @@
                     "developmentVoiceUsageKnown": false,
                     "deployment": "Voor elke vervanging nul actieve voiceleases; geheugen/kern ook geen actief gedelegeerd of geheugenwerk. Nieuwe kernimage van andere uitvoerder gedetecteerd en behouden; gerichte overlay opnieuw op die werkelijkeimage gebouwd. Geen permanente onderhoudslock."
                   }
-                }
+                },
+                "executionOwner": "other_wsl_voice_executor",
+                "independentCoreWorkRequired": false
               },
               {
                 "id": "C3.3",
@@ -3043,7 +3045,7 @@
                 "status": "planned",
                 "kind": "verbeteren",
                 "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
-                "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
+                "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
                 "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
                 "ownerTrial": {
                   "status": "partial_with_false_interruptions_and_stop_failure",
@@ -3054,7 +3056,7 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
+                "nextAction": "De andere WSL-uitvoerder rondt gewone onderbreking en stoppen af. Deze uitvoerder wijzigt geen spraakcode of installatie. Bestaand bewijs en open fysieke beoordeling behouden.",
                 "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
@@ -3230,7 +3232,9 @@
                     "developmentVoiceUsageKnown": false,
                     "deployment": "Voor elke vervanging nul actieve voiceleases; geheugen/kern ook geen actief gedelegeerd of geheugenwerk. Nieuwe kernimage van andere uitvoerder gedetecteerd en behouden; gerichte overlay opnieuw op die werkelijkeimage gebouwd. Geen permanente onderhoudslock."
                   }
-                }
+                },
+                "executionOwner": "other_wsl_voice_executor",
+                "independentCoreWorkRequired": false
               },
               {
                 "id": "C4.3",
@@ -3238,7 +3242,7 @@
                 "status": "planned",
                 "kind": "praktijk",
                 "doneWhen": "Een lopende gesproken reactie stoppen en gesprek vervolgen; aangenomen werk alleen stoppen op verzoek.",
-                "owner": "Codex /root",
+                "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
                 "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
                 "ownerActionRequired": false,
                 "ownerInstructions": {
@@ -3252,7 +3256,9 @@
                 "assignment": {
                   "activeWorkers": []
                 },
-                "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd."
+                "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+                "executionOwner": "other_wsl_voice_executor",
+                "independentCoreWorkRequired": false
               }
             ]
           },
@@ -5974,7 +5980,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.",
+        "nextAction": "F2.1 is beschikbaar; normale ervaringen verzamelen. Geen zelfstandig uitvoerbare open kernbouwkaart op dit moment. Spraak bij de andere WSL-uitvoerder; uitgestelde en geparkeerde opties blijven zichtbaar.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5983,7 +5989,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-18T02:24:39.871399+00:00",
+        "updatedAt": "2026-10-18T02:47:54.513488+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -6377,7 +6383,7 @@
               "status": "planned",
               "kind": "aansluiten",
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
-              "owner": "Jaap · tempo/vloeiendheid beoordelen; Codex · eventuele correctie",
+              "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
               "blocker": null,
               "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
               "checkedAt": "2026-10-17T13:21:29.304952+00:00",
@@ -6389,7 +6395,7 @@
                 "blocksIndependentWork": false,
                 "currentCandidateStatus": "fluency_correction_not_yet_assessed"
               },
-              "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
+              "nextAction": "De andere WSL-uitvoerder rondt tempo, vloeiendheid en de echte gespreksroute af. Deze uitvoerder wijzigt geen spraakcode of installatie. Bestaand bewijs en open fysieke beoordeling behouden.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -6571,7 +6577,9 @@
                   "developmentVoiceUsageKnown": false,
                   "deployment": "Voor elke vervanging nul actieve voiceleases; geheugen/kern ook geen actief gedelegeerd of geheugenwerk. Nieuwe kernimage van andere uitvoerder gedetecteerd en behouden; gerichte overlay opnieuw op die werkelijkeimage gebouwd. Geen permanente onderhoudslock."
                 }
-              }
+              },
+              "executionOwner": "other_wsl_voice_executor",
+              "independentCoreWorkRequired": false
             },
             {
               "id": "C3.3",
@@ -6612,7 +6620,7 @@
               "status": "planned",
               "kind": "verbeteren",
               "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
-              "owner": "Jaap · fysieke beoordeling; Codex · eventuele correctie",
+              "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
               "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
               "ownerTrial": {
                 "status": "partial_with_false_interruptions_and_stop_failure",
@@ -6623,7 +6631,7 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Beoordeel resterende spraakprovidervertraging en fysieke gesprekskwaliteit met concreet nieuw bewijs. Behoud volledige Eva-kern/geheugen en stop-/apparaatbevestiging; afgewezen STOP- en herstartvarianten niet installeren.",
+              "nextAction": "De andere WSL-uitvoerder rondt gewone onderbreking en stoppen af. Deze uitvoerder wijzigt geen spraakcode of installatie. Bestaand bewijs en open fysieke beoordeling behouden.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -6799,7 +6807,9 @@
                   "developmentVoiceUsageKnown": false,
                   "deployment": "Voor elke vervanging nul actieve voiceleases; geheugen/kern ook geen actief gedelegeerd of geheugenwerk. Nieuwe kernimage van andere uitvoerder gedetecteerd en behouden; gerichte overlay opnieuw op die werkelijkeimage gebouwd. Geen permanente onderhoudslock."
                 }
-              }
+              },
+              "executionOwner": "other_wsl_voice_executor",
+              "independentCoreWorkRequired": false
             },
             {
               "id": "C4.3",
@@ -6807,7 +6817,7 @@
               "status": "planned",
               "kind": "praktijk",
               "doneWhen": "Een lopende gesproken reactie stoppen en gesprek vervolgen; aangenomen werk alleen stoppen op verzoek.",
-              "owner": "Codex /root",
+              "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
               "nextAction": "Geparkeerd op verzoek van Jaap; eerst de overige Eva-uitkomsten afmaken. Bestaande code/werking/acceptaties behouden.",
               "ownerActionRequired": false,
               "ownerInstructions": {
@@ -6821,7 +6831,9 @@
               "assignment": {
                 "activeWorkers": []
               },
-              "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd."
+              "parked": "Spraakontwikkeling geparkeerd door eigenaar; geen fysieke proef gevraagd.",
+              "executionOwner": "other_wsl_voice_executor",
+              "independentCoreWorkRequired": false
             }
           ]
         },
@@ -9543,7 +9555,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.",
+      "nextAction": "F2.1 is beschikbaar; normale ervaringen verzamelen. Geen zelfstandig uitvoerbare open kernbouwkaart op dit moment. Spraak bij de andere WSL-uitvoerder; uitgestelde en geparkeerde opties blijven zichtbaar.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -9552,7 +9564,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-18T02:24:39.871399+00:00",
+      "updatedAt": "2026-10-18T02:47:54.513488+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10914,9 +10926,30 @@
       "newBuilds": 0,
       "newInstalls": 0,
       "newModelCalls": 0
+    },
+    "executionAvailability": {
+      "checkedAt": "2026-10-18T02:47:54.513488+00:00",
+      "independentlyExecutableOpenTasks": [],
+      "otherExecutor": [
+        "C3.1",
+        "C4.1"
+      ],
+      "ownerUseAndJudgment": [
+        "F2.1",
+        "F2.2"
+      ],
+      "parkedOptional": [
+        "C4.3",
+        "E2.6"
+      ],
+      "parkedNoNewComparisonSeries": [
+        "P2.1"
+      ],
+      "familyTrialBlocksIndependentWork": false,
+      "basis": "All seven existing non-completed task cards checked against current owner instruction; no new task, new comparison or invented completion."
     }
   },
-  "updatedAt": "2026-10-18T02:24:39.871399+00:00",
+  "updatedAt": "2026-10-18T02:47:54.513488+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -10953,5 +10986,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-18T02:24:39.871399+00:00"
+  "lastUpdatedAt": "2026-10-18T02:47:54.513488+00:00"
 }
