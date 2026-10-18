@@ -223,7 +223,7 @@
         "targeted-test.private.txt": "2fe24a475414c12f5e62563f3cb0ca69a3b24cac0b9730544d2f37d3796701e4"
       },
       "installed": true,
-      "actualOutcomeReviewed": false,
+      "actualOutcomeReviewed": true,
       "wholeTaskComplete": false,
       "familyAccepted": false,
       "limit": "This addresses a real supplied-instruction conflict. It does not establish that conflict caused prior silence or that this clarification improves ordinary behavior. Earlier negative observations, original useful-work/checked-result/later-use criteria and separate F2 acceptance remain unchanged. Installation and actual behavior require separate evidence.",
@@ -258,6 +258,57 @@
           },
           "publicEvidenceSha256": "5da35493b5b9f2a1f0d27f591c998cd2bf22296d78102c89e5a0840f66dfe4b1",
           "limit": "All 73 saved installed sources equal the candidate map; only the reviewed model file differs from V3. Remaining 72 measured files, worker image/start, signed identity bytes and compose configuration except core image are preserved. Saved evidence only; no every-byte inventory, voice behavior, Eva-performed self-installation, useful work or follow-through certified."
+        }
+      ],
+      "outcomeVerdict": "NOT_MET_USEFUL_SELF_CHOSEN_WORK_RESULT_AND_LATER_USE",
+      "actualObservationAddenda": [
+        {
+          "reviewedAt": "2026-10-18T23:18:56.381998+00:00",
+          "previousReviewSha256": "da845f8132508ac0cf9d6e9cdf54bc9fd3dade8a83e798189edbb6eb72741300",
+          "savedObservationSha256": "8745024a513041870630c1ad2f3a57dfaa9550953ff3ecda6ae06e70d45d8a31",
+          "sourceProfile": "private-orientation-curiosity-contract-v4",
+          "sourceCause": "installed_profile_change",
+          "observedAt": "2026-10-18T23:16:45.036179+00:00",
+          "sourceAt": "2026-10-18 23:16:30+00:00",
+          "decidedAt": "2026-10-18 23:16:40+00:00",
+          "sourceSha256": "0f5af68b71c59a09a39364b4cf1951ade4cb164e9378ee46df0856813f4c4726",
+          "decisionSha256": "b77fc9566fc9816a47cdd90309681205ad0a51c52a458a75c0ee2bc8e28463c7",
+          "sameThreadAndBothCanonicalHashesVerified": true,
+          "operatorQueuedReview": false,
+          "operatorSelectedTask": false,
+          "historyCount": 3,
+          "lifeContextBytes": 7962,
+          "disposition": "silence",
+          "initiativeChosen": false,
+          "nextAttentionChosen": false,
+          "memorySearchUsed": false,
+          "expressionPrepared": false,
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 11587,
+            "output_tokens": 146,
+            "model_attempts": 1
+          },
+          "runtimeCredits": null,
+          "criteriaResult": {
+            "selfChosenUsefulConcreteWork": false,
+            "nativeCheckedRetainedResultToCorrectPrivateRecipient": false,
+            "laterOrdinaryResultUseAndAppropriateContinuation": false
+          },
+          "interpretation": "The installed corrected contract reached its ordinary changed-profile occasion and again produced silence, with no work, search or selected attention. The reasoning considers later social contact but stores no next-attention time; an expressed future possibility is not scheduled or completed follow-through.",
+          "whatIsEstablished": [
+            "Bounded source correction and saved installation binding are valid; the original requested outcome has not occurred in this observed chain.",
+            "This selected night-time review chose no nonurgent contact and also no independent background work. Source/installation/test completion cannot substitute for the useful-work/result/later-use chain."
+          ],
+          "whatIsNotEstablished": [
+            "No causal effect or broad behavioral benefit of the clarification is proven.",
+            "This one night-time result does not prove that fitting daytime contact or all later initiative will fail, nor that the original outcome is impossible.",
+            "Quiet timing does not explain or justify every missing self-chosen background contribution; no separate lack of execution capability is established.",
+            "No new prompt/profile iteration, arbitrary assigned topic, forced search/work quota, replay or fabricated daytime observation follows from this evidence."
+          ],
+          "wholeTaskComplete": false,
+          "familyAccepted": false
         }
       ]
     }

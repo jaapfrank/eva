@@ -1,6 +1,6 @@
 {
   "contract": "EvaScopedInstalledRepair/v1",
-  "status": "curiosity_contract_installed_ordinary_outcome_pending",
+  "status": "installed_actual_ordinary_silence_e51_open",
   "taskId": "E5.1",
   "deficit": "Completed private decisions without adopted work or a delivered message were not returned to the next ordinary orientation.",
   "existingRoute": "Existing sensory private context, current-authority capture, model decision, durable adoption and native executor; no additional scheduler or memory.",
@@ -187,9 +187,9 @@
   "familyAcceptance": false,
   "developmentCredits": null,
   "runtimeCredits": null,
-  "checkedAt": "2026-10-18T23:11:49.709140+00:00",
+  "checkedAt": "2026-10-18T23:18:49.546107+00:00",
   "curiosityContract": {
-    "status": "installed_ordinary_outcome_pending",
+    "status": "installed_actual_ordinary_silence_outcome_not_met",
     "profile": "private-orientation-curiosity-contract-v4",
     "finding": "Current signed identity presents a general only-necessary-questions boundary; private interpretation must distinguish unnecessary task clarification from optional fitting curiosity/social contact.",
     "identityPackSha256": "96bec21f0eb19378e1e1c5b02fe2b875149bca402b1b72c1a08980d7ee4567fd",
@@ -206,7 +206,35 @@
       "pytestSeconds": 1.76,
       "modelCalls": 0
     },
-    "ordinaryObservation": null,
+    "ordinaryObservation": {
+      "observedAt": "2026-10-18T23:16:45.036179+00:00",
+      "sourceAt": "2026-10-18 23:16:30+00:00",
+      "decidedAt": "2026-10-18 23:16:40+00:00",
+      "sourceProfile": "private-orientation-curiosity-contract-v4",
+      "sourceCause": "installed_profile_change",
+      "sourceSha256": "0f5af68b71c59a09a39364b4cf1951ade4cb164e9378ee46df0856813f4c4726",
+      "decisionSha256": "b77fc9566fc9816a47cdd90309681205ad0a51c52a458a75c0ee2bc8e28463c7",
+      "savedObservationSha256": "8745024a513041870630c1ad2f3a57dfaa9550953ff3ecda6ae06e70d45d8a31",
+      "operatorQueuedReview": false,
+      "operatorSelectedTask": false,
+      "disposition": "silence",
+      "initiativeChosen": false,
+      "nextAttentionChosen": false,
+      "memorySearchUsed": false,
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 11587,
+        "output_tokens": 146,
+        "model_attempts": 1
+      },
+      "runtimeCredits": null,
+      "usefulUnassistedWorkProven": false,
+      "laterFollowthroughProven": false,
+      "e51Completed": false,
+      "familyAcceptance": false,
+      "meaning": "The actual installed-contract orientation still chose no work or retained next attention. Optional future contact is mentioned in its reason, but no actual future attention was selected. No causal superiority or E5.1 completion is demonstrated."
+    },
     "causeOfPriorSilenceProven": false,
     "e51Completed": false,
     "installedAt": "2026-10-18T23:11:49.709140+00:00",
@@ -320,5 +348,27 @@
     "operatorAssistedAndOrdinarySourcesMixed": true,
     "notAControlledTrial": true,
     "meaning": "Stored decisions substantiate repeated non-selection of work; two prepared messages are not new autonomous work. Old sources and error outcomes remain unchanged."
+  },
+  "measuredRuntimeSequence": {
+    "modelAttempts": 3,
+    "toolCalls": 3,
+    "inputTokens": 34379,
+    "outputTokens": 437,
+    "totalTokens": 34816,
+    "includes": "Three separately caused installed-contract observations v2, v3 and v4; no unchanged resampling. Earlier v1 reference and development agent consumption are not included.",
+    "credits": null,
+    "developmentCredits": null
+  },
+  "contextSelectionDiagnostic": {
+    "baselineFacts": 6,
+    "neutralQueryFacts": 2,
+    "sameScopeAliasesTimeAndFactLimit": true,
+    "personalLifeInterestsOrPlansShown": false,
+    "queryReplacementBenefitProven": false,
+    "queryChanged": false,
+    "retainedReference": true,
+    "diagnosticReportSha256": "4d69c2a10b9fe5a97ce0ce21b69f1d5609fd61d25a00c850255a048cb9a5746b",
+    "independentReviewSha256": "ee7f2b7e5da49efe7fa5c3d0337e129df66a27df73f896f7be0e6265b248166d",
+    "corpusWideAbsenceOrLostImportProven": false
   }
 }
