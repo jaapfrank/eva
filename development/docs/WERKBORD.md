@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Het volledige actuele geheel opleveren en laten beoordelen
 
-Eigen resultaatcontext hersteld; zelfstandig vervolg nog open
+E5.1 open: gewone afweging kiest nog geen eigen werk
 
 Klaar wanneer: Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.
 
@@ -27,7 +27,7 @@ Klaar wanneer: Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en 
 | Eigen initiatief | Context hersteld · dagelijks vervolg nog open | Zonder aansturing passende eigen activiteiten voortzetten, resultaat terugbrengen en later gebruiken; dagelijks nut blijft onbewezen. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | Bediening en afgebakende onderhoudsfase technisch afgerond. Samenhangend dagelijks gezinsgebruik en jouw acceptatie blijven F2.1/F2.2. |
 
-Contextcorrectie geïnstalleerd en werkelijk teruggelezen. Een zelfstandig doorlopende, nuttige aanwezigheid is nog niet bewezen; geen gezinsproef als technische blokkade.
+E5.1 blijft open: de echte nieuwe gewone afweging koos stilte. De geïnstalleerde zoekmogelijkheid is een technische verbetering, geen bewijs van zelfstandig dagelijks leven.
 
 ## Alle geregistreerde kleine taken
 

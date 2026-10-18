@@ -53,6 +53,7 @@ class PostgresSensoryEventStore:
         context_reviews_only: bool = False,
         household_binding=None,
         private_work_context_reader=None,
+        private_review_profile: str | None = None,
     ) -> None:
         self._timeline = PostgresOperationalTimeline(
             engine,
@@ -95,6 +96,12 @@ class PostgresSensoryEventStore:
                 not callable(private_work_context_reader) or not context_reviews_only
                 or household_binding is not None):
             raise ValueError("private work context requires the private owner review store")
+        if private_review_profile is not None and (not context_reviews_only
+                or household_binding is not None or not isinstance(private_review_profile, str)
+                or not 0 < len(private_review_profile) <= 80
+                or any(ch not in "abcdefghijklmnopqrstuvwxyz0123456789-" for ch in private_review_profile)):
+            raise ValueError("private review profile requires its private owner store")
+        self._private_review_profile = private_review_profile
         self._private_work_context_reader = private_work_context_reader
         self._context_reviews_only = context_reviews_only
         self._decision_prefix = ("sensory:initiative-review:" + hashlib.sha256(
@@ -182,7 +189,14 @@ class PostgresSensoryEventStore:
                         e.thread_id == latest.thread_id, e.event_type == "WILL_USAGE_UNCERTAIN")
                         .order_by(e.sequence.desc()).limit(1)).scalar_one()
                 if completion_source is None and not attention_due:
-                    if attention is not None or now - reviewed_at < timedelta(hours=1):
+                    # A changed installed decision capability is a new occasion,
+                    # not a replay. It cannot bypass pending/uncertain work or a
+                    # model-chosen future attention, and keeps the numeric source
+                    # identity and ordinary one-event-per-window deduplication.
+                    profile_changed = (self._private_review_profile is not None
+                        and self._event_from_thread(latest.thread_id).payload.get("review_profile")
+                            != self._private_review_profile)
+                    if attention is not None or (not profile_changed and now - reviewed_at < timedelta(hours=1)):
                         return "idle"
             if self._household_binding is None:
                 pending = connection.execute(sa.select(c.thread_id).join(operational_events, sa.and_(
@@ -202,6 +216,8 @@ class PostgresSensoryEventStore:
                 completion_id if completion_source is not None else str(window))
             thread_id = "sensory:" + source_id
             payload = {"review_window": window}
+            if self._private_review_profile is not None:
+                payload["review_profile"] = self._private_review_profile
             if attention_due:
                 payload["attention_origin"] = attention
             elif attention is not None:
@@ -1077,6 +1093,9 @@ class PostgresSensoryEventStore:
         *,
         now: datetime,
     ) -> None:
+        if decision.memory_search_context is not None and (not self._context_reviews_only
+                or self._household_binding is not None or claim.event.source != "initiative-review"):
+            raise ValueError("private memory search context cannot enter a shared decision")
         if self._household_binding is not None:
             if not self._matches_household_event(claim.event):
                 raise ValueError("household initiative decision audience differs")
@@ -1098,7 +1117,8 @@ class PostgresSensoryEventStore:
             decision = FreeWillDecision("silence", decision.reason, 0, decision.provider,
                 usage=decision.usage, initiative=decision.initiative,
                 source_context_sha256=decision.source_context_sha256,
-                next_attention=decision.next_attention)
+                next_attention=decision.next_attention,
+                memory_search_context=decision.memory_search_context)
         if decision.disposition == "respond" and self._cooldown_applies(
             claim, decision, now=now
         ):
@@ -1111,6 +1131,7 @@ class PostgresSensoryEventStore:
                 initiative=decision.initiative,
                 source_context_sha256=decision.source_context_sha256,
                 next_attention=decision.next_attention,
+                memory_search_context=decision.memory_search_context,
             )
         from eva.adapters.postgres.initiative_attention import attention_fields
         attention = (attention_fields(decision.next_attention, now=now) if self._context_reviews_only
@@ -1141,6 +1162,8 @@ class PostgresSensoryEventStore:
                 **attention,
                 **({"source_context_sha256": decision.source_context_sha256}
                    if decision.source_context_sha256 is not None else {}),
+                **({"memory_search_context": decision.memory_search_context}
+                   if decision.memory_search_context is not None else {}),
                 "source_event_id": claim.event.source_event_id,
                 "urgency": decision.urgency,
                 "usage": None if decision.usage is None else asdict(decision.usage),

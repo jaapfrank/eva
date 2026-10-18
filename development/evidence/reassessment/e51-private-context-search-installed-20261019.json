@@ -1,0 +1,130 @@
+{
+  "contract": "EvaPrivateContextSearchInstallation/v1",
+  "recordedAt": "2026-10-18T22:08:05.924063+00:00",
+  "taskId": "E5.1",
+  "status": "installed_ordinary_self_chosen_followthrough_open",
+  "technicalComplete": true,
+  "wholeTaskComplete": false,
+  "familyAccepted": false,
+  "existingRoute": "Private FreeWill decision through existing personal memory, native initiative adoption, work and delivery.",
+  "concreteGap": "Only a fixed broad recall was available during private orientation. The model could not choose a relevant query when that recall contained old probe restrictions.",
+  "added": [
+    "One optional model-chosen search_personal_memory through existing scoped recall; then one final decision.",
+    "Retain actual returned source context and aggregate both measured provider responses.",
+    "Revalidate person, authority, stop, foreground and claim across the read and decision.",
+    "Separate appropriate contact timing from quiet self-chosen research and development.",
+    "One ordinary reconsideration on an installed capability profile change, preserving uncertain-work, pending-attention and source deduplication guards."
+  ],
+  "notAdded": [
+    "No second memory, planner, agent or persistent daemon.",
+    "No predefined family topic, example-specific rule or required unsolicited message.",
+    "No voice implementation or configuration change."
+  ],
+  "tests": {
+    "newModelFile": {
+      "passed": 8,
+      "seconds": 1.73,
+      "logSha256": "559c187b42850f268c36577b0efbda15552d54ff60db0f9e9947c0c61a51e2ca"
+    },
+    "newApplicationFile": {
+      "passed": 27,
+      "seconds": 1.05,
+      "reportSha256": "80c4f3ada9a33752d40d8ce30cceab9cbc14b235ee61c9db124653ed361ca7da"
+    },
+    "postgresBundle": {
+      "passed": 80,
+      "seconds": 56.94,
+      "includesNewCases": 2,
+      "logSha256": "c0ec8cd3dd1c39c4b1017dfb6a658448a834cf9c6f4ea8c91b8ee3f88056a480"
+    },
+    "earlierModelAndExistingApplicationBundle": {
+      "passed": 30,
+      "seconds": 3.6,
+      "logSha256": "362c8edba1398a70fded6276e3c1e37ed47ade3f83846fcf718fbe8864d2930a"
+    },
+    "overlapNote": "These are separate targeted runs with overlap; counts are not summed into a unique or combined total.",
+    "providerCallsByTests": 0
+  },
+  "installed": {
+    "core": {
+      "image": "sha256:04fcb86321b0c7d6a1e5f86bca421ccfa394662678b66e82b7b8993d5de7470b",
+      "health": "healthy",
+      "sourceCount": 72,
+      "retainedMounts": true
+    },
+    "worker": {
+      "image": "sha256:003b383c970f396694e69fe0c22c20cf5d0b2aeb4e0a5f1fa000231cc71fb260",
+      "health": "healthy",
+      "sourceCount": 72,
+      "retainedMounts": true
+    }
+  },
+  "changedSources": [
+    "src/eva/application/free_will.py",
+    "src/eva/adapters/model/pydantic_conversation.py",
+    "src/eva/adapters/postgres/sensory_events.py",
+    "src/eva/bootstrap/runtime.py"
+  ],
+  "independentReview": "development/reviews/e51-private-context-search-review-20261019.json",
+  "measurements": {
+    "runtimeNewCandidate": {
+      "reviewModelAttempts": 1,
+      "inputTokens": 11021,
+      "outputTokens": 146,
+      "toolCalls": 1,
+      "measurement": "measured",
+      "credits": null
+    },
+    "developmentCredits": null,
+    "runtimeCredits": null
+  },
+  "remaining": [
+    "Ordinary self-chosen useful execution and verified result.",
+    "Unprompted later follow-through using what was actually learned.",
+    "Separate family observation and acceptance."
+  ],
+  "privateEvidence": {
+    "sourceParitySha256": "fa12cf3dae941c2242f733649adbac5bb61061559fce6f20a551d5360e331c6b",
+    "candidateMetadataSha256": "676716d5ccfca61b7aedb4f641374efd6b41b8c194a388c2efe93d069557989e",
+    "coreReceiptSha256": "92a6dbac9097ffc0653320a10fe913aae08b88cc9a7bda6736b95c4e06db3a56",
+    "workerReceiptSha256": "d4c37657ef05906121fa8ef0167df1f58211fa0ad74698f24843792e84038c50"
+  },
+  "ordinaryObservation": {
+    "observedAt": "2026-10-18T22:11:05.446679+00:00",
+    "originalSourceSha256": "e1124ae653c29d8ba8137bf631954fad28fea5f98fd7919ee996fb9f1fa50ae6",
+    "decisionSha256": "a7140b9c6f5968329095e0bf8b3d44cbca631b2c5347fe038139013580956493",
+    "decisionAt": "2026-10-18 22:10:13+00:00",
+    "sourceProfile": "private-memory-search-v1",
+    "sourceCreatedBy": "existing installed ordinary idle cycle after deployment",
+    "operatorQueuedReview": false,
+    "operatorChosenTopic": false,
+    "state": "silence",
+    "initiativeChosen": false,
+    "nextAttentionChosen": false,
+    "optionalMemorySearchUsed": false,
+    "usage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 11021,
+      "output_tokens": 146,
+      "model_attempts": 1
+    },
+    "noBlockerOrDispatchFailure": true,
+    "usefulDailyOutcomeProven": false,
+    "laterAutonomousFollowthroughProven": false,
+    "interpretation": "Ordinary cycle and retained result continuity run, but this choice supplies no self-chosen execution or later follow-through. No new technical execution gap proven by silence alone.",
+    "privateObservationSha256": "9d67ba44289e69992a6344da2e66c79c79fc00ee2935c1bbc316f9b7613f3af6"
+  },
+  "additionalReadOnlyDiagnosis": {
+    "sameImportAndRuntimeNamespace": true,
+    "sameImportedOwnerInCurrentRecallAliases": true,
+    "importMissingNotProven": true,
+    "nameAnchoredFacts": 8,
+    "nameAnchoredLegacyFacts": 8,
+    "genericLifeConceptFacts": 7,
+    "genericLifeConceptLegacyFacts": 4,
+    "answerModelCalls": 0,
+    "newPromptOrMemoryChangeApplied": false,
+    "note": "Read-only query contrast shows that memories are available with different searches. This does not prove a useful self-chosen task or that one retrieval query is universally better."
+  }
+}

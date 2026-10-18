@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
+from copy import deepcopy
 from datetime import datetime
 from typing import Callable, Literal, Protocol
 
@@ -82,8 +83,14 @@ class FreeWillDecision:
     initiative: PersonalInitiativeProposal | None = None
     source_context_sha256: str | None = None
     next_attention: NextAttention | None = None
+    memory_search_context: dict | None = None
 
     def __post_init__(self) -> None:
+        if self.memory_search_context is not None:
+            from eva.contracts.canonical_json import canonical_json_bytes
+            if (not isinstance(self.memory_search_context, dict)
+                    or len(canonical_json_bytes(self.memory_search_context)) > 8192):
+                raise ValueError("private memory search context is invalid")
         if self.next_attention is not None and not isinstance(self.next_attention, NextAttention):
             raise ValueError("next attention must be a validated choice")
         if self.source_context_sha256 is not None:
@@ -248,6 +255,7 @@ class FreeWillModelPort(Protocol):
         initiative_history: tuple[dict[str, str], ...] = (),
         initiative_capabilities: tuple[str, ...] = (),
         initiative_source_outcomes: tuple[dict, ...] = (),
+        private_context_search: Callable[[str], dict] | None = None,
     ) -> FreeWillDecision: ...
 
 
@@ -417,36 +425,35 @@ class SensoryDecisionWorker:
                 # without rewriting existing private memories or widening their audience.
                 memory_principal = (self._principal_id if self._memory_principal_resolver is None
                                     else self._memory_principal_resolver())
-                memory = self._memory.recall_for_presence(
-                    RecallCurrentFacts(
-                        recall_id=f"free-will:{event.source_event_id}",
-                        installation_id=self._installation_id,
-                        tenant_id=self._tenant_id,
-                        principal_id=memory_principal,
-                        audience=MemoryAudience.private_person(
-                            principal_id=memory_principal
-                        ),
-                        conversation_id="sensory:" + event.source,
-                        project_id=None,
-                        query_purpose="private_opportunity_review" if event.source == "initiative-review" else "passive_event_decision",
-                        requested_valid_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                        scope={
-                            "event_type": event.event_type,
-                            "kind": "private_opportunity" if event.source == "initiative-review" else "household_event",
-                            "source": event.source,
-                        },
-                        subject_ids=(memory_principal,),
-                        query_text=(
-                            "Persoonlijke plannen, dagelijkse behoeften, interesses en voorkeuren "
-                            "voor een nuttige eigen bijdrage. "
-                            + (_private_review_recall_context(event) if event.source == "initiative-review" else
-                               "Context bij deze waarneming: "
-                               f"{event.source} {event.event_type} "
-                               f"{event.payload.get('entity_id', '')} {state_description}")
-                        ),
-                        maximum_facts=8,
-                    )
+                private_query = RecallCurrentFacts(
+                    recall_id=f"free-will:{event.source_event_id}",
+                    installation_id=self._installation_id,
+                    tenant_id=self._tenant_id,
+                    principal_id=memory_principal,
+                    audience=MemoryAudience.private_person(
+                        principal_id=memory_principal
+                    ),
+                    conversation_id="sensory:" + event.source,
+                    project_id=None,
+                    query_purpose="private_opportunity_review" if event.source == "initiative-review" else "passive_event_decision",
+                    requested_valid_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    scope={
+                        "event_type": event.event_type,
+                        "kind": "private_opportunity" if event.source == "initiative-review" else "household_event",
+                        "source": event.source,
+                    },
+                    subject_ids=(memory_principal,),
+                    query_text=(
+                        "Persoonlijke plannen, dagelijkse behoeften, interesses en voorkeuren "
+                        "voor een nuttige eigen bijdrage. "
+                        + (_private_review_recall_context(event) if event.source == "initiative-review" else
+                           "Context bij deze waarneming: "
+                           f"{event.source} {event.event_type} "
+                           f"{event.payload.get('entity_id', '')} {state_description}")
+                    ),
+                    maximum_facts=8,
                 )
+                memory = self._memory.recall_for_presence(private_query)
                 history_reader = getattr(self._store, "recent_initiatives", None)
                 history = () if not callable(history_reader) else history_reader()
                 contact_history = getattr(self._store, "recent_private_contacts", None)
@@ -510,6 +517,43 @@ class SensoryDecisionWorker:
             contact_reader = getattr(self._store, "private_contact_allowed", None)
             private_contact = (context_review and not household_review
                 and callable(contact_reader) and contact_reader())
+            search_context = None
+            search_used = False
+            private_context_search = None
+            if (context_review and not household_review and event.source == "initiative-review"
+                    and event.event_type == "private_opportunity_review"
+                    and getattr(self._model, "supports_private_context_search", False) is True):
+                def revalidate_search():
+                    at = self._current_time(now)
+                    self._context_review_authorizer()
+                    principal = (self._principal_id if self._memory_principal_resolver is None
+                                 else self._memory_principal_resolver())
+                    if principal != private_query.principal_id:
+                        raise RuntimeError("private memory search owner binding changed")
+                    if callable(cancel_attention) and cancel_attention(claim, now=at):
+                        raise RuntimeError("private memory search attention was cancelled")
+                    if not self._store.context_review_claim_is_current(claim, now=at):
+                        raise RuntimeError("private memory search claim is no longer current")
+                    if self._dispatch_ready is not None and not self._dispatch_ready():
+                        raise RuntimeError("private memory search deferred by foreground activity")
+
+                def private_context_search(query_text):
+                    nonlocal search_used, search_context
+                    if search_used:
+                        raise RuntimeError("private memory search is already consumed")
+                    search_used = True
+                    if (not isinstance(query_text, str) or not query_text.strip()
+                            or len(query_text.encode("utf-8")) > 1024):
+                        raise ValueError("private memory search query is invalid")
+                    revalidate_search()
+                    query = replace(private_query,
+                        recall_id=private_query.recall_id + ":memorysearch",
+                        query_text="Semantische zoekconcepten: " + query_text)
+                    expanded = self._memory.recall_for_presence(query)
+                    revalidate_search()
+                    search_context = _bounded_private_memory_search_context(expanded, query_text)
+                    return deepcopy(search_context)
+
             model_entered = True  # All later failures remain potentially dispatched.
             decision = self._model.evaluate_sensory_event(
                 event,
@@ -520,7 +564,20 @@ class SensoryDecisionWorker:
                 **({"initiative_history": history} if history else {}),
                 **({"initiative_capabilities": capabilities} if callable(capability_reader) else {}),
                 **({"initiative_source_outcomes": source_outcomes} if source_outcomes else {}),
+                **({"private_context_search": private_context_search} if private_context_search is not None else {}),
             )
+            # Only actual host lookup output can be committed, never model-supplied metadata.
+            if search_context is not None:
+                try:
+                    revalidate_search()
+                except Exception as error:
+                    if (isinstance(decision.usage, ConversationModelUsage)
+                            and decision.usage.measurement == "measured"):
+                        error.model_usage = decision.usage
+                        error.validation_failure_stage = "sensory_decision"
+                        error.validation_failure_code = "private_context_changed_before_commit"
+                    raise
+            decision = replace(decision, memory_search_context=deepcopy(search_context))
             if source_outcomes:
                 from eva.contracts.canonical_json import canonical_sha256
                 decision = replace(decision, source_context_sha256=canonical_sha256(list(source_outcomes)))
@@ -593,6 +650,31 @@ def _private_review_recall_context(event: SensoryEvent) -> str:
         return ""
     return " Lopende eigen bedoelingen (bronhistorie, geen actuele bevestiging): " + json.dumps(
         commitments, ensure_ascii=False, separators=(",", ":"))[:1600]
+
+
+def _bounded_private_memory_search_context(memory: PresenceMemory, query_text: str) -> dict:
+    """Retain exact recall provenance within the existing private context budget."""
+    import hashlib
+    from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
+    facts = [fact.model_dump(mode="json") for fact in memory.confirmed_facts]
+    recall = memory.recall.model_dump(mode="json")
+    result = {"result_count": len(facts), "recalled_context": list(facts), "recall": recall,
+        "recall_sha256": canonical_sha256(recall),
+        "query_sha256": hashlib.sha256(query_text.encode("utf-8")).hexdigest(),
+        "is_execution_permission": False, "truncated": False, "omitted_count": 0}
+    while len(canonical_json_bytes(result)) > 8192 and result["recalled_context"]:
+        result["recalled_context"].pop()
+        result["omitted_count"] += 1
+        result["truncated"] = True
+    if len(canonical_json_bytes(result)) > 8192:
+        result["recall"] = {"sha256": result["recall_sha256"], "metadata_omitted": True}
+        result["recalled_context"] = list(facts)
+        result["omitted_count"] = 0
+        result["truncated"] = True
+        while len(canonical_json_bytes(result)) > 8192 and result["recalled_context"]:
+            result["recalled_context"].pop()
+            result["omitted_count"] += 1
+    return result
 
 
 def _bounded_routine_decision(event: SensoryEvent) -> FreeWillDecision | None:

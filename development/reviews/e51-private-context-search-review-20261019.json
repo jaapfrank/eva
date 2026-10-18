@@ -1,0 +1,123 @@
+{
+  "contract": "EvaPrivateContextSearchReview/v1",
+  "taskId": "E5.1",
+  "reviewedAt": "2026-10-18T22:09:26.161029+00:00",
+  "verdict": "GO_SOURCE_AND_RECORDED_INSTALLED_CONNECTION_ONLY",
+  "wholeTaskComplete": false,
+  "familyAccepted": false,
+  "scope": [
+    "src/eva/application/free_will.py",
+    "src/eva/adapters/model/pydantic_conversation.py",
+    "src/eva/adapters/postgres/sensory_events.py",
+    "src/eva/bootstrap/runtime.py"
+  ],
+  "method": "Independent source, focused test and saved installation-evidence review; no new test, provider or production call by this reviewer.",
+  "resolvedFinding": {
+    "id": "MS-01",
+    "problem": "A typed local input-budget rejection before the second provider dispatch could lose the already measured first request usage.",
+    "resolution": "The exact typed pre-dispatch rejection now retains measured first usage and a sensory validation marker. Unmeasured or missing second-request usage remains uncertain; no broad provider-exception conversion or replay.",
+    "coveredBy": "Final eight-case model retest, including typed continuation budget rejection and lost usage."
+  },
+  "checks": [
+    "At most one optional semantic lookup through the existing private recall port; no household or passive callback and no additional memory store.",
+    "Current principal, owner authorization, foreground, attention and exact claim are checked around lookup and before decision commit.",
+    "Query is bounded to 1024 UTF-8 bytes; the actual host-produced context is bounded to 8192 bytes and preserves source hashes and observation time. Model-supplied context cannot replace it.",
+    "Only the existing search and final decision tools are exposed. The continuation forces a final decision; both measured requests are aggregated.",
+    "A changed private capability profile permits a normal opportunity without bypassing unresolved usage, active work, pending attention or source/window deduplication.",
+    "Context persists through private-contact suppression and cooldown handling. Search grants no execution or communication authority and requires no topic or message."
+  ],
+  "validation": {
+    "runs": [
+      {
+        "scope": "Final model cases",
+        "passed": 8,
+        "seconds": 1.73,
+        "logSha256": "559c187b42850f268c36577b0efbda15552d54ff60db0f9e9947c0c61a51e2ca"
+      },
+      {
+        "scope": "New application cases after correction",
+        "passed": 27,
+        "seconds": 1.05
+      },
+      {
+        "scope": "Postgres new and relevant existing cases",
+        "passed": 80,
+        "seconds": 56.94,
+        "logSha256": "c0ec8cd3dd1c39c4b1017dfb6a658448a834cf9c6f4ea8c91b8ee3f88056a480"
+      },
+      {
+        "scope": "Earlier model/application regression bundle",
+        "passed": 30,
+        "seconds": 3.6,
+        "logSha256": "362c8edba1398a70fded6276e3c1e37ed47ade3f83846fcf718fbe8864d2930a"
+      }
+    ],
+    "overlap": "Runs overlap and are not summed into a unique total. These are deterministic focused checks, not ordinary household acceptance."
+  },
+  "installationReview": {
+    "basis": "Saved candidate source maps, role overlays, parity metadata and installation receipts; no fresh runtime query by reviewer.",
+    "sourcesPerRole": 72,
+    "candidateMapsMatchRecordedInstalledMaps": true,
+    "changedNodeCheck": "Role-specific changed AST nodes match the reviewed checkout changes; removing the single new runtime composition keyword restores each role-specific prior runtime AST.",
+    "preservation": "Other role-specific changes are preserved. Core and worker are not claimed byte-identical. No speech implementation or configuration review is claimed.",
+    "publicEvidence": {
+      "path": "development/evidence/reassessment/e51-private-context-search-installed-20261019.json",
+      "sha256": "674c17dd991b036552bfa061b0708454851ab5e5465464e8e933eeafbd469ddf"
+    },
+    "parityMetadataSha256": "fa12cf3dae941c2242f733649adbac5bb61061559fce6f20a551d5360e331c6b",
+    "candidateMetadataSha256": "676716d5ccfca61b7aedb4f641374efd6b41b8c194a388c2efe93d069557989e",
+    "receiptSha256": {
+      "core": "92a6dbac9097ffc0653320a10fe913aae08b88cc9a7bda6736b95c4e06db3a56",
+      "worker": "d4c37657ef05906121fa8ef0167df1f58211fa0ad74698f24843792e84038c50"
+    }
+  },
+  "sourceBindings": {
+    "core": {
+      "eva/application/free_will.py": "b25040ae7a6fc2f919f2b03c19fd766ef3fb8dfd67b3de3e68cccaa0f41efa2c",
+      "eva/adapters/model/pydantic_conversation.py": "0d5b6e5495184d662f41c7c5a080902e3a5b3cf9508e89297facf02906a85a48",
+      "eva/adapters/postgres/sensory_events.py": "e60b382757f00239bcec55f5cc9260f64bc5c82e7143f2c0eeb462148be3603e",
+      "eva/bootstrap/runtime.py": "b0d4d28a0181ee1245c01f9125be4dc97f37e23ca421b2a11ad7d229aefe7d3b"
+    },
+    "worker": {
+      "eva/application/free_will.py": "b25040ae7a6fc2f919f2b03c19fd766ef3fb8dfd67b3de3e68cccaa0f41efa2c",
+      "eva/adapters/model/pydantic_conversation.py": "7b6b6b43782c236af690d2d205fffc9131af7f9ea6dc49dd1c30c8c4fb34cf07",
+      "eva/adapters/postgres/sensory_events.py": "e60b382757f00239bcec55f5cc9260f64bc5c82e7143f2c0eeb462148be3603e",
+      "eva/bootstrap/runtime.py": "fc2ae9f3e59a33732ad6dcf5f4503b52c5555ffb7b9378cf1787663d78ed69de"
+    }
+  },
+  "priorReviewSha256": "bde03c30aa55af9baa913be16a356a106cfb90bcaf711fdd5604bf611aa8ee46",
+  "remainingBlockers": [],
+  "limits": [
+    "GO covers this source/context contract and its recorded installed connection only.",
+    "A useful ordinary self-chosen action, checked result and later unprompted reuse remain to be observed.",
+    "Daily autonomy, learning and household acceptance are not established; E5.1 remains open."
+  ],
+  "ordinaryObservationAddenda": [
+    {
+      "reviewedAt": "2026-10-18T22:13:09.311054+00:00",
+      "previousReviewSha256": "b30ea2c8b75dc9453d1e76bede9785f2960cafa1614518de703f4ed62733449f",
+      "evidenceSha256": "9d67ba44289e69992a6344da2e66c79c79fc00ee2935c1bbc316f9b7613f3af6",
+      "scope": "Exact ordinary private orientation window 497878; saved events only.",
+      "decidedAt": "2026-10-18T22:10:13+00:00",
+      "phase": "will_decided",
+      "disposition": "silence",
+      "expressionPrepared": false,
+      "initiativeAdmitted": false,
+      "attentionRequested": false,
+      "memorySearchUsed": false,
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 11021,
+        "output_tokens": 146,
+        "model_attempts": 1
+      },
+      "origin": "Coordinator records an ordinary post-startup scheduler cycle, with no manually queued task; inspected event sequence contains observed, claimed, model-started and decided events only.",
+      "interpretation": "The offered search was optional and was not used. This observation supplies no useful self-chosen initiative or later followthrough proof. It does not by itself establish a new implementation defect or justify repeated prompt variants.",
+      "independentContentReview": "The separate interface reviewer reports correct use of the existing source, result and feedback. This addendum verifies structural events and usage, without publishing or independently re-scoring private text.",
+      "verdictUnchanged": "GO_SOURCE_AND_RECORDED_INSTALLED_CONNECTION_ONLY",
+      "wholeTaskComplete": false,
+      "familyAccepted": false
+    }
+  ]
+}

@@ -1638,6 +1638,7 @@ def create_runtime_app() -> FastAPI:
                 initiative_principal_id=settings.background_principal_id,
                 initiative_authorizer=lambda: runtime._initiative_authority().policy(),
                 context_reviews_only=True, decision_lease_seconds=300,
+                private_review_profile=getattr(model, "private_opportunity_profile", None),
                 private_work_context_reader=(None if delegated_work_service is None
                     else delegated_work_service.private_initiative_work_context),
             )
