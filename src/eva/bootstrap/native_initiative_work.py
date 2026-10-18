@@ -99,8 +99,7 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
     if type(old) is not DelegatedInitiativeDigitalWorkSpec:
         raise InitiativeMandateDenied("native recovery requires its original typed source")
     _, mandate_sha = authority.policy()
-    if mandate_sha != old.origin.mandate_sha256:
-        raise InitiativeMandateDenied("native recovery mandate changed")
+    previous_mandate_sha = authority._work_mandate(old)
     current_grant = authority.digital_grant(service.digital_profile)
     if not set(old.grant.capability_ids) <= set(current_grant.capability_ids):
         raise InitiativeMandateDenied("native recovery grant no longer authorized")
@@ -153,6 +152,8 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
             raise InitiativeMandateDenied("native recovery admission deadline expired")
         authority.timeline._scope(conn)
         guard, _ = authority.bind_resume_work(current, spec, now=now, _connection=conn)
+        if guard.mandate_sha != mandate_sha:
+            raise InitiativeMandateDenied("native recovery mandate changed during admission")
         admission = service.store.admit(spec=spec, title=current.title, summary=current.summary,
             worker_role=current.worker_role, retention_policy_id=current.retention_policy_id,
             retention_until=current.retention_until, occurred_at=created,
@@ -165,7 +166,8 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
             event_type="PERSONAL_INITIATIVE_WORK_RESUMED", occurred_at=created,
             data={"intent_id": old.origin.intent_id, "origin": "eva_initiative",
                 "work_id": spec.work_id, "spec_sha256": spec.sha256,
-                "mandate_sha256": mandate_sha, "generation": spec.generation,
+                "mandate_sha256": mandate_sha, "previous_mandate_sha256": previous_mandate_sha,
+                "generation": spec.generation,
                 "previous_work_id": old.work_id, "previous_spec_sha256": old.sha256,
                 "source_ingress_sha256": old.source_ingress_sha256,
                 "recovery_kind": "explicit_private_owner_native_resume",

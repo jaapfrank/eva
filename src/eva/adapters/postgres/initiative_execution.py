@@ -304,7 +304,7 @@ class PostgresInitiativeAuthority:
         expected["audience"] = {"kind": "private_person", "principal_id": turn.principal_id}
         if (spec.source.model_dump(mode="json") != expected
                 or canonical_sha256(PostgresConversationJournal._ingress_data(turn)) != spec.source_ingress_sha256
-                or origin.intent_id != claim.intent_id or origin.mandate_sha256 != guard.mandate_sha):
+                or origin.intent_id != claim.intent_id or self._work_mandate(spec) != guard.mandate_sha):
             raise InitiativeMandateDenied("native digital source differs from its durable initiative")
         policy, _ = self.policy()
         digital = policy.get("digital_work")
@@ -316,30 +316,56 @@ class PostgresInitiativeAuthority:
 
     @staticmethod
     def _work_admission(events, spec):
-        expected_type = ("PERSONAL_INITIATIVE_WORK_ADMITTED" if spec.generation == 1
-                         else "PERSONAL_INITIATIVE_WORK_RESUMED")
+        """Validate the immutable host admission chain, including old same-policy resumes."""
+        admitted = {}
         for event in events:
-            if event.event_type != expected_type:
-                continue
             data = event.payload.get("data", {})
-            if (canonical_sha256(event.payload) != event.payload_sha256
+            digest = data.get("mandate_sha256")
+            if (event.event_type not in {"PERSONAL_INITIATIVE_WORK_ADMITTED", "PERSONAL_INITIATIVE_WORK_RESUMED"}
+                    or canonical_sha256(event.payload) != event.payload_sha256
                     or data.get("intent_id") != spec.origin.intent_id
-                    or data.get("work_id") != spec.work_id or data.get("spec_sha256") != spec.sha256
-                    or data.get("mandate_sha256") != spec.origin.mandate_sha256):
+                    or not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None
+                    or not isinstance(data.get("spec_sha256"), str)
+                    or re.fullmatch(r"[0-9a-f]{64}", data["spec_sha256"]) is None):
                 continue
-            if spec.generation == 1:
-                if event.sequence == spec.origin.claim_revision + 1:
-                    return event
-            elif (event.sequence > spec.origin.claim_revision + 1
-                    and data.get("generation") == spec.generation
-                    and data.get("previous_work_id") == spec.parent_task_id
-                    and data.get("source_ingress_sha256") == spec.source_ingress_sha256
-                    and data.get("recovery_kind") == "explicit_private_owner_native_resume"
-                    and all(isinstance(data.get(key), str)
-                            and re.fullmatch(r"[0-9a-f]{64}", data[key]) is not None
-                            for key in ("previous_spec_sha256", "recovery_ingress_sha256"))):
-                return event
-        return None
+            if event.event_type == "PERSONAL_INITIATIVE_WORK_ADMITTED":
+                if (event.sequence != spec.origin.claim_revision + 1
+                        or digest != spec.origin.mandate_sha256
+                        or data.get("work_id") != "work:eva-initiative:" + spec.origin.intent_id.removeprefix("personal-interest:")):
+                    continue
+                generation = 1
+            else:
+                prior = admitted.get((data.get("previous_work_id"), data.get("previous_spec_sha256")))
+                if (prior is None or type(data.get("generation")) is not int
+                        or data["generation"] != prior[1] + 1
+                        or data.get("source_ingress_sha256") != spec.source_ingress_sha256
+                        or data.get("recovery_kind") != "explicit_private_owner_native_resume"
+                        or not isinstance(data.get("recovery_ingress_sha256"), str)
+                        or re.fullmatch(r"[0-9a-f]{64}", data["recovery_ingress_sha256"]) is None):
+                    continue
+                previous_digest = prior[0].payload["data"]["mandate_sha256"]
+                # Legacy resume admissions had no revision field and were restricted
+                # to the original mandate. Do not reinterpret them as revision grants.
+                if "previous_mandate_sha256" in data:
+                    if data["previous_mandate_sha256"] != previous_digest:
+                        continue
+                elif digest != spec.origin.mandate_sha256 or digest != previous_digest:
+                    continue
+                generation = data["generation"]
+            admitted[(data.get("work_id"), data["spec_sha256"])] = (event, generation)
+        matched = admitted.get((spec.work_id, spec.sha256))
+        if matched is None or matched[1] != spec.generation:
+            return None
+        event = matched[0]
+        if spec.generation > 1 and event.payload["data"].get("previous_work_id") != spec.parent_task_id:
+            return None
+        return event
+
+    def _work_mandate(self, spec):
+        admission = self._work_admission(self.timeline.events(spec.origin.thread_id), spec)
+        if admission is None:
+            raise InitiativeMandateDenied("native work has no exact host admission")
+        return admission.payload["data"]["mandate_sha256"]
 
     def bind_resume_work(self, previous, spec, *, now, _connection=None):
         """Admission-only guard; resume never invents another native source claim."""
@@ -401,7 +427,7 @@ class PostgresInitiativeAuthority:
                     != spec.source_ingress_sha256
                 or bound.get("work_id") != spec.work_id
                 or bound.get("spec_sha256") != spec.sha256
-                or bound.get("mandate_sha256") != spec.origin.mandate_sha256):
+                or admission is None):
             raise InitiativeMandateDenied("initiative memory source binding differs")
         if work.state in {"succeeded", "verified"}:
             completion = next((event for event in reversed(events)
@@ -477,7 +503,7 @@ class PostgresInitiativeAuthority:
             work, turn = self._completed_work(conn, work_id, now=now)
         spec = work.spec
         digital = policy.get("digital_work")
-        if (digest != spec.origin.mandate_sha256 or digital is None
+        if (digest != self._work_mandate(spec) or digital is None
                 or digital["worker_profile_release_sha256"] != spec.worker_profile_release_sha256
                 or not set(spec.grant.capability_ids).issubset(
                     set(digital["capability_ids"]) | {cap["action_name"] for cap in policy["capabilities"]})):
@@ -522,7 +548,7 @@ class PostgresInitiativeAuthority:
                 "message_id": turn.message_id, "text": turn.text, "occurred_at": turn.occurred_at})}
         if self.timeline.events(thread)[0].payload.get("data") != expected:
             raise InitiativeMandateDenied("original native execution binding differs")
-        guard = ReviewedNativeSavedArtifactGuard(self, claim, turn, work.spec.origin.mandate_sha256,
+        guard = ReviewedNativeSavedArtifactGuard(self, claim, turn, self._work_mandate(work.spec),
             thread, work=work, publication=publication, candidate_content=candidate_content)
         guard.check(turn)
         return guard, turn
@@ -585,10 +611,10 @@ class PostgresInitiativeAuthority:
         turn = execution_turn(claim)
         thread = "initiative-execution:" + claim.intent_id.removeprefix("personal-interest:")
         data = {"intent_id": claim.intent_id, "origin": "eva_initiative",
-                "mandate_sha256": digest, "turn_sha256": canonical_sha256({
+                "mandate_sha256": (digest if work_spec is None else work_spec.origin.mandate_sha256), "turn_sha256": canonical_sha256({
                     "principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
                     "message_id": turn.message_id, "text": turn.text, "occurred_at": turn.occurred_at})}
-        if resume_work is not None:
+        if work_spec is not None:
             existing = self.timeline.events(thread)
             if not existing or existing[0].payload.get("data") != data:
                 raise InitiativeMandateDenied("native resume lacks its original execution binding")
@@ -654,7 +680,7 @@ class NativeInitiativeGuard:
                     or data.get("spec_sha256") != previous.spec.sha256
                     or data.get("work_state") != "failed"
                     or data.get("delegated_usage") != (None if previous.usage is None else previous.usage.to_payload())
-                    or self.work_spec.origin.mandate_sha256 != self.mandate_sha):
+                    or self.authority._work_admission(events, previous.spec) is None):
                 raise InitiativeMandateDenied("native failure was stopped, superseded or is uncertain")
             return row
         admission = (None if self.work_spec is None else self.authority._work_admission(
@@ -663,6 +689,7 @@ class NativeInitiativeGuard:
             None if admission is None else admission.sequence)
         phase = "initiative_work_waiting" if self.work_spec is not None else "exploration_claimed"
         if (row is None or row.revision != revision or row.phase != phase
+                or (admission is not None and admission.payload["data"]["mandate_sha256"] != self.mandate_sha)
                 or row.status != "waiting_for_proof"
                 or row.adoption["data"].get("execution_mode") != "autonomous_task"):
             raise InitiativeMandateDenied("initiative stopped, superseded or no longer claimed before dispatch")

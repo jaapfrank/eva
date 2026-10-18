@@ -1,14 +1,23 @@
 {
   "contract": "EvaE51NativeResumeReview/v1",
-  "recordedAt": "2026-10-18T13:56:18.253972+00:00",
+  "recordedAt": "2026-10-18T14:15:25.704435+00:00",
   "taskId": "E5.1",
   "sourceVerdict": "GO",
   "installedVerdict": "Exact owned source hashes,68 shared execution pins and healthy current role images verified; configuration/mount retention receipts preserved.",
-  "functionalVerdict": "PENDING_ACTUAL_RESULT_DELIVERY_AND_FOLLOWTHROUGH",
+  "functionalVerdict": "GO_ACTUAL_RECOVERED_WORK_AND_DELIVERY",
   "taskCompleted": false,
   "independentCombinedSourceReviewSHA256": "f95823f071785761e1c36303b98327f4a7410f617eb060841fefe0d5f965bd4c",
   "nativeTestsPassed": 39,
   "readContinuationTestsPassed": 22,
   "sourceCodeReviewDoesNotProveAutonomy": true,
-  "recoveryProvenance": "Explicit operator-assisted recovery, original spontaneous choice retained, no new spontaneous admission."
+  "recoveryProvenance": "Explicit operator-assisted recovery, original spontaneous choice retained, no new spontaneous admission.",
+  "historyRevisionSourceReviewSHA256": "a7f769486aff84b0d997d07443a6a9e764235e5fedc987701963b76e6f131bc3",
+  "historyRevisionInstalledCASReadbackSHA256": "dfc8dd360638e365c5761811a1a7eca13cb3c64a6db3a74c8724bdbbdf0fdf1f",
+  "historyRevisionTestsUniqueCases": 44,
+  "executionClockAndRunnerTestsPassed": 123,
+  "offlinePolicyChecksPassed": 16,
+  "overallE5": "PENDING_NATURAL_FOLLOWTHROUGH",
+  "independentActualOutcomeReviewSHA256": "3707b1d15017826950abc57af8d4b22c867731732b5d6ce719dc8e73aa974e67",
+  "actualResultArithmeticIndependentlyVerified": true,
+  "memoryRetentionIsNotLaterLearning": true
 }

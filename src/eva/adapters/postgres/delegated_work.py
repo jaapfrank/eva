@@ -327,7 +327,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     or delivery_destination is not None
                     or spec.origin.intent_id != _native_guard.claim.intent_id
                     or spec.origin.claim_revision != _native_guard.claim.revision
-                    or spec.origin.mandate_sha256 != _native_guard.mandate_sha):
+                    or (resumes_work_id is None and spec.origin.mandate_sha256 != _native_guard.mandate_sha)):
                 raise DelegatedWorkConflict("native admission requires its atomic host handoff")
             if resumes_work_id is not None and (
                     _native_guard.resume_work is None

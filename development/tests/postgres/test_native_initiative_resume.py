@@ -167,3 +167,95 @@ def test_second_known_failure_can_resume_same_original_execution(native_digital)
     assert third.spec.execution_id == old.spec.execution_id
     assert third.spec.origin == old.spec.origin
     f.auth.bind_work(third.spec)
+
+
+def revise_mandate(f):
+    old_digest = f.auth.policy()[1]
+    f.policy["authorization_source"] += "; explicit owner-approved revision"
+    f.path.write_text(json.dumps(f.policy))
+    new_digest = canonical_sha256({k: v for k, v in f.policy.items() if k != "enabled"})
+    return old_digest, new_digest
+
+
+def test_explicit_admitted_revision_resumes_same_origin_with_current_guard(native_digital):
+    f = native_digital
+    old = failed(f)
+    original_payload = old.spec.to_payload()
+    first_answer = resume(f, old)
+    second = f.store.load(first_answer["work"]["work_id"], **f.service._owner)
+    old_guard, turn = f.auth.bind_work(second.spec)
+    call = started(f, second)
+    f.store.record_failure(call, usage=result(call).usage, error_code="incomplete_work",
+        error_fingerprint="e" * 64, ambiguous=False, now=NOW)
+    second = f.store.load(second.spec.work_id, **f.service._owner)
+    previous_digest, current_digest = revise_mandate(f)
+    with pytest.raises(InitiativeMandateDenied, match="owner admission required"):
+        resume(f, second)
+    with pytest.raises(InitiativeMandateDenied, match="previous mandate revision differs"):
+        f.auth.admit_revision("f" * 64, current_digest)
+    assert f.auth.admit_revision(previous_digest, current_digest)["status"] == "revised"
+    with pytest.raises(InitiativeMandateDenied): old_guard.check(turn)
+    with pytest.raises(InitiativeMandateDenied): f.auth.bind_work(second.spec)
+    answer = resume(f, second)
+    third = f.store.load(answer["work"]["work_id"], **f.service._owner)
+    assert third.spec.generation == 3
+    assert third.spec.origin == old.spec.origin
+    assert third.spec.origin.mandate_sha256 == previous_digest != current_digest
+    assert third.spec.execution_id == old.spec.execution_id
+    assert old.spec.to_payload() == original_payload
+    event = f.auth.timeline.events(f.claim.thread_id)[-1]
+    assert event.payload["data"]["mandate_sha256"] == current_digest
+    assert event.payload["data"]["previous_mandate_sha256"] == previous_digest
+    guard, actual_turn = f.auth.bind_work(third.spec)
+    assert actual_turn == turn
+    assert guard.mandate_sha == current_digest
+    assert f.auth._work_mandate(third.spec) == current_digest
+    call = started(f, third)
+    saved = f.store.record_success(call, result(call), now=NOW)
+    assert f.control.artifact(f.claim.intent_id, now=NOW)["content"] == saved.result.output
+    assert f.auth.work_memory_source(saved, now=NOW) == turn
+    assert f.auth.retained_procedure_source(source=third.spec.source.model_dump(mode="json"), now=NOW) == turn
+    assert f.auth.reviewed_work_current(third.spec.work_id, now=NOW) == (saved, turn)
+    assert f.store.load(old.spec.work_id, **f.service._owner).spec.to_payload() == original_payload
+
+
+@pytest.mark.parametrize("stop", ["parent", "mandate"])
+def test_explicit_revision_does_not_override_stop_or_revoke(native_digital, stop):
+    f = native_digital
+    old = failed(f)
+    before, after = revise_mandate(f)
+    f.auth.admit_revision(before, after)
+    if stop == "parent": f.control.stop(f.claim.intent_id, now=NOW)
+    else: f.auth.revoke()
+    with pytest.raises(InitiativeMandateDenied): resume(f, old)
+
+
+def test_revision_admission_cannot_borrow_another_previous_digest(native_digital):
+    f = native_digital
+    old = failed(f)
+    before, after = revise_mandate(f)
+    f.auth.admit_revision(before, after)
+    answer = resume(f, old)
+    second = f.store.load(answer["work"]["work_id"], **f.service._owner)
+    events = f.auth.timeline.events(f.claim.thread_id)
+    event = events[-1]
+    data = {**event.payload["data"], "previous_mandate_sha256": "f" * 64}
+    payload = {**event.payload, "data": data}
+    forged = replace(event, payload=payload, payload_sha256=canonical_sha256(payload))
+    assert f.auth._work_admission(events[:-1] + (forged,), second.spec) is None
+
+
+def test_resume_rejects_concurrent_admitted_revision_before_queue_insert(native_digital, monkeypatch):
+    f = native_digital
+    old = failed(f)
+    events = f.auth.timeline.events(f.claim.thread_id)
+    bind = f.auth.bind_resume_work
+    def concurrent_revision(*args, **kwargs):
+        before, after = revise_mandate(f)
+        f.auth.admit_revision(before, after)
+        return bind(*args, **kwargs)
+    monkeypatch.setattr(f.auth, "bind_resume_work", concurrent_revision)
+    with pytest.raises(InitiativeMandateDenied, match="changed during admission"):
+        resume(f, old)
+    assert f.auth.timeline.events(f.claim.thread_id) == events
+    assert len(f.store.workboard(**f.service._owner, now=NOW).cards) == 1

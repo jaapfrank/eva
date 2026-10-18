@@ -39,7 +39,7 @@ class _UnfinishedWorkPlan(ConversationConflict):
     """Preserved progress exists, but this bounded attempt cannot finish it."""
 
 
-def _remaining_budget_context(grant, actual, *, calls, dispatches, response_output_tokens=None, response_input_tokens=None, remaining_wall_seconds=None):
+def _remaining_budget_context(grant, actual, *, calls, dispatches, response_output_tokens=None, response_input_tokens=None, remaining_wall_seconds=None, observed_at=None):
     """Report known counters; incomplete measurement cannot imply free capacity."""
     limits = {"model_runs": grant.maximum_model_runs, "input_tokens": grant.maximum_input_tokens,
               "output_tokens": grant.maximum_output_tokens, "tool_calls": grant.maximum_tool_calls,
@@ -51,9 +51,15 @@ def _remaining_budget_context(grant, actual, *, calls, dispatches, response_outp
                  for name in ("model_runs", "input_tokens", "output_tokens")}
     remaining["tool_calls"] = max(0, grant.maximum_tool_calls - max(calls, dispatches))
     remaining["wall_seconds"] = remaining_wall_seconds
+    clock_context = {}
+    if observed_at is not None:
+        if observed_at.tzinfo is None or observed_at.utcoffset() is None:
+            raise ValueError("execution observation requires an aware host clock")
+        clock_context = {"execution_observed_at_utc": observed_at.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                         "source_message_timestamp_is_historical": True}
     return ("Resterend budget van deze poging (null = onbekend; gemelde deelmetingen zijn geen volledige meting): "
             + json.dumps({"measurement": actual.measurement, "limits": limits,
-                          "used": used, "remaining": remaining}, separators=(",", ":"))
+                          "used": used, "remaining": remaining, **clock_context}, separators=(",", ":"))
             + " Input telt opnieuw mee bij elke modelcall, inclusief eerdere context en toolresultaten. "
               "Ook een eindantwoord verbruikt een modelcall. Houd daarvoor ruimte naast uitvoering en controle; haal alleen relevante gegevens op. "
               "Sla geen vereiste controle over en claim geen afronding om budget te sparen. "
@@ -509,7 +515,8 @@ class DelegatedDigitalRunner:
                                         response_output_tokens=(max(0, spec.grant.maximum_output_tokens - latest_usage.output_tokens)
                                             if latest_usage.measurement == "measured" else None),
                                         response_input_tokens=self.profile.maximum_response_input_tokens,
-                                        remaining_wall_seconds=max(0, int((deadline - self.clock()).total_seconds()))))
+                                        remaining_wall_seconds=max(0, int((deadline - self.clock()).total_seconds())),
+                                        observed_at=self.clock()))
             conversation = LivingConversation(task_memory, task_model, self.identity, actions)
 
             def execute():

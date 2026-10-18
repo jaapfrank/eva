@@ -1,8 +1,8 @@
 {
   "contract": "EvaE51NativeResume/v1",
-  "recordedAt": "2026-10-18T13:55:25.240862+00:00",
+  "recordedAt": "2026-10-18T14:12:37.440758+00:00",
   "taskId": "E5.1",
-  "status": "installed_actual_recovery_running",
+  "status": "installed_actual_initiative_completed_and_delivered_pending_followthrough_review",
   "taskCompleted": false,
   "finding": "Eva made a genuine spontaneous initiative choice. A known read verification failure and loss of native source identity in the existing resume path prevented finishing it. Silence after a blocked task was not proof that no original initiative existed.",
   "changes": [
@@ -11,6 +11,217 @@
     "A host-bound failed REST GET remains failed context, but the admitted worker may choose a new authorized indexed read. Writes, conflicts and uncertain outcomes do not gain replay authority."
   ],
   "sourceFiles": [
+    {
+      "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+      "sha256": "6b9ef47d3b8ddd41d0dd7a7f49bba9504300eae79f0dc0db712f83168ae215fb"
+    },
+    {
+      "path": "src/eva/bootstrap/native_initiative_work.py",
+      "sha256": "2b36a0809829b1fbc91670ab5dc4a478ad2e59aba3c58fd0bc6ba9327490f977"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "sha256": "a0cbef3de3b43ac56c7ec2098dd014687386cb69b88bc32ef00a1040c06c5c81"
+    },
+    {
+      "path": "src/eva/adapters/postgres/delegated_work.py",
+      "sha256": "9a8daa0be803f8962c36e2b270115f1e30588c7f4d4e97294c1032797b720eca"
+    },
+    {
+      "path": "src/eva/contracts/delegated_digital_work.py",
+      "sha256": "92c797cc6482e95a0ae47b7fda93dd5cab48a3e3416094789f97ed644c5aae2e"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_source_outcomes.py",
+      "sha256": "289d7b88aa4cdfc5ce2f2b9d04cbc261ad807ab8762cedef90642f82aaa19d1d"
+    },
+    {
+      "path": "src/eva/adapters/postgres/sensory_events.py",
+      "sha256": "7ed4f99dd0f057ec15a31c12c5e814fa51070df363e86bdc63a85f408a4e0a3b"
+    },
+    {
+      "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+      "sha256": "6c52076014d02653bb10b360e6be4a92f56fbc3506db57ad503bc725b069fa22"
+    },
+    {
+      "path": "src/eva/adapters/connectors/delegated_completion.py",
+      "sha256": "323f6282653836bed4627321aa9cad3594366f0d12ede449e00a6f548828d404"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "43aad9eb717cf7517b3038d8bd3c7c46307f70af0dd5a7f54c6fe1a10248eb7f"
+    }
+  ],
+  "installation": {
+    "roles": {
+      "core": {
+        "image": "sha256:ed6626f48830cbee253cb62caf55e687b43f10e40f7cc01b4d4f225e0ccfc27e",
+        "health": "healthy",
+        "startedAt": "2026-10-18T14:08:17.319955046Z",
+        "imageExact": true,
+        "ownedSourceExact": true
+      },
+      "worker": {
+        "image": "sha256:95040f84182deb638d3f7b0f8537b40ac6b920c16eb9b917b29b4f784e934abe",
+        "health": "healthy",
+        "startedAt": "2026-10-18T14:08:48.584122852Z",
+        "imageExact": true,
+        "ownedSourceExact": true
+      }
+    },
+    "digitalSourcePins": 68,
+    "digitalSourceDifferences": [],
+    "ownedChangedSourceCount": 10,
+    "preservedOtherExecutorModules": [
+      "eva/adapters/connectors/home_assistant_admin.py",
+      "eva/adapters/postgres/connector_results.py"
+    ],
+    "changedSpeechFilesOrServices": false,
+    "configurationAndDataPreserved": true
+  },
+  "verification": {
+    "readContinuation": {
+      "passed": 22,
+      "seconds": 3.15,
+      "modelCalls": 0,
+      "externalServices": 0
+    },
+    "nativePostgres": {
+      "passed": 39,
+      "deselected": 19,
+      "seconds": 53.91,
+      "wallSeconds": 55.801,
+      "modelCalls": 0,
+      "productionDatabaseWrites": 0
+    },
+    "independentCombinedSourceReviewSHA256": "f95823f071785761e1c36303b98327f4a7410f617eb060841fefe0d5f965bd4c",
+    "nativePatchSHA256": "57045771b208234949b77a0016e31a55447214b1deb6f7f41c7b887ad5965662",
+    "historyRevisionInstalledCASReviewSHA256": "dfc8dd360638e365c5761811a1a7eca13cb3c64a6db3a74c8724bdbbdf0fdf1f"
+  },
+  "actualRecovery": {
+    "at": "2026-10-18T13:55:01+00:00",
+    "originalAdmissionSpontaneous": true,
+    "recoveryOperatorAssisted": true,
+    "newSpontaneousAdmission": false,
+    "created": true,
+    "generation": 2,
+    "originalWorkStillFailed": true,
+    "newResultProven": false,
+    "deliveryProven": false,
+    "laterSourceFollowthroughProven": false,
+    "modelUsage": {
+      "measurement": "partial",
+      "completed_model_responses": 3,
+      "tool_calls": 2,
+      "input_tokens": 34269,
+      "output_tokens": 571,
+      "total_tokens": 34840,
+      "cost_usd_micros": null
+    },
+    "creditCost": null,
+    "completedAt": "2026-10-18T13:57:20Z",
+    "state": "failed",
+    "errorCode": "incomplete_work",
+    "actualVerifiedRead": true,
+    "remainingGap": "Existing local HA history read route is not admitted for general entities. Original immutable message timestamp was also mistaken for present execution time."
+  },
+  "limits": [
+    "Technical operator recovery is not an independent new initiative.",
+    "No completion from containers, tests or queue admission.",
+    "Original partial/unknown use and failures remain unchanged.",
+    "Earlier E4.5 later-use learning proof remains within original scope; no rerun of HUE or competitor matrix.",
+    "Seven actual family days and owner acceptance remain F2.1/F2.2."
+  ],
+  "developmentCreditCost": null,
+  "nextChangedCause": "No retry required: actual task completed and was privately delivered. Observe normal source-bound followthrough and finish the independent outcome review; retain family acceptance separately.",
+  "initialInstalledRepair": {
+    "roles": {
+      "core": {
+        "image": "sha256:2508d53cf53a32f8996b49890ded72184d05fbde3f78b6ad0f6d125e24c0b0d0",
+        "health": "healthy",
+        "startedAt": "2026-10-18T13:53:27.584692942Z",
+        "imageExact": true,
+        "ownedSourceExact": true
+      },
+      "worker": {
+        "image": "sha256:2f6d2f84e273889b804282b9b2c38c1367ad17d45c04a188a3b7cd3c6613971a",
+        "health": "healthy",
+        "startedAt": "2026-10-18T13:53:58.639505322Z",
+        "imageExact": true,
+        "ownedSourceExact": true
+      }
+    },
+    "digitalSourcePins": 68,
+    "digitalSourceDifferences": [],
+    "preservedOtherExecutorModules": [
+      "eva/adapters/connectors/home_assistant_admin.py",
+      "eva/adapters/postgres/connector_results.py"
+    ],
+    "changedSpeechFilesOrServices": false,
+    "configurationAndDataPreserved": true
+  },
+  "historyCapabilityRecovery": {
+    "sourceReviewSHA256": "a7f769486aff84b0d997d07443a6a9e764235e5fedc987701963b76e6f131bc3",
+    "patchSHA256": "b7264378acb8bada2e33f59efd1c9db978370d2cb7fa0cc98214b8ca8358a445",
+    "changes": [
+      "Current local HA GET recorder history added to the existing explicitly admitted owner mandate; no new destination, entity-specific rule, write or paid route.",
+      "Exact successor admission binds the current admitted mandate and previous admission while preserving original immutable origin/source/grant.",
+      "Existing host budget context carries actual execution UTC separately from the historical source message."
+    ],
+    "verification": {
+      "mandateRevisionUniqueCasesPassedAcrossRuns": 44,
+      "lastRaceAndLifecycleCasesPassed": 3,
+      "lastCasesSeconds": 6.29,
+      "sourcePinRaceWasFixtureError": true,
+      "fixtureCaseRerunPassed": 1,
+      "executionClockAndExistingRunnerTestsPassed": 123,
+      "runnerTestsSeconds": 6.03,
+      "offlinePolicyBoundaryChecksPassed": 16,
+      "newModelCallsInDevelopmentChecks": 0
+    },
+    "mandateRevision": {
+      "status": "revised",
+      "previousSHA256": "4f7f4a42b1bd38d7a2d8df5f2a3456133b68b3a75e2f627140ca8beaab826991",
+      "currentSHA256": "0772f35abfea4166ad2f9bc3673d5316ee80e4b44806fd2faf025476178f7527",
+      "topLevelCapabilityCount": 10,
+      "grantChanged": false
+    },
+    "generation3": {
+      "at": "2026-10-18T14:09:26Z",
+      "state": "succeeded",
+      "operatorAssisted": true,
+      "newSpontaneousAdmission": false,
+      "sameOriginalIntentAndSource": true,
+      "originalAndPreviousFailuresRetained": true,
+      "modelUsage": {
+        "schema_version": 1,
+        "contract": "DelegatedWorkUsage/v1",
+        "measurement": "partial",
+        "completed_model_responses": 3,
+        "tool_calls": 2,
+        "input_tokens": 40899,
+        "output_tokens": 618,
+        "total_tokens": 41517,
+        "cost_usd_micros": null
+      },
+      "creditCost": null,
+      "newResultProven": true,
+      "deliveryProven": true,
+      "laterSourceFollowthroughProven": false,
+      "completedAt": "2026-10-18T14:11:33Z",
+      "operatorRecoveryToCompletionSeconds": 127,
+      "resultSHA256": "e6f37dce9226009cd3a497f6c916a8796ed19d2407e7df4d240797530a14bb38",
+      "deliveredAt": "2026-10-18T14:11:34Z",
+      "deliveryChannel": "telegram_private",
+      "sourceOutcomeAvailable": true,
+      "memoryProjectionProven": true,
+      "memoryRetentionProven": true,
+      "memoryRetainedAt": "2026-10-18T14:11:49Z",
+      "newLearningProven": false
+    },
+    "actualEvidenceSHA256": "07c5be5fd8261c7fa2d6f9fec290ecd4950f820db3725b3c6f6c4e033e2bb13e"
+  },
+  "initialSourceFiles": [
     {
       "path": "src/eva/contracts/delegated_digital_work.py",
       "sha256": "92c797cc6482e95a0ae47b7fda93dd5cab48a3e3416094789f97ed644c5aae2e"
@@ -47,71 +258,5 @@
       "path": "src/eva/adapters/connectors/delegated_completion.py",
       "sha256": "323f6282653836bed4627321aa9cad3594366f0d12ede449e00a6f548828d404"
     }
-  ],
-  "installation": {
-    "roles": {
-      "core": {
-        "image": "sha256:2508d53cf53a32f8996b49890ded72184d05fbde3f78b6ad0f6d125e24c0b0d0",
-        "health": "healthy",
-        "startedAt": "2026-10-18T13:53:27.584692942Z",
-        "imageExact": true,
-        "ownedSourceExact": true
-      },
-      "worker": {
-        "image": "sha256:2f6d2f84e273889b804282b9b2c38c1367ad17d45c04a188a3b7cd3c6613971a",
-        "health": "healthy",
-        "startedAt": "2026-10-18T13:53:58.639505322Z",
-        "imageExact": true,
-        "ownedSourceExact": true
-      }
-    },
-    "digitalSourcePins": 68,
-    "digitalSourceDifferences": [],
-    "preservedOtherExecutorModules": [
-      "eva/adapters/connectors/home_assistant_admin.py",
-      "eva/adapters/postgres/connector_results.py"
-    ],
-    "changedSpeechFilesOrServices": false,
-    "configurationAndDataPreserved": true
-  },
-  "verification": {
-    "readContinuation": {
-      "passed": 22,
-      "seconds": 3.15,
-      "modelCalls": 0,
-      "externalServices": 0
-    },
-    "nativePostgres": {
-      "passed": 39,
-      "deselected": 19,
-      "seconds": 53.91,
-      "wallSeconds": 55.801,
-      "modelCalls": 0,
-      "productionDatabaseWrites": 0
-    },
-    "independentCombinedSourceReviewSHA256": "f95823f071785761e1c36303b98327f4a7410f617eb060841fefe0d5f965bd4c",
-    "nativePatchSHA256": "57045771b208234949b77a0016e31a55447214b1deb6f7f41c7b887ad5965662"
-  },
-  "actualRecovery": {
-    "at": "2026-10-18T13:55:01+00:00",
-    "originalAdmissionSpontaneous": true,
-    "recoveryOperatorAssisted": true,
-    "newSpontaneousAdmission": false,
-    "created": true,
-    "generation": 2,
-    "originalWorkStillFailed": true,
-    "newResultProven": false,
-    "deliveryProven": false,
-    "laterSourceFollowthroughProven": false,
-    "modelUsage": null,
-    "creditCost": null
-  },
-  "limits": [
-    "Technical operator recovery is not an independent new initiative.",
-    "No completion from containers, tests or queue admission.",
-    "Original partial/unknown use and failures remain unchanged.",
-    "Earlier E4.5 later-use learning proof remains within original scope; no rerun of HUE or competitor matrix.",
-    "Seven actual family days and owner acceptance remain F2.1/F2.2."
-  ],
-  "developmentCreditCost": null
+  ]
 }
