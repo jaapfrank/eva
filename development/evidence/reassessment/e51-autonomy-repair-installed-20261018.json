@@ -1,8 +1,8 @@
 {
   "contract": "EvaE51AutonomyRepairInstalled/v1",
-  "recordedAt": "2026-10-18T03:26:23.145368+00:00",
+  "recordedAt": "2026-10-18T03:37:22.000982+00:00",
   "taskId": "E5.1",
-  "status": "installed_orientation_interrupted_by_concurrent_core_update",
+  "status": "own_life_alignment_installed_natural_outcome_pending",
   "taskCompleted": false,
   "changes": [
     "Durable known non-dispatch preparation failure separated from actual possible provider dispatch, with at most3bounded preparations and old UNKNOWN retained.",
@@ -49,7 +49,7 @@
     "initialCandidatesNotInstalled": "Two images rebuilt once for concurrent owner-query source delta; only final pair installed. No service rollback."
   },
   "actualOutcome": {
-    "status": "unconfirmed_interrupted",
+    "status": "natural_outcome_pending_after_goal_alignment",
     "forcedTaskTopic": null,
     "initialOrientationStimulated": true,
     "additionalCoordinatorRequestedOrientationsBudget": 0,
@@ -59,7 +59,29 @@
     "providerReached": null,
     "runtimeUsage": null,
     "originalReviewReplayed": false,
-    "reason": "Other authorized WSL executor replaced shared core11seconds after review-start marker; no durable decision or usage receipt. Original markers/failure remain."
+    "reason": "Other authorized WSL executor replaced shared core11seconds after review-start marker; no durable decision or usage receipt. Original markers/failure remain.",
+    "replacement": {
+      "status": "retained",
+      "thread_id": "sensory:initiative-review:547262a5e00deb3ed2a6b3c5:1792294127000",
+      "at": "2026-10-18T03:28:47+00:00",
+      "stimulated": true,
+      "task_topic": null,
+      "forced_proposal": false,
+      "model_called_by_operator": false,
+      "execution": "existing ordinary background scheduler only"
+    },
+    "originalInterruptedReviewAbandonedWithoutReplay": true,
+    "maximumAdditionalCoordinatorRequestedOrientations": 0,
+    "proofOfBehavior": false,
+    "decidedAt": "2026-10-18T03:30:18+00:00",
+    "replacementClaimedAt": "2026-10-18T03:30:09+00:00",
+    "disposition": "silence",
+    "initiative": null,
+    "reasonSummary": "Rejects old technical work, historical telemetry and generic assistance; no current personally useful opportunity selected.",
+    "newOwnWork": 0,
+    "newCompletedOwnResults": 0,
+    "newDeliveredOwnResults": 0,
+    "laterUseProven": false
   },
   "measurement": {
     "newOperatorModelRequests": 0,
@@ -67,7 +89,16 @@
     "newComparisons": 0,
     "creditCost": null,
     "developmentUsage": "unknown; separate from Eva runtime",
-    "ordinaryRuntimeUsage": "to be bound to actual post-repair events, not guessed"
+    "ordinaryRuntimeUsage": "One replacement orientation measured; interrupted original remains unknown. No claim of total runtime/development cost.",
+    "coordinatorRequestedOrientations": 2,
+    "directOperatorModelCalls": 0,
+    "replacementRuntimeUsage": {
+      "measurement": "measured",
+      "model_attempts": 1,
+      "tool_calls": 1,
+      "input_tokens": 8362,
+      "output_tokens": 161
+    }
   },
   "evidence": [
     {
@@ -121,6 +152,42 @@
     {
       "privateName": "concurrent-core-replacement.metadata.json",
       "sha256": "4d24861d33944ba0790554298ff617d5ae909b41aaa5f5c3fbb67b61af925de0"
+    },
+    {
+      "privateName": "post-repair-check-plan-v2.json",
+      "sha256": "71b4569a9633fc8f7d160867ae20721722d8b3676f13488cae1325d2c17c50fd"
+    },
+    {
+      "privateName": "recover-interrupted-lease.private.txt",
+      "sha256": "a4ac815dfc7706aacf599346c30b84b18196a56724ef71b123ac8e8b4d4eed18"
+    },
+    {
+      "privateName": "interrupted-recovery-result.json",
+      "sha256": "5333997a6068da79e7a9cc958df0feb916c2c0f85f555882408214c3b3951f34"
+    },
+    {
+      "privateName": "successor-source-parity.metadata.json",
+      "sha256": "8c3efebbcc304f4b92f7c9dbf8eb7e088ef0c63032aca32ebb4a38512a5810c2"
+    },
+    {
+      "privateName": "replacement-orientation-queued.json",
+      "sha256": "e260cc1d323b80cee34febfa2ea28dd2ba1d533026af3e051a3420b437bc2348"
+    },
+    {
+      "privateName": "replacement-current.private.txt",
+      "sha256": "a4df6324e62318c4666588e589c7cfa1037cc2895b3079a22e766515e0357f3b"
+    },
+    {
+      "privateName": "own-life-alignment/installed-source-parity.metadata.json",
+      "sha256": "94bfff27ca5ee195733df94fd7407721e0c5c623abeed25b602ca8a2a9db1d31"
+    },
+    {
+      "privateName": "own-life-alignment/tests.txt",
+      "sha256": "a450b4128bf2e18d51abfdd20184ebff57c42a6e110dd3fcbf7e2c2b55433298"
+    },
+    {
+      "privateName": "own-life-alignment/preflight.json",
+      "sha256": "03d87ceb4226af08c3cceaf4eefc93f252b5fb1fe3951be04d1d105194e9639d"
     }
   ],
   "independentSourceReviewSha256": "61ea72779f82c644ffd57fba1f5f064c67a315f6c0c06698ee3e0e29b5e883fe",
@@ -132,20 +199,32 @@
   ],
   "privateEvidence": "Full snapshots and own result content remain private; public report contains hashes,aggregate status and bounded claims only.",
   "currentRuntimeSuccessor": {
-    "observedAt": "2026-10-18T03:23:15.953821+00:00",
-    "image": "sha256:9d15288f55697499069b283d7d28f48a72902192b218e3af00d769afee5fb5e1",
-    "id": "a98873a8a2b9133ef55f7ecf4fc4a589cf33665ef1d5105d3ab311ef5e923409",
-    "startedAt": "2026-10-18T03:20:06.019783457Z",
-    "delta": {
-      "adapters/postgres/completed_contribution.py": {
-        "ours": "9ee11a924c0407060f274423c2164b300b67826320d029e81e33fba65722c3d6",
-        "current": "a666dfadc4d66e6c30edb83492165096e2a94fcb56702402efc280c23b460f4f"
-      }
+    "core": {
+      "image": "sha256:d144dc893f08359a160301dfd5abdb3212cb90a4869f308bcc30dcdfef633081",
+      "id": "b21ad2a2b0f19cdb22780036a2a58cfb58c205bb005c2fede1463468dd4112d9",
+      "health": "healthy"
     },
-    "newBackendSources": {
-      "application/free_will.py": "7daad7010372433746e1cc63ed5e8d491678deb34b0fad2a4b9aa218321a376c",
-      "adapters/postgres/sensory_events.py": "29bb9894db7a5212c534c2d2bd69a0b0ae2b6ccb93d425690a3576b244ee7b03",
-      "adapters/postgres/owner_initiatives.py": "9b37ee09d16896554a99f7a5827c1c2061623d07efb63f7b0a28249ef7925b43"
-    }
-  }
+    "worker": {
+      "image": "sha256:ad8a6d5c600592b058aee31f5779f655f6128df3bf64eee582ad211f8896337b",
+      "id": "536d9250219a2e7bed62d42a36afd6034d21df551271180ee4a9024b73f6758e",
+      "health": "healthy"
+    },
+    "sourceCount": 70,
+    "sourceParity": true
+  },
+  "budgetAmendment": "One replacement only after externally interrupted initial orientation; see fixed-before-execution v2 plan. No third for silence or failure.",
+  "ownLifeAlignment": {
+    "status": "installed_behavior_not_yet_proven",
+    "changedFunction": "_private_opportunity_instructions",
+    "purpose": "Restore explicit own interests without previously proven direct family benefit; completed step does not prohibit genuinely new inquiry on that subject. Null,no quota,source/audience/mandate/budget/stop/unknown-no-replay remain.",
+    "tests": {
+      "passed": 9,
+      "seconds": 4.02,
+      "externalModelCalls": 0
+    },
+    "independentReviewSha256": "35b72f2e74b1e607190f3070c70a42b7bc5a0ff872cdada2ee1df00a6da7a6f0",
+    "actualBehaviorVerified": false,
+    "operatorThirdOrientationQueued": false
+  },
+  "sourceCountDefinition": "70 unique execution/source files including the two newly added failure modules. Earlier private71-entry list included owner_initiatives twice; hash parity remains unchanged."
 }
