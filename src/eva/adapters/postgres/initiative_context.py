@@ -34,12 +34,54 @@ def _text(value, limit):
     return value[:limit] if isinstance(value, str) else None
 
 
+def _ordinary_work_snapshot(value, now):
+    """Keep only the host's bounded current private work metadata, never authority."""
+    unavailable = {"available": False, "reason": "private_work_context_unavailable",
+                   "is_execution_permission": False}
+    if (not isinstance(value, dict) or value.get("available") is not True
+            or value.get("source") != "current_private_owner_work_store"
+            or not isinstance(value.get("as_of"), str) or len(value["as_of"]) > 50
+            or not isinstance(value.get("jobs"), (list, tuple))
+            or ("coverage" in value and not isinstance(value["coverage"], str))):
+        return unavailable
+    try:
+        at = datetime.fromisoformat(value["as_of"].replace("Z", "+00:00"))
+        if at.utcoffset() != timedelta(0) or at != now:
+            return unavailable
+        jobs = list(value["jobs"][:3])
+        for job in jobs:
+            if (not isinstance(job, dict)
+                    or not isinstance(job.get("work_id"), str) or not 0 < len(job["work_id"]) <= 240
+                    or any(not isinstance(job.get(key), str)
+                           or re.fullmatch(r"[0-9a-f]{64}", job[key]) is None
+                           for key in ("spec_sha256", "source_ingress_sha256"))
+                    or job.get("source_conversation_kind") not in {"telegram", "dashboard", "voice"}
+                    or any(key in job and (type(job[key]) is not int or not 0 <= job[key] <= 65)
+                           for key in ("earlier_attempts", "earlier_uncertain_attempts"))):
+                return unavailable
+        snapshot = {"available": True, "source": value["source"], "as_of": value["as_of"],
+            "jobs": jobs, "truncated": value.get("truncated") is True or len(value["jobs"]) > 3,
+            "is_execution_permission": False,
+            **({"coverage": value["coverage"][:160]} if "coverage" in value else {})}
+        # The caller's owner service bounds individual metadata fields. Retain no
+        # opaque envelope fields or raw conversation/instruction alongside them.
+        while len(canonical_json_bytes(snapshot)) > 6144:
+            if not jobs:
+                return unavailable
+            jobs.pop()
+            snapshot["truncated"] = True
+        return snapshot
+    except (ValueError, TypeError, OverflowError):
+        return unavailable
+
+
 def read_private_initiative_context(connection, scope: TimelineScope,
-                                   principal_id: str, now: datetime) -> dict:
+                                   principal_id: str, now: datetime, *, ordinary_work=None) -> dict:
     """Snapshot admitted household history and exact-owner durable commitments.
 
-    Ordinary delegated work has a different authority scope and binding. Without
-    that binding here its coverage stays explicitly unknown; it is not guessed.
+    Ordinary delegated work has a separate current owner/source binding. A host
+    reader may supply its bounded metadata; otherwise coverage stays unknown.
+    Retained status is context, never permission to resume or repeat that work.
     """
     if not isinstance(principal_id, str) or not 0 < len(principal_id) <= 240:
         raise ValueError("initiative context requires its current private owner")
@@ -138,6 +180,17 @@ def read_private_initiative_context(connection, scope: TimelineScope,
             "byte_budget_truncated": False,
         },
     }
+    if ordinary_work is not None:
+        ordinary = _ordinary_work_snapshot(ordinary_work, now)
+        result["ordinary_work"] = ordinary
+        result["coverage"]["ordinary_work_available"] = ordinary["available"]
+        missing = result["coverage"]["missing"]
+        marker = "ordinary_delegated_work_requires_separate_owner_binding"
+        missing.remove(marker)
+        if not ordinary["available"]:
+            missing.append("ordinary_delegated_work_current_status_unknown")
+        else:
+            result["coverage"]["ordinary_work_truncated"] = ordinary["truncated"]
     while len(canonical_json_bytes(result)) > _MAX_BYTES:
         if observations:
             observations.pop()
@@ -145,6 +198,10 @@ def read_private_initiative_context(connection, scope: TimelineScope,
         elif own_work:
             own_work.pop()
             result["coverage"]["commitments_truncated"] = True
+        elif result.get("ordinary_work", {}).get("jobs"):
+            result["ordinary_work"]["jobs"].pop()
+            result["ordinary_work"]["truncated"] = True
+            result["coverage"]["ordinary_work_truncated"] = True
         else:
             raise RuntimeError("initiative context envelope exceeds its bound")
         result["coverage"]["byte_budget_truncated"] = True

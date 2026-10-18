@@ -420,6 +420,58 @@ class DelegatedWorkOwnerService:
         return {"initiatives": selected, "limited": page["truncated"],
                 "recent_private_contacts": contacts, "as_of": self.now().isoformat()}
 
+    def private_initiative_work_context(self, *, now: datetime) -> dict:
+        """Host-only current private work metadata; historical requests grant no action."""
+        if now.tzinfo is None or now.utcoffset() != timedelta(0) or now.microsecond:
+            raise ValueError("initiative work context requires whole-second UTC")
+        self.store.validate_admission_authority(**self._owner)
+        alias = (None if self._private_bridge_principal_loader is None
+                 else self._private_bridge_principal_loader())
+        owner, dashboard = str(self.owner_principal_id), f"dashboard:{self.principal_binding_id}"
+        rows = self.store.list_owned(**self._owner, limit=65, active_first=True)
+        selected = []
+        for work in rows:
+            source = getattr(work.spec, "source", None)
+            if (source is None or getattr(work.spec, "origin", None) is not None
+                    or source.audience.kind != "private_person"
+                    or source.audience.principal_id != source.principal_id
+                    or external_timeline_scope(source.tenant_id, source.installation_id,
+                        "initiative work source scope required") != self.conversation_scope):
+                continue
+            if not ((source.principal_id == owner and (source.conversation_id == dashboard
+                    or source.conversation_id.startswith("voice:"))) or
+                    (alias is not None and source.principal_id == alias and source.conversation_id == alias)):
+                continue
+            if (parse_utc_timestamp(work.spec.created_at) <= now and work.updated_at <= now
+                    and work.retention_until > now):
+                selected.append(work)
+        # Several resumes can describe the same original request. Prefer its latest
+        # generation while keeping older uncertain attempts visible as uncertainty.
+        grouped = {}
+        for work in selected:
+            grouped.setdefault(work.spec.source_ingress_sha256, []).append(work)
+        selected = [max(group, key=lambda w: (w.spec.created_at, w.updated_at, w.spec.work_id))
+                    for group in grouped.values()]
+        selected.sort(key=lambda w: (w.state in {"admitted", "call_started"} and w.stop_requested_at is None,
+                                    alias is not None and w.spec.source.principal_id == alias,
+                                    w.spec.created_at, w.updated_at), reverse=True)
+        from eva.application.work_context import work_context_metadata
+        context = work_context_metadata(selected[:3], now)
+        for item, work in zip(context["jobs"], selected):
+            item.update(title=item["title"][:160], spec_sha256=work.spec.sha256,
+                source_ingress_sha256=work.spec.source_ingress_sha256,
+                source_conversation_kind=work.spec.source.conversation_id.split(":", 1)[0],
+                earlier_attempts=len(grouped[work.spec.source_ingress_sha256]) - 1,
+                earlier_uncertain_attempts=sum(1 for previous in grouped[work.spec.source_ingress_sha256]
+                    if previous is not work and previous.state in {"call_started", "ambiguous"}))
+        self.store.validate_admission_authority(**self._owner)
+        if self._private_bridge_principal_loader is not None and self._private_bridge_principal_loader() != alias:
+            raise DelegatedWorkConflict("initiative work alias changed during retrieval")
+        return {**context, "available": True, "as_of": now.isoformat(),
+                "truncated": len(selected) > 3 or len(rows) == 65,
+                "source": "current_private_owner_work_store", "is_execution_permission": False,
+                "coverage": "Bounded retained private digital sources; tasks without a private source are not covered."}
+
     def active_work_metadata(self, turn: ConversationTurn) -> dict:
         """Project authorized task metadata without per-task delivery lookups."""
         if not self.available_for(turn):

@@ -46,5 +46,11 @@
     "installedSourceExact": true,
     "E51Outcome": "NOT_YET_PROVEN",
     "ownerAcceptance": false
+  },
+  "ordinaryWorkContextCorrection": {
+    "sourceReviewSHA256": "19965ddb17f303103403b6f92eadf5406d8d94cb20a3677216d7d7003789b4b0",
+    "verdict": "GO_guarded_installation_only",
+    "installedSourceExact": true,
+    "actualUserOutcome": "NOT_YET_PROVEN"
   }
 }

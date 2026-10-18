@@ -2,7 +2,7 @@
   "contract": "EvaE51AutonomyRepairInstalled/v1",
   "recordedAt": "2026-10-18T03:37:22.000982+00:00",
   "taskId": "E5.1",
-  "status": "private_contact_and_conversation_continuity_installed_actual_outcome_pending",
+  "status": "ordinary_owner_work_context_installed_actual_outcome_pending",
   "taskCompleted": false,
   "changes": [
     "Durable known non-dispatch preparation failure separated from actual possible provider dispatch, with at most3bounded preparations and old UNKNOWN retained.",
@@ -299,9 +299,74 @@
       "queuedAt": "2026-10-18T04:52:25+00:00",
       "prescribedTopic": null,
       "forcedProposal": false,
-      "state": "queued_existing_scheduler",
-      "ownerAcceptance": false
+      "state": "completed_silence_no_initiative",
+      "ownerAcceptance": false,
+      "completedAt": "2026-10-18T04:56:48+00:00",
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 8538,
+        "output_tokens": 127,
+        "model_attempts": 1
+      },
+      "initiativeChosen": false,
+      "newWork": 0,
+      "newResults": 0,
+      "newDeliveries": 0,
+      "laterLearningNotProven": true,
+      "resultPayloadSHA256": "b33077d94da5f753f96033158042b7b9542eb021724bef8d546f043043ab145f",
+      "additionalOperatorAttempts": 0
     },
     "limits": "An actual delivered question is still not completed work, useful family contribution or later learning."
+  },
+  "ordinaryWorkContextCorrection": {
+    "installedAt": "2026-10-18T05:12:41.032746+00:00",
+    "scope": "Existing private owner work service supplies current source-bound status to the same sealed private orientation; no new task store or example-specific function.",
+    "maximumJobs": 3,
+    "maximumCandidates": 65,
+    "maximumContextBytes": 8192,
+    "deduplicatedOriginalRequests": true,
+    "olderUncertainAttemptsPreservedAsCounters": true,
+    "expiredAndForeignWorkExcluded": true,
+    "hostOriginalRequestIsNotNewPermission": true,
+    "actualReadBeforeInstall": {
+      "available": true,
+      "jobs": 3,
+      "bytes": 7869,
+      "originalHouseholdRequestLatestGenerationPresent": true,
+      "modelCalls": 0,
+      "productionWrites": 0
+    },
+    "verification": {
+      "postgresCases": 26,
+      "postgresSeconds": 4.74,
+      "ownerSourceCases": 12,
+      "ownerSeconds": 1.69,
+      "NonePreservesOriginalBytes": true,
+      "sourceReviewSHA256": "19965ddb17f303103403b6f92eadf5406d8d94cb20a3677216d7d7003789b4b0"
+    },
+    "roles": {
+      "core": {
+        "image": "sha256:d8090c19564fc51f1f10ea2b33da07ceef769c1c0e6e45c04a29e0036b25c1a4",
+        "affectedSourcesExact": true
+      },
+      "worker": {
+        "image": "sha256:a08a43431c2030483cc58aa994dc90804c6c8b2b77449248f1dc1109174bcc59",
+        "affectedSourcesExact": true
+      }
+    },
+    "actualCheck": {
+      "queuedAt": "2026-10-18T05:12:00+00:00",
+      "maxOperatorQueuedOrientations": 1,
+      "topicAssigned": false,
+      "forcedInitiative": false,
+      "state": "queued_existing_scheduler",
+      "actualOutcomeNotYetProven": true
+    },
+    "limitations": [
+      "Current status is not a new instruction, approval or proof that earlier UNKNOWN actions did not happen.",
+      "Bounded supported private-source tasks only; other ordinary work remains outside this snapshot.",
+      "Installed source and state metadata are not a new completed autonomous family contribution."
+    ]
   }
 }

@@ -52,6 +52,7 @@ class PostgresSensoryEventStore:
         initiative_authorizer=None,
         context_reviews_only: bool = False,
         household_binding=None,
+        private_work_context_reader=None,
     ) -> None:
         self._timeline = PostgresOperationalTimeline(
             engine,
@@ -90,6 +91,11 @@ class PostgresSensoryEventStore:
                     or household_binding.tenant_id != tenant_id
                     or household_binding.installation_id != installation_id):
                 raise ValueError("household initiative storage binding differs")
+        if private_work_context_reader is not None and (
+                not callable(private_work_context_reader) or not context_reviews_only
+                or household_binding is not None):
+            raise ValueError("private work context requires the private owner review store")
+        self._private_work_context_reader = private_work_context_reader
         self._context_reviews_only = context_reviews_only
         self._decision_prefix = ("sensory:initiative-review:" + hashlib.sha256(
             initiative_principal_id.encode()).hexdigest()[:24] + ":"
@@ -207,8 +213,19 @@ class PostgresSensoryEventStore:
                 # review. Retries and admission retain this original provenance;
                 # current service reads remain work for the native executor.
                 from eva.adapters.postgres.initiative_context import read_private_initiative_context
+                ordinary_work = None
+                if self._private_work_context_reader is not None:
+                    try:
+                        ordinary_work = self._private_work_context_reader(now=now)
+                    except Exception:
+                        ordinary_work = {"available": False,
+                            "reason": "private_work_context_unavailable"}
+                    if ordinary_work is None:
+                        ordinary_work = {"available": False,
+                            "reason": "private_work_context_unavailable"}
                 payload["life_context"] = read_private_initiative_context(
-                    connection, scope, self._initiative_principal_id, now)
+                    connection, scope, self._initiative_principal_id, now,
+                    ordinary_work=ordinary_work)
             data = {"event_type": "private_opportunity_review", "source": "initiative-review",
                     "source_event_id": source_id, "payload": payload}
             if self._household_binding is not None:
