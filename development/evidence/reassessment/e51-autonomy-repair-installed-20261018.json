@@ -1,8 +1,8 @@
 {
   "contract": "EvaE51AutonomyRepairInstalled/v1",
-  "recordedAt": "2026-10-18T03:37:22.000982+00:00",
+  "recordedAt": "2026-10-18T05:22:47.898935+00:00",
   "taskId": "E5.1",
-  "status": "ordinary_owner_work_context_installed_actual_outcome_pending",
+  "status": "changed_purpose_variant_installed_actual_execution_pending",
   "taskCompleted": false,
   "changes": [
     "Durable known non-dispatch preparation failure separated from actual possible provider dispatch, with at most3bounded preparations and old UNKNOWN retained.",
@@ -360,13 +360,69 @@
       "maxOperatorQueuedOrientations": 1,
       "topicAssigned": false,
       "forcedInitiative": false,
-      "state": "queued_existing_scheduler",
-      "actualOutcomeNotYetProven": true
+      "state": "completed_silence_no_initiative",
+      "actualOutcomeNotYetProven": true,
+      "completedAt": "2026-10-18T05:16:26+00:00",
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 9345,
+        "output_tokens": 141,
+        "model_attempts": 1
+      },
+      "initiativeChosen": false,
+      "newWork": 0,
+      "newResults": 0,
+      "newDeliveries": 0,
+      "resultPayloadSHA256": "e86801950211751d7b8f1bcafc2ccd21c18b3cbef92888d21c195b6601cf6cee"
     },
     "limitations": [
       "Current status is not a new instruction, approval or proof that earlier UNKNOWN actions did not happen.",
       "Bounded supported private-source tasks only; other ordinary work remains outside this snapshot.",
       "Installed source and state metadata are not a new completed autonomous family contribution."
     ]
+  },
+  "discoveryPurposeVariant": {
+    "registeredAt": "2026-10-18T05:18:32.878360+00:00",
+    "scope": "One deliberate instruction variant in the existing private opportunity decision; no prescribed topic, forced quota, authority change or second loop. Missing personal context may motivate self-chosen exploration.",
+    "sourceSHA256": "4e8ee68c4f2f1586b442d65536cbd5ff9c2205c48f85a14fb21b3ba16df31243",
+    "independentReviewSHA256": "9c667348a22eae005086b47897a0b9a8bd3ab608a2ea688d4202a8e7b6475e08",
+    "verification": {
+      "existingModelCases": 9,
+      "seconds": 1.18
+    },
+    "installation": {
+      "at": "2026-10-18T05:22:47.898935+00:00",
+      "roles": {
+        "core": {
+          "image": "sha256:45d439234bd1feee1203640223616b2c78b90c8ff8af6b640f9c5a9f2f931b56",
+          "health": "healthy",
+          "startedAt": "2026-10-18T05:22:03.963356468Z",
+          "modelSHA256": "4e8ee68c4f2f1586b442d65536cbd5ff9c2205c48f85a14fb21b3ba16df31243",
+          "modelExact": true
+        },
+        "worker": {
+          "image": "sha256:86aea35295df1343632865ce8bd170d016dec31cde6fc8d9c542155430f620c5",
+          "health": "healthy",
+          "startedAt": "2026-10-18T05:21:34.619424504Z",
+          "modelSHA256": "4e8ee68c4f2f1586b442d65536cbd5ff9c2205c48f85a14fb21b3ba16df31243",
+          "modelExact": true
+        }
+      },
+      "configurationEnvironmentMountsRetained": true
+    },
+    "actualCheck": {
+      "queuedAt": "2026-10-18T05:22:27+00:00",
+      "stimulated": true,
+      "topicAssigned": false,
+      "forcedInitiative": false,
+      "state": "queued_for_ordinary_scheduler",
+      "newWork": 0,
+      "newResults": 0,
+      "newDeliveries": 0
+    },
+    "maxOperatorQueuedOrientations": 1,
+    "provenImprovement": false,
+    "AIDE2SelfLearningProven": false
   }
 }

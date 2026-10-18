@@ -1,6 +1,6 @@
 {
   "contract": "EvaE51AutonomyRepairIndependentReview/v1",
-  "reviewedAt": "2026-10-18T03:37:35.156956+00:00",
+  "reviewedAt": "2026-10-18T05:22:47.898935+00:00",
   "taskId": "E5.1",
   "technicalRepair": "GO installed corrections and exact original recovery",
   "ownerOutcome": "NOT_PROVEN",
@@ -52,5 +52,12 @@
     "verdict": "GO_guarded_installation_only",
     "installedSourceExact": true,
     "actualUserOutcome": "NOT_YET_PROVEN"
+  },
+  "discoveryPurposeVariant": {
+    "sourceReviewSHA256": "9c667348a22eae005086b47897a0b9a8bd3ab608a2ea688d4202a8e7b6475e08",
+    "verdict": "GO_bounded_changed_candidate_check_only",
+    "installedSourceExact": true,
+    "actualUserOutcome": "NOT_YET_PROVEN",
+    "AIDE2SelfLearningProven": false
   }
 }
