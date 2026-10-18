@@ -1,0 +1,922 @@
+{
+  "contract": "EvaJointInstalledCandidate/v1",
+  "taskId": "E5.1",
+  "recordedAt": "2026-10-18T02:22:27.915123+00:00",
+  "candidateId": "eva2-joint-20261018",
+  "status": "installed_technically_completed",
+  "scope": "One current installed candidate with bounded reused E1-E4 evidence; family acceptance remains F2.1/F2.2. No newly built runtime feature is claimed.",
+  "baselineCommit": "b315b8c7056b89546119b6206ca309fa75a3ea11",
+  "runtime": {
+    "core": {
+      "name": "eva2-managed-b-slot3-core",
+      "id": "7a7f771facf21a3aaa898e876f3d709a02a92e9dc4b4f82917b30a1f5ccf3216",
+      "image": "sha256:3845005761721b000b1fa2e6ad747a0d392c7ecb326f9be074b07620888c3cb8",
+      "startedAt": "2026-10-17T13:18:00.012855232Z",
+      "health": "healthy",
+      "sourceCount": 382,
+      "sourceManifestSha256": "eba4fec0b3493629cb7a4374e5760249e6e9ac5040b637f5af2a8efb58a6f409"
+    },
+    "worker": {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "id": "71da381af8c30802d130372ed2468790d30266ae7aefe58ca5c9146874c6ef5a",
+      "image": "sha256:f482cd1baf857aa7be1256b9922c4c147abe67fb4b71999f8dc8ec9312886c3f",
+      "startedAt": "2026-10-17T13:15:14.276750455Z",
+      "health": "healthy",
+      "sourceCount": 369,
+      "sourceManifestSha256": "9906e7c85c380c1dccdbc98e8e1b506f75c00d26faa59fd43ae2990f87297367"
+    }
+  },
+  "workProfile": {
+    "sourcePinCount": 68,
+    "sameCoreWorkerAndCheckoutSources": true,
+    "workerProgramSha256": "2dd3ffc1d96d474c9a9ad93beadcbb2f67b71129673d8b9684c4ecd5b3852842",
+    "lastProvenActualWorkerRelease": "last-proven-worker-release.metadata.json",
+    "configurationEvidence": "Seven shared current configuration-file hashes agree between core/worker, including budget, mandate, component/procedure/programming clients and identity. Existing E4.5 successful work binds same current program. Full current model/profile configuration fingerprint was not reconstructed (would load credential-bearing provider settings).",
+    "strictClaim": "Current source ring matches real successful installed E4.5 worker release; not a fresh model/claim/admission run."
+  },
+  "preservation": {
+    "timestampSha256": "cea4d09fe29bb17b599a05d30ea9c24875e82b7401c0b16c806ac6529c1ca4ad",
+    "workerUnchangedFromE45Manifest": true,
+    "coreDeltaFromE45Manifest": [
+      "adapters/model/openai_codex_provider.py",
+      "bootstrap/runtime.py"
+    ],
+    "coreDeltaOwner": "Existing other-executor voice followup; current exact hashes/image independently match its recorded readiness. Preserved without edits.",
+    "hostService": "eva-component-evaluation.service active/running, current E45 config path; configured follow_current_images=true; fixed timestamp verifier still pinned to85993c721128bce650f14b65b831f42b7df7349b746b1d03e610e2682b710f6a. No publisher/application/recovery trigger executed.",
+    "operatorResources": "E4.4 operator wheel and portable resources checks reused. Narrow core/worker runtime schema/identity resources independently hashed now,195files each and equal."
+  },
+  "dependencies": {
+    "imageLockSha256": "88b5095e87596b80a84c591682723647665c49cbde924fe7931207455fa4b2f2",
+    "checkoutLockSha256": "036e2463be9fea6b3adb8528e8e0288b0985f65f958d4abdbf371c21d828693e",
+    "currentLockPinsCheckedAgainstDistributionMetadata": 44,
+    "allCorePinsMatch": true,
+    "allWorkerPinsMatch": true,
+    "fileDelta": "Only six appended token-accounting package pins, with all versions already installed. Exact diff retained. No wheel hash/rebuild equivalence claimed from version metadata alone.",
+    "schemaHead": "4e_0009_restore_hold",
+    "runtimeSchemaAndDefaultIdentityManifestSha256": "cef6bf00e46d105a76c217803fb37273720af0e282c3f3df7510ec16b8013014"
+  },
+  "autonomyReflection": {
+    "backgroundEnabled": true,
+    "idleSeconds": 300,
+    "delegatedDigitalResearchEnabled": true,
+    "workModel": "gpt-6-astra",
+    "reasoningEffort": "medium",
+    "contactModel": "gpt-6-sol",
+    "contactReasoningEffort": "none",
+    "reflectionCompletedCheckpointCount": 198,
+    "latestReflectionCompletion": "2026-10-18T00:13:05+00:00",
+    "latestPrivateOpportunityReview": {
+      "updatedAt": "2026-10-18T01:33:51+00:00",
+      "phase": "will_decided",
+      "state": "silence",
+      "blocker": null
+    },
+    "countsAreHistoricalMetadataNotAcceptance": true,
+    "openWorkAtRead": 0,
+    "sources": "Parent GET readiness snapshots reused; exact state aggregates only queried, no conversations/content or new autonomous work requested."
+  },
+  "ownerRoutes": {
+    "existing200Readiness": [
+      "work",
+      "initiatives",
+      "components",
+      "model-providers",
+      "whatsapp"
+    ],
+    "reusedParentSnapshots": true,
+    "mutatingControlsStaticOnly": [
+      "work stop/resume/revise_digital",
+      "initiative stop/feedback/revoke/mandate revise",
+      "memory forget/correct"
+    ],
+    "mutationsExecuted": false,
+    "readinessIsNotProductCompletion": true
+  },
+  "voiceBoundary": {
+    "currentMediaAndSpeakerPointToCurrentCore": true,
+    "coreOrigin": "http://127.0.0.1:44710",
+    "identitySha256": "96bec21f0eb19378e1e1c5b02fe2b875149bca402b1b72c1a08980d7ee4567fd",
+    "sharedIdentityAndPolicyHashesVerified": true,
+    "policyStates": "enabled, unexpired at observation",
+    "twoConfiguredDevices": true,
+    "envelopeBoundaries": [
+      "EvaVoiceSessionReady/v1 via /internal/v1/voice-session/*",
+      "HA route /internal/v1/ha-voice/session/*; content cannot select device/principal/audience authority"
+    ],
+    "previousReadinessReused": "Two bindings ready, one listener/two established transports per original executor record. No new audio/readiness request made.",
+    "physicalAudioTest": false,
+    "ownerAcceptance": false
+  },
+  "boundedFindings": [
+    {
+      "id": "ordinary-digital-admission-evidence-limit",
+      "severity": "evidence_limit",
+      "fact": "Two E4.5 coordinator-designated ordinary-chat calls rejected input without admission. Actual argument shape was not persisted and is unavailable from the replaced container logs. Current digital validator explicitly accepts null acceptance_message and already has one bounded repair turn.",
+      "decision": "No hypothetical schema/null-coercion patch; preserve failed ingress evidence and do not claim this route newly repaired/tested.",
+      "references": [
+        "src/eva/adapters/postgres/delegated_work_actions.py:418",
+        "src/eva/application/conversation.py:1320",
+        "ordinary-admission-evidence.metadata.json"
+      ]
+    },
+    {
+      "id": "generic-input-rejection-wording",
+      "severity": "minor_existing_ui_wording",
+      "fact": "Default ConversationActionInputRejected says research even for a rejected digital action.",
+      "decision": "Concrete wording limitation, not evidence of a worker/config failure or a mandatory release rebuild.",
+      "references": [
+        "src/eva/application/conversation.py:87",
+        "src/eva/adapters/postgres/delegated_work_actions.py:434"
+      ]
+    },
+    {
+      "id": "source-tree-not-image-equality",
+      "severity": "provenance_limit",
+      "fact": "Existing images intentionally retain role-specific/older files and omit operator-only checkout files. Exact checkout/runtime discrepancy list is retained; all68active digital sourcepins do agree.",
+      "decision": "Freeze actual image/source manifests; do not claim whole checkout byte parity or rebuild automatically."
+    }
+  ],
+  "reuse": {
+    "matrixSha256": "2007431f85a11ff4afba17e897376d53229dd3e35fb38ac5b75b2f22e7843cb0",
+    "records": [
+      {
+        "card": "E1.1",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/e11-semantic-source-use-outcome-20261015.json",
+            "sha256": "b36c11f7acabebbe7d95a61b5271c960d3cd4ad7ebedcfbbcac9b67a4177ee1a",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "completed_installed"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e11-semantic-source-use-review-20261015.json",
+            "sha256": "5dcb93c95fc179d2580481563e6ecca852f9e2074dac5da2a6a82ee0a3d998d6",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "Self-selected missing-information question, existing native source read, later substantive use in one actual decision.",
+        "limits": "Original acquisition/task failure remains ambiguous; stimulated callback; no repeated spontaneous family value.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E1.2",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/e12-next-attention-outcome-20261015.json",
+            "sha256": "ec2d09438ecb7eb4f88758285bdfb1703642c0ca7907fe938a54d3f9de97933e",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "completed_installed"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e12-next-attention-review-20261015.json",
+            "sha256": "89b3f4572c8d16dbc3a7cec28c773d516d45e85148740a792d69850469632947",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "Actual model-selected attention/time/reason persisted; same due event deferred during foreground then resumed once.",
+        "limits": "Isolated database/logically advanced clock and simulated foreground predicate; no household crash trial.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E1.3",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/e13-native-initiative-result-20261015.json",
+            "sha256": "50f74228afc902d824f9b177878f44c3bb95fb3e5655370db0d96a700a957674",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "installed_used_and_independently_completed"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e13-native-initiative-completion-review-20261015.json",
+            "sha256": "b0c5c6eead23a1a8a962a7a9e754344aa4ff28202bbb2d79ab7e4fac2cfe782b",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "Model chose new allowed work, actual current source read, separately read-back saved result, original private delivery.",
+        "limits": "Owner-requested/controller-stimulated start; utility unaccepted and two textual inaccuracies retained; earlier failed attempt not green.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E2.1",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/e21-owner-navigation-installed-20261016.json",
+            "sha256": "7478663d9859aa2aa6664e93315992d2d4ca749e4c1476615469ebe142d3add0",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "completed_installed"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e21-owner-navigation-review-20261016.json",
+            "sha256": "a6f5b49405774b3291fe85312a446009d5823fbee810c8dc1544ef7e5e138ce6",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "Installed six-section product navigation uses existing real backend, sealed assets and browser checks.",
+        "limits": "Navigation only; later E2.2–E2.5 supply its subsequent controls. Historic UI-image SHA is not current candidate SHA.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E2.2",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/e22-owner-memory-installed-20261016.json",
+            "sha256": "6affa52e37180eb59a5de649cb9414a93c5a13d215bd923660e3e38dce4a6d4f",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "completed_installed"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e22-owner-memory-review-20261016.json",
+            "sha256": "50253bd61ff12ab8844dd6d6725868ef2748e5d80fa06a7d968106142b00aa89",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "Person/topic source view, evidence/inference distinction, current authority, correction and targeted forgetting through existing storage.",
+        "limits": "Ranked selection, not exhaustive person directory; erasure retains original ingress/work artifacts; household data read-only during installed check.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E2.3",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/e23-conversation-work-installed-20261016.json",
+            "sha256": "de9a74548e2a9c1a893d830308e1b115db531295e477db0e73032550e1f8b9db",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "completed_installed"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e23-conversation-work-review-20261016.json",
+            "sha256": "0608fbf4a632e2ca8d3fb50bdb0209d4615e91b9715668eb176233a8b3053610",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "Exact conversation/work/source/result binding with existing stop/resume and explicit full-result disclosure.",
+        "limits": "Legacy missing source remains unknown; note/result/delivery/owner acceptance distinct; mutations verified only isolated.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E2.4",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/e24-initiative-learning-installed-20261016.json",
+            "sha256": "cfd4e0aa6d90129ef5cb46a9b91560055758fc1fbbe2baead7de140f79371299",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "installed_and_technically_completed"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e24-initiative-learning-review-20261016.json",
+            "sha256": "80a232619f9180c55c35e1ec37d49232e16c0eab77a000782e21b17f9d7491a8",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "Initiative, actual feedback, reflection, candidate/evaluation/reference/application states shown separately with actual owner counts.",
+        "limits": "Stored reflection/offered feedback context is not changed behavior; historical absence of completed applications superseded only by exact later E4.5 receipt.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E2.5",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/e25-optional-models-installed-20261016.json",
+            "sha256": "3d5b73509961f7b0eab8d3f2fc90abb17f7e0c4efbe0b235b777b4450c39534c",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "installed_and_technically_completed"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e25-optional-models-review-20261016.json",
+            "sha256": "cdbe1d61d6150aabb1640d90001a8e5e968dc6bb67b09eddd8648055df1f2820",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "Installed optional Anthropic/OpenAI-compatible private-text adapters plus explicit save/check/select/disable; same context/actions.",
+        "limits": "SDK transport/browser lifecycle proof is synthetic; no real external account/paid request; background and voice retain existing provider route.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E2.6",
+        "boardStatus": "blocked",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/e26-whatsapp-calling-installed-20261016.json",
+            "sha256": "7e70521ccd59074de22f9d89b8c24cc73ac599529270ccea3d9b9299234c78ce",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "installed_awaiting_separate_eva_number_and_real_call"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e26-whatsapp-calling-review-20261016.json",
+            "sha256": "e5377fa0216449e427dbfe0df4db4d3a653b6f324ce1df61e05665d7e0439174",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO_INSTALLED_COMPONENT_NOT_CARD_COMPLETE"
+          }
+        ],
+        "provenBoundary": "Optional pinned WhatsApp text/PCM transport and existing voice-session seam installed; codec/protocol/isolated room verified.",
+        "limits": "No Eva account, pairing, handset call or original-message live return; card remains blocked and optional.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "optional_not_a_core_release_blocker",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E2.7",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/e27-own-activity-history-installed-20261017.json",
+            "sha256": "ab2363a28d2e684d867fd8a4bb6c1132ae2eb16898effd1f401e726603cdcfb3",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "installed_and_technically_completed"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e27-own-activity-history-review-20261017.json",
+            "sha256": "78c107e85351bd7cc9be6f9b114c982227497949cc384fa29326435bcdf3baa5",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "One existing private activity action combines retained conversations/work/initiative/learning; actual ordinary chat used it after bounded query repair.",
+        "limits": "Coverage is authorized retained data/pages, not complete life; 25.19s/42952 input tokens retained; old failed SELECT and unknown usage preserved.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E3.1",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/reassessment/e31-file-register-20261017.json",
+            "sha256": "e6388466b6d7fbffd3cbc9add9aad8c1cc07c9fe01e58396fb7d224ee061d193",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "completed_registration_only"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e31-file-register-20261017.json",
+            "sha256": "e73c346c3b6091b18fda367c0b43357a5b4456493defa038ae38da78cff95554",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO_ORIGINAL_E31_REGISTRATION_ONLY"
+          }
+        ],
+        "provenBoundary": "Immutable 4896-path register with exact SHA or explicit policy exclusion; not a source-reading claim.",
+        "limits": "Registration checkpoint; later source deltas must be bound separately.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E3.2",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/reassessment/e32-core-review-20261017.json",
+            "sha256": "8667802cc01cf34a839b901dc53309c4049e04777bec29604a32e72dd1ffbca3",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "completed_semantic_review_only"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e32-core-review-20261017.json",
+            "sha256": "14ebdcc7c67c5b3e2d80cbabbcf60f5f5acc502269cc0623627e8224135d5cfe",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "136 core dispositions with exact read hashes, consumers and finite E4 decisions.",
+        "limits": "Review reference only now; later patches need their own reviewed delta, not original fullread claim.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E3.3",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+            "sha256": "65c9a3a070004eecafd5f90914eb5af1a275e00683f48dc754aad1392edba086",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "completed_semantic_review_only"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e33-adapters-installation-review-20261017.json",
+            "sha256": "e44d027facf960cabe3454423d80d28b40fc71400f9a1fe6b99f5cbc21037d48",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "1027 adapter/deploy/operator dispositions, actual consumer chains, generated/vendor provenance and finite changes.",
+        "limits": "Photo library retained conditionally, not Eva1 agent; hybrid operational reader not whole acceptance-source fullread.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E3.4",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/reassessment/e34-tests-docs-history-review-20261017.json",
+            "sha256": "e31962e51f20ae44c406a0fb9176381378317149f6b84757e56c43a65285163c",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "completed_review_only"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e34-tests-docs-history-review-20261017.json",
+            "sha256": "e5270c793654e66cc1ab2ec5a202bacbf96d4851c9eb7d2e7a922afc6a48ed65",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "3733 remaining dispositions plus E3.2/E3.3 =4896; protected metadata/reference modes explicit and twelve finite cleanup clusters.",
+        "limits": "No all-file fullread claim; 24 historical markdown files stay unread; exact historical evidence does not become active work.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E4.1",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/reassessment/e41-proven-dead-code-cleanup-20261017.json",
+            "sha256": "197c9f38e339d50df79c105c0e6fbd6251e99a5749655e7983a65d5aa01dabfa",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "completed"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e41-proven-dead-code-cleanup-review-20261017.json",
+            "sha256": "4b87450e3a75a624fdfc7591d1395bf15289a5c5676a55e434dc3067ab4a4316",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "Entire fixed deletion list C01: unreachable PeopleOverview, 28 lines; generated production output unchanged.",
+        "limits": "No broad file deletion or quality/speed win inferred.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E4.2",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/reassessment/e42-module-boundaries-installed-20261017.json",
+            "sha256": "db14d340e925073da674883fc05fe965c954761c5a55500e0a44722ba1783543",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "installed_technically_completed"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e42-module-boundaries-review-20261017.json",
+            "sha256": "7f02febc0df7272af6487c289133e89fa78fba57d55c4a0bcdbf7184a3a73c11",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "go"
+          }
+        ],
+        "provenBoundary": "Seven finite boundary clusters installed/reviewed: protocol, completion, state/privacy, pure contracts, recipient/catalogue readiness.",
+        "limits": "Actual installed overlays intentionally differ from checkout where concurrent legacy functions retained; bind current executable sources instead of asserting whole checkout parity.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E4.3",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json",
+            "sha256": "9c34cddd32b9c7926313b5b1ad193eb69fc268d18cb9cf68cc097b2908222a76",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "installed_bounded_efficiency_improvement"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e43-runtime-efficiency-review-20261017.json",
+            "sha256": "e5c8b3b308d660f074b196884b9f56418c47876f225f66b344e8a157b08fe6d1",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO_bounded_lossless_change"
+          }
+        ],
+        "provenBoundary": "Same whole provider input bytes; measured CPU preparation improvement for two larger cases; early header guard; installed/tested.",
+        "limits": "No total answer latency/token/credit gain. Short context no demonstrated win; portable old failure retained and subsequently repaired E4.4.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E4.4",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json",
+            "sha256": "ec1ec11fe47cf7fbceef8882c67c47d96db19a820d7ea7b3cd0216f4135cd34c",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "installed_bounded_maintenance_complete"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e44-module-maintenance-review-20261017.json",
+            "sha256": "a242e71f5695e6f304b71293e1c86835ecb6e54aeed04527b865fa0a4d20c50b",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO_bounded_installed_maintenance"
+          }
+        ],
+        "provenBoundary": "C10–C12: identity/portable resources, coherent worker recipe, existing module contracts, operational helper outside acceptance runner; host/wheel and core boundary verified.",
+        "limits": "Operators belong host+wheel, not narrow core containers; original pins/criteria retained; no live private DB restore or arbitrary upstream upgrade.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      },
+      {
+        "card": "E4.5",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+            "sha256": "bc6e44760492818942efd8241def4228106b52cce6f05fa7cc2150f2fbfaef0d",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "installed_and_later_used"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
+            "sha256": "f45ad7d6136f3de8650d99b6cc14284e5a8f22c45f0a4f4fbb4e249777b4424c",
+            "reviewMode": "existing_review_and_outcome_reference",
+            "verdict": "GO"
+          }
+        ],
+        "provenBoundary": "One Eva-authored timestamp candidate: independent gain, exact automatic publication/application, trusted behavior probe and later native task use; isolated safe recovery checks.",
+        "limits": "Initial owner-service admission and host runner-signature repair explicit; later external voice core successor retains parser but is not original reviewed image; no unrestricted self-update/dead-core compensation claim.",
+        "reuseDecision": "retain_bounded_evidence_no_rerun",
+        "currentInstalledBinding": "historical_matrix_checkpoint_resolved_by_runtime_section",
+        "releaseClassification": "reused_technical_evidence_with_current_runtime_binding",
+        "currentBindingReviewSha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a"
+      }
+    ],
+    "retainedAcceptanceAndBaseline": [
+      {
+        "card": "M1.2",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "latestEvidence",
+            "path": "development/evidence/product/m1-continuity-owner-accepted-20261001.json",
+            "sha256": "4a1cefe73f3a916a1655262b0abafe49599199e5cd26e0c9eaad326abc11b4a8",
+            "reviewMode": "accepted_scope_reference_no_replay"
+          }
+        ],
+        "reuse": "preserve_original_acceptance_or_technical_boundary; not_current_E5_installation_certification"
+      },
+      {
+        "card": "M3.3",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "latestEvidence",
+            "path": "development/evidence/product/m3-personality-owner-accepted-20261005.json",
+            "sha256": "aab19ddf443aa8134e512109166d684fd055c39bcfb4df2e3338d91e386c1556",
+            "reviewMode": "accepted_scope_reference_no_replay"
+          }
+        ],
+        "reuse": "preserve_original_acceptance_or_technical_boundary; not_current_E5_installation_certification"
+      },
+      {
+        "card": "I1.2",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/i12-quiet-attention-installed-20261016.json",
+            "sha256": "4138e97782318f86d3f785557d8d76fb77782935413650c0ca72bd068dae34f1",
+            "reviewMode": "accepted_scope_reference_no_replay"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/reviews/i12-quiet-attention-review-20261016.json",
+            "sha256": "300b9f34cf459a677949ff5fd11c550a0aa21d633cc642891fefbe11febe516c",
+            "reviewMode": "accepted_scope_reference_no_replay"
+          }
+        ],
+        "reuse": "preserve_original_acceptance_or_technical_boundary; not_current_E5_installation_certification"
+      },
+      {
+        "card": "HUE5.1",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+            "sha256": "8b4c2351c752170d49dc4ce2397ffef9e273c3513c87de6f036c6af8e81a216d",
+            "reviewMode": "accepted_scope_reference_no_replay"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/evidence/product/hue5-feedback-later-use-completion-review-20261014.json",
+            "sha256": "670c68e98121e89c1242dccdfb610f203c1614a426e50c76705335a4dbd3be38",
+            "reviewMode": "accepted_scope_reference_no_replay"
+          }
+        ],
+        "reuse": "preserve_original_acceptance_or_technical_boundary; not_current_E5_installation_certification"
+      },
+      {
+        "card": "HUE6.1",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "completionEvidence",
+            "path": "development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
+            "sha256": "51e3588df165594fb90790e1d20e806f7e099775f17ce9980a93970fcaaae57e",
+            "reviewMode": "accepted_scope_reference_no_replay"
+          },
+          {
+            "role": "independentReview",
+            "path": "development/evidence/product/hue6-original-completion-publication-review-20261014.json",
+            "sha256": "eb07b4d4df24db1a2f6a697c8403c50857a0017190b24ec46901ea2187548633",
+            "reviewMode": "accepted_scope_reference_no_replay"
+          }
+        ],
+        "reuse": "preserve_original_acceptance_or_technical_boundary; not_current_E5_installation_certification"
+      },
+      {
+        "card": "F1.1",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "latestEvidence",
+            "path": "development/evidence/product/f1-integrated-installed-20261003.json",
+            "sha256": "07623bbc8c0d979c96e55917253e4c48052effd8e90f3636cc19edbd5fd35e6d",
+            "reviewMode": "accepted_scope_reference_no_replay"
+          }
+        ],
+        "reuse": "preserve_original_acceptance_or_technical_boundary; not_current_E5_installation_certification"
+      },
+      {
+        "card": "F1.2",
+        "boardStatus": "completed",
+        "evidence": [
+          {
+            "role": "latestEvidence",
+            "path": "development/evidence/product/f1-post-reboot-independent-review-20261006.json",
+            "sha256": "e22910f467e06e45baf36d89c4f6a456df3fb1243769f3b0e7abdbdcfb9e9743",
+            "reviewMode": "accepted_scope_reference_no_replay"
+          }
+        ],
+        "reuse": "preserve_original_acceptance_or_technical_boundary; not_current_E5_installation_certification"
+      }
+    ],
+    "acceptanceFocus": [
+      {
+        "id": "daily_continuity",
+        "reuseCards": [
+          "M1.2",
+          "E1.2",
+          "E2.2",
+          "E2.3",
+          "E2.7"
+        ],
+        "technicalBoundary": "Owner-accepted subject continuation; retained authorized history/work/results and delayed attention, with privacy and explicit unknowns.",
+        "currentCandidateNeed": "Existing reader/work routes, person boundary and current database retained; bind actual sources/config without scripted family replay.",
+        "F2Observation": "Continue real commitments across days; record repeated explanation, reminders and human interventions. Technical reader success does not establish daily reliability."
+      },
+      {
+        "id": "own_life",
+        "reuseCards": [
+          "HUE5.1",
+          "HUE6.1",
+          "E1.1",
+          "E1.2",
+          "E1.3",
+          "E4.5"
+        ],
+        "technicalBoundary": "Self-chosen information/work, later feedback/quiet learning and one independently improved/applied code capability with later actual use.",
+        "currentCandidateNeed": "Current ordinary initiative route not blocked, original receipts/UNKNOWN retained, existing worker/application chain preserved.",
+        "F2Observation": "Same voluntarily chosen interests/projects continue over multiple ordinary days without repeated steering; no new forced model series."
+      },
+      {
+        "id": "family_contribution",
+        "reuseCards": [
+          "M3.3",
+          "HUE5.1",
+          "I1.2",
+          "E1.3"
+        ],
+        "technicalBoundary": "Existing owner personality acceptance and genuine utility/timing/nuisance feedback, plus original-recipient delivery and quiet-window/foreground checks.",
+        "currentCandidateNeed": "Chosen receiving channels and original person/audience/stop rules preserved.",
+        "F2Observation": "Each participating family member judges actual help, involvement, enjoyment, timing and nuisance separately. No proxy from Jaap or missing judgments; earlier negative utility remains negative."
+      },
+      {
+        "id": "house_awareness",
+        "reuseCards": [
+          "E1.1",
+          "E1.3",
+          "I1.2",
+          "E2.4",
+          "E4.2"
+        ],
+        "technicalBoundary": "Allowed source discovery/read and bounded result use, general attention, explicit authority and readback; no hard-coded family example.",
+        "currentCandidateNeed": "Chosen connected sources and current readiness/authority/coverage are clear in existing Connections and instructions. Healthy HA/MCP is access readiness, not semantic correctness or monitoring coverage.",
+        "F2Observation": "Observe appropriate attention/communication/handling on chosen sources; absent unchosen cameras/HA examples are not mandatory features."
+      },
+      {
+        "id": "one_eva",
+        "reuseCards": [
+          "E2.1",
+          "E2.2",
+          "E2.3",
+          "E2.5",
+          "E2.6",
+          "E4.2"
+        ],
+        "technicalBoundary": "Existing core identity/private context/work route and provider/channel separation; E4.2 inspected two device readiness bindings to same signed identity/core.",
+        "currentCandidateNeed": "Speech owner supplies current same-core/identity/session/person/work/stop/return integration boundary for chosen existing voice route. Preserve concurrent voice successor. No audio/protected data read by reviewer.",
+        "F2Observation": "Ordinary selected text/voice entrances show the same permitted continuity; private/shared audiences intentionally differ. Optional unpaired WhatsApp is not a release requirement."
+      }
+    ],
+    "sourceBindings": "Historical source differences remain separate from current runtime bindings; no broad current-image equality claimed.",
+    "matrixIsImmutableHistoricalCheckpoint": true
+  },
+  "installation": {
+    "action": "retain_existing_installation",
+    "newBuilds": 0,
+    "newInstalls": 0,
+    "restarts": 0,
+    "databaseMigrations": 0,
+    "dataMutations": 0,
+    "preservedExistingVolumes": true,
+    "basis": "Inspected current installed images, configuration-file hash parity, schema resources and real previous worker release. No release-trigger or production recovery experiment performed."
+  },
+  "use": {
+    "instructions": "README.md#daily-use",
+    "ownerDashboard": "http://127.0.0.1:44711/internal/v1/dashboard",
+    "projectDashboard": "http://127.0.0.1:44712/",
+    "channels": "Ordinary Telegram and standard chat use the existing Eva2 core. /eva1 is historical comparison only; Eva1 remains stopped.",
+    "voiceOwner": "Other WSL Codex retains speech source, installation, physical latency and interruption acceptance.",
+    "familyTrial": {
+      "taskId": "F2.1",
+      "days": 7,
+      "availableAfterTechnicalReview": true,
+      "startedAt": null,
+      "ownerConfirmedStart": false,
+      "focus": [
+        "daily_continuity",
+        "own_life",
+        "family_contribution",
+        "house_awareness",
+        "one_eva"
+      ],
+      "guidance": "Use ordinary requests and report concrete useful/unhelpful episodes, timing, hindrance and needed human help per participating person. Accepted prior memory/personality trials need not be repeated.",
+      "acceptanceTask": "F2.2"
+    }
+  },
+  "remainingOptions": [
+    "WhatsApp own number/account remains optional and unpaired; does not block core candidate.",
+    "Additional provider credentials are optional.",
+    "Physical voice quality and interruptions belong to the other executor.",
+    "Retained photo-provider library dependency stays explicit, no second Eva agent.",
+    "No overall superiority over Eva1 or competitors proven; comparison series remains parked."
+  ],
+  "measurement": {
+    "newModelCallsRequested": 0,
+    "newPaidComparisonRuns": 0,
+    "newAutomatedTests": 0,
+    "verification": "Read-only existing owner GETs, runtime/source/config/dependency/schema parity and reused existing tests/reviews. A fresh ordinary-chat diagnostic was blocked before execution by tool policy and was not retried through another route.",
+    "developmentModelUsage": "unknown; Codex development usage is separate from Eva runtime",
+    "runtimeBackgroundUsage": "not measured by this handoff",
+    "creditCost": null
+  },
+  "independentInputs": [
+    {
+      "name": "runtime-review",
+      "sha256": "70389b512c7917a54071203a5657619a24aa86779f55f33bd30291879b7cfb1a",
+      "scope": "Current runtime/release coherence, autonomy/reflection, non-speech owner routes; requested voice/core contract and identity metadata only. No broad source rereview.",
+      "verdict": "go_existing_installed_candidate_with_explicit_evidence_limits"
+    },
+    {
+      "name": "reuse-matrix",
+      "sha256": "2007431f85a11ff4afba17e897376d53229dd3e35fb38ac5b75b2f22e7843cb0",
+      "scope": "E1–E4 evidence/reference reuse and five existing acceptanceFocus aspects; initial bounded review, final current candidate not yet supplied",
+      "verdict": "GO_REUSE_AND_EXISTING_UI_SCOPE; FINAL_E5_RELEASE_PENDING_CURRENT_BINDING"
+    }
+  ],
+  "references": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "1378975f1908ef58fdc002d325e30d67e1155c3117e7bf46126772223ea5d650"
+    },
+    {
+      "path": "development/docs/PROJECTDOEL.md",
+      "sha256": "04caa2f38f55359e1ec9d11b766de9c760953d7014620aab1b379542222474b0"
+    },
+    {
+      "path": "development/docs/ARCHITECTUUR.md",
+      "sha256": "a5c7f68b4ed3cdb298bc0ae23d3012a305477a32230a59cdcc2ade055b622041"
+    },
+    {
+      "path": "development/docs/AFRONDINGSPLAN.md",
+      "sha256": "7a26aade0999ae1a1bdbb4ed90442dde15c1e60bc172f2ce2d937866ae1a756d"
+    },
+    {
+      "path": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json",
+      "sha256": "ec1ec11fe47cf7fbceef8882c67c47d96db19a820d7ea7b3cd0216f4135cd34c"
+    },
+    {
+      "path": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+      "sha256": "bc6e44760492818942efd8241def4228106b52cce6f05fa7cc2150f2fbfaef0d"
+    },
+    {
+      "path": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
+      "sha256": "53989e83f7925be95b98182d3aa140b0f87f482a2f8502d57d5b1fe96579bb0e"
+    }
+  ],
+  "privateEvidence": "Raw owner snapshots, full source/config manifests and detailed independent inputs remain outside Git under the E5.1 artifact directories. No credentials, private conversations or protected cases are published.",
+  "statusAtIndependentReview": "installed_pending_independent_final_review",
+  "independentFinalReview": {
+    "path": "development/reviews/e51-joint-candidate-review-20261018.json",
+    "reviewedPayloadSha256": "588cb1aebecb3c557655bd61427bd9b721f5ffba613444cfcffec5720e9fb089",
+    "privateReviewSha256": "0b7cec4b78e05a0cdd4b0556e171e2bfcddeda88c9dcbbc5e504bec80b81b551",
+    "verdict": "GO_BOUNDED_TECHNICAL_E5_1_INSTALLED_CANDIDATE",
+    "reviewedAt": "2026-10-18T02:24:16.202121+00:00",
+    "decisionOnlyMetadataAddedAfterReview": true
+  }
+}

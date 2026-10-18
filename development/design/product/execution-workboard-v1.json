@@ -838,18 +838,18 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-17T12:16:51.042915+00:00",
+  "lastUpdated": "2026-10-18T02:24:39.871399+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E5.1",
+  "activeTaskId": "F2.1",
   "currentWork": {
-    "id": "E5.1",
-    "title": "Het volledige actuele geheel opleveren en laten beoordelen",
+    "id": "F2.1",
+    "title": "Zeven dagen gezinsgebruik",
     "status": "planned",
-    "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
-    "nextAction": "Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.",
-    "checkedAt": "2026-10-17T13:23:36.139042+00:00",
-    "ownerActionRequired": false
+    "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
+    "nextAction": "Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.",
+    "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+    "ownerActionRequired": true
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -865,8 +865,8 @@
   ],
   "team": {
     "coordinator": "/root",
-    "architectureReviewer": "/root/eva1_memory_transfer",
-    "documentationReviewer": "/root/hue6_independent_review"
+    "architectureReviewer": "/root/e33_state_adapters",
+    "documentationReviewer": "/root/e33_interface_adapters"
   },
   "audit": {
     "projectDashboard": {
@@ -1632,6 +1632,22 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E5.1 · Gezamenlijke geïnstalleerde kandidaat technisch opgeleverd",
+            "state": "installed",
+            "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+            "summary": "Eén actuele installatie met E1–E4, gedeelde identiteit en bestaande spraakoverdracht. Bestaand bewijs gebundeld en onafhankelijk beoordeeld; bron-, configuratie-, schema- en dependencybinding gecontroleerd. Geen nieuwe build, herinstallatie of modelproef.",
+            "remaining": "Zeven dagen werkelijk gezinsgebruik F2.1 en eigenaaroordeel F2.2. Fysieke spraak bij de andere uitvoerder; WhatsApp-nummer optioneel. Geen volledige gezinsacceptatie of concurrentievoorsprong.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e51-joint-candidate-review-20261018.json",
+            "maintenanceRepair": false,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [
+              "E5.1"
+            ],
+            "familyAcceptance": false,
+            "completionScope": "Technical joint installed delivery only; no new product capability or fabricated owner acceptance."
+          },
+          {
             "title": "E4.5 · Eigen softwareverbetering automatisch geïnstalleerd en later gebruikt",
             "state": "installed",
             "checkedAt": "2026-10-17T13:23:36.139042+00:00",
@@ -2172,21 +2188,6 @@
             "familyAcceptance": false
           },
           {
-            "title": "HUE5.1 · Van echte initiatiefreactie geleerd",
-            "state": "installed",
-            "summary": "HUE5 afgerond: eigen bijdrage werkelijk privé afgeleverd, echte negatieve nutsfeedback bewaard en in een nieuwe neutrale afweging toegepast. Eva koos bewust geen nieuw werk omdat de eerdere bijdrage niet bij de bestaande werkwijze paste. Eén Sol-contactaanvraag, 9.153 tokens, nul tools of nieuwe acties. Geen spontane nieuwe bijdrage, algemene voorsprong of finale gezinsacceptatie geclaimd.",
-            "source": "/home/administrator/project/Eva2/development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
-            "checkedAt": "2026-10-14T07:22:01.869796+00:00",
-            "newProductFunctionCompleted": true,
-            "completedTaskIds": [
-              "HUE5.1"
-            ],
-            "smallTaskCountsUnchanged": false,
-            "maintenanceRepair": false,
-            "familyAcceptance": false,
-            "completionScope": "HUE5.1 only"
-          },
-          {
             "title": "HUE5 · Eigen bijdrage echt via Telegram afgeleverd",
             "state": "installed",
             "summary": "Bestaande zelfgekozen bijdrage gecontroleerd, geregistreerd en kort privé afgeleverd. Geen herhaalde creatie. Nut en later feedbackgebruik nog open.",
@@ -2390,46 +2391,45 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E4.5 · Eigen softwareverbetering automatisch geïnstalleerd en later gebruikt",
+          "title": "E5.1 · Gezamenlijke geïnstalleerde kandidaat technisch opgeleverd",
           "state": "installed",
-          "checkedAt": "2026-10-17T13:23:36.139042+00:00",
-          "summary": "Eva schreef één echte parserverbetering: ontwikkeling19/26→26/26, onafhankelijk51/106→106/106. Automatisch gepubliceerd/geïnstalleerd, gedrag op beide services bevestigd en later in een gewone native taak gebruikt.128 gerichte tests en onafhankelijke review GO; actuele gegevens en ander WSL-werk behouden.",
-          "remaining": "E5.1, gezamenlijk gezinsgebruik en afzonderlijke acceptatie blijven open. Eén vooraf toegelaten klasse bewezen; geen algemene autonomie- of concurrentieclaim.",
-          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/e45-autonomous-software-improvement-review-20261017.json",
+          "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+          "summary": "Eén actuele installatie met E1–E4, gedeelde identiteit en bestaande spraakoverdracht. Bestaand bewijs gebundeld en onafhankelijk beoordeeld; bron-, configuratie-, schema- en dependencybinding gecontroleerd. Geen nieuwe build, herinstallatie of modelproef.",
+          "remaining": "Zeven dagen werkelijk gezinsgebruik F2.1 en eigenaaroordeel F2.2. Fysieke spraak bij de andere uitvoerder; WhatsApp-nummer optioneel. Geen volledige gezinsacceptatie of concurrentievoorsprong.",
+          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e51-joint-candidate-review-20261018.json",
           "maintenanceRepair": false,
-          "newProductFunctionCompleted": true,
+          "newProductFunctionCompleted": false,
           "completedTaskIds": [
-            "E4.5"
+            "E5.1"
           ],
-          "smallTaskCountsUnchanged": false,
           "familyAcceptance": false,
-          "completionScope": "One Eva-authored reversible code class through independent quality selection, actual installation, behavior verification and later native use; isolated recovery proof, no family acceptance."
+          "completionScope": "Technical joint installed delivery only; no new product capability or fabricated owner acceptance."
         },
         "now": {
-          "taskId": "E5.1",
-          "title": "Het volledige actuele geheel opleveren en laten beoordelen",
+          "taskId": "F2.1",
+          "title": "Zeven dagen gewoon gezinsgebruik",
           "status": "planned",
-          "summary": "Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.",
-          "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2."
+          "summary": "Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.",
+          "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen."
         },
         "next": {
-          "title": "F2 · Gezamenlijk gebruik en jouw oordeel",
-          "state": "Na E5.1",
-          "summary": "Bestaande gezinsproef en afzonderlijke eigenaaracceptatie; technische afronding is geen menselijk oordeel.",
+          "title": "F2.2 · Jouw eindoordeel",
+          "state": "Na zeven werkelijke gebruiksdagen",
+          "summary": "Concrete hulp, dagelijkse continuïteit, eigen leven, timing/hinder en benodigde begeleiding beoordelen.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Geen handeling nodig voor E4.5",
-          "detail": "E4.5 draait en is later gebruikt. Volgend is gezamenlijke E5.1-oplevering. Spraak blijft bij Codex in WSL; eigen WhatsApp-nummer kan later.",
-          "required": false
+          "title": "Gebruik Eva normaal; korte concrete ervaringen zijn genoeg",
+          "detail": "E5.1 is technisch opgeleverd. Gebruik zeven dagen de bestaande Telegramchat of Eva-beheer. Meld wanneer je begint en noteer nuttige hulp, gemiste opvolging, hinder en benodigde aansporingen. Geen herhaling van geaccepteerde deelproeven. Spraak blijft bij de andere uitvoerder.",
+          "required": true
         },
-        "checkedAt": "2026-10-17T13:23:36.139042+00:00",
-        "reviewedAt": "2026-10-17T13:23:36.139042+00:00",
+        "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+        "reviewedAt": "2026-10-18T02:24:39.871399+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-17T11:16:40.392200+00:00",
-      "checkedAt": "2026-10-17T12:16:51.042915+00:00",
+      "reviewedAt": "2026-10-18T02:24:39.871399+00:00",
+      "checkedAt": "2026-10-18T02:24:39.871399+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2443,10 +2443,10 @@
         "checkedAt": "2026-10-09T03:43:44.996434+00:00"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-17T13:23:36.139042+00:00",
+        "checkedAt": "2026-10-18T02:24:39.871399+00:00",
         "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 en HUE5 technisch afgerond, met echte initiatiefreactie en latere toepassing. De bijdrage was niet nuttig voor de eigenaar; timing was goed. Dit is geen positieve algemene gezinsacceptatie.",
-        "headline": "E4.1–E4.5 afgerond; volgende: één gezamenlijke eindkandidaat.",
-        "note": "64 van 72 geregistreerde kleine taken afgerond; 8 open. E4.5 is nieuw afgerond; geen productpercentage of volledige gezinsacceptatie.",
+        "headline": "E5.1 technisch opgeleverd; gezamenlijk dagelijks gezinsgebruik en jouw oordeel volgen.",
+        "note": "65 van 72 geregistreerde kleine taken afgerond; 7 open. Technische oplevering is geen productpercentage of volledige gezinsacceptatie.",
         "rows": [
           {
             "name": "Persoonlijkheid",
@@ -2455,7 +2455,8 @@
             "result": "Warmte, eigen oordeel en stijl in gewoon gebruik: jouw acceptatie van 5 oktober blijft staan. Dit is de M3-scope; geen bewijs van algemene voorsprong.",
             "remaining": "M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie.",
             "evidencePaths": [
-              "development/evidence/product/m3-personality-owner-accepted-20261005.json"
+              "development/evidence/product/m3-personality-owner-accepted-20261005.json",
+              "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json"
             ],
             "checkedAt": "2026-10-13T12:00:00+02:00"
           },
@@ -2481,7 +2482,8 @@
               "development/evidence/product/hue-learning-later-use-result-20261013.json",
               "development/reviews/hue-learning-later-use-review-20261013.json",
               "development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
-              "development/evidence/product/e22-owner-memory-installed-20261016.json"
+              "development/evidence/product/e22-owner-memory-installed-20261016.json",
+              "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json"
             ],
             "checkedAt": "2026-10-16T11:28:21.773727+00:00"
           },
@@ -2490,7 +2492,7 @@
             "state": "incomplete",
             "label": "E1 technisch afgerond · werkelijk uitgevoerd en privé afgeleverd",
             "result": "Eva koos werk, gebruikte actuele bronnen, bewaarde en leverde het resultaat privé af. Zelfgekozen vervolg-aandacht en voorrang voor gesprek/nachtrust zijn geïnstalleerd en onafhankelijk beoordeeld. De start van de nieuwe bijdrage was gestimuleerd; het nut is niet beoordeeld. Eerdere echte feedback was inhoudelijk negatief, timing/hinder goed.",
-            "remaining": "Herhaald spontaan dagelijks gezinsnut en finale gezinsacceptatie; samenhangende bediening volgt in E2.",
+            "remaining": "Herhaald spontaan dagelijks gezinsnut en finale gezinsacceptatie in F2.1/F2.2; bediening is geïnstalleerd.",
             "evidencePaths": [
               "development/evidence/product/i1-private-contribution-readback-20261002.json",
               "development/evidence/product/i2-self-chosen-research-installed-20261005.json",
@@ -2502,7 +2504,8 @@
               "development/evidence/product/e11-semantic-source-use-outcome-20261015.json",
               "development/evidence/product/e12-next-attention-outcome-20261015.json",
               "development/evidence/product/e13-native-initiative-result-20261015.json",
-              "development/evidence/product/i12-quiet-attention-installed-20261016.json"
+              "development/evidence/product/i12-quiet-attention-installed-20261016.json",
+              "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json"
             ],
             "checkedAt": "2026-10-15T22:10:53.727800+00:00"
           },
@@ -2511,7 +2514,7 @@
             "state": "incomplete",
             "label": "Werkend en geïnstalleerd · gezinsgebruik open",
             "result": "De gewone HA/documentopdracht en het zelf maken, verbeteren en later hergebruiken van een hulpmiddel zijn bewezen en geïnstalleerd. Nu ook dezelfde digitale uitvoerder aangesloten voor eigen initiatieven; 224 gerichte controles groen. Oude fouten/verliezen blijven zichtbaar. De onafhankelijk beoordeelde hulpmiddeltoepassing is nu ook aangesloten voor de oorspronkelijke native initiatiefherkomst. Volledig opgeslagen resultaat nu werkelijk bij de oorspronkelijke Telegramvraag geleverd; bytes teruggelezen. Standaard geen bijlage. HUE6 technisch afgerond: agentvariant werkelijk beoordeeld; gelijkspel, dus referentie behouden en later gebruikt. Bestaande codewinst/toepassing/later gebruik behouden. E2.3: gesprekgebonden opdrachten met voortgang, beschikbare oorspronkelijke gespreksbron en opgeslagen resultaat zijn bedienbaar; stoppen/hervatten via bestaande dienst, volledig resultaat op verzoek. E4.5: één eigen codeverbetering onafhankelijk gemeten, automatisch toegepast en later in echte taakverwerking gebruikt; geen onbeperkte zelfwijzigingsclaim.",
-            "remaining": "E1-brongebruik, vervolg-aandacht, eigen uitvoering/aflevering en stilte technisch afgerond. Samenhangende bediening, onderhoudseindfase en finale gezinsacceptatie blijven open.",
+            "remaining": "Bediening en afgebakende onderhoudsfase technisch afgerond. Samenhangend dagelijks gezinsgebruik en jouw acceptatie blijven F2.1/F2.2.",
             "evidencePaths": [
               "development/evidence/product/p2-published-results-20261006.json",
               "development/evidence/product/p2-provider-history-independent-result-20261006.json",
@@ -2545,13 +2548,14 @@
               "development/evidence/product/full-saved-result-delivery-installed-20261013.json",
               "development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
               "development/evidence/product/e23-conversation-work-installed-20261016.json",
-              "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json"
+              "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+              "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json"
             ],
             "checkedAt": "2026-10-16T12:49:32.967702+00:00"
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-17T12:16:51.042915+00:00",
+      "lastUpdatedAt": "2026-10-18T02:24:39.871399+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2585,7 +2589,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-17T12:16:51.042915+00:00",
+      "updatedAt": "2026-10-18T02:24:39.871399+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -2594,7 +2598,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E5.1",
+        "currentStep": "F2.1",
         "steps": [
           {
             "number": 1,
@@ -4411,24 +4415,24 @@
             ],
             "outcome": "Volledige vergelijking uitvoeren",
             "effort": "L; runtime unknown",
-            "status": "in_progress",
+            "status": "planned",
             "dashboardComponent": "project-wide",
             "remainingTasks": [
               {
                 "id": "P2.1",
                 "title": "Vergelijking op eindkandidaat uitvoeren",
-                "status": "in_progress",
+                "status": "planned",
                 "kind": "vergelijken",
                 "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
                 "owner": "Codex",
-                "nextAction": "Gebruik bestaand verlies- en foutbewijs om het concrete tekort in zelfstandig werk te lokaliseren; geen extra vergelijkingsrun uitsluitend om meer rijen te vullen.",
+                "nextAction": "Geparkeerd: geen nieuwe vergelijkingsserie. Bestaande resultaten en ontbrekende dekking blijven zichtbaar; geen algemene kwaliteitsvoorsprong geclaimd.",
                 "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Nieuwe vergelijkingsserie geparkeerd; bestaande resultaten en ontbrekende dekking blijven zichtbaar.",
                   "steps": []
                 },
-                "checkedAt": "2026-10-10T12:05:54.938589+00:00",
+                "checkedAt": "2026-10-18T02:24:39.871399+00:00",
                 "remaining": "P2.1 blijft open: oorspronkelijke vergelijkingsdekking en de reeds vereiste menselijke beoordelingen. XD10 is gesloten met conflicterende datumankers in de oorspronkelijke vraag en scorer. Beide volgen de gevraagde dag; ruwe scores bewijzen geen productverlies of winnaar. Geen herhaling van gesloten proeven.",
                 "latestEvidence": "development/evidence/product/p2-original-xd10-eva2-openclaw-result-20261009.json",
                 "assignment": {
@@ -4546,18 +4550,18 @@
                 "kind": "gebruikersproef",
                 "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
                 "owner": "Jaap",
-                "nextAction": "Gebruik na E5.1 dezelfde kandidaat zeven dagen normaal: dagelijkse continuïteit, blijvende eigen projecten, bijdrage per deelnemend gezinslid, afgesproken huisbewaking en één Eva. Leg concrete hulp/hinder en noodzakelijke begeleiding vast.",
-                "ownerActionRequired": false,
+                "nextAction": "Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.",
+                "ownerActionRequired": true,
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Eerst E5.1: één actuele technisch opgeleverde en geïnstalleerde eindkandidaat. Nu nog geen gezinsweek starten.",
+                  "availableNow": true,
+                  "readyWhen": "E5.1 is technisch afgerond. De gezinsweek kan starten; nog geen start of succesvolle week geregistreerd.",
                   "steps": [
-                    "Gebruik de door E5.1 opgeleverde kandidaat zeven dagen normaal; geen aparte vooraf gescripte gezinsfuncties.",
-                    "Meld concrete voorbeelden van de vijf vastgelegde samenhangaspecten, per deelnemend gezinslid waar mogelijk.",
-                    "Noteer ook wanneer je Eva moest aansporen, iets opnieuw uitleggen of ingrijpen."
+                    "Gebruik Eva2 zeven dagen normaal via de bestaande Telegramchat of http://127.0.0.1:44711/internal/v1/dashboard; gewone berichten gaan naar Eva2.",
+                    "Let op beloften/opvolging, haar eigen projecten, werkelijke hulp en passend initiatief. Noteer per deelnemend gezinslid een kort concreet voorbeeld en wanneer je moest aansporen of ingrijpen.",
+                    "Meld ervaringen hier of bij het initiatief. Herhaal geaccepteerde geheugen- en persoonlijkheidsproeven niet. Spraak blijft bij de andere uitvoerder."
                   ],
                   "expected": "Echte dagelijkse betrokkenheid, hulp en steeds minder nodige begeleiding; nut, plezier, timing en hinder apart.",
-                  "reportBack": "Ervaringen en concrete problemen.",
+                  "reportBack": "Meld wanneer je begint en daarna concrete ervaringen. Na zeven werkelijke dagen volgt jouw eindoordeel in F2.2.",
                   "blocksIndependentWork": false
                 },
                 "assignment": {
@@ -4571,7 +4575,10 @@
                   "one_eva"
                 ],
                 "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus",
-                "checkedAt": "2026-10-16T23:08:48.419108+00:00"
+                "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+                "availableAt": "2026-10-18T02:24:39.871399+00:00",
+                "startedAt": null,
+                "ownerConfirmedStart": false
               },
               {
                 "id": "F2.2",
@@ -5897,7 +5904,7 @@
               "FE4"
             ],
             "outcome": "Eén eindkandidaat en gezinsacceptatie",
-            "status": "planned",
+            "status": "in_progress",
             "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
             "endCondition": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie.",
             "dashboardComponent": "finalization-E5",
@@ -5906,14 +5913,14 @@
               {
                 "id": "E5.1",
                 "title": "Het volledige actuele geheel opleveren en laten beoordelen",
-                "status": "planned",
+                "status": "completed",
                 "kind": "afronden",
                 "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
-                "existing": "F1-installatie-/herstartbewijs en afzonderlijke afgeronde gebruikersuitkomsten bestaan.",
-                "gap": "Het nieuwe volledige doel is nog niet als één actuele kandidaat opgeleverd en beoordeeld.",
-                "nextAction": "Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.",
+                "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
+                "gap": "Geen resterend technisch werk binnen E5.1. Zeven dagen werkelijk gezinsgebruik, afzonderlijk eigenaaroordeel en fysieke spraakkwaliteit zijn hiermee niet voltooid.",
+                "nextAction": "Gebruik deze kandidaat voor F2.1; behoud bestaande bewijsgrenzen. Spraak bij de andere WSL-uitvoerder, optioneel WhatsApp wacht op Eva-nummer.",
                 "files": [
                   "src",
                   "deploy",
@@ -5938,10 +5945,10 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-16T23:08:48.419108+00:00",
+                "checkedAt": "2026-10-18T02:24:39.871399+00:00",
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                  "availableNow": true,
+                  "readyWhen": "Technisch opgeleverd in de huidige installatie. Gebruik Telegram of Eva-beheer; F2.1 bevat de korte gebruiksinstructies.",
                   "steps": [],
                   "blocksIndependentWork": false
                 },
@@ -5952,13 +5959,22 @@
                   "house_awareness",
                   "one_eva"
                 ],
-                "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus"
+                "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus",
+                "completedAt": "2026-10-18T02:24:39.871399+00:00",
+                "completionEvidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+                "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
+                "completionKind": "joint_installed_technical_candidate"
               }
-            ]
+            ],
+            "completion": {
+              "technicalCandidate": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+              "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
+              "familyAcceptance": false
+            }
           }
         ],
         "status": "in_progress",
-        "nextAction": "Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.",
+        "nextAction": "Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5967,10 +5983,10 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-17T13:23:36.139042+00:00",
+        "updatedAt": "2026-10-18T02:24:39.871399+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
-          "updatedAt": "2026-10-17T12:16:51.042915+00:00",
+          "updatedAt": "2026-10-18T02:24:39.871399+00:00",
           "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
           "phases": [
             {
@@ -6049,7 +6065,7 @@
             {
               "id": "E5",
               "title": "Eén eindkandidaat en gezinsacceptatie",
-              "status": "planned",
+              "status": "in_progress",
               "finish": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie.",
               "taskIds": [
                 "E5.1"
@@ -6057,7 +6073,10 @@
               "existingTaskIds": [
                 "F2.1",
                 "F2.2"
-              ]
+              ],
+              "currentGap": "E5.1 technisch afgerond en geïnstalleerd. F2.1 zeven dagen werkelijk gezinsgebruik en F2.2 eigenaaroordeel blijven open.",
+              "completionEvidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+              "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json"
             }
           ],
           "acceptanceFocus": {
@@ -6148,7 +6167,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E5.1",
+      "currentStep": "F2.1",
       "steps": [
         {
           "number": 1,
@@ -7965,24 +7984,24 @@
           ],
           "outcome": "Volledige vergelijking uitvoeren",
           "effort": "L; runtime unknown",
-          "status": "in_progress",
+          "status": "planned",
           "dashboardComponent": "project-wide",
           "remainingTasks": [
             {
               "id": "P2.1",
               "title": "Vergelijking op eindkandidaat uitvoeren",
-              "status": "in_progress",
+              "status": "planned",
               "kind": "vergelijken",
               "doneWhen": "De vastgelegde taken uitvoeren met dezelfde voorwaarden; niet-uitvoerbaar blijft zichtbaar.",
               "owner": "Codex",
-              "nextAction": "Gebruik bestaand verlies- en foutbewijs om het concrete tekort in zelfstandig werk te lokaliseren; geen extra vergelijkingsrun uitsluitend om meer rijen te vullen.",
+              "nextAction": "Geparkeerd: geen nieuwe vergelijkingsserie. Bestaande resultaten en ontbrekende dekking blijven zichtbaar; geen algemene kwaliteitsvoorsprong geclaimd.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Nieuwe vergelijkingsserie geparkeerd; bestaande resultaten en ontbrekende dekking blijven zichtbaar.",
                 "steps": []
               },
-              "checkedAt": "2026-10-10T12:05:54.938589+00:00",
+              "checkedAt": "2026-10-18T02:24:39.871399+00:00",
               "remaining": "P2.1 blijft open: oorspronkelijke vergelijkingsdekking en de reeds vereiste menselijke beoordelingen. XD10 is gesloten met conflicterende datumankers in de oorspronkelijke vraag en scorer. Beide volgen de gevraagde dag; ruwe scores bewijzen geen productverlies of winnaar. Geen herhaling van gesloten proeven.",
               "latestEvidence": "development/evidence/product/p2-original-xd10-eva2-openclaw-result-20261009.json",
               "assignment": {
@@ -8100,18 +8119,18 @@
               "kind": "gebruikersproef",
               "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
               "owner": "Jaap",
-              "nextAction": "Gebruik na E5.1 dezelfde kandidaat zeven dagen normaal: dagelijkse continuïteit, blijvende eigen projecten, bijdrage per deelnemend gezinslid, afgesproken huisbewaking en één Eva. Leg concrete hulp/hinder en noodzakelijke begeleiding vast.",
-              "ownerActionRequired": false,
+              "nextAction": "Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.",
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Eerst E5.1: één actuele technisch opgeleverde en geïnstalleerde eindkandidaat. Nu nog geen gezinsweek starten.",
+                "availableNow": true,
+                "readyWhen": "E5.1 is technisch afgerond. De gezinsweek kan starten; nog geen start of succesvolle week geregistreerd.",
                 "steps": [
-                  "Gebruik de door E5.1 opgeleverde kandidaat zeven dagen normaal; geen aparte vooraf gescripte gezinsfuncties.",
-                  "Meld concrete voorbeelden van de vijf vastgelegde samenhangaspecten, per deelnemend gezinslid waar mogelijk.",
-                  "Noteer ook wanneer je Eva moest aansporen, iets opnieuw uitleggen of ingrijpen."
+                  "Gebruik Eva2 zeven dagen normaal via de bestaande Telegramchat of http://127.0.0.1:44711/internal/v1/dashboard; gewone berichten gaan naar Eva2.",
+                  "Let op beloften/opvolging, haar eigen projecten, werkelijke hulp en passend initiatief. Noteer per deelnemend gezinslid een kort concreet voorbeeld en wanneer je moest aansporen of ingrijpen.",
+                  "Meld ervaringen hier of bij het initiatief. Herhaal geaccepteerde geheugen- en persoonlijkheidsproeven niet. Spraak blijft bij de andere uitvoerder."
                 ],
                 "expected": "Echte dagelijkse betrokkenheid, hulp en steeds minder nodige begeleiding; nut, plezier, timing en hinder apart.",
-                "reportBack": "Ervaringen en concrete problemen.",
+                "reportBack": "Meld wanneer je begint en daarna concrete ervaringen. Na zeven werkelijke dagen volgt jouw eindoordeel in F2.2.",
                 "blocksIndependentWork": false
               },
               "assignment": {
@@ -8125,7 +8144,10 @@
                 "one_eva"
               ],
               "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus",
-              "checkedAt": "2026-10-16T23:08:48.419108+00:00"
+              "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+              "availableAt": "2026-10-18T02:24:39.871399+00:00",
+              "startedAt": null,
+              "ownerConfirmedStart": false
             },
             {
               "id": "F2.2",
@@ -9451,7 +9473,7 @@
             "FE4"
           ],
           "outcome": "Eén eindkandidaat en gezinsacceptatie",
-          "status": "planned",
+          "status": "in_progress",
           "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
           "endCondition": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie.",
           "dashboardComponent": "finalization-E5",
@@ -9460,14 +9482,14 @@
             {
               "id": "E5.1",
               "title": "Het volledige actuele geheel opleveren en laten beoordelen",
-              "status": "planned",
+              "status": "completed",
               "kind": "afronden",
               "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
               "owner": "Codex",
               "ownerActionRequired": false,
-              "existing": "F1-installatie-/herstartbewijs en afzonderlijke afgeronde gebruikersuitkomsten bestaan.",
-              "gap": "Het nieuwe volledige doel is nog niet als één actuele kandidaat opgeleverd en beoordeeld.",
-              "nextAction": "Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.",
+              "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
+              "gap": "Geen resterend technisch werk binnen E5.1. Zeven dagen werkelijk gezinsgebruik, afzonderlijk eigenaaroordeel en fysieke spraakkwaliteit zijn hiermee niet voltooid.",
+              "nextAction": "Gebruik deze kandidaat voor F2.1; behoud bestaande bewijsgrenzen. Spraak bij de andere WSL-uitvoerder, optioneel WhatsApp wacht op Eva-nummer.",
               "files": [
                 "src",
                 "deploy",
@@ -9492,10 +9514,10 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-16T23:08:48.419108+00:00",
+              "checkedAt": "2026-10-18T02:24:39.871399+00:00",
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Geen handeling nodig; dit is eerst werk voor Codex. Eventueel benodigde toegang wordt pas concreet gevraagd wanneer de aansluiting gereed is.",
+                "availableNow": true,
+                "readyWhen": "Technisch opgeleverd in de huidige installatie. Gebruik Telegram of Eva-beheer; F2.1 bevat de korte gebruiksinstructies.",
                 "steps": [],
                 "blocksIndependentWork": false
               },
@@ -9506,13 +9528,22 @@
                 "house_awareness",
                 "one_eva"
               ],
-              "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus"
+              "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus",
+              "completedAt": "2026-10-18T02:24:39.871399+00:00",
+              "completionEvidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+              "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
+              "completionKind": "joint_installed_technical_candidate"
             }
-          ]
+          ],
+          "completion": {
+            "technicalCandidate": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+            "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
+            "familyAcceptance": false
+          }
         }
       ],
       "status": "in_progress",
-      "nextAction": "Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.",
+      "nextAction": "Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -9521,10 +9552,10 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-17T13:23:36.139042+00:00",
+      "updatedAt": "2026-10-18T02:24:39.871399+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
-        "updatedAt": "2026-10-17T12:16:51.042915+00:00",
+        "updatedAt": "2026-10-18T02:24:39.871399+00:00",
         "scope": "Five finite phases; original small task criteria and counts retained. New owner requests are explicit coverage, not completed historical tasks.",
         "phases": [
           {
@@ -9603,7 +9634,7 @@
           {
             "id": "E5",
             "title": "Eén eindkandidaat en gezinsacceptatie",
-            "status": "planned",
+            "status": "in_progress",
             "finish": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie.",
             "taskIds": [
               "E5.1"
@@ -9611,7 +9642,10 @@
             "existingTaskIds": [
               "F2.1",
               "F2.2"
-            ]
+            ],
+            "currentGap": "E5.1 technisch afgerond en geïnstalleerd. F2.1 zeven dagen werkelijk gezinsgebruik en F2.2 eigenaaroordeel blijven open.",
+            "completionEvidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+            "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json"
           }
         ],
         "acceptanceFocus": {
@@ -9705,34 +9739,24 @@
       "scopeClarification": "development/evidence/reassessment/continuous-development-coverage-20261017.json"
     },
     "currentRuntime": {
-      "recordedAt": "2026-10-13T05:19:28.211424+00:00",
-      "image": "sha256:80dfaac158484563d62a4bfaade3852fd2411383294293b123b5122a020c15a7",
-      "coreImage": "sha256:80dfaac158484563d62a4bfaade3852fd2411383294293b123b5122a020c15a7",
-      "workerImage": "sha256:61edf0ea3bc396942988e03864dada1fa1eac844876d8ebfe8ecbc81a0af10b6",
-      "core": "/eva2-managed-b-slot3-core",
-      "worker": "/eva2-managed-b-slot3-delegated-work-worker-1",
+      "recordedAt": "2026-10-18T02:22:27.915123+00:00",
+      "checkedAt": "2026-10-18T02:22:27.915123+00:00",
+      "core": "eva2-managed-b-slot3-core",
+      "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "image": "sha256:3845005761721b000b1fa2e6ad747a0d392c7ecb326f9be074b07620888c3cb8",
+      "coreImage": "sha256:3845005761721b000b1fa2e6ad747a0d392c7ecb326f9be074b07620888c3cb8",
+      "workerImage": "sha256:f482cd1baf857aa7be1256b9922c4c147abe67fb4b71999f8dc8ec9312886c3f",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
-      "readyStatus": "ready",
       "repositoryHeadFullyInstalled": false,
-      "reviewedSourceIdentity": {
-        "src/eva/adapters/projection/hindsight.py": "2cc2a6af72ddf19788d62f679b69f5560604e7f33b14e115d6cca0782062e9db",
-        "src/eva/adapters/model/pydantic_conversation.py": "2305d23c289f9d7bb800fb143ece3f29e4fe2b33dc305c28d679d8058b211d55"
-      },
-      "retainedSourceItems": 343,
-      "evidence": "development/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
-      "evidencePath": "development/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
-      "composeOverride": "/home/administrator/project/.eva2-artifacts/hue-pattern-social-20261013/installation/candidate.compose.private.json",
-      "configurationEnvironmentMountsRetained": true,
-      "installedReview": "development/reviews/hue-pattern-social-later-use-installed-review-20261013.json",
-      "meaning": "Patroonherkomst en voorlopigheid geïnstalleerd in gezonde kern/werker; HUE2.1/HUE4.1 originele later-gebruikcriteria onafhankelijk PASS. Twee gewijzigde modules,343 overige Pythonbronnen en configuratie/mounts behouden.",
-      "independentSourceReview": "development/reviews/hue-pattern-social-later-use-installed-review-20261013.json",
-      "installedReviewSha256": "1535218ed106d7e6f38056372057b3441c17e2b5a48ccdb1f12897f78fd7566e",
-      "checkedAt": "2026-10-13T06:25:55.653001+00:00",
       "ready": true,
       "healthy": true,
-      "verificationEvidence": "development/evidence/product/original-proposal-telegram-return-installed-20261013.json",
-      "installationVerificationSha256": "eca40c0fd0cb2a663b7723b6595e79168cc9bb60811687eef5d1032d654cdb80"
+      "readyStatus": "ready",
+      "evidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+      "evidencePath": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+      "independentSourceReview": "development/reviews/e51-joint-candidate-review-20261018.json",
+      "configurationEnvironmentMountsRetained": true,
+      "meaning": "Actuele gezamenlijke technische kandidaat; exacte runtimebron en uitvoerprofielen vastgelegd, hele checkout niet bytegelijk aan images. Geen gezinsacceptatie uit gezondheid afgeleid."
     },
     "memoryGoal20260910": {
       "status": "completed",
@@ -10881,9 +10905,18 @@
       "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
       "candidateSha256": "cea4d09fe29bb17b599a05d30ea9c24875e82b7401c0b16c806ac6529c1ca4ad",
       "familyAcceptance": false
+    },
+    "e51JointCandidate20261018": {
+      "candidateId": "eva2-joint-20261018",
+      "evidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+      "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
+      "familyAcceptance": false,
+      "newBuilds": 0,
+      "newInstalls": 0,
+      "newModelCalls": 0
     }
   },
-  "updatedAt": "2026-10-17T13:23:36.139042+00:00",
+  "updatedAt": "2026-10-18T02:24:39.871399+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -10920,5 +10953,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-17T13:23:36.139042+00:00"
+  "lastUpdatedAt": "2026-10-18T02:24:39.871399+00:00"
 }

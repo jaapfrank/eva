@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Het volledige actuele geheel opleveren en laten beoordelen
+Zeven dagen gewoon gezinsgebruik
 
-Lever na E1–E4 één actuele kandidaat op en toets de vijf vastgelegde samenhangaspecten; gebruik F2.1/F2.2 voor echt gezinsgebruik en oordeel. Geen nieuwe vergelijkingsserie of spraakherbouw.
+Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.
 
-Klaar wanneer: Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.
+Klaar wanneer: Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.
 
 ## Afmaakvolgorde
 
@@ -24,10 +24,10 @@ Klaar wanneer: Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en 
 | --- | --- | --- |
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
 | Geheugen | Geheugenbasis geaccepteerd · correctie en uitkomst toegepast | HUE1–6 zijn technisch afgerond en later toegepast. Samenhangend dagelijks gezinsgebruik en finale acceptatie; geen geheugenherbouw. |
-| Eigen initiatief | E1 technisch afgerond · werkelijk uitgevoerd en privé afgeleverd | Herhaald spontaan dagelijks gezinsnut en finale gezinsacceptatie; samenhangende bediening volgt in E2. |
-| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | E1-brongebruik, vervolg-aandacht, eigen uitvoering/aflevering en stilte technisch afgerond. Samenhangende bediening, onderhoudseindfase en finale gezinsacceptatie blijven open. |
+| Eigen initiatief | E1 technisch afgerond · werkelijk uitgevoerd en privé afgeleverd | Herhaald spontaan dagelijks gezinsnut en finale gezinsacceptatie in F2.1/F2.2; bediening is geïnstalleerd. |
+| Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | Bediening en afgebakende onderhoudsfase technisch afgerond. Samenhangend dagelijks gezinsgebruik en jouw acceptatie blijven F2.1/F2.2. |
 
-64 van 72 geregistreerde kleine taken afgerond; 8 open. E4.5 is nieuw afgerond; geen productpercentage of volledige gezinsacceptatie.
+65 van 72 geregistreerde kleine taken afgerond; 7 open. Technische oplevering is geen productpercentage of volledige gezinsacceptatie.
 
 ## Alle geregistreerde kleine taken
 
@@ -108,11 +108,11 @@ Klaar wanneer: Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en 
 | E4.3 · Runtime-efficiëntie verbeteren zonder dommer gedrag | ✓ Afgerond | Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend. |
 | E4.4 · Modules en updates onderhoudbaar opleveren | ✓ Afgerond | Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten. |
 | E4.5 · Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken | ✓ Afgerond | Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering. |
-| E5.1 · Het volledige actuele geheel opleveren en laten beoordelen | ● Open | Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2. |
+| E5.1 · Het volledige actuele geheel opleveren en laten beoordelen | ✓ Afgerond | Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2. |
 
 ## Van jou
 
-E4.5 draait en is later gebruikt. Volgend is gezamenlijke E5.1-oplevering. Spraak blijft bij Codex in WSL; eigen WhatsApp-nummer kan later.
+E5.1 is technisch opgeleverd. Gebruik zeven dagen de bestaande Telegramchat of Eva-beheer. Meld wanneer je begint en noteer nuttige hulp, gemiste opvolging, hinder en benodigde aansporingen. Geen herhaling van geaccepteerde deelproeven. Spraak blijft bij de andere uitvoerder.
 
 ## Historie
 

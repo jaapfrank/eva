@@ -26,3 +26,21 @@ the Eva1 benchmark inputs still read by existing tests remain locally. See the
 [cleanup record](development/docs/repository-pruning-20261013.md). Existing WSL runtime data and pinned container images are
 separate from this source tree. Historical results remain unchanged; no general
 superiority over other agents has been established.
+
+## Daily use
+
+Open [Eva](http://127.0.0.1:44711/internal/v1/dashboard) on the Eva computer, or use
+the existing Telegram conversation. The six product sections cover conversation,
+people and memory, work and results, initiative and learning, and connections.
+The separate [project dashboard](http://127.0.0.1:44712/) shows development work.
+
+Use ordinary requests. Longer work keeps its own status; an acknowledgement is not
+a completed result. Open Work & results to inspect, stop or legitimately resume a
+task. Full saved results are available on request. Memory controls show the source
+before correcting or forgetting it. Give initiative feedback on the relevant item.
+
+Additional model accounts and Eva's own WhatsApp number remain optional. Speaker
+fluency and interruption are being completed by the speech executor. The existing
+seven-day family trial and the owner's final judgment remain separate from the
+technical delivery. Report concrete usefulness, timing, nuisance and help needed;
+there is no need to repeat already accepted memory or personality trials.
