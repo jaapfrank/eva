@@ -15,21 +15,39 @@ function validReview(review) {
     && Object.hasOwn(reviewLabels, review.state)
     && ['reason', 'blocker', 'intent_id'].every(key => review[key] === null || typeof review[key] === 'string'));
 }
-function ReviewStatus({ page }) {
-  const review = page.latest_review;
-  return <div aria-label="Laatste beoordeling">
-    <h3>Laatste beoordeling</h3>
+function validLanes(lanes) {
+  return lanes === undefined || (lanes && typeof lanes === 'object' && !Array.isArray(lanes)
+    && ['private', 'household'].every(key => lanes[key] && validReview(lanes[key].latest_review)
+      && validReview(lanes[key].unresolved_review)));
+}
+function ReviewLane({ title, lane }) {
+  const review = lane?.unresolved_review || lane?.latest_review;
+  const blocked = review?.state === 'attention';
+  return <article aria-label={title} style={{ borderLeft: `5px solid ${blocked ? '#b33932' : '#b1842f'}`, padding: '0 14px', margin: '16px 0' }}>
+    <h4>{title}</h4>
     {review ? <>
-      <p><strong>{review.blocker === 'background_budget' ? 'Wacht op achtergrondbudget' : reviewLabels[review.state]}</strong></p>
+      <p><strong style={{ color: blocked ? '#a12520' : undefined }}>{blocked ? 'Technisch vastgelopen · herstel nodig' : reviewLabels[review.state]}</strong></p>
       <p>Bijgewerkt: <time dateTime={review.updated_at}>{new Date(review.updated_at).toLocaleString('nl-NL')}</time></p>
       {review.reason && <p>{review.reason}</p>}
       {review.blocker && <p>Blokkade: {review.blocker === 'background_budget'
-        ? 'Het beschikbare achtergrondbudget laat deze stap nu niet toe.' : review.blocker}</p>}
-      {review.state === 'silence' && <p>Eva heeft beoordeeld dat er nu geen passende actie nodig is.</p>}
-    </> : <p>{review === null ? 'Er is nog geen opgeslagen beoordeling beschikbaar.'
-      : 'De laatste beoordeling is via deze versie nog niet beschikbaar.'}</p>}
+        ? 'Het beschikbare achtergrondbudget laat deze stap nu niet toe.'
+        : blocked ? 'Deze beoordeling is niet afgerond. Dat houdt deze initiatiefroute tegen.' : review.blocker}</p>}
+      {blocked && <p>Een recente beoordeling in de andere route heft deze blokkade niet op.</p>}
+      {!blocked && review.state === 'silence' && <p>Geen actie gekozen. Dit is geen afgeronde bijdrage.</p>}
+    </> : <p>Voor deze route is nog geen beoordeling beschikbaar.</p>}
+  </article>;
+}
+function ReviewStatus({ page }) {
+  const latestResult = page.cards.map(card => card.result_at).filter(isDate).sort((a, b) => Date.parse(b) - Date.parse(a))[0];
+  return <div aria-label="Laatste beoordelingen">
+    <h3>Zelfstandige activiteit</h3>
+    <ReviewLane title="Privéoriëntatie" lane={page.review_lanes?.private || { latest_review: page.latest_review }} />
+    <ReviewLane title="Gedeeld huisinitiatief" lane={page.review_lanes?.household} />
+    <p><strong>Laatst opgeslagen eigen resultaat:</strong> {latestResult
+      ? <time dateTime={latestResult}>{new Date(latestResult).toLocaleString('nl-NL')}</time>
+      : 'Nog geen opgeslagen resultaat in dit overzicht.'}</p>
+    <p>Opslag bewijst nog geen aflevering of nut. Resultaten en jouw feedback staan hieronder.</p>
     {page.checked_at && <p>Overzicht opgehaald: <time dateTime={page.checked_at}>{new Date(page.checked_at).toLocaleString('nl-NL')}</time></p>}
-    <p>Een beoordeling is nog geen bijdrage. Opgepakte initiatieven en hun resultaten staan hieronder.</p>
   </div>;
 }
 
@@ -48,7 +66,7 @@ export default function OwnerInitiatives() {
     const data = await response.json();
     if (data.contract !== 'EvaOwnerInitiativeHistory/v1' || !Array.isArray(data.cards) || data.cards.length > 64
       || !Array.isArray(data.learning?.reflections) || !Array.isArray(data.learning?.components) || !Array.isArray(data.learning?.current_styles)
-      || !validReview(data.latest_review) || (data.checked_at !== undefined && !isDate(data.checked_at))) {
+      || !validReview(data.latest_review) || !validLanes(data.review_lanes) || (data.checked_at !== undefined && !isDate(data.checked_at))) {
       throw new Error('Het initiatiefsoverzicht kon niet worden gelezen.');
     }
     if (sequence !== refreshSequence.current) return;

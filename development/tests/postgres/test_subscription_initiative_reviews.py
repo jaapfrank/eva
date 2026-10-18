@@ -87,19 +87,41 @@ def test_native_review_uses_claim_once_preserves_memory_ledger_and_revalidates_a
     with ThreadPoolExecutor(max_workers=2) as pool:
         results = list(pool.map(lambda _: worker().run_once(now=NOW), range(2)))
     assert len(called) == int(mode in {"success", "lost_response"})
-    assert len(recalled) == int(mode != "provider_blocked")
+    preparation_failure = mode in {"revoked_during_recall", "owner_expired", "expired_claim"}
+    if preparation_failure:
+        # These host-known failures precede provider entry. Retrying only the
+        # same preparation is safe, bounded, and must never spend a model call.
+        assert 1 <= len(recalled) <= 3
+        for _ in range(3):
+            result = worker().run_once(now=clock[0] + timedelta(seconds=1))
+            if result == "idle":
+                break
+            assert result == "failed"
+        states = store._timeline.list_checkpoints(thread_prefix=store._decision_prefix, limit=4)
+        events = store._timeline.events(states[0].thread_id)
+        assert states[0].phase == "will_preparation_failed"
+        assert states[0].status == "needs_help" and states[0].retry_count == 3
+        assert sum(e.event_type == "WILL_PREPARATION_FAILED" for e in events) == 3
+        assert events[-1].payload["data"]["provider_dispatched"] is False
+        assert events[-1].payload["data"]["usage"] is None
+        assert len(called) == 0
+        assert worker().run_once(now=clock[0] + timedelta(seconds=1)) == "idle"
+        assert reviews().schedule_context_review(now=clock[0] + timedelta(days=1)) == (
+            "scheduled" if mode == "expired_claim" else "mandate_unavailable")
+    else:
+        assert len(recalled) == int(mode != "provider_blocked")
+        assert worker().run_once(now=clock[0] + timedelta(seconds=1)) in {"idle", "waiting_for_admission"}
+        assert len(called) == int(mode in {"success", "lost_response"})
+        states = store._timeline.list_checkpoints(thread_prefix=store._decision_prefix, limit=4)
+        events = store._timeline.events(states[0].thread_id)
+        assert sum(e.event_type == "WILL_MODEL_STARTED" for e in events) == int(mode != "provider_blocked")
+        if mode == "success":
+            assert states[0].phase == "will_decided"
+            assert events[-1].payload["data"]["usage"]["model_attempts"] == 1
+        elif mode != "provider_blocked":
+            assert states[0].phase == "will_usage_uncertain"
+            assert reviews().schedule_context_review(now=clock[0] + timedelta(days=1)) in {"idle", "mandate_unavailable"}
     _assert_old_ledger_unchanged(review_setup)
-    assert worker().run_once(now=clock[0] + timedelta(seconds=1)) in {"idle", "waiting_for_admission"}
-    assert len(called) == int(mode in {"success", "lost_response"})
-    states = store._timeline.list_checkpoints(thread_prefix=store._decision_prefix, limit=4)
-    events = store._timeline.events(states[0].thread_id)
-    assert sum(e.event_type == "WILL_MODEL_STARTED" for e in events) == int(mode != "provider_blocked")
-    if mode == "success":
-        assert states[0].phase == "will_decided"
-        assert events[-1].payload["data"]["usage"]["model_attempts"] == 1
-    elif mode != "provider_blocked":
-        assert states[0].phase == "will_usage_uncertain"
-        assert reviews().schedule_context_review(now=clock[0] + timedelta(days=1)) in {"idle", "mandate_unavailable"}
 
 
 @pytest.mark.parametrize("variant", ["different_owner", "source_changed", "stale_revision", "expired_claim", "non_subscription"])

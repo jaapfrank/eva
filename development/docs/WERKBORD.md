@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Dagelijkse autonomie: vastgelopen route en ontbrekend eigen vervolg oplossen
 
-Concrete functionele tegenbevinding: de gedeelde huisinitiatiefroute staat sinds16oktober vast na een geheugenfout.17privébeoordelingen kozen stilte;48uur geen nieuw eigen werk/resultaat of aflevering. Dagelijkse autonomie is nog niet gereed; geen gebruikersoordeel als verklaring voor deze technische blokkade.
+Correcties voor initiatief, foutafhandeling en geleerd privécontact zijn geïnstalleerd. De eerste startcontrole is tijdens een herstart van de gedeelde kern onderbroken; geen uitkomst of verbruik bevestigd. E5.1 blijft open: werkelijk eigen resultaat en later vervolg moeten nog blijken. Geen handeling van Jaap nodig.
 
 Klaar wanneer: Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.
 
@@ -27,7 +27,7 @@ Klaar wanneer: Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en 
 | Eigen initiatief | Niet dagelijks operationeel · concrete blokkade | Gedeelde route herstellen, werkelijke eigen bijdrage en vervolg aantonen. Laatste48uur0nieuwe eigen uitkomsten; geen afwachting van gezinsacceptatie. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | Bediening en afgebakende onderhoudsfase technisch afgerond. Samenhangend dagelijks gezinsgebruik en jouw acceptatie blijven F2.1/F2.2. |
 
-64van72kleine taken technisch afgerond;8open. E5.1 heropend wegens aangetoonde autonomietekorten; oorspronkelijke resultaten en acceptaties behouden.
+64 van72 concrete taken afgerond. E5.1: correctie geïnstalleerd, maar de eerste controle onderbroken door een gedeelde kernherstart. Werkelijk zelfstandig resultaat en vervolg nog open; geen eigenaarhandeling nodig.
 
 ## Alle geregistreerde kleine taken
 

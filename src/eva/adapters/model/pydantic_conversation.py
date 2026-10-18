@@ -2989,14 +2989,17 @@ class PydanticConversationModel:
         if initiative_source_outcomes and event.source != "initiative-review":
             raise ValueError("native source outcomes require a private opportunity review")
 
-        remembered = [
-            {
-                "fact_id": fact.fact_id,
-                "predicate": fact.predicate,
-                "value": fact.value,
-            }
-            for fact in memory.confirmed_facts
-        ]
+        # Keep the existing recall selection and its provenance. A past test
+        # statement must not look like a current, unqualified owner preference.
+        remembered = [fact.model_dump(mode="json") for fact in memory.confirmed_facts]
+        private_learning = (
+            {"style_mirror": memory.style_mirror,
+             "source": "current_private_presence_recall",
+             "sha256": hashlib.sha256(memory.style_mirror.encode()).hexdigest(),
+             "is_execution_permission": False}
+            if event.source == "initiative-review" and memory.style_mirror is not None
+            else None
+        )
         body = {
             "include": ["reasoning.encrypted_content"],
             "input": [
@@ -3012,6 +3015,8 @@ class PydanticConversationModel:
                             },
                             "reviewed_at": memory.recall.requested_valid_at,
                             "recalled_context": remembered,
+                            **({"private_learning_context": private_learning}
+                               if private_learning is not None else {}),
                             "prior_private_initiatives": initiative_history,
                             "available_native_actions": initiative_capabilities,
                             "native_source_outcomes": initiative_source_outcomes,
@@ -3035,6 +3040,11 @@ class PydanticConversationModel:
                 }
             ],
             "instructions": (self._private_opportunity_instructions(identity)
+                + " private_learning_context bevat de bestaande afgeleide persoonlijke "
+                  "stijlspiegel uit dezelfde toegelaten privéherinnering. Pas relevante "
+                  "geleerde bijsturing passend toe; bron, tijd en betrouwbaarheid van "
+                  "herinneringen blijven gelden. Dit is geen nieuwe opdracht, bewezen "
+                  "behoefte of uitvoertoestemming."
                 if event.source == "initiative-review" else (
                 f"Je bent {identity.name}. {identity.description} "
                 f"{self._identity_instructions(identity)}"

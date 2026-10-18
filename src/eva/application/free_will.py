@@ -186,6 +186,10 @@ class FreeWillStorePort(Protocol):
         self, claim: SensoryDecisionClaim, *, now: datetime
     ) -> SensoryDecisionClaim | None: ...
 
+    def fail_before_dispatch(
+        self, claim: SensoryDecisionClaim, error: Exception, *, now: datetime
+    ) -> None: ...
+
     def claim_next_revalidation(self, *, now: datetime) -> SensoryDecisionClaim | None: ...
 
     def complete_revalidation(
@@ -319,6 +323,7 @@ class SensoryDecisionWorker:
         event = claim.event
         household_review = event.source == "household-initiative"
         context_review = event.source in {"initiative-review", "household-initiative"}
+        model_entered = False
         try:
             if household_review != (self._household_context is not None):
                 raise RuntimeError("initiative context audience differs from configured worker")
@@ -351,8 +356,9 @@ class SensoryDecisionWorker:
                 self._store.wait_for_admission(claim, blocker, now=now)
                 return "waiting_for_admission"
             if context_review:
-                # Claim the dispatch boundary before reserving or recalling. Recovery never
-                # spends another slot or issues another request after this ambiguous boundary.
+                # Preserve the existing admission claim before reserving budget.
+                # A crash after this marker stays ambiguous; a live preparation
+                # failure can still prove that the model adapter was never entered.
                 started = self._store.mark_model_started(claim, now=self._current_time(now))
                 if started is None:
                     return "idle"
@@ -470,7 +476,7 @@ class SensoryDecisionWorker:
                 if callable(cancel_attention) and cancel_attention(claim, now=now):
                     return "cancelled"
                 if not self._store.context_review_claim_is_current(claim, now=now):
-                    return "idle"
+                    raise RuntimeError("context review claim expired before provider dispatch")
             else:
                 started = self._store.mark_model_started(claim, now=now)
                 if started is None:
@@ -486,6 +492,7 @@ class SensoryDecisionWorker:
                 self._store.defer_before_dispatch(claim, reason="foreground_active",
                     now=self._current_time(now))
                 return "deferred"
+            model_entered = True  # All later failures remain potentially dispatched.
             decision = self._model.evaluate_sensory_event(
                 event,
                 self._identity,
@@ -508,7 +515,12 @@ class SensoryDecisionWorker:
             self._store.complete(claim, decision, now=self._current_time(now))
             return decision.disposition
         except Exception as error:
-            self._store.fail(claim, error, now=self._current_time(now))
+            fail_before_dispatch = getattr(self._store, "fail_before_dispatch", None)
+            if (not model_entered and not isinstance(error, AutonomousUsageUncertain)
+                    and callable(fail_before_dispatch)):
+                fail_before_dispatch(claim, error, now=self._current_time(now))
+            else:
+                self._store.fail(claim, error, now=self._current_time(now))
             return "failed"
 
 

@@ -1,0 +1,151 @@
+{
+  "contract": "EvaE51AutonomyRepairInstalled/v1",
+  "recordedAt": "2026-10-18T03:26:23.145368+00:00",
+  "taskId": "E5.1",
+  "status": "installed_orientation_interrupted_by_concurrent_core_update",
+  "taskCompleted": false,
+  "changes": [
+    "Durable known non-dispatch preparation failure separated from actual possible provider dispatch, with at most3bounded preparations and old UNKNOWN retained.",
+    "Exact current-owner/historical-source/revision-bound household review recovery through existing owner API.",
+    "Private and household review lanes/unresolved decisions separately visible in existing initiative owner page.",
+    "Same selected recalled facts retain subject,source,evidence,time,trust; existing learned private style offered only to private initiative.",
+    "Shared execution source modules aligned between current core and worker, preserving other-executor core source outside named sensory function and concurrent owner-query optimization."
+  ],
+  "installation": {
+    "core": {
+      "image": "sha256:12dad96b62f01ebfde5278a130ed2a6bb1972f20a8a6aa2428f7165e29dae311",
+      "id": "f6496c23061cea5025e1032051aefbac9bf5ef383c9f1941d51071ef70790af6",
+      "health": "healthy"
+    },
+    "worker": {
+      "image": "sha256:29250fa6e3103aa72b11fc1fb163efab202cb184936b280eca84e1683908acd6",
+      "id": "667b826c291298f2accb287157820ac1f246cb33d5a2b0597da547fd1b933dd0",
+      "health": "healthy"
+    },
+    "executionSourceCount": 68,
+    "executionSourceParity": true,
+    "imageOnlyUpdate": true,
+    "configurationAndMountsRetained": true,
+    "migrations": 0,
+    "speechServicesUnchanged": {
+      "eva2-owner-voice-media-1": true,
+      "eva2-household-speaker-1": true
+    },
+    "runtimeOutcomeIsNotInferredFromHealth": true
+  },
+  "originalFailureRecovery": {
+    "disposition": "abandoned",
+    "usage": "unknown",
+    "replayed": false,
+    "sourceSha256": "b07884693aa18a4a6aec031470c286e8c19b4f2cd538924ce58f3924d9201609",
+    "priorFailureSha256": "ca2ffcf907fbd884f8b4958b3e2f6d41654b1ab3d11663d482a6903957f4b511",
+    "noHouseholdUnresolvedReviewAfterRecovery": true
+  },
+  "verification": {
+    "backendOriginalBundle": "72passed;14furtherownerfilter/lane/recoverycases passed on retained concurrent9b37source (overlaps; do not sum as unique tests).",
+    "contextTests": "9passed, existing synthetic body/parser transport,0externalmodelcalls.",
+    "browser": "Isolated controls/error-hiding/mobile cases and installed actual owner-page read passed; no installed mutation requested by browser.",
+    "knownTestLimits": "Initial fixture rejected PostgreSQL18beforemigration; corrected to isolated16.13.5existingquery-hint assertion failures retained, one reproduced on pre-patch worker; not counted as passing.",
+    "initialCandidatesNotInstalled": "Two images rebuilt once for concurrent owner-query source delta; only final pair installed. No service rollback."
+  },
+  "actualOutcome": {
+    "status": "unconfirmed_interrupted",
+    "forcedTaskTopic": null,
+    "initialOrientationStimulated": true,
+    "additionalCoordinatorRequestedOrientationsBudget": 0,
+    "familyAcceptance": false,
+    "interruptedAt": "2026-10-18T03:20:06.019783457Z",
+    "initialClaimedAt": "2026-10-18T03:19:55+00:00",
+    "providerReached": null,
+    "runtimeUsage": null,
+    "originalReviewReplayed": false,
+    "reason": "Other authorized WSL executor replaced shared core11seconds after review-start marker; no durable decision or usage receipt. Original markers/failure remain."
+  },
+  "measurement": {
+    "newOperatorModelRequests": 0,
+    "onePostRepairOrientationQueuedForOrdinaryScheduler": true,
+    "newComparisons": 0,
+    "creditCost": null,
+    "developmentUsage": "unknown; separate from Eva runtime",
+    "ordinaryRuntimeUsage": "to be bound to actual post-repair events, not guessed"
+  },
+  "evidence": [
+    {
+      "privateName": "backend-correction.json",
+      "sha256": "57aafe7dd18841fa4d679d78bb2abec6b47069b194b2fa89b6225b0bc3363100"
+    },
+    {
+      "privateName": "final-focused-tests.metadata.json",
+      "sha256": "29823b54e7172ce9f724b791f47a88385549a3b1b126021dbca5dd1348f5f495"
+    },
+    {
+      "privateName": "owner-concurrent-change-tests.metadata.json",
+      "sha256": "564ea80ef86c9a78eeeff1e828e8d43aaa03e1129a0e2a8c486fa9eac1480edc"
+    },
+    {
+      "privateName": "owner-concurrent-change-review.json",
+      "sha256": "c2141fdd7e98fcbfb24aa5ce0f294a6c3257738967c33fc2adafe2135ddc60df"
+    },
+    {
+      "privateName": "overlay-source-metadata.json",
+      "sha256": "77635f079bc2de7c655fe8f63bd812948832b72255b8b421e3366155daee9539"
+    },
+    {
+      "privateName": "installed-source-parity.metadata.json",
+      "sha256": "fb20bbc1e1d56c3d99020d49b7890317d49491a21ea2359682af200899797d97"
+    },
+    {
+      "privateName": "exact-recovery-result.json",
+      "sha256": "6a160ee8dc8984e701cdd474589746ed2d6b8a1d0d6d96e39014f43514d419aa"
+    },
+    {
+      "privateName": "post-repair-check-plan.json",
+      "sha256": "4053a912bdbcfd5dcf87184ae04c1496534854266e4a88262966abe6e23d09ef"
+    },
+    {
+      "privateName": "post-repair-orientation-queued.json",
+      "sha256": "fbe1a1765774243fdd6c2fee37e269716b1d5d14130c1441054b09f56671a4ff"
+    },
+    {
+      "privateName": "browser-proof.txt",
+      "sha256": "eba5fb419ab2a49d9c5ac5061b0d58dad95d7c7fd0f8789c1ee69327e4bc3de9"
+    },
+    {
+      "privateName": "browser-installed.txt",
+      "sha256": "68dd57bc4961d5982128498872b59de0fdc362f1e68098b9ec6b3be5119f9233"
+    },
+    {
+      "privateName": "speech-retained.metadata.json",
+      "sha256": "fa95ed2d17b87ecd5e32cf2b80c7e74c1b2057c0185db959db6e182533ba07b2"
+    },
+    {
+      "privateName": "concurrent-core-replacement.metadata.json",
+      "sha256": "4d24861d33944ba0790554298ff617d5ae909b41aaa5f5c3fbb67b61af925de0"
+    }
+  ],
+  "independentSourceReviewSha256": "61ea72779f82c644ffd57fba1f5f064c67a315f6c0c06698ee3e0e29b5e883fe",
+  "limits": [
+    "No actual new own work,result,delivery or later behavioral application yet claimed.",
+    "No spontaneous multi-day family activity, global provider reliability or superiority over competitors claimed.",
+    "Old E1/HUE original evidence and existing family acceptance remain unchanged.",
+    "Speech code/transport/container installation remains with other executor."
+  ],
+  "privateEvidence": "Full snapshots and own result content remain private; public report contains hashes,aggregate status and bounded claims only.",
+  "currentRuntimeSuccessor": {
+    "observedAt": "2026-10-18T03:23:15.953821+00:00",
+    "image": "sha256:9d15288f55697499069b283d7d28f48a72902192b218e3af00d769afee5fb5e1",
+    "id": "a98873a8a2b9133ef55f7ecf4fc4a589cf33665ef1d5105d3ab311ef5e923409",
+    "startedAt": "2026-10-18T03:20:06.019783457Z",
+    "delta": {
+      "adapters/postgres/completed_contribution.py": {
+        "ours": "9ee11a924c0407060f274423c2164b300b67826320d029e81e33fba65722c3d6",
+        "current": "a666dfadc4d66e6c30edb83492165096e2a94fcb56702402efc280c23b460f4f"
+      }
+    },
+    "newBackendSources": {
+      "application/free_will.py": "7daad7010372433746e1cc63ed5e8d491678deb34b0fad2a4b9aa218321a376c",
+      "adapters/postgres/sensory_events.py": "29bb9894db7a5212c534c2d2bd69a0b0ae2b6ccb93d425690a3576b244ee7b03",
+      "adapters/postgres/owner_initiatives.py": "9b37ee09d16896554a99f7a5827c1c2061623d07efb63f7b0a28249ef7925b43"
+    }
+  }
+}

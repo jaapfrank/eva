@@ -144,7 +144,7 @@ class PostgresSensoryEventStore:
                             continue  # Already used; a different retained source may still be pending.
                         completion_source = binding
                         break  # Select one never-reviewed source, retaining newest-first order.
-            latest = connection.execute(sa.select(c.phase, c.updated_at, c.thread_id, c.revision, c.operation_id).where(
+            latest = connection.execute(sa.select(c.phase, c.status, c.updated_at, c.thread_id, c.revision, c.operation_id).where(
                 c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
                 c.thread_id.startswith(schedule_prefix)).order_by(c.updated_at.desc()).limit(1)).first()
             # A lost decision blocks until explicitly abandoned by the owner.
@@ -152,6 +152,8 @@ class PostgresSensoryEventStore:
             # is not a new model attempt and must not postpone recovery by an hour.
             if latest is not None:
                 terminal = {"will_decided", "will_abandoned"}
+                if latest.phase == "will_preparation_failed" and latest.status == "needs_help":
+                    terminal.add("will_preparation_failed")  # Exhausted source; new occasions may proceed.
                 if self._household_binding is not None:
                     terminal |= {"expression_offered", "expression_interrupted", "expression_expired", "will_observation_expired"}
                 if (self._household_binding is not None and latest.phase == "expression_pending"
@@ -524,7 +526,7 @@ class PostgresSensoryEventStore:
             self._restore_cost_waits(now=now, admission_open=include_waiting)
         states = self._timeline.list_checkpoints(
             thread_prefix=self._decision_prefix,
-            phases=("sensory_observed", "will_claimed", "will_model_started", "will_revalidated") + (
+            phases=("sensory_observed", "will_claimed", "will_model_started", "will_revalidated", "will_preparation_failed") + (
                 ("will_waiting_admission",) if include_waiting else ()
             ),
             statuses=("completed", "active", "failed") + (
@@ -1450,6 +1452,37 @@ class PostgresSensoryEventStore:
             data={"reason": error_text},
             retry_count=3,
             last_error_fingerprint=hashlib.sha256(error_text.encode()).hexdigest(),
+        )
+
+    def fail_before_dispatch(
+        self, claim: SensoryDecisionClaim, error: Exception, *, now: datetime,
+    ) -> None:
+        """The live caller never entered the adapter; bound retries to this source.
+
+        This is not a recovery rule for old dispatch markers or lost processes.
+        A changed revision/uncertain outcome cannot be reclassified as unspent.
+        """
+        state = self._timeline.load(claim.thread_id)
+        if (isinstance(error, AutonomousUsageUncertain)
+                or not claim.thread_id.startswith(self._decision_prefix)
+                or state.phase not in {"will_claimed", "will_model_started"}
+                or state.status != "active" or state.revision != claim.revision
+                or state.operation_id != claim.operation_id
+                or self._event_from_thread(claim.thread_id, latest=True) != claim.event):
+            raise CheckpointConflict("preparation failure claim is no longer current")
+        retry_count = min(claim.retry_count + 1, 3)
+        fingerprint = hashlib.sha256(f"{type(error).__name__}: {error}".encode()).hexdigest()
+        self._timeline.transition(
+            thread_id=claim.thread_id, expected_revision=claim.revision,
+            checkpoint_id=f"{claim.thread_id}:preparation-failed:{claim.revision + 1}",
+            operation_id=claim.operation_id, phase="will_preparation_failed",
+            status="needs_help" if retry_count >= 3 else "failed",
+            event_type="WILL_PREPARATION_FAILED", occurred_at=now,
+            data={"reason": "decision_preparation_failed", "source_event_id": claim.event.source_event_id,
+                  "provider_dispatched": False, "model_dispatch_started": False,
+                  "failure_type": type(error).__name__, "failure_fingerprint": fingerprint,
+                  "usage": None, "retry_count": retry_count},
+            retry_count=retry_count, last_error_fingerprint=fingerprint,
         )
 
     def fail(

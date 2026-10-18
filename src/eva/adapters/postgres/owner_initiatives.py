@@ -44,14 +44,22 @@ class PostgresOwnerInitiatives:
 
     def _query(self):
         c, e = operational_checkpoints.c, operational_events.c
-        return sa.select(operational_checkpoints, e.payload.label("adoption")).join(
-            operational_events, sa.and_(c.tenant_id == e.tenant_id,
-                c.installation_id == e.installation_id, c.thread_id == e.thread_id)
-        ).where(c.tenant_id == self._scope.tenant_id,
-            c.installation_id == self._scope.installation_id,
+        # Select the exact authorized adoption set before joining checkpoints.
+        # Otherwise PostgreSQL can probe the event index once for every unrelated
+        # checkpoint, even though only a handful of owner initiatives match.
+        adoptions = sa.select(e.tenant_id, e.installation_id, e.thread_id, e.payload).where(
+            e.tenant_id == self._scope.tenant_id,
+            e.installation_id == self._scope.installation_id,
             e.event_type == "PERSONAL_INTENT_ADOPTED",
             e.payload["data"]["principal_id"].astext == str(self._owner),
-            e.payload["data"]["origin"].astext == "eva_initiative")
+            e.payload["data"]["origin"].astext == "eva_initiative",
+        ).cte("owner_adoptions").prefix_with("MATERIALIZED")
+        return sa.select(operational_checkpoints, adoptions.c.payload.label("adoption")).join(
+            adoptions, sa.and_(c.tenant_id == adoptions.c.tenant_id,
+                c.installation_id == adoptions.c.installation_id,
+                c.thread_id == adoptions.c.thread_id),
+        ).where(c.tenant_id == self._scope.tenant_id,
+                c.installation_id == self._scope.installation_id)
 
     @staticmethod
     def _intent_id(value):
@@ -68,6 +76,13 @@ class PostgresOwnerInitiatives:
                 operational_checkpoints.c.updated_at.desc(), operational_checkpoints.c.thread_id
             ).limit(limit + 1)).all()
             latest_review = self._latest_review(conn)
+            household_review = self._latest_review(conn, household=True)
+            review_lanes = {
+                "private": {"latest_review": latest_review,
+                            "unresolved_review": self._latest_review(conn, unresolved=True)},
+                "household": {"latest_review": household_review,
+                              "unresolved_review": self._latest_review(conn, household=True, unresolved=True)},
+            }
             cards = []
             for row in rows[:limit]:
                 data = row.adoption["data"]
@@ -87,30 +102,74 @@ class PostgresOwnerInitiatives:
                     cards[-1]["result_preview"] = artifact["content"][:500]
                     cards[-1]["result_truncated"] = len(artifact["content"]) > 500
         return {"contract": "EvaOwnerInitiatives/v1", "cards": cards, "truncated": len(rows) > limit,
-                "latest_review": latest_review, "checked_at": now.isoformat()}
+                "latest_review": latest_review, "review_lanes": review_lanes,
+                "checked_at": now.isoformat()}
 
-    def _latest_review(self, conn):
-        """Read the owner's ordinary private cycle, including decisions before adoption."""
+    def _validate_review_source(self, thread_id, event, *, household):
+        """Validate immutable audience/source identity, never today's replacement policy."""
+        if canonical_sha256(event.payload) != bytes(event.payload_sha256).hex():
+            raise ValueError("review original source hash differs")
+        data = event.payload.get("data", {})
+        if (event.event_type != "SENSORY_EVENT_OBSERVED"
+                or data.get("source_event_id") != thread_id.removeprefix("sensory:")):
+            raise ValueError("review original source differs")
+        if not household:
+            if data.get("source") != "initiative-review":
+                raise ValueError("private review original source differs")
+            return
+        from eva.application.household_initiative import HouseholdInitiativeBinding
+        from eva.application.sensory import SensoryEvent
+        try:
+            binding = HouseholdInitiativeBinding(**data["payload"]["household_binding"])
+            source = SensoryEvent(data["source"], data["source_event_id"], data["event_type"],
+                                  event.occurred_at, data["payload"])
+            valid = (binding.tenant_id == self._tenant_id
+                     and binding.installation_id == self._installation_id
+                     and source.source == "household-initiative" and binding.matches_event(source))
+        except (KeyError, TypeError, ValueError):
+            valid = False
+        if not valid:
+            raise ValueError("household review original binding differs")
+
+    def _latest_review(self, conn, *, household=False, unresolved=False):
+        """Keep each lane visible, including an older globally unresolved review."""
         c, e = operational_checkpoints.c, operational_events.c
-        prefix = "sensory:initiative-review:" + hashlib.sha256(str(self._owner).encode()).hexdigest()[:24] + ":"
-        row = conn.execute(sa.select(c.updated_at, c.phase, c.status, e.payload, e.payload_sha256)
+        prefix = ("sensory:household-initiative:" if household else
+                  "sensory:initiative-review:" + hashlib.sha256(str(self._owner).encode()).hexdigest()[:24] + ":")
+        original = operational_events.alias("review_original")
+        query = (sa.select(c.updated_at, c.phase, c.status, c.thread_id, c.revision,
+                           e.payload, e.payload_sha256,
+                           original.c.payload.label("original_payload"),
+                           original.c.payload_sha256.label("original_sha256"),
+                           original.c.event_type.label("original_type"),
+                           original.c.occurred_at.label("original_at"))
             .join(operational_events, sa.and_(c.tenant_id == e.tenant_id,
                 c.installation_id == e.installation_id, c.thread_id == e.thread_id,
                 c.checkpoint_id == e.checkpoint_id, c.revision == e.sequence))
+            .join(original, sa.and_(c.tenant_id == original.c.tenant_id,
+                c.installation_id == original.c.installation_id, c.thread_id == original.c.thread_id,
+                original.c.sequence == 1))
             .where(c.tenant_id == self._scope.tenant_id,
-                c.installation_id == self._scope.installation_id, c.thread_id.startswith(prefix))
-            .order_by(c.updated_at.desc(), c.thread_id.desc()).limit(1)).first()
+                c.installation_id == self._scope.installation_id, c.thread_id.startswith(prefix)))
+        if unresolved:
+            query = query.where(c.phase.in_(("will_model_started", "will_usage_uncertain")))
+        row = conn.execute(query.order_by(c.updated_at.desc(), c.thread_id.desc()).limit(1)).first()
         if row is None:
             return None
         if canonical_sha256(row.payload) != bytes(row.payload_sha256).hex():
             raise RuntimeError("initiative review payload hash differs")
+        from types import SimpleNamespace
+        self._validate_review_source(row.thread_id, SimpleNamespace(
+            payload=row.original_payload, payload_sha256=row.original_sha256,
+            event_type=row.original_type, occurred_at=row.original_at), household=household)
         data = row.payload["data"]
         reason = data.get("reason")
         if reason is not None and (not isinstance(reason, str) or len(reason) > 4000):
             raise RuntimeError("initiative review reason differs")
         state, blocker, intent_id = "unknown", None, None
         if row.status in ("failed", "needs_help"):
-            state, blocker = "attention", "review_needs_help"
+            state, blocker = "attention", ("review_preparation_failed"
+                if row.phase == "will_preparation_failed" else "review_needs_help")
         elif row.phase == "will_abandoned":
             state = "abandoned"
         elif row.phase == "will_waiting_admission":
@@ -133,16 +192,22 @@ class PostgresOwnerInitiatives:
         elif row.phase in ("will_claimed", "will_model_started", "will_revalidated"):
             state = "working"
         return {"updated_at": row.updated_at.isoformat(), "phase": row.phase,
-                "state": state, "reason": reason, "blocker": blocker, "intent_id": intent_id}
+                "state": state, "reason": reason, "blocker": blocker, "intent_id": intent_id,
+                "thread_id": row.thread_id, "revision": row.revision,
+                "source_payload_sha256": bytes(row.original_sha256).hex(),
+                "payload_sha256": bytes(row.payload_sha256).hex()}
 
     def abandon_uncertain_review(self, thread_id, expected_revision, *, now: datetime):
         """Owner closes a lost decision; never infer usage or replay its work."""
         prefix = "sensory:initiative-review:" + hashlib.sha256(str(self._owner).encode()).hexdigest()[:24] + ":"
-        if (not isinstance(thread_id, str) or not thread_id.startswith(prefix)
-                or not thread_id[len(prefix):].isdigit()
+        household = isinstance(thread_id, str) and bool(re.fullmatch(
+            r"sensory:household-initiative:[0-9a-f]{64}:(?:[0-9]+|observation:[0-9a-f]{64})", thread_id))
+        private = (isinstance(thread_id, str) and thread_id.startswith(prefix)
+                   and thread_id[len(prefix):].isdigit())
+        if (not (private or household)
                 or isinstance(expected_revision, bool) or not isinstance(expected_revision, int)
                 or expected_revision < 1):
-            raise ValueError("invalid private review recovery")
+            raise ValueError("invalid initiative review recovery")
         with self._engine.begin() as conn:
             self._authorize(conn, now)
             c, e = operational_checkpoints.c, operational_events.c
@@ -158,14 +223,18 @@ class PostgresOwnerInitiatives:
                 e.installation_id == self._scope.installation_id,
                 e.thread_id == thread_id).order_by(e.sequence)).all()
             allowed = {"SENSORY_EVENT_OBSERVED", "WILL_EVALUATION_CLAIMED",
-                       "WILL_EVALUATION_RECLAIMED", "WILL_MODEL_STARTED", "WILL_USAGE_UNCERTAIN"}
+                       "WILL_EVALUATION_RECLAIMED", "WILL_MODEL_STARTED", "WILL_USAGE_UNCERTAIN",
+                       "WILL_PREPARATION_FAILED", "WILL_DISPATCH_DEFERRED", "WILL_ADMISSION_BLOCKED",
+                       "RECOVERY_FAILED", "RECOVERY_NEEDS_HELP"}
             if (not history or any(event.event_type not in allowed
                     or canonical_sha256(event.payload) != bytes(event.payload_sha256).hex()
                     for event in history)
                     or history[0].event_type != "SENSORY_EVENT_OBSERVED"
-                    or history[0].payload["data"].get("source") != "initiative-review"
-                    or history[-1].event_type != "WILL_USAGE_UNCERTAIN"):
-                raise ValueError("private review history is not safely abandonable")
+                    or history[-1].event_type != "WILL_USAGE_UNCERTAIN"
+                    or history[-1].sequence != row.revision
+                    or history[-1].checkpoint_id != row.checkpoint_id):
+                raise ValueError("initiative review history is not safely abandonable")
+            self._validate_review_source(thread_id, history[0], household=household)
             transition_timeline_thread(conn, self._scope, thread_id=thread_id,
                 expected_revision=expected_revision,
                 checkpoint_id=f"{thread_id}:owner-abandoned:{expected_revision + 1}",
@@ -175,7 +244,11 @@ class PostgresOwnerInitiatives:
                     None if row.last_error_fingerprint is None else bytes(row.last_error_fingerprint).hex()),
                 data={"reason":"Eigenaarherstel: oude beoordeling afgebroken; verbruik blijft onbekend.",
                       "usage":None, "previous_revision":expected_revision,
-                      "replayed":False, "owner_principal_id":str(self._owner)})
+                      "replayed":False, "owner_principal_id":str(self._owner),
+                      "review_lane":"household" if household else "private",
+                      "source_event_id":history[0].payload["data"]["source_event_id"],
+                      "source_payload_sha256":bytes(history[0].payload_sha256).hex(),
+                      "previous_payload_sha256":bytes(history[-1].payload_sha256).hex()})
         return {"contract":"EvaPrivateReviewRecovery/v1", "disposition":"abandoned",
                 "usage":"unknown", "replayed":False}
 

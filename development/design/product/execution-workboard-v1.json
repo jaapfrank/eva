@@ -847,8 +847,8 @@
     "title": "Dagelijkse autonomie: vastgelopen route en ontbrekend eigen vervolg oplossen",
     "status": "in_progress",
     "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
-    "nextAction": "Herstel eerst de exact vastgelopen algemene initiatiefroute gegevensveilig en maak beide routestatussen zichtbaar; daarna gewoon zelfgekozen werk, werkelijk resultaat en vervolg aantonen via de bestaande uitvoering. Geen geforceerde bijdrage, nieuwe vergelijkingsserie of spraakwijziging.",
-    "checkedAt": "2026-10-18T02:55:51.973301+00:00",
+    "nextAction": "Correcties voor initiatief, foutafhandeling en geleerd privécontact zijn geïnstalleerd. De eerste startcontrole is tijdens een herstart van de gedeelde kern onderbroken; geen uitkomst of verbruik bevestigd. E5.1 blijft open: werkelijk eigen resultaat en later vervolg moeten nog blijken. Geen handeling van Jaap nodig.",
+    "checkedAt": "2026-10-18T03:25:39.234269+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2425,7 +2425,7 @@
           "taskId": "E5.1",
           "title": "Dagelijkse autonomie: vastgelopen route en ontbrekend eigen vervolg oplossen",
           "status": "in_progress",
-          "summary": "Concrete functionele tegenbevinding: de gedeelde huisinitiatiefroute staat sinds16oktober vast na een geheugenfout.17privébeoordelingen kozen stilte;48uur geen nieuw eigen werk/resultaat of aflevering. Dagelijkse autonomie is nog niet gereed; geen gebruikersoordeel als verklaring voor deze technische blokkade.",
+          "summary": "Correcties voor initiatief, foutafhandeling en geleerd privécontact zijn geïnstalleerd. De eerste startcontrole is tijdens een herstart van de gedeelde kern onderbroken; geen uitkomst of verbruik bevestigd. E5.1 blijft open: werkelijk eigen resultaat en later vervolg moeten nog blijken. Geen handeling van Jaap nodig.",
           "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2."
         },
         "next": {
@@ -2444,7 +2444,7 @@
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-18T02:24:39.871399+00:00",
-      "checkedAt": "2026-10-18T02:55:51.973301+00:00",
+      "checkedAt": "2026-10-18T03:25:39.234269+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2461,7 +2461,7 @@
         "checkedAt": "2026-10-18T02:55:51.973301+00:00",
         "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 en HUE5 technisch afgerond, met echte initiatiefreactie en latere toepassing. De bijdrage was niet nuttig voor de eigenaar; timing was goed. Dit is geen positieve algemene gezinsacceptatie.",
         "headline": "Eva is nog niet gereed voor zelfstandig dagelijks gezinsgebruik.",
-        "note": "64van72kleine taken technisch afgerond;8open. E5.1 heropend wegens aangetoonde autonomietekorten; oorspronkelijke resultaten en acceptaties behouden.",
+        "note": "64 van72 concrete taken afgerond. E5.1: correctie geïnstalleerd, maar de eerste controle onderbroken door een gedeelde kernherstart. Werkelijk zelfstandig resultaat en vervolg nog open; geen eigenaarhandeling nodig.",
         "rows": [
           {
             "name": "Persoonlijkheid",
@@ -5946,7 +5946,7 @@
                 "ownerActionRequired": false,
                 "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
                 "gap": "Concrete functionele tegenbevinding: de gedeelde huisinitiatiefroute staat sinds16oktober vast na een geheugenfout.17privébeoordelingen kozen stilte;48uur geen nieuw eigen werk/resultaat of aflevering. Dagelijkse autonomie is nog niet gereed; geen gebruikersoordeel als verklaring voor deze technische blokkade.",
-                "nextAction": "Herstel eerst de exact vastgelopen algemene initiatiefroute gegevensveilig en maak beide routestatussen zichtbaar; daarna gewoon zelfgekozen werk, werkelijk resultaat en vervolg aantonen via de bestaande uitvoering. Geen geforceerde bijdrage, nieuwe vergelijkingsserie of spraakwijziging.",
+                "nextAction": "Correcties voor initiatief, foutafhandeling en geleerd privécontact zijn geïnstalleerd. De eerste startcontrole is tijdens een herstart van de gedeelde kern onderbroken; geen uitkomst of verbruik bevestigd. E5.1 blijft open: werkelijk eigen resultaat en later vervolg moeten nog blijken. Geen handeling van Jaap nodig.",
                 "files": [
                   "src",
                   "deploy",
@@ -5968,10 +5968,14 @@
                   "E4.5"
                 ],
                 "assignment": {
-                  "activeWorkers": []
+                  "activeWorkers": [
+                    "Coördinator: gewone eigen uitvoering, terugkoppeling/leren, gerichte installatie en bord",
+                    "e33_state_adapters: bekende pre-dispatchfout, exact herstel en routestatus in bestaande backend",
+                    "e33_interface_adapters: onafhankelijke gebundelde review"
+                  ]
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-18T02:55:51.973301+00:00",
+                "checkedAt": "2026-10-18T03:25:39.234269+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling van jou nodig. Dit zijn aangetoonde technische en functionele tekorten voor Codex, geen ontbrekende gezinsacceptatie.",
@@ -6010,22 +6014,27 @@
                   "items": [
                     {
                       "id": "A1",
-                      "status": "open",
-                      "outcome": "Vastgelopen gedeelde initiatiefroute veilig herstellen; fout vóór provider onderscheiden; oorspronkelijke onbekende usage en bronnen behouden."
+                      "status": "installed_and_exact_original_recovered",
+                      "outcome": "Vastgelopen gedeelde initiatiefroute veilig herstellen; fout vóór provider onderscheiden; oorspronkelijke onbekende usage en bronnen behouden.",
+                      "usage": "unknown",
+                      "oldReviewReplayed": false
                     },
                     {
                       "id": "A2",
-                      "status": "open",
+                      "status": "installed_and_actual_owner_response_verified",
                       "outcome": "Privé- en huisroute plus laatst werkelijk eigen resultaat samen zichtbaar in bestaande initiatiefbediening."
                     },
                     {
                       "id": "A3",
-                      "status": "open",
-                      "outcome": "Gewone eigen oriëntatie leidt aantoonbaar tot zelfstandig uitgevoerd resultaat en later vervolg; stilte/reflectietelling niet als gezinsnut tellen."
+                      "status": "in_progress",
+                      "outcome": "Gewone eigen oriëntatie leidt aantoonbaar tot zelfstandig uitgevoerd resultaat en later vervolg; stilte/reflectietelling niet als gezinsnut tellen.",
+                      "resultProven": false,
+                      "note": "Startcontrole op03:19:55; gedeelde core herstartte03:20:06 vóór een vastgelegde beslissing. Bron en UNKNOWN blijven bewaard; geen automatische herhaling."
                     }
                   ],
                   "newProductTasksAdded": false
-                }
+                },
+                "executionEstimate": "Gerichte correctie op bestaande algemene keten; vooraf geen nieuwe matrix of vaste herhalingsproeven. Werkelijke model-/toolmetingen bewaren; creditkosten onbekend."
               }
             ],
             "completion": {
@@ -9559,7 +9568,7 @@
               "ownerActionRequired": false,
               "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
               "gap": "Concrete functionele tegenbevinding: de gedeelde huisinitiatiefroute staat sinds16oktober vast na een geheugenfout.17privébeoordelingen kozen stilte;48uur geen nieuw eigen werk/resultaat of aflevering. Dagelijkse autonomie is nog niet gereed; geen gebruikersoordeel als verklaring voor deze technische blokkade.",
-              "nextAction": "Herstel eerst de exact vastgelopen algemene initiatiefroute gegevensveilig en maak beide routestatussen zichtbaar; daarna gewoon zelfgekozen werk, werkelijk resultaat en vervolg aantonen via de bestaande uitvoering. Geen geforceerde bijdrage, nieuwe vergelijkingsserie of spraakwijziging.",
+              "nextAction": "Correcties voor initiatief, foutafhandeling en geleerd privécontact zijn geïnstalleerd. De eerste startcontrole is tijdens een herstart van de gedeelde kern onderbroken; geen uitkomst of verbruik bevestigd. E5.1 blijft open: werkelijk eigen resultaat en later vervolg moeten nog blijken. Geen handeling van Jaap nodig.",
               "files": [
                 "src",
                 "deploy",
@@ -9581,10 +9590,14 @@
                 "E4.5"
               ],
               "assignment": {
-                "activeWorkers": []
+                "activeWorkers": [
+                  "Coördinator: gewone eigen uitvoering, terugkoppeling/leren, gerichte installatie en bord",
+                  "e33_state_adapters: bekende pre-dispatchfout, exact herstel en routestatus in bestaande backend",
+                  "e33_interface_adapters: onafhankelijke gebundelde review"
+                ]
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-18T02:55:51.973301+00:00",
+              "checkedAt": "2026-10-18T03:25:39.234269+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling van jou nodig. Dit zijn aangetoonde technische en functionele tekorten voor Codex, geen ontbrekende gezinsacceptatie.",
@@ -9623,22 +9636,27 @@
                 "items": [
                   {
                     "id": "A1",
-                    "status": "open",
-                    "outcome": "Vastgelopen gedeelde initiatiefroute veilig herstellen; fout vóór provider onderscheiden; oorspronkelijke onbekende usage en bronnen behouden."
+                    "status": "installed_and_exact_original_recovered",
+                    "outcome": "Vastgelopen gedeelde initiatiefroute veilig herstellen; fout vóór provider onderscheiden; oorspronkelijke onbekende usage en bronnen behouden.",
+                    "usage": "unknown",
+                    "oldReviewReplayed": false
                   },
                   {
                     "id": "A2",
-                    "status": "open",
+                    "status": "installed_and_actual_owner_response_verified",
                     "outcome": "Privé- en huisroute plus laatst werkelijk eigen resultaat samen zichtbaar in bestaande initiatiefbediening."
                   },
                   {
                     "id": "A3",
-                    "status": "open",
-                    "outcome": "Gewone eigen oriëntatie leidt aantoonbaar tot zelfstandig uitgevoerd resultaat en later vervolg; stilte/reflectietelling niet als gezinsnut tellen."
+                    "status": "in_progress",
+                    "outcome": "Gewone eigen oriëntatie leidt aantoonbaar tot zelfstandig uitgevoerd resultaat en later vervolg; stilte/reflectietelling niet als gezinsnut tellen.",
+                    "resultProven": false,
+                    "note": "Startcontrole op03:19:55; gedeelde core herstartte03:20:06 vóór een vastgelegde beslissing. Bron en UNKNOWN blijven bewaard; geen automatische herhaling."
                   }
                 ],
                 "newProductTasksAdded": false
-              }
+              },
+              "executionEstimate": "Gerichte correctie op bestaande algemene keten; vooraf geen nieuwe matrix of vaste herhalingsproeven. Werkelijke model-/toolmetingen bewaren; creditkosten onbekend."
             }
           ],
           "completion": {
@@ -9846,24 +9864,24 @@
       "scopeClarification": "development/evidence/reassessment/continuous-development-coverage-20261017.json"
     },
     "currentRuntime": {
-      "recordedAt": "2026-10-18T02:22:27.915123+00:00",
-      "checkedAt": "2026-10-18T02:22:27.915123+00:00",
+      "recordedAt": "2026-10-18T03:25:39.234269+00:00",
+      "checkedAt": "2026-10-18T03:25:39.234269+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "image": "sha256:3845005761721b000b1fa2e6ad747a0d392c7ecb326f9be074b07620888c3cb8",
-      "coreImage": "sha256:3845005761721b000b1fa2e6ad747a0d392c7ecb326f9be074b07620888c3cb8",
-      "workerImage": "sha256:f482cd1baf857aa7be1256b9922c4c147abe67fb4b71999f8dc8ec9312886c3f",
+      "image": "sha256:9d15288f55697499069b283d7d28f48a72902192b218e3af00d769afee5fb5e1",
+      "coreImage": "sha256:9d15288f55697499069b283d7d28f48a72902192b218e3af00d769afee5fb5e1",
+      "workerImage": "sha256:29250fa6e3103aa72b11fc1fb163efab202cb184936b280eca84e1683908acd6",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
-      "ready": true,
+      "ready": false,
       "healthy": true,
-      "readyStatus": "ready",
-      "evidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
-      "evidencePath": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+      "readyStatus": "autonomous_outcome_pending",
+      "evidence": "development/evidence/reassessment/e51-autonomy-repair-installed-20261018.json",
+      "evidencePath": "development/evidence/reassessment/e51-autonomy-repair-installed-20261018.json",
       "independentSourceReview": "development/reviews/e51-joint-candidate-review-20261018.json",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "Actuele gezamenlijke technische kandidaat; exacte runtimebron en uitvoerprofielen vastgelegd, hele checkout niet bytegelijk aan images. Geen gezinsacceptatie uit gezondheid afgeleid."
+      "meaning": "Correcties behouden in actuele kern. Andere uitvoerder herstartte de gedeelde kern tijdens een beoordeling; oorspronkelijke uitkomst en verbruik onbekend. Gezondheid is geen bewijs van eigen initiatief."
     },
     "memoryGoal20260910": {
       "status": "completed",
@@ -11041,9 +11059,15 @@
       "familyTrialIsNotOnlyRemainingGate": true,
       "coreHealthyIsNotAutonomousReadiness": true,
       "worldLeadingClaimProven": false
+    },
+    "e51AutonomyRepair20261018": {
+      "report": "development/evidence/reassessment/e51-autonomy-repair-installed-20261018.json",
+      "review": "development/reviews/e51-autonomy-repair-review-20261018.json",
+      "status": "installed_actual_outcome_unconfirmed",
+      "taskCompleted": false
     }
   },
-  "updatedAt": "2026-10-18T02:55:51.973301+00:00",
+  "updatedAt": "2026-10-18T03:25:39.234269+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -11080,5 +11104,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-18T02:55:51.973301+00:00"
+  "lastUpdatedAt": "2026-10-18T03:25:39.234269+00:00"
 }
