@@ -183,5 +183,83 @@
       "sha256": "b59b51e393fae3f7cc06e32fa6624aeb05bcd5de5da0b9ae370611a493cca813"
     }
   ],
-  "outcomeVerdict": "NOT_MET_USEFUL_SELF_CHOSEN_WORK_RESULT_AND_LATER_USE"
+  "outcomeVerdict": "NOT_MET_USEFUL_SELF_CHOSEN_WORK_RESULT_AND_LATER_USE",
+  "contractClarificationAddenda": [
+    {
+      "reviewedAt": "2026-10-18T23:10:21.061681+00:00",
+      "previousReviewSha256": "554ea3bab0b8c9a52f032e62c6050d721e7e35ae27a4f103759b319f6ed8c9bc",
+      "verdict": "GO_PRIVATE_CURIOSITY_CONTRACT_SOURCE_ONLY",
+      "blockers": [],
+      "profile": "private-orientation-curiosity-contract-v4",
+      "scope": [
+        {
+          "path": "src/eva/adapters/model/pydantic_conversation.py",
+          "beforeSha256": "ccea3b76f537970a95125411fff487c04fc61624ed8403c9fed39533b0417a37",
+          "sha256": "56eb67e760342ed9b81555d462944a9e1d824019841d6e5c8a0b1f957938092c"
+        },
+        {
+          "path": "development/tests/model/test_private_opportunity_contract.py",
+          "sha256": "4bbef8d67272a3638ebbc35b08350b5ff7add09b9c88ffb7a50a97a297615f96"
+        }
+      ],
+      "findings": [
+        "The exact delta scopes the concrete necessary-question identity conflict immediately after the trusted renderer in private orientation. Suitable social or curious contact without an ongoing task remains optional and creates no new privacy, person or execution authority. No assigned topic, required question, search or work quota is added.",
+        "Independent AST comparison against the exact before snapshot found only the profile assignment and _private_opportunity_instructions changed. The shared identity renderer, household path, tool schema, validators, model routes, stop and UNKNOWN handling are unchanged.",
+        "Current signed identity bytes still hash to the previously inspected value. The delta contains no identity/trust/key modification or lifecycle bypass. This is contextual interpretation of the latest owner direction, not a claim that identity files were re-signed."
+      ],
+      "identityPackSha256": "96bec21f0eb19378e1e1c5b02fe2b875149bca402b1b72c1a08980d7ee4567fd",
+      "verificationReviewed": {
+        "newProviderlessContractCasePassed": 1,
+        "pytestSeconds": 1.76,
+        "wrapperSeconds": 2.826,
+        "providerCalls": 0,
+        "existingProfileAssertionUpdatedButNotClaimedRerun": true,
+        "scope": "Saved new targeted case checks private placement, preserved trusted boundary, optional contact, unchanged silence/null result and absence from household instructions."
+      },
+      "evidenceHashes": {
+        "implementation-report.json": "74e958cc8c754417506e1c3c62edcf9716d0d888870ae52371428b075120b253",
+        "owned.patch": "074d11e0dbddb9fd9460ec0f0063ae616feb82d346d3e74abc5ec19d5982398f",
+        "targeted-test.metadata.json": "6cb5e4c6ede0361b765602adadc3cb05e1ba646c9d8f5af4eecae78ba4effa0c",
+        "targeted-test.private.txt": "2fe24a475414c12f5e62563f3cb0ca69a3b24cac0b9730544d2f37d3796701e4"
+      },
+      "installed": true,
+      "actualOutcomeReviewed": false,
+      "wholeTaskComplete": false,
+      "familyAccepted": false,
+      "limit": "This addresses a real supplied-instruction conflict. It does not establish that conflict caused prior silence or that this clarification improves ordinary behavior. Earlier negative observations, original useful-work/checked-result/later-use criteria and separate F2 acceptance remain unchanged. Installation and actual behavior require separate evidence.",
+      "installationAddenda": [
+        {
+          "reviewedAt": "2026-10-18T23:12:20.448909+00:00",
+          "previousReviewSha256": "02e250c98d727f1808db20792fc0c6b8a9653861ef17bd120a3486e64c41278b",
+          "verdict": "GO_RECORDED_V4_CORE_INSTALLATION_BINDING_ONLY",
+          "operatorInstalled": true,
+          "core": {
+            "image": "sha256:d22e8d990aba485254d4732fc4eac00cc13c2c76c21d851737b762d4f0ddac7c",
+            "startedAt": "2026-10-18T23:11:22.433014135Z",
+            "health": "healthy"
+          },
+          "measuredSources": 73,
+          "reviewedChangedSourcesMatched": 1,
+          "otherPriorMeasuredSourcesUnchanged": 72,
+          "workerImageAndStartUnchanged": true,
+          "identityPackHashUnchanged": true,
+          "configurationEqualExceptCoreImage": true,
+          "retainedMounts": true,
+          "savedPreflight": {
+            "at": "2026-10-18T23:10:48.279900+00:00",
+            "pendingOrRunningWork": false,
+            "blockingClaims": []
+          },
+          "evidenceHashes": {
+            "candidates.metadata.json": "790a633f3672a3399414d056045a9897b70402103afc713dd38823f5221e325a",
+            "installed-parity.private.json": "a1d019114565ca032b8f7c40997546b1f63681a46d9c13deb2d37d86bde29df6",
+            "core.installation-receipt.private.json": "b9cb16aa46cc275755b24efb833a2cd8cc8e73f6802a25a27825320252e369fd",
+            "core.install-preflight.private.json": "931f776c742086cfd85f09f05400159f67ec44fb2cb5d6e322368ff19b58a8b9"
+          },
+          "publicEvidenceSha256": "5da35493b5b9f2a1f0d27f591c998cd2bf22296d78102c89e5a0840f66dfe4b1",
+          "limit": "All 73 saved installed sources equal the candidate map; only the reviewed model file differs from V3. Remaining 72 measured files, worker image/start, signed identity bytes and compose configuration except core image are preserved. Saved evidence only; no every-byte inventory, voice behavior, Eva-performed self-installation, useful work or follow-through certified."
+        }
+      ]
+    }
+  ]
 }

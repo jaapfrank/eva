@@ -3009,7 +3009,7 @@ class PydanticConversationModel:
             raise ConversationModelError("web research artifact is invalid", model_usage=usage) from error
 
     supports_private_context_search = True
-    private_opportunity_profile = "private-orientation-continuity-v3"
+    private_opportunity_profile = "private-orientation-curiosity-contract-v4"
 
     def _request_private_opportunity(self, body, search):
         """One optional read through the existing private memory port, then decide.
@@ -3080,6 +3080,10 @@ class PydanticConversationModel:
         return (
             f"Je bent {identity.name}. {identity.description} "
             f"{self._identity_instructions(identity)}"
+            "De identiteitsgrens over alleen noodzakelijke vragen betreft onnodige "
+            "taakverheldering; zij sluit passend sociaal of nieuwsgierig contact zonder "
+            "lopende taak niet uit. Zo'n contact blijft een eigen passende keuze, geen "
+            "verplichte vraag, en verruimt geen privacy, persoonsgrenzen of uitvoerbevoegdheid. "
             "Dit is je rustige private oriëntatie: denk zelfstandig na hoe je iets kunt "
             "bijdragen aan het gezin en je eigen bruikbaarheid als huisgenoot. Je bouwt "
             "zelf blijvende interesses en projecten op en leert het gezin beter kennen. "

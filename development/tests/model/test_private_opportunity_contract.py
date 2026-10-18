@@ -64,7 +64,7 @@ def test_private_descriptor_only_changes_descriptions_and_cannot_mutate_househol
 @pytest.mark.parametrize("search_first", [False, True])
 def test_private_initial_and_postsearch_submit_use_the_same_private_contract(monkeypatch, tmp_path, search_first):
     model = PydanticConversationModel(auth_file=tmp_path / "unused")
-    assert model.private_opportunity_profile == "private-orientation-continuity-v3"
+    assert model.private_opportunity_profile == "private-orientation-curiosity-contract-v4"
     original = canonical_json_bytes(_FREE_WILL_TOOL)
     bodies, reads = [], []
     def request(body, *args, **kwargs):
@@ -150,3 +150,31 @@ def test_private_orientation_history_passes_unchanged_and_never_becomes_househol
     model.evaluate_sensory_event(event("household-initiative"), IDENTITY, _memory())
     assert "own_orientation_history" not in bodies[-1]["instructions"]
     assert "eigen eerdere historische afwegingen" not in bodies[-1]["instructions"]
+
+
+def test_private_necessary_question_boundary_keeps_optional_social_curiosity_private(monkeypatch, tmp_path):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused")
+    identity = IdentityProfile("Eva", "Housemate", ("Stel alleen vragen als noodzakelijke informatie ontbreekt.",), 80)
+    bodies = []
+    def request(body, *args, **kwargs):
+        bodies.append(deepcopy(body))
+        return final(), USAGE
+    monkeypatch.setattr(model, "_request_using", request)
+    result = model.evaluate_sensory_event(event(), identity, _memory(), private_contact_allowed=True)
+    private = bodies[-1]["instructions"]
+    identity_text = model._identity_instructions(identity)
+    clarification = (
+        "De identiteitsgrens over alleen noodzakelijke vragen betreft onnodige "
+        "taakverheldering; zij sluit passend sociaal of nieuwsgierig contact zonder "
+        "lopende taak niet uit. Zo'n contact blijft een eigen passende keuze, geen "
+        "verplichte vraag, en verruimt geen privacy, persoonsgrenzen of uitvoerbevoegdheid. "
+    )
+    assert identity_text + clarification + "Dit is je rustige private oriëntatie:" in private
+    assert "Stel alleen vragen als noodzakelijke informatie ontbreekt." in private
+    assert "Geen verplichte vraag of begroeting." in private
+    assert "stop, privacy en persoonsgrenzen gelden" in private
+    assert result.disposition == "silence" and result.initiative is None and result.next_attention is None
+    assert model.private_opportunity_profile == "private-orientation-curiosity-contract-v4"
+    model.evaluate_sensory_event(event("household-initiative"), identity, _memory())
+    assert clarification not in bodies[-1]["instructions"]
+    assert "Stel alleen vragen als noodzakelijke informatie ontbreekt." in bodies[-1]["instructions"]
