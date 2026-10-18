@@ -1,0 +1,117 @@
+{
+  "contract": "EvaE51NativeResume/v1",
+  "recordedAt": "2026-10-18T13:55:25.240862+00:00",
+  "taskId": "E5.1",
+  "status": "installed_actual_recovery_running",
+  "taskCompleted": false,
+  "finding": "Eva made a genuine spontaneous initiative choice. A known read verification failure and loss of native source identity in the existing resume path prevented finishing it. Silence after a blocked task was not proof that no original initiative existed.",
+  "changes": [
+    "Same guarded ten-second HA and research response verification already installed; original failed receipts kept.",
+    "Existing owner resume now preserves original native intent, source hash, execution namespace and grant, with atomic parent/queue successor binding and explicit recovery provenance.",
+    "A host-bound failed REST GET remains failed context, but the admitted worker may choose a new authorized indexed read. Writes, conflicts and uncertain outcomes do not gain replay authority."
+  ],
+  "sourceFiles": [
+    {
+      "path": "src/eva/contracts/delegated_digital_work.py",
+      "sha256": "92c797cc6482e95a0ae47b7fda93dd5cab48a3e3416094789f97ed644c5aae2e"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+      "sha256": "6b9ef47d3b8ddd41d0dd7a7f49bba9504300eae79f0dc0db712f83168ae215fb"
+    },
+    {
+      "path": "src/eva/bootstrap/native_initiative_work.py",
+      "sha256": "08c4b8317845365f61ba8867f46685a39a7116805f30f28ee65f4e485ff45e59"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_source_outcomes.py",
+      "sha256": "289d7b88aa4cdfc5ce2f2b9d04cbc261ad807ab8762cedef90642f82aaa19d1d"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "sha256": "0f0f5b2bc518dd14c4ef870de2a72f9f38c753431f8662fbbab7d4f727080b7f"
+    },
+    {
+      "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+      "sha256": "6c52076014d02653bb10b360e6be4a92f56fbc3506db57ad503bc725b069fa22"
+    },
+    {
+      "path": "src/eva/adapters/postgres/sensory_events.py",
+      "sha256": "7ed4f99dd0f057ec15a31c12c5e814fa51070df363e86bdc63a85f408a4e0a3b"
+    },
+    {
+      "path": "src/eva/adapters/postgres/delegated_work.py",
+      "sha256": "65936a391b4147f021316ee80c3b4177cb06c15c27d5a66a9a4c3d9ec198fe3b"
+    },
+    {
+      "path": "src/eva/adapters/connectors/delegated_completion.py",
+      "sha256": "323f6282653836bed4627321aa9cad3594366f0d12ede449e00a6f548828d404"
+    }
+  ],
+  "installation": {
+    "roles": {
+      "core": {
+        "image": "sha256:2508d53cf53a32f8996b49890ded72184d05fbde3f78b6ad0f6d125e24c0b0d0",
+        "health": "healthy",
+        "startedAt": "2026-10-18T13:53:27.584692942Z",
+        "imageExact": true,
+        "ownedSourceExact": true
+      },
+      "worker": {
+        "image": "sha256:2f6d2f84e273889b804282b9b2c38c1367ad17d45c04a188a3b7cd3c6613971a",
+        "health": "healthy",
+        "startedAt": "2026-10-18T13:53:58.639505322Z",
+        "imageExact": true,
+        "ownedSourceExact": true
+      }
+    },
+    "digitalSourcePins": 68,
+    "digitalSourceDifferences": [],
+    "preservedOtherExecutorModules": [
+      "eva/adapters/connectors/home_assistant_admin.py",
+      "eva/adapters/postgres/connector_results.py"
+    ],
+    "changedSpeechFilesOrServices": false,
+    "configurationAndDataPreserved": true
+  },
+  "verification": {
+    "readContinuation": {
+      "passed": 22,
+      "seconds": 3.15,
+      "modelCalls": 0,
+      "externalServices": 0
+    },
+    "nativePostgres": {
+      "passed": 39,
+      "deselected": 19,
+      "seconds": 53.91,
+      "wallSeconds": 55.801,
+      "modelCalls": 0,
+      "productionDatabaseWrites": 0
+    },
+    "independentCombinedSourceReviewSHA256": "f95823f071785761e1c36303b98327f4a7410f617eb060841fefe0d5f965bd4c",
+    "nativePatchSHA256": "57045771b208234949b77a0016e31a55447214b1deb6f7f41c7b887ad5965662"
+  },
+  "actualRecovery": {
+    "at": "2026-10-18T13:55:01+00:00",
+    "originalAdmissionSpontaneous": true,
+    "recoveryOperatorAssisted": true,
+    "newSpontaneousAdmission": false,
+    "created": true,
+    "generation": 2,
+    "originalWorkStillFailed": true,
+    "newResultProven": false,
+    "deliveryProven": false,
+    "laterSourceFollowthroughProven": false,
+    "modelUsage": null,
+    "creditCost": null
+  },
+  "limits": [
+    "Technical operator recovery is not an independent new initiative.",
+    "No completion from containers, tests or queue admission.",
+    "Original partial/unknown use and failures remain unchanged.",
+    "Earlier E4.5 later-use learning proof remains within original scope; no rerun of HUE or competitor matrix.",
+    "Seven actual family days and owner acceptance remain F2.1/F2.2."
+  ],
+  "developmentCreditCost": null
+}

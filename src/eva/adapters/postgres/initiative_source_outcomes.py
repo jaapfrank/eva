@@ -243,7 +243,7 @@ def read_recent_source_outcomes(authority, *, now, work_id=None) -> tuple[dict, 
             or now.utcoffset() != timedelta(0) or now.microsecond):
         raise ValueError("source outcomes require a whole-second UTC clock")
     if work_id is not None and (not isinstance(work_id, str)
-            or re.fullmatch(r"work:eva-initiative:[0-9a-f]{64}", work_id) is None):
+            or re.fullmatch(r"work:eva-(?:initiative:[0-9a-f]{64}|resume:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})", work_id) is None):
         raise ValueError("source outcome target must be an exact native work ID")
     owner, c = authority.owner, operational_checkpoints.c
     completion = operational_events.alias("native_source_completion")

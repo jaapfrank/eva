@@ -314,6 +314,51 @@ class PostgresInitiativeAuthority:
             raise InitiativeMandateDenied("native digital capability binding differs")
         return guard, turn
 
+    @staticmethod
+    def _work_admission(events, spec):
+        expected_type = ("PERSONAL_INITIATIVE_WORK_ADMITTED" if spec.generation == 1
+                         else "PERSONAL_INITIATIVE_WORK_RESUMED")
+        for event in events:
+            if event.event_type != expected_type:
+                continue
+            data = event.payload.get("data", {})
+            if (canonical_sha256(event.payload) != event.payload_sha256
+                    or data.get("intent_id") != spec.origin.intent_id
+                    or data.get("work_id") != spec.work_id or data.get("spec_sha256") != spec.sha256
+                    or data.get("mandate_sha256") != spec.origin.mandate_sha256):
+                continue
+            if spec.generation == 1:
+                if event.sequence == spec.origin.claim_revision + 1:
+                    return event
+            elif (event.sequence > spec.origin.claim_revision + 1
+                    and data.get("generation") == spec.generation
+                    and data.get("previous_work_id") == spec.parent_task_id
+                    and data.get("source_ingress_sha256") == spec.source_ingress_sha256
+                    and data.get("recovery_kind") == "explicit_private_owner_native_resume"
+                    and all(isinstance(data.get(key), str)
+                            and re.fullmatch(r"[0-9a-f]{64}", data[key]) is not None
+                            for key in ("previous_spec_sha256", "recovery_ingress_sha256"))):
+                return event
+        return None
+
+    def bind_resume_work(self, previous, spec, *, now, _connection=None):
+        """Admission-only guard; resume never invents another native source claim."""
+        from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore
+        from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+        if (type(previous.spec) is not DelegatedInitiativeDigitalWorkSpec
+                or type(spec) is not DelegatedInitiativeDigitalWorkSpec
+                or previous.state != "failed" or previous.stop_requested_at is not None
+                or previous.lease_owner is not None or previous.retention_until <= now
+                or spec.origin != previous.spec.origin or spec.source != previous.spec.source
+                or spec.source_ingress_sha256 != previous.spec.source_ingress_sha256
+                or spec.execution_id != previous.spec.execution_id or spec.grant != previous.spec.grant):
+            raise InitiativeMandateDenied("native resume requires its retained known failed attempt")
+        self._retained_work_source(previous, now=now, _connection=_connection)
+        claim = PostgresPersonalInterestStore._claim_from_events(self.owner._tenant_id,
+            self.owner._installation_id, self.timeline.events(spec.origin.thread_id),
+            spec.origin.claim_revision)
+        return self.bind(claim, work_spec=spec, resume_work=previous, _connection=_connection)
+
     def work_memory_source(self, work, *, now):
         """Read-only outcome-memory compatibility; no new execution authority."""
         return self._retained_work_source(work, now=now)
@@ -348,9 +393,7 @@ class PostgresInitiativeAuthority:
         expected = {key: getattr(turn, key) for key in (
             "tenant_id", "installation_id", "principal_id", "conversation_id", "message_id")}
         expected["audience"] = {"kind": "private_person", "principal_id": turn.principal_id}
-        admission = next((event for event in events
-            if event.event_type == "PERSONAL_INITIATIVE_WORK_ADMITTED"
-            and event.sequence == spec.origin.claim_revision + 1), None)
+        admission = self._work_admission(events, spec)
         bound = {} if admission is None else admission.payload.get("data", {})
         if (claim.principal_id != str(owner._owner) or claim.intent_id != spec.origin.intent_id
                 or spec.source.model_dump(mode="json") != expected
@@ -417,6 +460,7 @@ class PostgresInitiativeAuthority:
             PostgresOperationalTimeline(self.owner._engine, self.owner._authority)._scope(conn)
             ids = conn.execute(sa.select(work.c.work_id).where(
                 work.c.spec_payload["contract"].astext == "DelegatedInitiativeDigitalWork/v1",
+                work.c.state.in_(("succeeded", "verified")),
                 *(work.c.spec_payload["source"][key].astext == value for key, value in identity.items()))
                 .limit(2)).scalars().all()
             if len(ids) != 1:
@@ -494,8 +538,9 @@ class PostgresInitiativeAuthority:
             raise InitiativeMandateDenied("native parent is absent")
         if row.phase == "personal_stopped":
             return  # Stop wins; a late result cannot manufacture completion.
+        admission = self._work_admission(self.timeline.events(spec.origin.thread_id), spec)
         if (row.phase != "initiative_work_waiting" or row.status != "waiting_for_proof"
-                or row.revision != spec.origin.claim_revision + 1):
+                or admission is None or row.revision != admission.sequence):
             raise InitiativeMandateDenied("native parent outcome no longer matches")
         bound = conn.execute(sa.select(e.payload, e.payload_sha256).where(
             e.tenant_id == owner._scope.tenant_id, e.installation_id == owner._scope.installation_id,
@@ -523,13 +568,14 @@ class PostgresInitiativeAuthority:
             data.update(reason="Digitale uitvoering niet bevestigd onder het actuele initiatiefmandaat.",
                 delegated_usage=None if usage is None else usage.to_payload())
         transition_timeline_thread(conn, owner._scope, thread_id=row.thread_id,
-            expected_revision=row.revision, checkpoint_id=row.thread_id + ":digital-outcome",
+            expected_revision=row.revision, checkpoint_id=(row.thread_id + ":digital-outcome"
+                if spec.generation == 1 else row.thread_id + ":digital-outcome:" + spec.work_id),
             phase="initiative_completed" if complete else "initiative_blocked",
             status="completed" if complete else "needs_help",
             event_type="PERSONAL_INITIATIVE_COMPLETED" if complete else "PERSONAL_INITIATIVE_BLOCKED",
             occurred_at=now, data=data)
 
-    def bind(self, claim, *, work_spec=None):
+    def bind(self, claim, *, work_spec=None, resume_work=None, _connection=None):
         policy, digest = self.policy()
         from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore
         durable = PostgresPersonalInterestStore._claim_from_events(
@@ -542,22 +588,32 @@ class PostgresInitiativeAuthority:
                 "mandate_sha256": digest, "turn_sha256": canonical_sha256({
                     "principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
                     "message_id": turn.message_id, "text": turn.text, "occurred_at": turn.occurred_at})}
-        try:
-            self.timeline.create_thread(thread_id=thread, checkpoint_id=thread + ":bound",
-                occurred_at=datetime.now(UTC).replace(microsecond=0), data=data)
-        except CheckpointConflict:
-            if self.timeline.events(thread)[0].payload["data"] != data:
-                raise InitiativeMandateDenied("native execution binding differs") from None
-        guard = NativeInitiativeGuard(self, claim, turn, digest, thread, work_spec=work_spec)
-        guard.check(turn)
+        if resume_work is not None:
+            existing = self.timeline.events(thread)
+            if not existing or existing[0].payload.get("data") != data:
+                raise InitiativeMandateDenied("native resume lacks its original execution binding")
+        else:
+            try:
+                self.timeline.create_thread(thread_id=thread, checkpoint_id=thread + ":bound",
+                    occurred_at=datetime.now(UTC).replace(microsecond=0), data=data)
+            except CheckpointConflict:
+                if self.timeline.events(thread)[0].payload["data"] != data:
+                    raise InitiativeMandateDenied("native execution binding differs") from None
+        guard = NativeInitiativeGuard(self, claim, turn, digest, thread,
+            work_spec=work_spec, resume_work=resume_work)
+        if _connection is None:
+            guard.check(turn)
+        else:
+            guard.check_locked(_connection)
         return guard, turn
 
 
 class NativeInitiativeGuard:
-    def __init__(self, authority, claim, turn, mandate_sha, thread, *, work_spec=None):
+    def __init__(self, authority, claim, turn, mandate_sha, thread, *, work_spec=None, resume_work=None):
         self.authority, self.claim, self.turn = authority, claim, turn
         self.mandate_sha, self.thread = mandate_sha, thread
         self.work_spec = work_spec
+        self.resume_work = resume_work
 
     def check(self, turn):
         if turn != self.turn:
@@ -586,24 +642,35 @@ class NativeInitiativeGuard:
             raise InitiativeMandateDenied("initiative mandate revoked or revised before dispatch")
         row = conn.execute(owner._query().where(c.thread_id == self.claim.thread_id)
             .with_for_update(of=operational_checkpoints)).one_or_none()
-        revision = self.claim.revision + (1 if self.work_spec is not None else 0)
+        if self.resume_work is not None:
+            previous = self.resume_work
+            events = self.authority.timeline.events(self.claim.thread_id)
+            outcome = events[-1] if events else None
+            data = {} if outcome is None else outcome.payload.get("data", {})
+            if (row is None or row.phase != "initiative_blocked" or row.status != "needs_help"
+                    or outcome is None or outcome.sequence != row.revision
+                    or outcome.event_type != "PERSONAL_INITIATIVE_BLOCKED"
+                    or data.get("work_id") != previous.spec.work_id
+                    or data.get("spec_sha256") != previous.spec.sha256
+                    or data.get("work_state") != "failed"
+                    or data.get("delegated_usage") != (None if previous.usage is None else previous.usage.to_payload())
+                    or self.work_spec.origin.mandate_sha256 != self.mandate_sha):
+                raise InitiativeMandateDenied("native failure was stopped, superseded or is uncertain")
+            return row
+        admission = (None if self.work_spec is None else self.authority._work_admission(
+            self.authority.timeline.events(self.claim.thread_id), self.work_spec))
+        revision = self.claim.revision if self.work_spec is None else (
+            None if admission is None else admission.sequence)
         phase = "initiative_work_waiting" if self.work_spec is not None else "exploration_claimed"
         if (row is None or row.revision != revision or row.phase != phase
                 or row.status != "waiting_for_proof"
                 or row.adoption["data"].get("execution_mode") != "autonomous_task"):
             raise InitiativeMandateDenied("initiative stopped, superseded or no longer claimed before dispatch")
-        if self.work_spec is not None:
-            e = operational_events.c
-            bound = conn.execute(sa.select(e.payload, e.payload_sha256).where(
-                e.tenant_id == owner._scope.tenant_id, e.installation_id == owner._scope.installation_id,
-                e.thread_id == self.claim.thread_id, e.sequence == revision)).one()
-            if (canonical_sha256(bound.payload) != bytes(bound.payload_sha256).hex()
-                    or bound.payload["data"].get("work_id") != self.work_spec.work_id
-                    or bound.payload["data"].get("spec_sha256") != self.work_spec.sha256):
-                raise InitiativeMandateDenied("initiative delegated work binding differs")
         return row
 
     def action_allowed(self, name):
+        if self.resume_work is not None:
+            return False  # Recovery admission is never tool execution authority.
         self.check(self.turn)
         policy, _ = self.authority.policy()
         # Local work requires the separately admitted host profile; never infer
@@ -613,6 +680,8 @@ class NativeInitiativeGuard:
         return any(c["action_name"] == name for c in policy["capabilities"])
 
     def authorize_request(self, request, *, phase):
+        if self.resume_work is not None:
+            raise InitiativeMandateDenied("native recovery admission cannot dispatch tools")
         self.check(self.turn)
         policy, _ = self.authority.policy()
         caps = [c for c in policy["capabilities"]

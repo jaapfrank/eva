@@ -207,13 +207,24 @@ class DelegatedInitiativeDigitalWorkSpec(DelegatedDigitalWorkSpec):
 
     @model_validator(mode="after")
     def _initiative_binding(self):
-        from uuid import NAMESPACE_URL, uuid5
+        from uuid import NAMESPACE_URL, UUID, uuid5
         from eva.contracts.canonical_json import canonical_sha256
         key = self.origin.intent_id.removeprefix("personal-interest:")
-        if (self.generation != 1 or self.origin.thread_id != "intent:" + self.origin.intent_id
-                or self.parent_task_id != self.origin.intent_id
-                or self.work_id != "work:eva-initiative:" + key
-                or self.execution_id != self.work_id
+        original_work = "work:eva-initiative:" + key
+        if self.generation == 1:
+            identity_valid = self.work_id == original_work and self.parent_task_id == self.origin.intent_id
+        else:
+            try:
+                resumed = self.work_id.removeprefix("work:eva-resume:")
+                parent = self.parent_task_id.removeprefix("work:eva-resume:")
+                identity_valid = (self.work_id.startswith("work:eva-resume:")
+                    and str(UUID(resumed)) == resumed and self.work_id != self.parent_task_id
+                    and (self.parent_task_id == original_work if self.generation == 2 else
+                         self.parent_task_id.startswith("work:eva-resume:") and str(UUID(parent)) == parent))
+            except (ValueError, AttributeError):
+                identity_valid = False
+        if (not identity_valid or self.origin.thread_id != "intent:" + self.origin.intent_id
+                or self.execution_id != original_work
                 or self.source.conversation_id != "initiative-task:" + key
                 or self.source.principal_id != self.owner_principal_id
                 or self.episode_id != str(uuid5(NAMESPACE_URL,

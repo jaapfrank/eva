@@ -323,12 +323,17 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         _native_guard=None,
     ) -> DelegatedWorkAdmission:
         if isinstance(spec, DelegatedInitiativeDigitalWorkSpec):
-            if (_connection is None or _native_guard is None or resumes_work_id is not None
+            if (_connection is None or _native_guard is None
                     or delivery_destination is not None
                     or spec.origin.intent_id != _native_guard.claim.intent_id
                     or spec.origin.claim_revision != _native_guard.claim.revision
                     or spec.origin.mandate_sha256 != _native_guard.mandate_sha):
                 raise DelegatedWorkConflict("native admission requires its atomic host handoff")
+            if resumes_work_id is not None and (
+                    _native_guard.resume_work is None
+                    or _native_guard.resume_work.spec.work_id != resumes_work_id
+                    or _native_guard.work_spec != spec):
+                raise DelegatedWorkConflict("native resume requires its exact recovery admission guard")
             if _native_guard.authority.owner._authority != self.scope:
                 raise DelegatedWorkConflict("native queue authority scope differs")
             _native_guard.check_locked(_connection)
@@ -400,6 +405,16 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 if (previous.spec.owner_principal_id != str(owner_principal_id)
                         or previous.spec.principal_binding_id != str(principal_binding_id)):
                     raise DelegatedWorkNotFound("previous delegated work is absent")
+                if isinstance(previous.spec, DelegatedInitiativeDigitalWorkSpec):
+                    if (not isinstance(spec, DelegatedInitiativeDigitalWorkSpec)
+                            or spec.origin != previous.spec.origin
+                            or previous.state != "failed" or previous.stop_requested_at is not None
+                            or previous.lease_owner is not None or previous.retention_until <= occurred_at
+                            or _native_guard is None
+                            or _native_guard.resume_work.spec.sha256 != previous.spec.sha256):
+                        raise DelegatedWorkNotResumable(previous)
+                elif isinstance(spec, DelegatedInitiativeDigitalWorkSpec):
+                    raise DelegatedWorkConflict("native resume cannot borrow ordinary owner work")
                 expected_id = "work:eva-resume:" + str(uuid5(
                     self._scope_value.installation_id,
                     f"{previous.spec.work_id}:{previous.spec.generation + 1}",

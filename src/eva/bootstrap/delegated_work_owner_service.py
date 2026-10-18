@@ -22,7 +22,7 @@ from eva.application.conversation import ConversationTurn
 from eva.bootstrap.delegated_work_provider import build_unadmitted_delegated_work_spec
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.delegated_work import DelegatedResearchSpec, PublicResearchRequest
-from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
+from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec, DelegatedInitiativeDigitalWorkSpec
 from eva.contracts.timestamps import parse_utc_timestamp
 
 
@@ -353,6 +353,20 @@ class DelegatedWorkOwnerService:
         from eva.bootstrap.scheduled_admission import scheduled_creation_time
         created = scheduled_creation_time(admission_time, turn.occurred_at, self.now,
             lambda: self.store.load(next_id, **self._owner))
+        if isinstance(previous.spec, DelegatedInitiativeDigitalWorkSpec):
+            self.validate_authority(turn)
+            from eva.bootstrap.native_initiative_work import resume_native_initiative
+            admission = resume_native_initiative(self, previous, created=created,
+                recovery_conversation_id=turn.conversation_id, recovery_message_id=turn.message_id,
+                recovery_ingress_sha256=canonical_sha256(PostgresConversationJournal._ingress_data(turn)))
+            return {**response, "created": admission.disposition == "inserted",
+                "previous": self._view(previous, turn=turn), "work": self._view(admission.work, turn=turn),
+                "prior_outcome_unknown": False,
+                "recovery": {"kind": "explicit_private_owner_native_resume",
+                    "original_intent_id": previous.spec.origin.intent_id,
+                    "original_work_id": previous.spec.execution_id,
+                    "spontaneous_admission": False},
+                "guidance": "Hervat op uitdrukkelijk eigenaar- of operatorverzoek; het oorspronkelijke initiatief blijft van Eva. Eerdere mislukking en verbruik blijven bewaard."}
         is_research = isinstance(previous.spec, DelegatedResearchSpec)
         is_digital = isinstance(previous.spec, DelegatedDigitalWorkSpec)
         if is_research and self.research_profile is None:

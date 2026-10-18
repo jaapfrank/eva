@@ -74,6 +74,107 @@ def admit_native_initiative(authority, claim, service):
     return NativeInitiativeDelegation(spec.work_id)
 
 
+def resume_native_initiative(service, previous, *, created, recovery_ingress_sha256,
+        recovery_conversation_id, recovery_message_id):
+    """Explicit owner recovery, retaining the original native execution namespace."""
+    import sqlalchemy as sa
+    from eva.adapters.postgres.current_catalog import delegated_work_runs
+    from eva.adapters.postgres.delegated_work import DelegatedWorkAdmission, DelegatedWorkConflict
+    from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline
+    from eva.adapters.postgres.operational_timeline import operational_checkpoints
+    from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+    from eva.contracts.timestamps import parse_utc_timestamp
+    loader = service.store._initiative_authority_loader
+    if loader is None or service.digital_profile is None:
+        raise InitiativeMandateDenied("native recovery authority is not composed")
+    authority = loader()
+    if (service.store._engine is not authority.owner._engine
+            or service.owner_principal_id != authority.owner._owner
+            or service.principal_binding_id != authority.owner._binding
+            or service.conversation_scope != authority.owner._scope
+            or service.store.scope != authority.owner._authority):
+        raise InitiativeMandateDenied("native recovery differs from its host owner scope")
+    now = service.now()
+    old = previous.spec
+    if type(old) is not DelegatedInitiativeDigitalWorkSpec:
+        raise InitiativeMandateDenied("native recovery requires its original typed source")
+    _, mandate_sha = authority.policy()
+    if mandate_sha != old.origin.mandate_sha256:
+        raise InitiativeMandateDenied("native recovery mandate changed")
+    current_grant = authority.digital_grant(service.digital_profile)
+    if not set(old.grant.capability_ids) <= set(current_grant.capability_ids):
+        raise InitiativeMandateDenied("native recovery grant no longer authorized")
+    next_id = "work:eva-resume:" + str(uuid5(service.store.scope.installation_id,
+        f"{old.work_id}:{old.generation + 1}"))
+    spec = service.digital_profile.build_spec(initiative_origin=old.origin.model_dump(mode="json"),
+        grant=old.grant, source=old.source.model_dump(mode="json"),
+        source_ingress_sha256=old.source_ingress_sha256, execution_id=old.execution_id,
+        work_id=next_id, episode_id=old.episode_id, generation=old.generation + 1,
+        parent_task_id=old.work_id, owner_principal_id=old.owner_principal_id,
+        principal_binding_id=old.principal_binding_id, task=old.task, created_at=created,
+        deadline=created + timedelta(seconds=old.grant.timeout_seconds))
+    queue = PostgresOperationalTimeline(service.store._engine, service.store.scope)
+    with authority.owner._engine.begin() as conn:
+        authority.owner._authorize(conn, now)
+        row = conn.execute(authority.owner._query().where(
+            operational_checkpoints.c.thread_id == old.origin.thread_id)
+            .with_for_update(of=operational_checkpoints)).one_or_none()
+        if row is None or row.phase == "personal_stopped" or row.status == "stopped":
+            raise InitiativeMandateDenied("native recovery source is absent or stopped")
+        queue._scope(conn)
+        # Parent lock serializes duplicate requests before any new queue admission.
+        # A read-only duplicate must not invert the running queue-to-parent lock order.
+        existing_row = conn.execute(sa.select(delegated_work_runs).where(
+            delegated_work_runs.c.tenant_id == service.store.scope.tenant_id,
+            delegated_work_runs.c.installation_id == service.store.scope.installation_id,
+            delegated_work_runs.c.work_id == next_id)).mappings().one_or_none()
+        existing = (None if existing_row is None else
+                    service.store._validated(conn, existing_row))
+        if existing is not None:
+            actual = existing.spec
+            if (type(actual) is not DelegatedInitiativeDigitalWorkSpec
+                    or actual.origin != old.origin or actual.parent_task_id != old.work_id
+                    or actual.generation != old.generation + 1 or actual.source != old.source
+                    or actual.source_ingress_sha256 != old.source_ingress_sha256
+                    or actual.execution_id != old.execution_id or actual.grant != old.grant
+                    or actual.task != old.task or actual.episode_id != old.episode_id
+                    or actual.owner_principal_id != old.owner_principal_id
+                    or actual.principal_binding_id != old.principal_binding_id
+                    or existing.stop_requested_at is not None):
+                raise DelegatedWorkConflict("native successor identity differs")
+            authority.timeline._scope(conn)
+            authority._retained_work_source(existing, now=now, _connection=conn)
+            return DelegatedWorkAdmission("already_present", existing)
+        current = service.store._load_terminal_locked(conn, work_id=old.work_id,
+            missing_message="native previous attempt absent")
+        if current.spec.sha256 != old.sha256:
+            raise DelegatedWorkConflict("native previous attempt changed")
+        if parse_utc_timestamp(spec.deadline) <= now:
+            raise InitiativeMandateDenied("native recovery admission deadline expired")
+        authority.timeline._scope(conn)
+        guard, _ = authority.bind_resume_work(current, spec, now=now, _connection=conn)
+        admission = service.store.admit(spec=spec, title=current.title, summary=current.summary,
+            worker_role=current.worker_role, retention_policy_id=current.retention_policy_id,
+            retention_until=current.retention_until, occurred_at=created,
+            resumes_work_id=old.work_id, _connection=conn, _native_guard=guard)
+        authority.timeline._scope(conn)
+        transition_timeline_thread(conn, authority.owner._scope, thread_id=old.origin.thread_id,
+            expected_revision=row.revision,
+            checkpoint_id=old.origin.thread_id + ":digital-resumed:" + str(spec.generation),
+            phase="initiative_work_waiting", status="waiting_for_proof",
+            event_type="PERSONAL_INITIATIVE_WORK_RESUMED", occurred_at=created,
+            data={"intent_id": old.origin.intent_id, "origin": "eva_initiative",
+                "work_id": spec.work_id, "spec_sha256": spec.sha256,
+                "mandate_sha256": mandate_sha, "generation": spec.generation,
+                "previous_work_id": old.work_id, "previous_spec_sha256": old.sha256,
+                "source_ingress_sha256": old.source_ingress_sha256,
+                "recovery_kind": "explicit_private_owner_native_resume",
+                "recovery_ingress_sha256": recovery_ingress_sha256,
+                "recovery_conversation_id": recovery_conversation_id,
+                "recovery_message_id": recovery_message_id})
+        return admission
+
+
 def subscription_initiative_available(authority, model):
     """Current private owner authority plus the existing subscription, not quota headroom."""
     owner = authority.owner

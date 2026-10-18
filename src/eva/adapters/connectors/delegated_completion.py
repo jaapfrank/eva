@@ -17,10 +17,13 @@ from eva.adapters.postgres.programming_actions import (
 def recoverable_read_error(receipt):
     proof = receipt.output.get("proof")
     evidence = proof.get("evidence") if isinstance(proof, dict) else None
-    return (receipt.output.get("status") == "failed"
+    return ((receipt.output.get("status") == "failed"
+             or (receipt.output.get("status") == "timed_out"
+                 and isinstance(evidence, dict)
+                 and evidence.get("source") == "home_assistant_api_read_error"))
             and receipt.output.get("recoverable_read_error") is True
             and isinstance(evidence, dict)
-            and evidence.get("source") in {"mcp_gateway_read_error", "home_assistant_inventory_read_error"}
+            and evidence.get("source") in {"mcp_gateway_read_error", "home_assistant_inventory_read_error", "home_assistant_api_read_error"}
             and evidence.get("operation_kind") == "read")
 
 

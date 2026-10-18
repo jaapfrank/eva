@@ -1,0 +1,14 @@
+{
+  "contract": "EvaE51NativeResumeReview/v1",
+  "recordedAt": "2026-10-18T13:56:18.253972+00:00",
+  "taskId": "E5.1",
+  "sourceVerdict": "GO",
+  "installedVerdict": "Exact owned source hashes,68 shared execution pins and healthy current role images verified; configuration/mount retention receipts preserved.",
+  "functionalVerdict": "PENDING_ACTUAL_RESULT_DELIVERY_AND_FOLLOWTHROUGH",
+  "taskCompleted": false,
+  "independentCombinedSourceReviewSHA256": "f95823f071785761e1c36303b98327f4a7410f617eb060841fefe0d5f965bd4c",
+  "nativeTestsPassed": 39,
+  "readContinuationTestsPassed": 22,
+  "sourceCodeReviewDoesNotProveAutonomy": true,
+  "recoveryProvenance": "Explicit operator-assisted recovery, original spontaneous choice retained, no new spontaneous admission."
+}

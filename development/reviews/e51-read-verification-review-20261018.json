@@ -9,5 +9,7 @@
   "taskCompleted": false,
   "familyAcceptance": false,
   "sameCauseResearchSourceReviewSHA256": "6d0feef6a1cd290ea828a30822c62dcb285baa886dd0cd1549cdf04c7d128ff3",
-  "activeDigitalSourcePinsAgree": 68
+  "activeDigitalSourcePinsAgree": 68,
+  "actualFunctionalOutcome": "NOT_YET_PROVEN: two post-repair orientations chose silence; the current-owner diagnostic read succeeds, but source-preserving native resume remains incomplete.",
+  "operatorDiagnosticReviewSHA256": "dcbec6166d925db0b377021d9fa428648613cceb6e03bf9107f87048c97d9342"
 }
