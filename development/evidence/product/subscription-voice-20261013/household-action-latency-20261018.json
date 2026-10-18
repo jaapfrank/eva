@@ -1,0 +1,212 @@
+{
+  "contract": "EvaHouseholdActionLatency/v1",
+  "status": "installed_general_repairs_readonly_route_verified",
+  "date": "2026-10-18",
+  "existing_working_behavior": "Existing authorized household voice route understood the lighting request, sent one grouped service call and separately read back all nine selected targets as off.",
+  "specific_defect": "33 seconds before sending the action; 44 seconds to final model result; overbroad discovery and invalid local selection.",
+  "affected_route": "Household voice -> shared conversation and memory -> existing Home Assistant API -> separate readback -> household reply.",
+  "end_condition": "Install focused general discovery/selection repair, verify actual installed read-only route and report measured limitations without replaying owner action.",
+  "scope": "No second Eva or household-specific decision rule; preserve current memory, authority and write/readback boundary.",
+  "private_content_published": false,
+  "original_observation": {
+    "ingress_utc": "2026-10-18T02:26:07Z",
+    "first_model_admitted_utc": "2026-10-18T02:26:15Z",
+    "write_prepared_utc": "2026-10-18T02:26:40Z",
+    "write_executed_utc": "2026-10-18T02:26:41Z",
+    "fresh_readback_utc": "2026-10-18T02:26:47Z",
+    "final_model_recorded_utc": "2026-10-18T02:26:51Z",
+    "timestamps_precision": "Seconds; event-time fields on ingress/reply/admission receipts reuse original turn time and must not be interpreted as wall-clock completion. Model and execution times above use their actual wall-clock journal events.",
+    "approximate_seconds_before_write": 33,
+    "approximate_seconds_to_final_model_result": 44,
+    "model_usage": {
+      "tool_calls": 7,
+      "measurement": "measured",
+      "input_tokens": 106391,
+      "output_tokens": 787,
+      "model_attempts": 8
+    },
+    "accumulated_model_timing": {
+      "completed_ms": 21415,
+      "first_content_ms": 19976
+    },
+    "external_invocations": 5,
+    "local_reads": 2,
+    "full_inventory_items": 108,
+    "subsequent_area_inventory_items": 8,
+    "service_catalog_domains": 82,
+    "invalid_local_reads": 1,
+    "readback_selected_target_count": 9,
+    "readback_all_selected_targets_reported_off": true,
+    "physical_observation_claimed": false,
+    "request_reexecuted": false,
+    "spoken_playback_timing": "Not retained: actual first PCM, audible interim speech and playback ACK cannot be reconstructed. Session binding confirms household session/respond with VoiceContext.",
+    "private_journal_sha256": "d037292ba04abaa7305e7f3bc923b35c0f5d8391d64156bfe2313d1252c145fd"
+  },
+  "repairs": [
+    "Retained model view preserves the bounded, exact inner reader and pointer from the proven original observation. Forged navigation is rejected; existing stored bytes, proof hashes, scope checks and legacy projections are unchanged.",
+    "HA tool guidance discovers only missing targets or schema, reads one relevant schema through the existing WebSocket API, and retains fresh post-mutation readback.",
+    "Inventory guidance reuses enough current evidence, filters stored rows locally and distinguishes an unavailable state from an ambiguous device name."
+  ],
+  "installation": {
+    "base": "sha256:a9a8b3f275f75698b42188466e14206006263d11ea74cb32139cfb1e3e94cb9d",
+    "candidate": "sha256:e1c8c42b87644bf34dd125ec9160629705e43591bca895dee1fccce0cb83ab38",
+    "hashes": {
+      "adapters/connectors/home_assistant_admin.py": "9d9687d05f2399f9c48282e7f62e2c3829e282425e9de605ae7bb4931a35e361",
+      "adapters/connectors/home_assistant_api.py": "3c416796a399f404ecb82afe4c6443e4f6a674ec1eb3e0cd20167e22fa994f90",
+      "adapters/postgres/connector_results.py": "486721c2811a03a2749b85a14e5dd4c04e45f920c1ecc524217d1831cee92031",
+      "adapters/model/pydantic_conversation.py": "40c6683502e44ae85b9629dcd9e1e4a629914fbb4d83bff4ef56c072e345f9e3"
+    },
+    "pre_install_guard": {
+      "active_voice_leases": 0,
+      "active_delegated_work": 0,
+      "active_memory_outbox": 0,
+      "active_model_requests": 0,
+      "active_decision_claims": 0,
+      "active_conversation_claims": 0
+    },
+    "running": true,
+    "source_verified": true,
+    "configuration_preserved": true,
+    "health": "healthy",
+    "installed_at": "2026-10-18T04:29:35.989914587Z"
+  },
+  "validation": {
+    "focused_regression_tests": {
+      "baseline_failed": 5,
+      "after_passed": 44,
+      "runtime_image_with_focused_overlays": true,
+      "network": "none",
+      "independent_review": "GO"
+    },
+    "actual_service_schema_read": {
+      "elapsed_ms": 45.6,
+      "success": true,
+      "schema_keys": [
+        "fields",
+        "target"
+      ],
+      "service_fields": [
+        "transition",
+        "additional_fields"
+      ],
+      "service_field_count": 2,
+      "truncated": false,
+      "total": 2,
+      "next_offset": null,
+      "selected_response_bytes": 477,
+      "full_source_bytes": 115089,
+      "physical_effects_invoked": false,
+      "model_calls": 0
+    },
+    "live_readonly_probes": [
+      {
+        "candidate": "before",
+        "endpoint": "actual running /internal/v1/ha-voice/session/respond",
+        "input_kind": "Same read-only question about current outdoor lighting, explicitly no changes.",
+        "seconds_to_final": 20.948,
+        "spoken_update_seconds": [
+          10.795
+        ],
+        "model_requests": 4,
+        "usage": {
+          "input_tokens": 41982,
+          "output_tokens": 329,
+          "tool_calls": 4
+        },
+        "external_invocations": 2,
+        "physical_mutations": 0,
+        "result": "Unnecessary ambiguous-name clarification despite already-read states.",
+        "physical_audio_playback": false,
+        "raw_evidence_published": false,
+        "phase_timing": {
+          "initial_memory_ms": 7883,
+          "model_phase_ms": [
+            1531,
+            1530,
+            3931,
+            2382
+          ]
+        }
+      },
+      {
+        "candidate": "after",
+        "endpoint": "actual running /internal/v1/ha-voice/session/respond",
+        "input_kind": "Same read-only question about current outdoor lighting, explicitly no changes.",
+        "seconds_to_final": 21.208,
+        "spoken_update_seconds": [
+          10.209
+        ],
+        "model_requests": 4,
+        "usage": {
+          "input_tokens": 41624,
+          "output_tokens": 334,
+          "tool_calls": 3
+        },
+        "external_invocations": 1,
+        "physical_mutations": 0,
+        "result": "Answers actual on state and unavailable-device limit from current source; no redundant ambiguous-name lookup.",
+        "physical_audio_playback": false,
+        "raw_evidence_published": false,
+        "phase_timing": {
+          "initial_memory_ms": 6576,
+          "model_phase_ms": [
+            2177,
+            3069,
+            3752,
+            2442
+          ]
+        }
+      }
+    ]
+  },
+  "limits": [
+    "These two live HTTP probes exercise the actual installed household core, authority, models and HA reads; they do not measure microphone-to-speaker playback.",
+    "The status query was correct after the change but was not faster overall (20.948s before,21.208s after). This is not proof of a faster complete switching request.",
+    "No repeat of the original physical action has been performed. Explicit owner approval for a single current switching measurement is pending.",
+    "Initial memory and model latency still contributes; GPU recovery remains a separate pending coordinated restart.",
+    "Source navigation repair covers the current retained-result model view; compact ancestor-history projection is unchanged."
+  ],
+  "usage": {
+    "owner_original_runtime": {
+      "tool_calls": 7,
+      "measurement": "measured",
+      "input_tokens": 106391,
+      "output_tokens": 787,
+      "model_attempts": 8
+    },
+    "diagnostic_runtime": {
+      "model_requests": 8,
+      "input_tokens": 83606,
+      "output_tokens": 663,
+      "tool_calls": 7,
+      "additional_direct_ha_read_calls": 1,
+      "provider_credits": "unknown"
+    },
+    "codex_development_usage": "unknown"
+  },
+  "own_probe_memory_cleanup": {
+    "contract": "EvaSyntheticProbeCleanupAssessment/v1",
+    "verified_at": "2026-10-18T04:37:01.499808+00:00",
+    "scope": "Exactly the before/after read-only household diagnostics; original owner conversation excluded",
+    "exact_source_count": 2,
+    "supported_route": "MemoryColdPath.erase_document(principal_id, document_id, source_message_id)",
+    "manifest_sha256": "03bc1f12329baea6976ffdf983644822aa9c1c4925180de3f01e5beb66131e77",
+    "execution_script_sha256": "14a8c38d93f57d2026981d56485d921c41437fb0e06b60c39ffb52e195c22749",
+    "execution_log_sha256": "869db3869c35644ad257b6988c61c9180feb71b6b3f584065aa1dd326ecba41a",
+    "image": "sha256:e1c8c42b87644bf34dd125ec9160629705e43591bca895dee1fccce0cb83ab38",
+    "verification": {
+      "storage_removed": 2,
+      "raw_exchanges_erased": 2,
+      "outbox_erased": 2,
+      "hindsight_documents_absent": 2,
+      "protected_original_events_unchanged": 47,
+      "other_probe_events_unchanged": 12
+    },
+    "private_diagnostic_backups_preserved": true,
+    "new_model_requests": 0,
+    "physical_device_operations": 0,
+    "derivative_memory_absence_claimed": false,
+    "code_deployment_changes": 0
+  },
+  "independent_scope_privacy_review": "GO: only seven intended files, including four added model-validation lines and five nested board fields; currentWork and unrelated working changes preserved."
+}

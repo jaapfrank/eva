@@ -45,9 +45,11 @@ class HomeAssistantApiTool:
         return (ConversationToolDescriptor(
             name=_ACTION,
             description=(
-                "Gebruik de echte Home Assistant REST- of WebSocket-API. Ontdek eerst "
-                "beschikbare services, entiteiten, apparaten en ruimtes; kies zelf de "
-                "passende API en parameters voor de gebruikersvraag. Geen vaste lijst "
+                "Gebruik de echte Home Assistant REST- of WebSocket-API. Ontdek alleen "
+                "ontbrekende doelentiteiten of onbekende servicevelden. Gebruik voldoende "
+                "actuele, brongebonden informatie uit deze beurt opnieuw; een bekende "
+                "service met bekende velden vereist geen volledige servicecatalogus. "
+                "Kies de passende API en parameters voor de gebruikersvraag. Geen vaste lijst "
                 "apparaattypen of automatiseringssjablonen. REST: GET /api/services, "
                 "GET /api/states, GET /api/states/<entity_id>, POST "
                 "/api/services/<domain>/<service>. Automatiseringsconfiguratie: "
@@ -74,6 +76,12 @@ class HomeAssistantApiTool:
                 "The REST body contains service fields and entity_id directly, not a WebSocket "
                 "command envelope. Use known service fields; if unknown, inspect the relevant "
                 "service definition rather than guessing fields or template functions. "
+                "For one unknown service schema, use transport=websocket, method=GET, "
+                "path empty, body_json={\"type\":\"get_services\"}, and response_pointer "
+                "/<domain>/<service> to receive only that definition, rather than GET "
+                "/api/services with its full catalog. When current source evidence proves "
+                "a group already includes the requested members, target the group or those "
+                "members once, not both; never infer group membership from names alone. "
                 "Een API-antwoord bewijst geen fysiek resultaat. Controleer veranderingen "
                 "met een aparte leesaanvraag. Lang werk kan via start_digital_work doorgaan. "
                 "response_pointer is een JSON Pointer om in een groot antwoord te kijken; "
@@ -100,6 +108,15 @@ class HomeAssistantApiTool:
                 "back with another request. A verified receipt confirms a persisted API response or local rejection; inspect success and request_sent. "
                 "If success is false, inspect the error and correct the request or read current state; "
                 "do not claim completion. Never repeat an uncertain write automatically. "
+                "For stored responses, use the exact reader.tool_id and pointer advertised "
+                "together by that manifest. When the compact view provides "
+                "source_navigation.reader and source_navigation.pointer, use that exact "
+                "pair to read the retained full response. source_response_manifest and "
+                "source_response_pointer identify the retained full response; an outer "
+                "receipt reader is a different document. Do not guess /response_json: "
+                "it may be absent when the original response was truncated. Read the "
+                "advertised wrapper metadata if the inner reader is not yet visible. "
+                "Never repeat an API write to obtain another local selection. "
                 "Use ordinary Dutch names in your reply, not API implementation details."
             ),
         ),)

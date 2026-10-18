@@ -25,6 +25,35 @@ SOURCE_RESPONSE_FIELDS = (*LEGACY_SOURCE_RESPONSE_FIELDS,
                           "offset", "total", "has_more", "next_offset", "selected_fields", "absent_fields", "page_size")
 
 
+def retained_source_navigation(observation):
+    """Expose only bounded navigation already bound by the original receipt.
+
+    This decorates the ephemeral outer model view, never stored manifests or
+    source bytes. A nested reader and its pointer must remain paired.
+    """
+    inner = observation.get("source_response_manifest")
+    pointer = observation.get("source_response_pointer")
+    guidance = observation.get("source_response_guidance")
+    if (not isinstance(inner, dict)
+            or inner.get("contract") != "EvaStoredConnectorResult/v1"
+            or inner.get("stored_complete") is not True
+            or inner.get("external_state_verified") is not False
+            or not isinstance(pointer, str) or not pointer.startswith("/")
+            or len(pointer) > 512
+            or not isinstance(guidance, str) or len(guidance) > 2048):
+        return None
+    reader = inner.get("reader")
+    if (not isinstance(reader, dict) or reader.get("action") != "use_connector_tool"
+            or not isinstance(reader.get("tool_id"), str)):
+        return None
+    match = re.fullmatch(re.escape(READER_PREFIX) + r"[0-9a-f]{64}:([0-9a-f]{64})", reader["tool_id"])
+    if match is None or match[1] != inner.get("sha256"):
+        return None
+    navigation = {"reader": {key: reader[key] for key in ("action", "tool_id")},
+                  "pointer": pointer, "guidance": guidance}
+    return navigation if len(_encoded(navigation)) <= 4096 else None
+
+
 class ConnectorSelectionError(ConversationConflict):
     """A local selection can be corrected without repeating an external action."""
 
@@ -401,6 +430,9 @@ class ConnectorResults:
         manifest["source_output_truncated"] = receipt.output[observation_key].get("truncated") is True
         manifest["source_response"] = {key: receipt.output[observation_key][key]
             for key in SOURCE_RESPONSE_FIELDS if key in receipt.output[observation_key]}
+        navigation = retained_source_navigation(receipt.output[observation_key])
+        if navigation is not None:
+            manifest["source_navigation"] = navigation
         proof = receipt.output["proof"]
         reference = {"model_view_reference": "/" + observation_key,
             "observation_sha256": canonical_sha256(receipt.output[observation_key]),

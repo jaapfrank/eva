@@ -3059,7 +3059,14 @@
                     "measuredCoreTestTokens": 666883,
                     "testSourcesErased": 37,
                     "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
-                    "restartExecuted": false
+                    "restartExecuted": false,
+                    "householdActionLatency": {
+                      "status": "installed_readonly_verified_awaiting_single_action_probe",
+                      "evidence": "development/evidence/product/subscription-voice-20261013/household-action-latency-20261018.json",
+                      "finding": "Werkelijk eigenaarverzoek: circa 33 seconden tot schakelcommando en 44 seconden tot laatste modelantwoord; 8 modelrondes/7 toolaanroepen. Overbrede ontdekking en verborgen verwijzing naar compleet API-antwoord hersteld in bestaande route.",
+                      "verification": "Geïnstalleerd na controle op actieve claims; 44 gerichte checks en onafhankelijke review. Echte leesvraag geeft nu correct brongebonden antwoord; circa 21 seconden blijft gemeten, geen bewezen totale snelheidswinst voor schakelen.",
+                      "acceptance": "Geen fysieke opdracht herhaald; expliciete toestemming voor één nieuwe uitschakelmeting gevraagd omdat de verlichting inmiddels aan staat. Origineel gesprek behouden."
+                    }
                   }
                 },
                 "executionOwner": "other_wsl_voice_executor",
@@ -3312,7 +3319,14 @@
                     "measuredCoreTestTokens": 666883,
                     "testSourcesErased": 37,
                     "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
-                    "restartExecuted": false
+                    "restartExecuted": false,
+                    "householdActionLatency": {
+                      "status": "installed_readonly_verified_awaiting_single_action_probe",
+                      "evidence": "development/evidence/product/subscription-voice-20261013/household-action-latency-20261018.json",
+                      "finding": "Werkelijk eigenaarverzoek: circa 33 seconden tot schakelcommando en 44 seconden tot laatste modelantwoord; 8 modelrondes/7 toolaanroepen. Overbrede ontdekking en verborgen verwijzing naar compleet API-antwoord hersteld in bestaande route.",
+                      "verification": "Geïnstalleerd na controle op actieve claims; 44 gerichte checks en onafhankelijke review. Echte leesvraag geeft nu correct brongebonden antwoord; circa 21 seconden blijft gemeten, geen bewezen totale snelheidswinst voor schakelen.",
+                      "acceptance": "Geen fysieke opdracht herhaald; expliciete toestemming voor één nieuwe uitschakelmeting gevraagd omdat de verlichting inmiddels aan staat. Origineel gesprek behouden."
+                    }
                   }
                 },
                 "executionOwner": "other_wsl_voice_executor",
@@ -6727,7 +6741,14 @@
                   "measuredCoreTestTokens": 666883,
                   "testSourcesErased": 37,
                   "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
-                  "restartExecuted": false
+                  "restartExecuted": false,
+                  "householdActionLatency": {
+                    "status": "installed_readonly_verified_awaiting_single_action_probe",
+                    "evidence": "development/evidence/product/subscription-voice-20261013/household-action-latency-20261018.json",
+                    "finding": "Werkelijk eigenaarverzoek: circa 33 seconden tot schakelcommando en 44 seconden tot laatste modelantwoord; 8 modelrondes/7 toolaanroepen. Overbrede ontdekking en verborgen verwijzing naar compleet API-antwoord hersteld in bestaande route.",
+                    "verification": "Geïnstalleerd na controle op actieve claims; 44 gerichte checks en onafhankelijke review. Echte leesvraag geeft nu correct brongebonden antwoord; circa 21 seconden blijft gemeten, geen bewezen totale snelheidswinst voor schakelen.",
+                    "acceptance": "Geen fysieke opdracht herhaald; expliciete toestemming voor één nieuwe uitschakelmeting gevraagd omdat de verlichting inmiddels aan staat. Origineel gesprek behouden."
+                  }
                 }
               },
               "executionOwner": "other_wsl_voice_executor",
@@ -6980,7 +7001,14 @@
                   "measuredCoreTestTokens": 666883,
                   "testSourcesErased": 37,
                   "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
-                  "restartExecuted": false
+                  "restartExecuted": false,
+                  "householdActionLatency": {
+                    "status": "installed_readonly_verified_awaiting_single_action_probe",
+                    "evidence": "development/evidence/product/subscription-voice-20261013/household-action-latency-20261018.json",
+                    "finding": "Werkelijk eigenaarverzoek: circa 33 seconden tot schakelcommando en 44 seconden tot laatste modelantwoord; 8 modelrondes/7 toolaanroepen. Overbrede ontdekking en verborgen verwijzing naar compleet API-antwoord hersteld in bestaande route.",
+                    "verification": "Geïnstalleerd na controle op actieve claims; 44 gerichte checks en onafhankelijke review. Echte leesvraag geeft nu correct brongebonden antwoord; circa 21 seconden blijft gemeten, geen bewezen totale snelheidswinst voor schakelen.",
+                    "acceptance": "Geen fysieke opdracht herhaald; expliciete toestemming voor één nieuwe uitschakelmeting gevraagd omdat de verlichting inmiddels aan staat. Origineel gesprek behouden."
+                  }
                 }
               },
               "executionOwner": "other_wsl_voice_executor",
@@ -10382,7 +10410,14 @@
           "measuredCoreTestTokens": 666883,
           "testSourcesErased": 37,
           "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
-          "restartExecuted": false
+          "restartExecuted": false,
+          "householdActionLatency": {
+            "status": "installed_readonly_verified_awaiting_single_action_probe",
+            "evidence": "development/evidence/product/subscription-voice-20261013/household-action-latency-20261018.json",
+            "finding": "Werkelijk eigenaarverzoek: circa 33 seconden tot schakelcommando en 44 seconden tot laatste modelantwoord; 8 modelrondes/7 toolaanroepen. Overbrede ontdekking en verborgen verwijzing naar compleet API-antwoord hersteld in bestaande route.",
+            "verification": "Geïnstalleerd na controle op actieve claims; 44 gerichte checks en onafhankelijke review. Echte leesvraag geeft nu correct brongebonden antwoord; circa 21 seconden blijft gemeten, geen bewezen totale snelheidswinst voor schakelen.",
+            "acceptance": "Geen fysieke opdracht herhaald; expliciete toestemming voor één nieuwe uitschakelmeting gevraagd omdat de verlichting inmiddels aan staat. Origineel gesprek behouden."
+          }
         }
       }
     },

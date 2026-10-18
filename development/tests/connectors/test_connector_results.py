@@ -794,3 +794,82 @@ def test_legacy_retained_reader_schema_remains_exactly_valid_after_filter_upgrad
     assert arguments["path"] == receipt.call.arguments["path"]
     assert output["source_receipt_sha256"] == canonical_sha256(receipt.output)
     assert _encoded([projection, receipt.output]) == before
+
+
+def _retained_nested_api_response():
+    from eva.contracts.canonical_json import canonical_sha256
+    port, timeline, thread, _, authorize = _retained_ha()
+    capture = ConnectorResults(timeline, TURN, authorize)
+    source = {'source_response_json': json.dumps({'light': {'turn_off': {'fields': {}}},
+                                                'other': 'x' * 90000})}
+    binding = {'owner': capture.owner, 'operation': 'nested-source', 'phase': 'source_response'}
+    capture._store(binding, source)
+    inner = capture._manifest(canonical_sha256(binding), source)
+    observation = {'success': True, 'http_status': 200, 'truncated': True,
+        'response_preview': 'preview ' * 6000, 'external_state_verified': False,
+        'source_response_manifest': inner, 'source_response_pointer': '/source_response_json',
+        'source_response_guidance': 'Read the retained JSON string using this exact inner reader.'}
+    timeline.rows[thread][-1].payload['data']['proof']['evidence']['observation'] = observation
+    return port, timeline, thread, capture, observation
+
+
+def test_nested_source_navigation_survives_outer_projection_without_replaying_api():
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    port, timeline, thread, capture, observation = _retained_nested_api_response()
+    before = _encoded([e.payload for e in timeline.rows[thread]])
+    receipt = port._receipt(TURN, timeline.events(thread), 1)
+    view = PydanticConversationModel._receipt_presentation(receipt)['result']
+    navigation = view['source_navigation']
+    assert navigation == {'reader': {k: observation['source_response_manifest']['reader'][k]
+                                    for k in ('action', 'tool_id')},
+        'pointer': observation['source_response_pointer'], 'guidance': observation['source_response_guidance']}
+    assert navigation['reader']['tool_id'] != view['reader']['tool_id']
+    page = capture.read(navigation['reader']['tool_id'],
+        {'pointer': navigation['pointer'], 'offset': 0, 'limit': 200, 'query': None})
+    assert 'turn_off' in page['text']
+    assert len(_encoded(navigation)) < 4096
+    assert _encoded([e.payload for e in timeline.rows[thread]]) == before
+    assert receipt.output['result'] == observation
+
+
+@pytest.mark.parametrize('tamper', ['reader', 'pointer', 'guidance', 'unexpected'])
+def test_nested_source_navigation_rejects_tampering_and_accepts_old_projection(tamper):
+    from copy import deepcopy
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel, ConversationModelError
+    from eva.adapters.postgres.connector_results import LEGACY_SOURCE_RESPONSE_FIELDS
+    port, timeline, thread, _, observation = _retained_nested_api_response()
+    receipt = port._receipt(TURN, timeline.events(thread), 1)
+    changed = deepcopy(receipt.model_output)
+    nav = changed['result']['source_navigation']
+    if tamper == 'reader': nav['reader']['tool_id'] = changed['result']['reader']['tool_id']
+    elif tamper == 'pointer': nav['pointer'] = '/response_json'
+    elif tamper == 'guidance': nav['guidance'] += ' altered'
+    else: nav['unexpected'] = True
+    with pytest.raises(ConversationModelError):
+        PydanticConversationModel._receipt_presentation(replace(receipt, model_output=changed))
+    old = deepcopy(receipt.model_output);old['result'].pop('source_navigation')
+    assert PydanticConversationModel._receipt_presentation(replace(receipt, model_output=old))['result'] == old['result']
+    old['result']['source_response'] = {k: observation[k] for k in LEGACY_SOURCE_RESPONSE_FIELDS if k in observation}
+    assert PydanticConversationModel._receipt_presentation(replace(receipt, model_output=old))['result'] == old['result']
+
+
+@pytest.mark.parametrize('field,value', [
+    ('source_response_pointer', 'x' * 513),
+    ('source_response_guidance', 'x' * 2049),
+    ('source_response_guidance', '\U0001f600' * 1500),
+    ('source_response_manifest', {'contract': 'untrusted'}),
+])
+def test_nested_source_navigation_is_bounded_and_does_not_create_authority(field, value):
+    from copy import deepcopy
+    from eva.adapters.postgres.connector_results import retained_source_navigation
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel, ConversationModelError
+    port, timeline, thread, _, observation = _retained_nested_api_response()
+    observation[field] = value
+    assert retained_source_navigation(observation) is None
+    receipt = port._receipt(TURN, timeline.events(thread), 1)
+    assert 'source_navigation' not in receipt.model_output['result']
+    forged = deepcopy(receipt.model_output)
+    forged['result']['source_navigation'] = {'reader': {'action': 'use_connector_tool',
+        'tool_id': forged['result']['reader']['tool_id']}, 'pointer': '/response_json', 'guidance': 'invented'}
+    with pytest.raises(ConversationModelError):
+        PydanticConversationModel._receipt_presentation(replace(receipt, model_output=forged))
