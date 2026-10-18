@@ -841,15 +841,15 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "F2.1",
+  "activeTaskId": "E5.1",
   "currentWork": {
-    "id": "F2.1",
-    "title": "Zeven dagen gezinsgebruik",
-    "status": "planned",
-    "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
-    "nextAction": "Gebruik Eva zeven echte dagen normaal via Telegram of de bestaande chat. Meld wanneer je begint en concrete voorbeelden van hulp, eigen initiatief, opvolging, plezier of hinder. Geaccepteerde geheugen-/persoonlijkheidsproeven blijven staan; spraak is een aparte uitvoerder.",
-    "checkedAt": "2026-10-18T14:40:32.336548+00:00",
-    "ownerActionRequired": true
+    "id": "E5.1",
+    "title": "Het volledige actuele geheel opleveren en laten beoordelen",
+    "status": "in_progress",
+    "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
+    "nextAction": "Volg de bestaande gewone oriëntatie met de herstelde context; controleer werkelijk zelfgekozen vervolg en aflevering. Geen geforceerde berichten, nieuwe vergelijkingsserie of spraakbouw.",
+    "checkedAt": "2026-10-18T21:19:30.157725+00:00",
+    "ownerActionRequired": false
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -1631,6 +1631,20 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E5.1 · Eigen resultaten terug in gewone oriëntatie",
+            "state": "installed",
+            "date": "2026-10-18T21:19:30.157725+00:00",
+            "checkedAt": "2026-10-18T21:19:30.157725+00:00",
+            "summary": "Bewaarde eigen resultaatinhoud met bron en tijd komt nu terug in latere afwegingen. Oude afgesloten werkcontext wordt beperkt; onopgeloste afspraken blijven bewaard.",
+            "remaining": "Dagelijks zelfstandig passend vervolg na deze correctie nog niet waargenomen. E5.1 blijft actief; geen claim van volledig eigen leven.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-daily-life-context-installed-20261018.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e51-daily-life-context-review-20261018.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "familyAcceptance": false
+          },
           {
             "title": "E5.1 · Eigen initiatief van bron tot resultaat en juist vervolg opgeleverd",
             "state": "installed",
@@ -2480,48 +2494,44 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E5.1 · Eigen initiatief van bron tot resultaat en juist vervolg opgeleverd",
+          "title": "E5.1 · Eigen resultaten terug in gewone oriëntatie",
           "state": "installed",
-          "date": "2026-10-18T14:38:29+00:00",
-          "checkedAt": "2026-10-18T14:40:32.336548+00:00",
-          "summary": "Eva koos zelf onderzoek, rondde het na technische herstelhulp af, bezorgde het privé en gebruikte de oorspronkelijke brongegevens later correct. Huidige installatie en gebundelde review bevestigd; fouten en hulp blijven vermeld.",
-          "remaining": "Zeven dagen werkelijk gezinsgebruik en jouw oordeel blijven F2.1/F2.2. Spraak bij de andere uitvoerder; optioneel WhatsApp-nummer nog nodig.",
-          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-native-resume-installed-20261018.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/e51-native-resume-review-20261018.json",
-          "maintenanceRepair": false,
+          "date": "2026-10-18T21:19:30.157725+00:00",
+          "checkedAt": "2026-10-18T21:19:30.157725+00:00",
+          "summary": "Bewaarde eigen resultaatinhoud met bron en tijd komt nu terug in latere afwegingen. Oude afgesloten werkcontext wordt beperkt; onopgeloste afspraken blijven bewaard.",
+          "remaining": "Dagelijks zelfstandig passend vervolg na deze correctie nog niet waargenomen. E5.1 blijft actief; geen claim van volledig eigen leven.",
+          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-daily-life-context-installed-20261018.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e51-daily-life-context-review-20261018.json",
+          "maintenanceRepair": true,
           "newProductFunctionCompleted": false,
-          "completedTaskIds": [
-            "E5.1"
-          ],
-          "familyAcceptance": false,
-          "completionScope": "Joint installed operational trial candidate; explicit operator assistance preserved, no long-term autonomy or superiority claim."
+          "completedTaskIds": [],
+          "familyAcceptance": false
         },
         "now": {
-          "taskId": "F2.1",
-          "title": "Zeven dagen gezinsgebruik",
-          "status": "planned",
-          "state": "planned",
-          "summary": "Nu: Eva normaal gebruiken in het gezin",
-          "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
-          "detail": "Gebruik Eva zeven echte dagen normaal via Telegram of de bestaande chat. Meld wanneer je begint en concrete voorbeelden van hulp, eigen initiatief, opvolging, plezier of hinder. Geaccepteerde geheugen-/persoonlijkheidsproeven blijven staan; spraak is een aparte uitvoerder."
+          "taskId": "E5.1",
+          "title": "Het volledige actuele geheel opleveren en laten beoordelen",
+          "status": "in_progress",
+          "state": "in_progress",
+          "summary": "Eigen resultaatcontext hersteld; zelfstandig vervolg nog open",
+          "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
+          "detail": "Overdracht van eigen resultaten is geïnstalleerd hersteld. Nog niet aangetoond: dat de gewone cyclus daarna zonder herstelhulp een passend eigen vervolg kiest, afmaakt en later benut. Langdurig dagelijks nut en gezinsacceptatie blijven afzonderlijk."
         },
         "next": {
-          "title": "Zeven echte dagen gezinsgebruik, daarna jouw oordeel",
-          "state": "Beschikbaar voor jou",
-          "summary": "Gebruik Eva zeven echte dagen normaal via Telegram of de bestaande chat. Meld wanneer je begint en concrete voorbeelden van hulp, eigen initiatief, opvolging, plezier of hinder. Geaccepteerde geheugen-/persoonlijkheidsproeven blijven staan; spraak is een aparte uitvoerder.",
-          "ownerActionNeeded": true
+          "taskId": "F2.1",
+          "title": "Zeven dagen gezinsgebruik",
+          "detail": "Apart van de technische opvolging; niet vereist om dit herstel verder uit te voeren."
         },
         "ownerAction": {
-          "title": "Begin de gezinsweek wanneer je haar normaal gaat gebruiken",
-          "detail": "Gebruik gewone Telegramberichten of de bestaande chat. Meld je start en concrete ervaringen; herhaal geaccepteerde proeven niet. De zeven dagen beginnen niet automatisch door deze technische oplevering. Spraak blijft bij de andere uitvoerder.",
-          "required": true
+          "title": "Nu geen handeling van jou nodig",
+          "detail": "Geen nieuwe handeling nodig. Codex volgt zelfstandig vervolg na de geïnstalleerde contextcorrectie. Spraak blijft bij de andere uitvoerder.",
+          "required": false
         },
-        "checkedAt": "2026-10-18T14:40:32.336548+00:00",
-        "reviewedAt": "2026-10-18T14:40:32.336548+00:00",
+        "checkedAt": "2026-10-18T21:19:30.157725+00:00",
+        "reviewedAt": "2026-10-18T21:19:30.157725+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-18T14:40:32.336548+00:00",
-      "checkedAt": "2026-10-18T14:40:32.336548+00:00",
+      "reviewedAt": "2026-10-18T21:19:30.157725+00:00",
+      "checkedAt": "2026-10-18T21:19:30.157725+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2535,10 +2545,10 @@
         "checkedAt": "2026-10-09T03:43:44.996434+00:00"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-18T14:40:32.336548+00:00",
+        "checkedAt": "2026-10-18T21:19:30.157725+00:00",
         "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 en HUE5 technisch afgerond, met echte initiatiefreactie en latere toepassing. De bijdrage was niet nuttig voor de eigenaar; timing was goed. Dit is geen positieve algemene gezinsacceptatie.",
-        "headline": "Eva is geïnstalleerd en klaar voor de gezinsweek.",
-        "note": "65 van 72 concrete taken afgerond. E5.1 functioneel opgeleverd na expliciete technische herstelhulp en onafhankelijk beoordeeld. Dagelijks nut, continuïteit en minder begeleiding blijven in de echte gezinsweek te beoordelen; geen algemene voorsprong geclaimd.",
+        "headline": "Eigen vervolg blijft de actuele opdracht",
+        "note": "Contextcorrectie geïnstalleerd en werkelijk teruggelezen. Een zelfstandig doorlopende, nuttige aanwezigheid is nog niet bewezen; geen gezinsproef als technische blokkade.",
         "rows": [
           {
             "name": "Persoonlijkheid",
@@ -2584,9 +2594,9 @@
           {
             "name": "Eigen initiatief",
             "state": "incomplete",
-            "label": "Werkend geïnstalleerd · gezinsgebruik open",
-            "result": "Op 18 oktober koos Eva zelf onderzoek uit een echte huiswaarneming. Na technische herstelhulp rondde zij het af, bezorgde het via Telegram, bewaarde de uitkomst en gebruikte de oorspronkelijke gegevens later inhoudelijk juist. Eerdere fout, onbekend verbruik en operatorhulp blijven bewaard. Gebundelde onafhankelijke review GO.",
-            "remaining": "Werkelijke dagelijkse betrokkenheid, nut en minder begeleiding per gezinslid beoordelen in F2.1/F2.2.",
+            "label": "Context hersteld · dagelijks vervolg nog open",
+            "result": "Eigen uitvoering en aflevering zijn eerder bewezen met technische hulp. Nu krijgt ook gewone latere oriëntatie de inhoud van drie eigen resultaten terug; bronnen en data blijven zichtbaar.",
+            "remaining": "Zonder aansturing passende eigen activiteiten voortzetten, resultaat terugbrengen en later gebruiken; dagelijks nut blijft onbewezen.",
             "evidencePaths": [
               "development/evidence/product/i1-private-contribution-readback-20261002.json",
               "development/evidence/product/i2-self-chosen-research-installed-20261005.json",
@@ -2601,9 +2611,10 @@
               "development/evidence/product/i12-quiet-attention-installed-20261016.json",
               "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
               "development/evidence/reassessment/actual-autonomy-observation-20261018.json",
-              "development/evidence/reassessment/e51-native-resume-installed-20261018.json"
+              "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
+              "development/evidence/reassessment/e51-daily-life-context-installed-20261018.json"
             ],
-            "checkedAt": "2026-10-18T14:40:32.336548+00:00"
+            "checkedAt": "2026-10-18T21:19:30.157725+00:00"
           },
           {
             "name": "Zelfstandig werk",
@@ -2652,7 +2663,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-18T14:40:32.336548+00:00",
+      "lastUpdatedAt": "2026-10-18T21:19:30.157725+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2686,7 +2697,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-18T14:40:32.336548+00:00",
+      "updatedAt": "2026-10-18T21:19:30.157725+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -6077,14 +6088,14 @@
               {
                 "id": "E5.1",
                 "title": "Het volledige actuele geheel opleveren en laten beoordelen",
-                "status": "completed",
+                "status": "in_progress",
                 "kind": "afronden",
                 "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Actuele geïnstalleerde E1–E4-kandidaat met behoud van de bestaande spraakoverdracht. Een werkelijk zelfgekozen onderzoek is na expliciete technische herstelhulp afgerond, privé afgeleverd, opgeslagen en later inhoudelijk juist gebruikt. Gebundelde onafhankelijke review GO; oude fouten en hulp blijven zichtbaar.",
-                "gap": "Geen concrete E5.1-releaseblokkade over. Zeven dagen werkelijk gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2; afzonderlijke spraakafwerking bij de andere uitvoerder.",
-                "nextAction": "Gebruik de geïnstalleerde kandidaat in de bestaande gezinsweek F2.1; dagelijks nut, continuïteit en minder hulp worden daar werkelijk beoordeeld.",
+                "gap": "Overdracht van eigen resultaten is geïnstalleerd hersteld. Nog niet aangetoond: dat de gewone cyclus daarna zonder herstelhulp een passend eigen vervolg kiest, afmaakt en later benut. Langdurig dagelijks nut en gezinsacceptatie blijven afzonderlijk.",
+                "nextAction": "Volg de bestaande gewone oriëntatie met de herstelde context; controleer werkelijk zelfgekozen vervolg en aflevering. Geen geforceerde berichten, nieuwe vergelijkingsserie of spraakbouw.",
                 "files": [
                   "src",
                   "deploy",
@@ -6109,7 +6120,7 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-18T14:40:32.336548+00:00",
+                "checkedAt": "2026-10-18T21:19:30.157725+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "E5.1 is opgeleverd; normaal gezinsgebruik en jouw oordeel volgen in F2.1/F2.2.",
@@ -6133,9 +6144,9 @@
                   "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
                   "gap": "Geen resterend technisch werk binnen E5.1. Zeven dagen werkelijk gezinsgebruik, afzonderlijk eigenaaroordeel en fysieke spraakkwaliteit zijn hiermee niet voltooid."
                 },
-                "latestEvidence": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
-                "reopenedAt": "2026-10-18T02:55:51.973301+00:00",
-                "reopenReason": "Actual48hbehavior and frozen shared lane contradict joint operational readiness; retain original bounded technical evidence.",
+                "latestEvidence": "development/evidence/reassessment/e51-daily-life-context-installed-20261018.json",
+                "reopenedAt": "2026-10-18T21:09:16.856979+00:00",
+                "reopenReason": "Owner reports continued absence; ordinary orientation omits retained result content and is dominated by old completed test work.",
                 "technicalFollowup": {
                   "status": "completed",
                   "ownerActionRequired": false,
@@ -6169,10 +6180,26 @@
                   "newProductTasksAdded": false
                 },
                 "executionEstimate": "Gerichte correctie op bestaande algemene keten; vooraf geen nieuwe matrix of vaste herhalingsproeven. Werkelijke model-/toolmetingen bewaren; creditkosten onbekend.",
-                "completedAt": "2026-10-18T14:40:32.336548+00:00",
                 "completionEvidence": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
                 "independentReview": "development/reviews/e51-native-resume-review-20261018.json",
-                "completionKind": "joint_installed_operational_trial_candidate"
+                "previousOperationalCandidate": {
+                  "status": "completed",
+                  "completedAt": "2026-10-18T14:40:32.336548+00:00",
+                  "completionEvidence": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
+                  "independentReview": "development/reviews/e51-native-resume-review-20261018.json",
+                  "completionKind": "joint_installed_operational_trial_candidate",
+                  "existing": "Actuele geïnstalleerde E1–E4-kandidaat met behoud van de bestaande spraakoverdracht. Een werkelijk zelfgekozen onderzoek is na expliciete technische herstelhulp afgerond, privé afgeleverd, opgeslagen en later inhoudelijk juist gebruikt. Gebundelde onafhankelijke review GO; oude fouten en hulp blijven zichtbaar.",
+                  "gap": "Geen concrete E5.1-releaseblokkade over. Zeven dagen werkelijk gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2; afzonderlijke spraakafwerking bij de andere uitvoerder.",
+                  "nextAction": "Gebruik de geïnstalleerde kandidaat in de bestaande gezinsweek F2.1; dagelijks nut, continuïteit en minder hulp worden daar werkelijk beoordeeld."
+                },
+                "dailyLifeContextRepair": {
+                  "status": "installed",
+                  "evidence": "development/evidence/reassessment/e51-daily-life-context-installed-20261018.json",
+                  "review": "development/reviews/e51-daily-life-context-review-20261018.json",
+                  "checkedAt": "2026-10-18T21:19:30.157725+00:00",
+                  "modelAttempts": 0,
+                  "unassistedDailyContinuationProven": false
+                }
               }
             ],
             "completion": {
@@ -6183,7 +6210,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Gebruik Eva zeven echte dagen normaal via Telegram of de bestaande chat. Meld wanneer je begint en concrete voorbeelden van hulp, eigen initiatief, opvolging, plezier of hinder. Geaccepteerde geheugen-/persoonlijkheidsproeven blijven staan; spraak is een aparte uitvoerder.",
+        "nextAction": "Volg de bestaande gewone oriëntatie met de herstelde context; controleer werkelijk zelfgekozen vervolg en aflevering. Geen geforceerde berichten, nieuwe vergelijkingsserie of spraakbouw.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -6192,7 +6219,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-18T14:40:32.336548+00:00",
+        "updatedAt": "2026-10-18T21:19:30.157725+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9759,14 +9786,14 @@
             {
               "id": "E5.1",
               "title": "Het volledige actuele geheel opleveren en laten beoordelen",
-              "status": "completed",
+              "status": "in_progress",
               "kind": "afronden",
               "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Actuele geïnstalleerde E1–E4-kandidaat met behoud van de bestaande spraakoverdracht. Een werkelijk zelfgekozen onderzoek is na expliciete technische herstelhulp afgerond, privé afgeleverd, opgeslagen en later inhoudelijk juist gebruikt. Gebundelde onafhankelijke review GO; oude fouten en hulp blijven zichtbaar.",
-              "gap": "Geen concrete E5.1-releaseblokkade over. Zeven dagen werkelijk gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2; afzonderlijke spraakafwerking bij de andere uitvoerder.",
-              "nextAction": "Gebruik de geïnstalleerde kandidaat in de bestaande gezinsweek F2.1; dagelijks nut, continuïteit en minder hulp worden daar werkelijk beoordeeld.",
+              "gap": "Overdracht van eigen resultaten is geïnstalleerd hersteld. Nog niet aangetoond: dat de gewone cyclus daarna zonder herstelhulp een passend eigen vervolg kiest, afmaakt en later benut. Langdurig dagelijks nut en gezinsacceptatie blijven afzonderlijk.",
+              "nextAction": "Volg de bestaande gewone oriëntatie met de herstelde context; controleer werkelijk zelfgekozen vervolg en aflevering. Geen geforceerde berichten, nieuwe vergelijkingsserie of spraakbouw.",
               "files": [
                 "src",
                 "deploy",
@@ -9791,7 +9818,7 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-18T14:40:32.336548+00:00",
+              "checkedAt": "2026-10-18T21:19:30.157725+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "E5.1 is opgeleverd; normaal gezinsgebruik en jouw oordeel volgen in F2.1/F2.2.",
@@ -9815,9 +9842,9 @@
                 "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
                 "gap": "Geen resterend technisch werk binnen E5.1. Zeven dagen werkelijk gezinsgebruik, afzonderlijk eigenaaroordeel en fysieke spraakkwaliteit zijn hiermee niet voltooid."
               },
-              "latestEvidence": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
-              "reopenedAt": "2026-10-18T02:55:51.973301+00:00",
-              "reopenReason": "Actual48hbehavior and frozen shared lane contradict joint operational readiness; retain original bounded technical evidence.",
+              "latestEvidence": "development/evidence/reassessment/e51-daily-life-context-installed-20261018.json",
+              "reopenedAt": "2026-10-18T21:09:16.856979+00:00",
+              "reopenReason": "Owner reports continued absence; ordinary orientation omits retained result content and is dominated by old completed test work.",
               "technicalFollowup": {
                 "status": "completed",
                 "ownerActionRequired": false,
@@ -9851,10 +9878,26 @@
                 "newProductTasksAdded": false
               },
               "executionEstimate": "Gerichte correctie op bestaande algemene keten; vooraf geen nieuwe matrix of vaste herhalingsproeven. Werkelijke model-/toolmetingen bewaren; creditkosten onbekend.",
-              "completedAt": "2026-10-18T14:40:32.336548+00:00",
               "completionEvidence": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
               "independentReview": "development/reviews/e51-native-resume-review-20261018.json",
-              "completionKind": "joint_installed_operational_trial_candidate"
+              "previousOperationalCandidate": {
+                "status": "completed",
+                "completedAt": "2026-10-18T14:40:32.336548+00:00",
+                "completionEvidence": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
+                "independentReview": "development/reviews/e51-native-resume-review-20261018.json",
+                "completionKind": "joint_installed_operational_trial_candidate",
+                "existing": "Actuele geïnstalleerde E1–E4-kandidaat met behoud van de bestaande spraakoverdracht. Een werkelijk zelfgekozen onderzoek is na expliciete technische herstelhulp afgerond, privé afgeleverd, opgeslagen en later inhoudelijk juist gebruikt. Gebundelde onafhankelijke review GO; oude fouten en hulp blijven zichtbaar.",
+                "gap": "Geen concrete E5.1-releaseblokkade over. Zeven dagen werkelijk gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2; afzonderlijke spraakafwerking bij de andere uitvoerder.",
+                "nextAction": "Gebruik de geïnstalleerde kandidaat in de bestaande gezinsweek F2.1; dagelijks nut, continuïteit en minder hulp worden daar werkelijk beoordeeld."
+              },
+              "dailyLifeContextRepair": {
+                "status": "installed",
+                "evidence": "development/evidence/reassessment/e51-daily-life-context-installed-20261018.json",
+                "review": "development/reviews/e51-daily-life-context-review-20261018.json",
+                "checkedAt": "2026-10-18T21:19:30.157725+00:00",
+                "modelAttempts": 0,
+                "unassistedDailyContinuationProven": false
+              }
             }
           ],
           "completion": {
@@ -9865,7 +9908,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Gebruik Eva zeven echte dagen normaal via Telegram of de bestaande chat. Meld wanneer je begint en concrete voorbeelden van hulp, eigen initiatief, opvolging, plezier of hinder. Geaccepteerde geheugen-/persoonlijkheidsproeven blijven staan; spraak is een aparte uitvoerder.",
+      "nextAction": "Volg de bestaande gewone oriëntatie met de herstelde context; controleer werkelijk zelfgekozen vervolg en aflevering. Geen geforceerde berichten, nieuwe vergelijkingsserie of spraakbouw.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -9874,7 +9917,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-18T14:40:32.336548+00:00",
+      "updatedAt": "2026-10-18T21:19:30.157725+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10063,26 +10106,26 @@
     },
     "currentRuntime": {
       "recordedAt": "2026-10-18T13:56:18.253972+00:00",
-      "checkedAt": "2026-10-18T14:40:32.336548+00:00",
+      "checkedAt": "2026-10-18T21:19:30.157725+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "image": "sha256:3bc144c13dd875d5e8658d86ebfd284c7896174cd5d0d93aa1d7d5633449522d",
-      "coreImage": "sha256:3bc144c13dd875d5e8658d86ebfd284c7896174cd5d0d93aa1d7d5633449522d",
-      "workerImage": "sha256:a095ad6f8bd21c1bc9f65fbf7f9b1f79bb3086753e4b27888fb9db4f67b05ce0",
+      "image": "sha256:3bbecfe4e8d1f9b48e0dffc1c87c314f15f854c7792bc9468661e616716a7eba",
+      "coreImage": "sha256:3bbecfe4e8d1f9b48e0dffc1c87c314f15f854c7792bc9468661e616716a7eba",
+      "workerImage": "sha256:bebff7ea57a04c5d4e4de86ee7387408f75cca01ff661d93827ad6c322aea49e",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
       "ready": true,
       "healthy": true,
-      "readyStatus": "installed_operational_trial_candidate",
-      "evidence": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
-      "evidencePath": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
-      "independentSourceReview": "development/reviews/e51-native-resume-review-20261018.json",
+      "readyStatus": "installed_context_repair_daily_continuation_open",
+      "evidence": "development/evidence/reassessment/e51-daily-life-context-installed-20261018.json",
+      "evidencePath": "development/evidence/reassessment/e51-daily-life-context-installed-20261018.json",
+      "independentSourceReview": "development/reviews/e51-daily-life-context-review-20261018.json",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "Werkelijk eigen onderzoek, privéaflevering, geheugenopslag en later juiste brongebonden communicatie zijn bevestigd na technische herstelhulp. Gebundelde onafhankelijke review GO. Gezinsweek/eigenaaroordeel en afzonderlijke spraakafwerking staan open.",
-      "executionSourceCount": 68,
+      "meaning": "Eigen resultaten met bron/tijd komen nu werkelijk terug in gewone oriëntatie; dagelijkse zelfstandige opvolging is nog niet opnieuw aangetoond.",
+      "executionSourceCount": 71,
       "executionSourceParity": true,
-      "ownedChangedSourceCount": 12,
+      "ownedChangedSourceCount": 3,
       "readinessScope": "Functioneel beoordeelde gezamenlijke kandidaat; geen gezinsacceptatie of bewijs van langdurig hulpvrij gebruik."
     },
     "memoryGoal20260910": {
@@ -11309,9 +11352,19 @@
       "status": "installed_operational_trial_candidate",
       "taskCompleted": true,
       "review": "development/reviews/e51-native-resume-review-20261018.json"
+    },
+    "dailyLifeContinuation20261018": {
+      "status": "installed_context_repair_actual_followup_open",
+      "finding": "ordinary reviews omit retained own result content; old completed test work dominates life_context",
+      "existingEvidencePreserved": true,
+      "newProductTasksAdded": false,
+      "voiceExcluded": true,
+      "checkedAt": "2026-10-18T21:19:30.157725+00:00",
+      "evidence": "development/evidence/reassessment/e51-daily-life-context-installed-20261018.json",
+      "independentReview": "development/reviews/e51-daily-life-context-review-20261018.json"
     }
   },
-  "updatedAt": "2026-10-18T14:40:32.336548+00:00",
+  "updatedAt": "2026-10-18T21:19:30.157725+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -11348,5 +11401,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-18T14:40:32.336548+00:00"
+  "lastUpdatedAt": "2026-10-18T21:19:30.157725+00:00"
 }

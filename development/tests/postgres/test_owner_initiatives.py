@@ -692,8 +692,10 @@ def test_periodic_private_review_reuses_native_claim_budget_and_owner_context(co
             assert query.principal_id == old_claim.principal_id
             assert query.conversation_id == "sensory:initiative-review"
             assert query.scope["kind"] == "private_opportunity"
-            assert "Relevant context fixture" in query.query_text
-            assert "bronhistorie, geen actuele bevestiging" in query.query_text
+            # Ordinary recall searches personal context. The original sensor is
+            # still checked below in the stamped model event, not in the search hint.
+            assert "Relevant context fixture" not in query.query_text
+            assert "Persoonlijke plannen" in query.query_text
             if outcome == "revoked_during_recall": auth.revoke()
             if outcome == "expired_during_recall": clock[0] += timedelta(minutes=2)
             return object()
@@ -733,15 +735,27 @@ def test_periodic_private_review_reuses_native_claim_budget_and_owner_context(co
         assert failures == ["RuntimeError('lost model response')"]
     assert len(calls) == (0 if outcome in {"budget_denied", "revoked_during_recall", "expired_during_recall"} else 1)
     assert len(recalled) == (0 if outcome == "budget_denied" else 1)
+    if outcome in {"revoked_during_recall", "expired_during_recall"}:
+        # Existing pre-dispatch recovery bounds preparation, with no model call.
+        for _ in range(2):
+            assert worker.run_once(now=NOW + timedelta(minutes=21)) == "failed"
+        assert calls == []
     assert worker.run_once(now=NOW + timedelta(minutes=21)) == "idle"
     assert review_store().schedule_context_review(now=NOW + timedelta(minutes=50)) in {"idle", "mandate_unavailable"}
     rows = restarted._timeline.list_checkpoints(thread_prefix=restarted._decision_prefix, limit=10)
     assert len(rows) == 1
     events = restarted._timeline.events(rows[0].thread_id)
     assert not any(e.event_type == "PROACTIVE_EXPRESSION_PREPARED" for e in events)
-    if outcome in {"unknown", "revoked_during_recall", "expired_during_recall"}:
+    if outcome == "unknown":
         assert rows[0].phase == "will_usage_uncertain"
         assert review_store().schedule_context_review(now=NOW + timedelta(days=1)) in {"idle", "mandate_unavailable"}
+    elif outcome in {"revoked_during_recall", "expired_during_recall"}:
+        assert rows[0].phase == "will_preparation_failed" and rows[0].retry_count == 3
+        assert rows[0].status == "needs_help"
+        failures = [e for e in events if e.event_type == "WILL_PREPARATION_FAILED"]
+        assert len(failures) == 3
+        assert all(e.payload["data"]["provider_dispatched"] is False for e in failures)
+        assert all(e.payload["data"]["usage"] is None for e in failures)
     else:
         assert rows[0].phase == "will_decided"
         assert events[-1].payload["data"]["expression"] is None

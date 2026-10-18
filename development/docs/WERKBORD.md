@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Zeven dagen gezinsgebruik
+Het volledige actuele geheel opleveren en laten beoordelen
 
-Nu: Eva normaal gebruiken in het gezin
+Eigen resultaatcontext hersteld; zelfstandig vervolg nog open
 
-Klaar wanneer: Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.
+Klaar wanneer: Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.
 
 ## Afmaakvolgorde
 
@@ -24,10 +24,10 @@ Klaar wanneer: Technisch gereed gemelde eindkandidaat zeven dagen in het gezin p
 | --- | --- | --- |
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
 | Geheugen | Geheugenbasis geaccepteerd · correctie en uitkomst toegepast | HUE1–6 zijn technisch afgerond en later toegepast. Samenhangend dagelijks gezinsgebruik en finale acceptatie; geen geheugenherbouw. |
-| Eigen initiatief | Werkend geïnstalleerd · gezinsgebruik open | Werkelijke dagelijkse betrokkenheid, nut en minder begeleiding per gezinslid beoordelen in F2.1/F2.2. |
+| Eigen initiatief | Context hersteld · dagelijks vervolg nog open | Zonder aansturing passende eigen activiteiten voortzetten, resultaat terugbrengen en later gebruiken; dagelijks nut blijft onbewezen. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | Bediening en afgebakende onderhoudsfase technisch afgerond. Samenhangend dagelijks gezinsgebruik en jouw acceptatie blijven F2.1/F2.2. |
 
-65 van 72 concrete taken afgerond. E5.1 functioneel opgeleverd na expliciete technische herstelhulp en onafhankelijk beoordeeld. Dagelijks nut, continuïteit en minder begeleiding blijven in de echte gezinsweek te beoordelen; geen algemene voorsprong geclaimd.
+Contextcorrectie geïnstalleerd en werkelijk teruggelezen. Een zelfstandig doorlopende, nuttige aanwezigheid is nog niet bewezen; geen gezinsproef als technische blokkade.
 
 ## Alle geregistreerde kleine taken
 
@@ -108,11 +108,11 @@ Klaar wanneer: Technisch gereed gemelde eindkandidaat zeven dagen in het gezin p
 | E4.3 · Runtime-efficiëntie verbeteren zonder dommer gedrag | ✓ Afgerond | Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend. |
 | E4.4 · Modules en updates onderhoudbaar opleveren | ✓ Afgerond | Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten. |
 | E4.5 · Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken | ✓ Afgerond | Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering. |
-| E5.1 · Het volledige actuele geheel opleveren en laten beoordelen | ✓ Afgerond | Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2. |
+| E5.1 · Het volledige actuele geheel opleveren en laten beoordelen | ● Open | Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2. |
 
 ## Van jou
 
-Gebruik gewone Telegramberichten of de bestaande chat. Meld je start en concrete ervaringen; herhaal geaccepteerde proeven niet. De zeven dagen beginnen niet automatisch door deze technische oplevering. Spraak blijft bij de andere uitvoerder.
+Geen nieuwe handeling nodig. Codex volgt zelfstandig vervolg na de geïnstalleerde contextcorrectie. Spraak blijft bij de andere uitvoerder.
 
 ## Historie
 

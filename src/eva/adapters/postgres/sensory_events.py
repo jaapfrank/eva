@@ -1220,8 +1220,8 @@ class PostgresSensoryEventStore:
                 break
         return tuple(result)
 
-    def recent_initiatives(self) -> tuple[dict[str, str], ...]:
-        """Bounded, owner-scoped context for avoiding completed/stopped work."""
+    def recent_initiatives(self) -> tuple[dict[str, JsonValue], ...]:
+        """Bounded owner history and recorded results, never new execution authority."""
         if self._initiative_principal_id is None:
             return ()
         scope = self._timeline._scope_value
@@ -1239,13 +1239,39 @@ class PostgresSensoryEventStore:
         if any(canonical_sha256(row.payload) != bytes(row.payload_sha256).hex() for row in rows):
             raise RuntimeError("initiative history payload hash differs")
         result = []
+        completed_seen = 0
         for row in rows:
+            events = self._timeline.events(row.thread_id)
             feedback = next((event.payload["data"].get("feedback")
-                for event in reversed(self._timeline.events(row.thread_id))
+                for event in reversed(events)
                 if event.event_type == "PERSONAL_INITIATIVE_FEEDBACK"), None)
-            result.append({"title": row.payload["data"]["title"],
+            item = {"title": row.payload["data"]["title"],
                 "question": row.payload["data"]["next_exploration"], "phase": row.phase,
-                **({"owner_feedback": feedback} if feedback else {})})
+                **({"owner_feedback": feedback} if feedback else {})}
+            if row.phase in {"completed", "release_ready", "initiative_completed"} and completed_seen < 3:
+                completed_seen += 1
+                artifact = next((event for event in reversed(events) if event.event_type in {
+                    "PERSONAL_INITIATIVE_COMPLETED", "PERSONAL_PROTOTYPE_COMPLETED"}), None)
+                if artifact is not None:
+                    data = artifact.payload.get("data", {})
+                    content = data.get("content")
+                    intent_id = row.payload["data"].get("intent_id")
+                    if (not isinstance(content, str) or not isinstance(intent_id, str)
+                            or row.thread_id != "intent:" + intent_id
+                            or data.get("intent_id") != intent_id
+                            or hashlib.sha256(content.encode("utf-8")).hexdigest() != data.get("content_sha256")):
+                        raise RuntimeError("initiative recorded result differs")
+                    raw = content.encode("utf-8")
+                    prefix = raw[:1200].decode("utf-8", errors="ignore")
+                    item["recorded_result"] = {
+                        "content": prefix, "content_sha256": data["content_sha256"],
+                        "event_sha256": artifact.payload_sha256,
+                        "occurred_at": artifact.occurred_at.isoformat(),
+                        "classification": "recorded_result_not_live_proof",
+                        "truncated": len(prefix.encode("utf-8")) < len(raw),
+                        "is_execution_permission": False,
+                    }
+            result.append(item)
         return tuple(result)
 
     def _adopt_initiative(self, connection, claim, decision, *, now):

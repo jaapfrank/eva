@@ -466,6 +466,12 @@ class DelegatedWorkOwnerService:
             grouped.setdefault(work.spec.source_ingress_sha256, []).append(work)
         selected = [max(group, key=lambda w: (w.spec.created_at, w.updated_at, w.spec.work_id))
                     for group in grouped.values()]
+        # Keep old unresolved/uncertain work, but do not turn an old completed
+        # request into a standing demand at every hourly initiative review.
+        selected = [w for w in selected if w.state not in {"succeeded", "verified", "stopped"}
+                    or w.updated_at >= now - timedelta(hours=24)
+                    or any(previous is not w and previous.state in {"call_started", "ambiguous"}
+                           for previous in grouped[w.spec.source_ingress_sha256])]
         selected.sort(key=lambda w: (w.state in {"admitted", "call_started"} and w.stop_requested_at is None,
                                     alias is not None and w.spec.source.principal_id == alias,
                                     w.spec.created_at, w.updated_at), reverse=True)
@@ -484,7 +490,7 @@ class DelegatedWorkOwnerService:
         return {**context, "available": True, "as_of": now.isoformat(),
                 "truncated": len(selected) > 3 or len(rows) == 65,
                 "source": "current_private_owner_work_store", "is_execution_permission": False,
-                "coverage": "Bounded retained private digital sources; tasks without a private source are not covered."}
+                "coverage": "Retained private sources: unresolved work and outcomes updated within 24h; older terminal history retained separately."}
 
     def active_work_metadata(self, turn: ConversationTurn) -> dict:
         """Project authorized task metadata without per-task delivery lookups."""

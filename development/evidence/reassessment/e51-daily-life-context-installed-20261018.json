@@ -1,0 +1,97 @@
+{
+  "contract": "EvaDailyLifeContextRepair/v1",
+  "recordedAt": "2026-10-18T21:19:30.157725+00:00",
+  "status": "installed_context_repair_daily_life_not_yet_proven",
+  "taskId": "E5.1",
+  "problem": "Ordinary private orientation received own initiative title/question/status without retained result content, alongside stale completed work metadata.",
+  "existing": "Native perception, opportunity scheduling, private contact, work execution, retained results and learning routes reused. No new daemon, planner, memory or task platform.",
+  "changes": [
+    "At most three recorded successful own results reach ordinary orientation: 1200 UTF8 bytes each, original content/event hashes and timestamp; no live-proof or execution-authority claim.",
+    "Old completed/cancelled durable work omitted from current orientation after 24h. Unfulfilled/failed/needs-help retained. Original history unchanged.",
+    "Old successful/verified/stopped ordinary work omitted after 24h unless an earlier generation is still uncertain. Source identity, uncertainty counters and active work remain."
+  ],
+  "installation": {
+    "roles": {
+      "core": {
+        "image": "sha256:3bbecfe4e8d1f9b48e0dffc1c87c314f15f854c7792bc9468661e616716a7eba",
+        "health": "healthy",
+        "exactSources": 71
+      },
+      "worker": {
+        "image": "sha256:bebff7ea57a04c5d4e4de86ee7387408f75cca01ff661d93827ad6c322aea49e",
+        "health": "healthy",
+        "exactSources": 71
+      }
+    },
+    "changedSourceCount": 3,
+    "otherMeasuredSourcesPreserved": 68,
+    "mountsAndConfigurationRetained": true,
+    "voiceChanged": false,
+    "repositoryHeadFullyInstalled": false
+  },
+  "actualRoute": {
+    "checkedAt": "2026-10-18T21:17:39+00:00",
+    "recordedResultsAvailable": 3,
+    "privateContactAuthorized": true,
+    "oldCompletedDurableGoalsInCurrentContext": 0,
+    "readOnlyInspectionModelCalls": 0,
+    "privateEvidenceSha256": "38150f6b3601c3a59abf200d0d59319d18003bc36f52202a858a8a91f0f93a29"
+  },
+  "verification": {
+    "correctedContext": {
+      "exit_code": 0,
+      "elapsed_seconds": 26.059086063003633,
+      "tests": [
+        "development/tests/bootstrap/test_daily_life_context.py",
+        "development/tests/bootstrap/test_initiative_work_context.py",
+        "development/tests/postgres/test_initiative_context.py",
+        "development/tests/postgres/test_initiative_result_continuity.py",
+        "development/tests/postgres/test_completed_contribution.py",
+        "development/tests/postgres/test_conversation_initiative_adoption.py"
+      ],
+      "result": "39 passed",
+      "outputSha256": "d70a761d0fa449a6f02be873b4f090a4b9160f7c47d1a14735390c4f01b6ffe3"
+    },
+    "existingPeriodic": {
+      "exit_code": 0,
+      "elapsed_seconds": 28.5477104249876,
+      "tests": [
+        "development/tests/postgres/test_owner_initiatives.py",
+        "-k",
+        "test_periodic_private_review_reuses_native_claim_budget_and_owner_context"
+      ],
+      "result": "6 passed, 45 deselected",
+      "outputSha256": "dbd4dab01a255f14eb002b2d5db17c9b6592b109ba43d8823ec4e354470f119d"
+    },
+    "earlierResultsRetained": [
+      "Initial test setup used the wrong local PostgreSQL image and noncanonical fixture timestamps; not production failures.",
+      "First broad bundle: 83 passed, 5 failed on stale pre-existing recall fixture assumptions.",
+      "First periodic fixture alignment: 4 passed, 2 failed on stale pre-dispatch recovery expectations.",
+      "Fixture now preserves zero dispatch for revocation/expiry and distinguishes bounded preparation failure from truly unknown model usage. No production code changed for these fixture alignments."
+    ]
+  },
+  "independentReview": {
+    "verdict": "GO_BOUNDED_CONTEXT_CONTRACT",
+    "privateReviewSha256": "2d10fc3cc194a4c29d35674e4a070becfa5f1607f2771d460d4da0cc3d5f27e3",
+    "previousNoGoAndAddendaPreserved": true
+  },
+  "runtimeModelUse": {
+    "additionalModelAttempts": 0,
+    "newForcedMessages": 0,
+    "newForcedInitiativeTasks": 0,
+    "credits": "unknown",
+    "ordinaryBackgroundUsage": "Not fully collected; existing background cycle remained enabled."
+  },
+  "limitations": [
+    "Normal next opportunity may still choose silence; changed handoff does not force contact or action.",
+    "No new unassisted self-chosen completed activity observed after this installation yet.",
+    "Sustained own interests, helpful family involvement and reduced guidance remain unproven; E5.1 remains active, F2 family acceptance separate.",
+    "Recorded worker prose is not independently verified live source truth.",
+    "No competitor-superiority or new AIDE learning claim."
+  ],
+  "developmentUsage": {
+    "credits": "unknown",
+    "modelTokens": "not separately measured for this change",
+    "tests": "Recorded local runs, setup failures and fixture corrections retained."
+  }
+}

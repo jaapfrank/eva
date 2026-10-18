@@ -141,6 +141,11 @@ def read_private_initiative_context(connection, scope: TimelineScope,
         original.c.event_type == "GOAL_ADMITTED",
         original.c.payload["data"]["owner_id"].astext == principal_id,
         original.c.occurred_at <= now, c.c.updated_at <= now,
+        # Completed historical tests are not today's obligations. Their immutable
+        # history stays available; ordinary orientation needs live commitments
+        # and recent transitions, not the latest few regardless of age.
+        sa.or_(c.c.status != "completed",
+               c.c.updated_at >= now - timedelta(hours=24)),
     ).order_by(c.c.updated_at.desc(), c.c.thread_id).limit(_COMMITMENTS + 1)).mappings().all()
     own_work = []
     for row in goals[:_COMMITMENTS]:
@@ -174,6 +179,7 @@ def read_private_initiative_context(connection, scope: TimelineScope,
             "observations_truncated": len(rows) > _OBSERVATIONS,
             "commitments_truncated": len(goals) > _COMMITMENTS,
             "own_work_source": "same-scope exact-owner admitted durable commitments only",
+            "commitment_selection": "unresolved or updated within 24h; older closed history retained",
             "missing": ["live_connected_service_inventory", "live_calendar_events",
                         "ordinary_delegated_work_requires_separate_owner_binding",
                         "owner_alias_commitments_not_checked", "unretained_household_observations"],

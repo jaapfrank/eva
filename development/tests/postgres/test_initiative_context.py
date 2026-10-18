@@ -140,3 +140,27 @@ def test_unknown_clock_is_rejected_and_empty_sources_remain_explicit(postgres_en
     assert "unretained_household_observations" in result["coverage"]["missing"]
     with pytest.raises(ValueError, match="timezone-aware"):
         _read(postgres_engine, store, now=NOW.replace(tzinfo=None))
+
+
+def test_old_closed_goals_do_not_displace_live_commitments_or_erase_history(postgres_engine):
+    label = "context-old-closed"
+    store = _store(postgres_engine, label)
+    goals, closed = _goal(postgres_engine, label, "old-closed")
+    goals.cancel(closed.goal_id, closed.owner_id, "Stopped by owner", NOW)
+    _, active = _goal(postgres_engine, label, "still-active")
+    before = goals._timeline.events(goals._thread_id(closed.goal_id, closed.owner_id))
+    result = _read(postgres_engine, store, now=NOW + timedelta(days=2))
+    assert [x["goal_id"] for x in result["own_work"]] == [active.goal_id]
+    assert "older closed history retained" in result["coverage"]["commitment_selection"]
+    assert goals._timeline.events(goals._thread_id(closed.goal_id, closed.owner_id)) == before
+
+
+def test_old_needs_help_is_still_unfulfilled_not_silently_closed(postgres_engine):
+    label = "context-old-needs-help"
+    store = _store(postgres_engine, label)
+    goals, goal = _goal(postgres_engine, label, "unfulfilled")
+    goals.mark_needs_help(goal, "A real unresolved blocker", NOW)
+    result = _read(postgres_engine, store, now=NOW + timedelta(days=2))
+    assert result["own_work"][0]["goal_id"] == goal.goal_id
+    assert result["own_work"][0]["status"] == "needs_help"
+    assert result["own_work"][0]["is_execution_permission"] is False
