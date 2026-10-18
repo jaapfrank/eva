@@ -67,8 +67,8 @@
     "development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
     "development/reviews/e51-private-orientation-review-20261019.json"
   ],
-  "installationReviewed": false,
-  "actualOutcomeReviewed": false,
+  "installationReviewed": true,
+  "actualOutcomeReviewed": true,
   "limits": "GO concerns the bounded missing own-decision transfer only. It is not proven behavioral improvement, useful work, delivery, later use, E5.1 completion, long-term own life, family benefit or superiority. Installation provenance and actual ordinary behavior require separate saved evidence.",
   "usage": {
     "reviewerProviderCalls": 0,
@@ -76,8 +76,87 @@
     "credits": null,
     "developmentAndRuntimeSeparate": true
   },
-  "installationAddenda": [],
-  "actualObservationAddenda": [],
+  "installationAddenda": [
+    {
+      "reviewedAt": "2026-10-18T22:56:46.616433+00:00",
+      "verdict": "GO_RECORDED_CORE_INSTALLATION_BINDING_ONLY",
+      "operatorInstalled": true,
+      "core": {
+        "image": "sha256:198ab71e96169f3ed6ed2fb16a911b7eb1fc1c6a52e3c193001d4816c6a9f9b5",
+        "startedAt": "2026-10-18T22:55:14.891334866Z",
+        "health": "healthy"
+      },
+      "measuredSources": 73,
+      "reviewedChangedSourcesMatched": 2,
+      "otherPreviousMeasuredSourcesUnchanged": 71,
+      "workerImageAndStartUnchanged": true,
+      "configurationEqualExceptCoreImage": true,
+      "retainedMounts": true,
+      "savedPreflight": {
+        "at": "2026-10-18T22:54:42.644832+00:00",
+        "pendingOrRunningWork": false,
+        "blockingClaims": []
+      },
+      "evidence": {
+        "installedParitySha256": "db7be385f65914757d058f59f4ac17537450318f9cd18888ed2e1265f5785154",
+        "coreReceiptSha256": "cb30b09211274f66a4573ee86fce097d2dc7246e4654bcc0656c9cca4d81863e",
+        "preflightSha256": "0486e889a1f0131f6879eafcf5249be39201aadc3985717a2a8ade42e9345d88",
+        "publicInstallation": "development/evidence/reassessment/e51-self-continuity-installed-20261019.json",
+        "publicInstallationSha256": "42643513c42b36281dd246b11f6b8fe2cb0a94634f0e9041e500b5d97cf0d82c"
+      },
+      "limit": "Two reviewed sources match installed candidate; 71 previously measured sources, worker image/start and compose configuration except core image are preserved. One newly measured context file is bound to its saved before-role hash. This is bounded saved installation evidence, not every-byte inventory, speech behavior or Eva-performed self-installation. No useful ordinary work or follow-through established."
+    }
+  ],
+  "actualObservationAddenda": [
+    {
+      "reviewedAt": "2026-10-18T23:02:34.849206+00:00",
+      "evidenceSha256": "9a81f0429b46142f81fdce37475df284cbabc109cad9e7e7fba0f9f2b40ca1bb",
+      "observation": {
+        "observedAt": "2026-10-18T23:01:17.500397+00:00",
+        "sourceAt": "2026-10-18 23:00:22+00:00",
+        "decidedAt": "2026-10-18 23:00:43+00:00",
+        "sourceProfile": "private-orientation-continuity-v3",
+        "sourceCause": "installed_profile_change",
+        "reviewWindow": 497879,
+        "sourceSha256": "52506e45510ac9b4469021fbd5b142590294f776a470a5aed4eb2093f734b785",
+        "decisionSha256": "dbe557aba91848ae62447a0cf1af815147dee0aec6bf309e1ec784223e1a9916",
+        "savedObservationSha256": "522d9c6a1adac8e234b9463551e514511bbe0436230bc73f2372a3cb94a1a727",
+        "operatorQueuedReview": false,
+        "operatorSelectedTask": false,
+        "disposition": "silence",
+        "initiativeChosen": false,
+        "nextAttentionChosen": false,
+        "memorySearchUsed": false,
+        "usage": {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 11522,
+          "output_tokens": 139,
+          "model_attempts": 1
+        },
+        "runtimeCredits": null,
+        "historyCount": 3,
+        "lifeContextBytes": 7940,
+        "historyPreservesOriginalHashesAndTimes": true,
+        "historyContainsPreviousV2Decision": true,
+        "expressionPrepared": false,
+        "usefulUnassistedWorkProven": false,
+        "laterFollowthroughProven": false,
+        "e51Completed": false,
+        "familyAcceptance": false,
+        "meaning": "Installed continuity context actually reached the ordinary changed-profile orientation. The model again chose silence without new work, search or attention; the original useful-work/result/later-use outcome is not met. This observation alone establishes no cause for that choice."
+      },
+      "verification": "Saved original and decision payload hashes independently recomputed with the exact canonical serialization and matched. Source and decision share one thread. The returned latest historical source/decision hashes equal the separately preserved V2 events. No new runtime call or provider resample by reviewer.",
+      "criteriaResult": {
+        "selfChosenUsefulConcreteWork": false,
+        "nativeCheckedRetainedResultToCorrectPrivateRecipient": false,
+        "laterOrdinaryResultUseAndAppropriateContinuation": false
+      },
+      "wholeTaskComplete": false,
+      "familyAccepted": false,
+      "limit": "Source/install GO remains bounded. Historical context delivery is established; useful execution, completion and later follow-through are absent in this observation. No causal diagnosis, broad behavioral gain or long-term family outcome inferred."
+    }
+  ],
   "evidenceHashes": [
     {
       "name": "implementation-report.json",
@@ -103,5 +182,6 @@
       "name": "postgres-revocation-2.private.txt",
       "sha256": "b59b51e393fae3f7cc06e32fa6624aeb05bcd5de5da0b9ae370611a493cca813"
     }
-  ]
+  ],
+  "outcomeVerdict": "NOT_MET_USEFUL_SELF_CHOSEN_WORK_RESULT_AND_LATER_USE"
 }

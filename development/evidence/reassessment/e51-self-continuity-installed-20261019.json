@@ -1,6 +1,6 @@
 {
   "contract": "EvaScopedInstalledRepair/v1",
-  "status": "installed_ordinary_outcome_pending",
+  "status": "installed_ordinary_observation_silence_outcome_not_met",
   "taskId": "E5.1",
   "deficit": "Completed private decisions without adopted work or a delivered message were not returned to the next ordinary orientation.",
   "existingRoute": "Existing sensory private context, current-authority capture, model decision, durable adoption and native executor; no additional scheduler or memory.",
@@ -146,12 +146,46 @@
     "voiceChanged": false,
     "workerChanged": false
   },
-  "ordinaryObservation": null,
+  "ordinaryObservation": {
+    "observedAt": "2026-10-18T23:01:17.500397+00:00",
+    "sourceAt": "2026-10-18 23:00:22+00:00",
+    "decidedAt": "2026-10-18 23:00:43+00:00",
+    "sourceProfile": "private-orientation-continuity-v3",
+    "sourceCause": "installed_profile_change",
+    "reviewWindow": 497879,
+    "sourceSha256": "52506e45510ac9b4469021fbd5b142590294f776a470a5aed4eb2093f734b785",
+    "decisionSha256": "dbe557aba91848ae62447a0cf1af815147dee0aec6bf309e1ec784223e1a9916",
+    "savedObservationSha256": "522d9c6a1adac8e234b9463551e514511bbe0436230bc73f2372a3cb94a1a727",
+    "operatorQueuedReview": false,
+    "operatorSelectedTask": false,
+    "disposition": "silence",
+    "initiativeChosen": false,
+    "nextAttentionChosen": false,
+    "memorySearchUsed": false,
+    "usage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 11522,
+      "output_tokens": 139,
+      "model_attempts": 1
+    },
+    "runtimeCredits": null,
+    "historyCount": 3,
+    "lifeContextBytes": 7940,
+    "historyPreservesOriginalHashesAndTimes": true,
+    "historyContainsPreviousV2Decision": true,
+    "expressionPrepared": false,
+    "usefulUnassistedWorkProven": false,
+    "laterFollowthroughProven": false,
+    "e51Completed": false,
+    "familyAcceptance": false,
+    "meaning": "Installed continuity context actually reached the ordinary changed-profile orientation. The model again chose silence without new work, search or attention; the original useful-work/result/later-use outcome is not met. This observation alone establishes no cause for that choice."
+  },
   "usefulUnassistedWorkProven": false,
   "laterFollowthroughProven": false,
   "e51Completed": false,
   "familyAcceptance": false,
   "developmentCredits": null,
   "runtimeCredits": null,
-  "checkedAt": "2026-10-18T22:55:36.867242+00:00"
+  "checkedAt": "2026-10-18T23:02:34.849206+00:00"
 }
