@@ -1,0 +1,127 @@
+{
+  "contract": "EvaActualAutonomyObservation/v1",
+  "recordedAt": "2026-10-18T02:55:00.664977+00:00",
+  "status": "not_operationally_ready_for_claimed_daily_autonomy",
+  "method": "Read-only repeatable-read aggregate of the installed operational journal and work queue; targeted inspection of existing decision, recovery and owner-projection source. No health-only conclusion, new model request, forced initiative, voice test or paid comparison.",
+  "facts": {
+    "checked_at": "2026-10-18T02:54:05.914006+00:00",
+    "window_start": "2026-10-16T02:54:05.914006+00:00",
+    "private_reviews": 17,
+    "private_silence": 17,
+    "private_review_input_tokens": 126351,
+    "private_review_output_tokens": 2372,
+    "own_intents_adopted": 0,
+    "own_work_admitted": 0,
+    "own_work_completed": 0,
+    "own_results_delivered": 0,
+    "last_own_result_delivery": "2026-10-15T15:00:53+00:00",
+    "memory_reflections_completed": 79,
+    "new_own_work_runs": 0,
+    "household_latest_decision": "2026-10-16T10:26:35+00:00",
+    "household_unresolved_reviews": 1,
+    "household_blocked_since": "2026-10-16T10:31:32+00:00",
+    "ha_observations": 4226,
+    "ha_latest_observation": "2026-10-18T02:54:02+00:00"
+  },
+  "findings": [
+    {
+      "id": "household_lane_frozen",
+      "severity": "functional_blocker",
+      "fact": "One household decision remains will_usage_uncertain/needs_help since16October. Existing household scheduling blocks all household reviews on any unresolved household decision in this installation, with no automatic time expiry. Incoming HA observations continue.",
+      "causeEvidence": "Recorded HindsightProjectionProtocolError with provider_usage_error=false. The shared decision worker records model-start before recall, so this record does not prove provider dispatch or cost. Exact original exception/cause is not reconstructed.",
+      "requiredFollowup": "Inspect the exact effect-free failed decision, preserve unknown original usage and source hashes, recover safely through the existing timeline/authority and prevent pre-dispatch memory errors from falsely freezing future work. No replay or forced message."
+    },
+    {
+      "id": "latest_private_review_masks_shared_failure",
+      "severity": "readiness_reporting_gap",
+      "fact": "Owner latest_review selects only the private initiative prefix. Its recent successful silence does not expose the frozen household lane.",
+      "requiredFollowup": "Existing initiative view must report each relevant lane truthfully; no new dashboard/platform."
+    },
+    {
+      "id": "no_new_autonomous_user_outcome",
+      "severity": "unmet_product_outcome",
+      "fact": "All17private reviews chose silence, zero new own intent/work/completion/delivery in the48-hour snapshot. Reflections and incoming sensor records are not delivered family benefit.",
+      "causeEvidence": "Recent recorded decisions repeatedly reject generic checklists and earlier blocked research. Selected retained observations are recent historical states, not live proof. The frozen household lane does not establish the cause of all private silence.",
+      "requiredFollowup": "Inspect the existing context/orientation and reuse of interests/feedback; demonstrate actual independently chosen useful work and follow-through through the existing route. Do not force a quota, greeting or example-specific behavior."
+    },
+    {
+      "id": "self_improvement_scope",
+      "severity": "claim_boundary",
+      "fact": "E4.5 proves one bounded Eva-authored parser improvement with independent evaluation, automatic application and later native use, with initial human-assisted admission. It does not prove continuously self-initiated improvement across all abilities or superiority over competitors.79memory reflections in this snapshot do not by themselves demonstrate better later behavior.",
+      "requiredFollowup": "Retain existing HUE/AIDE evidence and boundaries; ordinary autonomous development and later usefulness must be observed, not inferred from an installed toolchain or promised future updates."
+    }
+  ],
+  "conclusion": {
+    "evaFinishedExceptVoiceAndFamilyTrial": false,
+    "worldLeadingDigitalPersonProven": false,
+    "automaticFutureSuperiorityGuaranteed": false,
+    "needsDeveloperWorkBeforeFamilyTrialAsOnlyRemainingGate": true,
+    "previousTechnicalEvidenceInvalidated": false,
+    "jointReadinessNeedsCorrection": true
+  },
+  "measurement": {
+    "observedPrivateDecisionTokens": 128723,
+    "creditCost": null,
+    "isTotalRuntimeOrDevelopmentUsage": false,
+    "newEvaModelRequests": 0,
+    "newTests": 0,
+    "sourceChanges": 0,
+    "installationChanges": 0,
+    "dataMutations": 0,
+    "speechChanges": 0
+  },
+  "references": [
+    {
+      "path": "src/eva/adapters/postgres/sensory_events.py",
+      "sha256": "a75a8709e5deecdaab4938073a5bb4a138b9897a2b5b5163d157abd6abf64dbf"
+    },
+    {
+      "path": "src/eva/application/free_will.py",
+      "sha256": "d4b96fcc56926cf9c3369cd5938dec2c725cd922eaa2313bd972b6b5ed3922d1"
+    },
+    {
+      "path": "src/eva/adapters/postgres/owner_initiatives.py",
+      "sha256": "d9b541773e163d54b00f7070b9b2272204adb8c930cec19e96cbf9454db05aa8"
+    },
+    {
+      "path": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+      "sha256": "b11c18446dc2ffe32e25d084ca1cc30cf8c48548a6eba837cfd2f5febcd6b430"
+    },
+    {
+      "path": "development/reviews/e51-joint-candidate-review-20261018.json",
+      "sha256": "8031f752e6eccb865724b787a170493e22cfdf67265df7c11cb0843f0f0e0563"
+    },
+    {
+      "path": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+      "sha256": "bc6e44760492818942efd8241def4228106b52cce6f05fa7cc2150f2fbfaef0d"
+    }
+  ],
+  "rawEvidence": [
+    {
+      "name": "context-activity.private.txt",
+      "sha256": "b2c6dca594f65bbcbd34cd6696f4ce117c57b308870ae2188fd8a6e39689a257",
+      "retainedPrivately": true
+    },
+    {
+      "name": "events-48h-aggregate.txt",
+      "sha256": "23124d90d40dd517e845a4ad12e811af54140fe63573cc7c8344309961f28b31",
+      "retainedPrivately": true
+    },
+    {
+      "name": "facts.json",
+      "sha256": "1b8d5e0e5ad24e6a169981514b13c3ee3144272c251d8d1743655600d51ec744",
+      "retainedPrivately": true
+    },
+    {
+      "name": "review-decisions.private.txt",
+      "sha256": "9fbfae3bfb366d068823f893512a0db79778396f412d9a4a0480917b87a80ebb",
+      "retainedPrivately": true
+    },
+    {
+      "name": "work-blocker.private.txt",
+      "sha256": "2fa62e783b5dc323f74d237a67de0c2fd7d6e8f719930603c5c21ff5bb05b6f3",
+      "retainedPrivately": true
+    }
+  ],
+  "scope": "This finding reopens joint operational readiness, not previously accepted memory/personality/HUE cases. Original failed/unknown evidence remains; no new competitor series."
+}

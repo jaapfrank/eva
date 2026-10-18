@@ -838,18 +838,18 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-18T02:47:54.513488+00:00",
+  "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "F2.1",
+  "activeTaskId": "E5.1",
   "currentWork": {
-    "id": "F2.1",
-    "title": "Zeven dagen gezinsgebruik",
-    "status": "planned",
-    "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
-    "nextAction": "F2.1 is beschikbaar; normale ervaringen verzamelen. Geen zelfstandig uitvoerbare open kernbouwkaart op dit moment. Spraak bij de andere WSL-uitvoerder; uitgestelde en geparkeerde opties blijven zichtbaar.",
-    "checkedAt": "2026-10-18T02:47:54.513488+00:00",
-    "ownerActionRequired": true
+    "id": "E5.1",
+    "title": "Dagelijkse autonomie: vastgelopen route en ontbrekend eigen vervolg oplossen",
+    "status": "in_progress",
+    "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
+    "nextAction": "Herstel eerst de exact vastgelopen algemene initiatiefroute gegevensveilig en maak beide routestatussen zichtbaar; daarna gewoon zelfgekozen werk, werkelijk resultaat en vervolg aantonen via de bestaande uitvoering. Geen geforceerde bijdrage, nieuwe vergelijkingsserie of spraakwijziging.",
+    "checkedAt": "2026-10-18T02:55:51.973301+00:00",
+    "ownerActionRequired": false
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -1632,20 +1632,34 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "Autonomiecontrole · dagelijks zelfstandig resultaat ontbreekt",
+            "state": "incomplete",
+            "checkedAt": "2026-10-18T02:55:51.973301+00:00",
+            "summary": "48uur:17privébeoordelingen,allemaalstilte;0nieuw eigen werk/resultaat/aflevering. Gedeelde huisinitiatiefroute sinds16oktober geblokkeerd door geheugenfout.79geheugenreflecties bewijzen geen nuttig dagelijks vervolg.",
+            "remaining": "Codex herstelt de bestaande route en statusweergave, en maakt werkelijk eigen uitvoering/vervolg aantoonbaar. Geen nieuwe gezinsproef of spraakwerk nodig om deze bevinding te erkennen.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/actual-autonomy-observation-20261018.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/actual-autonomy-observation-review-20261018.json",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "familyAcceptance": false
+          },
+          {
             "title": "E5.1 · Gezamenlijke geïnstalleerde kandidaat technisch opgeleverd",
-            "state": "installed",
+            "state": "incomplete",
             "checkedAt": "2026-10-18T02:24:39.871399+00:00",
             "summary": "Eén actuele installatie met E1–E4, gedeelde identiteit en bestaande spraakoverdracht. Bestaand bewijs gebundeld en onafhankelijk beoordeeld; bron-, configuratie-, schema- en dependencybinding gecontroleerd. Geen nieuwe build, herinstallatie of modelproef.",
-            "remaining": "Zeven dagen werkelijk gezinsgebruik F2.1 en eigenaaroordeel F2.2. Fysieke spraak bij de andere uitvoerder; WhatsApp-nummer optioneel. Geen volledige gezinsacceptatie of concurrentievoorsprong.",
+            "remaining": "Nieuwe autonomiecontrole heeft een concrete vastloper gevonden. E5.1 is heropend; eerdere technische bron/installbeoordeling blijft als begrensd bewijs behouden.",
             "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
             "review": "/home/administrator/project/Eva2/development/reviews/e51-joint-candidate-review-20261018.json",
             "maintenanceRepair": false,
             "newProductFunctionCompleted": false,
-            "completedTaskIds": [
+            "completedTaskIds": [],
+            "familyAcceptance": false,
+            "completionScope": "Technical joint installed delivery only; no new product capability or fabricated owner acceptance.",
+            "originalCompletedTaskIds": [
               "E5.1"
             ],
-            "familyAcceptance": false,
-            "completionScope": "Technical joint installed delivery only; no new product capability or fabricated owner acceptance."
+            "currentReadinessSupersededBy": "development/evidence/reassessment/actual-autonomy-observation-20261018.json"
           },
           {
             "title": "E4.5 · Eigen softwareverbetering automatisch geïnstalleerd en later gebruikt",
@@ -2391,45 +2405,46 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E5.1 · Gezamenlijke geïnstalleerde kandidaat technisch opgeleverd",
+          "title": "E4.5 · Eigen softwareverbetering automatisch geïnstalleerd en later gebruikt",
           "state": "installed",
-          "checkedAt": "2026-10-18T02:24:39.871399+00:00",
-          "summary": "Eén actuele installatie met E1–E4, gedeelde identiteit en bestaande spraakoverdracht. Bestaand bewijs gebundeld en onafhankelijk beoordeeld; bron-, configuratie-, schema- en dependencybinding gecontroleerd. Geen nieuwe build, herinstallatie of modelproef.",
-          "remaining": "Zeven dagen werkelijk gezinsgebruik F2.1 en eigenaaroordeel F2.2. Fysieke spraak bij de andere uitvoerder; WhatsApp-nummer optioneel. Geen volledige gezinsacceptatie of concurrentievoorsprong.",
-          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/e51-joint-candidate-review-20261018.json",
+          "checkedAt": "2026-10-17T13:23:36.139042+00:00",
+          "summary": "Eva schreef één echte parserverbetering: ontwikkeling19/26→26/26, onafhankelijk51/106→106/106. Automatisch gepubliceerd/geïnstalleerd, gedrag op beide services bevestigd en later in een gewone native taak gebruikt.128 gerichte tests en onafhankelijke review GO; actuele gegevens en ander WSL-werk behouden.",
+          "remaining": "E5.1, gezamenlijk gezinsgebruik en afzonderlijke acceptatie blijven open. Eén vooraf toegelaten klasse bewezen; geen algemene autonomie- of concurrentieclaim.",
+          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e45-autonomous-software-improvement-review-20261017.json",
           "maintenanceRepair": false,
-          "newProductFunctionCompleted": false,
+          "newProductFunctionCompleted": true,
           "completedTaskIds": [
-            "E5.1"
+            "E4.5"
           ],
+          "smallTaskCountsUnchanged": false,
           "familyAcceptance": false,
-          "completionScope": "Technical joint installed delivery only; no new product capability or fabricated owner acceptance."
+          "completionScope": "One Eva-authored reversible code class through independent quality selection, actual installation, behavior verification and later native use; isolated recovery proof, no family acceptance."
         },
         "now": {
-          "taskId": "F2.1",
-          "title": "Zeven dagen gewoon gezinsgebruik",
-          "status": "planned",
-          "summary": "E5.1 is technisch afgerond. De gezinsproef is beschikbaar en blokkeert ander werk niet. Van de zeven resterende kaarten is nu geen bouwkaart zelfstandig uitvoerbaar voor deze uitvoerder: spraak ligt bij de andere Codex, WhatsApp wacht op het uitgestelde nummer, de vergelijkingsserie blijft geparkeerd.",
-          "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen."
+          "taskId": "E5.1",
+          "title": "Dagelijkse autonomie: vastgelopen route en ontbrekend eigen vervolg oplossen",
+          "status": "in_progress",
+          "summary": "Concrete functionele tegenbevinding: de gedeelde huisinitiatiefroute staat sinds16oktober vast na een geheugenfout.17privébeoordelingen kozen stilte;48uur geen nieuw eigen werk/resultaat of aflevering. Dagelijkse autonomie is nog niet gereed; geen gebruikersoordeel als verklaring voor deze technische blokkade.",
+          "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2."
         },
         "next": {
-          "title": "Wie pakt het resterende werk op?",
-          "state": "Verantwoordelijkheid per bestaande kaart",
-          "summary": "Andere WSL-Codex: C3.1/C4.1 spraak. Optioneel geparkeerd: C4.3 telefoonspraak en P2.1 vergelijking. Uitgesteld door eigenaar: E2.6 WhatsApp-nummer. Gezin/eigenaar: F2.1 gebruik en F2.2 oordeel. Geen zelfstandig uitvoerbare kernbouwkaart blijft liggen.",
+          "title": "Gericht herstel binnen de bestaande E5.1-kaart",
+          "state": "Werk voor Codex",
+          "summary": "Herstel eerst de exact vastgelopen algemene initiatiefroute gegevensveilig en maak beide routestatussen zichtbaar; daarna gewoon zelfgekozen werk, werkelijk resultaat en vervolg aantonen via de bestaande uitvoering. Geen geforceerde bijdrage, nieuwe vergelijkingsserie of spraakwijziging.",
           "ownerActionNeeded": false
         },
         "ownerAction": {
-          "title": "Gebruik Eva normaal; korte concrete ervaringen zijn genoeg",
-          "detail": "Gebruik Eva2 normaal voor F2.1 en meld concrete ervaringen; dit blokkeert onafhankelijk werk niet. Spraak blijft bij de andere WSL-uitvoerder. Het WhatsApp-nummer mag later zoals afgesproken. Geen extra account-, spraak- of vergelijkingshandeling gevraagd.",
-          "required": true
+          "title": "Geen handeling nodig voor dit herstel",
+          "detail": "De controle bevestigt concrete autonomietekorten. Codex moet die oplossen; jouw gezinsproef is geen vervanging voor werkende eigen activiteit. Spraak blijft bij de andere WSL-uitvoerder.",
+          "required": false
         },
-        "checkedAt": "2026-10-18T02:47:54.513488+00:00",
-        "reviewedAt": "2026-10-18T02:24:39.871399+00:00",
+        "checkedAt": "2026-10-18T02:55:51.973301+00:00",
+        "reviewedAt": "2026-10-18T02:55:51.973301+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-18T02:24:39.871399+00:00",
-      "checkedAt": "2026-10-18T02:47:54.513488+00:00",
+      "checkedAt": "2026-10-18T02:55:51.973301+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2443,10 +2458,10 @@
         "checkedAt": "2026-10-09T03:43:44.996434+00:00"
       },
       "housemateSummary": {
-        "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+        "checkedAt": "2026-10-18T02:55:51.973301+00:00",
         "basis": "Persoonlijkheids- en geheugenacceptaties behouden. HUE6 en HUE5 technisch afgerond, met echte initiatiefreactie en latere toepassing. De bijdrage was niet nuttig voor de eigenaar; timing was goed. Dit is geen positieve algemene gezinsacceptatie.",
-        "headline": "E5.1 technisch opgeleverd; gezamenlijk dagelijks gezinsgebruik en jouw oordeel volgen.",
-        "note": "65 van 72 geregistreerde kleine taken afgerond; 7 open. Technische oplevering is geen productpercentage of volledige gezinsacceptatie.",
+        "headline": "Eva is nog niet gereed voor zelfstandig dagelijks gezinsgebruik.",
+        "note": "64van72kleine taken technisch afgerond;8open. E5.1 heropend wegens aangetoonde autonomietekorten; oorspronkelijke resultaten en acceptaties behouden.",
         "rows": [
           {
             "name": "Persoonlijkheid",
@@ -2456,7 +2471,8 @@
             "remaining": "M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie.",
             "evidencePaths": [
               "development/evidence/product/m3-personality-owner-accepted-20261005.json",
-              "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json"
+              "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+              "development/evidence/reassessment/actual-autonomy-observation-20261018.json"
             ],
             "checkedAt": "2026-10-13T12:00:00+02:00"
           },
@@ -2483,16 +2499,17 @@
               "development/reviews/hue-learning-later-use-review-20261013.json",
               "development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
               "development/evidence/product/e22-owner-memory-installed-20261016.json",
-              "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json"
+              "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+              "development/evidence/reassessment/actual-autonomy-observation-20261018.json"
             ],
             "checkedAt": "2026-10-16T11:28:21.773727+00:00"
           },
           {
             "name": "Eigen initiatief",
             "state": "incomplete",
-            "label": "E1 technisch afgerond · werkelijk uitgevoerd en privé afgeleverd",
+            "label": "Niet dagelijks operationeel · concrete blokkade",
             "result": "Eva koos werk, gebruikte actuele bronnen, bewaarde en leverde het resultaat privé af. Zelfgekozen vervolg-aandacht en voorrang voor gesprek/nachtrust zijn geïnstalleerd en onafhankelijk beoordeeld. De start van de nieuwe bijdrage was gestimuleerd; het nut is niet beoordeeld. Eerdere echte feedback was inhoudelijk negatief, timing/hinder goed.",
-            "remaining": "Herhaald spontaan dagelijks gezinsnut en finale gezinsacceptatie in F2.1/F2.2; bediening is geïnstalleerd.",
+            "remaining": "Gedeelde route herstellen, werkelijke eigen bijdrage en vervolg aantonen. Laatste48uur0nieuwe eigen uitkomsten; geen afwachting van gezinsacceptatie.",
             "evidencePaths": [
               "development/evidence/product/i1-private-contribution-readback-20261002.json",
               "development/evidence/product/i2-self-chosen-research-installed-20261005.json",
@@ -2505,7 +2522,8 @@
               "development/evidence/product/e12-next-attention-outcome-20261015.json",
               "development/evidence/product/e13-native-initiative-result-20261015.json",
               "development/evidence/product/i12-quiet-attention-installed-20261016.json",
-              "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json"
+              "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+              "development/evidence/reassessment/actual-autonomy-observation-20261018.json"
             ],
             "checkedAt": "2026-10-15T22:10:53.727800+00:00"
           },
@@ -2549,13 +2567,14 @@
               "development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
               "development/evidence/product/e23-conversation-work-installed-20261016.json",
               "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
-              "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json"
+              "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+              "development/evidence/reassessment/actual-autonomy-observation-20261018.json"
             ],
             "checkedAt": "2026-10-16T12:49:32.967702+00:00"
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-18T02:47:54.513488+00:00",
+      "lastUpdatedAt": "2026-10-18T02:55:51.973301+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2589,7 +2608,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-18T02:47:54.513488+00:00",
+      "updatedAt": "2026-10-18T02:55:51.973301+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -2598,7 +2617,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "F2.1",
+        "currentStep": "E5.1",
         "steps": [
           {
             "number": 1,
@@ -4556,11 +4575,11 @@
                 "kind": "gebruikersproef",
                 "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
                 "owner": "Jaap",
-                "nextAction": "Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.",
-                "ownerActionRequired": true,
+                "nextAction": "Wacht voor de formele gezinsweek op gerichte oplossing en actuele functionele oplevering van de gevonden autonomietekorten; dit blokkeert Codex-werk niet.",
+                "ownerActionRequired": false,
                 "ownerInstructions": {
-                  "availableNow": true,
-                  "readyWhen": "E5.1 is technisch afgerond. De gezinsweek kan starten; nog geen start of succesvolle week geregistreerd.",
+                  "availableNow": false,
+                  "readyWhen": "Eerst de concrete autonomietekorten binnen E5.1 oplossen. Normaal gebruik mag; nu geen gezinsproef gevraagd om deze blokkade te bevestigen.",
                   "steps": [
                     "Gebruik Eva2 zeven dagen normaal via de bestaande Telegramchat of http://127.0.0.1:44711/internal/v1/dashboard; gewone berichten gaan naar Eva2.",
                     "Let op beloften/opvolging, haar eigen projecten, werkelijke hulp en passend initiatief. Noteer per deelnemend gezinslid een kort concreet voorbeeld en wanneer je moest aansporen of ingrijpen.",
@@ -4581,10 +4600,11 @@
                   "one_eva"
                 ],
                 "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus",
-                "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+                "checkedAt": "2026-10-18T02:55:51.973301+00:00",
                 "availableAt": "2026-10-18T02:24:39.871399+00:00",
                 "startedAt": null,
-                "ownerConfirmedStart": false
+                "ownerConfirmedStart": false,
+                "availabilitySuspendedAt": "2026-10-18T02:55:51.973301+00:00"
               },
               {
                 "id": "F2.2",
@@ -5919,14 +5939,14 @@
               {
                 "id": "E5.1",
                 "title": "Het volledige actuele geheel opleveren en laten beoordelen",
-                "status": "completed",
+                "status": "in_progress",
                 "kind": "afronden",
                 "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
-                "gap": "Geen resterend technisch werk binnen E5.1. Zeven dagen werkelijk gezinsgebruik, afzonderlijk eigenaaroordeel en fysieke spraakkwaliteit zijn hiermee niet voltooid.",
-                "nextAction": "Gebruik deze kandidaat voor F2.1; behoud bestaande bewijsgrenzen. Spraak bij de andere WSL-uitvoerder, optioneel WhatsApp wacht op Eva-nummer.",
+                "gap": "Concrete functionele tegenbevinding: de gedeelde huisinitiatiefroute staat sinds16oktober vast na een geheugenfout.17privébeoordelingen kozen stilte;48uur geen nieuw eigen werk/resultaat of aflevering. Dagelijkse autonomie is nog niet gereed; geen gebruikersoordeel als verklaring voor deze technische blokkade.",
+                "nextAction": "Herstel eerst de exact vastgelopen algemene initiatiefroute gegevensveilig en maak beide routestatussen zichtbaar; daarna gewoon zelfgekozen werk, werkelijk resultaat en vervolg aantonen via de bestaande uitvoering. Geen geforceerde bijdrage, nieuwe vergelijkingsserie of spraakwijziging.",
                 "files": [
                   "src",
                   "deploy",
@@ -5951,10 +5971,10 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+                "checkedAt": "2026-10-18T02:55:51.973301+00:00",
                 "ownerInstructions": {
-                  "availableNow": true,
-                  "readyWhen": "Technisch opgeleverd in de huidige installatie. Gebruik Telegram of Eva-beheer; F2.1 bevat de korte gebruiksinstructies.",
+                  "availableNow": false,
+                  "readyWhen": "Geen handeling van jou nodig. Dit zijn aangetoonde technische en functionele tekorten voor Codex, geen ontbrekende gezinsacceptatie.",
                   "steps": [],
                   "blocksIndependentWork": false
                 },
@@ -5969,7 +5989,43 @@
                 "completedAt": "2026-10-18T02:24:39.871399+00:00",
                 "completionEvidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
                 "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
-                "completionKind": "joint_installed_technical_candidate"
+                "completionKind": "joint_installed_technical_candidate",
+                "previousTechnicalCompletion": {
+                  "status": "completed",
+                  "completedAt": "2026-10-18T02:24:39.871399+00:00",
+                  "completionEvidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+                  "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
+                  "completionKind": "joint_installed_technical_candidate",
+                  "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
+                  "gap": "Geen resterend technisch werk binnen E5.1. Zeven dagen werkelijk gezinsgebruik, afzonderlijk eigenaaroordeel en fysieke spraakkwaliteit zijn hiermee niet voltooid."
+                },
+                "latestEvidence": "development/evidence/reassessment/actual-autonomy-observation-20261018.json",
+                "reopenedAt": "2026-10-18T02:55:51.973301+00:00",
+                "reopenReason": "Actual48hbehavior and frozen shared lane contradict joint operational readiness; retain original bounded technical evidence.",
+                "technicalFollowup": {
+                  "status": "required",
+                  "ownerActionRequired": false,
+                  "findingSource": "development/evidence/reassessment/actual-autonomy-observation-20261018.json",
+                  "diagnosisReview": "development/reviews/actual-autonomy-observation-review-20261018.json",
+                  "items": [
+                    {
+                      "id": "A1",
+                      "status": "open",
+                      "outcome": "Vastgelopen gedeelde initiatiefroute veilig herstellen; fout vóór provider onderscheiden; oorspronkelijke onbekende usage en bronnen behouden."
+                    },
+                    {
+                      "id": "A2",
+                      "status": "open",
+                      "outcome": "Privé- en huisroute plus laatst werkelijk eigen resultaat samen zichtbaar in bestaande initiatiefbediening."
+                    },
+                    {
+                      "id": "A3",
+                      "status": "open",
+                      "outcome": "Gewone eigen oriëntatie leidt aantoonbaar tot zelfstandig uitgevoerd resultaat en later vervolg; stilte/reflectietelling niet als gezinsnut tellen."
+                    }
+                  ],
+                  "newProductTasksAdded": false
+                }
               }
             ],
             "completion": {
@@ -5980,7 +6036,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "F2.1 is beschikbaar; normale ervaringen verzamelen. Geen zelfstandig uitvoerbare open kernbouwkaart op dit moment. Spraak bij de andere WSL-uitvoerder; uitgestelde en geparkeerde opties blijven zichtbaar.",
+        "nextAction": "Herstel eerst de exact vastgelopen algemene initiatiefroute gegevensveilig en maak beide routestatussen zichtbaar; daarna gewoon zelfgekozen werk, werkelijk resultaat en vervolg aantonen via de bestaande uitvoering. Geen geforceerde bijdrage, nieuwe vergelijkingsserie of spraakwijziging.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -5989,7 +6045,7 @@
           "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-18T02:47:54.513488+00:00",
+        "updatedAt": "2026-10-18T02:55:51.973301+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -6080,9 +6136,10 @@
                 "F2.1",
                 "F2.2"
               ],
-              "currentGap": "E5.1 technisch afgerond en geïnstalleerd. F2.1 zeven dagen werkelijk gezinsgebruik en F2.2 eigenaaroordeel blijven open.",
+              "currentGap": "E5.1 heropend op nieuwe concrete autonomiebevinding. Technische bron/installbinding blijft behouden; dagelijkse activiteit en actuele gedeelde initiatiefroute zijn niet gereed.",
               "completionEvidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
-              "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json"
+              "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
+              "latestEvidence": "development/evidence/reassessment/actual-autonomy-observation-20261018.json"
             }
           ],
           "acceptanceFocus": {
@@ -6173,7 +6230,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "F2.1",
+      "currentStep": "E5.1",
       "steps": [
         {
           "number": 1,
@@ -8131,11 +8188,11 @@
               "kind": "gebruikersproef",
               "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
               "owner": "Jaap",
-              "nextAction": "Gebruik de huidige Eva2 zeven dagen normaal via Telegram of standaardchat. Meld concrete hulp, gemiste opvolging, hinder en benodigde begeleiding; geen herhaling van geaccepteerde deelproeven.",
-              "ownerActionRequired": true,
+              "nextAction": "Wacht voor de formele gezinsweek op gerichte oplossing en actuele functionele oplevering van de gevonden autonomietekorten; dit blokkeert Codex-werk niet.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "E5.1 is technisch afgerond. De gezinsweek kan starten; nog geen start of succesvolle week geregistreerd.",
+                "availableNow": false,
+                "readyWhen": "Eerst de concrete autonomietekorten binnen E5.1 oplossen. Normaal gebruik mag; nu geen gezinsproef gevraagd om deze blokkade te bevestigen.",
                 "steps": [
                   "Gebruik Eva2 zeven dagen normaal via de bestaande Telegramchat of http://127.0.0.1:44711/internal/v1/dashboard; gewone berichten gaan naar Eva2.",
                   "Let op beloften/opvolging, haar eigen projecten, werkelijke hulp en passend initiatief. Noteer per deelnemend gezinslid een kort concreet voorbeeld en wanneer je moest aansporen of ingrijpen.",
@@ -8156,10 +8213,11 @@
                 "one_eva"
               ],
               "acceptanceFocusSource": "audit.deliveryPlan.finalizationPlan.acceptanceFocus",
-              "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+              "checkedAt": "2026-10-18T02:55:51.973301+00:00",
               "availableAt": "2026-10-18T02:24:39.871399+00:00",
               "startedAt": null,
-              "ownerConfirmedStart": false
+              "ownerConfirmedStart": false,
+              "availabilitySuspendedAt": "2026-10-18T02:55:51.973301+00:00"
             },
             {
               "id": "F2.2",
@@ -9494,14 +9552,14 @@
             {
               "id": "E5.1",
               "title": "Het volledige actuele geheel opleveren en laten beoordelen",
-              "status": "completed",
+              "status": "in_progress",
               "kind": "afronden",
               "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
-              "gap": "Geen resterend technisch werk binnen E5.1. Zeven dagen werkelijk gezinsgebruik, afzonderlijk eigenaaroordeel en fysieke spraakkwaliteit zijn hiermee niet voltooid.",
-              "nextAction": "Gebruik deze kandidaat voor F2.1; behoud bestaande bewijsgrenzen. Spraak bij de andere WSL-uitvoerder, optioneel WhatsApp wacht op Eva-nummer.",
+              "gap": "Concrete functionele tegenbevinding: de gedeelde huisinitiatiefroute staat sinds16oktober vast na een geheugenfout.17privébeoordelingen kozen stilte;48uur geen nieuw eigen werk/resultaat of aflevering. Dagelijkse autonomie is nog niet gereed; geen gebruikersoordeel als verklaring voor deze technische blokkade.",
+              "nextAction": "Herstel eerst de exact vastgelopen algemene initiatiefroute gegevensveilig en maak beide routestatussen zichtbaar; daarna gewoon zelfgekozen werk, werkelijk resultaat en vervolg aantonen via de bestaande uitvoering. Geen geforceerde bijdrage, nieuwe vergelijkingsserie of spraakwijziging.",
               "files": [
                 "src",
                 "deploy",
@@ -9526,10 +9584,10 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+              "checkedAt": "2026-10-18T02:55:51.973301+00:00",
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "Technisch opgeleverd in de huidige installatie. Gebruik Telegram of Eva-beheer; F2.1 bevat de korte gebruiksinstructies.",
+                "availableNow": false,
+                "readyWhen": "Geen handeling van jou nodig. Dit zijn aangetoonde technische en functionele tekorten voor Codex, geen ontbrekende gezinsacceptatie.",
                 "steps": [],
                 "blocksIndependentWork": false
               },
@@ -9544,7 +9602,43 @@
               "completedAt": "2026-10-18T02:24:39.871399+00:00",
               "completionEvidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
               "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
-              "completionKind": "joint_installed_technical_candidate"
+              "completionKind": "joint_installed_technical_candidate",
+              "previousTechnicalCompletion": {
+                "status": "completed",
+                "completedAt": "2026-10-18T02:24:39.871399+00:00",
+                "completionEvidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+                "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
+                "completionKind": "joint_installed_technical_candidate",
+                "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
+                "gap": "Geen resterend technisch werk binnen E5.1. Zeven dagen werkelijk gezinsgebruik, afzonderlijk eigenaaroordeel en fysieke spraakkwaliteit zijn hiermee niet voltooid."
+              },
+              "latestEvidence": "development/evidence/reassessment/actual-autonomy-observation-20261018.json",
+              "reopenedAt": "2026-10-18T02:55:51.973301+00:00",
+              "reopenReason": "Actual48hbehavior and frozen shared lane contradict joint operational readiness; retain original bounded technical evidence.",
+              "technicalFollowup": {
+                "status": "required",
+                "ownerActionRequired": false,
+                "findingSource": "development/evidence/reassessment/actual-autonomy-observation-20261018.json",
+                "diagnosisReview": "development/reviews/actual-autonomy-observation-review-20261018.json",
+                "items": [
+                  {
+                    "id": "A1",
+                    "status": "open",
+                    "outcome": "Vastgelopen gedeelde initiatiefroute veilig herstellen; fout vóór provider onderscheiden; oorspronkelijke onbekende usage en bronnen behouden."
+                  },
+                  {
+                    "id": "A2",
+                    "status": "open",
+                    "outcome": "Privé- en huisroute plus laatst werkelijk eigen resultaat samen zichtbaar in bestaande initiatiefbediening."
+                  },
+                  {
+                    "id": "A3",
+                    "status": "open",
+                    "outcome": "Gewone eigen oriëntatie leidt aantoonbaar tot zelfstandig uitgevoerd resultaat en later vervolg; stilte/reflectietelling niet als gezinsnut tellen."
+                  }
+                ],
+                "newProductTasksAdded": false
+              }
             }
           ],
           "completion": {
@@ -9555,7 +9649,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "F2.1 is beschikbaar; normale ervaringen verzamelen. Geen zelfstandig uitvoerbare open kernbouwkaart op dit moment. Spraak bij de andere WSL-uitvoerder; uitgestelde en geparkeerde opties blijven zichtbaar.",
+      "nextAction": "Herstel eerst de exact vastgelopen algemene initiatiefroute gegevensveilig en maak beide routestatussen zichtbaar; daarna gewoon zelfgekozen werk, werkelijk resultaat en vervolg aantonen via de bestaande uitvoering. Geen geforceerde bijdrage, nieuwe vergelijkingsserie of spraakwijziging.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -9564,7 +9658,7 @@
         "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-18T02:47:54.513488+00:00",
+      "updatedAt": "2026-10-18T02:55:51.973301+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9655,9 +9749,10 @@
               "F2.1",
               "F2.2"
             ],
-            "currentGap": "E5.1 technisch afgerond en geïnstalleerd. F2.1 zeven dagen werkelijk gezinsgebruik en F2.2 eigenaaroordeel blijven open.",
+            "currentGap": "E5.1 heropend op nieuwe concrete autonomiebevinding. Technische bron/installbinding blijft behouden; dagelijkse activiteit en actuele gedeelde initiatiefroute zijn niet gereed.",
             "completionEvidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
-            "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json"
+            "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
+            "latestEvidence": "development/evidence/reassessment/actual-autonomy-observation-20261018.json"
           }
         ],
         "acceptanceFocus": {
@@ -10928,28 +11023,27 @@
       "newModelCalls": 0
     },
     "executionAvailability": {
-      "checkedAt": "2026-10-18T02:47:54.513488+00:00",
-      "independentlyExecutableOpenTasks": [],
+      "checkedAt": "2026-10-18T02:55:51.973301+00:00",
+      "independentlyExecutableOpenTasks": [
+        "E5.1"
+      ],
       "otherExecutor": [
         "C3.1",
         "C4.1"
       ],
-      "ownerUseAndJudgment": [
-        "F2.1",
-        "F2.2"
-      ],
-      "parkedOptional": [
-        "C4.3",
-        "E2.6"
-      ],
-      "parkedNoNewComparisonSeries": [
-        "P2.1"
-      ],
       "familyTrialBlocksIndependentWork": false,
-      "basis": "All seven existing non-completed task cards checked against current owner instruction; no new task, new comparison or invented completion."
+      "supersedesPreviousAvailability": "New48hbehavior/source check found concrete functional blockers previously missed."
+    },
+    "actualAutonomyObservation20261018": {
+      "status": "needs_developer_work",
+      "evidence": "development/evidence/reassessment/actual-autonomy-observation-20261018.json",
+      "independentReview": "development/reviews/actual-autonomy-observation-review-20261018.json",
+      "familyTrialIsNotOnlyRemainingGate": true,
+      "coreHealthyIsNotAutonomousReadiness": true,
+      "worldLeadingClaimProven": false
     }
   },
-  "updatedAt": "2026-10-18T02:47:54.513488+00:00",
+  "updatedAt": "2026-10-18T02:55:51.973301+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -10986,5 +11080,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-18T02:47:54.513488+00:00"
+  "lastUpdatedAt": "2026-10-18T02:55:51.973301+00:00"
 }

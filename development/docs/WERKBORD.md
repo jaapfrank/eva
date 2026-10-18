@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Zeven dagen gewoon gezinsgebruik
+Dagelijkse autonomie: vastgelopen route en ontbrekend eigen vervolg oplossen
 
-E5.1 is technisch afgerond. De gezinsproef is beschikbaar en blokkeert ander werk niet. Van de zeven resterende kaarten is nu geen bouwkaart zelfstandig uitvoerbaar voor deze uitvoerder: spraak ligt bij de andere Codex, WhatsApp wacht op het uitgestelde nummer, de vergelijkingsserie blijft geparkeerd.
+Concrete functionele tegenbevinding: de gedeelde huisinitiatiefroute staat sinds16oktober vast na een geheugenfout.17privébeoordelingen kozen stilte;48uur geen nieuw eigen werk/resultaat of aflevering. Dagelijkse autonomie is nog niet gereed; geen gebruikersoordeel als verklaring voor deze technische blokkade.
 
-Klaar wanneer: Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.
+Klaar wanneer: Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.
 
 ## Afmaakvolgorde
 
@@ -24,10 +24,10 @@ Klaar wanneer: Technisch gereed gemelde eindkandidaat zeven dagen in het gezin p
 | --- | --- | --- |
 | Persoonlijkheid | Door jou geaccepteerd · M3.3 | M3.3 en HUE1–4 behouden. Samenhangend dagelijks gebruik en finale gezinsacceptatie. |
 | Geheugen | Geheugenbasis geaccepteerd · correctie en uitkomst toegepast | HUE1–6 zijn technisch afgerond en later toegepast. Samenhangend dagelijks gezinsgebruik en finale acceptatie; geen geheugenherbouw. |
-| Eigen initiatief | E1 technisch afgerond · werkelijk uitgevoerd en privé afgeleverd | Herhaald spontaan dagelijks gezinsnut en finale gezinsacceptatie in F2.1/F2.2; bediening is geïnstalleerd. |
+| Eigen initiatief | Niet dagelijks operationeel · concrete blokkade | Gedeelde route herstellen, werkelijke eigen bijdrage en vervolg aantonen. Laatste48uur0nieuwe eigen uitkomsten; geen afwachting van gezinsacceptatie. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | Bediening en afgebakende onderhoudsfase technisch afgerond. Samenhangend dagelijks gezinsgebruik en jouw acceptatie blijven F2.1/F2.2. |
 
-65 van 72 geregistreerde kleine taken afgerond; 7 open. Technische oplevering is geen productpercentage of volledige gezinsacceptatie.
+64van72kleine taken technisch afgerond;8open. E5.1 heropend wegens aangetoonde autonomietekorten; oorspronkelijke resultaten en acceptaties behouden.
 
 ## Alle geregistreerde kleine taken
 
@@ -108,11 +108,11 @@ Klaar wanneer: Technisch gereed gemelde eindkandidaat zeven dagen in het gezin p
 | E4.3 · Runtime-efficiëntie verbeteren zonder dommer gedrag | ✓ Afgerond | Voor relevante gewone uitkomsten zijn kwaliteit, menselijke hulp, antwoord-/taakduur en model-/tool-/contextgebruik vóór en na een gerichte verbetering vastgelegd. Pas winst toe met behoud van kwaliteit; een onderbouwd negatieve optimalisatie-uitkomst blijft zichtbaar. Ontwikkelverbruik staat apart en onbekende credits blijven onbekend. |
 | E4.4 · Modules en updates onderhoudbaar opleveren | ✓ Afgerond | Actieve modules hebben duidelijke verantwoordelijkheid, contract/configversie, dependencies, gegevensbezit en aan-/uitgedrag. Installatie/updates bewaren gegevens en optioneel gebruik; locks/builds zijn reproduceerbaar. Relevante upstream-updates krijgen gerichte compatibiliteits- en migratiebesluiten. |
 | E4.5 · Een eigen softwareverbetering zelfstandig installeren en blijven gebruiken | ✓ Afgerond | Eén echte, omkeerbare softwareverbetering binnen een vooraf toegelaten wijzigingsklasse doorloopt de bestaande keten van waargenomen tekort/ontwikkelkans, Eva-gemaakte kandidaat en onafhankelijke winstbeoordeling tot exact gebonden installatie, controle van het geraakte gedrag en later werkelijk gebruik zonder handmatig geschreven Codex-patch of handmatige overdracht per stap. De bestaande geldige bevoegdheid geldt door de keten. Onzekere of mislukte toepassing en latere regressie leiden binnen dezelfde route tot inspectie en gegevensveilig behoud/herstel van de goede versie; geen blinde herhaling, verloren nieuwe gesprekken of dubbele huisactie. De hersteloverdracht wordt gecontroleerd zonder kunstmatige productiestoring bij het gezin. Gelijkspel/verlies bewaart de referentie en blijft zichtbaar; de taakclaim vereist daarnaast één werkelijk toegepaste bruikbare verbetering. |
-| E5.1 · Het volledige actuele geheel opleveren en laten beoordelen | ✓ Afgerond | Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2. |
+| E5.1 · Het volledige actuele geheel opleveren en laten beoordelen | ● Open | Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2. |
 
 ## Van jou
 
-Gebruik Eva2 normaal voor F2.1 en meld concrete ervaringen; dit blokkeert onafhankelijk werk niet. Spraak blijft bij de andere WSL-uitvoerder. Het WhatsApp-nummer mag later zoals afgesproken. Geen extra account-, spraak- of vergelijkingshandeling gevraagd.
+De controle bevestigt concrete autonomietekorten. Codex moet die oplossen; jouw gezinsproef is geen vervanging voor werkende eigen activiteit. Spraak blijft bij de andere WSL-uitvoerder.
 
 ## Historie
 
