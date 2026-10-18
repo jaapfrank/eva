@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Dagelijkse autonomie: vastgelopen route en ontbrekend eigen vervolg oplossen
 
-De vastgelopen route en ontbrekende geleerde privécontext zijn hersteld. De eerste werkende beoordeling koos nog niets. Nu is ook de te nauwe instructie voor eigen interesses/inhoudelijk vervolg gecorrigeerd en geïnstalleerd.9gerichte controles geslaagd;70 bronbestanden gelijk in kern/werker. Wacht op de volgende gewone autonome keuze en controleer werk, aflevering en later gebruik; geen derde handmatige oriëntatie. E5.1 blijft open.
+E5.1 · Eigen activiteit daadwerkelijk laten werken
 
 Klaar wanneer: Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.
 

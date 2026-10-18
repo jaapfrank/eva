@@ -152,18 +152,20 @@ class PostgresSensoryEventStore:
             # is not a new model attempt and must not postpone recovery by an hour.
             if latest is not None:
                 terminal = {"will_decided", "will_abandoned"}
+                if self._household_binding is None:
+                    terminal |= {"expression_delivered", "expression_expired"}
                 if latest.phase == "will_preparation_failed" and latest.status == "needs_help":
                     terminal.add("will_preparation_failed")  # Exhausted source; new occasions may proceed.
                 if self._household_binding is not None:
                     terminal |= {"expression_offered", "expression_interrupted", "expression_expired", "will_observation_expired"}
-                if (self._household_binding is not None and latest.phase == "expression_pending"
+                if (latest.phase == "expression_pending"
                         and now - latest.updated_at > timedelta(minutes=15)):
                     transition_timeline_thread(connection, scope, thread_id=latest.thread_id,
                         expected_revision=latest.revision,
                         checkpoint_id=f"{latest.thread_id}:expression-expired",
                         operation_id=latest.operation_id, phase="expression_expired",
                         status="completed", event_type="PROACTIVE_EXPRESSION_EXPIRED",
-                        occurred_at=now, data={"reason": "household destination opportunity expired"})
+                        occurred_at=now, data={"reason": "initiative destination opportunity expired"})
                     return "idle"
                 if latest.phase not in terminal:
                     return "idle"
@@ -479,6 +481,83 @@ class PostgresSensoryEventStore:
         return (state.phase == "will_model_started" and state.status == "active"
                 and state.revision == claim.revision and state.deadline is not None
                 and state.deadline > now)
+
+    def _private_contact_authority(self):
+        if (not self._context_reviews_only or self._household_binding is not None
+                or self._initiative_authorizer is None):
+            raise ValueError("private contact requires its owner review source")
+        policy, digest = self._initiative_authorizer()
+        contact = policy.get("private_contact")
+        if (policy.get("enabled") is not True or not isinstance(contact, dict)
+                or set(contact) != {"enabled", "channel", "owner_principal_id"}
+                or contact["enabled"] is not True or contact["channel"] != "telegram"
+                or contact["owner_principal_id"] != self._initiative_principal_id):
+            raise ValueError("private contact is not currently authorized")
+        return policy, digest
+
+    def private_contact_allowed(self) -> bool:
+        """Current owner opt-in only; never expose a household review privately."""
+        try:
+            self._private_contact_authority()
+            return True
+        except Exception:
+            return False
+
+    @staticmethod
+    def _private_expression_source_sha256(event):
+        return canonical_sha256({"source": event.source,
+            "source_event_id": event.source_event_id, "event_type": event.event_type,
+            "occurred_at": event.occurred_at.isoformat(), "payload": event.payload})
+
+    def _validate_private_expression(self, thread_id, prepared, *, now):
+        _, digest = self._private_contact_authority()
+        event = self._event_from_thread(thread_id)
+        if (not thread_id.startswith(self._decision_prefix)
+                or thread_id != "sensory:" + event.source_event_id
+                or event.source != "initiative-review"
+                or event.event_type != "private_opportunity_review"
+                or not timedelta(0) <= now - event.occurred_at <= timedelta(minutes=15)
+                or prepared.get("source_event_id") != event.source_event_id
+                or prepared.get("private_contact") != {
+                    "owner_principal_id": self._initiative_principal_id,
+                    "mandate_sha256": digest,
+                    "source_sha256": self._private_expression_source_sha256(event)}):
+            raise ValueError("private expression source or current authority differs")
+
+    def authorize_private_expression(self, claim, *, now):
+        """Recheck the immutable private claim and live owner policy before transport."""
+        prepared = self._prepared_expression(claim.thread_id)
+        self._validate_private_expression(claim.thread_id, prepared, now=now)
+        state = self._timeline.load(claim.thread_id)
+        if (state.phase != "expression_claimed" or state.status != "active"
+                or state.revision != claim.revision or state.retry_count != claim.retry_count
+                or state.operation_id != claim.operation_id or state.deadline is None
+                or state.deadline <= now
+                or prepared["source_event_id"] != claim.source_event_id
+                or prepared["expression"] != claim.text or prepared["urgency"] != claim.urgency):
+            raise CheckpointConflict("private expression claim is stale or differs")
+
+    def fail_before_expression_send(self, claim, error, *, now):
+        """The live host guard failed before transport; retire, never replay this text."""
+        if (not self._context_reviews_only or self._household_binding is not None
+                or not claim.thread_id.startswith(self._decision_prefix)):
+            raise ValueError("private expression rejection source differs")
+        state = self._timeline.load(claim.thread_id)
+        prepared = self._prepared_expression(claim.thread_id)
+        if (state.phase != "expression_claimed" or state.status != "active"
+                or state.revision != claim.revision or state.retry_count != claim.retry_count
+                or state.operation_id != claim.operation_id
+                or prepared["source_event_id"] != claim.source_event_id
+                or prepared["expression"] != claim.text or prepared["urgency"] != claim.urgency):
+            raise CheckpointConflict("private expression rejection claim differs")
+        self._timeline.transition(thread_id=claim.thread_id,
+            expected_revision=claim.revision, operation_id=claim.operation_id,
+            checkpoint_id=f"{claim.thread_id}:expression-expired",
+            phase="expression_expired", status="completed",
+            event_type="PROACTIVE_EXPRESSION_EXPIRED", occurred_at=now,
+            data={"reason": "private contact guard rejected before transport",
+                "provider_dispatched": False,
+                "failure_type": type(error).__name__})
 
     def native_capabilities(self) -> tuple[str, ...]:
         """Expose the current owner mandate, never capability guesses from memory."""
@@ -985,8 +1064,20 @@ class PostgresSensoryEventStore:
             if not self._matches_household_event(claim.event):
                 raise ValueError("household initiative decision audience differs")
             self._initiative_authorizer()
+        private_contact = None
         if (self._context_reviews_only and self._household_binding is None
-                and decision.disposition == "respond"):
+                and decision.disposition == "respond" and self.private_contact_allowed()):
+            _, digest = self._private_contact_authority()
+            original = self._event_from_thread(claim.thread_id)
+            if (claim.event != original or original.source != "initiative-review"
+                    or original.event_type != "private_opportunity_review"
+                    or claim.thread_id != "sensory:" + original.source_event_id):
+                raise ValueError("private expression decision source differs")
+            private_contact = {"owner_principal_id": self._initiative_principal_id,
+                "mandate_sha256": digest,
+                "source_sha256": self._private_expression_source_sha256(original)}
+        if (self._context_reviews_only and self._household_binding is None
+                and decision.disposition == "respond" and private_contact is None):
             decision = FreeWillDecision("silence", decision.reason, 0, decision.provider,
                 usage=decision.usage, initiative=decision.initiative,
                 source_context_sha256=decision.source_context_sha256,
@@ -1029,6 +1120,7 @@ class PostgresSensoryEventStore:
                 "provider": decision.provider,
                 "reason": decision.reason,
                 "shadow_mode": True,
+                **({"private_contact": private_contact} if private_contact is not None else {}),
                 **attention,
                 **({"source_context_sha256": decision.source_context_sha256}
                    if decision.source_context_sha256 is not None else {}),
@@ -1061,6 +1153,55 @@ class PostgresSensoryEventStore:
             if original.event_type == "historical_observation_batch":
                 self._complete_group_members(connection, original, group_thread_id=claim.thread_id,
                     decision_revision=claim.revision + 1, disposition=decision.disposition, now=now)
+
+    def recent_private_contacts(self, *, now: datetime, limit: int = 3) -> tuple[dict[str, str], ...]:
+        """Private prior contact is continuity, never a resident answer or assent."""
+        if type(limit) is not int or not 1 <= limit <= 3:
+            raise ValueError("private contact history limit is outside 1..3")
+        if not self.private_contact_allowed():
+            return ()
+        result = []
+        states = self._timeline.list_checkpoints(thread_prefix=self._decision_prefix,
+            phases=("expression_pending", "expression_claimed", "expression_delivered"),
+            statuses=("completed", "active"), updated_before=now, limit=64)
+        for state in states:
+            if now - state.updated_at > timedelta(days=7):
+                continue
+            prepared = self._prepared_expression(state.thread_id)
+            event = self._event_from_thread(state.thread_id)
+            binding = prepared.get("private_contact")
+            if (state.thread_id != "sensory:" + event.source_event_id
+                    or event.source != "initiative-review"
+                    or event.event_type != "private_opportunity_review"
+                    or not timedelta(0) <= now - event.occurred_at <= timedelta(days=7)
+                    or prepared["source_event_id"] != event.source_event_id
+                    or not isinstance(binding, dict)
+                    or set(binding) != {"owner_principal_id", "mandate_sha256", "source_sha256"}
+                    or binding["owner_principal_id"] != self._initiative_principal_id
+                    or binding["source_sha256"] != self._private_expression_source_sha256(event)):
+                raise ValueError("private contact history source differs")
+            status = "prepared_not_confirmed_delivered"
+            occurred_at = state.updated_at
+            if state.phase == "expression_delivered":
+                delivered = next((item for item in reversed(self._timeline.events(state.thread_id))
+                    if item.event_type == "PROACTIVE_EXPRESSION_DELIVERED"), None)
+                data = {} if delivered is None else delivered.payload.get("data", {})
+                if (data.get("channel") != "telegram"
+                        or data.get("source_event_id") != event.source_event_id
+                        or not isinstance(data.get("provider_message_id"), str)
+                        or not data["provider_message_id"].startswith("telegram:")
+                        or len(data["provider_message_id"]) > 240):
+                    continue
+                status = "delivery_confirmed_no_answer_implied"
+                occurred_at = delivered.occurred_at
+            result.append({"kind": "private_contact", "title": "Earlier private contact",
+                "question": str(prepared["expression"]), "expression": str(prepared["expression"]),
+                "phase": state.phase, "status": status,
+                "occurred_at": occurred_at.isoformat(),
+                "age_seconds": str(int((now - occurred_at).total_seconds()))})
+            if len(result) == limit:
+                break
+        return tuple(result)
 
     def recent_initiatives(self) -> tuple[dict[str, str], ...]:
         """Bounded, owner-scoped context for avoiding completed/stopped work."""
@@ -1246,6 +1387,21 @@ class PostgresSensoryEventStore:
                 continue
             if state.status == "failed" and state.retry_count >= 3:
                 continue
+            if self._context_reviews_only and self._household_binding is None:
+                try:
+                    self._validate_private_expression(state.thread_id,
+                        self._prepared_expression(state.thread_id), now=now)
+                except Exception:
+                    try:
+                        self._timeline.transition(thread_id=state.thread_id,
+                            expected_revision=state.revision,
+                            checkpoint_id=f"{state.thread_id}:expression-expired",
+                            operation_id=state.operation_id, phase="expression_expired",
+                            status="completed", event_type="PROACTIVE_EXPRESSION_EXPIRED",
+                            occurred_at=now, data={"reason": "private contact no longer available"})
+                    except CheckpointConflict:
+                        pass
+                    continue
             if self._household_binding is not None:
                 self._validate_household_expression(state.thread_id, self._household_binding.to_payload())
                 event = self._event_from_thread(state.thread_id)
@@ -1580,6 +1736,8 @@ class PostgresSensoryEventStore:
                     "expression": expression,
                     "source_event_id": source_event_id,
                     "urgency": urgency,
+                    **({"private_contact": data["private_contact"]}
+                       if "private_contact" in data else {}),
                 }
             break
         raise RuntimeError("proactive expression preparation is missing")

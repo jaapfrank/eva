@@ -103,7 +103,8 @@ class PostgresInitiativeAuthority:
             raise InitiativeMandateDenied("initiative mandate file unavailable") from error
         fields = {"contract", "mandate_id", "owner_principal_id", "enabled",
                   "authorization_source", "capabilities", "tenant_scope", "installation_scope"}
-        if (not isinstance(data, dict) or set(data) not in (fields, fields | {"digital_work"})
+        if (not isinstance(data, dict) or not fields <= set(data)
+                or set(data) - fields - {"digital_work", "private_contact"}
                 or data["contract"] != "EvaCostlessInitiativeMandate/v1"
                 or data["owner_principal_id"] != str(self.owner._owner)
                 or data["tenant_scope"] != str(self.owner._scope.tenant_id)
@@ -113,6 +114,14 @@ class PostgresInitiativeAuthority:
                            for k in ("mandate_id", "authorization_source"))
                 or not isinstance(data["capabilities"], list)):
             raise InitiativeMandateDenied("initiative mandate is invalid")
+        if "private_contact" in data:
+            contact = data["private_contact"]
+            if (not isinstance(contact, dict)
+                    or set(contact) != {"enabled", "channel", "owner_principal_id"}
+                    or type(contact["enabled"]) is not bool
+                    or contact["channel"] != "telegram"
+                    or contact["owner_principal_id"] != str(self.owner._owner)):
+                raise InitiativeMandateDenied("private contact requires the current private owner")
         digital = data.get("digital_work")
         if digital is not None:
             from eva.contracts.delegated_digital_work import INITIATIVE_LOCAL_CAPABILITIES

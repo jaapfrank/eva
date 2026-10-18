@@ -39,5 +39,12 @@
     "otherSourceBytesPreserved": true,
     "targetedTestsPassed": 9,
     "behaviorGO": false
+  },
+  "privateContactCorrection": {
+    "sourceReviewSHA256": "295abafabe5f3bcb853c886657ce5b118094d6ab9dff656906b376c28cae0a8c",
+    "verdict": "GO_guarded_installation_only",
+    "installedSourceExact": true,
+    "E51Outcome": "NOT_YET_PROVEN",
+    "ownerAcceptance": false
   }
 }

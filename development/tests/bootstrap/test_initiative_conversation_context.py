@@ -53,7 +53,7 @@ def context_service():
     def artifact(identifier, *, now):
         reads.append(("artifact", identifier))
         return {"content": "Bewaard resultaat. " * 60}
-    service._initiative_store = lambda incoming: NS(page=page, artifact=artifact)
+    service._initiative_store = lambda incoming: NS(page=page, artifact=artifact, recent_private_contacts=lambda **kwargs: [])
     return service, authority, cards, reads
 
 
@@ -113,3 +113,17 @@ def test_own_result_available_in_social_context_without_active_delegated_work(co
     assert '"status":"done"' in context[0]
     assert "niet de uitvoeringsdatum" in context[0]
     assert "geen opdrachten" in context[0]
+
+
+def test_delivered_question_available_without_adopted_work(context_service):
+    service, _, _, _ = context_service
+    contacts = [{"text": "Which project interests you?", "state": "delivered",
+                 "delivered_at": NOW.isoformat(), "provider_message_id": "telegram:42:23"}]
+    service._initiative_store = lambda incoming: NS(
+        page=lambda **kwargs: {"cards": [], "truncated": False},
+        recent_private_contacts=lambda **kwargs: contacts)
+    service.active_work_metadata = lambda incoming: {"jobs": [], "truncated": False}
+    context = PostgresDelegatedWorkActions(None, service).active_context(turn())
+    assert len(context) == 1 and contacts[0]["text"] in context[0]
+    assert "geen" in context[0] and "instemming" in context[0]
+    assert "telegram:42:23" in context[0]

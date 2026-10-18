@@ -1,7 +1,7 @@
 """Owner control of existing personal-work timelines; no second task store."""
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from uuid import UUID
 import re
 import hashlib
@@ -105,9 +105,62 @@ class PostgresOwnerInitiatives:
                 "latest_review": latest_review, "review_lanes": review_lanes,
                 "checked_at": now.isoformat()}
 
+    def recent_private_contacts(self, *, now: datetime, limit: int = 3) -> list[dict]:
+        """Actual delivered self-expression, scoped to this verified private owner."""
+        if type(limit) is not int or not 1 <= limit <= 3:
+            raise ValueError("private contact limit must be between 1 and 3")
+        prefix = "sensory:initiative-review:" + hashlib.sha256(str(self._owner).encode()).hexdigest()[:24] + ":"
+        e = operational_events.c
+        with self._engine.begin() as conn:
+            self._authorize(conn, now)
+            rows = conn.execute(sa.select(e.thread_id).where(
+                e.tenant_id == self._scope.tenant_id, e.installation_id == self._scope.installation_id,
+                e.thread_id.startswith(prefix), e.event_type == "PROACTIVE_EXPRESSION_DELIVERED",
+                e.occurred_at <= now, e.occurred_at >= now - timedelta(days=7),
+                e.payload["data"]["channel"].astext == "telegram",
+            ).order_by(e.occurred_at.desc(), e.thread_id).limit(limit)).all()
+            timeline = PostgresOperationalTimeline(self._engine, self._scope)
+            contacts = []
+            for row in rows:
+                if not row.thread_id[len(prefix):].isdigit():
+                    raise RuntimeError("private contact review identity differs")
+                events = timeline.events(row.thread_id)
+                original = events[0]
+                self._validate_review_source(row.thread_id, original, household=False)
+                prepared = next((event for event in events if event.event_type == "PROACTIVE_EXPRESSION_PREPARED"), None)
+                delivered = next((event for event in events if event.event_type == "PROACTIVE_EXPRESSION_DELIVERED"), None)
+                if prepared is None or delivered is None:
+                    raise RuntimeError("private contact delivery evidence is missing")
+                for event in (prepared, delivered):
+                    if canonical_sha256(event.payload) != event.payload_sha256:
+                        raise RuntimeError("private contact evidence hash differs")
+                data, receipt, source = prepared.payload["data"], delivered.payload["data"], original.payload["data"]
+                from eva.application.sensory import SensoryEvent
+                from eva.adapters.postgres.sensory_events import PostgresSensoryEventStore
+                observation = SensoryEvent(source["source"], source["source_event_id"], source["event_type"],
+                    original.occurred_at, source["payload"])
+                binding = data.get("private_contact", {})
+                text = data.get("expression")
+                if (binding.get("owner_principal_id") != str(self._owner)
+                        or not re.fullmatch(r"[0-9a-f]{64}", str(binding.get("mandate_sha256")))
+                        or binding.get("source_sha256") != PostgresSensoryEventStore._private_expression_source_sha256(observation)
+                        or source["event_type"] != "private_opportunity_review"
+                        or receipt.get("source_event_id") != source["source_event_id"]
+                        or data.get("source_event_id") != source["source_event_id"]
+                        or receipt.get("channel") != "telegram"
+                        or not isinstance(receipt.get("provider_message_id"), str) or not receipt["provider_message_id"].strip()
+                        or not isinstance(text, str) or not text.strip() or len(text) > 4000):
+                    raise RuntimeError("private contact delivery binding differs")
+                contacts.append({"text": text, "delivered_at": delivered.occurred_at.isoformat(),
+                    "source_event_id": source["source_event_id"], "state": "delivered",
+                    "provider_message_id": receipt["provider_message_id"]})
+            self._authorize(conn, now)
+            return contacts
+
     def _validate_review_source(self, thread_id, event, *, household):
         """Validate immutable audience/source identity, never today's replacement policy."""
-        if canonical_sha256(event.payload) != bytes(event.payload_sha256).hex():
+        digest = event.payload_sha256 if isinstance(event.payload_sha256, str) else bytes(event.payload_sha256).hex()
+        if canonical_sha256(event.payload) != digest:
             raise ValueError("review original source hash differs")
         data = event.payload.get("data", {})
         if (event.event_type != "SENSORY_EVENT_OBSERVED"
@@ -187,6 +240,9 @@ class PostgresOwnerInitiatives:
                     raise RuntimeError("initiative review blocker differs")
             elif data.get("disposition") == "silence":
                 state = "silence"
+        elif row.phase in ("expression_pending", "expression_claimed", "expression_delivered", "expression_expired"):
+            state = {"expression_pending": "contact_pending", "expression_claimed": "contact_sending",
+                     "expression_delivered": "contact_delivered", "expression_expired": "contact_expired"}[row.phase]
         elif row.phase == "sensory_observed":
             state = "scheduled"
         elif row.phase in ("will_claimed", "will_model_started", "will_revalidated"):

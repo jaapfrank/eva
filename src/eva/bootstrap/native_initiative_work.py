@@ -122,3 +122,17 @@ def admit_initiative_review(authority, model, budget, claim, *, now):
         principal_id=str(owner._owner), now=now)
     return BackgroundReflectionAdmission(True, budget._day(now), person_used,
         installation_used, "existing_subscription_review")
+
+
+def private_contact_delivery(store, delivery, *, can_send):
+    """Run the existing guarded private expression transport in the service loop."""
+    from eva.application.free_will import ProactiveExpressionWorker
+    clock = lambda: datetime.now(UTC).replace(microsecond=0)
+    def authorize(claim):
+        if not can_send():
+            raise InitiativeMandateDenied("private contact deferred by current foreground activity")
+        store.authorize_private_expression(claim, now=clock())
+        if not can_send():
+            raise InitiativeMandateDenied("private contact deferred by new foreground activity")
+    worker = ProactiveExpressionWorker(store, delivery, channel="telegram", before_send=authorize)
+    return lambda: worker.run_once(now=clock())

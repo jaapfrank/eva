@@ -2916,7 +2916,7 @@ class PydanticConversationModel:
         except ValueError as error:
             raise ConversationModelError("web research artifact is invalid", model_usage=usage) from error
 
-    def _private_opportunity_instructions(self, identity: IdentityProfile) -> str:
+    def _private_opportunity_instructions(self, identity: IdentityProfile, *, private_contact_allowed: bool = False) -> str:
         """Plan private useful work independently from household notification triage."""
         return (
             f"Je bent {identity.name}. {identity.description} "
@@ -2938,9 +2938,20 @@ class PydanticConversationModel:
             "daadwerkelijk afmaken of eerlijk beëindigen. Kies geen willekeurige bezigheid "
             "om actief te lijken. Het doel is een bruikbare bijdrage, niet nog een plan of logboek. "
             "De klokprikkel is geen huiswaarneming of wens. Beoordeel berichtgeving los van "
-            "werk: kies hier altijd disposition silence, expression null en urgency 0. "
-            "Dat betekent alleen dat dit oriëntatiemoment geen directe melding veroorzaakt; "
-            "het verhindert geen initiative. Gebruik initiative voor één zelfgekozen concrete "
+            "werk. "
+            + ("De host staat privécontact met de geverifieerde eigenaar via Telegram toe. "
+               "Je mag respond kiezen voor een korte, natuurlijke vraag, voorstel of relevante "
+               "bijdrage als dat inhoudelijk helpt. Ontbrekende persoonlijke informatie hoeft "
+               "geen reden voor blijvende stilte te zijn: vraag gericht wat je nodig hebt. "
+               "Een vraag is geen afgeronde taak en geen toestemming voor later handelen. "
+               "Gebruik urgency 1 voor gewoon contact; kies silence met expression null en "
+               "urgency 0 als contact nu niet passend is. Geen verplichte vraag of begroeting. "
+               "Eerdere eigen contacten staan in prior_private_initiatives: herhaal een vraag "
+               "niet zonder nieuwe aanleiding; aflevering bewijst geen antwoord of instemming. "
+               if private_contact_allowed else
+               "Kies hier altijd disposition silence, expression null en urgency 0. "
+               "Dit oriëntatiemoment heeft geen rechtstreekse contactroute. ")
+            + "Stilte verhindert geen initiative. Gebruik initiative voor één zelfgekozen concrete "
             "uitkomst met motivatie en een uitvoerbare next_exploration. Als er geen goed idee "
             "is, is initiative null geldig: forceer geen idee. Leg in reason je inhoudelijke "
             "afweging uit; alleen geen actuele gebeurtenis is geen afweging van eigen initiatief. "
@@ -2993,9 +3004,13 @@ class PydanticConversationModel:
         initiative_history: tuple[dict[str, str], ...] = (),
         initiative_capabilities: tuple[str, ...] = (),
         initiative_source_outcomes: tuple[dict, ...] = (),
+        private_contact_allowed: bool = False,
     ) -> FreeWillDecision:
         """Evaluate a household event or plan useful private work through one protocol."""
 
+        if type(private_contact_allowed) is not bool or (private_contact_allowed and (
+                event.source != "initiative-review" or event.event_type != "private_opportunity_review")):
+            raise ValueError("private contact requires its host-authorized private opportunity review")
         if initiative_source_outcomes and event.source != "initiative-review":
             raise ValueError("native source outcomes require a private opportunity review")
 
@@ -3049,7 +3064,7 @@ class PydanticConversationModel:
                     "type": "message",
                 }
             ],
-            "instructions": (self._private_opportunity_instructions(identity)
+            "instructions": (self._private_opportunity_instructions(identity, private_contact_allowed=private_contact_allowed)
                 + " private_learning_context bevat de bestaande afgeleide persoonlijke "
                   "stijlspiegel uit dezelfde toegelaten privéherinnering. Pas relevante "
                   "geleerde bijsturing passend toe; bron, tijd en betrouwbaarheid van "

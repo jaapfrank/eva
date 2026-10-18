@@ -847,8 +847,8 @@
     "title": "Dagelijkse autonomie: vastgelopen route en ontbrekend eigen vervolg oplossen",
     "status": "in_progress",
     "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
-    "nextAction": "De vastgelopen route en ontbrekende geleerde privécontext zijn hersteld. De eerste werkende beoordeling koos nog niets. Nu is ook de te nauwe instructie voor eigen interesses/inhoudelijk vervolg gecorrigeerd en geïnstalleerd.9gerichte controles geslaagd;70 bronbestanden gelijk in kern/werker. Wacht op de volgende gewone autonome keuze en controleer werk, aflevering en later gebruik; geen derde handmatige oriëntatie. E5.1 blijft open.",
-    "checkedAt": "2026-10-18T03:37:22.000982+00:00",
+    "nextAction": "Eigen privécontact en gespreksoverdracht zijn geïnstalleerd op kern en worker. Eén onderwerpvrije eigen afweging staat in de gewone achtergrondwachtrij. Nu controleren of Eva zelf iets kiest, uitvoert, terugbrengt en later gebruikt. E5.1 nog open; geen extra proefherhaling of spraakwerk.",
+    "checkedAt": "2026-10-18T04:53:01.429522+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,20 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "Eigen privévragen en gespreksoverdracht aangesloten",
+            "state": "installed",
+            "date": "2026-10-18T04:53:01.429522+00:00",
+            "checkedAt": "2026-10-18T04:53:01.429522+00:00",
+            "summary": "Eva kan tijdens haar eigen afweging een passende privévraag of bijdrage sturen via bestaande Telegramroute. Alleen bewezen aflevering komt terug als gesprekscontext.",
+            "remaining": "Werkelijk eigen werk, resultaat en later vervolg worden nu gecontroleerd; E5.1 is niet afgerond.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-autonomy-repair-installed-20261018.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e51-autonomy-repair-review-20261018.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "familyAcceptance": false
+          },
           {
             "title": "Initiatiefroute hersteld; dagelijkse eigen bijdrage nog open",
             "state": "installed",
@@ -2440,10 +2454,10 @@
           "taskId": "E5.1",
           "title": "Dagelijkse autonomie: vastgelopen route en ontbrekend eigen vervolg oplossen",
           "status": "in_progress",
-          "summary": "De vastgelopen route en ontbrekende geleerde privécontext zijn hersteld. De eerste werkende beoordeling koos nog niets. Nu is ook de te nauwe instructie voor eigen interesses/inhoudelijk vervolg gecorrigeerd en geïnstalleerd.9gerichte controles geslaagd;70 bronbestanden gelijk in kern/werker. Wacht op de volgende gewone autonome keuze en controleer werk, aflevering en later gebruik; geen derde handmatige oriëntatie. E5.1 blijft open.",
+          "summary": "E5.1 · Eigen activiteit daadwerkelijk laten werken",
           "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
-          "state": "Bezig · zelfstandig vervolg nog te bevestigen",
-          "detail": "De vastgelopen route en ontbrekende geleerde privécontext zijn hersteld. De eerste werkende beoordeling koos nog niets. Nu is ook de te nauwe instructie voor eigen interesses/inhoudelijk vervolg gecorrigeerd en geïnstalleerd.9gerichte controles geslaagd;70 bronbestanden gelijk in kern/werker. Wacht op de volgende gewone autonome keuze en controleer werk, aflevering en later gebruik; geen derde handmatige oriëntatie. E5.1 blijft open."
+          "state": "in_progress",
+          "detail": "Eigen privécontact en gespreksoverdracht zijn geïnstalleerd op kern en worker. Eén onderwerpvrije eigen afweging staat in de gewone achtergrondwachtrij. Nu controleren of Eva zelf iets kiest, uitvoert, terugbrengt en later gebruikt. E5.1 nog open; geen extra proefherhaling of spraakwerk."
         },
         "next": {
           "title": "Gericht herstel binnen de bestaande E5.1-kaart",
@@ -2456,12 +2470,12 @@
           "detail": "De controle bevestigt concrete autonomietekorten. Codex moet die oplossen; jouw gezinsproef is geen vervanging voor werkende eigen activiteit. Spraak blijft bij de andere WSL-uitvoerder.",
           "required": false
         },
-        "checkedAt": "2026-10-18T03:37:22.000982+00:00",
-        "reviewedAt": "2026-10-18T03:37:22.000982+00:00",
+        "checkedAt": "2026-10-18T04:53:01.429522+00:00",
+        "reviewedAt": "2026-10-18T04:53:01.429522+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-18T02:24:39.871399+00:00",
-      "checkedAt": "2026-10-18T03:37:22.000982+00:00",
+      "reviewedAt": "2026-10-18T04:53:01.429522+00:00",
+      "checkedAt": "2026-10-18T04:53:01.429522+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -6023,7 +6037,7 @@
                 "ownerActionRequired": false,
                 "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
                 "gap": "Concrete functionele tegenbevinding: de gedeelde huisinitiatiefroute staat sinds16oktober vast na een geheugenfout.17privébeoordelingen kozen stilte;48uur geen nieuw eigen werk/resultaat of aflevering. Dagelijkse autonomie is nog niet gereed; geen gebruikersoordeel als verklaring voor deze technische blokkade.",
-                "nextAction": "De vastgelopen route en ontbrekende geleerde privécontext zijn hersteld. De eerste werkende beoordeling koos nog niets. Nu is ook de te nauwe instructie voor eigen interesses/inhoudelijk vervolg gecorrigeerd en geïnstalleerd.9gerichte controles geslaagd;70 bronbestanden gelijk in kern/werker. Wacht op de volgende gewone autonome keuze en controleer werk, aflevering en later gebruik; geen derde handmatige oriëntatie. E5.1 blijft open.",
+                "nextAction": "Eigen privécontact en gespreksoverdracht zijn geïnstalleerd op kern en worker. Eén onderwerpvrije eigen afweging staat in de gewone achtergrondwachtrij. Nu controleren of Eva zelf iets kiest, uitvoert, terugbrengt en later gebruikt. E5.1 nog open; geen extra proefherhaling of spraakwerk.",
                 "files": [
                   "src",
                   "deploy",
@@ -6047,12 +6061,12 @@
                 "assignment": {
                   "activeWorkers": [
                     "Coördinator: gewone eigen uitvoering, terugkoppeling/leren, gerichte installatie en bord",
-                    "e33_state_adapters: bekende pre-dispatchfout, exact herstel en routestatus in bestaande backend",
+                    "e33_state_adapters: privécontactmandaat, brongebonden expressie, gerichte tests",
                     "e33_interface_adapters: onafhankelijke gebundelde review"
                   ]
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-18T03:37:22.000982+00:00",
+                "checkedAt": "2026-10-18T04:53:01.429522+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling van jou nodig. Dit zijn aangetoonde technische en functionele tekorten voor Codex, geen ontbrekende gezinsacceptatie.",
@@ -6106,7 +6120,7 @@
                       "status": "in_progress",
                       "outcome": "Gewone eigen oriëntatie leidt aantoonbaar tot zelfstandig uitgevoerd resultaat en later vervolg; stilte/reflectietelling niet als gezinsnut tellen.",
                       "resultProven": false,
-                      "note": "Herstelde review afgerond03:30:18; geen nieuw initiatief.8362in/161out/1modelpoging. Context en inhoudelijke ruimte voor eigen leven gericht onderzoeken; geen herhaling tot groen."
+                      "note": "Privécontact+gespreksoverdracht geïnstalleerd; één nieuwe afweging in bestaande scheduler. Zelfgekozen werk/resultaat/laterleren nog niet aangetoond."
                     }
                   ],
                   "newProductTasksAdded": false
@@ -9705,7 +9719,7 @@
               "ownerActionRequired": false,
               "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
               "gap": "Concrete functionele tegenbevinding: de gedeelde huisinitiatiefroute staat sinds16oktober vast na een geheugenfout.17privébeoordelingen kozen stilte;48uur geen nieuw eigen werk/resultaat of aflevering. Dagelijkse autonomie is nog niet gereed; geen gebruikersoordeel als verklaring voor deze technische blokkade.",
-              "nextAction": "De vastgelopen route en ontbrekende geleerde privécontext zijn hersteld. De eerste werkende beoordeling koos nog niets. Nu is ook de te nauwe instructie voor eigen interesses/inhoudelijk vervolg gecorrigeerd en geïnstalleerd.9gerichte controles geslaagd;70 bronbestanden gelijk in kern/werker. Wacht op de volgende gewone autonome keuze en controleer werk, aflevering en later gebruik; geen derde handmatige oriëntatie. E5.1 blijft open.",
+              "nextAction": "Eigen privécontact en gespreksoverdracht zijn geïnstalleerd op kern en worker. Eén onderwerpvrije eigen afweging staat in de gewone achtergrondwachtrij. Nu controleren of Eva zelf iets kiest, uitvoert, terugbrengt en later gebruikt. E5.1 nog open; geen extra proefherhaling of spraakwerk.",
               "files": [
                 "src",
                 "deploy",
@@ -9729,12 +9743,12 @@
               "assignment": {
                 "activeWorkers": [
                   "Coördinator: gewone eigen uitvoering, terugkoppeling/leren, gerichte installatie en bord",
-                  "e33_state_adapters: bekende pre-dispatchfout, exact herstel en routestatus in bestaande backend",
+                  "e33_state_adapters: privécontactmandaat, brongebonden expressie, gerichte tests",
                   "e33_interface_adapters: onafhankelijke gebundelde review"
                 ]
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-18T03:37:22.000982+00:00",
+              "checkedAt": "2026-10-18T04:53:01.429522+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling van jou nodig. Dit zijn aangetoonde technische en functionele tekorten voor Codex, geen ontbrekende gezinsacceptatie.",
@@ -9788,7 +9802,7 @@
                     "status": "in_progress",
                     "outcome": "Gewone eigen oriëntatie leidt aantoonbaar tot zelfstandig uitgevoerd resultaat en later vervolg; stilte/reflectietelling niet als gezinsnut tellen.",
                     "resultProven": false,
-                    "note": "Herstelde review afgerond03:30:18; geen nieuw initiatief.8362in/161out/1modelpoging. Context en inhoudelijke ruimte voor eigen leven gericht onderzoeken; geen herhaling tot groen."
+                    "note": "Privécontact+gespreksoverdracht geïnstalleerd; één nieuwe afweging in bestaande scheduler. Zelfgekozen werk/resultaat/laterleren nog niet aangetoond."
                   }
                 ],
                 "newProductTasksAdded": false
@@ -10002,12 +10016,12 @@
     },
     "currentRuntime": {
       "recordedAt": "2026-10-18T03:25:39.234269+00:00",
-      "checkedAt": "2026-10-18T03:37:22.000982+00:00",
+      "checkedAt": "2026-10-18T04:53:21.744253+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "image": "sha256:d144dc893f08359a160301dfd5abdb3212cb90a4869f308bcc30dcdfef633081",
-      "coreImage": "sha256:d144dc893f08359a160301dfd5abdb3212cb90a4869f308bcc30dcdfef633081",
-      "workerImage": "sha256:ad8a6d5c600592b058aee31f5779f655f6128df3bf64eee582ad211f8896337b",
+      "image": "sha256:d7f4551606c330c84328f951fb7c2913e7639c6ec70ba7260a5949585999e682",
+      "coreImage": "sha256:d7f4551606c330c84328f951fb7c2913e7639c6ec70ba7260a5949585999e682",
+      "workerImage": "sha256:1da4362cd05fdf1af46495fb301eafca37925a022b20178d2b238f83a2383f23",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
@@ -10016,10 +10030,10 @@
       "readyStatus": "actual_autonomous_outcome_pending",
       "evidence": "development/evidence/reassessment/e51-autonomy-repair-installed-20261018.json",
       "evidencePath": "development/evidence/reassessment/e51-autonomy-repair-installed-20261018.json",
-      "independentSourceReview": "development/reviews/e51-joint-candidate-review-20261018.json",
+      "independentSourceReview": "development/reviews/e51-autonomy-repair-review-20261018.json",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "Route- en doelcorrecties geïnstalleerd;70 bronbestanden gelijk. Werkelijk zelfstandig resultaat en later gebruik nog niet bewezen; gezondheid bewijst geen gezinsfunctie.",
-      "executionSourceCount": 70,
+      "meaning": "Privécontact en gespreksoverdracht geïnstalleerd;9geraakte modules per rol exact gecontroleerd. Werkelijk eigen werk/resultaat/later gebruik nog open; gezondheid is geen gezinsfunctie.",
+      "executionSourceCount": 9,
       "executionSourceParity": true
     },
     "memoryGoal20260910": {
@@ -11236,7 +11250,7 @@
       "taskCompleted": false
     }
   },
-  "updatedAt": "2026-10-18T03:37:22.000982+00:00",
+  "updatedAt": "2026-10-18T04:53:01.429522+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -11273,5 +11287,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-18T03:37:22.000982+00:00"
+  "lastUpdatedAt": "2026-10-18T04:53:01.429522+00:00"
 }

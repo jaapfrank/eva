@@ -415,8 +415,10 @@ class DelegatedWorkOwnerService:
             selected.append(item)
         # The alias file or owner binding may have changed during retrieval.
         self.validate_authority(turn)
+        contacts = initiatives.recent_private_contacts(now=min(self.now(), parse_utc_timestamp(turn.occurred_at)))
+        self.validate_authority(turn)
         return {"initiatives": selected, "limited": page["truncated"],
-                "as_of": self.now().isoformat()}
+                "recent_private_contacts": contacts, "as_of": self.now().isoformat()}
 
     def active_work_metadata(self, turn: ConversationTurn) -> dict:
         """Project authorized task metadata without per-task delivery lookups."""

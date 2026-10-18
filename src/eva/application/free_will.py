@@ -156,17 +156,29 @@ class ProactiveExpressionWorker:
         delivery: ProactiveDeliveryPort,
         *,
         channel: str,
+        before_send: Callable[[ProactiveExpressionClaim], None] | None = None,
     ) -> None:
         if channel not in {"telegram", "test"}:
             raise ValueError("proactive delivery channel is invalid")
         self._store = store
         self._delivery = delivery
         self._channel = channel
+        self._before_send = before_send
 
     def run_once(self, *, now: datetime) -> str:
         claim = self._store.claim_next_expression(now=now)
         if claim is None:
             return "idle"
+        if self._before_send is not None:
+            try:
+                self._before_send(claim)
+            except Exception as error:
+                reject = getattr(self._store, "fail_before_expression_send", None)
+                if callable(reject):
+                    reject(claim, error, now=now)
+                else:
+                    self._store.fail_expression(claim, error, now=now)
+                return "failed"
         try:
             provider_message_id = self._delivery.deliver(claim)
             self._store.acknowledge_expression(
@@ -437,6 +449,9 @@ class SensoryDecisionWorker:
                 )
                 history_reader = getattr(self._store, "recent_initiatives", None)
                 history = () if not callable(history_reader) else history_reader()
+                contact_history = getattr(self._store, "recent_private_contacts", None)
+                if context_review and callable(contact_history):
+                    history += contact_history(now=self._current_time(now))
                 capability_reader = getattr(self._store, "native_capabilities", None)
                 capabilities = () if not callable(capability_reader) else capability_reader()
             # Native outcomes stay private, with original observation times and
@@ -492,12 +507,16 @@ class SensoryDecisionWorker:
                 self._store.defer_before_dispatch(claim, reason="foreground_active",
                     now=self._current_time(now))
                 return "deferred"
+            contact_reader = getattr(self._store, "private_contact_allowed", None)
+            private_contact = (context_review and not household_review
+                and callable(contact_reader) and contact_reader())
             model_entered = True  # All later failures remain potentially dispatched.
             decision = self._model.evaluate_sensory_event(
                 event,
                 self._identity,
                 memory,
                 attention,
+                **({"private_contact_allowed": True} if private_contact else {}),
                 **({"initiative_history": history} if history else {}),
                 **({"initiative_capabilities": capabilities} if callable(capability_reader) else {}),
                 **({"initiative_source_outcomes": source_outcomes} if source_outcomes else {}),

@@ -1664,6 +1664,11 @@ def create_runtime_app() -> FastAPI:
 
             )
         )
+        if context_review_store is not None and proactive_delivery is not None:
+            from eva.bootstrap.native_initiative_work import private_contact_delivery
+            service_tasks = (*service_tasks,
+                private_contact_delivery(context_review_store, proactive_delivery,
+                    can_send=lambda: not runtime._cold_path.foreground_active))
         expression_worker = (
             None
             if sensory_store is None or proactive_delivery is None

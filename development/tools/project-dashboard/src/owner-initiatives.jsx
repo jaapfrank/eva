@@ -4,6 +4,8 @@ import OwnerLearning from './owner-learning.jsx';
 const endpoint = '/internal/v1/dashboard/initiatives';
 const labels = { working: 'Bezig', done: 'Resultaat klaar', stopped: 'Gestopt', attention: 'Aandacht nodig' };
 const reviewLabels = {
+  contact_pending: 'Eigen bericht klaar voor aflevering', contact_sending: 'Eigen bericht wordt afgeleverd',
+  contact_delivered: 'Eigen bericht via Telegram afgeleverd', contact_expired: 'Eigen bericht niet verzonden',
   scheduled: 'Beoordeling gepland', working: 'Beoordeling bezig', waiting: 'Wacht op volgende stap',
   silence: 'Bewust geen actie', adopted: 'Initiatief opgepakt', not_admitted: 'Geen initiatief gestart',
   abandoned: 'Afgesloten · verbruik onbekend', attention: 'Aandacht nodig', unknown: 'Uitkomst onbekend',
