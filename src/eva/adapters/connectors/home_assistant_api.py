@@ -170,7 +170,7 @@ class HomeAssistantApiTool:
             tool_name="home_assistant.api.request", arguments=args, expected_proof={},
             receipt_output={"operation_kind": "invoke", "external_state_verified": False},
             observation_output_key="result", execution_timeout_seconds=45 if self.vision and camera_get else 25,
-            verification_timeout_seconds=1,
+            verification_timeout_seconds=10,
         )
 
     def _request(self, arguments):

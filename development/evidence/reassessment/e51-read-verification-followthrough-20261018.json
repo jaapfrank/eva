@@ -1,0 +1,88 @@
+{
+  "contract": "EvaE51ReadVerificationFollowthrough/v1",
+  "recordedAt": "2026-10-18T13:16:25.858224+00:00",
+  "taskId": "E5.1",
+  "status": "installed_changed_cause_followthrough_pending",
+  "taskCompleted": false,
+  "reference": {
+    "actualSpontaneousIntentAt": "2026-10-18T12:51:21Z",
+    "spontaneousAdmission": true,
+    "originalFailure": "Known retained HA200 response; wrapped response verification exceeded1second. No verified result or finished history analysis.",
+    "errorFingerprint": "e401b65fcca0547cf45ec84c77aa1986955ced94f309518fee5bfabfdbfaeaf3",
+    "errorFingerprintMeaning": "SHA256 of TimeoutError: with one trailing space",
+    "workerFailureFingerprint": "fb82923d6535f283e417a46f1db68a49d26a44033dfa48e65be0db06b2d006a1",
+    "originalWorkStatePreserved": "failed",
+    "originalUsage": {
+      "measurement": "partial",
+      "completed_model_responses": 2,
+      "tool_calls": 1,
+      "input_tokens": 18615,
+      "output_tokens": 200,
+      "total_tokens": 18815
+    }
+  },
+  "change": {
+    "module": "eva.adapters.connectors.home_assistant_api",
+    "linesChanged": 1,
+    "verificationSecondsBefore": 1,
+    "verificationSecondsAfter": 10,
+    "newPlatform": false,
+    "newPrompt": false,
+    "authorityChanged": false,
+    "oldReceiptsRewritten": false
+  },
+  "verification": {
+    "casesPassed": 26,
+    "seconds": 4.7,
+    "controlledWrapperLatencySeconds": 1.2,
+    "retainedResponseNoNetwork": true,
+    "newModelCalls": 0,
+    "sourceSHA256": "dd7cb3121cf96552e749a90c08a9815d7bdfcd1aa091f887517b17eb8d84f060",
+    "testSHA256": "0fa326de22ff06c14e2f8ea9d1095e8a1caf8570faa3c827463155a7ca8641a7",
+    "independentPatchReviewSHA256": "e196dc91058d1e52c06ddec0a7a58ea6434519b95a73cee7b8a84bb4ea6cd9a7",
+    "limits": "The original exact authorization wait was not instrumented; no measured production DB latency is claimed. Fixture construction corrections precede the demonstrated regression."
+  },
+  "actualOutcome": {
+    "finishedResult": false,
+    "delivery": false,
+    "laterUse": false
+  },
+  "limits": [
+    "A corrected timeout does not finish the original failed task.",
+    "A single spontaneous proposal does not prove useful ongoing family behavior.",
+    "One changed-cause operator wake remains distinct from spontaneous initiation.",
+    "Reuse earlier E4.5/HUE learning evidence within its original scope; no new global intelligence claim."
+  ],
+  "speechChanged": false,
+  "newComparisonSeries": false,
+  "creditCost": null,
+  "installation": {
+    "at": "2026-10-18T13:16:25.858224+00:00",
+    "roles": {
+      "core": {
+        "image": "sha256:73d9df68952b69deb0b174ee42c2bc9a5cb841d35a47697dfe2a5557579808cb",
+        "health": "healthy",
+        "startedAt": "2026-10-18T13:15:31.760973425Z",
+        "sourceSHA256": "dd7cb3121cf96552e749a90c08a9815d7bdfcd1aa091f887517b17eb8d84f060",
+        "sourceExact": true
+      },
+      "worker": {
+        "image": "sha256:35ca43719d38b68916a98fe875f6869a347f82d6b65b13ba6e17e9fd885b1a18",
+        "health": "healthy",
+        "startedAt": "2026-10-18T13:14:58.404365551Z",
+        "sourceSHA256": "dd7cb3121cf96552e749a90c08a9815d7bdfcd1aa091f887517b17eb8d84f060",
+        "sourceExact": true
+      }
+    },
+    "configurationEnvironmentMountsRetained": true,
+    "speechServicesChanged": false
+  },
+  "changedCauseCheck": {
+    "queuedAt": "2026-10-18T13:15:59+00:00",
+    "operatorStimulated": true,
+    "forcedInitiative": false,
+    "topicAssigned": false,
+    "maxOperatorQueuedOrientations": 1,
+    "state": "queued_for_ordinary_scheduler"
+  }
+}

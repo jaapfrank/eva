@@ -4,7 +4,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Dagelijkse autonomie: vastgelopen route en ontbrekend eigen vervolg oplossen
+Eigen initiatief van bronlezing tot afgerond resultaat herstellen
 
 E5.1 · Eigen activiteit daadwerkelijk laten werken
 

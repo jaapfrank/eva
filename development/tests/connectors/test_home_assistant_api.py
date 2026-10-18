@@ -214,3 +214,67 @@ def test_full_response_above_capture_bound_is_not_claimed_or_reobserved():
     assert len(calls) == 1
     assert not any(event.event_type == "CONNECTOR_CAPTURE_SEALED"
                    for events in capture.timeline.rows.values() for event in events)
+
+
+@pytest.mark.parametrize("historical_one_second, expected", [(True, "failed"), (False, "verified")])
+def test_retained_read_verification_includes_native_authority_latency(monkeypatch, historical_one_second, expected):
+    """Exercise the real stop/native wrapper without another HA request or model."""
+    from datetime import UTC, datetime, timedelta
+    from time import sleep
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from eva.application.conversation import ConversationActionCall, ConversationTurn
+    from eva.application.initiative_execution import initiative_execution
+    from eva.application.memory_audience import MemoryAudience
+    from eva.application.orchestration import ToolDispatchResult
+    from eva.contracts.canonical_json import canonical_sha256
+
+    now = datetime.now(UTC).replace(microsecond=0)
+    turn = ConversationTurn(tenant_id="test-tenant", installation_id="test-installation",
+        principal_id="test-owner", conversation_id="initiative-task:verification",
+        message_id="initiative-execute:verification", text="Read current state",
+        occurred_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"), audience=MemoryAudience.private_person(principal_id="test-owner"))
+    tool = HomeAssistantApiTool(base_url="http://unused.invalid", token="local-fixture")
+    arguments = args(path="/api/states/binary_sensor.fixture", limit=50)
+    prepared = asyncio.run(tool.prepare(turn, ConversationActionCall("read", "home_assistant_request", arguments)))
+    # This is the already retained provider response; no execute/HTTP path is used.
+    retained = {"http_status": 200, "success": True, "response_json": '{"state":"off"}',
+        "external_state_verified": False}
+    dispatch = ToolDispatchResult(True, canonical_sha256(retained),
+        {"response": retained, "request_sha256": canonical_sha256(arguments)})
+    def no_execute(*args, **kwargs):
+        pytest.fail("verification must never resend the retained read")
+    monkeypatch.setattr(tool, "execute", no_execute)
+    monkeypatch.setattr("eva.adapters.connectors.home_assistant_api.httpx.Client", no_execute)
+    phases = []
+    state = SimpleNamespace(thread_id="read-verification", revision=1, checkpoint_id="executed",
+        operation_id="read", phase="tool_executed", status="waiting_for_proof", retry_count=0,
+        last_error_fingerprint=None, deadline=now + timedelta(seconds=30))
+    class Timeline:
+        def transition(self, **values):
+            phases.append(values["event_type"])
+            return SimpleNamespace(**{**vars(state), **values, "revision": state.revision + 1})
+        def record_recovery_failure(self, **values):
+            assert values["error_text"] == "TimeoutError: "
+            phases.append("RECOVERY_FAILED")
+            return SimpleNamespace(**{**vars(state), "status": "failed"})
+    class Guard:
+        def check(self, actual): assert actual == turn
+        def authorize_request(self, request, *, phase):
+            assert phase == "observe"
+            sleep(0.6)
+    def authorize(actual):
+        assert actual == turn
+        sleep(0.6)
+    from sqlalchemy.engine import make_url
+    engine = SimpleNamespace(url=make_url("postgresql://"))
+    route = PostgresExternalConversationTools(engine, tool, tool, authorize_turn=authorize)
+    request = SimpleNamespace(thread_id=state.thread_id, checkpoint_prefix="read", operation_id="read",
+        arguments=arguments, expected_proof={}, tool_configuration_sha256=None,
+        verification_timeout_seconds=1 if historical_one_second else prepared.verification_timeout_seconds,
+        poll_interval_milliseconds=100)
+    with initiative_execution(Guard()):
+        result = asyncio.run(route._orchestrator(turn, Timeline())._verify_or_resume(request, state, dispatch))
+    assert result.status == expected
+    assert phases == (["RECOVERY_FAILED"] if historical_one_second else ["STATE_VERIFIED"])
+    if result.status == "verified":
+        assert result.proof["evidence"]["observation"] == retained

@@ -1,0 +1,11 @@
+{
+  "contract": "EvaE51ReadVerificationReview/v1",
+  "taskId": "E5.1",
+  "reviewedAt": "2026-10-18T13:16:25.858224+00:00",
+  "sourceVerdict": "GO_targeted_overlay_only",
+  "patchReviewSHA256": "e196dc91058d1e52c06ddec0a7a58ea6434519b95a73cee7b8a84bb4ea6cd9a7",
+  "installedSourcesExact": true,
+  "actualOutcome": "NOT_YET_PROVEN",
+  "taskCompleted": false,
+  "familyAcceptance": false
+}
