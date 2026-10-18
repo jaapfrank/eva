@@ -847,8 +847,8 @@
     "title": "Eigen initiatief van bronlezing tot afgerond resultaat herstellen",
     "status": "in_progress",
     "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
-    "nextAction": "Een echt zelfgekozen onderzoek bereikte HA maar faalde op te korte verificatie. Dezelfde fout is nu in huis- en onderzoeksroute geïnstalleerd hersteld;26+12gerichte controles slagen en68actieve uitvoerbronnen zijn gelijk gebonden. Eén actuele afweging volgt de gewijzigde oorzaak, zonder opgelegd onderwerp. Werkelijk eindresultaat/terugmelding/vervolg blijven open.",
-    "checkedAt": "2026-10-18T13:22:26.084578+00:00",
+    "nextAction": "Eva koos vandaag zelf onderzoek, maar de uitvoering faalde op een te korte antwoordcontrole. Die fout is geïnstalleerd hersteld. De eerste herbeoordeling bleef stil: toegang was nog niet bewezen. Een nieuwe echte bronlezing slaagt nu (200 + gecontroleerd resultaat, 0 modelcalls); één afweging gebruikt dat nieuwe bewijs. Zelfstandig eindresultaat en terugmelding blijven nog open.",
+    "checkedAt": "2026-10-18T13:36:40.112009+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2471,7 +2471,7 @@
           "summary": "E5.1 · Eigen activiteit daadwerkelijk laten werken",
           "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
           "state": "in_progress",
-          "detail": "Een echt zelfgekozen onderzoek bereikte HA maar faalde op te korte verificatie. Dezelfde fout is nu in huis- en onderzoeksroute geïnstalleerd hersteld;26+12gerichte controles slagen en68actieve uitvoerbronnen zijn gelijk gebonden. Eén actuele afweging volgt de gewijzigde oorzaak, zonder opgelegd onderwerp. Werkelijk eindresultaat/terugmelding/vervolg blijven open."
+          "detail": "Eva koos vandaag zelf onderzoek, maar de uitvoering faalde op een te korte antwoordcontrole. Die fout is geïnstalleerd hersteld. De eerste herbeoordeling bleef stil: toegang was nog niet bewezen. Een nieuwe echte bronlezing slaagt nu (200 + gecontroleerd resultaat, 0 modelcalls); één afweging gebruikt dat nieuwe bewijs. Zelfstandig eindresultaat en terugmelding blijven nog open."
         },
         "next": {
           "title": "Gericht herstel binnen de bestaande E5.1-kaart",
@@ -2484,12 +2484,12 @@
           "detail": "De controle bevestigt concrete autonomietekorten. Codex moet die oplossen; jouw gezinsproef is geen vervanging voor werkende eigen activiteit. Spraak blijft bij de andere WSL-uitvoerder.",
           "required": false
         },
-        "checkedAt": "2026-10-18T13:22:26.084578+00:00",
-        "reviewedAt": "2026-10-18T13:22:26.084578+00:00",
+        "checkedAt": "2026-10-18T13:36:40.112009+00:00",
+        "reviewedAt": "2026-10-18T13:36:40.112009+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-18T13:22:26.084578+00:00",
-      "checkedAt": "2026-10-18T13:22:26.084578+00:00",
+      "reviewedAt": "2026-10-18T13:36:40.112009+00:00",
+      "checkedAt": "2026-10-18T13:36:40.112009+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -11258,7 +11258,7 @@
       "taskCompleted": false
     }
   },
-  "updatedAt": "2026-10-18T13:22:26.084578+00:00",
+  "updatedAt": "2026-10-18T13:36:40.112009+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -11295,5 +11295,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-18T13:22:26.084578+00:00"
+  "lastUpdatedAt": "2026-10-18T13:36:40.112009+00:00"
 }

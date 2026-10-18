@@ -1,6 +1,6 @@
 {
   "contract": "EvaE51ReadVerificationFollowthrough/v1",
-  "recordedAt": "2026-10-18T13:22:26.084578+00:00",
+  "recordedAt": "2026-10-18T13:36:40.112009+00:00",
   "taskId": "E5.1",
   "status": "installed_changed_cause_followthrough_pending",
   "taskCompleted": false,
@@ -105,9 +105,20 @@
     "forcedInitiative": false,
     "topicAssigned": false,
     "maxOperatorQueuedOrientations": 1,
-    "state": "queued_for_ordinary_scheduler",
+    "state": "completed_silence",
     "additionalOperatorWake": false,
-    "singleQueuedReviewRetainedWithoutDispatchDuringCompletionInstall": true
+    "singleQueuedReviewRetainedWithoutDispatchDuringCompletionInstall": true,
+    "completedAt": "2026-10-18T13:27:18Z",
+    "usage": {
+      "measurement": "complete",
+      "attempts": 1,
+      "input_tokens": 9594,
+      "output_tokens": 183,
+      "total_tokens": 9777
+    },
+    "initiative": null,
+    "next_attention": null,
+    "reason": "Model stated that a larger verification window alone does not prove restored access; it declined to repeat blocked work."
   },
   "sameCauseResearchRoute": {
     "module": "eva.adapters.model.research_tools",
@@ -176,5 +187,27 @@
       "python": "3.12.14"
     }
   },
-  "currentMandateProfileMatches": true
+  "currentMandateProfileMatches": true,
+  "operatorSourceVerification": {
+    "provenance": "operator technical diagnostic; not Eva initiative or old native task success",
+    "at": "2026-10-18T13:35:24.754709+00:00",
+    "modelCalls": 0,
+    "toolCalls": 1,
+    "seconds": 0.10820822601090185,
+    "httpStatus": 200,
+    "receiptStatus": "verified",
+    "terminal": "STATE_VERIFIED",
+    "houseChanged": false,
+    "nativeGuardProven": false,
+    "receiptSHA256": "49da7c06631563570acdb5f70904626f3d9ad1e6a80209d701c47916490e5a07",
+    "methodReviewSHA256": "c22e7d2d64e531a8cb8138b4baf798a0987c4a840bcd1fad1aeef01d5f198ddc"
+  },
+  "newEvidenceReview": {
+    "queuedAt": "2026-10-18T13:35:49Z",
+    "provenance": "operator stimulated; new verified read evidence after earlier explicit absence of access proof",
+    "forcedTopic": null,
+    "forcedInitiative": false,
+    "status": "queued_for_ordinary_scheduler",
+    "maximumReviewsOnThisEvidence": 1
+  }
 }
