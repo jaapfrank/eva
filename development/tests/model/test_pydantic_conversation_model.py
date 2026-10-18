@@ -56,6 +56,7 @@ NOW = "2026-08-31T12:00:00Z"
 def _phase_transport_adapter(
     tmp_path, monkeypatch, parts, *, fail=False, reuse_message_id=False,
     before_response=None, timeout_seconds=60.0, namespaced_search=False, namespace=None,
+    called_tool_name=None, call_arguments=None, tool_schema=None,
 ):
     """Exercise the installed SDK and Pydantic parser; no external network."""
     requests = []
@@ -76,7 +77,7 @@ def _phase_transport_adapter(
             {"id": "discovery", "type": "tool_search_output", "execution": "server",
              "call_id": None, "status": "completed", "tools": [{
                  "type": "function", "name": TOOL.name, "description": TOOL.description,
-                 "parameters": TOOL.input_schema, "strict": True, "defer_loading": True,
+                 "parameters": tool_schema or TOOL.input_schema, "strict": True, "defer_loading": True,
              }]},
         ])
         if namespaced_search:
@@ -93,8 +94,8 @@ def _phase_transport_adapter(
         if phase == "tool":
             item = {
                 "id": f"call_{index}", "type": "function_call", "status": "completed",
-                "call_id": "comfort-call-1", "name": TOOL.name,
-                "arguments": json.dumps(CALL.arguments),
+                "call_id": "comfort-call-1", "name": called_tool_name or TOOL.name,
+                "arguments": json.dumps(CALL.arguments if call_arguments is None else call_arguments),
             }
             if namespace is not None:
                 item["namespace"] = namespace
@@ -1755,3 +1756,42 @@ def test_current_multi_source_observation_reaches_real_model_wire_as_provisional
     for source in sources:
         assert source["source_ref"] in shared_context and source["evidence_ref"] in shared_context
         assert source["text"] not in shared_context
+
+
+@pytest.mark.parametrize("parts, expected", [
+    ([("commentary", ("Ik kijk ", "even.")), ("tool", ())], "Ik kijk even."),
+    ([("commentary", ("Ik kijk",)), ("commentary", (" even.",)), ("tool", ())], "Ik kijk even."),
+    ([(None, ("Niet als voorafzin bedoeld.",)), ("tool", ())], None),
+    ([("commentary", ("woord " * 36,)), ("tool", ())], None),
+    ([("commentary", ("x" * 1001,)), ("tool", ())], None),
+    ([("commentary", ("   ",)), ("tool", ())], None),
+])
+def test_completed_action_commentary_is_bounded_provenance_not_streaming(tmp_path, monkeypatch, parts, expected):
+    model, deltas, requests, completed = _phase_transport_adapter(tmp_path, monkeypatch, parts)
+    with stream_conversation_text(deltas.append):
+        result = _generate(model, available_actions=(TOOL.name,))
+    assert result.action_call == CALL
+    assert result.text == expected
+    assert result.text_phase == ("commentary" if expected is not None else None)
+    assert deltas == [] and completed == [()]
+    assert len(requests) == result.usage.model_attempts == result.usage.tool_calls == 1
+
+
+def test_interrupted_action_commentary_never_returns_partial_preamble(tmp_path, monkeypatch):
+    model, deltas, requests, completed = _phase_transport_adapter(
+        tmp_path, monkeypatch, [("commentary", ("Ik kijk even.",)), ("tool", ())], fail=True)
+    with stream_conversation_text(deltas.append), pytest.raises(ConversationModelError):
+        _generate(model, available_actions=(TOOL.name,))
+    assert deltas == [] and completed == [] and len(requests) == 1
+
+
+@pytest.mark.parametrize("invalid", ["unknown", "multiple"])
+def test_completed_commentary_cannot_admit_unknown_or_multiple_actions(tmp_path, monkeypatch, invalid):
+    parts = [("commentary", ("Ik kijk even.",)), ("tool", ())]
+    if invalid == "multiple":
+        parts.append(("tool", ()))
+    model, deltas, requests, _ = _phase_transport_adapter(tmp_path, monkeypatch, parts,
+        called_tool_name="unknown_action" if invalid == "unknown" else None)
+    with stream_conversation_text(deltas.append), pytest.raises(ConversationModelError):
+        _generate(model, available_actions=(TOOL.name,))
+    assert deltas == [] and len(requests) == 1

@@ -234,6 +234,28 @@ def _schema(
     return value
 
 
+_SPOKEN_PREAMBLE = "_spoken_preamble"
+
+
+def _voice_preamble_tool(tool: dict[str, Any]) -> dict[str, Any]:
+    """Derive an exact first-voice wrapper without changing provider arguments."""
+    from eva.application.voice_context import SPEAK_AND_CONTINUE, STOP_VOICE_WORK
+    if tool["name"] in {SPEAK_AND_CONTINUE, STOP_VOICE_WORK, "request_private_voice_session"}:
+        return tool
+    schema = tool.get("parameters")
+    if (not isinstance(schema, dict) or schema.get("type") != "object"
+            or not isinstance(schema.get("properties"), dict)
+            or not isinstance(schema.get("required"), list)
+            or _SPOKEN_PREAMBLE in schema["properties"]
+            or _SPOKEN_PREAMBLE in schema["required"]):
+        raise ConversationModelError("voice preamble schema conflicts with registered tool")
+    return {**tool, "parameters": {**schema,
+        "properties": {**schema["properties"], _SPOKEN_PREAMBLE: {
+            "type": "string", "maxLength": 1000,
+            "description": "Korte natuurlijke voorafzin voor deze echte actie, hoogstens 35 woorden; leeg als geen voorafzin past. Geen uitvoeringsclaim of onbewezen feiten. Wordt alleen aangeboden na validatie van de hele modelreactie."}},
+        "required": [*schema["required"], _SPOKEN_PREAMBLE]}}
+
+
 def _tool(
     name: str,
     tool_description: str,
@@ -2140,6 +2162,13 @@ class PydanticConversationModel:
                 selected = output.calls[0]
                 try:
                     arguments = selected.args_as_dict(raise_if_invalid=True)
+                    selected_tool = next((tool for tool in tools if tool["name"] == selected.tool_name), None)
+                    preamble = None
+                    if selected_tool is not None and _SPOKEN_PREAMBLE in selected_tool["parameters"].get("properties", {}):
+                        arguments = dict(arguments)
+                        preamble = arguments.pop(_SPOKEN_PREAMBLE, None)
+                        if not isinstance(preamble, str):
+                            raise ValueError("voice preamble must be a string")
                     action_call = ConversationActionCall(
                         selected.tool_call_id,
                         selected.tool_name,
@@ -2149,6 +2178,19 @@ class PydanticConversationModel:
                     raise ConversationModelError(
                         "conversation deferred action is invalid"
                     ) from error
+                # Retain only completed, explicitly labelled commentary. It is
+                # never streamed and is not a final answer or execution proof.
+                commentary = "".join(
+                    part.content for part in result.response.parts
+                    if isinstance(part, TextPart)
+                    and (part.provider_details or {}).get("phase") == "commentary"
+                ).strip()
+                # A wrapped field is the model's explicit choice, including
+                # deliberate silence. Native commentary is only a fallback
+                # when no schema preamble was requested.
+                spoken = commentary if preamble is None else preamble.strip()
+                if spoken and len(spoken) <= 1000 and len(spoken.split()) <= 35:
+                    text = spoken
             else:
                 raise ConversationModelError("conversation output type is invalid")
 
@@ -2498,6 +2540,8 @@ class PydanticConversationModel:
             if offer_tools
             else ()
         )
+        if current_voice_context() is not None and SPEAK_DESCRIPTOR.name in available_actions:
+            pydantic_catalog = tuple(_voice_preamble_tool(tool) for tool in pydantic_catalog)
         selected_recent = recent_messages[-12:]
         # Unanswered retries can follow the latest assistant proposal. Keep that
         # proposal, its preceding user message and every subsequent message.
@@ -2661,6 +2705,7 @@ class PydanticConversationModel:
             text=text.strip() or None,
             provider=f"chatgpt-codex:{self._model}",
             action_call=action_call,
+            text_phase="commentary" if action_call is not None and text.strip() else None,
             usage=aggregate_usage,
             timing=ConversationModelTiming.aggregate(tuple(timings)),
         )
@@ -3635,6 +3680,18 @@ class PydanticConversationModel:
                     control = _descriptor_tool(STOP_DESCRIPTOR)
                     expected[STOP_DESCRIPTOR.name] = control
                     expected[SPEAK_DESCRIPTOR.name] = _descriptor_tool(SPEAK_DESCRIPTOR)
+                wrapped_voice = (
+                    current_voice_context() is not None
+                    and any(isinstance(item, dict) and item.get("name") == SPEAK_DESCRIPTOR.name for item in tools)
+                    and any(isinstance(item, dict) and isinstance(item.get("parameters"), dict)
+                            and isinstance(item["parameters"].get("properties"), dict)
+                            and _SPOKEN_PREAMBLE in item["parameters"]["properties"] for item in tools)
+                )
+                if wrapped_voice:
+                    offered_names = {item.get("name") for item in tools if isinstance(item, dict)
+                                     and isinstance(item.get("name"), str)}
+                    expected = {name: (_voice_preamble_tool(tool) if name in offered_names else tool)
+                                for name, tool in expected.items()}
                 # Bound catalog bytes by the trusted registered descriptors. A fixed
                 # byte cap rejected valid owner catalogs as maintained tools grew.
                 # Exact descriptor checks below precede input BPE accounting; neither
@@ -4343,10 +4400,14 @@ class PydanticConversationModel:
         from eva.application.voice_context import current_voice_context, SPEAK_DESCRIPTOR
         if current_voice_context() is not None and SPEAK_DESCRIPTOR.name in available_actions:
             action_guidance_parts.append(
-                "In dit live stemgesprek is speak_and_continue direct beschikbaar. "
-                "Als je eerst een bron moet lezen of verder moet afwegen, geef vóór die "
-                "stap een korte, bij deze vraag passende denkreactie via speak_and_continue. "
-                "Dat is geen feitelijk eindantwoord en gaat vooraf aan de eerste bronlezing. "
+                "Vul bij een gewone toegelaten toolkeuze _spoken_preamble in met één korte "
+                "natuurlijke voorafzin, samen met de echte toolargumenten in dezelfde request. "
+                "Laat dit veld leeg als geen voorafzin past; het is geen argument voor de externe tool. "
+                "Als dat veld niet aangeboden is, kan expliciete commentary dezelfde rol vervullen. "
+                "De voorafzin wordt pas na validatie aangeboden; gebruik geen final_answer "
+                "bij een toolcall. Dit is geen eindantwoord of bewijs dat de actie al uitgevoerd is. "
+                "Gebruik speak_and_continue alleen wanneer een los eerste antwoorddeel nodig "
+                "is zonder dat je in dezelfde beslissing een gewone tool kiest. "
                 "Formuleer zelf vanuit het gesprek, zonder vaste wachtzin of onbewezen resultaat. "
                 "Heb je nog geen antwoordinhoud, houd de denkreactie bij hoogstens acht "
                 "woorden: een kleine aarzeling of gedachte die hier past. Bij een vraag "

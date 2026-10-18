@@ -1,0 +1,928 @@
+{
+  "contract": "EvaChatVoiceLatencyEvidence/v1",
+  "date": "2026-10-18",
+  "status": "installed_and_live_comparison_verified",
+  "scope": "Same lighting instruction through installed household voice and real owner dashboard chat; owner authorized outdoor light tests.",
+  "comparison_limits": [
+    "Private owner chat and household voice have different admitted histories, memories and permissions.",
+    "Recorded software audio exercises actual STT, core, Home Assistant and literal TTS; physical microphone/loudspeaker delivery is not asserted.",
+    "Single diagnostic runs depend on provider load and exact numerical rerank cache state; do not treat them as population averages.",
+    "Persisted tool-admission rows carry the request timestamp, not the physical tool start. Misleading zero admission offsets are omitted; client start/finish and coarse verified timestamps retain their explicitly different clocks."
+  ],
+  "baseline": {
+    "scope": "Two recorded diagnostic requests only; no new runtime/provider calls",
+    "clock_scope": "Client measurements are milliseconds since request_submitted. Journal timing is seconds since INGRESS_COMMITTED, rounded to whole seconds, uncertainty at least 1 second; not an exact request-submitted clock. No microphone/speaker timing.",
+    "probes": {
+      "A": {
+        "request_sha256": "ece43a2149c1c49dcb1aa02d0181e9cc181276c182a487cf91dbd3ca242f41eb",
+        "mode": "household voice HTTP without physical audio",
+        "client_final_since_request_ms": 30858.641,
+        "client_response_headers_since_request_ms": 139.1,
+        "model_usage": {
+          "recorded_requests": 5,
+          "attempts": 5,
+          "input_tokens": 47553,
+          "output_tokens": 387,
+          "tool_calls": 4
+        },
+        "model_phases_coarse": [
+          {
+            "admitted_since_ingress_seconds": 12.0,
+            "completed_since_ingress_seconds": 14.0
+          },
+          {
+            "admitted_since_ingress_seconds": 16.0,
+            "completed_since_ingress_seconds": 19.0
+          },
+          {
+            "admitted_since_ingress_seconds": 21.0,
+            "completed_since_ingress_seconds": 23.0
+          },
+          {
+            "admitted_since_ingress_seconds": 24.0,
+            "completed_since_ingress_seconds": 27.0
+          },
+          {
+            "admitted_since_ingress_seconds": 28.0,
+            "completed_since_ingress_seconds": 31.0
+          }
+        ],
+        "tool_steps": [
+          {
+            "step": 0,
+            "action": "read_home_assistant_inventory",
+            "category": "inventory_read",
+            "journal_verified_since_ingress_seconds": 15.0,
+            "limit": 200,
+            "fields": [
+              "entity_id",
+              "name",
+              "state",
+              "attributes"
+            ],
+            "section": "entities",
+            "observation_metadata": {
+              "total": 9,
+              "next_offset": null,
+              "has_more": false
+            },
+            "client_started_since_request_ms": 14469.111,
+            "client_finished_since_request_ms": 15063.847,
+            "client_action_duration_ms": 594.736
+          },
+          {
+            "step": 1,
+            "action": "read_home_assistant_inventory",
+            "category": "inventory_read",
+            "journal_verified_since_ingress_seconds": 20.0,
+            "limit": 200,
+            "fields": [
+              "entity_id",
+              "name",
+              "state",
+              "attributes"
+            ],
+            "section": "entities",
+            "observation_metadata": {
+              "total": 5,
+              "next_offset": null,
+              "has_more": false
+            },
+            "client_started_since_request_ms": 19248.041,
+            "client_finished_since_request_ms": 19836.262,
+            "client_action_duration_ms": 588.221
+          },
+          {
+            "step": 2,
+            "action": "home_assistant_request",
+            "category": "service_write",
+            "journal_verified_since_ingress_seconds": 23.0,
+            "limit": 50,
+            "observation_metadata": {
+              "http_status": 200,
+              "success": true,
+              "total": 0,
+              "truncated": false,
+              "next_offset": null
+            },
+            "selected_response_type": "list",
+            "selected_response_count": 0,
+            "client_started_since_request_ms": 22568.675,
+            "client_finished_since_request_ms": 23020.011,
+            "client_action_duration_ms": 451.336
+          },
+          {
+            "step": 3,
+            "action": "home_assistant_request",
+            "category": "template_read",
+            "journal_verified_since_ingress_seconds": 28.0,
+            "limit": 50,
+            "observation_metadata": {
+              "http_status": 200,
+              "success": true,
+              "total": 12,
+              "truncated": false,
+              "next_offset": null
+            },
+            "selected_response_type": "list",
+            "selected_response_count": 12,
+            "client_started_since_request_ms": 27149.729,
+            "client_finished_since_request_ms": 27470.781,
+            "client_action_duration_ms": 321.052
+          }
+        ],
+        "core_timing_logs": [
+          {
+            "kind": "conversation_initial_memory_timing",
+            "elapsed_ms": 9572,
+            "outcome": "succeeded"
+          },
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 9574
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 2950,
+            "first_content_ms": null,
+            "input_tokens": 8471,
+            "output_tokens": 63,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 1,
+            "receipt_count": 1,
+            "elapsed_ms": 3789,
+            "first_content_ms": null,
+            "input_tokens": 9026,
+            "output_tokens": 64,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 2,
+            "receipt_count": 2,
+            "elapsed_ms": 2187,
+            "first_content_ms": null,
+            "input_tokens": 9665,
+            "output_tokens": 58,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 3,
+            "receipt_count": 3,
+            "elapsed_ms": 3733,
+            "first_content_ms": null,
+            "input_tokens": 9973,
+            "output_tokens": 161,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 4,
+            "receipt_count": 4,
+            "elapsed_ms": 2801,
+            "first_content_ms": 1588,
+            "input_tokens": 10418,
+            "output_tokens": 41,
+            "requested_action": false
+          }
+        ],
+        "client_action_events": [
+          {
+            "type": "action_started",
+            "since_request_ms": 14469.111,
+            "action": "read_home_assistant_inventory"
+          },
+          {
+            "type": "action_finished",
+            "since_request_ms": 15063.847,
+            "action": "read_home_assistant_inventory"
+          },
+          {
+            "type": "action_started",
+            "since_request_ms": 19248.041,
+            "action": "read_home_assistant_inventory"
+          },
+          {
+            "type": "action_finished",
+            "since_request_ms": 19836.262,
+            "action": "read_home_assistant_inventory"
+          },
+          {
+            "type": "action_started",
+            "since_request_ms": 22568.675,
+            "action": "home_assistant_request"
+          },
+          {
+            "type": "action_finished",
+            "since_request_ms": 23020.011,
+            "action": "home_assistant_request"
+          },
+          {
+            "type": "action_started",
+            "since_request_ms": 27149.729,
+            "action": "home_assistant_request"
+          },
+          {
+            "type": "action_finished",
+            "since_request_ms": 27470.781,
+            "action": "home_assistant_request"
+          },
+          {
+            "type": "final",
+            "since_request_ms": 30857.624
+          }
+        ],
+        "sources": [
+          {
+            "file": "a.private.jsonl",
+            "sha256": "a327cdd79996de200481d4b5a04cbd5ac39f7fbe345180a30f3c75ad1c870c41"
+          },
+          {
+            "file": "a-journal-full.private.json",
+            "sha256": "784a1f1c0d3a79012265c7746cdfa8463945a4038a1877b0f813c5f52b193edb"
+          }
+        ],
+        "model_timing_coverage": {
+          "logged_phases": 5,
+          "recorded_model_requests": 5,
+          "complete": true,
+          "sum_logged_phase_ms": 15460
+        }
+      },
+      "C": {
+        "request_sha256": "8dc25161e43b975a9d55b9c23e99bb78386bb516fe9cbc10973abd02cd348815",
+        "mode": "private dashboard chat",
+        "client_final_since_request_ms": 37467.473,
+        "client_response_headers_since_request_ms": 15.84,
+        "model_usage": {
+          "recorded_requests": 5,
+          "attempts": 5,
+          "input_tokens": 55245,
+          "output_tokens": 308,
+          "tool_calls": 4
+        },
+        "model_phases_coarse": [
+          {
+            "admitted_since_ingress_seconds": 20.0,
+            "completed_since_ingress_seconds": 22.0
+          },
+          {
+            "admitted_since_ingress_seconds": 24.0,
+            "completed_since_ingress_seconds": 26.0
+          },
+          {
+            "admitted_since_ingress_seconds": 27.0,
+            "completed_since_ingress_seconds": 30.0
+          },
+          {
+            "admitted_since_ingress_seconds": 32.0,
+            "completed_since_ingress_seconds": 33.0
+          },
+          {
+            "admitted_since_ingress_seconds": 35.0,
+            "completed_since_ingress_seconds": 37.0
+          }
+        ],
+        "tool_steps": [
+          {
+            "step": 0,
+            "action": "read_home_assistant_inventory",
+            "category": "inventory_read",
+            "journal_verified_since_ingress_seconds": 23.0,
+            "limit": 200,
+            "fields": [
+              "entity_id",
+              "name",
+              "state",
+              "attributes"
+            ],
+            "section": "entities",
+            "observation_metadata": {
+              "total": 9,
+              "next_offset": null,
+              "has_more": false
+            }
+          },
+          {
+            "step": 1,
+            "action": "home_assistant_request",
+            "category": "service_write",
+            "journal_verified_since_ingress_seconds": 27.0,
+            "limit": 1,
+            "observation_metadata": {
+              "http_status": 200,
+              "success": true,
+              "total": 0,
+              "truncated": false,
+              "next_offset": null
+            },
+            "selected_response_type": "list",
+            "selected_response_count": 0
+          },
+          {
+            "step": 2,
+            "action": "home_assistant_request",
+            "category": "template_read",
+            "journal_verified_since_ingress_seconds": 31.0,
+            "limit": 1,
+            "observation_metadata": {
+              "http_status": 400,
+              "success": false,
+              "total": 1,
+              "truncated": false,
+              "next_offset": null
+            },
+            "selected_response_type": "dict",
+            "selected_response_count": 1,
+            "failure": "Template returned a set that Home Assistant could not serialize as JSON; HTTP 400. No readback state returned."
+          },
+          {
+            "step": 3,
+            "action": "home_assistant_request",
+            "category": "entity_state_read",
+            "journal_verified_since_ingress_seconds": 34.0,
+            "limit": 1,
+            "observation_metadata": {
+              "http_status": 200,
+              "success": true,
+              "total": 7,
+              "truncated": false,
+              "next_offset": 1
+            },
+            "selected_response_type": "dict",
+            "selected_response_count": 1,
+            "selected_has_state": false,
+            "retained_full_source_has_state": true,
+            "retained_full_source_has_attributes": true
+          }
+        ],
+        "core_timing_logs": [
+          {
+            "kind": "conversation_initial_memory_timing",
+            "elapsed_ms": 17770,
+            "outcome": "succeeded"
+          },
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 17773
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 2413,
+            "first_content_ms": null,
+            "input_tokens": 9856,
+            "output_tokens": 63,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 1,
+            "receipt_count": 1,
+            "elapsed_ms": 2510,
+            "first_content_ms": null,
+            "input_tokens": 10724,
+            "output_tokens": 58,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 2,
+            "receipt_count": 2,
+            "elapsed_ms": 3335,
+            "first_content_ms": null,
+            "input_tokens": 11032,
+            "output_tokens": 113,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 3,
+            "receipt_count": 3,
+            "elapsed_ms": 2211,
+            "first_content_ms": null,
+            "input_tokens": 11420,
+            "output_tokens": 48,
+            "requested_action": true
+          }
+        ],
+        "client_action_events": [],
+        "sources": [
+          {
+            "file": "c.private.jsonl",
+            "sha256": "de79a6ce7874aa95f227b9eb9b3937be2690ddad613157cb9b1ddaf43a89d115"
+          },
+          {
+            "file": "c-journal-full.private.json",
+            "sha256": "66082997798462e8f2ce717d71b7eb4359caf55a3b32d4c60444cbb608c8c4db"
+          }
+        ],
+        "model_timing_coverage": {
+          "logged_phases": 4,
+          "recorded_model_requests": 5,
+          "complete": false,
+          "sum_logged_phase_ms": 10469
+        }
+      }
+    },
+    "credits": null,
+    "new_calls": 0,
+    "findings": {
+      "same_request_is_not_same_context": "A uses household voice authority/context; C uses private dashboard authority/context. Both retain the same core and facts/authorization checks; neither is a physical speech timing experiment.",
+      "a": "Two inventory calls, one service write, one successful template readback; no spoken_update in this run.",
+      "c": "One inventory call, one service write, a failed template readback (HTTP400 JSON set serialization), then direct entity-state fallback.",
+      "c_extra_read_caused_by_limit_one": false,
+      "c_limit_one_caveat": "The final entity GET selected one dictionary key (entity_id), next_offset=1; full source_response_json still contained state and attributes. This selection did not precede the failed template and is not the cause of the extra GET.",
+      "recommendation": "Use JSON-serializable scalar/list/object template results for readback; sets are unsupported. Keep fresh verification after writes. Select /state or adequate fields when only state is needed, rather than limit=1 on the whole state object. Do not treat an empty write response as verification. No new code or special household routing proposed.",
+      "timing_log_limit": "C source log ends before the final model timing line; all five model usage records are present, but exact model-duration coverage is only 4/5. Do not infer missing duration."
+    }
+  },
+  "changes": {
+    "memory_compute": {
+      "bounded_shared_workers_before": 2,
+      "bounded_shared_workers_after": 4,
+      "cpu_quota_before": 4,
+      "cpu_quota_after": 8,
+      "host_logical_cpus": 18,
+      "torch_threads_unchanged": 2,
+      "batch_size_unchanged": 8,
+      "isolated_abba_seconds": [
+        7.7905,
+        5.8357,
+        5.3782,
+        7.0544
+      ],
+      "all_64_scores_bit_exact": true,
+      "network": "none",
+      "source_authority_and_retrieval_unchanged": true
+    },
+    "voice_first_reaction": "Validated bounded model-authored preamble accompanies the first real action, with unchanged provider arguments, existing authority/cancellation gates and no extra model round.",
+    "readback": "Explicit JSON-safe list materialization guidance fixes the observed HA template collection error without skipping verification.",
+    "spoken_confirmation": "Short natural result plus relevant limitation; omit system narration when unnecessary."
+  },
+  "unsuccessful_intermediate_candidate": {
+    "retained_evidence": true,
+    "live_native_commentary_missing": true,
+    "core_request_to_final_seconds": 31.210365,
+    "initial_memory_seconds": 9.438,
+    "model_requests": 5,
+    "real_actions": 4,
+    "spoken_parts": 1,
+    "first_candidate_did_not_improve_end_to_end_latency": true,
+    "next_change": "Bounded preamble carried in the first voice tool schema, removed before real action execution.",
+    "audio_assessment": {
+      "contract": "EvaVoiceComparisonAudioAssessment/v1",
+      "scenario": "B1 household voice after commentary-phase-only change",
+      "source_request_sha256": "8d27098783f7e0f579b595321ea6ef96b3ddedc0c129ddbcff58146a8d4c0a7a",
+      "same_exact_request_as_baseline_a_c": true,
+      "source_result_sha256": "f292b587c3d3073cf173de29b1f3b3b4abc23328388a0d8da7dc4dabb4ca1590",
+      "source_pcm_sha256": "4b96cbdc2d6535190f2d48f4261b5094619da42d9e3f5b61da59e8b92475ad05",
+      "source_journal_sha256": "990b111051ddff38b7f2adf64f9a5754182fc500e890764d843b625f5276cc9b",
+      "timing_clock": "Audio harness monotonic ms, relative to end of submitted input PCM; signal threshold abs(s16)>80 and frame-resolution timing. Journal timings use coarse persisted seconds and a separate ingress origin.",
+      "timings_ms": {
+        "input_duration_including_delivery": 3489.093,
+        "recognized_request_after_input_end": 1434.913,
+        "core_ack_after_input_end": 1641.624,
+        "core_final_after_input_end": 32645.278,
+        "recognized_request_to_core_final": 31210.365,
+        "first_tts_request_after_input_end": 32689.125,
+        "first_meaningful_signal_after_input_end": 33926.584,
+        "last_signal_frame_after_input_end": 45577.675,
+        "last_pcm_frame_end_after_input_end": 46207.738,
+        "reply_complete_after_input_end": 46256.551,
+        "tts_request_to_first_signal": 1237.459,
+        "maximum_gap_between_submitted_pcm_frames": 19.752
+      },
+      "tool_steps": [
+        {
+          "step_index": 0,
+          "action": "read_home_assistant_inventory",
+          "category": "inventory_read",
+          "start_after_input_end_ms": 17088.928,
+          "finish_after_input_end_ms": 17513.711,
+          "duration_ms": 424.783,
+          "journal_verified_after_ingress_seconds": 16.0,
+          "observation_metadata": {
+            "total": 9,
+            "next_offset": null,
+            "has_more": false
+          }
+        },
+        {
+          "step_index": 1,
+          "action": "read_home_assistant_inventory",
+          "category": "inventory_read",
+          "start_after_input_end_ms": 20293.182,
+          "finish_after_input_end_ms": 20884.355,
+          "duration_ms": 591.173,
+          "journal_verified_after_ingress_seconds": 20.0,
+          "observation_metadata": {
+            "total": 5,
+            "next_offset": null,
+            "has_more": false
+          }
+        },
+        {
+          "step_index": 2,
+          "action": "home_assistant_request",
+          "category": "service_write",
+          "start_after_input_end_ms": 24128.175,
+          "finish_after_input_end_ms": 24689.101,
+          "duration_ms": 560.926,
+          "journal_verified_after_ingress_seconds": 23.0,
+          "observation_metadata": {
+            "http_status": 200,
+            "success": true,
+            "total": 0,
+            "truncated": false,
+            "next_offset": null
+          }
+        },
+        {
+          "step_index": 3,
+          "action": "home_assistant_request",
+          "category": "fresh_state_template_read",
+          "start_after_input_end_ms": 29133.116,
+          "finish_after_input_end_ms": 29658.927,
+          "duration_ms": 525.811,
+          "journal_verified_after_ingress_seconds": 28.0,
+          "observation_metadata": {
+            "http_status": 200,
+            "success": true,
+            "total": 12,
+            "truncated": false,
+            "next_offset": null
+          }
+        }
+      ],
+      "spoken_update_count": 0,
+      "tts_request_count": 1,
+      "tts_matches_approved_core_final": true,
+      "model_usage": {
+        "tool_calls": 4,
+        "measurement": "measured",
+        "input_tokens": 47791,
+        "output_tokens": 413,
+        "model_attempts": 5
+      },
+      "model_timing_aggregate": {
+        "completed_ms": 13338,
+        "first_content_ms": 12746
+      },
+      "pcm": {
+        "rate": 24000,
+        "sample_count": 287372,
+        "duration_seconds": 11.974
+      },
+      "error": null,
+      "provider_credits": null,
+      "new_calls_from_this_analysis": 0,
+      "limits": [
+        "B1 emitted no commentary and no early spoken bridge; this candidate did not demonstrate improved responsiveness.",
+        "Actual software PCM delivery is measured; no physical microphone, speaker playback, or physical heard acknowledgement is claimed.",
+        "No new independent ASR for this capture. Exact TTS request text matches the core final, which is a text contract check rather than an acoustic transcription.",
+        "Only one request; different scope/history/cache/load prevents attributing all A/B/C timing differences to audio.",
+        "Persisted aggregate model usage is measured; individual model request threads are not included in this bounded journal export."
+      ]
+    }
+  },
+  "final": {
+    "household_software_audio": {
+      "contract": "EvaVoiceComparisonAudioAssessment/v1",
+      "scenario": "B2 household voice with first-tool explicit spoken preamble",
+      "source_request_sha256": "8d27098783f7e0f579b595321ea6ef96b3ddedc0c129ddbcff58146a8d4c0a7a",
+      "same_exact_request_as_baseline_a_c_b1": true,
+      "sources": [
+        {
+          "file": "b2-after-export/result.private.json",
+          "sha256": "cd0158c371afd91740f767b08f941d5a863100cf058d443c4184968b948e1365"
+        },
+        {
+          "file": "b2-after-export/received-output.private.wav",
+          "sha256": "cbe6fa6633fc723f71a9dc4c527477ace607dcf87e78eb126fac7dd67fdef74b"
+        },
+        {
+          "file": "b2-after-journal.private.json",
+          "sha256": "5192f626e7a2b27ad9083026db1f70dcb7f1bc439140812e3dd6ff310befd7a6"
+        }
+      ],
+      "timing_clock": "Audio harness monotonic ms relative to submitted input PCM end; abs(s16)>80 threshold and frame-resolution timestamps. Journal clock is coarse persisted seconds relative to ingress.",
+      "timings_ms": {
+        "input_duration_including_delivery": 3311.775,
+        "recognized_request_after_input_end": 1606.412,
+        "core_ack_after_input_end": 1739.171,
+        "core_final_after_input_end": 28190.309,
+        "recognized_request_to_core_final": 26583.897,
+        "first_meaningful_signal_after_input_end": 11691.799,
+        "last_signal_frame_after_input_end": 37432.086,
+        "last_pcm_frame_end_after_input_end": 38025.202,
+        "reply_complete_after_input_end": 38138.715
+      },
+      "tool_steps": [
+        {
+          "step_index": 0,
+          "action": "read_home_assistant_inventory",
+          "category": "inventory_read",
+          "start_after_input_end_ms": 11072.912,
+          "finish_after_input_end_ms": 11533.803,
+          "duration_ms": 460.891,
+          "journal_verified_after_ingress_seconds": 9.0,
+          "observation_metadata": {
+            "total": 9,
+            "next_offset": null,
+            "has_more": false
+          }
+        },
+        {
+          "step_index": 1,
+          "action": "home_assistant_request",
+          "category": "service_write",
+          "start_after_input_end_ms": 14451.421,
+          "finish_after_input_end_ms": 15028.094,
+          "duration_ms": 576.673,
+          "journal_verified_after_ingress_seconds": 13.0,
+          "observation_metadata": {
+            "http_status": 200,
+            "success": true,
+            "total": 0,
+            "truncated": false,
+            "next_offset": null
+          }
+        },
+        {
+          "step_index": 2,
+          "action": "home_assistant_request",
+          "category": "fresh_state_template_read",
+          "start_after_input_end_ms": 20444.153,
+          "finish_after_input_end_ms": 20838.901,
+          "duration_ms": 394.748,
+          "journal_verified_after_ingress_seconds": 19.0,
+          "observation_metadata": {
+            "http_status": 200,
+            "success": true,
+            "total": 2,
+            "truncated": false,
+            "next_offset": null
+          }
+        },
+        {
+          "step_index": 3,
+          "action": "home_assistant_request",
+          "category": "fresh_state_template_read",
+          "start_after_input_end_ms": 24600.176,
+          "finish_after_input_end_ms": 25251.722,
+          "duration_ms": 651.546,
+          "journal_verified_after_ingress_seconds": 23.0,
+          "observation_metadata": {
+            "http_status": 200,
+            "success": true,
+            "total": 11,
+            "truncated": false,
+            "next_offset": null
+          }
+        }
+      ],
+      "spoken_update_count": 1,
+      "tts_request_count": 2,
+      "speech_segments": [
+        {
+          "kind": "commentary",
+          "word_count": 6,
+          "tts_request_after_input_end_ms": 10937.321,
+          "first_signal_after_input_end_ms": 11691.799,
+          "last_signal_frame_after_input_end_ms": 13964.119,
+          "tts_to_first_signal_ms": 754.478
+        },
+        {
+          "kind": "final",
+          "word_count": 21,
+          "tts_request_after_input_end_ms": 28207.263,
+          "first_signal_after_input_end_ms": 29107.37,
+          "last_signal_frame_after_input_end_ms": 37432.086,
+          "tts_to_first_signal_ms": 900.107
+        }
+      ],
+      "commentary_pcm_overlap_with_action_execution": [],
+      "no_separate_speak_action": true,
+      "model_usage": {
+        "tool_calls": 4,
+        "measurement": "measured",
+        "input_tokens": 48010,
+        "output_tokens": 437,
+        "model_attempts": 5
+      },
+      "model_timing_aggregate": {
+        "completed_ms": 16164,
+        "first_content_ms": 15776
+      },
+      "pcm": {
+        "rate": 24000,
+        "sample_count": 286580,
+        "duration_seconds": 11.941
+      },
+      "error": null,
+      "provider_credits": null,
+      "new_calls_from_this_analysis": 0,
+      "limits": [
+        "Actual software PCM delivery is measured; no physical microphone, speaker playback or physical heard acknowledgement is claimed.",
+        "No independent ASR added for this capture; text contracts alone are not acoustic transcription.",
+        "Speech segment matching assumes serialized TTS requests and attributes signal between consecutive requests; no synthetic alignment between distinct clocks.",
+        "This is one request; context/history/cache/load and test order confound A/B/C comparisons.",
+        "Journal contains exact scoped conversation/tool/storage events and aggregate usage; no individual model request threads."
+      ]
+    },
+    "private_dashboard_chat": {
+      "contract": "EvaChatComparisonAssessment/v1",
+      "scenario": "C-after actual private dashboard chat",
+      "request_text_sha256": "8d27098783f7e0f579b595321ea6ef96b3ddedc0c129ddbcff58146a8d4c0a7a",
+      "same_exact_request_as_a_b1_b2": true,
+      "timings_ms": {
+        "headers_after_request": 17.123,
+        "first_nonempty_text_delta_after_request": 27146.534,
+        "final_after_request": 28071.695
+      },
+      "text_delta_count": 48,
+      "model_usage": {
+        "tool_calls": 4,
+        "measurement": "measured",
+        "input_tokens": 55396,
+        "output_tokens": 421,
+        "model_attempts": 5
+      },
+      "model_timing_aggregate": {
+        "completed_ms": 11906,
+        "first_content_ms": 11157
+      },
+      "tool_steps": [
+        {
+          "step_index": 0,
+          "action": "read_home_assistant_inventory",
+          "category": "inventory_read",
+          "verified_after_ingress_seconds": 14.0,
+          "observation_metadata": {
+            "total": 9,
+            "next_offset": null,
+            "has_more": false
+          }
+        },
+        {
+          "step_index": 1,
+          "action": "read_home_assistant_inventory",
+          "category": "inventory_read",
+          "verified_after_ingress_seconds": 17.0,
+          "observation_metadata": {
+            "total": 9,
+            "next_offset": null,
+            "has_more": false
+          }
+        },
+        {
+          "step_index": 2,
+          "action": "home_assistant_request",
+          "category": "service_write",
+          "verified_after_ingress_seconds": 21.0,
+          "observation_metadata": {
+            "http_status": 200,
+            "success": true,
+            "total": 0,
+            "truncated": false,
+            "next_offset": null
+          }
+        },
+        {
+          "step_index": 3,
+          "action": "home_assistant_request",
+          "category": "fresh_state_template_read",
+          "verified_after_ingress_seconds": 25.0,
+          "observation_metadata": {
+            "http_status": 200,
+            "success": true,
+            "total": 11,
+            "truncated": false,
+            "next_offset": null
+          }
+        }
+      ],
+      "source_files": [
+        {
+          "file": "c-after.private.jsonl",
+          "sha256": "8d3ee31428551b32fa051733130d4665f7560f80a75c3eb3ffae7ffbc94e685d"
+        },
+        {
+          "file": "c-after-journal.private.json",
+          "sha256": "1b75012e31bbf77e77d5ad8d73e84655fcc5973ec6308089bd26502c073bc0be"
+        }
+      ],
+      "new_calls": 0,
+      "credits": null,
+      "limits": [
+        "Client timing is relative to this dashboard request submission, not audio input end. Journal verification timestamps are coarse persisted seconds relative to ingress.",
+        "Text deltas precede final commit; their first appearance is not a completed verified reply.",
+        "Private dashboard history and authority differ from household voice; this is a product-route comparison, not isolated audio overhead.",
+        "One sample per route and model decisions/cache/load differ.",
+        "No audio was produced by this typed route."
+      ]
+    },
+    "initial_memory_seconds": {
+      "household_audio": 1.342,
+      "private_dashboard_chat": 10.275
+    },
+    "interpretation": "Both installed routes completed the same requested lighting action with fresh successful readback. Voice provided one bounded model-authored preamble without an extra SPEAK call. Five sequential model rounds remain in each measured route.",
+    "cache_caveat": "The final voice run reused warm exact numerical rerank scores. Its latency improvement is not attributable solely to four-worker compute or the preamble change. These are individual runs, not a controlled end-to-end speed estimate.",
+    "remaining_experience_limit": "11.692 seconds to the first voice signal remains a long initial wait. Physical room microphone/loudspeaker experience and owner acceptance are not established here.",
+    "earlier_evidence_preserved": "The prior household-action-latency-20261018 evidence includes faster individual runs. This comparison does not overwrite them or establish a monotonic improvement across every session."
+  },
+  "cleanup": {
+    "exact_own_exchanges": 5,
+    "storage_and_raw_exchange_sources_erased": 5,
+    "retention_outboxes_erased": 5,
+    "hindsight_source_documents_confirmed_absent": 5,
+    "original_owner_events_preserved": 47,
+    "application_batches": [
+      {
+        "count": 2,
+        "manifest_sha256": "09515fe3667b4f0500e321b2fedc4a722b82d7b11d13eff4600331f8230930fd"
+      },
+      {
+        "count": 1,
+        "manifest_sha256": "011d79cf8f6a670316a5a1711058e5e3f17e08231a24dba7194d67722c001962"
+      },
+      {
+        "count": 2,
+        "manifest_sha256": "9f56e0b61cfd1300cf509c0cba306156e498a03dd2f179bd92e692369ca52d28"
+      }
+    ],
+    "limits": "Exact diagnostic source removal only; no claim that every derived memory is absent. Private raw evidence retained outside Git."
+  },
+  "cost": {
+    "eva_runtime": {
+      "diagnostic_exchanges": 5,
+      "model_attempts": 25,
+      "model_tool_calls": 20,
+      "input_tokens": 253995,
+      "output_tokens": 1966,
+      "total_tokens": 255961,
+      "audio_input_transports": 2,
+      "harness_tts_requests": 3,
+      "harness_tts_count_is_not_a_provider_invoice_count": true,
+      "credits": "unknown"
+    },
+    "development_usage": "not metered here; separate from runtime measurements"
+  },
+  "completed_at": "2026-10-18T21:41:44.685106+00:00",
+  "installation": {
+    "live_measured_core_image": "sha256:a7215a50e019f7777313a58f413512256ca2c5f22bba1b97546c9258af8fe4b0",
+    "final_core_image": "sha256:bb95cec7b422cc770c11c47671530d02080b205288e1fd4cfa6004c4d3c6b363",
+    "final_memory_image": "sha256:ba9f050f49eeb50604c7793630c8b653dde728486eb744a7e30f3f42450f9388",
+    "final_core_adjustment": "Only remove a dependency on an unrelated uncommitted private-voice constant; the exact same existing control name is excluded by literal. Equality verified and all 16 wrapper tests passed on HEAD plus own patch. No additional physical action was repeated for this behavior-equivalent adjustment.",
+    "core_installed_at": "2026-10-18T21:40:53.926671639Z",
+    "memory_installed_at": "2026-10-18T21:19:41.039138228Z",
+    "source_hashes_verified": true,
+    "configuration_preserved_except_documented_memory_workers_and_cpu": true,
+    "active_claims_checked_before_replacement": true,
+    "speaker_and_media_unchanged": true
+  },
+  "validation": {
+    "final_model_and_catalog_tests_passed": 134,
+    "core_and_voice_tests_passed": 112,
+    "shared_rerank_pool_tests_passed": 9,
+    "self_contained_head_plus_own_wrapper_tests_passed": 16,
+    "isolated_real_model_rerank_abba": {
+      "bounded_shared_workers_before": 2,
+      "bounded_shared_workers_after": 4,
+      "cpu_quota_before": 4,
+      "cpu_quota_after": 8,
+      "host_logical_cpus": 18,
+      "torch_threads_unchanged": 2,
+      "batch_size_unchanged": 8,
+      "isolated_abba_seconds": [
+        7.7905,
+        5.8357,
+        5.3782,
+        7.0544
+      ],
+      "all_64_scores_bit_exact": true,
+      "network": "none",
+      "source_authority_and_retrieval_unchanged": true
+    },
+    "independent_review": "Adapter, core, memory, explicit schema preamble and prompt changes reviewed; final metric sums and claim bounds checked independently.",
+    "test_counts_are_separate_runs_not_a_unique_test_total": true
+  },
+  "physical_action_scope": {
+    "owner_authorized": true,
+    "diagnostic_probes": 5,
+    "fixture_started_off_and_turned_on_for_each_probe": true,
+    "all_five_completed_with_no_cleanup_light_write": true,
+    "final_group_state": "off",
+    "reachable_members_off": 8,
+    "unavailable_members": 2,
+    "automation_configuration_unchanged": true
+  }
+}

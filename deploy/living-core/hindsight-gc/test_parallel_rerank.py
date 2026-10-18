@@ -54,6 +54,49 @@ class ParallelBatchTests(unittest.TestCase):
             self.assertEqual([f.result(2) for f in jobs],[[1.]*32]*2)
         self.assertEqual(peak,2)
 
+    def test_four_workers_remain_shared_and_bounded(self):
+        helper = runpy.run_path(str(HERE/'parallel_rerank_batches.py'))
+        factory = helper['_shared_rerank_batch_pool']
+        with patch.dict(os.environ, {'EVA_HINDSIGHT_RERANK_BATCH_WORKERS': '4'}):
+            pool = factory()
+            try:
+                self.assertIs(factory(), pool)
+                lock = threading.Lock()
+                full = threading.Event()
+                release = threading.Event()
+                active = peak = 0
+                class Model:
+                    def predict(self, pairs, **kw):
+                        nonlocal active, peak
+                        with lock:
+                            active += 1
+                            peak = max(peak, active)
+                            if active == 4:
+                                full.set()
+                        assert release.wait(3)
+                        with lock:
+                            active -= 1
+                        return [1.] * len(pairs)
+                with ThreadPoolExecutor(max_workers=2) as outer:
+                    jobs = [outer.submit(helper['predict_parallel_rerank_batches'],
+                                         Model(), [('q', 'd')]*32, 8) for _ in range(2)]
+                    try:
+                        self.assertTrue(full.wait(2))
+                        self.assertEqual(peak, 4)
+                    finally:
+                        release.set()
+                    self.assertEqual([job.result(2) for job in jobs], [[1.]*32]*2)
+                self.assertEqual(peak, 4)
+            finally:
+                pool.shutdown(wait=True)
+
+    def test_worker_configuration_cannot_remove_bound(self):
+        for value in ('0', '3', '999', 'bad'):
+            helper = runpy.run_path(str(HERE/'parallel_rerank_batches.py'))
+            with patch.dict(os.environ, {'EVA_HINDSIGHT_RERANK_BATCH_WORKERS': value}):
+                with self.assertRaises(ValueError):
+                    helper['_shared_rerank_batch_pool']()
+
     def test_failure_drains_own_running_batch_and_pool_remains_usable(self):
         entered=threading.Event();release=threading.Event();returned=threading.Event()
         class Model:

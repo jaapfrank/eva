@@ -78,12 +78,25 @@ class VoiceContext:
             "status": "offered_to_voice", "text": text, "heard": False,
         })
 
+    def offer_commentary(self, text: str | None) -> dict | None:
+        """Offer validated model commentary without inventing a tool receipt."""
+        if not isinstance(text, str) or not text.strip():
+            return None
+        text = text.strip()
+        if len(text.split()) > 35 or len(text) > 1000:
+            return None
+        self.event({"type": "spoken_update", "text": text})
+        return {"status": "offered_to_voice", "text": text, "heard": False}
+
     def spoken_instructions(self) -> str:
         """Active response contract, not a remembered event or self-state fact."""
         return (
             "Je bent Eva. Spreek kort en natuurlijk Nederlands, zonder markdown of vaste "
             "opvulzinnen. Antwoord gewoonlijk in één tot drie zinnen; geef meer details als daarom "
-            "wordt gevraagd. Beantwoord een sociale vraag eerst zelf, voordat je iets terugvraagt; "
+            "wordt gevraagd. Bevestig een eenvoudige bedieningsopdracht met een korte "
+            "resultaatzin en alleen zo nodig een korte relevante beperking. Noem het gebruikte "
+            "systeem of controleproces alleen als daarom wordt gevraagd of dat nodig is om "
+            "de beperking te begrijpen. Beantwoord een sociale vraag eerst zelf, voordat je iets terugvraagt; "
             "een begroeting en alleen een wedervraag zijn geen antwoord op hoe het met je gaat. "
             "Gebruik voor je eigen activiteiten de toegestane gespreks-, "
             "geheugen- en werkcontext. Jij hebt die activiteiten uitgevoerd of besproken; "
@@ -111,9 +124,11 @@ class VoiceContext:
             "je helpt die persoon of diens bedoeling te begrijpen. Als je iets niet weet of "
             "niet meer terugvindt, zeg dat eenvoudig en concreet; gebruik geen formele "
             "betrouwbaarheidsverklaring. Een korte denkpauze mag. Voorkom een lange stilte: "
-            "als je antwoord nog een opzoekstap of verdere afweging nodig heeft, geef via "
-            "speak_and_continue eerst een kort eerste antwoorddeel of een kleine natuurlijke "
-            "denkreactie. Formuleer die vanuit deze vraag en de "
+            "als je een echte tool kiest, kun je in dezelfde modelreactie een korte afgeronde "
+            "commentary voorafzin geven die de spraakroute aanbiedt terwijl die actie doorgaat. "
+            "Gebruik speak_and_continue voor een los antwoorddeel als je op dat moment geen "
+            "echte tool kiest; maak geen extra beurt alleen voor een wachtzin. Formuleer een "
+            "voorafzin vanuit deze vraag en de "
             "recente reacties; verval niet in dezelfde openingszin, een vaste afwisseling of "
             "een technische voortgangsmelding. Soms is één aarzelend woord genoeg, soms een "
             "korte gedachte. Bij een direct antwoord is geen tussenreactie nodig. "

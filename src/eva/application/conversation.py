@@ -666,6 +666,9 @@ class ConversationModelResult:
     timing: ConversationModelTiming = field(
         default_factory=ConversationModelTiming.unmeasured
     )
+    # Only completed, explicitly marked commentary validated by the adapter.
+    # Ordinary text accompanying an action is never implicitly speakable.
+    text_phase: Literal["commentary"] | None = None
 
     def __post_init__(self) -> None:
         if self.text is not None and not self.text.strip():
@@ -678,6 +681,11 @@ class ConversationModelResult:
             raise ValueError("conversation model usage is invalid")
         if not isinstance(self.timing, ConversationModelTiming):
             raise ValueError("conversation model timing is invalid")
+        if self.text_phase not in (None, "commentary") or (
+            self.text_phase == "commentary"
+            and (self.text is None or self.action_call is None)
+        ):
+            raise ValueError("conversation model text phase is invalid")
 
 
 @dataclass(frozen=True, slots=True)
@@ -1095,6 +1103,26 @@ class LivingConversation:
         action_input_repaired = False
         input_rejection_prompt = ""
         seen_call_ids = {item.call.call_id for item in receipts}
+        voice_bridge_offered = any(item.call.name == SPEAK_AND_CONTINUE for item in receipts)
+
+        def offer_action_commentary(result: ConversationModelResult) -> None:
+            nonlocal voice_bridge_offered, available_names, self_context
+            if voice is None or voice_bridge_offered or result.text_phase != "commentary":
+                return
+            offered = voice.offer_commentary(result.text)
+            if offered is None:
+                return
+            voice_bridge_offered = True
+            available_names = tuple(name for name in available_names if name != SPEAK_AND_CONTINUE)
+            self_context = (*self_context,
+                "Dit antwoorddeel is al aan de spraakroute aangeboden, niet bewezen gehoord. "
+                "Herhaal het niet; ga verder met de echte actie en het inhoudelijke vervolg: "
+                + json.dumps(offered, ensure_ascii=False))
+            # Delivery can observe a concurrent stop or revoked authority.
+            # Recheck before the following real action/retrieval is admitted.
+            checkpoint()
+            check_cancellation()
+
         while True:
             if contact_model is not None:
                 # Offer admitted background work instead of new synchronous
@@ -1201,6 +1229,7 @@ class LivingConversation:
                     or len(query_text.encode("utf-8")) > 1_024
                 ):
                     raise RuntimeError("conversation memory search request is invalid")
+                offer_action_commentary(generated)
                 expanded = recall(f"{turn.text}\nSemantische zoekconcepten: {query_text}")
                 if expanded.confirmed_facts:
                     memory = expanded
@@ -1226,6 +1255,7 @@ class LivingConversation:
                 continue
             if voice is not None and call.name == SPEAK_AND_CONTINUE and call.name in available_names:
                 completed = voice.speak_and_continue(call)
+                voice_bridge_offered = True
                 receipts.append(completed)
                 available_names = tuple(name for name in available_names if name != SPEAK_AND_CONTINUE)
                 continue
@@ -1236,6 +1266,7 @@ class LivingConversation:
                 continue
             if self._actions is None or call.name not in available_names:
                 raise RuntimeError("conversation model requested an unavailable action")
+            offer_action_commentary(generated)
             if voice is not None:
                 voice.event({"type": "action_started", "name": call.name})
             try:
@@ -1287,7 +1318,7 @@ class LivingConversation:
                 # stop/authority guard used by the ordinary second-model reply.
                 reply_guard = guard_factory(turn, tuple(receipts))
                 if reply_guard is not None:
-                    generated = replace(generated, text=acceptance, action_call=None)
+                    generated = replace(generated, text=acceptance, action_call=None, text_phase=None)
                     break
             available_names = continuation_names(completed)
             if voice is not None and voice.active_work:

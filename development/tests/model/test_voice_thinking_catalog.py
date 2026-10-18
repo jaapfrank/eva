@@ -42,7 +42,7 @@ def test_injected_model_can_answer_directly_with_eager_speech_available(tmp_path
     speech = next(t for t in scripted.definitions if t.name == SPEAK_DESCRIPTOR.name)
     assert speech.defer_loading is False
     assert result.text == "Goedemorgen." and result.action_call is None
-    assert "vóór die stap" in scripted.captures[0].instructions
+    assert "_spoken_preamble" in scripted.captures[0].instructions and "dezelfde request" in scripted.captures[0].instructions
 
 
 def test_only_eager_speech_has_no_native_discovery_tool():

@@ -3137,7 +3137,37 @@
                       "evidence": "development/evidence/product/subscription-voice-20261013/household-action-latency-20261018.json",
                       "finding": "Gerichte naam-/ruimte-/aliasselectie en brongebonden groepsleden voorkomen dubbele ontdekking; verkeerd gekopieerde reader-syntaxis is herstelbaar binnen bestaande autoriteit.",
                       "verification": "Geïnstalleerd en echt gebruikt: groepsactie met aparte verse statuscontrole; 8 bereikbare leden uit,2 onbereikbaar. Laatste volledige spraakproef: schakelack11,255s na coreverzoek (oorspronkelijk~33s), corefinal18,597s (oorspronkelijk~44s); eerste softwaresignaal7,040s na zineinde, finale audio20,763s en volledig klaar33,634s. Daglichtregel onveranderd hersteld; geen cleanup-lightwrite.",
-                      "acceptance": "Eigenaar heeft buitenverlichtingtests expliciet toegestaan. Dit bewijst de gemeten huishoudelijke route en volledige softwareaudio, niet fysieke verstaanbaarheid of volledige gezinsacceptatie. Geen WSL-herstart uitgevoerd."
+                      "acceptance": "Eigenaar heeft buitenverlichtingtests expliciet toegestaan. Dit bewijst de gemeten huishoudelijke route en volledige softwareaudio, niet fysieke verstaanbaarheid of volledige gezinsacceptatie. Geen WSL-herstart uitgevoerd.",
+                      "chatComparison": {
+                        "status": "installed_live_comparison_verified",
+                        "existing": "Bestaande huishoudelijke actie en volledige softwareaudio live bewezen; corewriteack11,255s/corefinal18,597s op vorige kandidaat.",
+                        "defect": "Nog geen vergelijking met gewone chat; resterende tijd in gedeelde kern/geheugen/modelrondes nog te verklaren.",
+                        "route": "Bestaande eigenaar-chat en huishoudelijke spraak; gelijke tekst, actuele bron en geverifieerde actie, met expliciet verschillende persoons-/geheugenscope.",
+                        "doneWhen": "Echte chatmeting met uitvoer/readback naast spraak, volgende concrete vertraging gericht verbeteren en geïnstalleerd nameten zonder tweede Eva of veiligheids-/geheugenscope over te slaan.",
+                        "outcome": "Zelfde lichtopdracht via echte eigenaar-chat en volledige software-spraak uitgevoerd en vers teruggelezen. Eerste spraakactie draagt een korte modelreactie zonder extra modelronde; geheugenberekening parallel verbeterd en geobserveerde templatefout gecorrigeerd.",
+                        "measured": {
+                          "chat_before_seconds": 37.467473,
+                          "chat_after_seconds": 28.071695,
+                          "voice_intermediate_first_signal_seconds": 33.927,
+                          "voice_final_first_signal_seconds": 11.691799,
+                          "voice_final_write_ack_seconds": 15.028094,
+                          "voice_final_core_answer_seconds": 28.190309,
+                          "voice_final_complete_audio_seconds": 38.138715
+                        },
+                        "evidence": "development/evidence/product/subscription-voice-20261013/chat-and-voice-latency-20261018.json",
+                        "installedCoreImage": "sha256:bb95cec7b422cc770c11c47671530d02080b205288e1fd4cfa6004c4d3c6b363",
+                        "installedMemoryImage": "sha256:ba9f050f49eeb50604c7793630c8b653dde728486eb744a7e30f3f42450f9388",
+                        "limits": "Losse metingen met andere persoonscontext en cache/load; laatste voice-geheugen warm. Eerste reactie na 11,7 seconden blijft lang. Geen fysieke microfoon/speaker- of eigenaaracceptatieclaim; eerdere snellere metingen behouden.",
+                        "runtimeUsage": {
+                          "modelAttempts": 25,
+                          "toolCalls": 20,
+                          "tokens": 255961,
+                          "credits": "unknown"
+                        },
+                        "cleanup": "Alle vijf eigen diagnostische bronnen verwijderd; 47 oorspronkelijke eigenaar-events behouden; lampgroep en acht bereikbare leden uit, twee onbereikbaar; automatisering ongewijzigd.",
+                        "ownerAcceptance": "not_claimed",
+                        "completedAt": "2026-10-18T21:41:44.685106+00:00"
+                      }
                     }
                   }
                 },
@@ -3397,7 +3427,37 @@
                       "evidence": "development/evidence/product/subscription-voice-20261013/household-action-latency-20261018.json",
                       "finding": "Gerichte naam-/ruimte-/aliasselectie en brongebonden groepsleden voorkomen dubbele ontdekking; verkeerd gekopieerde reader-syntaxis is herstelbaar binnen bestaande autoriteit.",
                       "verification": "Geïnstalleerd en echt gebruikt: groepsactie met aparte verse statuscontrole; 8 bereikbare leden uit,2 onbereikbaar. Laatste volledige spraakproef: schakelack11,255s na coreverzoek (oorspronkelijk~33s), corefinal18,597s (oorspronkelijk~44s); eerste softwaresignaal7,040s na zineinde, finale audio20,763s en volledig klaar33,634s. Daglichtregel onveranderd hersteld; geen cleanup-lightwrite.",
-                      "acceptance": "Eigenaar heeft buitenverlichtingtests expliciet toegestaan. Dit bewijst de gemeten huishoudelijke route en volledige softwareaudio, niet fysieke verstaanbaarheid of volledige gezinsacceptatie. Geen WSL-herstart uitgevoerd."
+                      "acceptance": "Eigenaar heeft buitenverlichtingtests expliciet toegestaan. Dit bewijst de gemeten huishoudelijke route en volledige softwareaudio, niet fysieke verstaanbaarheid of volledige gezinsacceptatie. Geen WSL-herstart uitgevoerd.",
+                      "chatComparison": {
+                        "status": "installed_live_comparison_verified",
+                        "existing": "Bestaande huishoudelijke actie en volledige softwareaudio live bewezen; corewriteack11,255s/corefinal18,597s op vorige kandidaat.",
+                        "defect": "Nog geen vergelijking met gewone chat; resterende tijd in gedeelde kern/geheugen/modelrondes nog te verklaren.",
+                        "route": "Bestaande eigenaar-chat en huishoudelijke spraak; gelijke tekst, actuele bron en geverifieerde actie, met expliciet verschillende persoons-/geheugenscope.",
+                        "doneWhen": "Echte chatmeting met uitvoer/readback naast spraak, volgende concrete vertraging gericht verbeteren en geïnstalleerd nameten zonder tweede Eva of veiligheids-/geheugenscope over te slaan.",
+                        "outcome": "Zelfde lichtopdracht via echte eigenaar-chat en volledige software-spraak uitgevoerd en vers teruggelezen. Eerste spraakactie draagt een korte modelreactie zonder extra modelronde; geheugenberekening parallel verbeterd en geobserveerde templatefout gecorrigeerd.",
+                        "measured": {
+                          "chat_before_seconds": 37.467473,
+                          "chat_after_seconds": 28.071695,
+                          "voice_intermediate_first_signal_seconds": 33.927,
+                          "voice_final_first_signal_seconds": 11.691799,
+                          "voice_final_write_ack_seconds": 15.028094,
+                          "voice_final_core_answer_seconds": 28.190309,
+                          "voice_final_complete_audio_seconds": 38.138715
+                        },
+                        "evidence": "development/evidence/product/subscription-voice-20261013/chat-and-voice-latency-20261018.json",
+                        "installedCoreImage": "sha256:bb95cec7b422cc770c11c47671530d02080b205288e1fd4cfa6004c4d3c6b363",
+                        "installedMemoryImage": "sha256:ba9f050f49eeb50604c7793630c8b653dde728486eb744a7e30f3f42450f9388",
+                        "limits": "Losse metingen met andere persoonscontext en cache/load; laatste voice-geheugen warm. Eerste reactie na 11,7 seconden blijft lang. Geen fysieke microfoon/speaker- of eigenaaracceptatieclaim; eerdere snellere metingen behouden.",
+                        "runtimeUsage": {
+                          "modelAttempts": 25,
+                          "toolCalls": 20,
+                          "tokens": 255961,
+                          "credits": "unknown"
+                        },
+                        "cleanup": "Alle vijf eigen diagnostische bronnen verwijderd; 47 oorspronkelijke eigenaar-events behouden; lampgroep en acht bereikbare leden uit, twee onbereikbaar; automatisering ongewijzigd.",
+                        "ownerAcceptance": "not_claimed",
+                        "completedAt": "2026-10-18T21:41:44.685106+00:00"
+                      }
                     }
                   }
                 },
@@ -6835,7 +6895,37 @@
                     "evidence": "development/evidence/product/subscription-voice-20261013/household-action-latency-20261018.json",
                     "finding": "Gerichte naam-/ruimte-/aliasselectie en brongebonden groepsleden voorkomen dubbele ontdekking; verkeerd gekopieerde reader-syntaxis is herstelbaar binnen bestaande autoriteit.",
                     "verification": "Geïnstalleerd en echt gebruikt: groepsactie met aparte verse statuscontrole; 8 bereikbare leden uit,2 onbereikbaar. Laatste volledige spraakproef: schakelack11,255s na coreverzoek (oorspronkelijk~33s), corefinal18,597s (oorspronkelijk~44s); eerste softwaresignaal7,040s na zineinde, finale audio20,763s en volledig klaar33,634s. Daglichtregel onveranderd hersteld; geen cleanup-lightwrite.",
-                    "acceptance": "Eigenaar heeft buitenverlichtingtests expliciet toegestaan. Dit bewijst de gemeten huishoudelijke route en volledige softwareaudio, niet fysieke verstaanbaarheid of volledige gezinsacceptatie. Geen WSL-herstart uitgevoerd."
+                    "acceptance": "Eigenaar heeft buitenverlichtingtests expliciet toegestaan. Dit bewijst de gemeten huishoudelijke route en volledige softwareaudio, niet fysieke verstaanbaarheid of volledige gezinsacceptatie. Geen WSL-herstart uitgevoerd.",
+                    "chatComparison": {
+                      "status": "installed_live_comparison_verified",
+                      "existing": "Bestaande huishoudelijke actie en volledige softwareaudio live bewezen; corewriteack11,255s/corefinal18,597s op vorige kandidaat.",
+                      "defect": "Nog geen vergelijking met gewone chat; resterende tijd in gedeelde kern/geheugen/modelrondes nog te verklaren.",
+                      "route": "Bestaande eigenaar-chat en huishoudelijke spraak; gelijke tekst, actuele bron en geverifieerde actie, met expliciet verschillende persoons-/geheugenscope.",
+                      "doneWhen": "Echte chatmeting met uitvoer/readback naast spraak, volgende concrete vertraging gericht verbeteren en geïnstalleerd nameten zonder tweede Eva of veiligheids-/geheugenscope over te slaan.",
+                      "outcome": "Zelfde lichtopdracht via echte eigenaar-chat en volledige software-spraak uitgevoerd en vers teruggelezen. Eerste spraakactie draagt een korte modelreactie zonder extra modelronde; geheugenberekening parallel verbeterd en geobserveerde templatefout gecorrigeerd.",
+                      "measured": {
+                        "chat_before_seconds": 37.467473,
+                        "chat_after_seconds": 28.071695,
+                        "voice_intermediate_first_signal_seconds": 33.927,
+                        "voice_final_first_signal_seconds": 11.691799,
+                        "voice_final_write_ack_seconds": 15.028094,
+                        "voice_final_core_answer_seconds": 28.190309,
+                        "voice_final_complete_audio_seconds": 38.138715
+                      },
+                      "evidence": "development/evidence/product/subscription-voice-20261013/chat-and-voice-latency-20261018.json",
+                      "installedCoreImage": "sha256:bb95cec7b422cc770c11c47671530d02080b205288e1fd4cfa6004c4d3c6b363",
+                      "installedMemoryImage": "sha256:ba9f050f49eeb50604c7793630c8b653dde728486eb744a7e30f3f42450f9388",
+                      "limits": "Losse metingen met andere persoonscontext en cache/load; laatste voice-geheugen warm. Eerste reactie na 11,7 seconden blijft lang. Geen fysieke microfoon/speaker- of eigenaaracceptatieclaim; eerdere snellere metingen behouden.",
+                      "runtimeUsage": {
+                        "modelAttempts": 25,
+                        "toolCalls": 20,
+                        "tokens": 255961,
+                        "credits": "unknown"
+                      },
+                      "cleanup": "Alle vijf eigen diagnostische bronnen verwijderd; 47 oorspronkelijke eigenaar-events behouden; lampgroep en acht bereikbare leden uit, twee onbereikbaar; automatisering ongewijzigd.",
+                      "ownerAcceptance": "not_claimed",
+                      "completedAt": "2026-10-18T21:41:44.685106+00:00"
+                    }
                   }
                 }
               },
@@ -7095,7 +7185,37 @@
                     "evidence": "development/evidence/product/subscription-voice-20261013/household-action-latency-20261018.json",
                     "finding": "Gerichte naam-/ruimte-/aliasselectie en brongebonden groepsleden voorkomen dubbele ontdekking; verkeerd gekopieerde reader-syntaxis is herstelbaar binnen bestaande autoriteit.",
                     "verification": "Geïnstalleerd en echt gebruikt: groepsactie met aparte verse statuscontrole; 8 bereikbare leden uit,2 onbereikbaar. Laatste volledige spraakproef: schakelack11,255s na coreverzoek (oorspronkelijk~33s), corefinal18,597s (oorspronkelijk~44s); eerste softwaresignaal7,040s na zineinde, finale audio20,763s en volledig klaar33,634s. Daglichtregel onveranderd hersteld; geen cleanup-lightwrite.",
-                    "acceptance": "Eigenaar heeft buitenverlichtingtests expliciet toegestaan. Dit bewijst de gemeten huishoudelijke route en volledige softwareaudio, niet fysieke verstaanbaarheid of volledige gezinsacceptatie. Geen WSL-herstart uitgevoerd."
+                    "acceptance": "Eigenaar heeft buitenverlichtingtests expliciet toegestaan. Dit bewijst de gemeten huishoudelijke route en volledige softwareaudio, niet fysieke verstaanbaarheid of volledige gezinsacceptatie. Geen WSL-herstart uitgevoerd.",
+                    "chatComparison": {
+                      "status": "installed_live_comparison_verified",
+                      "existing": "Bestaande huishoudelijke actie en volledige softwareaudio live bewezen; corewriteack11,255s/corefinal18,597s op vorige kandidaat.",
+                      "defect": "Nog geen vergelijking met gewone chat; resterende tijd in gedeelde kern/geheugen/modelrondes nog te verklaren.",
+                      "route": "Bestaande eigenaar-chat en huishoudelijke spraak; gelijke tekst, actuele bron en geverifieerde actie, met expliciet verschillende persoons-/geheugenscope.",
+                      "doneWhen": "Echte chatmeting met uitvoer/readback naast spraak, volgende concrete vertraging gericht verbeteren en geïnstalleerd nameten zonder tweede Eva of veiligheids-/geheugenscope over te slaan.",
+                      "outcome": "Zelfde lichtopdracht via echte eigenaar-chat en volledige software-spraak uitgevoerd en vers teruggelezen. Eerste spraakactie draagt een korte modelreactie zonder extra modelronde; geheugenberekening parallel verbeterd en geobserveerde templatefout gecorrigeerd.",
+                      "measured": {
+                        "chat_before_seconds": 37.467473,
+                        "chat_after_seconds": 28.071695,
+                        "voice_intermediate_first_signal_seconds": 33.927,
+                        "voice_final_first_signal_seconds": 11.691799,
+                        "voice_final_write_ack_seconds": 15.028094,
+                        "voice_final_core_answer_seconds": 28.190309,
+                        "voice_final_complete_audio_seconds": 38.138715
+                      },
+                      "evidence": "development/evidence/product/subscription-voice-20261013/chat-and-voice-latency-20261018.json",
+                      "installedCoreImage": "sha256:bb95cec7b422cc770c11c47671530d02080b205288e1fd4cfa6004c4d3c6b363",
+                      "installedMemoryImage": "sha256:ba9f050f49eeb50604c7793630c8b653dde728486eb744a7e30f3f42450f9388",
+                      "limits": "Losse metingen met andere persoonscontext en cache/load; laatste voice-geheugen warm. Eerste reactie na 11,7 seconden blijft lang. Geen fysieke microfoon/speaker- of eigenaaracceptatieclaim; eerdere snellere metingen behouden.",
+                      "runtimeUsage": {
+                        "modelAttempts": 25,
+                        "toolCalls": 20,
+                        "tokens": 255961,
+                        "credits": "unknown"
+                      },
+                      "cleanup": "Alle vijf eigen diagnostische bronnen verwijderd; 47 oorspronkelijke eigenaar-events behouden; lampgroep en acht bereikbare leden uit, twee onbereikbaar; automatisering ongewijzigd.",
+                      "ownerAcceptance": "not_claimed",
+                      "completedAt": "2026-10-18T21:41:44.685106+00:00"
+                    }
                   }
                 }
               },
@@ -10522,7 +10642,37 @@
             "evidence": "development/evidence/product/subscription-voice-20261013/household-action-latency-20261018.json",
             "finding": "Gerichte naam-/ruimte-/aliasselectie en brongebonden groepsleden voorkomen dubbele ontdekking; verkeerd gekopieerde reader-syntaxis is herstelbaar binnen bestaande autoriteit.",
             "verification": "Geïnstalleerd en echt gebruikt: groepsactie met aparte verse statuscontrole; 8 bereikbare leden uit,2 onbereikbaar. Laatste volledige spraakproef: schakelack11,255s na coreverzoek (oorspronkelijk~33s), corefinal18,597s (oorspronkelijk~44s); eerste softwaresignaal7,040s na zineinde, finale audio20,763s en volledig klaar33,634s. Daglichtregel onveranderd hersteld; geen cleanup-lightwrite.",
-            "acceptance": "Eigenaar heeft buitenverlichtingtests expliciet toegestaan. Dit bewijst de gemeten huishoudelijke route en volledige softwareaudio, niet fysieke verstaanbaarheid of volledige gezinsacceptatie. Geen WSL-herstart uitgevoerd."
+            "acceptance": "Eigenaar heeft buitenverlichtingtests expliciet toegestaan. Dit bewijst de gemeten huishoudelijke route en volledige softwareaudio, niet fysieke verstaanbaarheid of volledige gezinsacceptatie. Geen WSL-herstart uitgevoerd.",
+            "chatComparison": {
+              "status": "installed_live_comparison_verified",
+              "existing": "Bestaande huishoudelijke actie en volledige softwareaudio live bewezen; corewriteack11,255s/corefinal18,597s op vorige kandidaat.",
+              "defect": "Nog geen vergelijking met gewone chat; resterende tijd in gedeelde kern/geheugen/modelrondes nog te verklaren.",
+              "route": "Bestaande eigenaar-chat en huishoudelijke spraak; gelijke tekst, actuele bron en geverifieerde actie, met expliciet verschillende persoons-/geheugenscope.",
+              "doneWhen": "Echte chatmeting met uitvoer/readback naast spraak, volgende concrete vertraging gericht verbeteren en geïnstalleerd nameten zonder tweede Eva of veiligheids-/geheugenscope over te slaan.",
+              "outcome": "Zelfde lichtopdracht via echte eigenaar-chat en volledige software-spraak uitgevoerd en vers teruggelezen. Eerste spraakactie draagt een korte modelreactie zonder extra modelronde; geheugenberekening parallel verbeterd en geobserveerde templatefout gecorrigeerd.",
+              "measured": {
+                "chat_before_seconds": 37.467473,
+                "chat_after_seconds": 28.071695,
+                "voice_intermediate_first_signal_seconds": 33.927,
+                "voice_final_first_signal_seconds": 11.691799,
+                "voice_final_write_ack_seconds": 15.028094,
+                "voice_final_core_answer_seconds": 28.190309,
+                "voice_final_complete_audio_seconds": 38.138715
+              },
+              "evidence": "development/evidence/product/subscription-voice-20261013/chat-and-voice-latency-20261018.json",
+              "installedCoreImage": "sha256:bb95cec7b422cc770c11c47671530d02080b205288e1fd4cfa6004c4d3c6b363",
+              "installedMemoryImage": "sha256:ba9f050f49eeb50604c7793630c8b653dde728486eb744a7e30f3f42450f9388",
+              "limits": "Losse metingen met andere persoonscontext en cache/load; laatste voice-geheugen warm. Eerste reactie na 11,7 seconden blijft lang. Geen fysieke microfoon/speaker- of eigenaaracceptatieclaim; eerdere snellere metingen behouden.",
+              "runtimeUsage": {
+                "modelAttempts": 25,
+                "toolCalls": 20,
+                "tokens": 255961,
+                "credits": "unknown"
+              },
+              "cleanup": "Alle vijf eigen diagnostische bronnen verwijderd; 47 oorspronkelijke eigenaar-events behouden; lampgroep en acht bereikbare leden uit, twee onbereikbaar; automatisering ongewijzigd.",
+              "ownerAcceptance": "not_claimed",
+              "completedAt": "2026-10-18T21:41:44.685106+00:00"
+            }
           }
         }
       }

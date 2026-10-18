@@ -1,6 +1,7 @@
 """Schedule unchanged local CPU batches; never cache inputs or alter scores."""
 from concurrent.futures import ThreadPoolExecutor, wait
 import threading
+import os
 
 _rerank_batch_pool = None
 _rerank_batch_pool_lock = threading.Lock()
@@ -10,8 +11,11 @@ def _shared_rerank_batch_pool():
     global _rerank_batch_pool
     with _rerank_batch_pool_lock:
         if _rerank_batch_pool is None:
+            workers = int(os.environ.get('EVA_HINDSIGHT_RERANK_BATCH_WORKERS', '2'))
+            if workers not in (2, 4):
+                raise ValueError('Rerank batch workers must be 2 or 4')
             _rerank_batch_pool = ThreadPoolExecutor(
-                max_workers=2, thread_name_prefix='eva-rerank-batch')
+                max_workers=workers, thread_name_prefix='eva-rerank-batch')
         return _rerank_batch_pool
 
 
@@ -19,7 +23,7 @@ def predict_parallel_rerank_batches(model, sorted_pairs, batch_size):
     """Keep each original ordered batch and reassemble in original batch order.
 
     The existing outer recall executor remains bounded. All recalls share this
-    separate two-worker compute pool, avoiding per-recall thread multiplication.
+    separate bounded compute pool, avoiding per-recall thread multiplication.
     """
     chunks = [sorted_pairs[i:i + batch_size]
               for i in range(0, len(sorted_pairs), batch_size)]
