@@ -1,0 +1,107 @@
+{
+  "contract": "EvaPrivateSelfContinuityReview/v1",
+  "taskId": "E5.1",
+  "reviewedAt": "2026-10-18T22:54:35Z",
+  "verdict": "GO_SOURCE_ONLY",
+  "wholeTaskComplete": false,
+  "familyAccepted": false,
+  "blockers": [],
+  "method": "Independent exact scoped patch/source and saved verification review. Reviewer ran no tests, provider calls, runtime queries or installs; only this report was written.",
+  "scope": [
+    {
+      "path": "src/eva/adapters/postgres/initiative_context.py",
+      "sha256": "6679edd99b235b10b4635387e77e0b74583d557d1b037b35efb3bcdf4a64f475"
+    },
+    {
+      "path": "development/tests/postgres/test_private_orientation_history.py",
+      "sha256": "ad1f9632c54d232f7120ecf83b6ce376e33a273cb9d410988fee02ec60c027bc"
+    },
+    {
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "ccea3b76f537970a95125411fff487c04fc61624ed8403c9fed39533b0417a37"
+    },
+    {
+      "path": "development/tests/model/test_private_opportunity_contract.py",
+      "sha256": "c57e37033c21aa1991c0c87cc075fbdf3735687e045fcbbb46c9478cfc604dea"
+    }
+  ],
+  "findings": [
+    "The existing private capture caller rechecks the current owner mandate. The history reader scopes tenant, installation and hashed exact-owner private prefix; passive household/contact decisions do not enter this history.",
+    "At most three recent terminal WILL_DECIDED records within 48 hours return. Measured usage with integer model attempts, original and decision hashes, source identity, latest sequence and current checkpoint coherence are checked. Unknown, abandoned, invalid and deterministic outcomes are excluded; malformed selected evidence fails capture.",
+    "Only bounded reason with full reason hash, original times/bindings, disposition, original admission status and selected attention return. No expression, feedback, recursive context, current work status or execution grant is manufactured.",
+    "The existing 8192-byte envelope trims oldest household observations, then oldest decision history, before actual commitments/jobs. Truncation remains explicit. Saved-context sizing is only preparation evidence; actual installed capture remains to be checked.",
+    "Two private-only interpretation sentences and the v3 profile preserve the same tool/schema/validator and household instructions. Silence/null remain valid, with no assigned topic, forced search, work quota or new authority."
+  ],
+  "verificationReviewed": [
+    {
+      "scope": "Providerless model contract/search/planning",
+      "passed": 16,
+      "seconds": 1.64,
+      "providerCalls": 0
+    },
+    {
+      "scope": "Private history, existing initiative context and ordinary-work context",
+      "passed": 27,
+      "failed": 1,
+      "seconds": 16.53,
+      "failedEvidencePreserved": true,
+      "failure": "New revocation test updated the work tenant instead of authority tenant and changed zero binding rows; no production source fault established."
+    },
+    {
+      "scope": "Corrected revocation test only",
+      "passed": 1,
+      "seconds": 6.16,
+      "correction": "Use authority tenant and assert exactly one updated binding. Production source unchanged; no full bundle rerun claimed."
+    }
+  ],
+  "criteriaPreserved": {
+    "originalE51DoneWhenUnchanged": true,
+    "outcome": [
+      "Ordinary model chooses useful concrete work itself without an assigned task/topic.",
+      "Existing native route completes a retained checked result for the correct private recipient.",
+      "A later ordinary review actually uses that result and chooses appropriate continuation."
+    ],
+    "separateFamilyAcceptance": "F2.1/F2.2; no seven-day or owner verdict inferred."
+  },
+  "preservedNegativeEvidence": [
+    "development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
+    "development/reviews/e51-private-orientation-review-20261019.json"
+  ],
+  "installationReviewed": false,
+  "actualOutcomeReviewed": false,
+  "limits": "GO concerns the bounded missing own-decision transfer only. It is not proven behavioral improvement, useful work, delivery, later use, E5.1 completion, long-term own life, family benefit or superiority. Installation provenance and actual ordinary behavior require separate saved evidence.",
+  "usage": {
+    "reviewerProviderCalls": 0,
+    "reviewerEvaRuntimeCalls": 0,
+    "credits": null,
+    "developmentAndRuntimeSeparate": true
+  },
+  "installationAddenda": [],
+  "actualObservationAddenda": [],
+  "evidenceHashes": [
+    {
+      "name": "implementation-report.json",
+      "sha256": "58a2a0770c5756ff5791499d4b407318f7559b27dfbb1b41c0e7e708a5c0765f"
+    },
+    {
+      "name": "decision-continuity.patch",
+      "sha256": "06db43cc0a760c4457b4c88008766a18bc7d40a55a6e1f0aef79fc74a6f38d5b"
+    },
+    {
+      "name": "implementation-report.json",
+      "sha256": "78860a4dc58ee77ecc967b4ca67b831dff028882027d38572f1186556c35eab2"
+    },
+    {
+      "name": "bounded-outcome-contract.private.json",
+      "sha256": "aecc2c203b88bee840f429d4e4dc54f8629bc6a4ceccfa13c566622473a130fe"
+    },
+    {
+      "name": "postgres-1.private.txt",
+      "sha256": "510491df27daa851b9302559d648ed8dcc460b3bfaf855b4ba8cab7c8aacf4df"
+    },
+    {
+      "name": "postgres-revocation-2.private.txt",
+      "sha256": "b59b51e393fae3f7cc06e32fa6624aeb05bcd5de5da0b9ae370611a493cca813"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 """Private orientation has phase-appropriate metadata and the same host schema."""
 from copy import deepcopy
 from datetime import UTC, datetime
+import json
 
 import pytest
 
@@ -63,7 +64,7 @@ def test_private_descriptor_only_changes_descriptions_and_cannot_mutate_househol
 @pytest.mark.parametrize("search_first", [False, True])
 def test_private_initial_and_postsearch_submit_use_the_same_private_contract(monkeypatch, tmp_path, search_first):
     model = PydanticConversationModel(auth_file=tmp_path / "unused")
-    assert model.private_opportunity_profile == "private-orientation-contract-v2"
+    assert model.private_opportunity_profile == "private-orientation-continuity-v3"
     original = canonical_json_bytes(_FREE_WILL_TOOL)
     bodies, reads = [], []
     def request(body, *args, **kwargs):
@@ -116,3 +117,36 @@ def test_each_private_request_has_a_fresh_descriptor(monkeypatch, tmp_path):
     model.evaluate_sensory_event(event(), IDENTITY, _memory())
     assert called == [True, True]
     assert canonical_json_bytes(_FREE_WILL_TOOL) == original
+
+
+def test_private_orientation_history_passes_unchanged_and_never_becomes_household_instruction(monkeypatch, tmp_path):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused")
+    history = [{"decided_at": "2026-10-18T20:00:00Z",
+        "reason": "Synthetic earlier considered silence", "reason_sha256": "c" * 64,
+        "reason_truncated": False, "disposition": "silence", "initiative_status": None,
+        "next_attention": None, "source_event_id": "initiative-review:synthetic:1",
+        "source_sha256": "a" * 64, "decision_sha256": "b" * 64, "decision_sequence": 4,
+        "classification": "historical_model_decision_not_owner_preference_or_execution_permission"}]
+    original = deepcopy(history)
+    bodies = []
+    def request(body, *args, **kwargs):
+        bodies.append(deepcopy(body))
+        return final(), USAGE
+    monkeypatch.setattr(model, "_request_using", request)
+    private = event()
+    private = SensoryEvent(private.source, private.source_event_id, private.event_type,
+        private.occurred_at, {"life_context": {"own_orientation_history": history}})
+    result = model.evaluate_sensory_event(private, IDENTITY, _memory())
+    payload = json.loads(bodies[-1]["input"][0]["content"])
+    assert payload["event"]["payload"]["life_context"]["own_orientation_history"] == original
+    assert history == original
+    assert history[0]["classification"] == "historical_model_decision_not_owner_preference_or_execution_permission"
+    instructions = bodies[-1]["instructions"]
+    assert "eigen eerdere historische afwegingen" in instructions
+    assert "geen bewonersuitspraken" in instructions and "of uitvoertoestemming" in instructions
+    assert "eerdere stilte is geen blijvend besluit" in instructions
+    assert "stilte of null geldig blijft" in instructions and "geen taakquotum" in instructions
+    assert result.initiative is None and result.next_attention is None
+    model.evaluate_sensory_event(event("household-initiative"), IDENTITY, _memory())
+    assert "own_orientation_history" not in bodies[-1]["instructions"]
+    assert "eigen eerdere historische afwegingen" not in bodies[-1]["instructions"]

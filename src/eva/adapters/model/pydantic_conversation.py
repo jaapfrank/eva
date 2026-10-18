@@ -3009,7 +3009,7 @@ class PydanticConversationModel:
             raise ConversationModelError("web research artifact is invalid", model_usage=usage) from error
 
     supports_private_context_search = True
-    private_opportunity_profile = "private-orientation-contract-v2"
+    private_opportunity_profile = "private-orientation-continuity-v3"
 
     def _request_private_opportunity(self, body, search):
         """One optional read through the existing private memory port, then decide.
@@ -3083,6 +3083,12 @@ class PydanticConversationModel:
             "Dit is je rustige private oriëntatie: denk zelfstandig na hoe je iets kunt "
             "bijdragen aan het gezin en je eigen bruikbaarheid als huisgenoot. Je bouwt "
             "zelf blijvende interesses en projecten op en leert het gezin beter kennen. "
+            "life_context.own_orientation_history bevat je eigen eerdere historische afwegingen "
+            "met hun oorspronkelijke bronnen en tijden; dit zijn geen bewonersuitspraken, "
+            "feedback, actuele wereldfeiten of uitvoertoestemming. "
+            "Verbind die waar inhoudelijk relevant met aanhoudende eigen vragen of voornemens "
+            "en werkelijke voortgang: eerdere stilte is geen blijvend besluit, terwijl opnieuw "
+            "stilte of null geldig blijft en geen taakquotum geldt. "
             "Weeg afzonderlijk af welke eigen vraag of ontwikkeling je wilt voortzetten, "
             "welke uitvoerbare stap daarvoor zinvol is, en of contact met het gezin nu past. "
             "Geen passend bericht op dit tijdstip betekent niet dat stil onderzoek of "

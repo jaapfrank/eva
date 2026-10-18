@@ -4,6 +4,7 @@ The caller owns current owner authorization and the already-scoped connection.
 No connector is contacted, task resumed, or observation promoted to current truth.
 """
 from datetime import UTC, datetime, timedelta
+import hashlib
 import re
 from zoneinfo import ZoneInfo
 
@@ -73,6 +74,104 @@ def _ordinary_work_snapshot(value, now):
         return snapshot
     except (ValueError, TypeError, OverflowError):
         return unavailable
+
+
+def _own_orientation_history(connection, scope, principal_id, now):
+    """Only completed private model decisions; contact has its own continuity port."""
+    prefix = "sensory:initiative-review:" + hashlib.sha256(principal_id.encode()).hexdigest()[:24] + ":"
+    e, c = operational_events, operational_checkpoints
+    original, decision = e.alias("orientation_original"), e.alias("orientation_decision")
+    newest_sequence = sa.select(sa.func.max(e.c.sequence)).where(
+        e.c.tenant_id == c.c.tenant_id, e.c.installation_id == c.c.installation_id,
+        e.c.thread_id == c.c.thread_id).correlate(c).scalar_subquery()
+    rows = connection.execute(sa.select(c,
+        original.c.payload.label("original"), original.c.payload_sha256.label("original_sha"),
+        original.c.occurred_at.label("source_at"),
+        decision.c.payload.label("decision"), decision.c.payload_sha256.label("decision_sha"),
+        decision.c.occurred_at.label("decided_at"), newest_sequence.label("newest_sequence"),
+    ).select_from(c.join(original, sa.and_(
+        original.c.tenant_id == c.c.tenant_id, original.c.installation_id == c.c.installation_id,
+        original.c.thread_id == c.c.thread_id, original.c.sequence == 1,
+        original.c.event_type == "SENSORY_EVENT_OBSERVED",
+    )).join(decision, sa.and_(
+        decision.c.tenant_id == c.c.tenant_id, decision.c.installation_id == c.c.installation_id,
+        decision.c.thread_id == c.c.thread_id, decision.c.sequence == c.c.revision,
+        decision.c.event_type == "WILL_DECIDED",
+    ))).where(
+        c.c.tenant_id == scope.tenant_id, c.c.installation_id == scope.installation_id,
+        c.c.thread_id.startswith(prefix), c.c.phase == "will_decided", c.c.status == "completed",
+        c.c.updated_at <= now, decision.c.occurred_at >= now - timedelta(hours=48),
+        decision.c.occurred_at <= now, original.c.occurred_at <= decision.c.occurred_at,
+        decision.c.payload["data"]["usage"]["measurement"].astext == "measured",
+        decision.c.payload["data"]["usage"]["model_attempts"].astext.op("~")("^[1-9][0-9]*$"),
+    ).order_by(decision.c.occurred_at.desc(), c.c.thread_id).limit(4)).mappings().all()
+    result = []
+    for row in rows:
+        source = _verified_data(row["original"], row["original_sha"])
+        data = _verified_data(row["decision"], row["decision_sha"])
+        source_id = row["thread_id"].removeprefix("sensory:")
+        if (re.fullmatch(re.escape(prefix) + r"[0-9]+", row["thread_id"]) is None
+                or source.get("source") != "initiative-review"
+                or source.get("event_type") != "private_opportunity_review"
+                or source.get("source_event_id") != source_id
+                or data.get("source_event_id") != source_id):
+            raise RuntimeError("private orientation source binding differs")
+        checkpoint = row["decision"].get("checkpoint")
+        expected = {key: row[key] for key in (
+            "checkpoint_id", "operation_id", "phase", "status", "retry_count", "revision")}
+        expected.update(updated_at=row["updated_at"].strftime("%Y-%m-%dT%H:%M:%SZ"),
+            deadline=None if row["deadline"] is None else row["deadline"].strftime("%Y-%m-%dT%H:%M:%SZ"),
+            last_error_fingerprint=(None if row["last_error_fingerprint"] is None
+                                    else bytes(row["last_error_fingerprint"]).hex()))
+        original_checkpoint = row["original"].get("checkpoint", {})
+        if (row["newest_sequence"] != row["revision"] or row["decided_at"] != row["updated_at"]
+                or canonical_sha256(checkpoint) != canonical_sha256(expected)
+                or type(original_checkpoint.get("revision")) is not int
+                or original_checkpoint.get("revision") != 1
+                or original_checkpoint.get("operation_id") != source_id
+                or row["operation_id"] != source_id
+                or original_checkpoint.get("phase") != "sensory_observed"
+                or original_checkpoint.get("status") != "completed"
+                or original_checkpoint.get("updated_at") != row["source_at"].strftime("%Y-%m-%dT%H:%M:%SZ")):
+            raise RuntimeError("private orientation checkpoint differs")
+        usage = data.get("usage")
+        reason, disposition = data.get("reason"), data.get("disposition")
+        if (not isinstance(usage, dict) or usage.get("measurement") != "measured"
+                or type(usage.get("model_attempts")) is not int or usage["model_attempts"] < 1
+                or any(type(usage.get(k)) is not int or usage[k] < 0
+                       for k in ("tool_calls", "input_tokens", "output_tokens"))
+                or not isinstance(data.get("provider"), str) or not data["provider"]
+                or not isinstance(reason, str) or not reason.strip() or len(reason) > 600
+                or disposition not in ("silence", "respond")):
+            raise RuntimeError("private orientation decision is malformed")
+        proposal = data.get("initiative")
+        status = None if proposal is None else proposal.get("status") if isinstance(proposal, dict) else None
+        if proposal is not None and status not in ("adopted", "already_adopted", "not_admitted"):
+            raise RuntimeError("private orientation admission status is malformed")
+        attention = data.get("next_attention")
+        if attention is not None:
+            from eva.application.resident_attention import NextAttention
+            from eva.contracts.timestamps import parse_utc_timestamp
+            if not isinstance(attention, dict) or set(attention) != {"requested_at", "at", "reason", "selection_sequence"}:
+                raise RuntimeError("private orientation attention is malformed")
+            try:
+                selected = NextAttention.from_payload({"at": attention["requested_at"], "reason": attention["reason"]})
+                effective = parse_utc_timestamp(attention["at"])
+                if (selected.at <= row["decided_at"] or effective < selected.at
+                        or type(attention["selection_sequence"]) is not int or attention["selection_sequence"] < 1):
+                    raise ValueError("attention chronology differs")
+            except (ValueError, TypeError):
+                raise RuntimeError("private orientation attention is malformed") from None
+        result.append({
+            "decided_at": row["decided_at"].isoformat(), "source_observed_at": row["source_at"].isoformat(),
+            "reason": reason[:300], "reason_sha256": hashlib.sha256(reason.encode()).hexdigest(),
+            "reason_truncated": len(reason) > 300, "disposition": disposition,
+            "initiative_status": status, "next_attention": attention,
+            "source_event_id": source_id, "source_sha256": bytes(row["original_sha"]).hex(),
+            "decision_sha256": bytes(row["decision_sha"]).hex(), "decision_sequence": row["revision"],
+            "classification": "historical_model_decision_not_owner_preference_or_execution_permission",
+        })
+    return result[:3], len(rows) > 3
 
 
 def read_private_initiative_context(connection, scope: TimelineScope,
@@ -169,11 +268,16 @@ def read_private_initiative_context(connection, scope: TimelineScope,
             "state_sha256": bytes(row["latest_sha"]).hex(),
             "is_execution_permission": False,
         })
+    orientation, orientation_truncated = _own_orientation_history(connection, scope, principal_id, now)
     result = {
+        "own_orientation_history": orientation,
         "observed_at_utc": now.isoformat(),
         "local_time": now.astimezone(ZoneInfo("Europe/Amsterdam")).isoformat(),
         "timezone": "Europe/Amsterdam", "observations": observations, "own_work": own_work,
         "coverage": {
+            "own_orientation_history_window_hours": 48,
+            "own_orientation_history_truncated": orientation_truncated,
+            "own_orientation_history_source": "same-owner completed WILL_DECIDED with measured model usage; contacts use separate history",
             "household_observation_window_hours": 24,
             "observations_are_current_proof": False,
             "observations_truncated": len(rows) > _OBSERVATIONS,
@@ -201,6 +305,9 @@ def read_private_initiative_context(connection, scope: TimelineScope,
         if observations:
             observations.pop()
             result["coverage"]["observations_truncated"] = True
+        elif orientation:
+            orientation.pop()
+            result["coverage"]["own_orientation_history_truncated"] = True
         elif own_work:
             own_work.pop()
             result["coverage"]["commitments_truncated"] = True
