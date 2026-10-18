@@ -217,7 +217,7 @@ def _retained_reads(authority, work, turn, now):
                     "source": source, "observation_sha256": hashlib.sha256(raw).hexdigest(),
                     "observation_bytes": len(raw), "historical": True,
                     "is_current_proof": False, "status": "verified_original_read"}
-                if len(raw) <= 1536:
+                if len(raw) <= _MAX_BYTES // 2:
                     item["observation"] = observation
                 else:
                     item["omitted_reason"] = "original_observation_exceeds_inline_bound"

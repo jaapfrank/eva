@@ -1,9 +1,9 @@
 {
   "contract": "EvaE51NativeResume/v1",
-  "recordedAt": "2026-10-18T14:25:24.492652+00:00",
+  "recordedAt": "2026-10-18T14:40:32.336548+00:00",
   "taskId": "E5.1",
-  "status": "installed_decision_rejection_repair_followthrough_pending",
-  "taskCompleted": false,
+  "status": "installed_operational_trial_candidate",
+  "taskCompleted": true,
   "finding": "Eva made a genuine spontaneous initiative choice. A known read verification failure and loss of native source identity in the existing resume path prevented finishing it. Silence after a blocked task was not proof that no original initiative existed.",
   "changes": [
     "Same guarded ten-second HA and research response verification already installed; original failed receipts kept.",
@@ -33,7 +33,7 @@
     },
     {
       "path": "src/eva/adapters/postgres/initiative_source_outcomes.py",
-      "sha256": "289d7b88aa4cdfc5ce2f2b9d04cbc261ad807ab8762cedef90642f82aaa19d1d"
+      "sha256": "76eb462a5c1219df36dc2e4af16784c5c436494c6fcd2e634f6f5dc448eb64c2"
     },
     {
       "path": "src/eva/adapters/postgres/sensory_events.py",
@@ -63,16 +63,16 @@
   "installation": {
     "roles": {
       "core": {
-        "image": "sha256:d4de6fe2cb26c14bc5b8bd776faaacd83ac3b1cd95cab42de037b939f53ebc0d",
+        "image": "sha256:3bc144c13dd875d5e8658d86ebfd284c7896174cd5d0d93aa1d7d5633449522d",
         "health": "healthy",
-        "startedAt": "2026-10-18T14:24:01.352177703Z",
+        "startedAt": "2026-10-18T14:33:09.545650093Z",
         "imageExact": true,
         "ownedSourceExact": true
       },
       "worker": {
-        "image": "sha256:f71765f1af062fcfe9ca58ae536900690c608c1c1a911686565cdc8d42e6ad00",
+        "image": "sha256:a095ad6f8bd21c1bc9f65fbf7f9b1f79bb3086753e4b27888fb9db4f67b05ce0",
         "health": "healthy",
-        "startedAt": "2026-10-18T14:24:32.109617728Z",
+        "startedAt": "2026-10-18T14:33:39.285730589Z",
         "imageExact": true,
         "ownedSourceExact": true
       }
@@ -137,7 +137,7 @@
     "Seven actual family days and owner acceptance remain F2.1/F2.2."
   ],
   "developmentCreditCost": null,
-  "nextChangedCause": "The precise validation/usage fault is repaired and installed. Follow the single preregistered operator-requested review on the same completed source through the existing background route; no additional unchanged retries.",
+  "nextChangedCause": "No remaining concrete E5.1 release blocker. Seven actual family days and owner acceptance remain F2.1/F2.2; speech stays with the separate executor. No further retry or comparison series.",
   "initialInstalledRepair": {
     "roles": {
       "core": {
@@ -211,7 +211,7 @@
       "creditCost": null,
       "newResultProven": true,
       "deliveryProven": true,
-      "laterSourceFollowthroughProven": false,
+      "laterSourceFollowthroughProven": true,
       "completedAt": "2026-10-18T14:11:33Z",
       "operatorRecoveryToCompletionSeconds": 127,
       "resultSHA256": "e6f37dce9226009cd3a497f6c916a8796ed19d2407e7df4d240797530a14bb38",
@@ -230,7 +230,8 @@
         "originalUsage": null,
         "state": "needs_help",
         "newDecisionOrLearningProven": false
-      }
+      },
+      "followthroughProvenance": "Operator-requested changed-cause recovery, processed by the existing ordinary background lane; not a newly unassisted spontaneous review."
     },
     "actualEvidenceSHA256": "07c5be5fd8261c7fa2d6f9fec290ecd4950f820db3725b3c6f6c4e033e2bb13e",
     "installation": {
@@ -333,9 +334,94 @@
       "newTaskOrForcedProposal": false,
       "modelCalledByOperator": false,
       "execution": "existing ordinary background scheduler",
-      "decisionProven": false,
-      "usage": null,
-      "creditCost": null
+      "decisionProven": true,
+      "usage": {
+        "measurement": "measured",
+        "input_tokens": 11279,
+        "output_tokens": 184,
+        "model_attempts": 1,
+        "tool_calls": 1
+      },
+      "creditCost": null,
+      "decidedAt": "2026-10-18T14:29:17Z",
+      "disposition": "respond",
+      "delivered": true,
+      "sourceContextSHA256": "7bb5b1a3f032c4fe27630fbeb0b13c40218c80b8293c5406ad1e64839f2f8eda",
+      "contentFinding": "Verified historical body was omitted by the smaller per-read bound, so the decision truthfully said it could not confirm details already present in the completed research. Not a content-ready E5 outcome."
+    },
+    "installedReviewSHA256": "0253fa7a764777ef60bb421af8bc4f5ce709c72e4993613dd00bb89b358d02a6",
+    "installation": {
+      "roles": {
+        "core": {
+          "image": "sha256:d4de6fe2cb26c14bc5b8bd776faaacd83ac3b1cd95cab42de037b939f53ebc0d",
+          "health": "healthy",
+          "startedAt": "2026-10-18T14:24:01.352177703Z",
+          "imageExact": true,
+          "ownedSourceExact": true
+        },
+        "worker": {
+          "image": "sha256:f71765f1af062fcfe9ca58ae536900690c608c1c1a911686565cdc8d42e6ad00",
+          "health": "healthy",
+          "startedAt": "2026-10-18T14:24:32.109617728Z",
+          "imageExact": true,
+          "ownedSourceExact": true
+        }
+      },
+      "digitalSourcePins": 68,
+      "digitalSourceDifferences": [],
+      "ownedChangedSourceCount": 12,
+      "changedSpeechFilesOrServices": false,
+      "configurationAndDataPreserved": true
     }
-  }
+  },
+  "sourceHandoffRepair": {
+    "independentSourceReviewSHA256": "a3307575e2c2c47a0de2b9d7014a02dacd80ffe7652fc264550116476ce82c59",
+    "change": "Only the generic per-read inline allowance1536→4096, preserving the existing8192 whole-context bound and all original proofs/audience/stop guards.",
+    "testsPassed": 18,
+    "testSeconds": 16.02,
+    "newFocusedCases": 5,
+    "existingSafetyCases": 13,
+    "developmentModelCalls": 0,
+    "productionWritesDuringTests": 0,
+    "actualContextReadback": {
+      "bytes": 8013,
+      "wholeContextMaximumBytes": 8192,
+      "fullOriginalObservations": 2,
+      "sameOriginalSourceAndProofHashes": true,
+      "sourceContextSHA256": "759d2448d0439d7c3b044fa3539f6dd2873e975524591293864f6f04653357e2",
+      "newExternalReads": 0,
+      "newModelCalls": 0
+    },
+    "postRepairReview": {
+      "queuedAt": "2026-10-18T14:34:14Z",
+      "operatorAssisted": true,
+      "spontaneous": false,
+      "forcedChoice": false,
+      "newTask": false,
+      "completed": true,
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 12560,
+        "output_tokens": 220,
+        "model_attempts": 1
+      },
+      "creditCost": null,
+      "decidedAt": "2026-10-18 14:38:28+00:00",
+      "deliveredAt": "2026-10-18 14:38:29+00:00",
+      "startedAt": "2026-10-18 14:38:18+00:00",
+      "disposition": "respond",
+      "sourceContextSHA256": "759d2448d0439d7c3b044fa3539f6dd2873e975524591293864f6f04653357e2",
+      "measuredTotalTokens": 12780,
+      "correctHistoricalSourceUseObserved": true,
+      "correctedEarlierSourceOmission": true,
+      "newExternalReads": 0,
+      "newResearchTask": false,
+      "newLongTermLearningProven": false,
+      "eventsSHA256": "3ebdbe608f633501c519e820824f3ac193f1b02aa7171d72eae8742ee31d0d82"
+    },
+    "independentFinalVerdict": "GO_E51_BOUNDED_TECHNICAL_CANDIDATE"
+  },
+  "independentFinalReviewSHA256": "b1d6017e319da25b2f3ba07c5cc4ab2b5b4490dc1aca589237482d917e6c56d3",
+  "completionScope": "Restored joint installed E1-E4 candidate with actual original self-chosen work, verified result/private delivery and later correct retained-source use after explicitly assisted repair. Technical readiness, not unassisted long-term autonomy, family acceptance or competitive superiority."
 }
