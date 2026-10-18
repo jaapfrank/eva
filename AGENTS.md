@@ -1,6 +1,6 @@
 # Eva2 — actuele werkafspraken
 
-Bijgewerkt op 15 oktober 2026. Dit bestand bevat de geldende uitvoering; gedateerde
+Bijgewerkt op 18 oktober 2026. Dit bestand bevat de geldende uitvoering; gedateerde
 voortgang en oude opdrachten staan in het [exacte archief](development/archive/history/20261015-authority-consolidation/snapshot.json).
 
 ## Eén doel en één werkregistratie
@@ -53,6 +53,10 @@ Eva-agent. Werk die afhankelijkheid gericht weg wanneer haar vervanging is bewez
 - Installeer werkende wijzigingen in de bestaande WSL-installatie. Baseer een
   gerichte overlay op de werkelijk huidige images/configuratie; behoud gegevens en
   wijzigingen van anderen. Geen routine van terugzetten/installeren/opnieuw beginnen.
+  Stem vervanging van de gedeelde kern af: controleer vlak vóór installatie ook
+  actieve gespreks-, modelbeoordelings- en werkclaims, niet alleen containergezondheid.
+  Onderbreek geen lopende beoordeling voor een parallelle installatie. Verlopen oude
+  markers blijven bewaard en gelden niet als bewijs dat nu nog werk loopt.
 - Werk bord, dashboard en Git bij bij start, echte blokkade en oplevering. Onderscheid
   gebouwd, geïnstalleerd, werkelijk gebruikt, technisch afgerond en eigenaaracceptatie.
   Containers, tests en een afgerond rapport zijn op zichzelf geen gezinsfunctie.
