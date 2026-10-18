@@ -1,6 +1,6 @@
 {
   "contract": "EvaE51AutonomyRepairIndependentReview/v1",
-  "reviewedAt": "2026-10-18T05:22:47.898935+00:00",
+  "reviewedAt": "2026-10-18T05:30:53.459027+00:00",
   "taskId": "E5.1",
   "technicalRepair": "GO installed corrections and exact original recovery",
   "ownerOutcome": "NOT_PROVEN",
@@ -55,9 +55,13 @@
   },
   "discoveryPurposeVariant": {
     "sourceReviewSHA256": "9c667348a22eae005086b47897a0b9a8bd3ab608a2ea688d4202a8e7b6475e08",
-    "verdict": "GO_bounded_changed_candidate_check_only",
+    "verdict": "NO_OBSERVED_GAIN_REFERENCE_RETAINED",
     "installedSourceExact": true,
-    "actualUserOutcome": "NOT_YET_PROVEN",
-    "AIDE2SelfLearningProven": false
-  }
+    "actualUserOutcome": "NOT_PROVEN",
+    "AIDE2SelfLearningProven": false,
+    "actualReviewSHA256": "0a6e05cee41ae9cef5839efad9cac855b82f72a26102dfb6d1f751cc19e416d8",
+    "referenceFunctionExactInstalled": true,
+    "unchangedCandidateRepeated": false
+  },
+  "reuseScopeReviewSHA256": "d73714a3d3faf492165725bfb971080c6a6e9e442d06500e33af940ca86c57d0"
 }

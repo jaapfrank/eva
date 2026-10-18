@@ -1,8 +1,8 @@
 {
   "contract": "EvaE51AutonomyRepairInstalled/v1",
-  "recordedAt": "2026-10-18T05:22:47.898935+00:00",
+  "recordedAt": "2026-10-18T05:30:53.459027+00:00",
   "taskId": "E5.1",
-  "status": "changed_purpose_variant_installed_actual_execution_pending",
+  "status": "actual_autonomy_not_achieved_after_bounded_changed_variant",
   "taskCompleted": false,
   "changes": [
     "Durable known non-dispatch preparation failure separated from actual possible provider dispatch, with at most3bounded preparations and old UNKNOWN retained.",
@@ -84,13 +84,12 @@
     "laterUseProven": false
   },
   "measurement": {
-    "newOperatorModelRequests": 0,
     "onePostRepairOrientationQueuedForOrdinaryScheduler": true,
     "newComparisons": 0,
     "creditCost": null,
     "developmentUsage": "unknown; separate from Eva runtime",
-    "ordinaryRuntimeUsage": "One replacement orientation measured; interrupted original remains unknown. No claim of total runtime/development cost.",
-    "coordinatorRequestedOrientations": 2,
+    "ordinaryRuntimeUsage": "Five completed observed reviews: four operator-stimulated and one normal scheduled review. Their registered tokens are measured; interrupted original usage and other runtime/development use remain outside this total. Queuing rather than direct dispatch does not make these model calls free.",
+    "coordinatorRequestedOrientations": 5,
     "directOperatorModelCalls": 0,
     "replacementRuntimeUsage": {
       "measurement": "measured",
@@ -98,7 +97,15 @@
       "tool_calls": 1,
       "input_tokens": 8362,
       "output_tokens": 161
-    }
+    },
+    "measuredObservedRuntimeReviews": 5,
+    "measuredRuntimeModelAttempts": 5,
+    "measuredRuntimeToolCalls": 5,
+    "measuredRuntimeInputTokens": 44102,
+    "measuredRuntimeOutputTokens": 709,
+    "measuredRuntimeTotalTokens": 44811,
+    "unknownInterruptedRuntimeReviews": 1,
+    "scope": "Only observed review calls for this correction; excludes earlier48h128723tokens, other work and Codex development."
   },
   "evidence": [
     {
@@ -199,18 +206,25 @@
   ],
   "privateEvidence": "Full snapshots and own result content remain private; public report contains hashes,aggregate status and bounded claims only.",
   "currentRuntimeSuccessor": {
-    "core": {
-      "image": "sha256:d144dc893f08359a160301dfd5abdb3212cb90a4869f308bcc30dcdfef633081",
-      "id": "b21ad2a2b0f19cdb22780036a2a58cfb58c205bb005c2fede1463468dd4112d9",
-      "health": "healthy"
+    "at": "2026-10-18T05:30:53.459027+00:00",
+    "roles": {
+      "core": {
+        "image": "sha256:a8fe9bf2b0235557cf89ee9eec7ef80b3c820bd31e5d09a5fe5f9715859a5bb7",
+        "health": "healthy",
+        "startedAt": "2026-10-18T05:29:30.778832874Z",
+        "modelSHA256": "ed025ed67101e4aa2be74069ff940fca1feb3ae3d46523c7802ebce68b83ca9b",
+        "referenceFunctionRestored": true
+      },
+      "worker": {
+        "image": "sha256:9d277709b572921ac530be7f73e02343875e079b8343a269f2ac0021d8a8587d",
+        "health": "healthy",
+        "startedAt": "2026-10-18T05:29:01.712332864Z",
+        "modelSHA256": "ed025ed67101e4aa2be74069ff940fca1feb3ae3d46523c7802ebce68b83ca9b",
+        "referenceFunctionRestored": true
+      }
     },
-    "worker": {
-      "image": "sha256:ad8a6d5c600592b058aee31f5779f655f6128df3bf64eee582ad211f8896337b",
-      "id": "536d9250219a2e7bed62d42a36afd6034d21df551271180ee4a9024b73f6758e",
-      "health": "healthy"
-    },
-    "sourceCount": 70,
-    "sourceParity": true
+    "retainsVerifiedTransferCorrections": true,
+    "functionalAutonomyProven": false
   },
   "budgetAmendment": "One replacement only after externally interrupted initial orientation; see fixed-before-execution v2 plan. No third for silence or failure.",
   "ownLifeAlignment": {
@@ -416,13 +430,74 @@
       "stimulated": true,
       "topicAssigned": false,
       "forcedInitiative": false,
-      "state": "queued_for_ordinary_scheduler",
+      "state": "completed_silence_no_initiative",
       "newWork": 0,
       "newResults": 0,
-      "newDeliveries": 0
+      "newDeliveries": 0,
+      "completedAt": "2026-10-18T05:27:21+00:00",
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 9484,
+        "output_tokens": 153,
+        "model_attempts": 1
+      },
+      "initiativeChosen": false,
+      "nextAttentionChosen": false,
+      "resultPayloadSHA256": "551b62572a5fcf8d6a752ead615cc520b945ef1181c7dc1efd3ae1cb303f784d"
     },
     "maxOperatorQueuedOrientations": 1,
     "provenImprovement": false,
-    "AIDE2SelfLearningProven": false
+    "AIDE2SelfLearningProven": false,
+    "stopConditionApplied": true,
+    "referenceDisposition": {
+      "decision": "Reference function retained after no observed gain; all proven data-transfer fixes preserved",
+      "actualIndependentReviewSHA256": "0a6e05cee41ae9cef5839efad9cac855b82f72a26102dfb6d1f751cc19e416d8",
+      "installedAt": "2026-10-18T05:30:53.459027+00:00",
+      "roles": {
+        "core": {
+          "image": "sha256:a8fe9bf2b0235557cf89ee9eec7ef80b3c820bd31e5d09a5fe5f9715859a5bb7",
+          "health": "healthy",
+          "startedAt": "2026-10-18T05:29:30.778832874Z",
+          "modelSHA256": "ed025ed67101e4aa2be74069ff940fca1feb3ae3d46523c7802ebce68b83ca9b",
+          "referenceFunctionRestored": true
+        },
+        "worker": {
+          "image": "sha256:9d277709b572921ac530be7f73e02343875e079b8343a269f2ac0021d8a8587d",
+          "health": "healthy",
+          "startedAt": "2026-10-18T05:29:01.712332864Z",
+          "modelSHA256": "ed025ed67101e4aa2be74069ff940fca1feb3ae3d46523c7802ebce68b83ca9b",
+          "referenceFunctionRestored": true
+        }
+      },
+      "newModelCheck": false,
+      "configurationEnvironmentMountsRetained": true
+    }
+  },
+  "reusedProof": {
+    "independentScopeReviewSHA256": "d73714a3d3faf492165725bfb971080c6a6e9e442d06500e33af940ca86c57d0",
+    "softwareLearning": {
+      "task": "E4.5",
+      "evidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+      "verdict": "reuse original independent gain, exact automatic application and later real native use",
+      "limits": "One bounded timestamp-parser candidate, initial owner-assisted admission; no universal self-improvement or superior family intelligence claim."
+    },
+    "closedHistoricalProofsReplayed": false,
+    "remaining": "Actual new self-chosen result and follow-through after present autonomy repair; operator wake alone does not prove spontaneous/multiday family benefit."
+  },
+  "additionalChangedCandidatePlans": [
+    "privateContactCorrection.actualAutonomyCheck",
+    "ordinaryWorkContextCorrection.actualCheck",
+    "discoveryPurposeVariant.actualCheck"
+  ],
+  "householdIntakeReadOnlyFollowup": {
+    "newOriginalObservationsSinceRecovery": 211,
+    "originalSources": "binary_sensor:94, light:117",
+    "newHouseholdDecisionSinceRecovery": false,
+    "reason": "Existing22:00-08:00Europe/Amsterdam quiet-window gate precedes household projection/evaluation; inspected05:29:59UTC is07:29:59local.",
+    "intakeAndCompositionConfigured": true,
+    "doesNotProveBehaviorOutsideQuietWindow": true,
+    "newModelCalls": 0,
+    "configurationChanged": false
   }
 }
