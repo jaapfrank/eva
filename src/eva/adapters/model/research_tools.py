@@ -118,7 +118,7 @@ class NativeResearchTool:
             observation_tool_name=self.tool_name, observation_arguments=arguments,
             tool_configuration_sha256=self._configuration_sha256(),
             execution_timeout_seconds=int(getattr(self.research, "native_research_timeout_seconds", lambda: 55.0)()) + 5,
-            verification_timeout_seconds=1,
+            verification_timeout_seconds=10,
             receipt_output={"verification_scope": "research_artifact_only",
                 "provider_request_body": envelope, "provider_request_body_sha256": envelope_hash,
                 "public_input_checks": review,

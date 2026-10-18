@@ -1,6 +1,6 @@
 {
   "contract": "EvaE51ReadVerificationFollowthrough/v1",
-  "recordedAt": "2026-10-18T13:16:25.858224+00:00",
+  "recordedAt": "2026-10-18T13:22:26.084578+00:00",
   "taskId": "E5.1",
   "status": "installed_changed_cause_followthrough_pending",
   "taskCompleted": false,
@@ -75,7 +75,29 @@
       }
     },
     "configurationEnvironmentMountsRetained": true,
-    "speechServicesChanged": false
+    "speechServicesChanged": false,
+    "successorRoles": {
+      "core": {
+        "image": "sha256:ae66f053a70565f15de3208ebb989282b1fe80b779e8c57626cff925d2e93e39",
+        "health": "healthy",
+        "startedAt": "2026-10-18T13:20:02.761901903Z",
+        "sources": {
+          "/opt/eva/src/eva/adapters/connectors/home_assistant_api.py": "dd7cb3121cf96552e749a90c08a9815d7bdfcd1aa091f887517b17eb8d84f060",
+          "/opt/eva/src/eva/adapters/model/research_tools.py": "bf9d758e48d40ebadb24e0a066ebf6b72702755f0104ac5504979efee8445144"
+        },
+        "sourcesExact": true
+      },
+      "worker": {
+        "image": "sha256:0dbd3740d7739ae31b6b15056e3c4bf05194f793eb6a76c00cd36de4927ead12",
+        "health": "healthy",
+        "startedAt": "2026-10-18T13:19:25.683075401Z",
+        "sources": {
+          "/opt/eva/src/eva/adapters/connectors/home_assistant_api.py": "dd7cb3121cf96552e749a90c08a9815d7bdfcd1aa091f887517b17eb8d84f060",
+          "/opt/eva/src/eva/adapters/model/research_tools.py": "bf9d758e48d40ebadb24e0a066ebf6b72702755f0104ac5504979efee8445144"
+        },
+        "sourcesExact": true
+      }
+    }
   },
   "changedCauseCheck": {
     "queuedAt": "2026-10-18T13:15:59+00:00",
@@ -83,6 +105,76 @@
     "forcedInitiative": false,
     "topicAssigned": false,
     "maxOperatorQueuedOrientations": 1,
-    "state": "queued_for_ordinary_scheduler"
-  }
+    "state": "queued_for_ordinary_scheduler",
+    "additionalOperatorWake": false,
+    "singleQueuedReviewRetainedWithoutDispatchDuringCompletionInstall": true
+  },
+  "sameCauseResearchRoute": {
+    "module": "eva.adapters.model.research_tools",
+    "sharedPreparationConsumers": [
+      "NativeResearchTool",
+      "OwnerResearchContinuationTool"
+    ],
+    "linesChanged": 1,
+    "verificationSecondsBefore": 1,
+    "verificationSecondsAfter": 10,
+    "sourceSHA256": "bf9d758e48d40ebadb24e0a066ebf6b72702755f0104ac5504979efee8445144",
+    "independentPatchReviewSHA256": "6d0feef6a1cd290ea828a30822c62dcb285baa886dd0cd1549cdf04c7d128ff3",
+    "existingTestsPassed": 12,
+    "seconds": 1.82,
+    "newModelCalls": 0,
+    "installation": {
+      "state": "installed",
+      "roles": {
+        "core": {
+          "image": "sha256:ae66f053a70565f15de3208ebb989282b1fe80b779e8c57626cff925d2e93e39",
+          "health": "healthy",
+          "startedAt": "2026-10-18T13:20:02.761901903Z",
+          "sources": {
+            "/opt/eva/src/eva/adapters/connectors/home_assistant_api.py": "dd7cb3121cf96552e749a90c08a9815d7bdfcd1aa091f887517b17eb8d84f060",
+            "/opt/eva/src/eva/adapters/model/research_tools.py": "bf9d758e48d40ebadb24e0a066ebf6b72702755f0104ac5504979efee8445144"
+          },
+          "sourcesExact": true
+        },
+        "worker": {
+          "image": "sha256:0dbd3740d7739ae31b6b15056e3c4bf05194f793eb6a76c00cd36de4927ead12",
+          "health": "healthy",
+          "startedAt": "2026-10-18T13:19:25.683075401Z",
+          "sources": {
+            "/opt/eva/src/eva/adapters/connectors/home_assistant_api.py": "dd7cb3121cf96552e749a90c08a9815d7bdfcd1aa091f887517b17eb8d84f060",
+            "/opt/eva/src/eva/adapters/model/research_tools.py": "bf9d758e48d40ebadb24e0a066ebf6b72702755f0104ac5504979efee8445144"
+          },
+          "sourcesExact": true
+        }
+      },
+      "configurationEnvironmentMountsRetained": true
+    },
+    "reason": "The only other one-second verification budget uses the same guarded wrapper and retained no-I/O observation; leaving it would preserve the same failure in research."
+  },
+  "activeDigitalSourceParity": {
+    "existingSourcePins": 68,
+    "coreWorkerDifferences": 0,
+    "missing": 0
+  },
+  "candidate": {
+    "core": {
+      "image": "sha256:ae66f053a70565f15de3208ebb989282b1fe80b779e8c57626cff925d2e93e39",
+      "sourceFileCount": 385,
+      "sourceManifestSHA256": "28fb18dcfcbf72e8f16b0b3764cf622a0793234d2c7595f269617fcabf1680f0",
+      "dependencyCount": 47,
+      "dependencyManifestSHA256": "18570711deb8e103983a58f6d043e3c126efe40dd4977ed7d9b078948368e17d",
+      "configurationAndMountsSHA256": "6941acb946958195524c6ffb7226064455c20aefe014d592bf455a17115c69ba",
+      "python": "3.12.14"
+    },
+    "worker": {
+      "image": "sha256:0dbd3740d7739ae31b6b15056e3c4bf05194f793eb6a76c00cd36de4927ead12",
+      "sourceFileCount": 373,
+      "sourceManifestSHA256": "d76c3c4a94d0ad61ed80e1cfd372be1fc30821969bf9c7319cd0feb83581e954",
+      "dependencyCount": 45,
+      "dependencyManifestSHA256": "f543ab7c25c045b9838f9e62488312c8a957035f83d5a8d4985d11062fb5f8e8",
+      "configurationAndMountsSHA256": "9166c546535bfcb094aa13a134f02d905a793c68c7acca8aa6c8eec590c778a4",
+      "python": "3.12.14"
+    }
+  },
+  "currentMandateProfileMatches": true
 }

@@ -7,5 +7,7 @@
   "installedSourcesExact": true,
   "actualOutcome": "NOT_YET_PROVEN",
   "taskCompleted": false,
-  "familyAcceptance": false
+  "familyAcceptance": false,
+  "sameCauseResearchSourceReviewSHA256": "6d0feef6a1cd290ea828a30822c62dcb285baa886dd0cd1549cdf04c7d128ff3",
+  "activeDigitalSourcePinsAgree": 68
 }

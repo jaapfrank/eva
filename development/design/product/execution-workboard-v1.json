@@ -847,8 +847,8 @@
     "title": "Eigen initiatief van bronlezing tot afgerond resultaat herstellen",
     "status": "in_progress",
     "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
-    "nextAction": "Het echte eigen initiatief van14:51 bereikte HA, maar faalde op de1secondeverificatie. Die algemene fout is geïnstalleerd verholpen en26gerichte controles slagen. Eén nieuwe afweging met de gewijzigde technische oorzaak staat klaar; Eva kiest zelf vervolg. Nog geen nieuw afgerond resultaat; E5.1 blijft open.",
-    "checkedAt": "2026-10-18T13:16:25.858224+00:00",
+    "nextAction": "Een echt zelfgekozen onderzoek bereikte HA maar faalde op te korte verificatie. Dezelfde fout is nu in huis- en onderzoeksroute geïnstalleerd hersteld;26+12gerichte controles slagen en68actieve uitvoerbronnen zijn gelijk gebonden. Eén actuele afweging volgt de gewijzigde oorzaak, zonder opgelegd onderwerp. Werkelijk eindresultaat/terugmelding/vervolg blijven open.",
+    "checkedAt": "2026-10-18T13:22:26.084578+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1632,11 +1632,11 @@
       "deliveryOverview": {
         "deliveries": [
           {
-            "title": "Fout in controle van een echt HA-antwoord hersteld",
+            "title": "Te korte antwoordcontrole in huis- en onderzoeksroute hersteld",
             "state": "installed",
             "date": "2026-10-18T13:16:25.858224+00:00",
-            "checkedAt": "2026-10-18T13:16:25.858224+00:00",
-            "summary": "Eva koos zelf een onderzoek. Geldig HA-antwoord werd door te korte verificatie afgekeurd. Algemene route gecorrigeerd; oude mislukking blijft bewaard.",
+            "checkedAt": "2026-10-18T13:22:26.084578+00:00",
+            "summary": "Dezelfde verificatiefout in beide bestaande adapters hersteld.38gerichte controles groen; huidige kern/uitvoerder behouden alle bestaande gegevens en bevoegdheden.",
             "remaining": "Echte zelfstandige afronding, terugkoppeling en vervolg volgen nog.",
             "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-read-verification-followthrough-20261018.json",
             "review": "/home/administrator/project/Eva2/development/reviews/e51-read-verification-review-20261018.json",
@@ -2471,7 +2471,7 @@
           "summary": "E5.1 · Eigen activiteit daadwerkelijk laten werken",
           "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
           "state": "in_progress",
-          "detail": "Het echte eigen initiatief van14:51 bereikte HA, maar faalde op de1secondeverificatie. Die algemene fout is geïnstalleerd verholpen en26gerichte controles slagen. Eén nieuwe afweging met de gewijzigde technische oorzaak staat klaar; Eva kiest zelf vervolg. Nog geen nieuw afgerond resultaat; E5.1 blijft open."
+          "detail": "Een echt zelfgekozen onderzoek bereikte HA maar faalde op te korte verificatie. Dezelfde fout is nu in huis- en onderzoeksroute geïnstalleerd hersteld;26+12gerichte controles slagen en68actieve uitvoerbronnen zijn gelijk gebonden. Eén actuele afweging volgt de gewijzigde oorzaak, zonder opgelegd onderwerp. Werkelijk eindresultaat/terugmelding/vervolg blijven open."
         },
         "next": {
           "title": "Gericht herstel binnen de bestaande E5.1-kaart",
@@ -2484,12 +2484,12 @@
           "detail": "De controle bevestigt concrete autonomietekorten. Codex moet die oplossen; jouw gezinsproef is geen vervanging voor werkende eigen activiteit. Spraak blijft bij de andere WSL-uitvoerder.",
           "required": false
         },
-        "checkedAt": "2026-10-18T13:16:25.858224+00:00",
-        "reviewedAt": "2026-10-18T13:16:25.858224+00:00",
+        "checkedAt": "2026-10-18T13:22:26.084578+00:00",
+        "reviewedAt": "2026-10-18T13:22:26.084578+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-18T13:16:25.858224+00:00",
-      "checkedAt": "2026-10-18T13:16:25.858224+00:00",
+      "reviewedAt": "2026-10-18T13:22:26.084578+00:00",
+      "checkedAt": "2026-10-18T13:22:26.084578+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -6051,7 +6051,7 @@
                 "ownerActionRequired": false,
                 "existing": "De gebundelde technische kandidaat en haar eerdere beperkte bewijzen blijven beschikbaar; werkende algemene overdrachten voor actuele context en privécontact zijn geïnstalleerd.",
                 "gap": "Werkelijk zelfstandig gekozen nieuw werk is nu aangetoond; de uitvoering faalde door verificatie-timeout. Nieuw afgerond resultaat en vervolg blijven open.",
-                "nextAction": "Het echte eigen initiatief van14:51 bereikte HA, maar faalde op de1secondeverificatie. Die algemene fout is geïnstalleerd verholpen en26gerichte controles slagen. Eén nieuwe afweging met de gewijzigde technische oorzaak staat klaar; Eva kiest zelf vervolg. Nog geen nieuw afgerond resultaat; E5.1 blijft open.",
+                "nextAction": "Een echt zelfgekozen onderzoek bereikte HA maar faalde op te korte verificatie. Dezelfde fout is nu in huis- en onderzoeksroute geïnstalleerd hersteld;26+12gerichte controles slagen en68actieve uitvoerbronnen zijn gelijk gebonden. Eén actuele afweging volgt de gewijzigde oorzaak, zonder opgelegd onderwerp. Werkelijk eindresultaat/terugmelding/vervolg blijven open.",
                 "files": [
                   "src",
                   "deploy",
@@ -6078,7 +6078,7 @@
                   ]
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-18T13:16:25.858224+00:00",
+                "checkedAt": "2026-10-18T13:22:26.084578+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling van jou nodig. Dit zijn aangetoonde technische en functionele tekorten voor Codex, geen ontbrekende gezinsacceptatie.",
@@ -6128,7 +6128,7 @@
                       "status": "in_progress",
                       "outcome": "Gewone eigen oriëntatie leidt aantoonbaar tot zelfstandig uitgevoerd resultaat en later vervolg; stilte/reflectietelling niet als gezinsnut tellen.",
                       "resultProven": false,
-                      "note": "Het echte eigen initiatief van14:51 bereikte HA, maar faalde op de1secondeverificatie. Die algemene fout is geïnstalleerd verholpen en26gerichte controles slagen. Eén nieuwe afweging met de gewijzigde technische oorzaak staat klaar; Eva kiest zelf vervolg. Nog geen nieuw afgerond resultaat; E5.1 blijft open."
+                      "note": "Een echt zelfgekozen onderzoek bereikte HA maar faalde op te korte verificatie. Dezelfde fout is nu in huis- en onderzoeksroute geïnstalleerd hersteld;26+12gerichte controles slagen en68actieve uitvoerbronnen zijn gelijk gebonden. Eén actuele afweging volgt de gewijzigde oorzaak, zonder opgelegd onderwerp. Werkelijk eindresultaat/terugmelding/vervolg blijven open."
                     }
                   ],
                   "newProductTasksAdded": false
@@ -9727,7 +9727,7 @@
               "ownerActionRequired": false,
               "existing": "De gebundelde technische kandidaat en haar eerdere beperkte bewijzen blijven beschikbaar; werkende algemene overdrachten voor actuele context en privécontact zijn geïnstalleerd.",
               "gap": "Werkelijk zelfstandig gekozen nieuw werk is nu aangetoond; de uitvoering faalde door verificatie-timeout. Nieuw afgerond resultaat en vervolg blijven open.",
-              "nextAction": "Het echte eigen initiatief van14:51 bereikte HA, maar faalde op de1secondeverificatie. Die algemene fout is geïnstalleerd verholpen en26gerichte controles slagen. Eén nieuwe afweging met de gewijzigde technische oorzaak staat klaar; Eva kiest zelf vervolg. Nog geen nieuw afgerond resultaat; E5.1 blijft open.",
+              "nextAction": "Een echt zelfgekozen onderzoek bereikte HA maar faalde op te korte verificatie. Dezelfde fout is nu in huis- en onderzoeksroute geïnstalleerd hersteld;26+12gerichte controles slagen en68actieve uitvoerbronnen zijn gelijk gebonden. Eén actuele afweging volgt de gewijzigde oorzaak, zonder opgelegd onderwerp. Werkelijk eindresultaat/terugmelding/vervolg blijven open.",
               "files": [
                 "src",
                 "deploy",
@@ -9754,7 +9754,7 @@
                 ]
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-18T13:16:25.858224+00:00",
+              "checkedAt": "2026-10-18T13:22:26.084578+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling van jou nodig. Dit zijn aangetoonde technische en functionele tekorten voor Codex, geen ontbrekende gezinsacceptatie.",
@@ -9804,7 +9804,7 @@
                     "status": "in_progress",
                     "outcome": "Gewone eigen oriëntatie leidt aantoonbaar tot zelfstandig uitgevoerd resultaat en later vervolg; stilte/reflectietelling niet als gezinsnut tellen.",
                     "resultProven": false,
-                    "note": "Het echte eigen initiatief van14:51 bereikte HA, maar faalde op de1secondeverificatie. Die algemene fout is geïnstalleerd verholpen en26gerichte controles slagen. Eén nieuwe afweging met de gewijzigde technische oorzaak staat klaar; Eva kiest zelf vervolg. Nog geen nieuw afgerond resultaat; E5.1 blijft open."
+                    "note": "Een echt zelfgekozen onderzoek bereikte HA maar faalde op te korte verificatie. Dezelfde fout is nu in huis- en onderzoeksroute geïnstalleerd hersteld;26+12gerichte controles slagen en68actieve uitvoerbronnen zijn gelijk gebonden. Eén actuele afweging volgt de gewijzigde oorzaak, zonder opgelegd onderwerp. Werkelijk eindresultaat/terugmelding/vervolg blijven open."
                   }
                 ],
                 "newProductTasksAdded": false
@@ -10018,12 +10018,12 @@
     },
     "currentRuntime": {
       "recordedAt": "2026-10-18T03:25:39.234269+00:00",
-      "checkedAt": "2026-10-18T13:16:25.858224+00:00",
+      "checkedAt": "2026-10-18T13:22:26.084578+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "image": "sha256:73d9df68952b69deb0b174ee42c2bc9a5cb841d35a47697dfe2a5557579808cb",
-      "coreImage": "sha256:73d9df68952b69deb0b174ee42c2bc9a5cb841d35a47697dfe2a5557579808cb",
-      "workerImage": "sha256:35ca43719d38b68916a98fe875f6869a347f82d6b65b13ba6e17e9fd885b1a18",
+      "image": "sha256:ae66f053a70565f15de3208ebb989282b1fe80b779e8c57626cff925d2e93e39",
+      "coreImage": "sha256:ae66f053a70565f15de3208ebb989282b1fe80b779e8c57626cff925d2e93e39",
+      "workerImage": "sha256:0dbd3740d7739ae31b6b15056e3c4bf05194f793eb6a76c00cd36de4927ead12",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
@@ -10034,7 +10034,7 @@
       "evidencePath": "development/evidence/reassessment/e51-read-verification-followthrough-20261018.json",
       "independentSourceReview": "development/reviews/e51-autonomy-repair-review-20261018.json",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "Algemene HA-antwoordverificatie naar de bestaande normale10seconden; bron exact gecontroleerd. Werkelijk afgerond eigen resultaat blijft open.",
+      "meaning": "Huis- en onderzoeksantwoordverificatie gecorrigeerd; beide bronnen exact en68actieve digitale bronpins gelijk. Werkelijk afgerond eigen resultaat blijft open.",
       "executionSourceCount": 10,
       "executionSourceParity": true
     },
@@ -11258,7 +11258,7 @@
       "taskCompleted": false
     }
   },
-  "updatedAt": "2026-10-18T13:16:25.858224+00:00",
+  "updatedAt": "2026-10-18T13:22:26.084578+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -11295,5 +11295,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-18T13:16:25.858224+00:00"
+  "lastUpdatedAt": "2026-10-18T13:22:26.084578+00:00"
 }
