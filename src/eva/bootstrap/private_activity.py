@@ -7,7 +7,7 @@ import sqlalchemy as sa
 
 from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
 from eva.adapters.postgres.operational_timeline import (
-    PostgresOperationalTimeline, operational_events as events,
+    PostgresOperationalTimeline, operational_checkpoints, operational_events as events,
 )
 from eva.application.conversation import ConversationActionInputRejected, ConversationConflict
 from eva.bootstrap.dashboard_learning import _component_records, _principals
@@ -274,7 +274,7 @@ class PrivateActivityHistory:
     def _initiatives(self, owner, start, end, calendar_end, offset, now):
         e = events.c
         owned = owner._query().with_only_columns(
-            events.c.thread_id).subquery()
+            operational_checkpoints.c.thread_id).subquery()
         prefix = "sensory:initiative-review:" + hashlib.sha256(str(owner._owner).encode()).hexdigest()[:24] + ":"
         with owner._engine.begin() as conn:
             owner._authorize(conn, now)

@@ -49,22 +49,24 @@ class CompletedContributionActions:
             raise ConversationConflict("recursive initiative registration is unavailable")
         return self._adopter.validate(turn)
 
-    def available_for(self, turn):
+    def _available_authority(self, turn):
         if turn.audience.kind != "private_person" or turn.conversation_id.startswith("initiative-task:"):
-            return False
+            return None
         try:
-            self._authority(turn)
+            return self._authority(turn)
         except (ConversationConflict, OSError, ValueError):
-            return False
+            return None
         except RuntimeError as error:
             if str(error) == "initiative owner binding is not current":
-                return False
+                return None
             raise
-        return True
+
+    def available_for(self, turn):
+        return self._available_authority(turn) is not None
 
     def active_context(self, turn):
-        if not self.available_for(turn):
-            return ()
+        # No source data is returned here. Capability discovery and execution
+        # each perform their own current authority checks.
         return ()
 
     def _id(self, turn, step_index):
@@ -104,9 +106,10 @@ class CompletedContributionActions:
         return self.pending_step(turn, step_index=step_index)
 
     def pending_step(self, turn, *, step_index):
-        if not self.available_for(turn):
+        admitted = self._available_authority(turn)
+        if admitted is None:
             return None
-        authority, _ = self._authority(turn)
+        authority, _ = admitted
         events = PostgresOperationalTimeline(authority.owner._engine, authority.owner._scope).events(
             "intent:" + self._id(turn, step_index))
         if not events:

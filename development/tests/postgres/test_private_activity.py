@@ -166,6 +166,51 @@ def test_learning_pages_do_not_include_other_person_or_outside_day(database,monk
     assert not read(x,source='learning',day='2026-08-25')['sources']['learning']['records']
 
 
+def test_initiative_pages_keep_exact_owner_threads_after_adoption_query_projection(database,monkeypatch):
+    x=prepared(database,'activity-initiative-owner-pages',monkeypatch)
+    expected=set()
+    for i in range(23):
+        intent='personal-interest:'+hashlib.sha256(('owned:'+str(i)).encode()).hexdigest()
+        event(x,'intent:'+intent,'PERSONAL_INTENT_ADOPTED',{
+            'principal_id':str(x.owner._owner),'origin':'eva_initiative',
+            'intent_id':intent,'title':'Owned initiative '+str(i)},seconds=i)
+        expected.add(intent)
+    own_prefix=hashlib.sha256(str(x.owner._owner).encode()).hexdigest()[:24]
+    event(x,'sensory:initiative-review:'+own_prefix+':1','WILL_DECIDED',
+        {'reason':'Own review'},seconds=23)
+
+    # These newer records share the installation but belong to another owner,
+    # another origin, or a completely unrelated thread. None may enter the
+    # initiative page through an unscoped event-table projection.
+    for i in range(23):
+        intent='personal-interest:'+hashlib.sha256(('foreign:'+str(i)).encode()).hexdigest()
+        event(x,'intent:'+intent,'PERSONAL_INTENT_ADOPTED',{
+            'principal_id':'other-person','origin':'eva_initiative',
+            'intent_id':intent,'title':'Foreign initiative'},seconds=30+i)
+    event(x,'unrelated:private-thread','PRIVATE_NOTE_RECORDED',
+        {'summary':'Unrelated private content'},seconds=54)
+    event(x,'sensory:initiative-review:other-owner:1','WILL_DECIDED',
+        {'reason':'Other owner review'},seconds=55)
+    event(x,'intent:wrong-origin','PERSONAL_INTENT_ADOPTED',{
+        'principal_id':str(x.owner._owner),'origin':'manual',
+        'title':'Not an Eva initiative'},seconds=56)
+    other=prepared(database,'activity-initiative-other-installation',monkeypatch)
+    event(other,'intent:other-installation','PERSONAL_INTENT_ADOPTED',{
+        'principal_id':str(x.owner._owner),'origin':'eva_initiative',
+        'title':'Other installation'},seconds=57)
+    x.clock[0]+=timedelta(seconds=90)
+
+    first=read(x,source='initiative')['sources']['initiative']
+    assert len(first['records'])==20 and first['next_offset']==20
+    assert first==read(x,source='initiative')['sources']['initiative']
+    second=read(x,source='initiative',offset=first['next_offset'])['sources']['initiative']
+    records=first['records']+second['records']
+    assert len(second['records'])==4 and second['next_offset'] is None
+    assert {r['intent_id'] for r in records if r['intent_id'] is not None}==expected
+    assert [r['detail'] for r in records if r['intent_id'] is None]==[{'reason':'Own review'}]
+    assert len({r['source_sha256'] for r in records})==24
+
+
 def test_all_source_paging_must_choose_explicit_source(database,monkeypatch):
     x=prepared(database,'activity-explicit-paging',monkeypatch)
     with pytest.raises(ConversationActionInputRejected): read(x,offset=20)

@@ -1,6 +1,7 @@
 """Owner-bound LiveKit connector endpoint; no client-selectable principal."""
 from __future__ import annotations
 
+from contextlib import nullcontext
 from dataclasses import replace
 from datetime import UTC, datetime
 import json
@@ -44,6 +45,9 @@ class VoiceRequest(BaseModel):
     recent: list[HeardMessage] = Field(default_factory=list, max_length=24)
     active_work: list[ActiveWork] = Field(default_factory=list, max_length=8)
     work_results: list[WorkResult] = Field(default_factory=list, max_length=4)
+    # Existing streaming clients keep their provisional text. Literal speech
+    # consumes only committed replies and explicit spoken updates.
+    stream_deltas: bool = Field(default=True, strict=True)
 
 class PrivateReturnRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -151,9 +155,10 @@ def stream_voice_turn(*, runtime, payload: VoiceRequest, turn: ConversationTurn,
             check()
             if admit is not None:
                 turn = admit(turn)
-            with voice_context(context), stream_conversation_text(
+            text_stream = (stream_conversation_text(
                 lambda text: event({"type": "delta", "text": text})
-            ):
+            ) if payload.stream_deltas else nullcontext())
+            with voice_context(context), text_stream:
                 reply = runtime.respond(turn)
             if reply.conversation_id != turn.conversation_id or reply.message_id != turn.message_id:
                 raise ValueError("Voice reply crossed its request binding")

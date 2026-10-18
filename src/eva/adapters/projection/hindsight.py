@@ -101,6 +101,29 @@ _LOGGER = logging.getLogger(__name__)
 
 _PROJECTION_VERSION = "hindsight-0.9.1-v1"
 _ANCHOR_TOKEN = re.compile(r"(?u)\b[^\W_][\w-]{5,63}\b")
+# These Dutch grammatical/time words qualify by length, but do not identify a
+# topic on their own. Keep them in the full question: expanding e.g. "gisteren"
+# separately discards what happened and can promote unrelated older memories.
+# Deliberately narrower than a general stopword list ("buiten" is a real topic).
+# Explicit bound/planned concepts bypass this filter, including these words.
+_IMPLICIT_ANCHOR_NON_TOPICS = frozenset({
+    "vandaag", "gisteren", "eergisteren", "morgen", "overmorgen",
+    "vanochtend", "vanmiddag", "vanavond", "vannacht", "destijds",
+    "gedaan", "geweest", "geworden", "hebben", "hadden", "worden",
+    "werden", "kunnen", "konden", "moeten", "moesten", "zullen",
+    "zouden", "willen", "wilden", "wanneer", "waarom", "hoeveel",
+    "welke", "iemand", "iedereen", "niemand", "jezelf", "mijzelf",
+    "jijzelf", "onszelf", "zichzelf", "jullie", "eigenlijk", "misschien",
+    "andere", "anders", "dezelfde", "hetzelfde", "allemaal",
+    "daarmee", "daarover", "daarvoor", "daardoor", "hiermee", "hierover",
+    "hiervoor", "hierdoor", "waarmee", "waarover", "waarvoor", "waardoor",
+    "bedoel", "bedoelt", "bedoelde", "bedoelden", "bedoelen",
+    "vertel", "vertelt", "vertelde", "vertelden", "vertellen",
+    "denken", "dachten", "gedacht", "zeggen", "gezegd",
+    "vragen", "vroegen", "gevraagd", "wachten", "wachtte", "wachtten",
+    "begrijp", "begrijpt", "begreep", "begrepen", "begrijpen",
+    "herinner", "herinnert", "herinnerde", "herinnerden", "herinneren",
+})
 _PLANNED_QUERY_MARKER = "Semantische zoekconcepten:"
 _BOUND_QUERY_MARKER = "Gebonden retrieval-ankers:"
 _SHA256 = re.compile(r"[0-9a-f]{64}")
@@ -590,13 +613,14 @@ class HindsightMemoryEngine:
 
     @staticmethod
     def _recall_query_variants(query_text: str) -> tuple[str, ...]:
-        """Extract rare lexical anchors from the full query in parallel.
+        """Extract candidate topic anchors from the full query in parallel.
 
         Each outgoing variant is bounded separately at the HTTP boundary.
 
         Dense retrieval can bury a unique Dutch place, person, or device name under
-        the rest of a natural sentence. The longest words are sent as independent
-        semantic queries and fused with the full-sentence result. They never encode
+        the rest of a natural sentence. The longest remaining topic words are sent
+        as independent semantic queries and fused with the full-sentence result.
+        Grammatical and conversational verbs remain in the full query. Anchors never encode
         a scenario or an answer and therefore remain connector- and persona-neutral.
         """
 
@@ -633,6 +657,8 @@ class HindsightMemoryEngine:
         unique: dict[str, str] = {}
         for match in _ANCHOR_TOKEN.finditer(query_text):
             token = match.group(0)
+            if token.casefold() in _IMPLICIT_ANCHOR_NON_TOPICS:
+                continue
             unique.setdefault(token.casefold(), token)
         anchors = sorted(unique.values(), key=lambda value: -len(value))[:3]
         return (query_text, *anchors)

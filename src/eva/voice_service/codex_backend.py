@@ -173,7 +173,7 @@ class EvaVoiceBackend:
         self.active[message_id] = text
         payload = {'session_id':self.session_id,'message_id':message_id,'text':text,
                    'recent':self.recent[-24:], 'active_work':active,
-                   'work_results':work_results}
+                   'work_results':work_results, 'stream_deltas':False}
         self.diagnostic('core_request', recent_count=len(payload['recent']))
         self.notify({'type':'work_started','message_id':message_id,'text':text})
         try:

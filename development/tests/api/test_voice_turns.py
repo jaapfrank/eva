@@ -1,6 +1,7 @@
 from types import SimpleNamespace
 from uuid import uuid4
 import json
+import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from eva.adapters.api.dashboard_access import DashboardAccess
@@ -62,7 +63,8 @@ def test_credentials_revocation_and_client_identity_rejected():
     assert client.post(PATH, headers={"Authorization": "Bearer " + TOKEN}, json=payload()).status_code == 403
 
 
-def test_revocation_during_turn_discards_late_text_and_final():
+@pytest.mark.parametrize("stream_deltas", [True, False])
+def test_revocation_during_turn_discards_late_text_and_final(stream_deltas):
     from eva.application.conversation import publish_conversation_text
     client, config, runtime = setup()
     original = runtime.respond
@@ -74,10 +76,44 @@ def test_revocation_during_turn_discards_late_text_and_final():
     runtime.respond = revoke_during_response
     data = payload()
     data["active_work"] = []
+    data["stream_deltas"] = stream_deltas
     response = client.post(PATH, headers={"Authorization": "Bearer " + TOKEN}, json=data)
     rows = [json.loads(line) for line in response.text.splitlines()]
     assert rows == [{"type": "error", "code": "voice_authority_changed"}]
     assert "uitlekken" not in response.text and "In orde" not in response.text
+
+
+@pytest.mark.parametrize("stream_deltas", [None, False])
+def test_literal_client_can_omit_provisional_text_without_losing_spoken_updates(stream_deltas, monkeypatch):
+    from eva.application.conversation import publish_conversation_text
+    from eva.application.voice_context import SPEAK_AND_CONTINUE
+    from eva.adapters.api import voice_turns
+    original_stream = voice_turns.stream_conversation_text
+    streams = []
+    def track_stream(callback):
+        streams.append(callback)
+        return original_stream(callback)
+    monkeypatch.setattr(voice_turns, "stream_conversation_text", track_stream)
+    client, _, runtime = setup()
+    original = runtime.respond
+    def respond(turn):
+        result = original(turn)
+        publish_conversation_text("Voorlopige woorden.", tools_disabled=True)
+        current_voice_context().speak_and_continue(ConversationActionCall(
+            "thinking", SPEAK_AND_CONTINUE, {"text": "Even denken…"}))
+        return result
+    runtime.respond = respond
+    data = payload()
+    data["active_work"] = []
+    if stream_deltas is not None:
+        data["stream_deltas"] = stream_deltas
+    response = client.post(PATH, headers={"Authorization": "Bearer " + TOKEN}, json=data)
+    rows = [json.loads(line) for line in response.text.splitlines()]
+    assert [row["type"] for row in rows] == (
+        (["delta"] if stream_deltas is None else []) + ["spoken_update", "final"])
+    assert len(streams) == (1 if stream_deltas is None else 0)
+    assert rows[-2]["text"] == "Even denken…"
+    assert rows[-1]["reply"]["text"] == "In orde."
 
 
 def test_canonical_admitted_turn_reaches_stop_and_after_response():

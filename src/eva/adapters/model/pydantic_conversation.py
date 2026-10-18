@@ -4317,6 +4317,9 @@ class PydanticConversationModel:
                 "Kun je nu al inhoudelijk antwoorden, antwoord dan direct zonder tussenreactie."
             )
         action_guidance = " ".join(action_guidance_parts)
+        voice = current_voice_context()
+        spoken_contract = ("" if voice is None else
+                           "\n\nActuele mondelinge antwoordvorm:\n" + voice.spoken_instructions())
         return (
             f"Je bent {identity.name}. {identity.description}\n\n"
             "Vorm één eigen oordeel uit je IdentityPack, tijdlijn, bewezen waarnemingen "
@@ -4384,6 +4387,7 @@ class PydanticConversationModel:
             "Een lagere, toepasselijke expliciete woordlimiet van deze persoon gaat "
             "voor deze algemene bovengrens. Houd ook expliciete opmaakverboden aan; "
             "controleer lengte en opmaak voordat je antwoordt."
+            f"{spoken_contract}"
         )
 
 

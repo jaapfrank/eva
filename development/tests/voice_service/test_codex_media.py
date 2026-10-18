@@ -203,7 +203,8 @@ async def test_native_capture_is_drained_before_account_negotiation(monkeypatch)
         yield pcm(700,16000)
     monkeypatch.setattr(codex_media,'CodexVoiceSession',Voice)
     state=BridgeState(None)
-    session=CodexMediaSession({'codex_executable':'unused','codex_auth_file':'unused'},state,lambda:None)
+    session=CodexMediaSession({'codex_executable':'unused','codex_auth_file':'unused'},state,
+        lambda:None,speech_output=SimpleNamespace())
     session.prewarm()
     session.output.audio=Sink();session.input.audio=microphone()
     await asyncio.sleep(0)
@@ -236,19 +237,67 @@ async def test_actual_speaker_failure_without_local_stop_still_fails_closed():
         await source.capture_frame(pcm(700))
 
 @pytest.mark.asyncio
-async def test_cached_wake_greeting_plays_without_a_model_connection():
+@pytest.mark.parametrize('asset', ['0.wav', '1.wav', '2.wav'])
+async def test_cached_wake_greeting_plays_without_a_model_connection(asset, monkeypatch):
+    import hashlib
+    import json
+    import wave
+    from array import array
+    from pathlib import Path
+    from av import AudioResampler
+    from eva.voice_service import codex_media
+
+    path=Path(codex_media.__file__).parent/'greetings'/asset
+    manifest=json.loads((path.parent/'manifest.json').read_text())
+    entry=next(row for row in manifest['clips'] if row['file']==asset)
+    assert hashlib.sha256(path.read_bytes()).hexdigest()==entry['sha256']
+    with wave.open(str(path),'rb') as recording:
+        assert (recording.getframerate(),recording.getnchannels(),recording.getsampwidth())==(48000,1,2)
+        count=recording.getnframes();raw=recording.readframes(count)
+    assert count/48000==entry['seconds']
+    # Compare the complete voiced waveform against independently resampled
+    # source PCM, including its first and last voiced samples. The existing
+    # speaker gate may omit the remaining quiet tail, not any spoken fragment.
+    original=AudioFrame(format='s16',layout='mono',samples=count)
+    original.sample_rate=48000;original.planes[0].update(raw)
+    resampler=AudioResampler(format='s16',layout='mono',rate=24000)
+    expected=b''.join(bytes(frame.planes[0])[:frame.samples*2]
+        for frame in resampler.resample(original)+resampler.resample(None))
+    def voiced_span(data):
+        samples=array('h',data)
+        indices=[i for i,value in enumerate(samples) if abs(value)>80]
+        assert indices
+        return data[indices[0]*2:(indices[-1]+1)*2]
+
+    acknowledged=asyncio.Event();waiting=asyncio.Event()
     class Sink:
-        def __init__(self):self.frames=0;self.flushed=False;self.confirmed=False
-        async def capture_frame(self,frame):self.frames+=frame.samples_per_channel
+        wire=object()
+        segment=None
+        def __init__(self):self.frames=[];self.flushed=False;self.confirmed=False
+        async def capture_frame(self,frame):
+            self.frames.append(bytes(frame.data))
+            if self.segment is None:
+                self.segment=SimpleNamespace(task=asyncio.create_task(acknowledged.wait()))
         def flush(self):self.flushed=True
-        async def wait_for_playout(self):self.confirmed=True
+        async def wait_for_playout(self):
+            waiting.set();await self.segment.task;self.confirmed=True
         def clear_buffer(self):pass
+    monkeypatch.setattr('secrets.choice',lambda paths:path)
     session=CodexMediaSession({},None,lambda:None)
     sink=Sink();session.output.audio=sink;session.source=SpeakerSource(sink)
-    await session.greet()
-    assert sink.frames>24000 and sink.flushed and sink.confirmed
-    assert session.voice is None
-    await session.aclose()
+    greeting=asyncio.create_task(session.greet())
+    try:
+        await asyncio.wait_for(waiting.wait(),1)
+        assert voiced_span(b''.join(sink.frames))==voiced_span(expected)
+        assert sink.flushed and not sink.confirmed and not greeting.done()
+        assert session.source.input_suppressed and session.voice is None
+        acknowledged.set();await asyncio.wait_for(greeting,1)
+        assert sink.confirmed and session.source.input_suppressed
+        await asyncio.sleep(.32)
+        assert not session.source.input_suppressed
+    finally:
+        acknowledged.set();await asyncio.gather(greeting,return_exceptions=True)
+        await session.aclose()
 
 
 def provider_turn(session, kind, identity, role='assistant', text=''):
@@ -602,7 +651,7 @@ async def test_revoking_active_offer_stops_audio_but_cancelling_queued_offer_doe
     active.interrupt();await asyncio.gather(active.task,return_exceptions=True)
     await asyncio.sleep(0)
     assert session.source.cleared==1 and session.output_suppressed
-    assert stops==['thread/realtime/appendText']
+    assert stops==[]  # V3 appendText is speakable context, not a cancel command.
     assert not session.closed
     await session.aclose()
 
@@ -804,11 +853,101 @@ def test_speech_parts_preserve_exact_text_and_transport_bound(text):
     from eva.voice_service.codex_media import speech_parts
     parts=list(speech_parts(text))
     assert ''.join(parts)==text
-    assert all(0<len(part)<=1500 for part in parts)
+    assert all(0<len(part)<=160 or len(part.split())==1 for part in parts)
+    assert all(len(part.split())<=25 for part in parts)
     if ' ' in text:
         assert all(part[-1].isspace() for part in parts[:-1])
     if '.' in text:
         assert all(part.rstrip().endswith('.') for part in parts[:-1])
+
+
+@pytest.mark.parametrize(('text','expected'), [
+    ('Een hele zin.  Nog een hele zin.  Dit is het vervolg.',
+     ['Een hele zin.  Nog een hele zin.  ', 'Dit is het vervolg.']),
+    ('Dit kan in een rustige clausule, en daarna gaat deze lange zin nog verder.',
+     ['Dit kan in een rustige clausule, ', 'en daarna gaat deze lange zin nog ', 'verder.']),
+    ('een twee drie vier vijf zes zeven acht negen tien elf twaalf dertien',
+     ['een twee drie vier vijf zes zeven ', 'acht negen tien elf twaalf dertien']),
+])
+def test_short_render_parts_prefer_sentences_then_clauses_then_whole_words(text,expected):
+    from eva.voice_service.codex_media import speech_parts
+    assert list(speech_parts(text,limit=35))==expected
+
+
+def test_short_word_render_is_bounded_by_words_and_never_slices_a_long_token():
+    from eva.voice_service.codex_media import speech_parts
+    text='ik '*31
+    parts=list(speech_parts(text))
+    assert ''.join(parts)==text and [len(part.split()) for part in parts]==[25,6]
+    token='x'*180
+    assert list(speech_parts(token+' klaar.'))==[token+' ', 'klaar.']
+
+
+@pytest.mark.asyncio
+async def test_next_render_part_waits_for_terminal_and_device_ack_and_can_be_cancelled():
+    sent=asyncio.Queue();ack=asyncio.Queue()
+    class Voice:
+        async def say(self,text):sent.put_nowait(text)
+        async def close(self):pass
+    class Source:
+        def playback_marker(self):return 0
+        async def confirm_playout(self,marker):return await ack.get()
+        def clear_queue(self):pass
+        async def aclose(self):pass
+    session=CodexMediaSession({},None,lambda:None,render_only=True)
+    session.started.set();session.voice=Voice();session.source=Source()
+    text='Een volledige zin, zonder wijziging of extra tekst.  '*8
+    handle=session.say(text)
+    try:
+        first=await asyncio.wait_for(sent.get(),1)
+        assert len(first)<=160 and text.startswith(first)
+        provider_turn(session,'turn.created','first')
+        for _ in range(3):await asyncio.sleep(0)
+        assert sent.empty()
+        provider_turn(session,'turn.done','first',text=first)
+        for _ in range(3):await asyncio.sleep(0)
+        assert sent.empty() and not handle.done()
+        ack.put_nowait(True)
+        second=await asyncio.wait_for(sent.get(),.1)
+        assert text.startswith(first+second)
+        provider_turn(session,'turn.created','second')
+        handle.interrupt()
+        await asyncio.gather(handle.task,return_exceptions=True)
+        provider_turn(session,'turn.done','second',text=second)
+        ack.put_nowait(True)
+        for _ in range(3):await asyncio.sleep(0)
+        assert sent.empty() and handle.interrupted
+    finally:await session.aclose()
+
+
+@pytest.mark.parametrize(('render_only','started','channel_state'), [
+    (False,True,'open'), (True,False,'open'), (True,True,'connecting'),
+    (True,True,'closed'),
+])
+def test_context_cannot_use_listener_or_unready_renderer_channel(render_only,started,channel_state):
+    sent=[]
+    session=CodexMediaSession({},None,lambda:None,render_only=render_only)
+    if started:session.started.set()
+    session.channel=SimpleNamespace(readyState=channel_state,send=sent.append)
+    with pytest.raises(ValueError,match='not ready'):
+        session.send_speech_context({'type':'session.context.append'})
+    assert not sent
+
+
+def test_renderer_context_rechecks_authority_before_using_its_ordered_channel():
+    import json
+    sent=[];authorized=True
+    def check():
+        if not authorized:raise ValueError('Authority revoked')
+    session=CodexMediaSession({},None,check,render_only=True)
+    session.started.set();session.channel=SimpleNamespace(readyState='open',send=sent.append)
+    event={'type':'session.context.append','channel':'commentary',
+           'content':[{'type':'input_text','text':'synthetic script'}]}
+    session.send_speech_context(event)
+    assert [json.loads(value) for value in sent]==[event]
+    authorized=False
+    with pytest.raises(ValueError,match='Authority revoked'):session.send_speech_context(event)
+    assert len(sent)==1
 
 
 @pytest.mark.asyncio

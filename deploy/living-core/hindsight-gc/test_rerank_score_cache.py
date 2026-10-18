@@ -38,6 +38,19 @@ class ScoreCacheTests(unittest.TestCase):
         self.assertEqual(len(calls),4); self.assertEqual(len(cache._entries),2)
         now[0]=3.;read('b');self.assertEqual(len(calls),5)
 
+    def test_default_lifetime_reuses_scores_after_session_idle_but_expires(self):
+        now=[0.];cache=Cache(clock=lambda:now[0]);calls=[]
+        def compute(pairs):calls.append(pairs);return [1.25]
+        def read():return cache.predict([('q','document')],compute,context='model')
+        self.assertEqual(read(),[1.25])
+        for elapsed in (121.,3599.):
+            now[0]=elapsed
+            self.assertEqual(read(),[1.25])
+        self.assertEqual(len(calls),1)
+        # Hits do not prolong the lifetime of the original calculation.
+        now[0]=3600.;self.assertEqual(read(),[1.25])
+        self.assertEqual(len(calls),2)
+
     def test_concurrent_misses_not_serialized_and_context_cannot_poison(self):
         cache=Cache();entered=threading.Event();release=threading.Event()
         def old(pairs):entered.set();release.wait(2);return [1.]

@@ -1369,6 +1369,37 @@ def test_model_planned_synonyms_become_independent_recall_queries() -> None:
     )
 
 
+@pytest.mark.parametrize("text", [
+    "Wat heb je vandaag gedaan?", "En wat heb je gisteren gedaan?",
+    "Wat hadden jullie eigenlijk kunnen doen?",
+    "Wacht even, ik bedoelde iets anders. Hoe gaat het met je?",
+    "Vertel eens, wat herinner je je van gisteren?",
+    "Ik begrijp het. Wat bedoelde je daarmee?",
+])
+def test_implicit_recall_keeps_grammatical_context_without_topicless_expansion(
+    hindsight_server, text,
+):
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    result = engine.recall_for_presence(replace(_query(), query_text=text))
+    requests = [body for method, path, body in state.requests
+                if method == "POST" and path.endswith("/memories/recall")]
+    assert [body["query"] for body in requests] == [text]
+    assert result.confirmed_facts  # Full scoped semantic recall still runs.
+
+
+def test_implicit_recall_preserves_named_topics_and_explicit_time_concepts():
+    text = "Wat heb je gisteren in Apeldoorn aan de buitenverlichting gedaan?"
+    assert HindsightMemoryEngine._recall_query_variants(text) == (
+        text, "buitenverlichting", "Apeldoorn",
+    )
+    for marker in ("Gebonden retrieval-ankers:", "Semantische zoekconcepten:"):
+        explicit = f"Zoek dit op.\n{marker} gisteren, gedaan"
+        assert HindsightMemoryEngine._recall_query_variants(explicit) == (
+            explicit, "gisteren", "gedaan",
+        )
+
+
 def test_reflection_has_no_unmanaged_schedule_and_refreshes_only_on_request(
     hindsight_server: tuple[str, _State],
 ) -> None:

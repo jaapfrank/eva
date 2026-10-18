@@ -27,18 +27,38 @@ acknowledgements, interpretations or follow-up questions. Do not delegate.
 Stay silent until speech text is supplied."""
 RENDER_TAIL_TIMEOUT = 3
 RENDER_TAIL_QUIET_SAMPLES = 14400  # 300 ms of received mono PCM at 48 kHz.
+RENDER_SPEECH_MAX_CHARACTERS = 160
+RENDER_SPEECH_MAX_WORDS = 25
+INPUT_FRAGMENT_QUIET_SECONDS = .55
 
 
-def speech_parts(text, limit=1500):
-    """Keep supplied text intact while preferring complete sentences or words."""
-    while len(text)>limit:
-        head=text[:limit]
+def speech_parts(text, limit=RENDER_SPEECH_MAX_CHARACTERS,
+                 word_limit=RENDER_SPEECH_MAX_WORDS):
+    """Bound outstanding speech at natural boundaries, preserving every word.
+
+    V3 has no verified hard cancellation. Only one part is offered at a time,
+    so an interrupted answer cannot leave a long unspoken remainder in flight.
+    An individual token longer than the character budget remains intact; the
+    transport's separate maximum still applies.
+    """
+    while text:
+        words=list(re.finditer(r"\S+",text))
+        if len(text)<=limit and len(words)<=word_limit:
+            yield text
+            return
+        cap=min(limit,words[word_limit].start() if len(words)>word_limit else len(text))
+        head=text[:cap]
         endings=list(re.finditer(r"[.!?][\"'’”)]*\s+",head))
+        if not endings:endings=list(re.finditer(r"[,;:][\"'’”)]*\s+",head))
         if not endings:endings=list(re.finditer(r"\s+",head))
-        boundary=endings[-1].end() if endings else limit
+        if endings:
+            boundary=endings[-1].end()
+        else:
+            # No word boundary fits: preserve the entire exceptional token.
+            ending=re.search(r"\s+",text)
+            boundary=ending.end() if ending else len(text)
         yield text[:boundary]
         text=text[boundary:]
-    if text:yield text
 
 
 def access_lease(path):
@@ -159,9 +179,11 @@ class AudioInputPort:
 
 
 class CodexMediaSession:
-    def __init__(self, config, state, check, *, render_only=False):
+    def __init__(self, config, state, check, *, render_only=False, speech_output=None):
         self.config,self.state,self.check=config,state,check
         self.render_only=render_only
+        self.speech_output=speech_output
+        self._literal_tts=None
         self.renderer=None
         self._turns={}
         self._input_generations={}
@@ -234,6 +256,14 @@ class CodexMediaSession:
             fields[name]=value if isinstance(value,str) and value in allowed else 'unknown'
         self.diagnostic(stage,**fields)
 
+    def send_speech_context(self, event):
+        """Send the pinned renderer protocol on its existing ordered channel."""
+        self.current()
+        if (not self.render_only or not self.started.is_set() or self.channel is None
+                or self.channel.readyState!='open'):
+            raise ValueError('Renderer context transport is not ready')
+        self.channel.send(json.dumps(event,ensure_ascii=False))
+
     def on(self, name, callback=None):
         def register(fn):self.handlers.setdefault(name,[]).append(fn);return fn
         return register(callback) if callback else register
@@ -261,9 +291,11 @@ class CodexMediaSession:
 
         This opens no model session and reads no microphone or account lease.
         """
+        if self.render_only:return  # Literal TTS has no model account or peer.
         if self.peer is not None:return
         if not self.render_only and self.renderer is None:
-            self.renderer=CodexMediaSession(self.config,self.state,self.current,render_only=True)
+            self.renderer=CodexMediaSession(self.config,self.state,self.current,
+                render_only=True,speech_output=self.speech_output)
             self.renderer.prewarm()
         self.peer=RTCPeerConnection();self.microphone=MicrophoneTrack(
             lambda dropped, queued: self.diagnostic('microphone_overrun',
@@ -473,8 +505,9 @@ class CodexMediaSession:
 
     async def flush_input(self):
         # The provider can finalize a clause just before recognizing its last
-        # word. A short quiet window joins only unadmitted adjacent fragments.
-        await asyncio.sleep(.45)
+        # word or a continuation after a natural pause. Keep a bounded quiet
+        # window before admitting work; new speech cancels this pending flush.
+        await asyncio.sleep(INPUT_FRAGMENT_QUIET_SECONDS)
         self.current()
         if self._input_open:return
         fragments=sorted(self._input_fragments,key=lambda row:row[2])
@@ -600,12 +633,17 @@ class CodexMediaSession:
         self.opened_at=time.monotonic()
         self.last_activity=self.opened_at
         if self.state is None:self.state=agent.state
+        if self.render_only:
+            from eva.voice_service.literal_speech import start_literal_renderer
+            start_literal_renderer(self)
+            return
         if not self.render_only:
             self.bridge=await EvaVoiceBackend(self.state.backend,self.state.session_id,self.current,
             self.state.notify,state=self.state,refresh_context=agent.refresh_saved_context).open()
             self.bridge.allow_handoffs=False
         self.voice=CodexVoiceSession(self.config['codex_executable'],
-            lambda:access_lease(self.config['codex_auth_file']),self.bridge,media_only=True)
+            lambda:access_lease(self.config['codex_auth_file']),self.bridge,media_only=True,
+            context_sender=self.send_speech_context if self.render_only else None)
         self.prewarm()
         self.channel.on('message', self.provider_message)
         @self.peer.on('track')
@@ -854,6 +892,10 @@ class CodexMediaSession:
                     if self.render_only:
                         await asyncio.wait_for(self.started.wait(),30)
                         self.current()
+                    if self._literal_tts is not None:
+                        from eva.voice_service.literal_speech import speak_literal
+                        if await speak_literal(self,text,handle):handle.interrupted=False
+                        return
                     if isinstance(text,str):await part(text)
                     else:
                         async for value in text:await part(value)
@@ -876,16 +918,15 @@ class CodexMediaSession:
             self._response_floor=self._generation
             self._input_changed.set()
             return self.renderer.stop_current_audio()
-        if self.render_only and (self._assistant_turns or
+        if self.render_only and self._literal_tts is None and (self._assistant_turns or
                 self._awaiting_speech_turn or self._speaking_handle is not None):
             self._render_drain_needed=True
         self.output_suppressed=True
         self.retire_interrupted_output()
         if self.source:self.source.clear_queue()
-        if self.voice and not self.closed and self._assistant_turns:
-            self.task(self.voice.request('thread/realtime/appendText',{
-                'threadId':self.voice.thread,'role':'developer',
-                'text':'Stop speaking now and listen. Previously accepted backend work remains active.'}))
+        # A V3 appendText "STOP" is speakable context, not a cancel operation.
+        # Mute and retire locally, then retain the terminal/tail fence. Never
+        # append control prose that can extend or contaminate the old response.
 
     def interrupt(self):
         if self.renderer is not None:
@@ -925,6 +966,7 @@ class CodexMediaSession:
                 try:
                     if self.renderer:await self.renderer.aclose()
                     if self.voice:await self.voice.close()
+                    if self._literal_tts:await self._literal_tts.aclose()
                 finally:
                     try:
                         if self.peer:await self.peer.close()

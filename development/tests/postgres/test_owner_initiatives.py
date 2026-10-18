@@ -60,6 +60,26 @@ def test_owner_can_read_result_and_stop_claimed_work_without_resurrection(postgr
     assert control().artifact(next_intent, now=at) == {
         "filename": artifact.filename, "content": artifact.content, "sha256": artifact.content_sha256}
     assert any(card["has_artifact"] for card in control().page(now=at)["cards"])
+    # The optimized adoption-first query must return the same rows, including
+    # completed/stopped work and exact adoption payloads, as the original join.
+    from eva.adapters.postgres.operational_timeline import operational_checkpoints, operational_events
+    instance = control()
+    c, e = operational_checkpoints.c, operational_events.c
+    original = sa.select(operational_checkpoints, e.payload.label("adoption")).join(
+        operational_events, sa.and_(c.tenant_id == e.tenant_id,
+            c.installation_id == e.installation_id, c.thread_id == e.thread_id)
+    ).where(c.tenant_id == instance._scope.tenant_id,
+        c.installation_id == instance._scope.installation_id,
+        e.event_type == "PERSONAL_INTENT_ADOPTED",
+        e.payload["data"]["principal_id"].astext == str(owner),
+        e.payload["data"]["origin"].astext == "eva_initiative")
+    with postgres_engine.begin() as conn:
+        instance._authorize(conn, at)
+        order = (c.updated_at.desc(), c.thread_id)
+        expected = conn.execute(original.order_by(*order).limit(4)).mappings().all()
+        actual = conn.execute(instance._query().order_by(*order).limit(4)).mappings().all()
+        assert actual == expected and len(actual) == 2
+
     with pytest.raises(RuntimeError, match="binding is not current"):
         control(_id(label, "other")).artifact(next_intent, now=at)
     with pytest.raises(LookupError):

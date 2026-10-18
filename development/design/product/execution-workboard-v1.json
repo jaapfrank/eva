@@ -2846,7 +2846,7 @@
                 "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
                 "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
                 "blocker": null,
-                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
                 "checkedAt": "2026-10-17T13:21:29.304952+00:00",
                 "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
                 "ownerTrial": {
@@ -2856,7 +2856,7 @@
                   "blocksIndependentWork": false,
                   "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                 },
-                "nextAction": "De andere WSL-uitvoerder rondt tempo, vloeiendheid en de echte gespreksroute af. Deze uitvoerder wijzigt geen spraakcode of installatie. Bestaand bewijs en open fysieke beoordeling behouden.",
+                "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": true,
@@ -3037,6 +3037,29 @@
                     "developmentSpeechRequests": 11,
                     "developmentVoiceUsageKnown": false,
                     "deployment": "Voor elke vervanging nul actieve voiceleases; geheugen/kern ook geen actief gedelegeerd of geheugenwerk. Nieuwe kernimage van andere uitvoerder gedetecteerd en behouden; gerichte overlay opnieuw op die werkelijkeimage gebouwd. Geen permanente onderhoudslock."
+                  },
+                  "liveCompletion20261018": {
+                    "startedAt": "2026-10-18T02:19:46.999720+00:00",
+                    "status": "installed_repairs_gpu_recovery_coordination",
+                    "ownerInstruction": "Zorg dat het geheel werkt; live testen, problemen en eigenaardigheden oplossen; onderzoek of vraag wanneer kennis ontbreekt. Geen testscores als vervanging voor een goed gesprek.",
+                    "existing": "Gedeelde Eva-kern/geheugen en bestaande speaker-/browserroutes. De eerdere claim van letterlijke generatieve audio is in deze ronde weerlegd en vervangen door bestaande HA-spraakuitvoer.",
+                    "gap": "Eerdere beperkte proeven sluiten gebruikersroute/echte audio niet volledig; circa8s onderbrekingsvertraging; relevantie/natuurlijkheid en betrouwbare start/afscheid nog onvoldoende live aangetoond.",
+                    "routes": [
+                      "actual installed browser microphone/LiveKit/private-core/rendered audio",
+                      "existing native speaker/shared-core/audio acknowledgements",
+                      "existing pinned subscription realtime transport"
+                    ],
+                    "doneWhen": "Geconstateerde gespreksfouten gericht opgelost en geïnstalleerde hele route live gebruikt met echte audio: relevante sociale/eigen-activiteitsantwoorden, coherente vervolgvragen, behoud van eerste woorden, onderbreken en betrouwbaar afscheid/heropenen. Fysieke of menselijke waarneming die niet beschikbaar is gericht navragen; niet vervangen door softwaretesttelling.",
+                    "ownerAccepted": false,
+                    "ownerActionRequired": true,
+                    "updatedAt": "2026-10-18T04:15:10.372575+00:00",
+                    "result": "Werkelijke ontvangen audio en kerntekst komen overeen; eerste woorden, samengestelde invoer, dagantwoord, onderbreken en afscheid gericht hersteld. Bestaande Fenna-spraakuitvoer gebruikt dezelfde Eva-kern. Alle wijzigingen geïnstalleerd; post6 inhoud passend en afscheid gesloten.",
+                    "currentInvestigation": "Live groet13,8s, dagbrug11s en dageindantwoord20,8s blijven te langzaam. Windows RTX5080 werkt; WSL NVML/CUDA geblokkeerd met dxg -75. Gecontroleerde WSL-herstart voorbereid; onderbreekt toolserver en andere WSL-processen, dus coördineren. Daarna pas GPU-rangschikking/livegesprek bewijzen.",
+                    "liveScope": "Werkelijke browser, LiveKit, provider en Eva-kern, synthetische Nederlandse microfooninvoer en werkelijk ontvangen PCM vóór gedempte fysieke uitvoer; geen claim over menselijke luisteracceptatie of akoestische hardware.",
+                    "measuredCoreTestTokens": 666883,
+                    "testSourcesErased": 37,
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
+                    "restartExecuted": false
                   }
                 },
                 "executionOwner": "other_wsl_voice_executor",
@@ -3082,7 +3105,7 @@
                 "kind": "verbeteren",
                 "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                 "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
-                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
                 "ownerTrial": {
                   "status": "partial_with_false_interruptions_and_stop_failure",
                   "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -3092,8 +3115,8 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "De andere WSL-uitvoerder rondt gewone onderbreking en stoppen af. Deze uitvoerder wijzigt geen spraakcode of installatie. Bestaand bewijs en open fysieke beoordeling behouden.",
-                "ownerActionRequired": false,
+                "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
+                "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
@@ -3267,6 +3290,29 @@
                     "developmentSpeechRequests": 11,
                     "developmentVoiceUsageKnown": false,
                     "deployment": "Voor elke vervanging nul actieve voiceleases; geheugen/kern ook geen actief gedelegeerd of geheugenwerk. Nieuwe kernimage van andere uitvoerder gedetecteerd en behouden; gerichte overlay opnieuw op die werkelijkeimage gebouwd. Geen permanente onderhoudslock."
+                  },
+                  "liveCompletion20261018": {
+                    "startedAt": "2026-10-18T02:19:46.999720+00:00",
+                    "status": "installed_repairs_gpu_recovery_coordination",
+                    "ownerInstruction": "Zorg dat het geheel werkt; live testen, problemen en eigenaardigheden oplossen; onderzoek of vraag wanneer kennis ontbreekt. Geen testscores als vervanging voor een goed gesprek.",
+                    "existing": "Gedeelde Eva-kern/geheugen en bestaande speaker-/browserroutes. De eerdere claim van letterlijke generatieve audio is in deze ronde weerlegd en vervangen door bestaande HA-spraakuitvoer.",
+                    "gap": "Eerdere beperkte proeven sluiten gebruikersroute/echte audio niet volledig; circa8s onderbrekingsvertraging; relevantie/natuurlijkheid en betrouwbare start/afscheid nog onvoldoende live aangetoond.",
+                    "routes": [
+                      "actual installed browser microphone/LiveKit/private-core/rendered audio",
+                      "existing native speaker/shared-core/audio acknowledgements",
+                      "existing pinned subscription realtime transport"
+                    ],
+                    "doneWhen": "Geconstateerde gespreksfouten gericht opgelost en geïnstalleerde hele route live gebruikt met echte audio: relevante sociale/eigen-activiteitsantwoorden, coherente vervolgvragen, behoud van eerste woorden, onderbreken en betrouwbaar afscheid/heropenen. Fysieke of menselijke waarneming die niet beschikbaar is gericht navragen; niet vervangen door softwaretesttelling.",
+                    "ownerAccepted": false,
+                    "ownerActionRequired": true,
+                    "updatedAt": "2026-10-18T04:15:10.372575+00:00",
+                    "result": "Werkelijke ontvangen audio en kerntekst komen overeen; eerste woorden, samengestelde invoer, dagantwoord, onderbreken en afscheid gericht hersteld. Bestaande Fenna-spraakuitvoer gebruikt dezelfde Eva-kern. Alle wijzigingen geïnstalleerd; post6 inhoud passend en afscheid gesloten.",
+                    "currentInvestigation": "Live groet13,8s, dagbrug11s en dageindantwoord20,8s blijven te langzaam. Windows RTX5080 werkt; WSL NVML/CUDA geblokkeerd met dxg -75. Gecontroleerde WSL-herstart voorbereid; onderbreekt toolserver en andere WSL-processen, dus coördineren. Daarna pas GPU-rangschikking/livegesprek bewijzen.",
+                    "liveScope": "Werkelijke browser, LiveKit, provider en Eva-kern, synthetische Nederlandse microfooninvoer en werkelijk ontvangen PCM vóór gedempte fysieke uitvoer; geen claim over menselijke luisteracceptatie of akoestische hardware.",
+                    "measuredCoreTestTokens": 666883,
+                    "testSourcesErased": 37,
+                    "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
+                    "restartExecuted": false
                   }
                 },
                 "executionOwner": "other_wsl_voice_executor",
@@ -6468,7 +6514,7 @@
               "doneWhen": "Onderzoeksopdracht aannemen, weer luisteren en een nieuwe vraag beantwoorden terwijl werk loopt.",
               "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
               "blocker": null,
-              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
+              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
               "checkedAt": "2026-10-17T13:21:29.304952+00:00",
               "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
               "ownerTrial": {
@@ -6478,7 +6524,7 @@
                 "blocksIndependentWork": false,
                 "currentCandidateStatus": "fluency_correction_not_yet_assessed"
               },
-              "nextAction": "De andere WSL-uitvoerder rondt tempo, vloeiendheid en de echte gespreksroute af. Deze uitvoerder wijzigt geen spraakcode of installatie. Bestaand bewijs en open fysieke beoordeling behouden.",
+              "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -6659,6 +6705,29 @@
                   "developmentSpeechRequests": 11,
                   "developmentVoiceUsageKnown": false,
                   "deployment": "Voor elke vervanging nul actieve voiceleases; geheugen/kern ook geen actief gedelegeerd of geheugenwerk. Nieuwe kernimage van andere uitvoerder gedetecteerd en behouden; gerichte overlay opnieuw op die werkelijkeimage gebouwd. Geen permanente onderhoudslock."
+                },
+                "liveCompletion20261018": {
+                  "startedAt": "2026-10-18T02:19:46.999720+00:00",
+                  "status": "installed_repairs_gpu_recovery_coordination",
+                  "ownerInstruction": "Zorg dat het geheel werkt; live testen, problemen en eigenaardigheden oplossen; onderzoek of vraag wanneer kennis ontbreekt. Geen testscores als vervanging voor een goed gesprek.",
+                  "existing": "Gedeelde Eva-kern/geheugen en bestaande speaker-/browserroutes. De eerdere claim van letterlijke generatieve audio is in deze ronde weerlegd en vervangen door bestaande HA-spraakuitvoer.",
+                  "gap": "Eerdere beperkte proeven sluiten gebruikersroute/echte audio niet volledig; circa8s onderbrekingsvertraging; relevantie/natuurlijkheid en betrouwbare start/afscheid nog onvoldoende live aangetoond.",
+                  "routes": [
+                    "actual installed browser microphone/LiveKit/private-core/rendered audio",
+                    "existing native speaker/shared-core/audio acknowledgements",
+                    "existing pinned subscription realtime transport"
+                  ],
+                  "doneWhen": "Geconstateerde gespreksfouten gericht opgelost en geïnstalleerde hele route live gebruikt met echte audio: relevante sociale/eigen-activiteitsantwoorden, coherente vervolgvragen, behoud van eerste woorden, onderbreken en betrouwbaar afscheid/heropenen. Fysieke of menselijke waarneming die niet beschikbaar is gericht navragen; niet vervangen door softwaretesttelling.",
+                  "ownerAccepted": false,
+                  "ownerActionRequired": true,
+                  "updatedAt": "2026-10-18T04:15:10.372575+00:00",
+                  "result": "Werkelijke ontvangen audio en kerntekst komen overeen; eerste woorden, samengestelde invoer, dagantwoord, onderbreken en afscheid gericht hersteld. Bestaande Fenna-spraakuitvoer gebruikt dezelfde Eva-kern. Alle wijzigingen geïnstalleerd; post6 inhoud passend en afscheid gesloten.",
+                  "currentInvestigation": "Live groet13,8s, dagbrug11s en dageindantwoord20,8s blijven te langzaam. Windows RTX5080 werkt; WSL NVML/CUDA geblokkeerd met dxg -75. Gecontroleerde WSL-herstart voorbereid; onderbreekt toolserver en andere WSL-processen, dus coördineren. Daarna pas GPU-rangschikking/livegesprek bewijzen.",
+                  "liveScope": "Werkelijke browser, LiveKit, provider en Eva-kern, synthetische Nederlandse microfooninvoer en werkelijk ontvangen PCM vóór gedempte fysieke uitvoer; geen claim over menselijke luisteracceptatie of akoestische hardware.",
+                  "measuredCoreTestTokens": 666883,
+                  "testSourcesErased": 37,
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
+                  "restartExecuted": false
                 }
               },
               "executionOwner": "other_wsl_voice_executor",
@@ -6704,7 +6773,7 @@
               "kind": "verbeteren",
               "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
               "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
-              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-latency-followup-20261017.json",
+              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
               "ownerTrial": {
                 "status": "partial_with_false_interruptions_and_stop_failure",
                 "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -6714,8 +6783,8 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "De andere WSL-uitvoerder rondt gewone onderbreking en stoppen af. Deze uitvoerder wijzigt geen spraakcode of installatie. Bestaand bewijs en open fysieke beoordeling behouden.",
-              "ownerActionRequired": false,
+              "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
+              "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
@@ -6889,6 +6958,29 @@
                   "developmentSpeechRequests": 11,
                   "developmentVoiceUsageKnown": false,
                   "deployment": "Voor elke vervanging nul actieve voiceleases; geheugen/kern ook geen actief gedelegeerd of geheugenwerk. Nieuwe kernimage van andere uitvoerder gedetecteerd en behouden; gerichte overlay opnieuw op die werkelijkeimage gebouwd. Geen permanente onderhoudslock."
+                },
+                "liveCompletion20261018": {
+                  "startedAt": "2026-10-18T02:19:46.999720+00:00",
+                  "status": "installed_repairs_gpu_recovery_coordination",
+                  "ownerInstruction": "Zorg dat het geheel werkt; live testen, problemen en eigenaardigheden oplossen; onderzoek of vraag wanneer kennis ontbreekt. Geen testscores als vervanging voor een goed gesprek.",
+                  "existing": "Gedeelde Eva-kern/geheugen en bestaande speaker-/browserroutes. De eerdere claim van letterlijke generatieve audio is in deze ronde weerlegd en vervangen door bestaande HA-spraakuitvoer.",
+                  "gap": "Eerdere beperkte proeven sluiten gebruikersroute/echte audio niet volledig; circa8s onderbrekingsvertraging; relevantie/natuurlijkheid en betrouwbare start/afscheid nog onvoldoende live aangetoond.",
+                  "routes": [
+                    "actual installed browser microphone/LiveKit/private-core/rendered audio",
+                    "existing native speaker/shared-core/audio acknowledgements",
+                    "existing pinned subscription realtime transport"
+                  ],
+                  "doneWhen": "Geconstateerde gespreksfouten gericht opgelost en geïnstalleerde hele route live gebruikt met echte audio: relevante sociale/eigen-activiteitsantwoorden, coherente vervolgvragen, behoud van eerste woorden, onderbreken en betrouwbaar afscheid/heropenen. Fysieke of menselijke waarneming die niet beschikbaar is gericht navragen; niet vervangen door softwaretesttelling.",
+                  "ownerAccepted": false,
+                  "ownerActionRequired": true,
+                  "updatedAt": "2026-10-18T04:15:10.372575+00:00",
+                  "result": "Werkelijke ontvangen audio en kerntekst komen overeen; eerste woorden, samengestelde invoer, dagantwoord, onderbreken en afscheid gericht hersteld. Bestaande Fenna-spraakuitvoer gebruikt dezelfde Eva-kern. Alle wijzigingen geïnstalleerd; post6 inhoud passend en afscheid gesloten.",
+                  "currentInvestigation": "Live groet13,8s, dagbrug11s en dageindantwoord20,8s blijven te langzaam. Windows RTX5080 werkt; WSL NVML/CUDA geblokkeerd met dxg -75. Gecontroleerde WSL-herstart voorbereid; onderbreekt toolserver en andere WSL-processen, dus coördineren. Daarna pas GPU-rangschikking/livegesprek bewijzen.",
+                  "liveScope": "Werkelijke browser, LiveKit, provider en Eva-kern, synthetische Nederlandse microfooninvoer en werkelijk ontvangen PCM vóór gedempte fysieke uitvoer; geen claim over menselijke luisteracceptatie of akoestische hardware.",
+                  "measuredCoreTestTokens": 666883,
+                  "testSourcesErased": 37,
+                  "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
+                  "restartExecuted": false
                 }
               },
               "executionOwner": "other_wsl_voice_executor",
@@ -10268,6 +10360,29 @@
           "developmentSpeechRequests": 11,
           "developmentVoiceUsageKnown": false,
           "deployment": "Voor elke vervanging nul actieve voiceleases; geheugen/kern ook geen actief gedelegeerd of geheugenwerk. Nieuwe kernimage van andere uitvoerder gedetecteerd en behouden; gerichte overlay opnieuw op die werkelijkeimage gebouwd. Geen permanente onderhoudslock."
+        },
+        "liveCompletion20261018": {
+          "startedAt": "2026-10-18T02:19:46.999720+00:00",
+          "status": "installed_repairs_gpu_recovery_coordination",
+          "ownerInstruction": "Zorg dat het geheel werkt; live testen, problemen en eigenaardigheden oplossen; onderzoek of vraag wanneer kennis ontbreekt. Geen testscores als vervanging voor een goed gesprek.",
+          "existing": "Gedeelde Eva-kern/geheugen en bestaande speaker-/browserroutes. De eerdere claim van letterlijke generatieve audio is in deze ronde weerlegd en vervangen door bestaande HA-spraakuitvoer.",
+          "gap": "Eerdere beperkte proeven sluiten gebruikersroute/echte audio niet volledig; circa8s onderbrekingsvertraging; relevantie/natuurlijkheid en betrouwbare start/afscheid nog onvoldoende live aangetoond.",
+          "routes": [
+            "actual installed browser microphone/LiveKit/private-core/rendered audio",
+            "existing native speaker/shared-core/audio acknowledgements",
+            "existing pinned subscription realtime transport"
+          ],
+          "doneWhen": "Geconstateerde gespreksfouten gericht opgelost en geïnstalleerde hele route live gebruikt met echte audio: relevante sociale/eigen-activiteitsantwoorden, coherente vervolgvragen, behoud van eerste woorden, onderbreken en betrouwbaar afscheid/heropenen. Fysieke of menselijke waarneming die niet beschikbaar is gericht navragen; niet vervangen door softwaretesttelling.",
+          "ownerAccepted": false,
+          "ownerActionRequired": true,
+          "updatedAt": "2026-10-18T04:15:10.372575+00:00",
+          "result": "Werkelijke ontvangen audio en kerntekst komen overeen; eerste woorden, samengestelde invoer, dagantwoord, onderbreken en afscheid gericht hersteld. Bestaande Fenna-spraakuitvoer gebruikt dezelfde Eva-kern. Alle wijzigingen geïnstalleerd; post6 inhoud passend en afscheid gesloten.",
+          "currentInvestigation": "Live groet13,8s, dagbrug11s en dageindantwoord20,8s blijven te langzaam. Windows RTX5080 werkt; WSL NVML/CUDA geblokkeerd met dxg -75. Gecontroleerde WSL-herstart voorbereid; onderbreekt toolserver en andere WSL-processen, dus coördineren. Daarna pas GPU-rangschikking/livegesprek bewijzen.",
+          "liveScope": "Werkelijke browser, LiveKit, provider en Eva-kern, synthetische Nederlandse microfooninvoer en werkelijk ontvangen PCM vóór gedempte fysieke uitvoer; geen claim over menselijke luisteracceptatie of akoestische hardware.",
+          "measuredCoreTestTokens": 666883,
+          "testSourcesErased": 37,
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
+          "restartExecuted": false
         }
       }
     },

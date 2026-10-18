@@ -1,0 +1,34 @@
+{
+  "engine": "tts.home_assistant_cloud",
+  "voice": "FennaNeural",
+  "language": "nl-NL",
+  "generated_on": "2026-10-18",
+  "purpose": "Brief local wakeword acknowledgement during connection startup",
+  "clips": [
+    {
+      "file": "0.wav",
+      "text": "Ja?",
+      "seconds": 1.872,
+      "sha256": "cff0e4db2b02195dd66b370dd9f36a6887970a0b29a0d4eb549c21ec020fc399",
+      "original_seconds": 1.872,
+      "trimmed_only_exact_zero_tail": true
+    },
+    {
+      "file": "1.wav",
+      "text": "Hé.",
+      "seconds": 1.872,
+      "sha256": "0aca0520720df3c0133e6a0195f8b19640c4eafae55c79a5d7dd702e550e9556",
+      "original_seconds": 1.872,
+      "trimmed_only_exact_zero_tail": true
+    },
+    {
+      "file": "2.wav",
+      "text": "Vertel.",
+      "seconds": 1.872,
+      "sha256": "95c9ec5bce916a3f0cbe05632101af3003fa47038bdbf0ca4b52499a58322a48",
+      "original_seconds": 1.872,
+      "trimmed_only_exact_zero_tail": true
+    }
+  ],
+  "verification": "Same literal HA TTS voice as live speech; complete nonzero PCM retained, at least 320 ms trailing silence, 48 kHz mono signed 16-bit. No physical listening claim."
+}

@@ -71,12 +71,14 @@ class HumanUnderstandingActions:
         authorize_background_dispatch(turn)
         return reader, query, now, timeline
 
-    def available_for(self, turn):
+    def _available_host(self, turn):
         try:
-            self._host(turn)
-            return True
+            return self._host(turn)
         except (RuntimeError, ValueError, LookupError):
-            return False
+            return None
+
+    def available_for(self, turn):
+        return self._available_host(turn) is not None
 
     @staticmethod
     def _slot(turn, step):
@@ -157,9 +159,10 @@ class HumanUnderstandingActions:
         return ConversationActionReceipt(call, output)
 
     def pending(self, turn, *, step_index=0):
-        if not self.available_for(turn):
+        admitted = self._available_host(turn)
+        if admitted is None:
             return None
-        _, _, _, timeline = self._host(turn)
+        _, _, _, timeline = admitted
         events = timeline.events(self._slot(turn, step_index))
         if not events:
             return None

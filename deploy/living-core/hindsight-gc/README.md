@@ -72,7 +72,9 @@ This is arithmetic reuse, not a recall-result cache. Every recall still performs
 fresh retrieval, ranking aggregation and the existing host source/authority
 validation. Each local model instance retains at most 64 salted hashes of whole,
 ordered input batches and immutable numeric scores. A hit expires for use after
-30 seconds; expiry cleanup is lazy, on the next eligible call. No query or document
+one hour; expiry cleanup is lazy, on the next eligible call. This lifetime applies
+only to exact arithmetic results, never to retrieved facts or source authority.
+No query or document
 strings are retained in the cache. Entries contain at most 256 scores; batches
 larger than 2 MiB of UTF-8 input bypass caching. Changed query/document/order or
 model instance, device, FP16, batch/bucketing or PyTorch thread configuration
@@ -108,3 +110,47 @@ scores were exactly equal, with roughly 1.9–2.1 seconds for inference versus
 0.44 milliseconds for a hit. This proves one repeat case, not general hit rate
 or end-to-end voice latency. First calls and changed batches have no inference
 saving. Keep original ordering; do not sort inputs to manufacture hits.
+
+## Parallel unchanged CPU reranker batches
+
+`parallel_rerank_patch.py` pins the **currently deployed, score-cache-patched**
+`cross_encoder.py` and embeds `parallel_rerank_batches.py`. Apply it after the
+existing cache overlay, not against raw upstream. It is disabled unless
+`EVA_HINDSIGHT_PARALLEL_RERANK_BATCHES=1`. Different source bytes fail closed.
+
+Only the existing CPU, length-bucketed path with more than one explicit batch
+uses this option. Original batch membership, within-batch order, padding,
+activation and numeric output are preserved. The same model receives each
+original batch separately; longest batches are submitted first and results are
+reassembled in original order. GPU, unbucketed and default-off calls retain the
+original implementation. There is no per-pair arithmetic cache or retrieval
+change. The numeric whole-batch cache includes the scheduling flag in its model
+context; all retrieval and host authority checks remain fresh.
+
+One lazily created process-wide pool has **two** compute workers, shared by all
+recalls and model instances. Keep the existing outer concurrency bound, two
+PyTorch threads and current CPU quota; do not create a pool per request. Threads
+remain available until process shutdown. A failure returns no partial scores:
+only that call's queued futures are cancelled, and its running native work is
+drained before the existing inference cleanup. Native work cannot be forcibly
+cancelled. No other call's work or shared pool is cancelled.
+
+```sh
+python3 deploy/living-core/hindsight-gc/parallel_rerank_patch.py /private/build/cross_encoder.py
+EVA_PARALLEL_RERANK_SOURCE=/private/original/cross_encoder.py \
+  python3 deploy/living-core/hindsight-gc/test_parallel_rerank.py
+```
+
+Build on the exact current image with patched module permissions `0644`, retaining
+all existing cache/GC flags, service configuration, weights and data. Use the
+same idle, health, authenticated-recall and rollback procedure above. Disabling
+the new flag restores sequential scheduling. No database rollback is involved.
+
+A frozen real 32-pair private batch on the existing four-CPU/two-thread FP32
+installation produced bit-identical scores. Warm whole-call time was 4.73 s;
+two parallel unchanged batches took 3.37 s. A separate alternating comparison
+of short-first versus long-first scheduling measured 3.50 versus 2.43 s warm,
+also bit-identical. These are bounded component observations, not a promise
+about every input, concurrent workload, real conversation or physical speaker.
+General per-pair memoization was rejected: changed batch composition changed
+floating-point scores. Preserve the original batches here.

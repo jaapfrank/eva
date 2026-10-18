@@ -1,0 +1,2215 @@
+{
+  "status": "installed_voice_repairs_gpu_recovery_requires_coordinated_restart",
+  "method": {
+    "route": "actual installed private browser client, injected WAV at getUserMedia, actual remote PCM captured before muted physical sink",
+    "timing": "browser performance clock, input-ended to first PCM peak >80 after first corresponding core update/final release; no claim about human acoustic perception",
+    "usage": "deduplicated CONVERSATION_MODEL_RECORDED event IDs only; REPLY_COMMITTED.model_usage excluded to avoid double counting",
+    "recorded_event_ids_sha256": "2c3c9acb9cd24f9dc87f26d256cf7718ec54fb362c41c9eebac247bae661964f"
+  },
+  "core_usage": {
+    "recorded_events": 73,
+    "measurement_counts": {
+      "measured": 73
+    },
+    "input_tokens": 663852,
+    "output_tokens": 3031,
+    "model_attempts": 73,
+    "tool_calls": 36,
+    "unknown_numeric_fields": 0
+  },
+  "own_core_exchanges": 37,
+  "own_core_sessions": 12,
+  "runs": [
+    {
+      "label": "initial",
+      "browser_artifact_sha256": "e5d7d22ced3115fa6a4cf3022ff9a44f85400d17e08c916f222e81b0ffe96369",
+      "turns": [
+        {
+          "scenario": "social_self_state",
+          "sequence_index": 0,
+          "admitted": true,
+          "message_sha256": "52122fdd508abde74cd6e20fbbf25dfc5ebb4b9ce62acbc95e0ecbb77f7ed880",
+          "input_end_to_core_start_ms": 1824.5,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 9155.7,
+          "input_end_to_first_reply_pcm_ms": 11799.0,
+          "first_output_release_to_pcm_ms": 818.8,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7760,
+            "output_tokens": 33,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_today_activity",
+          "sequence_index": 1,
+          "admitted": false,
+          "limitation": "No admitted core turn; initial later input followed an already idle-closed session."
+        }
+      ],
+      "model_usage": {
+        "recorded_events": 1,
+        "measurement_counts": {
+          "measured": 1
+        },
+        "input_tokens": 7760,
+        "output_tokens": 33,
+        "model_attempts": 1,
+        "tool_calls": 0,
+        "unknown_numeric_fields": 0
+      }
+    },
+    {
+      "label": "baseline_sequence",
+      "browser_artifact_sha256": "3dbd961bd58385c5f3bb12b64292d20b3b6016ae7a952efca2ba4a0f2a894616",
+      "turns": [
+        {
+          "scenario": "calendar_today_activity",
+          "sequence_index": 0,
+          "admitted": true,
+          "message_sha256": "4f6a46f5f567269f062fb2caa3b3fa6316d3b37ee17bedc24ed231d9724dc213",
+          "input_end_to_core_start_ms": 1525.0,
+          "core_start_to_first_spoken_update_ms": 22270.6,
+          "core_start_to_final_ms": 30724.8,
+          "input_end_to_first_reply_pcm_ms": 25038.9,
+          "first_output_release_to_pcm_ms": 1243.3,
+          "final_before_next_input": false,
+          "spoken_updates": 1,
+          "actions": [
+            "read_recent_activity"
+          ],
+          "model_usage": {
+            "recorded_events": 3,
+            "measurement_counts": {
+              "measured": 3
+            },
+            "input_tokens": 24657,
+            "output_tokens": 146,
+            "model_attempts": 3,
+            "tool_calls": 2,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_yesterday_activity",
+          "sequence_index": 1,
+          "admitted": true,
+          "message_sha256": "f4df187a9223d2706288385336a0bdcb499fcf2d14688d138a91852d5fde0f91",
+          "input_end_to_core_start_ms": 1726.2,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 26344.9,
+          "input_end_to_first_reply_pcm_ms": 29147.6,
+          "first_output_release_to_pcm_ms": 1076.5,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [
+            "read_recent_activity",
+            "get_delegated_work"
+          ],
+          "model_usage": {
+            "recorded_events": 3,
+            "measurement_counts": {
+              "measured": 3
+            },
+            "input_tokens": 36626,
+            "output_tokens": 249,
+            "model_attempts": 3,
+            "tool_calls": 2,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "farewell",
+          "sequence_index": 2,
+          "admitted": true,
+          "message_sha256": "2e120838e352cbae7660ac5e81d8749c4b2efe919de745be4d39d523e8f910d1",
+          "input_end_to_core_start_ms": 1556.6,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 9772.3,
+          "input_end_to_first_reply_pcm_ms": 12525.7,
+          "first_output_release_to_pcm_ms": 1196.8,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7171,
+            "output_tokens": 14,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "social_self_state",
+          "sequence_index": 3,
+          "admitted": true,
+          "message_sha256": "2b30205f528dadd45feaf9772140f7142cbd25e127a6e8f567c90b031ce5ec04",
+          "input_end_to_core_start_ms": 1704.1,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 10256.1,
+          "input_end_to_first_reply_pcm_ms": 13460.5,
+          "first_output_release_to_pcm_ms": 1500.3,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7497,
+            "output_tokens": 20,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        }
+      ],
+      "model_usage": {
+        "recorded_events": 8,
+        "measurement_counts": {
+          "measured": 8
+        },
+        "input_tokens": 75951,
+        "output_tokens": 429,
+        "model_attempts": 8,
+        "tool_calls": 4,
+        "unknown_numeric_fields": 0
+      }
+    },
+    {
+      "label": "postinstall_1",
+      "browser_artifact_sha256": "ebc221de189ed7a500fcd547192fd7f3e1ec215666585baad5aa72b9ce9938ef",
+      "turns": [
+        {
+          "scenario": "social_self_state",
+          "sequence_index": 0,
+          "admitted": true,
+          "message_sha256": "5ed39bdfdaf739cd2b2324ca04975b1eb6e0a77089c714eb72a0da88e6a53d46",
+          "input_end_to_core_start_ms": 1591.5,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 10357.6,
+          "input_end_to_first_reply_pcm_ms": 13651.5,
+          "first_output_release_to_pcm_ms": 1702.4,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7642,
+            "output_tokens": 20,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_today_activity",
+          "sequence_index": 1,
+          "admitted": true,
+          "message_sha256": "c144173647a333e657846cb06e4897adb90eb19f6a4db8d6d8911785977d6a81",
+          "input_end_to_core_start_ms": 1491.5,
+          "core_start_to_first_spoken_update_ms": 9660.1,
+          "core_start_to_final_ms": 18429.5,
+          "input_end_to_first_reply_pcm_ms": 12239.4,
+          "first_output_release_to_pcm_ms": 1087.8,
+          "final_before_next_input": true,
+          "spoken_updates": 1,
+          "actions": [
+            "read_recent_activity"
+          ],
+          "model_usage": {
+            "recorded_events": 3,
+            "measurement_counts": {
+              "measured": 3
+            },
+            "input_tokens": 24250,
+            "output_tokens": 142,
+            "model_attempts": 3,
+            "tool_calls": 2,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_yesterday_activity",
+          "sequence_index": 2,
+          "admitted": true,
+          "message_sha256": "fb966f1c5a8cf3e86d6965af498749d02e63afcc997d4ecf4767731b87b825c2",
+          "input_end_to_core_start_ms": 1635.3,
+          "core_start_to_first_spoken_update_ms": 11046.9,
+          "core_start_to_final_ms": 25555.6,
+          "input_end_to_first_reply_pcm_ms": 13897.5,
+          "first_output_release_to_pcm_ms": 1215.3,
+          "final_before_next_input": true,
+          "spoken_updates": 1,
+          "actions": [
+            "read_recent_activity",
+            "get_delegated_work"
+          ],
+          "model_usage": {
+            "recorded_events": 4,
+            "measurement_counts": {
+              "measured": 4
+            },
+            "input_tokens": 43812,
+            "output_tokens": 268,
+            "model_attempts": 4,
+            "tool_calls": 3,
+            "unknown_numeric_fields": 0
+          }
+        }
+      ],
+      "model_usage": {
+        "recorded_events": 8,
+        "measurement_counts": {
+          "measured": 8
+        },
+        "input_tokens": 75704,
+        "output_tokens": 430,
+        "model_attempts": 8,
+        "tool_calls": 5,
+        "unknown_numeric_fields": 0
+      }
+    },
+    {
+      "label": "postinstall_2_literal",
+      "browser_artifact_sha256": "95c4af70f0c0c147e3c3727578ef4d7c25511f448746e460288714c4c64a7910",
+      "turns": [
+        {
+          "scenario": "social_self_state",
+          "sequence_index": 0,
+          "admitted": true,
+          "message_sha256": "11d6cf89ea8322c46ce0cf41220fb5489981b21181fb9d0de3e2e46454c10cb7",
+          "input_end_to_core_start_ms": 1863.3,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 11749.5,
+          "input_end_to_first_reply_pcm_ms": 14397.2,
+          "first_output_release_to_pcm_ms": 784.4,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7824,
+            "output_tokens": 25,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_today_activity",
+          "sequence_index": 1,
+          "admitted": true,
+          "message_sha256": "411b70dac3d01d557db4dc8047320405128944f18c3288365a3d5100aa9c52e2",
+          "input_end_to_core_start_ms": 1620.6,
+          "core_start_to_first_spoken_update_ms": 7209.1,
+          "core_start_to_final_ms": 22909.8,
+          "input_end_to_first_reply_pcm_ms": 9560.0,
+          "first_output_release_to_pcm_ms": 730.3,
+          "final_before_next_input": true,
+          "spoken_updates": 1,
+          "actions": [
+            "read_recent_activity"
+          ],
+          "model_usage": {
+            "recorded_events": 3,
+            "measurement_counts": {
+              "measured": 3
+            },
+            "input_tokens": 25630,
+            "output_tokens": 132,
+            "model_attempts": 3,
+            "tool_calls": 2,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_yesterday_activity",
+          "sequence_index": 2,
+          "admitted": true,
+          "message_sha256": "573ec81c3e08956d689663645a33666e78b2f46bcde304891c6bbe49ba061d63",
+          "input_end_to_core_start_ms": 1677.2,
+          "core_start_to_first_spoken_update_ms": 7159.0,
+          "core_start_to_final_ms": 31863.2,
+          "input_end_to_first_reply_pcm_ms": 9488.6,
+          "first_output_release_to_pcm_ms": 652.4,
+          "final_before_next_input": true,
+          "spoken_updates": 1,
+          "actions": [
+            "read_recent_activity",
+            "read_recent_activity",
+            "get_delegated_work"
+          ],
+          "model_usage": {
+            "recorded_events": 5,
+            "measurement_counts": {
+              "measured": 5
+            },
+            "input_tokens": 60109,
+            "output_tokens": 278,
+            "model_attempts": 5,
+            "tool_calls": 4,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "farewell",
+          "sequence_index": 3,
+          "admitted": true,
+          "message_sha256": "9703b8d28318866d8115b64e25be580aaec53ebd3caaf863021c8a4dc2ae18a0",
+          "input_end_to_core_start_ms": 1660.4,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 12066.9,
+          "input_end_to_first_reply_pcm_ms": 14510.8,
+          "first_output_release_to_pcm_ms": 783.5,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7581,
+            "output_tokens": 14,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "social_self_state",
+          "sequence_index": 4,
+          "admitted": true,
+          "message_sha256": "b75d0bb3143ba94a77361922d5cc90feb1ea63acf1fc973ee3a16b1ce93a3e29",
+          "input_end_to_core_start_ms": 1709.7,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 11438.6,
+          "input_end_to_first_reply_pcm_ms": 13813.1,
+          "first_output_release_to_pcm_ms": 664.8,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7729,
+            "output_tokens": 24,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_today_activity",
+          "sequence_index": 5,
+          "admitted": true,
+          "message_sha256": "8ef351096510da8329668c9842ebac399602d701e4c1c36ba5e48033241fe2b5",
+          "input_end_to_core_start_ms": 1712.1,
+          "core_start_to_first_spoken_update_ms": 8675.1,
+          "core_start_to_final_ms": 28596.7,
+          "input_end_to_first_reply_pcm_ms": 11180.2,
+          "first_output_release_to_pcm_ms": 793.0,
+          "final_before_next_input": true,
+          "spoken_updates": 1,
+          "actions": [
+            "read_recent_activity"
+          ],
+          "model_usage": {
+            "recorded_events": 3,
+            "measurement_counts": {
+              "measured": 3
+            },
+            "input_tokens": 26360,
+            "output_tokens": 127,
+            "model_attempts": 3,
+            "tool_calls": 2,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "interrupt_and_social_correction",
+          "sequence_index": 6,
+          "admitted": true,
+          "message_sha256": "bfdaa8efadef623c3913ab11b2d5f5fb0b8e8fce599097e3796915c78d6a42a1",
+          "input_end_to_core_start_ms": 1870.2,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 23426.2,
+          "input_end_to_first_reply_pcm_ms": 25960.2,
+          "first_output_release_to_pcm_ms": 663.8,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 8444,
+            "output_tokens": 32,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "farewell",
+          "sequence_index": 7,
+          "admitted": true,
+          "message_sha256": "9544dd0290caf68fff52cedb716074bd16e075ca1f83804c9a24b8d3bd82071b",
+          "input_end_to_core_start_ms": 1638.5,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 8635.4,
+          "input_end_to_first_reply_pcm_ms": 10697.9,
+          "first_output_release_to_pcm_ms": 424.0,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7510,
+            "output_tokens": 14,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        }
+      ],
+      "model_usage": {
+        "recorded_events": 16,
+        "measurement_counts": {
+          "measured": 16
+        },
+        "input_tokens": 151187,
+        "output_tokens": 646,
+        "model_attempts": 16,
+        "tool_calls": 8,
+        "unknown_numeric_fields": 0
+      }
+    },
+    {
+      "label": "postinstall_3_context_queries",
+      "browser_artifact_sha256": "7b582bf31b349af1447c4b3266853cf95c543677ed1706c2b812bb5de8553054",
+      "turns": [
+        {
+          "scenario": "social_self_state",
+          "sequence_index": 0,
+          "admitted": true,
+          "message_sha256": "8001a65a5d2cab75fda4fb5ca4c4457f8461748dc077b9cc101b993ae6091a77",
+          "input_end_to_core_start_ms": 1757.6,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 7131.6,
+          "input_end_to_first_reply_pcm_ms": 9664.4,
+          "first_output_release_to_pcm_ms": 775.2,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7834,
+            "output_tokens": 32,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_today_activity",
+          "sequence_index": 1,
+          "admitted": true,
+          "message_sha256": "71f0309e8131599cd061905883c5acd463fc78cb26c845746742d1e45cb2526d",
+          "input_end_to_core_start_ms": 1559.9,
+          "core_start_to_first_spoken_update_ms": 6168.7,
+          "core_start_to_final_ms": 19956.5,
+          "input_end_to_first_reply_pcm_ms": 8472.7,
+          "first_output_release_to_pcm_ms": 744.1,
+          "final_before_next_input": true,
+          "spoken_updates": 1,
+          "actions": [
+            "read_recent_activity"
+          ],
+          "model_usage": {
+            "recorded_events": 3,
+            "measurement_counts": {
+              "measured": 3
+            },
+            "input_tokens": 23222,
+            "output_tokens": 117,
+            "model_attempts": 3,
+            "tool_calls": 2,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "farewell",
+          "sequence_index": 2,
+          "admitted": true,
+          "message_sha256": "6e5bf59f5e75bd7a859fe79032655b7a2d04e60563dfe62223b567376d253b52",
+          "input_end_to_core_start_ms": 1451.1,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 10485.5,
+          "input_end_to_first_reply_pcm_ms": 12553.8,
+          "first_output_release_to_pcm_ms": 617.2,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7148,
+            "output_tokens": 14,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "social_self_state",
+          "sequence_index": 3,
+          "admitted": true,
+          "message_sha256": "7ce1d14d8faaa6f7e87b57e7ff425344b7bebf99aa2830c21f14601115827040",
+          "input_end_to_core_start_ms": 1605.9,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 7042.5,
+          "input_end_to_first_reply_pcm_ms": 9259.5,
+          "first_output_release_to_pcm_ms": 611.1,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7571,
+            "output_tokens": 25,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_today_activity",
+          "sequence_index": 4,
+          "admitted": true,
+          "message_sha256": "becb2909c88548b8402fbaf28104fe0bb2dec1af3de0978893a59b40baeace09",
+          "input_end_to_core_start_ms": 1773.0,
+          "core_start_to_first_spoken_update_ms": 5244.9,
+          "core_start_to_final_ms": 55910.2,
+          "input_end_to_first_reply_pcm_ms": 7591.4,
+          "first_output_release_to_pcm_ms": 573.5,
+          "final_before_next_input": true,
+          "spoken_updates": 1,
+          "actions": [
+            "read_recent_activity",
+            "read_recent_activity",
+            "read_recent_activity",
+            "read_recent_activity",
+            "read_home_assistant_inventory"
+          ],
+          "model_usage": {
+            "recorded_events": 7,
+            "measurement_counts": {
+              "measured": 7
+            },
+            "input_tokens": 85089,
+            "output_tokens": 338,
+            "model_attempts": 7,
+            "tool_calls": 6,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "interrupt_and_social_correction",
+          "sequence_index": 5,
+          "admitted": true,
+          "message_sha256": "b5c3b76ccb4a82508a74fc2029fac88ddb211eb65df8da029c700dad9aa0f9cd",
+          "input_end_to_core_start_ms": 1684.1,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 6940.4,
+          "input_end_to_first_reply_pcm_ms": 9294.7,
+          "first_output_release_to_pcm_ms": 670.2,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7552,
+            "output_tokens": 32,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "farewell",
+          "sequence_index": 6,
+          "admitted": true,
+          "message_sha256": "3307cbb90231b749867dd0f2d8549db57097d77bbfbb31027d5a48d31223e6a2",
+          "input_end_to_core_start_ms": 1559.4,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 7475.9,
+          "input_end_to_first_reply_pcm_ms": 9833.4,
+          "first_output_release_to_pcm_ms": 798.1,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7321,
+            "output_tokens": 15,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        }
+      ],
+      "model_usage": {
+        "recorded_events": 15,
+        "measurement_counts": {
+          "measured": 15
+        },
+        "input_tokens": 145737,
+        "output_tokens": 573,
+        "model_attempts": 15,
+        "tool_calls": 8,
+        "unknown_numeric_fields": 0
+      }
+    },
+    {
+      "label": "postinstall_4_delta_and_pending",
+      "browser_artifact_sha256": "4ce821863c9e5cefbecc84f75b76002b06fe6188053049078141c464697e872f",
+      "injected_inputs": 6,
+      "actual_core_admissions": 7,
+      "turns": [
+        {
+          "scenario": "social_self_state",
+          "sequence_index": 0,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 1,
+          "admitted": true,
+          "message_sha256": "e5f72ce66f660dd13ce61b1fd59f49751da4a60f8da8bf23b93785bb8c3f848f",
+          "input_end_to_core_start_ms": 1705.3,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 6575.3,
+          "input_end_to_first_reply_pcm_ms": 8957.4,
+          "first_output_release_to_pcm_ms": 676.8,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7834,
+            "output_tokens": 24,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_today_activity",
+          "sequence_index": 1,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 1,
+          "admitted": true,
+          "message_sha256": "3c9a7a47876da3ea74aa43ecdec567460854b1c877bc89cc6e48f33dd988d6f3",
+          "input_end_to_core_start_ms": 1771.0,
+          "core_start_to_first_spoken_update_ms": 4873.6,
+          "core_start_to_final_ms": 17714.9,
+          "input_end_to_first_reply_pcm_ms": 7238.2,
+          "first_output_release_to_pcm_ms": 593.6,
+          "final_before_next_input": true,
+          "spoken_updates": 1,
+          "actions": [
+            "read_recent_activity",
+            "read_recent_activity"
+          ],
+          "model_usage": {
+            "recorded_events": 4,
+            "measurement_counts": {
+              "measured": 4
+            },
+            "input_tokens": 34956,
+            "output_tokens": 187,
+            "model_attempts": 4,
+            "tool_calls": 3,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "farewell",
+          "sequence_index": 2,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 1,
+          "admitted": true,
+          "message_sha256": "2b63a9b90016f5fcc8c9c527bf9a82adbd5322afc62013aa1c2034c611cf3c96",
+          "input_end_to_core_start_ms": 1719.0,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 5697.0,
+          "input_end_to_first_reply_pcm_ms": 7935.8,
+          "first_output_release_to_pcm_ms": 519.8,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7155,
+            "output_tokens": 16,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "social_self_state",
+          "sequence_index": 3,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 1,
+          "admitted": true,
+          "message_sha256": "1263afd2f97ea8b8412ad6ebda1f53591bb01589e8d115a5f96959a80f2dcc6a",
+          "input_end_to_core_start_ms": 1584.0,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 10529.5,
+          "input_end_to_first_reply_pcm_ms": 12676.4,
+          "first_output_release_to_pcm_ms": 562.9,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 8091,
+            "output_tokens": 26,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_today_activity",
+          "sequence_index": 4,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 1,
+          "admitted": true,
+          "message_sha256": "ceee3458bfeec3106ddd6b3b948492b1101be813ffe075aa3d1cdc505b2c0b3f",
+          "input_end_to_core_start_ms": 1652.9,
+          "core_start_to_first_spoken_update_ms": 5814.4,
+          "core_start_to_final_ms": 20379.7,
+          "input_end_to_first_reply_pcm_ms": 8274.1,
+          "first_output_release_to_pcm_ms": 806.8,
+          "final_before_next_input": true,
+          "spoken_updates": 1,
+          "actions": [
+            "read_recent_activity",
+            "read_recent_activity"
+          ],
+          "model_usage": {
+            "recorded_events": 4,
+            "measurement_counts": {
+              "measured": 4
+            },
+            "input_tokens": 36018,
+            "output_tokens": 177,
+            "model_attempts": 4,
+            "tool_calls": 3,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "interrupt_and_social_correction",
+          "sequence_index": 5,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 2,
+          "admitted": true,
+          "message_sha256": "c8051753dd071ca53ff217081673e0396e11f9e9fc16f6c832e9af7800b26fd9",
+          "input_end_to_core_start_ms": -428.8,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 11563.3,
+          "input_end_to_first_reply_pcm_ms": null,
+          "first_output_release_to_pcm_ms": null,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7206,
+            "output_tokens": 19,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          },
+          "limitation": "One injected correction was split into two core admissions; PCM attribution withheld, harness waited for first final rather than the complete logical input."
+        },
+        {
+          "scenario": "interrupt_and_social_correction",
+          "sequence_index": 5,
+          "fragment_index": 1,
+          "core_requests_for_injected_input": 2,
+          "admitted": true,
+          "message_sha256": "9209e6c240d89c5c7ba042cc75a8820ab9cb39caf63d0d2cb7cdf20220025265",
+          "input_end_to_core_start_ms": 11143.7,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 11389.8,
+          "input_end_to_first_reply_pcm_ms": null,
+          "first_output_release_to_pcm_ms": null,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7322,
+            "output_tokens": 29,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          },
+          "limitation": "One injected correction was split into two core admissions; PCM attribution withheld, harness waited for first final rather than the complete logical input."
+        }
+      ],
+      "model_usage": {
+        "recorded_events": 13,
+        "measurement_counts": {
+          "measured": 13
+        },
+        "input_tokens": 108582,
+        "output_tokens": 478,
+        "model_attempts": 13,
+        "tool_calls": 6,
+        "unknown_numeric_fields": 0
+      },
+      "failure": "Second fragment arrived 467.4ms after first final, beyond the 450ms admission debounce; additional core work and first-final harness completion. Final planned farewell not reached. No complete sequence acceptance."
+    },
+    {
+      "label": "postinstall_5_fragment_settlement",
+      "browser_artifact_sha256": "a43d7876722539b1af5513218fdef69875adb5c5f0aa9d87456a8654a0c0db95",
+      "injected_inputs": 4,
+      "actual_core_admissions": 4,
+      "turns": [
+        {
+          "scenario": "social_self_state",
+          "sequence_index": 0,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 1,
+          "admitted": true,
+          "message_sha256": "59ad0ef1c87be109816a0a779b9a42ab2332548f3c2420706d14d9d5a2f07c53",
+          "input_end_to_core_start_ms": 1796.7,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 11521.8,
+          "input_end_to_first_reply_pcm_ms": 14132.6,
+          "first_output_release_to_pcm_ms": 814.1,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7586,
+            "output_tokens": 25,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_today_activity",
+          "sequence_index": 1,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 1,
+          "admitted": true,
+          "message_sha256": "1246930dc957ea89aa9083f68f8dd9c11bb8b5c9b6eb5912279d1c55610383e1",
+          "input_end_to_core_start_ms": 1864.2,
+          "core_start_to_first_spoken_update_ms": 9692.7,
+          "core_start_to_final_ms": 26216.9,
+          "input_end_to_first_reply_pcm_ms": 12233.5,
+          "first_output_release_to_pcm_ms": 676.6,
+          "final_before_next_input": true,
+          "spoken_updates": 1,
+          "actions": [
+            "read_recent_activity",
+            "read_recent_activity"
+          ],
+          "model_usage": {
+            "recorded_events": 4,
+            "measurement_counts": {
+              "measured": 4
+            },
+            "input_tokens": 37371,
+            "output_tokens": 180,
+            "model_attempts": 4,
+            "tool_calls": 3,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "interrupt_and_social_correction",
+          "sequence_index": 2,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 1,
+          "admitted": true,
+          "message_sha256": "944bf9d28c3eb7805df93c7a59564dbb903a132c3549e941416d6bf914d0fe3c",
+          "input_end_to_core_start_ms": 1917.3,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 5912.6,
+          "input_end_to_first_reply_pcm_ms": 8549.8,
+          "first_output_release_to_pcm_ms": 719.9,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7564,
+            "output_tokens": 30,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "farewell",
+          "sequence_index": 3,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 1,
+          "admitted": true,
+          "message_sha256": "2b5e9c6d323eb506dc921a52ab89a588dbe0cb62b829040d863697c3a206c863",
+          "input_end_to_core_start_ms": 1701.3,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 5789.9,
+          "input_end_to_first_reply_pcm_ms": 8292.2,
+          "first_output_release_to_pcm_ms": 801.0,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7331,
+            "output_tokens": 15,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        }
+      ],
+      "model_usage": {
+        "recorded_events": 7,
+        "measurement_counts": {
+          "measured": 7
+        },
+        "input_tokens": 59852,
+        "output_tokens": 250,
+        "model_attempts": 7,
+        "tool_calls": 3,
+        "unknown_numeric_fields": 0
+      },
+      "limitation": "Four actual inputs admitted as four core requests. This does not establish physical hardware acceptance or resolve initial memory latency."
+    },
+    {
+      "label": "postinstall_6_parallel_cpu",
+      "browser_artifact_sha256": "6d0bb83143be95acb54a511b65811f88bfde63ea4b43d013a3b3c0850a09641f",
+      "injected_inputs": 3,
+      "actual_core_admissions": 3,
+      "turns": [
+        {
+          "scenario": "social_self_state",
+          "sequence_index": 0,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 1,
+          "admitted": true,
+          "message_sha256": "f53b4c1610f8fc4b893cd41bf6eee224627352ae2c7ebe4b4c120ec61deabb69",
+          "input_end_to_core_start_ms": 1940.7,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 11182.1,
+          "input_end_to_first_reply_pcm_ms": 13840.7,
+          "first_output_release_to_pcm_ms": 717.9,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7834,
+            "output_tokens": 29,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "calendar_today_activity",
+          "sequence_index": 1,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 1,
+          "admitted": true,
+          "message_sha256": "9b94a6fb96759246cc2a15ec1cc246ae4d6da5d0a68b67ccde356a0400533338",
+          "input_end_to_core_start_ms": 1753.9,
+          "core_start_to_first_spoken_update_ms": 8668.9,
+          "core_start_to_final_ms": 18238.3,
+          "input_end_to_first_reply_pcm_ms": 11017.8,
+          "first_output_release_to_pcm_ms": 595.0,
+          "final_before_next_input": true,
+          "spoken_updates": 1,
+          "actions": [
+            "read_recent_activity"
+          ],
+          "model_usage": {
+            "recorded_events": 3,
+            "measurement_counts": {
+              "measured": 3
+            },
+            "input_tokens": 24085,
+            "output_tokens": 149,
+            "model_attempts": 3,
+            "tool_calls": 2,
+            "unknown_numeric_fields": 0
+          }
+        },
+        {
+          "scenario": "farewell",
+          "sequence_index": 2,
+          "fragment_index": 0,
+          "core_requests_for_injected_input": 1,
+          "admitted": true,
+          "message_sha256": "ba33af820e05d5d4af30e8ef87720ff973366821ece49d39dba281c955639bb4",
+          "input_end_to_core_start_ms": 1701.9,
+          "core_start_to_first_spoken_update_ms": null,
+          "core_start_to_final_ms": 7317.1,
+          "input_end_to_first_reply_pcm_ms": 9718.5,
+          "first_output_release_to_pcm_ms": 699.5,
+          "final_before_next_input": true,
+          "spoken_updates": 0,
+          "actions": [],
+          "model_usage": {
+            "recorded_events": 1,
+            "measurement_counts": {
+              "measured": 1
+            },
+            "input_tokens": 7160,
+            "output_tokens": 14,
+            "model_attempts": 1,
+            "tool_calls": 0,
+            "unknown_numeric_fields": 0
+          }
+        }
+      ],
+      "model_usage": {
+        "recorded_events": 5,
+        "measurement_counts": {
+          "measured": 5
+        },
+        "input_tokens": 39079,
+        "output_tokens": 192,
+        "model_attempts": 5,
+        "tool_calls": 2,
+        "unknown_numeric_fields": 0
+      },
+      "limitation": "Three actual inputs admitted as three core requests. This does not establish physical hardware acceptance or resolve initial memory latency."
+    }
+  ],
+  "limits": [
+    "No real hardware speaker/microphone path or household acceptance proven by browser audio capture.",
+    "Independent ASR is evidence about captured PCM, not proof of every physical word.",
+    "Generative renderer fidelity failed before literal HA TTS; failure evidence retained.",
+    "Initial baseline sequence advanced after an intermediate update and interrupted some replies; it is not a clean sequential-answer benchmark.",
+    "Baseline activity latency overlapped an offline inference experiment and is confounded.",
+    "Provider credits and audio-listener/renderer token usage are unknown; measured core tokens are not total development/provider consumption.",
+    "Native ordinary barge-in remains under temporary half-duplex protection; browser results do not demonstrate native acoustic echo cancellation.",
+    "One first word in interrupted old output is unresolved between ASR substitution and audio clipping.",
+    "Post2 predates long-text/caption-ACK hardening; post5 includes current literal helper and fragment-window update. No new ASR calls in post6; PCM timing and exact received captions were compared.",
+    "Final post6 first PCM: greeting 13.819 s; day bridge 10.997 s; day final 20.761 s; farewell 9.697 s. These are not acceptable general conversational latency.",
+    "Restoring WSL GPU access is a proposed repair, not a proven performance outcome. GPU activation requires same-model ranking and source validation, followed by a live voice measurement."
+  ],
+  "cleanup": {
+    "own_sources_erased": 37,
+    "supported_forget_confirmed_by_parent": true,
+    "postinstall3_receipt_directory": "postinstall-3/cleanup/",
+    "postinstall4_postinstall5_receipt": "postinstall-4-5-cleanup/cleanup-execution.private.json",
+    "new_own_sources_pending": 0,
+    "postinstall4_postinstall5_erased": 11,
+    "cleanup_executed_by_parent_only_after_all_exact_sources_verified": true,
+    "protected_failure_evidence_preserved": true,
+    "postinstall6_sources": 3,
+    "postinstall6_cleanup_pending": false,
+    "postinstall6_erased": 3,
+    "postinstall6_receipt": "postinstall-6-cleanup/cleanup-execution.private.json"
+  },
+  "independent_audio_assessment": {
+    "artifact_sha256": "d136f5df2a1742b76e70a45b6149da76a9fda1166d3af47d9aa4f31eab952797",
+    "assessment": {
+      "schema": "EvaLiteralVoiceAudioAssessment/v1",
+      "recorded_at_utc": "2026-10-18T03:15:47.870454+00:00",
+      "scope": "Actual received browser PCM from two isolated software-input sessions, no physical home speaker playback or household microphone capture.",
+      "live_source_relationship": "postinstall-2 captured the installed literal output route before subsequent long-text and caption-ACK hardening; current frozen helper hash is recorded separately and is not represented as the captured installed image.",
+      "current_frozen_literal_speech_sha256": "3a88244980f81b85e00c78d0b6d057eac198e1159fb1a25a710abd521f83058b",
+      "current_helper_focused_tests": {
+        "passed": 17,
+        "duration_seconds": 7.16,
+        "network": "none",
+        "additional_test_runs_for_assessment": 0
+      },
+      "audio_integrity": {
+        "capture_sample_rate": 48000,
+        "capture_samples": 13281280,
+        "timed_samples": 13281280,
+        "untimed_trailing_samples": 0,
+        "peak_metadata_mismatches": 0,
+        "nonmonotone_timing_steps": 0
+      },
+      "audio_integrity_method": "Existing received WAV peak compared with timestamp metadata, threshold80/32768. Signal boundaries are energy measurements, not semantic word boundaries.",
+      "asr": {
+        "route": "Existing Home Assistant speech-input adapter; no new model/provider route.",
+        "postinstall2_attempts": 7,
+        "earlier_baseline_attempts": 1,
+        "total_attempts": 8,
+        "credits_tokens": "unknown",
+        "method": "Per-utterance bundles from actual PCM, selected without changing speech samples. Internal silence shortened to200ms with100ms margins retained around detected signal; original WAV retained for timing. Case and accent normalized word comparison.",
+        "completed_utterances_checked": 6,
+        "completed_utterances_exact_word_sequence": 6,
+        "interrupted_utterances_checked": 1,
+        "results": [
+          {
+            "index": 0,
+            "label": "initial_greeting",
+            "expected_words": 15,
+            "asr_words": 15,
+            "exact_normalized_words": true,
+            "first_three_words_match": true,
+            "last_three_words_match": true,
+            "asr_error": false
+          },
+          {
+            "index": 1,
+            "label": "thinking_update",
+            "expected_words": 4,
+            "asr_words": 4,
+            "exact_normalized_words": true,
+            "first_three_words_match": true,
+            "last_three_words_match": true,
+            "asr_error": false
+          },
+          {
+            "index": 2,
+            "label": "yesterday_full",
+            "expected_words": 36,
+            "asr_words": 36,
+            "exact_normalized_words": true,
+            "first_three_words_match": true,
+            "last_three_words_match": true,
+            "asr_error": false
+          },
+          {
+            "index": 3,
+            "label": "farewell",
+            "expected_words": 4,
+            "asr_words": 4,
+            "exact_normalized_words": true,
+            "first_three_words_match": true,
+            "last_three_words_match": true,
+            "asr_error": false
+          },
+          {
+            "index": 4,
+            "label": "reopened_greeting",
+            "expected_words": 15,
+            "asr_words": 15,
+            "exact_normalized_words": true,
+            "first_three_words_match": true,
+            "last_three_words_match": true,
+            "asr_error": false
+          },
+          {
+            "index": 5,
+            "label": "interrupted_prefix",
+            "expected_words": 32,
+            "asr_words": 7,
+            "exact_normalized_words": false,
+            "first_three_words_match": false,
+            "last_three_words_match": false,
+            "asr_error": false,
+            "qualification": "Interrupted output: ASR words2..7 match approved prefix; first word differs. This does not establish whether ASR substituted it or audio clipped it. No remaining approved words were heard in this segment."
+          },
+          {
+            "index": 6,
+            "label": "after_interruption",
+            "expected_words": 21,
+            "asr_words": 21,
+            "exact_normalized_words": true,
+            "first_three_words_match": true,
+            "last_three_words_match": true,
+            "asr_error": false
+          }
+        ],
+        "coverage": "Selected complete greeting, thinking update, full yesterday answer, farewell, reopened greeting and answer after interruption. Not every emitted utterance was independently transcribed.",
+        "baseline": "Earlier generative-renderer run independently transcribed13 unapproved extra words; replaced output route has no generative conversation model."
+      },
+      "timing_ms": {
+        "core_final_to_first_actual_signal_per_final": [
+          763.1,
+          934.7,
+          1223.2,
+          762.2,
+          643.5,
+          741.1,
+          642.5,
+          402.7
+        ],
+        "core_final_to_first_actual_signal_min": 402.7,
+        "core_final_to_first_actual_signal_max": 1223.2,
+        "recognized_interruption_to_last_old_signal": 264.9,
+        "injected_interruption_start_to_last_old_signal": 1688.1,
+        "interruption_input_end_to_first_new_signal": 25938.9,
+        "new_core_final_to_first_new_signal": 642.5,
+        "within_utterance_quiet_gaps": [
+          1129.9,
+          927.7,
+          966.9,
+          896.7,
+          1152.3,
+          954.4,
+          986.9,
+          1168.6,
+          926.7,
+          954.9,
+          944.0,
+          954.7
+        ],
+        "within_utterance_quiet_gap_min": 896.7,
+        "within_utterance_quiet_gap_max": 1168.6
+      },
+      "lifecycle": {
+        "software_input_turns": 8,
+        "core_final_events": 8,
+        "browser_sessions": 2,
+        "farewell_closures": 2,
+        "interrupted_old_answer_remainder_absent_in_capture": true
+      },
+      "conclusion": "Selected actual browser audio preserves approved wording. Local interruption removes old output promptly after speech detection. Core response waiting remains material; this is not a whole-voice latency pass or physical-speaker acceptance.",
+      "limits": [
+        "Native ordinary barge-in remains protected by the temporary half-duplex guard; these browser measurements do not prove native acoustic echo cancellation.",
+        "One first word in an interrupted old segment is unresolved between ASR substitution and clipping.",
+        "TTS has measured roughly0.9–1.17s internal pauses.",
+        "Independent ASR samples and deterministic literal input do not prove every future acoustic utterance."
+      ]
+    }
+  },
+  "query_optimization_evidence": {
+    "installed_sha256": "d9b541773e163d54b00f7070b9b2272204adb8c930cec19e96cbf9454db05aa8",
+    "candidate_sha256": "226f91358485fd95c89afd2e2c8939bb81dcc966c6c678925e5f3409b3ab99a7",
+    "same_process_page_ms": {
+      "baseline": [
+        754,
+        878
+      ],
+      "candidate": [
+        204,
+        181
+      ]
+    },
+    "output_sha256_identical": true,
+    "full_scope_validation_unchanged": true,
+    "before_plan_checkpoint_rows": 127906,
+    "before_plan_event_index_probes": 127906,
+    "before_plan_execution_ms": 822.306,
+    "provider_calls": 0,
+    "production_mutations": 0,
+    "exact_current_image_two_module_overlay_tests": 10,
+    "test_elapsed_seconds": 9.13,
+    "working_tree_broad_run": {
+      "passed": 53,
+      "failed": 5,
+      "failure_scope": "periodic private initiative worker; not diagnosed or claimed baseline",
+      "baseline_isolation": {
+        "same_parameter_cases": 5,
+        "failed": 5,
+        "duration_seconds": 12.49,
+        "assertion_error_lines_exactly_equal": true,
+        "method": "Both source changes removed using before-task snapshots over same working tree in a new disposable PostgreSQL16.13 database.",
+        "conclusion": "Failures reproduced without either query/empty-context change; underlying preexisting worker failures not diagnosed."
+      }
+    },
+    "empty_contribution_context_removed_redundant_authority_read_ms": [
+      197,
+      228
+    ],
+    "candidate_completed_contribution_sha256": "a666dfadc4d66e6c30edb83492165096e2a94fcb56702402efc280c23b460f4f"
+  },
+  "pending_authority_reuse": {
+    "source_changes": [
+      "src/eva/adapters/postgres/completed_contribution.py",
+      "src/eva/providers/human_understanding_actions.py"
+    ],
+    "new_test": "development/tests/bootstrap/test_pending_authority_reuse.py",
+    "working_before_equals_installed": true,
+    "pending_ms": {
+      "original": 517,
+      "candidate": [
+        405,
+        340
+      ]
+    },
+    "available_action_names_identical": true,
+    "authority_cache_across_calls": false,
+    "fresh_execute_authority_unchanged": true,
+    "exact_current_image_tests": {
+      "passed_distinct": 10,
+      "first_run_passed": 9,
+      "first_run_fixture_error": 1,
+      "fixture_error": "Learning module demands a fresh database; it was initially combined with an already migrated session fixture.",
+      "learning_isolated_fresh_database_passed": 1,
+      "learning_seconds": 8.13
+    },
+    "provider_calls": 0,
+    "deployment_performed": false,
+    "contribution": {
+      "baseline": "pending-contribution.actual-before.py",
+      "working_snapshot": "pending-contribution.working-before.py",
+      "candidate": "candidate-pending-contribution.py",
+      "patch": "pending-contribution-own.patch",
+      "candidate_sha256": "cf49548edcb8df5101213befcd6b593024f4886d3ef5cdb9e9e25f526c2feca4"
+    },
+    "learning": {
+      "baseline": "pending-learning.actual-before.py",
+      "working_snapshot": "pending-learning.working-before.py",
+      "candidate": "candidate-pending-learning.py",
+      "patch": "pending-learning-own.patch",
+      "candidate_sha256": "eca5844285a82fffdd7370efa00d05b11b71aff91788f33f185cd2927966d57b"
+    }
+  },
+  "deployment_boundary": {
+    "status": "All listed voice changes installed and post6 actual browser run completed; CPU runtime remains active.",
+    "images": {
+      "core": {
+        "candidate": "sha256:a9a8b3f275f75698b42188466e14206006263d11ea74cb32139cfb1e3e94cb9d",
+        "source_verified": true,
+        "installed_at": "2026-10-18T04:06:09.12044618Z",
+        "installed_module_hashes": {
+          "bootstrap/recent_activity.py": "bd9d469b1cac2f4894278b3637e3bc28ee0c8e80d7ed0e873c095fe5258fe6d0"
+        }
+      },
+      "speaker": {
+        "candidate": "sha256:3dd607f14fb00bf163d542918b03a81ec665cf44929afe6f8a904709adec3730",
+        "source_verified": true,
+        "installed_at": "2026-10-18T03:49:06.481801071Z",
+        "installed_module_hashes": {
+          "voice_service/codex_media.py": "9bdac95ada74134b119cad18dd2859a48fe7579dffac4914b044d3a010c350b0"
+        }
+      },
+      "media": {
+        "candidate": "sha256:fe043d35c117b0eda6e725e015548f350c7c76b13596cae8bc9984bdfccbbae9",
+        "source_verified": true,
+        "installed_at": "2026-10-18T03:49:21.233035149Z",
+        "installed_module_hashes": {
+          "voice_service/codex_media.py": "9bdac95ada74134b119cad18dd2859a48fe7579dffac4914b044d3a010c350b0"
+        }
+      },
+      "memory": {
+        "candidate": "sha256:d69ee989faebdf8a361569cb0375f65a11c0a8c6dc4b1992dda82803fbdd0565",
+        "source_verified": true,
+        "installed_at": "2026-10-18T04:04:55.827543536Z",
+        "installed_module_hashes": {
+          "cross_encoder.py": "4ce76ce1207b79dce68fecadcf7172e3bfafab93589fe84ded33120718085c08"
+        }
+      }
+    },
+    "configuration_delta": {
+      "hindsight": "EVA_HINDSIGHT_PARALLEL_RERANK_BATCHES=1; all other configuration preserved"
+    },
+    "guards": "At latest memory/core installations: zero active voice leases, delegated work, memory outbox, current-process model admissions, conversation claims and future decision claims; memory async work also zero. Preflight only, not a permanent maintenance lock.",
+    "concurrent_executor": "Two image changes by the other executor detected; own overlays rebased onto actual images without rolling back their changes. Owner query was also incorporated in their HEAD. Only own deltas will be committed.",
+    "earlier_guard_limit": "Earlier guards counted voice/work/memory but did not count all model/decision claims; broader latest guard added after updated AGENTS guidance. No retrospective zero-claim assertion.",
+    "final_followup_live_included": true
+  },
+  "test_harness_notes": {
+    "optional_delta_api_checks": 13,
+    "backend_distinct_checks": 13,
+    "backend_initial_harness_failure": "Three tests initially failed because runner replaced PYTHONPATH and omitted actual /opt/eva/src. The same three passed with actual image PYTHONPATH; ten other tests had already passed. No duplicate count."
+  },
+  "postinstall5_independent_audio_assessment": {
+    "path": "postinstall-5/actual-audio-assessment.json",
+    "sha256": "0dae36fd8447915ea2ce8f3fe88a252ea31b493f117137715c77cdf647cea3eb",
+    "assessment": {
+      "schema": "EvaLiteralVoiceAudioAssessment/v1",
+      "recorded_at_utc": "2026-10-18T03:55:45.032256+00:00",
+      "scope": "Final four-turn browser sequence with software input and actual received PCM; no physical home speaker or household microphone acceptance.",
+      "installed_images": {
+        "media": "sha256:fe043d35c117b0eda6e725e015548f350c7c76b13596cae8bc9984bdfccbbae9",
+        "speaker": "sha256:3dd607f14fb00bf163d542918b03a81ec665cf44929afe6f8a904709adec3730"
+      },
+      "verified_media_modules": {
+        "codex_media.py": "9bdac95ada74134b119cad18dd2859a48fe7579dffac4914b044d3a010c350b0",
+        "literal_speech.py": "3a88244980f81b85e00c78d0b6d057eac198e1159fb1a25a710abd521f83058b",
+        "codex_backend.py": "864a4e388420206c2b3ac77c41d2fb58e635626539efcd804ccc1d0058f53b75"
+      },
+      "audio_integrity": {
+        "capture_sample_rate": 48000,
+        "capture_samples": 4657152,
+        "timed_samples": 4657152,
+        "untimed_trailing_samples": 0,
+        "peak_metadata_mismatches": 0,
+        "nonmonotone_timing_steps": 0
+      },
+      "turns": [
+        {
+          "ordinal": 1,
+          "input_index": 0,
+          "input_end_to_dispatch_ms": 1796.7,
+          "dispatch_to_core_final_ms": 11521.8,
+          "input_end_to_core_final_ms": 13318.5,
+          "input_end_to_first_final_audio_ms": 14111.3,
+          "core_final_to_audio_ms": 792.8,
+          "final_wordcount": 16,
+          "spoken_updates": [],
+          "tools": [],
+          "final_audio_intervals_ms": [
+            [
+              28881.7,
+              29307.4
+            ],
+            [
+              30690.3,
+              32065.3
+            ],
+            [
+              32967.4,
+              34077.2
+            ],
+            [
+              35030.1,
+              36177.3
+            ]
+          ],
+          "interrupted": false
+        },
+        {
+          "ordinal": 2,
+          "input_index": 1,
+          "input_end_to_dispatch_ms": 1864.2,
+          "dispatch_to_core_final_ms": 26216.9,
+          "input_end_to_core_final_ms": 28081.1,
+          "input_end_to_first_final_audio_ms": 28766.2,
+          "core_final_to_audio_ms": 685.1,
+          "final_wordcount": 33,
+          "spoken_updates": [
+            {
+              "approved_after_input_end_ms": 11556.9,
+              "first_audio_after_input_end_ms": 12212.2,
+              "words": 4
+            }
+          ],
+          "tools": [
+            {
+              "tool": "read_recent_activity",
+              "status": "verified",
+              "duration_ms": 3581.1
+            },
+            {
+              "tool": "read_recent_activity",
+              "status": "verified",
+              "duration_ms": 760.8
+            }
+          ],
+          "final_audio_intervals_ms": [
+            [
+              69473.0,
+              71540.2
+            ]
+          ],
+          "interrupted": true
+        },
+        {
+          "ordinal": 3,
+          "input_index": 3,
+          "input_end_to_dispatch_ms": 1917.3,
+          "dispatch_to_core_final_ms": 5912.6,
+          "input_end_to_core_final_ms": 7829.9,
+          "input_end_to_first_final_audio_ms": 8528.5,
+          "core_final_to_audio_ms": 698.6,
+          "final_wordcount": 18,
+          "spoken_updates": [],
+          "tools": [],
+          "final_audio_intervals_ms": [
+            [
+              83597.4,
+              85455.5
+            ],
+            [
+              86410.1,
+              88210.1
+            ],
+            [
+              89142.3,
+              90849.8
+            ]
+          ],
+          "interrupted": false
+        },
+        {
+          "ordinal": 4,
+          "input_index": 4,
+          "input_end_to_dispatch_ms": 1701.3,
+          "dispatch_to_core_final_ms": 5789.9,
+          "input_end_to_core_final_ms": 7491.2,
+          "input_end_to_first_final_audio_ms": 8270.9,
+          "core_final_to_audio_ms": 779.7,
+          "final_wordcount": 7,
+          "spoken_updates": [],
+          "tools": [],
+          "final_audio_intervals_ms": [
+            [
+              103418.6,
+              105427.2
+            ]
+          ],
+          "interrupted": false
+        }
+      ],
+      "interruption": {
+        "input_admitted_requests": 1,
+        "expected_composite_input_words": 11,
+        "admitted_composite_input_words": [
+          11
+        ],
+        "complete_input_word_sequence_preserved": true,
+        "recognized_to_last_old_audio_ms": 257.6,
+        "input_start_to_last_old_audio_ms": 1799.9,
+        "input_end_to_first_new_audio_ms": 8528.5,
+        "observed_continuation_after_first_final_ms": 329.2,
+        "qualification": "This live continuation arrived within the older450ms boundary too. The specific467.4ms former failure is separately covered by the deterministic before-fails/after-passes regression; do not present this changed provider timing alone as proof of that boundary repair.",
+        "old_audio_remainder_absent_after_interruption": true
+      },
+      "asr": {
+        "route": "Existing configured Home Assistant STT adapter only",
+        "new_attempts": 2,
+        "previous_attempts": 8,
+        "total_attempts": 10,
+        "credits_tokens": "unknown",
+        "normalization": "Case-fold and Unicode accent normalization; compare ordinary word sequence.",
+        "method": "Complete selected received PCM utterances. All detected speech and100ms surrounding samples retained; internal silent margins shortened to200ms for endpoint-sensitive STT. Original capture unchanged for timing.",
+        "completed_utterances_checked": 2,
+        "completed_utterances_exact_word_sequence": 2,
+        "results": [
+          {
+            "index": 0,
+            "label": "initial_greeting",
+            "error": null,
+            "expected_words": 16,
+            "asr_words": 16,
+            "exact_normalized_words": true,
+            "first_three_words_match": true,
+            "last_three_words_match": true
+          },
+          {
+            "index": 1,
+            "label": "after_interruption",
+            "error": null,
+            "expected_words": 18,
+            "asr_words": 18,
+            "exact_normalized_words": true,
+            "first_three_words_match": true,
+            "last_three_words_match": true
+          }
+        ]
+      },
+      "within_utterance_quiet_gaps_ms": [
+        1382.9,
+        902.1,
+        952.9,
+        954.6,
+        932.2
+      ],
+      "lifecycle": {
+        "input_utterances": 4,
+        "core_requests": 4,
+        "core_finals": 4,
+        "farewell_closures": 1
+      },
+      "conclusion": "Literal output fidelity passes the two independently recognized latest utterances, including first/last words. Composite input is complete and admitted once. Interruption removes old browser output promptly after detection. Whole-route latency remains variable and is not accepted as resolved.",
+      "limits": [
+        "Two selected utterances are independently recognized; this is not exhaustive proof of all future speech.",
+        "No physical acoustic echo cancellation or family listening acceptance is demonstrated. Native ordinary barge-in remains subject to the separate microphone protection.",
+        "A core-final event and a caption are not independent recognition; wording claims here rely on the two explicit ASR checks.",
+        "Provider/audio usage is partially unknown; the10STTcalls do not represent all core or development model usage."
+      ]
+    }
+  },
+  "parallel_cpu_component_assessment": {
+    "status": "candidate_verified_not_deployed_by_worker",
+    "baseline_source_sha256": "d10cc5fc3e644c20197b936ede04ea9101146fffbbaeff76581db86a406ac026",
+    "candidate_source_sha256": "4ce76ce1207b79dce68fecadcf7172e3bfafab93589fe84ded33120718085c08",
+    "opt_in": "EVA_HINDSIGHT_PARALLEL_RERANK_BATCHES=1",
+    "limits": {
+      "shared_batch_workers": 2,
+      "torch_threads": 2,
+      "cpu_quota": 4,
+      "unchanged_batch_size": 8,
+      "network": "none",
+      "provider_calls": 0
+    },
+    "tests": {
+      "targeted_helper_and_pinned_seam": 7,
+      "passed": 7
+    },
+    "actual_candidate": {
+      "sequential_ms": 5144.6,
+      "one_recall_ms": 2947.2,
+      "two_simultaneous_recalls_completion_ms": 6908.3,
+      "all_scores_bit_identical": true,
+      "exceptions": 0
+    },
+    "scope": "Exact original length-sorted batch membership and within-batch order retained; longest blocks scheduled first; CPU only; existing source validation and retrieval unchanged.",
+    "limitations": [
+      "Component test is not end-to-end voice or physical acceptance.",
+      "Native running inference is drained on error, not forcibly cancelled.",
+      "Latency varies by sequence lengths and concurrent workload."
+    ],
+    "installation_reported_by_parent": {
+      "core_image_prefix": "a9a8b3",
+      "memory_image_prefix": "d69ee",
+      "source_sha256": "4ce76ce1207b79dce68fecadcf7172e3bfafab93589fe84ded33120718085c08",
+      "live_run": "postinstall6",
+      "cold_memory_process": true,
+      "no_concurrent_offline_cpu_probe": true
+    },
+    "independent_review": "Sibling reviewed pinned batching, shared worker bounds, error drain and unchanged retrieval/authority; no code blocker."
+  },
+  "contract": "EvaVoiceLiveRepairCheckpoint/v1",
+  "recorded_at": "2026-10-18T04:15:10.372575+00:00",
+  "owner_accepted": false,
+  "whole_project_complete": false,
+  "postinstall6_independent_audio_assessment": {
+    "schema": "EvaLiteralVoiceAudioAssessment/v1",
+    "recorded_at_utc": "2026-10-18T04:11:11.535559+00:00",
+    "scope": "Postinstall-6 three complete browser turns using prerecorded test input and actual received PCM. Existing audio path unchanged; no ASR or provider calls from this assessment.",
+    "installed_images": {
+      "core": "sha256:a9a8b3f275f75698b42188466e14206006263d11ea74cb32139cfb1e3e94cb9d",
+      "hindsight": "sha256:d69ee989faebdf8a361569cb0375f65a11c0a8c6dc4b1992dda82803fbdd0565",
+      "media": "sha256:fe043d35c117b0eda6e725e015548f350c7c76b13596cae8bc9984bdfccbbae9",
+      "speaker": "sha256:3dd607f14fb00bf163d542918b03a81ec665cf44929afe6f8a904709adec3730"
+    },
+    "audio_integrity": {
+      "capture_sample_rate": 48000,
+      "capture_samples": 4017152,
+      "timed_samples": 4017152,
+      "untimed_trailing_samples": 0,
+      "peak_metadata_mismatches": 0,
+      "nonmonotone_timing_steps": 0
+    },
+    "turns": [
+      {
+        "ordinal": 1,
+        "input_index": 0,
+        "final_words": 21,
+        "input_end_to_dispatch_ms": 1940.7,
+        "dispatch_to_core_final_ms": 11182.1,
+        "input_end_to_first_final_audio_ms": 13819.4,
+        "core_final_to_first_audio_ms": 696.6,
+        "final_audio_intervals_ms": [
+          [
+            28279.0,
+            28730.9
+          ],
+          [
+            30100.9,
+            32526.3
+          ],
+          [
+            33466.2,
+            35790.4
+          ]
+        ],
+        "within_final_audio_quiet_gaps_ms": [
+          1370.0,
+          939.9
+        ],
+        "spoken_updates": [],
+        "activity_tools": [],
+        "initial_memory_ms": 5904,
+        "complete_preparation_ms": 5906,
+        "model_phases": [
+          {
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 3816,
+            "first_content_ms": 2104,
+            "input_tokens": 7834,
+            "output_tokens": 29,
+            "requested_action": false
+          }
+        ],
+        "core_residual_outside_preparation_model_and_tool_intervals_ms": 1460.1,
+        "captions_exactly_match_core_offered_text": true
+      },
+      {
+        "ordinal": 2,
+        "input_index": 1,
+        "final_words": 37,
+        "input_end_to_dispatch_ms": 1753.9,
+        "dispatch_to_core_final_ms": 18238.3,
+        "input_end_to_first_final_audio_ms": 20761.0,
+        "core_final_to_first_audio_ms": 768.8,
+        "final_audio_intervals_ms": [
+          [
+            61106.0,
+            66592
+          ],
+          [
+            67570.3,
+            71903.7
+          ],
+          [
+            72824.7,
+            74450.4
+          ]
+        ],
+        "within_final_audio_quiet_gaps_ms": [
+          978.3,
+          921.0
+        ],
+        "spoken_updates": [
+          {
+            "words": 4,
+            "approved_after_input_end_ms": 10422.8,
+            "first_audio_after_input_end_ms": 10996.5,
+            "audio_end_to_final_audio_ms": 7952.8
+          }
+        ],
+        "activity_tools": [
+          {
+            "name": "read_recent_activity",
+            "status": "verified",
+            "duration_ms": 1791.3
+          }
+        ],
+        "initial_memory_ms": 4923,
+        "complete_preparation_ms": 4926,
+        "model_phases": [
+          {
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 1804,
+            "first_content_ms": null,
+            "input_tokens": 6899,
+            "output_tokens": 25,
+            "requested_action": true
+          },
+          {
+            "phase_index": 1,
+            "receipt_count": 1,
+            "elapsed_ms": 3111,
+            "first_content_ms": null,
+            "input_tokens": 7048,
+            "output_tokens": 56,
+            "requested_action": true
+          },
+          {
+            "phase_index": 2,
+            "receipt_count": 2,
+            "elapsed_ms": 3257,
+            "first_content_ms": 1970,
+            "input_tokens": 10138,
+            "output_tokens": 68,
+            "requested_action": false
+          }
+        ],
+        "core_residual_outside_preparation_model_and_tool_intervals_ms": 3349.0,
+        "captions_exactly_match_core_offered_text": true
+      },
+      {
+        "ordinal": 3,
+        "input_index": 4,
+        "final_words": 5,
+        "input_end_to_dispatch_ms": 1701.9,
+        "dispatch_to_core_final_ms": 7317.1,
+        "input_end_to_first_final_audio_ms": 9697.2,
+        "core_final_to_first_audio_ms": 678.2,
+        "final_audio_intervals_ms": [
+          [
+            88402.2,
+            89935
+          ],
+          [
+            90924.3,
+            91643.7
+          ]
+        ],
+        "within_final_audio_quiet_gaps_ms": [
+          989.3
+        ],
+        "spoken_updates": [],
+        "activity_tools": [],
+        "initial_memory_ms": 3979,
+        "complete_preparation_ms": 3981,
+        "model_phases": [
+          {
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 1931,
+            "first_content_ms": 1532,
+            "input_tokens": 7160,
+            "output_tokens": 14,
+            "requested_action": false
+          }
+        ],
+        "core_residual_outside_preparation_model_and_tool_intervals_ms": 1405.1,
+        "captions_exactly_match_core_offered_text": true
+      }
+    ],
+    "semantic_review": {
+      "social_answer": "Directly answers the social question before asking a relevant question back. No invented physical experience.",
+      "day_recap": "37 words, first person, describes an evaluation and the decision not to begin new work. No claim that a planned action was completed; no exhaustive absence claim. Modest and relevant, although the substance is an internal decision rather than a useful completed household activity.",
+      "bridge": "Four context-specific words about reflecting on the day. No external-persona framing; arrives nearly11seconds after input, so not accepted as early.",
+      "farewell": "Short appropriate response; transport closes after its audio.",
+      "scope": "Semantic assessment of core output and received captions. Current activity source arguments/results are not exported, so individual historical claims were not independently reconstructed."
+    },
+    "lifecycle": {
+      "input_utterances": 3,
+      "core_requests": 3,
+      "core_finals": 3,
+      "farewell_closures": 1,
+      "last_farewell_signal_to_close_ms": 1278.1,
+      "all_offered_texts_match_received_captions": true
+    },
+    "usage": {
+      "unique_recorded_model_requests": 5,
+      "input_tokens": 39079,
+      "output_tokens": 192,
+      "credits": "unknown"
+    },
+    "asr": {
+      "new_attempts": 0,
+      "previous_task_attempts": 10,
+      "independent_word_recognition_on_this_run": false
+    },
+    "comparison": {
+      "post5_today_final_audio_ms": 28766.2,
+      "post6_today_final_audio_ms": 20761.0,
+      "day_final_audio_improvement_ms": 8005.2,
+      "post5_activity_reads": 2,
+      "post6_activity_reads": 1,
+      "qualification": "One bounded repeated scenario; memory scheduling and pagination instructions changed together. The reduction is observed, not a general latency guarantee or isolated causal benchmark."
+    },
+    "conclusion": "All three complete browser turns remain coherent and close normally; the short day recap now uses one activity read and arrives about8seconds earlier. Initial social/farewell responses and the thinking bridge remain too delayed for a general natural-conversation latency acceptance.",
+    "limits": [
+      "PCM timing is independently checked; captions are not independent recognition of acoustic words. No new ASR was run.",
+      "No physical speaker listening or native acoustic barge-in acceptance is claimed.",
+      "The phase log has no wall-clock timestamps. Residual intervals cannot be split precisely into pending/catalog/admission versus final host checks. Journal REPLY_COMMITTED.occurred_at is the original turn time, not its commit wall-clock.",
+      "No repeated or duplicate activity tool arguments can be inferred from action names alone; the journal omits these read-only arguments and outputs."
+    ]
+  },
+  "repairs": [
+    {
+      "problem": "Generative output added 13 words not present in the core answer.",
+      "change": "Existing HA FennaNeural literal TTS now speaks the same core text; existing Codex input transcription retained.",
+      "proof": "Six complete post2 and two complete post5 recordings independently transcribed exactly after word normalization; short output contains first and last words. Current native ACK, full short-waveform, long-text splitting and cancellation checks retained."
+    },
+    {
+      "problem": "Composite spoken correction could split into two core requests.",
+      "change": "Existing input quiet window increased from 450 to 550 ms.",
+      "proof": "Actual 467.4 ms event gap reproduced red before/green after; post5 full 11-word correction admitted once, though that new live gap was 329.2 ms."
+    },
+    {
+      "problem": "Own-day response sounded like an external report and paged too broadly.",
+      "change": "Active spoken contract appended to the ordinary model instructions; first-person facts, compact day response, ordinary uncertainty and request-driven pagination.",
+      "proof": "Post6: 37-word first-person day answer, one activity read, a naturally generated four-word bridge; no new factual or emotional inventions identified. It mainly describes an internal decision, not evidence of additional household value."
+    },
+    {
+      "problem": "Slow initial memory and context preparation.",
+      "change": "Ignore grammatical/time-only implicit anchors; retain full semantic query and explicit subject anchors. Scoped initiative query CTE, empty contribution context removal, within-invocation authority reuse, optional provisional delta suppression. Exact numeric cache TTL one hour, and opt-in two-worker parallel scheduling of unchanged CPU batches.",
+      "proof": "Installed and used in actual browser route; component speed gains measured separately, complete response latency still too long."
+    },
+    {
+      "problem": "CTE optimization introduced a downstream activity projection cross join.",
+      "change": "Project scoped operational_checkpoints.thread_id, not outer operational_events.thread_id.",
+      "proof": "Regression failed on old caller and passed on corrected caller; owner/other-owner/origin/installation boundaries and paging covered. Original page-only equality proof did not cover this caller."
+    }
+  ],
+  "focused_verification": {
+    "private_activity_projection": {
+      "schema": "EvaPrivateActivityProjectionRepair/v1",
+      "recorded_at_utc": "2026-10-18T03:39:49.946728+00:00",
+      "cause": "The owner-adoption query was refactored to a materialized CTE. Its private activity consumer still projected the old unaliased event table, which SQLAlchemy added as a cartesian outer FROM. Presence of an own adoption could admit unrelated threads into the initiative read.",
+      "repair": "Project the authorized joined checkpoint thread_id instead; tenant/installation/principal/origin filters and current authority/retention checks remain unchanged.",
+      "baseline_image": "sha256:9d15288f55697499069b283d7d28f48a72902192b218e3af00d769afee5fb5e1",
+      "baseline_private_activity_sha256": "c8c0642af4a7637e92358a0dd91f32d35d7593ae93e908e9ae5ca4a290299517",
+      "candidate_private_activity_sha256": "7abdf580c8be7f4bced54b5f076853221f5dc7ce567aeb09a246f83062335c79",
+      "test_sha256": "7dbcf3abe80c4b2f4c3e20c1f626e8873c75254cde9e8cec6dc2cb81993a4f97",
+      "tests": {
+        "baseline_regression": "failed as expected on real result assertion; SQLAlchemy cartesian-product warning independently confirms cause",
+        "baseline_regression_seconds": 8.02,
+        "candidate_unique_checks_passed": 12,
+        "candidate_module_passed": 11,
+        "candidate_module_seconds": 18.54,
+        "remaining_planning_check_passed": 1,
+        "remaining_planning_seconds": 6.47,
+        "fixture_alignment": "Installed image recognizes migration head4e0007; disposable migration copy pinned to that exact revision. Earlier attempts stopped in fixture setup on newer repository migrations, not test assertions. The remaining planning test needed /repo/src mapped to actual image /opt/eva/src. No broad working-source overlay used.",
+        "test_database": "New disposable PostgreSQL in dedicated network-none namespace; no production database touched.",
+        "regression_scope": "23own initiatives plus own review,23other-owner initiatives, unrelated private thread, other-owner review, wrong origin and other installation; expected pages20+4, stable reread and exact24unique source hashes."
+      },
+      "review": "Independent worker reviewed final two-line source change and all other owner-query callers; no second unscoped event projection found.",
+      "patch": "private-activity-projection-own.patch",
+      "logs": [
+        "private-activity-projection-before-tests.log",
+        "private-activity-projection-after-tests.log",
+        "private-activity-projection-planning-test.log"
+      ],
+      "limits": [
+        "Four activity calls in postinstall3 are observed, but their arguments and returned receipts were not journalled. Do not claim those were identical calls or that this projection error alone caused all four reads.",
+        "No new ASR, model, microphone or physical playback calls in this repair."
+      ],
+      "provider_calls": 0,
+      "deployment_performed_by_this_worker": false
+    },
+    "input_fragment_quiet": {
+      "schema": "EvaVoiceFragmentQuietRepair/v1",
+      "recorded_at_utc": "2026-10-18T03:48:32.647081+00:00",
+      "observed_failure": "A provider transcription split one composite interruption. Continuation turn.created arrived467.4ms after the first turn.done, after the450ms input flush had admitted the incomplete clause. Core then handled two questions serially.",
+      "change": "Named INPUT_FRAGMENT_QUIET_SECONDS550ms, adding100ms before admission. Existing continuation-created cancellation joins only pending unadmitted fragments. No text heuristic, new VAD or change to core identity.",
+      "baseline_image": "sha256:afd1fb05bf78dc3076ddc7ec77917b31df7f2ba8112f1636c6b25dd5aa352ab8",
+      "baseline_codex_media_sha256": "ed1de8e568bcccceea048658adb65306ffd69799b5d7b463c8b5f6d54b99687c",
+      "candidate_codex_media_sha256": "9bdac95ada74134b119cad18dd2859a48fe7579dffac4914b044d3a010c350b0",
+      "test_sha256": "8c88f497082123e3b0d2329b060b5c99b9d721e73772b1d161a76e36cd8e477c",
+      "verification": {
+        "baseline_regression": "1failed as expected: incomplete clause already dispatched",
+        "candidate_passed": 43,
+        "candidate_seconds": 21.99,
+        "network": "none",
+        "provider_calls": 0,
+        "coverage": [
+          "Deterministic467.4ms live-boundary replay, one request with both complete fragments, duplicates not replayed",
+          "Separate completed utterances after quiet window retain separate request IDs and same conversation",
+          "Existing interruption, STOP, noise, authorization, core-update and farewell cases"
+        ],
+        "limits": [
+          "Only the measured split boundary is repaired; arbitrary long pauses cannot be inferred as continuation without further evidence.",
+          "This offline check does not prove hardware acoustic barge-in.",
+          "Final integrated browser validation remains parent-owned."
+        ]
+      },
+      "patch": "fragment-quiet-own.patch",
+      "logs": [
+        "fragment-quiet-before-tests.log",
+        "fragment-quiet-after-tests.log"
+      ],
+      "deployment_performed_by_this_worker": false
+    },
+    "parallel_cpu_reranking": {
+      "status": "candidate_verified_not_deployed_by_worker",
+      "baseline_source_sha256": "d10cc5fc3e644c20197b936ede04ea9101146fffbbaeff76581db86a406ac026",
+      "candidate_source_sha256": "4ce76ce1207b79dce68fecadcf7172e3bfafab93589fe84ded33120718085c08",
+      "opt_in": "EVA_HINDSIGHT_PARALLEL_RERANK_BATCHES=1",
+      "limits": {
+        "shared_batch_workers": 2,
+        "torch_threads": 2,
+        "cpu_quota": 4,
+        "unchanged_batch_size": 8,
+        "network": "none",
+        "provider_calls": 0
+      },
+      "tests": {
+        "targeted_helper_and_pinned_seam": 7,
+        "passed": 7
+      },
+      "actual_candidate": {
+        "sequential_ms": 5144.6,
+        "one_recall_ms": 2947.2,
+        "two_simultaneous_recalls_completion_ms": 6908.3,
+        "all_scores_bit_identical": true,
+        "exceptions": 0
+      },
+      "scope": "Exact original length-sorted batch membership and within-batch order retained; longest blocks scheduled first; CPU only; existing source validation and retrieval unchanged.",
+      "limitations": [
+        "Component test is not end-to-end voice or physical acceptance.",
+        "Native running inference is drained on error, not forcibly cancelled.",
+        "Latency varies by sequence lengths and concurrent workload."
+      ]
+    },
+    "pagination_guidance": {
+      "change": "Activity pagination guidance only; requested-content coverage and complete overviews preserved",
+      "ast_unchanged_except_descriptor_description_and_completion_guidance": true,
+      "installed_image_offline_import_passed": true,
+      "baseline_image": "sha256:9f4afcc2701e3c3eca19dc5bbd8d09363a567d4bbc52c52f0acf189bcf4db281",
+      "baseline_sha256": "539951959862587fd3b933bf995b84fc709db907d9f1c6a465a60038263ae6b0",
+      "candidate_sha256": "bd9d469b1cac2f4894278b3637e3bc28ee0c8e80d7ed0e873c095fe5258fe6d0",
+      "additional_tests": "No new mirror-string tests or database suite for prose-only descriptor change",
+      "external_calls": 0,
+      "deployed": false
+    },
+    "pending_authority_reuse": {
+      "source_changes": [
+        "src/eva/adapters/postgres/completed_contribution.py",
+        "src/eva/providers/human_understanding_actions.py"
+      ],
+      "new_test": "development/tests/bootstrap/test_pending_authority_reuse.py",
+      "working_before_equals_installed": true,
+      "pending_ms": {
+        "original": 517,
+        "candidate": [
+          405,
+          340
+        ]
+      },
+      "available_action_names_identical": true,
+      "authority_cache_across_calls": false,
+      "fresh_execute_authority_unchanged": true,
+      "exact_current_image_tests": {
+        "passed_distinct": 10,
+        "first_run_passed": 9,
+        "first_run_fixture_error": 1,
+        "fixture_error": "Learning module demands a fresh database; it was initially combined with an already migrated session fixture.",
+        "learning_isolated_fresh_database_passed": 1,
+        "learning_seconds": 8.13
+      },
+      "provider_calls": 0,
+      "deployment_performed": false,
+      "contribution": {
+        "baseline": "pending-contribution.actual-before.py",
+        "working_snapshot": "pending-contribution.working-before.py",
+        "candidate": "candidate-pending-contribution.py",
+        "patch": "pending-contribution-own.patch",
+        "candidate_sha256": "cf49548edcb8df5101213befcd6b593024f4886d3ef5cdb9e9e25f526c2feca4"
+      },
+      "learning": {
+        "baseline": "pending-learning.actual-before.py",
+        "working_snapshot": "pending-learning.working-before.py",
+        "candidate": "candidate-pending-learning.py",
+        "patch": "pending-learning-own.patch",
+        "candidate_sha256": "eca5844285a82fffdd7370efa00d05b11b71aff91788f33f185cd2927966d57b"
+      }
+    },
+    "api_optional_deltas": "13 relevant API cases passed; fresh private and household authority checks retained.",
+    "backend": "13 distinct backend cases passed; initial three harness import failures resolved by using actual /opt/eva/src PYTHONPATH and rerunning those three.",
+    "preexisting_failures": "Five unrelated initiative-worker cases reproduced with own context changes removed; no claim they are fixed by this voice repair."
+  },
+  "gpu_recovery": {
+    "status": "read_only_diagnosis",
+    "windows_gpu": {
+      "name": "NVIDIA GeForce RTX 5080 Laptop GPU",
+      "driver": "617.42",
+      "driver_model": "WDDM",
+      "pnp_problem": 0,
+      "pnp_status": "OK",
+      "native_nvml_works": true,
+      "display_active": true
+    },
+    "wsl": {
+      "version": "2.7.11.0",
+      "kernel": "6.18.33.2-2",
+      "windows_version": "10.0.26200.8894",
+      "dxg_present": true,
+      "nvml_error": "GPU access blocked by the operating system",
+      "kernel_error": "dxgvmb_send_create_process: create_process failed -75"
+    },
+    "assessment": "Failure localized to WSL GPU-PV bridge rather than disabled/missing Windows GPU. Matching upstream user report supports a stale bridge hypothesis; trigger and repair success not proven locally.",
+    "next_repair_candidate": "Coordinated idle WSL VM shutdown/restart with Windows-side restart orchestration and persisted recovery instructions, followed by WSL NVML and CUDA proof before enabling reranker GPU. No Windows reboot or driver replacement as first step.",
+    "mutation_performed": false,
+    "sources": [
+      "https://github.com/microsoft/WSL/issues/41062",
+      "https://learn.microsoft.com/en-us/windows/wsl/basic-commands#shutdown",
+      "https://docs.nvidia.com/cuda/wsl-user-guide/index.html",
+      "https://archive.docs.nvidia.com/metropolis/deepstream/7.1/text/DS_WSL2_FAQ.html",
+      "https://github.com/microsoft/WSL/issues/41701"
+    ],
+    "direct_wsl_libcuda_init": 100,
+    "root_nvml_same_failure": true,
+    "windows_driver_error_events": {
+      "date_utc": "2026-10-16T10:27:00Z",
+      "event14": 2,
+      "event153": 3
+    },
+    "running_wsl_distro_count": 1,
+    "shutdown_interrupts_current_toolserver": true,
+    "toolserver_systemd_restart_policy": null,
+    "windows_registered_python": "3.13",
+    "windows_python_modules": {
+      "torch": false,
+      "sentence_transformers": false,
+      "onnxruntime": false
+    },
+    "installed_torch": "2.10.0+cu128; build includes sm_120",
+    "prepared_only_recovery_directory": "gpu-recovery",
+    "specific_driver_version_cause_proven": false,
+    "toolserver_survives_restart": false,
+    "automatic_chat_resume_guaranteed": false,
+    "recovery_bundle_prepared": true,
+    "windows_side_handoff_required": true,
+    "script_execution_performed": false,
+    "next_steps": [
+      "Coordinate restart of the current WSL VM, affecting this toolserver and all running WSL workloads.",
+      "Run prepared Windows-side guarded recovery after fresh idle and workspace checks.",
+      "Verify NVML, cuInit, original container images/health and enabled EVA services.",
+      "If GPU restored, prove same-model scoring/ranking on existing private captures before any GPU runtime activation.",
+      "Use the installed browser route again and evaluate actual reply delay, then remove only new synthetic retained sources."
+    ],
+    "native_windows_python_fallback_present": false
+  },
+  "usage_scope": {
+    "measured_core_test_tokens": 666883,
+    "measured_core_requests": 73,
+    "measured_tool_calls": 36,
+    "independent_ha_stt_calls": 14,
+    "static_ha_tts_fixture_calls": 11,
+    "runtime_speech_provider_usage": "not fully measured",
+    "provider_credits": "unknown",
+    "codex_development_agent_usage": "not available; not included in core totals",
+    "work_started_at": "2026-10-18T02:19:46.999720+00:00",
+    "checkpoint_at": "2026-10-18T04:15:10.372575+00:00"
+  }
+}

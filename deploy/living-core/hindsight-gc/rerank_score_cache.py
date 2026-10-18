@@ -8,7 +8,7 @@ from collections import OrderedDict
 
 
 class ExactRerankScores:
-    def __init__(self, *, capacity=64, ttl=30.0, clock=time.monotonic):
+    def __init__(self, *, capacity=64, ttl=3600.0, clock=time.monotonic):
         self._capacity, self._ttl, self._clock = capacity, ttl, clock
         self._salt = os.urandom(32)
         self._entries = OrderedDict()

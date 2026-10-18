@@ -106,13 +106,13 @@ async def test_unapproved_input_assistant_never_speaks_or_enters_memory():
 @pytest.mark.asyncio
 @pytest.mark.parametrize('farewell',['Dankje doei','Dank je, tot doei','Dank je, hè. Do ei'])
 async def test_farewell_waits_for_core_and_playout_before_closing(farewell):
-    s,payloads,spoken=fixture();played=asyncio.Event()
+    s,payloads,spoken=fixture();played=asyncio.Event();offered=asyncio.Event()
     def say(text):
-        spoken.append(text)
+        spoken.append(text);offered.set()
         return SimpleNamespace(task=asyncio.create_task(played.wait()),interrupted=False)
     s.renderer.say=say
     turn(s,'turn.done','bye',farewell)
-    await asyncio.sleep(.5)
+    await asyncio.wait_for(offered.wait(),1)
     assert len(payloads)==1 and spoken and not s.closed
     played.set()
     for _ in range(10):await asyncio.sleep(0)
@@ -234,6 +234,69 @@ async def test_adjacent_asr_fragments_form_one_authoritative_request():
     await settle(s)
     assert len(payloads)==1
     await s.aclose()
+
+
+class InputClock:
+    """Advance input debounce without depending on host scheduling jitter."""
+    def __init__(self):self.now=0;self.waiters=[]
+    def __getattr__(self,name):return getattr(asyncio,name)
+    async def sleep(self,delay):
+        if not delay:return await asyncio.sleep(0)
+        future=asyncio.get_running_loop().create_future()
+        self.waiters.append((self.now+delay,future))
+        await future
+    async def advance(self,seconds):
+        self.now+=seconds
+        for deadline,future in self.waiters:
+            if deadline<=self.now and not future.done():future.set_result(None)
+        for _ in range(12):await asyncio.sleep(0)
+
+
+@pytest.mark.asyncio
+async def test_natural_pause_continuation_does_not_admit_a_partial_core_question(monkeypatch):
+    from eva.voice_service import codex_media
+    clock=InputClock();monkeypatch.setattr(codex_media,'asyncio',clock)
+    s,payloads,spoken=fixture()
+    first='Wacht even, ik bedoelde iets anders.'
+    second='Hoe gaat het met je?'
+    try:
+        turn(s,'turn.created','correction');turn(s,'turn.done','correction',first)
+        await clock.advance(0)
+        # Observed live: continuation created467ms after the first final,
+        # just after the old450ms admission timer had released a partial question.
+        await clock.advance(.4674)
+        assert not payloads and not spoken
+        turn(s,'turn.created','question')
+        await clock.advance(1.6626)
+        assert not payloads and not spoken
+        turn(s,'turn.done','question',second)
+        await clock.advance(0)
+        await clock.advance(.55)
+        await settle(s)
+        assert [p['text'] for p in payloads]==[first+' '+second]
+        assert spoken==['Kern: '+first+' '+second]
+        turn(s,'turn.done','correction',first);turn(s,'turn.done','question',second)
+        await settle(s)
+        assert len(payloads)==1
+    finally:await s.aclose()
+
+
+@pytest.mark.asyncio
+async def test_complete_utterances_after_quiet_window_remain_separate(monkeypatch):
+    from eva.voice_service import codex_media
+    clock=InputClock();monkeypatch.setattr(codex_media,'asyncio',clock)
+    s,payloads,spoken=fixture()
+    try:
+        for identity,text in [('first','Wat heb je gelezen?'),('second','En wat vond je ervan?')]:
+            turn(s,'turn.created',identity);turn(s,'turn.done',identity,text)
+            await clock.advance(0)
+            await clock.advance(.55)
+            await settle(s)
+        assert [p['text'] for p in payloads]==['Wat heb je gelezen?','En wat vond je ervan?']
+        assert len({p['message_id'] for p in payloads})==2
+        assert len({p['session_id'] for p in payloads})==1
+        assert spoken==['Kern: '+p['text'] for p in payloads]
+    finally:await s.aclose()
 
 
 @pytest.mark.asyncio
