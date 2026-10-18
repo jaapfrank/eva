@@ -1,0 +1,117 @@
+{
+  "contract": "EvaPrivateOrientationContractReview/v1",
+  "taskId": "E5.1",
+  "reviewedAt": "2026-10-18T22:39:39.908374+00:00",
+  "verdict": "GO_SOURCE_CONTRACT_ONLY",
+  "wholeTaskComplete": false,
+  "familyAccepted": false,
+  "blockers": [],
+  "scope": [
+    {
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "bce4f6f09120754b508455047abf5c8713f1f8caa16ff405e874ff98c60d3edb"
+    },
+    {
+      "path": "src/eva/adapters/postgres/sensory_events.py",
+      "sha256": "f77ad972746252ccdb051d58e6a5c249909291a52f722ef9c63a43c79f8a4f9e"
+    },
+    {
+      "path": "development/tests/model/test_private_opportunity_contract.py",
+      "sha256": "db34bb8c3ca3da81f2486289a892ec1fe39a5b643c09b0ddc711a1f3cadcdab0"
+    },
+    {
+      "path": "development/tests/postgres/test_initiative_profile_change.py",
+      "sha256": "997ee55b9a255c8083e9a048b846cd5e6927c3d70c47451bb65cc249c10ce17f"
+    }
+  ],
+  "method": "Independent bounded source/diff and recorded focused-test review; no new tests, provider calls, runtime queries or installation by reviewer.",
+  "findings": [
+    {
+      "area": "Private descriptor",
+      "source": "src/eva/adapters/model/pydantic_conversation.py:627",
+      "conclusion": "A fresh deep copy changes descriptions only. Function name, argument schema, strictness, bounds and validator remain unchanged. Descriptions separate self-chosen work from message disposition/urgency; null initiative and no search remain valid. No fixed topic, mandatory work or new authority."
+    },
+    {
+      "area": "Private first/final request",
+      "source": "src/eva/adapters/model/pydantic_conversation.py:3065",
+      "conclusion": "The optional-search first request inherits the private body tool; post-search final request inherits the same body and forced submit. Direct submit and private-without-search also retain the private descriptor."
+    },
+    {
+      "area": "Household preservation",
+      "source": "src/eva/adapters/model/pydantic_conversation.py:3435",
+      "conclusion": "Global _FREE_WILL_TOOL AST is exactly unchanged from the before snapshot. Household still selects that descriptor. All other named model AST nodes are unchanged outside the new private factory, two consumers and private profile constant."
+    },
+    {
+      "area": "Profile occasion identity",
+      "source": "src/eva/adapters/postgres/sensory_events.py:215",
+      "conclusion": "Only a non-null actually changed private profile derives a separate deterministic decimal SHA256 identity from profile plus hour window. Original review_window and explicit installed_profile_change cause remain in the immutable payload. Standard hourly identity is unchanged; an existing identical source returns idle without overwriting it."
+    },
+    {
+      "area": "Blocking and deduplication",
+      "source": "src/eva/adapters/postgres/sensory_events.py:163",
+      "conclusion": "Existing nonterminal/unknown evaluation, pending expression and adopted active work checks precede source creation. Future model-selected attention remains authoritative. Same-profile restart does not resample a completed opportunity; absent profile keeps previous hourly behavior. Completion/attention source priority remains unchanged."
+    }
+  ],
+  "testsReviewed": [
+    {
+      "scope": "Model contract and existing private-search/planning cases",
+      "passed": 15,
+      "seconds": 2.0,
+      "newCases": 5,
+      "existingCases": 10,
+      "evidence": "Recorded execution metadata (original exec stdout, no rerun solely for logging)",
+      "metadataSha256": "54b8db3d9310b0cf72496ea372dda15ab15369ecb4718a42ac2f3461fd0133fb"
+    },
+    {
+      "scope": "Postgres profile identity, memory-search and preparation/recovery cases",
+      "passed": 24,
+      "seconds": 18.68,
+      "newProfileCases": 4,
+      "stdoutSha256": "74337b2e8f17d69bf83e3a7024d3fa29f9142a45f20a08fea2ffa161bbc4d2f2",
+      "metadataSha256": "82a48bab632189c287918c8fe996f71e4d856c0a3ca94998f6a11aa7eeb0789c"
+    }
+  ],
+  "coverageLimits": [
+    "New focused store cases directly cover same-hour changed identity/original-history preservation/restart dedup, future attention, inflight decision and null profile. Existing targeted lost-response case covers UNKNOWN. Active-work and pending-expression guards were source-reviewed as unchanged, not claimed as new dedicated assertions.",
+    "No actual installed-role parity or live behavior is certified by this review. Coordinator owns the core-only candidate; worker and speech changes are outside scope."
+  ],
+  "evidence": {
+    "modelPatchSha256": "4b3706cba4b7b3683ce8334a7cfe048fc0ca321476334d9cb41285c3208f5e7f",
+    "storePatchSha256": "dd803581c47bc4cb85ad0c9d1f20c50fa0bfbf918458a08e3f39d8693c0daa3c",
+    "boundedOutcomeContractSha256": "aecc2c203b88bee840f429d4e4dc54f8629bc6a4ceccfa13c566622473a130fe",
+    "modelImplementationReportSha256": "abdd3fdd4d5cbe460b8729141b87c28f510fa3cac675955e55f6063fedfdda83"
+  },
+  "outcomeBoundary": "This fixes a concrete descriptive-contract mismatch and changed-profile source-ID collision. A useful ordinary self-chosen task, checked result and later ordinary followthrough remain unproven. Silence or passing deterministic tests do not complete E5.1 or establish household acceptance.",
+  "installationAddenda": [
+    {
+      "reviewedAt": "2026-10-18T22:42:48.682531+00:00",
+      "previousSourceReviewSha256": "b4decb10e73d55cb122ef57f6b9b98ec02723678af46be66bd1f871cc5c16f41",
+      "verdict": "GO_RECORDED_CORE_INSTALLATION_BINDING_ONLY",
+      "method": "Saved metadata and receipt comparison only; no fresh runtime call.",
+      "core": {
+        "image": "sha256:38ce3683f5120ab1942493f090c11562693f0a6c46d895e8fc02bcc2e93397a4",
+        "health": "healthy",
+        "startedAt": "2026-10-18T22:40:27.151436323Z",
+        "measuredSources": 72,
+        "reviewedSourcesMatched": [
+          "eva/adapters/model/pydantic_conversation.py",
+          "eva/adapters/postgres/sensory_events.py"
+        ],
+        "unchangedMeasuredSources": 70,
+        "retainedMounts": true
+      },
+      "worker": {
+        "image": "sha256:003b383c970f396694e69fe0c22c20cf5d0b2aeb4e0a5f1fa000231cc71fb260",
+        "unchangedFromPriorInstallation": true
+      },
+      "evidence": {
+        "installedParitySha256": "8b13901caef032ef9ef007211516994d4142e6ac0d175e8d3a6e51ce530c8791",
+        "coreReceiptSha256": "12955a1274b2801150f9b8b1c1b372a7c55f323b401451d7b97e539a92315f08",
+        "priorInstalledParitySha256": "fa12cf3dae941c2242f733649adbac5bb61061559fce6f20a551d5360e331c6b",
+        "publicInstallationPath": "development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
+        "publicInstallationSha256": "428d452821dca4e0b6025d997fc4acda73ebbe5e35e40e0f5dfcdcf5936a9da5"
+      },
+      "limit": "Two reviewed core sources match the installed source map; all other 70 measured core sources and the worker image are preserved. This is a bounded measured-source claim, not an inventory of every byte or a speech behavior check. No actual autonomous execution, result or later continuation is established. E5.1 remains open."
+    }
+  ]
+}

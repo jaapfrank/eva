@@ -623,6 +623,53 @@ _FREE_WILL_TOOL: dict[str, Any] = _tool(
 )
 
 
+def _private_opportunity_tool() -> dict[str, Any]:
+    """Describe private orientation without changing the shared decision contract."""
+    from copy import deepcopy
+    tool = deepcopy(_FREE_WILL_TOOL)
+    tool["description"] = (
+        "Leg je private oriëntatie vast: weeg eigen interesse en bewaarde voortgang, "
+        "een inhoudelijk informatiegat en een verifieerbare uitvoerstap af. "
+        "Beoordeel afzonderlijk of een bericht nu past; geen verplicht initiatief."
+    )
+    fields = tool["parameters"]["properties"]
+    fields["disposition"]["description"] = (
+        "Alleen de berichtkeuze: silence of respond. Silence sluit eigen onderzoek "
+        "of voorbereiding niet uit."
+    )
+    fields["reason"]["description"] = (
+        "Korte inhoudelijke afweging van eigen belangstelling, voortgang, informatiegat "
+        "en mogelijke verifieerbare stap, los van het berichtmoment; geen verborgen redeneerketen."
+    )
+    fields["expression"]["description"] = (
+        "Eén natuurlijk Nederlands privébericht als disposition respond is; anders null. "
+        "Geen claim over een oorzaak, wens of uitvoering die niet bewezen is."
+    )
+    fields["urgency"]["description"] = (
+        "Uitsluitend de urgentie van eventuele privéberichtgeving; geen urgentievereiste voor eigen werk."
+    )
+    fields["initiative"]["description"] = (
+        "Een zelfgekozen onderzoeksintentie of verifieerbare uitvoerstap op eigen interesse "
+        "of voortgang; anders null. Een informatiegat mag de aanleiding zijn. "
+        "Geen opdracht namens de eigenaar of extra uitvoerbevoegdheid."
+    )
+    proposal = fields["initiative"]["properties"]
+    proposal["title"]["description"] = "Je eigen vraag of voorgenomen bijdrage."
+    proposal["motivation"]["description"] = (
+        "Waarom deze verkenning of voortgang inhoudelijk zinvol lijkt; "
+        "een eigen hypothese, geen bewezen bewonerswens."
+    )
+    proposal["next_exploration"]["description"] = (
+        "Een eerste uitvoerbare en verifieerbare stap voor de bestaande uitvoerder "
+        "binnen actuele bevoegdheden; geen claim dat die al is uitgevoerd."
+    )
+    fields["next_attention"]["description"] = (
+        "Een zelfgekozen later moment om een eigen vraag of voortgang opnieuw te beoordelen, "
+        "anders null; geen nieuwe uitvoeropdracht."
+    )
+    return tool
+
+
 _CODEX_SUBSCRIPTION_ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
 
 
@@ -2962,7 +3009,7 @@ class PydanticConversationModel:
             raise ConversationModelError("web research artifact is invalid", model_usage=usage) from error
 
     supports_private_context_search = True
-    private_opportunity_profile = "private-memory-search-v1"
+    private_opportunity_profile = "private-orientation-contract-v2"
 
     def _request_private_opportunity(self, body, search):
         """One optional read through the existing private memory port, then decide.
@@ -2970,7 +3017,7 @@ class PydanticConversationModel:
         No action is executed here. A second memory search is never offered; a
         lost provider response retains the existing uncertain-usage boundary.
         """
-        initial = dict(body, tools=[_FREE_WILL_TOOL, _MEMORY_SEARCH_TOOL], tool_choice="required")
+        initial = dict(body, tools=[*body["tools"], _MEMORY_SEARCH_TOOL], tool_choice="required")
         initial["instructions"] += (
             " De eerste herinneringen zijn een beperkte zoekselectie, niet alles wat je weet. "
             "Als een eigen informatievraag betere persoonscontext vraagt, mag je eenmalig "
@@ -3334,7 +3381,7 @@ class PydanticConversationModel:
             "store": False,
             "stream": True,
             "tool_choice": {"name": _FREE_WILL_ACTION, "type": "function"},
-            "tools": [_FREE_WILL_TOOL],
+            "tools": [_private_opportunity_tool() if event.source == "initiative-review" else _FREE_WILL_TOOL],
         }
         try:
             if private_context_search is None:

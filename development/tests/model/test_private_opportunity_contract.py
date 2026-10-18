@@ -1,0 +1,118 @@
+"""Private orientation has phase-appropriate metadata and the same host schema."""
+from copy import deepcopy
+from datetime import UTC, datetime
+
+import pytest
+
+from eva.adapters.model.pydantic_conversation import (
+    PydanticConversationModel, _FREE_WILL_TOOL, _private_opportunity_tool,
+)
+from eva.application.conversation import ConversationActionCall, ConversationModelUsage, IdentityProfile
+from eva.application.sensory import SensoryEvent
+from eva.contracts.canonical_json import canonical_json_bytes
+from tests.model.test_conversation_model import _memory
+
+NOW = datetime(2026, 10, 19, 1, tzinfo=UTC)
+IDENTITY = IdentityProfile("Eva", "Housemate", ("Honest",), 80)
+USAGE = ConversationModelUsage.measured(model_attempts=1, tool_calls=1, input_tokens=100, output_tokens=20)
+DECISION = {"disposition": "silence", "expression": None, "reason": "A considered choice",
+            "urgency": 0, "initiative": None, "next_attention": None}
+
+
+def without_descriptions(value):
+    if isinstance(value, dict):
+        return {key: without_descriptions(item) for key, item in value.items() if key != "description"}
+    if isinstance(value, list):
+        return [without_descriptions(item) for item in value]
+    return value
+
+
+def event(source="initiative-review"):
+    return SensoryEvent(source, "synthetic:orientation-contract", "private_opportunity_review"
+        if source == "initiative-review" else "household_opportunity_review", NOW, {})
+
+
+def final():
+    return ("", ConversationActionCall("final", "submit_sensory_decision", deepcopy(DECISION)))
+
+
+def assert_private(tool):
+    assert tool["name"] == "submit_sensory_decision"
+    assert without_descriptions(tool) == without_descriptions(_FREE_WILL_TOOL)
+    assert "private oriëntatie" in tool["description"]
+    assert "passieve huisprikkel" not in tool["description"]
+    fields = tool["parameters"]["properties"]
+    assert "berichtkeuze" in fields["disposition"]["description"]
+    assert "eigen onderzoek" in fields["disposition"]["description"]
+    assert "informatie" in fields["reason"]["description"]
+    assert "verifieerbare" in fields["initiative"]["properties"]["next_exploration"]["description"]
+    assert "anders null" in fields["initiative"]["description"]
+
+
+def test_private_descriptor_only_changes_descriptions_and_cannot_mutate_household_metadata():
+    original = canonical_json_bytes(_FREE_WILL_TOOL)
+    private = _private_opportunity_tool()
+    assert_private(private)
+    private["parameters"]["properties"]["initiative"]["properties"]["title"]["description"] = "Changed local copy"
+    private["parameters"]["required"].append("not_a_real_field")
+    assert canonical_json_bytes(_FREE_WILL_TOOL) == original
+    assert_private(_private_opportunity_tool())
+    assert "passieve huisprikkel" in _FREE_WILL_TOOL["description"]
+
+
+@pytest.mark.parametrize("search_first", [False, True])
+def test_private_initial_and_postsearch_submit_use_the_same_private_contract(monkeypatch, tmp_path, search_first):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused")
+    assert model.private_opportunity_profile == "private-orientation-contract-v2"
+    original = canonical_json_bytes(_FREE_WILL_TOOL)
+    bodies, reads = [], []
+    def request(body, *args, **kwargs):
+        bodies.append(deepcopy(body))
+        assert_private(body["tools"][0])
+        if len(bodies) == 1 and search_first:
+            return (("", ConversationActionCall("search", "search_personal_memory",
+                {"query_text": "self-chosen source question"})), USAGE)
+        return final(), USAGE
+    monkeypatch.setattr(model, "_request_using", request)
+    def search(query):
+        reads.append(query)
+        return {"result_count": 0, "recalled_context": [], "is_execution_permission": False}
+    result = model.evaluate_sensory_event(event(), IDENTITY, _memory(), private_context_search=search)
+    assert result.initiative is None and result.next_attention is None and result.disposition == "silence"
+    assert len(bodies) == (2 if search_first else 1)
+    assert len(reads) == (1 if search_first else 0)
+    assert bodies[0]["tool_choice"] == "required" and len(bodies[0]["tools"]) == 2
+    if search_first:
+        assert bodies[1]["tools"] == [bodies[0]["tools"][0]]
+        assert bodies[1]["tool_choice"] == {"name": "submit_sensory_decision", "type": "function"}
+    assert canonical_json_bytes(_FREE_WILL_TOOL) == original
+
+
+def test_private_without_search_keeps_the_private_descriptor_and_household_bytes_unchanged(monkeypatch, tmp_path):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused")
+    original = canonical_json_bytes(_FREE_WILL_TOOL)
+    bodies = []
+    monkeypatch.setattr(model, "_request_using", lambda body, *args, **kwargs:
+        (bodies.append(deepcopy(body)) or final(), USAGE))
+    model.evaluate_sensory_event(event(), IDENTITY, _memory())
+    assert_private(bodies[-1]["tools"][0])
+    model.evaluate_sensory_event(event("household-initiative"), IDENTITY, _memory())
+    assert canonical_json_bytes(bodies[-1]["tools"][0]) == original
+    assert "passieve huisprikkel" in bodies[-1]["tools"][0]["description"]
+    assert canonical_json_bytes(_FREE_WILL_TOOL) == original
+
+
+def test_each_private_request_has_a_fresh_descriptor(monkeypatch, tmp_path):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused")
+    original = canonical_json_bytes(_FREE_WILL_TOOL)
+    called = []
+    def request(body, *args, **kwargs):
+        assert_private(body["tools"][0])
+        body["tools"][0]["description"] = "Only this request changed"
+        called.append(True)
+        return final(), USAGE
+    monkeypatch.setattr(model, "_request_using", request)
+    model.evaluate_sensory_event(event(), IDENTITY, _memory())
+    model.evaluate_sensory_event(event(), IDENTITY, _memory())
+    assert called == [True, True]
+    assert canonical_json_bytes(_FREE_WILL_TOOL) == original

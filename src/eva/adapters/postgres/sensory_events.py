@@ -160,6 +160,7 @@ class PostgresSensoryEventStore:
             latest = connection.execute(sa.select(c.phase, c.status, c.updated_at, c.thread_id, c.revision, c.operation_id).where(
                 c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
                 c.thread_id.startswith(schedule_prefix)).order_by(c.updated_at.desc()).limit(1)).first()
+            profile_changed = False
             # A lost decision blocks until explicitly abandoned by the owner.
             # Preserve the original interval after abandonment: acknowledgement time
             # is not a new model attempt and must not postpone recovery by an hour.
@@ -192,7 +193,8 @@ class PostgresSensoryEventStore:
                     # A changed installed decision capability is a new occasion,
                     # not a replay. It cannot bypass pending/uncertain work or a
                     # model-chosen future attention, and keeps the numeric source
-                    # identity and ordinary one-event-per-window deduplication.
+                    # identity and ordinary hourly deduplication. A changed
+                    # profile has its own distinct, single-use occasion below.
                     profile_changed = (self._private_review_profile is not None
                         and self._event_from_thread(latest.thread_id).payload.get("review_profile")
                             != self._private_review_profile)
@@ -211,13 +213,23 @@ class PostgresSensoryEventStore:
                 if pending is not None:
                     return "idle"
             window = int(now.timestamp()) // 3600
+            # A real installed capability change has its own immutable source.
+            # Reusing this hour's ID would silently discard the new profile;
+            # overwriting it would rewrite the earlier decision. Stable numeric
+            # identity also prevents a restart from resampling this occasion.
+            profile_source = (str(int(canonical_sha256({
+                "installed_private_review_profile": self._private_review_profile,
+                "review_window": window}), 16)) if profile_changed else None)
             source_id = self._decision_prefix.removeprefix("sensory:") + (
                 attention_suffix(attention) if attention_due else
-                completion_id if completion_source is not None else str(window))
+                completion_id if completion_source is not None else
+                profile_source if profile_source is not None else str(window))
             thread_id = "sensory:" + source_id
             payload = {"review_window": window}
             if self._private_review_profile is not None:
                 payload["review_profile"] = self._private_review_profile
+            if profile_source is not None and not attention_due and completion_source is None:
+                payload["review_cause"] = "installed_profile_change"
             if attention_due:
                 payload["attention_origin"] = attention
             elif attention is not None:

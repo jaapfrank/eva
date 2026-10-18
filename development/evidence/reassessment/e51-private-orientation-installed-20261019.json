@@ -1,0 +1,83 @@
+{
+  "contract": "EvaPrivateOrientationContractOutcome/v1",
+  "taskId": "E5.1",
+  "recordedAt": "2026-10-18T22:41:26.557736+00:00",
+  "state": "installed",
+  "status": "installed_ordinary_work_and_followthrough_pending",
+  "wholeTaskComplete": false,
+  "familyAccepted": false,
+  "baseline": {
+    "commit": "0261b03078c9edfc63e59422e7b7ce3693051320",
+    "ordinaryReviewAt": "2026-10-18T22:10:13Z",
+    "outcome": "silence_no_initiative_no_attention_no_memory_search",
+    "usage": {
+      "modelAttempts": 1,
+      "inputTokens": 11021,
+      "outputTokens": 146,
+      "toolCalls": 1,
+      "measurement": "measured",
+      "credits": null
+    }
+  },
+  "provenContractMismatch": "Private orientation requested independent work, but first and final submit descriptions still defined one passive household stimulus. This is a real phase mismatch, not proof of the sole cause of every silence.",
+  "changes": [
+    "Private descriptions for the same function and exact argument schema; work and message timing are separate. Null is still valid.",
+    "The private descriptor is retained before and after optional existing memory search; shared/passive descriptor remains unchanged.",
+    "A genuinely changed installed profile gets one distinct immutable, restart-deduplicated source in the same hour. Existing unresolved, active-work, pending-expression and future-attention guards remain."
+  ],
+  "unchanged": [
+    "No assigned topic, forced search, task quota or new planner/memory/agent.",
+    "Same native adoption, executor, authority, budgets, stop, result verification and original private recipient.",
+    "Speech and the delegated worker installation are unchanged."
+  ],
+  "profile": "private-orientation-contract-v2",
+  "tests": {
+    "modelBundle": {
+      "passed": 15,
+      "seconds": 2.0,
+      "newCases": 5,
+      "reportSha256": "abdd3fdd4d5cbe460b8729141b87c28f510fa3cac675955e55f6063fedfdda83"
+    },
+    "postgresBundle": {
+      "passed": 24,
+      "seconds": 18.68,
+      "newCases": 4,
+      "logSha256": "74337b2e8f17d69bf83e3a7024d3fa29f9142a45f20a08fea2ffa161bbc4d2f2"
+    },
+    "providerCalls": 0
+  },
+  "installation": {
+    "core": {
+      "image": "sha256:38ce3683f5120ab1942493f090c11562693f0a6c46d895e8fc02bcc2e93397a4",
+      "health": "healthy",
+      "startedAt": "2026-10-18T22:40:27.151436323Z",
+      "retainedMounts": true,
+      "preservedMeasuredSources": 70
+    },
+    "worker": {
+      "image": "sha256:003b383c970f396694e69fe0c22c20cf5d0b2aeb4e0a5f1fa000231cc71fb260",
+      "health": "healthy",
+      "unchanged": true,
+      "startedAt": "2026-10-18T22:05:54.49095938Z"
+    }
+  },
+  "independentReview": "development/reviews/e51-private-orientation-review-20261019.json",
+  "ordinaryObservation": null,
+  "scopeOfNextObservation": "One ordinary installed-profile-change occasion through the existing cycle, with explicit installation provenance. No operator-selected task or topic. If work is selected, follow the existing native result and subsequent ordinary source-bound review.",
+  "actualCompletionRequired": [
+    "Self-chosen useful concrete work, not merely a message or plan.",
+    "Checked retained result with correct private delivery.",
+    "Later ordinary use and appropriate continuation of that result."
+  ],
+  "accounting": {
+    "developmentCredits": null,
+    "runtimeNewCandidateUsage": null,
+    "runtimeCredits": null
+  },
+  "privateEvidence": {
+    "baselineSha256": "9214609083337b4d41f674b41efc3c391b985c38b041d9da142c9c29800e051b",
+    "outcomeConditionsSha256": "aecc2c203b88bee840f429d4e4dc54f8629bc6a4ceccfa13c566622473a130fe",
+    "installedSourceParitySha256": "8b13901caef032ef9ef007211516994d4142e6ac0d175e8d3a6e51ce530c8791",
+    "installationReceiptSha256": "12955a1274b2801150f9b8b1c1b372a7c55f323b401451d7b97e539a92315f08"
+  }
+}

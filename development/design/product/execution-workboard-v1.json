@@ -847,8 +847,8 @@
     "title": "Het volledige actuele geheel opleveren en laten beoordelen",
     "status": "in_progress",
     "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
-    "nextAction": "De bestaande autonome cyclus volgen op werkelijk zelfgekozen werk en later gebruik; alleen een concrete nieuwe bron-, zoek- of uitvoerfout gericht herstellen. Geen onveranderde betaalde herhaling of geforceerde voorbeeldopdracht.",
-    "checkedAt": "2026-10-18T22:15:00.426680+00:00",
+    "nextAction": "Gewone nieuwe contractafweging volgen zonder onderwerp of opdracht toe te voegen; gekozen native werk, gecontroleerd resultaat, oorspronkelijke privéontvanger en latere brongebonden opvolging vastleggen.",
+    "checkedAt": "2026-10-18T22:41:37.190405+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,20 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E5.1 · Private oriëntatie krijgt het juiste besluitcontract",
+            "state": "installed",
+            "date": "2026-10-18T22:41:37.190405+00:00",
+            "checkedAt": "2026-10-18T22:41:37.190405+00:00",
+            "summary": "Eigen onderzoek/voortgang en berichttiming zijn in dezelfde functie afzonderlijke keuzes. Een echte contractwijziging krijgt één eigen bron; oude besluiten blijven bewaard. Gerichte controles en onafhankelijke bronreview geslaagd.",
+            "remaining": "Gewone zelfgekozen uitvoering en later vervolg nog niet waargenomen; E5.1 blijft open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e51-private-orientation-review-20261019.json",
+            "maintenanceRepair": true,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "familyAcceptance": false
+          },
           {
             "title": "E5.1 · Zelf gericht persoonscontext zoeken tijdens eigen oriëntatie",
             "state": "installed",
@@ -2508,14 +2522,14 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E5.1 · Zelf gericht persoonscontext zoeken tijdens eigen oriëntatie",
+          "title": "E5.1 · Private oriëntatie krijgt het juiste besluitcontract",
           "state": "installed",
-          "date": "2026-10-18T22:09:44.333757+00:00",
-          "checkedAt": "2026-10-18T22:09:44.333757+00:00",
-          "summary": "Eén modelgekozen privézoekstap via bestaand geheugen, met bewaarde herkomst en gemeten verbruik van beide antwoorden. Geïnstalleerd en onafhankelijk beoordeeld.",
-          "remaining": "Werkelijke gewone afweging koos stilte; nog geen zelfgekozen uitvoering en later vervolg. E5.1 niet afgerond.",
-          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-private-context-search-installed-20261019.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/e51-private-context-search-review-20261019.json",
+          "date": "2026-10-18T22:41:37.190405+00:00",
+          "checkedAt": "2026-10-18T22:41:37.190405+00:00",
+          "summary": "Eigen onderzoek/voortgang en berichttiming zijn in dezelfde functie afzonderlijke keuzes. Een echte contractwijziging krijgt één eigen bron; oude besluiten blijven bewaard. Gerichte controles en onafhankelijke bronreview geslaagd.",
+          "remaining": "Gewone zelfgekozen uitvoering en later vervolg nog niet waargenomen; E5.1 blijft open.",
+          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e51-private-orientation-review-20261019.json",
           "maintenanceRepair": true,
           "newProductFunctionCompleted": false,
           "completedTaskIds": [],
@@ -2526,10 +2540,10 @@
           "title": "Het volledige actuele geheel opleveren en laten beoordelen",
           "status": "in_progress",
           "state": "in_progress",
-          "summary": "E5.1 open: gewone afweging kiest nog geen eigen werk",
+          "summary": "E5.1 · Eigen werk los van meldstilte aangesloten",
           "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
-          "detail": "De contextzoekstap is geïnstalleerd en beoordeeld. De echte gewone afweging van 19 oktober 00:10 koos opnieuw stilte, zonder initiatief of vervolgaandacht. Zelfstandig passend werk en later voortbouwen zijn hiermee niet aangetoond. Geen handeling van jou vereist.",
-          "checkedAt": "2026-10-18T22:15:00.426680+00:00"
+          "detail": "Het private besluitcontract is gecorrigeerd en geïnstalleerd. De gewone cyclus mag nu met dezelfde uitvoerder zelf werk kiezen; geen onderwerp of proefopdracht toegevoegd. Werkelijk resultaat en vervolg worden gevolgd.",
+          "checkedAt": "2026-10-18T22:41:37.190405+00:00"
         },
         "next": {
           "taskId": "E4.6",
@@ -2546,12 +2560,12 @@
           "detail": "Geen nieuwe handeling nodig. Codex volgt zelfstandig vervolg na de geïnstalleerde contextcorrectie. Spraak blijft bij de andere uitvoerder.",
           "required": false
         },
-        "checkedAt": "2026-10-18T22:15:00.426680+00:00",
+        "checkedAt": "2026-10-18T22:41:37.190405+00:00",
         "reviewedAt": "2026-10-18T21:19:30.157725+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-18T21:19:30.157725+00:00",
-      "checkedAt": "2026-10-18T22:15:00.426680+00:00",
+      "checkedAt": "2026-10-18T22:41:37.190405+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2683,7 +2697,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-18T22:15:00.426680+00:00",
+      "lastUpdatedAt": "2026-10-18T22:41:37.190405+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2717,7 +2731,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-18T22:15:00.426680+00:00",
+      "updatedAt": "2026-10-18T22:41:37.190405+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -6389,7 +6403,7 @@
                 "ownerActionRequired": false,
                 "existing": "Actuele geïnstalleerde E1–E4-kandidaat met behoud van de bestaande spraakoverdracht. Een werkelijk zelfgekozen onderzoek is na expliciete technische herstelhulp afgerond, privé afgeleverd, opgeslagen en later inhoudelijk juist gebruikt. Gebundelde onafhankelijke review GO; oude fouten en hulp blijven zichtbaar.",
                 "gap": "De gewone geïnstalleerde afweging koos op 19 oktober 00:10 lokale tijd opnieuw stilte, zonder zoekstap, eigen uitvoering of vervolgaandacht. E5.1 vereist nog werkelijk nuttig zelfgekozen werk en voortbouw; dit is geen eigenaarblokkade of geslaagde gezinsproef.",
-                "nextAction": "De bestaande autonome cyclus volgen op werkelijk zelfgekozen werk en later gebruik; alleen een concrete nieuwe bron-, zoek- of uitvoerfout gericht herstellen. Geen onveranderde betaalde herhaling of geforceerde voorbeeldopdracht.",
+                "nextAction": "Gewone nieuwe contractafweging volgen zonder onderwerp of opdracht toe te voegen; gekozen native werk, gecontroleerd resultaat, oorspronkelijke privéontvanger en latere brongebonden opvolging vastleggen.",
                 "files": [
                   "src",
                   "deploy",
@@ -6414,7 +6428,7 @@
                   "activeWorkers": []
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-18T22:15:00.426680+00:00",
+                "checkedAt": "2026-10-18T22:41:37.190405+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "E5.1 is opgeleverd; normaal gezinsgebruik en jouw oordeel volgen in F2.1/F2.2.",
@@ -6438,7 +6452,7 @@
                   "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
                   "gap": "Geen resterend technisch werk binnen E5.1. Zeven dagen werkelijk gezinsgebruik, afzonderlijk eigenaaroordeel en fysieke spraakkwaliteit zijn hiermee niet voltooid."
                 },
-                "latestEvidence": "development/evidence/reassessment/e51-private-context-search-installed-20261019.json",
+                "latestEvidence": "development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
                 "reopenedAt": "2026-10-18T21:09:16.856979+00:00",
                 "reopenReason": "Owner reports continued absence; ordinary orientation omits retained result content and is dominated by old completed test work.",
                 "technicalFollowup": {
@@ -6529,6 +6543,18 @@
                     "blocker": null,
                     "independentReview": "development/reviews/e51-private-context-search-review-20261019.json"
                   }
+                },
+                "behavioralDiagnosis": {
+                  "status": "contract_mismatch_corrected_installed_ordinary_outcome_pending",
+                  "finding": "Private orientation instructions request independent self-chosen development; the offered final tool still describes only one passive household stimulus.",
+                  "scope": "Same decision function/schema/native execution; no forced task or second planner.",
+                  "voiceChanged": false,
+                  "checkedAt": "2026-10-18T22:41:37.190405+00:00",
+                  "evidence": "development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
+                  "independentReview": "development/reviews/e51-private-orientation-review-20261019.json",
+                  "profile": "private-orientation-contract-v2",
+                  "modelTests": 15,
+                  "postgresTests": 24
                 }
               },
               {
@@ -10483,7 +10509,7 @@
               "ownerActionRequired": false,
               "existing": "Actuele geïnstalleerde E1–E4-kandidaat met behoud van de bestaande spraakoverdracht. Een werkelijk zelfgekozen onderzoek is na expliciete technische herstelhulp afgerond, privé afgeleverd, opgeslagen en later inhoudelijk juist gebruikt. Gebundelde onafhankelijke review GO; oude fouten en hulp blijven zichtbaar.",
               "gap": "De gewone geïnstalleerde afweging koos op 19 oktober 00:10 lokale tijd opnieuw stilte, zonder zoekstap, eigen uitvoering of vervolgaandacht. E5.1 vereist nog werkelijk nuttig zelfgekozen werk en voortbouw; dit is geen eigenaarblokkade of geslaagde gezinsproef.",
-              "nextAction": "De bestaande autonome cyclus volgen op werkelijk zelfgekozen werk en later gebruik; alleen een concrete nieuwe bron-, zoek- of uitvoerfout gericht herstellen. Geen onveranderde betaalde herhaling of geforceerde voorbeeldopdracht.",
+              "nextAction": "Gewone nieuwe contractafweging volgen zonder onderwerp of opdracht toe te voegen; gekozen native werk, gecontroleerd resultaat, oorspronkelijke privéontvanger en latere brongebonden opvolging vastleggen.",
               "files": [
                 "src",
                 "deploy",
@@ -10508,7 +10534,7 @@
                 "activeWorkers": []
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-18T22:15:00.426680+00:00",
+              "checkedAt": "2026-10-18T22:41:37.190405+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "E5.1 is opgeleverd; normaal gezinsgebruik en jouw oordeel volgen in F2.1/F2.2.",
@@ -10532,7 +10558,7 @@
                 "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
                 "gap": "Geen resterend technisch werk binnen E5.1. Zeven dagen werkelijk gezinsgebruik, afzonderlijk eigenaaroordeel en fysieke spraakkwaliteit zijn hiermee niet voltooid."
               },
-              "latestEvidence": "development/evidence/reassessment/e51-private-context-search-installed-20261019.json",
+              "latestEvidence": "development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
               "reopenedAt": "2026-10-18T21:09:16.856979+00:00",
               "reopenReason": "Owner reports continued absence; ordinary orientation omits retained result content and is dominated by old completed test work.",
               "technicalFollowup": {
@@ -10623,6 +10649,18 @@
                   "blocker": null,
                   "independentReview": "development/reviews/e51-private-context-search-review-20261019.json"
                 }
+              },
+              "behavioralDiagnosis": {
+                "status": "contract_mismatch_corrected_installed_ordinary_outcome_pending",
+                "finding": "Private orientation instructions request independent self-chosen development; the offered final tool still describes only one passive household stimulus.",
+                "scope": "Same decision function/schema/native execution; no forced task or second planner.",
+                "voiceChanged": false,
+                "checkedAt": "2026-10-18T22:41:37.190405+00:00",
+                "evidence": "development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
+                "independentReview": "development/reviews/e51-private-orientation-review-20261019.json",
+                "profile": "private-orientation-contract-v2",
+                "modelTests": 15,
+                "postgresTests": 24
               }
             },
             {
@@ -10918,26 +10956,26 @@
     },
     "currentRuntime": {
       "recordedAt": "2026-10-18T13:56:18.253972+00:00",
-      "checkedAt": "2026-10-18T22:15:00.426680+00:00",
+      "checkedAt": "2026-10-18T22:41:37.190405+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "image": "sha256:04fcb86321b0c7d6a1e5f86bca421ccfa394662678b66e82b7b8993d5de7470b",
-      "coreImage": "sha256:04fcb86321b0c7d6a1e5f86bca421ccfa394662678b66e82b7b8993d5de7470b",
+      "image": "sha256:38ce3683f5120ab1942493f090c11562693f0a6c46d895e8fc02bcc2e93397a4",
+      "coreImage": "sha256:38ce3683f5120ab1942493f090c11562693f0a6c46d895e8fc02bcc2e93397a4",
       "workerImage": "sha256:003b383c970f396694e69fe0c22c20cf5d0b2aeb4e0a5f1fa000231cc71fb260",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
       "ready": true,
       "healthy": true,
-      "readyStatus": "installed_private_context_search_daily_outcome_open",
-      "evidence": "development/evidence/reassessment/e51-private-context-search-installed-20261019.json",
-      "evidencePath": "development/evidence/reassessment/e51-private-context-search-installed-20261019.json",
-      "independentSourceReview": "development/reviews/e51-private-context-search-review-20261019.json",
+      "readyStatus": "installed_private_orientation_contract_observation_pending",
+      "evidence": "development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
+      "evidencePath": "development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
+      "independentSourceReview": "development/reviews/e51-private-orientation-review-20261019.json",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "Installatie en gewone cyclus werken; de echte nieuwe keuze was stilte. Dagelijkse zelfgekozen uitvoering en voortbouw blijven open.",
+      "meaning": "Private toolbeschrijving past nu bij eigen oriëntatie; echte autonome uitvoering en voortbouw nog open.",
       "executionSourceCount": 72,
       "executionSourceParity": true,
-      "ownedChangedSourceCount": 4,
+      "ownedChangedSourceCount": 2,
       "readinessScope": "Functioneel beoordeelde gezamenlijke kandidaat; geen gezinsacceptatie of bewijs van langdurig hulpvrij gebruik."
     },
     "memoryGoal20260910": {
@@ -12279,7 +12317,7 @@
       ]
     }
   },
-  "updatedAt": "2026-10-18T22:15:00.426680+00:00",
+  "updatedAt": "2026-10-18T22:41:37.190405+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -12321,5 +12359,5 @@
       "sha256": "d01d058408df849d60022c07de456af48c8b6c42a6a3ea507004bba7ea2b15a1"
     }
   ],
-  "lastUpdatedAt": "2026-10-18T22:15:00.426680+00:00"
+  "lastUpdatedAt": "2026-10-18T22:41:37.190405+00:00"
 }
