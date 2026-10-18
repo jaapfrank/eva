@@ -1,8 +1,8 @@
 {
   "contract": "EvaE51ReadVerificationFollowthrough/v1",
-  "recordedAt": "2026-10-18T13:36:40.112009+00:00",
+  "recordedAt": "2026-10-18T13:40:52.585765+00:00",
   "taskId": "E5.1",
-  "status": "installed_changed_cause_followthrough_pending",
+  "status": "installed_read_repair_native_resume_gap_remaining",
   "taskCompleted": false,
   "reference": {
     "actualSpontaneousIntentAt": "2026-10-18T12:51:21Z",
@@ -199,15 +199,42 @@
     "terminal": "STATE_VERIFIED",
     "houseChanged": false,
     "nativeGuardProven": false,
-    "receiptSHA256": "49da7c06631563570acdb5f70904626f3d9ad1e6a80209d701c47916490e5a07",
-    "methodReviewSHA256": "c22e7d2d64e531a8cb8138b4baf798a0987c4a840bcd1fad1aeef01d5f198ddc"
+    "methodReviewSHA256": "c22e7d2d64e531a8cb8138b4baf798a0987c4a840bcd1fad1aeef01d5f198ddc",
+    "diagnosticArtifactSHA256": "49da7c06631563570acdb5f70904626f3d9ad1e6a80209d701c47916490e5a07",
+    "independentReviewSHA256": "dcbec6166d925db0b377021d9fa428648613cceb6e03bf9107f87048c97d9342"
   },
   "newEvidenceReview": {
     "queuedAt": "2026-10-18T13:35:49Z",
     "provenance": "operator stimulated; new verified read evidence after earlier explicit absence of access proof",
     "forcedTopic": null,
     "forcedInitiative": false,
-    "status": "queued_for_ordinary_scheduler",
-    "maximumReviewsOnThisEvidence": 1
+    "status": "completed_silence",
+    "maximumReviewsOnThisEvidence": 1,
+    "completedAt": "2026-10-18T13:38:57Z",
+    "usage": {
+      "measurement": "complete",
+      "attempts": 1,
+      "input_tokens": 9673,
+      "output_tokens": 137,
+      "total_tokens": 9810
+    },
+    "initiative": null,
+    "next_attention": null,
+    "reason": "Model distinguished a fresh current reading from the missing historical analysis and declined to restart the blocked native work.",
+    "immutableQueueHashLabelNote": "The queued receipt_sha256 denotes the entire operator diagnostic artifact, not the canonical receipt. This label clarification does not alter the original event."
+  },
+  "measuredChangedCauseReviewUsage": {
+    "attempts": 2,
+    "tool_calls": 2,
+    "input_tokens": 19267,
+    "output_tokens": 320,
+    "total_tokens": 19587,
+    "credit_cost": null,
+    "scope": "Only the two actual orientation reviews recorded here, excluding development and unrelated runtime; original failed work usage remains partial."
+  },
+  "remainingGap": {
+    "module": "existing native delegated resume path",
+    "finding": "Owner resume currently drops native initiative origin, while native queue admission and parent guards accept only original generation. Source-preserving recovery is not implemented.",
+    "action": "Implement native recovery within existing owner resume, preserving original source, stopped/uncertain outcomes and actual operator-assisted provenance. No automatic rerun of old work or further orientation resampling."
   }
 }
