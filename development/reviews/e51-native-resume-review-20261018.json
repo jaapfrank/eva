@@ -1,6 +1,6 @@
 {
   "contract": "EvaE51NativeResumeReview/v1",
-  "recordedAt": "2026-10-18T14:15:25.704435+00:00",
+  "recordedAt": "2026-10-18T14:25:48.623070+00:00",
   "taskId": "E5.1",
   "sourceVerdict": "GO",
   "installedVerdict": "Exact owned source hashes,68 shared execution pins and healthy current role images verified; configuration/mount retention receipts preserved.",
@@ -16,8 +16,17 @@
   "historyRevisionTestsUniqueCases": 44,
   "executionClockAndRunnerTestsPassed": 123,
   "offlinePolicyChecksPassed": 16,
-  "overallE5": "PENDING_NATURAL_FOLLOWTHROUGH",
+  "overallE5": "PENDING_CHANGED_VALIDATION_CAUSE_FOLLOWTHROUGH",
   "independentActualOutcomeReviewSHA256": "3707b1d15017826950abc57af8d4b22c867731732b5d6ce719dc8e73aa974e67",
   "actualResultArithmeticIndependentlyVerified": true,
-  "memoryRetentionIsNotLaterLearning": true
+  "memoryRetentionIsNotLaterLearning": true,
+  "decisionRejectionRepair": {
+    "sourceVerdict": "GO",
+    "independentSourceReviewSHA256": "417b76791fbd181bfffd0c8b8f4b07d04d208de0165ad78fe65656a69d303e93",
+    "ownedSourceHashesExact": 12,
+    "sharedDigitalPinsExact": 68,
+    "oldNaturalReviewUnknownPreserved": true,
+    "postRepairReviewOperatorAssisted": true,
+    "validFollowthroughDecisionProven": false
+  }
 }

@@ -847,8 +847,8 @@
     "title": "Eigen initiatief van bronlezing tot afgerond resultaat herstellen",
     "status": "in_progress",
     "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
-    "nextAction": "Eva heeft het oorspronkelijke eigen onderzoek werkelijk afgerond en om 16:11 Nederlandse tijd via Telegram teruggebracht. Bronlezing, geschiedenis en aflevering zijn bevestigd. De normale vervolg-/leerroute en gebundelde eindbeoordeling worden nu gecontroleerd; E5.1 blijft tot die beoordeling open.",
-    "checkedAt": "2026-10-18T14:12:37.440758+00:00",
+    "nextAction": "Eigen onderzoek en aflevering zijn bewezen. De fout die het vervolg blokkeerde is nu geïnstalleerd opgelost: gemeten ongeldige antwoorden verliezen hun verbruik niet en blokkeren nieuwe afwegingen niet. Oude onzekere afweging behouden en expliciet afgesloten; één herkenbaar operatorgestimuleerd herstelvervolg wacht op de gewone achtergrondroute. E5.1 blijft open tot de uitkomstbeoordeling.",
+    "checkedAt": "2026-10-18T14:25:24.492652+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2500,7 +2500,7 @@
           "summary": "E5.1 · Eigen activiteit daadwerkelijk laten werken",
           "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
           "state": "in_progress",
-          "detail": "Eva heeft het oorspronkelijke eigen onderzoek werkelijk afgerond en om 16:11 Nederlandse tijd via Telegram teruggebracht. Bronlezing, geschiedenis en aflevering zijn bevestigd. De normale vervolg-/leerroute en gebundelde eindbeoordeling worden nu gecontroleerd; E5.1 blijft tot die beoordeling open."
+          "detail": "Eigen onderzoek en aflevering zijn bewezen. De fout die het vervolg blokkeerde is nu geïnstalleerd opgelost: gemeten ongeldige antwoorden verliezen hun verbruik niet en blokkeren nieuwe afwegingen niet. Oude onzekere afweging behouden en expliciet afgesloten; één herkenbaar operatorgestimuleerd herstelvervolg wacht op de gewone achtergrondroute. E5.1 blijft open tot de uitkomstbeoordeling."
         },
         "next": {
           "title": "Gericht herstel binnen de bestaande E5.1-kaart",
@@ -2513,12 +2513,12 @@
           "detail": "De controle bevestigt concrete autonomietekorten. Codex moet die oplossen; jouw gezinsproef is geen vervanging voor werkende eigen activiteit. Spraak blijft bij de andere WSL-uitvoerder.",
           "required": false
         },
-        "checkedAt": "2026-10-18T14:12:37.440758+00:00",
-        "reviewedAt": "2026-10-18T14:12:37.440758+00:00",
+        "checkedAt": "2026-10-18T14:25:24.492652+00:00",
+        "reviewedAt": "2026-10-18T14:25:24.492652+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-18T14:12:37.440758+00:00",
-      "checkedAt": "2026-10-18T14:12:37.440758+00:00",
+      "reviewedAt": "2026-10-18T14:25:24.492652+00:00",
+      "checkedAt": "2026-10-18T14:25:24.492652+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -6079,8 +6079,8 @@
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "De gebundelde technische kandidaat en haar eerdere beperkte bewijzen blijven beschikbaar; werkende algemene overdrachten voor actuele context en privécontact zijn geïnstalleerd.",
-                "gap": "Werkelijke uitvoering en privéaflevering bevestigd; normale vervolgroute en onafhankelijke eindbeoordeling afronden.",
-                "nextAction": "Eva heeft het oorspronkelijke eigen onderzoek werkelijk afgerond en om 16:11 Nederlandse tijd via Telegram teruggebracht. Bronlezing, geschiedenis en aflevering zijn bevestigd. De normale vervolg-/leerroute en gebundelde eindbeoordeling worden nu gecontroleerd; E5.1 blijft tot die beoordeling open.",
+                "gap": "Herstelde brongebonden vervolgkeuze werkelijk afronden en onafhankelijk beoordelen.",
+                "nextAction": "Eigen onderzoek en aflevering zijn bewezen. De fout die het vervolg blokkeerde is nu geïnstalleerd opgelost: gemeten ongeldige antwoorden verliezen hun verbruik niet en blokkeren nieuwe afwegingen niet. Oude onzekere afweging behouden en expliciet afgesloten; één herkenbaar operatorgestimuleerd herstelvervolg wacht op de gewone achtergrondroute. E5.1 blijft open tot de uitkomstbeoordeling.",
                 "files": [
                   "src",
                   "deploy",
@@ -6107,7 +6107,7 @@
                   ]
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-18T14:12:37.440758+00:00",
+                "checkedAt": "2026-10-18T14:25:24.492652+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling van jou nodig. Dit zijn aangetoonde technische en functionele tekorten voor Codex, geen ontbrekende gezinsacceptatie.",
@@ -6157,7 +6157,7 @@
                       "status": "in_progress",
                       "outcome": "Gewone eigen oriëntatie leidt aantoonbaar tot zelfstandig uitgevoerd resultaat en later vervolg; stilte/reflectietelling niet als gezinsnut tellen.",
                       "resultProven": true,
-                      "note": "Eva heeft het oorspronkelijke eigen onderzoek werkelijk afgerond en om 16:11 Nederlandse tijd via Telegram teruggebracht. Bronlezing, geschiedenis en aflevering zijn bevestigd. De normale vervolg-/leerroute en gebundelde eindbeoordeling worden nu gecontroleerd; E5.1 blijft tot die beoordeling open.",
+                      "note": "Eigen onderzoek en aflevering zijn bewezen. De fout die het vervolg blokkeerde is nu geïnstalleerd opgelost: gemeten ongeldige antwoorden verliezen hun verbruik niet en blokkeren nieuwe afwegingen niet. Oude onzekere afweging behouden en expliciet afgesloten; één herkenbaar operatorgestimuleerd herstelvervolg wacht op de gewone achtergrondroute. E5.1 blijft open tot de uitkomstbeoordeling.",
                       "deliveryProven": true
                     }
                   ],
@@ -9756,8 +9756,8 @@
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "De gebundelde technische kandidaat en haar eerdere beperkte bewijzen blijven beschikbaar; werkende algemene overdrachten voor actuele context en privécontact zijn geïnstalleerd.",
-              "gap": "Werkelijke uitvoering en privéaflevering bevestigd; normale vervolgroute en onafhankelijke eindbeoordeling afronden.",
-              "nextAction": "Eva heeft het oorspronkelijke eigen onderzoek werkelijk afgerond en om 16:11 Nederlandse tijd via Telegram teruggebracht. Bronlezing, geschiedenis en aflevering zijn bevestigd. De normale vervolg-/leerroute en gebundelde eindbeoordeling worden nu gecontroleerd; E5.1 blijft tot die beoordeling open.",
+              "gap": "Herstelde brongebonden vervolgkeuze werkelijk afronden en onafhankelijk beoordelen.",
+              "nextAction": "Eigen onderzoek en aflevering zijn bewezen. De fout die het vervolg blokkeerde is nu geïnstalleerd opgelost: gemeten ongeldige antwoorden verliezen hun verbruik niet en blokkeren nieuwe afwegingen niet. Oude onzekere afweging behouden en expliciet afgesloten; één herkenbaar operatorgestimuleerd herstelvervolg wacht op de gewone achtergrondroute. E5.1 blijft open tot de uitkomstbeoordeling.",
               "files": [
                 "src",
                 "deploy",
@@ -9784,7 +9784,7 @@
                 ]
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-18T14:12:37.440758+00:00",
+              "checkedAt": "2026-10-18T14:25:24.492652+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling van jou nodig. Dit zijn aangetoonde technische en functionele tekorten voor Codex, geen ontbrekende gezinsacceptatie.",
@@ -9834,7 +9834,7 @@
                     "status": "in_progress",
                     "outcome": "Gewone eigen oriëntatie leidt aantoonbaar tot zelfstandig uitgevoerd resultaat en later vervolg; stilte/reflectietelling niet als gezinsnut tellen.",
                     "resultProven": true,
-                    "note": "Eva heeft het oorspronkelijke eigen onderzoek werkelijk afgerond en om 16:11 Nederlandse tijd via Telegram teruggebracht. Bronlezing, geschiedenis en aflevering zijn bevestigd. De normale vervolg-/leerroute en gebundelde eindbeoordeling worden nu gecontroleerd; E5.1 blijft tot die beoordeling open.",
+                    "note": "Eigen onderzoek en aflevering zijn bewezen. De fout die het vervolg blokkeerde is nu geïnstalleerd opgelost: gemeten ongeldige antwoorden verliezen hun verbruik niet en blokkeren nieuwe afwegingen niet. Oude onzekere afweging behouden en expliciet afgesloten; één herkenbaar operatorgestimuleerd herstelvervolg wacht op de gewone achtergrondroute. E5.1 blijft open tot de uitkomstbeoordeling.",
                     "deliveryProven": true
                   }
                 ],
@@ -10049,18 +10049,18 @@
     },
     "currentRuntime": {
       "recordedAt": "2026-10-18T13:56:18.253972+00:00",
-      "checkedAt": "2026-10-18T14:10:23.812524+00:00",
+      "checkedAt": "2026-10-18T14:25:24.492652+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "image": "sha256:ed6626f48830cbee253cb62caf55e687b43f10e40f7cc01b4d4f225e0ccfc27e",
-      "coreImage": "sha256:ed6626f48830cbee253cb62caf55e687b43f10e40f7cc01b4d4f225e0ccfc27e",
-      "workerImage": "sha256:95040f84182deb638d3f7b0f8537b40ac6b920c16eb9b917b29b4f784e934abe",
+      "image": "sha256:d4de6fe2cb26c14bc5b8bd776faaacd83ac3b1cd95cab42de037b939f53ebc0d",
+      "coreImage": "sha256:d4de6fe2cb26c14bc5b8bd776faaacd83ac3b1cd95cab42de037b939f53ebc0d",
+      "workerImage": "sha256:f71765f1af062fcfe9ca58ae536900690c608c1c1a911686565cdc8d42e6ad00",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
       "ready": false,
       "healthy": true,
-      "readyStatus": "actual_completed_delivered_pending_followthrough_review",
+      "readyStatus": "installed_rejection_repair_followthrough_pending",
       "evidence": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
       "evidencePath": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
       "independentSourceReview": "development/reviews/e51-native-resume-review-20261018.json",
@@ -10068,7 +10068,7 @@
       "meaning": "De echte hervatting las de actuele bron succesvol, maar eindigde onvoltooid: de algemene geschiedenisroute valt buiten het huidige leesmandaat. Die concrete beperking wordt nu opgelost via de bestaande mandaatrevisie en hervatroute, met behoud van oorspronkelijke bron en fouten. Ook wordt de actuele uitvoertijd apart van het oude berichttijdstip meegegeven. Nog geen E5.1-afronding.",
       "executionSourceCount": 68,
       "executionSourceParity": true,
-      "ownedChangedSourceCount": 10
+      "ownedChangedSourceCount": 12
     },
     "memoryGoal20260910": {
       "status": "completed",
@@ -11291,12 +11291,12 @@
     },
     "e51NativeResume20261018": {
       "report": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
-      "status": "installed_actual_initiative_completed_and_delivered_pending_followthrough_review",
+      "status": "installed_decision_rejection_repair_followthrough_pending",
       "taskCompleted": false,
       "review": "development/reviews/e51-native-resume-review-20261018.json"
     }
   },
-  "updatedAt": "2026-10-18T14:12:37.440758+00:00",
+  "updatedAt": "2026-10-18T14:25:24.492652+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -11333,5 +11333,5 @@
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
     }
   ],
-  "lastUpdatedAt": "2026-10-18T14:12:37.440758+00:00"
+  "lastUpdatedAt": "2026-10-18T14:25:24.492652+00:00"
 }

@@ -1,8 +1,8 @@
 {
   "contract": "EvaE51NativeResume/v1",
-  "recordedAt": "2026-10-18T14:12:37.440758+00:00",
+  "recordedAt": "2026-10-18T14:25:24.492652+00:00",
   "taskId": "E5.1",
-  "status": "installed_actual_initiative_completed_and_delivered_pending_followthrough_review",
+  "status": "installed_decision_rejection_repair_followthrough_pending",
   "taskCompleted": false,
   "finding": "Eva made a genuine spontaneous initiative choice. A known read verification failure and loss of native source identity in the existing resume path prevented finishing it. Silence after a blocked task was not proof that no original initiative existed.",
   "changes": [
@@ -37,7 +37,7 @@
     },
     {
       "path": "src/eva/adapters/postgres/sensory_events.py",
-      "sha256": "7ed4f99dd0f057ec15a31c12c5e814fa51070df363e86bdc63a85f408a4e0a3b"
+      "sha256": "c34824f4fe2093c7614cebf1735d6128db4d416b1c8c7ffbe73206c68213171d"
     },
     {
       "path": "src/eva/adapters/postgres/external_conversation_tools.py",
@@ -50,32 +50,36 @@
     {
       "path": "src/eva/bootstrap/delegated_digital_runner.py",
       "sha256": "43aad9eb717cf7517b3038d8bd3c7c46307f70af0dd5a7f54c6fe1a10248eb7f"
+    },
+    {
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "f67bc1a8778ada509451037e6f90994d90e63fe2c664d07dc8318132c44a2578"
+    },
+    {
+      "path": "src/eva/adapters/postgres/owner_initiatives.py",
+      "sha256": "b261dd2c8b91c12885b2ec21694c2047b0d3d21593f8284be51452c257c101d1"
     }
   ],
   "installation": {
     "roles": {
       "core": {
-        "image": "sha256:ed6626f48830cbee253cb62caf55e687b43f10e40f7cc01b4d4f225e0ccfc27e",
+        "image": "sha256:d4de6fe2cb26c14bc5b8bd776faaacd83ac3b1cd95cab42de037b939f53ebc0d",
         "health": "healthy",
-        "startedAt": "2026-10-18T14:08:17.319955046Z",
+        "startedAt": "2026-10-18T14:24:01.352177703Z",
         "imageExact": true,
         "ownedSourceExact": true
       },
       "worker": {
-        "image": "sha256:95040f84182deb638d3f7b0f8537b40ac6b920c16eb9b917b29b4f784e934abe",
+        "image": "sha256:f71765f1af062fcfe9ca58ae536900690c608c1c1a911686565cdc8d42e6ad00",
         "health": "healthy",
-        "startedAt": "2026-10-18T14:08:48.584122852Z",
+        "startedAt": "2026-10-18T14:24:32.109617728Z",
         "imageExact": true,
         "ownedSourceExact": true
       }
     },
     "digitalSourcePins": 68,
     "digitalSourceDifferences": [],
-    "ownedChangedSourceCount": 10,
-    "preservedOtherExecutorModules": [
-      "eva/adapters/connectors/home_assistant_admin.py",
-      "eva/adapters/postgres/connector_results.py"
-    ],
+    "ownedChangedSourceCount": 12,
     "changedSpeechFilesOrServices": false,
     "configurationAndDataPreserved": true
   },
@@ -133,7 +137,7 @@
     "Seven actual family days and owner acceptance remain F2.1/F2.2."
   ],
   "developmentCreditCost": null,
-  "nextChangedCause": "No retry required: actual task completed and was privately delivered. Observe normal source-bound followthrough and finish the independent outcome review; retain family acceptance separately.",
+  "nextChangedCause": "The precise validation/usage fault is repaired and installed. Follow the single preregistered operator-requested review on the same completed source through the existing background route; no additional unchanged retries.",
   "initialInstalledRepair": {
     "roles": {
       "core": {
@@ -217,9 +221,45 @@
       "memoryProjectionProven": true,
       "memoryRetentionProven": true,
       "memoryRetainedAt": "2026-10-18T14:11:49Z",
-      "newLearningProven": false
+      "newLearningProven": false,
+      "naturalFollowthrough": {
+        "observedAt": "2026-10-18T14:16:38Z",
+        "modelStartedAt": "2026-10-18T14:16:40Z",
+        "failedAt": "2026-10-18T14:16:55Z",
+        "failure": "post_response_sensory_decision_validation",
+        "originalUsage": null,
+        "state": "needs_help",
+        "newDecisionOrLearningProven": false
+      }
     },
-    "actualEvidenceSHA256": "07c5be5fd8261c7fa2d6f9fec290ecd4950f820db3725b3c6f6c4e033e2bb13e"
+    "actualEvidenceSHA256": "07c5be5fd8261c7fa2d6f9fec290ecd4950f820db3725b3c6f6c4e033e2bb13e",
+    "installation": {
+      "roles": {
+        "core": {
+          "image": "sha256:ed6626f48830cbee253cb62caf55e687b43f10e40f7cc01b4d4f225e0ccfc27e",
+          "health": "healthy",
+          "startedAt": "2026-10-18T14:08:17.319955046Z",
+          "imageExact": true,
+          "ownedSourceExact": true
+        },
+        "worker": {
+          "image": "sha256:95040f84182deb638d3f7b0f8537b40ac6b920c16eb9b917b29b4f784e934abe",
+          "health": "healthy",
+          "startedAt": "2026-10-18T14:08:48.584122852Z",
+          "imageExact": true,
+          "ownedSourceExact": true
+        }
+      },
+      "digitalSourcePins": 68,
+      "digitalSourceDifferences": [],
+      "ownedChangedSourceCount": 10,
+      "preservedOtherExecutorModules": [
+        "eva/adapters/connectors/home_assistant_admin.py",
+        "eva/adapters/postgres/connector_results.py"
+      ],
+      "changedSpeechFilesOrServices": false,
+      "configurationAndDataPreserved": true
+    }
   },
   "initialSourceFiles": [
     {
@@ -258,5 +298,44 @@
       "path": "src/eva/adapters/connectors/delegated_completion.py",
       "sha256": "323f6282653836bed4627321aa9cad3594366f0d12ede449e00a6f548828d404"
     }
-  ]
+  ],
+  "decisionValidationRepair": {
+    "independentSourceReviewSHA256": "417b76791fbd181bfffd0c8b8f4b07d04d208de0165ad78fe65656a69d303e93",
+    "changes": [
+      "Offered reason/expression bounds match the existing600character validator; malformed JSON argument containers and dispositions stay rejected.",
+      "Completed response validation failures retain measured usage and safe diagnostic codes.",
+      "Strictly measured host-marked invalid decisions are terminal rejected with no effects or automatic retry; other unknown/partial provider outcomes retain their old uncertainty boundary.",
+      "Owner projection distinguishes rejected from unknown."
+    ],
+    "checks": {
+      "uniqueModelCasesPassedAcrossRuns": 23,
+      "finalFocusedModelCasesPassed": 11,
+      "finalFocusedModelCasesSeconds": 1.23,
+      "existingPeerCasesReused": 12,
+      "uniquePostgresCasesPassed": 15,
+      "postgresCasesSeconds": 7.36,
+      "ownerProjectionCasesRerun": 2,
+      "ownerProjectionCasesSeconds": 5.15,
+      "newModelCalls": 0,
+      "productionWritesDuringTests": 0
+    },
+    "oldNaturalFollowthrough": {
+      "abandonedAfterInstalledRepair": true,
+      "originalUsage": null,
+      "originalFailureRetained": true,
+      "oldResponseReplayed": false
+    },
+    "postRepairReview": {
+      "queuedAt": "2026-10-18T14:25:01Z",
+      "operatorAssisted": true,
+      "spontaneous": false,
+      "sameOriginalCompletedSource": true,
+      "newTaskOrForcedProposal": false,
+      "modelCalledByOperator": false,
+      "execution": "existing ordinary background scheduler",
+      "decisionProven": false,
+      "usage": null,
+      "creditCost": null
+    }
+  }
 }

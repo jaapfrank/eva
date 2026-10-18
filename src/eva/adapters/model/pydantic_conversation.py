@@ -579,13 +579,13 @@ _FREE_WILL_TOOL: dict[str, Any] = _tool(
     "Leg precies één beslissing over een passieve huisprikkel vast.",
     required=("disposition", "expression", "reason", "urgency", "initiative", "next_attention"),
     disposition=_schema(enum=("silence", "respond")),
-    reason=_schema("Korte operationele motivatie, geen verborgen redeneerketen."),
+    reason=_schema("Korte operationele motivatie, geen verborgen redeneerketen.", minLength=1, maxLength=600),
     expression=_schema(
         (
             "Eén natuurlijk Nederlands bericht als disposition respond is; "
             "anders null. Geen diagnose of oorzaak die niet bewezen is."
         ),
-        type_=["string", "null"],
+        type_=["string", "null"], minLength=1, maxLength=600,
     ),
     urgency=_schema(type_="integer", maximum=3, minimum=0),
     next_attention=_schema("Volgende zinvolle aandacht, anders null; geen nieuwe uitvoeropdracht.",
@@ -3219,28 +3219,36 @@ class PydanticConversationModel:
             )
         except _ProviderUsageError as error:
             raise AutonomousUsageUncertain("autonomous provider usage is unverified") from error
+        def rejected(message, code):
+            # A completed response has known usage even when its decision is invalid.
+            error = ConversationModelError(message, model_usage=usage)
+            error.validation_failure_stage = "sensory_decision"
+            error.validation_failure_code = code
+            return error
+
         if text.strip() or action_call is None or action_call.name != _FREE_WILL_ACTION:
-            raise ConversationModelError("sensory decision response is invalid")
+            raise rejected("sensory decision response is invalid", "invalid_response")
         arguments = action_call.arguments
         required = {"disposition", "expression", "reason", "urgency"}
-        if not required <= set(arguments) <= required | {"initiative", "next_attention"}:
-            raise ConversationModelError("sensory decision fields are invalid")
+        if not isinstance(arguments, dict) or not required <= set(arguments) <= required | {"initiative", "next_attention"}:
+            raise rejected("sensory decision fields are invalid", "invalid_fields")
         disposition = arguments["disposition"]
         expression = arguments["expression"]
         reason = arguments["reason"]
         urgency = arguments["urgency"]
         if (
-            disposition not in {"silence", "respond"}
+            not isinstance(disposition, str)
+            or disposition not in {"silence", "respond"}
             or not isinstance(reason, str)
             or not isinstance(urgency, int)
             or isinstance(urgency, bool)
             or (expression is not None and not isinstance(expression, str))
         ):
-            raise ConversationModelError("sensory decision values are invalid")
+            raise rejected("sensory decision values are invalid", "invalid_values")
         raw_initiative = arguments.get("initiative")
         if raw_initiative is not None and (not isinstance(raw_initiative, dict) or
                 set(raw_initiative) != {"title", "motivation", "next_exploration"}):
-            raise ConversationModelError("personal initiative fields are invalid")
+            raise rejected("personal initiative fields are invalid", "invalid_initiative_fields")
         try:
             from eva.application.resident_attention import NextAttention
             raw_attention = arguments.get("next_attention")
@@ -3257,7 +3265,20 @@ class PydanticConversationModel:
                 next_attention=next_attention,
             )
         except ValueError as error:
-            raise ConversationModelError("sensory decision is invalid") from error
+            codes = {
+                "free-will reason is invalid": "invalid_reason",
+                "free-will expression is invalid": "invalid_expression",
+                "expressed free-will decision requires urgency": "invalid_response_urgency",
+                "silent free-will decision cannot have an expression": "invalid_silence_expression",
+                "personal initiative proposal is invalid": "invalid_initiative",
+                "next attention reason is invalid": "invalid_attention_reason",
+                "next attention time must be canonical UTC": "invalid_attention_time",
+                "next attention time must be a UTC timestamp": "invalid_attention_time",
+                "next attention fields are invalid": "invalid_attention_fields",
+                "timestamp must use YYYY-MM-DDTHH:MM:SSZ": "invalid_attention_time",
+            }
+            raise rejected("sensory decision is invalid",
+                codes.get(str(error), "invalid_decision")) from error
 
     def build_prototype(self, claim: PersonalPrototypeClaim) -> PersonalPrototype:
         """Create one concrete artifact, not another plan about an artifact."""

@@ -157,7 +157,7 @@ class PostgresSensoryEventStore:
             # Preserve the original interval after abandonment: acknowledgement time
             # is not a new model attempt and must not postpone recovery by an hour.
             if latest is not None:
-                terminal = {"will_decided", "will_abandoned"}
+                terminal = {"will_decided", "will_abandoned", "will_decision_rejected"}
                 if self._household_binding is None:
                     terminal |= {"expression_delivered", "expression_expired"}
                 if latest.phase == "will_preparation_failed" and latest.status == "needs_help":
@@ -1666,6 +1666,41 @@ class PostgresSensoryEventStore:
         now: datetime,
     ) -> None:
         state = self._timeline.load(claim.thread_id)
+        from eva.application.conversation import ConversationModelUsage
+        usage = getattr(error, "model_usage", None)
+        measured_invalid_decision = (
+            not isinstance(error, AutonomousUsageUncertain)
+            and getattr(error, "validation_failure_stage", None) == "sensory_decision"
+            and isinstance(usage, ConversationModelUsage)
+            and usage.measurement == "measured"
+            and all(type(value) is int and value >= 0 for value in (
+                usage.model_attempts, usage.tool_calls, usage.input_tokens, usage.output_tokens))
+            and usage.model_attempts >= 1)
+        if measured_invalid_decision:
+            # The host adapter received a measured terminal response but rejected
+            # its decision. It grants no expression, initiative, effect or replay.
+            if (state.phase != "will_model_started" or state.status != "active"
+                    or state.revision != claim.revision or state.operation_id != claim.operation_id
+                    or not claim.thread_id.startswith(self._decision_prefix)
+                    or self._event_from_thread(claim.thread_id, latest=True) != claim.event):
+                raise CheckpointConflict("rejected sensory response claim is no longer current")
+            import re
+            code = getattr(error, "validation_failure_code", "invalid_decision")
+            if not isinstance(code, str) or re.fullmatch(r"[a-z][a-z0-9_]{0,63}", code) is None:
+                code = "invalid_decision"
+            fingerprint = hashlib.sha256(f"{type(error).__name__}: {error}".encode()).hexdigest()
+            self._timeline.transition(
+                thread_id=claim.thread_id, expected_revision=claim.revision,
+                checkpoint_id=f"{claim.thread_id}:decision-rejected:{claim.revision + 1}",
+                operation_id=claim.operation_id, phase="will_decision_rejected", status="completed",
+                event_type="WILL_DECISION_REJECTED", occurred_at=now,
+                data={"reason": "measured_sensory_response_rejected",
+                    "source_event_id": claim.event.source_event_id, "usage": usage.to_wire(),
+                    "validation_failure_stage": "sensory_decision", "validation_failure_code": code,
+                    "failure_type": type(error).__name__, "failure_fingerprint": fingerprint,
+                    "decision_valid": False, "effects_applied": False, "automatic_retry": False},
+                retry_count=claim.retry_count, last_error_fingerprint=fingerprint)
+            return
         if isinstance(error, AutonomousUsageUncertain) or state.phase == "will_model_started":
             # A new request cannot recover the missing measurement of this one.
             # Keep the uncertainty durable instead of spending another attempt.

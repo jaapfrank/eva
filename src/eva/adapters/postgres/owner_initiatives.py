@@ -225,6 +225,8 @@ class PostgresOwnerInitiatives:
                 if row.phase == "will_preparation_failed" else "review_needs_help")
         elif row.phase == "will_abandoned":
             state = "abandoned"
+        elif row.phase == "will_decision_rejected":
+            state = "rejected"
         elif row.phase == "will_waiting_admission":
             state, blocker = "waiting", "model_admission"
         elif row.phase == "will_decided":
