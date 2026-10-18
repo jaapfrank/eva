@@ -63,8 +63,8 @@ def test_household_reads_replays_and_resumes_own_bytes_without_private_dispatch(
     assert private == []
 
 
-@pytest.mark.parametrize("identifier", ["remote:tool", "eva-stored-result:invalid", "eva-stored-result:" + "a"*64 + ":" + "b"*64])
-def test_household_rejects_remote_malformed_and_absent_readers(identifier):
+@pytest.mark.parametrize("identifier", ["remote:tool", "eva-stored-result:" + "a"*64 + ":" + "b"*64])
+def test_household_rejects_remote_and_absent_readers(identifier):
     route, turn, call, private, _, _ = harness()
     call = replace(call, arguments={**call.arguments, "tool_id": identifier})
     with pytest.raises((ConversationConflict, KeyError)):
@@ -162,3 +162,23 @@ def test_invalid_local_selection_can_be_corrected_without_new_source_call():
     with pytest.raises(ConversationConflict, match="stopped"):
         route.can_continue_after(turn, receipt)
     assert private == []
+
+
+@pytest.mark.parametrize("reader_change", [lambda reader: reader[:-1], lambda reader: "eva-stored-result:invalid"])
+def test_malformed_reader_is_durable_recoverable_without_source_or_authority_bypass(reader_change):
+    route, turn, call, private, stopped, capture = harness()
+    bad = replace(call, arguments={**call.arguments, "tool_id": reader_change(call.arguments["tool_id"])})
+    receipt = route.execute(turn, bad, step_index=2)
+    assert receipt.output["status"] == "selection_invalid"
+    assert receipt.output["external_state_verified"] is False
+    assert "exact" in receipt.output["error"]
+    assert route.can_continue_after(turn, receipt)
+    assert route.execute(turn, bad, step_index=2) == receipt
+    assert route.pending(turn, step_index=2) == receipt
+    assert not any(event.event_type == "CONNECTOR_SELECTION_READ" for events in capture.timeline.rows.values() for event in events)
+    corrected = route.execute(turn, replace(call, call_id="corrected-reader"), step_index=3)
+    assert corrected.output["status"] == "verified"
+    assert private == []
+    stopped.append(True)
+    with pytest.raises(ConversationConflict, match="stopped"):
+        route.execute(turn, replace(bad, call_id="after-stop"), step_index=4)

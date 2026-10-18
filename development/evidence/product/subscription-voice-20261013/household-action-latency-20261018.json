@@ -1,11 +1,11 @@
 {
   "contract": "EvaHouseholdActionLatency/v1",
-  "status": "installed_general_repairs_readonly_route_verified",
+  "status": "installed_live_household_action_and_complete_software_audio_verified",
   "date": "2026-10-18",
   "existing_working_behavior": "Existing authorized household voice route understood the lighting request, sent one grouped service call and separately read back all nine selected targets as off.",
   "specific_defect": "33 seconds before sending the action; 44 seconds to final model result; overbroad discovery and invalid local selection.",
   "affected_route": "Household voice -> shared conversation and memory -> existing Home Assistant API -> separate readback -> household reply.",
-  "end_condition": "Install focused general discovery/selection repair, verify actual installed read-only route and report measured limitations without replaying owner action.",
+  "end_condition": "Verify the installed household action with authorized real outdoor lighting and existing speech path; measure command, readback and output timing, preserve existing Eva core and authority.",
   "scope": "No second Eva or household-specific decision rule; preserve current memory, authority and write/readback boundary.",
   "private_content_published": false,
   "original_observation": {
@@ -162,7 +162,7 @@
   "limits": [
     "These two live HTTP probes exercise the actual installed household core, authority, models and HA reads; they do not measure microphone-to-speaker playback.",
     "The status query was correct after the change but was not faster overall (20.948s before,21.208s after). This is not proof of a faster complete switching request.",
-    "No repeat of the original physical action has been performed. Explicit owner approval for a single current switching measurement is pending.",
+    "At the earlier checkpoint no physical replay was authorized. The owner has now explicitly approved outdoor-lighting tests; follow-up evidence is recorded separately below.",
     "Initial memory and model latency still contributes; GPU recovery remains a separate pending coordinated restart.",
     "Source navigation repair covers the current retained-result model view; compact ancestor-history projection is unchanged."
   ],
@@ -208,5 +208,375 @@
     "derivative_memory_absence_claimed": false,
     "code_deployment_changes": 0
   },
-  "independent_scope_privacy_review": "GO: only seven intended files, including four added model-validation lines and five nested board fields; currentWork and unrelated working changes preserved."
+  "independent_scope_privacy_review": "GO: only seven intended files, including four added model-validation lines and five nested board fields; currentWork and unrelated working changes preserved.",
+  "authorized_followup": {
+    "owner_authorized_outdoor_lighting_tests": true,
+    "wsl_restart_authorized": false,
+    "status": "installed_live_action_and_complete_software_audio_verified",
+    "pre_install": {
+      "already_off_request_final_seconds": 29.56,
+      "failed_request_seconds": 12.488,
+      "failure": "Malformed copied retained-result reference aborted the turn before mutation; now recoverable selection feedback.",
+      "fixture_interference": "Existing daytime outdoor-light automation turned off fixture before the core request; not counted as Eva switching proof."
+    },
+    "repairs": [
+      "Optional source-bound entity-name/area/actual-alias substring selection before pagination and projection, preserving legacy calls.",
+      "Malformed retained-result reader syntax yields existing recoverable selection_invalid receipt; valid unauthorized/corrupt source conflicts remain rejected.",
+      "Safe original device-group membership is projected with selected attributes, avoiding repeated group discovery; never infer or auto-expand targets."
+    ],
+    "tests": {
+      "inventory_passed": 163,
+      "inventory_baseline_only_failures": 2,
+      "unrelated_voice_collection_excluded": 1,
+      "reader_passed": 62,
+      "new_functional_regressions_red_on_installed_baseline": 8,
+      "independent_review": "GO",
+      "inventory_and_membership_passed": 180
+    },
+    "privacy": "Raw audio, identifiers, conversations, traces and fixture configuration remain private.",
+    "installation": {
+      "base": "sha256:04b3be8752e936be955a0d8e4d3e65813cac7361f012e129436f5a9f42b41536",
+      "candidate": "sha256:527f22faf6ccfe297e32e56e8609f7836c5e09e9c8ec2c6a602dd2271da03f37",
+      "original_hashes": {
+        "adapters/connectors/home_assistant_admin.py": "b7b121976227290c3e645c08fd760b76e23276112d57191345f5c69909b6dfed"
+      },
+      "hashes": {
+        "adapters/connectors/home_assistant_admin.py": "a61b2d90cc24b4dde177a68a47cc868a64213ad93a7590199167d808e3b9c0ef"
+      },
+      "pre_install_guard": {
+        "active_voice_leases": 0,
+        "active_delegated_work": 0,
+        "active_memory_outbox": 0,
+        "active_model_requests": 0,
+        "active_decision_claims": 0,
+        "active_conversation_claims": 0
+      },
+      "running": true,
+      "source_verified": true,
+      "configuration_preserved": true,
+      "health": "healthy",
+      "installed_at": "2026-10-18T13:32:37.654645981Z"
+    },
+    "earlier_live_audio": {
+      "checked_at": "2026-10-18T13:31:29.673317+00:00",
+      "outcome": "One household core request and real lamp action; final speech interrupted by bounded fixture timeout before completion",
+      "core_admissions": 1,
+      "core_finals": 1,
+      "input_end_ms": 11838.189,
+      "core_final_ms": 48634.069,
+      "input_end_to_core_final_ms": 36795.88,
+      "speech_parts": [
+        {
+          "part": "bridge",
+          "approved_words": 7,
+          "tts_requested_ms": 19773.395,
+          "first_pcm_ms": 21269.386,
+          "first_signal_ms": 21479.44,
+          "input_end_to_first_signal_ms": 9641.251,
+          "submitted_pcm_seconds": 2.7695,
+          "last_signal_ms": 23469.721,
+          "last_frame_peak": 1
+        },
+        {
+          "part": "final",
+          "approved_words": 34,
+          "tts_requested_ms": 48641.488,
+          "first_pcm_ms": 49209.986,
+          "first_signal_ms": 49628.487,
+          "input_end_to_first_signal_ms": 37790.298,
+          "submitted_pcm_seconds": 11.372416666666666,
+          "last_signal_ms": 60657.593,
+          "last_frame_peak": 15614
+        }
+      ],
+      "captured_pcm_samples": 339406,
+      "captured_pcm_rate": 24000,
+      "final_pcm_ends_with_signal": true,
+      "completion_wait_correct": true,
+      "full_final_acoustic_fidelity_proven": false,
+      "cleanup": {
+        "elapsed_ms": 65653,
+        "group_off": true,
+        "cleanup_light_write": false,
+        "automation_restored": true,
+        "config_unchanged": true,
+        "child_exit": null,
+        "cleanup_errors": [],
+        "pause_elapsed_seconds": 65.614
+      },
+      "core_action_verified_in_separate_journal": true,
+      "new_diagnostic_provider_calls": 0,
+      "observed_input_provider_session_attempts": 1,
+      "observed_ha_tts_requests": 2,
+      "fixture_wav_reused": true,
+      "provider_credits": null,
+      "physical_speaker_playback": false,
+      "physical_microphone_capture": false,
+      "runtime_or_harness_changes": 0,
+      "captured_pcm_scope": "Paced software sink submissions, not physical speaker playback",
+      "artifacts": [
+        {
+          "file": "live-action-2-export/result.private.json",
+          "sha256": "a83b8950838459226a56de27c98ba9c3fcb979f32cb87bc1080bd250fa80216c",
+          "bytes": 27034
+        },
+        {
+          "file": "live-action-2-export/received-output.private.wav",
+          "sha256": "4957d7c00c9398295d2b1459c3283e378472cadbd932798f36d515acaa6dce0b",
+          "bytes": 678856
+        }
+      ]
+    },
+    "measurement_failure": {
+      "checked_at": "2026-10-18T13:27:53.991147+00:00",
+      "failure_cause": "Private harness logger parameter kind collided with provider diagnostic kind=session.started, raised TypeError and triggered existing fail-closed local session close",
+      "installed_transport_connected_before_close": true,
+      "account_ready_ms": 936.1,
+      "ice_complete_ms": 10050.451,
+      "peer_connected_ms": 10139.195,
+      "local_close_ms": 10256.379,
+      "core_admissions": 0,
+      "tts_requests": 0,
+      "pcm_samples": 0,
+      "failed_provider_session_attempts": 1,
+      "provider_credits": null,
+      "runtime_source_changed": false,
+      "guard_changed": false,
+      "harness_before_sha256": "b69540e6686b6d61cd1ec66d6a27ccf34971331fd552925be0e1cea6105dc859",
+      "harness_after_sha256": "bb6511d3889aebf80df000923e33c2a74d785a52e97ca472072f2827684a1081",
+      "container_copy_matches": true,
+      "offline_red_green": true,
+      "offline_diagnostic_kinds_checked": 5,
+      "new_provider_starts_for_diagnosis": 0,
+      "new_physical_actions": 0,
+      "exported_artifacts": [
+        {
+          "file": "live-action-1-export/result.private.json",
+          "sha256": "68abeece6644b98a7035e38c13a88f729c34bf4f0a9830c6732a58ab09ed193e",
+          "bytes": 3089
+        },
+        {
+          "file": "live-action-1-export/received-output.private.wav",
+          "sha256": "712618020da1c97986d60975b6a279bb8b4f90b4ab392fa5d278df7fb89c5cc0",
+          "bytes": 44
+        }
+      ]
+    },
+    "final_audio": {
+      "checked_at": "2026-10-18T13:36:25.969321+00:00",
+      "scenario": "audio3",
+      "outcome": "Completed exact household audio request, real light action and full software output",
+      "core_admissions": 1,
+      "core_finals": 1,
+      "input_end_ms": 12045.123,
+      "core_final_ms": 32297.457,
+      "input_end_to_core_final_ms": 20252.334,
+      "input_end_to_reply_completed_ms": 33634.137,
+      "speech_parts": [
+        {
+          "part": "bridge",
+          "approved_words": 7,
+          "tts_requested_ms": 18785.097,
+          "first_pcm_ms": 18874.866,
+          "first_signal_ms": 19084.827,
+          "input_end_to_first_signal_ms": 7039.704,
+          "submitted_pcm_seconds": 2.7695,
+          "last_signal_ms": 21094.472,
+          "last_frame_peak": 1,
+          "largest_unpaced_interframe_gap_ms": 7.804
+        },
+        {
+          "part": "final",
+          "approved_words": 34,
+          "tts_requested_ms": 32308.972,
+          "first_pcm_ms": 32394.063,
+          "first_signal_ms": 32808.407,
+          "input_end_to_first_signal_ms": 20763.284,
+          "submitted_pcm_seconds": 12.960083333333333,
+          "last_signal_ms": 45018.999,
+          "last_frame_peak": 1,
+          "largest_unpaced_interframe_gap_ms": 9.339
+        }
+      ],
+      "captured_pcm_samples": 377510,
+      "captured_pcm_rate": 24000,
+      "captured_pcm_seconds": 15.729583333333334,
+      "full_output_completed": true,
+      "error_type": null,
+      "cleanup": {
+        "elapsed_ms": 52180,
+        "group_off": true,
+        "cleanup_light_write": false,
+        "automation_restored": true,
+        "config_unchanged": true,
+        "child_exit": 0,
+        "cleanup_errors": [],
+        "pause_elapsed_seconds": 52.135
+      },
+      "actions": [
+        {
+          "ms": 21506.932,
+          "type": "action_started",
+          "name": "read_home_assistant_inventory"
+        },
+        {
+          "ms": 21930.875,
+          "type": "action_finished",
+          "name": "read_home_assistant_inventory"
+        },
+        {
+          "ms": 24540.73,
+          "type": "action_started",
+          "name": "home_assistant_request"
+        },
+        {
+          "ms": 24955.426,
+          "type": "action_finished",
+          "name": "home_assistant_request"
+        },
+        {
+          "ms": 29066.804,
+          "type": "action_started",
+          "name": "home_assistant_request"
+        },
+        {
+          "ms": 29269.15,
+          "type": "action_finished",
+          "name": "home_assistant_request"
+        }
+      ],
+      "measured_core_usage": {
+        "scenario": "audio3",
+        "recorded_model_requests": 5,
+        "model_attempts": 5,
+        "input_tokens": 47634,
+        "output_tokens": 386,
+        "tool_calls": 4,
+        "input_provider_session_attempts": 1,
+        "ha_tts_requests": 2,
+        "credits": null
+      },
+      "new_calls_for_this_analysis": 0,
+      "physical_speaker_playback": false,
+      "physical_microphone_capture": false,
+      "physical_delivery_confirmed": false,
+      "acoustic_word_sequence_independently_transcribed_this_run": false,
+      "scope": "Paced software output, real household core and HA actions; not a physical speaker listening test",
+      "artifacts": [
+        {
+          "file": "live-action-3-export/result.private.json",
+          "sha256": "29fe78535bf2a826865e58f974a0fd4cf58565fe90b7fa4ff681ced7978cad89",
+          "bytes": 25696
+        },
+        {
+          "file": "live-action-3-export/received-output.private.wav",
+          "sha256": "985bde615ef197ccf669748f565550df8eab4d3b84c9f6970513cfc0bf7078bc",
+          "bytes": 755064
+        },
+        {
+          "file": "audio3-journal.private.json",
+          "sha256": "b43d5878ab0d2c5d7e4f16fb9cd3eb9ea09f84344b7e7731515ba84258676dd3",
+          "bytes": 141369
+        }
+      ]
+    },
+    "measured_runtime_usage": {
+      "scope": "Four exact core diagnostic conversations in lighting-action only; original owner conversation and earlier read-only probes excluded",
+      "per_probe": [
+        {
+          "scenario": "initial-action",
+          "recorded_model_requests": 5,
+          "model_attempts": 5,
+          "input_tokens": 49071,
+          "output_tokens": 536,
+          "tool_calls": 4
+        },
+        {
+          "scenario": "baseline-on-action",
+          "recorded_model_requests": 2,
+          "model_attempts": 2,
+          "input_tokens": 19250,
+          "output_tokens": 228,
+          "tool_calls": 2
+        },
+        {
+          "scenario": "audio2",
+          "recorded_model_requests": 8,
+          "model_attempts": 8,
+          "input_tokens": 81078,
+          "output_tokens": 620,
+          "tool_calls": 7,
+          "input_provider_session_attempts": 1,
+          "ha_tts_requests": 2,
+          "credits": null
+        },
+        {
+          "scenario": "audio3",
+          "recorded_model_requests": 5,
+          "model_attempts": 5,
+          "input_tokens": 47634,
+          "output_tokens": 386,
+          "tool_calls": 4,
+          "input_provider_session_attempts": 1,
+          "ha_tts_requests": 2,
+          "credits": null
+        }
+      ],
+      "total_core_measured": {
+        "recorded_model_requests": 20,
+        "model_attempts": 20,
+        "input_tokens": 197033,
+        "output_tokens": 1770,
+        "tool_calls": 17
+      },
+      "audio_input_provider_session_attempts": 3,
+      "ha_output_tts_requests": 4,
+      "ha_fixture_tts_requests": 1,
+      "audio1_core_requests": 0,
+      "audio1_tts_requests": 0,
+      "fixture_reused_for_all_audio_attempts": true,
+      "provider_credits": null,
+      "physical_room_audio_playback_or_capture": false,
+      "new_calls_for_this_analysis": 0
+    },
+    "latency_comparison": {
+      "original_ingress_to_write_seconds_approximate": 33,
+      "latest_core_request_to_write_started_seconds": 10.841,
+      "latest_core_request_to_write_acknowledged_seconds": 11.255,
+      "original_ingress_to_final_model_seconds_approximate": 44,
+      "latest_core_request_to_final_seconds": 18.597,
+      "latest_audio_input_end_to_write_acknowledged_seconds": 12.91,
+      "latest_audio_input_end_to_first_signal_seconds": 7.04,
+      "latest_audio_input_end_to_final_signal_seconds": 20.763,
+      "latest_audio_input_end_to_complete_software_output_seconds": 33.634,
+      "clock_scope": "Original journal has whole-second ingress/model/execution times, no original microphone or playback clock. Latest monotonic audio and core clocks are retained separately. One complete final probe, not a latency distribution."
+    },
+    "independent_final_state": {
+      "captured_at": "2026-10-18T13:34:35.516978+00:00",
+      "group_off": true,
+      "members_off": 8,
+      "members_unavailable": 2,
+      "automation_enabled": true,
+      "fixture_cleanup_performed_no_light_write": true,
+      "automation_configuration_unchanged": true
+    },
+    "retained_reader_installed_sha256": "37dc78681e1039c115f6d0bcd2d6d45ce931f8551ba245dd7cf19fa075b40914",
+    "remaining_scope": "A full software speech capture and real HA action/readback are proven. Physical microphone/speaker audibility and family acceptance are separate; GPU recovery was not attempted.",
+    "own_probe_memory_cleanup": {
+      "scope": "Exactly initial-action, audio2 and audio3 synthetic retained sources. Failed diagnostic ingress and original owner conversation preserved.",
+      "supported_route": "MemoryColdPath.erase_document",
+      "manifest_sha256": "c552d4ddd3c6b7579130905afb6ac2be268a876d4dd9d0ab4fc67800bf070591",
+      "script_sha256": "48324f7263254b81e73f402c6a74640a4207965e0375b283e41633659f06c53e",
+      "execution_log_sha256": "167bd6511a55c471dbde66de8127d96f822fd8d5a97f7a2255bb7efacc7f7979",
+      "verification": {
+        "storage_removed": 3,
+        "raw_exchanges_erased": 3,
+        "outbox_erased": 3,
+        "hindsight_documents_absent": 3,
+        "protected_original_events_unchanged": 47,
+        "other_probe_events_unchanged": 18
+      },
+      "all_derivative_absence_claimed": false
+    }
+  }
 }

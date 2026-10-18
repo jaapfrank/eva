@@ -533,7 +533,7 @@ class ConnectorResults:
     def read(self, reader, arguments):
         match = re.fullmatch(re.escape(READER_PREFIX)+r"([0-9a-f]{64}):([0-9a-f]{64})", reader)
         if not match:
-            raise ConversationConflict("stored connector result reference is invalid")
+            raise ConnectorSelectionError("stored connector result reference is malformed; copy the exact tool_id from the offered reader without shortening or rewriting it")
         batched = isinstance(arguments, dict) and set(arguments) == {"selections"}
         selections = arguments["selections"] if batched else [arguments]
         if not isinstance(selections, list) or not 1 <= len(selections) <= 8:
