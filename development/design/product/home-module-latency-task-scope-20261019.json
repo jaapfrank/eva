@@ -1,0 +1,48 @@
+{
+  "contract": "EvaWorkboardScopeExtension/v1",
+  "id": "home-module-latency-20261019",
+  "createdAt": "2026-10-18T22:37:35.579695+00:00",
+  "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+  "sourceSha256": "d415cee664c5322226e51d81c218c29372b98fb17b24556d030c8fb4c25238b8",
+  "ownerAuthorized": true,
+  "authorization": "Direct owner request: create the tasks needed to fix slow ordinary actions and make the Home Assistant connection a module of Eva, outside her core; examine official API and MCP support. Followed by explicit go ahead.",
+  "meaning": "Frozen initial additional scope; execution-workboard-v1.json is the only live status source. Original task end conditions and bounded completions remain unchanged.",
+  "tasks": [
+    {
+      "id": "E4.6",
+      "title": "Home Assistant volledig achter de optionele modulegrens plaatsen",
+      "status": "planned",
+      "doneWhen": "De bestaande HA-provider bezit alle HA-specifieke instructies, doel- en toolclassificatie, broninterpretatie, configuratie en afleveradapter. Eva-kern en algemene modeladapter werken via generieke capability-, context- en receiptcontracten. Zonder geïnstalleerde of ingeschakelde HA-module blijven chat, geheugen, initiatief en andere connectors werken; HA-tools en instructies ontbreken dan. Aan-/uitzetten en bijwerken behouden gegevens, lopende taakstatus en bestaande receipts. Geen tweede Eva, geheugen of moduleplatform."
+    },
+    {
+      "id": "E4.7",
+      "title": "Officiële API en MCP binnen één HA-module aansluiten",
+      "status": "planned",
+      "doneWhen": "De module gebruikt één vastgelegd capabilityprofiel voor de werkelijk geïnstalleerde HA-versie, beschikbare officiële MCP-tools en REST/WebSocket-API. Bestaande Assist-MCP- en API-code wordt hergebruikt. Per capability zijn gekozen transport, toegang, schemas, actuele dekking en controle vastgelegd; normale bediening en geautoriseerd beheer blijven beschikbaar. Ontbrekend MCP-bereik veroorzaakt geen stille bevoegdheidsverruiming of blinde herhaling via een ander transport. Geen eigen HA-planner of tweede gespreksagent."
+    },
+    {
+      "id": "E4.8",
+      "title": "Actuele apparaatcontext in de HA-module hergebruiken",
+      "status": "planned",
+      "doneWhen": "De HA-module houdt één bevoegdheidsgebonden apparaat-, naam-, gebieds-, groeps- en toestandsbeeld actueel via de bestaande eventroute en ondersteunde officiële API. Bekende ondubbelzinnige doelen vereisen geen herhaalde volledige inventarisatie per gesprek. Versheid, herkomst en volledigheid zijn zichtbaar; hernoemen, toevoegen, verwijderen, toegang intrekken, reconnect en ontbrekende updates werken correct. Onzekere of verouderde context wordt gericht ververst vóór uitvoering; geen tweede autobiografisch geheugen en geen cache als bewijs van een nieuwe actie."
+    },
+    {
+      "id": "E4.9",
+      "title": "Bedienen en vers controleren in één moduleactie uitvoeren",
+      "status": "planned",
+      "doneWhen": "Een ondubbelzinnige toegelaten apparaatopdracht wordt via de bestaande algemene uitvoerder als één samengestelde HA-capability uitgevoerd: doel valideren, één effect toepassen en de actuele eindtoestand controleren. Daarvoor zijn geen losse modelrondes voor inventaris, servicekeuze en readback nodig. De kern krijgt een compacte geverifieerde uitkomst; servicebevestiging alleen telt niet als succes. Ambiguïteit, gedeeltelijk resultaat, stoppen, onbekende uitkomst en hervatten blijven correct; geen huis- of lampregex in de kern."
+    },
+    {
+      "id": "E4.10",
+      "title": "Verplichte geheugenwachttijd uit eenvoudige opdrachten halen",
+      "status": "planned",
+      "doneWhen": "Dezelfde Eva kan een eenvoudige actuele opdracht uitvoeren zonder eerst iedere beurt de volledige semantische geheugenzoektocht af te wachten. Identiteit, actuele bevoegdheden, relevante afspraken, correcties en gespreksverwijzingen blijven beschikbaar. Geheugenafhankelijke vragen en bedoelingen gebruiken aantoonbaar de benodigde bronnen vóór antwoord of effect, ook bij een eerste beurt. Het mechanisme is kanaal- en providerneutraal, met actuele invalidatie en één bestaande geheugenbron. Geen HA-keywordbypass, tweede contactbrein of verzonnen context."
+    },
+    {
+      "id": "E5.2",
+      "title": "Snelle modulaire huisbediening via chat en spraak live opleveren",
+      "status": "planned",
+      "doneWhen": "E4.6–E4.10 zijn op de werkelijk actuele installatie geïntegreerd en onafhankelijk beoordeeld. Gelijke bekende toegelaten opdrachten werken via gewone chat en bestaande spraak met dezelfde module, identiteit, geheugen en bevoegdheden. In de vooraf vastgelegde proef voldoet chatontvangst tot verse HA-eindbevestiging aan mediaan maximaal 1 seconde en p95 maximaal 2 seconden bij een gereedstaande installatie; koude context en onbekende doelen worden afzonderlijk gerapporteerd. Spraak meet ook vanaf einde invoeraudio en vanaf herkende tekst. Een tussenreactie of service-ack vervangt geen eindbevestiging. Ruwe steekproef, fouten, context/cache, model-/toolgebruik en beperkingen blijven bewaard; niet gehaalde grenzen sluiten deze taak niet af. Installatie, bron/configuratie, herstelmogelijkheid en module-uitgedrag zijn gecontroleerd, zonder fysieke hoorbaarheid of gezinsacceptatie te verzinnen."
+    }
+  ]
+}

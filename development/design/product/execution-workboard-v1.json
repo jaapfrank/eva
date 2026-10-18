@@ -2532,9 +2532,14 @@
           "checkedAt": "2026-10-18T22:15:00.426680+00:00"
         },
         "next": {
-          "taskId": "F2.1",
-          "title": "Zeven dagen gezinsgebruik",
-          "detail": "Apart van de technische opvolging; niet vereist om dit herstel verder uit te voeren."
+          "taskId": "E4.6",
+          "title": "Home Assistant volledig achter de optionele modulegrens plaatsen",
+          "detail": "Nieuwe eigenaarprioriteit: zes concrete taken voor snelle huisbediening en één optionele HA-module. E5.1 blijft bij de lopende uitvoerder; deze registratie start geen tweede primaire implementatie.",
+          "followingAcceptance": {
+            "taskId": "F2.1",
+            "title": "Zeven dagen gezinsgebruik",
+            "detail": "Apart van de technische opvolging; niet vereist om dit herstel verder uit te voeren."
+          }
         },
         "ownerAction": {
           "title": "Nu geen handeling van jou nodig",
@@ -5661,7 +5666,7 @@
               "FE3"
             ],
             "outcome": "Bewezen schuld opruimen; efficiëntie en onderhoud",
-            "status": "completed",
+            "status": "planned",
             "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
             "endCondition": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
             "dashboardComponent": "finalization-E4",
@@ -6140,8 +6145,222 @@
                 "completionEvidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
                 "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
                 "completionKind": "bounded_installed_autonomous_software_improvement"
+              },
+              {
+                "id": "E4.6",
+                "title": "Home Assistant volledig achter de optionele modulegrens plaatsen",
+                "doneWhen": "De bestaande HA-provider bezit alle HA-specifieke instructies, doel- en toolclassificatie, broninterpretatie, configuratie en afleveradapter. Eva-kern en algemene modeladapter werken via generieke capability-, context- en receiptcontracten. Zonder geïnstalleerde of ingeschakelde HA-module blijven chat, geheugen, initiatief en andere connectors werken; HA-tools en instructies ontbreken dan. Aan-/uitzetten en bijwerken behouden gegevens, lopende taakstatus en bestaande receipts. Geen tweede Eva, geheugen of moduleplatform.",
+                "existing": "ProviderContribution, external-provider entry points en een optionele HomeAssistantProviderFactory bestaan. HA-beleid lekt nog naar gesprek, modeladapter en bootstrap.",
+                "gap": "De huidige optionele configuratie levert nog geen volledige product- en codegrens; alleen bestanden verplaatsen verwijdert die afhankelijkheid niet.",
+                "implementation": [
+                  "Verplaats HA-specifieke prompttekst en classificatie naar de bestaande providerbijdrage; de kern consumeert neutrale metadata.",
+                  "Verplaats HA-bronprojectie en lees-/schrijfinterpretatie uit de modeladapter met behoud van bronhash, bevoegdheid, replay en bestaande opgeslagen resultaten.",
+                  "Laat initiatief en aflevering optionele provider-capabilities gebruiken; geen HA-settings in de algemene beslissing.",
+                  "Gebruik bestaande manifest-/installatiebediening; een aparte service of nieuw pluginplatform is geen voorwaarde."
+                ],
+                "files": [
+                  "src/eva/providers/contracts.py",
+                  "src/eva/providers/runtime.py",
+                  "src/eva/providers/home_assistant.py",
+                  "src/eva/application/conversation.py",
+                  "src/eva/adapters/model/pydantic_conversation.py",
+                  "src/eva/bootstrap/runtime.py",
+                  "development/design/architecture/package-boundaries-v1.json"
+                ],
+                "dependsOn": [
+                  "E4.4"
+                ],
+                "verification": [
+                  "Grenscontrole plus opstart en gewone chat met HA afwezig/uitgeschakeld.",
+                  "Aan/uit, uitval en heraansluiting zonder verloren gegevens of opnieuw uitgevoerde effecten.",
+                  "Bestaande opgeslagen receipts en andere provider blijven bruikbaar."
+                ],
+                "nextAction": "Leg de echte HA-consumers en generieke overdrachtscontracten vast; migreer de bestaande verantwoordelijkheden in één beoordeelbare wijziging.",
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+                "ownerActionRequired": false,
+                "scopeOrigin": "home-module-latency-20261019",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+              },
+              {
+                "id": "E4.7",
+                "title": "Officiële API en MCP binnen één HA-module aansluiten",
+                "doneWhen": "De module gebruikt één vastgelegd capabilityprofiel voor de werkelijk geïnstalleerde HA-versie, beschikbare officiële MCP-tools en REST/WebSocket-API. Bestaande Assist-MCP- en API-code wordt hergebruikt. Per capability zijn gekozen transport, toegang, schemas, actuele dekking en controle vastgelegd; normale bediening en geautoriseerd beheer blijven beschikbaar. Ontbrekend MCP-bereik veroorzaakt geen stille bevoegdheidsverruiming of blinde herhaling via een ander transport. Geen eigen HA-planner of tweede gespreksagent.",
+                "existing": "home_assistant_mcp.py ondersteunt al /api/mcp/assist met HassTurnOn/Off; API-, MCP-gateway-, registratie- en providercontracten bestaan.",
+                "gap": "De gewone gemeten chatroute gebruikt losse inventory/API-opdrachten. Een bestaande MCP-adapter bewijst nog geen gekozen snelle, volledige gezamenlijke route.",
+                "implementation": [
+                  "Inventariseer de actuele geïnstalleerde HA-versie, MCP-endpoints, tools/schemas en werkelijk toegelaten entiteiten; documentatie is geen bewijs van lokale ondersteuning.",
+                  "Maak een capabilitymatrix voor bedienen, actuele toestand, veranderingen, geschiedenis en automatiseringsbeheer. Assist-bediening en eventuele beheertools hebben afzonderlijke bevoegdheden.",
+                  "Beoordeel hergebruik van verbinding en gevalideerde toolcatalogus; invalidatie bij gewijzigde versie, endpoint, credentials, scope of schema. Geen initialize/tools-list per actie zonder aantoonbare noodzaak.",
+                  "Kies MCP waar het de vereiste functie betrouwbaar levert; behoud officiële API/WS voor aangetoonde ontbrekende dekking. Voorkom een tweede effect na een onduidelijke timeout."
+                ],
+                "files": [
+                  "src/eva/adapters/connectors/home_assistant_mcp.py",
+                  "src/eva/adapters/connectors/home_assistant_api.py",
+                  "src/eva/adapters/connectors/home_assistant.py",
+                  "src/eva/adapters/connectors/mcp_gateway.py",
+                  "src/eva/adapters/connectors/mcp_registration.py",
+                  "src/eva/providers/home_assistant.py",
+                  "src/eva/contracts/capability.py",
+                  "src/eva/contracts/connector.py"
+                ],
+                "dependsOn": [
+                  "E4.6"
+                ],
+                "verification": [
+                  "Gekozen MCP/API-profiel werkt met actuele installatie en toegelaten account.",
+                  "Schemawijziging, onbekende effectuitkomst en ingetrokken toegang geven geen dubbele actie of bredere toegang.",
+                  "Huidige beheer-/automatiseringsfuncties behouden hun bestaande resultaatcontrole."
+                ],
+                "nextAction": "Controleer huidige API/MCP-dekking en koppel bestaande transporten aan één module-capabilityprofiel vóór transportwijzigingen.",
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+                "ownerActionRequired": false,
+                "scopeOrigin": "home-module-latency-20261019",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+              },
+              {
+                "id": "E4.8",
+                "title": "Actuele apparaatcontext in de HA-module hergebruiken",
+                "doneWhen": "De HA-module houdt één bevoegdheidsgebonden apparaat-, naam-, gebieds-, groeps- en toestandsbeeld actueel via de bestaande eventroute en ondersteunde officiële API. Bekende ondubbelzinnige doelen vereisen geen herhaalde volledige inventarisatie per gesprek. Versheid, herkomst en volledigheid zijn zichtbaar; hernoemen, toevoegen, verwijderen, toegang intrekken, reconnect en ontbrekende updates werken correct. Onzekere of verouderde context wordt gericht ververst vóór uitvoering; geen tweede autobiografisch geheugen en geen cache als bewijs van een nieuwe actie.",
+                "existing": "HA-eventadapter, inventarislezer en bestaande sensor-/bronregistratie bestaan; de gemeten chat vroeg dezelfde doelinventaris tweemaal op.",
+                "gap": "Actuele apparaten zijn nog geen herbruikbare modulecontext in de gewone beslisroute.",
+                "implementation": [
+                  "Hergebruik home_assistant_events en de bestaande bronopslag; kies een begrensde modulecache met bron-/versie- en toegangsbinding.",
+                  "Controleer welke officiële WS-subscriptie door de geïnstalleerde versie wordt ondersteund; begin met een complete snapshot en verwerk wijzigingen zonder gat.",
+                  "Lever alleen relevante geautoriseerde doelen en compacte capabilitycontext aan Eva; geen volledige huisinventaris in iedere prompt.",
+                  "Maak meerdere gelijknamige doelen, groepsleden en onbekende toestand expliciet. Geen stil gokken of oneindige warme-cacheaanname."
+                ],
+                "files": [
+                  "src/eva/adapters/connectors/home_assistant_events.py",
+                  "src/eva/adapters/connectors/home_assistant_admin.py",
+                  "src/eva/providers/home_assistant.py",
+                  "src/eva/adapters/postgres/sensory_events.py"
+                ],
+                "dependsOn": [
+                  "E4.6",
+                  "E4.7"
+                ],
+                "verification": [
+                  "Gerichte controles voor eerste snapshot, delta, reconnect, hernoemen/verwijderen en ingetrokken toegang.",
+                  "Bekend doel gebruikt aanwezige context; onbekend of ambigu doel leidt tot passende ontdekking of vraag.",
+                  "Privé- en huishoudcontext blijven gescheiden."
+                ],
+                "nextAction": "Vergelijk de bestaande event-/snapshotbron met de gewone gespreksoverdracht en sluit het ontbrekende hergebruik aan.",
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+                "ownerActionRequired": false,
+                "scopeOrigin": "home-module-latency-20261019",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+              },
+              {
+                "id": "E4.9",
+                "title": "Bedienen en vers controleren in één moduleactie uitvoeren",
+                "doneWhen": "Een ondubbelzinnige toegelaten apparaatopdracht wordt via de bestaande algemene uitvoerder als één samengestelde HA-capability uitgevoerd: doel valideren, één effect toepassen en de actuele eindtoestand controleren. Daarvoor zijn geen losse modelrondes voor inventaris, servicekeuze en readback nodig. De kern krijgt een compacte geverifieerde uitkomst; servicebevestiging alleen telt niet als succes. Ambiguïteit, gedeeltelijk resultaat, stoppen, onbekende uitkomst en hervatten blijven correct; geen huis- of lampregex in de kern.",
+                "existing": "De bestaande uitvoerder heeft bevoegdheids-, stop-, receipt- en readbackcontracten. Eva1 bundelde apparaatbediening al binnen één tool; broninzicht wordt gebruikt zonder Eva1-code of agent te herstarten.",
+                "gap": "Eva2 laat het model nu meerdere keren hetzelfde eenvoudige uitvoeringspad plannen; de schakelcall zelf was circa 0,6 seconde, maar kwam pas veel later.",
+                "implementation": [
+                  "Laat de module doelresolutie, transportkeuze en verificatie uitvoeren onder één gevalideerde opdracht met begrensde substeps.",
+                  "Hergebruik bestaande algemene action/effect/receipt-contracten; Het model interpreteert bedoeling en signaleert ambiguïteit; bestaande hostautorisatie beslist over toestemming en effecttoelating.",
+                  "Leg iedere effectpoging en onzeker resultaat vast. Een retry leest eerst de actuele situatie en voert geen blinde toggle of dubbel effect uit.",
+                  "Geef complete brongebonden resultaatdata voor Eva’s eigen korte antwoord; geen extra modelbeslissing om een reeds gekozen verificatiestap te bedenken."
+                ],
+                "files": [
+                  "src/eva/providers/home_assistant.py",
+                  "src/eva/adapters/connectors/home_assistant.py",
+                  "src/eva/adapters/connectors/home_assistant_completion.py",
+                  "src/eva/adapters/postgres/external_conversation_tools.py",
+                  "src/eva/contracts/capability.py",
+                  "src/eva/contracts/connector.py"
+                ],
+                "dependsOn": [
+                  "E4.7",
+                  "E4.8"
+                ],
+                "verification": [
+                  "Live toegelaten buitenlichtopdracht met verse eindcontrole en behoud van beginstand/automatisering.",
+                  "Ambiguïteit, onbereikbaar groepslid, stop en onduidelijke effectuitkomst gecontroleerd zonder extra productie-effecten.",
+                  "Geen herhaalde modelrondes voor vaste substeps; daadwerkelijke effect- en verificatietijd apart geregistreerd."
+                ],
+                "nextAction": "Maak één complete bediening via de bestaande capabilitygrens; hergebruik de huidige geverifieerde uitvoerder en provider.",
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+                "ownerActionRequired": false,
+                "scopeOrigin": "home-module-latency-20261019",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+              },
+              {
+                "id": "E4.10",
+                "title": "Verplichte geheugenwachttijd uit eenvoudige opdrachten halen",
+                "doneWhen": "Dezelfde Eva kan een eenvoudige actuele opdracht uitvoeren zonder eerst iedere beurt de volledige semantische geheugenzoektocht af te wachten. Identiteit, actuele bevoegdheden, relevante afspraken, correcties en gespreksverwijzingen blijven beschikbaar. Geheugenafhankelijke vragen en bedoelingen gebruiken aantoonbaar de benodigde bronnen vóór antwoord of effect, ook bij een eerste beurt. Het mechanisme is kanaal- en providerneutraal, met actuele invalidatie en één bestaande geheugenbron. Geen HA-keywordbypass, tweede contactbrein of verzonnen context.",
+                "existing": "Gesprek en actieve context worden al deels parallel voorbereid. initial_memory blokkeert nog elke eerste modelbeslissing; laatste chatproef besteedde hier 10,275 seconden aan.",
+                "gap": "Algemene geheugentoegang en directe apparaatbediening zijn onnodig serieel gekoppeld; een warme numerieke cache maskeert dit slechts in sommige proeven.",
+                "implementation": [
+                  "Scheid noodzakelijke directe context van aanvullende semantische retrieval via bestaande context-/geheugencontracten.",
+                  "Onderzoek begrensde sessiecontext, vooraf voorbereide relevante context en vraaggestuurde aanvulling; bepaal de keuze door algemene contextbehoefte, niet door lampzinnen.",
+                  "Behoud bronvalidatie, vergeten/correcties, ingetrokken toegang, tijdsgrenzen en privé-/huishoudscope op ieder gebruik.",
+                  "Meet koude en warme retrieval apart en toets verwijzende opdrachten, relevante eerdere afspraken en gewone sociale/activiteitenvragen."
+                ],
+                "files": [
+                  "src/eva/application/conversation.py",
+                  "src/eva/adapters/projection/hindsight.py",
+                  "src/eva/adapters/postgres/conversation_actions.py",
+                  "src/eva/adapters/model/pydantic_conversation.py",
+                  "src/eva/application/voice_context.py"
+                ],
+                "dependsOn": [
+                  "E4.3"
+                ],
+                "verification": [
+                  "Context die voor bedoeling of toestemming nodig is blijft vóór effect aanwezig.",
+                  "Nieuwe sessie, correctie/vergeten, privéscope, verwijzende opdracht en herinneringsvraag blijven inhoudelijk juist.",
+                  "Voorbereiding, eerste modelbeslissing en effecttijd afzonderlijk gemeten; winst komt niet alleen uit opgewarmde scores."
+                ],
+                "nextAction": "Ontkoppel de aantoonbare verplichte retrieval-wachtstap binnen de gedeelde contextcontracten, met behoud van relevante herinneringen.",
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+                "ownerActionRequired": false,
+                "scopeOrigin": "home-module-latency-20261019",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
               }
-            ]
+            ],
+            "previousBoundedCompletion": {
+              "status": "completed",
+              "taskIds": [
+                "E4.1",
+                "E4.2",
+                "E4.3",
+                "E4.4",
+                "E4.5"
+              ],
+              "scope": "Original finite E4 scope remains technically completed; new owner scope is planned separately."
+            },
+            "ownerScopeExtension": {
+              "id": "home-module-latency-20261019",
+              "newTaskIds": [
+                "E4.6",
+                "E4.7",
+                "E4.8",
+                "E4.9",
+                "E4.10"
+              ],
+              "status": "planned"
+            }
           },
           {
             "id": "FE5",
@@ -6311,12 +6530,61 @@
                     "independentReview": "development/reviews/e51-private-context-search-review-20261019.json"
                   }
                 }
+              },
+              {
+                "id": "E5.2",
+                "title": "Snelle modulaire huisbediening via chat en spraak live opleveren",
+                "doneWhen": "E4.6–E4.10 zijn op de werkelijk actuele installatie geïntegreerd en onafhankelijk beoordeeld. Gelijke bekende toegelaten opdrachten werken via gewone chat en bestaande spraak met dezelfde module, identiteit, geheugen en bevoegdheden. In de vooraf vastgelegde proef voldoet chatontvangst tot verse HA-eindbevestiging aan mediaan maximaal 1 seconde en p95 maximaal 2 seconden bij een gereedstaande installatie; koude context en onbekende doelen worden afzonderlijk gerapporteerd. Spraak meet ook vanaf einde invoeraudio en vanaf herkende tekst. Een tussenreactie of service-ack vervangt geen eindbevestiging. Ruwe steekproef, fouten, context/cache, model-/toolgebruik en beperkingen blijven bewaard; niet gehaalde grenzen sluiten deze taak niet af. Installatie, bron/configuratie, herstelmogelijkheid en module-uitgedrag zijn gecontroleerd, zonder fysieke hoorbaarheid of gezinsacceptatie te verzinnen.",
+                "existing": "Vijf eigen liveproeven met echte verlichting en softwareaudio zijn vastgelegd; chatfinal 28,072s, voice eerste audio 11,692s en writeack 15,028s. Eerdere losse snellere metingen blijven behouden.",
+                "gap": "Losse optimalisaties bewijzen nog geen snelle modulaire gebruikersroute of herhaalbare één-secondebediening.",
+                "implementation": [
+                  "Leg representatieve veilige bekende opdrachten, steekproefomvang, cachecondities en meetklokken vast vóór kandidaatmetingen; rapporteer ruwe waarden en p95 met de bijbehorende steekproefgrens.",
+                  "Meet directe HA-transporttijd naast Eva-tijd; meet een al-uit-lamp niet als nieuwe echte schakeling. Leg ambiguïteit en onbekende apparaten apart vast.",
+                  "Gebruik voor fysieke effectproeven uitsluitend de reeds toegestane buitenverlichting; controleer na afloop toestand en automatisering. Andere controles mogen geïsoleerd of read-only.",
+                  "Integreer gecoördineerd met E5.1 en de huidige speakeruitvoerder. Controleer actieve gesprekken/model-/werkclaims vóór vervanging en behoud andere actuele wijzigingen.",
+                  "Publiceer een korte eerlijke vergelijking; bewaar privé-audio en gesprekken buiten Git en ruim uitsluitend exact eigen diagnostische bronnen op."
+                ],
+                "files": [
+                  "development/evidence/product/subscription-voice-20261013/chat-and-voice-latency-20261018.json",
+                  "development/tools/voice",
+                  "development/design/product/execution-workboard-v1.json",
+                  "deploy/living-core",
+                  "deploy/voice-session"
+                ],
+                "dependsOn": [
+                  "E4.6",
+                  "E4.7",
+                  "E4.8",
+                  "E4.9",
+                  "E4.10"
+                ],
+                "verification": [
+                  "Actuele geïnstalleerde bron/configuratie en gedeelde chat-/spraakroute.",
+                  "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
+                  "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
+                ],
+                "nextAction": "Na de bouw eerst meetopzet en grenzen vastzetten, daarna de huidige installatie gericht integreren en echte uitkomst meten.",
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+                "ownerActionRequired": false,
+                "scopeOrigin": "home-module-latency-20261019",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
               }
             ],
             "completion": {
               "technicalCandidate": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
               "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
               "familyAcceptance": false
+            },
+            "ownerScopeExtension": {
+              "id": "home-module-latency-20261019",
+              "newTaskIds": [
+                "E5.2"
+              ],
+              "status": "planned"
             }
           }
         ],
@@ -6326,11 +6594,11 @@
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
           "E3: volledige bestandsregistratie en onderbouwde besluiten",
-          "E4: gerichte vereenvoudiging, efficiëntie en onderhoud",
-          "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
+          "E4: oorspronkelijke opruiming afgerond; nieuwe E4.6–E4.10 maken HA modulair en verkorten eenvoudige acties",
+          "E5: E5.1-opvolging en nieuwe E5.2 chat-/spraakoplevering; daarna onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-18T21:19:30.157725+00:00",
+        "updatedAt": "2026-10-18T22:37:35.579695+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -6395,19 +6663,38 @@
             {
               "id": "E4",
               "title": "Bewezen schuld opruimen; efficiëntie en onderhoud",
-              "status": "completed",
+              "status": "planned",
               "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
               "taskIds": [
                 "E4.1",
                 "E4.2",
                 "E4.3",
                 "E4.4",
-                "E4.5"
+                "E4.5",
+                "E4.6",
+                "E4.7",
+                "E4.8",
+                "E4.9",
+                "E4.10"
               ],
-              "currentGap": "E4.1–E4.5 technisch afgerond binnen vaste scope en expliciete beperkingen. Volgend: één gezamenlijke kandidaat E5.1, daarna F2-gebruik/acceptatie.",
-              "completionEvidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
-              "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
-              "completionKind": "bounded_technical_phase"
+              "currentGap": "Nieuwe eigenaaropdracht E4.6–E4.10: modulegrens voltooien en eenvoudige acties versnellen. Oorspronkelijke E4.1–E4.5-afronding blijft geldig binnen haar scope.",
+              "previousBoundedCompletion": {
+                "id": "E4",
+                "title": "Bewezen schuld opruimen; efficiëntie en onderhoud",
+                "status": "completed",
+                "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
+                "taskIds": [
+                  "E4.1",
+                  "E4.2",
+                  "E4.3",
+                  "E4.4",
+                  "E4.5"
+                ],
+                "currentGap": "E4.1–E4.5 technisch afgerond binnen vaste scope en expliciete beperkingen. Volgend: één gezamenlijke kandidaat E5.1, daarna F2-gebruik/acceptatie.",
+                "completionEvidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+                "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
+                "completionKind": "bounded_technical_phase"
+              }
             },
             {
               "id": "E5",
@@ -6415,7 +6702,8 @@
               "status": "in_progress",
               "finish": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie.",
               "taskIds": [
-                "E5.1"
+                "E5.1",
+                "E5.2"
               ],
               "existingTaskIds": [
                 "F2.1",
@@ -6509,6 +6797,22 @@
             "order": "E3.3/E3.4 remain next. E2.7 after source review; E4.5 after E4.4; both before existing E5/F2.",
             "widerSelfMaintenance": "Only widen automatic changes after real evidence in the first class; no unlimited new release gate.",
             "economicValue": "Actual time/cost/help may be assessed during ordinary use; no mandatory revenue or commercial project quota."
+          },
+          "homeModuleLatencyCoverage": {
+            "scopeOrigin": "home-module-latency-20261019",
+            "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+            "newTaskIds": [
+              "E4.6",
+              "E4.7",
+              "E4.8",
+              "E4.9",
+              "E4.10",
+              "E5.2"
+            ],
+            "nextTaskId": "E4.6",
+            "status": "planned",
+            "order": "E4.6 → E4.7 → E4.8 → E4.9; E4.10 independently after existing E4.3; combine in E5.2 before final family acceptance.",
+            "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
         "checkedAt": "2026-10-18T22:08:26.558837+00:00"
@@ -9456,7 +9760,7 @@
             "FE3"
           ],
           "outcome": "Bewezen schuld opruimen; efficiëntie en onderhoud",
-          "status": "completed",
+          "status": "planned",
           "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
           "endCondition": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
           "dashboardComponent": "finalization-E4",
@@ -9935,8 +10239,222 @@
               "completionEvidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
               "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
               "completionKind": "bounded_installed_autonomous_software_improvement"
+            },
+            {
+              "id": "E4.6",
+              "title": "Home Assistant volledig achter de optionele modulegrens plaatsen",
+              "doneWhen": "De bestaande HA-provider bezit alle HA-specifieke instructies, doel- en toolclassificatie, broninterpretatie, configuratie en afleveradapter. Eva-kern en algemene modeladapter werken via generieke capability-, context- en receiptcontracten. Zonder geïnstalleerde of ingeschakelde HA-module blijven chat, geheugen, initiatief en andere connectors werken; HA-tools en instructies ontbreken dan. Aan-/uitzetten en bijwerken behouden gegevens, lopende taakstatus en bestaande receipts. Geen tweede Eva, geheugen of moduleplatform.",
+              "existing": "ProviderContribution, external-provider entry points en een optionele HomeAssistantProviderFactory bestaan. HA-beleid lekt nog naar gesprek, modeladapter en bootstrap.",
+              "gap": "De huidige optionele configuratie levert nog geen volledige product- en codegrens; alleen bestanden verplaatsen verwijdert die afhankelijkheid niet.",
+              "implementation": [
+                "Verplaats HA-specifieke prompttekst en classificatie naar de bestaande providerbijdrage; de kern consumeert neutrale metadata.",
+                "Verplaats HA-bronprojectie en lees-/schrijfinterpretatie uit de modeladapter met behoud van bronhash, bevoegdheid, replay en bestaande opgeslagen resultaten.",
+                "Laat initiatief en aflevering optionele provider-capabilities gebruiken; geen HA-settings in de algemene beslissing.",
+                "Gebruik bestaande manifest-/installatiebediening; een aparte service of nieuw pluginplatform is geen voorwaarde."
+              ],
+              "files": [
+                "src/eva/providers/contracts.py",
+                "src/eva/providers/runtime.py",
+                "src/eva/providers/home_assistant.py",
+                "src/eva/application/conversation.py",
+                "src/eva/adapters/model/pydantic_conversation.py",
+                "src/eva/bootstrap/runtime.py",
+                "development/design/architecture/package-boundaries-v1.json"
+              ],
+              "dependsOn": [
+                "E4.4"
+              ],
+              "verification": [
+                "Grenscontrole plus opstart en gewone chat met HA afwezig/uitgeschakeld.",
+                "Aan/uit, uitval en heraansluiting zonder verloren gegevens of opnieuw uitgevoerde effecten.",
+                "Bestaande opgeslagen receipts en andere provider blijven bruikbaar."
+              ],
+              "nextAction": "Leg de echte HA-consumers en generieke overdrachtscontracten vast; migreer de bestaande verantwoordelijkheden in één beoordeelbare wijziging.",
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+              "ownerActionRequired": false,
+              "scopeOrigin": "home-module-latency-20261019",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+            },
+            {
+              "id": "E4.7",
+              "title": "Officiële API en MCP binnen één HA-module aansluiten",
+              "doneWhen": "De module gebruikt één vastgelegd capabilityprofiel voor de werkelijk geïnstalleerde HA-versie, beschikbare officiële MCP-tools en REST/WebSocket-API. Bestaande Assist-MCP- en API-code wordt hergebruikt. Per capability zijn gekozen transport, toegang, schemas, actuele dekking en controle vastgelegd; normale bediening en geautoriseerd beheer blijven beschikbaar. Ontbrekend MCP-bereik veroorzaakt geen stille bevoegdheidsverruiming of blinde herhaling via een ander transport. Geen eigen HA-planner of tweede gespreksagent.",
+              "existing": "home_assistant_mcp.py ondersteunt al /api/mcp/assist met HassTurnOn/Off; API-, MCP-gateway-, registratie- en providercontracten bestaan.",
+              "gap": "De gewone gemeten chatroute gebruikt losse inventory/API-opdrachten. Een bestaande MCP-adapter bewijst nog geen gekozen snelle, volledige gezamenlijke route.",
+              "implementation": [
+                "Inventariseer de actuele geïnstalleerde HA-versie, MCP-endpoints, tools/schemas en werkelijk toegelaten entiteiten; documentatie is geen bewijs van lokale ondersteuning.",
+                "Maak een capabilitymatrix voor bedienen, actuele toestand, veranderingen, geschiedenis en automatiseringsbeheer. Assist-bediening en eventuele beheertools hebben afzonderlijke bevoegdheden.",
+                "Beoordeel hergebruik van verbinding en gevalideerde toolcatalogus; invalidatie bij gewijzigde versie, endpoint, credentials, scope of schema. Geen initialize/tools-list per actie zonder aantoonbare noodzaak.",
+                "Kies MCP waar het de vereiste functie betrouwbaar levert; behoud officiële API/WS voor aangetoonde ontbrekende dekking. Voorkom een tweede effect na een onduidelijke timeout."
+              ],
+              "files": [
+                "src/eva/adapters/connectors/home_assistant_mcp.py",
+                "src/eva/adapters/connectors/home_assistant_api.py",
+                "src/eva/adapters/connectors/home_assistant.py",
+                "src/eva/adapters/connectors/mcp_gateway.py",
+                "src/eva/adapters/connectors/mcp_registration.py",
+                "src/eva/providers/home_assistant.py",
+                "src/eva/contracts/capability.py",
+                "src/eva/contracts/connector.py"
+              ],
+              "dependsOn": [
+                "E4.6"
+              ],
+              "verification": [
+                "Gekozen MCP/API-profiel werkt met actuele installatie en toegelaten account.",
+                "Schemawijziging, onbekende effectuitkomst en ingetrokken toegang geven geen dubbele actie of bredere toegang.",
+                "Huidige beheer-/automatiseringsfuncties behouden hun bestaande resultaatcontrole."
+              ],
+              "nextAction": "Controleer huidige API/MCP-dekking en koppel bestaande transporten aan één module-capabilityprofiel vóór transportwijzigingen.",
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+              "ownerActionRequired": false,
+              "scopeOrigin": "home-module-latency-20261019",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+            },
+            {
+              "id": "E4.8",
+              "title": "Actuele apparaatcontext in de HA-module hergebruiken",
+              "doneWhen": "De HA-module houdt één bevoegdheidsgebonden apparaat-, naam-, gebieds-, groeps- en toestandsbeeld actueel via de bestaande eventroute en ondersteunde officiële API. Bekende ondubbelzinnige doelen vereisen geen herhaalde volledige inventarisatie per gesprek. Versheid, herkomst en volledigheid zijn zichtbaar; hernoemen, toevoegen, verwijderen, toegang intrekken, reconnect en ontbrekende updates werken correct. Onzekere of verouderde context wordt gericht ververst vóór uitvoering; geen tweede autobiografisch geheugen en geen cache als bewijs van een nieuwe actie.",
+              "existing": "HA-eventadapter, inventarislezer en bestaande sensor-/bronregistratie bestaan; de gemeten chat vroeg dezelfde doelinventaris tweemaal op.",
+              "gap": "Actuele apparaten zijn nog geen herbruikbare modulecontext in de gewone beslisroute.",
+              "implementation": [
+                "Hergebruik home_assistant_events en de bestaande bronopslag; kies een begrensde modulecache met bron-/versie- en toegangsbinding.",
+                "Controleer welke officiële WS-subscriptie door de geïnstalleerde versie wordt ondersteund; begin met een complete snapshot en verwerk wijzigingen zonder gat.",
+                "Lever alleen relevante geautoriseerde doelen en compacte capabilitycontext aan Eva; geen volledige huisinventaris in iedere prompt.",
+                "Maak meerdere gelijknamige doelen, groepsleden en onbekende toestand expliciet. Geen stil gokken of oneindige warme-cacheaanname."
+              ],
+              "files": [
+                "src/eva/adapters/connectors/home_assistant_events.py",
+                "src/eva/adapters/connectors/home_assistant_admin.py",
+                "src/eva/providers/home_assistant.py",
+                "src/eva/adapters/postgres/sensory_events.py"
+              ],
+              "dependsOn": [
+                "E4.6",
+                "E4.7"
+              ],
+              "verification": [
+                "Gerichte controles voor eerste snapshot, delta, reconnect, hernoemen/verwijderen en ingetrokken toegang.",
+                "Bekend doel gebruikt aanwezige context; onbekend of ambigu doel leidt tot passende ontdekking of vraag.",
+                "Privé- en huishoudcontext blijven gescheiden."
+              ],
+              "nextAction": "Vergelijk de bestaande event-/snapshotbron met de gewone gespreksoverdracht en sluit het ontbrekende hergebruik aan.",
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+              "ownerActionRequired": false,
+              "scopeOrigin": "home-module-latency-20261019",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+            },
+            {
+              "id": "E4.9",
+              "title": "Bedienen en vers controleren in één moduleactie uitvoeren",
+              "doneWhen": "Een ondubbelzinnige toegelaten apparaatopdracht wordt via de bestaande algemene uitvoerder als één samengestelde HA-capability uitgevoerd: doel valideren, één effect toepassen en de actuele eindtoestand controleren. Daarvoor zijn geen losse modelrondes voor inventaris, servicekeuze en readback nodig. De kern krijgt een compacte geverifieerde uitkomst; servicebevestiging alleen telt niet als succes. Ambiguïteit, gedeeltelijk resultaat, stoppen, onbekende uitkomst en hervatten blijven correct; geen huis- of lampregex in de kern.",
+              "existing": "De bestaande uitvoerder heeft bevoegdheids-, stop-, receipt- en readbackcontracten. Eva1 bundelde apparaatbediening al binnen één tool; broninzicht wordt gebruikt zonder Eva1-code of agent te herstarten.",
+              "gap": "Eva2 laat het model nu meerdere keren hetzelfde eenvoudige uitvoeringspad plannen; de schakelcall zelf was circa 0,6 seconde, maar kwam pas veel later.",
+              "implementation": [
+                "Laat de module doelresolutie, transportkeuze en verificatie uitvoeren onder één gevalideerde opdracht met begrensde substeps.",
+                "Hergebruik bestaande algemene action/effect/receipt-contracten; Het model interpreteert bedoeling en signaleert ambiguïteit; bestaande hostautorisatie beslist over toestemming en effecttoelating.",
+                "Leg iedere effectpoging en onzeker resultaat vast. Een retry leest eerst de actuele situatie en voert geen blinde toggle of dubbel effect uit.",
+                "Geef complete brongebonden resultaatdata voor Eva’s eigen korte antwoord; geen extra modelbeslissing om een reeds gekozen verificatiestap te bedenken."
+              ],
+              "files": [
+                "src/eva/providers/home_assistant.py",
+                "src/eva/adapters/connectors/home_assistant.py",
+                "src/eva/adapters/connectors/home_assistant_completion.py",
+                "src/eva/adapters/postgres/external_conversation_tools.py",
+                "src/eva/contracts/capability.py",
+                "src/eva/contracts/connector.py"
+              ],
+              "dependsOn": [
+                "E4.7",
+                "E4.8"
+              ],
+              "verification": [
+                "Live toegelaten buitenlichtopdracht met verse eindcontrole en behoud van beginstand/automatisering.",
+                "Ambiguïteit, onbereikbaar groepslid, stop en onduidelijke effectuitkomst gecontroleerd zonder extra productie-effecten.",
+                "Geen herhaalde modelrondes voor vaste substeps; daadwerkelijke effect- en verificatietijd apart geregistreerd."
+              ],
+              "nextAction": "Maak één complete bediening via de bestaande capabilitygrens; hergebruik de huidige geverifieerde uitvoerder en provider.",
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+              "ownerActionRequired": false,
+              "scopeOrigin": "home-module-latency-20261019",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+            },
+            {
+              "id": "E4.10",
+              "title": "Verplichte geheugenwachttijd uit eenvoudige opdrachten halen",
+              "doneWhen": "Dezelfde Eva kan een eenvoudige actuele opdracht uitvoeren zonder eerst iedere beurt de volledige semantische geheugenzoektocht af te wachten. Identiteit, actuele bevoegdheden, relevante afspraken, correcties en gespreksverwijzingen blijven beschikbaar. Geheugenafhankelijke vragen en bedoelingen gebruiken aantoonbaar de benodigde bronnen vóór antwoord of effect, ook bij een eerste beurt. Het mechanisme is kanaal- en providerneutraal, met actuele invalidatie en één bestaande geheugenbron. Geen HA-keywordbypass, tweede contactbrein of verzonnen context.",
+              "existing": "Gesprek en actieve context worden al deels parallel voorbereid. initial_memory blokkeert nog elke eerste modelbeslissing; laatste chatproef besteedde hier 10,275 seconden aan.",
+              "gap": "Algemene geheugentoegang en directe apparaatbediening zijn onnodig serieel gekoppeld; een warme numerieke cache maskeert dit slechts in sommige proeven.",
+              "implementation": [
+                "Scheid noodzakelijke directe context van aanvullende semantische retrieval via bestaande context-/geheugencontracten.",
+                "Onderzoek begrensde sessiecontext, vooraf voorbereide relevante context en vraaggestuurde aanvulling; bepaal de keuze door algemene contextbehoefte, niet door lampzinnen.",
+                "Behoud bronvalidatie, vergeten/correcties, ingetrokken toegang, tijdsgrenzen en privé-/huishoudscope op ieder gebruik.",
+                "Meet koude en warme retrieval apart en toets verwijzende opdrachten, relevante eerdere afspraken en gewone sociale/activiteitenvragen."
+              ],
+              "files": [
+                "src/eva/application/conversation.py",
+                "src/eva/adapters/projection/hindsight.py",
+                "src/eva/adapters/postgres/conversation_actions.py",
+                "src/eva/adapters/model/pydantic_conversation.py",
+                "src/eva/application/voice_context.py"
+              ],
+              "dependsOn": [
+                "E4.3"
+              ],
+              "verification": [
+                "Context die voor bedoeling of toestemming nodig is blijft vóór effect aanwezig.",
+                "Nieuwe sessie, correctie/vergeten, privéscope, verwijzende opdracht en herinneringsvraag blijven inhoudelijk juist.",
+                "Voorbereiding, eerste modelbeslissing en effecttijd afzonderlijk gemeten; winst komt niet alleen uit opgewarmde scores."
+              ],
+              "nextAction": "Ontkoppel de aantoonbare verplichte retrieval-wachtstap binnen de gedeelde contextcontracten, met behoud van relevante herinneringen.",
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+              "ownerActionRequired": false,
+              "scopeOrigin": "home-module-latency-20261019",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
             }
-          ]
+          ],
+          "previousBoundedCompletion": {
+            "status": "completed",
+            "taskIds": [
+              "E4.1",
+              "E4.2",
+              "E4.3",
+              "E4.4",
+              "E4.5"
+            ],
+            "scope": "Original finite E4 scope remains technically completed; new owner scope is planned separately."
+          },
+          "ownerScopeExtension": {
+            "id": "home-module-latency-20261019",
+            "newTaskIds": [
+              "E4.6",
+              "E4.7",
+              "E4.8",
+              "E4.9",
+              "E4.10"
+            ],
+            "status": "planned"
+          }
         },
         {
           "id": "FE5",
@@ -10106,12 +10624,61 @@
                   "independentReview": "development/reviews/e51-private-context-search-review-20261019.json"
                 }
               }
+            },
+            {
+              "id": "E5.2",
+              "title": "Snelle modulaire huisbediening via chat en spraak live opleveren",
+              "doneWhen": "E4.6–E4.10 zijn op de werkelijk actuele installatie geïntegreerd en onafhankelijk beoordeeld. Gelijke bekende toegelaten opdrachten werken via gewone chat en bestaande spraak met dezelfde module, identiteit, geheugen en bevoegdheden. In de vooraf vastgelegde proef voldoet chatontvangst tot verse HA-eindbevestiging aan mediaan maximaal 1 seconde en p95 maximaal 2 seconden bij een gereedstaande installatie; koude context en onbekende doelen worden afzonderlijk gerapporteerd. Spraak meet ook vanaf einde invoeraudio en vanaf herkende tekst. Een tussenreactie of service-ack vervangt geen eindbevestiging. Ruwe steekproef, fouten, context/cache, model-/toolgebruik en beperkingen blijven bewaard; niet gehaalde grenzen sluiten deze taak niet af. Installatie, bron/configuratie, herstelmogelijkheid en module-uitgedrag zijn gecontroleerd, zonder fysieke hoorbaarheid of gezinsacceptatie te verzinnen.",
+              "existing": "Vijf eigen liveproeven met echte verlichting en softwareaudio zijn vastgelegd; chatfinal 28,072s, voice eerste audio 11,692s en writeack 15,028s. Eerdere losse snellere metingen blijven behouden.",
+              "gap": "Losse optimalisaties bewijzen nog geen snelle modulaire gebruikersroute of herhaalbare één-secondebediening.",
+              "implementation": [
+                "Leg representatieve veilige bekende opdrachten, steekproefomvang, cachecondities en meetklokken vast vóór kandidaatmetingen; rapporteer ruwe waarden en p95 met de bijbehorende steekproefgrens.",
+                "Meet directe HA-transporttijd naast Eva-tijd; meet een al-uit-lamp niet als nieuwe echte schakeling. Leg ambiguïteit en onbekende apparaten apart vast.",
+                "Gebruik voor fysieke effectproeven uitsluitend de reeds toegestane buitenverlichting; controleer na afloop toestand en automatisering. Andere controles mogen geïsoleerd of read-only.",
+                "Integreer gecoördineerd met E5.1 en de huidige speakeruitvoerder. Controleer actieve gesprekken/model-/werkclaims vóór vervanging en behoud andere actuele wijzigingen.",
+                "Publiceer een korte eerlijke vergelijking; bewaar privé-audio en gesprekken buiten Git en ruim uitsluitend exact eigen diagnostische bronnen op."
+              ],
+              "files": [
+                "development/evidence/product/subscription-voice-20261013/chat-and-voice-latency-20261018.json",
+                "development/tools/voice",
+                "development/design/product/execution-workboard-v1.json",
+                "deploy/living-core",
+                "deploy/voice-session"
+              ],
+              "dependsOn": [
+                "E4.6",
+                "E4.7",
+                "E4.8",
+                "E4.9",
+                "E4.10"
+              ],
+              "verification": [
+                "Actuele geïnstalleerde bron/configuratie en gedeelde chat-/spraakroute.",
+                "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
+                "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
+              ],
+              "nextAction": "Na de bouw eerst meetopzet en grenzen vastzetten, daarna de huidige installatie gericht integreren en echte uitkomst meten.",
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+              "ownerActionRequired": false,
+              "scopeOrigin": "home-module-latency-20261019",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
             }
           ],
           "completion": {
             "technicalCandidate": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
             "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
             "familyAcceptance": false
+          },
+          "ownerScopeExtension": {
+            "id": "home-module-latency-20261019",
+            "newTaskIds": [
+              "E5.2"
+            ],
+            "status": "planned"
           }
         }
       ],
@@ -10121,11 +10688,11 @@
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
         "E3: volledige bestandsregistratie en onderbouwde besluiten",
-        "E4: gerichte vereenvoudiging, efficiëntie en onderhoud",
-        "E5: één eindkandidaat, onafhankelijke eindreview en gezinsacceptatie"
+        "E4: oorspronkelijke opruiming afgerond; nieuwe E4.6–E4.10 maken HA modulair en verkorten eenvoudige acties",
+        "E5: E5.1-opvolging en nieuwe E5.2 chat-/spraakoplevering; daarna onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-18T21:19:30.157725+00:00",
+      "updatedAt": "2026-10-18T22:37:35.579695+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -10190,19 +10757,38 @@
           {
             "id": "E4",
             "title": "Bewezen schuld opruimen; efficiëntie en onderhoud",
-            "status": "completed",
+            "status": "planned",
             "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
             "taskIds": [
               "E4.1",
               "E4.2",
               "E4.3",
               "E4.4",
-              "E4.5"
+              "E4.5",
+              "E4.6",
+              "E4.7",
+              "E4.8",
+              "E4.9",
+              "E4.10"
             ],
-            "currentGap": "E4.1–E4.5 technisch afgerond binnen vaste scope en expliciete beperkingen. Volgend: één gezamenlijke kandidaat E5.1, daarna F2-gebruik/acceptatie.",
-            "completionEvidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
-            "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
-            "completionKind": "bounded_technical_phase"
+            "currentGap": "Nieuwe eigenaaropdracht E4.6–E4.10: modulegrens voltooien en eenvoudige acties versnellen. Oorspronkelijke E4.1–E4.5-afronding blijft geldig binnen haar scope.",
+            "previousBoundedCompletion": {
+              "id": "E4",
+              "title": "Bewezen schuld opruimen; efficiëntie en onderhoud",
+              "status": "completed",
+              "finish": "Eindige E3-lijst afwerken; vervangen routes verwijderen; echte runtime-efficiëntie meten, module- en updatecontracten vastleggen.",
+              "taskIds": [
+                "E4.1",
+                "E4.2",
+                "E4.3",
+                "E4.4",
+                "E4.5"
+              ],
+              "currentGap": "E4.1–E4.5 technisch afgerond binnen vaste scope en expliciete beperkingen. Volgend: één gezamenlijke kandidaat E5.1, daarna F2-gebruik/acceptatie.",
+              "completionEvidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+              "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
+              "completionKind": "bounded_technical_phase"
+            }
           },
           {
             "id": "E5",
@@ -10210,7 +10796,8 @@
             "status": "in_progress",
             "finish": "Geïnstalleerd geheel, gebundelde onafhankelijke review, bestaande zeven dagen gebruik en Jaaps afzonderlijke acceptatie.",
             "taskIds": [
-              "E5.1"
+              "E5.1",
+              "E5.2"
             ],
             "existingTaskIds": [
               "F2.1",
@@ -10304,6 +10891,22 @@
           "order": "E3.3/E3.4 remain next. E2.7 after source review; E4.5 after E4.4; both before existing E5/F2.",
           "widerSelfMaintenance": "Only widen automatic changes after real evidence in the first class; no unlimited new release gate.",
           "economicValue": "Actual time/cost/help may be assessed during ordinary use; no mandatory revenue or commercial project quota."
+        },
+        "homeModuleLatencyCoverage": {
+          "scopeOrigin": "home-module-latency-20261019",
+          "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+          "newTaskIds": [
+            "E4.6",
+            "E4.7",
+            "E4.8",
+            "E4.9",
+            "E4.10",
+            "E5.2"
+          ],
+          "nextTaskId": "E4.6",
+          "status": "planned",
+          "order": "E4.6 → E4.7 → E4.8 → E4.9; E4.10 independently after existing E4.3; combine in E5.2 before final family acceptance.",
+          "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
       "checkedAt": "2026-10-18T22:08:26.558837+00:00"
@@ -11637,6 +12240,43 @@
           "independentReview": "development/reviews/e51-private-context-search-review-20261019.json"
         }
       }
+    },
+    "homeModuleLatencyTasks20261019": {
+      "status": "tasks_registered",
+      "scopeOrigin": "home-module-latency-20261019",
+      "newTaskIds": [
+        "E4.6",
+        "E4.7",
+        "E4.8",
+        "E4.9",
+        "E4.10",
+        "E5.2"
+      ],
+      "evidence": "development/evidence/product/subscription-voice-20261013/chat-and-voice-latency-20261018.json",
+      "existingProviderAndOfficialMcpReused": true,
+      "runtimeChanged": false,
+      "runtimeModelCalls": 0,
+      "runtimeEffectCalls": 0,
+      "developmentUsage": "not metered separately; credits unknown",
+      "officialSourcesCheckedAt": "2026-10-18T22:37:35.579695+00:00",
+      "officialSources": [
+        {
+          "url": "https://www.home-assistant.io/integrations/mcp_server/",
+          "use": "Official MCP integration, selected API tools and optional context snapshot; local version and configured access still require checking."
+        },
+        {
+          "url": "https://developers.home-assistant.io/docs/core/llm/",
+          "use": "Assist device control and administrative API coverage have different access boundaries."
+        },
+        {
+          "url": "https://developers.home-assistant.io/docs/api/rest/",
+          "use": "Real device control uses service/action calls; updating a state record is not physical device control."
+        },
+        {
+          "url": "https://developers.home-assistant.io/docs/api/websocket/",
+          "use": "Initial state and incremental updates can support module-owned current context; reconnect and supported-version checks remain necessary."
+        }
+      ]
     }
   },
   "updatedAt": "2026-10-18T22:15:00.426680+00:00",
@@ -11674,6 +12314,11 @@
       "id": "continuous-development-20261017",
       "path": "development/design/product/continuous-development-task-scope-20261017.json",
       "sha256": "3be5d61a5ba36003ae09baeb1325bc29d40dfbbb7ac94986cee1c741b8b6edb4"
+    },
+    {
+      "id": "home-module-latency-20261019",
+      "path": "development/design/product/home-module-latency-task-scope-20261019.json",
+      "sha256": "d01d058408df849d60022c07de456af48c8b6c42a6a3ea507004bba7ea2b15a1"
     }
   ],
   "lastUpdatedAt": "2026-10-18T22:15:00.426680+00:00"

@@ -275,6 +275,48 @@ datamigratie; herstelbewijs vraagt geen kunstmatige storing in het gezin. E4.4 b
 het onderhoudscontract, E4.5 bewijst de uitvoering. Bestaande HUE6/L3-acceptaties blijven
 binnen hun oorspronkelijke scope geldig. Beide nieuwe kaarten gaan mee in E5/F2.
 
+### Gerichte eigenaaruitbreiding: snelle bediening en Home Assistant-module
+
+De eigenaar heeft op 19 oktober 2026 taken gevraagd voor de te trage gewone
+lichtopdracht en voor Home Assistant als module buiten Eva's kern. De livevergelijking
+van 18 oktober toont verplichte geheugenwachttijd en meerdere modelrondes rond een
+korte echte schakelcall. Bestaande provider-, API-, Assist-MCP- en eventcode blijft
+de basis. De zes nieuwe kaarten staan uitsluitend op het bestaande werkbord:
+
+| Taak | Concrete uitkomst |
+| --- | --- |
+| E4.6 | HA-specifieke verantwoordelijkheid achter de optionele providergrens; kern en overige modules werken zonder HA. |
+| E4.7 | Eén capabilityprofiel met actuele officiële API/MCP-dekking en bestaande bevoegdheden. |
+| E4.8 | Actuele apparaatcontext hergebruiken, met verversing en correct herstel na onderbreking. |
+| E4.9 | Doelvalidatie, één uitvoering en verse controle samen binnen één moduleactie. |
+| E4.10 | Gedeelde geheugenvoorbereiding versnellen met behoud van relevante context, identiteit en persoonsgrenzen. |
+| E5.2 | De geïnstalleerde combinatie via gewone chat en bestaande spraak live bewijzen. |
+
+De ongeveer één seconde uit de Eva1-gebruikservaring is een ontwikkeldoel, geen
+opnieuw gemeten referentie. Voor bekende ondubbelzinnige chatopdrachten is de nieuwe
+eindgrens mediaan maximaal 1 seconde en p95 maximaal 2 seconden van ontvangst tot
+verse HA-eindbevestiging bij een gereedstaande installatie. Leg steekproef en
+omstandigheden vooraf vast, rapporteer koude context afzonderlijk en verlaag geen
+kwaliteit om de klok te halen. Spraak meet zowel vanaf einde audio als vanaf herkende
+tekst. Een snelle wachtzin telt niet als uitgevoerde actie; een HA-waarneming bewijst
+op zichzelf geen fysieke hoorbaarheid. Niet gehaald blijft open.
+
+De officiële [MCP-documentatie](https://www.home-assistant.io/integrations/mcp_server/)
+en [LLM API](https://developers.home-assistant.io/docs/core/llm/) bepalen welke
+mogelijkheden en toegangsgrenzen de geselecteerde API biedt. De
+[REST API](https://developers.home-assistant.io/docs/api/rest/) en
+[WebSocket API](https://developers.home-assistant.io/docs/api/websocket/) leveren
+aanvullende toestands-, actie- en updatefuncties. De lokale versie en configuratie
+moeten die functies werkelijk ondersteunen; MCP is geen automatische snelheidswinst.
+
+De oorspronkelijke E4.1–E4.5-criteria en hun beperkte afronding blijven behouden.
+Deze nieuwe scope is afzonderlijk bevroren in
+[de taakuitbreiding](../design/product/home-module-latency-task-scope-20261019.json).
+Er komt geen zesde fase. E4.6 is de eerstvolgende taak van deze uitbreiding;
+E4.10 kan onafhankelijk worden voorbereid binnen de bestaande teamomvang.
+Lopende E5.1-opvolging van de andere uitvoerder blijft actief. De gezamenlijke
+eindoplevering omvat ook E5.2; gezinsacceptatie blijft F2.1/F2.2.
+
 ## E5 — Eén gezamenlijke oplevering
 
 1. Stel één kandidaat samen uit de werkelijk actuele bron, dependencies, configuratie,

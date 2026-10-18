@@ -168,6 +168,19 @@ eindfase, geen claim dat elk bestaand manifest deze velden al implementeert.
 Verwijderen/uitzetten stopt nieuwe toelating en maakt lopend werk en behouden
 gegevens zichtbaar; het wist niet stilletjes andermans geheugen of resultaten.
 
+Home Assistant is volgens de eigenaarinstructie van 19 oktober een optionele
+module van Eva. De bestaande provider bezit HA-transport, apparaatcontext,
+doelresolutie, uitvoeringsdetails en actuele resultaatcontrole. De algemene kern
+bezit identiteit, persoonsgebonden geheugen, bedoeling, bevoegdheden en duurzame
+taak-/resultaatbinding. Zij consumeert generieke mogelijkheden en bronbewijzen;
+HA-specifieke instructies of beslisregels horen bij de provider. Afwezigheid of
+uitval van deze module blokkeert de rest van Eva niet. Dit voltooit de bestaande
+providergrens en vereist geen nieuw pluginplatform of afzonderlijke huisagent.
+Officiële MCP-, REST- en WebSocket-verbindingen zijn transportkeuzes binnen dezelfde
+module. Eén samengestelde bediening mag doelvalidatie, uitvoering en verse
+verificatie afhandelen zonder een modelronde per substep. De concrete open scope
+staat in E4.6–E4.10 en E5.2 op het bestaande werkbord.
+
 ## Actieve module- en onderhoudscontracten
 
 Deze tabel concretiseert de bestaande componentcatalogus en bovenstaande eigenaars;
