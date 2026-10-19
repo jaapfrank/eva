@@ -16,12 +16,23 @@
     {
       "agent": "distinctive_eva_review",
       "scope": "Optional development-only acoustic probe",
-      "result": "GO for preparation; explicit bounded arm, private files, passive existing authorized PCM only, original frames/control/error/cancellation retained. Not activated."
+      "result": "GO for the bounded passive observer. It was subsequently activated for one agreed living-room trial, produced no recording because no literal answer began, and was removed after the failed input trial. This review does not establish an input or interruption repair."
     }
   ],
   "limits": [
     "No claim of free speech barge-in while the native echo fence remains active.",
     "No claim of heard audio or physical family acceptance from a simulated wire receipt.",
-    "A provider cadence change does not fix shared core/action latency; E4.10/E5.2 remain separate."
-  ]
+    "A provider cadence change does not fix shared core/action latency; E4.10/E5.2 remain separate.",
+    "Successful controlled input probes do not establish physical microphone quality, room-noise causality or a repaired owner conversation.",
+    "The original targeted code reviews remain valid within their scope; they are not full physical voice acceptance."
+  ],
+  "updatedAt": "2026-10-19T08:45:12.977531+00:00",
+  "followupEvidence": "development/evidence/product/subscription-voice-20261013/voice-acoustic-session-20261019.json",
+  "ownerTrialFollowup": {
+    "decision": "NO_GO_for_claiming_input_failure_or_ordinary_interruption_fixed",
+    "status": "input_diagnosis_owner_input_needed",
+    "failedOwnerTrial": "One user turn started but did not finish; no core answer or acoustic recording. Original speaker image restored.",
+    "controlledInput": "Two separate prerecorded digital-silence probes produced final transcripts 1111/1030 ms after input EOF and reached a local callback 1662/1580 ms after EOF; zero actual core calls or answer output. Earlier missing-file attempt remains a distinct harness failure.",
+    "cause": "Not established by these different input conditions."
+  }
 }

@@ -3288,7 +3288,7 @@
                 "doneWhen": "De bestaande TTS- en speakerroute speelt gewone Nederlandse antwoorden met behoud van alle woorden en natuurlijke zinsrust. Lange onverwachte stiltes zijn met bron-PCM, aanvoertijden en apparaatbevestiging gelokaliseerd en de aangetoonde oorzaak is verholpen. Geen ongefundeerd versnellen of wegknippen van betekenisvolle rust. Gewone, meerzinnige en onderbroken antwoorden zijn via de geïnstalleerde route gecontroleerd; werkelijk horen en technische ontvangst blijven onderscheiden.",
                 "existing": "Korte antwoorden gebruiken één letterlijke HA-TTS-aanvraag; tekst en stop-/afspeelbevestigingen blijven gekoppeld.",
                 "gap": "Eerdere ontvangst bevatte pauzes van 0,90–1,17 seconde; bronstilte en aanvoergaten zijn nog niet onderscheiden.",
-                "nextAction": "Bronstiltes begrensd en antwoord als één native afspeelbeurt geïnstalleerd. Controleer de hoorbare natuurlijke zinsrust op beide speakers.",
+                "nextAction": "Hoorbare zinsrust beoordelen in één woonkamerproef nadat de vastlopende invoer is gelokaliseerd. Tweede speaker alleen bij een concrete afwijking.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
@@ -3310,7 +3310,7 @@
                 "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
                 "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
                 "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-                "nextAction": "Zachte vervolgen binnen hetzelfde antwoord blijven behouden. Bestaande invoerbundeling van 550 ms behouden; controleer natuurlijke beurten op beide speakers.",
+                "nextAction": "Mislukte eigenaarinvoer onderzoeken: provider gaf turn.created zonder turn.done. Dezelfde telzin werkt met synthetische invoer en digitale stilte; werkelijke woonkamer-PCM ontbreekt nog.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
@@ -3323,7 +3323,8 @@
                   "updatedAt": "2026-10-19T07:20:01.969123+00:00",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
                   "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-                  "ownerAcceptance": false
+                  "ownerAcceptance": false,
+                  "inputDiagnosisEvidence": "development/evidence/product/subscription-voice-20261013/voice-acoustic-session-20261019.json"
                 }
               },
               {
@@ -3378,7 +3379,7 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Eén gerichte woonkamerproef uitvoeren en de begrensde akoestische opname analyseren. Tweede speaker alleen gericht onderzoeken bij een concrete afwijking; geen dubbele volledige eigenaartest.",
+                "nextAction": "Eén korte woonkamerherhaling meten vanaf de gesproken invoer, inclusief privéprovider-events. Eerst de ontbrekende afgeronde gebruikersbeurt oplossen; onderbreken is in de mislukte proef niet bereikt.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": false,
@@ -3632,10 +3633,13 @@
                   "ownerAcceptance": false,
                   "runtimeChanged": false,
                   "acousticProbe": {
-                    "status": "armed_awaiting_owner_test",
-                    "scope": "living_room_only",
+                    "status": "input_probe_armed_after_failed_owner_test",
                     "evidence": "development/evidence/product/subscription-voice-20261013/voice-acoustic-session-20261019.json",
-                    "startedAt": "2026-10-19T08:26:38.732254426Z"
+                    "scope": "living_room_only",
+                    "ownerAcceptance": false,
+                    "failure": "user turn.created without turn.done; no core admission or answer",
+                    "controlledProbe": "same counting request finalized after 1030 ms of digital silence; core stub only",
+                    "next": "Capture the actual short room input and provider progress; no acoustic cause or production fix claimed."
                   }
                 }
               },
@@ -7680,7 +7684,7 @@
               "doneWhen": "De bestaande TTS- en speakerroute speelt gewone Nederlandse antwoorden met behoud van alle woorden en natuurlijke zinsrust. Lange onverwachte stiltes zijn met bron-PCM, aanvoertijden en apparaatbevestiging gelokaliseerd en de aangetoonde oorzaak is verholpen. Geen ongefundeerd versnellen of wegknippen van betekenisvolle rust. Gewone, meerzinnige en onderbroken antwoorden zijn via de geïnstalleerde route gecontroleerd; werkelijk horen en technische ontvangst blijven onderscheiden.",
               "existing": "Korte antwoorden gebruiken één letterlijke HA-TTS-aanvraag; tekst en stop-/afspeelbevestigingen blijven gekoppeld.",
               "gap": "Eerdere ontvangst bevatte pauzes van 0,90–1,17 seconde; bronstilte en aanvoergaten zijn nog niet onderscheiden.",
-              "nextAction": "Bronstiltes begrensd en antwoord als één native afspeelbeurt geïnstalleerd. Controleer de hoorbare natuurlijke zinsrust op beide speakers.",
+              "nextAction": "Hoorbare zinsrust beoordelen in één woonkamerproef nadat de vastlopende invoer is gelokaliseerd. Tweede speaker alleen bij een concrete afwijking.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
@@ -7702,7 +7706,7 @@
               "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
               "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
               "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-              "nextAction": "Zachte vervolgen binnen hetzelfde antwoord blijven behouden. Bestaande invoerbundeling van 550 ms behouden; controleer natuurlijke beurten op beide speakers.",
+              "nextAction": "Mislukte eigenaarinvoer onderzoeken: provider gaf turn.created zonder turn.done. Dezelfde telzin werkt met synthetische invoer en digitale stilte; werkelijke woonkamer-PCM ontbreekt nog.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
@@ -7715,7 +7719,8 @@
                 "updatedAt": "2026-10-19T07:20:01.969123+00:00",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
                 "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-                "ownerAcceptance": false
+                "ownerAcceptance": false,
+                "inputDiagnosisEvidence": "development/evidence/product/subscription-voice-20261013/voice-acoustic-session-20261019.json"
               }
             },
             {
@@ -7770,7 +7775,7 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Eén gerichte woonkamerproef uitvoeren en de begrensde akoestische opname analyseren. Tweede speaker alleen gericht onderzoeken bij een concrete afwijking; geen dubbele volledige eigenaartest.",
+              "nextAction": "Eén korte woonkamerherhaling meten vanaf de gesproken invoer, inclusief privéprovider-events. Eerst de ontbrekende afgeronde gebruikersbeurt oplossen; onderbreken is in de mislukte proef niet bereikt.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": false,
@@ -8024,10 +8029,13 @@
                 "ownerAcceptance": false,
                 "runtimeChanged": false,
                 "acousticProbe": {
-                  "status": "armed_awaiting_owner_test",
-                  "scope": "living_room_only",
+                  "status": "input_probe_armed_after_failed_owner_test",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-acoustic-session-20261019.json",
-                  "startedAt": "2026-10-19T08:26:38.732254426Z"
+                  "scope": "living_room_only",
+                  "ownerAcceptance": false,
+                  "failure": "user turn.created without turn.done; no core admission or answer",
+                  "controlledProbe": "same counting request finalized after 1030 ms of digital silence; core stub only",
+                  "next": "Capture the actual short room input and provider progress; no acoustic cause or production fix claimed."
                 }
               }
             },

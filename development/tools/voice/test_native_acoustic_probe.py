@@ -9,6 +9,13 @@ from native_acoustic_probe import Probe, install
 class Source:
     _input_fences={1}
     _utterance=object()
+    input_suppressed=True
+
+
+@pytest.fixture(autouse=True)
+def restore_input_observer(monkeypatch):
+    from eva.voice_service.codex_media import CodexMediaSession
+    monkeypatch.setattr(CodexMediaSession,'input_event',CodexMediaSession.input_event)
 
 
 def frame():
@@ -137,3 +144,78 @@ async def test_other_or_missing_household_binding_is_never_recorded(tmp_path,mon
     await CodexMediaSession.capture_native(session,frames())
     assert received==[f] and received[0] is f
     assert probe.count==0 and not list(probe.root.iterdir())
+
+
+def test_input_trigger_waits_for_unsuppressed_audio_without_answer(tmp_path):
+    now=[0];probe=Probe(tmp_path/'input',trigger='input',clock=lambda:now[0])
+    source=Source();source._utterance=None
+    probe.microphone(source,frame())
+    assert probe.count==0
+    now[0]=8;source.input_suppressed=False
+    probe.microphone(source,frame())
+    recording=probe.recordings[source]
+    assert recording.deadline==38
+    source.input_suppressed=True
+    probe.microphone(source,frame())
+    probe.finish(source)
+    import json
+    events=[json.loads(line) for line in (recording.root/'timing.private.jsonl').read_text().splitlines()]
+    assert [e['echo_gate'] for e in events]==[False,True]
+    with wave.open(str(recording.root/'microphone.private.wav'),'rb') as w:
+        assert w.getnframes()==640
+
+
+def test_provider_observation_whitelist_bound_and_cleanup(tmp_path):
+    import json
+    now=[0];probe=Probe(tmp_path/'events',trigger='input',clock=lambda:now[0])
+    source=Source();source.input_suppressed=False
+    probe.provider(source,{'type':'turn.done'})
+    assert probe.count==0
+    probe.microphone(source,frame())
+    event={'type':'turn.done','turn':{'role':'user','transcript':'a'*5000,
+           'id':'secret'},'sdp':'secret','token':'secret'}
+    for _ in range(520):probe.provider(source,event)
+    probe.provider(source,{'type':'unknown','transcript':'secret'})
+    probe.finish(source)
+    probe.provider(source,event)
+    rows=[json.loads(line) for line in (probe.recordings[source].root/'timing.private.jsonl').read_text().splitlines()]
+    provider=[row for row in rows if row['kind']=='provider']
+    assert len(provider)==512
+    assert set(provider[0])=={'kind','monotonic','type','role','text'}
+    assert len(provider[0]['text'])==4096
+    assert 'secret' not in json.dumps(rows)
+
+
+def test_input_provider_observer_preserves_binding_and_original_result(tmp_path,monkeypatch):
+    import json
+    from eva.voice_service.codex_media import CodexMediaSession
+    from eva.voice_service.codex_speaker_audio import SpeakerSource
+    seen=[]
+    def original(session,event):seen.append(event);return 'unchanged'
+    async def capture(session,frames):pass
+    monkeypatch.setattr(CodexMediaSession,'input_event',original)
+    monkeypatch.setattr(CodexMediaSession,'capture_native',capture)
+    monkeypatch.setattr(SpeakerSource,'capture_frame',lambda *args:None)
+    probe=install(tmp_path/'bound-events','chosen',trigger='input')
+    source=Source();source.input_suppressed=False
+    probe.microphone(source,frame())
+    session=SimpleNamespace(source=source,state=SimpleNamespace(backend=SimpleNamespace(_device={'device_id':'other'})))
+    event={'type':'input_transcript.added','start_ms':0,'end_ms':50,
+           'item':{'id':'private-item-id','type':'input_transcript','text':'neutral test'}}
+    assert CodexMediaSession.input_event(session,event)=='unchanged'
+    session.state.backend._device['device_id']='chosen'
+    assert CodexMediaSession.input_event(session,event)=='unchanged'
+    probe.finish(source)
+    rows=[json.loads(line) for line in (probe.recordings[source].root/'timing.private.jsonl').read_text().splitlines()]
+    provider=[row for row in rows if row['kind']=='provider']
+    assert len(provider)==1
+    assert provider[0]['text']=='neutral test'
+    assert set(provider[0])=={'kind','monotonic','type','text'}
+    assert 'private-item-id' not in json.dumps(rows)
+    assert seen==[event,event]
+
+
+@pytest.mark.parametrize('trigger',['',None,'other'])
+def test_invalid_trigger_does_not_create_directory(tmp_path,trigger):
+    with pytest.raises(ValueError):Probe(tmp_path/'invalid',trigger=trigger)
+    assert not (tmp_path/'invalid').exists()

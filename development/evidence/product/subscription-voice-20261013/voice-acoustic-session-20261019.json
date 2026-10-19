@@ -1,10 +1,10 @@
 {
-  "status": "armed_awaiting_owner_test",
+  "status": "input_diagnosis_owner_input_needed",
   "taskId": "C4.1",
   "scope": "living_room_only",
   "ownerRequest": "What and how should I test? Full repeated test on the second identical device is not requested.",
   "installation": {
-    "status": "armed_living_room_only",
+    "status": "diagnostic_overlay_removed_base_restored",
     "startedAt": "2026-10-19T08:26:38.732254426Z",
     "armSeconds": 600,
     "maxRecordingSeconds": 30,
@@ -12,6 +12,15 @@
     "image": "sha256:d9f329a767ad06bb7dbe671e4fde1ad5a641b29ca92d811746ca8f0a48caf8b3",
     "base": "sha256:c2df976695f6691096806359e93259cb3f92f25d73e2dd9ba40ba945334588c5",
     "preInstallGuard": {
+      "active_voice_leases": 0,
+      "active_delegated_work": 0,
+      "active_memory_outbox": 0,
+      "active_model_requests": 0,
+      "active_decision_claims": 0,
+      "active_conversation_claims": 0
+    },
+    "restoredImage": "sha256:c2df976695f6691096806359e93259cb3f92f25d73e2dd9ba40ba945334588c5",
+    "restoreGuard": {
       "active_voice_leases": 0,
       "active_delegated_work": 0,
       "active_memory_outbox": 0,
@@ -27,7 +36,7 @@
   "helperSha256": "9d57f7b296840e7bc3ed4ddf66e042d78973ad7da098c2295c2db01f28bd0986",
   "review": {
     "agent": "distinctive_eva_review",
-    "result": "GO: existing binding checked; ordinary audio/control preserved; observer bounds and input checks retained."
+    "result": "GO for bounded passive observation only. The real owner trial failed before a final input transcript; no claim that ordinary interruption or the failed input path is repaired."
   },
   "verification": {
     "testsPassed": 7,
@@ -36,11 +45,164 @@
   },
   "runtimeUsage": {
     "coreModelCallsByDeveloper": 0,
-    "ttsRequestsByDeveloper": 0,
-    "credits": null
+    "ttsRequestsByDeveloper": 1,
+    "credits": null,
+    "developerInputProviderSessionsStarted": 3,
+    "developerInputAudioSubmissions": 2,
+    "ownerInputProviderSessionsObserved": 1,
+    "providerTokens": null,
+    "scope": "Development probes are separate from the real owner session. No actual core model call or answer TTS was made by these input probes; one HA TTS request prepared the counting input fixture."
   },
   "ordinaryEchoFencePreserved": true,
-  "physicalResult": "awaiting_user_utterance",
+  "physicalResult": "failed_before_final_input_transcript_no_answer_or_acoustic_recording",
   "privateState": "/var/lib/eva2/voice-session/fluency-20261019/acoustic-probe/watch-status.json",
-  "automaticCleanup": "A bounded observer watch saves the recording and restores the original speaker image after verifying idle claims; it never interrupts active voice/work. Recording expires regardless."
+  "automaticCleanup": "The coordinator stopped the diagnostic watcher and restored the original speaker image after idle checks. No acoustic recording had been created; passive-recording bounds remained enforced.",
+  "updatedAt": "2026-10-19T08:45:12.977531+00:00",
+  "ownerTrial": {
+    "status": "failed_before_core_dispatch",
+    "relativeToNativeMediaStartMs": {
+      "wakeGreetingFinished": 1330,
+      "echoGateOpened": 1636,
+      "mediaReady": 5492,
+      "inputTurnCreated": 8307,
+      "singleMicrophoneOverrun": 56911,
+      "closeStarted": 72087
+    },
+    "inputTurnCreatedCount": 1,
+    "inputTurnDoneCount": 0,
+    "literalAnswerRequests": 0,
+    "acousticRecordingsCreated": 0,
+    "coreDispatchObserved": false,
+    "noCoreDispatchBasis": "This input route starts core work only after a final transcript. No final transcript occurred; the saved core log is empty. This is not an independent database census.",
+    "taskFailureEventsDuringActiveSession": 0,
+    "providerTerminalEvents": 0,
+    "lifetimeExpiryEvents": 0,
+    "microphoneDroppedFramesLogged": 1,
+    "closeCause": "Unresolved: existing logs do not distinguish native STOP/mute from device socket disconnection. The 120-second idle and 1800-second absolute limits do not explain closure at 72.087 seconds.",
+    "precedingStandbyFailure": {
+      "deviceErrorPacket": true,
+      "classification": "speaker_reported_output_failure",
+      "freshSessionSubsequentlyStarted": true,
+      "relationToStalledInput": "not_proven"
+    },
+    "rawSpeakerLogSha256": "811bda778a88328869c14a102cbb69589d4c644b38be5751b74d0808c351d281"
+  },
+  "isolatedInstalledSourceCheck": {
+    "image": "sha256:c2df976695f6691096806359e93259cb3f92f25d73e2dd9ba40ba945334588c5",
+    "mediaSha256": "9bdac95ada74134b119cad18dd2859a48fe7579dffac4914b044d3a010c350b0",
+    "input": "session.started followed by one user turn.created without turn.done",
+    "coreCalls": 0,
+    "coreActive": 0,
+    "coreResults": 0,
+    "recentTranscripts": 0,
+    "openInputTurns": 1,
+    "inputFragments": 0,
+    "corePending": 0,
+    "inputFlushScheduled": false,
+    "explicitCloseCompleted": true,
+    "providerCalls": 0,
+    "network": "none"
+  },
+  "controlledProviderProbes": {
+    "route": "Existing input-only realtime transport, prerecorded synthetic PCM followed by digital silence, core replaced by a local callback.",
+    "attempts": [
+      {
+        "attempt": 1,
+        "status": "harness_failure_before_audio_input",
+        "errorType": "FileNotFoundError",
+        "elapsedMs": 9468,
+        "inputSubmitted": false,
+        "actualCoreCalls": 0,
+        "physicalAudio": false,
+        "actualAnswerOutput": false,
+        "rawLogSha256": "fcc99a0d7f14e843efba25f002c84286bfe1cf7d4df53620f6fb103fcb1980bb"
+      },
+      {
+        "attempt": 2,
+        "status": "final_transcript_and_local_callback_completed",
+        "errorType": null,
+        "elapsedMs": 14595,
+        "inputSubmitted": true,
+        "actualCoreCalls": 0,
+        "physicalAudio": false,
+        "actualAnswerOutput": false,
+        "rawLogSha256": "9bed629ed44f9860f58fd4b012058f8a99191e1379d9e8d9fa5227e9d2d39a30",
+        "inputEofMs": 12916,
+        "finalTranscriptMs": 14027,
+        "finalAfterInputEofMs": 1111,
+        "localCallbackMs": 14578,
+        "callbackAfterInputEofMs": 1662,
+        "finalTranscripts": 1,
+        "localCallbacks": 1,
+        "finalTranscriptEqualsCallbackText": true,
+        "transcriptMatchesExpectedInput": "reported_exact_by_coordinator"
+      },
+      {
+        "attempt": 3,
+        "status": "final_transcript_and_local_callback_completed",
+        "errorType": null,
+        "elapsedMs": 15820,
+        "inputSubmitted": true,
+        "actualCoreCalls": 0,
+        "physicalAudio": false,
+        "actualAnswerOutput": false,
+        "rawLogSha256": "87ba5fe9913ee58fb15b35deb21068e7b8e82a9a82793e0e4b9b8ec80add209c",
+        "inputEofMs": 14223,
+        "finalTranscriptMs": 15253,
+        "finalAfterInputEofMs": 1030,
+        "localCallbackMs": 15803,
+        "callbackAfterInputEofMs": 1580,
+        "finalTranscripts": 1,
+        "localCallbacks": 1,
+        "finalTranscriptEqualsCallbackText": true,
+        "transcriptMatchesExpectedInput": "reported_exact_by_coordinator",
+        "fixture": "Synthetic rendition of the same counting request from the owner trial; existing HA TTS used once."
+      }
+    ],
+    "interpretation": "The existing provider finalized both controlled inputs with digital silence. This neither reproduces the room microphone path nor proves why the owner trial had no final transcript."
+  },
+  "remainingEvidence": [
+    "One explicitly agreed, bounded living-room input observation is needed to measure the actual microphone signal before a final transcript; the former answer-triggered observer cannot capture this failure.",
+    "The optional input-triggered diagnostic helper is separate preparation, not an installed input-route change.",
+    "Do not attribute the failure to room noise, DSP/AEC, provider endpointing or the observer without corresponding evidence.",
+    "No HA input-route switch or removal of the echo fence has been installed as a result of this trial."
+  ],
+  "acceptance": {
+    "ordinarySpeechInterruption": false,
+    "ownerInputFailureResolved": false,
+    "familyAcceptance": false,
+    "nextStatus": "owner_input_needed_for_bounded_input_diagnosis"
+  },
+  "inputObserver": {
+    "status": "armed_awaiting_single_living_room_repeat",
+    "installation": {
+      "status": "armed_living_room_only",
+      "startedAt": "2026-10-19T08:46:42.083831676Z",
+      "armSeconds": 600,
+      "maxRecordingSeconds": 30,
+      "starts": "first non-suppressed authorized microphone frame",
+      "image": "sha256:83a991b29b611de3198602101092dc62ccdc557f937270b76a5386666cff8263",
+      "base": "sha256:c2df976695f6691096806359e93259cb3f92f25d73e2dd9ba40ba945334588c5",
+      "preInstallGuard": {
+        "active_voice_leases": 0,
+        "active_delegated_work": 0,
+        "active_memory_outbox": 0,
+        "active_model_requests": 0,
+        "active_decision_claims": 0,
+        "active_conversation_claims": 0
+      }
+    },
+    "helperSha256": "bb9a04cb2506f841de6e5e9b6cf14b436e01eec0f393f8e7e8204401d52dc699",
+    "trigger": "first unsuppressed authorized input frame",
+    "providerEvents": "Whitelisted input progress and transcript text, private only; max512 events x4096 chars within same30s",
+    "verification": {
+      "testsPassed": 13,
+      "seconds": 3.88,
+      "network": "none",
+      "actualV3ItemTextSchemaCovered": true
+    },
+    "independentReview": "GO by distinctive_eva_review; no production input/gate/authority behavior changed",
+    "physicalResult": "pending",
+    "privateState": "/var/lib/eva2/voice-session/fluency-20261019/input-probe/watch-status.json"
+  }
 }
