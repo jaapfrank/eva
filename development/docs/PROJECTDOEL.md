@@ -37,11 +37,24 @@ Modelafweging bepaalt inhoudelijke relevantie; infrastructuur verzorgt betrouwba
 bronnen, taakstatus, deduplicatie, persoonsgrenzen, stoppen en gebruiksregistratie.
 Een bewering, gedachte of opgeslagen reflectie is geen uitgevoerde actie.
 
-Niet iedere gesprekszin wordt langetermijnkennis. De bestaande geheugenroute selecteert
-alleen later bruikbare persoonlijke informatie, afspraken en voortgang, voegt herhaling
-samen en bewaart bron, tijd en onzekerheid. Tijdelijke gesprekscontext en het
-gespreksarchief staan los van het actieve zoekgeheugen; onbelangrijke uitwisselingen
-blijven daarin niet onbeperkt meegroeien. De bediening laat die verschillen zien.
+Gesprekken van de lopende dag blijven eerst kortetermijncontext in de bestaande
+bron-/gespreksregistratie. Ze worden niet automatisch ieder afzonderlijk blijvende
+kennis. In de bestaande droomfase beoordeelt Eva de gebundelde nieuwe informatie
+op later nut en vergelijkt die met haar bestaande langetermijnkennis. Wat al klopt
+wordt niet opnieuw als hetzelfde inzicht toegevoegd; nieuwe relevante kennis wordt
+toegevoegd en correcties of veranderingen werken het bestaande inzicht bij, met
+herkomst, tijd en onzekerheid. Langetermijnkennis is compact, geen groeiende stapel
+gespreksfragmenten.
+
+Afspraken, expliciete correcties en lopende opdrachten blijven overdag direct bruikbaar
+via de bestaande tijdelijke context en operationele registraties; wachten op dromen
+mag geen afspraak of actuele correctie negeren. Tijdelijke broninhoud kan pas vervallen
+nadat de verwerking aantoonbaar is afgehandeld en noodzakelijke herkomst voor behouden
+kennis vastligt. Bij onderbreking of mislukking blijft het onafgehandelde materiaal
+bewaard. De bediening onderscheidt kortetermijncontext, wat tijdens dromen is verwerkt
+en de actuele blijvende kennis. Dit gebruikt één geheugenketen, geen tweede geheugen,
+extra permanent proces of classificatiemodel per bericht. De geïnstalleerde selectie
+van 19 oktober bewijst de volledige dag-/droomovergang nog niet; E4.11 blijft daarvoor open.
 
 ## Dagelijks meedenken
 

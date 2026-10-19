@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Alleen belangrijke kennis als blijvend geheugen bewaren
 
-Selectie geïnstalleerd; historische opschoning loopt
+Dagcontext tijdelijk; droomverwerking naar blijvende kennis afmaken
 
 Klaar wanneer: Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.
 
@@ -122,7 +122,7 @@ E5.1 blijft open: de echte nieuwe gewone afweging koos stilte. De geïnstalleerd
 
 ## Van jou
 
-De nieuwe selectie staat aan. Codex werkt historische opschoning af; spraak blijft bij de andere uitvoerder.
+De dagscheiding is vastgelegd binnen E4.11. De eerder geïnstalleerde selectie blijft werken; de volledige droomoverdracht is nog open.
 
 ## Historie
 

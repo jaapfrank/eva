@@ -33,6 +33,19 @@ agent per kanaal of vooraf gecodeerde regel per gezinsvoorbeeld. Geplande aandac
 is een algemene aanleiding om opnieuw te kijken; het model bepaalt inhoudelijke
 relevantie met de toegelaten bronnen. Technologie verzorgt betrouwbaarheid en grenzen.
 
+Het geheugen heeft één overdracht met twee tijdschalen. De bestaande PostgreSQL-
+gespreksregistratie en duurzame outbox houden de actuele dagcontext beschikbaar.
+De bestaande koude droom-/reflectieroute bundelt die informatie en gebruikt Hindsight
+voor selectie, vergelijking met bestaande kennis, bijwerken en consolidatie. Herhaling
+zonder nieuwe betekenis levert geen nieuwe actuele herinnering op. Nieuwe informatie,
+een veranderde voorkeur en een correctie blijven van elkaar te onderscheiden.
+Gesprek en taakuitvoering blijven beschikbaar tijdens de droomverwerking. Bevestigde
+overname en noodzakelijke bronbinding gaan vooraf aan het laten vervallen van tijdelijke
+inhoud; een fout of herstart mag geen informatie laten verdwijnen. Bestaande privacy-,
+correctie- en wisregels blijven per persoon/audience gelden. Dit is de gewenste
+overdracht binnen E4.11; de huidige per-berichtextractie en bestaande importbatch zijn
+nog geen bewezen dagelijkse droomconsolidatie.
+
 ## Moduleverantwoordelijkheden
 
 | Bestaande module / bron | Eigen verantwoordelijkheid | Interface en grens |

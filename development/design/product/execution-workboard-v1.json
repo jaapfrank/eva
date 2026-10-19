@@ -847,8 +847,8 @@
     "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
     "status": "in_progress",
     "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-    "nextAction": "Gebruik bestaande bron- en extractiebewijzen om oudere overbodige inhoud gericht te herclassificeren/op te schonen, met bronbehoud en echte opslagmeting. Geen volledige herextractie van alle gesprekken en geen nieuw geheugen.",
-    "checkedAt": "2026-10-19T09:10:02.476266+00:00",
+    "nextAction": "Maak de overdracht kortetermijn-dagcontext → bestaande droomfase → compacte bijgewerkte langetermijnkennis af, met per-bronresultaat en veilige verwerking/herstel. Behoud direct bruikbare afspraken/correcties en persoonsgrenzen; geen losse tweede geheugenroute.",
+    "checkedAt": "2026-10-19T09:19:58.337471+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2616,15 +2616,15 @@
           "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
           "status": "in_progress",
           "state": "in_progress",
-          "summary": "Selectie geïnstalleerd; historische opschoning loopt",
-          "detail": "Historische inhoud nog niet opgeschoond:387bronnen/416native documenten en445.987brontekstbytes blijven behouden onder bestaande365dagen/2000documenten/20MiB per persoon. Geen gemeten fysieke opslag- of antwoordversnellingswinst. Interne modelpogingen/kosten blijven onbekend.",
+          "summary": "Dagcontext tijdelijk; droomverwerking naar blijvende kennis afmaken",
+          "detail": "De dag-/droomovergang is nog niet geïmplementeerd. Gewone berichten gaan nu direct naar native extractie. Dagcontext moet eerst tijdelijk bruikbaar blijven; dromen moet gebundeld selecteren, vergelijken, bijwerken en herhaling overslaan. Ook historische opschoning en werkelijke opslag-/verbruiksmeting blijven open.",
           "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-          "checkedAt": "2026-10-19T09:10:02.476266+00:00"
+          "checkedAt": "2026-10-19T09:19:58.337471+00:00"
         },
         "next": {
           "taskId": "E4.11",
-          "title": "Oud geheugen gericht opschonen",
-          "detail": "Gebruik bestaande bron- en extractiebewijzen om oudere overbodige inhoud gericht te herclassificeren/op te schonen, met bronbehoud en echte opslagmeting. Geen volledige herextractie van alle gesprekken en geen nieuw geheugen.",
+          "title": "Dag-/droomoverdracht in hetzelfde geheugen",
+          "detail": "Maak de overdracht kortetermijn-dagcontext → bestaande droomfase → compacte bijgewerkte langetermijnkennis af, met per-bronresultaat en veilige verwerking/herstel. Behoud direct bruikbare afspraken/correcties en persoonsgrenzen; geen losse tweede geheugenroute.",
           "followingAcceptance": {
             "taskId": "F2.1",
             "title": "Zeven dagen gezinsgebruik",
@@ -2633,11 +2633,11 @@
         },
         "ownerAction": {
           "title": "Geen handeling van jou nodig",
-          "detail": "De nieuwe selectie staat aan. Codex werkt historische opschoning af; spraak blijft bij de andere uitvoerder.",
+          "detail": "De dagscheiding is vastgelegd binnen E4.11. De eerder geïnstalleerde selectie blijft werken; de volledige droomoverdracht is nog open.",
           "required": false
         },
-        "checkedAt": "2026-10-19T09:10:02.476266+00:00",
-        "reviewedAt": "2026-10-19T09:10:02.476266+00:00",
+        "checkedAt": "2026-10-19T09:19:58.337471+00:00",
+        "reviewedAt": "2026-10-19T09:19:58.337471+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-18T22:02:07.083142+00:00",
@@ -6549,8 +6549,8 @@
                 "scopeOrigin": "selective-memory-20261019",
                 "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
                 "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden.",
-                "gap": "Historische inhoud nog niet opgeschoond:387bronnen/416native documenten en445.987brontekstbytes blijven behouden onder bestaande365dagen/2000documenten/20MiB per persoon. Geen gemeten fysieke opslag- of antwoordversnellingswinst. Interne modelpogingen/kosten blijven onbekend.",
-                "nextAction": "Gebruik bestaande bron- en extractiebewijzen om oudere overbodige inhoud gericht te herclassificeren/op te schonen, met bronbehoud en echte opslagmeting. Geen volledige herextractie van alle gesprekken en geen nieuw geheugen.",
+                "gap": "De dag-/droomovergang is nog niet geïmplementeerd. Gewone berichten gaan nu direct naar native extractie. Dagcontext moet eerst tijdelijk bruikbaar blijven; dromen moet gebundeld selecteren, vergelijken, bijwerken en herhaling overslaan. Ook historische opschoning en werkelijke opslag-/verbruiksmeting blijven open.",
+                "nextAction": "Maak de overdracht kortetermijn-dagcontext → bestaande droomfase → compacte bijgewerkte langetermijnkennis af, met per-bronresultaat en veilige verwerking/herstel. Behoud direct bruikbare afspraken/correcties en persoonsgrenzen; geen losse tweede geheugenroute.",
                 "files": [
                   "src/eva/application/memory.py",
                   "src/eva/application/memory_background.py",
@@ -6562,7 +6562,7 @@
                 "dependsOn": [
                   "E2.2"
                 ],
-                "checkedAt": "2026-10-19T09:10:02.476266+00:00",
+                "checkedAt": "2026-10-19T09:19:58.337471+00:00",
                 "assignment": {
                   "coordinator": "Codex",
                   "activeWorkers": [],
@@ -6578,7 +6578,18 @@
                 "latestEvidence": "development/evidence/reassessment/selective-memory-installed-20261019.json",
                 "independentReview": "development/reviews/selective-memory-installed-review-20261019.json",
                 "installed": true,
-                "technicalCompletion": false
+                "technicalCompletion": false,
+                "ownerClarification": {
+                  "recordedAt": "2026-10-19T09:19:58.337471+00:00",
+                  "source": "Directe eigenaarinstructie: gesprekken van die dag kort geheugen, in droomfase wat relevant en nieuw/veranderd is naar lang geheugen.",
+                  "shortTerm": "Bestaande journal/outbox; actuele dagcontext blijft direct bruikbaar, ook via een andere toegelaten ingang.",
+                  "dreamConsolidation": "Nieuwe daginformatie bundelen, relevantie afwegen en vergelijken met bestaande kennis; nieuwe kennis toevoegen, gewijzigde kennis bijwerken, herhaling zonder nieuwe betekenis niet opnieuw toevoegen.",
+                  "preserve": "Afspraak/correctie/lopende taak direct bruikbaar; persoonsgrenzen, bron/datum, stoppen, herstel en vergeten blijven werken. Tijdelijke bronnen pas laten vervallen na bewezen verwerking en noodzakelijke herkomstbinding.",
+                  "reuse": "Bestaande coldworker/droomroute en Hindsight; geen tweede geheugen, planner, daemon of classificatiemodel per bericht.",
+                  "actualGap": "De geïnstalleerde coldworker verwerkt retain nu onmiddellijk per bericht; alleen onderhoud/reflectie wacht op rust. Bestaande native importbatch mist per-bronselectie/0/errorhandoff en is geen drop-in dagverwerking.",
+                  "fullDreamHandoffImplemented": false,
+                  "newTaskAdded": false
+                }
               }
             ],
             "previousBoundedCompletion": {
@@ -7048,7 +7059,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Gebruik bestaande bron- en extractiebewijzen om oudere overbodige inhoud gericht te herclassificeren/op te schonen, met bronbehoud en echte opslagmeting. Geen volledige herextractie van alle gesprekken en geen nieuw geheugen.",
+        "nextAction": "Maak de overdracht kortetermijn-dagcontext → bestaande droomfase → compacte bijgewerkte langetermijnkennis af, met per-bronresultaat en veilige verwerking/herstel. Behoud direct bruikbare afspraken/correcties en persoonsgrenzen; geen losse tweede geheugenroute.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7057,7 +7068,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-19T09:10:02.476266+00:00",
+        "updatedAt": "2026-10-19T09:19:58.337471+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -11033,8 +11044,8 @@
               "scopeOrigin": "selective-memory-20261019",
               "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
               "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden.",
-              "gap": "Historische inhoud nog niet opgeschoond:387bronnen/416native documenten en445.987brontekstbytes blijven behouden onder bestaande365dagen/2000documenten/20MiB per persoon. Geen gemeten fysieke opslag- of antwoordversnellingswinst. Interne modelpogingen/kosten blijven onbekend.",
-              "nextAction": "Gebruik bestaande bron- en extractiebewijzen om oudere overbodige inhoud gericht te herclassificeren/op te schonen, met bronbehoud en echte opslagmeting. Geen volledige herextractie van alle gesprekken en geen nieuw geheugen.",
+              "gap": "De dag-/droomovergang is nog niet geïmplementeerd. Gewone berichten gaan nu direct naar native extractie. Dagcontext moet eerst tijdelijk bruikbaar blijven; dromen moet gebundeld selecteren, vergelijken, bijwerken en herhaling overslaan. Ook historische opschoning en werkelijke opslag-/verbruiksmeting blijven open.",
+              "nextAction": "Maak de overdracht kortetermijn-dagcontext → bestaande droomfase → compacte bijgewerkte langetermijnkennis af, met per-bronresultaat en veilige verwerking/herstel. Behoud direct bruikbare afspraken/correcties en persoonsgrenzen; geen losse tweede geheugenroute.",
               "files": [
                 "src/eva/application/memory.py",
                 "src/eva/application/memory_background.py",
@@ -11046,7 +11057,7 @@
               "dependsOn": [
                 "E2.2"
               ],
-              "checkedAt": "2026-10-19T09:10:02.476266+00:00",
+              "checkedAt": "2026-10-19T09:19:58.337471+00:00",
               "assignment": {
                 "coordinator": "Codex",
                 "activeWorkers": [],
@@ -11062,7 +11073,18 @@
               "latestEvidence": "development/evidence/reassessment/selective-memory-installed-20261019.json",
               "independentReview": "development/reviews/selective-memory-installed-review-20261019.json",
               "installed": true,
-              "technicalCompletion": false
+              "technicalCompletion": false,
+              "ownerClarification": {
+                "recordedAt": "2026-10-19T09:19:58.337471+00:00",
+                "source": "Directe eigenaarinstructie: gesprekken van die dag kort geheugen, in droomfase wat relevant en nieuw/veranderd is naar lang geheugen.",
+                "shortTerm": "Bestaande journal/outbox; actuele dagcontext blijft direct bruikbaar, ook via een andere toegelaten ingang.",
+                "dreamConsolidation": "Nieuwe daginformatie bundelen, relevantie afwegen en vergelijken met bestaande kennis; nieuwe kennis toevoegen, gewijzigde kennis bijwerken, herhaling zonder nieuwe betekenis niet opnieuw toevoegen.",
+                "preserve": "Afspraak/correctie/lopende taak direct bruikbaar; persoonsgrenzen, bron/datum, stoppen, herstel en vergeten blijven werken. Tijdelijke bronnen pas laten vervallen na bewezen verwerking en noodzakelijke herkomstbinding.",
+                "reuse": "Bestaande coldworker/droomroute en Hindsight; geen tweede geheugen, planner, daemon of classificatiemodel per bericht.",
+                "actualGap": "De geïnstalleerde coldworker verwerkt retain nu onmiddellijk per bericht; alleen onderhoud/reflectie wacht op rust. Bestaande native importbatch mist per-bronselectie/0/errorhandoff en is geen drop-in dagverwerking.",
+                "fullDreamHandoffImplemented": false,
+                "newTaskAdded": false
+              }
             }
           ],
           "previousBoundedCompletion": {
@@ -11532,7 +11554,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Gebruik bestaande bron- en extractiebewijzen om oudere overbodige inhoud gericht te herclassificeren/op te schonen, met bronbehoud en echte opslagmeting. Geen volledige herextractie van alle gesprekken en geen nieuw geheugen.",
+      "nextAction": "Maak de overdracht kortetermijn-dagcontext → bestaande droomfase → compacte bijgewerkte langetermijnkennis af, met per-bronresultaat en veilige verwerking/herstel. Behoud direct bruikbare afspraken/correcties en persoonsgrenzen; geen losse tweede geheugenroute.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -11541,7 +11563,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-19T09:10:02.476266+00:00",
+      "updatedAt": "2026-10-19T09:19:58.337471+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -13168,7 +13190,7 @@
       "physicalAcceptance": "pending"
     }
   },
-  "updatedAt": "2026-10-19T09:10:02.476266+00:00",
+  "updatedAt": "2026-10-19T09:19:58.337471+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -13220,6 +13242,6 @@
       "sha256": "6185e74c1bc0a43d1a8271662f2fcd15641476e5a6cc37c155c24a1693d064c0"
     }
   ],
-  "lastUpdatedAt": "2026-10-19T09:10:02.476266+00:00",
-  "checkedAt": "2026-10-19T09:10:02.476266+00:00"
+  "lastUpdatedAt": "2026-10-19T09:19:58.337471+00:00",
+  "checkedAt": "2026-10-19T09:19:58.337471+00:00"
 }
