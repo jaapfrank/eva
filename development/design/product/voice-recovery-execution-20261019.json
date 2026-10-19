@@ -1,0 +1,313 @@
+{
+  "contract": "EvaVoiceRecoveryExecution/v1",
+  "createdAt": "2026-10-19T09:41:45.235581+00:00",
+  "purpose": "De werkelijk gebruikte Eva-spraakroute snel, inhoudelijk correct en onderbreekbaar maken; iedere conclusie blijft gebonden aan de geteste uitvoering.",
+  "authority": "Bestaand werkbord is de enige statusbron. Dit document concretiseert C3.4, C3.5, C3.6 en C4.1; geen extra producttaken of wijziging van onafhankelijke eindcriteria.",
+  "ownerDirection": {
+    "technologyPreference": "De techniek is vrij binnen de bestaande projectafspraken; bruikbaarheid en snelheid bepalen de keuze. Geen verdere stemvoorkeurvraag nodig.",
+    "evidenceRule": "Een test van uitvoering A bewijst geen werking van uitvoering B.",
+    "currentTurn": "Uitwerking en alleen-lezen controle; geen runtimewijziging, providerproef, opname, firmwareflash of WSL-herstart."
+  },
+  "baseline": {
+    "capturedAt": "2026-10-19T09:36:55.009617+00:00",
+    "repositoryHead": "239b77c10bed026d24fef34736baca6d3bbca6b2",
+    "containers": {
+      "eva2-household-speaker-1": {
+        "image": "sha256:193e0a37a29d1bea0c9a0a9853cc38bdb00e5f88eab370ce6e9b0770034905bf",
+        "startedAt": "2026-10-19T09:02:43.056065434Z",
+        "running": true
+      },
+      "eva2-owner-voice-media-1": {
+        "image": "sha256:0b86d5ad829fd92430c5b0e0ec4060f8389dbeb45f1dd962054bd628f80699a7",
+        "startedAt": "2026-10-19T07:15:19.781688787Z",
+        "running": true
+      },
+      "eva2-managed-b-slot3-core": {
+        "image": "sha256:d8f0856fd0f065033919d8777bb16af852b3795afec04ad606148961d7d7962f",
+        "startedAt": "2026-10-19T09:03:33.969151386Z",
+        "running": true
+      },
+      "eva2-managed-b-slot3-hindsight-1": {
+        "image": "sha256:ba9f050f49eeb50604c7793630c8b653dde728486eb744a7e30f3f42450f9388",
+        "startedAt": "2026-10-18T21:19:41.039138228Z",
+        "running": true
+      }
+    },
+    "nativeSpeaker": {
+      "sourceHashes": {
+        "/app/eva/voice_service/codex_media.py": "9bdac95ada74134b119cad18dd2859a48fe7579dffac4914b044d3a010c350b0",
+        "/app/eva/voice_service/literal_speech.py": "9cafb92d5c9c121122a9bfc515a9e7dbe2465c416b731df2b073e06ae918fa42",
+        "/app/eva/voice_service/codex_speaker_audio.py": "f642a715ebe83f8cef6b1e83966297a09b3a522bb060cefa8858a88620a1cc2b",
+        "/app/eva/voice_service/codex_session.py": "7034340a014863aaa7ee322c5cd74c30b5a01545c8002503d3297973c5484a37",
+        "/app/eva/adapters/connectors/home_assistant_voice.py": "dee9f0f78f0b658de392c1285f9c6cb142d08d9ccc49cca23ac18d72034a6b45",
+        "/opt/eva/codex_speaker_service.py": "7034aa5d4880e5a135097c2f3feb99bc0f639a800cfbf46cb8e3570965bb3bf5",
+        "/opt/eva/speaker_endpoint.py": "1b149d71110c584be551c10b91f76908fc78827ae8727e65cc6395c569ef86ee"
+      },
+      "configuration": {
+        "tts_engine": "tts.home_assistant_cloud",
+        "tts_language": "nl-NL"
+      },
+      "voice": "FennaNeural (explicit composition argument)"
+    },
+    "firmware": "Retained install receipt and binary match; no fresh device-register read.",
+    "scope": "Read-only identity snapshot, not a new performance or acoustic proof.",
+    "memoryRuntime": {
+      "nanoCpus": 8000000000,
+      "settings": {
+        "HINDSIGHT_API_EMBEDDINGS_LOCAL_FORCE_CPU": "true",
+        "HINDSIGHT_API_RERANKER_LOCAL_FORCE_CPU": "true",
+        "HINDSIGHT_API_RERANKER_LOCAL_MAX_CONCURRENT": "2",
+        "HINDSIGHT_API_RERANKER_LOCAL_BATCH_SIZE": "8",
+        "HINDSIGHT_API_RERANKER_LOCAL_BUCKET_BATCHING": "true",
+        "HINDSIGHT_API_RERANKER_LOCAL_FP16": "false",
+        "HINDSIGHT_API_RERANKER_MAX_CANDIDATES_LOW": "32",
+        "EVA_HINDSIGHT_RERANK_BATCH_WORKERS": "4",
+        "EVA_HINDSIGHT_PARALLEL_RERANK_BATCHES": "1",
+        "EVA_HINDSIGHT_WARMUP_RERANKER": "1",
+        "EVA_HINDSIGHT_EXACT_RERANK_CACHE": "1"
+      },
+      "coverage": "Whitelisted observed settings only; not a complete configuration snapshot."
+    }
+  },
+  "observedDefects": [
+    {
+      "problem": "Lange beantwoording",
+      "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-followup-20261019.json",
+      "measured": "Kern 9041 ms: geheugen 4898 ms, één modelantwoord 2879 ms, circa 1263 ms overige nog niet verdeelde tijd. Dit is geen fysieke spraakeinde-tot-geluidmeting.",
+      "consequence": "Een stemwissel alleen kan de huidige wachttijd niet oplossen."
+    },
+    {
+      "problem": "Gewone gesproken correctie komt niet binnen",
+      "evidence": "src/eva/voice_service/codex_media.py: MicrophoneTrack.push; src/eva/voice_service/codex_speaker_audio.py: SpeakerSource.input_suppressed",
+      "measured": "De native host gooit microfoonframes tijdens uitvoer weg. De hardware-reference bestaat volgens gepinde firmware en schema; oorzaak van resterende echo is niet gemeten.",
+      "consequence": "Vervang de tijdelijke blokkade pas door aangetoond onderscheid tussen eigen geluid en menselijke spraak; blind openzetten veroorzaakt zelfreacties."
+    },
+    {
+      "problem": "Pauze alleen tussen de eerste twee getallen",
+      "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-followup-20261019.json",
+      "measured": "Kerntekst bevatte negen pauzetekens; de laatste verwerking verwijderde nul digitale stiltes. Het gehoorde ritme is niet daarmee bewezen.",
+      "consequence": "Vergelijk de werkelijke gegenereerde en gehoorde audio, niet alleen tekst of captions."
+    },
+    {
+      "problem": "Beginwoorden verkeerd herkend en eerdere hervatting viel stil",
+      "evidence": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json",
+      "measured": "De geïnstalleerde hervattingsreparatie is in het echte gesprek gebruikt en leverde antwoord. Twee beginwoorden in de laatste transcriptie wijken af.",
+      "consequence": "Behoud die reparatie en onderzoek herkenning/overlap afzonderlijk; de volledige spraakingang is nog niet geaccepteerd."
+    }
+  ],
+  "measurementContract": {
+    "beforeEachRun": "Leg variant, exacte images, werkelijk geladen bronhashes, geselecteerde model-/stemnamen, relevante niet-geheime instellingen, apparaat-/firmwarebinding en testinvoer vast. Controleer die vóór en na de proef. Pin volledige relevante configuratie vóór kandidaatacceptatie; deze nulmeting dekt alleen expliciet genoemde velden.",
+    "clock": "Gebruik één monotone klok waar mogelijk. Bewaar klokrelaties en onzekerheid bij losse componenten; vermeng geen sessierelatieve, Unix- en apparaatklokken.",
+    "events": [
+      "laatste gesproken invoersample indien werkelijk opgenomen",
+      "transcript gereed",
+      "Eva-kern aangevraagd",
+      "geheugen/context gereed",
+      "eerste modelinhoud en definitief kernantwoord",
+      "spraak aangevraagd",
+      "eerste aangeboden PCM",
+      "eerste hoorbare inhoud indien onafhankelijk waargenomen",
+      "apparaat FINISHED/STOPPED",
+      "volledig nieuw antwoord na correctie"
+    ],
+    "metrics": [
+      "tijd tot inhoudelijk antwoord; begroeting en filler tellen afzonderlijk",
+      "tijd tot daadwerkelijk bevestigde huishoudelijke actie",
+      "tijd vanaf nieuwe menselijke spraak tot stoppen oude audio",
+      "volledigheid en betekenis van herkende correctie",
+      "eerste/laatste gesproken woorden en gevraagde pauzes",
+      "falen, time-outs en ontbrekende opnamen naast geslaagde proeven"
+    ],
+    "physicalBoundary": "Software-PCM, providertranscript en apparaat-ACK bewijzen geen hoorbare uitspraak. Voor precieze akoestische tijd is een echte onafhankelijke opname nodig. Zonder die opname rapporteer softwaretijd en menselijke ervaring apart; geen schijnprecisie.",
+    "comparison": "Gebruik dezelfde teksten en geautoriseerde context, afwisselende volgorde en benoemde koude/warme toestand. Chat en household voice hebben mogelijk verschillende persoonsgrenzen: maak dat zichtbaar, geef geen privécontext aan de gedeelde speaker.",
+    "sampleReporting": "Toon iedere gerichte proef plus mediaan en maximum. Rapporteer p95 alleen bij minstens 20 waarnemingen, met de beperkte steekproefdekking erbij; voeg geen kostbare herhalingen toe zolang een harde fout al vaststaat.",
+    "engineeringTargets": {
+      "simpleAnswer": "Bestaand voorlopig werkdoel: mediaan <=3 s en p95 <=5 s vanaf werkelijk spraakeinde tot inhoudelijke audio. Dit is een doel, geen behaald resultaat of gewijzigde eigenaaracceptatie.",
+      "localCriticalPath": "Bestaand voorlopig doel: p95 <1000 ms lokale voorgrondverwerking, inclusief queues.",
+      "bargeIn": "Aanvullend voorgesteld werkdoel: oude spraak stopt binnen 300 ms na menselijke spraak, met 500 ms als afkeurgrens in de gerichte proef. Alleen claimen als beide fysieke grenzen meetbaar zijn.",
+      "meaning": "Geen verkeerde feiten, verloren beginwoorden, dubbele opdrachten of valse actievermelding in de afgesproken gerichte gevallen. Naturaliteit vereist werkelijk luisteren."
+    },
+    "existingTargetsSource": "development/design/product/voice-improvement-plan-20261015.json",
+    "unchangedCriteria": "development/design/product/voice-fluency-task-scope-20261019.json en bestaande C4.1 blijven ongewijzigd. Review legt de concrete proefgevallen en voorgestelde meetgrenzen vast vóór kandidaatbouw; de uitvoerder verandert geen beschermd eindgeval."
+  },
+  "executionOrder": [
+    {
+      "step": 1,
+      "name": "Een controleerbare kandidaat en meetroute voorbereiden",
+      "tasks": [
+        "C3.4",
+        "C3.5",
+        "C4.1"
+      ],
+      "work": [
+        "Hergebruik de bestaande volledige-ketenprobe en native_acoustic_probe; voeg de ontbrekende vergelijking van actuele image/configuratie met het proefmanifest toe.",
+        "De gerepareerde recorder sluit bij sessiesluiting of de oorspronkelijke deadline, ook over capture-resume. Maximaal 30 seconden, alleen het gekozen apparaat; geen opname in standby.",
+        "Scheid ontwikkelproeven, echte eigenaargesprekken en fysieke diagnose. Bewaar privé-PCM buiten Git; wis uitsluitend exact geïdentificeerde ontwikkelbronnen via bestaande gecontroleerde cleanup."
+      ],
+      "paths": [
+        "development/tools/voice/native_acoustic_probe.py",
+        "development/tools/voice/test_native_acoustic_probe.py",
+        "development/tests/voice_service/test_native_input_resume.py",
+        "src/eva/voice_service/codex_media.py"
+      ],
+      "completeWhen": "Proefresultaat vermeldt de werkelijk gebruikte uitvoering en stopt met de conclusie bij een veranderde image/configuratie of ontbrekende overdracht. De recorderreparatie is al getest, maar niet geïnstalleerd of geactiveerd.",
+      "doNot": "Geen nieuw testplatform; geen brede regressieronde vóór een concrete kandidaat."
+    },
+    {
+      "step": 2,
+      "name": "De gemeten geheugenvertraging aanpakken",
+      "tasks": [
+        "C4.1"
+      ],
+      "parallelWith": 3,
+      "work": [
+        "Profileer de resterende 1263 ms alleen waar bestaande timing ontbreekt; meet queue en toelating afzonderlijk van geheugen/model.",
+        "Herstel eerst de bestaande Windows/WSL-GPU-toegang. De aanwezige herstelbundel moet actuele images, werkclaims en werkbestanden vastleggen; haar oude baseline mag niet worden teruggezet.",
+        "Een eventuele WSL-herstart beëindigt ook andere diensten en de toolserver. Bereid herstel en verificatie volledig voor en stem het concrete onderbrekingsmoment af met lopend werk; voer dit niet stilzwijgend uit.",
+        "Na herstel: vergelijk hetzelfde bestaande geheugenmodel op exact dezelfde geautoriseerde kandidaten, batchindeling, truncatie en broncontrole, inclusief twee gelijktijdige aanvragen. GPU-gebruik mag de lopende cameramodule niet verdringen.",
+        "Leg vóór vergelijking de scoretolerantie vast; eis behoud van de feitelijk geleverde feiten/bronidentiteiten en relevante volgorde. Een mogelijk andere floatberekening is geen bit-identiek resultaat.",
+        "Installeer alleen bij echte tijdwinst zonder gewijzigde geheugenuitkomst; meet daarna dezelfde volledige voiceketen opnieuw."
+      ],
+      "paths": [
+        "deploy/living-core/hindsight-gc",
+        "src/eva/adapters/projection/hindsight.py",
+        "src/eva/application/conversation.py"
+      ],
+      "fallback": "Als GPU-toegang niet herstelt: eerst offline meten of ongewijzigde effectieve batches van acht echt terugkeren. Alleen bij overlap een uitbreiding van de bestaande exacte numerieke cache onderzoeken. Dit helpt herhaalde batches; het lost een koude eerste vraag niet op.",
+      "stopWhen": [
+        "NVML/CUDA-toegang blijft defect: geen blinde driverinstall of herstartlus.",
+        "Kandidaat verliest bronfeiten, relevante rangschikking of concurrencycapaciteit.",
+        "Cache-overlap ontbreekt: geen cachebouw zonder verwacht voordeel."
+      ],
+      "doNot": "Geen geheugen overslaan, telopdracht herkennen via een aparte route, echte onderwerpen als stopwoord schrappen, model vervangen door een zwakker model of bestaand parallel/cachewerk opnieuw als nieuwe winst tellen.",
+      "references": [
+        "https://learn.microsoft.com/en-us/windows/wsl/basic-commands",
+        "https://docs.nvidia.com/cuda/wsl-user-guide/index.html"
+      ]
+    },
+    {
+      "step": 3,
+      "name": "Echte onderbreking mogelijk maken",
+      "tasks": [
+        "C3.5",
+        "C4.1"
+      ],
+      "work": [
+        "Gebruik één gericht begonnen woonkameropname met trigger=answer: eerst alleen Eva, daarna gebruiker tijdens Eva, daarna dezelfde korte correctie zonder Eva. De huidige blokkade blijft tijdens deze diagnose actief.",
+        "Beoordeel of de hardware-uitvoer menselijke beginwoorden en zachte spraak al bruikbaar onderscheidt van echo. De aangeboden uitvoerreferentie is geen exact DAC-signaal.",
+        "Breid uitsluitend de bestaande offline replay uit voor de echte gekoppelde opname, met oorspronkelijke timinggaten zichtbaar. Controleer daarnaast de bestaande onafhankelijke fixtures; pas de detector niet op één zin aan.",
+        "Als bestaande hardwareverwerking voldoende is: vervang alleen de microfoonblokkade door de bewezen detectie en behoud een korte voorbuffer voor menselijke beginwoorden. Stop oude output lokaal en bind alle vervolgframes en het kernantwoord aan de nieuwe beurt.",
+        "Als eind-AGC aantoonbaar de oorzaak is, onderzoek een beperkte kanaalvergelijking met bestaande AEC/IC/NS. Dit vereist een afzonderlijk gepinde firmwarekandidaat; de huidige bedrading rechtvaardigt geen blinde flash.",
+        "Controleer gewone en zachte correctie, alleen echo, omgevingsgeluid, vertraagde STOP-bevestiging, sessiesluiting en nieuwe beurt. Een kandidaat die eigen spraak als opdracht doorstuurt valt af."
+      ],
+      "paths": [
+        "src/eva/voice_service/codex_speaker_audio.py",
+        "src/eva/voice_service/codex_media.py",
+        "deploy/native-speaker/codex_service.py",
+        "development/tools/voice/replay_native_echo.py",
+        "development/tests/voice_service/test_speaker_audio.py",
+        "development/tests/voice_service/test_native_utterance.py"
+      ],
+      "completeWhen": "Dezelfde fysieke kandidaat stopt op gewone menselijke spraak, behoudt de volledige correctie, geeft het passende vervolgantwoord en blijft daarna beschikbaar. De diagnose-opname alleen sluit deze stap niet.",
+      "ownerNeed": "Eén korte gerichte akoestische diagnose kan nodig zijn omdat er nog geen complete opname van echo plus menselijke overlap bestaat. De eigenaar hoeft geen oorzaak te zoeken of dezelfde mislukte proef blind te herhalen. Vraag dit pas wanneer de opname klaarstaat en vooraf gecontroleerd is.",
+      "stopWhen": [
+        "Alleen-echo triggert nieuwe kernvragen.",
+        "Zachte/vroege correctie verdwijnt of beginwoorden ontbreken.",
+        "Afbreken werkt uitsluitend met wekwoord, knop of microfoontoggle.",
+        "Er is geen bruikbare gekoppelde opname: geen nieuwe detectorclaim op ontbrekend bewijs."
+      ]
+    },
+    {
+      "step": 4,
+      "name": "Uitspraak en ritme op de beste bestaande route bewijzen",
+      "tasks": [
+        "C3.4"
+      ],
+      "work": [
+        "Gebruik de huidige Fenna-route als gemeten referentie; de gebruiker hoeft geen provider te kiezen.",
+        "Onderzoek eerst of expliciete pauzetekens in dezelfde uitvoerroute betrouwbaar kunnen worden weergegeven. Een eventuele generieke segmentering moet alle woorden behouden, dezelfde onderbreekbare uitvoergeneratie gebruiken en voorbereiding begrenzen; tien sequentiële netwerkaanvragen zijn geen acceptabele verborgen vertraging.",
+        "Als vergelijking zinvol is, toets één gerichte kandidaat op de oorspronkelijke Codex/Juniper-route met echte instructiebinding. Een prompt die letterlijk lezen vraagt is geen garantie.",
+        "Vergelijk werkelijk ontvangen audio op identieke Nederlandse teksten: gewone zinnen, expliciete pauzes, namen/getallen en onderbreking. Noteer eerste geluid, laatste geluid, woorden, stiltes, extra requests en annulering.",
+        "Pas alleen de variant toe die de volledige kwaliteitsvoorwaarden haalt en de totale keten verbetert. Sluit daarna dezelfde geïnstalleerde variant weer op de gewone Eva-kern aan; een losse rendererproef is geen gesprekstest."
+      ],
+      "paths": [
+        "src/eva/voice_service/literal_speech.py",
+        "src/eva/voice_service/codex_session.py",
+        "src/eva/voice_service/codex_media.py",
+        "src/eva/adapters/connectors/home_assistant_voice.py"
+      ],
+      "completeWhen": "Alle woorden en gevraagde pauzes blijven in de werkelijk gehoorde uitvoer behouden, zonder nieuwe tekst of extra onverklaarde wachttijd. Nabu Casa en Codex hebben vooraf geen winnaarstatus.",
+      "stopWhen": [
+        "Generatieve uitvoer voegt woorden/claims toe of wijzigt de kerntekst.",
+        "Pauzeherstel maakt begin of vervolg merkbaar trager.",
+        "Annulering laat oude audio terugkomen."
+      ],
+      "doNot": "Geen nieuwe provider, abonnement of spraakplatform; geen overstap zonder volledige vergelijking en zichtbare installatiebinding."
+    },
+    {
+      "step": 5,
+      "name": "Eén samenhangende eindkandidaat installeren en echt gebruiken",
+      "tasks": [
+        "C3.4",
+        "C3.5",
+        "C3.6",
+        "C4.1"
+      ],
+      "work": [
+        "Bundel alleen gewonnen wijzigingen op de werkelijk actuele images; pin de kandidaat inclusief normale instellingen en verwijderde tijdelijke diagnostiek.",
+        "Laat onafhankelijke review de concrete bronwijziging, behoud van STOP/persoonsgrenzen en bewijsbinding beoordelen.",
+        "Controleer vlak vóór installatie actieve gespreks-, model-, geheugen- en werkclaims. Behoud andermans gewijzigde kern en camerawerk; geen vervanging van een gedeelde dienst op een verouderde baseline.",
+        "Controleer na installatie opnieuw images, daadwerkelijk geïmporteerde modules, relevante configuratie, speakerverbinding en nieuwe lokaal begonnen sessie.",
+        "Gebruik de onderstaande scenario’s via dezelfde fysieke woonkamer-speaker. Test een tweede speaker alleen bij een concrete apparaat-/firmware-/ruimteafwijking.",
+        "Vergelijk één al toegestane buitenverlichtingsopdracht met chat; meet daadwerkelijke actie en verse statuscontrole apart van de gesproken bevestiging. Houd verschillen in persoonscontext zichtbaar.",
+        "Een wijziging na deze proef vereist hercontrole van de geraakte overdracht; de eindinstallatie mag niet ongemerkt verschillen van de beoordeelde kandidaat."
+      ],
+      "scenarioFamilies": [
+        "kort gewoon contact en één vervolgvraag",
+        "eigen activiteit/dagcontext met controle tegen echte toegankelijke gebeurtenissen",
+        "zacht beginwoord en samengestelde correctie",
+        "gevraagde pauzes plus een gewoon meerzinnig antwoord",
+        "onderbreken tijdens spreken, passende correctie en nog een vervolgvraag",
+        "dank je/doei, gesloten sessie en opnieuw wekken zonder microfoontoggle",
+        "één bestaande toegestane huishoudelijke opdracht met verse resultaatcontrole"
+      ],
+      "completeWhen": "De daadwerkelijke eindinstallatie levert de afgesproken uitkomsten. Technisch bewijs, gehoorde kwaliteit en eigenaaracceptatie blijven apart geregistreerd; geen groen vinkje uit een softwaretest voor een fysieke functie.",
+      "doNot": "Geen algemene claim voor alle omstandigheden of het hele Eva-project uit deze gerichte reparatie."
+    }
+  ],
+  "ownership": {
+    "coordinator": "Bestaande spraakuitvoerder; bron-/configuratiebinding, samenstelling, installatie en verslag.",
+    "workers": "Maximaal twee uitvoerders; geheugenprestatieanalyse en akoestiek kunnen parallel, review binnen dezelfde bezetting.",
+    "sharedCore": "Actueel ander werk is E2.8 camera. Wijzigingen aan kern/geheugen vereisen afstemming op de werkelijke actuele bestands- en runtimeclaims; dit plan wijzigt currentWork niet."
+  },
+  "firstExecutableActions": [
+    "Maak van de bestaande bron-/imagechecks één verplichte voor/na-controle in de bestaande probe.",
+    "Bereid de reeds gerepareerde begrensde woonkameropname concreet voor; start haar alleen in een aangekondigde lokaal begonnen testsessie.",
+    "Ververs de bestaande GPU-herstelbundel op huidige images/werkclaims en bepaal het concrete herstelpad vóór een onderbreking."
+  ],
+  "completionReport": "Meld wat in de huidige installatie daadwerkelijk werkt, met gemeten antwoord-/onderbrekingstijd en relevante beperking. Testscores, aantal bestanden en een plan zijn geen vervanging voor een goed gesprek.",
+  "currentWorkPerformed": {
+    "runtimeChanges": 0,
+    "newProviderCalls": 0,
+    "newMicrophoneRecordings": 0,
+    "firmwareFlashes": 0,
+    "wslRestarts": 0,
+    "completed": "Bestaande bewijsstukken, actuele installatie, GPU-blokkade en uitvoerbare technische stappen gecontroleerd; plan gekoppeld aan bestaande kaarten."
+  },
+  "independentReview": {
+    "decision": "go",
+    "reviewers": [
+      {
+        "agent": "review_cursor",
+        "scope": "Version/configuration binding, latency/GPU feasibility, goals versus evidence and shared-core ownership",
+        "result": "No material blockers; no runtime work or further tests performed."
+      },
+      {
+        "agent": "distinctive_eva_review",
+        "scope": "Physical diagnostic versus interruption proof, PCM/DAC boundary, unchanged capture deadline and measurable timing claims",
+        "result": "No material blockers; diagnostic recording does not establish working barge-in."
+      }
+    ],
+    "reviewDoesNotEstablish": "Implementation, installation, acoustic success or owner acceptance."
+  }
+}
