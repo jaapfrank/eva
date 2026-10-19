@@ -1,0 +1,17 @@
+{
+  "recordedAt": "2026-10-19T09:21:59.488681+00:00",
+  "reviewer": "review_cursor",
+  "decision": "go_for_bounded_diagnostic_lifecycle_change",
+  "scope": [
+    "development/tools/voice/native_acoustic_probe.py",
+    "development/tools/voice/test_native_acoustic_probe.py"
+  ],
+  "findings": [
+    "Capture restart retains the same SpeakerSource recording and original deadline/sample bound.",
+    "Session close ends observation before asynchronous cleanup; return, error and cancellation propagate.",
+    "Selected device, provider-event whitelist and private recording limits unchanged.",
+    "No production echo-gate or voice-route change and no microphone start."
+  ],
+  "verification": "15 passed in 3.25s; current installed speaker image, network disabled, tool files mounted read-only.",
+  "productAcceptance": false
+}

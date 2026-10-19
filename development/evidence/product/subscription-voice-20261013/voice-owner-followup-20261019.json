@@ -1,0 +1,184 @@
+{
+  "recordedAt": "2026-10-19T09:21:59.488681+00:00",
+  "status": "diagnosed_owner_regressions_no_product_completion_claim",
+  "ownerAccepted": false,
+  "ownerReport": {
+    "responseDelayApproximatelySeconds": 15,
+    "pauseOnlyAfterFirstNumber": true,
+    "ordinarySpokenCorrectionDidNotInterrupt": true,
+    "expectedNoSeparateTts": true
+  },
+  "activeRouteVerified": {
+    "speakerImage": "sha256:193e0a37a29d1bea0c9a0a9853cc38bdb00e5f88eab370ce6e9b0770034905bf",
+    "mediaImage": "sha256:0b86d5ad829fd92430c5b0e0ec4060f8389dbeb45f1dd962054bd628f80699a7",
+    "input": "Existing Codex realtime transcription",
+    "output": "Home Assistant Cloud / FennaNeural",
+    "ttsEngine": "tts.home_assistant_cloud",
+    "language": "nl-NL",
+    "literalModule": "/app/eva/voice_service/literal_speech.py",
+    "routeChangedOn": "2026-10-18",
+    "routeChangeReason": "Generative renderer added words absent from the core response.",
+    "ownerExpectationMismatchExplained": true,
+    "newRouteSwitch": false
+  },
+  "actualOwnerSession": {
+    "localCaptureResumePreservedInput": true,
+    "coreRequests": 1,
+    "coreReplies": 1,
+    "literalRequests": 1,
+    "playoutConfirmed": true,
+    "requestedPauseMarkersInCoreText": 9,
+    "ttsInternalZeroSamplesRemoved": 0,
+    "ordinaryBargeInReachedRecognizer": false,
+    "firstInputWordsMistranscribed": true,
+    "timingMs": {
+      "userTurnCreated": 4062,
+      "nativeInputResume": 6177,
+      "userTurnDone": 7794,
+      "coreRequest": 8349,
+      "coreFinal": 17390,
+      "nativeAudioStarted": 18192,
+      "literalCompleted": 26831
+    },
+    "limits": "Session-relative event timing, not measured physical end-of-speech or first audible sound. Device completion does not prove acoustic fidelity."
+  },
+  "coreLatency": {
+    "totalMs": 9041,
+    "initialMemoryMs": 4898,
+    "preparationMs": 4899,
+    "modelMs": 2879,
+    "modelFirstContentMs": 1631,
+    "inputTokens": 6540,
+    "outputTokens": 25,
+    "memoryQueryVariants": 4,
+    "rerankCandidatesEach": 32,
+    "rerankDurationsMs": [
+      2084,
+      2333,
+      3553,
+      4221
+    ],
+    "recallTailMs": 4864,
+    "unattributedOverheadApproximatelyMs": 1263,
+    "finding": "Full semantic query plus three longest-word implicit queries trigger concurrent recall/reranking. No safe example-independent word exclusion proven. Full query and authorized context retained.",
+    "sharedCoreBoundary": "E4.11 remains active and relevant core files contain external WIP. No core edits or deployment performed."
+  },
+  "hardwareAudit": {
+    "recordedAt": "2026-10-19T09:20:19.940756+00:00",
+    "status": "read_only_hardware_reference_route_verified_no_firmware_fault_proven",
+    "newFinding": "Official hardware net connectivity and pinned XMOS reference ingestion establish that the existing native playback route is wired to the AEC reference. This is stronger than the previous microphone-stage configuration inspection.",
+    "retainedInstallBinding": {
+      "receipt": "/home/administrator/project/.eva2-artifacts/c4-speaker-stop-20261005/firmware-install.json",
+      "installedFirmwareCompilationTime": "2026-10-05 11:39:39 +0200",
+      "esphomeVersion": "2026.6.2",
+      "wrapperSha256": "070f725dd32c916adfcf19f806a0f8288b03747e98c40ceca7ce4bfbf3eab75b",
+      "otaSha256": "ba5cb36295e900cb2ed2ce75da7fb6cbcc82ece694d5ea05c0b1da88e0cc600d",
+      "wrapperAndBinaryExactlyMatchRetainedReceipt": true,
+      "generatedSourceSha256": "950664f172dc60c895065c3551c7c6f3a76bc15c7bf31b0f35620eb7de057b43",
+      "freshDeviceFirmwareOrI2CRead": false
+    },
+    "capture": {
+      "sampleRateHz": 16000,
+      "channels": 1,
+      "sampleBits": 16,
+      "selectedXmosChannel": 0,
+      "gainFactor": 1,
+      "stage0": "AEC+IC+NS+AGC",
+      "stage1": "AEC+IC+NS",
+      "wakewordChannel": 1,
+      "wakewordGain": 4,
+      "rawMicrophoneSentToEva": false,
+      "note": "MicrophoneSource conversion/channel selection is reused exactly by EvaMicrophoneSource; native microphone capture remains enabled during firmware output. Host echo fence discards submitted input while output is busy."
+    },
+    "outputReference": {
+      "nativePath": "eva_duplex_resampling_speaker → eva_duplex_mixing_input → mixing_speaker → i2s_audio_speaker, 48 kHz stereo, GPIO10",
+      "electricalNet": "GPIO10 connects through a series zero-ohm resistor to I2S_DIN_SEC. This net reaches XMOS X1D00/XS1_PORT_1A and AIC3204 SCLK/MFP3.",
+      "xmosPath": "I2S_MIC_DATA/PORT_I2S_ADC_DATA → i2s1 RX → 48-to-16 kHz decimator → audio_pipeline_input first two reference channels → AEC stage",
+      "dacConfiguration": "The compiled AIC3204 driver selects secondary SCLK data input using page0 registers31=1 and32=1. Native speaker PCM therefore reaches both DAC and XMOS reference on the same net.",
+      "bypassFound": false,
+      "measuredEchoReductionDb": null,
+      "physicalReferenceMeasured": false
+    },
+    "officialPins": {
+      "xmosTag": "v1.3.1",
+      "xmosCommit": "1a1df7c2b3e578431b1550a8defe8ae2c8b54d93",
+      "xmosReleaseMd5": "964635c5bf125529dab14a2472a15401",
+      "voicePeHardwareCommit": "d4e6fa43d6a1a7d342b7d4d403567e06516719de",
+      "i2sDriverCommit": "656e31cc784254d7f404f915a1663438ac46356c"
+    },
+    "primarySources": [
+      "https://github.com/esphome/voice-kit-xmos-firmware/blob/1a1df7c2b3e578431b1550a8defe8ae2c8b54d93/src/ffva/src/main.c#L121-L143",
+      "https://github.com/esphome/voice-kit-xmos-firmware/blob/1a1df7c2b3e578431b1550a8defe8ae2c8b54d93/src/ffva/src/main.c#L168-L203",
+      "https://github.com/esphome/voice-kit-xmos-firmware/blob/1a1df7c2b3e578431b1550a8defe8ae2c8b54d93/src/ffva/bsp_config/NC-VOICE-KIT/platform/platform_init.c#L178-L202",
+      "https://github.com/esphome/voice-kit-xmos-firmware/blob/1a1df7c2b3e578431b1550a8defe8ae2c8b54d93/src/ffva/bsp_config/NC-VOICE-KIT/platform/driver_instances.h#L42-L47",
+      "https://github.com/esphome/home-assistant-voice-pe/blob/d4e6fa43d6a1a7d342b7d4d403567e06516719de/hardware/KiCad/Home%20Assistant%20Voice%20PE.pdf",
+      "https://www.ti.com/lit/ml/slaa557/slaa557.pdf#page=103",
+      "https://github.com/esphome/voice-kit-xmos-firmware/releases/tag/v1.3.1"
+    ],
+    "whyHistoricalEchoStillPossible": {
+      "established": "Earlier actual session inputs reproduced Eva output. The host halfduplex protection blocks ordinary spoken interruption by design.",
+      "notEstablished": [
+        "Absent hardware reference",
+        "Raw microphone selected",
+        "Hardware AEC disabled at runtime",
+        "Specific residual echo cause"
+      ],
+      "hypothesesOnly": [
+        "AGC may amplify surviving playback or room noise.",
+        "Acoustic nonlinearity, speaker level, environment and adaptation can leave residual echo despite a wired reference.",
+        "Input-provider turn detection can treat surviving intelligible echo as speech."
+      ]
+    },
+    "smallestNextChange": {
+      "diagnostic": "Keep the existing bounded paired-PCM recorder alive across native capture iterator cancellation/resume; terminate on session end or the original recording deadline. This repairs the missing observation without increasing the privacy window or changing live audio.",
+      "productionCandidateIfSupported": "An A/B native microphone source using existing channel1 with gain1 avoids final AGC while retaining AEC+IC+NS. This is only a hypothesis, needs a reviewable firmware change and bounded acoustic comparison; it is not an already-proven fix.",
+      "doNot": "Do not remove the echo fence or flash a channel change merely because AEC is advertised or configured."
+    },
+    "proofCriteria": [
+      "Record existing spoken answer and simultaneous owner interruption with current authority and explicit bounded owner test; preserve capture generations.",
+      "Observe echo-only versus double-talk, input-prefix preservation and output stop delay at existing volume; do not fit a detector to only one phrase.",
+      "A candidate must avoid self-trigger/core requests during echo-only output and retain the full early/quiet human interruption.",
+      "Native STOP/MUTE/end authority and confirmed output stop must remain intact."
+    ],
+    "workPerformed": {
+      "readOnlySourceAndOfficialWeb": true,
+      "firmwareFlash": false,
+      "runtimeInstall": false,
+      "providerSessions": 0,
+      "physicalPlayback": false,
+      "microphoneCapture": false,
+      "repositoryFilesChanged": false
+    }
+  },
+  "diagnosticRepair": {
+    "files": [
+      "development/tools/voice/native_acoustic_probe.py",
+      "development/tools/voice/test_native_acoustic_probe.py"
+    ],
+    "defect": "Capture-iterator cancellation closed a paired recording even when the same authorized session immediately resumed capture.",
+    "change": "Close the existing recording at session close, retaining the original absolute deadline across capture replacement.",
+    "maximumSeconds": 30,
+    "maximumRecordings": 2,
+    "deviceBindingAndPrivateFilePermissionsUnchanged": true,
+    "terminalCloseBeforeAsyncCleanup": true,
+    "checks": 15,
+    "testResult": "15 passed in 3.25s; current installed speaker image, network disabled, tool files mounted read-only.",
+    "independentReview": "development/reviews/native-acoustic-lifecycle-20261019.json",
+    "installed": false,
+    "armed": false
+  },
+  "usage": {
+    "newModelRequests": 0,
+    "newSpeechRequests": 0,
+    "newMicrophoneRecordings": 0,
+    "physicalPlayback": false,
+    "firmwareFlashes": 0,
+    "runtimeDeployments": 0
+  },
+  "limits": [
+    "Requested pauses and native spoken interruption are not repaired by this diagnostic-only change.",
+    "No new acoustic acceptance or latency improvement claimed.",
+    "Original generative voice versus current literal output is pending owner clarification."
+  ],
+  "privacy": "Private conversation, exact ASR text, identifiers and audio remain outside repository evidence."
+}

@@ -6,6 +6,7 @@ already-authorized capture; it never opens a microphone or changes the echo gate
 Use a fresh private directory. Remove the temporary diagnostic overlay afterward.
 The microphone WAV is room audio; keep it outside Git and public evidence.
 Submitted output PCM is a reference, NOT proof of physical playback or alignment.
+Capture restarts share the original recording deadline; session close ends it.
 The optional trigger="input" begins on the first unsuppressed input frame.
 Whitelisted provider events/text are private, capped at 512 events of 4096 characters
 within the same recording window; they are not evidence of physical acoustics.
@@ -150,6 +151,7 @@ def install(root, device_id, *, arm_seconds=600, trigger='answer'):
         raise ValueError('Acoustic probe is already installed')
     probe=Probe(root,arm_seconds=arm_seconds,trigger=trigger)
     capture=CodexMediaSession.capture_native;output=SpeakerSource.capture_frame
+    close=CodexMediaSession.aclose
     input_event=CodexMediaSession.input_event
 
     def selected(session):
@@ -169,8 +171,14 @@ def install(root, device_id, *, arm_seconds=600, trigger='answer'):
         try:return await capture(session,iterator)
         finally:
             await iterator.aclose()
-            try:probe.finish(session.source)
-            except Exception:pass
+
+    async def close_session(session):
+        # LOCAL_STOP replaces only the capture iterator. Its replacement still
+        # belongs to this session and must retain the same absolute deadline.
+        # Terminal close ends observation immediately, before async cleanup.
+        try:probe.finish(session.source)
+        except Exception:pass
+        return await close(session)
 
     async def capture_frame(source, frame):
         try:probe.output(source,frame)
@@ -186,6 +194,7 @@ def install(root, device_id, *, arm_seconds=600, trigger='answer'):
 
     capture_native._acoustic_probe=True
     CodexMediaSession.capture_native=capture_native
+    CodexMediaSession.aclose=close_session
     SpeakerSource.capture_frame=capture_frame
     CodexMediaSession.input_event=observed_input_event
     return probe

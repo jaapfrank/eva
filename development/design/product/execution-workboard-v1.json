@@ -3320,20 +3320,21 @@
                 "doneWhen": "De bestaande TTS- en speakerroute speelt gewone Nederlandse antwoorden met behoud van alle woorden en natuurlijke zinsrust. Lange onverwachte stiltes zijn met bron-PCM, aanvoertijden en apparaatbevestiging gelokaliseerd en de aangetoonde oorzaak is verholpen. Geen ongefundeerd versnellen of wegknippen van betekenisvolle rust. Gewone, meerzinnige en onderbroken antwoorden zijn via de geïnstalleerde route gecontroleerd; werkelijk horen en technische ontvangst blijven onderscheiden.",
                 "existing": "Korte antwoorden gebruiken één letterlijke HA-TTS-aanvraag; tekst en stop-/afspeelbevestigingen blijven gekoppeld.",
                 "gap": "Eerdere ontvangst bevatte pauzes van 0,90–1,17 seconde; bronstilte en aanvoergaten zijn nog niet onderscheiden.",
-                "nextAction": "Hoorbare zinsrust beoordelen in één woonkamerproef nadat de vastlopende invoer is gelokaliseerd. Tweede speaker alleen bij een concrete afwijking.",
+                "nextAction": "Eigenaar hoort alleen tussen het eerste en tweede getal een pauze; de kerntekst bevatte wel negen pauzetekens. Actieve Fenna/HA-route bevestigd; verschil met verwachte Codex-stem expliciet besproken vóór verdere uitvoerwijziging.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
-                "ownerActionRequired": true,
+                "ownerActionRequired": false,
                 "execution": {
-                  "status": "installed",
+                  "status": "investigating_actual_owner_feedback",
                   "startedAt": "2026-10-19T07:08:01.588667+00:00",
                   "owner": "voice_executor",
                   "runtimeChanged": true,
-                  "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+                  "updatedAt": "2026-10-19T09:21:59.488681+00:00",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
                   "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-                  "ownerAcceptance": false
+                  "ownerAcceptance": false,
+                  "ownerFeedbackEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-followup-20261019.json"
                 }
               },
               {
@@ -3342,21 +3343,22 @@
                 "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
                 "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
                 "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-                "nextAction": "Geïnstalleerd: native hervatting tijdens luisteren bewaart de onafgegeven vraag en beginbuffer. Echte volledige spraakketen met geïnjecteerde hervatting geslaagd; gewone woonkamerwerking volgen zonder opnieuw dezelfde onbewezen proef te vragen.",
+                "nextAction": "Native hervatting is werkelijk gebruikt en er kwam gesproken antwoord. Verkeerde beginwoorden in de herkenning en lange beantwoording afzonderlijk onderzoeken; geen nieuwe blinde eigenaarproef vragen.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
-                "ownerActionRequired": true,
+                "ownerActionRequired": false,
                 "execution": {
-                  "status": "installed_input_resume_fix",
+                  "status": "investigating_actual_owner_feedback",
                   "startedAt": "2026-10-19T07:08:01.588667+00:00",
                   "owner": "voice_executor",
                   "runtimeChanged": true,
-                  "updatedAt": "2026-10-19T09:02:43.056065434Z",
+                  "updatedAt": "2026-10-19T09:21:59.488681+00:00",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
                   "independentReview": "development/reviews/native-input-resume-20261019.json",
                   "ownerAcceptance": false,
-                  "inputDiagnosisEvidence": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json"
+                  "inputDiagnosisEvidence": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json",
+                  "ownerFeedbackEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-followup-20261019.json"
                 }
               },
               {
@@ -3411,8 +3413,8 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "De gevonden native listen-resume-race is hersteld en geïnstalleerd; eerst normale beantwoording volgen. Gewone gesproken onderbreking blijft een afzonderlijke open grens; geen herhaalde volledige proef op de tweede speaker vragen.",
-                "ownerActionRequired": true,
+                "nextAction": "Gewone onderbreking wordt door de tijdelijke echo-invoerblokkade weggegooid. Hardware-reference is in gepinde bron en schema aanwezig; geen blinde firmwarewissel. Bestaande meetcode hersteld zodat een hervatte microfoon dezelfde begrensde opname behoudt; nog niet geïnstalleerd of gestart.",
+                "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
@@ -3665,15 +3667,23 @@
                   "ownerAcceptance": false,
                   "runtimeChanged": false,
                   "acousticProbe": {
-                    "status": "captured_input_resume_fix_installed",
+                    "status": "observer_lifecycle_fixed_not_armed",
                     "evidence": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json",
                     "scope": "living_room_only",
                     "ownerAcceptance": false,
                     "failure": "repeated owner test: core final without renderer start; early capture restart",
                     "reproduction": "LOCAL_STOP during unadmitted input raised response floor and suppressed reply",
                     "installedFix": "Native listening-only resume preserves input generation and buffered prefix; busy and terminal controls unchanged",
-                    "liveResult": "one real STT/core/TTS turn after injected resume; first software PCM 8844.943 ms after input; no physical output claim"
+                    "liveResult": "one real STT/core/TTS turn after injected resume; first software PCM 8844.943 ms after input; no physical output claim",
+                    "followupEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-followup-20261019.json"
                   }
+                },
+                "ownerFeedback20261019": {
+                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-followup-20261019.json",
+                  "status": "investigating_actual_owner_feedback",
+                  "runtimeChanged": false,
+                  "ownerAccepted": false,
+                  "voiceRouteClarificationPending": true
                 }
               },
               {
@@ -7815,20 +7825,21 @@
               "doneWhen": "De bestaande TTS- en speakerroute speelt gewone Nederlandse antwoorden met behoud van alle woorden en natuurlijke zinsrust. Lange onverwachte stiltes zijn met bron-PCM, aanvoertijden en apparaatbevestiging gelokaliseerd en de aangetoonde oorzaak is verholpen. Geen ongefundeerd versnellen of wegknippen van betekenisvolle rust. Gewone, meerzinnige en onderbroken antwoorden zijn via de geïnstalleerde route gecontroleerd; werkelijk horen en technische ontvangst blijven onderscheiden.",
               "existing": "Korte antwoorden gebruiken één letterlijke HA-TTS-aanvraag; tekst en stop-/afspeelbevestigingen blijven gekoppeld.",
               "gap": "Eerdere ontvangst bevatte pauzes van 0,90–1,17 seconde; bronstilte en aanvoergaten zijn nog niet onderscheiden.",
-              "nextAction": "Hoorbare zinsrust beoordelen in één woonkamerproef nadat de vastlopende invoer is gelokaliseerd. Tweede speaker alleen bij een concrete afwijking.",
+              "nextAction": "Eigenaar hoort alleen tussen het eerste en tweede getal een pauze; de kerntekst bevatte wel negen pauzetekens. Actieve Fenna/HA-route bevestigd; verschil met verwachte Codex-stem expliciet besproken vóór verdere uitvoerwijziging.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
-              "ownerActionRequired": true,
+              "ownerActionRequired": false,
               "execution": {
-                "status": "installed",
+                "status": "investigating_actual_owner_feedback",
                 "startedAt": "2026-10-19T07:08:01.588667+00:00",
                 "owner": "voice_executor",
                 "runtimeChanged": true,
-                "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+                "updatedAt": "2026-10-19T09:21:59.488681+00:00",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
                 "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-                "ownerAcceptance": false
+                "ownerAcceptance": false,
+                "ownerFeedbackEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-followup-20261019.json"
               }
             },
             {
@@ -7837,21 +7848,22 @@
               "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
               "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
               "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-              "nextAction": "Geïnstalleerd: native hervatting tijdens luisteren bewaart de onafgegeven vraag en beginbuffer. Echte volledige spraakketen met geïnjecteerde hervatting geslaagd; gewone woonkamerwerking volgen zonder opnieuw dezelfde onbewezen proef te vragen.",
+              "nextAction": "Native hervatting is werkelijk gebruikt en er kwam gesproken antwoord. Verkeerde beginwoorden in de herkenning en lange beantwoording afzonderlijk onderzoeken; geen nieuwe blinde eigenaarproef vragen.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
-              "ownerActionRequired": true,
+              "ownerActionRequired": false,
               "execution": {
-                "status": "installed_input_resume_fix",
+                "status": "investigating_actual_owner_feedback",
                 "startedAt": "2026-10-19T07:08:01.588667+00:00",
                 "owner": "voice_executor",
                 "runtimeChanged": true,
-                "updatedAt": "2026-10-19T09:02:43.056065434Z",
+                "updatedAt": "2026-10-19T09:21:59.488681+00:00",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
                 "independentReview": "development/reviews/native-input-resume-20261019.json",
                 "ownerAcceptance": false,
-                "inputDiagnosisEvidence": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json"
+                "inputDiagnosisEvidence": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json",
+                "ownerFeedbackEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-followup-20261019.json"
               }
             },
             {
@@ -7906,8 +7918,8 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "De gevonden native listen-resume-race is hersteld en geïnstalleerd; eerst normale beantwoording volgen. Gewone gesproken onderbreking blijft een afzonderlijke open grens; geen herhaalde volledige proef op de tweede speaker vragen.",
-              "ownerActionRequired": true,
+              "nextAction": "Gewone onderbreking wordt door de tijdelijke echo-invoerblokkade weggegooid. Hardware-reference is in gepinde bron en schema aanwezig; geen blinde firmwarewissel. Bestaande meetcode hersteld zodat een hervatte microfoon dezelfde begrensde opname behoudt; nog niet geïnstalleerd of gestart.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Gewone gesproken onderbreking is hersteld en technisch gecontroleerd.",
@@ -8160,15 +8172,23 @@
                 "ownerAcceptance": false,
                 "runtimeChanged": false,
                 "acousticProbe": {
-                  "status": "captured_input_resume_fix_installed",
+                  "status": "observer_lifecycle_fixed_not_armed",
                   "evidence": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json",
                   "scope": "living_room_only",
                   "ownerAcceptance": false,
                   "failure": "repeated owner test: core final without renderer start; early capture restart",
                   "reproduction": "LOCAL_STOP during unadmitted input raised response floor and suppressed reply",
                   "installedFix": "Native listening-only resume preserves input generation and buffered prefix; busy and terminal controls unchanged",
-                  "liveResult": "one real STT/core/TTS turn after injected resume; first software PCM 8844.943 ms after input; no physical output claim"
+                  "liveResult": "one real STT/core/TTS turn after injected resume; first software PCM 8844.943 ms after input; no physical output claim",
+                  "followupEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-followup-20261019.json"
                 }
+              },
+              "ownerFeedback20261019": {
+                "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-followup-20261019.json",
+                "status": "investigating_actual_owner_feedback",
+                "runtimeChanged": false,
+                "ownerAccepted": false,
+                "voiceRouteClarificationPending": true
               }
             },
             {

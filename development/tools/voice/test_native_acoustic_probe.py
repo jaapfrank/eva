@@ -16,6 +16,7 @@ class Source:
 def restore_input_observer(monkeypatch):
     from eva.voice_service.codex_media import CodexMediaSession
     monkeypatch.setattr(CodexMediaSession,'input_event',CodexMediaSession.input_event)
+    monkeypatch.setattr(CodexMediaSession,'aclose',CodexMediaSession.aclose)
 
 
 def frame():
@@ -83,7 +84,9 @@ async def test_observers_preserve_frames_errors_and_cancellation(tmp_path,monkey
     async def original_output(source,value):
         output_received.append(value)
         raise RuntimeError('original output failure')
+    async def original_close(session):return 'closed'
     monkeypatch.setattr(CodexMediaSession,'capture_native',original_capture)
+    monkeypatch.setattr(CodexMediaSession,'aclose',original_close)
     monkeypatch.setattr(SpeakerSource,'capture_frame',original_output)
     probe=install(tmp_path/'installed','a'*32)
     session=SimpleNamespace(source=source,current=lambda:None,
@@ -100,11 +103,42 @@ async def test_observers_preserve_frames_errors_and_cancellation(tmp_path,monkey
     with pytest.raises(asyncio.CancelledError):await task
     assert received==[f] and received[0] is f
     assert output_received==[f] and output_received[0] is f
-    assert probe.recordings[source].closed
+    recording=probe.recordings[source]
+    assert not recording.closed
+    deadline=recording.deadline
+    # A replacement native capture continues the same sample, not a new window.
+    async def resumed_frames():yield f
+    await CodexMediaSession.capture_native(session,resumed_frames())
+    assert received==[f,f] and probe.count==1
+    assert recording.deadline==deadline and not recording.closed
+    assert await CodexMediaSession.aclose(session)=='closed'
+    assert recording.closed
+    with wave.open(str(recording.root/'microphone.private.wav'),'rb') as w:
+        assert w.getnframes()==640
     # A closed recording neither re-arms nor changes subsequent output failure.
     with pytest.raises(RuntimeError,match='original output failure'):
         await SpeakerSource.capture_frame(source,f)
     assert probe.count==1
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('failure',[RuntimeError('close failed'),asyncio.CancelledError()])
+async def test_terminal_close_stops_observation_before_cleanup_failure(tmp_path,monkeypatch,failure):
+    from eva.voice_service.codex_media import CodexMediaSession
+    from eva.voice_service.codex_speaker_audio import SpeakerSource
+    async def capture(session,frames):pass
+    async def close(session):
+        assert probe.recordings[source].closed
+        raise failure
+    monkeypatch.setattr(CodexMediaSession,'capture_native',capture)
+    monkeypatch.setattr(CodexMediaSession,'aclose',close)
+    monkeypatch.setattr(SpeakerSource,'capture_frame',lambda *args:None)
+    probe=install(tmp_path/'terminal','test-device')
+    source=Source();probe.microphone(source,frame())
+    session=SimpleNamespace(source=source)
+    with pytest.raises(type(failure)):await CodexMediaSession.aclose(session)
+    probe.microphone(source,frame())
+    assert probe.count==1 and probe.recordings[source].samples['microphone']==320
 
 
 @pytest.mark.asyncio
