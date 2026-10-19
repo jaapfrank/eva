@@ -195,7 +195,7 @@ function memorySourcesPayload(value) {
     if (typeof source.source_id !== 'string' || !uuid.test(source.source_id) || ids.has(source.source_id)
       || !timestamp(source.occurred_at) || typeof source.excerpt !== 'string'
       || !source.excerpt || [...source.excerpt].length > 2048 || typeof source.truncated !== 'boolean'
-      || !['retained', 'pending', 'needs_help'].includes(source.retention_state)) throw new Error('Geheugenbron wijkt af');
+      || !['retained', 'pending', 'needs_help', 'day_context', 'dream_processing', 'not_selected'].includes(source.retention_state)) throw new Error('Geheugenbron wijkt af');
     ids.add(source.source_id);
   }
   if (payload.next_cursor !== null && !payload.sources.length) throw new Error('Lege vervolgpagina');
@@ -215,7 +215,7 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged, onSelec
       exactObject(value, ['contract', 'source_id', 'content', 'occurred_at', 'retention_state', 'origin', 'kind', 'trust', 'learning', 'current_learning', 'current_source_id', 'can_forget', 'erasure_scope'], 'geheugenbron');
       if (value.contract !== 'EvaOwnerMemorySourceView/v1' || value.source_id !== sourceId
         || typeof value.content !== 'string' || !value.content || value.content.length > 1048576
-        || !['retained', 'pending', 'needs_help'].includes(value.retention_state)
+        || !['retained', 'pending', 'needs_help', 'day_context', 'dream_processing', 'not_selected'].includes(value.retention_state)
         || typeof value.origin !== 'string' || value.origin.length > 80) throw new Error();
       if (!controller.signal.aborted) setDetail(value);
     }).catch(() => { if (!controller.signal.aborted) setError('Deze bron is niet beschikbaar. Sluit dit venster en vernieuw de lijst.'); });
@@ -275,7 +275,7 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged, onSelec
         <button disabled={busy} onClick={() => change('forget')}>Bevestigen: deze bron vergeten</button>
         <button disabled={busy} onClick={() => setMode('view')}>Annuleren</button>
       </div>}
-      {detail.retention_state !== 'retained' && <p>Wissen is beschikbaar zodra deze bron verwerkt is.</p>}
+      {!detail.can_forget && <p>Wissen is beschikbaar zodra deze bron verwerkt is.</p>}
       {busy && <p role="status">Je wijziging wordt verwerkt…</p>}
     </>}
   </section>;
@@ -329,7 +329,7 @@ function MemorySources({ selectedSource, onMemoryChanged }) {
   React.useEffect(() => { if (['denied', 'error'].includes(result.state)) setSelected(null); }, [result.state]);
   const changePage = next => { setSelected(null); setResult({ state: 'loading', page: null }); setCursors(next); };
   const page = result.page;
-  const labels = { retained: 'Verwerkt', pending: 'Wacht op verwerking', needs_help: 'Hulp nodig' };
+  const labels = { retained: 'Verwerkt voor langetermijnkennis', pending: 'Wacht op verwerking', needs_help: 'Hulp nodig', day_context: 'Kortetermijncontext · wacht op dromen', dream_processing: 'Droomverwerking', not_selected: 'Verwerkt · geen blijvende kennis geselecteerd' };
   return <details className="memory-sources" open={expanded} onToggle={event => setExpanded(event.currentTarget.open)}>
     <summary id="memory-heading">Gespreksbronnen bekijken — geschiedenis en herkomst</summary>
     <div className="memory-toolbar"><div>

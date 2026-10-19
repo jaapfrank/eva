@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 import hashlib
 from queue import Empty, Queue
 import re
-from threading import Event, Lock, Thread, current_thread
+from threading import Event, Lock, RLock, Thread, current_thread
 import time
 from typing import Callable, Protocol
 
@@ -162,6 +162,8 @@ class SemanticMemoryColdPathWorker:
         self._service_thread: Thread | None = None
         self._stopping = False
         self._lock = Lock()
+        self._retention_fence = RLock()
+        self._dream_pending: dict[str, _RetainJob] = {}
         self._last_activity = time.monotonic()
         self._reflection_scopes: set[tuple[str, str, str]] = set()
         self._last_error: str | None = None
@@ -291,6 +293,8 @@ class SemanticMemoryColdPathWorker:
                 return
 
     def submit(self, document: ConversationMemoryDocument) -> object | None:
+        if document.retention_mode == "dream" and not callable(getattr(self._outbox, "prepare_dream_batch", None)):
+            raise RuntimeError("dream memory requires the existing durable outbox")
         with self._lock:
             self._last_activity = time.monotonic()
         admission = None
@@ -311,6 +315,8 @@ class SemanticMemoryColdPathWorker:
                 )
             document = replace(document, retention_until=retention_until)
         durable_job = None if self._outbox is None else self._outbox.enqueue(document)
+        if durable_job is not None:
+            document = getattr(durable_job, "document", document)
         self._queue.put_nowait(_RetainJob(document, durable_job=durable_job))
         return admission
 
@@ -321,6 +327,7 @@ class SemanticMemoryColdPathWorker:
         document_id: str,
         now: datetime,
         source_message_id: str | None = None,
+        document: ConversationMemoryDocument | None = None,
     ) -> bool:
         """Remove semantic and optional raw source content under one durable lease."""
 
@@ -337,13 +344,32 @@ class SemanticMemoryColdPathWorker:
         }
         if source_message_id is not None:
             request["source_message_id"] = source_message_id
-        job = self._storage_budget.request_erasure(**request)
-        if job is None:
-            return False
-        durable_source = getattr(job, "source_message_id", None)
-        if source_message_id is not None and durable_source != source_message_id:
-            raise RuntimeError("memory erasure source binding differs")
-        self._remove_job(job, now=now)
+        with self._retention_fence, self._durable_retention_guard():
+            if document is None:
+                resolve = getattr(self._outbox, "pending_erasure_document", None)
+                if callable(resolve):
+                    document = resolve(principal_id=principal_id, document_id=document_id,
+                        source_message_id=source_message_id)
+            if document is not None and document.retention_mode == "dream":
+                if (document.document_id != document_id or document.principal_id != principal_id
+                        or document.source_ref != source_message_id):
+                    raise RuntimeError("pending erasure source binding differs")
+                address = getattr(self._memory, "document_retention_address", None)
+                pending = getattr(self._storage_budget, "request_pending_erasure", None)
+                if not callable(address) or not callable(pending):
+                    raise RuntimeError("pending memory erasure is not configured")
+                bank_id, native_document_id = address(document)
+                if native_document_id != document_id:
+                    raise RuntimeError("pending native erasure address differs")
+                job = pending(document, bank_id=bank_id, now=now, source_message_id=source_message_id)
+            else:
+                job = self._storage_budget.request_erasure(**request)
+            if job is None:
+                return False
+            durable_source = getattr(job, "source_message_id", None)
+            if source_message_id is not None and durable_source != source_message_id:
+                raise RuntimeError("memory erasure source binding differs")
+            self._remove_job_fenced(job, now=now)
         return True
 
     @staticmethod
@@ -365,6 +391,12 @@ class SemanticMemoryColdPathWorker:
         return hashlib.sha256(payload).hexdigest()
 
     def _remove_job(self, job: object, *, now: datetime) -> None:
+        # A forget operation must follow an already dispatched retention stage,
+        # never race its later write. This lock is independent of foreground I/O.
+        with self._retention_fence, self._durable_retention_guard():
+            self._remove_job_fenced(job, now=now)
+
+    def _remove_job_fenced(self, job: object, *, now: datetime) -> None:
         if self._storage_budget is None:
             raise RuntimeError("memory erasure requires a durable storage budget")
         bank_id = getattr(job, "bank_id", None)
@@ -414,6 +446,7 @@ class SemanticMemoryColdPathWorker:
                 or not isinstance(getattr(authority_receipt, "replayed", None), bool)
             ):
                 raise RuntimeError("restore authority erasure receipt is invalid")
+        self._settle_dream_erasure(document_id=document_id, now=now)
         self._memory.remove_conversation_document(
             bank_id=bank_id,
             document_id=document_id,
@@ -481,6 +514,7 @@ class SemanticMemoryColdPathWorker:
             try:
                 job = self._queue.get(timeout=poll_seconds)
             except Empty:
+                added = False
                 if self._outbox is not None:
                     try:
                         recovered = self._outbox.pending()
@@ -497,11 +531,20 @@ class SemanticMemoryColdPathWorker:
                                     "an invalid job"
                                 )
                             continue
+                        if document.document_id in self._dream_pending:
+                            continue
                         self._queue.put_nowait(
                             _RetainJob(document, durable_job=durable_job)
                         )
-                    if recovered:
+                        added = True
+                    if added:
                         continue
+                try:
+                    self._flush_dream_if_idle()
+                except Exception as error:
+                    with self._lock:
+                        self._last_error = f"dream memory: {type(error).__name__}: {error}"
+                    self._stop.wait(self._retry_delay_seconds)
                 self._schedule_reflection_if_idle()
                 continue
             if job is None:
@@ -509,81 +552,217 @@ class SemanticMemoryColdPathWorker:
                 if self._stop.is_set():
                     return
                 continue  # A completed previous stop may have left its sentinel queued.
-            active_job = job
-            if self._outbox is not None:
-                try:
-                    durable_job = self._outbox.begin(
-                        job.durable_job,
-                        now=datetime.now(tz=UTC).replace(microsecond=0),
-                    )
-                except Exception as error:
-                    with self._lock:
-                        self._last_error = f"{type(error).__name__}: {error}"
-                    if not self._stop.wait(self._retry_delay_seconds):
-                        self._queue.put_nowait(job)
-                    self._queue.task_done()
-                    continue
-                if durable_job is None:
-                    self._queue.task_done()
-                    continue
-                active_job = _RetainJob(job.document, durable_job=durable_job)
+            if job.document.retention_mode == "dream":
+                self._dream_pending.setdefault(job.document.document_id, job)
+                self._queue.task_done()
+                continue
             try:
-                receipt = self._memory.retain_conversation(active_job.document)
-                if self._storage_budget is not None:
-                    self._storage_budget.mark_retained(
-                        active_job.document,
-                        receipt,
-                        now=datetime.now(tz=UTC).replace(microsecond=0),
-                    )
-                if self._outbox is not None:
-                    self._outbox.succeed(
-                        active_job.durable_job,
-                        receipt,
-                        now=datetime.now(tz=UTC).replace(microsecond=0),
-                    )
-                with self._lock:
-                    self._last_error = None
-                    if (active_job.document.audience.kind == "private_person"
-                            and getattr(receipt, "disposition", "retained") == "retained"):
-                        self._reflection_scopes.add(
-                            (
-                                active_job.document.tenant_id,
-                                active_job.document.installation_id,
-                                active_job.document.principal_id,
-                            )
-                        )
-            except Exception as error:  # worker boundary: never kill the chat server
+                with self._retention_fence, self._durable_retention_guard():
+                    self._process_immediate(job)
+            except Exception as error:
                 with self._lock:
                     self._last_error = f"{type(error).__name__}: {error}"
-                if self._outbox is not None:
-                    try:
-                        state = self._outbox.fail(
-                            active_job.durable_job,
-                            error,
-                            now=datetime.now(tz=UTC).replace(microsecond=0),
-                        )
-                    except Exception as outbox_error:
-                        with self._lock:
-                            self._last_error = (
-                                f"{type(outbox_error).__name__}: {outbox_error}"
-                            )
-                        if not self._stop.wait(self._retry_delay_seconds):
-                            self._queue.put_nowait(active_job)
-                        continue
-                    if getattr(
-                        state, "status", None
-                    ) != "needs_help" and not self._stop.wait(
-                        self._retry_delay_seconds
-                    ):
-                        self._queue.put_nowait(
-                            # begin() reloads the persisted checkpoint from the job.
-                            active_job
-                        )
-                elif job.attempt < 3 and not self._stop.wait(self._retry_delay_seconds):
-                    self._queue.put_nowait(_RetainJob(job.document, job.attempt + 1))
+                if not self._stop.wait(self._retry_delay_seconds):
+                    self._queue.put_nowait(job)
             finally:
                 self._queue.task_done()
             self._schedule_reflection_if_idle()
+
+    def _durable_retention_guard(self):
+        guard = getattr(self._outbox, "retention_guard", None)
+        return guard() if callable(guard) else nullcontext()
+
+    def _process_immediate(self, job: _RetainJob) -> None:
+        active_job = job
+        if self._outbox is not None:
+            try:
+                durable_job = self._outbox.begin(
+                    job.durable_job,
+                    now=datetime.now(tz=UTC).replace(microsecond=0),
+                )
+            except Exception as error:
+                with self._lock:
+                    self._last_error = f"{type(error).__name__}: {error}"
+                if not self._stop.wait(self._retry_delay_seconds):
+                    self._queue.put_nowait(job)
+                return
+            if durable_job is None:
+                return
+            active_job = _RetainJob(job.document, durable_job=durable_job)
+        try:
+            receipt = self._memory.retain_conversation(active_job.document)
+            self._accept_retention(active_job, receipt)
+        except Exception as error:  # worker boundary: never kill the chat server
+            with self._lock:
+                self._last_error = f"{type(error).__name__}: {error}"
+            if self._outbox is not None:
+                try:
+                    state = self._outbox.fail(
+                        active_job.durable_job,
+                        error,
+                        now=datetime.now(tz=UTC).replace(microsecond=0),
+                    )
+                except Exception as outbox_error:
+                    with self._lock:
+                        self._last_error = (
+                            f"{type(outbox_error).__name__}: {outbox_error}"
+                        )
+                    if not self._stop.wait(self._retry_delay_seconds):
+                        self._queue.put_nowait(active_job)
+                    return
+                if getattr(
+                    state, "status", None
+                ) != "needs_help" and not self._stop.wait(
+                    self._retry_delay_seconds
+                ):
+                    self._queue.put_nowait(
+                        # begin() reloads the persisted checkpoint from the job.
+                        active_job
+                    )
+            elif job.attempt < 3 and not self._stop.wait(self._retry_delay_seconds):
+                self._queue.put_nowait(_RetainJob(job.document, job.attempt + 1))
+
+    def _accept_retention(self, active_job: _RetainJob, receipt: MemoryRetentionReceipt) -> None:
+        now = datetime.now(tz=UTC).replace(microsecond=0)
+        if self._storage_budget is not None:
+            self._storage_budget.mark_retained(active_job.document, receipt, now=now)
+        if self._outbox is not None:
+            self._outbox.succeed(active_job.durable_job, receipt, now=now)
+        with self._lock:
+            self._last_error = None
+            if (active_job.document.audience.kind == 'private_person'
+                    and getattr(receipt, 'disposition', 'retained') == 'retained'):
+                self._reflection_scopes.add((active_job.document.tenant_id,
+                    active_job.document.installation_id, active_job.document.principal_id))
+
+    def _flush_dream_if_idle(self) -> None:
+        if not self._idle_ready():
+            return
+        prepare = getattr(self._outbox, 'prepare_dream_batch', None)
+        if not callable(prepare):
+            return
+        with self._retention_fence, self._durable_retention_guard():
+            batch = None
+            active = []
+            stage_started = False
+            try:
+                now = datetime.now(tz=UTC).replace(microsecond=0)
+                batch = prepare(tuple(job.durable_job for job in self._dream_pending.values()), now=now)
+                if batch is None:
+                    self._dream_pending.clear()  # Originals remain in the durable outbox.
+                    return
+                if any(job.state.status == 'needs_help' for job in batch.jobs):
+                    self._outbox.block_dream_batch(batch.state.thread_id,
+                        RuntimeError("dream cohort needs help; no new provider dispatch"), now=now)
+                    return
+                if all(job.state.status == 'completed' for job in batch.jobs):
+                    self._outbox.finish_dream_batch(batch, now=now)
+                    for job in batch.jobs:
+                        self._dream_pending.pop(job.document.document_id, None)
+                    return
+                checked = self._outbox.read_dream_batch(batch.state.thread_id)
+                if not self._idle_ready():
+                    return
+                identity = getattr(self._memory, "dream_operation_identity", None)
+                retain = getattr(self._memory, "retain_dream_conversations", None)
+                if not callable(identity) or not callable(retain):
+                    raise RuntimeError("selected memory provider does not support dream batches")
+                bank_id, operation_id = identity(tuple(job.document for job in checked.jobs))
+                stage_started = True
+                for job in checked.jobs:
+                    if job.state.status == 'completed':
+                        continue  # Keep its document in the same native replay.
+                    claimed = self._outbox.begin(job, now=now)
+                    if claimed is None:
+                        raise RuntimeError('dream source claim changed')
+                    active.append(_RetainJob(claimed.document, durable_job=claimed))
+                # This stage is now started. A later foreground arrival prevents the
+                # next stage, but does not burn a retry merely by deferring this one.
+                # The exact native operation is durable before its first POST.
+                self._outbox.bind_dream_operation(batch, bank_id=bank_id,
+                    operation_id=operation_id, now=now)
+                receipts = retain(tuple(job.document for job in checked.jobs))
+                expected = {job.document.document_id: job for job in checked.jobs}
+                if (not isinstance(receipts, tuple) or len(receipts) != len(expected)
+                        or any(not isinstance(receipt, MemoryRetentionReceipt) for receipt in receipts)
+                        or {receipt.document_id for receipt in receipts} != set(expected)):
+                    raise RuntimeError('dream provider receipts differ from exact cohort')
+                claimed_by_id = {job.document.document_id: job for job in active}
+                for receipt in receipts:
+                    job = claimed_by_id.get(receipt.document_id)
+                    if job is None:
+                        # A previously acknowledged source is replayed only for
+                        # exact receipt validation, never re-accounted in storage.
+                        self._outbox.succeed(expected[receipt.document_id], receipt, now=now)
+                    else:
+                        self._accept_retention(job, receipt)
+                        active.remove(job)
+                self._outbox.finish_dream_batch(batch, now=datetime.now(tz=UTC).replace(microsecond=0))
+                for job in checked.jobs:
+                    self._dream_pending.pop(job.document.document_id, None)
+            except Exception as error:
+                with self._lock:
+                    self._last_error = 'dream memory: ' + type(error).__name__ + ': ' + str(error)
+                if batch is not None and not stage_started:
+                    self._outbox.block_dream_batch(batch.state.thread_id, error,
+                        now=datetime.now(tz=UTC).replace(microsecond=0))
+                for job in active:
+                    try:
+                        state = self._outbox.fail(job.durable_job, error,
+                            now=datetime.now(tz=UTC).replace(microsecond=0))
+                        if state.status == "needs_help" and batch is not None:
+                            self._outbox.block_dream_batch(batch.state.thread_id, error,
+                                now=datetime.now(tz=UTC).replace(microsecond=0))
+                    except Exception:
+                        # Keep the immutable manifest and original source claims.
+                        # Recovery resumes them rather than constructing new work.
+                        pass
+                self._dream_pending.clear()  # Recovery reloads canonical, still-pending sources.
+                self._stop.wait(self._retry_delay_seconds)
+
+    def _settle_dream_erasure(self, *, document_id: str, now: datetime) -> None:
+        find = getattr(self._outbox, "dream_batches_for_erasure", None)
+        if not callable(find):
+            return
+        for state, binding in find(document_id):
+            thread_id = state.thread_id
+            if state.phase == "memory_dream_cancelled":
+                continue
+            if binding is None:
+                self._outbox.cancel_undispatched_dream_batch(thread_id, now=now)
+                continue
+            # Stop ordinary recovery before probing a possibly still running remote
+            # operation. Forget remains pending if settlement cannot be proven.
+            self._outbox.block_dream_batch(thread_id,
+                RuntimeError("source erasure requested; settle native operation first"), now=now)
+            settled = self._memory.settle_dream_operation(**binding)
+            if settled == "not_found":
+                self._outbox.cancel_absent_dream_batch(thread_id, **binding, now=now)
+            elif settled == "completed":
+                if state.phase == "memory_dream_completed":
+                    continue
+                batch = self._outbox.read_dream_batch(thread_id)
+                receipts = self._memory.read_dream_operation_receipts(
+                    tuple(job.document for job in batch.jobs), **binding)
+                expected = {job.document.document_id: job for job in batch.jobs}
+                if (not isinstance(receipts, tuple) or len(receipts) != len(expected)
+                        or any(not isinstance(receipt, MemoryRetentionReceipt) for receipt in receipts)
+                        or {receipt.document_id for receipt in receipts} != set(expected)):
+                    raise RuntimeError("settled dream receipts differ from exact cohort")
+                for receipt in receipts:
+                    durable = self._outbox.reconcile_dream_receipt(batch, receipt, now=now)
+                    if durable.document.document_id == document_id or durable.state.status == "completed":
+                        self._outbox.succeed(durable, receipt, now=now)
+                    else:
+                        self._accept_retention(_RetainJob(durable.document, durable_job=durable), receipt)
+                self._outbox.finish_dream_batch(batch, now=now)
+                for source in batch.jobs:
+                    self._dream_pending.pop(source.document.document_id, None)
+            elif settled != "failed":
+                raise RuntimeError("native dream operation has not safely settled")
+            # A failed, settled operation cannot write again. Its other members stay
+            # bound and visibly unresolved, rather than being silently re-extracted.
+        self._dream_pending.pop(document_id, None)
 
     def _schedule_reflection_if_idle(self) -> None:
         if self._stop.is_set():

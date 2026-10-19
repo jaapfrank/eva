@@ -1,0 +1,255 @@
+{
+  "contract": "EvaDreamMemoryInstalledOutcome/v1",
+  "recordedAt": "2026-10-19T10:53:31.449676+00:00",
+  "taskId": "E4.11",
+  "status": "installed_partial_task",
+  "technicalTaskComplete": false,
+  "ownerAcceptance": false,
+  "familyUse": "not_observed_after_this_installation",
+  "whatAlreadyExisted": [
+    "PostgreSQL conversation journal and durable semantic outbox",
+    "Native selective extraction and observation consolidation; six closed selection cases retained as prior proof",
+    "Owner source inspection/correction/erasure, resource admission, idle reflection and existing provider route"
+  ],
+  "added": [
+    "Ordinary private exchanges wait durably for idle/capacity before native retention; explicit controls, grounded identity corrections and typed work/learning remain on their existing immediate route",
+    "Fixed bounded same-person/audience/privacy/day manifests, exact native operation binding, per-source selected/zero receipts and recovery",
+    "Cross-worker retention/erasure guard and pending erasure leases; native operation must settle before DELETE, including process restart and mixed zero/positive outcomes",
+    "Named native strategy provision/readback retains bank defaults and unrelated strategies, avoiding new raw document/chunk copies",
+    "Owner source labels distinguish short-term context, dream processing and no selected knowledge; forget works for queued ordinary exchanges"
+  ],
+  "installation": {
+    "roles": {
+      "core": {
+        "baseImage": "sha256:4f1e82720bbac4edc107b00cde650938b4730d2e3051fd7e53364f5b61d4aacf",
+        "image": "sha256:58c762e7bec95f6652108909bafc8eea2ee5face8a1eefd40ec9fcbdd7064e27",
+        "changedSources": [
+          "eva/application/memory.py",
+          "eva/application/memory_background.py",
+          "eva/adapters/postgres/memory_outbox.py",
+          "eva/adapters/postgres/runtime_resource_usage.py",
+          "eva/adapters/postgres/people_memory_overview.py",
+          "eva/application/people_memory_overview.py",
+          "eva/bootstrap/runtime.py",
+          "eva/bootstrap/dashboard_memory.py",
+          "eva/adapters/projection/hindsight.py"
+        ]
+      },
+      "worker": {
+        "baseImage": "sha256:2ded8b001657e6b75114c6d629faf6296678943d42010a1f6e607c8eac8471f2",
+        "image": "sha256:fc78f752dcf3518667c675b1b3fab8a314aa85fa355314b22e2d795d5f61986e",
+        "changedSources": [
+          "eva/application/memory.py",
+          "eva/application/memory_background.py",
+          "eva/adapters/postgres/memory_outbox.py",
+          "eva/adapters/postgres/runtime_resource_usage.py",
+          "eva/adapters/postgres/people_memory_overview.py",
+          "eva/application/people_memory_overview.py",
+          "eva/bootstrap/runtime.py",
+          "eva/bootstrap/dashboard_memory.py",
+          "eva/adapters/projection/hindsight.py"
+        ]
+      }
+    },
+    "retainedMounts": true,
+    "policyBindingChanged": false,
+    "workerProfileReleaseSha256": "7b26d8da7d93c740b179b87b27148a56b31e312f047a2f89974858d4b41f1be4",
+    "executionPinParity": 50,
+    "voiceCodeOrServicesChanged": false
+  },
+  "verification": {
+    "rootHandoffTests": {
+      "passed": 65,
+      "seconds": 10.07,
+      "logSha256": "b4f92376feeb73906568f13dbe635aa6327eb15a54518b8d1dc88bc25f6bd33d"
+    },
+    "existingOutboxTests": {
+      "passed": 5,
+      "seconds": 2.43
+    },
+    "providerTests": {
+      "originalAgentDistinctPassed": 194,
+      "additionalProvisionReadbackCasesPassed": 7,
+      "runsWereTargetedNotOneWholeSuite": true
+    },
+    "pendingStorageTests": {
+      "distinctRelevantPassed": 48,
+      "overlapWithHandoffSelectionStorageTests": true
+    },
+    "producerProvenance": {
+      "affectedAfterResponseCasesPassed": 4,
+      "unrelatedRespondFixtureFailures": 3,
+      "respondMethodAstUnchanged": true,
+      "failuresPreserved": true
+    },
+    "nativeHandoff": {
+      "submittedParentOperations": 1,
+      "sourceItems": 2,
+      "nativeStoredOperationsIncludingChildren": 3,
+      "receiptSelectedFactCounts": [
+        2,
+        1
+      ],
+      "seconds": 10.89025950600626,
+      "originalTextBytes": 0,
+      "chunkTextBytes": 0,
+      "getOnlyReceiptRecoveryEqual": true,
+      "getOnlySettlementCompleted": true,
+      "semanticQualityComparisonPerformed": false,
+      "oldSixSelectionCasesRepeated": false
+    },
+    "installedSources": {
+      "roles": {
+        "core": {
+          "image": "sha256:58c762e7bec95f6652108909bafc8eea2ee5face8a1eefd40ec9fcbdd7064e27",
+          "sourceCountChecked": 9,
+          "healthy": true,
+          "startedAt": "2026-10-19T10:48:25.876466524Z",
+          "logLines": 5,
+          "errorLines": 0
+        },
+        "worker": {
+          "image": "sha256:fc78f752dcf3518667c675b1b3fab8a314aa85fa355314b22e2d795d5f61986e",
+          "sourceCountChecked": 9,
+          "healthy": true,
+          "startedAt": "2026-10-19T10:48:37.426714081Z",
+          "logLines": 1,
+          "errorLines": 0
+        }
+      },
+      "http": {
+        "project": {
+          "status": 200,
+          "bytes": 442020,
+          "currentTask": "E4.11"
+        },
+        "owner": {
+          "status": 200,
+          "bytes": 435
+        }
+      }
+    },
+    "http": {
+      "readiness": {
+        "status": 200,
+        "contract": null,
+        "ready": true
+      },
+      "memorySources": {
+        "status": 200,
+        "contract": "EvaOwnerMemorySources/v1",
+        "count": 2,
+        "states": [
+          "retained",
+          "retained"
+        ]
+      },
+      "memoryOverview": {
+        "status": 200,
+        "contract": "EvaPeopleMemoryOverview/v1",
+        "memory": {
+          "state": "unavailable"
+        }
+      },
+      "installedUI": {
+        "status": 200,
+        "path": "/internal/v1/dashboard/assets/index-DntJdv6h.js",
+        "sha256": "02e13f1a9d6d2e8d67c5f3e9d24de7e78c296a91808b53c1b568e2764a0629b0",
+        "dayContextLabel": true,
+        "dreamLabel": true,
+        "notSelectedLabel": true
+      }
+    }
+  },
+  "remaining": [
+    "Historical source/derived-memory cleanup and actual storage/context reduction are not complete",
+    "The existing status reader refuses a history over its 256-thread bound; installed audit found 1652 completed and 38 needs-help memory cursors. Neither missing statuses nor old failures are reported as success",
+    "Journal/outbox retention and native async payload lifecycle still retain raw source content; omitting new native document/chunk text is not complete physical data erasure",
+    "No proof of one model call per day, lower model tokens or credit savings; native batch children can extract separately",
+    "Actual family use and long-term consolidation over days remain to be observed"
+  ],
+  "independentSourceReviewSha256": "84bbc52d8a2905a6ba1fa778e728d52bfea07e536c7b0e5dc3c98d49ff2069bc",
+  "developmentUsage": {
+    "modelTokens": null,
+    "credits": null,
+    "testModelCalls": 0,
+    "isolatedNativeHandoffSubmittedOperations": 1
+  },
+  "runtimeUsage": {
+    "nativeModelAttempts": null,
+    "tokens": null,
+    "credits": null
+  },
+  "previousGoalTurnClassification": "progress: authoritative goal clarification committed; this turn installs the memory handoff and yields live evidence of the remaining historical-status gap",
+  "fullGoalComplete": false,
+  "repositoryPackaging": {
+    "reviewedInstalledBytesPreserved": true,
+    "lineEndingsAlignedToExistingPerFileGitConvention": [
+      {
+        "path": "src/eva/application/memory_background.py",
+        "reviewedAndInstalledSha256": "882cf879d9eb5d7d9873bc24311a5fe7bc2d74922549499342699f44bc6e5f80",
+        "repositorySha256": "fbdeb5a247217fdf339337bdfd69d7ec436498be74b0a8fbbc52c8a311d43d28",
+        "normalizedUtf8TextSha256": "fbdeb5a247217fdf339337bdfd69d7ec436498be74b0a8fbbc52c8a311d43d28",
+        "lineEndingOnly": true
+      },
+      {
+        "path": "src/eva/adapters/postgres/memory_outbox.py",
+        "reviewedAndInstalledSha256": "7c9d60691fef64bef20d117f45b96323538bbae7eeff4c82b39bc285ce838958",
+        "repositorySha256": "76d035a90a0e018670f4a1da2564bfe07812609b81de2cf84193f6e5b69ffe7a",
+        "normalizedUtf8TextSha256": "76d035a90a0e018670f4a1da2564bfe07812609b81de2cf84193f6e5b69ffe7a",
+        "lineEndingOnly": true
+      },
+      {
+        "path": "src/eva/adapters/postgres/people_memory_overview.py",
+        "reviewedAndInstalledSha256": "bc09bc95ea8fb780b726443f04ab4d4a730ef123c2364e28a15e54f9b35f9cb9",
+        "repositorySha256": "0de91e5bdaf28cf8f5733013b3e7e665bccb6c40b3147bb4f114f8330fcb5947",
+        "normalizedUtf8TextSha256": "0de91e5bdaf28cf8f5733013b3e7e665bccb6c40b3147bb4f114f8330fcb5947",
+        "lineEndingOnly": true
+      },
+      {
+        "path": "src/eva/application/people_memory_overview.py",
+        "reviewedAndInstalledSha256": "93ca7e7f1ca3cc241bc3cd3a632ab05fbe749eb2beedf0ab3465e3d88a5a3fb8",
+        "repositorySha256": "2bc5cf6b51c2b3224e1fbbcf676c340a9f633715818808e05bf349d42876de62",
+        "normalizedUtf8TextSha256": "2bc5cf6b51c2b3224e1fbbcf676c340a9f633715818808e05bf349d42876de62",
+        "lineEndingOnly": true
+      },
+      {
+        "path": "src/eva/bootstrap/dashboard_memory.py",
+        "reviewedAndInstalledSha256": "dc3e0871dad29a173109c299a2c781e12eeea6ba5972286892c8e22166bf73a9",
+        "repositorySha256": "62bc1c5016c4a952095a2363327db4ac9bf5c90a6cb97bdff3db24fc37a72bf0",
+        "normalizedUtf8TextSha256": "62bc1c5016c4a952095a2363327db4ac9bf5c90a6cb97bdff3db24fc37a72bf0",
+        "lineEndingOnly": true
+      },
+      {
+        "path": "development/tools/project-dashboard/src/main.jsx",
+        "reviewedAndInstalledSha256": "27dab0c1f358cc177c299835fc7e309a4e2a44ee2e0bdad7e89238fd47ef8a84",
+        "repositorySha256": "54537eedeb43c8e9b2ca6c899f6d07f64109b3aed0fcea8aa6c51be0f19e1968",
+        "normalizedUtf8TextSha256": "54537eedeb43c8e9b2ca6c899f6d07f64109b3aed0fcea8aa6c51be0f19e1968",
+        "lineEndingOnly": true
+      },
+      {
+        "path": "development/tests/application/test_memory_background.py",
+        "reviewedAndInstalledSha256": "79cfccfd7f9e17747a5faa4a867de49cb01ed67d1a1915b3b746a073b0f0af56",
+        "repositorySha256": "bbf45e6a67f7db0055b47d0fcfa210a9e62dc6eb0b411cb0b6c354728852c6a7",
+        "normalizedUtf8TextSha256": "bbf45e6a67f7db0055b47d0fcfa210a9e62dc6eb0b411cb0b6c354728852c6a7",
+        "lineEndingOnly": true
+      },
+      {
+        "path": "development/tests/postgres/test_dream_memory_handoff.py",
+        "reviewedAndInstalledSha256": "894f056ea4c37899739a6f6f6a60114bdec50098aca4e96cde45dece0ed3a686",
+        "repositorySha256": "e4e2f3f8f7c4e0f8e6e068d3aa4ff6d4a63ce814919030c5dd1865ec34c31792",
+        "normalizedUtf8TextSha256": "e4e2f3f8f7c4e0f8e6e068d3aa4ff6d4a63ce814919030c5dd1865ec34c31792",
+        "lineEndingOnly": true
+      }
+    ],
+    "semanticSourceChangesDuringPackaging": false,
+    "initialBuildFailure": "Existing core image had 418 filesystem layers; per-file COPY hit the mount-option length limit. The successful image uses one merged source COPY and existing asset replacement, with no running rollback.",
+    "previousWorkerMemoryModuleAlignment": [
+      "application/memory_background.py: already installed core foreground/capacity helpers",
+      "adapters/postgres/people_memory_overview.py: already installed core owner source reference helpers",
+      "bootstrap/dashboard_memory.py: shared module absent in the older worker image",
+      "adapters/projection/hindsight.py: already installed core compact memory presentation helpers"
+    ],
+    "unchangedExecutionPins": 50
+  }
+}

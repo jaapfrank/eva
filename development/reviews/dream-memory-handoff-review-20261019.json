@@ -1,0 +1,78 @@
+{
+  "contract": "EvaDreamMemoryReviewSummary/v1",
+  "recordedAt": "2026-10-19T10:53:31.449676+00:00",
+  "reviewer": "camera_face_adapter",
+  "summaryProducedByCoordinator": true,
+  "decision": "GO_FOR_BOUNDED_NATIVE_HANDOFF_AND_COORDINATED_INSTALLATION",
+  "sourceReviewSha256": "84bbc52d8a2905a6ba1fa778e728d52bfea07e536c7b0e5dc3c98d49ff2069bc",
+  "sourceBindings": [
+    {
+      "path": "src/eva/application/memory.py",
+      "sha256": "447ddd80c0ae5f77b5299992a1462fa687373344220adc840ff9812a32286897"
+    },
+    {
+      "path": "src/eva/application/memory_background.py",
+      "sha256": "882cf879d9eb5d7d9873bc24311a5fe7bc2d74922549499342699f44bc6e5f80"
+    },
+    {
+      "path": "src/eva/adapters/postgres/memory_outbox.py",
+      "sha256": "7c9d60691fef64bef20d117f45b96323538bbae7eeff4c82b39bc285ce838958"
+    },
+    {
+      "path": "src/eva/adapters/postgres/runtime_resource_usage.py",
+      "sha256": "e97ba5f22781dfb615bebc452dcb9113303d7d3f15e33f4c4e1e580e2ff87240"
+    },
+    {
+      "path": "src/eva/adapters/postgres/people_memory_overview.py",
+      "sha256": "bc09bc95ea8fb780b726443f04ab4d4a730ef123c2364e28a15e54f9b35f9cb9"
+    },
+    {
+      "path": "src/eva/application/people_memory_overview.py",
+      "sha256": "93ca7e7f1ca3cc241bc3cd3a632ab05fbe749eb2beedf0ab3465e3d88a5a3fb8"
+    },
+    {
+      "path": "src/eva/bootstrap/runtime.py",
+      "sha256": "dbc0b84a85feb87c613970b38247c6e1163fcfb64fd383a74f567bc22a988d3a"
+    },
+    {
+      "path": "src/eva/bootstrap/dashboard_memory.py",
+      "sha256": "dc3e0871dad29a173109c299a2c781e12eeea6ba5972286892c8e22166bf73a9"
+    },
+    {
+      "path": "src/eva/adapters/projection/hindsight.py",
+      "sha256": "7cc44509703618104acda6bd0e342287574d98e98505fddd31f511a4518f21d4"
+    },
+    {
+      "path": "development/tools/project-dashboard/src/main.jsx",
+      "sha256": "27dab0c1f358cc177c299835fc7e309a4e2a44ee2e0bdad7e89238fd47ef8a84"
+    },
+    {
+      "path": "development/tests/application/test_memory_background.py",
+      "sha256": "79cfccfd7f9e17747a5faa4a867de49cb01ed67d1a1915b3b746a073b0f0af56"
+    },
+    {
+      "path": "development/tests/projection/test_dream_memory_batch.py",
+      "sha256": "b921a432e843bce716bcba71f80615374439472166e45f042c02fb24468e7793"
+    },
+    {
+      "path": "development/tests/postgres/test_dream_memory_handoff.py",
+      "sha256": "894f056ea4c37899739a6f6f6a60114bdec50098aca4e96cde45dece0ed3a686"
+    },
+    {
+      "path": "development/tests/postgres/test_pending_memory_erasure.py",
+      "sha256": "ff98654a132e1c7d98c9220d66a0eb8d2ad0edd3f29c375d983ca7b70d1fa25e"
+    }
+  ],
+  "blockingSourceFindings": 0,
+  "installedReadbackPerformedBy": "root",
+  "installedEvidence": "development/evidence/product/dream-memory-handoff-installed-20261019.json",
+  "wholeTaskOrProjectApproved": false,
+  "limitations": [
+    "Historical source/derived-memory cleanup and actual storage/context reduction are not complete",
+    "The existing status reader refuses a history over its 256-thread bound; installed audit found 1652 completed and 38 needs-help memory cursors. Neither missing statuses nor old failures are reported as success",
+    "Journal/outbox retention and native async payload lifecycle still retain raw source content; omitting new native document/chunk text is not complete physical data erasure",
+    "No proof of one model call per day, lower model tokens or credit savings; native batch children can extract separately",
+    "Actual family use and long-term consolidation over days remain to be observed"
+  ],
+  "repositoryPackaging": "Eight reviewed files retain identical normalized UTF-8 text and existing per-file Git line endings. Original installed/reviewed byte hashes and the normalization mapping remain in the installed evidence. No runtime reinstallation for whitespace."
+}

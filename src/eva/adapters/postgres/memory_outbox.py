@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from contextlib import contextmanager
+from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 import hashlib
 import re
@@ -19,6 +20,7 @@ from eva.adapters.postgres.operational_timeline import (
     operational_checkpoints,
     operational_events,
     transition_timeline_thread,
+    insert_initial_timeline_thread,
 )
 from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
@@ -34,6 +36,12 @@ from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 class DurableMemoryRetentionJob:
     document: ConversationMemoryDocument
     state: CheckpointState
+
+
+@dataclass(frozen=True, slots=True)
+class DurableDreamMemoryBatch:
+    state: CheckpointState
+    jobs: tuple[DurableMemoryRetentionJob, ...]
 
 
 @dataclass(frozen=True, slots=True)
@@ -72,7 +80,7 @@ def conversation_memory_document_from_outbox_data(
     }
     audience_keys = {*legacy_keys, "audience"}
     required_keys = audience_keys if "audience" in data else legacy_keys
-    optional_keys = {"project_id", "retention_until"}
+    optional_keys = {"project_id", "retention_until", "retention_mode"}
     if not required_keys <= set(data) or set(data) - required_keys - optional_keys:
         raise RuntimeError("durable memory outbox document fields are malformed")
     scalar_keys = set(data) - {"audience"}
@@ -108,6 +116,7 @@ def conversation_memory_document_from_outbox_data(
             audience=audience,
             project_id=data.get("project_id"),
             retention_until=data.get("retention_until"),
+            retention_mode=data.get("retention_mode", "immediate"),
         )
     except (KeyError, TypeError, ValueError) as error:
         raise RuntimeError("durable memory outbox document is invalid") from error
@@ -163,6 +172,8 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             data["project_id"] = document.project_id
         if document.retention_until is not None:
             data["retention_until"] = document.retention_until
+        if document.retention_mode != "immediate":
+            data["retention_mode"] = document.retention_mode
         return data
 
     @staticmethod
@@ -296,20 +307,65 @@ class PostgresMemoryOutbox(PostgresScopedRole):
                 if first is not None and isinstance(first.payload, dict)
                 else None
             )
-            if first is None or first.event_type != "MEMORY_RETAIN_QUEUED" or first_data != data:
+            if first is None or first.event_type != "MEMORY_RETAIN_QUEUED":
                 raise RuntimeError("memory outbox replay differs") from None
+            if first_data != data:
+                # A source admitted by an earlier runtime retains its original
+                # scheduling policy. Never rewrite the immutable queued source.
+                previous = self._document_from_data(first_data)
+                if self._document_data(replace(previous, retention_mode=document.retention_mode)) != data:
+                    raise RuntimeError("memory outbox replay differs") from None
+                document = previous
             state = self._timeline.load(thread_id)
         if source_only and state.phase != "memory_source_recorded":
             raise RuntimeError("source-only replay is unavailable")
         return DurableMemoryRetentionJob(document, state)
 
+    def pending_erasure_document(self, *, principal_id: str, document_id: str,
+                                 source_message_id: str | None):
+        """Resolve only the caller's exact, still-present ordinary source."""
+        events = self._timeline.events(self._thread_id(document_id))
+        source = events[0].payload.get("data") if events else None
+        if not isinstance(source, dict) or source.get("content_erasure"):
+            return None
+        document = self._document_from_data(source)
+        if document.retention_mode != "dream":
+            return None
+        if (document.principal_id != principal_id or document.document_id != document_id
+                or document.source_ref != source_message_id
+                or document.tenant_id != self._tenant_id or document.installation_id != self._installation_id):
+            raise RuntimeError("pending erasure source binding differs")
+        return document
+
     def pending(self, *, limit: int = 256) -> tuple[DurableMemoryRetentionJob, ...]:
-        states = self._timeline.list_checkpoints(
-            thread_prefix="memory-retain:",
-            phases=("memory_queued", "memory_retaining", "memory_retry"),
-            statuses=("active", "failed", "waiting_for_proof"),
-            limit=limit,
-        )
+        if not 1 <= limit <= 256:
+            raise ValueError("memory pending limit is invalid")
+        c, e = operational_checkpoints.c, operational_events.c
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            held = set()
+            blocked = connection.execute(sa.select(c.thread_id, e.payload).select_from(
+                operational_checkpoints.join(operational_events, sa.and_(
+                    c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
+                    c.thread_id == e.thread_id, e.sequence == 1))).where(
+                c.tenant_id == self._scope_value.tenant_id,
+                c.installation_id == self._scope_value.installation_id,
+                c.thread_id.startswith("memory-dream:"), c.status == "needs_help",
+            )).all()
+            for thread_id, payload in blocked:
+                held.update(self._thread_id(member["document_id"])
+                            for member in self._dream_members(payload.get("data"), thread_id))
+            query = sa.select(c.thread_id).where(
+                c.tenant_id == self._scope_value.tenant_id,
+                c.installation_id == self._scope_value.installation_id,
+                c.thread_id.startswith("memory-retain:"),
+                c.phase.in_(("memory_queued", "memory_retaining", "memory_retry")),
+                c.status.in_(("active", "failed", "waiting_for_proof")),
+            )
+            if held:
+                query = query.where(c.thread_id.not_in(held))
+            thread_ids = tuple(connection.scalars(query.order_by(c.updated_at.desc(), c.thread_id).limit(limit)))
+        states = tuple(self._timeline.load(thread_id) for thread_id in thread_ids)
         jobs: list[DurableMemoryRetentionJob] = []
         for state in reversed(states):
             events = self._timeline.events(state.thread_id)
@@ -324,6 +380,271 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             )
             jobs.append(DurableMemoryRetentionJob(self._document_from_data(data), state))
         return tuple(jobs)
+
+    @contextmanager
+    def retention_guard(self):
+        """Serialize native retention and erasure across this installation's workers."""
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            connection.execute(
+                sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                {"key": f"memory-native-stage:{self._scope_value.tenant_id}:{self._scope_value.installation_id}"},
+            )
+            yield
+
+    @staticmethod
+    def _dream_members(data, thread_id):
+        if (not isinstance(data, dict) or set(data) != {"contract", "members"}
+                or data["contract"] != "EvaDreamMemoryBatch/v1"
+                or not isinstance(data["members"], list) or not 1 <= len(data["members"]) <= 32
+                or thread_id != "memory-dream:" + canonical_sha256(data)):
+            raise RuntimeError("dream batch manifest differs")
+        for member in data["members"]:
+            if (not isinstance(member, dict)
+                    or set(member) != {"document_id", "source_payload_sha256"}
+                    or not isinstance(member["document_id"], str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", member["source_payload_sha256"])):
+                raise RuntimeError("dream batch source binding is invalid")
+        if len({member["document_id"] for member in data["members"]}) != len(data["members"]):
+            raise RuntimeError("dream batch contains duplicate sources")
+        return data["members"]
+
+    def prepare_dream_batch(self, candidates: tuple[DurableMemoryRetentionJob, ...], *, now: datetime):
+        """Pin a bounded, immutable private cohort; blocked cohorts hold only their members."""
+        c, e = operational_checkpoints.c, operational_events.c
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                {"key": f"memory-dream:{self._scope_value.tenant_id}:{self._scope_value.installation_id}"})
+            rows = connection.execute(sa.select(c.thread_id, c.status, e.payload).select_from(
+                operational_checkpoints.join(operational_events, sa.and_(
+                    c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
+                    c.thread_id == e.thread_id, e.sequence == 1))).where(
+                c.tenant_id == self._scope_value.tenant_id,
+                c.installation_id == self._scope_value.installation_id,
+                c.thread_id.startswith("memory-dream:"), c.status != "completed",
+            ).order_by(c.updated_at, c.thread_id)).mappings().all()
+            held = set()
+            thread_id = None
+            for row in rows:
+                members = self._dream_members(row["payload"].get("data"), row["thread_id"])
+                held.update(member["document_id"] for member in members)
+                if row["status"] != "needs_help" and thread_id is None:
+                    thread_id = row["thread_id"]
+            if thread_id is None:
+                available = []
+                # Queue entries can outlive an erasure or another process's acknowledgement.
+                # Re-read the authoritative source before making it part of a new manifest.
+                for job in candidates:
+                    if job.document.document_id in held:
+                        continue
+                    state = self._timeline.load(job.state.thread_id)
+                    if state.status in {"completed", "needs_help"}:
+                        continue
+                    events = self._timeline.events(state.thread_id)
+                    source = events[0].payload.get("data") if events else None
+                    if not isinstance(source, dict) or source.get("content_erasure"):
+                        continue
+                    doc = self._document_from_data(source)
+                    if self._document_data(job.document) != source:
+                        raise RuntimeError("dream source changed before assignment")
+                    if doc.retention_mode != "dream":
+                        raise ValueError("dream batch contains an immediate record")
+                    available.append(DurableMemoryRetentionJob(doc, state))
+                if not available:
+                    return None
+                ordered = sorted(available, key=lambda job: (job.document.occurred_at, job.document.document_id))
+                first = ordered[0].document
+                def cohort_key(doc):
+                    return (doc.tenant_id, doc.installation_id, doc.principal_id,
+                            doc.audience.audience_id, doc.privacy_class, doc.occurred_at[:10])
+                key = cohort_key(first)
+                members = []
+                size = 0
+                for job in ordered:
+                    doc = job.document
+                    if cohort_key(doc) != key:
+                        continue
+                    payload = self._document_data(doc)
+                    length = len(canonical_json_bytes(payload))
+                    if members and (len(members) >= 32 or size + length > 131072):
+                        break
+                    size += length
+                    members.append({"document_id": doc.document_id, "source_payload_sha256": canonical_sha256(payload)})
+                manifest = {"contract": "EvaDreamMemoryBatch/v1", "members": members}
+                thread_id = "memory-dream:" + canonical_sha256(manifest)
+                insert_initial_timeline_thread(connection, self._scope_value,
+                    thread_id=thread_id, checkpoint_id=thread_id+":assigned",
+                    operation_id=thread_id, phase="memory_dream_assigned", status="active",
+                    event_type="MEMORY_DREAM_BATCH_ASSIGNED", occurred_at=now, data=manifest)
+        try:
+            return self.read_dream_batch(thread_id)
+        except RuntimeError as error:
+            self.block_dream_batch(thread_id, error, now=now)
+            return None  # Preserve the bad cohort, but do not block later people/days.
+
+    def bind_dream_operation(self, batch: DurableDreamMemoryBatch, *, bank_id: str,
+                             operation_id: str, now: datetime):
+        if not bank_id or not operation_id:
+            raise ValueError("dream native operation binding is missing")
+        data = {"bank_id": bank_id, "operation_id": operation_id}
+        events = self._timeline.events(batch.state.thread_id)
+        prior = [event for event in events if event.event_type == "MEMORY_DREAM_DISPATCH_BOUND"]
+        if prior:
+            if len(prior) != 1 or prior[0].payload.get("data") != data:
+                raise RuntimeError("dream native operation binding changed")
+            return
+        current = self._timeline.load(batch.state.thread_id)
+        if current.status in {"completed", "needs_help"}:
+            raise RuntimeError("closed dream batch cannot dispatch")
+        self._timeline.transition(thread_id=current.thread_id, expected_revision=current.revision,
+            checkpoint_id=current.thread_id+":dispatch-bound", operation_id=current.operation_id,
+            occurred_at=now, event_type="MEMORY_DREAM_DISPATCH_BOUND",
+            phase="memory_dream_dispatched", status="waiting_for_proof", data=data)
+
+    def block_dream_batch(self, thread_id: str, error: Exception, *, now: datetime):
+        current = self._timeline.load(thread_id)
+        if current.status in {"completed", "needs_help"}:
+            return current
+        fingerprint = hashlib.sha256(f"{type(error).__name__}:{error}".encode()).hexdigest()
+        return self._timeline.transition(thread_id=current.thread_id, expected_revision=current.revision,
+            checkpoint_id=current.thread_id+":needs-help", operation_id=current.operation_id,
+            occurred_at=now, event_type="MEMORY_DREAM_BATCH_NEEDS_HELP",
+            phase="memory_dream_needs_help", status="needs_help",
+            last_error_fingerprint=fingerprint, data={"error_fingerprint": fingerprint})
+
+    def dream_batches_for_erasure(self, document_id: str):
+        batches = []
+        c, e = operational_checkpoints.c, operational_events.c
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            thread_ids = tuple(connection.scalars(sa.select(c.thread_id).select_from(
+                operational_checkpoints.join(operational_events, sa.and_(
+                    c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
+                    c.thread_id == e.thread_id, e.sequence == 1))).where(
+                c.tenant_id == self._scope_value.tenant_id,
+                c.installation_id == self._scope_value.installation_id,
+                c.thread_id.startswith("memory-dream:"),
+                e.payload["data"]["members"].contains([{"document_id": document_id}]),
+            )))
+        for thread_id in thread_ids:
+            state = self._timeline.load(thread_id)
+            events = self._timeline.events(state.thread_id)
+            if not events:
+                raise RuntimeError("dream batch has no manifest")
+            members = self._dream_members(events[0].payload.get("data"), state.thread_id)
+            if not any(member["document_id"] == document_id for member in members):
+                continue
+            bound = [event.payload.get("data") for event in events
+                     if event.event_type == "MEMORY_DREAM_DISPATCH_BOUND"]
+            if len(bound) > 1:
+                raise RuntimeError("dream operation has multiple bindings")
+            binding = bound[0] if bound else None
+            if binding is not None and (not isinstance(binding, dict)
+                    or set(binding) != {"bank_id", "operation_id"}
+                    or not all(isinstance(value, str) and value for value in binding.values())):
+                raise RuntimeError("dream operation binding is invalid")
+            batches.append((state, binding))
+        return tuple(batches)
+
+    def cancel_undispatched_dream_batch(self, thread_id: str, *, now: datetime):
+        events = self._timeline.events(thread_id)
+        if any(event.event_type == "MEMORY_DREAM_DISPATCH_BOUND" for event in events):
+            raise RuntimeError("dispatched dream batch must settle before erasure")
+        current = self._timeline.load(thread_id)
+        if current.status == "completed":
+            return current
+        return self._timeline.transition(thread_id=thread_id, expected_revision=current.revision,
+            checkpoint_id=thread_id+":cancelled", operation_id=current.operation_id,
+            occurred_at=now, event_type="MEMORY_DREAM_BATCH_CANCELLED",
+            phase="memory_dream_cancelled", status="completed", data={"reason": "source_erasure_before_dispatch"})
+
+    def cancel_absent_dream_batch(self, thread_id: str, *, bank_id: str,
+                                 operation_id: str, now: datetime):
+        bindings = [event.payload.get("data") for event in self._timeline.events(thread_id)
+                    if event.event_type == "MEMORY_DREAM_DISPATCH_BOUND"]
+        if bindings != [{"bank_id": bank_id, "operation_id": operation_id}]:
+            raise RuntimeError("absent dream operation binding differs")
+        current = self._timeline.load(thread_id)
+        if current.status == "completed":
+            return current
+        return self._timeline.transition(thread_id=thread_id, expected_revision=current.revision,
+            checkpoint_id=thread_id+":absent", operation_id=current.operation_id,
+            occurred_at=now, event_type="MEMORY_DREAM_BATCH_CANCELLED",
+            phase="memory_dream_cancelled", status="completed",
+            data={"reason": "native_operation_absent_before_erasure",
+                  "bank_id": bank_id, "operation_id": operation_id})
+
+    def read_dream_batch(self, thread_id: str) -> DurableDreamMemoryBatch:
+        if not re.fullmatch('memory-dream:[0-9a-f]{64}', thread_id):
+            raise ValueError('dream batch identity is invalid')
+        events = self._timeline.events(thread_id)
+        first = events[0] if events else None
+        data = None if first is None else first.payload.get('data')
+        if (first is None or first.event_type != 'MEMORY_DREAM_BATCH_ASSIGNED'
+                or not isinstance(data, dict) or set(data) != {'contract', 'members'}
+                or data['contract'] != 'EvaDreamMemoryBatch/v1'
+                or not isinstance(data['members'], list) or not 1 <= len(data['members']) <= 32
+                or thread_id != 'memory-dream:' + canonical_sha256(data)):
+            raise RuntimeError('dream batch manifest differs')
+        jobs = []
+        for member in data['members']:
+            if not isinstance(member, dict) or set(member) != {'document_id', 'source_payload_sha256'}:
+                raise RuntimeError('dream batch source binding is invalid')
+            source_thread = self._thread_id(member['document_id'])
+            original = self._timeline.events(source_thread)
+            source = original[0].payload.get('data') if original else None
+            if (not isinstance(source, dict) or source.get('content_erasure')
+                    or canonical_sha256(source) != member['source_payload_sha256']):
+                raise RuntimeError('dream batch source was erased or changed; do not redispatch')
+            document = self._document_from_data(source)
+            if document.retention_mode != 'dream':
+                raise RuntimeError('dream batch source scheduling differs')
+            jobs.append(DurableMemoryRetentionJob(document, self._timeline.load(source_thread)))
+        if len({job.document.document_id for job in jobs}) != len(jobs):
+            raise RuntimeError('dream batch contains duplicate sources')
+        return DurableDreamMemoryBatch(self._timeline.load(thread_id), tuple(jobs))
+
+    def reconcile_dream_receipt(self, batch: DurableDreamMemoryBatch,
+                                receipt: MemoryRetentionReceipt, *, now: datetime):
+        """Acknowledge GET-only completion without inventing another extraction attempt."""
+        current_batch = self.read_dream_batch(batch.state.thread_id)
+        matches = [job for job in current_batch.jobs if job.document.document_id == receipt.document_id]
+        bindings = [event.payload.get("data") for event in self._timeline.events(batch.state.thread_id)
+                    if event.event_type == "MEMORY_DREAM_DISPATCH_BOUND"]
+        binding = {"bank_id": receipt.bank_id, "operation_id": receipt.operation_id}
+        if (len(matches) != 1 or bindings != [binding]
+                or receipt.selected_fact_count is None
+                or receipt.content_sha256 != hashlib.sha256(matches[0].document.content.encode()).hexdigest()):
+            raise RuntimeError("settled dream receipt does not match its immutable operation/source")
+        job = matches[0]
+        if job.state.status == "completed":
+            self.succeed(job, receipt, now=now)
+            return job
+        if job.state.phase == "memory_retaining":
+            return job
+        data = {**binding, "document_id": job.document.document_id,
+                "batch_thread_id": batch.state.thread_id}
+        state = self._timeline.transition(thread_id=job.state.thread_id,
+            expected_revision=job.state.revision,
+            checkpoint_id=job.state.thread_id+":dream-reconciled",
+            operation_id=job.state.operation_id, occurred_at=now,
+            event_type="MEMORY_DREAM_SOURCE_RECONCILED", phase="memory_retaining",
+            status="waiting_for_proof", retry_count=job.state.retry_count,
+            last_error_fingerprint=job.state.last_error_fingerprint, data=data)
+        return DurableMemoryRetentionJob(job.document, state)
+
+    def finish_dream_batch(self, batch: DurableDreamMemoryBatch, *, now: datetime):
+        current = self.read_dream_batch(batch.state.thread_id)
+        if any(job.state.status != 'completed' for job in current.jobs):
+            raise RuntimeError('dream batch has unacknowledged sources')
+        if current.state.status == 'completed':
+            return current.state
+        return self._timeline.transition(thread_id=current.state.thread_id,
+            expected_revision=current.state.revision, checkpoint_id=current.state.thread_id+':completed',
+            operation_id=current.state.operation_id, occurred_at=now,
+            event_type='MEMORY_DREAM_BATCH_COMPLETED', phase='memory_dream_completed', status='completed',
+            data={'member_count': len(current.jobs), 'source_manifest_sha256': current.state.thread_id.removeprefix('memory-dream:')})
 
     def _reflection_candidates(self, connection, *, principal_id=None, now, lock=False, recovery=False):
         """Read only validated, retained private documents without a dispatch claim."""
@@ -543,8 +864,8 @@ class PostgresMemoryOutbox(PostgresScopedRole):
         now: datetime | None = None,
     ) -> CheckpointState:
         current = self._timeline.load(job.state.thread_id)
-        if current.phase == "memory_not_selected":
-            return current  # A stale failure cannot reopen acknowledged selection.
+        if current.status == "completed":
+            return current  # A stale failure cannot reopen any acknowledged source.
         fingerprint = hashlib.sha256(
             f"{type(error).__name__}:{error}".encode("utf-8")
         ).hexdigest()

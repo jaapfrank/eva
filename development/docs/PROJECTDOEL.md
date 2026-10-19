@@ -62,8 +62,10 @@ nadat de verwerking aantoonbaar is afgehandeld en noodzakelijke herkomst voor be
 kennis vastligt. Bij onderbreking of mislukking blijft het onafgehandelde materiaal
 bewaard. De bediening onderscheidt kortetermijncontext, wat tijdens dromen is verwerkt
 en de actuele blijvende kennis. Dit gebruikt één geheugenketen, geen tweede geheugen,
-extra permanent proces of classificatiemodel per bericht. De geïnstalleerde selectie
-van 19 oktober bewijst de volledige dag-/droomovergang nog niet; E4.11 blijft daarvoor open.
+extra permanent proces of classificatiemodel per bericht. De dag-/droomoverdracht is op 19 oktober geïnstalleerd en gericht gecontroleerd,
+inclusief brongebonden verwerking en wissen vóór of na een onderbreking. Historische
+opschoning, de volledige bewaartermijnen, aantoonbare besparing en gebruik over meerdere
+dagen zijn daarmee nog niet afgerond; E4.11 blijft daarvoor open.
 
 ## Dagelijks meedenken
 

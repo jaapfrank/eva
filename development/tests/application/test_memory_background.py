@@ -897,6 +897,13 @@ def test_durable_retain_retries_with_job_and_preserves_attempt_limit(failures: i
             self._timeline = Timeline()  # type: ignore[assignment]
             self.loaded = False
 
+        def pending_reflection_scopes(self, **kwargs):
+            return ()
+
+        def retention_guard(self):
+            from contextlib import nullcontext
+            return nullcontext()
+
         def pending(self, *, limit=256):  # type: ignore[no-untyped-def]
             if self.loaded:
                 return ()

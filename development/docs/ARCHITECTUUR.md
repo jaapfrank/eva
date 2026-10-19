@@ -43,8 +43,13 @@ Gesprek en taakuitvoering blijven beschikbaar tijdens de droomverwerking. Bevest
 overname en noodzakelijke bronbinding gaan vooraf aan het laten vervallen van tijdelijke
 inhoud; een fout of herstart mag geen informatie laten verdwijnen. Bestaande privacy-,
 correctie- en wisregels blijven per persoon/audience gelden. Dit is de gewenste
-overdracht binnen E4.11; de huidige per-berichtextractie en bestaande importbatch zijn
-nog geen bewezen dagelijkse droomconsolidatie.
+overdracht binnen E4.11. Sinds 19 oktober wachten gewone privé-uitwisselingen duurzaam
+op de bestaande rust-/capaciteitsfase. Een vast begrensd cohort wordt met brongebonden
+ontvangstbewijzen verwerkt; een named strategy voorkomt nieuwe native document-/chunkkopieën.
+Wissen verzoent eerst een eventueel lopende native operatie, zonder nieuwe extractie.
+Het importpad en de gerichte werk-/leerroute blijven afzonderlijk bestaan. De beperkte
+native overdrachtscontrole bewijst geen dagelijkse kwaliteits- of tokenvoorsprong;
+historische opschoning en het statusoverzicht voor grote historie blijven open.
 
 ## Moduleverantwoordelijkheden
 

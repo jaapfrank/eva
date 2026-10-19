@@ -27,7 +27,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from uuid import NAMESPACE_URL, uuid5
+from uuid import NAMESPACE_URL, UUID, uuid5
 from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from typing import Any, Callable, Literal, Protocol
@@ -661,7 +661,10 @@ class HindsightMemoryEngine:
                 continue
             unique.setdefault(token.casefold(), token)
         anchors = sorted(unique.values(), key=lambda value: -len(value))[:3]
-        return (query_text, *anchors)
+        # A one-word query is already its own lexical anchor. Keep every
+        # distinct variant without repeating identical semantic retrieval.
+        return (query_text, *(anchor for anchor in anchors
+                              if anchor.casefold() != query_text.casefold()))
 
     def _recall_response(
         self,
@@ -1163,7 +1166,7 @@ class HindsightMemoryEngine:
         return content.strip()
 
     def _conversation_item(
-        self, document: ConversationMemoryDocument
+        self, document: ConversationMemoryDocument, *, _ensure_bank: bool = True
     ) -> tuple[str, dict[str, Any]]:
         if document.audience.kind == "private_person":
             audience_tag = self._person_tag(document.principal_id)
@@ -1223,7 +1226,8 @@ class HindsightMemoryEngine:
                 )
             )
         )
-        bank_id = self.ensure_bank(document.tenant_id, partition)
+        bank_id = (self.ensure_bank(document.tenant_id, partition) if _ensure_bank
+                   else self._bank_id(document.tenant_id, partition))
         item = {
             "content": document.content,
             "timestamp": document.occurred_at,
@@ -1297,6 +1301,238 @@ class HindsightMemoryEngine:
         return tuple(MemoryRetentionReceipt(bank_id=bank_id, document_id=document.document_id,
                                             content_sha256=hashlib.sha256(document.content.encode("utf-8")).hexdigest())
                      for document in documents)
+
+    def _prepare_dream_batch(
+        self, documents: tuple[ConversationMemoryDocument, ...]
+    ) -> tuple[str, dict[str, Any]]:
+        """Select compact native knowledge from one immutable private dream batch.
+
+        The named native strategy must already be provisioned and read back.
+        It omits document/chunk source text; async operation payloads retain their
+        existing native lifecycle. This never changes bank defaults or deletes
+        source/derived memory. Eva's journal/outbox remains source authority.
+        """
+        strategy = "eva-ordinary-dream-v1"
+        if not documents or len(documents) > 32:
+            raise HindsightMemoryScopeError("dream batch must contain 1..32 documents")
+        scopes = {
+            (d.tenant_id, d.installation_id, d.principal_id, d.privacy_class,
+             d.audience.audience_id)
+            for d in documents
+        }
+        if (len(scopes) != 1 or len({d.occurred_at[:10] for d in documents}) != 1
+                or any(d.audience.kind != "private_person" or d.project_id is not None
+                       or d.trust != "direct_user"
+                       or getattr(d, "retention_mode", None) != "dream"
+                       or len(d.document_id) > 512
+                       or d.document_id != f"{d.conversation_id}:exchange:{d.source_ref}"
+                       for d in documents)
+                or len({d.document_id for d in documents}) != len(documents)
+                or sum(len(d.content.encode("utf-8")) for d in documents) > 262_144):
+            raise HindsightMemoryScopeError("dream batch is not bounded ordinary private evidence")
+        prepared = tuple(self._conversation_item(d, _ensure_bank=False) for d in sorted(
+            documents, key=lambda d: d.document_id,
+        ))
+        if len({bank for bank, _ in prepared}) != 1:
+            raise HindsightMemoryScopeError("dream batch spans different banks")
+        bank_id = prepared[0][0]
+        items = []
+        for _, original in prepared:
+            item = {**original, "strategy": strategy,
+                    "metadata": {**original["metadata"], "retention_mode": "dream"}}
+            items.append(item)
+        if len(canonical_json_bytes(items)) > 262_144:
+            raise HindsightMemoryScopeError("dream batch serialized items exceed 256 KiB")
+
+        operation_id = str(uuid5(
+            NAMESPACE_URL, "EvaDreamMemoryBatchRetain/v1:" + canonical_sha256([bank_id, items]),
+        ))
+        request = {"items": items, "async": True, "operation_id": operation_id}
+        if len(canonical_json_bytes(request)) > 262_144:
+            raise HindsightMemoryScopeError("dream batch serialized request exceeds 256 KiB")
+        return bank_id, request
+
+    def document_retention_address(self, document: ConversationMemoryDocument) -> tuple[str, str]:
+        """Validate a native deletion address without retaining or creating a bank."""
+        bank_id, item = self._conversation_item(document, _ensure_bank=False)
+        return bank_id, item["document_id"]
+
+    def dream_operation_identity(
+        self, documents: tuple[ConversationMemoryDocument, ...]
+    ) -> tuple[str, str]:
+        """Derive the exact dispatch identity without HTTP or bank creation."""
+        bank_id, request = self._prepare_dream_batch(documents)
+        return bank_id, request["operation_id"]
+
+    def _read_dream_operation(self, *, bank_id: str, operation_id: str) -> dict[str, Any]:
+        if (not isinstance(bank_id, str)
+                or not re.fullmatch(rf"{re.escape(self._config.bank_namespace)}-[0-9a-f]{{32}}", bank_id)
+                or not isinstance(operation_id, str)):
+            raise HindsightMemoryScopeError("dream operation identity is invalid")
+        try:
+            if str(UUID(operation_id)) != operation_id:
+                raise ValueError("noncanonical operation UUID")
+        except ValueError as error:
+            raise HindsightMemoryScopeError("dream operation identity is invalid") from error
+        status, response = self._request(
+            "GET", f"/v1/default/banks/{bank_id}/operations/{operation_id}",
+            allowed_statuses=frozenset({404}),
+        )
+        if status == 404:
+            return {"operation_id": operation_id, "status": "not_found"}
+        if response.get("operation_id") != operation_id:
+            raise HindsightProjectionProtocolError("Hindsight dream operation identity differs")
+        state = response.get("status")
+        if state == "not_found":
+            return response
+        if state in {"pending", "processing"}:
+            raise HindsightProjectionUnavailable("Hindsight dream operation is still unsettled")
+        metadata = response.get("result_metadata")
+        children = response.get("child_operations")
+        if (state not in {"completed", "failed"} or not isinstance(metadata, dict)
+                or metadata.get("is_parent") is not True
+                or type(metadata.get("num_sub_batches")) is not int
+                or metadata["num_sub_batches"] < 1 or not isinstance(children, list)
+                or len(children) != metadata["num_sub_batches"]
+                or any(not isinstance(child, dict) or child.get("status") not in {"completed", "failed"}
+                       or not isinstance(child.get("operation_id"), str)
+                       or not re.fullmatch(r"[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}",
+                                           child["operation_id"]) for child in children)
+                or len({child["operation_id"] for child in children}) != len(children)
+                or (state == "completed" and any(child["status"] != "completed" for child in children))):
+            # Native cancellation only marks the parent; children may still run.
+            # Missing children cannot be used as proof that remote writes ended.
+            raise HindsightProjectionProtocolError("Hindsight dream operation has no settled child proof")
+        return response
+
+    def settle_dream_operation(self, *, bank_id: str, operation_id: str) -> str:
+        """Read only this recorded operation; refuse erasure while it can write.
+
+        The caller holds the existing cross-worker retention/erasure guard so a
+        not-found read cannot race a later POST. Never retry or cancel here.
+        """
+        return self._read_dream_operation(bank_id=bank_id, operation_id=operation_id)["status"]
+
+    def _dream_document_count(
+        self, bank_id: str, item: dict[str, Any], *, allow_absent: bool
+    ) -> int | None:
+        encoded = urllib.parse.quote(item["document_id"], safe="")
+        status, record = self._request(
+            "GET", f"/v1/default/banks/{bank_id}/documents/{encoded}",
+            allowed_statuses=frozenset({404}) if allow_absent else frozenset(),
+        )
+        if status == 404 and allow_absent:
+            return None
+        digest = hashlib.sha256(item["content"].encode("utf-8")).hexdigest()
+        count = record.get("memory_unit_count")
+        if (record.get("id") != item["document_id"] or record.get("bank_id") != bank_id
+                or record.get("content_hash") != digest
+                or record.get("document_metadata") != item["metadata"]
+                or not isinstance(record.get("tags"), list)
+                or not all(isinstance(tag, str) for tag in record["tags"])
+                or sorted(record["tags"]) != sorted(item["tags"])
+                or "original_text" not in record or record["original_text"] is not None
+                or type(count) is not int or count < 0):
+            raise HindsightProjectionProtocolError("Hindsight dream document evidence differs")
+        return count
+
+    def _dream_receipts(
+        self, documents: tuple[ConversationMemoryDocument, ...], bank_id: str,
+        request: dict[str, Any], completed: dict[str, Any],
+    ) -> tuple[MemoryRetentionReceipt, ...]:
+        with self._cache_lock:
+            self._fast_presence_generation += 1
+            self._fast_presence_cache.clear()
+        metadata = completed.get("result_metadata")
+        if (not isinstance(metadata, dict)
+                or type(metadata.get("unit_ids_count")) is not int
+                or metadata["unit_ids_count"] < 0
+                or type(metadata.get("extraction_errors_count")) is not int
+                or metadata["extraction_errors_count"] != 0):
+            raise HindsightProjectionProtocolError("Hindsight dream batch has no clean measured outcome")
+        counts = {item["document_id"]: self._dream_document_count(bank_id, item, allow_absent=False)
+                  for item in request["items"]}
+        if sum(counts.values()) != metadata["unit_ids_count"]:
+            raise HindsightProjectionProtocolError("Hindsight dream document counts differ from batch outcome")
+        return tuple(MemoryRetentionReceipt(
+            bank_id=bank_id, document_id=d.document_id,
+            content_sha256=hashlib.sha256(d.content.encode("utf-8")).hexdigest(),
+            disposition="not_selected" if counts[d.document_id] == 0 else "retained",
+            selected_fact_count=counts[d.document_id], operation_id=request["operation_id"],
+        ) for d in documents)
+
+    def read_dream_operation_receipts(
+        self, documents: tuple[ConversationMemoryDocument, ...], *, bank_id: str, operation_id: str
+    ) -> tuple[MemoryRetentionReceipt, ...]:
+        """Recover completed batch receipts with GET only, before erasing any member."""
+        expected_bank, request = self._prepare_dream_batch(documents)
+        if bank_id != expected_bank or operation_id != request["operation_id"]:
+            raise HindsightMemoryScopeError("dream receipt operation differs from exact membership")
+        completed = self._read_dream_operation(bank_id=bank_id, operation_id=operation_id)
+        if completed["status"] != "completed":
+            raise HindsightProjectionProtocolError("Hindsight dream operation has no completed receipts")
+        return self._dream_receipts(documents, bank_id, request, completed)
+
+    def _ensure_dream_strategy(self, bank_id: str) -> None:
+        """Provision only our named strategy, preserving bank defaults and other entries."""
+        strategy = "eva-ordinary-dream-v1"
+        expected = {"store_document_text": False}
+        # The cold worker also holds its cross-process native-stage guard. No model
+        # or untrusted source may choose a strategy or mutate bank configuration.
+        with self._cache_lock:
+            _, configuration = self._request("GET", f"/v1/default/banks/{bank_id}/config")
+            resolved = configuration.get("config")
+            if configuration.get("bank_id") != bank_id or not isinstance(resolved, dict):
+                raise HindsightProjectionProtocolError("Hindsight dream bank configuration differs")
+            strategies = resolved.get("retain_strategies")
+            if strategies is None:
+                strategies = {}
+            if not isinstance(strategies, dict):
+                raise HindsightProjectionProtocolError("Hindsight named strategies are malformed")
+            if strategy in strategies:
+                entry = strategies[strategy]
+                if (not isinstance(entry, dict) or set(entry) != {"store_document_text"}
+                        or entry["store_document_text"] is not False):
+                    raise HindsightProjectionProtocolError("Hindsight dream strategy differs")
+                return
+            existing = dict(strategies)
+            previous_default = canonical_sha256(["store_document_text" in resolved,
+                                                  resolved.get("store_document_text")])
+            self._request("PATCH", f"/v1/default/banks/{bank_id}/config",
+                {"updates": {"retain_strategies": {**existing, strategy: expected}}})
+            _, checked = self._request("GET", f"/v1/default/banks/{bank_id}/config")
+            actual = checked.get("config")
+            actual_strategies = actual.get("retain_strategies") if isinstance(actual, dict) else None
+            if (checked.get("bank_id") != bank_id or not isinstance(actual_strategies, dict)
+                    or not isinstance(actual_strategies.get(strategy), dict)
+                    or set(actual_strategies[strategy]) != {"store_document_text"}
+                    or actual_strategies[strategy]["store_document_text"] is not False
+                    or canonical_sha256(["store_document_text" in actual,
+                                         actual.get("store_document_text")]) != previous_default
+                    or any(key not in actual_strategies
+                           or canonical_sha256(actual_strategies[key]) != canonical_sha256(value)
+                           for key, value in existing.items())):
+                raise HindsightProjectionProtocolError("Hindsight dream strategy readback differs")
+
+    def retain_dream_conversations(
+        self, documents: tuple[ConversationMemoryDocument, ...]
+    ) -> tuple[MemoryRetentionReceipt, ...]:
+        """Dispatch one immutable batch using the previously persistable identity."""
+        strategy = "eva-ordinary-dream-v1"
+        bank_id, request = self._prepare_dream_batch(documents)
+        if self.ensure_bank(documents[0].tenant_id, documents[0].installation_id) != bank_id:
+            raise HindsightMemoryScopeError("dream bank identity differs")
+        for item in request["items"]:
+            self._dream_document_count(bank_id, item, allow_absent=True)
+        self._ensure_dream_strategy(bank_id)
+        _, response = self._request("POST", f"/v1/default/banks/{bank_id}/memories", request)
+        if (response.get("success") is not True or response.get("bank_id") != bank_id
+                or type(response.get("items_count")) is not int
+                or response["items_count"] != len(documents) or response.get("async") is not True
+                or response.get("operation_id") != request["operation_id"]):
+            raise HindsightProjectionProtocolError("Hindsight did not acknowledge the exact dream batch")
+        completed = self._wait_for_operation(bank_id, request["operation_id"], retry_existing_failure=True)
+        return self._dream_receipts(documents, bank_id, request, completed)
 
     def retain_conversation(
         self, document: ConversationMemoryDocument

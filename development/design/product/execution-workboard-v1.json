@@ -847,8 +847,8 @@
     "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
     "status": "in_progress",
     "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-    "nextAction": "Hervat de afgesproken kortetermijn-dagcontext → bestaande droomfase → compacte bijgewerkte langetermijnkennis. Cameramodule is technisch geïnstalleerd; geen herhaalde camera- of geheugenproef zonder nieuwe oorzaak.",
-    "checkedAt": "2026-10-19T10:02:07.750530+00:00",
+    "nextAction": "Oude vastgelopen geheugenverwerkingen alleen-lezen aan bestaande native uitkomsten koppelen; bron-/retentieopschoning en het statusoverzicht bij grote historie afmaken zonder nieuwe modelproeven.",
+    "checkedAt": "2026-10-19T10:53:31.449676+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,20 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.11 · Dagcontext en droomoverdracht geïnstalleerd",
+            "state": "installed",
+            "summary": "Gewone privégesprekken wachten op rust; geselecteerde kennis krijgt bevestiging per bron. Nieuwe native document-/chunkkopieën bevatten geen ruwe gesprekstekst. Publiek wissen werkt ook vóór verwerking en na een onderbreking. 65 gerichte overdrachtscontroles, onafhankelijke source-GO en één echte native batch bevestigd.",
+            "remaining": "Dagcontext→droomoverdracht en publiek wissen zijn geïnstalleerd. Oude bronnen en afgeleide kennis zijn nog niet volledig opgeschoond. De huidige statuslezer overschrijdt zijn 256-cursorgrens; de echte installatie bevat 1652 bevestigde en 38 vastgelopen geheugencursors. Model-/creditbesparing en meerdaags gezinsgebruik niet bewezen.",
+            "source": "development/evidence/product/dream-memory-handoff-installed-20261019.json",
+            "review": "development/reviews/dream-memory-handoff-review-20261019.json",
+            "checkedAt": "2026-10-19T10:53:31.449676+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "completionScope": "Geïnstalleerde overdracht; volledige E4.11 blijft open",
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E2.8 · Camera’s automatisch ontdekken en lokaal personen waarnemen",
             "state": "installed",
@@ -2613,18 +2627,16 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E2.8 · Camera’s automatisch ontdekken en lokaal personen waarnemen",
+          "title": "E4.11 · Dagcontext en droomoverdracht geïnstalleerd",
           "state": "installed",
-          "summary": "Optionele cameramodule geïnstalleerd: automatische apparaat-/sensorkoppeling, CPU-waarneming met bestaande lokale referenties en overdracht aan dezelfde Eva. Drie echte broncontroles en één spontane geïnstalleerde intake bevestigd;54 gerichte checks en onafhankelijke review GO. Geen vaste camerakeuze, huisregel of begroetingsscript. Naamaccuratesse, daadwerkelijke reactie en gezinsacceptatie blijven afzonderlijk onbewezen.",
-          "remaining": "Naamaccuratesse en dagelijks passende reacties nog niet beoordeeld. Geen scèneanalyse in deze CPU-stand.",
-          "source": "development/evidence/product/camera-observer-installed-20261019.json",
-          "review": "development/reviews/camera-observer-review-20261019.json",
-          "checkedAt": "2026-10-19T10:02:07.750530+00:00",
-          "newProductFunctionCompleted": true,
-          "completedTaskIds": [
-            "E2.8"
-          ],
-          "completionScope": "Optional technical camera module only",
+          "summary": "Gewone privégesprekken wachten op rust; geselecteerde kennis krijgt bevestiging per bron. Nieuwe native document-/chunkkopieën bevatten geen ruwe gesprekstekst. Publiek wissen werkt ook vóór verwerking en na een onderbreking. 65 gerichte overdrachtscontroles, onafhankelijke source-GO en één echte native batch bevestigd.",
+          "remaining": "Dagcontext→droomoverdracht en publiek wissen zijn geïnstalleerd. Oude bronnen en afgeleide kennis zijn nog niet volledig opgeschoond. De huidige statuslezer overschrijdt zijn 256-cursorgrens; de echte installatie bevat 1652 bevestigde en 38 vastgelopen geheugencursors. Model-/creditbesparing en meerdaags gezinsgebruik niet bewezen.",
+          "source": "development/evidence/product/dream-memory-handoff-installed-20261019.json",
+          "review": "development/reviews/dream-memory-handoff-review-20261019.json",
+          "checkedAt": "2026-10-19T10:53:31.449676+00:00",
+          "newProductFunctionCompleted": false,
+          "completedTaskIds": [],
+          "completionScope": "Geïnstalleerde overdracht; volledige E4.11 blijft open",
           "ownerAcceptance": false,
           "familyAcceptance": false
         },
@@ -2633,10 +2645,10 @@
           "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
           "state": "in_progress",
           "status": "in_progress",
-          "summary": "Dagcontext tijdelijk houden; droomoverdracht naar compacte kennis afmaken",
-          "detail": "De cameramodule is technisch geïnstalleerd en ontvangt echte gebeurtenissen. Hervat de nog open dagelijkse droomconsolidatie binnen de bestaande geheugenroute.",
+          "summary": "Droomoverdracht geïnstalleerd; historische geheugenopschoning loopt",
+          "detail": "Dagcontext→droomoverdracht en publiek wissen zijn geïnstalleerd. Oude bronnen en afgeleide kennis zijn nog niet volledig opgeschoond. De huidige statuslezer overschrijdt zijn 256-cursorgrens; de echte installatie bevat 1652 bevestigde en 38 vastgelopen geheugencursors. Model-/creditbesparing en meerdaags gezinsgebruik niet bewezen.",
           "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-          "checkedAt": "2026-10-19T10:02:07.750530+00:00"
+          "checkedAt": "2026-10-19T10:53:31.449676+00:00"
         },
         "next": {
           "taskId": "E4.11",
@@ -6644,8 +6656,8 @@
                 "scopeOrigin": "selective-memory-20261019",
                 "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
                 "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden.",
-                "gap": "De dag-/droomovergang is nog niet geïmplementeerd. Gewone berichten gaan nu direct naar native extractie. Dagcontext moet eerst tijdelijk bruikbaar blijven; dromen moet gebundeld selecteren, vergelijken, bijwerken en herhaling overslaan. Ook historische opschoning en werkelijke opslag-/verbruiksmeting blijven open.",
-                "nextAction": "Hervat de afgesproken kortetermijn-dagcontext → bestaande droomfase → compacte bijgewerkte langetermijnkennis. Cameramodule is technisch geïnstalleerd; geen herhaalde camera- of geheugenproef zonder nieuwe oorzaak.",
+                "gap": "Dagcontext→droomoverdracht en publiek wissen zijn geïnstalleerd. Oude bronnen en afgeleide kennis zijn nog niet volledig opgeschoond. De huidige statuslezer overschrijdt zijn 256-cursorgrens; de echte installatie bevat 1652 bevestigde en 38 vastgelopen geheugencursors. Model-/creditbesparing en meerdaags gezinsgebruik niet bewezen.",
+                "nextAction": "Oude vastgelopen geheugenverwerkingen alleen-lezen aan bestaande native uitkomsten koppelen; bron-/retentieopschoning en het statusoverzicht bij grote historie afmaken zonder nieuwe modelproeven.",
                 "files": [
                   "src/eva/application/memory.py",
                   "src/eva/application/memory_background.py",
@@ -6657,11 +6669,11 @@
                 "dependsOn": [
                   "E2.2"
                 ],
-                "checkedAt": "2026-10-19T10:02:07.750530+00:00",
+                "checkedAt": "2026-10-19T10:53:31.449676+00:00",
                 "assignment": {
-                  "coordinator": "Codex",
+                  "coordinator": "/root",
                   "activeWorkers": [],
-                  "scope": "Langetermijnselectie/-opslag en geheugenbediening. Spraak en aparte warme zoekroute E4.10 blijven bij bestaande uitvoerder."
+                  "scope": "Root rondt bestaande E4.11 af; provider- en opslaguitvoerder plus onafhankelijke reviewer hebben de nieuwe overdracht geleverd. Spraak blijft bij de andere uitvoerder."
                 },
                 "ownerInstructions": {
                   "availableNow": true,
@@ -6670,8 +6682,8 @@
                   ],
                   "blocksIndependentWork": false
                 },
-                "latestEvidence": "development/evidence/reassessment/selective-memory-installed-20261019.json",
-                "independentReview": "development/reviews/selective-memory-installed-review-20261019.json",
+                "latestEvidence": "development/evidence/product/dream-memory-handoff-installed-20261019.json",
+                "independentReview": "development/reviews/dream-memory-handoff-review-20261019.json",
                 "installed": true,
                 "technicalCompletion": false,
                 "ownerClarification": {
@@ -11224,8 +11236,8 @@
               "scopeOrigin": "selective-memory-20261019",
               "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
               "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden.",
-              "gap": "De dag-/droomovergang is nog niet geïmplementeerd. Gewone berichten gaan nu direct naar native extractie. Dagcontext moet eerst tijdelijk bruikbaar blijven; dromen moet gebundeld selecteren, vergelijken, bijwerken en herhaling overslaan. Ook historische opschoning en werkelijke opslag-/verbruiksmeting blijven open.",
-              "nextAction": "Hervat de afgesproken kortetermijn-dagcontext → bestaande droomfase → compacte bijgewerkte langetermijnkennis. Cameramodule is technisch geïnstalleerd; geen herhaalde camera- of geheugenproef zonder nieuwe oorzaak.",
+              "gap": "Dagcontext→droomoverdracht en publiek wissen zijn geïnstalleerd. Oude bronnen en afgeleide kennis zijn nog niet volledig opgeschoond. De huidige statuslezer overschrijdt zijn 256-cursorgrens; de echte installatie bevat 1652 bevestigde en 38 vastgelopen geheugencursors. Model-/creditbesparing en meerdaags gezinsgebruik niet bewezen.",
+              "nextAction": "Oude vastgelopen geheugenverwerkingen alleen-lezen aan bestaande native uitkomsten koppelen; bron-/retentieopschoning en het statusoverzicht bij grote historie afmaken zonder nieuwe modelproeven.",
               "files": [
                 "src/eva/application/memory.py",
                 "src/eva/application/memory_background.py",
@@ -11237,11 +11249,11 @@
               "dependsOn": [
                 "E2.2"
               ],
-              "checkedAt": "2026-10-19T10:02:07.750530+00:00",
+              "checkedAt": "2026-10-19T10:53:31.449676+00:00",
               "assignment": {
-                "coordinator": "Codex",
+                "coordinator": "/root",
                 "activeWorkers": [],
-                "scope": "Langetermijnselectie/-opslag en geheugenbediening. Spraak en aparte warme zoekroute E4.10 blijven bij bestaande uitvoerder."
+                "scope": "Root rondt bestaande E4.11 af; provider- en opslaguitvoerder plus onafhankelijke reviewer hebben de nieuwe overdracht geleverd. Spraak blijft bij de andere uitvoerder."
               },
               "ownerInstructions": {
                 "availableNow": true,
@@ -11250,8 +11262,8 @@
                 ],
                 "blocksIndependentWork": false
               },
-              "latestEvidence": "development/evidence/reassessment/selective-memory-installed-20261019.json",
-              "independentReview": "development/reviews/selective-memory-installed-review-20261019.json",
+              "latestEvidence": "development/evidence/product/dream-memory-handoff-installed-20261019.json",
+              "independentReview": "development/reviews/dream-memory-handoff-review-20261019.json",
               "installed": true,
               "technicalCompletion": false,
               "ownerClarification": {

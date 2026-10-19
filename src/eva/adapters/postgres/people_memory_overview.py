@@ -13,7 +13,7 @@ import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.memory_outbox import (
-    conversation_memory_document_from_outbox_data,
+    conversation_memory_document_from_outbox_data, PostgresMemoryOutbox,
 )
 from eva.adapters.postgres.operational_timeline import (
     CheckpointState,
@@ -425,11 +425,12 @@ class PostgresOwnerMemorySources:
                     data["installation_id"].astext == self._installation,
                     sa.not_(data["conversation_id"].astext.startswith("telegram:-")),
                     c.phase.in_(("memory_queued", "memory_retaining", "memory_retry",
-                                 "memory_retained", "memory_needs_help")),
+                                 "memory_retained", "memory_needs_help", "memory_not_selected")),
                     sa.or_(data["retention_until"].astext.is_(None),
                            data["retention_until"].astext > stamp),
                 )
                 if context_conversations is not None:
+                    query = query.where(c.phase != "memory_not_selected")
                     channel_scope = data["conversation_id"].astext.in_(context_conversations)
                     if context_voice:
                         # Only the already verified owner and private audience above
@@ -556,7 +557,10 @@ class PostgresOwnerMemorySources:
                             or (doc.retention_until is not None and doc.retention_until <= stamp)):
                         raise PeopleMemoryOverviewError("memory source scope differs")
                     state = ("retained" if row.phase == "memory_retained" else
-                             "needs_help" if row.phase == "memory_needs_help" else "pending")
+                             "not_selected" if row.phase == "memory_not_selected" else
+                             "needs_help" if row.phase == "memory_needs_help" else
+                             "day_context" if doc.retention_mode == "dream" and row.phase == "memory_queued" else
+                             "dream_processing" if doc.retention_mode == "dream" else "pending")
                     if selected_refs is not None:
                         assert selected_query is not None
                         if (doc.project_id != selected_query.project_id
@@ -920,6 +924,9 @@ class PostgresPeopleMemoryOverview:
 
     def _safe_memory_flow(self) -> MemoryFlowState:
         try:
+            if self._timeline.list_checkpoints(thread_prefix="memory-dream:",
+                    statuses=("needs_help",), limit=1):
+                return "needs_help"
             threads = self._validated_threads("memory-retain:")
             observed: set[MemoryFlowState] = set()
             for state, events in threads:
@@ -989,8 +996,29 @@ class PostgresPeopleMemoryOverview:
                     last_error_fingerprint=last_error,
                 )
                 result = "processing"
+            elif event.event_type == "MEMORY_DREAM_SOURCE_RECONCILED":
+                if (prior_type not in {"MEMORY_RETAIN_RETRY_SCHEDULED", "MEMORY_RETAIN_NEEDS_HELP"}
+                        or document.retention_mode != "dream"
+                        or set(data) != {"document_id", "batch_thread_id", "bank_id", "operation_id"}
+                        or data["document_id"] != document.document_id
+                        or not isinstance(data["batch_thread_id"], str)):
+                    raise PeopleMemoryOverviewError("dream receipt reconciliation is malformed")
+                batch_events = self._timeline.events(data["batch_thread_id"])
+                if not batch_events or batch_events[0].event_type != "MEMORY_DREAM_BATCH_ASSIGNED":
+                    raise PeopleMemoryOverviewError("dream reconciliation has no original manifest")
+                members = PostgresMemoryOutbox._dream_members(
+                    self._event_data(batch_events[0]), data["batch_thread_id"])
+                bindings = [self._event_data(candidate) for candidate in batch_events
+                            if candidate.event_type == "MEMORY_DREAM_DISPATCH_BOUND"]
+                if ({"document_id": document.document_id,
+                     "source_payload_sha256": canonical_sha256(queued_data)} not in members
+                        or bindings != [{"bank_id": data["bank_id"], "operation_id": data["operation_id"]}]):
+                    raise PeopleMemoryOverviewError("dream reconciliation operation/source differs")
+                self._require_event_state(event, phase="memory_retaining", status="waiting_for_proof",
+                    retry_count=attempt, last_error_fingerprint=last_error)
+                result = "processing"
             elif event.event_type == "MEMORY_RETAIN_SUCCEEDED":
-                if prior_type != "MEMORY_RETAIN_ATTEMPTED" or set(data) != {
+                if prior_type not in {"MEMORY_RETAIN_ATTEMPTED", "MEMORY_DREAM_SOURCE_RECONCILED"} or set(data) != {
                     "bank_id",
                     "content_sha256",
                     "document_id",
@@ -1017,6 +1045,17 @@ class PostgresPeopleMemoryOverview:
                     status="completed",
                     retry_count=attempt,
                 )
+                result = "up_to_date"
+            elif event.event_type == "MEMORY_RETAIN_NOT_SELECTED":
+                if (prior_type not in {"MEMORY_RETAIN_ATTEMPTED", "MEMORY_DREAM_SOURCE_RECONCILED"}
+                        or set(data) != {"bank_id", "content_sha256", "document_id", "selected_fact_count", "operation_id"}
+                        or data["document_id"] != document.document_id
+                        or data["content_sha256"] != hashlib.sha256(document.content.encode()).hexdigest()
+                        or type(data["selected_fact_count"]) is not int or data["selected_fact_count"] != 0
+                        or not isinstance(data["bank_id"], str) or not data["bank_id"]
+                        or not isinstance(data["operation_id"], str) or not data["operation_id"]):
+                    raise PeopleMemoryOverviewError("memory zero-selection receipt differs")
+                self._require_event_state(event, phase="memory_not_selected", status="completed", retry_count=attempt)
                 result = "up_to_date"
             elif event.event_type == "MEMORY_RETAIN_RETRY_SCHEDULED":
                 error_fingerprint = data.get("error_fingerprint")

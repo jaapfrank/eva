@@ -155,6 +155,7 @@ class ConversationMemoryDocument:
     audience: MemoryAudience
     project_id: str | None = None
     retention_until: str | None = None
+    retention_mode: Literal["immediate", "dream"] = "immediate"
 
     def __post_init__(self) -> None:
         required = (
@@ -170,6 +171,14 @@ class ConversationMemoryDocument:
             raise ValueError("memory document identifiers are required")
         if self.audience.principal_id != self.principal_id:
             raise ValueError("memory document audience author differs")
+        if self.retention_mode not in {"immediate", "dream"}:
+            raise ValueError("memory document retention mode is invalid")
+        if self.retention_mode == "dream" and (
+            self.audience.kind != "private_person" or self.trust != "direct_user"
+            or self.project_id is not None
+            or self.document_id != f"{self.conversation_id}:exchange:{self.source_ref}"
+        ):
+            raise ValueError("dream memory requires an ordinary private source exchange")
         if self.audience.kind == "household":
             prefix = f"household:{self.audience.household_id}:conversation:"
             if (not self.conversation_id.startswith(prefix)

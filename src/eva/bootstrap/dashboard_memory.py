@@ -49,7 +49,7 @@ def source_view(runtime, source_id, *, now=None):
         "origin": "Telegram" if doc.conversation_id.startswith("telegram:") else "Eigen geheugen",
         "kind": kind, "trust": doc.trust, "learning": record,
         "current_learning": current_learning, "current_source_id": current_source_id,
-        "can_forget": state == "retained", "erasure_scope": "exchange" if exchange else "memory_document"}
+        "can_forget": state == "retained" or doc.retention_mode == "dream", "erasure_scope": "exchange" if exchange else "memory_document"}
 
 
 def memory_view(runtime, text=None, *, now=None):

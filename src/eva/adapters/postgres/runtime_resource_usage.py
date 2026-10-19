@@ -794,13 +794,16 @@ class PostgresMemoryStorageBudget(PostgresScopedRole):
                     raise OperationalTimelineError(
                         "memory storage replay reason is malformed"
                     )
+                erasing = existing.phase in {
+                    "memory_storage_removing", "memory_storage_removed", "memory_storage_remove_needs_help",
+                }
                 return self._admission(
-                    admitted=admitted,
+                    admitted=admitted and not erasing,
                     replayed=True,
                     content_bytes=content_bytes,
                     usage=usage,
-                    retention_until=(stored_retention if admitted else None),  # type: ignore[arg-type]
-                    reason=reason,  # type: ignore[arg-type]
+                    retention_until=(stored_retention if admitted and not erasing else None),  # type: ignore[arg-type]
+                    reason="source_removal_requested" if erasing else reason,  # type: ignore[arg-type]
                 )
 
             usage = self._usage(
@@ -940,13 +943,13 @@ class PostgresMemoryStorageBudget(PostgresScopedRole):
         thread_id = f"memory-storage:{document_sha256}"
         state = self._timeline.load(thread_id)
         if state.phase in {"memory_storage_retained", "memory_storage_removing"}:
-            data = self._validate_retention_data(
+            data = (self._validate_retention_data(
                 self._first_data(self._timeline.events(thread_id)[-1].payload)
-                if state.phase == "memory_storage_retained"
-                else self._retained_event_data(thread_id)
-            )
+            ) if state.phase == "memory_storage_retained" else self._deletion_event_data(thread_id))
             if (
                 data["document_id"] != document.document_id
+                or receipt.document_id != document.document_id
+                or receipt.content_sha256 != data["content_sha256"]
                 or data["content_sha256"]
                 != hashlib.sha256(document.content.encode("utf-8")).hexdigest()
                 or data["bank_id"] != receipt.bank_id
@@ -983,13 +986,13 @@ class PostgresMemoryStorageBudget(PostgresScopedRole):
             },
         )
 
-    def _retained_event_data(self, thread_id: str) -> dict[str, object]:
+    def _deletion_event_data(self, thread_id: str) -> dict[str, object]:
         for event in reversed(self._timeline.events(thread_id)):
-            if getattr(event, "event_type", None) != "MEMORY_STORAGE_RETAINED":
-                continue
-            payload = getattr(event, "payload", None)
-            return self._validate_retention_data(self._first_data(payload))
-        raise OperationalTimelineError("memory storage retention event is missing")
+            if event.event_type == "MEMORY_STORAGE_PENDING_ERASURE_CLAIMED":
+                return self._validate_pending_erasure_data(self._first_data(event.payload))
+            if event.event_type == "MEMORY_STORAGE_RETAINED":
+                return self._validate_retention_data(self._first_data(event.payload))
+        raise OperationalTimelineError("memory storage deletion address is missing")
 
     @staticmethod
     def _validate_retention_data(data: dict[str, object]) -> dict[str, object]:
@@ -1009,6 +1012,128 @@ class PostgresMemoryStorageBudget(PostgresScopedRole):
                 "memory storage retention event is malformed"
             )
         return data
+
+    @classmethod
+    def _validate_pending_erasure_data(cls, data: dict[str, object]) -> dict[str, object]:
+        if (set(data) != {"bank_id", "content_sha256", "contract", "document_id",
+                          "document_sha256", "retention_until", "principal_sha256",
+                          "source_message_id", "reason", "requested_at"}
+                or data.get("contract") != "EvaMemoryStoragePendingErasure/v1"
+                or data.get("reason") != "explicit_request"
+                or not isinstance(data.get("bank_id"), str)
+                or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,127}", data["bank_id"])
+                or any(not isinstance(data.get(key), str)
+                       or not re.fullmatch(r"[0-9a-f]{64}", data[key])
+                       for key in ("content_sha256", "document_sha256", "principal_sha256"))
+                or not isinstance(data.get("document_id"), str)
+                or not data["document_id"].strip() or len(data["document_id"]) > 1_024
+                or cls._document_sha256(data["document_id"]) != data["document_sha256"]
+                or not isinstance(data.get("source_message_id"), str)
+                or not data["source_message_id"].strip() or len(data["source_message_id"]) > 240):
+            raise OperationalTimelineError("memory pending erasure event is malformed")
+        cls._parse_timestamp(data["retention_until"], label="pending erasure retention")
+        cls._parse_timestamp(data["requested_at"], label="pending erasure request")
+        return data
+
+    def request_pending_erasure(
+        self, document: ConversationMemoryDocument, *, bank_id: str,
+        now: datetime, source_message_id: str,
+    ) -> MemoryExpiryJob | None:
+        """Lease an admitted unfinished source; never manufacture retained proof."""
+        now = self._require_now(now)
+        if document.tenant_id != self._tenant_id or document.installation_id != self._installation_id:
+            raise ValueError("memory pending erasure crossed its runtime scope")
+        if (not isinstance(bank_id, str)
+                or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,127}", bank_id)
+                or not isinstance(source_message_id, str) or not source_message_id.strip()
+                or len(source_message_id) > 240 or source_message_id != document.source_ref):
+            raise ValueError("memory pending erasure source or bank is invalid")
+        principal_sha256 = self._principal_sha256(document.principal_id)
+        document_sha256 = self._document_sha256(document.document_id)
+        content_sha256 = hashlib.sha256(document.content.encode("utf-8")).hexdigest()
+        group_sha256 = (None if document.audience.kind != "telegram_group"
+                        else self._scope_sha256(document.audience.audience_id, label="group"))
+        project_sha256 = (None if document.project_id is None
+                          else self._scope_sha256(document.project_id, label="project"))
+        thread_id = f"memory-storage:{document_sha256}"
+        retained = False
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                {"key": f"{self._scope_value.tenant_id}:{self._scope_value.installation_id}:memory-storage:installation"})
+            row = connection.execute(sa.select(operational_checkpoints).where(
+                operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
+                operational_checkpoints.c.installation_id == self._scope_value.installation_id,
+                operational_checkpoints.c.thread_id == thread_id,
+            ).with_for_update()).one_or_none()
+            initial = connection.execute(sa.select(operational_events.c.payload).where(
+                operational_events.c.tenant_id == self._scope_value.tenant_id,
+                operational_events.c.installation_id == self._scope_value.installation_id,
+                operational_events.c.thread_id == thread_id, operational_events.c.sequence == 1,
+            )).one_or_none()
+            data = self._first_data(None if initial is None else initial.payload)
+            if (row is None or data.get("contract") != "EvaMemoryStorageAdmission/v2"
+                    or data.get("admitted") is not True
+                    or data.get("document_sha256") != document_sha256
+                    or data.get("principal_sha256") != principal_sha256
+                    or data.get("content_sha256") != content_sha256
+                    or type(data.get("content_bytes")) is not int
+                    or data.get("content_bytes") != len(document.content.encode("utf-8"))
+                    or data.get("audience_kind") != document.audience.kind
+                    or data.get("group_sha256") != group_sha256
+                    or data.get("project_sha256") != project_sha256
+                    or document.retention_until is None
+                    or data.get("retention_until") != document.retention_until):
+                raise OperationalTimelineError("memory pending erasure differs from its admission")
+            self._parse_timestamp(document.retention_until, label="pending erasure retention")
+            if row.phase in {"memory_storage_retained", "memory_storage_removing", "memory_storage_removed"}:
+                address = self._deletion_event_data(thread_id)
+                if any(address.get(k) != value for k, value in {
+                    "bank_id": bank_id, "document_id": document.document_id,
+                    "content_sha256": content_sha256, "retention_until": document.retention_until,
+                }.items()):
+                    raise OperationalTimelineError("memory pending erasure deletion address differs")
+                if row.phase != "memory_storage_retained":
+                    existing_principal, existing_source = self._explicit_erasure_bindings(thread_id)
+                    if existing_principal is not None and (existing_principal != principal_sha256
+                                                          or existing_source != source_message_id):
+                        raise OperationalTimelineError("memory pending erasure replay differs")
+                    return None
+                retained = True
+            elif row.phase != "memory_storage_reserved":
+                raise OperationalTimelineError("memory pending erasure is not admitted or removable")
+            else:
+                from eva.adapters.postgres.memory_outbox import conversation_memory_document_from_outbox_data
+                source = connection.execute(sa.select(operational_events.c.payload).where(
+                    operational_events.c.tenant_id == self._scope_value.tenant_id,
+                    operational_events.c.installation_id == self._scope_value.installation_id,
+                    operational_events.c.thread_id == f"memory-retain:{document_sha256}",
+                    operational_events.c.sequence == 1,
+                    operational_events.c.event_type == "MEMORY_RETAIN_QUEUED",
+                )).one_or_none()
+                if source is None or conversation_memory_document_from_outbox_data(
+                    self._first_data(source.payload)
+                ) != document:
+                    raise OperationalTimelineError("memory pending erasure differs from its queued source")
+                erasure_data = self._validate_pending_erasure_data({
+                    "bank_id": bank_id, "document_id": document.document_id,
+                    "document_sha256": document_sha256, "content_sha256": content_sha256,
+                    "retention_until": document.retention_until, "principal_sha256": principal_sha256,
+                    "source_message_id": source_message_id, "reason": "explicit_request",
+                    "requested_at": self._timestamp(now), "contract": "EvaMemoryStoragePendingErasure/v1",
+                })
+                leased = transition_timeline_thread(
+                    connection, self._scope_value, thread_id=thread_id, expected_revision=int(row.revision),
+                    checkpoint_id=f"{thread_id}:erase:1", phase="memory_storage_removing",
+                    status="waiting_for_proof", event_type="MEMORY_STORAGE_PENDING_ERASURE_CLAIMED",
+                    occurred_at=now, deadline=now + timedelta(seconds=self._removal_lease_seconds),
+                    retry_count=1, data=erasure_data,
+                )
+        if retained:
+            return self.request_erasure(principal_id=document.principal_id, document_id=document.document_id,
+                                        now=now, source_message_id=source_message_id)
+        return MemoryExpiryJob(leased, bank_id, document.document_id, document_sha256, content_sha256,
+                               document.retention_until, principal_sha256, source_message_id)
 
     def request_erasure(
         self,
@@ -1095,7 +1220,7 @@ class PostgresMemoryStorageBudget(PostgresScopedRole):
                     "memory erasure target is not durably retained"
                 )
             retained_data = self._validate_retention_data(
-                self._retained_event_data(thread_id)
+                self._deletion_event_data(thread_id)
             )
             values = (
                 retained_data.get("bank_id"),
@@ -1151,6 +1276,9 @@ class PostgresMemoryStorageBudget(PostgresScopedRole):
         self, thread_id: str
     ) -> tuple[str | None, str | None]:
         for event in reversed(self._timeline.events(thread_id)):
+            if event.event_type == "MEMORY_STORAGE_PENDING_ERASURE_CLAIMED":
+                data = self._validate_pending_erasure_data(self._first_data(event.payload))
+                return str(data["principal_sha256"]), str(data["source_message_id"])
             if event.event_type != "MEMORY_STORAGE_ERASURE_CLAIMED":
                 continue
             data = self._first_data(event.payload)
@@ -1240,7 +1368,7 @@ class PostgresMemoryStorageBudget(PostgresScopedRole):
                         operational_events.c.installation_id
                         == self._scope_value.installation_id,
                         operational_events.c.thread_id == state.thread_id,
-                        operational_events.c.event_type == "MEMORY_STORAGE_RETAINED",
+                        operational_events.c.event_type.in_(("MEMORY_STORAGE_RETAINED", "MEMORY_STORAGE_PENDING_ERASURE_CLAIMED")),
                     )
                     .order_by(operational_events.c.sequence.desc())
                     .limit(1)
@@ -1248,7 +1376,9 @@ class PostgresMemoryStorageBudget(PostgresScopedRole):
                 data = self._first_data(
                     None if retained_row is None else retained_row.payload
                 )
-                data = self._validate_retention_data(data)
+                data = (self._validate_pending_erasure_data(data)
+                        if data.get("contract") == "EvaMemoryStoragePendingErasure/v1"
+                        else self._validate_retention_data(data))
                 explicit_principal_sha256, source_message_id = (
                     self._explicit_erasure_bindings(state.thread_id)
                 )
@@ -1265,6 +1395,11 @@ class PostgresMemoryStorageBudget(PostgresScopedRole):
                     None if admission_row is None else admission_row.payload
                 )
                 principal_sha256 = admission_data.get("principal_sha256")
+                if data.get("contract") == "EvaMemoryStoragePendingErasure/v1" and any(
+                    admission_data.get(key) != data.get(key)
+                    for key in ("document_sha256", "content_sha256", "retention_until", "principal_sha256")
+                ):
+                    raise OperationalTimelineError("memory pending erasure admission binding differs")
                 if (
                     admission_data.get("contract") != "EvaMemoryStorageAdmission/v2"
                     or not isinstance(principal_sha256, str)
@@ -1346,6 +1481,18 @@ class PostgresMemoryStorageBudget(PostgresScopedRole):
 
     def mark_removed(self, job: MemoryExpiryJob, *, now: datetime) -> CheckpointState:
         now = self._require_now(now)
+        data = self._deletion_event_data(job.state.thread_id)
+        initial = self._first_data(self._timeline.events(job.state.thread_id)[0].payload)
+        explicit_principal, explicit_source = self._explicit_erasure_bindings(job.state.thread_id)
+        if (job.state.thread_id != f"memory-storage:{self._document_sha256(job.document_id)}"
+                or any(data.get(key) != value for key, value in {
+                    "bank_id": job.bank_id, "document_id": job.document_id,
+                    "document_sha256": job.document_sha256, "content_sha256": job.content_sha256,
+                    "retention_until": job.retention_until,
+                }.items()) or initial.get("principal_sha256") != job.principal_sha256
+                or (explicit_principal is not None and (
+                    explicit_principal != job.principal_sha256 or explicit_source != job.source_message_id))):
+            raise OperationalTimelineError("memory removal job differs from its deletion address")
         try:
             return self._timeline.transition(
                 thread_id=job.state.thread_id,

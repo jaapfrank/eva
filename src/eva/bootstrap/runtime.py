@@ -469,7 +469,7 @@ class PostgresHindsightMemoryRuntime:
     def dashboard_forget_memory_source(self, source_id: str):
         now = datetime.now(UTC).replace(microsecond=0)
         doc, state = self._owner_memory_sources().document(source_id, now=now)
-        if state != "retained":
+        if state != "retained" and doc.retention_mode != "dream":
             raise ConversationConflict("Deze bron is nog niet verwerkt. Probeer wissen na verwerking opnieuw.")
         # A task experience erases its own semantic source, not the original
         # user request. The durable projection marker prevents re-creation.
@@ -480,7 +480,7 @@ class PostgresHindsightMemoryRuntime:
                 raise ConversationConflict("Deze bron heeft geen ondersteunde gesprekskoppeling.")
             source_message_id = None
         erased = self._cold_path.erase_document(principal_id=doc.principal_id,
-            document_id=doc.document_id, source_message_id=source_message_id, now=now)
+            document_id=doc.document_id, source_message_id=source_message_id, now=now, document=doc)
         return {"contract": "EvaOwnerMemoryChange/v1", "source_id": source_id,
                 "state": "erased" if erased else "erasure_requested"}
 
@@ -839,7 +839,6 @@ class PostgresHindsightMemoryRuntime:
         # assistant reply is model output and must never inherit direct_user trust.
         # Keeping that authority boundary here prevents a speculative reply from
         # becoming a self-confirming long-term memory on the following turn.
-        _ = reply
         actions = getattr(self, "_conversation_actions", None)
         completed_action = None if actions is None else actions.pending(turn)
         grounded_correction = (
@@ -895,6 +894,11 @@ class PostgresHindsightMemoryRuntime:
             trust="direct_user",
             audience=turn.audience,
             project_id=turn.project_id,
+            retention_mode=(
+                "dream" if grounded_correction is None
+                and turn.audience.kind == "private_person" and turn.project_id is None
+                and reply.provider != "owner-memory-controls" else "immediate"
+            ),
         )
         # ``submit`` commits the separate outbox thread before returning. The
         # queue wake-up and Hindsight call remain asynchronous, but a crash in

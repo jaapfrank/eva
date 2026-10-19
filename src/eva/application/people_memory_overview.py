@@ -60,13 +60,13 @@ class MemorySource:
     occurred_at: str
     excerpt: str
     truncated: bool
-    retention_state: Literal["retained", "pending", "needs_help"]
+    retention_state: Literal["retained", "pending", "needs_help", "day_context", "dream_processing", "not_selected"]
 
     def __post_init__(self) -> None:
         memory_source_page_request(1, f"{self.occurred_at}|{self.source_id}")
         if (not isinstance(self.excerpt, str) or not self.excerpt
                 or len(self.excerpt) > 2048 or type(self.truncated) is not bool
-                or self.retention_state not in {"retained", "pending", "needs_help"}):
+                or self.retention_state not in {"retained", "pending", "needs_help", "day_context", "dream_processing", "not_selected"}):
             raise ValueError("memory source is invalid")
 
 
