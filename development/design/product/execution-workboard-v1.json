@@ -3469,7 +3469,7 @@
                 "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
                 "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
                 "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-                "nextAction": "Werkelijk eigenaargesprek herstellen: broncontext behouden over vervolgvragen, vastgelopen spraakinvoer expliciet afhandelen en de gemeten modelwachttijd aanpakken. Eerst dezelfde gebruikte keten controleren; geen nieuwe eigenaarproef vragen zolang deze concrete fouten uitvoerbaar zijn.",
+                "nextAction": "Broncontext en de geteste terminale spraakinvoerfout zijn geïnstalleerd en werkelijk via de native spraakketen gecontroleerd. Verminder de opeenvolgende modelrondes: onderzoek één begrensde discovery-opdracht in de bestaande HA-module voor entiteiten plus onbekende serviceschema’s; pas alleen gemeten winst toe. De eerste weersopvraag blijft circa23s tot gesproken eindantwoord; geen volledige spraak- of fysieke eigenaaracceptatie claimen.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
@@ -3488,8 +3488,8 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "owner_weather_followup_repair_in_progress",
-                  "updatedAt": "2026-10-19T18:17:35.121833+00:00",
+                  "status": "weather_followup_repair_installed_measured",
+                  "updatedAt": "2026-10-19T18:37:15.035445+00:00",
                   "ownerAcceptance": false,
                   "evidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
                 }
@@ -3553,7 +3553,7 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Werkelijk eigenaargesprek herstellen: broncontext behouden over vervolgvragen, vastgelopen spraakinvoer expliciet afhandelen en de gemeten modelwachttijd aanpakken. Eerst dezelfde gebruikte keten controleren; geen nieuwe eigenaarproef vragen zolang deze concrete fouten uitvoerbaar zijn.",
+                "nextAction": "Broncontext en de geteste terminale spraakinvoerfout zijn geïnstalleerd en werkelijk via de native spraakketen gecontroleerd. Verminder de opeenvolgende modelrondes: onderzoek één begrensde discovery-opdracht in de bestaande HA-module voor entiteiten plus onbekende serviceschema’s; pas alleen gemeten winst toe. De eerste weersopvraag blijft circa23s tot gesproken eindantwoord; geen volledige spraak- of fysieke eigenaaracceptatie claimen.",
                 "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
@@ -3830,8 +3830,8 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "owner_weather_followup_repair_in_progress",
-                  "updatedAt": "2026-10-19T18:17:35.121833+00:00",
+                  "status": "weather_followup_repair_installed_measured",
+                  "updatedAt": "2026-10-19T18:37:15.035445+00:00",
                   "ownerAcceptance": false,
                   "evidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
                 }
@@ -7526,18 +7526,18 @@
             "C3.5",
             "C3.6"
           ],
-          "status": "owner_weather_followup_repair_in_progress",
+          "status": "weather_followup_repair_installed_measured",
           "startedAt": "2026-10-19T07:08:01.588667+00:00",
           "activeOtherWorkPreserved": "E5.1",
           "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
           "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
-          "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-          "updatedAt": "2026-10-19T18:17:35.121833+00:00",
-          "physicalAcceptance": "owner_reported_slow_context_loss_and_silence",
+          "independentReview": "development/reviews/weather-followup-repair-20261019.json",
+          "updatedAt": "2026-10-19T18:37:15.035445+00:00",
+          "physicalAcceptance": "not_observed_after_repair",
           "executionPlan": {
             "path": "development/design/product/voice-recovery-execution-20261019.json",
-            "status": "early_contact_installed_physical_acceptance_pending",
-            "updatedAt": "2026-10-19T14:57:30.063739+00:00"
+            "status": "weather_followup_repair_installed_measured",
+            "updatedAt": "2026-10-19T18:37:15.035445+00:00"
           },
           "latestEvidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
         }
@@ -8079,7 +8079,7 @@
               "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
               "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
               "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-              "nextAction": "Werkelijk eigenaargesprek herstellen: broncontext behouden over vervolgvragen, vastgelopen spraakinvoer expliciet afhandelen en de gemeten modelwachttijd aanpakken. Eerst dezelfde gebruikte keten controleren; geen nieuwe eigenaarproef vragen zolang deze concrete fouten uitvoerbaar zijn.",
+              "nextAction": "Broncontext en de geteste terminale spraakinvoerfout zijn geïnstalleerd en werkelijk via de native spraakketen gecontroleerd. Verminder de opeenvolgende modelrondes: onderzoek één begrensde discovery-opdracht in de bestaande HA-module voor entiteiten plus onbekende serviceschema’s; pas alleen gemeten winst toe. De eerste weersopvraag blijft circa23s tot gesproken eindantwoord; geen volledige spraak- of fysieke eigenaaracceptatie claimen.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
@@ -8098,8 +8098,8 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "owner_weather_followup_repair_in_progress",
-                "updatedAt": "2026-10-19T18:17:35.121833+00:00",
+                "status": "weather_followup_repair_installed_measured",
+                "updatedAt": "2026-10-19T18:37:15.035445+00:00",
                 "ownerAcceptance": false,
                 "evidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
               }
@@ -8163,7 +8163,7 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Werkelijk eigenaargesprek herstellen: broncontext behouden over vervolgvragen, vastgelopen spraakinvoer expliciet afhandelen en de gemeten modelwachttijd aanpakken. Eerst dezelfde gebruikte keten controleren; geen nieuwe eigenaarproef vragen zolang deze concrete fouten uitvoerbaar zijn.",
+              "nextAction": "Broncontext en de geteste terminale spraakinvoerfout zijn geïnstalleerd en werkelijk via de native spraakketen gecontroleerd. Verminder de opeenvolgende modelrondes: onderzoek één begrensde discovery-opdracht in de bestaande HA-module voor entiteiten plus onbekende serviceschema’s; pas alleen gemeten winst toe. De eerste weersopvraag blijft circa23s tot gesproken eindantwoord; geen volledige spraak- of fysieke eigenaaracceptatie claimen.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -8440,8 +8440,8 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "owner_weather_followup_repair_in_progress",
-                "updatedAt": "2026-10-19T18:17:35.121833+00:00",
+                "status": "weather_followup_repair_installed_measured",
+                "updatedAt": "2026-10-19T18:37:15.035445+00:00",
                 "ownerAcceptance": false,
                 "evidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
               }
@@ -12136,18 +12136,18 @@
           "C3.5",
           "C3.6"
         ],
-        "status": "owner_weather_followup_repair_in_progress",
+        "status": "weather_followup_repair_installed_measured",
         "startedAt": "2026-10-19T07:08:01.588667+00:00",
         "activeOtherWorkPreserved": "E5.1",
         "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
         "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
-        "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-        "updatedAt": "2026-10-19T18:17:35.121833+00:00",
-        "physicalAcceptance": "owner_reported_slow_context_loss_and_silence",
+        "independentReview": "development/reviews/weather-followup-repair-20261019.json",
+        "updatedAt": "2026-10-19T18:37:15.035445+00:00",
+        "physicalAcceptance": "not_observed_after_repair",
         "executionPlan": {
           "path": "development/design/product/voice-recovery-execution-20261019.json",
-          "status": "early_contact_installed_physical_acceptance_pending",
-          "updatedAt": "2026-10-19T14:57:30.063739+00:00"
+          "status": "weather_followup_repair_installed_measured",
+          "updatedAt": "2026-10-19T18:37:15.035445+00:00"
         },
         "latestEvidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
       }

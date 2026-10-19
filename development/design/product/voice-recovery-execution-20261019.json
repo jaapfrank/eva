@@ -6,7 +6,7 @@
   "ownerDirection": {
     "technologyPreference": "De techniek is vrij binnen de bestaande projectafspraken; bruikbaarheid en snelheid bepalen de keuze. Geen verdere stemvoorkeurvraag nodig.",
     "evidenceRule": "Een test van uitvoering A bewijst geen werking van uitvoering B.",
-    "currentTurn": "Na expliciete eigenaaropdracht uitgevoerd en geïnstalleerd: vroege contactbeslissing, provideractie en native correctieoverdracht. Werkelijke native/chat-proeven vastgelegd; snelheidsdoel en fysieke eigenaaracceptatie blijven open. Geen nieuwe provider, firmwareflash of WSL-herstart.",
+    "currentTurn": "Laatste eigenaarmelding onderzocht: bronverlies na weersvraag en circa een minuut stilte. Begrensde broncontinuïteit, terminale invoerafhandeling en correcte Codex-cachekoppeling zijn geïnstalleerd en door de echte native softwareketen gebruikt. Eerste weersopvraag blijft te traag door opeenvolgende modelrondes; daar blijft de bestaande spraaktaak op gericht. Geen nieuwe provider of fysieke acceptatie geclaimd.",
     "previousTurnScope": "Uitwerking en alleen-lezen controle; geen runtimewijziging, providerproef, opname, firmwareflash of WSL-herstart."
   },
   "baseline": {
@@ -316,7 +316,7 @@
   "ownerSteering20261019": {
     "recordedAt": "2026-10-19T13:22:03.324164+00:00",
     "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
-    "status": "implemented_installed_measured",
+    "status": "weather_followup_repair_installed_measured",
     "intent": "Choose early whether a request can be answered or executed directly, or requires historical memory or deeper work. Keep one Eva and shared authority, memory and conversation history.",
     "concreteCandidate": {
       "status": "installed_used_not_fully_accepted",
@@ -338,8 +338,8 @@
     },
     "implementationStartedAt": "2026-10-19T13:49:39.902948+00:00",
     "ownerAuthorization": "Oke ga dit voor elkaar maken.",
-    "implementationEvidence": "development/evidence/product/subscription-voice-20261013/early-contact-installed-20261019.json",
-    "updatedAt": "2026-10-19T14:57:30.063739+00:00",
+    "implementationEvidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json",
+    "updatedAt": "2026-10-19T18:37:15.035445+00:00",
     "ownerAccepted": false
   }
 }

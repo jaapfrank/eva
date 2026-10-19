@@ -28,6 +28,8 @@ from pydantic_ai.toolsets.external import ExternalToolset
 from pydantic_ai.usage import UsageLimits
 
 from eva.adapters.model.openai_codex_provider import (
+    _codex_compatible_request,
+    _RawSseUsageAttestor,
     _CodexStreamingModel,
     _sanitized,
     CodexProviderError,
@@ -35,6 +37,44 @@ from eva.adapters.model.openai_codex_provider import (
     OpenAICodexProviderSettings,
     RawUsageAttestation,
 )
+
+
+def test_cache_affinity_matches_scoped_key_across_phases_and_separates_scopes():
+    def request(key):
+        body = {"model": "gpt-6-sol", "store": False, "stream": True, "instructions": "Answer briefly.",
+                "input": [{"role": "user", "content": "hello"}]}
+        if key is not None:
+            body["prompt_cache_key"] = key
+        return _codex_compatible_request(httpx2.Request(
+            "POST", "https://codex.test/responses", json=body,
+            headers={"session_id": "old-random-phase", "authorization": "Bearer test"}))
+
+    first, second, other = request("eva-scope-a"), request("eva-scope-a"), request("eva-scope-b")
+    assert first.headers["session-id"] == second.headers["session-id"] == "eva-scope-a"
+    assert other.headers["session-id"] != first.headers["session-id"]
+    assert "session_id" not in first.headers
+    assert first.headers["authorization"] == "Bearer test"
+    assert json.loads(first.content)["prompt_cache_key"] == "eva-scope-a"
+    assert "previous_response_id" not in json.loads(first.content)
+    assert request(None).headers["session-id"] != request(None).headers["session-id"]
+
+
+@pytest.mark.parametrize("key", ["", "scope\r\nInjected: yes", 42, "é", "x" * 257])
+def test_invalid_cache_scope_cannot_become_a_header(key):
+    with pytest.raises(CodexProviderError):
+        _codex_compatible_request(httpx2.Request("POST", "https://codex.test/responses",
+            json={"model": "gpt-6-sol", "store": False, "stream": True, "instructions": "Answer briefly.",
+                  "input": [{"role": "user", "content": "hello"}], "prompt_cache_key": key}))
+
+
+@pytest.mark.parametrize("cached,expected", [(0, 0), (12, 12), (None, None), (-1, None), (18, None), (True, None), ("secret", None)])
+def test_cached_usage_observation_preserves_unknown_and_rejects_invalid_metadata(cached, expected):
+    attestor = _RawSseUsageAttestor()
+    response = _response("hello")
+    response["usage"]["input_tokens_details"] = {"cached_tokens": cached}
+    attestor.feed(("data: " + json.dumps({"type": "response.completed", "response": response}) + "\n\n").encode())
+    assert attestor.finish() == RawUsageAttestation(17, 7, 24)
+    assert attestor.cached_tokens == expected
 
 
 class _StatusFailure(RuntimeError):

@@ -6,6 +6,8 @@ loader supplies account access; no login UI or persistent credentials are added.
 from __future__ import annotations
 import asyncio
 import json
+import hashlib
+import secrets
 import os
 import tempfile
 from pathlib import Path
@@ -15,11 +17,13 @@ class VoiceTransportError(RuntimeError):
 
 class CodexVoiceSession:
     def __init__(self, executable, credentials, backend, *, timeout=25, media_only=False,
-                 context_sender=None):
+                 context_sender=None, on_input_turn=None):
         self.executable, self.credentials, self.timeout = executable, credentials, timeout
         self.backend = backend
         self.media_only = media_only
         self.context_sender = context_sender
+        self.on_input_turn = on_input_turn
+        self._error_salt = secrets.token_bytes(32)
         self.account_id = None
         self.events = asyncio.Queue(maxsize=512)
         self.pending = {}
@@ -102,6 +106,48 @@ class CodexVoiceSession:
             if not future.done():
                 future.cancel()
 
+    def input_turn_notification(self, message):
+        """Observe only bound app-server turns; never publish provider text."""
+        params = message.get("params")
+        if not isinstance(params, dict) or params.get("threadId") != self.thread:
+            return
+        method = message.get("method")
+        turn = params.get("turn")
+        identity = params.get("turnId") if method == "error" else (
+            turn.get("id") if isinstance(turn, dict) else None)
+        if not isinstance(identity, str) or not 1 <= len(identity) <= 256:
+            return
+        phase = None
+        if method == "turn/started":
+            phase = "started"
+        elif method == "error" or method == "turn/completed":
+            failure = params.get("error") if method == "error" else (
+                turn.get("error") if isinstance(turn, dict) else None)
+            if method == "error" or (isinstance(turn, dict) and turn.get("status") == "failed"):
+                encoded = json.dumps(failure, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
+                info = failure.get("codexErrorInfo") if isinstance(failure, dict) else None
+                categories = {"contextWindowExceeded", "sessionBudgetExceeded", "usageLimitExceeded",
+                    "rateLimitExceeded", "serverOverloaded", "internalServerError", "unauthorized",
+                    "badRequest", "httpConnectionFailed", "responseStreamConnectionFailed",
+                    "responseStreamDisconnected", "responseTooManyFailedAttempts"}
+                category = info if isinstance(info, str) and info in categories else "other"
+                status = None
+                if isinstance(info, dict) and len(info) == 1:
+                    key, value = next(iter(info.items()))
+                    if key in categories and isinstance(value, dict):
+                        category = key
+                        code = value.get("httpStatusCode")
+                        if type(code) is int and 100 <= code <= 599: status = code
+                self.backend.diagnostic("input_transport_error", category=category, http_status=status,
+                    error_sha256=hashlib.sha256(self._error_salt + encoded[:65536]).hexdigest(),
+                    error_truncated=len(encoded)>65536, retrying=params.get("willRetry") is True)
+                if method == "turn/completed" or params.get("willRetry") is False:
+                    phase = "failed"
+            elif method == "turn/completed":
+                phase = "completed"
+        if phase is not None and self.on_input_turn is not None:
+            self.on_input_turn(phase, identity)
+
     async def read(self):
         try:
             while raw := await self.process.stdout.readline():
@@ -119,6 +165,7 @@ class CodexVoiceSession:
                             await self.write({"id": message["id"], "error": {
                                 "code": -32601, "message": "EVA does not permit Codex tool execution"}})
                     else:
+                        self.input_turn_notification(message)
                         if message['method'] in {'turn/started','turn/completed','error','thread/realtime/delegation/started','thread/realtime/delegation/completed'}:
                             self.backend.diagnostic('codex_event', method=message['method'])
                         if not self.media_only and message['method'] == 'thread/realtime/transcript/done':

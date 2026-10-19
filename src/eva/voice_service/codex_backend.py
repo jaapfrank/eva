@@ -121,6 +121,7 @@ class EvaVoiceBackend:
         if not secrets.compare_digest(request.headers.get('X-Eva-Voice-Bridge',''), self.secret):
             raise web.HTTPUnauthorized(text='Voice session authentication required')
         if not self.allow_handoffs:
+            self.diagnostic('handoff_denied', reason='input_transport_only')
             raise web.HTTPForbidden(text='Voice transport cannot originate core requests')
         try:
             self.current()

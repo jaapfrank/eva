@@ -586,6 +586,8 @@ class PostgresConversationActions:
             provider_context = getattr(provider, "active_context", None)
             if provider_context is not None:
                 context.extend(provider_context(turn))
+        from eva.adapters.postgres.conversation_grounding import recent_tool_context
+        context.extend(recent_tool_context(self, turn))
         if self._durable_goal_provider is not None:
             goals = self._durable_goal_store(turn).waiting(
                 observed_before=self._timestamp(turn), limit=32

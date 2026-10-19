@@ -1,0 +1,14 @@
+{
+  "contract": "EvaVoiceRepairReview/v1",
+  "recordedAt": "2026-10-19T18:36:36.768435+00:00",
+  "evidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json",
+  "decision": "GO for the installed bounded repairs",
+  "reviews": {
+    "grounding": "Independent exact-scope/retention/authority/terminal-receipt review GO. No new execution or capture.",
+    "input_failure": "Independent generation/STOP/late-input review GO. Actual live403→repeat→freshASR→core→Fenna confirmed.",
+    "cache_routing": "Matches pinned official Codex client; full input/auth unchanged. Cached-token observations do not establish a general speedup.",
+    "live_proofs": "Actual software chain and unchanged runtime verified; physical acoustic acceptance not claimed."
+  },
+  "criteriaChanged": false,
+  "ownerAcceptance": false
+}

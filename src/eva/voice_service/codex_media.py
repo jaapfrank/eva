@@ -190,6 +190,8 @@ class CodexMediaSession:
         self._input_fragments=[]
         self._input_empty_generation=0
         self._input_open=set()
+        self._transport_input_turns={}
+        self._failed_input_turns=set()
         self._input_changed=asyncio.Event()
         self._input_flush=None
         self._generation=0
@@ -443,6 +445,50 @@ class CodexMediaSession:
                     self.emit('agent_state_changed',new_state='listening')
         except (ValueError,TypeError,AttributeError):self.task(self.aclose())
 
+    def input_transport_turn(self, phase, identity):
+        """Settle failed transcription without inventing or repeating a core turn."""
+        self.current()
+        if phase == 'started':
+            if identity not in self._transport_input_turns:
+                pending=set(self._input_open) | {row[0] for row in self._input_fragments}
+                self._transport_input_turns[identity]=(pending,self._generation)
+                while len(self._transport_input_turns)>128:
+                    self._transport_input_turns.pop(next(iter(self._transport_input_turns)))
+            return
+        bound=self._transport_input_turns.pop(identity,None)
+        if phase!='failed' or bound is None:return
+        identities,generation=bound
+        pending=self._input_open | {row[0] for row in self._input_fragments}
+        failed=identities & pending
+        if not failed:return  # Already admitted work and newer input are untouched.
+        announce=(generation==self._generation and generation>=self._response_floor)
+        # Revoke stale answers BEFORE waking response_allowed waiters.
+        self._response_floor=max(self._response_floor,generation+1)
+        self._generation=max(self._generation,self._response_floor)
+        self._failed_input_turns.update(failed)
+        self._input_open.difference_update(failed)
+        self._input_fragments=[row for row in self._input_fragments if row[0] not in failed]
+        self._input_empty_generation=0
+        self._input_changed.set()
+        self.last_activity=time.monotonic()
+        self.diagnostic('input_transport_settled',retired_inputs=len(failed),
+            repeat_prompt=announce,generation=self._generation,response_floor=self._response_floor)
+        if announce:
+            self.renderer.interrupt()
+            self.task(self.input_repeat_prompt(self._generation))
+        if self._input_flush and not self._input_flush.done():self._input_flush.cancel()
+        if self._input_fragments and not self._input_open:
+            self._input_flush=self.task(self.flush_input())
+
+    async def input_repeat_prompt(self, generation):
+        if not await self.response_allowed(generation):return
+        text='Die laatste zin kwam niet door. Wil je hem nog eens zeggen?'
+        handle=self.say(text)
+        await asyncio.gather(handle.task,return_exceptions=True)
+        if not self.closed:
+            self.bridge.transcript('assistant',text,interrupted=(
+                True if handle.task.cancelled() else None if handle.interrupted else False))
+
     def input_event(self, event):
         """The input transport has no audio route and cannot initiate work."""
         kind=event.get('type');turn=event.get('turn',{})
@@ -457,6 +503,7 @@ class CodexMediaSession:
             identity=turn.get('id')
             if not isinstance(identity,str) or not 1<=len(identity)<=256:
                 raise ValueError('Missing input turn identity')
+            if identity in self._failed_input_turns:return
             if identity in self._input_generations:return
             if len(self._input_generations)>=128:raise ValueError('Voice capacity reached')
             self.last_activity=time.monotonic()
@@ -469,6 +516,7 @@ class CodexMediaSession:
             self.emit('user_state_changed',new_state='speaking')
         elif turn.get('role')=='user' and kind=='turn.done':
             identity=turn.get('id');text=turn.get('transcript')
+            if isinstance(identity,str) and identity in self._failed_input_turns:return
             if not isinstance(identity,str) or not 1<=len(identity)<=256:
                 raise ValueError('Missing input turn identity')
             if not isinstance(text,str):raise ValueError('Invalid input transcript')
@@ -643,7 +691,8 @@ class CodexMediaSession:
             self.bridge.allow_handoffs=False
         self.voice=CodexVoiceSession(self.config['codex_executable'],
             lambda:access_lease(self.config['codex_auth_file']),self.bridge,media_only=True,
-            context_sender=self.send_speech_context if self.render_only else None)
+            context_sender=self.send_speech_context if self.render_only else None,
+            on_input_turn=self.input_transport_turn if not self.render_only else None)
         self.prewarm()
         self.channel.on('message', self.provider_message)
         @self.peer.on('track')

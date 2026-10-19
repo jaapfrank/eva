@@ -1,7 +1,7 @@
 {
   "contract": "EvaWeatherFollowupRepair/v1",
-  "recordedAt": "2026-10-19T18:17:35.121833+00:00",
-  "status": "investigating_and_implementing",
+  "recordedAt": "2026-10-19T18:36:36.768435+00:00",
+  "status": "installed_actual_chain_verified",
   "ownerReport": "Gesprek redelijk maar traag; na weersvraag wist Eva niet voor welke plaats de verwachting gold; daaropvolgende vraag bleef ongeveer een minuut onbeantwoord.",
   "observed": {
     "sameInstalledRuntimeAsPreviousDelivery": true,
@@ -19,8 +19,250 @@
   ],
   "acceptance": {
     "ownerAccepted": false,
-    "voiceFluencyComplete": false
+    "voiceFluencyComplete": false,
+    "source_followup_verified": true,
+    "terminal_input_recovery_verified": true
   },
   "privateEvidenceRoot": "/var/lib/eva2/voice-session/weather-followup-20261019",
-  "criteriaUnchanged": true
+  "criteriaUnchanged": true,
+  "implementation": {
+    "conversation_grounding": {
+      "source": "Existing operational receipts and retained source outbox, exact conversation/principal/audience/configuration and retention checks. No new memory store.",
+      "bounds": {
+        "turns": 6,
+        "age_minutes": 30,
+        "actions": 8,
+        "fragment_characters": 6000
+      },
+      "effects_replayed": false,
+      "prior_reader_authority_expanded": false,
+      "retention_boundary": "Requires the original completed exchange and existing retained source; an unusually early follow-up before after_response completes can omit unavailable evidence."
+    },
+    "input_failure": {
+      "binding": "Appserver thread/turn bound to exact still-unadmitted input IDs and generation. Terminal failure retires those inputs before awakening a waiting answer.",
+      "repeat_prompt_once": true,
+      "late_transcript_discarded": true,
+      "partial_question_executed": false,
+      "automatic_action_retry": false,
+      "stop_and_authority_preserved": true,
+      "safe_diagnostics_only": true
+    },
+    "model_transport": {
+      "routing": "session-id uses the existing scope-bound prompt_cache_key; old random session_id header removed. Ungrouped requests retain separate UUIDs.",
+      "state_and_authority_changed": false,
+      "cached_token_counts_exposed": true,
+      "measured_cached_tokens": [
+        3200,
+        2560,
+        2560,
+        7168,
+        3200,
+        3200,
+        2560,
+        3200
+      ],
+      "speedup_claimed": false,
+      "primary_sources": [
+        "https://github.com/openai/codex/blob/rust-v0.162.1/codex-rs/core/src/client.rs",
+        "https://github.com/openai/codex/blob/rust-v0.162.1/codex-rs/codex-api/src/requests/headers.rs"
+      ]
+    }
+  },
+  "installation": {
+    "core": {
+      "image": "sha256:f24c0e843100ee48e1218413b02f2db9103a486ab9d94433f48da42411a8533f",
+      "base": "sha256:4d2d3a40ac0d49716615c8f6a0acfe4454974ff7fbe4fe996403ac03ad61ac6e",
+      "started_at": "2026-10-19T18:28:07.930665902Z",
+      "source_sha256": {
+        "/opt/eva/src/eva/adapters/model/openai_codex_provider.py": "39c63651633786110ec3a622a9096adfedb86648df1d60c928f7552932aa2533",
+        "/opt/eva/src/eva/adapters/postgres/conversation_actions.py": "126251a5c2a461cfd12a3c86c41141c83e22f248ab0776117f56dbdb8cfce6ed",
+        "/opt/eva/src/eva/adapters/postgres/external_conversation_tools.py": "686e6f7a52da84ba47c43c978ab818bf52e2beaba99a6839011adbb6266b3b02",
+        "/opt/eva/src/eva/adapters/postgres/conversation_grounding.py": "05cd8fa04139ad6949a070103650a2419248b756bc69dba654048a50f665dc85"
+      },
+      "configuration_preserved": true,
+      "source_verified": true,
+      "pre_install_guard": {
+        "active_voice_leases": 0,
+        "active_delegated_work": 0,
+        "active_memory_outbox": 0,
+        "active_model_requests": 0,
+        "active_decision_claims": 0,
+        "active_conversation_claims": 0,
+        "preserved_orphan_ingress": 1,
+        "completed_memory_decisions": 5,
+        "active_hindsight_operations": 0
+      }
+    },
+    "speaker": {
+      "image": "sha256:edf417b7af3dcb4c404e5f8e67a1f92ce9472e57e717e2124190b00f870d6c79",
+      "base": "sha256:8e66110e1f0cf6d89f790b9ca191b92d9b745ab3807cc02b3a532fc2a9849c03",
+      "started_at": "2026-10-19T18:28:35.090560424Z",
+      "source_sha256": {
+        "/app/eva/voice_service/codex_session.py": "817f8c5ac41a6fe798336e7c34450f0bba6a00fae885464d545b2df7bc077e73",
+        "/app/eva/voice_service/codex_media.py": "be5f12c4f95925bbba103b992067cf03a50641c88bae1ffb516aa4170a5fc371",
+        "/app/eva/voice_service/codex_backend.py": "d6592b750231207aabfca61a0b3ab07332a437e282c199a34489b3c0b9d5271c"
+      },
+      "configuration_preserved": true,
+      "source_verified": true,
+      "pre_install_guard": {
+        "active_voice_leases": 0,
+        "active_delegated_work": 0,
+        "active_memory_outbox": 0,
+        "active_model_requests": 0,
+        "active_decision_claims": 0,
+        "active_conversation_claims": 0,
+        "preserved_orphan_ingress": 1,
+        "completed_memory_decisions": 5,
+        "active_hindsight_operations": 0
+      }
+    }
+  },
+  "liveVerification": {
+    "route": "Installed native Codex audio input → household core → unchanged HA Cloud/Fenna literal speech → paced software PCM sink. Current images, source and scope verified. No microphone/device sockets.",
+    "weather": {
+      "recognized_requests": 3,
+      "core_answers": 3,
+      "source_remembered": true,
+      "absent_city_not_invented": true,
+      "explanation_followup_answered": true,
+      "second_turn_tools": 0,
+      "timing": [
+        {
+          "input_end_to_core_request_ms": 1126.133,
+          "core_request_to_final_ms": 20848.076,
+          "input_end_to_first_spoken_pcm_ms": 8847.379,
+          "input_end_to_final_answer_pcm_ms": 22823.008
+        },
+        {
+          "input_end_to_core_request_ms": 1639.82,
+          "core_request_to_final_ms": 5070.57,
+          "input_end_to_first_spoken_pcm_ms": 7492.623,
+          "input_end_to_final_answer_pcm_ms": 7492.623
+        },
+        {
+          "input_end_to_core_request_ms": 1750.035,
+          "core_request_to_final_ms": 9050.339,
+          "input_end_to_first_spoken_pcm_ms": 7785.369,
+          "input_end_to_final_answer_pcm_ms": 12716.807
+        }
+      ]
+    },
+    "input_failure": {
+      "initial_untranscribed_input_lifecycle": "Synthetic open only; no invented question or core turn.",
+      "actual_error": "Existing deny-handoff route returned403 through real Codex appserver. Historical cause remains unknown.",
+      "repeat_prompts": 1,
+      "fresh_actual_audio_admitted": 1,
+      "core_answers": 1,
+      "same_listener_bridge_lease": true,
+      "timing": [
+        {
+          "input_end_to_core_request_ms": 2064.948,
+          "core_request_to_final_ms": 5191.888,
+          "input_end_to_first_spoken_pcm_ms": 8128.678,
+          "input_end_to_final_answer_pcm_ms": 8128.678
+        }
+      ]
+    },
+    "runtime_unchanged_during_probes": true,
+    "physical_microphone": false,
+    "physical_speaker": false,
+    "physical_barge_in": false
+  },
+  "tests": {
+    "passed": 184,
+    "grounding_real_postgres": 15,
+    "grounding_existing_contact": 23,
+    "codex_transport": 69,
+    "input_lifecycle_and_stop": 77,
+    "grounding_baseline_failed": 7,
+    "independent_review": "GO on frozen deltas and actual live evidence"
+  },
+  "usage": {
+    "scope": "Development probes through Eva runtime; development agent usage not exposed. Provider credits unknown.",
+    "turns": {
+      "native-weather-1": {
+        "admitted_model_requests": 4,
+        "recorded_model_requests": 4,
+        "input_tokens": 35091,
+        "output_tokens": 260,
+        "tool_calls": 3,
+        "tools": [
+          "read_home_assistant_inventory",
+          "home_assistant_request",
+          "home_assistant_request"
+        ],
+        "timing": {
+          "completed_ms": 14443,
+          "first_content_ms": 13805
+        },
+        "credits": null
+      },
+      "native-weather-2": {
+        "admitted_model_requests": 1,
+        "recorded_model_requests": 1,
+        "input_tokens": 10717,
+        "output_tokens": 27,
+        "tool_calls": 0,
+        "tools": [],
+        "timing": {
+          "completed_ms": 2532,
+          "first_content_ms": 1803
+        },
+        "credits": null
+      },
+      "native-weather-3": {
+        "admitted_model_requests": 2,
+        "recorded_model_requests": 2,
+        "input_tokens": 21359,
+        "output_tokens": 118,
+        "tool_calls": 1,
+        "tools": [
+          "home_assistant_request"
+        ],
+        "timing": {
+          "completed_ms": 5893,
+          "first_content_ms": 4804
+        },
+        "credits": null
+      },
+      "input-transport-live-1": {
+        "admitted_model_requests": 1,
+        "recorded_model_requests": 1,
+        "input_tokens": 7998,
+        "output_tokens": 21,
+        "tool_calls": 0,
+        "tools": [],
+        "timing": {
+          "completed_ms": 2355,
+          "first_content_ms": 1828
+        },
+        "credits": null
+      }
+    },
+    "transcription_transport_sessions": 2,
+    "literal_tts_requests": 7,
+    "fixture_tts_requests": 3,
+    "deliberate_denied_transport_requests": 1
+  },
+  "remaining": {
+    "initial_weather_query": "Four model phases and three actual provider reads remain; measured first query latency still above natural conversational speed. No general speed-target acceptance.",
+    "general_reconnect": "Only the tested terminal error branch and fresh audio afterward are verified, not all provider disconnect modes.",
+    "physical_acceptance": "No physical microphone/speaker observation in these software probes."
+  },
+  "cleanup": {
+    "status": "applied_and_verified",
+    "exact_synthetic_turns": 4,
+    "protected_owner_events_unchanged": 204,
+    "backup_before_erasure": true,
+    "provider_usage_preserved_before_erasure": true,
+    "no_broad_derivative_removal_claim": true,
+    "manifest_sha256": "6a6a9ad61077010c4d28a54af5c654c2975c2a51086efdd93fdfee89610fe1c5"
+  },
+  "privateEvidenceDigests": {
+    "native-weather/result/result.private.json": "f7c607029fa5c87222e19d373ba5a046212cc1f5b8055185a6d31336eb30fbce",
+    "input-transport-live/result/result.private.json": "55e451c2e49d267fea0d48093e4d43adb11c347b73e7adc5078a7b7a20eb65f8",
+    "runtime-usage-journal.private.json": "c9335c0061348c2adbae2070e8a53342033a93249a3babb7a4dad03e491e4148",
+    "owner-conversation-journal.private.json": "dacb501627746edbbc35306ea0de7c8e9d9a00c5a551ece41245191fa3c0a6ca",
+    "installed-core-transport.private.log": "9723c306360aaf3917b4b8ef29e2e6ec29436e6d272129a641f6b66202c4e45f"
+  }
 }

@@ -159,6 +159,7 @@ class _RawSseUsageAttestor:
         self._pending = bytearray()
         self._terminal: RawUsageAttestation | None = None
         self._completed = False
+        self.cached_tokens: int | None = None
         self.failure: dict[str, str | None] | None = None
         self.event_counts = dict.fromkeys(("sse_events", "text_deltas", "tool_argument_deltas", "reasoning_deltas", "completed_events"), 0)
 
@@ -238,6 +239,10 @@ class _RawSseUsageAttestor:
             )
         except (TypeError, ValueError) as error:
             raise CodexProviderError("protocol") from error
+        details = usage.get("input_tokens_details")
+        cached = details.get("cached_tokens") if isinstance(details, dict) else None
+        if type(cached) is int and 0 <= cached <= self._terminal.input_tokens:
+            self.cached_tokens = cached
         self._completed = True
 
 
@@ -366,6 +371,8 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
             "response_status": self._response_status,
             "received_bytes": sum(body.received_bytes for body in self._streams),
             "received_chunks": sum(body.received_chunks for body in self._streams),
+            "cached_input_tokens": next((body._attestor.cached_tokens for body in self._streams
+                if body._attestor is not None and body._attestor.terminal is not None), None),
             **{key: sum(body._attestor.event_counts[key] for body in self._streams
                         if body._attestor is not None)
                for key in ("sse_events", "text_deltas", "tool_argument_deltas",
@@ -575,6 +582,19 @@ def _codex_compatible_request(
     encoded = canonical_json_bytes(body)
     headers = dict(request.headers)
     headers.pop("content-length", None)
+    # The pinned Codex client routes ChatGPT's prompt cache by session-id,
+    # matching its body prompt_cache_key. A fresh session_id per phase defeats
+    # that affinity even when Eva supplies a stable, authorized cache scope.
+    # This header is routing only; every request still carries its full context
+    # and current credential. No previous_response_id or stored state is used.
+    cache_key = body.get("prompt_cache_key")
+    if cache_key is not None and (
+        not isinstance(cache_key, str) or not 1 <= len(cache_key) <= 256
+        or any(not 33 <= ord(char) <= 126 for char in cache_key)
+    ):
+        raise CodexProviderError("configuration")
+    headers.pop("session_id", None)
+    headers["session-id"] = cache_key if cache_key is not None else str(uuid4())
     return httpx2.Request(
         request.method,
         request.url,
@@ -774,15 +794,11 @@ class OpenAICodexProvider:
             namespace_functions=self._settings.namespace_functions,
         )
 
-        async def bind_request(request: httpx2.Request) -> None:
-            request.headers["session_id"] = str(uuid4())
-
         http_client = httpx2.AsyncClient(
             transport=transport,
             trust_env=False,
             follow_redirects=False,
             timeout=httpx2.Timeout(self._settings.timeout_seconds),
-            event_hooks={"request": [bind_request]},
         )
         try:
             sdk_client = AsyncOpenAI(
@@ -858,6 +874,8 @@ class OpenAICodexProvider:
             await http_client.aclose()
         if session is not None:
             session._transport.provider_scope_closed = True
+            # Bounded counters/timing only; neither prompts nor headers are logged.
+            print(json.dumps({"event": "eva_model_transport", **session.observation}), flush=True)
 
 
 def _load_credentials(loader: CredentialLoader) -> tuple[str, str]:

@@ -118,6 +118,36 @@ class PostgresExternalConversationTools:
             return False
         return True
 
+    def historical_receipt(self, current, source, thread_id, admission):
+        """Read an already terminal receipt under this provider's current grant."""
+        if (self._authorize_turn is None
+                or any(getattr(current, key) != getattr(source, key) for key in (
+                    "tenant_id", "installation_id", "principal_id", "conversation_id",
+                    "project_id", "audience"))
+                or source.message_id == current.message_id
+                or admission.get("execution_namespace") is not None):
+            return None
+        name, step = admission.get("action_name"), admission.get("step_index", 0)
+        if name not in self.action_names or type(step) is not int or step < 0:
+            raise ConversationConflict("historical tool identity differs")
+        self._authorize(current)
+        if (self._configuration_sha256 is not None
+                and admission.get("request_tool_configuration_sha256") != self._configuration_sha256):
+            return None
+        if thread_id != self._thread_id(source, name, step):
+            raise ConversationConflict("historical tool source differs")
+        timeline = self._timeline(current)
+        events = timeline.events(thread_id)
+        if not events or events[0].payload.get("data") != admission:
+            raise ConversationConflict("historical tool admission differs")
+        if events[-1].event_type not in _TERMINAL_EVENTS:
+            return None
+        timeline.load(thread_id)
+        # project=False prevents creating new captures or resuming old work.
+        receipt = self._receipt(source, events, step, project=False)
+        self._authorize(current)
+        return receipt
+
     def archive_model_context(self, turn: ConversationTurn, index: dict) -> dict:
         """Host-only metadata copy using the existing scoped immutable reader."""
         from types import SimpleNamespace
