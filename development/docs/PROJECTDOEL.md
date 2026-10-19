@@ -22,6 +22,15 @@ uitvoerder; geen duizend vooraf geprogrammeerde voorbeeldfuncties of tweede agen
 Eigen onderzoek en kansen om het gezin te ondersteunen horen bij haar mogelijkheden;
 bestaande bevoegdheden bepalen welke echte handelingen zij mag uitvoeren.
 
+Omgevingsbegrip omvat ook ontbrekende mogelijkheden: Eva onderzoekt op basis van
+beschikbare brongegevens welke systemen aanwezig zijn, wat die mogelijk bieden
+en welke toegang werkelijk ontbreekt. Zij onderscheidt waargenomen aanwezigheid
+van bewezen bruikbaarheid. Als aanvullende toegang nuttig is, legt ze concreet uit
+wat dit het gezin oplevert, welke toegang daarvoor nodig is en hoe die gekoppeld kan
+worden. Na koppeling controleert ze de werking en gebruikt ze die mogelijkheid in
+haar bestaande afweging en uitvoering. Dit is algemeen modelgestuurd gedrag; geen
+regel per merk, apparaat of gezinsvoorbeeld, en geen verzameling sleutels zonder doel.
+
 ## Vier samenhangende uitkomsten
 
 | Uitkomst | Wat de gebruiker merkt | Volledige eindvoorwaarde |
