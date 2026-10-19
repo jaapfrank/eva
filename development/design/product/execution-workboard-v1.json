@@ -3378,7 +3378,7 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Meet echte stem over speakeruitvoer voordat de echo-afscherming wordt veranderd; actuele firmware wijst niet op een bewezen kanaalfout.",
+                "nextAction": "Eén gerichte woonkamerproef uitvoeren en de begrensde akoestische opname analyseren. Tweede speaker alleen gericht onderzoeken bij een concrete afwijking; geen dubbele volledige eigenaartest.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": false,
@@ -3630,7 +3630,13 @@
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
                   "independentReview": "development/reviews/voice-fluency-review-20261019.json",
                   "ownerAcceptance": false,
-                  "runtimeChanged": false
+                  "runtimeChanged": false,
+                  "acousticProbe": {
+                    "status": "armed_awaiting_owner_test",
+                    "scope": "living_room_only",
+                    "evidence": "development/evidence/product/subscription-voice-20261013/voice-acoustic-session-20261019.json",
+                    "startedAt": "2026-10-19T08:26:38.732254426Z"
+                  }
                 }
               },
               {
@@ -7764,7 +7770,7 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Meet echte stem over speakeruitvoer voordat de echo-afscherming wordt veranderd; actuele firmware wijst niet op een bewezen kanaalfout.",
+              "nextAction": "Eén gerichte woonkamerproef uitvoeren en de begrensde akoestische opname analyseren. Tweede speaker alleen gericht onderzoeken bij een concrete afwijking; geen dubbele volledige eigenaartest.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": false,
@@ -8016,7 +8022,13 @@
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
                 "independentReview": "development/reviews/voice-fluency-review-20261019.json",
                 "ownerAcceptance": false,
-                "runtimeChanged": false
+                "runtimeChanged": false,
+                "acousticProbe": {
+                  "status": "armed_awaiting_owner_test",
+                  "scope": "living_room_only",
+                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-acoustic-session-20261019.json",
+                  "startedAt": "2026-10-19T08:26:38.732254426Z"
+                }
               }
             },
             {

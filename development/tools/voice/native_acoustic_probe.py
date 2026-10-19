@@ -1,6 +1,6 @@
 """Explicit, short private PCM observation for a supervised native speaker test.
 
-Importing this module does nothing. Call install(root, arm_seconds=600) only in
+Importing this module does nothing. Call install(root, device_id, arm_seconds=600) only in
 a temporary diagnostic service process for an agreed listening test. It observes
 already-authorized capture; it never opens a microphone or changes the echo gate.
 Use a fresh private directory. Remove the temporary diagnostic overlay afterward.
@@ -78,6 +78,9 @@ class Probe:
         if source is None:return
         recording=self.recordings.get(source)
         if recording is None:
+            # Start the short acoustic window with the literal answer, not
+            # the wake chime or time spent waiting for the core's response.
+            if getattr(source,'_utterance',None) is None:return
             if self.clock()>=self.expires or self.count>=2:return
             self.count+=1
             root=self.root/('capture-'+str(self.count));root.mkdir(mode=0o700)
@@ -101,10 +104,12 @@ class Probe:
         if recording is not None:recording.close()
 
 
-def install(root, *, arm_seconds=600):
+def install(root, device_id, *, arm_seconds=600):
     """Install bounded observers in this process; no network or capture action."""
     from eva.voice_service.codex_media import CodexMediaSession
     from eva.voice_service.codex_speaker_audio import SpeakerSource
+    if not isinstance(device_id,str) or not device_id:
+        raise ValueError('Acoustic probe requires one existing device binding')
     if getattr(CodexMediaSession.capture_native,'_acoustic_probe',False):
         raise ValueError('Acoustic probe is already installed')
     probe=Probe(root,arm_seconds=arm_seconds)
@@ -114,7 +119,10 @@ def install(root, *, arm_seconds=600):
         async def observed():
             async for frame in frames:
                 session.current() # Same authority check as the original consumer.
-                try:probe.microphone(session.source,frame)
+                try:
+                    backend=getattr(getattr(session,'state',None),'backend',None)
+                    if getattr(backend,'_device',{}).get('device_id')==device_id:
+                        probe.microphone(session.source,frame)
                 except Exception:pass
                 yield frame
         iterator=observed()

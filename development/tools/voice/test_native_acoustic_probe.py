@@ -8,6 +8,7 @@ from native_acoustic_probe import Probe, install
 
 class Source:
     _input_fences={1}
+    _utterance=object()
 
 
 def frame():
@@ -35,6 +36,22 @@ def test_private_probe_bounds_sources_deadline_and_pcm_without_mutation(tmp_path
     assert not list(expired.root.iterdir())
 
 
+def test_core_wait_and_wake_greeting_do_not_consume_the_acoustic_window(tmp_path):
+    now=[0];probe=Probe(tmp_path/'answer',clock=lambda:now[0]);source=Source()
+    source._utterance=None
+    probe.microphone(source,frame());probe.output(source,frame())
+    now[0]=90;probe.microphone(source,frame())
+    assert probe.count==0 and not list(probe.root.iterdir())
+    source._utterance=object();probe.microphone(source,frame())
+    recording=probe.recordings[source]
+    assert recording.deadline==120 and not recording.closed
+    source._utterance=None # Keep the person's continuation after Eva finishes.
+    now[0]=100;probe.microphone(source,frame())
+    probe.finish(source)
+    with wave.open(str(recording.root/'microphone.private.wav'),'rb') as w:
+        assert w.getnframes()==640
+
+
 @pytest.mark.asyncio
 async def test_deadline_closes_wav_even_without_another_microphone_frame(tmp_path):
     probe=Probe(tmp_path/'timer',seconds=1);source=Source()
@@ -51,6 +68,7 @@ async def test_deadline_closes_wav_even_without_another_microphone_frame(tmp_pat
 async def test_observers_preserve_frames_errors_and_cancellation(tmp_path,monkeypatch):
     from eva.voice_service.codex_media import CodexMediaSession
     from eva.voice_service.codex_speaker_audio import SpeakerSource
+    from eva.voice_service.agent import HouseholdCoreClient
     received=[];output_received=[];entered=asyncio.Event();f=frame();source=Source()
     async def original_capture(session,frames):
         async for value in frames:
@@ -60,8 +78,10 @@ async def test_observers_preserve_frames_errors_and_cancellation(tmp_path,monkey
         raise RuntimeError('original output failure')
     monkeypatch.setattr(CodexMediaSession,'capture_native',original_capture)
     monkeypatch.setattr(SpeakerSource,'capture_frame',original_output)
-    probe=install(tmp_path/'installed')
-    session=SimpleNamespace(source=source,current=lambda:None)
+    probe=install(tmp_path/'installed','a'*32)
+    session=SimpleNamespace(source=source,current=lambda:None,
+        state=SimpleNamespace(backend=HouseholdCoreClient('http://127.0.0.1:1','unused',
+            satellite_id='assist_satellite.test',device_id='a'*32)))
     async def frames():
         yield f
         await asyncio.Event().wait()
@@ -88,10 +108,32 @@ async def test_revoked_capture_records_nothing(tmp_path,monkeypatch):
         async for value in frames:raise AssertionError('revoked frame reached media')
     monkeypatch.setattr(CodexMediaSession,'capture_native',original)
     monkeypatch.setattr(SpeakerSource,'capture_frame',lambda *args:None)
-    probe=install(tmp_path/'revoked')
+    probe=install(tmp_path/'revoked','test-device')
     def revoked():raise ValueError('authority revoked')
     session=SimpleNamespace(source=Source(),current=revoked)
     async def frames():yield frame()
     with pytest.raises(ValueError,match='authority revoked'):
         await CodexMediaSession.capture_native(session,frames())
+    assert probe.count==0 and not list(probe.root.iterdir())
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('device',[None,'b'*32])
+async def test_other_or_missing_household_binding_is_never_recorded(tmp_path,monkeypatch,device):
+    from eva.voice_service.codex_media import CodexMediaSession
+    from eva.voice_service.codex_speaker_audio import SpeakerSource
+    from eva.voice_service.agent import HouseholdCoreClient
+    received=[]
+    async def original(session,frames):
+        async for value in frames:received.append(value)
+    monkeypatch.setattr(CodexMediaSession,'capture_native',original)
+    monkeypatch.setattr(SpeakerSource,'capture_frame',lambda *args:None)
+    probe=install(tmp_path/'bound','a'*32)
+    session=SimpleNamespace(source=Source(),current=lambda:None,
+        state=SimpleNamespace(backend=None if device is None else HouseholdCoreClient(
+            'http://127.0.0.1:1','unused',satellite_id='assist_satellite.other',device_id=device)))
+    f=frame()
+    async def frames():yield f
+    await CodexMediaSession.capture_native(session,frames())
+    assert received==[f] and received[0] is f
     assert probe.count==0 and not list(probe.root.iterdir())

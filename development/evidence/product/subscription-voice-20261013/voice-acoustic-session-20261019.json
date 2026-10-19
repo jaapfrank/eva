@@ -1,0 +1,46 @@
+{
+  "status": "armed_awaiting_owner_test",
+  "taskId": "C4.1",
+  "scope": "living_room_only",
+  "ownerRequest": "What and how should I test? Full repeated test on the second identical device is not requested.",
+  "installation": {
+    "status": "armed_living_room_only",
+    "startedAt": "2026-10-19T08:26:38.732254426Z",
+    "armSeconds": 600,
+    "maxRecordingSeconds": 30,
+    "starts": "first microphone frame during literal answer preparation",
+    "image": "sha256:d9f329a767ad06bb7dbe671e4fde1ad5a641b29ca92d811746ca8f0a48caf8b3",
+    "base": "sha256:c2df976695f6691096806359e93259cb3f92f25d73e2dd9ba40ba945334588c5",
+    "preInstallGuard": {
+      "active_voice_leases": 0,
+      "active_delegated_work": 0,
+      "active_memory_outbox": 0,
+      "active_model_requests": 0,
+      "active_decision_claims": 0,
+      "active_conversation_claims": 0
+    }
+  },
+  "recordingStarts": "First authorized microphone frame during the literal answer; excludes wake greeting and core wait.",
+  "privateCaptureMaxSeconds": 30,
+  "armSeconds": 600,
+  "deviceScopeEnforced": true,
+  "helperSha256": "9d57f7b296840e7bc3ed4ddf66e042d78973ad7da098c2295c2db01f28bd0986",
+  "review": {
+    "agent": "distinctive_eva_review",
+    "result": "GO: existing binding checked; ordinary audio/control preserved; observer bounds and input checks retained."
+  },
+  "verification": {
+    "testsPassed": 7,
+    "seconds": 3.89,
+    "actualHouseholdCoreClientBindingCovered": true
+  },
+  "runtimeUsage": {
+    "coreModelCallsByDeveloper": 0,
+    "ttsRequestsByDeveloper": 0,
+    "credits": null
+  },
+  "ordinaryEchoFencePreserved": true,
+  "physicalResult": "awaiting_user_utterance",
+  "privateState": "/var/lib/eva2/voice-session/fluency-20261019/acoustic-probe/watch-status.json",
+  "automaticCleanup": "A bounded observer watch saves the recording and restores the original speaker image after verifying idle claims; it never interrupts active voice/work. Recording expires regardless."
+}
