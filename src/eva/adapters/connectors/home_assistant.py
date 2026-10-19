@@ -49,7 +49,7 @@ _TARGET_EQUIVALENTS = {
     "stopcontact": "socket",
 }
 _GENERIC_ENTITY_WORDS = frozenset(
-    {"apparaat", "apparaten", "lamp", "lampen", "licht", "lichten", "schakelaar"}
+    {"apparaat", "apparaten", "lamp", "lampen", "licht", "lichten", "verlichting", "schakelaar"}
 )
 
 
@@ -194,6 +194,44 @@ class HomeAssistantConversationEffectPlanner:
     """Keep provider-specific resolution and effect policy outside Eva's core."""
 
     action_names = ("set_home_assistant_light", "set_home_assistant_switch")
+
+    def contact_reply_allowed(self, turn, receipt):
+        """Keep a checked state or bounded member uncertainty in ordinary contact."""
+        if (receipt.call.name not in self.action_names
+                or hashlib.sha256(turn.principal_id.encode()).hexdigest()
+                    not in self._principal_sha256_allowlist):
+            return False
+        if receipt.output.get("status") == "verified":
+            return True
+        proof = receipt.output.get("proof")
+        if not isinstance(proof, dict):
+            return False
+        evidence, observed, expected = (proof.get(key) for key in ("evidence", "observed", "expected"))
+        if not all(isinstance(item, dict) for item in (evidence, observed, expected)):
+            return False
+        states = evidence.get("member_states")
+        unverified = evidence.get("unverified_member_ids")
+        entity = receipt.output.get("entity_id")
+        requested = receipt.call.arguments.get("state")
+        return (receipt.call.name == "set_home_assistant_light"
+                and receipt.output.get("status") == "failed"
+                and receipt.output.get("requested_state") == requested
+                and requested in {"on", "off"}
+                and isinstance(entity, str) and entity.startswith("light.")
+                and expected == {"entity_id": entity, "state": requested}
+                and observed.get("entity_id") == entity and observed.get("state") == requested
+                and evidence.get("entity_id") == entity
+                and evidence.get("source") == "home_assistant"
+                and evidence.get("group_verification") == "partial"
+                and evidence.get("group_state_confirmed") is True
+                and isinstance(states, dict) and 1 <= len(states) <= 32
+                and observed.get("member_states") == states
+                and isinstance(unverified, list) and bool(unverified)
+                and all(isinstance(key, str) and key.startswith("light.")
+                        and isinstance(value, str) for key, value in states.items())
+                and all(isinstance(key, str) for key in unverified)
+                and len(unverified) == len(set(unverified))
+                and set(unverified) == {key for key, value in states.items() if value != requested})
 
     def __init__(
         self,
@@ -437,19 +475,24 @@ class HomeAssistantToolAdapter:
         """Prefer an existing light/group, otherwise resolve an actual room snapshot."""
         payload = await asyncio.to_thread(self._light_catalog_sync)
         wanted = _target_tokens(target) - _GENERIC_ENTITY_WORDS
-        if not wanted:
-            raise ValueError("light target must name a lamp or room")
         inventory = None if self._household_inventory is None else await self._household_inventory()
         if inventory is not None:
             eligible = {row["entity_id"] for row in inventory["entities"]
                         if row.get("domain") == "light" and not row.get("disabled")
                         and row.get("entity_category") not in {"config", "diagnostic"}}
         # An actual named HA group takes precedence over its room members.
-        exact_names = {_normalized_target(target), _normalized_target(" ".join(sorted(wanted)))}
-        exact = [row for row in payload if row.get("entity_id", "").startswith("light.")
-                 and exact_names & {_normalized_target(row["entity_id"]),
-                     _normalized_target(row["entity_id"].removeprefix("light.")),
-                     _normalized_target(row.get("attributes", {}).get("friendly_name", ""))}]
+        def named_rows(names):
+            return [row for row in payload if row.get("entity_id", "").startswith("light.")
+                    and names & {_normalized_target(row["entity_id"]),
+                        _normalized_target(row["entity_id"].removeprefix("light.")),
+                        _normalized_target(row.get("attributes", {}).get("friendly_name", ""))}]
+        # A literal real name wins before removing generic words. Otherwise a
+        # fixture called "Atelier verlichting" could collide with "Atelier".
+        exact = named_rows({_normalized_target(target)})
+        if not exact:
+            if not wanted:
+                raise ValueError("light target must name a lamp or room")
+            exact = named_rows({_normalized_target(" ".join(sorted(wanted)))})
         if len(exact) > 1:
             raise ValueError("named light group is ambiguous")
         if exact:
@@ -457,6 +500,22 @@ class HomeAssistantToolAdapter:
             if direct is None:
                 raise ValueError("named light state is unavailable")
             return (direct,)
+        # Only after literal names fail, remove a Dutch light noun from a
+        # compound. Match the remaining name exactly; never broaden to a room
+        # or several similarly named fixtures through this fallback.
+        compound_names = _light_compound_names(target)
+        if compound_names:
+            compound = [row for row in payload
+                if row.get("entity_id", "").startswith("light.")
+                and compound_names & {_normalized_target(row["entity_id"].removeprefix("light.")),
+                    _normalized_target(row.get("attributes", {}).get("friendly_name", ""))}]
+            if len(compound) > 1:
+                raise ValueError("compound light name is ambiguous")
+            if compound:
+                direct = _resolve_binary_target_or_none(compound[0]["entity_id"], "light", compound)
+                if direct is None:
+                    raise ValueError("named light state is unavailable")
+                return (direct,)
         matches = []
         if inventory is not None:
             payload = [row for row in payload if row.get("entity_id") in eligible]
@@ -842,11 +901,59 @@ class HomeAssistantToolAdapter:
             "last_updated": _text_or_none(state.get("last_updated")),
             "source": "home_assistant",
         }
+        attributes = state.get("attributes")
+        if (entity_id.startswith("light.") and isinstance(attributes, dict)
+                and "entity_id" in attributes):
+            return await self._observe_named_light_group(
+                entity_id, attributes["entity_id"], expected, observed, evidence)
         return ToolProofObservation(
             "verified" if observed == expected else "pending",
             observed,
             evidence,
         )
+
+    async def _observe_named_light_group(
+        self, entity_id, members, expected, observed, evidence,
+    ) -> ToolProofObservation:
+        # A group's aggregate state is not proof that unavailable members obeyed.
+        # Read only bounded light IDs supplied by HA, never expand the write.
+        valid = (isinstance(members, list) and 1 <= len(members) <= 32
+            and all(isinstance(member, str) and _ENTITY.fullmatch(member)
+                    and member.startswith("light.") and member != entity_id for member in members)
+            and len(set(members)) == len(members))
+        if not valid:
+            return ToolProofObservation("conflict", observed, {**evidence,
+                "group_verification": "invalid_membership", "group_state_confirmed": observed == expected,
+                "guidance": "Group membership cannot be verified. Do not claim all members succeeded or repeat the write."})
+        semaphore = asyncio.Semaphore(4)
+        async def read_member(member):
+            async with semaphore:
+                try:
+                    raw = await self._request_json("GET", f"/api/states/{parse.quote(member, safe='.')}")
+                except error.HTTPError as exc:
+                    if exc.code == 404:
+                        return member, "missing"
+                    raise
+                if not isinstance(raw, dict) or raw.get("entity_id") != member:
+                    raise RuntimeError("Home Assistant returned an invalid member state")
+                value = raw.get("state")
+                if not isinstance(value, str):
+                    raise RuntimeError("Home Assistant returned an invalid member state")
+                if isinstance(raw.get("attributes"), dict) and "entity_id" in raw["attributes"]:
+                    return member, "nested_group_unverified"
+                return member, value
+        states = dict(await asyncio.gather(*(read_member(member) for member in members)))
+        unverified = [member for member in members if states[member] != expected.get("state")]
+        complete = observed == expected and not unverified
+        settling = (not complete and observed.get("state") in {"on", "off"}
+            and all(value in {"on", "off"} for value in states.values()))
+        disposition = "verified" if complete else "pending" if settling else "conflict"
+        return ToolProofObservation(disposition,
+            observed if complete else {**observed, "member_states": states},
+            {**evidence, "group_verification": "complete" if complete else "pending" if settling else "partial",
+             "group_state_confirmed": observed == expected,
+             "member_states": states, "unverified_member_ids": unverified,
+             "guidance": "Report member uncertainty explicitly; do not repeat this group write automatically."})
 
     async def _request_json(
         self,
@@ -1056,6 +1163,19 @@ def _target_tokens(value: str) -> set[str]:
     )
     tokens = set(re.findall(r"[a-z0-9]+", plain)) - _TARGET_FILLER
     return {_TARGET_EQUIVALENTS.get(token, token) for token in tokens}
+
+
+def _light_compound_names(target: str) -> set[str]:
+    words = _normalized_target(target).split()
+    if not words:
+        return set()
+    result = set()
+    for suffix in ("verlichting", "lichten", "lampen", "licht", "lamp"):
+        if words[-1].endswith(suffix) and len(words[-1]) > len(suffix):
+            name = " ".join([*words[:-1], words[-1][:-len(suffix)]])
+            if len(name) >= 2:
+                result.add(name)
+    return result
 
 
 def _resolve_binary_target(

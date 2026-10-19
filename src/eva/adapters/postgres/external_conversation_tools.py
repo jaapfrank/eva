@@ -101,6 +101,15 @@ class PostgresExternalConversationTools:
     def action_names(self) -> tuple[str, ...]:
         return self._action_names
 
+    def contact_reply_allowed(self, turn, receipt):
+        """Let the owning provider classify a result, retaining current authority."""
+        eligible = getattr(self._planner, "contact_reply_allowed", None)
+        if (receipt.call.name not in self.action_names
+                or not callable(eligible)):
+            return False
+        self._authorize(turn)
+        return eligible(turn, receipt) is True
+
     def available_for(self, turn: ConversationTurn) -> bool:
         """Filter model offerings; execution still rechecks authorization."""
         try:

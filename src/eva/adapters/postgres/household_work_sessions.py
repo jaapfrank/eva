@@ -306,6 +306,22 @@ class HouseholdWorkSessions:
             first = first_session(connection, self.store.scope, binding["session_id"])
             if first.get("native_conversation_key") is None:
                 return (binding,)
+            now = self.authority.clock()
+            # Keep the same retained selection, but evaluate its filters once
+            # instead of rescanning task payloads for each candidate session.
+            runs = sa.select(*(runs.c[name] for name in (
+                "tenant_id", "installation_id", "owner_principal_id", "principal_binding_id",
+                "spec_payload", "retention_until", "work_id", "parent_task_id", "updated_at",
+            ))).where(
+                runs.c.tenant_id == self.store.scope.tenant_id,
+                runs.c.installation_id == self.store.scope.installation_id,
+                runs.c.owner_principal_id == self.authority.policy.owner_principal_id,
+                runs.c.principal_binding_id == self.authority.policy.principal_binding_id,
+                runs.c.spec_payload["audience"].astext == "household",
+                runs.c.retention_until > now,
+                sa.true() if work_id is None else runs.c.work_id == work_id,
+                sa.true() if parent_ids is None else runs.c.parent_task_id.in_(parent_ids),
+            ).cte("retained_household_work").prefix_with("MATERIALIZED")
             data = events.c.payload["data"]
             stored_binding = data["binding"]
             selected = connection.execute(sa.select(stored_binding).select_from(events.join(
@@ -325,7 +341,7 @@ class HouseholdWorkSessions:
                 runs.c.owner_principal_id == self.authority.policy.owner_principal_id,
                 runs.c.principal_binding_id == self.authority.policy.principal_binding_id,
                 runs.c.spec_payload["audience"].astext == "household",
-                runs.c.retention_until > self.authority.clock(),
+                runs.c.retention_until > now,
                 sa.true() if work_id is None else runs.c.work_id == work_id,
                 sa.true() if parent_ids is None else runs.c.parent_task_id.in_(parent_ids),
             ).group_by(stored_binding).order_by(sa.func.max(runs.c.updated_at).desc()).limit(limit)).scalars().all()

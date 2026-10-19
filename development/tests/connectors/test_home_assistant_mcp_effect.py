@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import asyncio
+from copy import deepcopy
 from contextlib import contextmanager
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import threading
@@ -43,6 +44,8 @@ SCHEMA = {
 @dataclass
 class _State:
     schema: dict[str, Any] = field(default_factory=lambda: dict(SCHEMA))
+    tool_name: str = "HassTurnOff"
+    duplicate_name: str | None = None
     result_id: str = "light.test"
     failed: list[dict[str, str]] = field(default_factory=list)
     omit_data: bool = False
@@ -73,7 +76,9 @@ def _server(state: _State) -> Iterator[str]:
             if method == "initialize":
                 result = {"protocolVersion": "2025-06-18", "capabilities": {"tools": {}}}
             elif method == "tools/list":
-                result = {"tools": [{"name": "HassTurnOff", "inputSchema": state.schema}]}
+                result = {"tools": [{"name": state.tool_name, "inputSchema": state.schema}]}
+                if state.duplicate_name is not None:
+                    result["tools"].append({"name": state.duplicate_name, "inputSchema": state.schema})
             elif method == "tools/call":
                 success = [] if state.failed else [{"id": state.result_id}]
                 effect = {"response_type": "action_done", "data": {"failed": state.failed, "success": success}}
@@ -140,4 +145,45 @@ def test_effect_rejects_drift_wrong_target_and_provider_failure(failure: str) ->
 
     expected_calls = 3 if failure == "schema" else 4
     assert len(state.calls) == expected_calls
+    assert state.rest_services_calls == 0
+
+
+@pytest.mark.parametrize("prefix", ["", "intent__"])
+@pytest.mark.parametrize("service,intent", [("turn_off", "HassTurnOff"), ("turn_on", "HassTurnOn")])
+def test_official_names_and_enum_permutations_keep_exact_call(prefix, service, intent):
+    tool_name = prefix + intent
+    state = _State(tool_name=tool_name, schema=deepcopy(SCHEMA))
+    state.schema["properties"]["device_class"]["items"]["enum"].reverse()
+    before = deepcopy(state.schema)
+    command = replace(_command(), tool_name="home_assistant.light." + service,
+        arguments={**_command().arguments, "service": service},
+        expected_proof={"entity_id": "light.test", "state": "on" if service == "turn_on" else "off"})
+    with _server(state) as origin:
+        result = asyncio.run(HomeAssistantToolAdapter(HomeAssistantConfig(origin, "token")).execute(command))
+    assert result.details["tool_name"] == tool_name
+    assert state.calls[-1]["params"] == {"name": tool_name, "arguments": {"name": "light.test"}}
+    assert state.schema == before
+    assert state.rest_services_calls == 0
+
+
+@pytest.mark.parametrize("drift", ["added_enum", "removed_enum", "duplicate_enum", "nonstring_enum",
+    "name_type", "required", "extra_property", "foreign_namespace", "malformed_name", "duplicate_bare", "both_aliases"])
+def test_only_enum_order_and_exact_official_alias_are_compatible(drift):
+    state = _State(tool_name="intent__HassTurnOff", schema=deepcopy(SCHEMA))
+    values = state.schema["properties"]["device_class"]["items"]["enum"]
+    if drift == "added_enum": values.append("unreviewed")
+    elif drift == "removed_enum": values.pop()
+    elif drift == "duplicate_enum": values.append(values[0])
+    elif drift == "nonstring_enum": values.append(None)
+    elif drift == "name_type": state.schema["properties"]["name"]["type"] = "array"
+    elif drift == "required": state.schema["required"] = ["area"]
+    elif drift == "extra_property": state.schema["properties"]["unsafe"] = {"type": "string"}
+    elif drift == "foreign_namespace": state.tool_name = "custom__HassTurnOff"
+    elif drift == "malformed_name": state.tool_name = ["HassTurnOff"]
+    elif drift == "duplicate_bare": state.duplicate_name = state.tool_name
+    elif drift == "both_aliases": state.duplicate_name = "HassTurnOff"
+    with _server(state) as origin:
+        with pytest.raises(ToolExecutionRejected):
+            asyncio.run(HomeAssistantToolAdapter(HomeAssistantConfig(origin, "token")).execute(_command()))
+    assert [call["method"] for call in state.calls] == ["initialize", "notifications/initialized", "tools/list"]
     assert state.rest_services_calls == 0

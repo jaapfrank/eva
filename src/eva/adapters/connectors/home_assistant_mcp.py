@@ -12,7 +12,9 @@ from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 
 
 _PROTOCOL = "2025-06-18"
-_EFFECT_SCHEMA_SHA256 = "21499e66f4cf9309c45fcac873959cb1a136781415006767388010feb5776fc1"
+# Only the order of the device-class enum is non-semantic. All schema fields
+# and the complete allowed value set remain pinned.
+_EFFECT_SCHEMA_SHA256 = "712dde1bf07fd0158e1171dd9ca0991bc952c8247bd83a4c798570b4de92f9ea"
 
 
 class HomeAssistantMcpError(RuntimeError):
@@ -83,9 +85,14 @@ def call_assist_effect(
     headers["MCP-Protocol-Version"] = _PROTOCOL
     post({"jsonrpc": "2.0", "method": "notifications/initialized"}, status=202)
     tools = post({"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}}).get("tools")
-    matches = [item for item in tools if isinstance(item, dict) and item.get("name") == tool_name] if isinstance(tools, list) else []
-    if len(matches) != 1 or canonical_sha256(matches[0].get("inputSchema")) != _EFFECT_SCHEMA_SHA256:
+    # HA also exposes built-in intents under their integration namespace.
+    # Never accept arbitrary prefixes or choose between ambiguous duplicates.
+    admitted_names = {tool_name, f"intent__{tool_name}"}
+    matches = [item for item in tools if isinstance(item, dict)
+               and isinstance(item.get("name"), str) and item["name"] in admitted_names] if isinstance(tools, list) else []
+    if len(matches) != 1 or _effect_schema_digest(matches[0].get("inputSchema")) != _EFFECT_SCHEMA_SHA256:
         raise HomeAssistantMcpError("Home Assistant MCP effect schema drifted")
+    tool_name = matches[0]["name"]
     called = post({
         "jsonrpc": "2.0", "id": 3, "method": "tools/call",
         "params": {"name": tool_name, "arguments": {"name": entity_id}},
@@ -102,6 +109,23 @@ def call_assist_effect(
     if not isinstance(result, dict) or result.get("response_type") != "action_done" or not isinstance(data, dict) or data.get("failed") != [] or not isinstance(success, list) or len(success) != 1 or not isinstance(success[0], dict) or success[0].get("id") != entity_id:
         raise HomeAssistantMcpError("Home Assistant MCP effect was not exact")
     return {"entity_id": entity_id, "response_sha256": canonical_sha256(result), "tool_name": tool_name}
+
+
+def _effect_schema_digest(schema: Any) -> str | None:
+    """Normalize only a validated enum permutation, preserving all other data."""
+    if not isinstance(schema, dict):
+        return None
+    try:
+        values = schema["properties"]["device_class"]["items"]["enum"]
+    except (KeyError, TypeError):
+        return None
+    if (not isinstance(values, list) or not values
+            or not all(isinstance(value, str) for value in values)
+            or len(set(values)) != len(values)):
+        return None
+    normalized = json.loads(canonical_json_bytes(schema))
+    normalized["properties"]["device_class"]["items"]["enum"] = sorted(values)
+    return canonical_sha256(normalized)
 
 
 def _response(raw: bytes, content_type: str) -> dict[str, Any]:

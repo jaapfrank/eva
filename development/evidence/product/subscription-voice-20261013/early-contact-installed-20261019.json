@@ -1,0 +1,460 @@
+{
+  "contract": "EvaEarlyContactInstalledEvidence/v1",
+  "recordedAt": "2026-10-19T14:55:51.015530+00:00",
+  "ownerAuthorization": "Oke ga dit voor elkaar maken.",
+  "status": "installed_used_physical_acceptance_pending",
+  "acceptance": {
+    "ownerAccepted": false,
+    "voiceFluencyComplete": false,
+    "latencyTargetMet": false
+  },
+  "implementation": [
+    "Existing contact decision now precedes historical recall for ordinary eligible conversations. Same identity, recent authorized conversation, action authority and stop/work context remain. Unqueried memory is explicit; historical facts use the existing memory action.",
+    "Verified bounded provider results can be described by the same contact model without unnecessary deeper work. Home Assistant alone attests its supported partial group result; partial remains failed in the action ledger and never becomes full success.",
+    "Light/switch composite actions are directly discoverable. Provider-local resolution handles Dutch compound names and natural word order, with literal actual names taking priority and ambiguity rejected.",
+    "Home Assistant group readback checks fresh permitted member states with bounded concurrency. Unavailable members are explicitly uncertain; no automatic repeated effect is introduced.",
+    "MCP validation accepts the actual unique intent__ tool alias and enum order variation, retaining exact pinned schema membership and rejecting semantic drift.",
+    "Native LOCAL_STOP/capture handoff preserves unadmitted corrections, rebases their generation and waits the existing echo tail before pacing resumed capture. Ordinary speech during output is still gated pending acoustic evidence.",
+    "A materialized same-scope continuity CTE avoids repeated retained-work scans; all ownership, retention, destination and stop checks remain."
+  ],
+  "runtime": {
+    "coreImage": "sha256:4d2d3a40ac0d49716615c8f6a0acfe4454974ff7fbe4fe996403ac03ad61ac6e",
+    "speakerProductionImage": "sha256:8e66110e1f0cf6d89f790b9ca191b92d9b745ab3807cc02b3a532fc2a9849c03",
+    "temporaryAcousticObserverImage": "sha256:d2af4632f5bc4c89ac9b16373347c7f28dba667acc7c72cfca8581850090377a",
+    "mediaImageUnchanged": "sha256:0b86d5ad829fd92430c5b0e0ec4060f8389dbeb45f1dd962054bd628f80699a7",
+    "voicePath": "Existing Codex transcription -> Eva contact/core -> existing Home Assistant Cloud/Fenna literal renderer.",
+    "providersChanged": false,
+    "firmwareChanged": false,
+    "wslRestarted": false,
+    "deployment": "Each overlay based on the then-current running image with source/configuration and idle-claim checks. Concurrent memory changes preserved. Commit contains only owned deltas; the shared working tree and runtime include other authorized work."
+  },
+  "httpProbes": [
+    {
+      "probe": "before-greeting",
+      "request_to_final_ms": 6915.536,
+      "transport_error": null,
+      "outcome": "Relevant natural greeting; baseline."
+    },
+    {
+      "probe": "before-lights",
+      "request_to_final_ms": 31795.035,
+      "transport_error": null,
+      "outcome": "Group off with two unreachable members disclosed; four tool calls and five model phases."
+    },
+    {
+      "probe": "after-greeting",
+      "request_to_final_ms": 7800.215,
+      "transport_error": null,
+      "outcome": "Relevant greeting; slower than baseline, not a latency win."
+    },
+    {
+      "probe": "after-lights",
+      "request_to_final_ms": 11405.39,
+      "transport_error": null,
+      "outcome": "Failed target resolution; no effect. Preserved failed evidence."
+    },
+    {
+      "probe": "after-greeting-warm",
+      "request_to_final_ms": 7284.583,
+      "transport_error": null,
+      "outcome": "Relevant greeting; no demonstrated overall speed improvement."
+    },
+    {
+      "probe": "after-activity",
+      "request_to_final_ms": 14809.602,
+      "transport_error": null,
+      "outcome": "Used read_recent_activity and answered from actual activity; wording remains somewhat formal."
+    },
+    {
+      "probe": "after-lights-fixed",
+      "request_to_final_ms": 10257.163,
+      "transport_error": null,
+      "outcome": "MCP schema mismatch rejected dispatch; repaired in the next revision."
+    },
+    {
+      "probe": "after-lights-final",
+      "request_to_final_ms": 17088.336,
+      "transport_error": null,
+      "outcome": "One real dispatch; fresh group off, eight members off, two unavailable; uncertainty correctly disclosed."
+    },
+    {
+      "probe": "dashboard-native-match",
+      "request_to_final_ms": 10857.206,
+      "transport_error": null,
+      "outcome": "Same text as final native probe through ordinary dashboard; private principal scope differs from household scope."
+    }
+  ],
+  "nativeProbes": {
+    "correction": {
+      "scope": "Actual native session + live transcription/core/literal rendering with software audio sink; not a physical room test.",
+      "coreImage": "sha256:b75826053b0dda4b1a8acd810569f9279a30af3a517218959b7dc69b17f67c85",
+      "speakerImage": "sha256:8e66110e1f0cf6d89f790b9ca191b92d9b745ab3807cc02b3a532fc2a9849c03",
+      "bindingLimit": "This two-turn probe predates the final provider/query-only core revisions. It is not a two-turn physical acceptance on the final core image.",
+      "requests": 2,
+      "finalReplies": 2,
+      "ttsRequests": 2,
+      "transcriptionSessions": 1,
+      "inputEndToFirstSignalMs": [
+        7955.278,
+        8065.654
+      ],
+      "outcome": "Interrupted count followed by a correctly recognized conversational correction and a complete relevant new answer.",
+      "wireStopBranchInLiveProbe": false,
+      "separateWireChecks": "LOCAL_STOP, STOPPED, confirmed interrupted receipt and capture-resume branch covered by the targeted native tests."
+    },
+    "lightBeforeNameFix": {
+      "inputEndToFirstSignalMs": 7946.817,
+      "outcome": "Functional failure despite no harness error: target clarification, no admitted effect.",
+      "evidencePreserved": true
+    },
+    "lightFinal": {
+      "kind": "native_composition_software_sink",
+      "input_end_to_first_signal_ms": 8389.037,
+      "input_end_to_full_output_ms": 22109.257,
+      "tts_requests": 2,
+      "input_transport_sessions": 1,
+      "physical_playback": false,
+      "physical_microphone": false,
+      "error": null,
+      "events": [
+        {
+          "kind": "input_transcript",
+          "elapsed_ms": 1314.307
+        },
+        {
+          "kind": "recognized_request",
+          "elapsed_ms": 1871.775
+        },
+        {
+          "kind": "core_event",
+          "elapsed_ms": 1942.271,
+          "type": "request_acknowledged"
+        },
+        {
+          "kind": "core_event",
+          "elapsed_ms": 7401.379,
+          "type": "spoken_update"
+        },
+        {
+          "kind": "tts_requested",
+          "elapsed_ms": 7411.662
+        },
+        {
+          "kind": "core_event",
+          "elapsed_ms": 7521.34,
+          "type": "action_started",
+          "name": "set_home_assistant_light"
+        },
+        {
+          "kind": "core_event",
+          "elapsed_ms": 8444.839,
+          "type": "action_finished",
+          "name": "set_home_assistant_light",
+          "status": "failed"
+        },
+        {
+          "kind": "core_event",
+          "elapsed_ms": 11760.667,
+          "type": "final"
+        },
+        {
+          "kind": "tts_requested",
+          "elapsed_ms": 12061.252
+        },
+        {
+          "kind": "reply_completed",
+          "elapsed_ms": 22109.257
+        }
+      ],
+      "core_stages": [
+        {
+          "stage": "conversation_preparation_timing",
+          "elapsed_ms": 862,
+          "historical_recall_deferred": true
+        },
+        {
+          "stage": "conversation_model_phase_timing",
+          "phase_index": 0,
+          "receipt_count": 0,
+          "elapsed_ms": 3602,
+          "first_content_ms": 3527,
+          "input_tokens": 7991,
+          "output_tokens": 42,
+          "requested_action": true
+        },
+        {
+          "stage": "conversation_model_phase_timing",
+          "phase_index": 1,
+          "receipt_count": 1,
+          "elapsed_ms": 2986,
+          "first_content_ms": 2230,
+          "input_tokens": 4891,
+          "output_tokens": 32,
+          "requested_action": false
+        }
+      ],
+      "final_provider": "chatgpt-codex:gpt-6-sol",
+      "final_words": 20,
+      "final_model_timing": {
+        "completed_ms": 6468,
+        "first_content_ms": 5757
+      },
+      "usage": {
+        "admitted_models": 2,
+        "recorded_models": 2,
+        "input_tokens": 12882,
+        "output_tokens": 74,
+        "tool_calls": 1
+      },
+      "tools": [
+        {
+          "action_name": "set_home_assistant_light",
+          "requested_tool": "home_assistant.light.turn_off",
+          "event_types": [
+            "TOOL_REQUEST_ADMITTED",
+            "TOOL_PREPARED",
+            "TOOL_EXECUTED",
+            "STATE_VERIFICATION_CONFLICT"
+          ],
+          "terminal": "STATE_VERIFICATION_CONFLICT",
+          "group_verification": "partial",
+          "member_count": 10,
+          "unverified_member_count": 2,
+          "proof_disposition": null
+        }
+      ],
+      "exact_source_found": true,
+      "runtime_unchanged": true,
+      "core_image": "sha256:4d2d3a40ac0d49716615c8f6a0acfe4454974ff7fbe4fe996403ac03ad61ac6e",
+      "provider_credits": null,
+      "claim_limit": "Software runtime and exact durable evidence only; no physical microphone, room acoustics, or heard-delivery acceptance.",
+      "functional_outcome": "group_off_confirmed_with_two_unavailable_members_disclosed",
+      "effect_admitted": true,
+      "all_members_verified": false,
+      "effect_evidence_summary": {
+        "group_state_confirmed": true,
+        "member_state_counts": {
+          "off": 8,
+          "unavailable": 2
+        }
+      },
+      "same_exact_input_phrase_as_other_route": true,
+      "scope_comparison_note": "Native uses provisioned household scope; dashboard uses authenticated private owner scope. Same recognized wording/model is not an otherwise identical A/B request; context, tool presentation and current provider load differ."
+    },
+    "dashboardExactPhrase": {
+      "kind": "http",
+      "request_to_final_ms": 10857.206,
+      "text_sha256": "8d27098783f7e0f579b595321ea6ef96b3ddedc0c129ddbcff58146a8d4c0a7a",
+      "actions": [],
+      "error": null,
+      "core_stages": [
+        {
+          "stage": "conversation_preparation_timing",
+          "elapsed_ms": 954,
+          "historical_recall_deferred": true
+        },
+        {
+          "stage": "conversation_model_phase_timing",
+          "phase_index": 0,
+          "receipt_count": 0,
+          "elapsed_ms": 2540,
+          "first_content_ms": null,
+          "input_tokens": 8253,
+          "output_tokens": 27,
+          "requested_action": true
+        },
+        {
+          "stage": "conversation_model_phase_timing",
+          "phase_index": 1,
+          "receipt_count": 1,
+          "elapsed_ms": 5185,
+          "first_content_ms": 4546,
+          "input_tokens": 5804,
+          "output_tokens": 33,
+          "requested_action": false
+        }
+      ],
+      "final_provider": "chatgpt-codex:gpt-6-sol",
+      "final_words": 22,
+      "final_model_timing": {
+        "completed_ms": 7624,
+        "first_content_ms": 7007
+      },
+      "usage": {
+        "admitted_models": 2,
+        "recorded_models": 2,
+        "input_tokens": 14057,
+        "output_tokens": 60,
+        "tool_calls": 1
+      },
+      "tools": [
+        {
+          "action_name": "set_home_assistant_light",
+          "requested_tool": "home_assistant.light.turn_off",
+          "event_types": [
+            "TOOL_REQUEST_ADMITTED",
+            "TOOL_PREPARED",
+            "TOOL_EXECUTED",
+            "STATE_VERIFICATION_CONFLICT"
+          ],
+          "terminal": "STATE_VERIFICATION_CONFLICT",
+          "group_verification": "partial",
+          "member_count": 10,
+          "unverified_member_count": 2,
+          "proof_disposition": null
+        }
+      ],
+      "exact_source_found": true,
+      "runtime_unchanged": true,
+      "core_image": "sha256:4d2d3a40ac0d49716615c8f6a0acfe4454974ff7fbe4fe996403ac03ad61ac6e",
+      "provider_credits": null,
+      "claim_limit": "Software runtime and exact durable evidence only; no physical microphone, room acoustics, or heard-delivery acceptance.",
+      "functional_outcome": "group_off_confirmed_with_two_unavailable_members_disclosed",
+      "effect_admitted": true,
+      "all_members_verified": false,
+      "effect_evidence_summary": {
+        "group_state_confirmed": true,
+        "member_state_counts": {
+          "off": 8,
+          "unavailable": 2
+        }
+      },
+      "same_exact_input_phrase_as_other_route": true,
+      "scope_comparison_note": "Native uses provisioned household scope; dashboard uses authenticated private owner scope. Same recognized wording/model is not an otherwise identical A/B request; context, tool presentation and current provider load differ."
+    },
+    "comparison": "Final native core request to final: 9888.892 ms. Dashboard same exact phrase request to final: 10857.206 ms. Native utterance end to first substantive PCM: 8389.037 ms, containing an action preamble; final-result PCM: 12855.231 ms. Single observations with different audience context, not a statistical ranking or acoustic proof."
+  },
+  "latencyFindings": [
+    "Final core preparation measured 829-862 ms with historical recall deferred. The initial greeting baseline preparation was 2822 ms, but overall greeting time did not improve in the observed samples.",
+    "One final native light action dispatch and readback took 923.499 ms; two model phases took 3602 and 2986 ms.",
+    "A preceding HTTP light sample spent 11588 ms on its first model phase with nearly the same 8k input length. Provider latency varies substantially; this remains outside the speed target.",
+    "The continuity query preserves the same ten bindings in a fixed read-only snapshot; measured query 156/166 ms to 48/66 ms, explain execution 279 to 91 ms. delegated_work_runs SeqScan buffer hits fell from 50142 to 274; whole-plan buffer hits were 60106 to 19571. This is query-level evidence, not whole-conversation speed.",
+    "Read-only prompt/transport review found fresh per-phase HTTP clients and dynamic instructions preceding stable material, but cache hits and successful handshake stages are not retained. No unmeasured pooling or prompt-order candidate was installed."
+  ],
+  "verification": {
+    "contactMemory": "81 targeted checks passed. Broader exploration: 255 passed and two pre-existing baseline assertion failures retained; not reported as a green full suite.",
+    "finalProviderAndNaturalNames": "86 passed; includes authorization, actual-name precedence, ambiguous/unknown targets and partial group verification. Counts overlap earlier runs and are not summed.",
+    "mcp": "20 distinct checks, including four compatible variants that failed the old implementation. Read-only actual tools/list took 142 ms; subsequent native and HTTP dispatch verified actual compatibility.",
+    "nativeHandoff": "27 unique targeted checks, including two old-baseline regression failures; separate real wire-peer branch simulation.",
+    "continuity": "9 targeted retention, revocation and continuity checks against isolated temporary PostgreSQL16.13. Test fixture catalog aligned to this harness; production database and data were not migrated.",
+    "review": "Independent concrete code/edge-case review. Literal light named Verlichting caught during review and fixed before installation.",
+    "sourceInventory": [
+      {
+        "path": "src/eva/adapters/connectors/home_assistant_api.py",
+        "ownedCommitBlobSha256": "84ccb7c342859a609829232a5e4735feb1437311ac0f6ce455a4d17e7b576915"
+      },
+      {
+        "path": "src/eva/adapters/model/tool_namespaces.py",
+        "ownedCommitBlobSha256": "1f67ac6c26afc3e4803b6f2fb617b6c4dc0f3ca5e1e4f50e50e3f810d91d41fe"
+      },
+      {
+        "path": "src/eva/adapters/connectors/home_assistant.py",
+        "ownedCommitBlobSha256": "7be85819d17f144b984f004ea886bb15334b46f7d0c0b87cf4c1fa04ffb7f7d3"
+      },
+      {
+        "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+        "ownedCommitBlobSha256": "37be8b67983d28a8bdd3776c771b07864233d83dba4da8cb6a796731fc37a7e4"
+      },
+      {
+        "path": "src/eva/adapters/postgres/conversation_actions.py",
+        "ownedCommitBlobSha256": "352119c7d8e6902093f4f44875c81125df9fbe365474eb1a42c236548eab166f"
+      },
+      {
+        "path": "src/eva/adapters/projection/hindsight.py",
+        "ownedCommitBlobSha256": "da01df99af4baf5dafe4e4450412a7a64535aea6adb928e0e82c4525537b7089"
+      },
+      {
+        "path": "src/eva/application/conversation.py",
+        "ownedCommitBlobSha256": "0bdf4a3107cde7925c4644f0c024d6dc3275dc17b00feed739f062fc4bb52a5f"
+      },
+      {
+        "path": "src/eva/adapters/model/pydantic_conversation.py",
+        "ownedCommitBlobSha256": "135695ef097f798bfcfc50ce60f9f57fe77f31290a1f1968cdf1195895a9f63a"
+      },
+      {
+        "path": "development/tests/application/test_contact_model.py",
+        "ownedCommitBlobSha256": "63bdae58cab4db55f0486bd4836e23d106182b57a193a60905fcf9bd6d408aba"
+      },
+      {
+        "path": "development/tests/model/test_pydantic_conversation_model.py",
+        "ownedCommitBlobSha256": "0249f7099ff4521bed3fa262b7ba80e9ca774c0dc6ac1d7ca1ad86932671a8af"
+      },
+      {
+        "path": "development/tests/application/test_contact_memory.py",
+        "ownedCommitBlobSha256": "6a6d03454a619a57b1430c8d5ab931fcde3b4d8d3d53cef5dbd3198fbdf90e23"
+      },
+      {
+        "path": "deploy/native-speaker/codex_service.py",
+        "ownedCommitBlobSha256": "6fca01e60cc99eef58c2e44f54f233a01b6976a1d32c8b19c7126ca1a61d8547"
+      },
+      {
+        "path": "development/tests/connectors/test_contact_confirmation_policy.py",
+        "ownedCommitBlobSha256": "1ebf161e92fa84183d4b3e80f5860b4c1558e4d51342d6ec657bc7bd4cd0d294"
+      },
+      {
+        "path": "development/tests/projection/test_contact_style_context.py",
+        "ownedCommitBlobSha256": "228c8136af7793da50b1a333c33afb89c688f13db987de20e7ccd4a2d04c459e"
+      },
+      {
+        "path": "development/tests/connectors/test_home_assistant_named_group.py",
+        "ownedCommitBlobSha256": "fbb531e4652c4f1421addba6eb013211d3a72d8b36a31862cce2bd86fb542e34"
+      },
+      {
+        "path": "development/tests/voice_service/test_native_input_resume.py",
+        "ownedCommitBlobSha256": "dfb2f3be3997d1938d6823e56f3abf99d6e2d2a6486d83d02e04555508306783"
+      },
+      {
+        "path": "src/eva/adapters/connectors/home_assistant_mcp.py",
+        "ownedCommitBlobSha256": "56acacfd2786f4f1aa59c51ea40afdc74698296205e295495ecfa90ebdce8c1a"
+      },
+      {
+        "path": "development/tests/connectors/test_home_assistant_mcp_effect.py",
+        "ownedCommitBlobSha256": "77189c83ceeebe0357c7ad024ce410409dcd2123c7ce1dcee4b243004c749acc"
+      },
+      {
+        "path": "src/eva/adapters/postgres/household_work_sessions.py",
+        "ownedCommitBlobSha256": "1d8de3b631e766b8e16a0e65fa7729555c82253eca7dd76c519d5f3378924f5f"
+      }
+    ]
+  },
+  "runtimeUsage": {
+    "syntheticTurns": 13,
+    "admitted_model_requests": 22,
+    "recorded_model_requests": 22,
+    "input_tokens": 169971,
+    "output_tokens": 1049,
+    "tool_calls": 11,
+    "transcriptionTransportSessions": 3,
+    "literalTtsRequests": 6,
+    "providerCredits": null,
+    "developmentAgentUsage": "Not measured by Eva runtime telemetry.",
+    "scope": "Includes failures and pre/post samples; excludes the pending owner physical test."
+  },
+  "physicalTest": {
+    "status": "armed",
+    "maxRecordingSeconds": 30,
+    "armSeconds": 600,
+    "maxRecordings": 1,
+    "ownerAccepted": false,
+    "source": "/var/lib/eva2/voice-session/early-contact-20261019/physical-trial",
+    "requires": "Owner voice overlapping actual speaker output; software PCM and device acknowledgements do not prove acoustics."
+  },
+  "cleanup": {
+    "status": "applied_and_verified",
+    "exactSyntheticSources": 13,
+    "protectedOwnerEventsUnchanged": 15,
+    "storageRemoved": 13,
+    "rawExchangesErased": 13,
+    "outboxesErased": 13,
+    "semanticDocumentsAbsent": 13,
+    "manifestSha256": "7b2efe0e89ccac55a4937e3d4d2254be3acab5ce9e2a3fb2ad3436e6819bc573",
+    "scope": "Exactly identified development requests only; owner conversations protected; private source/effect journals retained before cleanup. No broad derivative-removal claim."
+  },
+  "remaining": [
+    "Measure real room interruption and complete follow-up; no assertion of ordinary speech barge-in while the input gate remains.",
+    "First model latency remains too slow/variable for the stated voice target; contact routing is installed but fast natural conversation is not accepted.",
+    "Acoustic start words, counting cadence and naturalness require the physical observation; neither transcripts nor software playback substitute for it."
+  ],
+  "privateEvidenceRoot": "/var/lib/eva2/voice-session/early-contact-20261019",
+  "publicDataPolicy": "No owner transcripts, raw audio, access tokens or device/entity identifiers in this evidence. Private artifacts remain outside Git."
+}

@@ -36,7 +36,7 @@ _BY_FUNCTION = {name: (namespace, description) for namespace, description, names
 
 def function_defer_loading(name):
     """Keep immediate voice reactions available without a discovery round."""
-    return name != "speak_and_continue"
+    return name not in {"speak_and_continue", "set_home_assistant_light", "set_home_assistant_switch"}
 
 
 def deferred_namespaces(tools):

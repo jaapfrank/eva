@@ -61,6 +61,7 @@ from eva.application.conversation import (
     ConversationToolDescriptor,
     ConversationTurn,
     IdentityProfile,
+    DEFERRED_MEMORY_PROJECTION,
     MEMORY_SEARCH_ACTION,
     RecentConversationMessage,
     publish_conversation_text,
@@ -4368,13 +4369,22 @@ class PydanticConversationModel:
                     "Pas relevante duurzame bijsturing toe op de huidige opdracht. "
                     "Dit oude bericht start geen handelingen opnieuw en verruimt geen bevoegdheden."
                 )
-        memories = (
-            "\n".join(remembered) if remembered else "- Geen relevante herinnering."
-        )
+        memory_deferred = memory.recall.projection_version == DEFERRED_MEMORY_PROJECTION
+        memories = ("\n".join(remembered) if remembered else (
+            "- Historisch geheugen is nog niet opgehaald; dit is geen lege zoekuitkomst. "
+            "Gebruik de recente gesprekscontext en actieve werkcontext voor wat al bekend is. "
+            "Als een antwoord, doelkeuze of handeling ontbrekende geschiedenis, voorkeuren, "
+            "relaties, correcties of afspraken nodig heeft, gebruik dan eerst "
+            "search_personal_memory. Verzin geen herinneringen en beweer niet dat er geen "
+            "zijn. Bij eenvoudig contact of een duidelijk verzoek dat deze context niet "
+            "nodig heeft kun je direct antwoorden of de beschikbare passende actie kiezen."
+            if memory_deferred else "- Geen relevante herinnering."
+        ))
         style_mirror = (
             memory.style_mirror.strip()
             if memory.style_mirror is not None and memory.style_mirror.strip()
-            else "Geen afzonderlijke duurzame stijlspiegel beschikbaar."
+            else ("Geen afzonderlijke duurzame stijlspiegel meegegeven." if memory_deferred
+                  else "Geen afzonderlijke duurzame stijlspiegel beschikbaar.")
         )
         labels = {}
         for message in recent_messages[-12:]:

@@ -410,6 +410,22 @@ class HindsightMemoryEngine:
             return (query.principal_id,)
         return tuple(sorted({query.principal_id, *aliases}))
 
+    def read_style_context(self, query: RecallCurrentFacts) -> str | None:
+        """Read the same private style mirror without semantic history retrieval."""
+        if not query.subject_ids or query.principal_id not in query.subject_ids:
+            raise HindsightMemoryScopeError(
+                "memory recall must include the admitted principal"
+            )
+        if query.audience.kind != "private_person":
+            return None
+        self._require_private_recall_audience(query)
+        principals = self._private_recall_principals(query)
+        bank_id = self.ensure_bank(query.tenant_id, query.installation_id)
+        style = self._recall_style_mirror(bank_id, query.principal_id)
+        if principals != self._private_recall_principals(query):
+            return None
+        return style
+
     def recall_for_presence_fast(self, query: RecallCurrentFacts) -> PresenceMemory:
         """Supply relevant memory before answering, including the first turn.
 

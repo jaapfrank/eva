@@ -6,7 +6,8 @@
   "ownerDirection": {
     "technologyPreference": "De techniek is vrij binnen de bestaande projectafspraken; bruikbaarheid en snelheid bepalen de keuze. Geen verdere stemvoorkeurvraag nodig.",
     "evidenceRule": "Een test van uitvoering A bewijst geen werking van uitvoering B.",
-    "currentTurn": "Uitwerking en alleen-lezen controle; geen runtimewijziging, providerproef, opname, firmwareflash of WSL-herstart."
+    "currentTurn": "Na expliciete eigenaaropdracht uitgevoerd en geïnstalleerd: vroege contactbeslissing, provideractie en native correctieoverdracht. Werkelijke native/chat-proeven vastgelegd; snelheidsdoel en fysieke eigenaaracceptatie blijven open. Geen nieuwe provider, firmwareflash of WSL-herstart.",
+    "previousTurnScope": "Uitwerking en alleen-lezen controle; geen runtimewijziging, providerproef, opname, firmwareflash of WSL-herstart."
   },
   "baseline": {
     "capturedAt": "2026-10-19T09:36:55.009617+00:00",
@@ -315,10 +316,10 @@
   "ownerSteering20261019": {
     "recordedAt": "2026-10-19T13:22:03.324164+00:00",
     "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
-    "status": "authorized_implementation_started",
+    "status": "implemented_installed_measured",
     "intent": "Choose early whether a request can be answered or executed directly, or requires historical memory or deeper work. Keep one Eva and shared authority, memory and conversation history.",
     "concreteCandidate": {
-      "status": "implementation_in_progress",
+      "status": "installed_used_not_fully_accepted",
       "finding": "The same existing contact model already chooses direct answers, permitted tools and delegated work, but currently waits for initial memory and active context before that first choice.",
       "proposal": "Evaluate moving the existing first contact decision ahead of expensive historical retrieval, using the same identity, admitted audience, recent conversation and necessary work/stop context. Retrieve missing historical context on demand; do not add a separate classifier request or independent voice agent.",
       "existingCapabilityReuse": "Existing provider actions already combine permitted target resolution, execution and independent state observation. Their use can avoid model-driven inventory/API/readback substeps when the requested target is supported and authorized.",
@@ -326,10 +327,19 @@
         "Missing memories remain explicitly unqueried; no fabricated personal history or day activities.",
         "Current authority, cancellation, durable action identity and original result destination remain mandatory.",
         "The speech renderer continues to receive approved text; it does not gain its own memory or permission policy.",
+        "Implementation and live software measurements are now recorded; the original proposal-only statement remains in initialProposalConstraints. No physical acceptance or speed-target success is claimed."
+      ],
+      "initialProposalConstraints": [
+        "Missing memories remain explicitly unqueried; no fabricated personal history or day activities.",
+        "Current authority, cancellation, durable action identity and original result destination remain mandatory.",
+        "The speech renderer continues to receive approved text; it does not gain its own memory or permission policy.",
         "This proposal has no implementation, latency result or acceptance claim in this record."
       ]
     },
     "implementationStartedAt": "2026-10-19T13:49:39.902948+00:00",
-    "ownerAuthorization": "Oke ga dit voor elkaar maken."
+    "ownerAuthorization": "Oke ga dit voor elkaar maken.",
+    "implementationEvidence": "development/evidence/product/subscription-voice-20261013/early-contact-installed-20261019.json",
+    "updatedAt": "2026-10-19T14:57:30.063739+00:00",
+    "ownerAccepted": false
   }
 }

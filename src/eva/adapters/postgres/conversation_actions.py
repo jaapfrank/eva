@@ -293,6 +293,12 @@ class PostgresConversationActions:
         eligible = None if provider is None else getattr(provider, "can_continue_after", None)
         return callable(eligible) and eligible(turn, receipt) is True
 
+    def contact_reply_allowed(self, turn, receipt):
+        """Let only the registered provider classify its completed confirmation."""
+        provider = self._external_tool_by_action.get(receipt.call.name)
+        eligible = getattr(provider, "contact_reply_allowed", None)
+        return callable(eligible) and eligible(turn, receipt) is True
+
     def continuation_action_names(self, turn: ConversationTurn) -> tuple[str, ...]:
         allowed = set(self.available_action_names(turn))
         return tuple(

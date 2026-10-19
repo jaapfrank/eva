@@ -19,9 +19,12 @@ from eva.application.memory_audience import MemoryAudience
 from eva.application.conversation_media import ConversationMediaContext
 from eva.contracts.tool_deadlines import maximum_tool_execution_seconds
 from eva.contracts.base import JsonValue, validate_json_value
+from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.identity import IdentityPack
+from eva.contracts.memory import MemoryRecall
 
 MEMORY_SEARCH_ACTION = "search_personal_memory"
+DEFERRED_MEMORY_PROJECTION = "conversation-not-retrieved-v1"
 
 _INITIAL_MEMORY_TIMING_LOG = logging.getLogger(__name__ + ".initial_memory_timing")
 _INITIAL_MEMORY_TIMING_LOG.setLevel(logging.INFO)
@@ -882,7 +885,7 @@ class LivingConversation:
         initiative = require_initiative_context(turn)
         contact_model = self._contact_model if initiative is None else None
 
-        def recall(query_text: str, *, fast: bool = False) -> PresenceMemory:
+        def recall_query(query_text: str) -> RecallCurrentFacts:
             grounded_query = query_text
             if turn.observation_binding is not None:
                 grounded_query = (
@@ -894,7 +897,7 @@ class LivingConversation:
                     grounded_query += "\nGebonden retrieval-ankers: " + ", ".join(
                         memory_query_hints
                     )
-            query = RecallCurrentFacts(
+            return RecallCurrentFacts(
                 recall_id=f"conversation:{turn.message_id}",
                 installation_id=turn.installation_id,
                 tenant_id=turn.tenant_id,
@@ -945,6 +948,9 @@ class LivingConversation:
                 query_text=grounded_query,
                 maximum_facts=12,
             )
+
+        def recall(query_text: str, *, fast: bool = False) -> PresenceMemory:
+            query = recall_query(query_text)
             fast_recall = getattr(self._memory, "recall_for_presence_fast", None)
             recalled = (
                 fast_recall(query)
@@ -1044,10 +1050,28 @@ class LivingConversation:
             return memory
 
         preparation_started_at = monotonic()
-        # The first normal model decision receives complete authorized memory.
-        # A separate thinking request delayed even direct answers and could keep
-        # running after recall finished; ordinary SPEAK remains in the tool loop.
-        if self._actions is None:
+        # The ordinary contact decision can request history through the existing
+        # memory tool. It is not a separate classifier or an empty search result.
+        # Keep bound observations, replayed work and substantive routes eager.
+        defer_memory = (contact_model is not None and not receipts
+                        and turn.observation_binding is None)
+        if defer_memory:
+            query = recall_query(turn.text)  # Retain the same scope validation.
+            style_reader = getattr(self._memory, "read_style_context", None)
+            style_mirror = style_reader(query) if callable(style_reader) else None
+            memory = PresenceMemory(MemoryRecall(
+                schema_version=1, contract="MemoryRecall/v1",
+                recall_id=query.recall_id, query_purpose=query.query_purpose,
+                tenant_id=query.tenant_id, principal_id=query.principal_id,
+                conversation_id=query.conversation_id, project_id=query.project_id,
+                requested_valid_at=query.requested_valid_at,
+                admitted_fact_ids_sha256=canonical_sha256([]), selected=[],
+                excluded_reasons={}, projection_version=DEFERRED_MEMORY_PROJECTION,
+                scope_sha256=canonical_sha256(query.scope), created_at=turn.occurred_at,
+            ), (), style_mirror)
+            self_context = (() if self._actions is None
+                            else self._actions.active_context(turn))
+        elif self._actions is None:
             self_context = ()
             memory = initial_memory()
         else:
@@ -1055,6 +1079,11 @@ class LivingConversation:
                 context = preparation.submit(copy_context().run, self._actions.active_context, turn)
                 memory = initial_memory()
                 self_context = context.result()
+        _INITIAL_MEMORY_TIMING_LOG.info("conversation_preparation_timing %s", json.dumps({
+            "message_id_sha256": hashlib.sha256(turn.message_id.encode()).hexdigest(),
+            "elapsed_ms": round((monotonic() - preparation_started_at) * 1000),
+            "historical_recall_deferred": defer_memory,
+        }, separators=(",", ":")))
         from eva.application.cancellation import check_cancellation
         check_cancellation()
         if contact_model is not None:
@@ -1135,6 +1164,7 @@ class LivingConversation:
                     deferred_actions.add("run_reusable_procedure")
                 available_names = tuple(name for name in available_names if name not in deferred_actions)
             checkpoint()
+            check_cancellation()
             repairing_input = completed is not None and completed.output.get("status") == "invalid_input"
             prior_actions = (receipts if repairing_input or (
                 completed is not None and completed not in receipts) else receipts[:-1])
@@ -1158,6 +1188,7 @@ class LivingConversation:
                 "stop_own_initiative", "give_initiative_feedback",
                 "schedule_digital_work", "schedule_work_resume", "list_scheduled_work", "cancel_scheduled_work", "cancel_work_chain",
             }
+            provider_contact_reply = getattr(self._actions, "contact_reply_allowed", None)
             def contact_receipt(receipt):
                 # Reading already captured bytes adds no external operation.
                 # Keep the original model only while the ENTIRE history remains
@@ -1168,13 +1199,20 @@ class LivingConversation:
                     and receipt.call.arguments["tool_id"].startswith("eva-stored-result:")
                     and receipt.output.get("source") == "stored_connector_result"
                     and receipt.output.get("external_state_verified") is False
-                    and receipt.output.get("status") in {"verified", "selection_invalid"})
+                    and receipt.output.get("status") in {"verified", "selection_invalid"}) or (
+                    callable(provider_contact_reply)
+                    and provider_contact_reply(turn, receipt) is True)
 
-            model = (contact_model
-                     if contact_model is not None
-                     and (completed is None or contact_receipt(completed))
-                     and all(contact_receipt(item) for item in receipts)
-                     else self._model)
+            use_contact_model = (contact_model is not None
+                and (completed is None or contact_receipt(completed))
+                and all(contact_receipt(item) for item in receipts))
+            model = contact_model if use_contact_model else self._model
+            if not use_contact_model and memory.recall.projection_version == DEFERRED_MEMORY_PROJECTION:
+                # A real work continuation still receives the existing memory
+                # preparation; only the first contact choice was made earlier.
+                memory = initial_memory()
+                checkpoint()
+                check_cancellation()
             individual_requests = getattr(model, "journals_provider_requests", False) is True
             request_id = (None if model_journal is None or individual_requests
                           else model_journal.begin_model_request(turn))
@@ -1231,7 +1269,7 @@ class LivingConversation:
                     raise RuntimeError("conversation memory search request is invalid")
                 offer_action_commentary(generated)
                 expanded = recall(f"{turn.text}\nSemantische zoekconcepten: {query_text}")
-                if expanded.confirmed_facts:
+                if expanded.confirmed_facts or memory.recall.projection_version == DEFERRED_MEMORY_PROJECTION:
                     memory = expanded
                 exchanges = (
                     self._history_search(turn, query_text)

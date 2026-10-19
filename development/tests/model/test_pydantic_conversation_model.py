@@ -1642,6 +1642,21 @@ def test_historical_eva1_recall_keeps_unconfirmed_origin_in_model_context(tmp_pa
                                               context.index("The earlier preference was silence.")+180]
 
 
+def test_unqueried_memory_is_distinct_from_a_completed_empty_search(tmp_path):
+    from dataclasses import replace
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    model = PydanticConversationModel(auth_file=tmp_path / "unused.json", resource_budget=_runtime_budget())
+    unqueried = replace(_memory(), recall=_memory().recall.model_copy(update={
+        "projection_version": "conversation-not-retrieved-v1"}))
+    first = model._instructions(_identity(), unqueried, ())
+    searched = model._instructions(_identity(), _memory(), ())
+    assert "nog niet opgehaald" in first and "geen lege zoekuitkomst" in first
+    assert "- Geen relevante herinnering." not in first
+    assert "Geen afzonderlijke duurzame stijlspiegel beschikbaar." not in first
+    assert "- Geen relevante herinnering." in searched
+    assert "Historisch geheugen is nog niet opgehaald" not in searched
+
+
 def test_model_receives_original_feedback_and_its_source_time_without_new_request(tmp_path, monkeypatch):
     from dataclasses import replace
     from eva.adapters.model.pydantic_conversation import PydanticConversationModel

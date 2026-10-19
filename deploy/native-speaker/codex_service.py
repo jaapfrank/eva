@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import secrets
 import signal
+import time
 from speaker_service import ServiceConfig, server_tls, verify_home_assistant
 from speaker_endpoint import SpeakerEndpoint
 from speaker_livekit_service import load_media_authority
@@ -15,6 +16,7 @@ from eva.adapters.connectors.home_assistant_voice import HomeAssistantSpeechOutp
 class NativeCodexMediaSession(CodexMediaSession):
     """Keep a listening utterance across the native LOCAL_STOP/resume handshake."""
     def clear_user_turn(self):
+        self._native_capture_resume=True
         output=self.renderer
         source=self.source
         busy=(self._core_pending>0
@@ -25,17 +27,85 @@ class NativeCodexMediaSession(CodexMediaSession):
                     or any(not handle.done() for handle in output.speech_handles))))
         self._preserve_native_input=bool(
             (self._input_open or self._input_fragments) and not busy)
-        if not self._preserve_native_input:
+        # LOCAL_STOP may arrive after the listener has already opened the
+        # correction. Retire admitted work, but keep this unadmitted utterance
+        # on the new generation rather than silently retiring its future reply.
+        self._native_unadmitted_input=set(self._input_open)
+        self._native_unadmitted_input.update(row[0] for row in self._input_fragments)
+        if not self._native_unadmitted_input:
             super().clear_user_turn()
 
     def interrupt(self):
         preserve=getattr(self,'_preserve_native_input',False)
         self._preserve_native_input=False
+        unadmitted=getattr(self,'_native_unadmitted_input',set())
+        self._native_unadmitted_input=set()
+        local_resume=getattr(self,'_native_capture_resume',False)
+        self._native_capture_resume=False
+        self._native_stopped_output=None
         self.diagnostic('native_input_resume',preserved=preserve,
             generation=self._generation,response_floor=self._response_floor,
             reason='listening_capture_resume' if preserve else 'interrupt_pending_or_output')
         if not preserve:
-            return super().interrupt()
+            result=super().interrupt()
+            if local_resume and self.source is not None:
+                sink=getattr(self.source,'sink',None)
+                segment=getattr(sink,'segment',None)
+                self._native_stopped_output=(self.source,getattr(self.source,'epoch',None),sink,
+                    getattr(segment,'generation',None),getattr(self,'_native_capture_epoch',None))
+            if unadmitted:
+                for identity in unadmitted:
+                    self._input_generations[identity]=self._generation
+                self._input_fragments=[(identity,text,self._generation if identity in unadmitted else generation)
+                    for identity,text,generation in self._input_fragments]
+                self.diagnostic('native_input_rebased',turns=len(unadmitted),
+                    generation=self._generation,response_floor=self._response_floor)
+            return result
+
+    async def capture_native(self, frames):
+        capture=getattr(frames,'capture',None)
+        self._native_capture_epoch=getattr(capture,'epoch',None)
+        stopped=getattr(self,'_native_stopped_output',None)
+        self._native_stopped_output=None
+        if stopped is not None:
+            source,epoch,sink,generation,previous_capture=stopped
+            barrier=getattr(sink,'barrier',None)
+            wire=getattr(sink,'wire',None)
+            # Only the inherited LOCAL_STOP -> STOPPED -> fresh CAPTURE route
+            # may retain a new prefix. Never retain pre-STOP or normal echo PCM.
+            bound=(epoch is not None and generation is not None and previous_capture is not None
+                and capture is not None and capture.epoch>previous_capture
+                and getattr(capture.owner,'_output',None) is wire
+                and capture.state=='active' and source is self.source
+                and source.epoch==epoch and barrier is not None and barrier.done()
+                and not barrier.cancelled() and barrier.exception() is None)
+            if bound:
+                receipt=wire.playback_result(generation)
+                bound=receipt.status=='interrupted' and receipt.confirmed_frames is not None
+            if bound:
+                started=time.monotonic()
+                while source.input_suppressed and time.monotonic()-started<.3:
+                    self.current()
+                    if source.epoch!=epoch:break
+                    await asyncio.sleep(min(.01,max(0,.3-(time.monotonic()-started))))
+                retained=(source.epoch==epoch and not source.input_suppressed)
+                self.diagnostic('native_post_stop_prefix',retained=retained,
+                    wait_ms=round((time.monotonic()-started)*1000))
+                if retained:
+                    async def paced():
+                        # Existing capture buffer holds at most two seconds.
+                        # Pace its post-ACK prefix to avoid overflowing the live
+                        # microphone queue. Added tail delay is at most 300 ms.
+                        next_frame=time.monotonic()
+                        async for frame in frames:
+                            self.current()
+                            await asyncio.sleep(max(0,next_frame-time.monotonic()))
+                            self.current()
+                            if capture.state!='active':return
+                            next_frame=max(next_frame,time.monotonic())+frame.samples_per_channel/frame.sample_rate
+                            yield frame
+                    return await super().capture_native(paced())
+        return await super().capture_native(frames)
 
 
 class CodexHouseholdSpeakerSession(LiveKitHouseholdSpeakerSession):

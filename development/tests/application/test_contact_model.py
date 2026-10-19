@@ -73,8 +73,11 @@ def test_simple_turn_uses_one_contact_call_with_same_authorized_context():
     assert len(contact.calls) == 1
     args, kwargs = contact.calls[0]
     assert args[1] is IDENTITY and args[3] is recent
-    assert args[2].confirmed_facts[0].subject == "jaap"
-    assert memory.query.principal_id == "jaap"
+    assert args[2].confirmed_facts == ()
+    assert args[2].recall.principal_id == "jaap"
+    assert args[2].recall.projection_version == "conversation-not-retrieved-v1"
+    assert memory.query is None
+    assert reply.evidence_memory_ids == ()
     assert reply.model_usage.model_attempts == 1
 
 
@@ -143,7 +146,8 @@ def test_household_contact_receives_household_scope_without_owner_tools():
                         audience=MemoryAudience.household(principal_id="household-device", household_id="home",
                             consent_ref=HouseholdConsentReference("household-device", "home", "household-consent:one")))
     memory = _Memory()
-    contact = Model(lambda t, k: "Dag!")
+    contact = Model(lambda t, k: ConversationActionCall("remember", MEMORY_SEARCH_ACTION,
+        {"query_text": "gedeelde afspraak"}) if k["completed_action"] is None else "Dag!")
     LivingConversation(memory, contact, IDENTITY, Actions(), contact_model=contact).respond(household)
     assert memory.query.scope == {"kind": "household", "household_id": "home"}
     assert memory.query.principal_id == "household-device"

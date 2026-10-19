@@ -45,6 +45,11 @@ class HomeAssistantApiTool:
         return (ConversationToolDescriptor(
             name=_ACTION,
             description=(
+                "Gebruik voor gewoon aan/uit-bedienen bij voorkeur de aangeboden "
+                "set_home_assistant_light of set_home_assistant_switch: die combineren "
+                "doelresolutie, toegestane uitvoering en onafhankelijke eindcontrole. "
+                "Daarvoor zijn geen losse inventaris-, service- en statusrondes nodig. "
+                "Deze algemene API blijft beschikbaar voor andere bedieningen en bronvragen. "
                 "Gebruik de echte Home Assistant REST- of WebSocket-API. Ontdek alleen "
                 "ontbrekende doelentiteiten of onbekende servicevelden. Gebruik voldoende "
                 "actuele, brongebonden informatie uit deze beurt opnieuw; een bekende "
