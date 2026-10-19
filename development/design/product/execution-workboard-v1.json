@@ -3419,7 +3419,7 @@
                 "doneWhen": "De bestaande TTS- en speakerroute speelt gewone Nederlandse antwoorden met behoud van alle woorden en natuurlijke zinsrust. Lange onverwachte stiltes zijn met bron-PCM, aanvoertijden en apparaatbevestiging gelokaliseerd en de aangetoonde oorzaak is verholpen. Geen ongefundeerd versnellen of wegknippen van betekenisvolle rust. Gewone, meerzinnige en onderbroken antwoorden zijn via de geïnstalleerde route gecontroleerd; werkelijk horen en technische ontvangst blijven onderscheiden.",
                 "existing": "Korte antwoorden gebruiken één letterlijke HA-TTS-aanvraag; tekst en stop-/afspeelbevestigingen blijven gekoppeld.",
                 "gap": "Eerdere ontvangst bevatte pauzes van 0,90–1,17 seconde; bronstilte en aanvoergaten zijn nog niet onderscheiden.",
-                "nextAction": "Beoordeel de werkelijk gesproken pauzes op de geïnstalleerde interpunctiekandidaat tijdens de opnieuw voorbereide woonkamerproef; provider-PCM alleen is geen fysieke acceptatie.",
+                "nextAction": "Behoud de geïnstalleerde cadansaanpassing; geen algemene ritmeacceptatie afleiden uit afkappen zonder vervolantwoord.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
@@ -3437,9 +3437,9 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "acoustic_trial_rearmed",
-                  "updatedAt": "2026-10-19T13:09:55.217852+00:00",
-                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
+                  "status": "owner_attempt_diagnosed_architecture_followup",
+                  "updatedAt": "2026-10-19T13:22:03.324164+00:00",
+                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
                   "ownerAcceptance": false
                 }
               },
@@ -3449,7 +3449,7 @@
                 "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
                 "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
                 "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-                "nextAction": "Meet microfoon en aangeboden uitvoer tijdens één begrensd woonkamerantwoord; bind de proef aan werkelijk geladen code/configuratie en actuele containers. Behoud native luisterhervatting.",
+                "nextAction": "Herstel de overdracht van afspelen stoppen naar correctie verstaan; de laatste eigenaarproef leverde geen tweede toegelaten corebeurt op. Behoud oorspronkelijke opname en ongeldige meetbinding.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
@@ -3468,9 +3468,9 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "acoustic_trial_rearmed",
-                  "updatedAt": "2026-10-19T13:09:55.217852+00:00",
-                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
+                  "status": "owner_attempt_diagnosed_architecture_followup",
+                  "updatedAt": "2026-10-19T13:22:03.324164+00:00",
+                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
                   "ownerAcceptance": false
                 }
               },
@@ -3480,7 +3480,7 @@
                 "doneWhen": "Een korte core- of netwerkonderbreking beëindigt een ongebruikte standbyverbinding niet onnodig. Na een werkelijke disconnect geeft de dienst alle oude sessie- en afspeelrechten vrij en kan dezelfde speaker via herverbinding en een nieuw lokaal wekwoord weer spreken zonder microfoon uit/aan. Gesloten of gemute input wordt nooit stilzwijgend heropend; aangenomen opdrachten worden niet blind herhaald. Standby, actieve uitval, herverbinding en nieuwe beurt zijn op de geïnstalleerde route gecontroleerd.",
                 "existing": "Firmware plant reconnect bij CLOSED/DISCONNECTED/ERROR; bestaande session-finally sluit input en core-lease.",
                 "gap": "Core-readiness wordt vóór het wekwoord gecontroleerd en kan een verder ongebruikte verbinding onnodig beëindigen.",
-                "nextAction": "Behoud de bestaande standby-reparatie; controleer afscheid en opnieuw wekken op de eindkandidaat nadat de gemeten akoestiek is afgehandeld.",
+                "nextAction": "Behoud bestaande standby-reparatie; volledige afloop en hervatting blijven onderdeel van de uiteindelijke gesprekstoets.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
@@ -3497,9 +3497,9 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "acoustic_trial_rearmed",
-                  "updatedAt": "2026-10-19T13:09:55.217852+00:00",
-                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
+                  "status": "owner_attempt_diagnosed_architecture_followup",
+                  "updatedAt": "2026-10-19T13:22:03.324164+00:00",
+                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
                   "ownerAcceptance": false
                 }
               }
@@ -3533,17 +3533,13 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Gebruik het opnieuw geactiveerde woonkamermeetvenster; de vorige poging verliep zonder opname. Beoordeel werkelijk paarmateriaal voordat onderbreken als hersteld geldt.",
+                "nextAction": "Werk de vroege keuze binnen dezelfde Eva uit: snelle contactbeslissing vóór dure historische retrieval, bestaande directe providers voor toegelaten eenvoudige acties, geheugen en verdieping wanneer nodig. Afkappen en correctie-opname afzonderlijk herstellen.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
-                  "availableNow": true,
-                  "readyWhen": "Nieuwe begrensde woonkamerproef opnieuw geactiveerd op 19 oktober om 15:07 lokaal; één opname van maximaal 30 seconden binnen het venster van 600 seconden na activeren.",
-                  "steps": [
-                    "Wek Eva in de woonkamer en vraag rustig tellen van één tot tien met pauzes.",
-                    "Laat de eerste drie cijfers uitspreken; zeg tijdens het tellen: wacht even, ik bedoelde drie.",
-                    "Herhaal na het antwoord: ik bedoelde drie."
-                  ],
-                  "purpose": "Oorzaakmeting van echo en eigen spraak; geen verklaring dat gewoon onderbreken al werkt."
+                  "availableNow": false,
+                  "readyWhen": "Geen nieuwe opname gevraagd; eerst de lopende verduidelijking over onderbreken en de gerichte reparatie verwerken.",
+                  "steps": [],
+                  "pendingClarification": "Gebruikte de eigenaar alleen de gesproken correctie of ook wekwoord/knop, en werd de correctie herhaald nadat Eva stil was?"
                 },
                 "checkedAt": "2026-10-17T13:21:29.304952+00:00",
                 "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
@@ -3804,18 +3800,19 @@
                   }
                 },
                 "ownerFeedback20261019": {
-                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-followup-20261019.json",
-                  "status": "investigating_actual_owner_feedback",
-                  "runtimeChanged": false,
-                  "ownerAccepted": false,
-                  "voiceRouteClarificationPending": false,
-                  "ownerDecision": "Techniek mag worden gekozen op daadwerkelijk bewezen snelheid en werking; test A bewijst B niet."
+                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
+                  "playbackCutoffHeard": true,
+                  "followupAnswerHeard": false,
+                  "firstAnswerTooSlow": true,
+                  "initialMemoryMs": 5015,
+                  "secondCoreTurnAdmitted": false,
+                  "ownerAccepted": false
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "acoustic_trial_rearmed",
-                  "updatedAt": "2026-10-19T13:09:55.217852+00:00",
-                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
+                  "status": "owner_attempt_diagnosed_architecture_followup",
+                  "updatedAt": "2026-10-19T13:22:03.324164+00:00",
+                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
                   "ownerAcceptance": false
                 }
               },
@@ -7500,20 +7497,21 @@
             "C3.5",
             "C3.6"
           ],
-          "status": "recovery_executing",
+          "status": "owner_correction_and_latency_diagnosed",
           "startedAt": "2026-10-19T07:08:01.588667+00:00",
           "activeOtherWorkPreserved": "E5.1",
           "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
           "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
           "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-          "updatedAt": "2026-10-19T13:09:55.217852+00:00",
+          "updatedAt": "2026-10-19T13:22:03.324164+00:00",
           "physicalAcceptance": "pending",
           "executionPlan": {
             "path": "development/design/product/voice-recovery-execution-20261019.json",
-            "status": "acoustic_trial_rearmed",
-            "updatedAt": "2026-10-19T13:09:55.217852+00:00",
-            "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json"
-          }
+            "status": "owner_attempt_diagnosed_architecture_followup",
+            "updatedAt": "2026-10-19T13:22:03.324164+00:00",
+            "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json"
+          },
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json"
         }
       }
     },
@@ -8023,7 +8021,7 @@
               "doneWhen": "De bestaande TTS- en speakerroute speelt gewone Nederlandse antwoorden met behoud van alle woorden en natuurlijke zinsrust. Lange onverwachte stiltes zijn met bron-PCM, aanvoertijden en apparaatbevestiging gelokaliseerd en de aangetoonde oorzaak is verholpen. Geen ongefundeerd versnellen of wegknippen van betekenisvolle rust. Gewone, meerzinnige en onderbroken antwoorden zijn via de geïnstalleerde route gecontroleerd; werkelijk horen en technische ontvangst blijven onderscheiden.",
               "existing": "Korte antwoorden gebruiken één letterlijke HA-TTS-aanvraag; tekst en stop-/afspeelbevestigingen blijven gekoppeld.",
               "gap": "Eerdere ontvangst bevatte pauzes van 0,90–1,17 seconde; bronstilte en aanvoergaten zijn nog niet onderscheiden.",
-              "nextAction": "Beoordeel de werkelijk gesproken pauzes op de geïnstalleerde interpunctiekandidaat tijdens de opnieuw voorbereide woonkamerproef; provider-PCM alleen is geen fysieke acceptatie.",
+              "nextAction": "Behoud de geïnstalleerde cadansaanpassing; geen algemene ritmeacceptatie afleiden uit afkappen zonder vervolantwoord.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
@@ -8041,9 +8039,9 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "acoustic_trial_rearmed",
-                "updatedAt": "2026-10-19T13:09:55.217852+00:00",
-                "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
+                "status": "owner_attempt_diagnosed_architecture_followup",
+                "updatedAt": "2026-10-19T13:22:03.324164+00:00",
+                "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
                 "ownerAcceptance": false
               }
             },
@@ -8053,7 +8051,7 @@
               "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
               "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
               "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-              "nextAction": "Meet microfoon en aangeboden uitvoer tijdens één begrensd woonkamerantwoord; bind de proef aan werkelijk geladen code/configuratie en actuele containers. Behoud native luisterhervatting.",
+              "nextAction": "Herstel de overdracht van afspelen stoppen naar correctie verstaan; de laatste eigenaarproef leverde geen tweede toegelaten corebeurt op. Behoud oorspronkelijke opname en ongeldige meetbinding.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
@@ -8072,9 +8070,9 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "acoustic_trial_rearmed",
-                "updatedAt": "2026-10-19T13:09:55.217852+00:00",
-                "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
+                "status": "owner_attempt_diagnosed_architecture_followup",
+                "updatedAt": "2026-10-19T13:22:03.324164+00:00",
+                "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
                 "ownerAcceptance": false
               }
             },
@@ -8084,7 +8082,7 @@
               "doneWhen": "Een korte core- of netwerkonderbreking beëindigt een ongebruikte standbyverbinding niet onnodig. Na een werkelijke disconnect geeft de dienst alle oude sessie- en afspeelrechten vrij en kan dezelfde speaker via herverbinding en een nieuw lokaal wekwoord weer spreken zonder microfoon uit/aan. Gesloten of gemute input wordt nooit stilzwijgend heropend; aangenomen opdrachten worden niet blind herhaald. Standby, actieve uitval, herverbinding en nieuwe beurt zijn op de geïnstalleerde route gecontroleerd.",
               "existing": "Firmware plant reconnect bij CLOSED/DISCONNECTED/ERROR; bestaande session-finally sluit input en core-lease.",
               "gap": "Core-readiness wordt vóór het wekwoord gecontroleerd en kan een verder ongebruikte verbinding onnodig beëindigen.",
-              "nextAction": "Behoud de bestaande standby-reparatie; controleer afscheid en opnieuw wekken op de eindkandidaat nadat de gemeten akoestiek is afgehandeld.",
+              "nextAction": "Behoud bestaande standby-reparatie; volledige afloop en hervatting blijven onderdeel van de uiteindelijke gesprekstoets.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
@@ -8101,9 +8099,9 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "acoustic_trial_rearmed",
-                "updatedAt": "2026-10-19T13:09:55.217852+00:00",
-                "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
+                "status": "owner_attempt_diagnosed_architecture_followup",
+                "updatedAt": "2026-10-19T13:22:03.324164+00:00",
+                "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
                 "ownerAcceptance": false
               }
             }
@@ -8137,17 +8135,13 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Gebruik het opnieuw geactiveerde woonkamermeetvenster; de vorige poging verliep zonder opname. Beoordeel werkelijk paarmateriaal voordat onderbreken als hersteld geldt.",
+              "nextAction": "Werk de vroege keuze binnen dezelfde Eva uit: snelle contactbeslissing vóór dure historische retrieval, bestaande directe providers voor toegelaten eenvoudige acties, geheugen en verdieping wanneer nodig. Afkappen en correctie-opname afzonderlijk herstellen.",
               "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": true,
-                "readyWhen": "Nieuwe begrensde woonkamerproef opnieuw geactiveerd op 19 oktober om 15:07 lokaal; één opname van maximaal 30 seconden binnen het venster van 600 seconden na activeren.",
-                "steps": [
-                  "Wek Eva in de woonkamer en vraag rustig tellen van één tot tien met pauzes.",
-                  "Laat de eerste drie cijfers uitspreken; zeg tijdens het tellen: wacht even, ik bedoelde drie.",
-                  "Herhaal na het antwoord: ik bedoelde drie."
-                ],
-                "purpose": "Oorzaakmeting van echo en eigen spraak; geen verklaring dat gewoon onderbreken al werkt."
+                "availableNow": false,
+                "readyWhen": "Geen nieuwe opname gevraagd; eerst de lopende verduidelijking over onderbreken en de gerichte reparatie verwerken.",
+                "steps": [],
+                "pendingClarification": "Gebruikte de eigenaar alleen de gesproken correctie of ook wekwoord/knop, en werd de correctie herhaald nadat Eva stil was?"
               },
               "checkedAt": "2026-10-17T13:21:29.304952+00:00",
               "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
@@ -8408,18 +8402,19 @@
                 }
               },
               "ownerFeedback20261019": {
-                "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-followup-20261019.json",
-                "status": "investigating_actual_owner_feedback",
-                "runtimeChanged": false,
-                "ownerAccepted": false,
-                "voiceRouteClarificationPending": false,
-                "ownerDecision": "Techniek mag worden gekozen op daadwerkelijk bewezen snelheid en werking; test A bewijst B niet."
+                "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
+                "playbackCutoffHeard": true,
+                "followupAnswerHeard": false,
+                "firstAnswerTooSlow": true,
+                "initialMemoryMs": 5015,
+                "secondCoreTurnAdmitted": false,
+                "ownerAccepted": false
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "acoustic_trial_rearmed",
-                "updatedAt": "2026-10-19T13:09:55.217852+00:00",
-                "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
+                "status": "owner_attempt_diagnosed_architecture_followup",
+                "updatedAt": "2026-10-19T13:22:03.324164+00:00",
+                "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
                 "ownerAcceptance": false
               }
             },
@@ -12104,20 +12099,21 @@
           "C3.5",
           "C3.6"
         ],
-        "status": "recovery_executing",
+        "status": "owner_correction_and_latency_diagnosed",
         "startedAt": "2026-10-19T07:08:01.588667+00:00",
         "activeOtherWorkPreserved": "E5.1",
         "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
         "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
         "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-        "updatedAt": "2026-10-19T13:09:55.217852+00:00",
+        "updatedAt": "2026-10-19T13:22:03.324164+00:00",
         "physicalAcceptance": "pending",
         "executionPlan": {
           "path": "development/design/product/voice-recovery-execution-20261019.json",
-          "status": "acoustic_trial_rearmed",
-          "updatedAt": "2026-10-19T13:09:55.217852+00:00",
-          "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json"
-        }
+          "status": "owner_attempt_diagnosed_architecture_followup",
+          "updatedAt": "2026-10-19T13:22:03.324164+00:00",
+          "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json"
+        },
+        "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json"
       }
     },
     "goalRevision": {

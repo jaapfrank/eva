@@ -309,5 +309,23 @@
       }
     ],
     "reviewDoesNotEstablish": "Implementation, installation, acoustic success or owner acceptance."
+  },
+  "ownerSteering20261019": {
+    "recordedAt": "2026-10-19T13:22:03.324164+00:00",
+    "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
+    "status": "architecture_candidate_not_implemented",
+    "intent": "Choose early whether a request can be answered or executed directly, or requires historical memory or deeper work. Keep one Eva and shared authority, memory and conversation history.",
+    "concreteCandidate": {
+      "status": "read_only_proposal_not_implemented",
+      "finding": "The same existing contact model already chooses direct answers, permitted tools and delegated work, but currently waits for initial memory and active context before that first choice.",
+      "proposal": "Evaluate moving the existing first contact decision ahead of expensive historical retrieval, using the same identity, admitted audience, recent conversation and necessary work/stop context. Retrieve missing historical context on demand; do not add a separate classifier request or independent voice agent.",
+      "existingCapabilityReuse": "Existing provider actions already combine permitted target resolution, execution and independent state observation. Their use can avoid model-driven inventory/API/readback substeps when the requested target is supported and authorized.",
+      "constraints": [
+        "Missing memories remain explicitly unqueried; no fabricated personal history or day activities.",
+        "Current authority, cancellation, durable action identity and original result destination remain mandatory.",
+        "The speech renderer continues to receive approved text; it does not gain its own memory or permission policy.",
+        "This proposal has no implementation, latency result or acceptance claim in this record."
+      ]
+    }
   }
 }

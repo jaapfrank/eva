@@ -18,13 +18,13 @@ from datetime import datetime, timezone
 from enum import Enum
 import hashlib
 import json
-import marshal
 import os
 from pathlib import Path
 import re
 import subprocess
+import struct
 import sys
-from types import FunctionType
+from types import CodeType, FunctionType
 from uuid import UUID
 
 
@@ -89,16 +89,53 @@ def _files(paths, kind, errors):
     return result
 
 
+def _code_value(value, depth=0):
+    """Canonical code/constant structure; never serialize reference counts.
+
+    co_code is the public, unquickened bytecode. Execution's adaptive caches
+    and marshal's reference flags are deliberately not part of the identity.
+    Unknown constant types fail closed rather than being reduced to repr().
+    """
+    if depth > 100:
+        raise ValueError("Resident code nesting exceeds its bound")
+    kind = type(value)
+    if value is None:
+        return ["none"]
+    if value is Ellipsis:
+        return ["ellipsis"]
+    if kind in (bool, int, str):
+        return [kind.__name__, value]
+    if kind is bytes:
+        return ["bytes", value.hex()]
+    if kind is float:
+        return ["float", struct.pack("!d", value).hex()]
+    if kind is complex:
+        return ["complex", struct.pack("!dd", value.real, value.imag).hex()]
+    if kind in (tuple, frozenset):
+        items = [_code_value(item, depth+1) for item in value]
+        if kind is frozenset:
+            items.sort(key=lambda item: json.dumps(item, sort_keys=True, separators=(",", ":")))
+        return [kind.__name__, items]
+    if kind is CodeType:
+        fields = ("co_argcount", "co_posonlyargcount", "co_kwonlyargcount",
+            "co_nlocals", "co_stacksize", "co_flags", "co_code", "co_consts",
+            "co_names", "co_varnames", "co_freevars", "co_cellvars",
+            "co_filename", "co_name", "co_qualname", "co_firstlineno",
+            "co_linetable", "co_exceptiontable")
+        return ["code", {name: _code_value(getattr(value, name), depth+1)
+                         for name in fields}]
+    raise ValueError("Unsupported resident code constant")
+
+
 def _code_digest(module):
     """Hash resident function code too: on-disk bytes alone can be stale."""
-    digest = hashlib.sha256()
+    functions = []
 
     def add(name, value):
         if isinstance(value, (staticmethod, classmethod)):
             value = value.__func__
         if isinstance(value, FunctionType):
-            digest.update(name.encode())
-            digest.update(marshal.dumps(value.__code__))
+            functions.append([name, _code_value(value.__code__)])
         elif isinstance(value, property):
             for suffix, function in (("get", value.fget), ("set", value.fset),
                                      ("del", value.fdel)):
@@ -109,7 +146,7 @@ def _code_digest(module):
         if isinstance(value, type) and value.__module__ == module.__name__:
             for member, function in sorted(vars(value).items()):
                 add(name + "." + member, function)
-    return digest.hexdigest()
+    return _digest({"resident_code_format": "structure-v1", "functions": functions})
 
 
 def capture_loaded_sources(module_names: Sequence[str]):

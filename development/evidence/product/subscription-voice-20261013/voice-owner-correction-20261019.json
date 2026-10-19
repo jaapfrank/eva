@@ -1,0 +1,131 @@
+{
+  "contract": "EvaVoiceOwnerCorrectionEvidence/v1",
+  "date": "2026-10-19",
+  "scope": "Owner follow-up to the second bounded living-room observation; no transcript, device identity or audio is published.",
+  "precedingEvidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
+  "status": {
+    "ownerAttemptPerformed": true,
+    "captureRecorded": true,
+    "runtimeBindingValid": false,
+    "completeSpokenInterruptionVerified": false,
+    "ownerAcceptance": false,
+    "wholeVoiceRecoveryComplete": false,
+    "diagnosticObserverRetired": true
+  },
+  "ownerReport": {
+    "playbackCutoffHeard": true,
+    "correctionFollowupAnswerHeard": false,
+    "initialAnswerPerceivedSlow": true,
+    "interpretation": "An audible cutoff alone does not establish that the correction was recognized, admitted to Eva, answered or heard."
+  },
+  "retainedCoreEvidence": {
+    "ingressCommittedCount": 1,
+    "replyCommittedCount": 1,
+    "secondCorrectionIngressPresent": false,
+    "sessionOpenedAtUtc": "2026-10-19T13:08:12Z",
+    "ingressStoredTimestampUtc": "2026-10-19T13:08:19Z",
+    "captureIdentityBeforeAtUtc": "2026-10-19T13:08:28.607929Z",
+    "storedIngressToCaptureTimestampDifferenceMsApproximate": 9608,
+    "timestampLimit": "The ingress timestamp has one-second precision. The capture begins when literal answer preparation has begun, before proven speaker output. This difference is not measured user-speech-end to audible-answer latency. REPLY_COMMITTED occurred_at is not used as a reply-completion clock.",
+    "initialMemory": {
+      "elapsedMs": 5015,
+      "outcome": "succeeded",
+      "source": "The retained core timing log for this same owner attempt, not an earlier benchmark."
+    },
+    "preparationElapsedMs": 5016,
+    "modelPhaseElapsedMs": 2899,
+    "modelFirstContentMs": 1837,
+    "providerModelCompletedMs": 2805,
+    "requestedAction": false,
+    "timingAccounting": "Memory is inside preparation; provider completion is inside the measured model phase. These nested values must not be added twice. No physical first-word timestamp is established.",
+    "runtimeUsage": {
+      "provider": "chatgpt-codex:gpt-6-sol",
+      "modelAttempts": 1,
+      "toolCalls": 0,
+      "inputTokens": 7071,
+      "outputTokens": 25,
+      "totalTokens": 7096,
+      "measurement": "measured",
+      "credits": null
+    }
+  },
+  "retainedObserverEvidence": {
+    "microphoneGateTransitionsRelativeToFirstRecordedMicrophoneArrivalMs": [
+      {
+        "atMs": 0.0,
+        "suppressed": false
+      },
+      {
+        "atMs": 2048.428,
+        "suppressed": true
+      },
+      {
+        "atMs": 7911.386,
+        "suppressed": false
+      }
+    ],
+    "providerEventRowsInsideCapture": 0,
+    "limits": [
+      "Gate transitions describe the software input path, not physical room sound or DAC timing.",
+      "No provider event inside this answer-triggered capture does not mean that the full session had no provider events.",
+      "No admitted second core turn is present in the retained session journal; these records do not establish exactly which acoustic or control event caused the audible cutoff.",
+      "The original runtime-binding comparison failed. The recording cannot be promoted to a valid bound acoustic acceptance result."
+    ]
+  },
+  "runtimeBindingFailure": {
+    "originalStatus": "invalid",
+    "originalIssue": "process:identity_changed",
+    "changedFieldClass": "loaded_code_sha256 for four selected modules",
+    "sourceFileBytesUnchanged": true,
+    "otherIdentityFieldsUnchanged": true,
+    "offlineSerializationIssueReproduced": true,
+    "finding": "Reference-sensitive marshal serialization can change a resident-code digest without changed source bytes. A structure-based helper repair has passed targeted checks and independent review; it is not installed and does not retroactively validate this recording.",
+    "causalLimit": "The original manifests do not retain per-function serialization; the offline reproduction does not identify the precise reference behind each original difference.",
+    "retrospectiveValidityOverride": false,
+    "originalManifestsPreserved": true
+  },
+  "retirement": {
+    "status": "cadence_production_installed_observer_removed",
+    "image": "sha256:ab306753dea1a5d6d964140f6fe03fe1e0059613d0060c07406a9a09073c643f",
+    "installedAtUtc": "2026-10-19T13:09:46.082488251Z",
+    "guardAtRetirement": {
+      "activeVoiceLeases": 0,
+      "activeDelegatedWork": 0,
+      "activeMemoryOutbox": 1,
+      "activeModelRequests": 0,
+      "activeDecisionClaims": 0,
+      "activeConversationClaims": 0
+    },
+    "scope": "Speaker-only retirement; no all-services-idle claim and no core replacement."
+  },
+  "architectureFollowup": {
+    "status": "read_only_proposal_not_implemented",
+    "finding": "The same existing contact model already chooses direct answers, permitted tools and delegated work, but currently waits for initial memory and active context before that first choice.",
+    "proposal": "Evaluate moving the existing first contact decision ahead of expensive historical retrieval, using the same identity, admitted audience, recent conversation and necessary work/stop context. Retrieve missing historical context on demand; do not add a separate classifier request or independent voice agent.",
+    "existingCapabilityReuse": "Existing provider actions already combine permitted target resolution, execution and independent state observation. Their use can avoid model-driven inventory/API/readback substeps when the requested target is supported and authorized.",
+    "constraints": [
+      "Missing memories remain explicitly unqueried; no fabricated personal history or day activities.",
+      "Current authority, cancellation, durable action identity and original result destination remain mandatory.",
+      "The speech renderer continues to receive approved text; it does not gain its own memory or permission policy.",
+      "This proposal has no implementation, latency result or acceptance claim in this record."
+    ]
+  },
+  "privacy": {
+    "rawTranscriptsPublished": false,
+    "audioPublished": false,
+    "privateSourceOrDeviceIdentifiersPublished": false,
+    "credentialsPublished": false,
+    "privateEvidenceRetained": true
+  },
+  "diagnosticRepair": {
+    "status": "built_not_installed",
+    "sourcePins": {
+      "development/tools/voice/runtime_identity.py": "4dd1ad56a8014baf61b12ed54661e67eca56fa84091c288e3062763c7c654622",
+      "development/tools/voice/test_runtime_identity.py": "9378942a8300de601e8999df692ea6d7c1e7d003ec33a4c10183c056d80e2efb"
+    },
+    "targetedTestsPassed": 30,
+    "independentReview": "go",
+    "pastMeasurementReclassified": false,
+    "futureCollector": "A private prepared collector also retains bounded service diagnostic logs before removing the temporary container; no new recording or runtime change was made this turn."
+  }
+}

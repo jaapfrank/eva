@@ -220,3 +220,43 @@ def test_mount_permutation_is_equivalent_but_mount_change_invalidates(probe, doc
     docker.raw['Mounts'][0]['RW'] = False
     assert not compare(probe.take(), probe.take(), containers_before=first,
                        containers_after=docker.take())['valid']
+
+
+def test_resident_code_hash_ignores_constant_reference_counts_and_execution():
+    from types import FunctionType, ModuleType
+    from runtime_identity import _code_digest
+    namespace = {}
+    exec(compile('def render():\n    x = (123456789, 234567890)\n    return sum(x)\n', 'stable-code', 'exec'), namespace)
+    module = ModuleType('stable_test');module.render = namespace['render']
+    first = _code_digest(module)
+    held = module.render.__code__.co_consts[1]
+    for _ in range(2000):assert module.render() == 358024679
+    assert held == (123456789, 234567890)
+    assert _code_digest(module) == first
+
+
+@pytest.mark.parametrize('field', ['bytecode', 'constant', 'nested', 'flags', 'exceptions'])
+def test_resident_structure_changes_remain_visible(field):
+    from types import ModuleType
+    from runtime_identity import _code_digest
+    namespace = {}
+    exec(compile('def render():\n    def inner():\n        return 123456789\n    return inner()\n', 'nested-code', 'exec'), namespace)
+    module = ModuleType('nested_test');module.render = namespace['render']
+    code = module.render.__code__;first = _code_digest(module)
+    if field == 'bytecode':changed = code.replace(co_code=code.co_code[:-2] + b'\x09\x00')
+    elif field == 'constant':changed = code.replace(co_consts=code.co_consts + ('extra',))
+    elif field == 'nested':
+        nested = code.co_consts[1]
+        changed = code.replace(co_consts=(None,nested.replace(co_consts=(None,987654321))))
+    elif field == 'flags':changed = code.replace(co_flags=code.co_flags ^ 0x40)
+    else:changed = code.replace(co_exceptiontable=b'\x00')
+    module.render.__code__ = changed  # Fingerprint only; deliberately do not execute mutations.
+    assert _code_digest(module) != first
+
+
+def test_unknown_code_constant_invalidates_loaded_source(probe):
+    code = probe.module.render.__code__
+    probe.module.render.__code__ = code.replace(co_consts=code.co_consts + (object(),))
+    value = probe.take()
+    assert not value['valid']
+    assert any(error.startswith('sources:unreadable:') for error in value['errors'])
