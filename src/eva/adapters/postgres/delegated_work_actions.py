@@ -409,6 +409,12 @@ class PostgresDelegatedWorkActions:
         optional = {"acceptance_message"} if operation in {"start", "research", "digital"} else set()
         if operation == "research":
             optional.add("prior_work_id")
+        # The shared model schema may include the optional household destination
+        # on private text turns. Explicit null means no destination; it grants no
+        # speaker access and is not forwarded by this private handler.
+        if operation in {"research", "digital"} and call.arguments.get(
+                "destination_satellite_id", "absent") is None:
+            optional.add("destination_satellite_id")
         if call.arguments.get("prior_work_id") is not None and (
                 not isinstance(call.arguments["prior_work_id"], str)
                 or not 1 <= len(call.arguments["prior_work_id"]) <= 240):

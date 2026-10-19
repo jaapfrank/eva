@@ -1,0 +1,46 @@
+{
+  "contract": "EvaPrivateNullableDestinationReview/v1",
+  "recordedAt": "2026-10-19T12:16:01.432912+00:00",
+  "decision": "GO_FOR_PRIVATE_NULL_DESTINATION_FIX",
+  "blockers": [],
+  "scope": "Alleen bekende destination_satellite_id:null bij privéonderzoek/digitaal werk; geen speakerbevoegdheid of spraakcode gewijzigd.",
+  "source": {
+    "path": "src/eva/adapters/postgres/delegated_work_actions.py",
+    "checkoutSha256": "81ef4b0c5ff1d7ba9bce89c8d4d1ef2b73a81a4d6b96d7e349a29b347d895951",
+    "scope": "owned six-line delta; other executor changes excluded"
+  },
+  "tests": {
+    "passed": 31,
+    "elapsedSeconds": 0.66,
+    "modelRequests": 0
+  },
+  "installedVerification": {
+    "checkedAt": "2026-10-19T12:16:01.432912+00:00",
+    "roles": {
+      "core": {
+        "image": "sha256:4154a5bb96cd67c2d5f5629ecb62b85e8143f9bfee706d41b92d6f0bccb8db0e",
+        "healthy": true,
+        "allSourceHashesMatch": true,
+        "sourceCount": 390
+      },
+      "worker": {
+        "image": "sha256:171b6efdd361cbbc34fae5d1bd8294b14b5cfe7181c060326e75e9df44249b0a",
+        "healthy": true,
+        "allSourceHashesMatch": true,
+        "sourceCount": 372
+      }
+    },
+    "newModelRequests": 0,
+    "installedBehavior": {
+      "capturedCallAccepted": true,
+      "stoppedBeforeAnyJournalOrServiceEffect": true,
+      "ready": true,
+      "readyzStatus": 200
+    }
+  },
+  "limitations": [
+    "Een nieuwe echte Telegramreactie is na installatie nog niet waargenomen.",
+    "De oorspronkelijke afgewezen modelargumenten zijn niet duurzaam bewaard; de vastgelegde gereproduceerde toolaanvraag bewijst de concrete routefout, niet alle mogelijke oorspronkelijke oorzaken.",
+    "Een normale modelreactie na eerder afgewezen toolinvoer kan elders nog door een algemene foutzin worden vervangen; dat pad is in deze gerichte wijziging niet veranderd."
+  ]
+}

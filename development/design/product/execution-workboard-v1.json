@@ -841,14 +841,14 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.11",
+  "activeTaskId": "F2.1",
   "currentWork": {
-    "id": "E4.11",
-    "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
+    "id": "F2.1",
+    "title": "Gewone Telegramvervolgvragen betrouwbaar afhandelen",
     "status": "in_progress",
-    "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-    "nextAction": "Bestaande gesloten native ontvangsten en historische bronregistraties gericht verzoenen zonder nieuwe modelaanvragen; daarna bewaarlast inclusief bewijsmetadata meten. Oude fouten en wisregistraties blijven bewaard en zichtbaar; geen nieuwe vergelijking of spraakwerk.",
-    "checkedAt": "2026-10-19T12:03:00.789605+00:00",
+    "doneWhen": "De gemelde privéchatfout is gericht hersteld en geïnstalleerd; de echte gezinsproef blijft afzonderlijk open.",
+    "nextAction": "Gewone Telegramreacties prioriteit geven: resterend pad controleren dat een normaal antwoord na afgewezen toolinvoer vervangt door een algemene foutzin. Geen geheugenopschoning of nieuwe brede proef voordat deze gemelde gebruiksroute begrijpelijk reageert.",
+    "checkedAt": "2026-10-19T12:16:01.432912+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,20 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "Telegram · lege optionele speakerbestemming blokkeert privéwerk niet meer",
+            "state": "installed",
+            "summary": "Gereproduceerde invoerafwijzing gericht hersteld; vastgelegde aanvraag wordt door geïnstalleerde code geaccepteerd. Kern en werkdienst gezond. Geen speakerrecht toegevoegd.",
+            "remaining": "Nieuwe echte Telegramreactie en het afzonderlijke algemene-foutpad blijven te beoordelen; geen volledige gezinsacceptatie.",
+            "source": "development/evidence/product/telegram-null-destination-installed-20261019.json",
+            "review": "development/reviews/telegram-null-destination-review-20261019.json",
+            "checkedAt": "2026-10-19T12:16:01.432912+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "completionScope": "Gerichte privéchatreparatie, geen afgeronde volledige gezinsproef",
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E4.11 · Dagtekst na bevestigde droomverwerking laten vervallen",
             "state": "installed",
@@ -2669,28 +2683,28 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E4.11 · Dagtekst na bevestigde droomverwerking laten vervallen",
+          "title": "Telegram · lege optionele speakerbestemming blokkeert privéwerk niet meer",
           "state": "installed",
-          "summary": "Tijdelijke tekst van erkende vorige-daggesprekken kan in de bestaande rustfase vervallen; relevante kennis, exacte herkomst, correcties en bewust vergeten blijven werken.",
-          "remaining": "Dag-/droomoverdracht, historische duplicaatopschoning en automatische bronlevenscyclus zijn geïnstalleerd. Nog open: oude cohorten zonder volledig ontvangstbewijs, native gesloten taakpayloads en irrelevante historische kennis onderbouwd opruimen; bewijsmetadata/opslag verder compact maken, oude statusfouten en meerdaags gebruik. Geen bewezen netto database-, token- of snelheidswinst.",
-          "source": "development/evidence/product/day-memory-source-lifecycle-installed-20261019.json",
-          "review": "development/reviews/day-memory-source-lifecycle-review-20261019.json",
-          "checkedAt": "2026-10-19T12:03:00.789605+00:00",
+          "summary": "Gereproduceerde invoerafwijzing gericht hersteld; vastgelegde aanvraag wordt door geïnstalleerde code geaccepteerd. Kern en werkdienst gezond. Geen speakerrecht toegevoegd.",
+          "remaining": "Nieuwe echte Telegramreactie en het afzonderlijke algemene-foutpad blijven te beoordelen; geen volledige gezinsacceptatie.",
+          "source": "development/evidence/product/telegram-null-destination-installed-20261019.json",
+          "review": "development/reviews/telegram-null-destination-review-20261019.json",
+          "checkedAt": "2026-10-19T12:16:01.432912+00:00",
           "newProductFunctionCompleted": false,
           "completedTaskIds": [],
-          "completionScope": "Geïnstalleerde bronlevenscyclus; volledige E4.11 en meerdaags gebruik blijven open",
+          "completionScope": "Gerichte privéchatreparatie, geen afgeronde volledige gezinsproef",
           "ownerAcceptance": false,
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.11",
-          "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
+          "taskId": "F2.1",
+          "title": "Gewone Telegramvervolgvragen betrouwbaar afhandelen",
           "state": "in_progress",
           "status": "in_progress",
-          "summary": "Dagtekstlevenscyclus geïnstalleerd · historie afmaken",
-          "detail": "Dag-/droomoverdracht, historische duplicaatopschoning en automatische bronlevenscyclus zijn geïnstalleerd. Nog open: oude cohorten zonder volledig ontvangstbewijs, native gesloten taakpayloads en irrelevante historische kennis onderbouwd opruimen; bewijsmetadata/opslag verder compact maken, oude statusfouten en meerdaags gebruik. Geen bewezen netto database-, token- of snelheidswinst.",
-          "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-          "checkedAt": "2026-10-19T12:03:00.789605+00:00"
+          "summary": "Concrete Telegramafwijzing hersteld en geïnstalleerd",
+          "detail": "Gewone Telegramreacties prioriteit geven: resterend pad controleren dat een normaal antwoord na afgewezen toolinvoer vervangt door een algemene foutzin. Geen geheugenopschoning of nieuwe brede proef voordat deze gemelde gebruiksroute begrijpelijk reageert.",
+          "doneWhen": "De gemelde privéchatfout is gericht hersteld en geïnstalleerd; de echte gezinsproef blijft afzonderlijk open.",
+          "checkedAt": "2026-10-19T12:16:01.432912+00:00"
         },
         "next": {
           "taskId": "E4.11",
@@ -5111,7 +5125,7 @@
                 "kind": "gebruikersproef",
                 "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
                 "owner": "Jaap",
-                "nextAction": "Gebruik Eva zeven echte dagen normaal via Telegram of de bestaande chat. Meld wanneer je begint en concrete voorbeelden van hulp, eigen initiatief, opvolging, plezier of hinder. Geaccepteerde geheugen-/persoonlijkheidsproeven blijven staan; spraak is een aparte uitvoerder.",
+                "nextAction": "Gewone Telegramreacties prioriteit geven: resterend pad controleren dat een normaal antwoord na afgewezen toolinvoer vervangt door een algemene foutzin. Geen geheugenopschoning of nieuwe brede proef voordat deze gemelde gebruiksroute begrijpelijk reageert.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": true,
@@ -5140,7 +5154,17 @@
                 "availableAt": "2026-10-18T14:40:32.336548+00:00",
                 "startedAt": null,
                 "ownerConfirmedStart": false,
-                "availabilitySuspendedAt": "2026-10-18T02:55:51.973301+00:00"
+                "availabilitySuspendedAt": "2026-10-18T02:55:51.973301+00:00",
+                "usageRegression": {
+                  "reportedAt": "2026-10-19T12:13:30.713553+00:00",
+                  "status": "specific_fix_installed",
+                  "ownerActionRequired": false,
+                  "source": "Directe eigenaarsmelding: gewone Telegramvervolgvraag geeft fout",
+                  "scope": "Privéchat-tooloverdracht; geen herhaling van oude geheugenproeven.",
+                  "checkedAt": "2026-10-19T12:16:01.432912+00:00",
+                  "evidence": "development/evidence/product/telegram-null-destination-installed-20261019.json",
+                  "review": "development/reviews/telegram-null-destination-review-20261019.json"
+                }
               },
               {
                 "id": "F2.2",
@@ -9705,7 +9729,7 @@
               "kind": "gebruikersproef",
               "doneWhen": "Technisch gereed gemelde eindkandidaat zeven dagen in het gezin proberen.",
               "owner": "Jaap",
-              "nextAction": "Gebruik Eva zeven echte dagen normaal via Telegram of de bestaande chat. Meld wanneer je begint en concrete voorbeelden van hulp, eigen initiatief, opvolging, plezier of hinder. Geaccepteerde geheugen-/persoonlijkheidsproeven blijven staan; spraak is een aparte uitvoerder.",
+              "nextAction": "Gewone Telegramreacties prioriteit geven: resterend pad controleren dat een normaal antwoord na afgewezen toolinvoer vervangt door een algemene foutzin. Geen geheugenopschoning of nieuwe brede proef voordat deze gemelde gebruiksroute begrijpelijk reageert.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -9734,7 +9758,17 @@
               "availableAt": "2026-10-18T14:40:32.336548+00:00",
               "startedAt": null,
               "ownerConfirmedStart": false,
-              "availabilitySuspendedAt": "2026-10-18T02:55:51.973301+00:00"
+              "availabilitySuspendedAt": "2026-10-18T02:55:51.973301+00:00",
+              "usageRegression": {
+                "reportedAt": "2026-10-19T12:13:30.713553+00:00",
+                "status": "specific_fix_installed",
+                "ownerActionRequired": false,
+                "source": "Directe eigenaarsmelding: gewone Telegramvervolgvraag geeft fout",
+                "scope": "Privéchat-tooloverdracht; geen herhaling van oude geheugenproeven.",
+                "checkedAt": "2026-10-19T12:16:01.432912+00:00",
+                "evidence": "development/evidence/product/telegram-null-destination-installed-20261019.json",
+                "review": "development/reviews/telegram-null-destination-review-20261019.json"
+              }
             },
             {
               "id": "F2.2",
