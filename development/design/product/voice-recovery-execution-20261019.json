@@ -161,6 +161,8 @@
       ],
       "parallelWith": 3,
       "work": [
+        "Na expliciete eigenaaropdracht: plaats de bestaande contactbeslissing vóór historische retrieval, met dezelfde identiteit, recente toegelaten context en werk-/stopstatus. Benodigde herinneringen blijven beschikbaar via de bestaande geheugenactie; onopgehaald is niet afwezig. Geen extra classificatiemodel.",
+        "Voer deze gerichte reparatie uit zonder GPU-herstel als voorwaarde; de eventuele WSL-herstart blijft afzonderlijk af te stemmen.",
         "Profileer de resterende 1263 ms alleen waar bestaande timing ontbreekt; meet queue en toelating afzonderlijk van geheugen/model.",
         "Herstel eerst de bestaande Windows/WSL-GPU-toegang. De aanwezige herstelbundel moet actuele images, werkclaims en werkbestanden vastleggen; haar oude baseline mag niet worden teruggezet.",
         "Een eventuele WSL-herstart beëindigt ook andere diensten en de toolserver. Bereid herstel en verificatie volledig voor en stem het concrete onderbrekingsmoment af met lopend werk; voer dit niet stilzwijgend uit.",
@@ -179,7 +181,7 @@
         "Kandidaat verliest bronfeiten, relevante rangschikking of concurrencycapaciteit.",
         "Cache-overlap ontbreekt: geen cachebouw zonder verwacht voordeel."
       ],
-      "doNot": "Geen geheugen overslaan, telopdracht herkennen via een aparte route, echte onderwerpen als stopwoord schrappen, model vervangen door een zwakker model of bestaand parallel/cachewerk opnieuw als nieuwe winst tellen.",
+      "doNot": "Geen herinneringen als afwezig voorstellen omdat ze niet zijn opgehaald; geen voorbeeldspecifieke tel-/licht-/begroetingsroute, zwakker inhoudelijk model of tweede geheugen. Bestaand parallel/cachewerk niet als nieuwe winst tellen.",
       "references": [
         "https://learn.microsoft.com/en-us/windows/wsl/basic-commands",
         "https://docs.nvidia.com/cuda/wsl-user-guide/index.html"
@@ -278,7 +280,7 @@
   "ownership": {
     "coordinator": "Bestaande spraakuitvoerder; bron-/configuratiebinding, samenstelling, installatie en verslag.",
     "workers": "Maximaal twee uitvoerders; geheugenprestatieanalyse en akoestiek kunnen parallel, review binnen dezelfde bezetting.",
-    "sharedCore": "Actueel ander werk is E2.8 camera. Wijzigingen aan kern/geheugen vereisen afstemming op de werkelijke actuele bestands- en runtimeclaims; dit plan wijzigt currentWork niet."
+    "sharedCore": "Parallel geheugen-/kernwerk behouden. currentWork blijft ongewijzigd; alleen eigen deltas op de daadwerkelijk actuele image installeren na controle van actieve claims."
   },
   "firstExecutableActions": [
     "Maak van de bestaande bron-/imagechecks één verplichte voor/na-controle in de bestaande probe.",
@@ -313,10 +315,10 @@
   "ownerSteering20261019": {
     "recordedAt": "2026-10-19T13:22:03.324164+00:00",
     "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
-    "status": "architecture_candidate_not_implemented",
+    "status": "authorized_implementation_started",
     "intent": "Choose early whether a request can be answered or executed directly, or requires historical memory or deeper work. Keep one Eva and shared authority, memory and conversation history.",
     "concreteCandidate": {
-      "status": "read_only_proposal_not_implemented",
+      "status": "implementation_in_progress",
       "finding": "The same existing contact model already chooses direct answers, permitted tools and delegated work, but currently waits for initial memory and active context before that first choice.",
       "proposal": "Evaluate moving the existing first contact decision ahead of expensive historical retrieval, using the same identity, admitted audience, recent conversation and necessary work/stop context. Retrieve missing historical context on demand; do not add a separate classifier request or independent voice agent.",
       "existingCapabilityReuse": "Existing provider actions already combine permitted target resolution, execution and independent state observation. Their use can avoid model-driven inventory/API/readback substeps when the requested target is supported and authorized.",
@@ -326,6 +328,8 @@
         "The speech renderer continues to receive approved text; it does not gain its own memory or permission policy.",
         "This proposal has no implementation, latency result or acceptance claim in this record."
       ]
-    }
+    },
+    "implementationStartedAt": "2026-10-19T13:49:39.902948+00:00",
+    "ownerAuthorization": "Oke ga dit voor elkaar maken."
   }
 }

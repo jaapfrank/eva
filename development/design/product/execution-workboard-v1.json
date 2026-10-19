@@ -3449,7 +3449,7 @@
                 "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
                 "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
                 "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-                "nextAction": "Herstel de overdracht van afspelen stoppen naar correctie verstaan; de laatste eigenaarproef leverde geen tweede toegelaten corebeurt op. Behoud oorspronkelijke opname en ongeldige meetbinding.",
+                "nextAction": "Geautoriseerde uitvoering: bestaande contactbeslissing vóór historische retrieval; ontbrekende kennis via dezelfde geheugenactie; native stop naar nieuwe invoer en vervolgantwoord herstellen. Daarna actuele installatie en gewone route gericht controleren.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
@@ -3468,9 +3468,8 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "owner_attempt_diagnosed_architecture_followup",
-                  "updatedAt": "2026-10-19T13:22:03.324164+00:00",
-                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
+                  "status": "early_contact_and_correction_implementation",
+                  "updatedAt": "2026-10-19T13:49:39.902948+00:00",
                   "ownerAcceptance": false
                 }
               },
@@ -3533,8 +3532,8 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Werk de vroege keuze binnen dezelfde Eva uit: snelle contactbeslissing vóór dure historische retrieval, bestaande directe providers voor toegelaten eenvoudige acties, geheugen en verdieping wanneer nodig. Afkappen en correctie-opname afzonderlijk herstellen.",
-                "ownerActionRequired": true,
+                "nextAction": "Geautoriseerde uitvoering: bestaande contactbeslissing vóór historische retrieval; ontbrekende kennis via dezelfde geheugenactie; native stop naar nieuwe invoer en vervolgantwoord herstellen. Daarna actuele installatie en gewone route gericht controleren.",
+                "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen nieuwe opname gevraagd; eerst de lopende verduidelijking over onderbreken en de gerichte reparatie verwerken.",
@@ -3810,9 +3809,8 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "owner_attempt_diagnosed_architecture_followup",
-                  "updatedAt": "2026-10-19T13:22:03.324164+00:00",
-                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
+                  "status": "early_contact_and_correction_implementation",
+                  "updatedAt": "2026-10-19T13:49:39.902948+00:00",
                   "ownerAcceptance": false
                 }
               },
@@ -7497,19 +7495,18 @@
             "C3.5",
             "C3.6"
           ],
-          "status": "owner_correction_and_latency_diagnosed",
+          "status": "early_contact_and_correction_implementation",
           "startedAt": "2026-10-19T07:08:01.588667+00:00",
           "activeOtherWorkPreserved": "E5.1",
           "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
           "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
           "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-          "updatedAt": "2026-10-19T13:22:03.324164+00:00",
+          "updatedAt": "2026-10-19T13:49:39.902948+00:00",
           "physicalAcceptance": "pending",
           "executionPlan": {
             "path": "development/design/product/voice-recovery-execution-20261019.json",
-            "status": "owner_attempt_diagnosed_architecture_followup",
-            "updatedAt": "2026-10-19T13:22:03.324164+00:00",
-            "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json"
+            "status": "early_contact_and_correction_implementation",
+            "updatedAt": "2026-10-19T13:49:39.902948+00:00"
           },
           "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json"
         }
@@ -8051,7 +8048,7 @@
               "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
               "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
               "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-              "nextAction": "Herstel de overdracht van afspelen stoppen naar correctie verstaan; de laatste eigenaarproef leverde geen tweede toegelaten corebeurt op. Behoud oorspronkelijke opname en ongeldige meetbinding.",
+              "nextAction": "Geautoriseerde uitvoering: bestaande contactbeslissing vóór historische retrieval; ontbrekende kennis via dezelfde geheugenactie; native stop naar nieuwe invoer en vervolgantwoord herstellen. Daarna actuele installatie en gewone route gericht controleren.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
@@ -8070,9 +8067,8 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "owner_attempt_diagnosed_architecture_followup",
-                "updatedAt": "2026-10-19T13:22:03.324164+00:00",
-                "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
+                "status": "early_contact_and_correction_implementation",
+                "updatedAt": "2026-10-19T13:49:39.902948+00:00",
                 "ownerAcceptance": false
               }
             },
@@ -8135,8 +8131,8 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Werk de vroege keuze binnen dezelfde Eva uit: snelle contactbeslissing vóór dure historische retrieval, bestaande directe providers voor toegelaten eenvoudige acties, geheugen en verdieping wanneer nodig. Afkappen en correctie-opname afzonderlijk herstellen.",
-              "ownerActionRequired": true,
+              "nextAction": "Geautoriseerde uitvoering: bestaande contactbeslissing vóór historische retrieval; ontbrekende kennis via dezelfde geheugenactie; native stop naar nieuwe invoer en vervolgantwoord herstellen. Daarna actuele installatie en gewone route gericht controleren.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen nieuwe opname gevraagd; eerst de lopende verduidelijking over onderbreken en de gerichte reparatie verwerken.",
@@ -8412,9 +8408,8 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "owner_attempt_diagnosed_architecture_followup",
-                "updatedAt": "2026-10-19T13:22:03.324164+00:00",
-                "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json",
+                "status": "early_contact_and_correction_implementation",
+                "updatedAt": "2026-10-19T13:49:39.902948+00:00",
                 "ownerAcceptance": false
               }
             },
@@ -12099,19 +12094,18 @@
           "C3.5",
           "C3.6"
         ],
-        "status": "owner_correction_and_latency_diagnosed",
+        "status": "early_contact_and_correction_implementation",
         "startedAt": "2026-10-19T07:08:01.588667+00:00",
         "activeOtherWorkPreserved": "E5.1",
         "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
         "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
         "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-        "updatedAt": "2026-10-19T13:22:03.324164+00:00",
+        "updatedAt": "2026-10-19T13:49:39.902948+00:00",
         "physicalAcceptance": "pending",
         "executionPlan": {
           "path": "development/design/product/voice-recovery-execution-20261019.json",
-          "status": "owner_attempt_diagnosed_architecture_followup",
-          "updatedAt": "2026-10-19T13:22:03.324164+00:00",
-          "evidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json"
+          "status": "early_contact_and_correction_implementation",
+          "updatedAt": "2026-10-19T13:49:39.902948+00:00"
         },
         "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-owner-correction-20261019.json"
       }
