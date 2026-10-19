@@ -12,6 +12,11 @@
       "agent": "distinctive_eva_review",
       "scope": "Digital-zero cadence filter and literal/native boundary integration",
       "result": "GO; all nonzero samples survive, cancelled speech never confirms playout; existing fatal-task close resets held token on no-audio or synthesis failure."
+    },
+    {
+      "agent": "distinctive_eva_review",
+      "scope": "Optional development-only acoustic probe",
+      "result": "GO for preparation; explicit bounded arm, private files, passive existing authorized PCM only, original frames/control/error/cancellation retained. Not activated."
     }
   ],
   "limits": [

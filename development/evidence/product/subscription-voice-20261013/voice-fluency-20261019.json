@@ -191,5 +191,23 @@
     "native-recovery/assessment.json": "784a24de3a4a17c578aea53347720cb3e9b811b096ac870c00aa50a8e6e92c7b",
     "runtime-capture/assessment.private.json": "f1b077ca6bb5536e4fb0b63bcf7cf6d45284bf487cddae330b9671dab1a4b5ed",
     "tts-capture/assessment.json": "2719a79dd78c0c1f6e65862bb72cdba49b7c40b23199df89176bd2da873914b9"
+  },
+  "acousticProbe": {
+    "status": "prepared_not_active",
+    "base": "sha256:c2df976695f6691096806359e93259cb3f92f25d73e2dd9ba40ba945334588c5",
+    "candidate": "sha256:417e575a979d1fbe02d674d46b2f40655162b4385e8ceb242b680cbe05f7c359",
+    "observerSha256": "77adeb203c7b244b5bd55c5dde3eeb07566760575052b97b2365b926a5833aa9",
+    "armSeconds": 600,
+    "maxSources": 2,
+    "maxSecondsPerSource": 30,
+    "runtimeChanged": false,
+    "microphoneOpened": false,
+    "helper": "development/tools/voice/native_acoustic_probe.py",
+    "tests": {
+      "passed": 4,
+      "seconds": 2.07,
+      "scope": "Private bounds, exact frame passthrough, authority rejection, errors/cancellation and timed WAV closure."
+    },
+    "next": "Owner availability is still pending. The prepared diagnostic process can observe an agreed short test; current speaker runtime has no capture observer enabled."
   }
 }
