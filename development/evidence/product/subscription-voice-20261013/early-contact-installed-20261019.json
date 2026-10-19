@@ -26,7 +26,8 @@
     "providersChanged": false,
     "firmwareChanged": false,
     "wslRestarted": false,
-    "deployment": "Each overlay based on the then-current running image with source/configuration and idle-claim checks. Concurrent memory changes preserved. Commit contains only owned deltas; the shared working tree and runtime include other authorized work."
+    "deployment": "Each overlay based on the then-current running image with source/configuration and idle-claim checks. Concurrent memory changes preserved. Commit contains only owned deltas; the shared working tree and runtime include other authorized work.",
+    "temporaryAcousticObserverActive": false
   },
   "httpProbes": [
     {
@@ -431,13 +432,17 @@
     "scope": "Includes failures and pre/post samples; excludes the pending owner physical test."
   },
   "physicalTest": {
-    "status": "armed",
+    "status": "expired_without_capture_observer_removed",
     "maxRecordingSeconds": 30,
     "armSeconds": 600,
     "maxRecordings": 1,
     "ownerAccepted": false,
     "source": "/var/lib/eva2/voice-session/early-contact-20261019/physical-trial",
-    "requires": "Owner voice overlapping actual speaker output; software PCM and device acknowledgements do not prove acoustics."
+    "requires": "Owner voice overlapping actual speaker output; software PCM and device acknowledgements do not prove acoustics.",
+    "captureRecorded": false,
+    "productionRestored": true,
+    "productionStartedAt": "2026-10-19T15:01:38.062648212Z",
+    "closedAt": "2026-10-19T15:02:05.268882+00:00"
   },
   "cleanup": {
     "status": "applied_and_verified",
