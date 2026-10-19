@@ -3469,11 +3469,11 @@
                 "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
                 "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
                 "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-                "nextAction": "De vroege contactbeslissing, directe toegelaten provideractie en native correctieoverdracht zijn geïnstalleerd en werkelijk gebruikt. Fysieke onderbreking en nieuw antwoord met de eigenaar vaststellen; eerste modelwachttijd blijft boven het snelheidsdoel. Geen volledige spraakacceptatie claimen.",
+                "nextAction": "Werkelijk eigenaargesprek herstellen: broncontext behouden over vervolgvragen, vastgelopen spraakinvoer expliciet afhandelen en de gemeten modelwachttijd aanpakken. Eerst dezelfde gebruikte keten controleren; geen nieuwe eigenaarproef vragen zolang deze concrete fouten uitvoerbaar zijn.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
-                "ownerActionRequired": true,
+                "ownerActionRequired": false,
                 "execution": {
                   "status": "investigating_actual_owner_feedback",
                   "startedAt": "2026-10-19T07:08:01.588667+00:00",
@@ -3488,10 +3488,10 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "early_contact_installed_physical_acceptance_pending",
-                  "updatedAt": "2026-10-19T14:57:30.063739+00:00",
+                  "status": "owner_weather_followup_repair_in_progress",
+                  "updatedAt": "2026-10-19T18:17:35.121833+00:00",
                   "ownerAcceptance": false,
-                  "evidence": "development/evidence/product/subscription-voice-20261013/early-contact-installed-20261019.json"
+                  "evidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
                 }
               },
               {
@@ -3553,8 +3553,8 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "De vroege contactbeslissing, directe toegelaten provideractie en native correctieoverdracht zijn geïnstalleerd en werkelijk gebruikt. Fysieke onderbreking en nieuw antwoord met de eigenaar vaststellen; eerste modelwachttijd blijft boven het snelheidsdoel. Geen volledige spraakacceptatie claimen.",
-                "ownerActionRequired": true,
+                "nextAction": "Werkelijk eigenaargesprek herstellen: broncontext behouden over vervolgvragen, vastgelopen spraakinvoer expliciet afhandelen en de gemeten modelwachttijd aanpakken. Eerst dezelfde gebruikte keten controleren; geen nieuwe eigenaarproef vragen zolang deze concrete fouten uitvoerbaar zijn.",
+                "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen nieuwe opname gevraagd; eerst de lopende verduidelijking over onderbreken en de gerichte reparatie verwerken.",
@@ -3830,10 +3830,10 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "early_contact_installed_physical_acceptance_pending",
-                  "updatedAt": "2026-10-19T14:57:30.063739+00:00",
+                  "status": "owner_weather_followup_repair_in_progress",
+                  "updatedAt": "2026-10-19T18:17:35.121833+00:00",
                   "ownerAcceptance": false,
-                  "evidence": "development/evidence/product/subscription-voice-20261013/early-contact-installed-20261019.json"
+                  "evidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
                 }
               },
               {
@@ -7526,20 +7526,20 @@
             "C3.5",
             "C3.6"
           ],
-          "status": "early_contact_installed_physical_acceptance_pending",
+          "status": "owner_weather_followup_repair_in_progress",
           "startedAt": "2026-10-19T07:08:01.588667+00:00",
           "activeOtherWorkPreserved": "E5.1",
           "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
           "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
           "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-          "updatedAt": "2026-10-19T14:57:30.063739+00:00",
-          "physicalAcceptance": "pending",
+          "updatedAt": "2026-10-19T18:17:35.121833+00:00",
+          "physicalAcceptance": "owner_reported_slow_context_loss_and_silence",
           "executionPlan": {
             "path": "development/design/product/voice-recovery-execution-20261019.json",
             "status": "early_contact_installed_physical_acceptance_pending",
             "updatedAt": "2026-10-19T14:57:30.063739+00:00"
           },
-          "latestEvidence": "development/evidence/product/subscription-voice-20261013/early-contact-installed-20261019.json"
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
         }
       }
     },
@@ -8079,11 +8079,11 @@
               "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
               "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
               "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-              "nextAction": "De vroege contactbeslissing, directe toegelaten provideractie en native correctieoverdracht zijn geïnstalleerd en werkelijk gebruikt. Fysieke onderbreking en nieuw antwoord met de eigenaar vaststellen; eerste modelwachttijd blijft boven het snelheidsdoel. Geen volledige spraakacceptatie claimen.",
+              "nextAction": "Werkelijk eigenaargesprek herstellen: broncontext behouden over vervolgvragen, vastgelopen spraakinvoer expliciet afhandelen en de gemeten modelwachttijd aanpakken. Eerst dezelfde gebruikte keten controleren; geen nieuwe eigenaarproef vragen zolang deze concrete fouten uitvoerbaar zijn.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
-              "ownerActionRequired": true,
+              "ownerActionRequired": false,
               "execution": {
                 "status": "investigating_actual_owner_feedback",
                 "startedAt": "2026-10-19T07:08:01.588667+00:00",
@@ -8098,10 +8098,10 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "early_contact_installed_physical_acceptance_pending",
-                "updatedAt": "2026-10-19T14:57:30.063739+00:00",
+                "status": "owner_weather_followup_repair_in_progress",
+                "updatedAt": "2026-10-19T18:17:35.121833+00:00",
                 "ownerAcceptance": false,
-                "evidence": "development/evidence/product/subscription-voice-20261013/early-contact-installed-20261019.json"
+                "evidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
               }
             },
             {
@@ -8163,8 +8163,8 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "De vroege contactbeslissing, directe toegelaten provideractie en native correctieoverdracht zijn geïnstalleerd en werkelijk gebruikt. Fysieke onderbreking en nieuw antwoord met de eigenaar vaststellen; eerste modelwachttijd blijft boven het snelheidsdoel. Geen volledige spraakacceptatie claimen.",
-              "ownerActionRequired": true,
+              "nextAction": "Werkelijk eigenaargesprek herstellen: broncontext behouden over vervolgvragen, vastgelopen spraakinvoer expliciet afhandelen en de gemeten modelwachttijd aanpakken. Eerst dezelfde gebruikte keten controleren; geen nieuwe eigenaarproef vragen zolang deze concrete fouten uitvoerbaar zijn.",
+              "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen nieuwe opname gevraagd; eerst de lopende verduidelijking over onderbreken en de gerichte reparatie verwerken.",
@@ -8440,10 +8440,10 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "early_contact_installed_physical_acceptance_pending",
-                "updatedAt": "2026-10-19T14:57:30.063739+00:00",
+                "status": "owner_weather_followup_repair_in_progress",
+                "updatedAt": "2026-10-19T18:17:35.121833+00:00",
                 "ownerAcceptance": false,
-                "evidence": "development/evidence/product/subscription-voice-20261013/early-contact-installed-20261019.json"
+                "evidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
               }
             },
             {
@@ -12136,20 +12136,20 @@
           "C3.5",
           "C3.6"
         ],
-        "status": "early_contact_installed_physical_acceptance_pending",
+        "status": "owner_weather_followup_repair_in_progress",
         "startedAt": "2026-10-19T07:08:01.588667+00:00",
         "activeOtherWorkPreserved": "E5.1",
         "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
         "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
         "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-        "updatedAt": "2026-10-19T14:57:30.063739+00:00",
-        "physicalAcceptance": "pending",
+        "updatedAt": "2026-10-19T18:17:35.121833+00:00",
+        "physicalAcceptance": "owner_reported_slow_context_loss_and_silence",
         "executionPlan": {
           "path": "development/design/product/voice-recovery-execution-20261019.json",
           "status": "early_contact_installed_physical_acceptance_pending",
           "updatedAt": "2026-10-19T14:57:30.063739+00:00"
         },
-        "latestEvidence": "development/evidence/product/subscription-voice-20261013/early-contact-installed-20261019.json"
+        "latestEvidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
       }
     },
     "goalRevision": {

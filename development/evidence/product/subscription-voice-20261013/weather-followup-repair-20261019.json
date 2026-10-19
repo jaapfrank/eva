@@ -1,0 +1,26 @@
+{
+  "contract": "EvaWeatherFollowupRepair/v1",
+  "recordedAt": "2026-10-19T18:17:35.121833+00:00",
+  "status": "investigating_and_implementing",
+  "ownerReport": "Gesprek redelijk maar traag; na weersvraag wist Eva niet voor welke plaats de verwachting gold; daaropvolgende vraag bleef ongeveer een minuut onbeantwoord.",
+  "observed": {
+    "sameInstalledRuntimeAsPreviousDelivery": true,
+    "weatherModelPhases": 4,
+    "weatherCoreRequestToFinalMs": 21628,
+    "weatherSource": "Configured household weather entity; no town name present in the observed source. Do not invent a town.",
+    "contextGap": "Previous tool arguments and observations are absent from the next spoken turn; only spoken text and work summaries survive.",
+    "silence": "An input turn opened, then two generic Codex errors occurred. No final transcript or core request followed. Session stayed open about 68 seconds after the first error.",
+    "exactTransportError": "Unavailable: old logging discarded error parameters; denied delegation remains a hypothesis."
+  },
+  "work": [
+    "Bounded earlier source context from the existing scoped operational journal; no second memory and no repeated device effect.",
+    "Handle failed input turns with safe diagnostics and bounded recovery while retaining one Eva and current authorization.",
+    "Check concrete model transport latency and cache routing against the pinned official client."
+  ],
+  "acceptance": {
+    "ownerAccepted": false,
+    "voiceFluencyComplete": false
+  },
+  "privateEvidenceRoot": "/var/lib/eva2/voice-session/weather-followup-20261019",
+  "criteriaUnchanged": true
+}
