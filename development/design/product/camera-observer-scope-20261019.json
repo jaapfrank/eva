@@ -1,0 +1,24 @@
+{
+  "contract": "EvaWorkboardScopeExtension/v1",
+  "id": "optional-camera-observer-20261019",
+  "ownerAuthorized": true,
+  "authorization": "Eigenaar vraagt cameramodule, bekenden bij naam, en automatische ontdekking op iedere installatie zonder woningvaste selectie.",
+  "sourceDocument": "development/docs/camera-observer-20261019.md",
+  "tasks": [
+    {
+      "id": "E2.8",
+      "title": "Camera’s zelf ontdekken, bekenden herkennen en passend afwegen",
+      "status": "planned",
+      "kind": "bouwen",
+      "owner": "Codex",
+      "doneWhen": "De optionele cameramodule ontdekt beschikbare camera’s en bijbehorende waarnemingsbronnen generiek, ook bij andere entiteitsnamen/installaties. Begrensde lokale beelden en herkenning met bestaande geautoriseerde referenties bereiken dezelfde Eva met herkomst, tijd en onzekerheid. Onbekend blijft onbekend; herkenning ontsluit geen privékennis. Eva kan zelf een passende reactie afwegen via de bestaande kringloop. Gebouwd, gericht gecontroleerd en geïnstalleerd; werkelijke herkennings-/reactiedekking en eigenaaracceptatie blijven afzonderlijk zichtbaar. Geen woningvaste camera’s, begroetingsregels of nieuwe spraakroute.",
+      "ownerActionRequired": false,
+      "sourceDocument": "development/docs/camera-observer-20261019.md",
+      "scopeOrigin": "optional-camera-observer-20261019",
+      "existing": "HA-inventaris, gebeurtenissen, snapshots, lokale Qwen-beeldanalyse en bestaande lokale ArcFace-profielen zijn beschikbaar.",
+      "gap": "Automatische bronkoppeling en veilige herkennings-/beeldoverdracht naar dezelfde Eva ontbreken.",
+      "nextAction": "Verbind generieke ontdekking, lokale analyse en bestaande gedeelde afweging; installeer zonder spraakwijziging.",
+      "effort": "Eén gerichte optionele module; hergebruik lokale providers. Credits onbekend; geen nieuwe betaalroute."
+    }
+  ]
+}

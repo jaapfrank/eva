@@ -1,0 +1,27 @@
+[Unit]
+Description=Eva optional local enrolled-face transport
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Replace all installation-specific placeholders. This example enrolls nobody,
+# creates no database and exposes no wildcard listener. The existing ArcFace
+# loopback service and human-enrolled profile database remain separate inputs.
+# For explicit CPU-only extraction, append --cpu-python <installed-insightface-python>
+# --cpu-model-root <existing-insightface-root> and use a backend revision ending
+# in :cpu. Both existing ONNX model hashes must match; no automatic fallback or download.
+User=<eva-runtime-user>
+WorkingDirectory=<eva-repository>
+Environment=PYTHONPATH=<eva-repository>/src
+ExecStart=<eva-python> -m eva.operations.local_face_identity_bridge --bind <docker-bridge-address> --port 44741 --token-file <private-token-file> --profiles-db <existing-enrolled-profile-db> --backend-endpoint http://127.0.0.1:3220 --backend-revision <verified-existing-model-revision>
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

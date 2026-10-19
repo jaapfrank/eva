@@ -1522,13 +1522,15 @@ def create_runtime_app() -> FastAPI:
             initiative_authorizer=lambda: runtime._initiative_authority().policy(),
         )
     )
+    from eva.bootstrap.camera_observer import camera_observer_source
+    sensory_source = camera_observer_source(None if provider_bundle is None else provider_bundle.event_source)
     sensory_worker = (
         None
         if provider_bundle is None
         or provider_bundle.event_source is None
         or sensory_store is None
         else SensoryIngestionWorker(
-            provider_bundle.event_source,
+            sensory_source,
             sensory_store,
         )
     )

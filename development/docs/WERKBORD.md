@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Alleen belangrijke kennis als blijvend geheugen bewaren
 
-Dagcontext tijdelijk; droomverwerking naar blijvende kennis afmaken
+Dagcontext tijdelijk houden; droomoverdracht naar compacte kennis afmaken
 
 Klaar wanneer: Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.
 
@@ -102,6 +102,7 @@ E5.1 blijft open: de echte nieuwe gewone afweging koos stilte. De geïnstalleerd
 | E2.5 · Extra modelproviders optioneel aansluiten | ✓ Afgerond | De providergrens ondersteunt Claude/Anthropic en andere providers zonder tweede identiteit/geheugen/uitvoerder. Toevoegen, ondersteund aanmelden, controleren, selecteren en uitschakelen werken; ontbrekende externe toegang wordt eerlijk getoond. Een formulier alleen is geen werkende adapter. |
 | E2.6 · WhatsApp met eigen Eva-nummer en live bellen | Geparkeerd | WhatsApp kan via een toegelaten werkelijke verbinding dezelfde Eva, persoonscontext, opdrachten en oorspronkelijke resultaatbinding gebruiken. Aan-/uitschakelen en verbindingsstatus zijn bedienbaar; geen verplicht account voor andere gebruikers. |
 | E2.7 · Eva laat haar eigen geschiedenis correct terugvinden | ✓ Afgerond | Via gewone toegelaten chat kan Eva haar eigen gesprekken/toolhandelingen, privéwerk, initiatief, interesses en leer-/verbeteruitkomsten uit bestaande bronnen samen terugvinden en kort beschrijven. De gevraagde lokale dag/periode, oorspronkelijke tijden, gepland/begonnen/gelukt/mislukt/onbekend, brondekking en paginering blijven juist. Privé-inhoud blijft bij de toegelaten persoon; gedeelde vragen krijgen alleen deelbare inhoud. Correctie/vergeten werkt door. Geen tweede activiteiten- of geheugenstore en geen spraakherbouw. |
+| E2.8 · Camera’s zelf ontdekken, bekenden herkennen en passend afwegen | ✓ Afgerond | De optionele cameramodule ontdekt beschikbare camera’s en bijbehorende waarnemingsbronnen generiek, ook bij andere entiteitsnamen/installaties. Begrensde lokale beelden en herkenning met bestaande geautoriseerde referenties bereiken dezelfde Eva met herkomst, tijd en onzekerheid. Onbekend blijft onbekend; herkenning ontsluit geen privékennis. Eva kan zelf een passende reactie afwegen via de bestaande kringloop. Gebouwd, gericht gecontroleerd en geïnstalleerd; werkelijke herkennings-/reactiedekking en eigenaaracceptatie blijven afzonderlijk zichtbaar. Geen woningvaste camera’s, begroetingsregels of nieuwe spraakroute. |
 | E3.1 · Alle bestanden en hun rol registreren | ✓ Afgerond | Een versiegebonden manifest omvat alle gevolgde en relevante projecteigen ongetrackte/genegeerde bestanden. Elk pad heeft hash, categorie, rol, reviewstatus en scope; caches, secrets en beschermde inhoud hebben expliciete uitsluiting of private metadata. Alleen tellen is geen inhoudelijke review. |
 | E3.2 · Actieve kerncode inhoudelijk beoordelen | ✓ Afgerond | Alle actieve kernbestanden in de E3-inventaris zijn inhoudelijk beoordeeld per bestaande module: rol, echte consumers, dubbele verantwoordelijkheden en concrete vereenvoudigingsbesluiten zijn vastgelegd. Lengte alleen is geen afkeur. |
 | E3.3 · Adapters, installatie en dynamisch gebruik beoordelen | ✓ Afgerond | Actieve adapters, frontend, deploy-, build-, installatie- en migratiebestanden hebben gecontroleerde werkelijke consumers en besluiten. Dynamische registratie en data-overgangen tellen mee. De tijdelijke oude fotoproviderafhankelijkheid heeft een onderbouwd vervangings- of behoudsbesluit. |
@@ -122,7 +123,7 @@ E5.1 blijft open: de echte nieuwe gewone afweging koos stilte. De geïnstalleerd
 
 ## Van jou
 
-De dagscheiding is vastgelegd binnen E4.11. De eerder geïnstalleerde selectie blijft werken; de volledige droomoverdracht is nog open.
+Geen camerakeuze of nieuwe handeling nodig. Bekende namen en passende reacties blijven via gewoon gebruik te beoordelen; de geheugenoverdracht is werk voor Codex.
 
 ## Historie
 

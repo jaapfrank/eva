@@ -122,6 +122,9 @@ class HouseholdInitiativeBinding:
                 or any(value is not None and not isinstance(value, (str, bool, int, float))
                        for value in payload.values())):
             raise ValueError("household observation metadata is invalid")
+        if original.event_type != "household_observation_batch" and "camera_observation" in original.payload:
+            from eva.contracts.camera_observation import normalize_camera_observation
+            payload["camera_observation"] = normalize_camera_observation(original.payload["camera_observation"])
         observation = {"source": original.source, "source_event_id": original.source_event_id,
             "event_type": original.event_type, "occurred_at": original.occurred_at.isoformat(),
             "payload": payload}

@@ -38,6 +38,19 @@ _LEGACY_COST_BLOCK_FINGERPRINT = hashlib.sha256(
 ).hexdigest()
 
 
+def _household_observation_selection_key(event: SensoryEvent) -> tuple:
+    """A newer binary reset must not displace the last actual camera evidence.
+
+    Keep one newest image per device and one newest ordinary sensor state.
+    The original trigger, retrieval time and unknown capture time remain intact;
+    selecting an image does not turn it into a live presence assertion.
+    """
+    camera = event.payload.get('camera_observation')
+    if isinstance(camera, dict) and camera.get('status') == 'observed' and camera.get('image_sha256'):
+        return event.source, 'camera_evidence', camera.get('device_id')
+    return event.source, 'sensor_state', event.payload.get('entity_id')
+
+
 class PostgresSensoryEventStore:
     def __init__(
         self,
@@ -400,7 +413,7 @@ class PostgresSensoryEventStore:
                 return pending[0][1]
             selected, members, keys = [], [], set()
             for row, event in pending:
-                key = (event.source, event.payload.get("entity_id"))
+                key = _household_observation_selection_key(event)
                 if key in keys:
                     continue  # Query is newest-first: retain only the latest state.
                 public = self._household_binding.observation_event(event).payload["observation"]
@@ -425,7 +438,7 @@ class PostgresSensoryEventStore:
                     event_type="SENSORY_EVENT_OBSERVED", phase="sensory_observed",
                     status="completed", operation_id=source_id)
                 for row, event in pending:
-                    if (event.source, event.payload.get("entity_id")) not in keys:
+                    if _household_observation_selection_key(event) not in keys:
                         continue
                     transition_timeline_thread(connection, scope, thread_id=row["thread_id"],
                         expected_revision=row["revision"],

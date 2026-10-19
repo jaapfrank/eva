@@ -1,0 +1,94 @@
+{
+  "contract": "EvaCameraObserverDelivery/v1",
+  "taskId": "E2.8",
+  "recordedAt": "2026-10-19T10:00:14.970298+00:00",
+  "state": "installed",
+  "scope": "Optional generic HA camera discovery and local enrolled-face evidence into the existing shared Eva decision route. No household-specific camera IDs or response rules.",
+  "alreadyExisted": [
+    "HA registry/events and bounded snapshot adapter",
+    "local image inference and existing ArcFace assets",
+    "human-enrolled reference profiles",
+    "shared household sensory/initiative/action route"
+  ],
+  "added": [
+    "registry-device discovery, refresh and bounded enrichment of the existing source",
+    "typed safe camera evidence and independent selection of latest image versus binary state",
+    "read-only local face matcher and explicit CPU bridge reusing existing assets",
+    "optional core configuration and scoped installation"
+  ],
+  "installed": {
+    "image": "sha256:4f1e82720bbac4edc107b00cde650938b4730d2e3051fd7e53364f5b61d4aacf",
+    "coreHealthy": {
+      "status": "alive"
+    },
+    "otherContainerIdentitiesPreserved": true,
+    "voiceCodeOrServicesChanged": false,
+    "physicalDevicesDiscovered": 3,
+    "enabledCameraEntities": 7,
+    "unsupportedEntities": 1,
+    "sceneAnalysisEnabled": false,
+    "nativeProfilePinsPreserved": true
+  },
+  "verification": {
+    "targetedChecksPassed": 54,
+    "sourceChecks": 3,
+    "sourceCheckStatus": [
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "sourceCheckSeconds": [
+      2.145,
+      3.888,
+      1.808
+    ],
+    "facesInSourceChecks": 0,
+    "naturalObservationRetained": true,
+    "naturalObservationStatuses": [
+      "observed"
+    ],
+    "modelResponseNotInferred": true,
+    "nameAccuracyProven": false
+  },
+  "usage": {
+    "operatorIntegrationCloudModelCalls": 0,
+    "successfulTechnicalLocalDetectionPipelineCalls": 3,
+    "technicalRecognitionEmbeddingNetworkCalls": 0,
+    "actualRuntimeUsage": "not comprehensively measured",
+    "developmentCredits": null,
+    "harnessCorrection": "Raw configured_local_analyzers_per_view=2 was an old constant. Effective CPU probe used one face pipeline per view; raw receipt and explicit correction retained.",
+    "historicalGpuProbeFaceTransportAttempts": 3,
+    "historicalGpuProbeSceneTransportAttempts": 3
+  },
+  "limitations": [
+    "Only metadata-bound binary sensor triggers currently supported; event-only/other camera protocols remain uncovered.",
+    "One sampled view per physical device; alternate channels are counted, not all inspected.",
+    "Existing reference profiles only; no autonomous enrollment. Recognition is not authentication.",
+    "No face appeared in the three source checks. Real name and multi-person accuracy remain unproven.",
+    "Natural event reached the existing journal; subsequent model choice, useful response and family acceptance are not inferred.",
+    "Scene inference is off for this observer because the OS blocks GPU access. Global vision and voice configuration were preserved."
+  ],
+  "privateEvidenceSha256": {
+    "tests.private.txt": "dccb86ebff540b3fb24582226a95bb9739521461e583d1fad1d8543b6601ae29",
+    "source-probe.private.json": "8d876b8e1c2cc2008ebd5e41dbeb679db994819f53ec817a2289a6ea81674193",
+    "gpu-source-probe.failure.private.json": "45e96cc87a9155d453c30b9e7deaed429dca63efd59311c35a05ad50f246fd49",
+    "metadata-correction.private.json": "9d25258d1e818229facbf586f5f26077970b0a68d8a435b6d16392ab2f387b62",
+    "installation-receipt.private.json": "7cf8fbc9400bb858c02c4ce783c413b3583de6ea37fdeaaf148c8d7d80606229",
+    "installed-verification.private.json": "8bb803326245bc347ef0a06d7769548a832bebb05617f02c9605e3234b695712",
+    "natural-event-outcome.private.json": "28c99cf8487c3abc65ee25328c1641f1a1d42d1b0813bf42b7ccad0965c53efc",
+    "profile-parity.private.json": "79adaec6bfa873f659ee3151c6f060b69fceab64fd379a4386ea8e3d941b39b4",
+    "independent-camera-review.private.json": "bf92b7f273ded5ac703493159e4622cfcd24da7686e2c6b13e7645b597fbeaa1"
+  },
+  "sourceSha256": {
+    "eva/bootstrap/runtime.py": "1853babae07f791272b19e93c1d8a25976a7060aff65d965052373d1fd36989f",
+    "eva/application/household_initiative.py": "087eba048cf38838a91a2d056c651f1fb60bdafb64d9799f0b327f6d85fdcc02",
+    "eva/adapters/postgres/sensory_events.py": "cc71481bb51ab6dec23fa7b607b5ca4e487c81dc4ca2b44e6febaf1895e3badd",
+    "eva/bootstrap/camera_observer.py": "1555892971f8fc89c6d5ac700cbd3c6e35e42d3df635d71393a21de1f6b12942",
+    "eva/adapters/connectors/camera_observer.py": "1b8230c86528351bc48bff86994282be1704ac15c5a6d3cadb92015f28cbdc0c",
+    "eva/adapters/connectors/local_face_identity.py": "acdf5f96cb398296f2ac7c89533190666486d1e3cfb8b8ef7509b8141179d4c4",
+    "eva/operations/local_face_identity_bridge.py": "30d66b14d0277dc7ddf7bd32097e77497b4fe6d794d6dd16dca3c730d5a2d653",
+    "eva/contracts/camera_observation.py": "6d33560f1f143928a0e9d09d4eb16a12b26af5ad5fda7552d510c4e7ba3cd958",
+    "eva/operations/local_face_cpu.py": "2b23b5dd7f2d6b1b25af52c306c3609dee77ccecea02013cfb81725e3d36f9ba"
+  },
+  "independentReviewVerdict": "GO_INSTALLED_SCOPED_E28_TECHNICAL_DELIVERY"
+}
