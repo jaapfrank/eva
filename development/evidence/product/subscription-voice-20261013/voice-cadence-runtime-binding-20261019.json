@@ -7,15 +7,15 @@
     "implementationBuilt": true,
     "targetedTestsPassed": true,
     "independentSourceReview": "go_with_explicit_evidence_limits",
-    "candidateInstalled": false,
+    "candidateInstalled": true,
     "physicalCandidateUsed": false,
     "ownerAcceptance": false,
     "wholeVoiceRecoveryComplete": false,
-    "stage": "Prepared and source-tested; installation and physical acceptance are not established by this record."
+    "stage": "Cadence candidate installed; bounded acoustic observation armed; physical outcome and owner acceptance pending."
   },
   "sourcePins": {
-    "development/tools/voice/runtime_identity.py": "729dc14d0a5656a8993bfd2174c90458188d7e297964b6bd1217999cdbfae245",
-    "development/tools/voice/test_runtime_identity.py": "c9b01c1f2441a6083805384f3547dbb5505c39e2b48a4c3e1175329b7c127fc4",
+    "development/tools/voice/runtime_identity.py": "32351f703eac84fb7cf47bfa15c652cc2946c74d72aeef95a627ab544d905700",
+    "development/tools/voice/test_runtime_identity.py": "56a31f0508ab470471f79491a4a53a2f78fbe6303ebe0ce6e7cc2506d4008768",
     "development/tools/voice/native_acoustic_probe.py": "ffeb983901166e47dc5fa94d00d33f63d2b4c9bbac3020cdd413d6553b4d13bd",
     "development/tools/voice/test_native_acoustic_probe.py": "b58cbd04752a9a615d7c879d2abb475f62c5774de7da600087c168a2e9fbcaa3",
     "src/eva/voice_service/literal_speech.py": "d8cea1b5f3e0baf59c32d11f2588e8727b15443bf92d35a6f917d06e405520be",
@@ -42,7 +42,8 @@
       "Runtime binding is not acoustic, DAC timing, physical interruption, speech-quality or owner-acceptance evidence."
     ],
     "integrationFinding": "The configured native route imports speaker_livekit_audio, not speaker_audio. The default module set was corrected; a network-disabled smoke using actual ServiceConfig/provider construction and renderer startup produced a valid callback. This is interface validation, not live runtime binding.",
-    "completionBoundary": "The final manifest is published only after WAV headers and buffered timing are closed. Both manifests use private complete temporary files and an atomic non-overwriting link."
+    "completionBoundary": "The final manifest is published only after WAV headers and buffered timing are closed. Both manifests use private complete temporary files and an atomic non-overwriting link.",
+    "dockerMountOrdering": "Real Docker inspection returned identical Config/HostConfig and permuted Mounts. Only Mounts order is now canonicalized by complete mount JSON; every option is retained. The unnormalized guard stopped before installation; four actual inspection reads then matched after correction."
   },
   "cadenceCandidate": {
     "change": "Replace only Unicode U+2026 with U+002E in the existing TTS synthesis argument. Original approved core text and captions retain their punctuation; all words, other punctuation and character bounds remain unchanged.",
@@ -116,10 +117,10 @@
     {
       "scope": "Runtime identity helper",
       "command": "python3 -m pytest -q development/tools/voice/test_runtime_identity.py",
-      "passed": 22,
-      "durationSeconds": 0.12,
+      "passed": 23,
+      "durationSeconds": 0.42,
       "execution": "Local standard-library tests with a fake Docker inspection boundary; no daemon/provider/microphone calls.",
-      "covered": "Real loaded-file versus resident-code mutation, process/container replacement and restart, separate disk/runtime config mutation, fixture change, missing/malformed nested evidence and private-value suppression.",
+      "covered": "Real loaded-file versus resident-code mutation, process/container replacement and restart, separate disk/runtime config mutation, fixture change, missing/malformed nested evidence and private-value suppression. Permuted mount lists compare equal; changed mount permissions invalidate evidence.",
       "evidenceKind": "Observed tool output; no separate raw pytest log was created."
     },
     {
@@ -127,7 +128,7 @@
       "testFile": "development/tools/voice/test_native_acoustic_probe.py",
       "passed": 19,
       "evidenceKind": "Worker-observed tool output after the atomic publication fix; 19 passed in 3.36 seconds, network disabled.",
-      "covered": "Private before/after manifests, capture deadline and resume, maximum recording count, callback failure and oversized-result containment without dropping the original PCM flow. Final WAV/header closure before after-callback and complete private atomic publication without overwriting existing evidence."
+      "covered": "Private before/after manifests, capture deadline and resume, maximum recording count, callback failure and oversized-result containment without dropping the original PCM flow. Final WAV/header closure before after-callback and complete private atomic publication without overwriting existing evidence. Final WAV/header closure before after-callback and complete private atomic publication without overwriting existing evidence."
     },
     {
       "scope": "Literal speech integration",
@@ -163,6 +164,27 @@
   "preparedImages": {
     "base": "sha256:193e0a37a29d1bea0c9a0a9853cc38bdb00e5f88eab370ce6e9b0770034905bf",
     "production": "sha256:ab306753dea1a5d6d964140f6fe03fe1e0059613d0060c07406a9a09073c643f",
-    "diagnostic": "sha256:691396f92bed7a4204dfb968d1bd874ccfa4760efa2aa68fd7dd2d2a7754fe9c"
+    "diagnostic": "sha256:d7341495221af3a0be00a47a51a9358370442f062dcab1c591a1b7b9f570d435"
+  },
+  "installation": {
+    "diagnosticImage": "sha256:d7341495221af3a0be00a47a51a9358370442f062dcab1c591a1b7b9f570d435",
+    "installedAt": "2026-10-19T10:22:07.550785984Z",
+    "sourceFilesVerified": true,
+    "resolvedComposeOnlyImageChanged": true,
+    "activeClaimsBeforeInstall": {
+      "active_voice_leases": 0,
+      "active_delegated_work": 0,
+      "active_memory_outbox": 0,
+      "active_model_requests": 0,
+      "active_decision_claims": 0,
+      "active_conversation_claims": 0
+    },
+    "nativeConnectionsAfterInstall": 2,
+    "connectionCountIsPhysicalAcceptance": false,
+    "maxCaptureSeconds": 30,
+    "maxRecordings": 1,
+    "armSeconds": 600,
+    "collection": "Private host collection through docker exec; runtime/container binding checked; diagnostic overlay retired to cadence production only when the speaker remains unchanged and no voice lease is active.",
+    "review": "Independent GO after fixing source module, closure publication, unchanged-config guards and mount ordering."
   }
 }

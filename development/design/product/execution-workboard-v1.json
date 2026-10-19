@@ -3355,8 +3355,8 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "executing_candidate_prepared",
-                  "updatedAt": "2026-10-19T10:19:11.095179+00:00",
+                  "status": "acoustic_trial_armed",
+                  "updatedAt": "2026-10-19T10:23:49.456539+00:00",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                   "ownerAcceptance": false
                 }
@@ -3386,8 +3386,8 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "executing_candidate_prepared",
-                  "updatedAt": "2026-10-19T10:19:11.095179+00:00",
+                  "status": "acoustic_trial_armed",
+                  "updatedAt": "2026-10-19T10:23:49.456539+00:00",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                   "ownerAcceptance": false
                 }
@@ -3415,8 +3415,8 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "executing_candidate_prepared",
-                  "updatedAt": "2026-10-19T10:19:11.095179+00:00",
+                  "status": "acoustic_trial_armed",
+                  "updatedAt": "2026-10-19T10:23:49.456539+00:00",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                   "ownerAcceptance": false
                 }
@@ -3452,11 +3452,16 @@
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
                 "nextAction": "Voer de begrensde akoestiekproef uit en herstel onderbreken vanuit werkelijk paarmateriaal. GPU-herstel is voorbereid; WSL-herstart wacht op afstemming met ander lopend ontwikkelwerk.",
-                "ownerActionRequired": false,
+                "ownerActionRequired": true,
                 "ownerInstructions": {
-                  "availableNow": false,
-                  "readyWhen": "Na geverifieerde installatie van de begrensde woonkamerproef.",
-                  "steps": []
+                  "availableNow": true,
+                  "readyWhen": "Binnen het begrensde opnamevenster, anders na opnieuw afgesproken voorbereiding.",
+                  "steps": [
+                    "Wek Eva in de woonkamer en vraag rustig tellen van één tot tien met pauzes.",
+                    "Laat de eerste drie cijfers uitspreken; zeg tijdens het tellen: wacht even, ik bedoelde drie.",
+                    "Herhaal na het antwoord: ik bedoelde drie."
+                  ],
+                  "purpose": "Oorzaakmeting van echo en eigen spraak; geen verklaring dat gewoon onderbreken al werkt."
                 },
                 "checkedAt": "2026-10-17T13:21:29.304952+00:00",
                 "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
@@ -3726,8 +3731,8 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "executing_candidate_prepared",
-                  "updatedAt": "2026-10-19T10:19:11.095179+00:00",
+                  "status": "acoustic_trial_armed",
+                  "updatedAt": "2026-10-19T10:23:49.456539+00:00",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                   "ownerAcceptance": false
                 }
@@ -7395,12 +7400,12 @@
           "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
           "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
           "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-          "updatedAt": "2026-10-19T10:19:11.095179+00:00",
+          "updatedAt": "2026-10-19T10:23:49.456539+00:00",
           "physicalAcceptance": "pending",
           "executionPlan": {
             "path": "development/design/product/voice-recovery-execution-20261019.json",
-            "status": "executing_candidate_prepared",
-            "updatedAt": "2026-10-19T10:19:11.095179+00:00",
+            "status": "acoustic_trial_armed",
+            "updatedAt": "2026-10-19T10:23:49.456539+00:00",
             "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json"
           }
         }
@@ -7930,8 +7935,8 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "executing_candidate_prepared",
-                "updatedAt": "2026-10-19T10:19:11.095179+00:00",
+                "status": "acoustic_trial_armed",
+                "updatedAt": "2026-10-19T10:23:49.456539+00:00",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                 "ownerAcceptance": false
               }
@@ -7961,8 +7966,8 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "executing_candidate_prepared",
-                "updatedAt": "2026-10-19T10:19:11.095179+00:00",
+                "status": "acoustic_trial_armed",
+                "updatedAt": "2026-10-19T10:23:49.456539+00:00",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                 "ownerAcceptance": false
               }
@@ -7990,8 +7995,8 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "executing_candidate_prepared",
-                "updatedAt": "2026-10-19T10:19:11.095179+00:00",
+                "status": "acoustic_trial_armed",
+                "updatedAt": "2026-10-19T10:23:49.456539+00:00",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                 "ownerAcceptance": false
               }
@@ -8027,11 +8032,16 @@
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
               "nextAction": "Voer de begrensde akoestiekproef uit en herstel onderbreken vanuit werkelijk paarmateriaal. GPU-herstel is voorbereid; WSL-herstart wacht op afstemming met ander lopend ontwikkelwerk.",
-              "ownerActionRequired": false,
+              "ownerActionRequired": true,
               "ownerInstructions": {
-                "availableNow": false,
-                "readyWhen": "Na geverifieerde installatie van de begrensde woonkamerproef.",
-                "steps": []
+                "availableNow": true,
+                "readyWhen": "Binnen het begrensde opnamevenster, anders na opnieuw afgesproken voorbereiding.",
+                "steps": [
+                  "Wek Eva in de woonkamer en vraag rustig tellen van één tot tien met pauzes.",
+                  "Laat de eerste drie cijfers uitspreken; zeg tijdens het tellen: wacht even, ik bedoelde drie.",
+                  "Herhaal na het antwoord: ik bedoelde drie."
+                ],
+                "purpose": "Oorzaakmeting van echo en eigen spraak; geen verklaring dat gewoon onderbreken al werkt."
               },
               "checkedAt": "2026-10-17T13:21:29.304952+00:00",
               "remaining": "Onderbreken naar volgend geluid blijft~8s in beperkte proef; volledige renderervervanging9.604s en daarom afgewezen. Nieuwe/gevarieerde geheugenquery behoudt volle rekenwerk. Fysiek ritme, native barge-in en eigenaaracceptatie blijven open.",
@@ -8301,8 +8311,8 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "executing_candidate_prepared",
-                "updatedAt": "2026-10-19T10:19:11.095179+00:00",
+                "status": "acoustic_trial_armed",
+                "updatedAt": "2026-10-19T10:23:49.456539+00:00",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                 "ownerAcceptance": false
               }
@@ -11970,12 +11980,12 @@
         "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
         "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
         "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-        "updatedAt": "2026-10-19T10:19:11.095179+00:00",
+        "updatedAt": "2026-10-19T10:23:49.456539+00:00",
         "physicalAcceptance": "pending",
         "executionPlan": {
           "path": "development/design/product/voice-recovery-execution-20261019.json",
-          "status": "executing_candidate_prepared",
-          "updatedAt": "2026-10-19T10:19:11.095179+00:00",
+          "status": "acoustic_trial_armed",
+          "updatedAt": "2026-10-19T10:23:49.456539+00:00",
           "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json"
         }
       }

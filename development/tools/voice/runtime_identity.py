@@ -193,6 +193,16 @@ def snapshot(*, runtime_config, config_files, fixtures,
             "valid": not errors, "identity": identity, "errors": errors}
 
 
+def container_configuration_digest(raw):
+    """Bind every configuration field, ignoring only Docker's mount-list order."""
+    mounts = raw["Mounts"]
+    if not isinstance(mounts, list) or not all(isinstance(item, dict) for item in mounts):
+        raise ValueError("Invalid container mounts")
+    return _digest({"Config": raw["Config"], "HostConfig": raw["HostConfig"],
+        "Mounts": sorted(mounts, key=lambda item: json.dumps(
+            item, sort_keys=True, separators=(",", ":"), allow_nan=False))})
+
+
 def capture_containers(containers: Mapping[str, str]):
     """Host-only Docker reads. Use neutral role aliases, not device identities."""
     items, errors = {}, []
@@ -213,8 +223,8 @@ def capture_containers(containers: Mapping[str, str]):
                 raise ValueError("Incomplete container identity")
             items[alias] = {"image": image, "container_sha256": _digest(identifier),
                 "started_at": started, "restart_count": raw["RestartCount"],
-                "running": state["Running"], "configuration_sha256": _digest({
-                    key: raw[key] for key in ("Config", "HostConfig", "Mounts")})}
+                "running": state["Running"],
+                "configuration_sha256": container_configuration_digest(raw)}
             if state["Running"] is not True:
                 errors.append("containers:not_running:" + alias)
         except (OSError, subprocess.SubprocessError, ValueError, KeyError, IndexError, TypeError):

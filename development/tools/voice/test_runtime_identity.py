@@ -202,3 +202,21 @@ def test_private_values_disguised_as_safe_fields_and_failures_do_not_escape(prob
     capture = docker.take()
     assert not capture["valid"]
     assert "secret" not in json.dumps(capture)
+
+
+def test_mount_permutation_is_equivalent_but_mount_change_invalidates(probe, docker):
+    from runtime_identity import container_configuration_digest
+    docker.raw['Mounts'] = [
+        {'Source': '/private-a', 'Destination': '/a', 'RW': False},
+        {'Source': '/private-b', 'Destination': '/b', 'RW': True},
+    ]
+    first = docker.take()
+    original = copy.deepcopy(docker.raw)
+    docker.raw['Mounts'].reverse()
+    assert container_configuration_digest(original) == container_configuration_digest(docker.raw)
+    assert compare(probe.take(), probe.take(), containers_before=first,
+                   containers_after=docker.take())['valid']
+    assert original['Mounts'][0]['Destination'] == '/a'  # Never mutate caller input.
+    docker.raw['Mounts'][0]['RW'] = False
+    assert not compare(probe.take(), probe.take(), containers_before=first,
+                       containers_after=docker.take())['valid']
