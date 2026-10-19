@@ -8,6 +8,17 @@ from eva.adapters.connectors.home_assistant_voice import HomeAssistantSpeechOutp
 from eva.voice_service.media import HomeAssistantTTS, InternalDigitalSilence
 
 
+def tts_punctuation(text):
+    """Give explicit ellipses sentence boundaries on the configured HA route.
+
+    Fenna can merge ellipsis-separated phrases without audible pauses. Its HA
+    text interface does not expose SSML breaks. Replace only the Unicode
+    ellipsis, preserving every word, all other punctuation and the input bound.
+    Captions and the approved core text retain their original punctuation.
+    """
+    return text.replace("\u2026", ".")
+
+
 def literal_parts(text):
     """Fit the cloud TTS's 2048-character input without discarding any text.
 
@@ -90,7 +101,7 @@ async def speak_literal(session, text, handle):
             audible=audible or any(abs(sample)>80 for sample in frame.data)
             await session.source.capture_frame(frame)
             session.current()
-        async with session._literal_tts.synthesize(value) as stream:
+        async with session._literal_tts.synthesize(tts_punctuation(value)) as stream:
             async for event in stream:
                 session.current()
                 frame=event.frame

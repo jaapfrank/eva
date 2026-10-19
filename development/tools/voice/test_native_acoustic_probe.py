@@ -253,3 +253,77 @@ def test_input_provider_observer_preserves_binding_and_original_result(tmp_path,
 def test_invalid_trigger_does_not_create_directory(tmp_path,trigger):
     with pytest.raises(ValueError):Probe(tmp_path/'invalid',trigger=trigger)
     assert not (tmp_path/'invalid').exists()
+
+
+def test_runtime_identity_brackets_one_recording_without_extending_capture(tmp_path):
+    import json
+    now=[0];revision=['before'];calls=[]
+    def identity():
+        calls.append(revision[0])
+        return {'valid':True,'revision':revision[0]}
+    probe=Probe(tmp_path/'bound',seconds=2,clock=lambda:now[0],
+                runtime_identity=identity,max_recordings=1)
+    source=Source();probe.microphone(source,frame())
+    recording=probe.recordings[source]
+    now[0]=1;probe.microphone(source,frame())
+    revision[0]='after';now[0]=2;probe.microphone(source,frame())
+    probe.finish(source);probe.microphone(Source(),frame())
+    assert recording.closed and recording.deadline==2 and probe.count==1
+    assert calls==['before','after']
+    for phase in calls:
+        path=recording.root/('runtime-'+phase+'.private.json')
+        assert json.loads(path.read_text())=={'valid':True,'revision':phase}
+        assert path.stat().st_mode & 0o777==0o600
+    with wave.open(str(recording.root/'microphone.private.wav'),'rb') as w:
+        assert w.getnframes()==640
+
+
+def test_identity_publication_is_complete_private_and_after_wav_close(tmp_path,monkeypatch):
+    import json
+    import os
+    published=[];recordings=[]
+    link=os.link
+    def publish(source,target):
+        assert not target.exists()
+        assert json.loads(Path(source).read_text())=={'valid':True}
+        assert Path(source).stat().st_mode & 0o777==0o600
+        published.append(target.name)
+        return link(source,target)
+    monkeypatch.setattr(os,'link',publish)
+    def identity():
+        if recordings:
+            recording=recordings[0]
+            assert all(file.closed for file in recording.files.values())
+            assert recording.events.closed
+            with wave.open(str(recording.root/'microphone.private.wav'),'rb') as w:
+                assert w.getnframes()==640
+                assert len(w.readframes(640))==1280
+        return {'valid':True}
+    probe=Probe(tmp_path/'atomic',runtime_identity=identity)
+    source=Source();probe.microphone(source,frame());probe.microphone(source,frame())
+    recordings.append(probe.recordings[source]);probe.finish(source)
+    assert published==['runtime-before.private.json','runtime-after.private.json']
+    assert not list(recordings[0].root.glob('.runtime-*'))
+    # Re-publication must not replace the first complete manifest.
+    monkeypatch.setattr(os,'link',link)
+    before=(recordings[0].root/'runtime-after.private.json').read_bytes()
+    recordings[0].runtime_identity=lambda:{'valid':False}
+    recordings[0].identity('after')
+    assert (recordings[0].root/'runtime-after.private.json').read_bytes()==before
+    assert not list(recordings[0].root.glob('.runtime-*'))
+
+
+@pytest.mark.parametrize('failure',['error','oversize'])
+def test_failed_runtime_identity_invalidates_evidence_without_losing_pcm(tmp_path,failure):
+    import json
+    def identity():
+        if failure=='error':raise ValueError('private credential must not escape')
+        return {'sensitive':'x'*262145}
+    probe=Probe(tmp_path/'failed-identity',runtime_identity=identity)
+    source=Source();probe.microphone(source,frame());probe.finish(source)
+    recording=probe.recordings[source]
+    for phase in ('before','after'):
+        value=json.loads((recording.root/('runtime-'+phase+'.private.json')).read_text())
+        assert value=={'valid':False,'errors':['runtime_identity:unavailable']}
+    with wave.open(str(recording.root/'microphone.private.wav'),'rb') as w:
+        assert w.readframes(320)==frame().data

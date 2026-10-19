@@ -1,0 +1,168 @@
+{
+  "contract": "EvaVoiceCadenceRuntimeBindingEvidence/v1",
+  "date": "2026-10-19",
+  "scope": "Bounded preparation for the existing voice recovery execution plan; runtime identity binding and one punctuation candidate on the existing configured speech route.",
+  "plan": "development/design/product/voice-recovery-execution-20261019.json",
+  "status": {
+    "implementationBuilt": true,
+    "targetedTestsPassed": true,
+    "independentSourceReview": "go_with_explicit_evidence_limits",
+    "candidateInstalled": false,
+    "physicalCandidateUsed": false,
+    "ownerAcceptance": false,
+    "wholeVoiceRecoveryComplete": false,
+    "stage": "Prepared and source-tested; installation and physical acceptance are not established by this record."
+  },
+  "sourcePins": {
+    "development/tools/voice/runtime_identity.py": "729dc14d0a5656a8993bfd2174c90458188d7e297964b6bd1217999cdbfae245",
+    "development/tools/voice/test_runtime_identity.py": "c9b01c1f2441a6083805384f3547dbb5505c39e2b48a4c3e1175329b7c127fc4",
+    "development/tools/voice/native_acoustic_probe.py": "ffeb983901166e47dc5fa94d00d33f63d2b4c9bbac3020cdd413d6553b4d13bd",
+    "development/tools/voice/test_native_acoustic_probe.py": "b58cbd04752a9a615d7c879d2abb475f62c5774de7da600087c168a2e9fbcaa3",
+    "src/eva/voice_service/literal_speech.py": "d8cea1b5f3e0baf59c32d11f2588e8727b15443bf92d35a6f917d06e405520be",
+    "development/tests/voice_service/test_literal_speech.py": "5598273af9f65f1c3d8b0edf91cc051e154616e30592afb68ce0ee7d619f3328"
+  },
+  "runtimeBinding": {
+    "processObservation": "The existing observer can invoke a local callback at recording start and close. The helper reads only modules already present in that process's sys.modules; it does not import replicas to manufacture loaded-source evidence.",
+    "pinnedValues": [
+      "Actual loaded source origin, source-file SHA256 and resident Python function-code digest",
+      "Process PID, process start ticks and Python version",
+      "Loaded runtime-configuration digest, separate on-disk configuration digests and optional resolved-settings digest",
+      "Labeled fixture or declared scenario content digests, without their paths or contents",
+      "Host-observed container image, container-identity digest, start time, restart count and complete Docker Config/HostConfig/Mounts digest"
+    ],
+    "publicSettings": "Only fixed recognized speech engine/language/voice values and explicit boolean flags can be readable; other values remain digest-only.",
+    "comparison": "Requires valid before/after process and container snapshots. Missing nested hashes, unreadable/unloaded sources, changed code/configuration/fixtures, restarted/replaced containers or a changed process invalidate the binding.",
+    "observerIntegration": "Optional callback results are written to separate private 0600 before/after JSON files. Capture resumes retain the original recording deadline. A configured maximum of one recording can be used for the forthcoming supervised diagnostic.",
+    "failureBehavior": "Identity capture failure invalidates measurement evidence without changing the live audio flow. Missing manifest files cannot count as valid comparison evidence.",
+    "limits": [
+      "The caller must supply the required module set and the actual loaded/resolved configuration; this is not automatic completeness discovery.",
+      "In-process source evidence describes only the service process invoking the callback. Other services are bound by their explicitly observed container identity/configuration unless separately instrumented.",
+      "Resident function hashes do not describe every mutable global or authenticate user authority.",
+      "Matching snapshots establish the observed boundaries, not continuous attestation of every instant between them.",
+      "Runtime binding is not acoustic, DAC timing, physical interruption, speech-quality or owner-acceptance evidence."
+    ],
+    "integrationFinding": "The configured native route imports speaker_livekit_audio, not speaker_audio. The default module set was corrected; a network-disabled smoke using actual ServiceConfig/provider construction and renderer startup produced a valid callback. This is interface validation, not live runtime binding.",
+    "completionBoundary": "The final manifest is published only after WAV headers and buffered timing are closed. Both manifests use private complete temporary files and an atomic non-overwriting link."
+  },
+  "cadenceCandidate": {
+    "change": "Replace only Unicode U+2026 with U+002E in the existing TTS synthesis argument. Original approved core text and captions retain their punctuation; all words, other punctuation and character bounds remain unchanged.",
+    "route": "Existing configured Home Assistant cloud TTS, FennaNeural, decoded through HomeAssistantSpeechOutput and HomeAssistantTTS as 24 kHz mono PCM.",
+    "liveProbeBinding": "The fourth request imported the exact candidate file and applied its tts_punctuation helper to the original synthetic Unicode-ellipsis fixture, then used the installed HA adapter/decoder. It did not execute the complete candidate speak_literal output chain. The existing digital-silence filter was applied offline to the received PCM.",
+    "testBaseImage": "sha256:193e0a37a29d1bea0c9a0a9853cc38bdb00e5f88eab370ce6e9b0770034905bf",
+    "installedDependenciesObserved": {
+      "/app/eva/voice_service/media.py": "032a5aae221784c287d082c1cd4937c316b7eba84406077ddcc15f5eff6c0e0b",
+      "/app/eva/adapters/connectors/home_assistant_voice.py": "dee9f0f78f0b658de392c1285f9c6cb142d08d9ccc49cca23ac18d72034a6b45",
+      "/app/eva/voice_service/literal_speech.py": "9cafb92d5c9c121122a9bfc515a9e7dbe2465c416b731df2b073e06ae918fa42"
+    },
+    "installedLiteralFileIsCandidate": false,
+    "quietMeasurement": "Consecutive 10 ms windows with absolute sample peak at most 80; report runs of at least 100 ms. Leading and trailing runs are excluded from internal-pause counts. This is an operational PCM threshold, not exact phoneme timing.",
+    "attempts": [
+      {
+        "variant": "baseline_unicode_ellipsis",
+        "ttsRequests": 1,
+        "sourcePcmSha256": "41e977fa7e0c329bde71e8e1b425efb3f7a5a1c8369246fec52281f12b761fe3",
+        "sourceDurationMs": 7944,
+        "internalQuietRuns": 2,
+        "filteredDurationMs": 7944
+      },
+      {
+        "variant": "period_fixture_exploration",
+        "ttsRequests": 1,
+        "sourcePcmSha256": "b4b3583b82e42b9d5e0e3c3ac583d7325ee674f3506d1b4e88f8f1892d913685",
+        "sourceDurationMs": 14352,
+        "internalQuietRuns": 9,
+        "filteredDurationMs": 12863.667
+      },
+      {
+        "variant": "ordinary_sentences_control",
+        "scope": "Mixed exploratory punctuation control: one ellipsis was normalized to a period plus space among ordinary sentences. This is not a matched before/after demonstration of identical natural speech.",
+        "ttsRequests": 1,
+        "sourcePcmSha256": "21c43a31798003b19562d759a9b13eabe90af98ff19b0757a1fc2696488f2285",
+        "sourceDurationMs": 8112,
+        "internalQuietRuns": 2,
+        "filteredDurationMs": 7885.375
+      },
+      {
+        "variant": "exact_candidate_helper_on_original_fixture",
+        "ttsRequests": 1,
+        "sourcePcmSha256": "bd11b943602c40c601f818dbfe7dd2adead2d693f166ac24a07f8a4544d61987",
+        "sourceDurationMs": 14352,
+        "internalQuietRuns": 9,
+        "sourceInternalQuietRangeMs": [
+          900,
+          960
+        ],
+        "filteredInternalQuietRuns": 9,
+        "filteredInternalQuietRangeMs": [
+          650,
+          960
+        ],
+        "filteredDurationMs": 12863.417,
+        "removedExactZeroSamples": 35726,
+        "allNonzeroSamplesBitIdenticalThroughExistingFilter": true
+      }
+    ],
+    "comparisonLimit": "The period exploration and exact candidate have different received PCM hashes. They are separate requests, not byte-identical source recordings.",
+    "supportedClaim": "For this synthetic fixture, the exact punctuation helper yielded nine measured internal quiet intervals where the unchanged Unicode-ellipsis fixture yielded two. Providerless integration tests show one synthesis request for the short utterance, preserved caption text and unchanged text bounds.",
+    "notEstablished": [
+      "Independent spoken-word fidelity: no ASR or physical listening was performed in these four probes.",
+      "Owner-approved natural cadence or desired pause duration.",
+      "Complete live candidate speaker output, physical playback or ordinary spoken interruption.",
+      "Network/first-audio latency improvement: provider cache/warm state was uncontrolled.",
+      "A universal punctuation rule for other voices, ASCII ellipses or other text formats."
+    ]
+  },
+  "verification": [
+    {
+      "scope": "Runtime identity helper",
+      "command": "python3 -m pytest -q development/tools/voice/test_runtime_identity.py",
+      "passed": 22,
+      "durationSeconds": 0.12,
+      "execution": "Local standard-library tests with a fake Docker inspection boundary; no daemon/provider/microphone calls.",
+      "covered": "Real loaded-file versus resident-code mutation, process/container replacement and restart, separate disk/runtime config mutation, fixture change, missing/malformed nested evidence and private-value suppression.",
+      "evidenceKind": "Observed tool output; no separate raw pytest log was created."
+    },
+    {
+      "scope": "Existing native acoustic observer with optional runtime callback and one-recording bound",
+      "testFile": "development/tools/voice/test_native_acoustic_probe.py",
+      "passed": 19,
+      "evidenceKind": "Worker-observed tool output after the atomic publication fix; 19 passed in 3.36 seconds, network disabled.",
+      "covered": "Private before/after manifests, capture deadline and resume, maximum recording count, callback failure and oversized-result containment without dropping the original PCM flow. Final WAV/header closure before after-callback and complete private atomic publication without overwriting existing evidence."
+    },
+    {
+      "scope": "Literal speech integration",
+      "testFile": "development/tests/voice_service/test_literal_speech.py",
+      "baselineFailed": 2,
+      "baselinePassed": 17,
+      "candidatePassed": 19,
+      "candidateDurationSeconds": 3.43,
+      "network": "none",
+      "overlay": "Only the candidate /app/eva/voice_service/literal_speech.py on the pinned installed-image baseline.",
+      "preservedFailureEvidence": "The first mount targeted stale /opt/eva/src; traceback confirmed that /app baseline code actually ran and the two new cases failed. The corrected /app overlay passed. The stale mount is not candidate validation.",
+      "evidenceKind": "Worker-observed tool output and retained sanitized assessment; no separate raw pytest log was created."
+    }
+  ],
+  "developmentUsage": {
+    "existingHomeAssistantTtsRequests": 4,
+    "coreModelRequests": 0,
+    "asrRequests": 0,
+    "physicalPlayback": false,
+    "microphoneRecordingStartedByThisWork": false,
+    "providerCredits": null,
+    "providerCreditsStatus": "unknown",
+    "runtimeUserUsage": "These four requests are development probes, not household conversation usage."
+  },
+  "independentReview": {
+    "runtimeIdentityReviewer": "review_cursor",
+    "observerIntegrationReviewer": "distinctive_eva_review",
+    "punctuationSourceReviewer": "distinctive_eva_review",
+    "decision": "Source changes may proceed to the coordinator's bounded installation and actual-route validation; no physical or complete-voice acceptance is implied."
+  },
+  "retainedAssessmentSha256": "e18015779a4a6b5ab0f739ee0da71d84441778bc9080f511d0dd62e403f27f70",
+  "privacy": "This artifact contains no private conversation text, audio, device identifiers, credentials, environment values or configuration contents. Raw received PCM and detailed probe artifacts remain private.",
+  "preparedImages": {
+    "base": "sha256:193e0a37a29d1bea0c9a0a9853cc38bdb00e5f88eab370ce6e9b0770034905bf",
+    "production": "sha256:ab306753dea1a5d6d964140f6fe03fe1e0059613d0060c07406a9a09073c643f",
+    "diagnostic": "sha256:691396f92bed7a4204dfb968d1bd874ccfa4760efa2aa68fd7dd2d2a7754fe9c"
+  }
+}

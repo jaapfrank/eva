@@ -51,6 +51,32 @@ def renderer(check=lambda:None):
     return session
 
 
+def test_tts_ellipsis_changes_only_explicit_unicode_punctuation_and_keeps_bound():
+    from eva.voice_service.literal_speech import tts_punctuation, literal_parts
+    original='Dr. A. wacht... Daarna\u2026 rustig verder!\nNog een zin?'
+    assert tts_punctuation(original)=='Dr. A. wacht... Daarna. rustig verder!\nNog een zin?'
+    long=('Wacht\u2026 daarna verder. '*200).strip()
+    parts=literal_parts(long)
+    assert ''.join(parts)==long
+    assert all(len(tts_punctuation(part))==len(part)<=2000 for part in parts)
+    assert tts_punctuation('Gewone zinnen. En afkortingen zoals bijv. deze.')=='Gewone zinnen. En afkortingen zoals bijv. deze.'
+
+
+@pytest.mark.asyncio
+async def test_tts_ellipsis_is_one_request_and_caption_keeps_approved_text():
+    session=renderer();captions=[]
+    async def caption(role,text,identity):captions.append(text)
+    session.caption=caption
+    original='Ik denk\u2026 we nemen rustig de tijd. Daarna gaan we verder.'
+    try:
+        handle=session.say(original)
+        await asyncio.wait_for(handle.task,1)
+        assert session._literal_tts.texts==[original.replace('\u2026','.')]
+        assert captions==[original] and not handle.interrupted
+        assert session._literal_tts.streams[0].closed.is_set()
+    finally:await session.aclose()
+
+
 @pytest.mark.asyncio
 async def test_literal_start_opens_no_peer_account_or_generative_session(monkeypatch):
     from eva.voice_service import codex_media

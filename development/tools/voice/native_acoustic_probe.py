@@ -7,6 +7,7 @@ Use a fresh private directory. Remove the temporary diagnostic overlay afterward
 The microphone WAV is room audio; keep it outside Git and public evidence.
 Submitted output PCM is a reference, NOT proof of physical playback or alignment.
 Capture restarts share the original recording deadline; session close ends it.
+An optional runtime_identity callback binds the start and end to loaded code.
 The optional trigger="input" begins on the first unsuppressed input frame.
 Whitelisted provider events/text are private, capped at 512 events of 4096 characters
 within the same recording window; they are not evidence of physical acoustics.
@@ -15,18 +16,41 @@ from pathlib import Path
 import asyncio
 import json
 import os
+import tempfile
 import time
 import wave
 from weakref import WeakKeyDictionary
 
 
 class Recording:
-    def __init__(self, root, deadline, seconds, clock):
+    def __init__(self, root, deadline, seconds, clock, runtime_identity=None):
         self.root=root; self.deadline=deadline; self.seconds=seconds; self.clock=clock
         self.streams={}; self.files={}; self.samples={}; self.closed=False;self.timer=None
         self.provider_events=0
         descriptor=os.open(root/'timing.private.jsonl', os.O_WRONLY|os.O_CREAT|os.O_EXCL, 0o600)
         self.events=os.fdopen(descriptor, 'w')
+        self.runtime_identity=runtime_identity
+        self.identity('before')
+
+    def identity(self, phase):
+        if self.runtime_identity is None:return
+        try:
+            value=json.dumps(self.runtime_identity(),allow_nan=False).encode()
+            if len(value)>262144:raise ValueError('Runtime identity exceeds its bound')
+        except Exception:
+            # Missing identity invalidates the measurement, never the live call.
+            value=b'{"valid":false,"errors":["runtime_identity:unavailable"]}'
+        temporary=None
+        try:
+            fd,temporary=tempfile.mkstemp(prefix='.runtime-',dir=self.root)
+            with os.fdopen(fd,'wb') as stream:stream.write(value+b'\n')
+            # Publish complete bytes atomically, without replacing prior proof.
+            os.link(temporary,self.root/('runtime-'+phase+'.private.json'))
+        except OSError:pass
+        finally:
+            if temporary is not None:
+                try:os.unlink(temporary)
+                except OSError:pass
 
     def close(self):
         if self.closed:return
@@ -40,6 +64,9 @@ class Recording:
             except OSError:pass
         try:self.events.close()
         except OSError:pass
+        # A collector may treat the final manifest as the recording boundary.
+        # Publish it only after WAV headers and buffered evidence are closed.
+        self.identity('after')
 
     def provider(self, event):
         if self.closed:return
@@ -98,11 +125,17 @@ class Recording:
 
 
 class Probe:
-    def __init__(self, root, *, arm_seconds=600, seconds=30, clock=time.monotonic, trigger='answer'):
+    def __init__(self, root, *, arm_seconds=600, seconds=30, clock=time.monotonic,
+                 trigger='answer', runtime_identity=None, max_recordings=2):
         if not 1<=arm_seconds<=600 or not 1<=seconds<=30:
             raise ValueError('Acoustic probe exceeds its time bound')
         if trigger not in {'answer','input'}:raise ValueError('Unknown acoustic probe trigger')
+        if type(max_recordings) is not int or not 1<=max_recordings<=2:
+            raise ValueError('Acoustic probe exceeds its recording bound')
+        if runtime_identity is not None and not callable(runtime_identity):
+            raise ValueError('Runtime identity must be callable')
         self.trigger=trigger
+        self.runtime_identity=runtime_identity;self.max_recordings=max_recordings
         self.root=Path(root);self.root.mkdir(mode=0o700,parents=False,exist_ok=False)
         self.clock=clock;self.expires=clock()+arm_seconds;self.seconds=seconds
         self.recordings=WeakKeyDictionary();self.count=0
@@ -116,10 +149,11 @@ class Probe:
             # the wake chime or time spent waiting for the core's response.
             if self.trigger=='answer' and getattr(source,'_utterance',None) is None:return
             if self.trigger=='input' and gated:return
-            if self.clock()>=self.expires or self.count>=2:return
+            if self.clock()>=self.expires or self.count>=self.max_recordings:return
             self.count+=1
             root=self.root/('capture-'+str(self.count));root.mkdir(mode=0o700)
-            recording=Recording(root,min(self.expires,self.clock()+self.seconds),self.seconds,self.clock)
+            recording=Recording(root,min(self.expires,self.clock()+self.seconds),
+                                self.seconds,self.clock,self.runtime_identity)
             self.recordings[source]=recording
             try:loop=asyncio.get_running_loop()
             except RuntimeError:pass
@@ -141,7 +175,8 @@ class Probe:
         if recording is not None:recording.close()
 
 
-def install(root, device_id, *, arm_seconds=600, trigger='answer'):
+def install(root, device_id, *, arm_seconds=600, trigger='answer',
+            runtime_identity=None, max_recordings=2):
     """Install bounded observers in this process; no network or capture action."""
     from eva.voice_service.codex_media import CodexMediaSession
     from eva.voice_service.codex_speaker_audio import SpeakerSource
@@ -149,7 +184,8 @@ def install(root, device_id, *, arm_seconds=600, trigger='answer'):
         raise ValueError('Acoustic probe requires one existing device binding')
     if getattr(CodexMediaSession.capture_native,'_acoustic_probe',False):
         raise ValueError('Acoustic probe is already installed')
-    probe=Probe(root,arm_seconds=arm_seconds,trigger=trigger)
+    probe=Probe(root,arm_seconds=arm_seconds,trigger=trigger,
+                runtime_identity=runtime_identity,max_recordings=max_recordings)
     capture=CodexMediaSession.capture_native;output=SpeakerSource.capture_frame
     close=CodexMediaSession.aclose
     input_event=CodexMediaSession.input_event
