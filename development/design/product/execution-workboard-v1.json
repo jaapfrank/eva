@@ -847,8 +847,8 @@
     "title": "Het volledige actuele geheel opleveren en laten beoordelen",
     "status": "in_progress",
     "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
-    "nextAction": "Bouw voort op de geïnstalleerde gelijke kern/worker en de volgende echte gezins- of broninformatie. Herhaal de afweging niet handmatig en verzin geen proefonderwerp, werkquotum of nieuwe promptvariant. Onderzoek een nieuw uitvoerbaar tekort zodra werkelijk nieuw bewijs dat rechtvaardigt; gewone initiatiefcyclus blijft actief. E5.1 pas sluiten bij echt zelfgekozen werk, gecontroleerd resultaat en later vervolg.",
-    "checkedAt": "2026-10-19T07:39:45.442639+00:00",
+    "nextAction": "Volg de bestaande gewone autonome cyclus na de echte cataloguswijziging. Beoordeel gekozen werk, controle, aflevering en later vervolg. Herstel uitsluitend een werkelijk vastgestelde ontbrekende overdracht; geen ongewijzigde modelproeven of geforceerd initiatief.",
+    "checkedAt": "2026-10-19T08:10:06.670417+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,21 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E5.1 · Autonome ontdekking van aangesloten diensten geïnstalleerd",
+            "state": "installed",
+            "date": "2026-10-19T08:05:40.990683+00:00",
+            "checkedAt": "2026-10-19T08:10:06.670417+00:00",
+            "summary": "Eva heeft via dezelfde uitvoerder nu ook toegang tot de bestaande lokale dienststatus en opgeslagen toolschema’s.25beschreven mogelijkheden; werkelijke uitvoergrant19, precies2uitleesfuncties erbij.43gerichte controles en onafhankelijke review geslaagd. Nieuw zelfstandig nuttig werk en later vervolg zijn hiermee nog niet bewezen.",
+            "remaining": "De gewone autonome cyclus moet de ontdekking werkelijk benutten waar passend, zelfgekozen werk afmaken en later voortzetten. Geen proefonderwerp opgelegd; E5.1 blijft open.",
+            "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-native-catalog-discovery-20261019.json",
+            "review": "/home/administrator/project/Eva2/development/reviews/e51-native-catalog-discovery-review-20261019.json",
+            "maintenanceRepair": false,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "familyAcceptance": false,
+            "completionScope": "Installed bounded discovery access; not whole autonomous E5.1 outcome."
+          },
           {
             "title": "E5.1 · Kern en achtergrondwerker gelijkgetrokken",
             "state": "installed",
@@ -2550,28 +2565,29 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E5.1 · Kern en achtergrondwerker gelijkgetrokken",
+          "title": "E5.1 · Autonome ontdekking van aangesloten diensten geïnstalleerd",
           "state": "installed",
-          "date": "2026-10-19T07:27:55.178568+00:00",
-          "checkedAt": "2026-10-19T07:39:45.442639+00:00",
-          "summary": "Echte releaseblokkade opgelost. De eigen afweging ziet23 beschreven mogelijkheden en gebruikt dezelfde bestaande werkuitvoerder. Gegevens en configuratie behouden.",
-          "remaining": "Gewone afweging om 09:32 koos opnieuw geen werk of vervolg, ondanks herstelde uitvoering. E5.1 is niet afgerond; dit is geen bewezen blokkade door ontbrekend antwoord van Jaap.",
-          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-execution-orientation-20261019.json",
-          "review": "/home/administrator/project/Eva2/development/reviews/e51-execution-orientation-review-20261019.json",
-          "maintenanceRepair": true,
+          "date": "2026-10-19T08:05:40.990683+00:00",
+          "checkedAt": "2026-10-19T08:10:06.670417+00:00",
+          "summary": "Eva heeft via dezelfde uitvoerder nu ook toegang tot de bestaande lokale dienststatus en opgeslagen toolschema’s.25beschreven mogelijkheden; werkelijke uitvoergrant19, precies2uitleesfuncties erbij.43gerichte controles en onafhankelijke review geslaagd. Nieuw zelfstandig nuttig werk en later vervolg zijn hiermee nog niet bewezen.",
+          "remaining": "De gewone autonome cyclus moet de ontdekking werkelijk benutten waar passend, zelfgekozen werk afmaken en later voortzetten. Geen proefonderwerp opgelegd; E5.1 blijft open.",
+          "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-native-catalog-discovery-20261019.json",
+          "review": "/home/administrator/project/Eva2/development/reviews/e51-native-catalog-discovery-review-20261019.json",
+          "maintenanceRepair": false,
           "newProductFunctionCompleted": false,
           "completedTaskIds": [],
-          "familyAcceptance": false
+          "familyAcceptance": false,
+          "completionScope": "Installed bounded discovery access; not whole autonomous E5.1 outcome."
         },
         "now": {
           "taskId": "E5.1",
           "title": "Het volledige actuele geheel opleveren en laten beoordelen",
           "status": "in_progress",
           "state": "in_progress",
-          "summary": "E5.1 · Overdracht werkt; zelfstandig werk nog niet aangetoond",
+          "summary": "E5.1 · Autonome ontdekking van aangesloten diensten geïnstalleerd",
           "doneWhen": "Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.",
-          "detail": "De werkoverdracht is hersteld en geïnstalleerd; kern en achtergrondwerker hebben exact hetzelfde uitvoeringsprofiel. De gewone afweging van 09:32 ontving alle 23 beschrijvingen maar koos opnieuw stilte, zonder werk of vervolgaandacht. Er is geen resterende technische bewonersantwoordblokkade aangetoond. Zelfstandig nuttig werk, resultaat en later vervolg ontbreken nog; E5.1 is niet af.",
-          "checkedAt": "2026-10-19T07:39:45.442639+00:00"
+          "detail": "Eva heeft via dezelfde uitvoerder nu ook toegang tot de bestaande lokale dienststatus en opgeslagen toolschema’s.25beschreven mogelijkheden; werkelijke uitvoergrant19, precies2uitleesfuncties erbij.43gerichte controles en onafhankelijke review geslaagd. Nieuw zelfstandig nuttig werk en later vervolg zijn hiermee nog niet bewezen.",
+          "checkedAt": "2026-10-19T08:10:06.670417+00:00"
         },
         "next": {
           "taskId": "E4.6",
@@ -2588,12 +2604,12 @@
           "detail": "Geen nieuwe handeling nodig. Codex volgt zelfstandig vervolg na de geïnstalleerde contextcorrectie. Spraak blijft bij de andere uitvoerder.",
           "required": false
         },
-        "checkedAt": "2026-10-19T07:39:45.442639+00:00",
+        "checkedAt": "2026-10-19T08:10:06.670417+00:00",
         "reviewedAt": "2026-10-18T21:19:30.157725+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-18T21:19:30.157725+00:00",
-      "checkedAt": "2026-10-19T07:39:45.442639+00:00",
+      "checkedAt": "2026-10-19T08:10:06.670417+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2725,7 +2741,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-19T07:39:45.442639+00:00",
+      "lastUpdatedAt": "2026-10-19T08:10:06.670417+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2759,7 +2775,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-19T07:39:45.442639+00:00",
+      "updatedAt": "2026-10-19T08:10:06.670417+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -6521,8 +6537,8 @@
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "existing": "Actuele geïnstalleerde E1–E4-kandidaat met behoud van de bestaande spraakoverdracht. Een werkelijk zelfgekozen onderzoek is na expliciete technische herstelhulp afgerond, privé afgeleverd, opgeslagen en later inhoudelijk juist gebruikt. Gebundelde onafhankelijke review GO; oude fouten en hulp blijven zichtbaar.",
-                "gap": "De werkoverdracht is hersteld en geïnstalleerd; kern en achtergrondwerker hebben exact hetzelfde uitvoeringsprofiel. De gewone afweging van 09:32 ontving alle 23 beschrijvingen maar koos opnieuw stilte, zonder werk of vervolgaandacht. Er is geen resterende technische bewonersantwoordblokkade aangetoond. Zelfstandig nuttig werk, resultaat en later vervolg ontbreken nog; E5.1 is niet af.",
-                "nextAction": "Bouw voort op de geïnstalleerde gelijke kern/worker en de volgende echte gezins- of broninformatie. Herhaal de afweging niet handmatig en verzin geen proefonderwerp, werkquotum of nieuwe promptvariant. Onderzoek een nieuw uitvoerbaar tekort zodra werkelijk nieuw bewijs dat rechtvaardigt; gewone initiatiefcyclus blijft actief. E5.1 pas sluiten bij echt zelfgekozen werk, gecontroleerd resultaat en later vervolg.",
+                "gap": "De gewone autonome cyclus moet de ontdekking werkelijk benutten waar passend, zelfgekozen werk afmaken en later voortzetten. Geen proefonderwerp opgelegd; E5.1 blijft open.",
+                "nextAction": "Volg de bestaande gewone autonome cyclus na de echte cataloguswijziging. Beoordeel gekozen werk, controle, aflevering en later vervolg. Herstel uitsluitend een werkelijk vastgestelde ontbrekende overdracht; geen ongewijzigde modelproeven of geforceerd initiatief.",
                 "files": [
                   "src",
                   "deploy",
@@ -6545,11 +6561,14 @@
                 ],
                 "assignment": {
                   "activeWorkers": [],
-                  "scope": "Afzonderlijke model/catalogus- en storebestanden; root verzorgt compositie, installatie en bord. Onafhankelijke review volgt binnen dezelfde teamomvang.",
-                  "coordinator": "Codex; gewone geïnstalleerde initiatiefcyclus volgen en beoordelen"
+                  "coordinator": "Codex; geïnstalleerde autonome uitkomst en vervolg beoordelen",
+                  "scope": "Twee bestaande uitleesfuncties aangesloten; spraak en nieuwe HA-/latentietaken blijven bij hun bestaande WSL-uitvoerder.",
+                  "responsibilities": {
+                    "root": "Gewone uitkomst volgen, concreet herstel afmaken, bord/Git bijwerken."
+                  }
                 },
                 "scopeOrigin": "finalization-20261015",
-                "checkedAt": "2026-10-19T07:07:49.709516+00:00",
+                "checkedAt": "2026-10-19T08:10:06.670417+00:00",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "E5.1 is opgeleverd; normaal gezinsgebruik en jouw oordeel volgen in F2.1/F2.2.",
@@ -6573,7 +6592,7 @@
                   "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
                   "gap": "Geen resterend technisch werk binnen E5.1. Zeven dagen werkelijk gezinsgebruik, afzonderlijk eigenaaroordeel en fysieke spraakkwaliteit zijn hiermee niet voltooid."
                 },
-                "latestEvidence": "development/evidence/reassessment/e51-execution-orientation-20261019.json",
+                "latestEvidence": "development/evidence/reassessment/e51-native-catalog-discovery-20261019.json",
                 "reopenedAt": "2026-10-18T21:09:16.856979+00:00",
                 "reopenReason": "Owner reports continued absence; ordinary orientation omits retained result content and is dominated by old completed test work.",
                 "technicalFollowup": {
@@ -6610,7 +6629,7 @@
                 },
                 "executionEstimate": "Twee begrensde bronwijzigingen en één bestaande compositieaansluiting; één gerichte controle per grens en gewone waarneming. Geen nieuwe betaalroute; werkelijke credits onbekend.",
                 "completionEvidence": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
-                "independentReview": "development/reviews/e51-native-resume-review-20261018.json",
+                "independentReview": "development/reviews/e51-native-catalog-discovery-review-20261019.json",
                 "previousOperationalCandidate": {
                   "status": "completed",
                   "completedAt": "2026-10-18T14:40:32.336548+00:00",
@@ -6829,6 +6848,17 @@
                   "laterFollowthrough": false,
                   "forcedTask": false,
                   "fullE51Outcome": "NOT_MET"
+                },
+                "nativeCatalogDiscovery": {
+                  "status": "installed_exact_grant_verified_behavior_pending",
+                  "installedAt": "2026-10-19T08:05:40.990683+00:00",
+                  "evidence": "development/evidence/reassessment/e51-native-catalog-discovery-20261019.json",
+                  "review": "development/reviews/e51-native-catalog-discovery-review-20261019.json",
+                  "newReadCapabilities": 2,
+                  "metadataNames": 25,
+                  "actualGrantNames": 19,
+                  "actualUnassistedOutcomeProven": false,
+                  "voiceChanged": false
                 }
               },
               {
@@ -10893,8 +10923,8 @@
               "owner": "Codex",
               "ownerActionRequired": false,
               "existing": "Actuele geïnstalleerde E1–E4-kandidaat met behoud van de bestaande spraakoverdracht. Een werkelijk zelfgekozen onderzoek is na expliciete technische herstelhulp afgerond, privé afgeleverd, opgeslagen en later inhoudelijk juist gebruikt. Gebundelde onafhankelijke review GO; oude fouten en hulp blijven zichtbaar.",
-              "gap": "De werkoverdracht is hersteld en geïnstalleerd; kern en achtergrondwerker hebben exact hetzelfde uitvoeringsprofiel. De gewone afweging van 09:32 ontving alle 23 beschrijvingen maar koos opnieuw stilte, zonder werk of vervolgaandacht. Er is geen resterende technische bewonersantwoordblokkade aangetoond. Zelfstandig nuttig werk, resultaat en later vervolg ontbreken nog; E5.1 is niet af.",
-              "nextAction": "Bouw voort op de geïnstalleerde gelijke kern/worker en de volgende echte gezins- of broninformatie. Herhaal de afweging niet handmatig en verzin geen proefonderwerp, werkquotum of nieuwe promptvariant. Onderzoek een nieuw uitvoerbaar tekort zodra werkelijk nieuw bewijs dat rechtvaardigt; gewone initiatiefcyclus blijft actief. E5.1 pas sluiten bij echt zelfgekozen werk, gecontroleerd resultaat en later vervolg.",
+              "gap": "De gewone autonome cyclus moet de ontdekking werkelijk benutten waar passend, zelfgekozen werk afmaken en later voortzetten. Geen proefonderwerp opgelegd; E5.1 blijft open.",
+              "nextAction": "Volg de bestaande gewone autonome cyclus na de echte cataloguswijziging. Beoordeel gekozen werk, controle, aflevering en later vervolg. Herstel uitsluitend een werkelijk vastgestelde ontbrekende overdracht; geen ongewijzigde modelproeven of geforceerd initiatief.",
               "files": [
                 "src",
                 "deploy",
@@ -10917,11 +10947,14 @@
               ],
               "assignment": {
                 "activeWorkers": [],
-                "scope": "Afzonderlijke model/catalogus- en storebestanden; root verzorgt compositie, installatie en bord. Onafhankelijke review volgt binnen dezelfde teamomvang.",
-                "coordinator": "Codex; gewone geïnstalleerde initiatiefcyclus volgen en beoordelen"
+                "coordinator": "Codex; geïnstalleerde autonome uitkomst en vervolg beoordelen",
+                "scope": "Twee bestaande uitleesfuncties aangesloten; spraak en nieuwe HA-/latentietaken blijven bij hun bestaande WSL-uitvoerder.",
+                "responsibilities": {
+                  "root": "Gewone uitkomst volgen, concreet herstel afmaken, bord/Git bijwerken."
+                }
               },
               "scopeOrigin": "finalization-20261015",
-              "checkedAt": "2026-10-19T07:07:49.709516+00:00",
+              "checkedAt": "2026-10-19T08:10:06.670417+00:00",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "E5.1 is opgeleverd; normaal gezinsgebruik en jouw oordeel volgen in F2.1/F2.2.",
@@ -10945,7 +10978,7 @@
                 "existing": "De actuele kern, worker, bron/configuratie/schema en bestaande spraakoverdracht zijn aan één geïnstalleerde kandidaat gebonden. Bestaande E1–E4-bewijzen hergebruikt; gebundelde onafhankelijke review GO. Geen nieuwe bouw of herinstallatie nodig.",
                 "gap": "Geen resterend technisch werk binnen E5.1. Zeven dagen werkelijk gezinsgebruik, afzonderlijk eigenaaroordeel en fysieke spraakkwaliteit zijn hiermee niet voltooid."
               },
-              "latestEvidence": "development/evidence/reassessment/e51-execution-orientation-20261019.json",
+              "latestEvidence": "development/evidence/reassessment/e51-native-catalog-discovery-20261019.json",
               "reopenedAt": "2026-10-18T21:09:16.856979+00:00",
               "reopenReason": "Owner reports continued absence; ordinary orientation omits retained result content and is dominated by old completed test work.",
               "technicalFollowup": {
@@ -10982,7 +11015,7 @@
               },
               "executionEstimate": "Twee begrensde bronwijzigingen en één bestaande compositieaansluiting; één gerichte controle per grens en gewone waarneming. Geen nieuwe betaalroute; werkelijke credits onbekend.",
               "completionEvidence": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
-              "independentReview": "development/reviews/e51-native-resume-review-20261018.json",
+              "independentReview": "development/reviews/e51-native-catalog-discovery-review-20261019.json",
               "previousOperationalCandidate": {
                 "status": "completed",
                 "completedAt": "2026-10-18T14:40:32.336548+00:00",
@@ -11201,6 +11234,17 @@
                 "laterFollowthrough": false,
                 "forcedTask": false,
                 "fullE51Outcome": "NOT_MET"
+              },
+              "nativeCatalogDiscovery": {
+                "status": "installed_exact_grant_verified_behavior_pending",
+                "installedAt": "2026-10-19T08:05:40.990683+00:00",
+                "evidence": "development/evidence/reassessment/e51-native-catalog-discovery-20261019.json",
+                "review": "development/reviews/e51-native-catalog-discovery-review-20261019.json",
+                "newReadCapabilities": 2,
+                "metadataNames": 25,
+                "actualGrantNames": 19,
+                "actualUnassistedOutcomeProven": false,
+                "voiceChanged": false
               }
             },
             {
@@ -11516,26 +11560,26 @@
     },
     "currentRuntime": {
       "recordedAt": "2026-10-18T13:56:18.253972+00:00",
-      "checkedAt": "2026-10-19T07:39:45.442639+00:00",
+      "checkedAt": "2026-10-19T08:10:06.670417+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "image": "sha256:da486bda767245ba38c59a4a8123fd86b10467e7b8d85326d980dbc8f83e9305",
-      "coreImage": "sha256:da486bda767245ba38c59a4a8123fd86b10467e7b8d85326d980dbc8f83e9305",
+      "image": "sha256:1865c4cb21d00b16881a9b3b324a4991d06f99e1ff0a88026763976175c06688",
+      "coreImage": "sha256:1865c4cb21d00b16881a9b3b324a4991d06f99e1ff0a88026763976175c06688",
       "workerImage": "sha256:683f3b1926d3a529f7ab148d0f478e0d55d21dc9766695c4060ee131f9770245",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
       "ready": true,
       "healthy": true,
-      "readyStatus": "installed_release_aligned_actual_silence_e51_open",
-      "evidence": "development/evidence/reassessment/e51-execution-orientation-20261019.json",
-      "evidencePath": "development/evidence/reassessment/e51-execution-orientation-20261019.json",
-      "independentSourceReview": "development/reviews/e51-execution-orientation-review-20261019.json",
+      "readyStatus": "installed_native_catalog_read_admission_behavior_pending",
+      "evidence": "development/evidence/reassessment/e51-native-catalog-discovery-20261019.json",
+      "evidencePath": "development/evidence/reassessment/e51-native-catalog-discovery-20261019.json",
+      "independentSourceReview": "development/reviews/e51-native-catalog-discovery-review-20261019.json",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "Kern en achtergrondwerker gelijkgetrokken en geïnstalleerd. Werkelijke eigen afweging koos opnieuw stilte; geen E5.1-afronding of bewezen gedragswinst.",
+      "meaning": "Eva heeft via dezelfde uitvoerder nu ook toegang tot de bestaande lokale dienststatus en opgeslagen toolschema’s.25beschreven mogelijkheden; werkelijke uitvoergrant19, precies2uitleesfuncties erbij.43gerichte controles en onafhankelijke review geslaagd. Nieuw zelfstandig nuttig werk en later vervolg zijn hiermee nog niet bewezen.",
       "executionSourceCount": 74,
       "executionSourceParity": true,
-      "ownedChangedSourceCount": 4,
+      "ownedChangedSourceCount": 1,
       "readinessScope": "Functioneel beoordeelde gezamenlijke kandidaat; geen gezinsacceptatie of bewijs van langdurig hulpvrij gebruik.",
       "coreWorkerReleaseParity": true
     },
@@ -12895,7 +12939,7 @@
       "physicalAcceptance": "pending"
     }
   },
-  "updatedAt": "2026-10-19T07:39:45.442639+00:00",
+  "updatedAt": "2026-10-19T08:10:06.670417+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -12942,5 +12986,5 @@
       "sha256": "e8597084de1aa782f84eb41a2e82226249b3201bed61eb9b281bb39ed6487d42"
     }
   ],
-  "lastUpdatedAt": "2026-10-19T07:39:45.442639+00:00"
+  "lastUpdatedAt": "2026-10-19T08:10:06.670417+00:00"
 }

@@ -75,7 +75,7 @@ def build_private_capability_context(policy, mandate_sha, *, observed_at, descri
 
     # Every description precedes optional schemas. Digest binds the full original
     # description and selected schema even when either detail cannot fit inline.
-    for limit in (256, 160, 96, 64):
+    for limit in (256, 160, 96, 64, 48, 32):
         for row in rows:
             row["description"] = descriptions[row["name"]].encode("utf-8")[:limit].decode("utf-8", errors="ignore")
         if seal() <= _MAX_BYTES:

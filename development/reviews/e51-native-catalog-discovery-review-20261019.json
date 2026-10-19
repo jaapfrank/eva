@@ -1,0 +1,26 @@
+{
+  "contract": "EvaBoundedCatalogDiscoveryReview/v1",
+  "taskId": "E5.1",
+  "checkedAt": "2026-10-19T08:10:06.670417+00:00",
+  "verdict": "GO_INSTALLED_BOUNDED_READ_ONLY_DISCOVERY",
+  "sourceReview": "GO_BOUNDED_READ_ONLY_CATALOG_POLICY_AND_HELPER_CANDIDATE",
+  "blockers": [],
+  "scope": "Two existing local catalog read operations; no connecting, operating services, public messaging or added cost authority.",
+  "checked": [
+    "exact old/candidate policy diff and host-only CAS admission",
+    "43focused saved test results",
+    "25metadata names8154bytes/full definition digests",
+    "configured26 intersect admitted25 = actual grant19; old17 plus exactly2",
+    "one exact core image update with73other measured sources and worker retained",
+    "five release fields unchanged,50explicit execution pins plus prior combined parity evidence"
+  ],
+  "privateReviewSha256": "bb66395eb62e010749479f2b68973a4906a126d17fbdcb781e3f00fffa7421fb",
+  "operatorCheckCorrection": "Host admission process succeeded; follow-up host assertion incorrectly expected union rather than configured intersection. No admission/install replay; original error and successful receipt retained.",
+  "installed": true,
+  "wholeTaskComplete": false,
+  "e51Outcome": "NOT_MET",
+  "usefulUnassistedWorkProven": false,
+  "familyAccepted": false,
+  "priorClosedFailuresPreserved": true,
+  "noNewComparisonOrForcedTopic": true
+}

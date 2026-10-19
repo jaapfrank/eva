@@ -1,0 +1,143 @@
+{
+  "contract": "EvaNativeCatalogDiscovery/v1",
+  "taskId": "E5.1",
+  "status": "installed_actual_native_grant_verified_behavior_pending",
+  "checkedAt": "2026-10-19T08:10:06.670417+00:00",
+  "alreadyWorks": "Configured ordinary MCP registry/status/schema discovery and durable native execution exist; installed core/worker releases match.",
+  "concreteDeficit": "Autonomous native admission omits the two existing registry metadata actions, so discovery supported in ordinary work is unavailable to self-chosen work.",
+  "excludedHypothesis": {
+    "missingCurrentOwnProjectOrOwnerAnswerProved": false,
+    "reviewedSourceCount": 7,
+    "unseenOwnerPrivateIngressAfterMorningContact": 0
+  },
+  "scope": "Enable only existing local registry status and registered-ID schema lookup behind the same native mandate/stop/owner checks. No new planner, provider, catalog storage or executor.",
+  "hardConditions": [
+    "Only action=status for manage_connected_services.",
+    "Only admitted current owner source and registry identifiers for schema discovery; no arbitrary endpoint URL.",
+    "No connect_service, pause, resume, stop, new subscription, external communication or service invocation granted.",
+    "Earlier uncertainty and blocked work are retained; nothing resumed or retried.",
+    "Metadata describes a retained registry, not live external service health.",
+    "The previous ordinary silence remains a negative result; no reclassification or new comparison series."
+  ],
+  "endCondition": "Reviewed read-only capabilities appear in the actual native grant and execute/observe through the existing guarded adapter; registry result and schemas retain exact owner/source provenance. Actual useful work and later behavior remain separate E5.1 evidence.",
+  "plannedVerification": "One focused isolated native-guard/provider test bundle, independent review, actual host configuration admission and installed metadata/source binding. No development model call or assigned product task.",
+  "developmentCredits": null,
+  "runtimeCredits": null,
+  "e51Completed": false,
+  "voiceChanged": false,
+  "installedAt": "2026-10-19T08:05:40.990683+00:00",
+  "implementation": {
+    "newRuntimeModules": 0,
+    "reused": [
+      "native initiative authority and current-owner source guards",
+      "existing ordinary MCP registration planner/status/registry read adapters",
+      "existing private capability context builder",
+      "same durable digital executor and result route"
+    ],
+    "runtimeSourceChanges": [
+      "src/eva/application/private_capability_context.py"
+    ],
+    "metadataChange": "Keep the existing8192byte bound and allow48/32byte description prefixes when all25 names/scopes do not fit otherwise; full definition hashes and omissions retained.",
+    "newCapabilities": [
+      "manage_connected_services(action=status)",
+      "discover_connector_tools(registry ID only)"
+    ],
+    "digitalLocalCapabilitiesUnchanged": 13
+  },
+  "installed": {
+    "at": "2026-10-19T08:06:42+00:00",
+    "coreImage": "sha256:1865c4cb21d00b16881a9b3b324a4991d06f99e1ff0a88026763976175c06688",
+    "workerImage": "sha256:683f3b1926d3a529f7ab148d0f478e0d55d21dc9766695c4060ee131f9770245",
+    "health": {
+      "core": "healthy",
+      "worker": "healthy"
+    },
+    "policySha256": "8e7d0ef4ddb9d14089f4ff3c34ec5dbb310e3fec53feb8902cfab44d693266cf",
+    "nativeCapabilities": 12,
+    "metadataCount": 25,
+    "metadataBytes": 8154,
+    "digitalGrantCount": 19,
+    "newDigitalGrantNames": [
+      "discover_connector_tools",
+      "manage_connected_services"
+    ],
+    "grantExactIntersection": true,
+    "measuredSources": 74,
+    "executionPinCount": 50,
+    "releaseUnchanged": true,
+    "privateVerificationSha256": "236d02022a47536f55ac217b8122f49331efe82c27a72c6accec1f7496ad088a",
+    "operatorPostAdmissionCheckCorrection": "Host admission process succeeded; follow-up host assertion incorrectly expected union rather than configured intersection. No admission/install replay; original error and successful receipt retained."
+  },
+  "verification": {
+    "focusedTests": 43,
+    "pureMetadataCases": 13,
+    "postgresCases": 30,
+    "pytestSeconds": 32.44,
+    "runnerElapsedSeconds": 36.88813887099968,
+    "result": "passed",
+    "independentReview": "GO",
+    "actualRuntimeGrantDelta": 2,
+    "arbitraryUrlConnectOrPauseEnabled": false
+  },
+  "ordinaryOutcome": {
+    "status": "not_observed_after_admission",
+    "lastObservationAt": "2026-10-19T08:07:23.475467+00:00",
+    "latestDecisionAt": "2026-10-19T08:02:16+00:00",
+    "latestDecisionPrecedesAdmission": true,
+    "usefulSelfChosenWorkCompleted": false,
+    "laterFollowthroughProven": false,
+    "meaning": "Do not count the pre-admission silence as an outcome of new permissions; await the existing ordinary idle cycle, no assigned trial task."
+  },
+  "usage": {
+    "developmentProductModelCalls": 0,
+    "developmentExternalProviderCalls": 0,
+    "credits": null,
+    "developerAssistantUsage": "Not separately metered by this proof; not equivalent to zero development token use.",
+    "earlierOrdinaryRuntimeReview": {
+      "decidedAt": "2026-10-19T08:02:16+00:00",
+      "inputTokens": 15767,
+      "outputTokens": 158,
+      "modelAttempts": 1,
+      "toolCalls": 1,
+      "precedesAdmission": true
+    },
+    "postAdmissionRuntimeUsage": null
+  },
+  "privateEvidence": {
+    "coverage-audit.private.json": "3bdb8f800a15ffe1257326e0617a0cdfdac31f87890e08ee421cfc872b190772",
+    "capability-grant-coverage.private.json": "e02ddfe47e1061f515dad25e8be1c5ade628b180e27b38b2f5c4262a0394f25e",
+    "catalog-admission/candidate.metadata.private.json": "3711b617e0c614427b34aecfb555604d80387522eb4a2b014379d4156d039cb2",
+    "catalog-admission/candidate-policy.private.json": "3a7b88129ee103b4ceffd23be9c542a0fe5d3f8f68f358fdfcb98cc7c243c467",
+    "candidate-budget.private.json": "78d174a8f64b9e9c3c0d9d8ec3fc25cca6baee775b0c497723551848692d0733",
+    "catalog-tests.private.txt": "fb73a29834ccbb0823dbda420bbf93ebc617c1d651b40d4f14fcd648a8bb540e",
+    "core.installation-receipt.private.json": "586637ddbc986604c55537d7effa9624d98c31abffe2a2f71f28ccb5749b96c8",
+    "policy-installation-receipt.private.json": "0604fe0676652d6595849ff0e75ae00cc789c3e1f813befa5f70c79655fb8b5e",
+    "installed-verification.private.json": "236d02022a47536f55ac217b8122f49331efe82c27a72c6accec1f7496ad088a",
+    "independent-catalog-review.private.json": "bb66395eb62e010749479f2b68973a4906a126d17fbdcb781e3f00fffa7421fb"
+  },
+  "remaining": "Actual use, unassisted useful completion, delivery and later ordinary continuation remain E5.1; family days/acceptance separate.",
+  "ownerActionRequired": false,
+  "changedFiles": [
+    {
+      "path": "src/eva/application/private_capability_context.py",
+      "sha256": "2f316647f340ba918d2da93f03da5a63d282299e16df401bb3440c318ffc7a74",
+      "role": "existing source module; bounded metadata accommodation",
+      "consumer": "runtime.private_capability_context callback",
+      "decision": "retain: directly required for the bounded current outcome; previous unchanged inventory/reviews reused"
+    },
+    {
+      "path": "development/tests/application/test_private_capability_context.py",
+      "sha256": "de50d00bc751caa41b704059ba3f64d4bae23a7a282184ffc6349ef5ac378163",
+      "role": "pure guardrail test for23/25/26capabilities",
+      "consumer": "focused pytest bundle",
+      "decision": "retain: directly required for the bounded current outcome; previous unchanged inventory/reviews reused"
+    },
+    {
+      "path": "development/tests/postgres/test_native_catalog_discovery.py",
+      "sha256": "9881662ad8cea8dcf0d1beccf53e3511d0e5f77c4f049318d909988f1830ff10",
+      "role": "isolated synthetic source/status/schema/stop tests",
+      "consumer": "focused pytest bundle",
+      "decision": "retain: directly required for the bounded current outcome; previous unchanged inventory/reviews reused"
+    }
+  ]
+}

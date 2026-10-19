@@ -138,16 +138,18 @@ def test_explicitly_disabled_digital_scope_never_exports_its_names():
     assert [row["name"] for row in build(p)["capabilities"]] == ["read_service"]
 
 
-def test_full_twenty_three_action_catalog_keeps_meaning_before_schemas():
-    names = ["action_" + str(i) for i in range(23)]
+@pytest.mark.parametrize("count", [23, 25, 26])
+def test_full_action_catalog_keeps_meaning_before_schemas(count):
+    names = ["action_" + str(i) for i in range(count)]
     huge = deepcopy(SCHEMA)
     huge["properties"]["path"]["enum"] = ["x" * 9000]
     descriptors = {name: {"description": "Meaningful existing action description " * 40,
         "parameters": huge} for name in names}
-    p = policy(*(capability(name, huge) for name in names[:10]), digital=names[10:])
+    native_count = 10 if count == 23 else 12
+    p = policy(*(capability(name, huge) for name in names[:native_count]), digital=names[native_count:])
     result = build(p, descriptors)
-    assert len(result["capabilities"]) == 23
+    assert len(result["capabilities"]) == count
     assert all(row["description"].startswith("Meaningful existing action") for row in result["capabilities"])
     assert all(not row["parameters_included"] and "parameters" not in row for row in result["capabilities"])
-    assert result["omitted_schema_count"] == result["omitted_description_count"] == 23
+    assert result["omitted_schema_count"] == result["omitted_description_count"] == count
     check_hash(result)
