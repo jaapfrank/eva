@@ -1,0 +1,46 @@
+{
+  "contract": "EvaWorkboardScopeExtension/v1",
+  "id": "selective-memory-20261019",
+  "ownerAuthorized": true,
+  "authorization": "Direct eigenaar19oktober2026:20pagina’s Telegramgesprekken zijn geen efficiënt geheugen; bewaar alleen belangrijke informatie. Eén concrete aanvulling op bestaande geheugen-/efficiëntiefase, geen tweede plan.",
+  "sourceDocument": "development/docs/PROJECTDOEL.md",
+  "tasks": [
+    {
+      "id": "E4.11",
+      "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
+      "status": "planned",
+      "kind": "bouwen",
+      "owner": "Codex",
+      "ownerActionRequired": false,
+      "scopeOrigin": "selective-memory-20261019",
+      "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
+      "existing": "Hindsight gebruikt al concise-extractie en een missie voor later nuttige kennis. Eigen chatbronnen en gekozen herinneringen zijn aparte bestaande routes; gewone native zoekcontext is begrensd.",
+      "gap": "Elke gewone gebruikerszin wordt nog aan semantische verwerking aangeboden en als bron bewaard. De eigenaar ziet20pagina’s gesprekken. Gemeten387bronnen en416native documenten;168documenten hebben geen directe memory_units. Niet alle bronnen gaan mee in elk antwoord.",
+      "nextAction": "Gebruik het bestaande native extractieresultaat voor selectief bewaren; voorkom blijvende opslag van niet-geselecteerde inhoud en maak het verschil met het gespreksarchief zichtbaar. Behoud relevante bronverwijzingen, controleer de echte route en installeer de wijziging.",
+      "files": [
+        "src/eva/application/memory.py",
+        "src/eva/application/memory_background.py",
+        "src/eva/adapters/projection/hindsight.py",
+        "src/eva/adapters/postgres/memory_outbox.py",
+        "development/tools/project-dashboard/src/owner-memory-view.jsx",
+        "development/tools/project-dashboard/src/main.jsx"
+      ],
+      "dependsOn": [
+        "E2.2"
+      ],
+      "checkedAt": "2026-10-19T08:31:12.581369+00:00",
+      "assignment": {
+        "coordinator": "Codex",
+        "activeWorkers": [
+          "e33_state_adapters"
+        ],
+        "scope": "Langetermijnselectie/-opslag en geheugenbediening. Spraak en aparte warme zoekroute E4.10 blijven bij bestaande uitvoerder."
+      },
+      "ownerInstructions": {
+        "availableNow": false,
+        "steps": [],
+        "blocksIndependentWork": false
+      }
+    }
+  ]
+}

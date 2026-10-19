@@ -1,0 +1,103 @@
+{
+  "contract": "EvaOriginalE51UnassistedEpisode/v1",
+  "taskId": "E5.1",
+  "status": "original_technical_scope_completed",
+  "checkedAt": "2026-10-19T08:30:14.652707+00:00",
+  "scope": "Original joint installed E1–E4 technical candidate plus real autonomous selection, source-checked result, original private delivery and bounded later use. Not whole project or family acceptance.",
+  "ordinaryEpisode": {
+    "sourceTime": "2026-10-19T07:51:28Z",
+    "decisionAndAdoptionTime": "2026-10-19T07:55:51Z",
+    "completedAt": "2026-10-19T08:01:55Z",
+    "deliveredAt": "2026-10-19T08:01:59Z",
+    "followthroughDecisionAt": "2026-10-19T08:02:16Z",
+    "originalGeneration": 1,
+    "claimCount": 1,
+    "resumeEvents": 0,
+    "operatorAssignedTopicOrRecoveryShown": false,
+    "all22RecordedEventHashesIndependentlyVerified": true,
+    "specResultUsageAndOutputHashesIndependentlyVerified": true,
+    "resultSha256": "37f35815c6a403fc2d9dd6f9e31e9ae21b2217a03a06eac146ed7a31f811c5f9",
+    "outputSha256": "c83785d47877e8f47a06f1673b467d85564bcecff4008ad6ee43294965645fb5"
+  },
+  "resultQuality": {
+    "independentSourceArithmeticMatches": true,
+    "currentSignalStateAndTimesRetained": true,
+    "physicalCauseProven": false,
+    "reportedSignalCountsAreNotPhysicalDiagnosis": true,
+    "ownerBenefitJudged": false
+  },
+  "laterUse": {
+    "selfChosenUsefulConcreteWork": "satisfied for this ordinary episode; no operator-selected topic or resume",
+    "checkedRetainedResultToCorrectPrivateRecipient": "satisfied at the retained receipt plus independent source-audit level, with semantic/physical limits explicit",
+    "laterOrdinaryUseAndAppropriateContinuation": "satisfied in bounded form: the exact result-bound next ordinary review used the real observed state and change time, declined unsupported duration assertions and chose not to repeat recently completed/delivered work. This is substantive source use, not merely restating task status.",
+    "noMandatorySecondTaskOrNewMessage": "A valid following decision can be silence. The original criterion does not require fabricated extra work or redundant contact.",
+    "limits": "This is an immediate subsequent ordinary decision, not proof of cross-day interests, later learned improvement or repeated daily benefit."
+  },
+  "limitations": {
+    "fullHistoryInlineTransfer": false,
+    "crossDaySelfChosenProjectContinuity": false,
+    "repeatedDailyBenefitProven": false,
+    "familyDaysComplete": false,
+    "ownerAcceptance": false,
+    "allCurrentExtendedProjectWorkComplete": false
+  },
+  "currentCandidateReuse": {
+    "caseFiveReleaseFieldsEqualCurrentInstalledVerification": true,
+    "workerImageStillSameAccepted683fRelease": true,
+    "original17CapabilityGrantSubsetOfCurrent19": true,
+    "oldExecutionMandate": "0772f35abfea4166ad2f9bc3673d5316ee80e4b44806fd2faf025476178f7527",
+    "currentReadAuthority": "8e7d0ef4ddb9d14089f4ff3c34ec5dbb310e3fec53feb8902cfab44d693266cf",
+    "currentRelevantSourceDelta": "Later core-only helper change extends description-prefix fallback; the catalog policy adds two read-only actions. Neither changes the household selection/result-reader/execution route used in this episode. Existing five-field release and unchanged worker provenance support reuse without a fresh run.",
+    "noRetroactiveReadmission": "Read old immutable evidence under current owner authority; do not attach the new mandate to the old work or authorize replay.",
+    "causedByNewCatalogAdmission": false,
+    "causalTiming": "Episode completed/delivered before the 08:05 catalog policy admission. It is a different ordinary lane from the later private idle silence."
+  },
+  "usage": {
+    "selection": {
+      "measurement": "measured",
+      "model_attempts": 1,
+      "tool_calls": 1,
+      "input_tokens": 8062,
+      "output_tokens": 244
+    },
+    "nativeWork": {
+      "contract": "DelegatedWorkUsage/v1",
+      "tool_calls": 2,
+      "measurement": "partial",
+      "input_tokens": 35449,
+      "total_tokens": 35773,
+      "output_tokens": 324,
+      "schema_version": 1,
+      "cost_usd_micros": null,
+      "completed_model_responses": 3
+    },
+    "followthrough": {
+      "measurement": "measured",
+      "model_attempts": 1,
+      "tool_calls": 1,
+      "input_tokens": 15767,
+      "output_tokens": 158
+    },
+    "nativeWorkLimit": "3 known completed responses and 2 tools; measurement remains partial and cost NULL. Do not label these as complete total model/cost usage.",
+    "reviewerProductModelOrProviderCalls": 0,
+    "developmentAssistantUsage": "Not separately metered; not zero by inference.",
+    "credits": null
+  },
+  "priorEvidenceReused": [
+    "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
+    "development/reviews/e51-native-resume-review-20261018.json",
+    "development/evidence/reassessment/e51-execution-orientation-20261019.json",
+    "development/evidence/reassessment/e51-native-catalog-discovery-20261019.json",
+    "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+    "development/evidence/product/hue6-quiet-learning-outcome-20261014.json"
+  ],
+  "privateEvidenceSha256": {
+    "e51-original-native-case-review.private.json": "ff5873b39b8d8870425f9f38858c58cc0b45b4daa8fe357ed550da7e1a181a2c",
+    "decision-input-diagnosis/exact-native-episode-report.private.json": "d5f801bb640db9c60725c4ff80633b156898a5f220cea40372058399eea6913b",
+    "decision-input-diagnosis/exact-native-chain.private.json": "08ccd4b4afab9464d34d4cac9216ea941ece8e7bdc6203527f2d1fd4ab0660d9",
+    "decision-input-diagnosis/retained-history-analysis.private.json": "c9dea91706cefe537ec309225ccdb740773d5f81c65f8fb6e92ad28335a1f8f8"
+  },
+  "newModelRunOrRetriedTaskForAssessment": false,
+  "voiceChanged": false,
+  "fullGoalCompleted": false
+}

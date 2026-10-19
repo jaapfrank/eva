@@ -37,6 +37,12 @@ Modelafweging bepaalt inhoudelijke relevantie; infrastructuur verzorgt betrouwba
 bronnen, taakstatus, deduplicatie, persoonsgrenzen, stoppen en gebruiksregistratie.
 Een bewering, gedachte of opgeslagen reflectie is geen uitgevoerde actie.
 
+Niet iedere gesprekszin wordt langetermijnkennis. De bestaande geheugenroute selecteert
+alleen later bruikbare persoonlijke informatie, afspraken en voortgang, voegt herhaling
+samen en bewaart bron, tijd en onzekerheid. Tijdelijke gesprekscontext en het
+gespreksarchief staan los van het actieve zoekgeheugen; onbelangrijke uitwisselingen
+blijven daarin niet onbeperkt meegroeien. De bediening laat die verschillen zien.
+
 ## Dagelijks meedenken
 
 Eva kan actuele beschikbare bronnen opzoeken en zelf een volgende passende

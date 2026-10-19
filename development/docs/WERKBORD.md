@@ -4,19 +4,19 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Het volledige actuele geheel opleveren en laten beoordelen
+Alleen belangrijke kennis als blijvend geheugen bewaren
 
-E5.1 · Autonome ontdekking van aangesloten diensten geïnstalleerd
+Selectie geïnstalleerd; historische opschoning loopt
 
-Klaar wanneer: Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2.
+Klaar wanneer: Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.
 
 ## Afmaakvolgorde
 
 1. E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie
 2. E2: één Eva-beheeromgeving en optionele verbindingen
 3. E3: volledige bestandsregistratie en onderbouwde besluiten
-4. E4: oorspronkelijke opruiming afgerond; nieuwe E4.6–E4.10 maken HA modulair en verkorten eenvoudige acties
-5. E5: E5.1-opvolging en nieuwe E5.2 chat-/spraakoplevering; daarna onafhankelijke eindreview en gezinsacceptatie
+4. E4: HA-/actielatentie bij bestaande uitvoerder; E4.11 maakt blijvend geheugen selectief en compact
+5. E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open.
 
 ## Vier productuitkomsten
 
@@ -116,12 +116,13 @@ E5.1 blijft open: de echte nieuwe gewone afweging koos stilte. De geïnstalleerd
 | E4.8 · Actuele apparaatcontext in de HA-module hergebruiken | ● Open | De HA-module houdt één bevoegdheidsgebonden apparaat-, naam-, gebieds-, groeps- en toestandsbeeld actueel via de bestaande eventroute en ondersteunde officiële API. Bekende ondubbelzinnige doelen vereisen geen herhaalde volledige inventarisatie per gesprek. Versheid, herkomst en volledigheid zijn zichtbaar; hernoemen, toevoegen, verwijderen, toegang intrekken, reconnect en ontbrekende updates werken correct. Onzekere of verouderde context wordt gericht ververst vóór uitvoering; geen tweede autobiografisch geheugen en geen cache als bewijs van een nieuwe actie. |
 | E4.9 · Bedienen en vers controleren in één moduleactie uitvoeren | ● Open | Een ondubbelzinnige toegelaten apparaatopdracht wordt via de bestaande algemene uitvoerder als één samengestelde HA-capability uitgevoerd: doel valideren, één effect toepassen en de actuele eindtoestand controleren. Daarvoor zijn geen losse modelrondes voor inventaris, servicekeuze en readback nodig. De kern krijgt een compacte geverifieerde uitkomst; servicebevestiging alleen telt niet als succes. Ambiguïteit, gedeeltelijk resultaat, stoppen, onbekende uitkomst en hervatten blijven correct; geen huis- of lampregex in de kern. |
 | E4.10 · Verplichte geheugenwachttijd uit eenvoudige opdrachten halen | ● Open | Dezelfde Eva kan een eenvoudige actuele opdracht uitvoeren zonder eerst iedere beurt de volledige semantische geheugenzoektocht af te wachten. Identiteit, actuele bevoegdheden, relevante afspraken, correcties en gespreksverwijzingen blijven beschikbaar. Geheugenafhankelijke vragen en bedoelingen gebruiken aantoonbaar de benodigde bronnen vóór antwoord of effect, ook bij een eerste beurt. Het mechanisme is kanaal- en providerneutraal, met actuele invalidatie en één bestaande geheugenbron. Geen HA-keywordbypass, tweede contactbrein of verzonnen context. |
-| E5.1 · Het volledige actuele geheel opleveren en laten beoordelen | ● Open | Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2. |
+| E4.11 · Alleen belangrijke kennis als blijvend geheugen bewaren | ● Open | Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt. |
+| E5.1 · Het volledige actuele geheel opleveren en laten beoordelen | ✓ Afgerond | Eén actuele kandidaat omvat de verplichte E1–E4-uitkomsten en de bestaande spraakroute, draait geïnstalleerd met gegevensbehoud en heeft één gebundelde onafhankelijke eindreview. Bediening en resterende opties zijn duidelijk. Bestaand geldig bewijs wordt hergebruikt; de zeven dagen gezinsgebruik en eigenaaracceptatie blijven F2.1/F2.2. |
 | E5.2 · Snelle modulaire huisbediening via chat en spraak live opleveren | ● Open | E4.6–E4.10 zijn op de werkelijk actuele installatie geïntegreerd en onafhankelijk beoordeeld. Gelijke bekende toegelaten opdrachten werken via gewone chat en bestaande spraak met dezelfde module, identiteit, geheugen en bevoegdheden. In de vooraf vastgelegde proef voldoet chatontvangst tot verse HA-eindbevestiging aan mediaan maximaal 1 seconde en p95 maximaal 2 seconden bij een gereedstaande installatie; koude context en onbekende doelen worden afzonderlijk gerapporteerd. Spraak meet ook vanaf einde invoeraudio en vanaf herkende tekst. Een tussenreactie of service-ack vervangt geen eindbevestiging. Ruwe steekproef, fouten, context/cache, model-/toolgebruik en beperkingen blijven bewaard; niet gehaalde grenzen sluiten deze taak niet af. Installatie, bron/configuratie, herstelmogelijkheid en module-uitgedrag zijn gecontroleerd, zonder fysieke hoorbaarheid of gezinsacceptatie te verzinnen. |
 
 ## Van jou
 
-Geen nieuwe handeling nodig. Codex volgt zelfstandig vervolg na de geïnstalleerde contextcorrectie. Spraak blijft bij de andere uitvoerder.
+De nieuwe selectie staat aan. Codex werkt historische opschoning af; spraak blijft bij de andere uitvoerder.
 
 ## Historie
 

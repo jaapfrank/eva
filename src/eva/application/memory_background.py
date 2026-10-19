@@ -543,7 +543,8 @@ class SemanticMemoryColdPathWorker:
                     )
                 with self._lock:
                     self._last_error = None
-                    if active_job.document.audience.kind == "private_person":
+                    if (active_job.document.audience.kind == "private_person"
+                            and getattr(receipt, "disposition", "retained") == "retained"):
                         self._reflection_scopes.add(
                             (
                                 active_job.document.tenant_id,

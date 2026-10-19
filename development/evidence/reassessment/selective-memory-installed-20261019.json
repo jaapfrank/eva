@@ -1,0 +1,152 @@
+{
+  "contract": "EvaSelectiveMemoryInstalled/v1",
+  "recordedAt": "2026-10-19T09:08:35.544063+00:00",
+  "taskId": "E4.11",
+  "status": "installed_bounded_selection_and_clear_source_archive;_historical_cleanup_open",
+  "whatChanged": [
+    "Existing Hindsight extraction selects short later-useful facts; transient greetings, acknowledgements and one-off technical requests are excluded by the same native extraction mission. No second semantic store, keyword classifier or additional classification model.",
+    "Native completed selection counts and exact operation IDs now propagate to the durable outbox. Only an explicitly measured clean0 ordinary private exchange becomes not_selected; missing/error counts never become zero. Typed learning/work/correction sources preserve their existing semantics.",
+    "not_selected does not create a selected-memory/source-list entry or schedule a person-style reflection. Physical source bodies remain within existing365-day,2000-document/20MiB per-person retention limits until real deletion acknowledgement.",
+    "Relevant observations are instructed to update/merge repeated claims and corrections using existing native consolidation. Source facts remain provenance.",
+    "Product UI shows selected memories first and a collapsed, clearly labelled source archive separately; it no longer polls the archive while closed."
+  ],
+  "measuredNativeCases": [
+    {
+      "id": "greeting",
+      "selectedFacts": 0,
+      "disposition": "not_selected",
+      "extractionErrors": 0,
+      "elapsedSeconds": 3.0910316549707204,
+      "nativeOperationRetryCount": 0
+    },
+    {
+      "id": "one_off_instruction",
+      "selectedFacts": 0,
+      "disposition": "not_selected",
+      "extractionErrors": 0,
+      "elapsedSeconds": 2.3266304599819705,
+      "nativeOperationRetryCount": 0
+    },
+    {
+      "id": "standing_preference",
+      "selectedFacts": 1,
+      "disposition": "retained",
+      "extractionErrors": 0,
+      "elapsedSeconds": 5.136831537995022,
+      "nativeOperationRetryCount": 0
+    },
+    {
+      "id": "future_commitment",
+      "selectedFacts": 1,
+      "disposition": "retained",
+      "extractionErrors": 0,
+      "elapsedSeconds": 6.683833674003836,
+      "nativeOperationRetryCount": 0
+    },
+    {
+      "id": "explicit_correction",
+      "selectedFacts": 1,
+      "disposition": "retained",
+      "extractionErrors": 0,
+      "elapsedSeconds": 6.944218099990394,
+      "nativeOperationRetryCount": 0
+    },
+    {
+      "id": "repeated_current_topic",
+      "selectedFacts": 1,
+      "disposition": "retained",
+      "extractionErrors": 0,
+      "elapsedSeconds": 5.873806405987125,
+      "nativeOperationRetryCount": 0
+    }
+  ],
+  "consolidation": {
+    "functionalResult": "One same-ID current oat-milk preference observation updated with correction+repetition provenance; no duplicate current preference; separate future commitment unchanged.",
+    "sourceFactsDeleted": false,
+    "allParaphraseDedupProven": false
+  },
+  "testEvidence": {
+    "isolatedPostgresAndProviderBundle": "165 passed;1 group-policy fixture expectation corrected and focused1 passed.2 logging-only cases pass standalone on before and after; mixed-test logging-state dependence retained as limitation.",
+    "focusedToolReceiptsSha256": "6accee411587cfdb88ed0f37cd997de252c9051a81a86aa67f77cd7ba4dc64d3",
+    "sealedFrontendBuild": true,
+    "newNativeDocuments": 6,
+    "sameCaseResubmissions": 0,
+    "harnessLimit": "Private observer buffered an input marker after05; preserved prior5 results and before06 snapshot, submitted previously unsubmitted06 once. No model/task replay."
+  },
+  "installation": {
+    "roles": {
+      "core": {
+        "image": "sha256:d8f0856fd0f065033919d8777bb16af852b3795afec04ad606148961d7d7962f",
+        "sourceCount": 77,
+        "sourceParity": true,
+        "healthy": true,
+        "changedSources": [
+          "eva/application/memory.py",
+          "eva/application/memory_background.py",
+          "eva/adapters/postgres/memory_outbox.py",
+          "eva/adapters/projection/hindsight.py"
+        ]
+      },
+      "worker": {
+        "image": "sha256:2ded8b001657e6b75114c6d629faf6296678943d42010a1f6e607c8eac8471f2",
+        "sourceCount": 76,
+        "sourceParity": true,
+        "healthy": true,
+        "changedSources": [
+          "eva/application/memory.py",
+          "eva/application/memory_background.py",
+          "eva/adapters/postgres/memory_outbox.py",
+          "eva/adapters/projection/hindsight.py"
+        ]
+      }
+    },
+    "coreWorkerReleaseEqual": true,
+    "policyProfileBindingPreserved": true,
+    "nativePolicyRevisionNeeded": false,
+    "configuredDigitalGrantCount": 19,
+    "sealedAssets": 3,
+    "voiceCodeOrServicesChanged": false,
+    "repositoryHeadFullyInstalled": false
+  },
+  "storage": {
+    "beforeOwnerSourceDocuments": 387,
+    "afterOwnerSourceDocuments": 387,
+    "beforeOwnerSourceBytes": 212739,
+    "afterOwnerSourceBytes": 212739,
+    "beforeNativeDocuments": 416,
+    "historicalRawBodiesDeleted": 0,
+    "physicalSavingsProven": false,
+    "meaning": "New selection behavior verified; existing history and noisy older selected facts are not yet pruned. No historical cleanup or decreasing physical storage claim.",
+    "afterNativeDocuments": 416,
+    "beforeNativeBodyBytes": 445987,
+    "afterNativeBodyBytes": 445987
+  },
+  "retrieval": {
+    "existingRecallMaxTokens": 2048,
+    "scope": "Per native relevant recall result, not the first tokens of a message, whole prompt, or a proof of one total recall call. Other separately bounded context/source checks remain.",
+    "allHistorySentEachTurn": false,
+    "measuredNewUserReplyLatencyImprovement": null
+  },
+  "usage": {
+    "development": "Focused local tests/build/read-only audits;6 isolated native extraction submissions and ordinary native consolidation. Separate from ordinary family runtime.",
+    "nativeInternalModelAttempts": "unknown",
+    "modelInputOutputTokens": "unknown",
+    "operationTotalTokens": "Processed document content tokens, not model consumption; never presented as model-cost savings.",
+    "additionalPerTurnClassifier": false,
+    "credits": null,
+    "completeFrozenProtocolVerdict": "inconclusive_for_unverified_internal_attempt_bound;_six_functional_cases_pass"
+  },
+  "remaining": [
+    "Source-safe historical reclassification/cleanup, including older temporary task facts, without re-extracting all conversations.",
+    "A source preservation boundary before disabling raw document text for all writers; synchronous direct retain currently has no outbox copy.",
+    "Physical storage savings, lower extraction usage and natural-family quality/latency not measured."
+  ],
+  "privateEvidenceHashes": {
+    "installed-verification.private.json": "f0506bf5fa9058d0a94bd3467bd431066ac02dd1ae82423ed8df3d0f8ef78de1",
+    "installation-receipt.private.json": "15d96b4ea0a156041085bdc1da35ad2a8fe2165b15c5bb19ad75ebe4ee9c3332",
+    "profile-parity.private.json": "866df9228ef541307d6f13d1f58298136c0db8ef44edb15aca98f7c1851431ba"
+  },
+  "fullGoalComplete": false,
+  "taskComplete": false,
+  "independentReview": "development/reviews/selective-memory-installed-review-20261019.json"
+}

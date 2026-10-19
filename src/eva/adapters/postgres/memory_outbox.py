@@ -491,22 +491,46 @@ class PostgresMemoryOutbox(PostgresScopedRole):
         expected_hash = hashlib.sha256(job.document.content.encode("utf-8")).hexdigest()
         if receipt.content_sha256 != expected_hash:
             raise RuntimeError("Hindsight receipt content hash differs")
+        disposition = getattr(receipt, "disposition", "retained")
+        if disposition not in {"retained", "not_selected"}:
+            raise RuntimeError("Hindsight receipt disposition differs")
+        not_selected = disposition == "not_selected"
+        selected = getattr(receipt, "selected_fact_count", None)
+        operation = getattr(receipt, "operation_id", None)
+        if not_selected and (type(selected) is not int or selected != 0
+                or not isinstance(operation, str) or not operation.strip()):
+            raise RuntimeError("Hindsight zero selection evidence is incomplete")
+        data = {"bank_id": receipt.bank_id, "content_sha256": receipt.content_sha256,
+                "document_id": receipt.document_id}
+        if not_selected:
+            data["selected_fact_count"] = selected
+            data["operation_id"] = operation
+        event_type = "MEMORY_RETAIN_NOT_SELECTED" if not_selected else "MEMORY_RETAIN_SUCCEEDED"
         current = self._timeline.load(job.state.thread_id)
+        if not_selected:
+            original = self._timeline.events(current.thread_id)
+            if (not original or original[0].event_type != "MEMORY_RETAIN_QUEUED"
+                    or original[0].payload.get("data") != self._document_data(job.document)):
+                raise RuntimeError("Hindsight zero selection source differs")
         if current.status == "completed":
+            completed = next((event for event in reversed(self._timeline.events(current.thread_id))
+                if event.event_type in {"MEMORY_RETAIN_SUCCEEDED", "MEMORY_RETAIN_NOT_SELECTED"}), None)
+            if (completed is None or completed.event_type != event_type
+                    or completed.payload.get("data") != data):
+                raise RuntimeError("Hindsight completed receipt replay differs")
             return current
+        if not_selected and (current.phase != "memory_retaining"
+                or current.revision != job.state.revision):
+            raise RuntimeError("Hindsight zero selection attempt is no longer current")
         return self._timeline.transition(
             thread_id=current.thread_id,
             expected_revision=current.revision,
-            checkpoint_id=f"{current.thread_id}:retained",
+            checkpoint_id=f"{current.thread_id}:" + ("not-selected" if not_selected else "retained"),
             operation_id=current.operation_id,
             occurred_at=now or self._now(),
-            data={
-                "bank_id": receipt.bank_id,
-                "content_sha256": receipt.content_sha256,
-                "document_id": receipt.document_id,
-            },
-            event_type="MEMORY_RETAIN_SUCCEEDED",
-            phase="memory_retained",
+            data=data,
+            event_type=event_type,
+            phase="memory_not_selected" if not_selected else "memory_retained",
             status="completed",
             retry_count=current.retry_count,
         )
@@ -519,6 +543,8 @@ class PostgresMemoryOutbox(PostgresScopedRole):
         now: datetime | None = None,
     ) -> CheckpointState:
         current = self._timeline.load(job.state.thread_id)
+        if current.phase == "memory_not_selected":
+            return current  # A stale failure cannot reopen acknowledged selection.
         fingerprint = hashlib.sha256(
             f"{type(error).__name__}:{error}".encode("utf-8")
         ).hexdigest()

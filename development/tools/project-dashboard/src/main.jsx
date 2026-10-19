@@ -282,6 +282,8 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged, onSelec
 }
 
 function MemorySources({ selectedSource, onMemoryChanged }) {
+  const [expanded, setExpanded] = React.useState(false);
+  React.useEffect(() => { if (selectedSource) setExpanded(true); }, [selectedSource]);
   // Keep only the visible page in component memory, never in a persistent store
   // or the shared query cache. Changing page/access first clears old content.
   const [selected, setSelected] = React.useState(null);
@@ -293,6 +295,7 @@ function MemorySources({ selectedSource, onMemoryChanged }) {
   const [result, setResult] = React.useState({ state: 'loading', page: null });
   const cursor = cursors[cursors.length - 1];
   React.useEffect(() => {
+    if (!expanded) return;
     let controller;
     let disposed = false;
     const load = async () => {
@@ -322,14 +325,15 @@ function MemorySources({ selectedSource, onMemoryChanged }) {
       window.removeEventListener('focus', load);
       document.removeEventListener('visibilitychange', load);
     };
-  }, [cursor, cursors, revision]);
+  }, [cursor, cursors, revision, expanded]);
   React.useEffect(() => { if (['denied', 'error'].includes(result.state)) setSelected(null); }, [result.state]);
   const changePage = next => { setSelected(null); setResult({ state: 'loading', page: null }); setCursors(next); };
   const page = result.page;
   const labels = { retained: 'Verwerkt', pending: 'Wacht op verwerking', needs_help: 'Hulp nodig' };
-  return <section className="memory-sources" aria-labelledby="memory-heading">
-    <div className="memory-toolbar"><div><h2 id="memory-heading">Jouw geheugenbronnen</h2>
-      <p>Eigen gespreksbronnen voor het geheugen — niet alle afgeleide herinneringen. Alleen jij kunt deze bronnen hier bekijken.</p></div>
+  return <details className="memory-sources" open={expanded} onToggle={event => setExpanded(event.currentTarget.open)}>
+    <summary id="memory-heading">Gespreksbronnen bekijken — geschiedenis en herkomst</summary>
+    <div className="memory-toolbar"><div>
+      <p>Dit is het bronarchief, geen lijst met wat Eva allemaal als blijvende kennis onthoudt. De compacte, relevante herinneringen staan hierboven. Niet elk bericht levert een herinnering op. Alleen jij kunt jouw bronnen hier bekijken.</p></div>
       <button onClick={() => { setResult({ state: 'loading', page: null }); refresh(); }}>Vernieuwen</button></div>
     {notice && <p role="status">{notice}</p>}
     {selected && <MemorySourceControl key={selected} sourceId={selected} generation={generation} onClose={() => setSelected(null)} onSelectSource={setSelected}
@@ -346,14 +350,14 @@ function MemorySources({ selectedSource, onMemoryChanged }) {
         {source.truncated && <small>Fragment — deze bron is langer dan hier getoond.</small>}
         <button onClick={() => { setNotice(''); setSelected(source.source_id); }}>Bekijken en aanpassen</button>
       </li>)}</ol>
-      <nav className="memory-pagination" aria-label="Geheugenpagina's">
+      <nav className="memory-pagination" aria-label="Pagina's met gespreksbronnen">
         <button disabled={cursors.length === 1} onClick={() => changePage(cursors.slice(0, -1))}>Vorige</button>
         <span>Pagina {cursors.length}</span>
         <button disabled={page.next_cursor === null} onClick={() => changePage([...cursors, page.next_cursor])}>Volgende</button>
       </nav>
     </>}
-    <small>Eva onderhoudt haar geheugen zelf. Gebruik deze bediening als je iets wilt controleren, corrigeren of bewust vergeten.</small>
-  </section>;
+    <small>Gebruik het bronarchief om de herkomst te controleren, corrigeren of bewust te vergeten. De paginatelling is geen telling van actieve herinneringen.</small>
+  </details>;
 }
 
 function Dashboard() {

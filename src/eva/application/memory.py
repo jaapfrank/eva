@@ -227,7 +227,9 @@ class MemoryRetentionReceipt:
     bank_id: str
     document_id: str
     content_sha256: str
-    disposition: Literal["retained"] = "retained"
+    disposition: Literal["retained", "not_selected"] = "retained"
+    selected_fact_count: int | None = None
+    operation_id: str | None = None
 
     def __post_init__(self) -> None:
         if any(
@@ -237,8 +239,21 @@ class MemoryRetentionReceipt:
             raise ValueError("memory retention receipt identifiers are invalid")
         if not re.fullmatch(r"[0-9a-f]{64}", self.content_sha256):
             raise ValueError("memory retention receipt content hash is invalid")
-        if self.disposition != "retained":
+        if self.disposition not in {"retained", "not_selected"}:
             raise ValueError("memory retention receipt disposition is invalid")
+        if self.selected_fact_count is not None and (
+            type(self.selected_fact_count) is not int or self.selected_fact_count < 0
+        ):
+            raise ValueError("memory retention selected fact count is invalid")
+        if self.operation_id is not None and (
+            not isinstance(self.operation_id, str) or not self.operation_id.strip()
+            or len(self.operation_id) > 512
+        ):
+            raise ValueError("memory retention operation identity is invalid")
+        if self.disposition == "not_selected" and (
+            self.selected_fact_count != 0 or self.operation_id is None
+        ):
+            raise ValueError("unselected memory requires an exact zero selection operation")
 
 
 class SemanticMemoryProviderError(RuntimeError):

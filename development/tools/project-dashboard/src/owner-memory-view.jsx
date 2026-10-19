@@ -53,7 +53,7 @@ export default function OwnerMemoryView({ onSource, revision }) {
   }, [load]);
   React.useEffect(() => { if (revision) load(query.trim()); }, [revision]);
   return <section className="owner-panel" aria-label="Personen en herinneringen">
-    <h2>Personen en herinneringen</h2><p>Wat Eva uit jouw eigen gesprekken over jou en andere mensen onthoudt. Je ziet hier geen privégesprekken van gezinsleden.</p>
+    <h2>Personen en herinneringen</h2><p>Compacte kennis die Eva uit jouw gesprekken selecteert en samenvoegt: mensen, voorkeuren, afspraken en wat later relevant is. Een nieuwe uitspraak kan dit bijwerken. Dit zijn geen volledige gesprekken; je ziet geen privégeheugen van gezinsleden.</p>
     <form className="memory-search" onSubmit={event => { event.preventDefault(); load(query.trim()); }}>
       <label htmlFor="memory-person-query">Zoek een persoon of onderwerp</label>
       <input id="memory-person-query" value={query} maxLength={200} onChange={event => setQuery(event.target.value)} placeholder="Een naam, je gezin of een voorkeur" />

@@ -1,0 +1,23 @@
+{
+  "contract": "EvaSelectiveMemoryInstalledReview/v1",
+  "recordedAt": "2026-10-19T09:10:02.476266+00:00",
+  "verdict": "GO_INSTALLED_BOUNDED_SELECTION;_HISTORICAL_CLEANUP_OPEN",
+  "scope": "Independent bundled source/handoff/image/installed review; not whole E4.11 completion.",
+  "sourceReviewSha256": "1201cbd3b0445a023fef2d3ee05b4d77de496e0dc2477ad45625655191be44a7",
+  "evidence": "development/evidence/reassessment/selective-memory-installed-20261019.json",
+  "verified": [
+    "Native exact operation/count/unknown receipt handoff, existing storage limits and erasure semantics preserved.",
+    "165 cases plus corrected exact group-policy expectation focused1pass;2 recall logging cases pass standalone both before and after, mixed-bundle order dependence retained.",
+    "77 core /76 worker sources match scoped candidate; healthy; same50execution pins/current release on both; exact existing native profile binding and19grant names retained;3sealed UI assets match.",
+    "Six synthetic functional criteria:0/0 for transient inputs,1/1/1/1 for meaningful inputs; same current preference observation updated with05+06support, separate future commitment retained.",
+    "Existing actual Hindsight container immutable config supports gpt-6-astra/openai-codex/medium and predates run."
+  ],
+  "limits": [
+    "Complete frozen protocol inconclusive because internal model-attempt count and full model input/output tokens are unknown. Processed-document token counts are not model consumption.",
+    "No physical storage reduction, historical cleanup, new family latency improvement, perfect dedup, complete E4.11 or family acceptance claim.",
+    "Temporary observer interruption before06 preserved all earlier results;06 not previously submitted, resumed once without model-case replay."
+  ],
+  "newReviewModelOrProviderCalls": 0,
+  "fullGoalComplete": false,
+  "taskComplete": false
+}

@@ -915,6 +915,14 @@ class HindsightMemoryEngine:
                     "timestamp; do not invent an unspecified duration. A temporary "
                     "exception does not replace a standing preference outside its scope. Treat later "
                     "explicit corrections as newer truth only within their stated scope. "
+                    "Keep each fact short and atomic. A greeting, acknowledgement, "
+                    "one-off request to use a tool, run a test, inspect a temporary "
+                    "status or produce an answer is not enduring person knowledge. "
+                    "Do not retain such instructions, proof IDs, intermediate tool "
+                    "steps or completed administrative chatter as personal facts. "
+                    "Still extract a genuine preference, correction, ongoing goal or "
+                    "future commitment explicitly stated within a request. If no "
+                    "later-useful information is stated, extract no facts. "
                     "A question, hypothetical or "
                     "benchmark scenario, quoted third-party claim, and assistant proposal "
                     "is not direct testimony; never turn it into a user preference or "
@@ -924,6 +932,12 @@ class HindsightMemoryEngine:
                     "Synthesize durable person-specific knowledge, including evolving "
                     "communication preferences such as desired brevity, directness, "
                     "warmth, formality and formatting. Track contradictions over time. "
+                    "Merge repeated statements about the same person and subject into "
+                    "one concise current observation, updating existing observations "
+                    "rather than paraphrasing them into duplicates. Preserve source "
+                    "evidence and meaningful changes over time. A correction updates "
+                    "current understanding; it must not become an additional competing "
+                    "current preference. "
                     "Keep temporary exceptions and their dates distinct from enduring traits. "
                     "Describe style preferences; never recommend copying spelling errors, "
                     "broken grammar or transient emotion."
@@ -1240,6 +1254,7 @@ class HindsightMemoryEngine:
                 ),
                 "source_ref": document.source_ref,
                 "trust": document.trust,
+                "selection_policy": "later-useful-knowledge-v2",
             },
             "tags": ["eva-memory", audience_tag],
             "observation_scopes": [[audience_tag]],
@@ -1288,6 +1303,9 @@ class HindsightMemoryEngine:
     ) -> MemoryRetentionReceipt:
         """Upsert one source using Hindsight's native replace/idempotency model."""
         bank_id, item = self._conversation_item(document)
+        expected_operation_id = str(uuid5(
+            NAMESPACE_URL, "EvaMemoryRetain/v2:" + canonical_sha256([bank_id, item]),
+        ))
         _, response = self._request(
             "POST",
             f"/v1/default/banks/{bank_id}/memories",
@@ -1297,10 +1315,7 @@ class HindsightMemoryEngine:
                 # Hindsight replays an existing operation before examining its
                 # content. Bind retries to the complete source revision, not
                 # just the document ID, or an edit silently retains old memory.
-                "operation_id": str(uuid5(
-                    NAMESPACE_URL,
-                    "EvaMemoryRetain/v2:" + canonical_sha256([bank_id, item]),
-                )),
+                "operation_id": expected_operation_id,
             },
         )
         operation_id = response.get("operation_id")
@@ -1308,13 +1323,30 @@ class HindsightMemoryEngine:
             response.get("success") is not True
             or response.get("items_count") != 1
             or response.get("async") is not True
-            or not isinstance(operation_id, str)
-            or not operation_id
+            or operation_id != expected_operation_id
         ):
             raise HindsightProjectionProtocolError(
                 "Hindsight did not acknowledge exactly one memory document"
         )
-        self._wait_for_operation(bank_id, operation_id, retry_existing_failure=True)
+        completed = self._wait_for_operation(bank_id, operation_id, retry_existing_failure=True)
+        metadata = completed.get("result_metadata")
+        selected_count = None
+        extraction_errors = None
+        if isinstance(metadata, dict):
+            for key in ("unit_ids_count", "extraction_errors_count"):
+                value = metadata.get(key)
+                if value is not None and (type(value) is not int or value < 0):
+                    raise HindsightProjectionProtocolError("Hindsight selection counts are invalid")
+            selected_count = metadata.get("unit_ids_count")
+            extraction_errors = metadata.get("extraction_errors_count")
+        # Only ordinary immutable user exchanges may be classified as unselected.
+        # Typed learning/work records remain source evidence even with zero facts.
+        ordinary_exchange = (
+            document.audience.kind == "private_person"
+            and document.trust == "direct_user"
+            and document.document_id == f"{document.conversation_id}:exchange:{document.source_ref}"
+        )
+        not_selected = ordinary_exchange and selected_count == 0 and extraction_errors == 0
         with self._cache_lock:
             # A completed retain may correct a previously recalled preference.
             # Drop this audience's old snapshot and fence any earlier read still
@@ -1336,6 +1368,9 @@ class HindsightMemoryEngine:
             bank_id=bank_id,
             document_id=document.document_id,
             content_sha256=hashlib.sha256(document.content.encode("utf-8")).hexdigest(),
+            disposition="not_selected" if not_selected else "retained",
+            selected_fact_count=selected_count,
+            operation_id=operation_id,
         )
 
     def remove_conversation_document(
@@ -1378,7 +1413,7 @@ class HindsightMemoryEngine:
 
     def _wait_for_operation(
         self, bank_id: str, operation_id: str, *, retry_existing_failure: bool = False
-    ) -> None:
+    ) -> dict[str, Any]:
         deadline = time.monotonic() + self._config.timeout_seconds
         first_poll = True
         while True:
@@ -1392,7 +1427,7 @@ class HindsightMemoryEngine:
                 )
             status = response.get("status")
             if status == "completed":
-                return
+                return response
             if status == "failed" and first_poll and retry_existing_failure:
                 # Reposting an idempotent retain only replays its failed operation.
                 # Resume that exact operation once; never revive cancellations or

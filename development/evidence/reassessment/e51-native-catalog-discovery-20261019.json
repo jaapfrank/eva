@@ -1,8 +1,8 @@
 {
   "contract": "EvaNativeCatalogDiscovery/v1",
   "taskId": "E5.1",
-  "status": "installed_actual_native_grant_verified_behavior_pending",
-  "checkedAt": "2026-10-19T08:10:06.670417+00:00",
+  "status": "installed_actual_ordinary_silence_outcome_not_met",
+  "checkedAt": "2026-10-19T08:13:11.833314+00:00",
   "alreadyWorks": "Configured ordinary MCP registry/status/schema discovery and durable native execution exist; installed core/worker releases match.",
   "concreteDeficit": "Autonomous native admission omits the two existing registry metadata actions, so discovery supported in ordinary work is unavailable to self-chosen work.",
   "excludedHypothesis": {
@@ -80,13 +80,32 @@
     "arbitraryUrlConnectOrPauseEnabled": false
   },
   "ordinaryOutcome": {
-    "status": "not_observed_after_admission",
-    "lastObservationAt": "2026-10-19T08:07:23.475467+00:00",
-    "latestDecisionAt": "2026-10-19T08:02:16+00:00",
-    "latestDecisionPrecedesAdmission": true,
-    "usefulSelfChosenWorkCompleted": false,
+    "observedAt": "2026-10-19T08:11:02.345858+00:00",
+    "sourceAt": "2026-10-19 08:10:02+00:00",
+    "decidedAt": "2026-10-19 08:10:18+00:00",
+    "sourceEventPayloadSha256": "a94c36467fa297205e01faf8bbaf9041be30df94bb09467b3c1bc4047e2fc8d2",
+    "decisionEventPayloadSha256": "e2c479b2e4c32fe691d64a4d6bc7938fb6f6c5ad2af26e4426176cc5c4444e9d",
+    "reviewCause": "installed_profile_change",
+    "capabilityMetadataCount": 25,
+    "capabilityConfigurationSha256": "af9eb11f98933c349201f1c2bee43493ff9c537b52040fe161615190396642e8",
+    "mandateSha256": "8e7d0ef4ddb9d14089f4ff3c34ec5dbb310e3fec53feb8902cfab44d693266cf",
+    "disposition": "silence",
+    "initiativeAdopted": false,
+    "nextAttentionRecorded": false,
+    "memorySearchUsed": false,
+    "usage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 14144,
+      "output_tokens": 144,
+      "model_attempts": 1
+    },
+    "runtimeCredits": null,
+    "noOperatorScheduledTaskOrReview": true,
+    "reasonSummary": "Het model noemt de nog onbeantwoorde eerdere vraag, een eerdere broncontrole en gesloten/geblokkeerd werk; het kiest geen ander onderzoek of vervolg. Dit bewijst geen technische eigenaarblokkade.",
+    "usefulUnassistedWorkProven": false,
     "laterFollowthroughProven": false,
-    "meaning": "Do not count the pre-admission silence as an outcome of new permissions; await the existing ordinary idle cycle, no assigned trial task."
+    "wholeTaskComplete": false
   },
   "usage": {
     "developmentProductModelCalls": 0,
@@ -101,7 +120,13 @@
       "toolCalls": 1,
       "precedesAdmission": true
     },
-    "postAdmissionRuntimeUsage": null
+    "postAdmissionRuntimeUsage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 14144,
+      "output_tokens": 144,
+      "model_attempts": 1
+    }
   },
   "privateEvidence": {
     "coverage-audit.private.json": "3bdb8f800a15ffe1257326e0617a0cdfdac31f87890e08ee421cfc872b190772",
@@ -113,7 +138,8 @@
     "core.installation-receipt.private.json": "586637ddbc986604c55537d7effa9624d98c31abffe2a2f71f28ccb5749b96c8",
     "policy-installation-receipt.private.json": "0604fe0676652d6595849ff0e75ae00cc789c3e1f813befa5f70c79655fb8b5e",
     "installed-verification.private.json": "236d02022a47536f55ac217b8122f49331efe82c27a72c6accec1f7496ad088a",
-    "independent-catalog-review.private.json": "bb66395eb62e010749479f2b68973a4906a126d17fbdcb781e3f00fffa7421fb"
+    "independent-catalog-review.private.json": "bb66395eb62e010749479f2b68973a4906a126d17fbdcb781e3f00fffa7421fb",
+    "ordinary-observation-2.private.json": "c1beeff141178ccf754a4e3fd0914e4e151f8c8c7dcd4855d6b1df61e37a84a6"
   },
   "remaining": "Actual use, unassisted useful completion, delivery and later ordinary continuation remain E5.1; family days/acceptance separate.",
   "ownerActionRequired": false,

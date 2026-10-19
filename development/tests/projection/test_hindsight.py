@@ -342,7 +342,7 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                         "success": True,
                         "items_count": len(body["items"]),
                         "async": True,
-                        "operation_id": "60c962ab-e659-47a0-aa44-70bc60ff7f66",
+                        "operation_id": body.get("operation_id", "60c962ab-e659-47a0-aa44-70bc60ff7f66"),
                     },
                 )
 
@@ -822,6 +822,7 @@ def test_hindsight_retain_uses_only_current_group_tag_and_metadata(
         "privacy_class": "internal",
         "source_ref": "telegram:-100123:message:1",
         "trust": "direct_user",
+        "selection_policy": "later-useful-knowledge-v2",
     }
     assert calls == [(PRINCIPAL, "-100123")]
 
