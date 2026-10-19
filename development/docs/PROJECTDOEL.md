@@ -68,8 +68,10 @@ bronnen verwijderd, met behoud van alle betrokken kennis en oorspronkelijke bron
 De bronlevenscyclus is eveneens geïnstalleerd: volledig erkende privébronnen van een
 vorige UTC-dag kunnen in de bestaande rustfase hun tekst verliezen, terwijl compacte
 kennis, exacte herkomst, correcties en bewust vergeten blijven werken. Onvolledig
-bewezen oude cohorten en deels gewiste cohorten blijven behouden. Native gesloten
-taakpayloads kunnen nog tekst bevatten. Bewijsmetadata kost ook opslag; netto database-,
+bewezen oude cohorten en deels gewiste cohorten blijven behouden. Op 19 oktober zijn bovendien 1.592 exact brongebonden afgesloten native taakpayloads
+gecompacteerd: netto 258.346 canonieke JSON-bytes minder, met exact behoud van 472
+betrokken kennisregels en overige taakvelden. Dit is een eenmalige opschoning; niet
+volledig gebonden gesloten taakpayloads kunnen nog tekst bevatten. Bewijsmetadata kost ook opslag; netto database-,
 token- en snelheidswinst zijn hiermee niet bewezen. Historische opschoning, oude
 statusfouten en meerdaags gebruik houden E4.11 open.
 

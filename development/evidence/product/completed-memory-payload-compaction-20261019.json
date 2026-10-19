@@ -1,0 +1,75 @@
+{
+  "contract": "EvaCompletedMemoryPayloadCompaction/v1",
+  "recordedAt": "2026-10-19T13:15:15.748652+00:00",
+  "state": "applied_to_active_database",
+  "scope": "E4.11: bewezen dubbele tekst in afgesloten native geheugenverwerking; geen nieuwe productkaart.",
+  "existing": "Dag-/droomoverdracht en bronlevenscyclus waren geïnstalleerd; 1.592 native document-/chunkkopieën eerder opgeschoond.",
+  "change": "In 1.592 volledig afgeronde en brongebonden retain-taken is alleen contents[*].content door content_sha256 vervangen. Geen taak, resultaat of geleerde kennis verwijderd.",
+  "measurement": {
+    "backupSavedBeforeMutation": true,
+    "elapsedSeconds": 19.620746081986,
+    "knowledgeCount": 472,
+    "knowledgeUnchanged": true,
+    "modelCalls": 0,
+    "operations": 1592,
+    "otherOperationFieldsUnchanged": true,
+    "payloadJsonByteReduction": 258346,
+    "payloadJsonBytesAfter": 1657070,
+    "payloadJsonBytesBefore": 1915416,
+    "removedRawTextBytes": 363733,
+    "retentionSubmissions": 0,
+    "sourceCount": 1592,
+    "sourceGuardHeld": true,
+    "status": "committed"
+  },
+  "verification": {
+    "knowledgeCount": 472,
+    "knowledgeUnchanged": true,
+    "modelCalls": 0,
+    "operations": 1592,
+    "otherOperationFieldsUnchanged": true,
+    "status": "verified_after_commit",
+    "sourceListReadable": true,
+    "checkedAt": "2026-10-19T13:15:15.748652+00:00"
+  },
+  "currentStatus": {
+    "hindsight": {
+      "state": "ready"
+    },
+    "memory": {
+      "state": "unavailable"
+    },
+    "sourceListReadable": true
+  },
+  "review": "development/reviews/completed-memory-payload-compaction-review-20261019.json",
+  "preserved": [
+    "Oorspronkelijke bronnen en exacte herkomstbinding.",
+    "Overige taakvelden inclusief resultaat, status, idempotentie en foutbewijs.",
+    "472 betrokken native kennisregels exact gelijk, gecontroleerd binnen de transactie en na commit.",
+    "80 niet volledig brongebonden afgeronde taken en alle mislukte/lopende/onzekere taken niet gewijzigd.",
+    "Bestaande retention-/wisvergrendeling gedurende actuele broncontrole, backup en databasetransactie.",
+    "Geen spraakcode, container of configuratie gewijzigd."
+  ],
+  "limits": [
+    "Historische eenmalige opschoning, geen nieuwe automatische toekomstige payloadopruiming.",
+    "258.346 bytes minder canonieke JSON-payload; fysieke PostgreSQL-schijfruimte en snelheids-/tokenwinst niet gemeten.",
+    "Een private herstelkopie bevat de oorspronkelijke payloads; geen claim dat die gegevens overal verdwenen zijn.",
+    "Het geheugenstatusoverzicht blijft onbeschikbaar door oude tijdlijnproblemen; Hindsight en de bronlijst zijn apart bereikbaar.",
+    "E4.11 en de gezinsacceptatie blijven open; geen nieuwe hoofdtaak afgerond."
+  ],
+  "usage": {
+    "evaModelCalls": 0,
+    "retentionSubmissions": 0,
+    "developmentProviderDiagnostics": 0,
+    "developmentCreditCost": null,
+    "wallSecondsApply": 19.620746081986
+  },
+  "privateProvenance": {
+    "reviewSha256": "14cf6ff4082e3dbdbb2cbbbc56a1f7853772f6c818dd04b97a810baceaa07f10",
+    "planSha256": "98efec125edf2f9ebc90311e01528aa835766c1b09831eedb9ba310da8e49b62",
+    "resultSha256": "30a1626c5b6934d0877cbec238ef3ceca24cf159715a3de4d8e9c14a1223b6de",
+    "verificationSha256": "17f509de6e2b52e180931db998354b97e20c8f3d3a0008617cc9a47044fb9c3b"
+  },
+  "runtimeCodeChanged": false,
+  "wholeTaskComplete": false
+}

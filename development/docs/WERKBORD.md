@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Gewone Telegramvervolgvragen betrouwbaar afhandelen
+Compact geheugen en betrouwbaar geheugenoverzicht afmaken
 
-Concrete Telegramafwijzing hersteld en geïnstalleerd
+Historische dubbele tekst toegepast opgeschoond; geheugenrestpunten blijven open
 
-Klaar wanneer: De gemelde privéchatfout is gericht hersteld en geïnstalleerd; de echte gezinsproef blijft afzonderlijk open.
+Klaar wanneer: Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.
 
 ## Afmaakvolgorde
 
