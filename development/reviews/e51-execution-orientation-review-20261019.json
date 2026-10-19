@@ -1,15 +1,39 @@
 {
   "contract": "EvaScopedIndependentReview/v1",
   "taskId": "E5.1",
-  "checkedAt": "2026-10-19T07:27:55.178568+00:00",
+  "checkedAt": "2026-10-19T07:39:45.442639+00:00",
   "sourceVerdict": "GO",
   "candidateCompositionVerdict": "GO",
-  "privateReviewSha256": "6f01a0372c6a4abf57f08f14c59e957d58daeb9fcc8023221ac1beb5d7a98bae",
+  "privateReviewSha256": "88607613f6c88a0f21a528d0bed752c2275a4a3a266a7537fc3461b8db5d7e0d",
   "installedImagesMatchReviewedCandidates": true,
   "mountsAndConfigurationRetained": true,
   "candidateExactReleaseEquality": true,
-  "actualWorkAndFollowthroughVerdict": "NOT_YET_DEMONSTRATED",
+  "actualWorkAndFollowthroughVerdict": "NOT_MET_ORDINARY_DECISION_SILENT",
   "e51Completed": false,
   "voiceContainerOrSpeakerChanges": false,
-  "scope": "Bounded metadata capture plus exact existing core/worker release alignment; no forced task, new planner or new tool authority."
+  "scope": "Bounded metadata capture plus exact existing core/worker release alignment; no forced task, new planner or new tool authority.",
+  "installedReleaseVerdict": "GO",
+  "ordinaryOutcome": {
+    "observedAt": "2026-10-19 07:32:27+00:00",
+    "decidedAt": "2026-10-19 07:32:42+00:00",
+    "sourceSha256": "3bcce44d7bbacc39fc0ef863980eca6a7081a9c31280ce014b3a7a4a791bd999",
+    "decisionSha256": "9c8bef6cda00d08e152eceecfa6e72f28099e27d9ded49576d63c97025a80f72",
+    "capabilityConfigurationSha256": "4e3f73da865118a3aae6ede779d0f2b5949e9664f81746745230fc3b331a8bfa",
+    "capabilitiesActuallySupplied": 23,
+    "disposition": "silence",
+    "initiative": null,
+    "nextAttention": null,
+    "modelUsage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 14051,
+      "output_tokens": 147,
+      "model_attempts": 1
+    },
+    "reasonSummary": "Het model ziet nog geen antwoord op de eerdere kennismakingsvraag en kiest geen ander onderzoek. Dit is een modelafweging, geen aangetoonde technische eigenaarblokkade.",
+    "completedUsefulWork": false,
+    "laterFollowthrough": false,
+    "forcedTask": false,
+    "fullE51Outcome": "NOT_MET"
+  }
 }
