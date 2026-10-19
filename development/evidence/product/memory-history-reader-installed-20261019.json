@@ -1,0 +1,121 @@
+{
+  "contract": "EvaMemoryHistoryReaderInstallation/v1",
+  "recordedAt": "2026-10-19T11:08:44.171480+00:00",
+  "taskId": "E4.11",
+  "status": "installed_partial",
+  "technicalTaskCompleted": false,
+  "ownerAcceptance": false,
+  "whatChanged": "Replaced the global256 memory-retain history cap with scoped keyset pages and bulk event reads in one READONLY REPEATABLE READ snapshot. Other tracks and strict integrity/source validation unchanged.",
+  "sourceScope": [
+    "src/eva/adapters/postgres/operational_timeline.py",
+    "src/eva/adapters/postgres/people_memory_overview.py",
+    "development/tests/postgres/test_memory_history_overview.py"
+  ],
+  "testResult": {
+    "passed": 13,
+    "deselected": 58,
+    "pytestSeconds": 12.42,
+    "wrapperSeconds": 13.807345972047187,
+    "realPostgres": true,
+    "largeHistorySources": 270,
+    "operationalSelectsForLargeHistory": 4,
+    "coverage": [
+      "later-page corruption",
+      "attention not hidden",
+      "concurrent append/transition snapshot",
+      "installation scope",
+      "private content not returned",
+      "five existing memory protocol cases"
+    ]
+  },
+  "independentReview": "development/reviews/memory-history-reader-review-20261019.json",
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "services": {
+      "core": {
+        "image": "sha256:d45d056bc6605601927ffdab5be55526801d86eb0f0a5a181aadc2a354980bae",
+        "health": "healthy",
+        "exactSourceHashes": true
+      },
+      "worker": {
+        "image": "sha256:96574ba56fd292a5e129c99011da8bed3a84b47c1e1e48a77dd72659f38b63b3",
+        "health": "healthy",
+        "exactSourceHashes": true
+      }
+    },
+    "executionPinsPreserved": 50,
+    "policyChanged": false,
+    "voiceSourcesChanged": false,
+    "unrelatedSourceChanges": false
+  },
+  "actualHttp": {
+    "ready": {
+      "status": 200,
+      "seconds": 0.037,
+      "payload": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "memoryOverview": {
+      "status": 200,
+      "seconds": 0.427,
+      "payload": {
+        "contains_raw_content": false,
+        "contract": "EvaPeopleMemoryOverview/v1",
+        "control_plane": {
+          "state": "owner_viewer_candidate"
+        },
+        "hindsight": {
+          "state": "ready"
+        },
+        "memory": {
+          "state": "unavailable"
+        },
+        "people": {
+          "dynamic_account": "no_extra_account"
+        },
+        "read_only": true,
+        "sharing": {
+          "state": "private_only"
+        }
+      }
+    },
+    "memorySources": {
+      "status": 200,
+      "seconds": 0.086,
+      "sourceCount": 2
+    }
+  },
+  "actualHistoricalDiagnosis": {
+    "checkpoints": 1690,
+    "completedCursors": 1652,
+    "needsHelpCursors": 38,
+    "chronologyRegressions": 2,
+    "chronologyDates": "2026-08-28",
+    "chronologySubset": "two existing needs-help sources; original events retained",
+    "nativeAuditPreliminary": {
+      "completedWithZeroSelection": 3,
+      "failed": 34,
+      "noMatchingOperationOrDocument": 1,
+      "pending": 0
+    }
+  },
+  "limitations": [
+    "The actual overview remains unavailable: the newly reachable old history contains two real chronology anomalies. No usable overview repair or E4.11 completion is claimed.",
+    "Three zero-selection completions need exact reconciliation; failed/missing sources are not silently retried or called successful.",
+    "This change does not compact historical source content or derived knowledge, prove retention deadlines, token savings or multi-day family use.",
+    "Per-page events and total validation CPU still grow with actual history."
+  ],
+  "usage": {
+    "newNativeExtractionCalls": 0,
+    "newComparisonSeries": false,
+    "developmentModelTokens": null,
+    "creditCosts": null,
+    "runtimeBackgroundUsageOutsideThisChange": "not attributed"
+  },
+  "nextAction": "Reconcile exact historical completion evidence without another model attempt; retain/error-classify old failures and finish source/knowledge lifecycle cleanup within E4.11."
+}

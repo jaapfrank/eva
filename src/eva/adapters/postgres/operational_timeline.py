@@ -7,7 +7,7 @@ from eva.contracts.timestamps import require_utc_second as _require_utc_second
 from dataclasses import dataclass
 from datetime import UTC, datetime
 import hashlib
-from typing import Any, Literal
+from typing import Any, Iterator, Literal
 from uuid import NAMESPACE_URL, UUID, uuid4, uuid5
 
 import sqlalchemy as sa
@@ -419,6 +419,76 @@ class PostgresOperationalTimeline:
                             "append-only event payload hash differs from its payload"
                         )
                 return events
+            finally:
+                transaction.rollback()
+
+    def iter_threads(
+        self, *, thread_prefix: str, page_size: int = 256,
+    ) -> Iterator[tuple[CheckpointState, tuple[TimelineEvent, ...]]]:
+        """Read complete scoped history in bounded pages from one stable snapshot.
+
+        Keyset pagination and one event query per page avoid per-thread round trips.
+        A concurrent append cannot mix a newer projection with older events.
+        """
+        _require_identifier(thread_prefix, "thread_prefix")
+        if isinstance(page_size, bool) or not isinstance(page_size, int) or not 1 <= page_size <= 256:
+            raise ValueError("timeline page size must contain 1..256 threads")
+        checkpoints = operational_checkpoints.c
+        event_columns = operational_events.c
+        with self._engine.connect() as connection:
+            transaction = connection.begin()
+            try:
+                connection.exec_driver_sql(
+                    "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY"
+                )
+                self._scope(connection)
+                after: str | None = None
+                while True:
+                    statement = sa.select(operational_checkpoints).where(
+                        checkpoints.tenant_id == self._scope_value.tenant_id,
+                        checkpoints.installation_id == self._scope_value.installation_id,
+                        checkpoints.thread_id.startswith(thread_prefix),
+                    )
+                    if after is not None:
+                        statement = statement.where(checkpoints.thread_id > after)
+                    rows = connection.execute(
+                        statement.order_by(checkpoints.thread_id).limit(page_size)
+                    ).all()
+                    if not rows:
+                        return
+                    states = tuple(_state_from_row(row) for row in rows)
+                    by_thread: dict[str, list[TimelineEvent]] = {
+                        state.thread_id: [] for state in states
+                    }
+                    event_rows = connection.execute(
+                        sa.select(operational_events).where(
+                            event_columns.tenant_id == self._scope_value.tenant_id,
+                            event_columns.installation_id == self._scope_value.installation_id,
+                            event_columns.thread_id.in_(tuple(by_thread)),
+                        ).order_by(event_columns.thread_id, event_columns.sequence)
+                    )
+                    for row in event_rows:
+                        event = _event_from_row(row)
+                        if canonical_sha256(event.payload) != event.payload_sha256:
+                            raise OperationalTimelineError(
+                                "append-only event payload hash differs from its payload"
+                            )
+                        by_thread[event.thread_id].append(event)
+                    for state in states:
+                        events = tuple(by_thread[state.thread_id])
+                        if (not events or len(events) != state.revision
+                            or any(event.sequence != index for index, event in enumerate(events, 1))
+                            or _state_from_event(events[-1]) != state):
+                            raise OperationalTimelineError(
+                                "checkpoint projection differs from append-only timeline"
+                            )
+                        if any(later.occurred_at < earlier.occurred_at
+                               for earlier, later in zip(events, events[1:])):
+                            raise OperationalTimelineError("timeline time moved backwards")
+                        yield state, events
+                    if len(states) < page_size:
+                        return
+                    after = states[-1].thread_id
             finally:
                 transaction.rollback()
 

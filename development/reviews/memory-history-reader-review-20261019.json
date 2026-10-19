@@ -1,0 +1,44 @@
+{
+  "contract": "EvaMemoryHistoryIndependentReview/v1",
+  "recordedAt": "2026-10-19T11:04:04.708621+00:00",
+  "decision": "GO_FOR_SCOPED_TWO_MODULE_IMAGE_OVERLAY",
+  "blockingFindings": [],
+  "sources": [
+    {
+      "sha256": "521ecd2c82a5ec42058f16bdd4bb06670529f0cfc4212019252837a40abba136",
+      "bytes": 37418,
+      "repositoryPath": "src/eva/adapters/postgres/operational_timeline.py",
+      "beforeSha256": "192a91439d861824bcae40c5b1c6ecb1a77a52154e0240d10fd79111b4e5473c"
+    },
+    {
+      "sha256": "31f021f1fd6257bbc534630069563cb77c8bd895b6d6d2664da023ce841893ba",
+      "bytes": 64062,
+      "repositoryPath": "src/eva/adapters/postgres/people_memory_overview.py",
+      "beforeSha256": "0de91e5bdaf28cf8f5733013b3e7e665bccb6c40b3147bb4f114f8330fcb5947"
+    },
+    {
+      "sha256": "77f98d36350c876df9a7a407c13f4b8a1ae42231a990f36c0e63bbb98c000c21",
+      "bytes": 6725,
+      "repositoryPath": "development/tests/postgres/test_memory_history_overview.py"
+    }
+  ],
+  "assessment": {
+    "completeness": "The memory-retain consumer no longer calls the closed global256-thread reader. Scoped C-collated thread_id keyset pages advance strictly, with no result limit on complete iteration. It drains every source even after finding attention, so a malformed later page still yields unavailable rather than a false green.",
+    "privacy": "Both checkpoint and bulk event reads explicitly bind tenant_id and installation_id, plus the existing scoped role/RLS configuration. No metadata, source content or identifiers are added to the public status payload. The targeted other-installation and canary check passes.",
+    "concurrency": "SET TRANSACTION REPEATABLE READ, READ ONLY is executed before any role/scope query acquires the MVCC snapshot. Checkpoints and all later event pages use that same connection/transaction. A concurrent transition or new thread is excluded consistently from the in-flight snapshot and visible on the next call.",
+    "integrity": "Each event payload hash is checked. Each thread must have events1..revision, exactly revision events, final event projection equal to its checkpoint, and nondecreasing event time. Existing memory protocol validation still checks all source/event payloads and ordering. No catch converts invalid history to up_to_date.",
+    "connections": "The iterator owns one connection and transaction with try/finally rollback and context-manager release on exhaustion, iterator exception or explicit close. The current consumer fully drains the iterator; no new early-success return is introduced. As with ordinary Python generators, any future partial consumer must close/dispose its iterator.",
+    "performance": "Measured270source iteration requires4 operational SELECT statements:2 checkpoint pages and2 bulk event reads, replacing per-source status/event round trips. Source history is processed pagewise rather than accumulating all threads. Per-page event/payload volume and total CPU still grow with actual source history; this is not a constant-time or arbitrary-size benchmark."
+  },
+  "limitations": [
+    "GO covers reviewed source and recorded isolated PostgreSQL evidence only. Coordinator must preserve actual current core/worker changes and verify the installed exact two-module overlay.",
+    "Only memory-retain history loses its global256 bound. Other independently bounded overview tracks retain their existing behavior by design.",
+    "One read-only snapshot holds a database connection while it is consumed; no absolute production latency, payload-memory bound or huge-history throughput claim is made.",
+    "The existing dream needs-help precheck is a separate query; this change provides one stable memory-retain snapshot, not a global instantaneous snapshot of every dashboard track.",
+    "No native-model/provider calls, production DB queries or writes, runtime/configuration change, extra test execution or product-file edits were performed by this reviewer.",
+    "No resolution of the38native-error audit, fullE4.11 completion, historical memory cleanup or measured token/credit savings is implied.",
+    "Installed HTTP memory status remains unavailable due to two discovered original chronology anomalies; coordinator has not claimed full status recovery."
+  ],
+  "privateReviewSha256": "c4a9f3f2344591c1f95b79b30f165fd1a9725cb8706fd59dab95f62567b806bd",
+  "independentReviewerExtraModelCalls": 0
+}

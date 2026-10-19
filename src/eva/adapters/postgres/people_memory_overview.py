@@ -927,7 +927,7 @@ class PostgresPeopleMemoryOverview:
             if self._timeline.list_checkpoints(thread_prefix="memory-dream:",
                     statuses=("needs_help",), limit=1):
                 return "needs_help"
-            threads = self._validated_threads("memory-retain:")
+            threads = self._timeline.iter_threads(thread_prefix="memory-retain:")
             observed: set[MemoryFlowState] = set()
             for state, events in threads:
                 observed.add(self._validate_memory_timeline(state, events))
