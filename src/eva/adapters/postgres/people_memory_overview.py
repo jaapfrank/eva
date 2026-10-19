@@ -30,6 +30,7 @@ from eva.application.people_memory_overview import (
     PeopleMemoryOverviewError,
 )
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt, RecallCurrentFacts
+from eva.application.memory_source_lifecycle import CompactedPrivateMemorySource
 from eva.application.human_understanding import (
     MAX_LEARNING_RECORDS, human_understanding_document_id,
     is_human_understanding_reference, parse_human_understanding_record,
@@ -430,7 +431,8 @@ class PostgresOwnerMemorySources:
                            data["retention_until"].astext > stamp),
                 )
                 if context_conversations is not None:
-                    query = query.where(c.phase != "memory_not_selected")
+                    query = query.where(c.phase != "memory_not_selected",
+                        sa.not_(data.has_key("content_compaction")))
                     channel_scope = data["conversation_id"].astext.in_(context_conversations)
                     if context_voice:
                         # Only the already verified owner and private audience above
@@ -496,7 +498,9 @@ class PostgresOwnerMemorySources:
                         original["message_id"].astext == data["source_ref"].astext,
                         original["project_id"].astext.is_not_distinct_from(selected_query.project_id),
                         sa.not_(original.has_key("content_erasure")),
-                        original["text"].astext.is_not(None),
+                        sa.or_(original["text"].astext.is_not(None),
+                            sa.and_(data.has_key("content_compaction"),
+                                original["content_compaction"] == data["content_compaction"])),
                     )).add_columns(
                         ingress.c.event_id.label("ingress_event_id"),
                         ingress.c.payload.label("ingress_payload"),
@@ -579,7 +583,11 @@ class PostgresOwnerMemorySources:
                                 or original.get("message_id") != doc.source_ref
                                 or original.get("project_id") != doc.project_id
                                 or "content_erasure" in original
-                                or not isinstance(original.get("text"), str) or not original["text"].strip()
+                                or (not isinstance(doc, CompactedPrivateMemorySource) and
+                                    (not isinstance(original.get("text"), str) or not original["text"].strip()))
+                                or (isinstance(doc, CompactedPrivateMemorySource) and
+                                    ("text" in original or original.get("content_compaction") != doc.content_compaction.to_wire()
+                                     or "text_sha256" in original))
                                 or row.ingress_occurred_at > now):
                             raise PeopleMemoryOverviewError("selected private ingress scope differs")
                         binding = selected_query.scope.get("observation_binding_sha256")
@@ -589,8 +597,17 @@ class PostgresOwnerMemorySources:
                                     or not isinstance(original_binding, dict)
                                     or original_binding.get("binding_sha256") != binding):
                                 raise PeopleMemoryOverviewError("selected private source observation binding differs")
-                        text = original["text"]
                         source_time = row.ingress_occurred_at.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+                        if isinstance(doc, CompactedPrivateMemorySource):
+                            if _learning_document or _recent_learning:
+                                raise PeopleMemoryOverviewError("typed learning cannot use expired day text")
+                            sources.append({"source_ref": doc.source_ref, "evidence_ref": doc.evidence_ref,
+                                "principal_id": doc.principal_id, "project_id": doc.project_id,
+                                "occurred_at": source_time, "text": None, "truncated": False,
+                                "raw_state": "compacted", "compacted_at": doc.content_compaction.compacted_at,
+                                "content_sha256": doc.content_compaction.content_sha256})
+                            continue
+                        text = original["text"]
                         if _learning_document:
                             return doc, text, source_time
                         truncated = len(text) > 4096
@@ -620,7 +637,10 @@ class PostgresOwnerMemorySources:
                         return doc, state
                     sources.append(MemorySource(str(row.event_id),
                         row.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                        doc.content[:2048], len(doc.content) > 2048, state))
+                        ("Dagtekst vervallen na droomverwerking; herkomst blijft bewaard."
+                         if isinstance(doc, CompactedPrivateMemorySource) else doc.content[:2048]),
+                        False if isinstance(doc, CompactedPrivateMemorySource) else len(doc.content) > 2048,
+                        state, "compacted" if isinstance(doc, CompactedPrivateMemorySource) else "available"))
                 if _recent_learning:
                     return tuple(sources)
                 if selected_refs is not None:
@@ -950,6 +970,11 @@ class PostgresPeopleMemoryOverview:
         first = events[0]
         queued_data = self._event_data(first)
         document = conversation_memory_document_from_outbox_data(queued_data)
+        source_content_sha256 = (document.content_compaction.content_sha256
+            if isinstance(document, CompactedPrivateMemorySource)
+            else hashlib.sha256(document.content.encode()).hexdigest())
+        source_payload_sha256 = (document.content_compaction.source_payload_sha256
+            if isinstance(document, CompactedPrivateMemorySource) else canonical_sha256(queued_data))
         operation_id = str(uuid5(NAMESPACE_URL, document.document_id))
         if (
             first.event_type != "MEMORY_RETAIN_QUEUED"
@@ -1011,7 +1036,7 @@ class PostgresPeopleMemoryOverview:
                 bindings = [self._event_data(candidate) for candidate in batch_events
                             if candidate.event_type == "MEMORY_DREAM_DISPATCH_BOUND"]
                 if ({"document_id": document.document_id,
-                     "source_payload_sha256": canonical_sha256(queued_data)} not in members
+                     "source_payload_sha256": source_payload_sha256} not in members
                         or bindings != [{"bank_id": data["bank_id"], "operation_id": data["operation_id"]}]):
                     raise PeopleMemoryOverviewError("dream reconciliation operation/source differs")
                 self._require_event_state(event, phase="memory_retaining", status="waiting_for_proof",
@@ -1034,7 +1059,7 @@ class PostgresPeopleMemoryOverview:
                 if (
                     receipt.document_id != document.document_id
                     or receipt.content_sha256
-                    != hashlib.sha256(document.content.encode()).hexdigest()
+                    != source_content_sha256
                 ):
                     raise PeopleMemoryOverviewError(
                         "memory retention receipt differs"
@@ -1050,7 +1075,7 @@ class PostgresPeopleMemoryOverview:
                 if (prior_type not in {"MEMORY_RETAIN_ATTEMPTED", "MEMORY_DREAM_SOURCE_RECONCILED"}
                         or set(data) != {"bank_id", "content_sha256", "document_id", "selected_fact_count", "operation_id"}
                         or data["document_id"] != document.document_id
-                        or data["content_sha256"] != hashlib.sha256(document.content.encode()).hexdigest()
+                        or data["content_sha256"] != source_content_sha256
                         or type(data["selected_fact_count"]) is not int or data["selected_fact_count"] != 0
                         or not isinstance(data["bank_id"], str) or not data["bank_id"]
                         or not isinstance(data["operation_id"], str) or not data["operation_id"]):

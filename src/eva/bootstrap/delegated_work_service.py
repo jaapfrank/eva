@@ -33,7 +33,7 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.operations.delegated_work_worker import ChildRunner, DelegatedWorkWorker
 
-_SCHEMA_HEAD = "4e_0009_restore_hold"
+_SCHEMA_HEAD = "4e_0010_memory_compaction"
 
 
 def _provider_release() -> DelegatedWorkReleaseSelector:

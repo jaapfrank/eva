@@ -453,13 +453,13 @@ class HindsightMemoryEngine:
         # known here. A missing imported legacy reference is not deletion proof.
         known_source_references = set()
         for fact in memory.confirmed_facts:
-            source = fact.value.get("original_source") if isinstance(fact.value, dict) else None
+            source = (fact.value.get("original_source") or fact.value.get("source_provenance")) if isinstance(fact.value, dict) else None
             if isinstance(source, dict) and all(isinstance(source.get(key), str)
                     for key in ("principal_id", "source_ref", "evidence_ref")):
                 known_source_references.add((source["principal_id"], source["source_ref"], source["evidence_ref"]))
         facts = tuple(fact.model_copy(update={"value": {
             key: value for key, value in fact.value.items()
-            if key not in {"original_source", "learning_context", "observation_sources"}
+            if key not in {"original_source", "source_provenance", "learning_context", "observation_sources"}
         }}) if isinstance(fact.value, dict) else fact for fact in memory.confirmed_facts)
         primary_references, references, observation_references = [], [], {}
         for fact in facts:
@@ -496,10 +496,18 @@ class HindsightMemoryEngine:
                     learning = is_human_understanding_reference(reference[2])
                     if not learning:
                         ordinary_sources += 1
+                    compacted = item.get("raw_state") == "compacted"
+                    if compacted:
+                        if (learning or item.get("text") is not None or item.get("truncated") is not False
+                                or not isinstance(item.get("content_sha256"), str)
+                                or not re.fullmatch(r"[0-9a-f]{64}", item["content_sha256"])):
+                            raise HindsightProjectionProtocolError("compacted source provenance differs")
+                        _canonical_timestamp(item.get("compacted_at"))
                     if (ordinary_sources > 3 or (reference not in references and not learning)
                             or reference[0] not in principals or item["project_id"] != query.project_id
-                            or not isinstance(item["text"], str) or not item["text"]
-                            or len(item["text"]) > 4096 or type(item["truncated"]) is not bool
+                            or (not compacted and (not isinstance(item["text"], str)
+                                or not item["text"] or len(item["text"]) > 4096))
+                            or type(item["truncated"]) is not bool
                             or not isinstance(item["occurred_at"], str)):
                         raise HindsightProjectionProtocolError("original source scope differs")
                     _canonical_timestamp(item["occurred_at"])
@@ -559,7 +567,8 @@ class HindsightMemoryEngine:
                 # Consolidation text never replaces the exact provisional record.
                 fact = fact.model_copy(update={"trust":"host_policy", "value":{**fact.value, **value}})
             if source is not None and isinstance(fact.value, dict):
-                fact = fact.model_copy(update={"value":{**fact.value,"original_source":source}})
+                key = "source_provenance" if source.get("raw_state") == "compacted" else "original_source"
+                fact = fact.model_copy(update={"value":{**fact.value, key: source}})
             enriched.append(fact)
         # These are current host-validated outbox sources, not additional semantic
         # facts or a second store. Exact typed references remain available even

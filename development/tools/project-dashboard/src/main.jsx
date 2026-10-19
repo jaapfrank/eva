@@ -191,8 +191,9 @@ function memorySourcesPayload(value) {
   }
   const ids = new Set();
   for (const source of payload.sources) {
-    exactObject(source, ['source_id', 'occurred_at', 'excerpt', 'truncated', 'retention_state'], 'geheugenbron');
+    exactObject(source, ['source_id', 'occurred_at', 'excerpt', 'truncated', 'retention_state', 'raw_state'], 'geheugenbron');
     if (typeof source.source_id !== 'string' || !uuid.test(source.source_id) || ids.has(source.source_id)
+      || !['available', 'compacted'].includes(source.raw_state)
       || !timestamp(source.occurred_at) || typeof source.excerpt !== 'string'
       || !source.excerpt || [...source.excerpt].length > 2048 || typeof source.truncated !== 'boolean'
       || !['retained', 'pending', 'needs_help', 'day_context', 'dream_processing', 'not_selected'].includes(source.retention_state)) throw new Error('Geheugenbron wijkt af');
@@ -212,9 +213,10 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged, onSelec
     const controller = new AbortController();
     setDetail(null); setError('');
     readJson(`${MEMORY_VIEW}/sources/${sourceId}`, { signal: controller.signal }).then(value => {
-      exactObject(value, ['contract', 'source_id', 'content', 'occurred_at', 'retention_state', 'origin', 'kind', 'trust', 'learning', 'current_learning', 'current_source_id', 'can_forget', 'erasure_scope'], 'geheugenbron');
+      exactObject(value, ['contract', 'source_id', 'content', 'occurred_at', 'retention_state', 'origin', 'kind', 'trust', 'learning', 'current_learning', 'current_source_id', 'can_forget', 'erasure_scope', 'raw_state'], 'geheugenbron');
       if (value.contract !== 'EvaOwnerMemorySourceView/v1' || value.source_id !== sourceId
-        || typeof value.content !== 'string' || !value.content || value.content.length > 1048576
+        || !['available', 'compacted'].includes(value.raw_state)
+        || (value.raw_state === 'compacted' ? value.content !== null : typeof value.content !== 'string' || !value.content || value.content.length > 1048576)
         || !['retained', 'pending', 'needs_help', 'day_context', 'dream_processing', 'not_selected'].includes(value.retention_state)
         || typeof value.origin !== 'string' || value.origin.length > 80) throw new Error();
       if (!controller.signal.aborted) setDetail(value);
@@ -250,7 +252,9 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged, onSelec
     {detail && <>
       <p>{detail.origin} · {new Date(detail.occurred_at).toLocaleString('nl-NL')}</p>
       <p className={`memory-kind ${detail.kind}`}>{detail.kind === 'inference' ? 'Afleiding van Eva · geen vastgesteld feit' : detail.kind === 'legacy' ? 'Oude bron · niet bevestigd' : 'Broninformatie · wat is gezegd of waargenomen'}</p>
-      <div className="memory-full-content">{detail.content}</div>
+      <div className="memory-full-content">{detail.raw_state === 'compacted'
+        ? 'De tijdelijke dagtekst is vervallen na droomverwerking. Geselecteerde kennis en de bronverwijzing blijven behouden; je kunt die kennis nog corrigeren of vergeten.'
+        : detail.content}</div>
       {detail.learning && <div className="memory-learning"><p>Soort: {detail.learning.kind === 'expectation' ? 'Verwachting' : 'Persoonsaanname'} · beoordeling: {({open:'Open',confirmed:'Bevestigd',refuted:'Weerlegd',unknown:'Onbekend'})[detail.learning.outcome]}</p>
         <p>Onzekerheid: {detail.learning.uncertainty_reason}</p>
         {detail.current_learning && <><h4>Actuele herziening</h4><p>{detail.current_learning.interpretation}</p>
@@ -345,7 +349,7 @@ function MemorySources({ selectedSource, onMemoryChanged }) {
       {!page.sources.length && <p role="status">Nog geen zichtbare geheugenbronnen.</p>}
       <ol className="memory-list">{page.sources.map(source => <li key={source.source_id}>
         <div className="memory-meta"><time dateTime={source.occurred_at}>{new Date(source.occurred_at).toLocaleString('nl-NL')}</time>
-          <span>{labels[source.retention_state]}</span></div>
+          <span>{labels[source.retention_state]}{source.raw_state === 'compacted' ? ' · dagtekst vervallen' : ''}</span></div>
         <p className="memory-excerpt">{source.excerpt}</p>
         {source.truncated && <small>Fragment — deze bron is langer dan hier getoond.</small>}
         <button onClick={() => { setNotice(''); setSelected(source.source_id); }}>Bekijken en aanpassen</button>

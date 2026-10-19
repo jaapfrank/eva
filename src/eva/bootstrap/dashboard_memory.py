@@ -4,6 +4,7 @@ from uuid import uuid4
 from eva.application.conversation import ConversationActionCall, ConversationConflict, ConversationTurn, GroundedReply
 from eva.application.human_understanding import is_human_understanding_reference, parse_human_understanding_record
 from eva.application.memory import RecallCurrentFacts
+from eva.application.memory_source_lifecycle import CompactedPrivateMemorySource
 from eva.application.memory_audience import MemoryAudience
 from eva.providers.human_understanding_actions import ACTION, HumanUnderstandingActions
 
@@ -44,7 +45,9 @@ def source_view(runtime, source_id, *, now=None):
     kind = "inference" if doc.trust == "model_inference_unconfirmed" else "legacy" if doc.trust == "legacy_unverified" else "source"
     exchange = doc.document_id == f"{doc.conversation_id}:exchange:{doc.source_ref}"
     return {"contract": "EvaOwnerMemorySourceView/v1", "source_id": source_id,
-        "content": record["interpretation"] if record else doc.content,
+        "content": (None if isinstance(doc, CompactedPrivateMemorySource)
+            else record["interpretation"] if record else doc.content),
+        "raw_state": "compacted" if isinstance(doc, CompactedPrivateMemorySource) else "available",
         "occurred_at": doc.occurred_at, "retention_state": state,
         "origin": "Telegram" if doc.conversation_id.startswith("telegram:") else "Eigen geheugen",
         "kind": kind, "trust": doc.trust, "learning": record,

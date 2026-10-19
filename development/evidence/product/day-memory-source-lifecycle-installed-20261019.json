@@ -1,0 +1,99 @@
+{
+  "contract": "EvaMemorySourceLifecycleInstalled/v1",
+  "recordedAt": "2026-10-19T12:03:00.789605+00:00",
+  "taskId": "E4.11",
+  "state": "installed",
+  "summary": "Tijdelijke tekst van erkende vorige-daggesprekken kan in de bestaande rustfase vervallen; relevante kennis, exacte herkomst, correcties en bewust vergeten blijven werken.",
+  "selection": "Bestaande Hindsight/droomselectie; geen nieuw classificatiemodel, voorbeeldregel, geheugen of daemon.",
+  "expiryConditions": [
+    "Gewoon privégesprek zonder project of typed learning/import.",
+    "Vorige UTC-dag en volledig voltooid cohort met exact native bronbewijs.",
+    "Bron, oorspronkelijk bericht en antwoord atomair; behoud van oorspronkelijke hashes."
+  ],
+  "tests": {
+    "consumerAndApi": 44,
+    "sourcePostgres": 13,
+    "ownerPostgres": 2,
+    "schemaRegistration": 11,
+    "totalDistinctChecks": 70,
+    "liveModelRequests": 0
+  },
+  "installation": {
+    "checkedAt": "2026-10-19T12:03:00.789605+00:00",
+    "roles": {
+      "core": {
+        "image": "sha256:44e82f18f35716a08208191ada9153e16c349a3ae02681fcf2b6b5ddf2065d02",
+        "healthy": true,
+        "allSourceHashesMatch": true,
+        "sourceFileCount": 390,
+        "filesystemLayers": 4
+      },
+      "worker": {
+        "image": "sha256:18af2412c7a448c0fca666dabab25bb3c2d75070ef74b3d339e153d8bbafa7ff",
+        "healthy": true,
+        "allSourceHashesMatch": true,
+        "sourceFileCount": 372,
+        "filesystemLayers": 3
+      }
+    },
+    "http": [
+      {
+        "path": "/internal/v1/dashboard/memory-sources?limit=2",
+        "httpStatus": 200,
+        "sourceCount": 2,
+        "rawStates": [
+          "available",
+          "available"
+        ]
+      },
+      {
+        "path": "/internal/v1/dashboard/people-memory",
+        "httpStatus": 200,
+        "memoryState": "unavailable"
+      }
+    ],
+    "modelRequests": 0,
+    "runtime": {
+      "readyzStatus": 200,
+      "ready": true,
+      "databaseHead": "4e_0010_memory_compaction",
+      "workerHead": "4e_0010_memory_compaction"
+    },
+    "ui": {
+      "httpStatus": 200,
+      "sealedJavascriptMatches": true
+    }
+  },
+  "installationHistory": [
+    {
+      "outcome": "first_install_incomplete",
+      "cause": "Werkdienstcontrole verwachtte vorige schemahead; oorspronkelijke foutregistratie behouden.",
+      "resolvedBy": "Gerichte registratiesynchronisatie; geen terugzetting of opnieuw uitgevoerde opdracht."
+    }
+  ],
+  "imageMaintenance": {
+    "coreBaseLayersBefore": 422,
+    "workerBaseLayersBefore": 323,
+    "newBases": 1,
+    "currentCoreLayers": 4,
+    "currentWorkerLayers": 3,
+    "scope": "Ongewijzigde imagebestanden/configuratie gerepackt; geen runtimegegevens geëxporteerd."
+  },
+  "limitations": [
+    "Oude cohorten zonder volledig brongebonden ontvangstbewijs worden niet blind gecompacteerd.",
+    "Een deels gewist cohort houdt overige tekst voorlopig; het blokkeert nieuwere cohorten niet.",
+    "Gesloten native taakpayloads kunnen nog brontekst bevatten; dit is geen volledige verwijdering van alle technische tekstkopieën.",
+    "Historische integriteits- en wisregistraties houden het grove geheugenoverzicht nog unavailable.",
+    "Bewijsmetadata neemt opslag in; verwijderen van tekst bewijst geen netto database-, token- of snelheidswinst.",
+    "Meerdaags automatisch gezinsgebruik is nog niet waargenomen; volledige E4.11 en gezinsacceptatie blijven open."
+  ],
+  "usage": {
+    "developmentLiveModelRequests": 0,
+    "runtimeAutonomyUsage": "not measured in this delivery",
+    "creditCost": null
+  },
+  "actualFamilyExpiryObserved": false,
+  "wholeTaskComplete": false,
+  "ownerActionRequired": false,
+  "review": "development/reviews/day-memory-source-lifecycle-review-20261019.json"
+}

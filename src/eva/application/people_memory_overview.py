@@ -62,10 +62,14 @@ class MemorySource:
     truncated: bool
     retention_state: Literal["retained", "pending", "needs_help", "day_context", "dream_processing", "not_selected"]
 
+    raw_state: Literal["available", "compacted"] = "available"
+
     def __post_init__(self) -> None:
         memory_source_page_request(1, f"{self.occurred_at}|{self.source_id}")
         if (not isinstance(self.excerpt, str) or not self.excerpt
                 or len(self.excerpt) > 2048 or type(self.truncated) is not bool
+                or self.raw_state not in {"available", "compacted"}
+                or (self.raw_state == "compacted" and self.truncated)
                 or self.retention_state not in {"retained", "pending", "needs_help", "day_context", "dream_processing", "not_selected"}):
             raise ValueError("memory source is invalid")
 
@@ -89,7 +93,7 @@ class MemorySourcePage:
             "sources": [
                 {"source_id": item.source_id, "occurred_at": item.occurred_at,
                  "excerpt": item.excerpt, "truncated": item.truncated,
-                 "retention_state": item.retention_state}
+                 "retention_state": item.retention_state, "raw_state": item.raw_state}
                 for item in self.sources
             ],
             "next_cursor": self.next_cursor,

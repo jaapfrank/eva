@@ -847,8 +847,8 @@
     "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
     "status": "in_progress",
     "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-    "nextAction": "De bestaande bronlevenscyclus afronden: tijdelijke dagtekst na bevestigde droomverwerking laten verlopen zonder compacte kennis of herkomst te verliezen. Oude proef-/wisregistraties met behoud van foutbewijs van actuele geheugenstatus scheiden; geen nieuwe modelproeven voor gesloten oude proeven.",
-    "checkedAt": "2026-10-19T11:29:00.247359+00:00",
+    "nextAction": "Bestaande gesloten native ontvangsten en historische bronregistraties gericht verzoenen zonder nieuwe modelaanvragen; daarna bewaarlast inclusief bewijsmetadata meten. Oude fouten en wisregistraties blijven bewaard en zichtbaar; geen nieuwe vergelijking of spraakwerk.",
+    "checkedAt": "2026-10-19T12:03:00.789605+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,20 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.11 · Dagtekst na bevestigde droomverwerking laten vervallen",
+            "state": "installed",
+            "summary": "Tijdelijke tekst van erkende vorige-daggesprekken kan in de bestaande rustfase vervallen; relevante kennis, exacte herkomst, correcties en bewust vergeten blijven werken.",
+            "remaining": "Dag-/droomoverdracht, historische duplicaatopschoning en automatische bronlevenscyclus zijn geïnstalleerd. Nog open: oude cohorten zonder volledig ontvangstbewijs, native gesloten taakpayloads en irrelevante historische kennis onderbouwd opruimen; bewijsmetadata/opslag verder compact maken, oude statusfouten en meerdaags gebruik. Geen bewezen netto database-, token- of snelheidswinst.",
+            "source": "development/evidence/product/day-memory-source-lifecycle-installed-20261019.json",
+            "review": "development/reviews/day-memory-source-lifecycle-review-20261019.json",
+            "checkedAt": "2026-10-19T12:03:00.789605+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "completionScope": "Geïnstalleerde bronlevenscyclus; volledige E4.11 en meerdaags gebruik blijven open",
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E4.11 · Historische dubbele geheugenopslag opgeruimd",
             "state": "installed",
@@ -2655,16 +2669,16 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E4.11 · Historische dubbele geheugenopslag opgeruimd",
+          "title": "E4.11 · Dagtekst na bevestigde droomverwerking laten vervallen",
           "state": "installed",
-          "summary": "1.592 exacte projectiekopieën opgeschoond: 556.769 bytes dubbele tekst weg. Alle opgeslagen kennis en oorspronkelijke bronnen bleven exact gelijk. Onafhankelijke review en verse uitlezing bevestigd; geen nieuwe modelaanvragen.",
-          "remaining": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
-          "source": "development/evidence/product/historical-memory-text-compaction-20261019.json",
-          "review": "development/reviews/historical-memory-text-compaction-review-20261019.json",
-          "checkedAt": "2026-10-19T11:29:00.247359+00:00",
+          "summary": "Tijdelijke tekst van erkende vorige-daggesprekken kan in de bestaande rustfase vervallen; relevante kennis, exacte herkomst, correcties en bewust vergeten blijven werken.",
+          "remaining": "Dag-/droomoverdracht, historische duplicaatopschoning en automatische bronlevenscyclus zijn geïnstalleerd. Nog open: oude cohorten zonder volledig ontvangstbewijs, native gesloten taakpayloads en irrelevante historische kennis onderbouwd opruimen; bewijsmetadata/opslag verder compact maken, oude statusfouten en meerdaags gebruik. Geen bewezen netto database-, token- of snelheidswinst.",
+          "source": "development/evidence/product/day-memory-source-lifecycle-installed-20261019.json",
+          "review": "development/reviews/day-memory-source-lifecycle-review-20261019.json",
+          "checkedAt": "2026-10-19T12:03:00.789605+00:00",
           "newProductFunctionCompleted": false,
           "completedTaskIds": [],
-          "completionScope": "Toegepaste historische duplicaatopschoning; volledige E4.11 nog open",
+          "completionScope": "Geïnstalleerde bronlevenscyclus; volledige E4.11 en meerdaags gebruik blijven open",
           "ownerAcceptance": false,
           "familyAcceptance": false
         },
@@ -2673,10 +2687,10 @@
           "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
           "state": "in_progress",
           "status": "in_progress",
-          "summary": "Dubbele geheugenopslag opgeruimd; bewaartermijnen afmaken",
-          "detail": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
+          "summary": "Dagtekstlevenscyclus geïnstalleerd · historie afmaken",
+          "detail": "Dag-/droomoverdracht, historische duplicaatopschoning en automatische bronlevenscyclus zijn geïnstalleerd. Nog open: oude cohorten zonder volledig ontvangstbewijs, native gesloten taakpayloads en irrelevante historische kennis onderbouwd opruimen; bewijsmetadata/opslag verder compact maken, oude statusfouten en meerdaags gebruik. Geen bewezen netto database-, token- of snelheidswinst.",
           "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-          "checkedAt": "2026-10-19T11:29:00.247359+00:00"
+          "checkedAt": "2026-10-19T12:03:00.789605+00:00"
         },
         "next": {
           "taskId": "E4.11",
@@ -6683,9 +6697,9 @@
                 "ownerActionRequired": false,
                 "scopeOrigin": "selective-memory-20261019",
                 "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-                "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden. Historische dubbele native tekstkopieën van 1.592 bevestigde bronnen zijn op 19 oktober verwijderd; alle 1.428 betrokken kennisregels en oorspronkelijke bronnen bleven exact gelijk.",
-                "gap": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
-                "nextAction": "De bestaande bronlevenscyclus afronden: tijdelijke dagtekst na bevestigde droomverwerking laten verlopen zonder compacte kennis of herkomst te verliezen. Oude proef-/wisregistraties met behoud van foutbewijs van actuele geheugenstatus scheiden; geen nieuwe modelproeven voor gesloten oude proeven.",
+                "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden. Historische dubbele native tekstkopieën van 1.592 bevestigde bronnen zijn op 19 oktober verwijderd; alle 1.428 betrokken kennisregels en oorspronkelijke bronnen bleven exact gelijk. Volledig erkende vorige-daguitwisselingen kunnen nu in de bestaande rustfase tekst laten vervallen met behoud van kennis/herkomst; eigenaarlezers, correcties en bewust vergeten volgen dezelfde route.",
+                "gap": "Dag-/droomoverdracht, historische duplicaatopschoning en automatische bronlevenscyclus zijn geïnstalleerd. Nog open: oude cohorten zonder volledig ontvangstbewijs, native gesloten taakpayloads en irrelevante historische kennis onderbouwd opruimen; bewijsmetadata/opslag verder compact maken, oude statusfouten en meerdaags gebruik. Geen bewezen netto database-, token- of snelheidswinst.",
+                "nextAction": "Bestaande gesloten native ontvangsten en historische bronregistraties gericht verzoenen zonder nieuwe modelaanvragen; daarna bewaarlast inclusief bewijsmetadata meten. Oude fouten en wisregistraties blijven bewaard en zichtbaar; geen nieuwe vergelijking of spraakwerk.",
                 "files": [
                   "src/eva/application/memory.py",
                   "src/eva/application/memory_background.py",
@@ -6694,16 +6708,26 @@
                   "development/tools/project-dashboard/src/owner-memory-view.jsx",
                   "development/tools/project-dashboard/src/main.jsx",
                   "src/eva/adapters/postgres/operational_timeline.py",
-                  "src/eva/adapters/postgres/people_memory_overview.py"
+                  "src/eva/adapters/postgres/people_memory_overview.py",
+                  "src/eva/application/memory_source_lifecycle.py",
+                  "src/eva/adapters/postgres/conversation_journal.py",
+                  "src/eva/application/people_memory_overview.py",
+                  "src/eva/bootstrap/dashboard_memory.py",
+                  "src/eva/bootstrap/runtime.py",
+                  "deploy/migrations/versions/4e_0010_memory_compaction.py",
+                  "src/eva/bootstrap/delegated_work_service.py",
+                  "src/eva/operations/install_schema.py",
+                  "src/tools/portable_v2_profile.py",
+                  "src/tools/managed_b_candidate/release_inputs.py"
                 ],
                 "dependsOn": [
                   "E2.2"
                 ],
-                "checkedAt": "2026-10-19T11:29:00.247359+00:00",
+                "checkedAt": "2026-10-19T12:03:00.789605+00:00",
                 "assignment": {
                   "coordinator": "/root",
                   "activeWorkers": [],
-                  "scope": "Root: bestaande E4.11 bronlevenscyclus; onafhankelijke dataopschoningreview gereed. Spraak blijft bij de andere uitvoerder."
+                  "scope": "E4.11 historische bronlevenscyclus en netto bewaarlast; spraak bij de andere uitvoerder."
                 },
                 "ownerInstructions": {
                   "availableNow": true,
@@ -6712,7 +6736,7 @@
                   ],
                   "blocksIndependentWork": false
                 },
-                "latestEvidence": "development/evidence/product/historical-memory-text-compaction-20261019.json",
+                "latestEvidence": "development/evidence/product/day-memory-source-lifecycle-installed-20261019.json",
                 "independentReview": "development/reviews/historical-memory-text-compaction-review-20261019.json",
                 "installed": true,
                 "technicalCompletion": false,
@@ -6727,7 +6751,8 @@
                   "fullDreamHandoffImplemented": true,
                   "newTaskAdded": false,
                   "implementedScope": "Bestaande dagcontext→begrensde droomcohorten met brongebonden ontvangsten en wissen; historische opschoning/volledige E4.11 nog open."
-                }
+                },
+                "latestReview": "development/reviews/day-memory-source-lifecycle-review-20261019.json"
               }
             ],
             "previousBoundedCompletion": {
@@ -11266,9 +11291,9 @@
               "ownerActionRequired": false,
               "scopeOrigin": "selective-memory-20261019",
               "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-              "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden. Historische dubbele native tekstkopieën van 1.592 bevestigde bronnen zijn op 19 oktober verwijderd; alle 1.428 betrokken kennisregels en oorspronkelijke bronnen bleven exact gelijk.",
-              "gap": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
-              "nextAction": "De bestaande bronlevenscyclus afronden: tijdelijke dagtekst na bevestigde droomverwerking laten verlopen zonder compacte kennis of herkomst te verliezen. Oude proef-/wisregistraties met behoud van foutbewijs van actuele geheugenstatus scheiden; geen nieuwe modelproeven voor gesloten oude proeven.",
+              "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden. Historische dubbele native tekstkopieën van 1.592 bevestigde bronnen zijn op 19 oktober verwijderd; alle 1.428 betrokken kennisregels en oorspronkelijke bronnen bleven exact gelijk. Volledig erkende vorige-daguitwisselingen kunnen nu in de bestaande rustfase tekst laten vervallen met behoud van kennis/herkomst; eigenaarlezers, correcties en bewust vergeten volgen dezelfde route.",
+              "gap": "Dag-/droomoverdracht, historische duplicaatopschoning en automatische bronlevenscyclus zijn geïnstalleerd. Nog open: oude cohorten zonder volledig ontvangstbewijs, native gesloten taakpayloads en irrelevante historische kennis onderbouwd opruimen; bewijsmetadata/opslag verder compact maken, oude statusfouten en meerdaags gebruik. Geen bewezen netto database-, token- of snelheidswinst.",
+              "nextAction": "Bestaande gesloten native ontvangsten en historische bronregistraties gericht verzoenen zonder nieuwe modelaanvragen; daarna bewaarlast inclusief bewijsmetadata meten. Oude fouten en wisregistraties blijven bewaard en zichtbaar; geen nieuwe vergelijking of spraakwerk.",
               "files": [
                 "src/eva/application/memory.py",
                 "src/eva/application/memory_background.py",
@@ -11277,16 +11302,26 @@
                 "development/tools/project-dashboard/src/owner-memory-view.jsx",
                 "development/tools/project-dashboard/src/main.jsx",
                 "src/eva/adapters/postgres/operational_timeline.py",
-                "src/eva/adapters/postgres/people_memory_overview.py"
+                "src/eva/adapters/postgres/people_memory_overview.py",
+                "src/eva/application/memory_source_lifecycle.py",
+                "src/eva/adapters/postgres/conversation_journal.py",
+                "src/eva/application/people_memory_overview.py",
+                "src/eva/bootstrap/dashboard_memory.py",
+                "src/eva/bootstrap/runtime.py",
+                "deploy/migrations/versions/4e_0010_memory_compaction.py",
+                "src/eva/bootstrap/delegated_work_service.py",
+                "src/eva/operations/install_schema.py",
+                "src/tools/portable_v2_profile.py",
+                "src/tools/managed_b_candidate/release_inputs.py"
               ],
               "dependsOn": [
                 "E2.2"
               ],
-              "checkedAt": "2026-10-19T11:29:00.247359+00:00",
+              "checkedAt": "2026-10-19T12:03:00.789605+00:00",
               "assignment": {
                 "coordinator": "/root",
                 "activeWorkers": [],
-                "scope": "Root: bestaande E4.11 bronlevenscyclus; onafhankelijke dataopschoningreview gereed. Spraak blijft bij de andere uitvoerder."
+                "scope": "E4.11 historische bronlevenscyclus en netto bewaarlast; spraak bij de andere uitvoerder."
               },
               "ownerInstructions": {
                 "availableNow": true,
@@ -11295,7 +11330,7 @@
                 ],
                 "blocksIndependentWork": false
               },
-              "latestEvidence": "development/evidence/product/historical-memory-text-compaction-20261019.json",
+              "latestEvidence": "development/evidence/product/day-memory-source-lifecycle-installed-20261019.json",
               "independentReview": "development/reviews/historical-memory-text-compaction-review-20261019.json",
               "installed": true,
               "technicalCompletion": false,
@@ -11310,7 +11345,8 @@
                 "fullDreamHandoffImplemented": true,
                 "newTaskAdded": false,
                 "implementedScope": "Bestaande dagcontext→begrensde droomcohorten met brongebonden ontvangsten en wissen; historische opschoning/volledige E4.11 nog open."
-              }
+              },
+              "latestReview": "development/reviews/day-memory-source-lifecycle-review-20261019.json"
             }
           ],
           "previousBoundedCompletion": {

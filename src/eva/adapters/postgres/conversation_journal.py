@@ -33,6 +33,7 @@ from eva.application.conversation import (
     GroundedReply,
     RecentConversationMessage,
 )
+from eva.application.memory_source_lifecycle import compaction_proof_from_data
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 
 
@@ -63,6 +64,22 @@ class PostgresConversationJournal(PostgresScopedRole):
         self._engine = engine
         self._scope_value = scope
         self._timeline = PostgresOperationalTimeline(engine, scope)
+
+    @staticmethod
+    def _require_compacted_content(data: dict[str, Any]):
+        """Validate metadata-only journal content without reconstructing raw text."""
+        try:
+            proof = compaction_proof_from_data(data.get("content_compaction"))
+        except ValueError as error:
+            raise ConversationConflict("conversation content compaction proof is invalid") from error
+        if "text" in data:
+            raise ConversationConflict("conversation text and compaction proof coexist")
+        if data.get("kind") == "conversation_reply":
+            if data.get("text_sha256") != proof.reply_text_sha256:
+                raise ConversationConflict("compacted conversation reply hash differs")
+        elif data.get("kind") != "conversation_ingress" or "text_sha256" in data:
+            raise ConversationConflict("compacted conversation ingress fields differ")
+        return proof
 
     @staticmethod
     def _timestamp(value: str) -> datetime:
@@ -100,6 +117,17 @@ class PostgresConversationJournal(PostgresScopedRole):
                 ) from None
             payload = events[0].payload
             durable = payload.get("data") if isinstance(payload, dict) else None
+            if isinstance(durable, dict) and "content_compaction" in durable:
+                proof = self._require_compacted_content(durable)
+                if "content_erasure" in durable:
+                    raise ConversationConflict("conversation ingress content was erased") from None
+                reconstructed = {**payload, "data": data}
+                if (canonical_sha256(reconstructed) != proof.ingress_payload_sha256
+                        or events[0].occurred_at != self._timestamp(turn.occurred_at)):
+                    raise ConversationConflict(
+                        "conversation message identity was reused with different ingress"
+                    ) from None
+                raise ConversationConflict("conversation ingress day text has expired; replay is unavailable") from None
             if durable != data or events[0].occurred_at != self._timestamp(
                 turn.occurred_at
             ):
@@ -564,6 +592,9 @@ class PostgresConversationJournal(PostgresScopedRole):
             provider = data.get("provider")
             if text is None and isinstance(data.get("content_erasure"), dict):
                 raise ConversationConflict("conversation reply content was erased")
+            if "content_compaction" in data:
+                self._require_compacted_content(data)
+                raise ConversationConflict("conversation reply day text has expired; replay is unavailable")
             if (
                 not isinstance(evidence, list)
                 or not all(isinstance(item, str) for item in evidence)
@@ -801,6 +832,8 @@ class PostgresConversationJournal(PostgresScopedRole):
                         ),
                         data["conversation_id"].astext == turn.conversation_id,
                         data["principal_id"].astext == turn.principal_id,
+                        sa.not_(data.has_key("content_compaction")),
+                        sa.not_(data.has_key("content_erasure")),
                     )
                     .order_by(
                         operational_events.c.occurred_at.desc(),
@@ -830,7 +863,8 @@ class PostgresConversationJournal(PostgresScopedRole):
         for row in reversed(rows):
             payload = row.payload
             value: Any = payload.get("data") if isinstance(payload, dict) else None
-            if not isinstance(value, dict):
+            if (not isinstance(value, dict) or "content_compaction" in value
+                    or "content_erasure" in value):
                 continue
             if exclude_message_id and value.get("message_id") == exclude_message_id:
                 continue
@@ -949,17 +983,21 @@ class PostgresConversationJournal(PostgresScopedRole):
                     raise ConversationConflict("conversation erasure target is malformed")
                 old_erasure = value.get("content_erasure")
                 if "text" not in value:
-                    if not isinstance(old_erasure, dict):
+                    if isinstance(old_erasure, dict):
+                        if existing is None:
+                            existing = old_erasure
+                        elif existing != old_erasure:
+                            raise ConversationConflict(
+                                "conversation erasure proofs differ within one exchange"
+                            )
+                        continue
+                    if "content_compaction" not in value:
                         raise ConversationConflict(
                             "conversation content disappeared without an erasure proof"
                         )
-                    if existing is None:
-                        existing = old_erasure
-                    elif existing != old_erasure:
-                        raise ConversationConflict(
-                            "conversation erasure proofs differ within one exchange"
-                        )
-                    continue
+                    self._require_compacted_content(value)
+                    if canonical_sha256(payload) != bytes(row.payload_sha256).hex():
+                        raise ConversationConflict("compacted conversation payload hash differs")
                 if old_erasure is not None:
                     raise ConversationConflict(
                         "conversation text and erasure proof coexist"

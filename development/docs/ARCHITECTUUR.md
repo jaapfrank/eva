@@ -50,6 +50,14 @@ Wissen verzoent eerst een eventueel lopende native operatie, zonder nieuwe extra
 Het importpad en de gerichte werk-/leerroute blijven afzonderlijk bestaan. De beperkte
 native overdrachtscontrole bewijst geen dagelijkse kwaliteits- of tokenvoorsprong;
 historische opschoning en het statusoverzicht voor grote historie blijven open.
+De geïnstalleerde bronlevenscyclus bewaart volledige bronontvangsten op het cohort.
+Een scopegebonden PostgreSQL-functie laat vorige-dagtekst van bron/bericht/antwoord
+atomair vervallen. `CompactedPrivateMemorySource` bevat uitsluitend identiteit en
+bewijs, geen `.content` of modeltekst. Actuele eigenaarcontrole laat geselecteerde
+native kennis daarmee terugkomen; bewust vergeten verwijdert die kennis afzonderlijk.
+Lezers geven compactmetadata nooit als oorspronkelijk gesprek aan het model.
+Geen nieuwe native extractie, TTL-wijziging of vrijgave van alle opslagruimte bij
+tekstcompactie. Legacy cohorten zonder volledig bewijs blijven zichtbaar behouden.
 
 ## Moduleverantwoordelijkheden
 

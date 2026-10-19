@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, replace, asdict
 from datetime import UTC, datetime
 import hashlib
+import json
 import re
 from uuid import NAMESPACE_URL, uuid5
 
@@ -24,6 +25,10 @@ from eva.adapters.postgres.operational_timeline import (
 )
 from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt
+from eva.application.memory_source_lifecycle import (
+    CompactedPrivateMemorySource, MemorySourceCompactionProof,
+    compacted_private_memory_source_from_data, source_identity_sha256,
+)
 from eva.application.memory_audience import (
     MemoryAudience,
     memory_audience_from_wire,
@@ -34,7 +39,7 @@ from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 
 @dataclass(frozen=True, slots=True)
 class DurableMemoryRetentionJob:
-    document: ConversationMemoryDocument
+    document: ConversationMemoryDocument | CompactedPrivateMemorySource
     state: CheckpointState
 
 
@@ -59,8 +64,13 @@ class MemoryOutboxContentErasureReceipt:
 
 def conversation_memory_document_from_outbox_data(
     data: object,
-) -> ConversationMemoryDocument:
-    """Rebuild and validate the exact document stored at the durable boundary."""
+) -> ConversationMemoryDocument | CompactedPrivateMemorySource:
+    """Return raw source or typed compacted metadata; never invent raw content."""
+    if isinstance(data, dict) and "content_compaction" in data:
+        try:
+            return compacted_private_memory_source_from_data(data)
+        except ValueError as error:
+            raise RuntimeError("durable compacted memory source is invalid") from error
 
     if not isinstance(data, dict) or data.get("kind") != "hindsight_memory_document":
         raise RuntimeError("durable memory outbox document is malformed")
@@ -177,7 +187,7 @@ class PostgresMemoryOutbox(PostgresScopedRole):
         return data
 
     @staticmethod
-    def _document_from_data(data: object) -> ConversationMemoryDocument:
+    def _document_from_data(data: object) -> ConversationMemoryDocument | CompactedPrivateMemorySource:
         return conversation_memory_document_from_outbox_data(data)
 
     def enqueue(self, document: ConversationMemoryDocument) -> DurableMemoryRetentionJob:
@@ -284,6 +294,8 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             or document.installation_id != self._installation_id
         ):
             raise ValueError("memory outbox document crossed its runtime scope")
+        if not isinstance(document, ConversationMemoryDocument):
+            raise ValueError("compacted memory metadata cannot enter retention")
         thread_id = self._thread_id(document.document_id)
         data = self._document_data(document)
         try:
@@ -329,7 +341,7 @@ class PostgresMemoryOutbox(PostgresScopedRole):
         if not isinstance(source, dict) or source.get("content_erasure"):
             return None
         document = self._document_from_data(source)
-        if document.retention_mode != "dream":
+        if isinstance(document, CompactedPrivateMemorySource) or document.retention_mode != "dream":
             return None
         if (document.principal_id != principal_id or document.document_id != document_id
                 or document.source_ref != source_message_id
@@ -594,13 +606,22 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             source_thread = self._thread_id(member['document_id'])
             original = self._timeline.events(source_thread)
             source = original[0].payload.get('data') if original else None
-            if (not isinstance(source, dict) or source.get('content_erasure')
-                    or canonical_sha256(source) != member['source_payload_sha256']):
+            if not isinstance(source, dict) or source.get('content_erasure'):
                 raise RuntimeError('dream batch source was erased or changed; do not redispatch')
             document = self._document_from_data(source)
+            source_state = self._timeline.load(source_thread)
+            if isinstance(document, CompactedPrivateMemorySource):
+                proof = document.content_compaction
+                if (self._timeline.load(thread_id).status != "completed"
+                        or source_state.status != "completed"
+                        or proof.source_payload_sha256 != member['source_payload_sha256']
+                        or proof.cohort_manifest_sha256 != thread_id.removeprefix("memory-dream:")):
+                    raise RuntimeError("compacted dream source binding differs")
+            elif canonical_sha256(source) != member['source_payload_sha256']:
+                raise RuntimeError('dream batch source was erased or changed; do not redispatch')
             if document.retention_mode != 'dream':
                 raise RuntimeError('dream batch source scheduling differs')
-            jobs.append(DurableMemoryRetentionJob(document, self._timeline.load(source_thread)))
+            jobs.append(DurableMemoryRetentionJob(document, source_state))
         if len({job.document.document_id for job in jobs}) != len(jobs):
             raise RuntimeError('dream batch contains duplicate sources')
         return DurableDreamMemoryBatch(self._timeline.load(thread_id), tuple(jobs))
@@ -615,7 +636,9 @@ class PostgresMemoryOutbox(PostgresScopedRole):
         binding = {"bank_id": receipt.bank_id, "operation_id": receipt.operation_id}
         if (len(matches) != 1 or bindings != [binding]
                 or receipt.selected_fact_count is None
-                or receipt.content_sha256 != hashlib.sha256(matches[0].document.content.encode()).hexdigest()):
+                or receipt.content_sha256 != (matches[0].document.content_compaction.content_sha256
+                    if isinstance(matches[0].document, CompactedPrivateMemorySource)
+                    else hashlib.sha256(matches[0].document.content.encode()).hexdigest())):
             raise RuntimeError("settled dream receipt does not match its immutable operation/source")
         job = matches[0]
         if job.state.status == "completed":
@@ -633,6 +656,176 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             status="waiting_for_proof", retry_count=job.state.retry_count,
             last_error_fingerprint=job.state.last_error_fingerprint, data=data)
         return DurableMemoryRetentionJob(job.document, state)
+
+    def bind_dream_receipts(self, batch, receipts, *, now):
+        """Persist exact per-document native acknowledgements, separately from old receipts."""
+        current = self.read_dream_batch(batch.state.thread_id)
+        bindings = [event.payload.get("data") for event in self._timeline.events(current.state.thread_id)
+                    if event.event_type == "MEMORY_DREAM_DISPATCH_BOUND"]
+        if len(bindings) != 1 or not isinstance(receipts, tuple):
+            raise RuntimeError("dream receipts lack one immutable dispatch binding")
+        binding = bindings[0]
+        expected = {job.document.document_id: job.document for job in current.jobs}
+        records = []
+        for receipt in receipts:
+            if not isinstance(receipt, MemoryRetentionReceipt) or receipt.document_id not in expected:
+                raise RuntimeError("dream receipt source differs")
+            document = expected[receipt.document_id]
+            digest = (document.content_compaction.content_sha256
+                if isinstance(document, CompactedPrivateMemorySource)
+                else hashlib.sha256(document.content.encode()).hexdigest())
+            if (receipt.content_sha256 != digest or receipt.bank_id != binding.get("bank_id")
+                    or receipt.operation_id != binding.get("operation_id")
+                    or type(receipt.selected_fact_count) is not int or receipt.selected_fact_count < 0
+                    or receipt.disposition != ("not_selected" if receipt.selected_fact_count == 0 else "retained")):
+                raise RuntimeError("dream receipt acknowledgement differs")
+            records.append(asdict(receipt))
+        if len(records) != len(expected) or {v["document_id"] for v in records} != set(expected):
+            raise RuntimeError("dream receipt membership differs")
+        records.sort(key=lambda value: value["document_id"])
+        data = {"contract": "EvaDreamReceipts/v1",
+                "source_manifest_sha256": current.state.thread_id.removeprefix("memory-dream:"),
+                "receipts": records}
+        previous = [event for event in self._timeline.events(current.state.thread_id)
+                    if event.event_type == "MEMORY_DREAM_RECEIPTS_BOUND"]
+        if previous:
+            if len(previous) != 1 or previous[0].payload.get("data") != data:
+                raise RuntimeError("dream acknowledgement replay differs")
+            return self._timeline.load(current.state.thread_id)
+        return self._timeline.transition(thread_id=current.state.thread_id,
+            expected_revision=current.state.revision, checkpoint_id=current.state.thread_id+":receipts",
+            operation_id=current.state.operation_id, occurred_at=now,
+            event_type="MEMORY_DREAM_RECEIPTS_BOUND",
+            phase="memory_dream_completed" if current.state.status == "completed" else "memory_dream_receipts_bound",
+            status="completed" if current.state.status == "completed" else "active", data=data)
+
+    def compact_day_sources(self, *, now, limit=32):
+        """Compact completed previous-day cohorts under one existing retention fence."""
+        if (not isinstance(now, datetime) or now.tzinfo is None or now.utcoffset() != UTC.utcoffset(now)
+                or now.microsecond or type(limit) is not int or not 1 <= limit <= 128):
+            raise ValueError("private day compaction bounds are invalid")
+        results = []
+        with self.retention_guard():
+            with self._engine.begin() as connection:
+                self._scope(connection)
+                c, e = operational_checkpoints.c, operational_events.c
+                ack_event = operational_events.alias("compaction_ack")
+                manifest_event = operational_events.alias("compaction_manifest")
+                raw_event = operational_events.alias("compaction_raw_source")
+                has_ack = sa.exists(sa.select(1).where(
+                    ack_event.c.tenant_id == c.tenant_id,
+                    ack_event.c.installation_id == c.installation_id,
+                    ack_event.c.thread_id == c.thread_id,
+                    ack_event.c.event_type == "MEMORY_DREAM_RECEIPTS_BOUND"))
+                has_raw_member = sa.exists(sa.select(1).select_from(manifest_event.join(raw_event,
+                    sa.and_(manifest_event.c.tenant_id == raw_event.c.tenant_id,
+                            manifest_event.c.installation_id == raw_event.c.installation_id))).where(
+                    manifest_event.c.tenant_id == c.tenant_id,
+                    manifest_event.c.installation_id == c.installation_id,
+                    manifest_event.c.thread_id == c.thread_id, manifest_event.c.sequence == 1,
+                    manifest_event.c.event_type == "MEMORY_DREAM_BATCH_ASSIGNED",
+                    raw_event.c.sequence == 1, raw_event.c.event_type == "MEMORY_RETAIN_QUEUED",
+                    raw_event.c.payload["data"].has_key("content"),
+                    ~raw_event.c.payload["data"].has_key("content_erasure"),
+                    ~raw_event.c.payload["data"].has_key("content_compaction"),
+                    raw_event.c.payload["data"]["occurred_at"].astext < now.strftime("%Y-%m-%dT00:00:00Z"),
+                    manifest_event.c.payload["data"]["members"].contains(sa.func.jsonb_build_array(
+                        sa.func.jsonb_build_object("document_id", raw_event.c.payload["data"]["document_id"].astext)))))
+                has_erased_member = sa.exists(sa.select(1).select_from(manifest_event.join(raw_event,
+                    sa.and_(manifest_event.c.tenant_id == raw_event.c.tenant_id,
+                            manifest_event.c.installation_id == raw_event.c.installation_id))).where(
+                    manifest_event.c.tenant_id == c.tenant_id,
+                    manifest_event.c.installation_id == c.installation_id,
+                    manifest_event.c.thread_id == c.thread_id, manifest_event.c.sequence == 1,
+                    raw_event.c.sequence == 1, raw_event.c.event_type == "MEMORY_RETAIN_QUEUED",
+                    raw_event.c.payload["data"].has_key("content_erasure"),
+                    manifest_event.c.payload["data"]["members"].contains(sa.func.jsonb_build_array(
+                        sa.func.jsonb_build_object("document_id", raw_event.c.payload["data"]["document_id"].astext)))))
+                cohorts = tuple(connection.scalars(sa.select(c.thread_id).where(
+                    c.tenant_id == self._scope_value.tenant_id,
+                    c.installation_id == self._scope_value.installation_id,
+                    c.phase == "memory_dream_completed", c.status == "completed", has_ack, has_raw_member,
+                    ~has_erased_member,
+                ).order_by(c.updated_at, c.thread_id).limit(limit)))
+                for thread_id in cohorts:
+                    batch = self.read_dream_batch(thread_id)
+                    if any(job.document.occurred_at[:10] >= now.strftime("%Y-%m-%d") for job in batch.jobs):
+                        continue
+                    ledger = self._timeline.events(thread_id)
+                    ack = [event.payload.get("data") for event in ledger
+                           if event.event_type == "MEMORY_DREAM_RECEIPTS_BOUND"]
+                    binding = [event.payload.get("data") for event in ledger
+                               if event.event_type == "MEMORY_DREAM_DISPATCH_BOUND"]
+                    if not ack:
+                        continue  # Legacy completion has no measured per-source acknowledgement.
+                    if (len(ack) != 1 or len(binding) != 1
+                            or ack[0].get("contract") != "EvaDreamReceipts/v1"
+                            or ack[0].get("source_manifest_sha256") != thread_id.removeprefix("memory-dream:")):
+                        raise RuntimeError("compaction cohort acknowledgement differs")
+                    records = {v["document_id"]: v for v in ack[0]["receipts"]}
+                    if (len(ack[0]["receipts"]) != len(batch.jobs) or len(records) != len(batch.jobs)
+                            or set(records) != {j.document.document_id for j in batch.jobs}):
+                        raise RuntimeError("compaction receipt membership differs")
+                    if any(j.state.status != "completed" or j.state.phase not in {"memory_retained", "memory_not_selected"}
+                           for j in batch.jobs):
+                        continue
+                    for job in batch.jobs:
+                        if len(results) >= limit:
+                            return tuple(results)
+                        if isinstance(job.document, CompactedPrivateMemorySource):
+                            continue
+                        document = job.document
+                        receipt = records[document.document_id]
+                        if (document.audience.kind != "private_person" or document.project_id is not None
+                                or document.trust != "direct_user" or document.retention_mode != "dream"
+                                or receipt["bank_id"] != binding[0]["bank_id"]
+                                or receipt["operation_id"] != binding[0]["operation_id"]):
+                            raise RuntimeError("compaction source is outside its acknowledgement")
+                        queue = connection.execute(sa.select(operational_events).where(
+                            e.tenant_id == self._scope_value.tenant_id, e.installation_id == self._scope_value.installation_id,
+                            e.thread_id == job.state.thread_id, e.sequence == 1)).mappings().one()
+                        journal = connection.execute(sa.select(operational_events).where(
+                            e.tenant_id == self._scope_value.tenant_id, e.installation_id == self._scope_value.installation_id,
+                            e.thread_id == "conversation:" + document.source_ref,
+                            e.event_type.in_(("INGRESS_COMMITTED", "REPLY_COMMITTED")),
+                        ).order_by(e.sequence)).mappings().all()
+                        if len(journal) != 2 or [row["event_type"] for row in journal] != ["INGRESS_COMMITTED", "REPLY_COMMITTED"]:
+                            raise RuntimeError("compaction requires one completed original exchange")
+                        ingress, reply = journal
+                        proof = MemorySourceCompactionProof(
+                            contract="EvaPrivateMemorySourceCompaction/v1", compacted_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                            queued_payload_sha256=bytes(queue["payload_sha256"]).hex(),
+                            content_sha256=hashlib.sha256(document.content.encode()).hexdigest(),
+                            source_payload_sha256=canonical_sha256(queue["payload"]["data"]),
+                            ingress_payload_sha256=bytes(ingress["payload_sha256"]).hex(),
+                            ingress_text_sha256=hashlib.sha256(ingress["payload"]["data"]["text"].encode()).hexdigest(),
+                            reply_payload_sha256=bytes(reply["payload_sha256"]).hex(),
+                            reply_text_sha256=hashlib.sha256(reply["payload"]["data"]["text"].encode()).hexdigest(),
+                            cohort_manifest_sha256=thread_id.removeprefix("memory-dream:"),
+                            bank_id=receipt["bank_id"], operation_id=receipt["operation_id"],
+                            selected_fact_count=receipt["selected_fact_count"], disposition=receipt["disposition"],
+                            receipt_sha256=canonical_sha256(receipt),
+                            source_identity_sha256=source_identity_sha256(queue["payload"]["data"]))
+                        wire = proof.to_wire()
+                        replacements = []
+                        for row, raw_key in ((queue, "content"), (ingress, "text"), (reply, "text")):
+                            payload = dict(row["payload"])
+                            data = dict(payload["data"])
+                            data.pop(raw_key)
+                            data["content_compaction"] = wire
+                            payload["data"] = data
+                            replacements.append(canonical_json_bytes(payload).decode())
+                        compacted_private_memory_source_from_data(json.loads(replacements[0])["data"])
+                        changed = connection.scalar(sa.text("SELECT eva_core.compact_private_memory_source("
+                            ":queued, :ingress, :reply, :proof, :qpayload, :ipayload, :rpayload)"),
+                            {"queued": queue["event_id"], "ingress": ingress["event_id"], "reply": reply["event_id"],
+                             "proof": canonical_json_bytes(wire).decode(), "qpayload": replacements[0],
+                             "ipayload": replacements[1], "rpayload": replacements[2]})
+                        if changed is not True:
+                            raise RuntimeError("private source compaction did not acknowledge exact exchange")
+                        results.append({"document_id": document.document_id,
+                            "proof_sha256": canonical_sha256(wire), "compacted_at": wire["compacted_at"]})
+        return tuple(results)
 
     def finish_dream_batch(self, batch: DurableDreamMemoryBatch, *, now: datetime):
         current = self.read_dream_batch(batch.state.thread_id)
@@ -706,7 +899,9 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             events = events_by_thread.get(row["thread_id"], ())
             if any(event.event_type == "MEMORY_REFLECTION_CLAIMED" for event in events):
                 continue
-            content_hash = hashlib.sha256(document.content.encode("utf-8")).hexdigest()
+            content_hash = (document.content_compaction.content_sha256
+                if isinstance(document, CompactedPrivateMemorySource)
+                else hashlib.sha256(document.content.encode("utf-8")).hexdigest())
             if not any(event.event_type == "MEMORY_RETAIN_SUCCEEDED"
                        and event.payload.get("data", {}).get("document_id") == document.document_id
                        and event.payload.get("data", {}).get("content_sha256") == content_hash
@@ -761,6 +956,10 @@ class PostgresMemoryOutbox(PostgresScopedRole):
         self, job: DurableMemoryRetentionJob, *, now: datetime | None = None
     ) -> DurableMemoryRetentionJob | None:
         current = self._timeline.load(job.state.thread_id)
+        if isinstance(job.document, CompactedPrivateMemorySource):
+            if current.status != "completed":
+                raise RuntimeError("compacted source cannot be a pending retention job")
+            return None
         if current.status in {"completed", "needs_help"}:
             return None
         occurred_at = now or self._now()
@@ -809,7 +1008,12 @@ class PostgresMemoryOutbox(PostgresScopedRole):
     ) -> CheckpointState:
         if receipt.document_id != job.document.document_id:
             raise RuntimeError("Hindsight receipt belongs to another document")
-        expected_hash = hashlib.sha256(job.document.content.encode("utf-8")).hexdigest()
+        expected_hash = (job.document.content_compaction.content_sha256
+            if isinstance(job.document, CompactedPrivateMemorySource)
+            else hashlib.sha256(job.document.content.encode("utf-8")).hexdigest())
+        if isinstance(job.document, CompactedPrivateMemorySource):
+            if canonical_sha256(asdict(receipt)) != job.document.content_compaction.receipt_sha256:
+                raise RuntimeError("compacted acknowledgement replay differs")
         if receipt.content_sha256 != expected_hash:
             raise RuntimeError("Hindsight receipt content hash differs")
         disposition = getattr(receipt, "disposition", "retained")
@@ -831,7 +1035,8 @@ class PostgresMemoryOutbox(PostgresScopedRole):
         if not_selected:
             original = self._timeline.events(current.thread_id)
             if (not original or original[0].event_type != "MEMORY_RETAIN_QUEUED"
-                    or original[0].payload.get("data") != self._document_data(job.document)):
+                    or (not isinstance(job.document, CompactedPrivateMemorySource)
+                        and original[0].payload.get("data") != self._document_data(job.document))):
                 raise RuntimeError("Hindsight zero selection source differs")
         if current.status == "completed":
             completed = next((event for event in reversed(self._timeline.events(current.thread_id))
@@ -978,7 +1183,7 @@ class PostgresMemoryOutbox(PostgresScopedRole):
                 "status": "erased",
             }
             existing = value.get("content_erasure")
-            if "content" not in value:
+            if "content" not in value and existing is not None:
                 if existing != expected_erasure:
                     raise RuntimeError("memory outbox erasure proof differs")
                 return MemoryOutboxContentErasureReceipt(
@@ -992,6 +1197,8 @@ class PostgresMemoryOutbox(PostgresScopedRole):
                 )
             if existing is not None:
                 raise RuntimeError("memory outbox content and erasure proof coexist")
+            if "content" not in value:
+                compacted_private_memory_source_from_data(value)
 
             if str(checkpoint.status) != "completed":
                 last_error_fingerprint = (
@@ -1026,7 +1233,7 @@ class PostgresMemoryOutbox(PostgresScopedRole):
                 )
 
             redacted_data = dict(value)
-            redacted_data.pop("content")
+            redacted_data.pop("content", None)
             redacted_data["content_erasure"] = expected_erasure
             redacted_payload = dict(payload)
             redacted_payload["data"] = redacted_data

@@ -19,6 +19,9 @@ from eva.application.memory import (
 )
 
 
+from eva.application.memory_source_lifecycle import CompactedPrivateMemorySource
+
+
 class DurableMemoryOutboxPort(Protocol):
     def enqueue(self, document: ConversationMemoryDocument) -> object: ...
 
@@ -327,7 +330,7 @@ class SemanticMemoryColdPathWorker:
         document_id: str,
         now: datetime,
         source_message_id: str | None = None,
-        document: ConversationMemoryDocument | None = None,
+        document: ConversationMemoryDocument | CompactedPrivateMemorySource | None = None,
     ) -> bool:
         """Remove semantic and optional raw source content under one durable lease."""
 
@@ -350,7 +353,11 @@ class SemanticMemoryColdPathWorker:
                 if callable(resolve):
                     document = resolve(principal_id=principal_id, document_id=document_id,
                         source_message_id=source_message_id)
-            if document is not None and document.retention_mode == "dream":
+            if isinstance(document, CompactedPrivateMemorySource) and (
+                    document.document_id != document_id or document.principal_id != principal_id
+                    or document.source_ref != source_message_id):
+                raise RuntimeError("compacted erasure source binding differs")
+            if isinstance(document, ConversationMemoryDocument) and document.retention_mode == "dream":
                 if (document.document_id != document_id or document.principal_id != principal_id
                         or document.source_ref != source_message_id):
                     raise RuntimeError("pending erasure source binding differs")
@@ -687,6 +694,7 @@ class SemanticMemoryColdPathWorker:
                         or any(not isinstance(receipt, MemoryRetentionReceipt) for receipt in receipts)
                         or {receipt.document_id for receipt in receipts} != set(expected)):
                     raise RuntimeError('dream provider receipts differ from exact cohort')
+                self._outbox.bind_dream_receipts(batch, receipts, now=now)
                 claimed_by_id = {job.document.document_id: job for job in active}
                 for receipt in receipts:
                     job = claimed_by_id.get(receipt.document_id)
@@ -749,6 +757,7 @@ class SemanticMemoryColdPathWorker:
                         or any(not isinstance(receipt, MemoryRetentionReceipt) for receipt in receipts)
                         or {receipt.document_id for receipt in receipts} != set(expected)):
                     raise RuntimeError("settled dream receipts differ from exact cohort")
+                self._outbox.bind_dream_receipts(batch, receipts, now=now)
                 for receipt in receipts:
                     durable = self._outbox.reconcile_dream_receipt(batch, receipt, now=now)
                     if durable.document.document_id == document_id or durable.state.status == "completed":
@@ -791,6 +800,17 @@ class SemanticMemoryColdPathWorker:
                         self._last_error = f"{type(error).__name__}: {error}"
         if not self._idle_ready():
             return
+        compact = getattr(self._outbox, "compact_day_sources", None)
+        if callable(compact):
+            # No provider/model call: expire acknowledged prior-day raw text only.
+            # The existing cross-process retention fence also serializes forgetting.
+            try:
+                with self._retention_fence:
+                    if self._idle_ready():
+                        compact(now=datetime.now(tz=UTC).replace(microsecond=0), limit=32)
+            except Exception as error:
+                with self._lock:
+                    self._last_error = "day text lifecycle: " + type(error).__name__ + ": " + str(error)
         with self._lock:
             scopes = tuple(self._reflection_scopes)
             self._reflection_scopes.clear()

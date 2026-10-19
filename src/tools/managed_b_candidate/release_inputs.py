@@ -348,6 +348,11 @@ _EXPECTED_MIGRATIONS = (
         "4e_0008_portable_current",
         "deploy/migrations/versions/4e_0009_restore_hold.py",
     ),
+    (
+        "4e_0010_memory_compaction",
+        "4e_0009_restore_hold",
+        "deploy/migrations/versions/4e_0010_memory_compaction.py",
+    ),
 )
 
 

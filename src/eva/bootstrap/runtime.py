@@ -457,11 +457,12 @@ class PostgresHindsightMemoryRuntime:
             now=datetime.now(UTC).replace(microsecond=0), limit=limit, before=before)
 
     def dashboard_memory_source(self, source_id: str):
+        from eva.application.memory_source_lifecycle import CompactedPrivateMemorySource
         doc, state = self._owner_memory_sources().document(
             source_id, now=datetime.now(UTC).replace(microsecond=0))
         return {
             "contract": "EvaOwnerMemorySource/v1", "source_id": source_id,
-            "content": doc.content, "occurred_at": doc.occurred_at,
+            "content": (None if isinstance(doc, CompactedPrivateMemorySource) else doc.content), "occurred_at": doc.occurred_at,
             "retention_state": state,
             "origin": "Telegram" if doc.conversation_id.startswith("telegram:") else "Eigen gesprek",
         }

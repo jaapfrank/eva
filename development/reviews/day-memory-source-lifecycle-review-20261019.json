@@ -1,0 +1,153 @@
+{
+  "contract": "EvaMemorySourceLifecycleReview/v1",
+  "recordedAt": "2026-10-19T12:03:00.789605+00:00",
+  "decision": "approved_scoped_installation",
+  "scope": "Bestaande dag-/droomroute, bronlevenscyclus, actuele eigenaarlezers, correcties/wissen, idempotent replay en schemaoverdracht. Geen spraakwijziging of nieuw geheugen.",
+  "sources": [
+    {
+      "repositoryPath": "src/eva/application/memory_source_lifecycle.py",
+      "sha256": "91053c9d9c215c097216e1423547f8712f15ff7e4dd311fd8e09ae37638e3d26",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "src/eva/adapters/postgres/memory_outbox.py",
+      "sha256": "12e7b7955514a0ae83edfa6beb235bfa03756655a7311f46c60650cc144d948b",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "src/eva/adapters/postgres/conversation_journal.py",
+      "sha256": "df85e8855020e7451dddd8bb96844408b3db560462957eca5e1531bbfd497887",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "src/eva/adapters/postgres/people_memory_overview.py",
+      "sha256": "8049505971d574569571e0e7ff8404f82b644b8ca2fd9f33c74a78deb9b05ccb",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "src/eva/adapters/projection/hindsight.py",
+      "sha256": "6021fa0eaf575347ccda2735b925cd0207d6a53acaf1dde93065a563e8a1f857",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "src/eva/application/memory_background.py",
+      "sha256": "de244b8b77900802ab041c000fb51895aec79fe240c6ea4d572b96e588f4f7c6",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "src/eva/application/people_memory_overview.py",
+      "sha256": "dfe3c1ee472a02886fb07bd48ad72b87e359c53a13f407f5bb1bb26a47843685",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "src/eva/bootstrap/dashboard_memory.py",
+      "sha256": "e7159829daa16558fa07f4a549151b83d66ffa824a4738e9224bc45dbdc0959b",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "src/eva/bootstrap/runtime.py",
+      "sha256": "98e66adec2125b4a95f37fdb5b961a128898fa50ee2951d5db36aeddf9a706c0",
+      "reviewScope": "dashboard_memory_source only; peer voice hunks excluded"
+    },
+    {
+      "repositoryPath": "deploy/migrations/versions/4e_0010_memory_compaction.py",
+      "sha256": "d1cf18e827c5e4addb992f7199a0db6b8f51efef2adea4d7e2ef9d322277719a",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "development/tools/project-dashboard/src/main.jsx",
+      "sha256": "1ce023c6abce596cc462763bfe098161d55a1c4bdcb8956e8e45b53069f946e5",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "src/eva/bootstrap/delegated_work_service.py",
+      "sha256": "6920a8033a24056e970c4e8607701ae7be178c2cf04f8805cbb760511f859b7b",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "src/eva/operations/install_schema.py",
+      "sha256": "c9c16aa3f8bcf03ca7bfd672cd81fd4d86667f838af981d10e4a05d5938e80b5",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "src/tools/portable_v2_profile.py",
+      "sha256": "cc52332535f6e179759f7b6513e5a6b4dc3ee871efd13cb3673e271ebdeb2008",
+      "reviewScope": "owned delta"
+    },
+    {
+      "repositoryPath": "src/tools/managed_b_candidate/release_inputs.py",
+      "sha256": "4c9d655876db2300dd9892d4ad145100f2b46fde0993d3e043675a3e6b11d74f",
+      "reviewScope": "owned delta"
+    }
+  ],
+  "checks": {
+    "consumerAndApi": 44,
+    "sourcePostgres": 13,
+    "ownerPostgres": 2,
+    "schemaRegistration": 11,
+    "totalDistinctChecks": 70,
+    "liveModelRequests": 0
+  },
+  "resolvedFindings": [
+    "Gratis broncompactie onafhankelijk van betaald reflectiebudget.",
+    "Echte journal.memory_queued-overdracht en exact bronbewijs meegenomen.",
+    "Oude/compacterende/deels gewiste cohorten blokkeren latere dagen niet.",
+    "Databasehead en werkdienst-/installatie-/exportregistraties op dezelfde versie."
+  ],
+  "installedVerification": {
+    "checkedAt": "2026-10-19T12:03:00.789605+00:00",
+    "roles": {
+      "core": {
+        "image": "sha256:44e82f18f35716a08208191ada9153e16c349a3ae02681fcf2b6b5ddf2065d02",
+        "healthy": true,
+        "allSourceHashesMatch": true,
+        "sourceFileCount": 390,
+        "filesystemLayers": 4
+      },
+      "worker": {
+        "image": "sha256:18af2412c7a448c0fca666dabab25bb3c2d75070ef74b3d339e153d8bbafa7ff",
+        "healthy": true,
+        "allSourceHashesMatch": true,
+        "sourceFileCount": 372,
+        "filesystemLayers": 3
+      }
+    },
+    "http": [
+      {
+        "path": "/internal/v1/dashboard/memory-sources?limit=2",
+        "httpStatus": 200,
+        "sourceCount": 2,
+        "rawStates": [
+          "available",
+          "available"
+        ]
+      },
+      {
+        "path": "/internal/v1/dashboard/people-memory",
+        "httpStatus": 200,
+        "memoryState": "unavailable"
+      }
+    ],
+    "modelRequests": 0,
+    "runtime": {
+      "readyzStatus": 200,
+      "ready": true,
+      "databaseHead": "4e_0010_memory_compaction",
+      "workerHead": "4e_0010_memory_compaction"
+    },
+    "ui": {
+      "httpStatus": 200,
+      "sealedJavascriptMatches": true
+    }
+  },
+  "limitations": [
+    "Oude cohorten zonder volledig brongebonden ontvangstbewijs worden niet blind gecompacteerd.",
+    "Een deels gewist cohort houdt overige tekst voorlopig; het blokkeert nieuwere cohorten niet.",
+    "Gesloten native taakpayloads kunnen nog brontekst bevatten; dit is geen volledige verwijdering van alle technische tekstkopieën.",
+    "Historische integriteits- en wisregistraties houden het grove geheugenoverzicht nog unavailable.",
+    "Bewijsmetadata neemt opslag in; verwijderen van tekst bewijst geen netto database-, token- of snelheidswinst.",
+    "Meerdaags automatisch gezinsgebruik is nog niet waargenomen; volledige E4.11 en gezinsacceptatie blijven open."
+  ],
+  "familyAcceptance": false,
+  "wholeTaskComplete": false
+}
