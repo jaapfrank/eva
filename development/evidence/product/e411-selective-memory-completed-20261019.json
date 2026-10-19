@@ -1,0 +1,202 @@
+{
+  "contract": "EvaSelectiveMemoryCompletion/v1",
+  "recordedAt": "2026-10-19T14:22:33.949096+00:00",
+  "taskId": "E4.11",
+  "state": "installed",
+  "technicalCompletion": true,
+  "ownerAcceptance": false,
+  "familyAcceptance": false,
+  "wholeProjectComplete": false,
+  "outcome": "Daggesprekken blijven tijdelijke context; de bestaande droomroute selecteert en actualiseert blijvende kennis. Bewezen dubbele tekst wordt veilig opgeruimd, terwijl bronnen, geselecteerde herinneringen en historische verwerkingsproblemen afzonderlijk zichtbaar zijn.",
+  "reused": {
+    "route": "Bestaande journal/outbox → begrensde droomcohorten → Hindsight-selectie/consolidatie → persoonsgebonden zoekprojectie; bestaande bronlevenscyclus en eigenaarbediening.",
+    "priorEvidence": [
+      "development/evidence/product/day-memory-source-lifecycle-installed-20261019.json",
+      "development/reviews/day-memory-source-lifecycle-review-20261019.json",
+      "development/evidence/product/completed-memory-payload-compaction-20261019.json",
+      "development/reviews/completed-memory-payload-compaction-review-20261019.json"
+    ],
+    "previousSelectionCases": {
+      "greeting": 0,
+      "test_exchange": 0,
+      "preference": 1,
+      "appointment": 1,
+      "correction": 1,
+      "repetition": 1,
+      "meaning": "Zes bestaande synthetische gevallen, geen nieuwe proef en geen algemene gezinskwaliteitsscore; dezelfde voorkeur-observatie bijgewerkt, afspraak behouden."
+    },
+    "retrievalContextTokenLimit": 2048,
+    "contextMeaning": "Begrensde selectie van relevante afgeleide kennis, geen afkapping van het begin van een volledig gesprek."
+  },
+  "added": [
+    "Inhoudsvrije wisstatus met exacte bron-, persoons-, scope- en bewijscontrole; geen verzonnen lege brontekst.",
+    "Complete aansluiting van de tien bestaande brongebeurtenissen op de statuslezer; zes droomcohortgebeurtenissen blijven een afzonderlijk contract.",
+    "Begrensde statusdiagnose voor ongeldige historische procesvolgorde en tijden, zonder bron-/hashfouten als onschuldig te behandelen.",
+    "Append-only verzoening van bewezen afgesloten native nulresultaten; geen heruitvoering of wijziging van oorspronkelijke fouten.",
+    "Providergebonden database-trigger voor nieuwe afgesloten retain/batch_retain-payloads: alleen exact gemarkeerde Eva-tekst boven96bytes en volledig afgeronde families zonder extractiefouten; alle overige velden behouden."
+  ],
+  "historicalDisposition": [
+    {
+      "scope": "3 exact bewezen afgesloten nulresultaten",
+      "decision": "reconciled",
+      "effect": "Afgehandeld als niet geselecteerd; oorspronkelijke gebeurtenissen exact behouden; nul modelaanvragen, retentieverzoeken of bronwissingen."
+    },
+    {
+      "scope": "35 overige historische probleembronnen:34mislukt en1onbekend",
+      "decision": "preserve_under_existing_scope_and_forget_controls",
+      "effect": "Niet automatisch opnieuw uitvoeren of betekenis afleiden uit ontbrekend resultaat.39 actuele/historische bank-documentadressen van de oorspronkelijke38 probleembronnen bevatten0 indexedunits. Geen geselecteerde langetermijnkennis uit deze bronnen; oorspronkelijke inhoud blijft controleerbaar en kan bewust worden vergeten."
+    },
+    {
+      "scope": "80 oude afgesloten native payloads zonder volledige bronbinding",
+      "decision": "preserve",
+      "effect": "Geen blind wissen van mogelijk noodzakelijke herkomst. Statische historische uitvoerpayloads zijn geen extra zoekgeheugen; nieuwe bewezen passende payloads vallen onder de geïnstalleerde trigger."
+    },
+    {
+      "scope": "Huidige droomcohorten",
+      "decision": "no_unreceipted_backlog",
+      "effect": "Eén actueel cohort heeft volledige per-bronontvangsten; nul actuele cohorten zonder volledige ontvangstbewijzen. Bronverval blijft aan de bestaande dag-/droomvoorwaarden gebonden."
+    },
+    {
+      "scope": "224 ongeldige oude brontijdlijnen",
+      "decision": "preserve_and_diagnose",
+      "effect": "193 ongeldige pogingvolgordes,29 ongeldige succesvolgordes,2 teruglopende tijden. Niet gerepareerd door geschiedenis te herschrijven; volledig verwerkingsoverzicht blijft expliciet onbeschikbaar, zoeken en bronlijsten zijn afzonderlijk bereikbaar."
+    }
+  ],
+  "measurements": {
+    "priorHistoricalPayloadCleanup": {
+      "source": "development/evidence/product/completed-memory-payload-compaction-20261019.json",
+      "operations": 1592,
+      "rawDuplicateTextBytesReplaced": 363733,
+      "canonicalPayloadBytesBefore": 1915416,
+      "canonicalPayloadBytesAfter": 1657070,
+      "canonicalPayloadByteReduction": 258346,
+      "involvedKnowledgeRowsUnchanged": 472,
+      "notRepeatedThisTurn": true
+    },
+    "priorNativeDocumentCleanup": {
+      "sources": 1592,
+      "duplicateTextBytesRemoved": 556769,
+      "thenInvolvedKnowledgeRowsUnchanged": 1428,
+      "separateEarlierMeasurement": true
+    },
+    "finalStatusAudit": {
+      "sources": 1700,
+      "valid": {
+        "up_to_date": 1392,
+        "no_signals": 60,
+        "needs_help": 24
+      },
+      "historicalInvalidTimelines": 224,
+      "unknownCurrentEventErrors": 0,
+      "falseUnknownReflectionErrorsRemovedFromEarlierSnapshot": 602,
+      "snapshotCaveat": "Actieve installatie; twee nieuwe bronnen tussen snapshots, geen vergelijking van inhoudelijke kwaliteit."
+    },
+    "ownerRoutes": {
+      "peopleMemoryHttp": 200,
+      "selectedMemoryViewHttp": 200,
+      "sourceListHttp": 200,
+      "selectedMemoriesShown": 2,
+      "namesShown": 7,
+      "viewSeconds": 7.0082662790082395,
+      "speedImprovementClaimed": false
+    },
+    "futureNativeCleanup": {
+      "installedNativeVersion": "0.9.1",
+      "triggerEnabled": true,
+      "installationSweepsHistoricalRows": false,
+      "installationModelCalls": 0,
+      "installationServicesRestarted": 0
+    },
+    "physicalDatabaseBytesSaved": null,
+    "tokenReduction": null,
+    "speedImprovement": null
+  },
+  "verification": {
+    "targetedTestRuns": [
+      {
+        "result": "115 passed,1deselected",
+        "wallSeconds": 39.96967409399804
+      },
+      {
+        "result": "37 passed",
+        "wallSeconds": 10.158492835005745
+      },
+      {
+        "result": "11 passed",
+        "wallSeconds": 1.9771167780272663
+      },
+      {
+        "result": "52 passed",
+        "wallSeconds": 8.875688415020704
+      }
+    ],
+    "countsOverlap": true,
+    "wholeRepositoryTestPassClaimed": false,
+    "excludedPreexistingCase": {
+      "name": "test_learning_source_rehydrates_exact_retained_chain_and_keeps_direct_sources",
+      "reason": "Bestaande parallel gewijzigde leerbronroute levert5 in plaats van3 getypeerde bronnen; niet door deze statuswijziging veroorzaakt.",
+      "sourceSha256": "aac24f154d50d8498bb0e7df1f9c50039c5b522a48fc6b8b6acb3946c42b7fac"
+    },
+    "independentReview": "development/reviews/e411-selective-memory-final-review-20261019.json"
+  },
+  "installation": {
+    "coreImage": "sha256:1cb46ad5b9a08f39f25c60f77b730bdcf32f148b28afbc9b61f027a6bbeead6f",
+    "workerImage": "sha256:820afb50716b7721b0e1783db366e186f0cb47b771ba3e49251c2f5c45ce8dd1",
+    "coreHealthy": true,
+    "reviewedSourceFilesVerified": 390,
+    "parallelChangesPreserved": true,
+    "voiceCodeOrInstallationChanged": false,
+    "nativeSqlSha256": "57221857fe7690ea8fe690b2dd8f0f75ece6e16082caaa9560ef834ae3caf35e",
+    "sourceHashes": {
+      "src/eva/adapters/postgres/memory_outbox.py": "86e6eca47823d313da2ad4a93083b9dee6fff541fce99a86ac6f39148627a9a1",
+      "src/eva/adapters/postgres/people_memory_overview.py": "50ad234c94a27d3f936d3c96eff104cedeac50296dc628ad58882d7b7c608889",
+      "src/eva/application/people_memory_overview.py": "4452f38f48db78374250450f5b1847f7f8ffb2410f15f89091592debec4913d8",
+      "development/tests/postgres/test_memory_closed_reconciliation.py": "c4df6f667f9e00287f3315933e3c257f3ba84be4a48b9d28c1973a48765639c4",
+      "development/tests/postgres/test_memory_erasure_status.py": "6c25922ed95ed43fe4ca64ed1bb98351a656943f35694ec196da44fd13739613",
+      "development/tests/postgres/test_memory_reflection_status.py": "390220d886a2aedb7e0a5eb0854f622b2221bc00778c2e57d160efe31678c911",
+      "development/tests/postgres/test_native_memory_payload_lifecycle.py": "d9346c254ced0720b48b0520c18863569ecd37e910e359b45a120bb11a9f6a33",
+      "deploy/living-core/hindsight-memory/completed_payload_compaction.sql": "57221857fe7690ea8fe690b2dd8f0f75ece6e16082caaa9560ef834ae3caf35e",
+      "deploy/living-core/hindsight-memory/install_completed_payload_compaction.py": "6f71b6a5cbd0e558750b46b045159a11b9a32d38919216d874e95b1a24dd4633",
+      "deploy/living-core/hindsight-memory/README.md": "3d36ba41eb985271fa7b2025a6de28e497b23a373ce4328990df0d79e333721a"
+    }
+  },
+  "usage": {
+    "taskSpecificEvaModelCalls": 0,
+    "retentionSubmissionsForReconciliation": 0,
+    "newPaidComparisonSeries": false,
+    "testWallSecondsTotal": 60.98097212205175,
+    "developmentCreditCost": null,
+    "developmentAssistantTokens": null,
+    "totalBackgroundEvaUsage": null,
+    "meaning": "Nul geldt alleen voor deze lokale controles/reconciliatie/installer; ontwikkelmodelverbruik en onafhankelijk lopende Eva-activiteit zijn niet nul gemeten."
+  },
+  "limitations": [
+    "Geen bewezen algemene kwaliteitsvoorsprong of meerdaagse gezinsacceptatie; F2.1/F2.2 blijven afzonderlijk.",
+    "Ongeldige oude tijdlijnen blijven foutbewijs en blokkeren een volledig bevestigd historisch verwerkingsoverzicht; geheugenzoeken werkt.",
+    "35 onzekere oude bronnen en80 onvolledig gebonden uitvoerpayloads bewust behouden, niet verdwenen of opgelost verklaard.",
+    "Nog geen productie-omslag naar een vorige dag met huidige nieuwe cohort geclaimd; bronverval en onderbreking zijn gericht geïsoleerd bewezen.",
+    "Geen fysieke schijfruimte-, token- of snelheidswinst gemeten. Een private herstelkopie bevat oorspronkelijke historische payloads.",
+    "Provideraddendum moet bij een nieuwe native database worden geïnstalleerd en vóór een native-versiewijziging opnieuw op compatibiliteit worden beoordeeld."
+  ],
+  "privateEvidenceSha256": {
+    "final-installed-verification.private.json": "b8785129ae1786cfd198b808b98c100e2338f94d6df53bc817f2d6a29cd27b11",
+    "installed-owner-route-verification.private.json": "257dc3d311ed7c746e6dbf0ded77b0c79665bef968020219557733b4e2bf52b3",
+    "final-status-audit.private.json": "655b280dea0a321654767c4fd61ab211cdf29ed751e62a16e08cc1504d3c0fdb",
+    "final-source-disposition.private.json": "ce9040b0fb9988c2d87763d6788f9f8119aae07f29aca9f8fb11dc29d846b2cd",
+    "legacy-no-indexed-units.private.json": "a3c4ee2fd0ca844cf251df9f82b77739f8f134ba9d2786b78bcbea8b4a275449",
+    "zero-reconciliation-result.private.json": "49f05f3dad80aeb1c6ea6f51ac624a5c5cece0cf7633a81205906af86c7215dc",
+    "native-install-receipt.private.json": "00934e11c147982334b6edb458347dd80579f39bdbeb088ca9ff2da79d4701a6",
+    "root-independent-status-review.private.json": "30d79a00a7a0beae6b4c1a6cf6526398d976f99123d13549787915e87a1f824a",
+    "root-changes-independent-review.private.json": "3b02d4344f67d6370be7b2e832f495e318372c6b2cbcf4f50074f99af727782c",
+    "zero-reconciliation-private-review.private.json": "877f1c56e10ccfcdfc865539f670968ac030f72d97fbd03af9b13ecc81550412",
+    "status-producer-consumer-audit.private.json": "e1e1a703087add37ce131b219cc2770beb0c5256f9063fb1f286d939ecc56872",
+    "final-tests.metadata.json": "e9c47c7b6c23fc6f0954f353625ed92ae10072dbae568230b2682cbb6b5f4bc6",
+    "changed-tests.metadata.json": "c68baae068793c45463bdd0a76e89694457cc945be110af005acb33acd8c1f26",
+    "native-final-tests.metadata.json": "6bac34c2d6810e678abffec5cc89c1ad8738e27c40e43842b33a7989216eb3f7",
+    "status-final-tests.metadata.json": "420bf2b537cb403421d03ee0dd8e649632dc8752cc2f96afdea822ad4baf84e5",
+    "installation-receipt.private.json": "9fb0c8b021196393c0fea336e24fcb14da976a397ffd1ccaa1eddea8c5951987",
+    "status-final/installation-receipt.private.json": "0521f83a7cb2c6cc40947c2ffcb31e65ebb2187f83ac69f8f5e9fea039b65f95"
+  },
+  "userActionRequired": false,
+  "use": "Eva-beheer → Geheugen: geselecteerde herinneringen bekijken; bronarchief afzonderlijk openen; corrigeren en bewust vergeten via de bestaande bediening."
+}

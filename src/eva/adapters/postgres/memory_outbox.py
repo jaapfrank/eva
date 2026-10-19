@@ -1061,6 +1061,62 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             retry_count=current.retry_count,
         )
 
+    def reconcile_closed_retention(
+        self, job: DurableMemoryRetentionJob, receipt: MemoryRetentionReceipt,
+        *, proof_sha256: str, now: datetime,
+    ) -> CheckpointState:
+        """Adopt an independently verified closed zero-result without redispatch.
+
+        The caller verifies the original native operation/source proof. This local
+        journal boundary binds that proof and receipt to the unchanged failed job;
+        it cannot turn a positive, pending or unknown result into zero selection.
+        """
+        import re
+        if (isinstance(job.document, CompactedPrivateMemorySource)
+                or not isinstance(proof_sha256, str)
+                or not re.fullmatch(r"[0-9a-f]{64}", proof_sha256)
+                or receipt.disposition != "not_selected"
+                or type(receipt.selected_fact_count) is not int
+                or receipt.selected_fact_count != 0
+                or not isinstance(receipt.operation_id, str) or not receipt.operation_id
+                or receipt.document_id != job.document.document_id
+                or receipt.content_sha256 != hashlib.sha256(job.document.content.encode()).hexdigest()
+                or job.state.thread_id != self._thread_id(job.document.document_id)):
+            raise RuntimeError("closed memory reconciliation proof differs")
+        current = self._timeline.load(job.state.thread_id)
+        events = self._timeline.events(current.thread_id)
+        if (not events or events[0].event_type != "MEMORY_RETAIN_QUEUED"
+                or events[0].payload.get("data") != self._document_data(job.document)):
+            raise RuntimeError("closed memory reconciliation source changed")
+        prefix = events[:-1] if events[-1].event_type == "MEMORY_RETAIN_RESULT_RECONCILED" else events
+        history_sha256 = canonical_sha256([
+            {"event_id": str(event.event_id), "sequence": event.sequence,
+             "event_type": event.event_type, "occurred_at": event.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+             "payload_sha256": event.payload_sha256} for event in prefix])
+        data = {"document_id": receipt.document_id, "bank_id": receipt.bank_id,
+                "content_sha256": receipt.content_sha256, "operation_id": receipt.operation_id,
+                "selected_fact_count": 0, "disposition": "not_selected", "proof_sha256": proof_sha256,
+                "source_history_sha256": history_sha256}
+        if current.status == "completed":
+            if (events[-1].event_type != "MEMORY_RETAIN_RESULT_RECONCILED"
+                    or events[-1].payload.get("data") != data):
+                raise RuntimeError("closed memory reconciliation replay differs")
+            return current
+        if (current.revision != job.state.revision
+                or (current.phase, current.status) not in {
+                    ("memory_needs_help", "needs_help"), ("memory_retry", "failed")}
+                or events[-1].event_type not in {
+                    "MEMORY_RETAIN_NEEDS_HELP", "MEMORY_RETAIN_RETRY_SCHEDULED"}):
+            raise RuntimeError("closed memory reconciliation job is no longer failed")
+        return self._timeline.transition(
+            thread_id=current.thread_id, expected_revision=current.revision,
+            checkpoint_id=current.thread_id + ":result-reconciled",
+            operation_id=current.operation_id, occurred_at=now, data=data,
+            event_type="MEMORY_RETAIN_RESULT_RECONCILED", phase="memory_not_selected",
+            status="completed", retry_count=current.retry_count,
+            last_error_fingerprint=current.last_error_fingerprint,
+        )
+
     def fail(
         self,
         job: DurableMemoryRetentionJob,

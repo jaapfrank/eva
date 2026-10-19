@@ -71,9 +71,16 @@ kennis, exacte herkomst, correcties en bewust vergeten blijven werken. Onvolledi
 bewezen oude cohorten en deels gewiste cohorten blijven behouden. Op 19 oktober zijn bovendien 1.592 exact brongebonden afgesloten native taakpayloads
 gecompacteerd: netto 258.346 canonieke JSON-bytes minder, met exact behoud van 472
 betrokken kennisregels en overige taakvelden. Dit is een eenmalige opschoning; niet
-volledig gebonden gesloten taakpayloads kunnen nog tekst bevatten. Bewijsmetadata kost ook opslag; netto database-,
-token- en snelheidswinst zijn hiermee niet bewezen. Historische opschoning, oude
-statusfouten en meerdaags gebruik houden E4.11 open.
+volledig gebonden gesloten taakpayloads kunnen nog tekst bevatten. Bewijsmetadata kost ook opslag; fysieke database-, token- en snelheidswinst zijn
+hiermee niet bewezen. E4.11 is op 19 oktober [technisch afgerond en geïnstalleerd](../evidence/product/e411-selective-memory-completed-20261019.json):
+legitiem wissen en reflectiegebeurtenissen worden correct gelezen; nieuwe bewezen
+afgesloten native uitvoerpayloads worden automatisch gecompacteerd. Drie exact bewezen
+nulresultaten zijn zonder herhaling verzoend. Voor 35 oude probleembronnen en 80
+onvoldoende gebonden uitvoerpayloads geldt een expliciet behoudsbesluit; ongeldige
+historische tijden en stapvolgordes blijven foutbewijs. Het volledige historische
+verwerkingsoverzicht blijft daarom een waarschuwing geven; geselecteerde herinneringen
+en bronlijsten zijn afzonderlijk bereikbaar. Meerdaags nut en gezinsacceptatie blijven
+de bestaande F2.1/F2.2-beoordeling; deze technische afronding vult dat oordeel niet in.
 
 ## Dagelijks meedenken
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from contextlib import nullcontext
+from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 import hashlib
 import re
@@ -17,6 +18,7 @@ from eva.adapters.postgres.memory_outbox import (
 )
 from eva.adapters.postgres.operational_timeline import (
     CheckpointState,
+    OperationalTimelineError,
     PostgresOperationalTimeline,
     TimelineEvent,
     TimelineScope,
@@ -26,11 +28,15 @@ from eva.application.people_memory_overview import (
     GroupSharingState,
     HindsightState,
     MemoryFlowState,
+    MemoryFlowDiagnostic,
     PeopleMemoryOverview,
     PeopleMemoryOverviewError,
 )
 from eva.application.memory import ConversationMemoryDocument, MemoryRetentionReceipt, RecallCurrentFacts
-from eva.application.memory_source_lifecycle import CompactedPrivateMemorySource
+from eva.application.memory_source_lifecycle import (
+    CompactedPrivateMemorySource, compacted_private_memory_source_from_data,
+)
+from eva.application.memory_audience import MemoryAudience, memory_audience_from_wire
 from eva.application.human_understanding import (
     MAX_LEARNING_RECORDS, human_understanding_document_id,
     is_human_understanding_reference, parse_human_understanding_record,
@@ -663,6 +669,91 @@ _EXPIRY_WARNING = timedelta(hours=24)
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
+
+@dataclass(frozen=True, slots=True)
+class _ErasedMemoryStatusSource:
+    """Identity for status validation only; deleted text is never reconstructed."""
+
+    tenant_id: str
+    installation_id: str
+    document_id: str
+    retention_mode: str
+    principal_id: str
+    audience: MemoryAudience
+
+
+def _memory_status_timestamp(value: object) -> datetime:
+    if not isinstance(value, str):
+        raise PeopleMemoryOverviewError("memory status timestamp is malformed")
+    try:
+        result = datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
+    except ValueError as error:
+        raise PeopleMemoryOverviewError("memory status timestamp is malformed") from error
+    if result.strftime("%Y-%m-%dT%H:%M:%SZ") != value:
+        raise PeopleMemoryOverviewError("memory status timestamp is not canonical")
+    return result
+
+
+def _erased_memory_status_source(data: dict):
+    """Validate the existing authorized erasure receipt, without inventing content.
+
+    The original content hash cannot be recalculated after deliberate erasure.
+    Preserved historical receipts remain structurally and identity checked.
+    """
+    required = {"tenant_id", "installation_id", "principal_id", "conversation_id", "document_id",
+        "occurred_at", "source_ref", "evidence_ref", "privacy_class", "trust", "kind", "content_erasure"}
+    optional = {"audience", "project_id", "retention_until", "retention_mode", "content_compaction"}
+    if (not required <= set(data) or set(data) - required - optional
+            or data["kind"] != "hindsight_memory_document"
+            or any(not isinstance(data[key], str) or not data[key] for key in required - {"content_erasure"})):
+        raise PeopleMemoryOverviewError("erased memory source metadata is malformed")
+    proof = data["content_erasure"]
+    if (not isinstance(proof, dict) or set(proof) != {"contract", "erased_at", "message_sha256",
+                "operation_sha256", "principal_sha256", "status"}
+            or proof["contract"] != "EvaConversationContentErasure/v1" or proof["status"] != "erased"
+            or any(not isinstance(proof[key], str) or not _SHA256.fullmatch(proof[key])
+                   for key in ("message_sha256", "operation_sha256", "principal_sha256"))
+            or proof["message_sha256"] != hashlib.sha256(data["source_ref"].encode()).hexdigest()
+            or proof["principal_sha256"] != hashlib.sha256(data["principal_id"].encode()).hexdigest()):
+        raise PeopleMemoryOverviewError("erased memory source proof differs")
+    occurred = _memory_status_timestamp(data["occurred_at"])
+    if _memory_status_timestamp(proof["erased_at"]) < occurred:
+        raise PeopleMemoryOverviewError("memory erasure precedes its source")
+    if "content_compaction" in data:
+        # The compaction identity hash predates the later erasure marker.
+        return compacted_private_memory_source_from_data({key: value for key, value in data.items()
+                                                         if key != "content_erasure"})
+    if "audience" in data:
+        audience = memory_audience_from_wire(data["audience"])
+    elif data["conversation_id"].startswith("telegram:-"):
+        raise PeopleMemoryOverviewError("erased group memory lacks its original audience")
+    else:
+        audience = MemoryAudience.private_person(principal_id=data["principal_id"])
+    mode = data.get("retention_mode", "immediate")
+    if (audience.principal_id != data["principal_id"] or mode not in {"dream", "immediate"}
+            or data["privacy_class"] not in {"public", "internal", "confidential", "restricted"}
+            or data["trust"] not in {"direct_user", "verified_external", "host_policy",
+                                    "model_inference_unconfirmed", "legacy_unverified"}):
+        raise PeopleMemoryOverviewError("erased memory source scope is invalid")
+    project = data.get("project_id")
+    if project is not None and (not isinstance(project, str) or not project.strip() or len(project) > 200):
+        raise PeopleMemoryOverviewError("erased memory source project is invalid")
+    if data.get("retention_until") is not None and _memory_status_timestamp(data["retention_until"]) < occurred:
+        raise PeopleMemoryOverviewError("erased memory retention precedes its source")
+    if mode == "dream" and (audience.kind != "private_person" or data["trust"] != "direct_user"
+            or project is not None or data["document_id"] != f"{data['conversation_id']}:exchange:{data['source_ref']}"):
+        raise PeopleMemoryOverviewError("erased dream source scope is invalid")
+    if audience.kind == "household":
+        conversation = data["conversation_id"]
+        if (not conversation.startswith(f"household:{audience.household_id}:conversation:")
+                or not conversation.removeprefix(f"household:{audience.household_id}:conversation:")
+                or project is not None or any(not data[key].startswith(conversation + ":")
+                    for key in ("document_id", "source_ref", "evidence_ref"))):
+            raise PeopleMemoryOverviewError("erased household source has cross-scope provenance")
+    return _ErasedMemoryStatusSource(data["tenant_id"], data["installation_id"], data["document_id"], mode,
+                                     data["principal_id"], audience)
+
+
 class PostgresPeopleMemoryOverview:
     """Read only the durable status cursors and discard every identifying value."""
 
@@ -688,10 +779,12 @@ class PostgresPeopleMemoryOverview:
             raise ValueError("people and memory snapshot time must be UTC")
         if now.microsecond:
             raise ValueError("people and memory snapshot time must use whole seconds")
+        memory_flow, memory_diagnostic = self._memory_flow_status()
         return PeopleMemoryOverview(
+            memory_diagnostic=memory_diagnostic,
             dynamic_account=self._safe_dynamic_account(),
             group_sharing=self._safe_group_sharing(now),
-            memory_flow=self._safe_memory_flow(),
+            memory_flow=memory_flow,
             hindsight=hindsight_state,
         )
 
@@ -943,14 +1036,28 @@ class PostgresPeopleMemoryOverview:
             return "unavailable"
 
     def _safe_memory_flow(self) -> MemoryFlowState:
+        return self._memory_flow_status()[0]
+
+    def _memory_flow_status(self) -> tuple[MemoryFlowState, MemoryFlowDiagnostic | None]:
         try:
             if self._timeline.list_checkpoints(thread_prefix="memory-dream:",
                     statuses=("needs_help",), limit=1):
-                return "needs_help"
+                return "needs_help", None
             threads = self._timeline.iter_threads(thread_prefix="memory-retain:")
             observed: set[MemoryFlowState] = set()
             for state, events in threads:
-                observed.add(self._validate_memory_timeline(state, events))
+                try:
+                    observed.add(self._validate_memory_timeline(state, events))
+                except PeopleMemoryOverviewError as error:
+                    if self._bound_reconciled_history(state, events):
+                        return "unavailable", "historical_reconciled_attention"
+                    if str(error) in {
+                        "memory retention attempt is out of order",
+                        "memory retention success is out of order",
+                        "memory retention terminal state is out of order",
+                    }:
+                        return "unavailable", "historical_protocol_attention"
+                    raise
             priorities: tuple[MemoryFlowState, ...] = (
                 "needs_help",
                 "retrying",
@@ -959,21 +1066,89 @@ class PostgresPeopleMemoryOverview:
             )
             for priority in priorities:
                 if priority in observed:
-                    return priority
-            return "no_signals"
+                    return priority, None
+            return "no_signals", None
+        except OperationalTimelineError as error:
+            if str(error) == "timeline time moved backwards":
+                return "unavailable", "historical_timeline_attention"
+            return "unavailable", None
         except Exception:
-            return "unavailable"
+            return "unavailable", None
+
+    def _validate_closed_reconciliation(self, document, source_hash, events) -> None:
+        event = events[-1]
+        data = self._event_data(event)
+        previous = events[-2]
+        history_records = [{
+            "event_id": str(item.event_id), "sequence": item.sequence,
+            "event_type": item.event_type,
+            "occurred_at": item.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "payload_sha256": item.payload_sha256,
+        } for item in events[:-1]]
+        if isinstance(document, CompactedPrivateMemorySource):
+            history_records[0]["payload_sha256"] = document.content_compaction.queued_payload_sha256
+        history_hash = canonical_sha256(history_records)
+        if (event.event_type != "MEMORY_RETAIN_RESULT_RECONCILED"
+                or previous.event_type not in {"MEMORY_RETAIN_NEEDS_HELP", "MEMORY_RETAIN_RETRY_SCHEDULED"}
+                or set(data) != {"document_id", "bank_id", "content_sha256", "operation_id",
+                    "selected_fact_count", "disposition", "proof_sha256", "source_history_sha256"}
+                or data["document_id"] != document.document_id
+                or not isinstance(data["content_sha256"], str) or not _SHA256.fullmatch(data["content_sha256"])
+                or (source_hash is not None and data["content_sha256"] != source_hash)
+                or not isinstance(data["source_history_sha256"], str)
+                or not _SHA256.fullmatch(data["source_history_sha256"])
+                # Authorized erasure rewrites the queued payload and deliberately
+                # removes its old content. That original hash is no longer derivable;
+                # the prior protocol/identity checks still apply, never invented text.
+                or (not isinstance(document, _ErasedMemoryStatusSource)
+                    and data["source_history_sha256"] != history_hash)
+                or type(data["selected_fact_count"]) is not int or data["selected_fact_count"] != 0
+                or data["disposition"] != "not_selected"
+                or not isinstance(data["proof_sha256"], str) or not _SHA256.fullmatch(data["proof_sha256"])
+                or any(not isinstance(data[key], str) or not data[key].strip()
+                       or len(data[key]) > 512 for key in ("bank_id", "operation_id"))):
+            raise PeopleMemoryOverviewError("memory closed-result reconciliation is malformed")
+        prior = previous.payload["checkpoint"]
+        if prior["status"] not in {"failed", "needs_help"}:
+            raise PeopleMemoryOverviewError("memory closed-result source is not failed")
+        self._require_event_state(event, phase="memory_not_selected", status="completed",
+            retry_count=prior["retry_count"], last_error_fingerprint=prior["last_error_fingerprint"])
+
+    def _bound_reconciled_history(self, state, events) -> bool:
+        """Diagnose a bound legacy result without accepting its invalid history."""
+        if len(events) < 2 or events[-1].event_type != "MEMORY_RETAIN_RESULT_RECONCILED":
+            return False
+        try:
+            for event in events:
+                self._event_data(event)
+            document = conversation_memory_document_from_outbox_data(self._event_data(events[0]))
+            digest = (document.content_compaction.content_sha256 if isinstance(document, CompactedPrivateMemorySource)
+                      else hashlib.sha256(document.content.encode()).hexdigest())
+            operation_id = str(uuid5(NAMESPACE_URL, document.document_id))
+            if (events[0].event_type != "MEMORY_RETAIN_QUEUED"
+                    or document.tenant_id != self._tenant_id or document.installation_id != self._installation_id
+                    or state.thread_id != PostgresMemoryOutbox._thread_id(document.document_id)
+                    or any(event.operation_id != operation_id for event in events)):
+                return False
+            self._validate_closed_reconciliation(document, digest, events)
+            return True
+        except Exception:
+            return False
 
     def _validate_memory_timeline(
         self, state: CheckpointState, events: tuple[TimelineEvent, ...]
     ) -> MemoryFlowState:
         first = events[0]
         queued_data = self._event_data(first)
-        document = conversation_memory_document_from_outbox_data(queued_data)
-        source_content_sha256 = (document.content_compaction.content_sha256
+        erasure = queued_data.get("content_erasure")
+        document = (_erased_memory_status_source(queued_data) if erasure is not None
+                    else conversation_memory_document_from_outbox_data(queued_data))
+        source_content_sha256 = (None if isinstance(document, _ErasedMemoryStatusSource) else
+            document.content_compaction.content_sha256
             if isinstance(document, CompactedPrivateMemorySource)
             else hashlib.sha256(document.content.encode()).hexdigest())
-        source_payload_sha256 = (document.content_compaction.source_payload_sha256
+        source_payload_sha256 = (None if isinstance(document, _ErasedMemoryStatusSource) else
+            document.content_compaction.source_payload_sha256
             if isinstance(document, CompactedPrivateMemorySource) else canonical_sha256(queued_data))
         operation_id = str(uuid5(NAMESPACE_URL, document.document_id))
         if (
@@ -993,7 +1168,7 @@ class PostgresPeopleMemoryOverview:
         prior_type = first.event_type
         last_error: str | None = None
         result: MemoryFlowState = "processing"
-        for event in events[1:]:
+        for index, event in enumerate(events[1:], 1):
             data = self._event_data(event)
             if event.event_type == "MEMORY_RETAIN_ATTEMPTED":
                 if prior_type not in {
@@ -1035,22 +1210,19 @@ class PostgresPeopleMemoryOverview:
                     self._event_data(batch_events[0]), data["batch_thread_id"])
                 bindings = [self._event_data(candidate) for candidate in batch_events
                             if candidate.event_type == "MEMORY_DREAM_DISPATCH_BOUND"]
-                if ({"document_id": document.document_id,
-                     "source_payload_sha256": source_payload_sha256} not in members
+                member_matches = [item for item in members if item["document_id"] == document.document_id
+                    and (source_payload_sha256 is None or item["source_payload_sha256"] == source_payload_sha256)]
+                if (len(member_matches) != 1
                         or bindings != [{"bank_id": data["bank_id"], "operation_id": data["operation_id"]}]):
                     raise PeopleMemoryOverviewError("dream reconciliation operation/source differs")
                 self._require_event_state(event, phase="memory_retaining", status="waiting_for_proof",
                     retry_count=attempt, last_error_fingerprint=last_error)
                 result = "processing"
             elif event.event_type == "MEMORY_RETAIN_SUCCEEDED":
-                if prior_type not in {"MEMORY_RETAIN_ATTEMPTED", "MEMORY_DREAM_SOURCE_RECONCILED"} or set(data) != {
-                    "bank_id",
-                    "content_sha256",
-                    "document_id",
-                }:
-                    raise PeopleMemoryOverviewError(
-                        "memory retention success is out of order"
-                    )
+                if prior_type not in {"MEMORY_RETAIN_ATTEMPTED", "MEMORY_DREAM_SOURCE_RECONCILED"}:
+                    raise PeopleMemoryOverviewError("memory retention success is out of order")
+                if set(data) != {"bank_id", "content_sha256", "document_id"}:
+                    raise PeopleMemoryOverviewError("memory retention success is malformed")
                 receipt = MemoryRetentionReceipt(
                     bank_id=data.get("bank_id"),  # type: ignore[arg-type]
                     document_id=data.get("document_id"),  # type: ignore[arg-type]
@@ -1058,8 +1230,8 @@ class PostgresPeopleMemoryOverview:
                 )
                 if (
                     receipt.document_id != document.document_id
-                    or receipt.content_sha256
-                    != source_content_sha256
+                    or (source_content_sha256 is not None
+                        and receipt.content_sha256 != source_content_sha256)
                 ):
                     raise PeopleMemoryOverviewError(
                         "memory retention receipt differs"
@@ -1071,17 +1243,47 @@ class PostgresPeopleMemoryOverview:
                     retry_count=attempt,
                 )
                 result = "up_to_date"
+            elif event.event_type == "MEMORY_REFLECTION_CLAIMED":
+                # This consumes an already retained private source for dispatch.
+                # It is not evidence that reflection completed or learned anything.
+                if (prior_type != "MEMORY_RETAIN_SUCCEEDED"
+                        or document.audience.kind != "private_person"
+                        or data != {"principal_sha256": hashlib.sha256(document.principal_id.encode()).hexdigest(),
+                            "document_sha256": hashlib.sha256(document.document_id.encode()).hexdigest(),
+                            "meaning": "dispatch claimed; completion and outcome recorded separately"}):
+                    raise PeopleMemoryOverviewError("memory reflection claim is malformed")
+                self._require_event_state(event, phase="memory_retained", status="completed",
+                                          retry_count=attempt)
+                result = "up_to_date"
             elif event.event_type == "MEMORY_RETAIN_NOT_SELECTED":
                 if (prior_type not in {"MEMORY_RETAIN_ATTEMPTED", "MEMORY_DREAM_SOURCE_RECONCILED"}
                         or set(data) != {"bank_id", "content_sha256", "document_id", "selected_fact_count", "operation_id"}
                         or data["document_id"] != document.document_id
-                        or data["content_sha256"] != source_content_sha256
+                        or not isinstance(data["content_sha256"], str)
+                        or not _SHA256.fullmatch(data["content_sha256"])
+                        or (source_content_sha256 is not None and data["content_sha256"] != source_content_sha256)
                         or type(data["selected_fact_count"]) is not int or data["selected_fact_count"] != 0
                         or not isinstance(data["bank_id"], str) or not data["bank_id"]
                         or not isinstance(data["operation_id"], str) or not data["operation_id"]):
                     raise PeopleMemoryOverviewError("memory zero-selection receipt differs")
                 self._require_event_state(event, phase="memory_not_selected", status="completed", retry_count=attempt)
                 result = "up_to_date"
+            elif event.event_type == "MEMORY_RETAIN_RESULT_RECONCILED":
+                self._validate_closed_reconciliation(document, source_content_sha256, events[:index + 1])
+                result = "up_to_date"
+            elif event.event_type == "MEMORY_RETAIN_ERASED":
+                if (erasure is None or event is not events[-1]
+                        or prior_type in {"MEMORY_RETAIN_SUCCEEDED", "MEMORY_RETAIN_NOT_SELECTED",
+                                          "MEMORY_RETAIN_RESULT_RECONCILED", "MEMORY_REFLECTION_CLAIMED", "MEMORY_RETAIN_ERASED"}
+                        or data != {"contract": "EvaMemoryOutboxErasure/v1",
+                            "document_sha256": hashlib.sha256(document.document_id.encode()).hexdigest(),
+                            "operation_sha256": erasure["operation_sha256"],
+                            "principal_sha256": erasure["principal_sha256"], "status": "erased"}
+                        or event.occurred_at != _memory_status_timestamp(erasure["erased_at"])):
+                    raise PeopleMemoryOverviewError("memory erasure receipt differs")
+                self._require_event_state(event, phase="memory_erased", status="completed",
+                    retry_count=attempt, last_error_fingerprint=last_error)
+                result = "no_signals"
             elif event.event_type == "MEMORY_RETAIN_RETRY_SCHEDULED":
                 error_fingerprint = data.get("error_fingerprint")
                 if (
@@ -1151,6 +1353,11 @@ class PostgresPeopleMemoryOverview:
                     "memory retention event is unknown"
                 )
             prior_type = event.event_type
+        if erasure is not None:
+            if (state.status != "completed" or result not in {"up_to_date", "no_signals"}
+                    or _memory_status_timestamp(erasure["erased_at"]) < events[-1].occurred_at):
+                raise PeopleMemoryOverviewError("erased memory source is not terminal")
+            return "no_signals"
         return result
 
     @staticmethod

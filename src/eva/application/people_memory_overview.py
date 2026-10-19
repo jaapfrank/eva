@@ -29,6 +29,7 @@ MemoryFlowState = Literal[
 ]
 HindsightState = Literal["ready", "attention", "unknown"]
 ControlPlaneState = Literal["owner_viewer_candidate"]
+MemoryFlowDiagnostic = Literal["historical_timeline_attention", "historical_reconciled_attention", "historical_protocol_attention"]
 
 
 class PeopleMemoryOverviewError(RuntimeError):
@@ -109,6 +110,7 @@ class PeopleMemoryOverview:
     memory_flow: MemoryFlowState
     hindsight: HindsightState
     control_plane: ControlPlaneState = "owner_viewer_candidate"
+    memory_diagnostic: MemoryFlowDiagnostic | None = None
 
     def __post_init__(self) -> None:
         allowed = (
@@ -134,6 +136,9 @@ class PeopleMemoryOverview:
             (self.hindsight, {"ready", "attention", "unknown"}),
             (self.control_plane, {"owner_viewer_candidate"}),
         )
+        if (self.memory_diagnostic not in {None, "historical_timeline_attention", "historical_reconciled_attention", "historical_protocol_attention"}
+                or (self.memory_diagnostic is not None and self.memory_flow != "unavailable")):
+            raise ValueError("people and memory overview diagnostic is invalid")
         if any(value not in choices for value, choices in allowed):
             raise ValueError("people and memory overview state is invalid")
 
@@ -143,7 +148,13 @@ class PeopleMemoryOverview:
             "contract": "EvaPeopleMemoryOverview/v1",
             "control_plane": {"state": self.control_plane},
             "hindsight": {"state": self.hindsight},
-            "memory": {"state": self.memory_flow},
+            "memory": {"state": self.memory_flow, **({"diagnostic": self.memory_diagnostic,
+                "explanation": ({
+                    "historical_timeline_attention": "Het verwerkingsoverzicht kan niet volledig worden bevestigd door een tijdvolgordefout in de historie. Dit betekent niet dat geheugenzoeken onbereikbaar is.",
+                    "historical_protocol_attention": "Het verwerkingsoverzicht kan niet volledig worden bevestigd doordat de oude proceshistorie stappen in een ongeldige volgorde bevat. Die fout blijft zichtbaar; dit betekent niet dat geheugenzoeken onbereikbaar is.",
+                    "historical_reconciled_attention": "Een oud verwerkingsresultaat is later gecontroleerd bevestigd, maar de oorspronkelijke proceshistorie bevat nog een fout. De historie blijft bewaard; dit betekent niet dat geheugenzoeken onbereikbaar is.",
+                }[self.memory_diagnostic])}
+                if self.memory_diagnostic is not None else {})},
             "people": {"dynamic_account": self.dynamic_account},
             "read_only": True,
             "sharing": {"state": self.group_sharing},
@@ -162,6 +173,7 @@ __all__ = [
     "GroupSharingState",
     "HindsightState",
     "MemoryFlowState",
+    "MemoryFlowDiagnostic",
     "PeopleMemoryOverview",
     "PeopleMemoryOverviewError",
     "PeopleMemoryOverviewPort",

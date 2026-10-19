@@ -1,0 +1,46 @@
+{
+  "contract": "EvaSelectiveMemoryFinalReview/v1",
+  "reviewedAt": "2026-10-19T14:24:28.236415+00:00",
+  "taskId": "E4.11",
+  "decision": "PASS_FOR_TECHNICAL_E411_COMPLETION",
+  "blockingFindings": [],
+  "scope": "Oorspronkelijke E4.11-eindvoorwaarden, huidige installatie en expliciete behoudsbesluiten; geen gezinsacceptatie of volledige projectafronding.",
+  "separationOfDuties": {
+    "statusAndErasure": "Implementatie door memory_history_diagnosis; onafhankelijke bron-/contractreview door root.",
+    "nativeCompactionAndReconciliation": "Implementatie door root; onafhankelijke bron-, SQL-, transactie- en installerreview door memory_history_diagnosis.",
+    "closure": "Gebundelde beoordeling van bestaande gerichte dag-/droom-, selectie-, eigenaarbediening- en opschoningsbewijzen; geen auteur claimt onafhankelijke review van eigen code."
+  },
+  "checks": [
+    "Alle geïnstalleerde bronhashes komen overeen; parallelle kernwijzigingen en spraak behouden.",
+    "Selectie, consolidatie, bronlevenscyclus en correctie/wissen volgens bestaande bewijsstukken; geen herhaling van gesloten proeven.",
+    "Drie exact bewezen nulresultaten append-only verzoend, zonder retentie/modelherhaling.",
+    "Toekomstige native-payloadcompactie alleen voor gemarkeerde exact passende afgesloten foutvrije families; geen vervroegde brondeletie.",
+    "Echte eigenaar-routes voor herinneringen en bronlijst geven200; verwerkingsoverzicht benoemt ongeldige oude historie afzonderlijk.",
+    "Voor35 oude probleembronnen,80 onvolledig gebonden payloads en224 ongeldige tijdlijnen geldt behoud; geen nieuwe onbewezen geheugenfeiten of groene historiestatus.",
+    "Huidig droomcohort volledig erkend; geen actuele onerkende cohortachterstand."
+  ],
+  "limits": [
+    "Meerdaagse gezinsbeleving en acceptatie blijven F2.1/F2.2.",
+    "Fysieke database-, token- en snelheidswinst onbekend.",
+    "Volledig historisch verwerkingsoverzicht blijft een expliciete waarschuwing door bewaarde oude fouten; geen algemene geheugenuitval.",
+    "Eén bestaande niet-gerelateerde leerbronverwachting is buiten de gerichte suite gebleven; geen claim dat de hele repository foutloos is."
+  ],
+  "privateReviewSha256": {
+    "root-independent-status-review.private.json": "30d79a00a7a0beae6b4c1a6cf6526398d976f99123d13549787915e87a1f824a",
+    "root-changes-independent-review.private.json": "3b02d4344f67d6370be7b2e832f495e318372c6b2cbcf4f50074f99af727782c",
+    "zero-reconciliation-private-review.private.json": "877f1c56e10ccfcdfc865539f670968ac030f72d97fbd03af9b13ecc81550412",
+    "e411-closure-review.private.json": "996b63a7338213b06458f654a2d8be8f89a33f384e3c2d089dc8184089ab697b"
+  },
+  "sourceHashes": {
+    "src/eva/adapters/postgres/memory_outbox.py": "86e6eca47823d313da2ad4a93083b9dee6fff541fce99a86ac6f39148627a9a1",
+    "src/eva/adapters/postgres/people_memory_overview.py": "50ad234c94a27d3f936d3c96eff104cedeac50296dc628ad58882d7b7c608889",
+    "src/eva/application/people_memory_overview.py": "4452f38f48db78374250450f5b1847f7f8ffb2410f15f89091592debec4913d8",
+    "development/tests/postgres/test_memory_closed_reconciliation.py": "c4df6f667f9e00287f3315933e3c257f3ba84be4a48b9d28c1973a48765639c4",
+    "development/tests/postgres/test_memory_erasure_status.py": "6c25922ed95ed43fe4ca64ed1bb98351a656943f35694ec196da44fd13739613",
+    "development/tests/postgres/test_memory_reflection_status.py": "390220d886a2aedb7e0a5eb0854f622b2221bc00778c2e57d160efe31678c911",
+    "development/tests/postgres/test_native_memory_payload_lifecycle.py": "d9346c254ced0720b48b0520c18863569ecd37e910e359b45a120bb11a9f6a33",
+    "deploy/living-core/hindsight-memory/completed_payload_compaction.sql": "57221857fe7690ea8fe690b2dd8f0f75ece6e16082caaa9560ef834ae3caf35e",
+    "deploy/living-core/hindsight-memory/install_completed_payload_compaction.py": "6f71b6a5cbd0e558750b46b045159a11b9a32d38919216d874e95b1a24dd4633",
+    "deploy/living-core/hindsight-memory/README.md": "3d36ba41eb985271fa7b2025a6de28e497b23a373ce4328990df0d79e333721a"
+  }
+}

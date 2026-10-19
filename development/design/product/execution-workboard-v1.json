@@ -844,11 +844,11 @@
   "activeTaskId": "E4.11",
   "currentWork": {
     "id": "E4.11",
-    "title": "Compact geheugen en betrouwbaar geheugenoverzicht afmaken",
-    "status": "in_progress",
+    "title": "Geheugen · E4.11 technisch afgerond en geïnstalleerd",
+    "status": "completed",
     "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-    "nextAction": "Herstel de geheugenstatusroute voor legitiem gewiste bronnen en maak historische tijdlijnproblemen afzonderlijk zichtbaar, met behoud van oorspronkelijke fouten en criteria; daarna resterende bewijsgebonden bronlevenscyclus afmaken. Geen nieuwe modelaanvraag of spraakwijziging.",
-    "checkedAt": "2026-10-19T13:15:15.748652+00:00",
+    "nextAction": "Volg de bestaande resterende kaarten. HA-/spraakwerk blijft bij de toegewezen uitvoerder; gezinsacceptatie blijft afzonderlijk en blokkeert ander werk niet.",
+    "checkedAt": "2026-10-19T14:24:28.236415+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,22 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.11 · Selectief geheugen, opschoning en status technisch afgerond",
+            "state": "installed",
+            "summary": "Gesprekken eerst als dagcontext; bestaande droomroute selecteert en actualiseert blijvende kennis. Automatische opruiming van bewezen dubbele uitvoertekst en correcte wis-/reflectiestatus zijn actief. Drie oude nulresultaten zonder herhaling afgehandeld.",
+            "remaining": "Historische fouten en onbewezen bron/payloadgegevens bewust behouden met afzonderlijke waarschuwing. Meerdaags nut en gezinsacceptatie blijven apart; fysieke database-, token- en snelheidswinst onbekend.",
+            "source": "development/evidence/product/e411-selective-memory-completed-20261019.json",
+            "review": "development/reviews/e411-selective-memory-final-review-20261019.json",
+            "checkedAt": "2026-10-19T14:24:28.236415+00:00",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "E4.11"
+            ],
+            "completionScope": "Technische eindvoorwaarde van bestaande kleine kaart E4.11; geen volledige Eva- of gezinsacceptatie.",
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "Geheugen · 1.592 dubbele taakteksten op actieve installatie opgeschoond",
             "state": "installed",
@@ -2697,50 +2713,52 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Geheugen · 1.592 dubbele taakteksten op actieve installatie opgeschoond",
+          "title": "E4.11 · Selectief geheugen, opschoning en status technisch afgerond",
           "state": "installed",
-          "summary": "Afgesloten geheugenpayloads netto 258.346 JSON-bytes kleiner; 472 betrokken kennisregels en overige taakvelden exact behouden. Geen modelcall, herstart of spraakwijziging.",
-          "remaining": "Resterend: oude cohorten zonder volledig ontvangstbewijs, onvolledig gebonden native payloads en oude status-/wisproblemen onderbouwd afhandelen. Eenmalige historische payloadopruiming is geen automatische toekomstige opruiming. Meerdaags gebruik, fysieke databasegrootte en token-/snelheidswinst niet bewezen.",
-          "source": "development/evidence/product/completed-memory-payload-compaction-20261019.json",
-          "review": "development/reviews/completed-memory-payload-compaction-review-20261019.json",
-          "checkedAt": "2026-10-19T13:15:15.748652+00:00",
-          "newProductFunctionCompleted": false,
-          "completedTaskIds": [],
-          "completionScope": "Een bestaande historische opslagachterstand toegepast afgehandeld; E4.11 blijft open.",
+          "summary": "Gesprekken eerst als dagcontext; bestaande droomroute selecteert en actualiseert blijvende kennis. Automatische opruiming van bewezen dubbele uitvoertekst en correcte wis-/reflectiestatus zijn actief. Drie oude nulresultaten zonder herhaling afgehandeld.",
+          "remaining": "Historische fouten en onbewezen bron/payloadgegevens bewust behouden met afzonderlijke waarschuwing. Meerdaags nut en gezinsacceptatie blijven apart; fysieke database-, token- en snelheidswinst onbekend.",
+          "source": "development/evidence/product/e411-selective-memory-completed-20261019.json",
+          "review": "development/reviews/e411-selective-memory-final-review-20261019.json",
+          "checkedAt": "2026-10-19T14:24:28.236415+00:00",
+          "newProductFunctionCompleted": true,
+          "completedTaskIds": [
+            "E4.11"
+          ],
+          "completionScope": "Technische eindvoorwaarde van bestaande kleine kaart E4.11; geen volledige Eva- of gezinsacceptatie.",
           "ownerAcceptance": false,
           "familyAcceptance": false
         },
         "now": {
           "taskId": "E4.11",
-          "title": "Compact geheugen en betrouwbaar geheugenoverzicht afmaken",
-          "state": "in_progress",
-          "status": "in_progress",
-          "summary": "Historische dubbele tekst toegepast opgeschoond; geheugenrestpunten blijven open",
-          "detail": "Herstel de geheugenstatusroute voor legitiem gewiste bronnen en maak historische tijdlijnproblemen afzonderlijk zichtbaar, met behoud van oorspronkelijke fouten en criteria; daarna resterende bewijsgebonden bronlevenscyclus afmaken. Geen nieuwe modelaanvraag of spraakwijziging.",
+          "title": "Geheugen · E4.11 technisch afgerond en geïnstalleerd",
+          "state": "completed",
+          "status": "completed",
+          "summary": "Gesprekken eerst als dagcontext; bestaande droomroute selecteert en actualiseert blijvende kennis. Automatische opruiming van bewezen dubbele uitvoertekst en correcte wis-/reflectiestatus zijn actief. Drie oude nulresultaten zonder herhaling afgehandeld.",
+          "detail": "Historische fouten en onbewezen bron/payloadgegevens bewust behouden met afzonderlijke waarschuwing. Meerdaags nut en gezinsacceptatie blijven apart; fysieke database-, token- en snelheidswinst onbekend.",
           "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-          "checkedAt": "2026-10-19T13:15:15.748652+00:00"
+          "checkedAt": "2026-10-19T14:24:28.236415+00:00"
         },
         "next": {
-          "taskId": "E4.11",
-          "title": "Dag-/droomoverdracht in hetzelfde geheugen",
-          "detail": "Maak de overdracht kortetermijn-dagcontext → bestaande droomfase → compacte bijgewerkte langetermijnkennis af, met per-bronresultaat en veilige verwerking/herstel. Behoud direct bruikbare afspraken/correcties en persoonsgrenzen; geen losse tweede geheugenroute.",
+          "taskId": "E4.6",
+          "title": "Bestaande Home Assistant-moduleafwerking",
+          "detail": "Bestaande E4.6–E4.10/E5.2 bij de toegewezen HA-/spraakcoördinator; geen nieuwe kaarten of startclaim. Deze oplevering wijzigt diens spraakwerk niet.",
           "followingAcceptance": {
             "taskId": "F2.1",
-            "title": "Zeven dagen gezinsgebruik",
-            "detail": "Blijft een afzonderlijke bestaande acceptatie; blokkeert deze geheugenverbetering niet."
+            "title": "Gewoon gezinsgebruik en afzonderlijke acceptatie",
+            "detail": "Bestaande beoordeling; geen herhaling van geaccepteerde geheugenproeven en geen blokkade voor ander uitvoerbaar werk."
           }
         },
         "ownerAction": {
           "required": false,
-          "detail": "Geen camerakeuze of nieuwe handeling nodig. Bekende namen en passende reacties blijven via gewoon gebruik te beoordelen; de geheugenoverdracht is werk voor Codex.",
+          "detail": "Voor E4.11 geen handeling of herhaalde Telegramproef nodig. Gebruik Eva normaal; eigen WhatsApp-nummer blijft een afzonderlijke optionele keuze.",
           "steps": []
         },
-        "checkedAt": "2026-10-19T10:02:07.750530+00:00",
-        "reviewedAt": "2026-10-19T09:19:58.337471+00:00",
+        "checkedAt": "2026-10-19T14:24:28.236415+00:00",
+        "reviewedAt": "2026-10-19T14:24:28.236415+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-18T22:02:07.083142+00:00",
-      "checkedAt": "2026-10-19T08:31:12.581369+00:00",
+      "reviewedAt": "2026-10-19T14:24:28.236415+00:00",
+      "checkedAt": "2026-10-19T14:24:28.236415+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2775,9 +2793,9 @@
           {
             "name": "Geheugen",
             "state": "incomplete",
-            "label": "Geheugenbasis geaccepteerd · correctie en uitkomst toegepast",
-            "result": "Geaccepteerde geheugenbasis en Eva1-import behouden. Werkuitkomsten en feedback worden opgeslagen. Bij een nieuwe opdracht in een andere sessie paste Eva de eerdere norm én vorm toe zonder herhaling: 8 over, 1 tekort tegen de norm van 9, drie korte bullets met vervolgstap. Werkelijk bestand apart teruggelezen; beide oude bestanden ongewijzigd. Installatie en beperkte toepassing onafhankelijk beoordeeld. HUE1.1/HUE3.1: persoonsaanname en verwachting herzien, vervolgens gebruikt in een nieuw gesprek zonder recente historie; onafhankelijk beoordeeld. HUE6: persoonlijke stijl tijdens rust gegrond bijgesteld en in een later gesprek gebruikt. E2.2: eigen personen/onderwerpen en herinneringen met exacte bron zoeken, corrigeren en vergeten via bestaande opslag; afzonderlijke labels voor bron en afleiding.",
-            "remaining": "HUE1–6 zijn technisch afgerond en later toegepast. Samenhangend dagelijks gezinsgebruik en finale acceptatie; geen geheugenherbouw.",
+            "label": "Geheugenbasis geaccepteerd · E4.11 technisch afgerond",
+            "result": "Dagcontext → bestaande droomselectie en consolidatie → compacte persoonskennis is geïnstalleerd, inclusief bronverval, correctie en vergeten. Historische dubbele native tekst is bewijsgebonden opgeschoond; nieuwe passende afgesloten uitvoerpayloads worden automatisch gecompacteerd. Wisstatus en alle bestaande brongebeurtenissen worden correct gelezen. Drie bewezen nulresultaten zonder herhaling verzoend.",
+            "remaining": "Geen open technische bouwvoorwaarde binnen E4.11. Expliciet behouden:35 oude onzekere/mislukte bronnen,80 onvoldoende gebonden uitvoerpayloads en224 ongeldige oude tijdlijnen. Geen blinde herhaling of verwijdering. Historisch verwerkingsoverzicht blijft een waarschuwing; zoeken en bronlijsten werken. Gezinsacceptatie en meerdaags nut blijven F2.1/F2.2; fysieke opslag-/token-/snelheidswinst onbekend.",
             "evidencePaths": [
               "development/design/product/execution-workboard-v1.json",
               "development/evidence/product/p2-published-results-20261006.json",
@@ -2796,9 +2814,11 @@
               "development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
               "development/evidence/product/e22-owner-memory-installed-20261016.json",
               "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
-              "development/evidence/reassessment/actual-autonomy-observation-20261018.json"
+              "development/evidence/reassessment/actual-autonomy-observation-20261018.json",
+              "development/evidence/product/e411-selective-memory-completed-20261019.json",
+              "development/reviews/e411-selective-memory-final-review-20261019.json"
             ],
-            "checkedAt": "2026-10-16T11:28:21.773727+00:00"
+            "checkedAt": "2026-10-19T14:24:28.236415+00:00"
           },
           {
             "name": "Eigen initiatief",
@@ -2872,7 +2892,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-19T08:31:12.581369+00:00",
+      "lastUpdatedAt": "2026-10-19T14:24:28.236415+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2906,7 +2926,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-19T08:31:12.581369+00:00",
+      "updatedAt": "2026-10-19T14:24:28.236415+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -6724,15 +6744,15 @@
               {
                 "id": "E4.11",
                 "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
-                "status": "in_progress",
+                "status": "completed",
                 "kind": "bouwen",
                 "owner": "Codex",
                 "ownerActionRequired": false,
                 "scopeOrigin": "selective-memory-20261019",
                 "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-                "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden. Historische dubbele native tekstkopieën van 1.592 bevestigde bronnen zijn op 19 oktober verwijderd; alle 1.428 betrokken kennisregels en oorspronkelijke bronnen bleven exact gelijk. Volledig erkende vorige-daguitwisselingen kunnen nu in de bestaande rustfase tekst laten vervallen met behoud van kennis/herkomst; eigenaarlezers, correcties en bewust vergeten volgen dezelfde route. Ook 1.592 exact brongebonden afgesloten native taakpayloads zijn nu zonder modelaanvragen gecompacteerd: 363.733 bytes dubbele tekst vervangen door hashes, canonieke payloads netto 258.346 bytes kleiner; de 472 op dit moment betrokken kennisregels bleven exact gelijk.",
-                "gap": "Resterend: oude cohorten zonder volledig ontvangstbewijs, onvolledig gebonden native payloads en oude status-/wisproblemen onderbouwd afhandelen. Eenmalige historische payloadopruiming is geen automatische toekomstige opruiming. Meerdaags gebruik, fysieke databasegrootte en token-/snelheidswinst niet bewezen.",
-                "nextAction": "Herstel de geheugenstatusroute voor legitiem gewiste bronnen en maak historische tijdlijnproblemen afzonderlijk zichtbaar, met behoud van oorspronkelijke fouten en criteria; daarna resterende bewijsgebonden bronlevenscyclus afmaken. Geen nieuwe modelaanvraag of spraakwijziging.",
+                "existing": "Dagcontext → bestaande droomselectie en consolidatie → compacte persoonskennis is geïnstalleerd, inclusief bronverval, correctie en vergeten. Historische dubbele native tekst is bewijsgebonden opgeschoond; nieuwe passende afgesloten uitvoerpayloads worden automatisch gecompacteerd. Wisstatus en alle bestaande brongebeurtenissen worden correct gelezen. Drie bewezen nulresultaten zonder herhaling verzoend.",
+                "gap": "Geen open technische bouwvoorwaarde binnen E4.11. Expliciet behouden:35 oude onzekere/mislukte bronnen,80 onvoldoende gebonden uitvoerpayloads en224 ongeldige oude tijdlijnen. Geen blinde herhaling of verwijdering. Historisch verwerkingsoverzicht blijft een waarschuwing; zoeken en bronlijsten werken. Gezinsacceptatie en meerdaags nut blijven F2.1/F2.2; fysieke opslag-/token-/snelheidswinst onbekend.",
+                "nextAction": "Gebruik Eva normaal. In Eva-beheer → Geheugen staan geselecteerde herinneringen en het afzonderlijke bronarchief. Geen nieuwe geheugenproef of eigenaarhandeling nodig; gewone gezinsbeoordeling blijft apart.",
                 "files": [
                   "src/eva/application/memory.py",
                   "src/eva/application/memory_background.py",
@@ -6756,23 +6776,23 @@
                 "dependsOn": [
                   "E2.2"
                 ],
-                "checkedAt": "2026-10-19T13:15:15.748652+00:00",
+                "checkedAt": "2026-10-19T14:24:28.236415+00:00",
                 "assignment": {
                   "coordinator": "/root",
                   "activeWorkers": [],
-                  "scope": "E4.11 historische tekstcompactie toegepast; status-/levenscyclusrestpunten open. Spraak bij andere uitvoerder."
+                  "scope": "E4.11 technisch afgerond en geïnstalleerd; spraak blijft bij de andere uitvoerder."
                 },
                 "ownerInstructions": {
                   "availableNow": true,
                   "steps": [
-                    "Open Eva-beheer → Geheugen. De relevante herinneringen staan bovenaan; het bronarchief staat afzonderlijk uitklapbaar. Je hoeft geen proef te herhalen."
+                    "Open Eva-beheer → Geheugen. Bekijk geselecteerde herinneringen; klap alleen bij behoefte het afzonderlijke bronarchief open. Corrigeren en vergeten gebruiken de bestaande bediening."
                   ],
                   "blocksIndependentWork": false
                 },
-                "latestEvidence": "development/evidence/product/completed-memory-payload-compaction-20261019.json",
-                "independentReview": "development/reviews/historical-memory-text-compaction-review-20261019.json",
+                "latestEvidence": "development/evidence/product/e411-selective-memory-completed-20261019.json",
+                "independentReview": "development/reviews/e411-selective-memory-final-review-20261019.json",
                 "installed": true,
-                "technicalCompletion": false,
+                "technicalCompletion": true,
                 "ownerClarification": {
                   "recordedAt": "2026-10-19T09:19:58.337471+00:00",
                   "source": "Directe eigenaarinstructie: gesprekken van die dag kort geheugen, in droomfase wat relevant en nieuw/veranderd is naar lang geheugen.",
@@ -6780,12 +6800,21 @@
                   "dreamConsolidation": "Nieuwe daginformatie bundelen, relevantie afwegen en vergelijken met bestaande kennis; nieuwe kennis toevoegen, gewijzigde kennis bijwerken, herhaling zonder nieuwe betekenis niet opnieuw toevoegen.",
                   "preserve": "Afspraak/correctie/lopende taak direct bruikbaar; persoonsgrenzen, bron/datum, stoppen, herstel en vergeten blijven werken. Tijdelijke bronnen pas laten vervallen na bewezen verwerking en noodzakelijke herkomstbinding.",
                   "reuse": "Bestaande coldworker/droomroute en Hindsight; geen tweede geheugen, planner, daemon of classificatiemodel per bericht.",
-                  "actualGap": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
+                  "actualGap": "Dag-/droomoverdracht, bewijsgebonden bronlevenscyclus, historische dubbele-tekstopschoning, automatische toekomstige native-payloadcompactie en status-/wiscontracten zijn technisch afgerond. Onbewezen oude bronnen/payloads bewust behouden; foutgeschiedenis apart zichtbaar. Meerdaags nut en gezinsacceptatie blijven F2.1/F2.2.",
                   "fullDreamHandoffImplemented": true,
                   "newTaskAdded": false,
-                  "implementedScope": "Bestaande dagcontext→begrensde droomcohorten met brongebonden ontvangsten en wissen; historische opschoning/volledige E4.11 nog open."
+                  "implementedScope": "De bestaande enkele dag-/droomgeheugenketen inclusief gerichte historische afhandeling; geen tweede geheugen en geen classificatiemodel per bericht."
                 },
-                "latestReview": "development/reviews/completed-memory-payload-compaction-review-20261019.json"
+                "latestReview": "development/reviews/e411-selective-memory-final-review-20261019.json",
+                "ownerAcceptance": false,
+                "familyAcceptance": false,
+                "completedAt": "2026-10-19T14:24:28.236415+00:00",
+                "completionEvidence": "development/evidence/product/e411-selective-memory-completed-20261019.json",
+                "knownLimitations": [
+                  "Bewuste behoudsbesluiten en oude foutregistraties staan in het opleverbewijs; geen onbewezen oude gegevens gewist.",
+                  "Volledige historische verwerking niet als gezond verklaard; geheugenzoeken afzonderlijk bereikbaar.",
+                  "Geen fysieke database-, token- of snelheidswinst en geen gezinsacceptatie geclaimd."
+                ]
               }
             ],
             "previousBoundedCompletion": {
@@ -7264,7 +7293,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-19T10:02:07.750530+00:00",
+        "updatedAt": "2026-10-19T14:24:28.236415+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -7486,7 +7515,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-19T08:31:12.581369+00:00",
+        "checkedAt": "2026-10-19T14:24:28.236415+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -11323,15 +11352,15 @@
             {
               "id": "E4.11",
               "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "bouwen",
               "owner": "Codex",
               "ownerActionRequired": false,
               "scopeOrigin": "selective-memory-20261019",
               "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-              "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden. Historische dubbele native tekstkopieën van 1.592 bevestigde bronnen zijn op 19 oktober verwijderd; alle 1.428 betrokken kennisregels en oorspronkelijke bronnen bleven exact gelijk. Volledig erkende vorige-daguitwisselingen kunnen nu in de bestaande rustfase tekst laten vervallen met behoud van kennis/herkomst; eigenaarlezers, correcties en bewust vergeten volgen dezelfde route. Ook 1.592 exact brongebonden afgesloten native taakpayloads zijn nu zonder modelaanvragen gecompacteerd: 363.733 bytes dubbele tekst vervangen door hashes, canonieke payloads netto 258.346 bytes kleiner; de 472 op dit moment betrokken kennisregels bleven exact gelijk.",
-              "gap": "Resterend: oude cohorten zonder volledig ontvangstbewijs, onvolledig gebonden native payloads en oude status-/wisproblemen onderbouwd afhandelen. Eenmalige historische payloadopruiming is geen automatische toekomstige opruiming. Meerdaags gebruik, fysieke databasegrootte en token-/snelheidswinst niet bewezen.",
-              "nextAction": "Herstel de geheugenstatusroute voor legitiem gewiste bronnen en maak historische tijdlijnproblemen afzonderlijk zichtbaar, met behoud van oorspronkelijke fouten en criteria; daarna resterende bewijsgebonden bronlevenscyclus afmaken. Geen nieuwe modelaanvraag of spraakwijziging.",
+              "existing": "Dagcontext → bestaande droomselectie en consolidatie → compacte persoonskennis is geïnstalleerd, inclusief bronverval, correctie en vergeten. Historische dubbele native tekst is bewijsgebonden opgeschoond; nieuwe passende afgesloten uitvoerpayloads worden automatisch gecompacteerd. Wisstatus en alle bestaande brongebeurtenissen worden correct gelezen. Drie bewezen nulresultaten zonder herhaling verzoend.",
+              "gap": "Geen open technische bouwvoorwaarde binnen E4.11. Expliciet behouden:35 oude onzekere/mislukte bronnen,80 onvoldoende gebonden uitvoerpayloads en224 ongeldige oude tijdlijnen. Geen blinde herhaling of verwijdering. Historisch verwerkingsoverzicht blijft een waarschuwing; zoeken en bronlijsten werken. Gezinsacceptatie en meerdaags nut blijven F2.1/F2.2; fysieke opslag-/token-/snelheidswinst onbekend.",
+              "nextAction": "Gebruik Eva normaal. In Eva-beheer → Geheugen staan geselecteerde herinneringen en het afzonderlijke bronarchief. Geen nieuwe geheugenproef of eigenaarhandeling nodig; gewone gezinsbeoordeling blijft apart.",
               "files": [
                 "src/eva/application/memory.py",
                 "src/eva/application/memory_background.py",
@@ -11355,23 +11384,23 @@
               "dependsOn": [
                 "E2.2"
               ],
-              "checkedAt": "2026-10-19T13:15:15.748652+00:00",
+              "checkedAt": "2026-10-19T14:24:28.236415+00:00",
               "assignment": {
                 "coordinator": "/root",
                 "activeWorkers": [],
-                "scope": "E4.11 historische tekstcompactie toegepast; status-/levenscyclusrestpunten open. Spraak bij andere uitvoerder."
+                "scope": "E4.11 technisch afgerond en geïnstalleerd; spraak blijft bij de andere uitvoerder."
               },
               "ownerInstructions": {
                 "availableNow": true,
                 "steps": [
-                  "Open Eva-beheer → Geheugen. De relevante herinneringen staan bovenaan; het bronarchief staat afzonderlijk uitklapbaar. Je hoeft geen proef te herhalen."
+                  "Open Eva-beheer → Geheugen. Bekijk geselecteerde herinneringen; klap alleen bij behoefte het afzonderlijke bronarchief open. Corrigeren en vergeten gebruiken de bestaande bediening."
                 ],
                 "blocksIndependentWork": false
               },
-              "latestEvidence": "development/evidence/product/completed-memory-payload-compaction-20261019.json",
-              "independentReview": "development/reviews/historical-memory-text-compaction-review-20261019.json",
+              "latestEvidence": "development/evidence/product/e411-selective-memory-completed-20261019.json",
+              "independentReview": "development/reviews/e411-selective-memory-final-review-20261019.json",
               "installed": true,
-              "technicalCompletion": false,
+              "technicalCompletion": true,
               "ownerClarification": {
                 "recordedAt": "2026-10-19T09:19:58.337471+00:00",
                 "source": "Directe eigenaarinstructie: gesprekken van die dag kort geheugen, in droomfase wat relevant en nieuw/veranderd is naar lang geheugen.",
@@ -11379,12 +11408,21 @@
                 "dreamConsolidation": "Nieuwe daginformatie bundelen, relevantie afwegen en vergelijken met bestaande kennis; nieuwe kennis toevoegen, gewijzigde kennis bijwerken, herhaling zonder nieuwe betekenis niet opnieuw toevoegen.",
                 "preserve": "Afspraak/correctie/lopende taak direct bruikbaar; persoonsgrenzen, bron/datum, stoppen, herstel en vergeten blijven werken. Tijdelijke bronnen pas laten vervallen na bewezen verwerking en noodzakelijke herkomstbinding.",
                 "reuse": "Bestaande coldworker/droomroute en Hindsight; geen tweede geheugen, planner, daemon of classificatiemodel per bericht.",
-                "actualGap": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
+                "actualGap": "Dag-/droomoverdracht, bewijsgebonden bronlevenscyclus, historische dubbele-tekstopschoning, automatische toekomstige native-payloadcompactie en status-/wiscontracten zijn technisch afgerond. Onbewezen oude bronnen/payloads bewust behouden; foutgeschiedenis apart zichtbaar. Meerdaags nut en gezinsacceptatie blijven F2.1/F2.2.",
                 "fullDreamHandoffImplemented": true,
                 "newTaskAdded": false,
-                "implementedScope": "Bestaande dagcontext→begrensde droomcohorten met brongebonden ontvangsten en wissen; historische opschoning/volledige E4.11 nog open."
+                "implementedScope": "De bestaande enkele dag-/droomgeheugenketen inclusief gerichte historische afhandeling; geen tweede geheugen en geen classificatiemodel per bericht."
               },
-              "latestReview": "development/reviews/completed-memory-payload-compaction-review-20261019.json"
+              "latestReview": "development/reviews/e411-selective-memory-final-review-20261019.json",
+              "ownerAcceptance": false,
+              "familyAcceptance": false,
+              "completedAt": "2026-10-19T14:24:28.236415+00:00",
+              "completionEvidence": "development/evidence/product/e411-selective-memory-completed-20261019.json",
+              "knownLimitations": [
+                "Bewuste behoudsbesluiten en oude foutregistraties staan in het opleverbewijs; geen onbewezen oude gegevens gewist.",
+                "Volledige historische verwerking niet als gezond verklaard; geheugenzoeken afzonderlijk bereikbaar.",
+                "Geen fysieke database-, token- of snelheidswinst en geen gezinsacceptatie geclaimd."
+              ]
             }
           ],
           "previousBoundedCompletion": {
@@ -11863,7 +11901,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-19T10:02:07.750530+00:00",
+      "updatedAt": "2026-10-19T14:24:28.236415+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -12085,7 +12123,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-19T08:31:12.581369+00:00",
+      "checkedAt": "2026-10-19T14:24:28.236415+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -13497,7 +13535,7 @@
       "physicalAcceptance": "pending"
     }
   },
-  "updatedAt": "2026-10-19T09:19:58.337471+00:00",
+  "updatedAt": "2026-10-19T14:24:28.236415+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -13554,6 +13592,6 @@
       "sha256": "6989f2ee57a5b84f48bbcc2407dc68332c3e11d5e6ae4d048ba43da37df9e20b"
     }
   ],
-  "lastUpdatedAt": "2026-10-19T09:19:58.337471+00:00",
-  "checkedAt": "2026-10-19T09:19:58.337471+00:00"
+  "lastUpdatedAt": "2026-10-19T14:24:28.236415+00:00",
+  "checkedAt": "2026-10-19T14:24:28.236415+00:00"
 }

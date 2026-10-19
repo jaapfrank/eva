@@ -42,14 +42,18 @@ een veranderde voorkeur en een correctie blijven van elkaar te onderscheiden.
 Gesprek en taakuitvoering blijven beschikbaar tijdens de droomverwerking. Bevestigde
 overname en noodzakelijke bronbinding gaan vooraf aan het laten vervallen van tijdelijke
 inhoud; een fout of herstart mag geen informatie laten verdwijnen. Bestaande privacy-,
-correctie- en wisregels blijven per persoon/audience gelden. Dit is de gewenste
+correctie- en wisregels blijven per persoon/audience gelden. Dit is de geïnstalleerde
 overdracht binnen E4.11. Sinds 19 oktober wachten gewone privé-uitwisselingen duurzaam
 op de bestaande rust-/capaciteitsfase. Een vast begrensd cohort wordt met brongebonden
 ontvangstbewijzen verwerkt; een named strategy voorkomt nieuwe native document-/chunkkopieën.
 Wissen verzoent eerst een eventueel lopende native operatie, zonder nieuwe extractie.
 Het importpad en de gerichte werk-/leerroute blijven afzonderlijk bestaan. De beperkte
 native overdrachtscontrole bewijst geen dagelijkse kwaliteits- of tokenvoorsprong;
-historische opschoning en het statusoverzicht voor grote historie blijven open.
+E4.11 is technisch afgerond met expliciete behoudsbesluiten voor onbewezen oude
+bronnen/payloads. De statuslezer begrijpt alle bestaande brongebeurtenissen en
+geautoriseerde inhoudsvrije wisbewijzen. Ongeldige oude stapvolgordes/tijden blijven
+een afzonderlijke diagnose; hash-, bron- of checkpointcorruptie wordt niet vrijgesteld.
+Geheugenzoeken en het bronarchief blijven onafhankelijk bereikbaar.
 De geïnstalleerde bronlevenscyclus bewaart volledige bronontvangsten op het cohort.
 Een scopegebonden PostgreSQL-functie laat vorige-dagtekst van bron/bericht/antwoord
 atomair vervallen. `CompactedPrivateMemorySource` bevat uitsluitend identiteit en
@@ -57,7 +61,15 @@ bewijs, geen `.content` of modeltekst. Actuele eigenaarcontrole laat geselecteer
 native kennis daarmee terugkomen; bewust vergeten verwijdert die kennis afzonderlijk.
 Lezers geven compactmetadata nooit als oorspronkelijk gesprek aan het model.
 Geen nieuwe native extractie, TTL-wijziging of vrijgave van alle opslagruimte bij
-tekstcompactie. Legacy cohorten zonder volledig bewijs blijven zichtbaar behouden.
+tekstcompactie. Legacy cohorten zonder volledig bewijs zouden behouden blijven;
+de huidige installatie bevat één cohort met volledige ontvangsten en geen onerkende
+cohortachterstand. Een providergebonden PostgreSQL-trigger ruimt uitsluitend dubbele
+uitvoertekst op in volledig afgesloten, foutvrije native families. Hij levert geen
+droomontvangst en maakt oorspronkelijke bronnen niet eerder wisbaar. Drie bewezen
+oude nulresultaten zijn append-only verzoend; overige onzekere bronnen en onvoldoende
+gebonden payloads blijven behouden, zonder automatische herhaling. Het addendum voor
+Hindsight 0.9.1 staat met versiecontrole en installatie-instructies onder
+`deploy/living-core/hindsight-memory`; een native update vereist compatibiliteitsreview.
 
 ## Moduleverantwoordelijkheden
 
