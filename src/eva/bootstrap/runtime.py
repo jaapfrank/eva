@@ -1631,6 +1631,37 @@ def create_runtime_app() -> FastAPI:
                 ),
             )
         )
+        def private_capability_context(policy, mandate_sha, now):
+            # Capture existing host declarations only. Actual discovery and work
+            # still require the normal durable native admission and executor.
+            from eva.application.private_capability_context import (
+                build_private_capability_context,
+            )
+
+            names = set()
+            if policy.get("enabled") is True:
+                for capability in policy.get("capabilities", []):
+                    names.add(capability["action_name"])
+                    if capability.get("tool_name"):
+                        names.add(capability["tool_name"])
+                digital = policy.get("digital_work", {})
+                if digital.get("enabled", True) is True:
+                    names.update(digital.get("capability_ids", []))
+            descriptors = model.private_action_descriptors(names)
+            if (delegated_work_service is not None
+                    and delegated_work_service.digital_profile is not None
+                    and provider_bundle is not None):
+                from eva.bootstrap.delegated_digital_composition import digital_tools
+
+                digital_descriptors, _ = digital_tools(provider_bundle)
+                descriptors.update({tool.name: {
+                    "name": tool.name, "description": tool.description,
+                    "parameters": tool.input_schema,
+                } for tool in digital_descriptors if tool.name in names})
+            return build_private_capability_context(
+                policy, mandate_sha, observed_at=now, descriptors=descriptors,
+            )
+
         context_review_store = (
             None if settings.background_principal_id is None else PostgresSensoryEventStore(
                 engine, tenant_id=settings.background_tenant_id,
@@ -1639,6 +1670,8 @@ def create_runtime_app() -> FastAPI:
                 initiative_authorizer=lambda: runtime._initiative_authority().policy(),
                 context_reviews_only=True, decision_lease_seconds=300,
                 private_review_profile=getattr(model, "private_opportunity_profile", None),
+                private_capability_context_reader=(private_capability_context
+                    if callable(getattr(model, "private_action_descriptors", None)) else None),
                 private_work_context_reader=(None if delegated_work_service is None
                     else delegated_work_service.private_initiative_work_context),
             )

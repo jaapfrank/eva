@@ -734,6 +734,12 @@ class PydanticConversationModel:
         self._credential_lock = threading.Lock()
         self._rejected_token_sha256: str | None = None
 
+    def private_action_descriptors(self, names: tuple[str, ...]) -> dict[str, dict[str, Any]]:
+        """Return isolated existing metadata; this does not offer or authorize tools."""
+        from copy import deepcopy
+        catalog = {**_ACTION_TOOLS, **self._conversation_tools}
+        return {name: deepcopy(catalog[name]) for name in sorted(set(names)) if name in catalog}
+
     def credential_status(
         self, *, now: datetime | None = None
     ) -> ConversationCredentialStatus:

@@ -1,0 +1,100 @@
+{
+  "contract": "EvaInitiativeExecutionFollowthrough/v1",
+  "taskId": "E5.1",
+  "status": "installed_release_aligned_ordinary_work_not_yet_proved",
+  "checkedAt": "2026-10-19T07:27:55.178568+00:00",
+  "existing": {
+    "ordinaryPrivateContact": {
+      "sourceAt": "2026-10-19 06:24:21+00:00",
+      "preparedAt": "2026-10-19 06:24:40+00:00",
+      "deliveredAt": "2026-10-19 06:24:40+00:00",
+      "sourceSha256": "1c35e0033692c7c50aaec0efd03863b07ae9775b68852a5817604b52de7e3895",
+      "preparedSha256": "b389f75af2d1d7426a30bd07ad7a52fda0fe7450d19a49488afeebbdf9cbc200",
+      "deliveredSha256": "7c1ab6ebbc18fdd8c2e7bd68867b492ba7570cbfdcdfc4fdcbd0ba73993a2803",
+      "sourceCause": "ordinary_hourly_review",
+      "operatorQueued": false,
+      "operatorAssignedTopic": false,
+      "questionAsksAboutUsefulRecurringHouseholdHelp": true,
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 11511,
+        "output_tokens": 174,
+        "model_attempts": 1
+      },
+      "completedWork": false
+    },
+    "ordinaryChatAlreadyReceivesDeliveredQuestion": true,
+    "nativeAdmissionExecutionAndVerifiedReadReturnAlreadyExist": true
+  },
+  "concreteDeficit": "Private orientation receives permitted action names but not their existing host-scoped capability descriptions/schema/scope. Actual execution remains behind durable native admission.",
+  "change": "Capture bounded descriptive capability metadata from current mandate and existing tool catalog in the same immutable private source; invalidate only on stable configuration changes. No new model tool or inline external execution.",
+  "endCondition": "A normal model-selected useful initiative completes through existing native execution, retains checked result and private delivery, and later receives real source-bound followthrough. No assigned proof topic or task quota.",
+  "unchangedCriteria": true,
+  "ownerAcceptanceSeparate": true,
+  "voiceChanged": false,
+  "newTasksAddedByThisWork": false,
+  "newOwnerTasksAcknowledged": [
+    "E4.6",
+    "E4.7",
+    "E4.8",
+    "E4.9",
+    "E4.10",
+    "E5.2"
+  ],
+  "newOwnerTasksOwnedByOtherCoordinator": true,
+  "plannedVerification": "New pure metadata cases and scoped PostgreSQL source/dedup/authority cases; existing valid execution proof reused, then one ordinary changed-capability observation and actual selected native work. No competitor matrix.",
+  "developmentCredits": null,
+  "runtimeCredits": null,
+  "e51Completed": false,
+  "updatedAt": "2026-10-19T07:22:16.371134+00:00",
+  "actualReleaseMismatch": {
+    "privateEvidenceSha256": "2217b81c2847f6b6105bb1003d63ce10b880d44e9a588ff3312c3d3fd54b2845",
+    "differentPinnedSourceCount": 3,
+    "differentReleaseFields": [
+      "model_profile_release_sha256",
+      "worker_program_sha256"
+    ],
+    "canClaimCurrentCoreWork": false
+  },
+  "candidateCapabilityCapture": {
+    "count": 23,
+    "descriptions": 23,
+    "bytes": 8070,
+    "fullParameterSchemas": 0,
+    "omissionsExplicit": true,
+    "scheduledOrExecuted": false
+  },
+  "tests": {
+    "finalPureAndCapture": "31 passed in15.58s",
+    "earlierAdditionalGuards": "6 passed within original26-casebundle"
+  },
+  "installation": {
+    "receiptSha256": "38c8dd4368877556f3f6cec55b44babbb83ffeef2ae011b48b404e7d205e574c",
+    "status": "running_with_retained_mounts",
+    "coreImage": "sha256:da486bda767245ba38c59a4a8123fd86b10467e7b8d85326d980dbc8f83e9305",
+    "workerImage": "sha256:683f3b1926d3a529f7ab148d0f478e0d55d21dc9766695c4060ee131f9770245",
+    "coreMeasuredSources": 74,
+    "workerMeasuredSources": 73,
+    "workerPreservedMeasuredSources": 70,
+    "exactCandidateReleaseEquality": true,
+    "configurationAndMountsRetained": true,
+    "voiceContainersChanged": false
+  },
+  "independentReview": {
+    "contract": "EvaScopedIndependentReview/v1",
+    "taskId": "E5.1",
+    "checkedAt": "2026-10-19T07:27:55.178568+00:00",
+    "sourceVerdict": "GO",
+    "candidateCompositionVerdict": "GO",
+    "privateReviewSha256": "6f01a0372c6a4abf57f08f14c59e957d58daeb9fcc8023221ac1beb5d7a98bae",
+    "installedImagesMatchReviewedCandidates": true,
+    "mountsAndConfigurationRetained": true,
+    "candidateExactReleaseEquality": true,
+    "actualWorkAndFollowthroughVerdict": "NOT_YET_DEMONSTRATED",
+    "e51Completed": false,
+    "voiceContainerOrSpeakerChanges": false,
+    "scope": "Bounded metadata capture plus exact existing core/worker release alignment; no forced task, new planner or new tool authority."
+  },
+  "remaining": "Ordinary self-chosen useful execution, retained checked result and later follow-through remain unproved. Morning self-initiated contact is separate evidence."
+}

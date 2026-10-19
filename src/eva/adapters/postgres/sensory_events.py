@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict
+from copy import deepcopy
 from datetime import UTC, datetime, timedelta
 import hashlib
 from uuid import NAMESPACE_URL, uuid5
@@ -54,6 +55,7 @@ class PostgresSensoryEventStore:
         household_binding=None,
         private_work_context_reader=None,
         private_review_profile: str | None = None,
+        private_capability_context_reader=None,
     ) -> None:
         self._timeline = PostgresOperationalTimeline(
             engine,
@@ -101,6 +103,11 @@ class PostgresSensoryEventStore:
                 or not 0 < len(private_review_profile) <= 80
                 or any(ch not in "abcdefghijklmnopqrstuvwxyz0123456789-" for ch in private_review_profile)):
             raise ValueError("private review profile requires its private owner store")
+        if private_capability_context_reader is not None and (
+                not callable(private_capability_context_reader) or not context_reviews_only
+                or household_binding is not None):
+            raise ValueError("private capability context requires the private owner review store")
+        self._private_capability_context_reader = private_capability_context_reader
         self._private_review_profile = private_review_profile
         self._private_work_context_reader = private_work_context_reader
         self._context_reviews_only = context_reviews_only
@@ -189,17 +196,6 @@ class PostgresSensoryEventStore:
                         e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
                         e.thread_id == latest.thread_id, e.event_type == "WILL_USAGE_UNCERTAIN")
                         .order_by(e.sequence.desc()).limit(1)).scalar_one()
-                if completion_source is None and not attention_due:
-                    # A changed installed decision capability is a new occasion,
-                    # not a replay. It cannot bypass pending/uncertain work or a
-                    # model-chosen future attention, and keeps the numeric source
-                    # identity and ordinary hourly deduplication. A changed
-                    # profile has its own distinct, single-use occasion below.
-                    profile_changed = (self._private_review_profile is not None
-                        and self._event_from_thread(latest.thread_id).payload.get("review_profile")
-                            != self._private_review_profile)
-                    if attention is not None or (not profile_changed and now - reviewed_at < timedelta(hours=1)):
-                        return "idle"
             if self._household_binding is None:
                 pending = connection.execute(sa.select(c.thread_id).join(operational_events, sa.and_(
                     c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
@@ -212,13 +208,32 @@ class PostgresSensoryEventStore:
                 ).limit(1)).first()
                 if pending is not None:
                     return "idle"
+            if (latest is not None and completion_source is None and not attention_due
+                    and attention is not None):
+                return "idle"
+            private_capability_context = None
+            review_profile = self._private_review_profile
+            if self._private_capability_context_reader is not None:
+                # Capability metadata is a pure host snapshot, not an inline tool
+                # executor. Capture only after unresolved/stop/work/attention gates.
+                policy, mandate_sha = self._initiative_authorizer()
+                private_capability_context = self._capture_private_capabilities(policy, mandate_sha, now)
+                review_profile = "pc-" + canonical_sha256({
+                    "base_profile": self._private_review_profile,
+                    "capability_configuration_sha256": private_capability_context["configuration_sha256"],
+                })
+            if latest is not None and completion_source is None and not attention_due:
+                profile_changed = (review_profile is not None
+                    and self._event_from_thread(latest.thread_id).payload.get("review_profile") != review_profile)
+                if not profile_changed and now - reviewed_at < timedelta(hours=1):
+                    return "idle"
             window = int(now.timestamp()) // 3600
             # A real installed capability change has its own immutable source.
             # Reusing this hour's ID would silently discard the new profile;
             # overwriting it would rewrite the earlier decision. Stable numeric
             # identity also prevents a restart from resampling this occasion.
             profile_source = (str(int(canonical_sha256({
-                "installed_private_review_profile": self._private_review_profile,
+                "installed_private_review_profile": review_profile,
                 "review_window": window}), 16)) if profile_changed else None)
             source_id = self._decision_prefix.removeprefix("sensory:") + (
                 attention_suffix(attention) if attention_due else
@@ -226,8 +241,11 @@ class PostgresSensoryEventStore:
                 profile_source if profile_source is not None else str(window))
             thread_id = "sensory:" + source_id
             payload = {"review_window": window}
-            if self._private_review_profile is not None:
-                payload["review_profile"] = self._private_review_profile
+            if review_profile is not None:
+                payload["review_profile"] = review_profile
+            if private_capability_context is not None:
+                payload["review_profile_base"] = self._private_review_profile
+                payload["private_capability_context"] = private_capability_context
             if profile_source is not None and not attention_due and completion_source is None:
                 payload["review_cause"] = "installed_profile_change"
             if attention_due:
@@ -263,6 +281,13 @@ class PostgresSensoryEventStore:
                     raise RuntimeError("household initiative source identity differs")
                 data = {"event_type": event.event_type, "source": event.source,
                         "source_event_id": source_id, "payload": event.payload}
+            if private_capability_context is not None:
+                try:
+                    _, current_mandate = self._initiative_authorizer()
+                except Exception:
+                    return "mandate_unavailable"
+                if current_mandate != private_capability_context["source_mandate_sha256"]:
+                    return "mandate_unavailable"
             try:
                 insert_initial_timeline_thread(connection, scope, thread_id=thread_id,
                     checkpoint_id=f"checkpoint:{source_id}:observed", occurred_at=now,
@@ -271,6 +296,38 @@ class PostgresSensoryEventStore:
             except CheckpointConflict:
                 return "idle"
         return "scheduled"
+
+    def _capture_private_capabilities(self, policy, mandate_sha, now):
+        """Verify the exact bounded descriptor snapshot; never grant an action."""
+        import re
+        value = deepcopy(self._private_capability_context_reader(deepcopy(policy), mandate_sha, now))
+        required = {"contract", "source_mandate_sha256", "observed_at", "configuration_sha256",
+            "classification", "is_execution_permission", "capabilities", "omitted_schema_count",
+            "omitted_description_count"}
+        if (not isinstance(value, dict) or set(value) != required
+                or value["contract"] != "PrivateCapabilityContext/v1"
+                or value["source_mandate_sha256"] != mandate_sha
+                or not isinstance(mandate_sha, str) or re.fullmatch(r"[0-9a-f]{64}", mandate_sha) is None
+                or value["observed_at"] != now.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+                or value["classification"] != "declared_permitted_not_live_health_or_execution_permission"
+                or value["is_execution_permission"] is not False
+                or not isinstance(value["capabilities"], list)
+                or any(type(value[k]) is not int or value[k] < 0
+                       for k in ("omitted_schema_count", "omitted_description_count"))):
+            raise ValueError("private capability context binding differs")
+        names = [item.get("name") if isinstance(item, dict) else None for item in value["capabilities"]]
+        permitted = ({cap["action_name"] for cap in policy["capabilities"]}
+                     if policy.get("enabled") is True else set())
+        digital = policy.get("digital_work") if policy.get("enabled") is True else None
+        if isinstance(digital, dict) and digital.get("enabled") is not False:
+            permitted.update(digital.get("capability_ids", ()))
+        if (any(not isinstance(name, str) or not name for name in names)
+                or len(names) != len(set(names)) or set(names) != permitted
+                or len(canonical_json_bytes(value)) > 8192
+                or value["configuration_sha256"] != canonical_sha256({
+                    key: item for key, item in value.items() if key not in {"observed_at", "configuration_sha256"}})):
+            raise ValueError("private capability context content differs")
+        return value
 
     def _matches_household_event(self, event: SensoryEvent) -> bool:
         binding = self._household_binding
