@@ -26,6 +26,27 @@ class SpeakerSource:
         self._input_deliveries=0
         self._input_resume_at=0.0
         self._input_was_suppressed=False
+        self._utterance=None
+
+    def begin_utterance(self):
+        """Keep a literal speech part on one native playback generation.
+
+        Silence inside a known part is punctuation, not provider completion.
+        The token also prevents a cancelled part from flushing its successor.
+        """
+        if self._utterance is not None:
+            raise RuntimeError('Speaker utterance already open')
+        token=object()
+        self._utterance=token
+        return token
+
+    def finish_utterance(self, token):
+        if token is not self._utterance:return False
+        self._utterance=None
+        if self.active:
+            self.sink.flush();self._fence_input()
+            self.active=False;self.quiet_samples=0;self.changed.set()
+        return True
 
     @property
     def input_suppressed(self):
@@ -123,7 +144,7 @@ class SpeakerSource:
                     leading_ms=round(leading_samples/24,2),
                     capture_wait_ms=round(self.max_capture_ms,2))
             self.quiet_samples=0 if audible else self.quiet_samples+pcm.samples
-            if self.quiet_samples>=7200:
+            if self.quiet_samples>=7200 and self._utterance is None:
                 self.diagnostic('speaker_audio_flushed', audio_ms=round(self.segment_samples/24,2),
                     max_input_gap_ms=round(self.max_gap_ms,2),
                     max_capture_wait_ms=round(self.max_capture_ms,2))
@@ -134,6 +155,7 @@ class SpeakerSource:
             self.diagnostic('speaker_audio_cleared',
                 submitted_audio_ms=round(self.segment_samples/24,2))
         self.epoch+=1
+        self._utterance=None
         self.last_frame_at=None
         self.leading.clear();self.active=False;self.quiet_samples=0
         self.sink.clear_buffer();self._fence_input();self.changed.set()

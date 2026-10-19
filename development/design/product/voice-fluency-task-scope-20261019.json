@@ -1,0 +1,30 @@
+{
+  "contract": "EvaWorkboardScopeExtension/v1",
+  "id": "voice-fluency-20261019",
+  "createdAt": "2026-10-19T07:08:01.588667+00:00",
+  "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+  "sourceSha256": "0953da28b663495e55d95122ac23594c2a9a29f97e0d4689bad0b1659e9af8b4",
+  "ownerAuthorized": true,
+  "authorization": "Direct owner instruction: create tasks for the four proposed voice improvements and execute them. Existing C4.1 covers native interruption; three new tasks cover cadence, turn boundaries and session recovery.",
+  "meaning": "Frozen additional scope; execution-workboard-v1.json remains the only live status source.",
+  "tasks": [
+    {
+      "id": "C3.4",
+      "title": "Natuurlijk spreekritme zonder onbedoelde pauzes",
+      "status": "planned",
+      "doneWhen": "De bestaande TTS- en speakerroute speelt gewone Nederlandse antwoorden met behoud van alle woorden en natuurlijke zinsrust. Lange onverwachte stiltes zijn met bron-PCM, aanvoertijden en apparaatbevestiging gelokaliseerd en de aangetoonde oorzaak is verholpen. Geen ongefundeerd versnellen of wegknippen van betekenisvolle rust. Gewone, meerzinnige en onderbroken antwoorden zijn via de geïnstalleerde route gecontroleerd; werkelijk horen en technische ontvangst blijven onderscheiden."
+    },
+    {
+      "id": "C3.5",
+      "title": "Natuurlijke beurtgrenzen en behoud van zachte beginwoorden",
+      "status": "planned",
+      "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist."
+    },
+    {
+      "id": "C3.6",
+      "title": "Speaker herstelt na tijdelijke verbindingsuitval",
+      "status": "planned",
+      "doneWhen": "Een korte core- of netwerkonderbreking beëindigt een ongebruikte standbyverbinding niet onnodig. Na een werkelijke disconnect geeft de dienst alle oude sessie- en afspeelrechten vrij en kan dezelfde speaker via herverbinding en een nieuw lokaal wekwoord weer spreken zonder microfoon uit/aan. Gesloten of gemute input wordt nooit stilzwijgend heropend; aangenomen opdrachten worden niet blind herhaald. Standby, actieve uitval, herverbinding en nieuwe beurt zijn op de geïnstalleerde route gecontroleerd."
+    }
+  ]
+}

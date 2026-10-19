@@ -13,6 +13,37 @@ from eva.voice_service.codex_media import CodexMediaSession
 from eva.adapters.connectors.home_assistant_voice import HomeAssistantSpeechOutput
 
 class CodexHouseholdSpeakerSession(LiveKitHouseholdSpeakerSession):
+    async def __call__(self, binding, wire):
+        self.check()
+        channel = wire.microphone
+        if channel is None:
+            raise ValueError("Speaker microphone is not enabled")
+        # Keep the existing network-candidate warmup, without asking the core
+        # to admit a conversation while this device is only in standby.
+        media = self.make_session()
+        wake = asyncio.create_task(channel.wait_wake())
+        try:
+            while not wake.done():
+                self.check()
+                await asyncio.wait((wake,), timeout=1)
+            await wake
+            self.check()
+            # A connection-local composition owns this exact prewarmed media.
+            # Concurrent speakers cannot exchange media or household bindings.
+            session = LiveKitHouseholdSpeakerSession(
+                core_url=self.core_url, household_token=self.token,
+                stt_source=self.stt_source, tts_source=self.tts_source,
+                vad=self.vad, check=self.check, notify=self.notify)
+            session.make_session = lambda: media
+            await session(binding, wire)
+        finally:
+            if not wake.done():
+                wake.cancel()
+            await asyncio.gather(wake, return_exceptions=True)
+            # Also retire ICE if readiness fails before the inherited session
+            # takes ownership, or the device disconnects without ever waking.
+            await media.aclose()
+
     def make_session(self):
         config={'wake_greeting':True,'codex_executable':os.environ['EVA_CODEX_EXECUTABLE'],
                 'codex_auth_file':os.environ['EVA_CODEX_AUTH_FILE']}

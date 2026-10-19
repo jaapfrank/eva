@@ -5,6 +5,50 @@ from livekit.agents import stt, tts, tokenize
 from livekit.agents.types import DEFAULT_API_CONNECT_OPTIONS
 from eva.adapters.connectors.home_assistant_voice import NoSpeechRecognized
 
+class InternalDigitalSilence:
+    """Cap only internal exact-zero PCM runs at 450 ms; preserve every other sample.
+
+    The observed provider inserts >650 ms of digital zero between sentences.
+    450 ms retains a sentence pause without accelerating speech or treating soft
+    consonants as silence. Leading/trailing silence and chunk boundaries survive.
+    """
+    def __init__(self, sample_rate=24000):
+        self.limit = sample_rate * 450 // 1000
+        self.seen_signal = False
+        self.zeros = 0
+        self.pending = 0
+        self.removed_samples = 0
+
+    def push(self, data):
+        from array import array
+        if len(data) % 2:
+            raise ValueError("Speech PCM must contain whole int16 samples")
+        samples = array('h'); samples.frombytes(data)
+        output = array('h')
+        for value in samples:
+            if value or not self.seen_signal:
+                if value:
+                    self.seen_signal = True
+                    self.removed_samples += self.pending
+                    self.pending = self.zeros = 0
+                output.append(value)
+            else:
+                self.zeros += 1
+                if self.zeros <= self.limit:
+                    output.append(0)
+                else:
+                    self.pending += 1
+        return output.tobytes()
+
+    def finish(self):
+        # EOF proves excess zeros were the original tail, not an internal pause.
+        # Yield bounded frames; cancellation must never flush this tail.
+        while self.pending:
+            count = min(self.pending, 480)
+            self.pending -= count
+            yield bytes(count * 2)
+
+
 class HomeAssistantSTT(stt.STT):
     def __init__(self, source, check=lambda: None, *, vad=None):
         super().__init__(capabilities=stt.STTCapabilities(streaming=vad is not None, interim_results=False))

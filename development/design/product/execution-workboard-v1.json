@@ -2976,7 +2976,7 @@
                   "blocksIndependentWork": false,
                   "currentCandidateStatus": "fluency_correction_not_yet_assessed"
                 },
-                "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
+                "nextAction": "Geïnstalleerde cadans- en sessieherstelreparaties behouden; controleer doorpraten op beide speakers. Echte fysieke uitkomsten vastleggen, geen WSL-herstart als algemene voorwaarde.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": true,
@@ -3220,7 +3220,17 @@
                   }
                 },
                 "executionOwner": "other_wsl_voice_executor",
-                "independentCoreWorkRequired": false
+                "independentCoreWorkRequired": false,
+                "previousExecutionBoundary20261019": {
+                  "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
+                  "ownerActionRequired": true
+                },
+                "voiceFluencyExecution": {
+                  "scopeOrigin": "voice-fluency-20261019",
+                  "status": "in_progress",
+                  "startedAt": "2026-10-19T07:08:01.588667+00:00",
+                  "owner": "voice_executor"
+                }
               },
               {
                 "id": "C3.3",
@@ -3240,6 +3250,72 @@
                 },
                 "assignment": {
                   "activeWorkers": []
+                }
+              },
+              {
+                "id": "C3.4",
+                "title": "Natuurlijk spreekritme zonder onbedoelde pauzes",
+                "doneWhen": "De bestaande TTS- en speakerroute speelt gewone Nederlandse antwoorden met behoud van alle woorden en natuurlijke zinsrust. Lange onverwachte stiltes zijn met bron-PCM, aanvoertijden en apparaatbevestiging gelokaliseerd en de aangetoonde oorzaak is verholpen. Geen ongefundeerd versnellen of wegknippen van betekenisvolle rust. Gewone, meerzinnige en onderbroken antwoorden zijn via de geïnstalleerde route gecontroleerd; werkelijk horen en technische ontvangst blijven onderscheiden.",
+                "existing": "Korte antwoorden gebruiken één letterlijke HA-TTS-aanvraag; tekst en stop-/afspeelbevestigingen blijven gekoppeld.",
+                "gap": "Eerdere ontvangst bevatte pauzes van 0,90–1,17 seconde; bronstilte en aanvoergaten zijn nog niet onderscheiden.",
+                "nextAction": "Bronstiltes begrensd en antwoord als één native afspeelbeurt geïnstalleerd. Controleer de hoorbare natuurlijke zinsrust op beide speakers.",
+                "status": "planned",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "scopeOrigin": "voice-fluency-20261019",
+                "ownerActionRequired": true,
+                "execution": {
+                  "status": "installed",
+                  "startedAt": "2026-10-19T07:08:01.588667+00:00",
+                  "owner": "voice_executor",
+                  "runtimeChanged": true,
+                  "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
+                  "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+                  "ownerAcceptance": false
+                }
+              },
+              {
+                "id": "C3.5",
+                "title": "Natuurlijke beurtgrenzen en behoud van zachte beginwoorden",
+                "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
+                "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
+                "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
+                "nextAction": "Zachte vervolgen binnen hetzelfde antwoord blijven behouden. Bestaande invoerbundeling van 550 ms behouden; controleer natuurlijke beurten op beide speakers.",
+                "status": "planned",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "scopeOrigin": "voice-fluency-20261019",
+                "ownerActionRequired": true,
+                "execution": {
+                  "status": "installed_outgoing_boundary_fix",
+                  "startedAt": "2026-10-19T07:08:01.588667+00:00",
+                  "owner": "voice_executor",
+                  "runtimeChanged": true,
+                  "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
+                  "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+                  "ownerAcceptance": false
+                }
+              },
+              {
+                "id": "C3.6",
+                "title": "Speaker herstelt na tijdelijke verbindingsuitval",
+                "doneWhen": "Een korte core- of netwerkonderbreking beëindigt een ongebruikte standbyverbinding niet onnodig. Na een werkelijke disconnect geeft de dienst alle oude sessie- en afspeelrechten vrij en kan dezelfde speaker via herverbinding en een nieuw lokaal wekwoord weer spreken zonder microfoon uit/aan. Gesloten of gemute input wordt nooit stilzwijgend heropend; aangenomen opdrachten worden niet blind herhaald. Standby, actieve uitval, herverbinding en nieuwe beurt zijn op de geïnstalleerde route gecontroleerd.",
+                "existing": "Firmware plant reconnect bij CLOSED/DISCONNECTED/ERROR; bestaande session-finally sluit input en core-lease.",
+                "gap": "Core-readiness wordt vóór het wekwoord gecontroleerd en kan een verder ongebruikte verbinding onnodig beëindigen.",
+                "nextAction": "Standby-readiness hersteld; beide echte speakers hebben vanzelf herverbonden. Controleer een nieuw lokaal wekwoord en gesprek zonder microfoon uit/aan.",
+                "status": "planned",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "scopeOrigin": "voice-fluency-20261019",
+                "ownerActionRequired": true,
+                "execution": {
+                  "status": "installed",
+                  "startedAt": "2026-10-19T07:08:01.588667+00:00",
+                  "owner": "voice_executor",
+                  "runtimeChanged": true,
+                  "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
+                  "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+                  "ownerAcceptance": false
                 }
               }
             ]
@@ -3272,7 +3348,7 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
+                "nextAction": "Meet echte stem over speakeruitvoer voordat de echo-afscherming wordt veranderd; actuele firmware wijst niet op een bewezen kanaalfout.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": false,
@@ -3510,7 +3586,22 @@
                   }
                 },
                 "executionOwner": "other_wsl_voice_executor",
-                "independentCoreWorkRequired": false
+                "independentCoreWorkRequired": false,
+                "previousExecutionBoundary20261019": {
+                  "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
+                  "ownerActionRequired": true
+                },
+                "voiceFluencyExecution": {
+                  "scopeOrigin": "voice-fluency-20261019",
+                  "status": "awaiting_acoustic_sample",
+                  "startedAt": "2026-10-19T07:08:01.588667+00:00",
+                  "owner": "voice_executor",
+                  "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
+                  "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+                  "ownerAcceptance": false,
+                  "runtimeChanged": false
+                }
               },
               {
                 "id": "C4.3",
@@ -6753,7 +6844,7 @@
           "E5: E5.1-opvolging en nieuwe E5.2 chat-/spraakoplevering; daarna onafhankelijke eindreview en gezinsacceptatie"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-18T22:37:35.579695+00:00",
+        "updatedAt": "2026-10-19T07:20:01.969123+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -6795,7 +6886,10 @@
               "existingTaskIds": [
                 "C3.1",
                 "C4.1",
-                "C4.3"
+                "C4.3",
+                "C3.4",
+                "C3.5",
+                "C3.6"
               ],
               "currentGap": "E2.1–E2.5 en E2.7 technisch afgerond/geïnstalleerd. Alleen optioneel WhatsApp E2.6 wacht op eigen Eva-nummer en echte belproef; blokkeert kernwerk niet."
             },
@@ -6970,7 +7064,24 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-18T22:08:26.558837+00:00"
+        "checkedAt": "2026-10-18T22:08:26.558837+00:00",
+        "voiceFluencyExecution": {
+          "scopeOrigin": "voice-fluency-20261019",
+          "taskIds": [
+            "C4.1",
+            "C3.4",
+            "C3.5",
+            "C3.6"
+          ],
+          "status": "targeted_repairs_installed",
+          "startedAt": "2026-10-19T07:08:01.588667+00:00",
+          "activeOtherWorkPreserved": "E5.1",
+          "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+          "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
+          "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+          "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+          "physicalAcceptance": "pending"
+        }
       }
     },
     "deliveryPlan": {
@@ -7197,7 +7308,7 @@
                 "blocksIndependentWork": false,
                 "currentCandidateStatus": "fluency_correction_not_yet_assessed"
               },
-              "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
+              "nextAction": "Geïnstalleerde cadans- en sessieherstelreparaties behouden; controleer doorpraten op beide speakers. Echte fysieke uitkomsten vastleggen, geen WSL-herstart als algemene voorwaarde.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
@@ -7441,7 +7552,17 @@
                 }
               },
               "executionOwner": "other_wsl_voice_executor",
-              "independentCoreWorkRequired": false
+              "independentCoreWorkRequired": false,
+              "previousExecutionBoundary20261019": {
+                "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
+                "ownerActionRequired": true
+              },
+              "voiceFluencyExecution": {
+                "scopeOrigin": "voice-fluency-20261019",
+                "status": "in_progress",
+                "startedAt": "2026-10-19T07:08:01.588667+00:00",
+                "owner": "voice_executor"
+              }
             },
             {
               "id": "C3.3",
@@ -7461,6 +7582,72 @@
               },
               "assignment": {
                 "activeWorkers": []
+              }
+            },
+            {
+              "id": "C3.4",
+              "title": "Natuurlijk spreekritme zonder onbedoelde pauzes",
+              "doneWhen": "De bestaande TTS- en speakerroute speelt gewone Nederlandse antwoorden met behoud van alle woorden en natuurlijke zinsrust. Lange onverwachte stiltes zijn met bron-PCM, aanvoertijden en apparaatbevestiging gelokaliseerd en de aangetoonde oorzaak is verholpen. Geen ongefundeerd versnellen of wegknippen van betekenisvolle rust. Gewone, meerzinnige en onderbroken antwoorden zijn via de geïnstalleerde route gecontroleerd; werkelijk horen en technische ontvangst blijven onderscheiden.",
+              "existing": "Korte antwoorden gebruiken één letterlijke HA-TTS-aanvraag; tekst en stop-/afspeelbevestigingen blijven gekoppeld.",
+              "gap": "Eerdere ontvangst bevatte pauzes van 0,90–1,17 seconde; bronstilte en aanvoergaten zijn nog niet onderscheiden.",
+              "nextAction": "Bronstiltes begrensd en antwoord als één native afspeelbeurt geïnstalleerd. Controleer de hoorbare natuurlijke zinsrust op beide speakers.",
+              "status": "planned",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "scopeOrigin": "voice-fluency-20261019",
+              "ownerActionRequired": true,
+              "execution": {
+                "status": "installed",
+                "startedAt": "2026-10-19T07:08:01.588667+00:00",
+                "owner": "voice_executor",
+                "runtimeChanged": true,
+                "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+                "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
+                "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+                "ownerAcceptance": false
+              }
+            },
+            {
+              "id": "C3.5",
+              "title": "Natuurlijke beurtgrenzen en behoud van zachte beginwoorden",
+              "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
+              "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
+              "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
+              "nextAction": "Zachte vervolgen binnen hetzelfde antwoord blijven behouden. Bestaande invoerbundeling van 550 ms behouden; controleer natuurlijke beurten op beide speakers.",
+              "status": "planned",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "scopeOrigin": "voice-fluency-20261019",
+              "ownerActionRequired": true,
+              "execution": {
+                "status": "installed_outgoing_boundary_fix",
+                "startedAt": "2026-10-19T07:08:01.588667+00:00",
+                "owner": "voice_executor",
+                "runtimeChanged": true,
+                "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+                "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
+                "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+                "ownerAcceptance": false
+              }
+            },
+            {
+              "id": "C3.6",
+              "title": "Speaker herstelt na tijdelijke verbindingsuitval",
+              "doneWhen": "Een korte core- of netwerkonderbreking beëindigt een ongebruikte standbyverbinding niet onnodig. Na een werkelijke disconnect geeft de dienst alle oude sessie- en afspeelrechten vrij en kan dezelfde speaker via herverbinding en een nieuw lokaal wekwoord weer spreken zonder microfoon uit/aan. Gesloten of gemute input wordt nooit stilzwijgend heropend; aangenomen opdrachten worden niet blind herhaald. Standby, actieve uitval, herverbinding en nieuwe beurt zijn op de geïnstalleerde route gecontroleerd.",
+              "existing": "Firmware plant reconnect bij CLOSED/DISCONNECTED/ERROR; bestaande session-finally sluit input en core-lease.",
+              "gap": "Core-readiness wordt vóór het wekwoord gecontroleerd en kan een verder ongebruikte verbinding onnodig beëindigen.",
+              "nextAction": "Standby-readiness hersteld; beide echte speakers hebben vanzelf herverbonden. Controleer een nieuw lokaal wekwoord en gesprek zonder microfoon uit/aan.",
+              "status": "planned",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "scopeOrigin": "voice-fluency-20261019",
+              "ownerActionRequired": true,
+              "execution": {
+                "status": "installed",
+                "startedAt": "2026-10-19T07:08:01.588667+00:00",
+                "owner": "voice_executor",
+                "runtimeChanged": true,
+                "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+                "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
+                "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+                "ownerAcceptance": false
               }
             }
           ]
@@ -7493,7 +7680,7 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
+              "nextAction": "Meet echte stem over speakeruitvoer voordat de echo-afscherming wordt veranderd; actuele firmware wijst niet op een bewezen kanaalfout.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": false,
@@ -7731,7 +7918,22 @@
                 }
               },
               "executionOwner": "other_wsl_voice_executor",
-              "independentCoreWorkRequired": false
+              "independentCoreWorkRequired": false,
+              "previousExecutionBoundary20261019": {
+                "nextAction": "Coördineer WSL-herstart voor geblokkeerde GPU-toegang; herstelbundel gereed. Daarna exact lokaal GPU-resultaat en werkelijk gespreksritme valideren. Geïnstalleerde spraakreparaties behouden; geen herbouw of oude tests herstarten.",
+                "ownerActionRequired": true
+              },
+              "voiceFluencyExecution": {
+                "scopeOrigin": "voice-fluency-20261019",
+                "status": "awaiting_acoustic_sample",
+                "startedAt": "2026-10-19T07:08:01.588667+00:00",
+                "owner": "voice_executor",
+                "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+                "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
+                "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+                "ownerAcceptance": false,
+                "runtimeChanged": false
+              }
             },
             {
               "id": "C4.3",
@@ -10974,7 +11176,7 @@
         "E5: E5.1-opvolging en nieuwe E5.2 chat-/spraakoplevering; daarna onafhankelijke eindreview en gezinsacceptatie"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-18T22:37:35.579695+00:00",
+      "updatedAt": "2026-10-19T07:20:01.969123+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -11016,7 +11218,10 @@
             "existingTaskIds": [
               "C3.1",
               "C4.1",
-              "C4.3"
+              "C4.3",
+              "C3.4",
+              "C3.5",
+              "C3.6"
             ],
             "currentGap": "E2.1–E2.5 en E2.7 technisch afgerond/geïnstalleerd. Alleen optioneel WhatsApp E2.6 wacht op eigen Eva-nummer en echte belproef; blokkeert kernwerk niet."
           },
@@ -11191,7 +11396,24 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-18T22:08:26.558837+00:00"
+      "checkedAt": "2026-10-18T22:08:26.558837+00:00",
+      "voiceFluencyExecution": {
+        "scopeOrigin": "voice-fluency-20261019",
+        "taskIds": [
+          "C4.1",
+          "C3.4",
+          "C3.5",
+          "C3.6"
+        ],
+        "status": "targeted_repairs_installed",
+        "startedAt": "2026-10-19T07:08:01.588667+00:00",
+        "activeOtherWorkPreserved": "E5.1",
+        "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+        "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
+        "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+        "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+        "physicalAcceptance": "pending"
+      }
     },
     "goalRevision": {
       "document": "development/docs/PROJECTDOEL.md",
@@ -12559,6 +12781,23 @@
           "use": "Initial state and incremental updates can support module-owned current context; reconnect and supported-version checks remain necessary."
         }
       ]
+    },
+    "voiceFluency20261019": {
+      "status": "targeted_repairs_installed",
+      "taskIds": [
+        "C4.1",
+        "C3.4",
+        "C3.5",
+        "C3.6"
+      ],
+      "scopeOrigin": "voice-fluency-20261019",
+      "runtimeChanged": true,
+      "runtimeModelCalls": 0,
+      "runtimeEffectCalls": 0,
+      "credits": null,
+      "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
+      "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+      "physicalAcceptance": "pending"
     }
   },
   "updatedAt": "2026-10-18T23:19:04.928959+00:00",
@@ -12601,6 +12840,11 @@
       "id": "home-module-latency-20261019",
       "path": "development/design/product/home-module-latency-task-scope-20261019.json",
       "sha256": "d01d058408df849d60022c07de456af48c8b6c42a6a3ea507004bba7ea2b15a1"
+    },
+    {
+      "id": "voice-fluency-20261019",
+      "path": "development/design/product/voice-fluency-task-scope-20261019.json",
+      "sha256": "e8597084de1aa782f84eb41a2e82226249b3201bed61eb9b281bb39ed6487d42"
     }
   ],
   "lastUpdatedAt": "2026-10-18T23:19:04.928959+00:00"

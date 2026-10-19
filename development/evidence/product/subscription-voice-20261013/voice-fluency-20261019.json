@@ -1,0 +1,195 @@
+{
+  "date": "2026-10-19T07:18:56.261522+00:00",
+  "status": "targeted_voice_repairs_installed_physical_conversation_check_pending",
+  "scopeOrigin": "voice-fluency-20261019",
+  "taskIds": [
+    "C4.1",
+    "C3.4",
+    "C3.5",
+    "C3.6"
+  ],
+  "baseline": {
+    "literalTextRendererAlreadyInstalled": true,
+    "inputFragmentQuietMs": 550,
+    "nativeMicrophoneMode": "half_duplex_echo_fence",
+    "taskCriteriaChanged": false
+  },
+  "findings": [
+    {
+      "task": "C3.4",
+      "cause": "A live HA TTS request contained 980 ms and 920 ms internal quiet intervals. Its longest exact digital-zero runs were 657.7 ms and 681.8 ms. Full decode arrived within 354 ms of first decoded audio; this was provider PCM silence, not a corresponding network gap.",
+      "repair": "Cap only internal runs of exact-zero PCM at 450 ms. Preserve every nonzero sample, leading and trailing PCM, text and cancellation. No global rate change.",
+      "samePcmComparison": {
+        "beforeMs": 8688,
+        "afterMs": 8248.58,
+        "removedMs": 439.42,
+        "nonZeroSamplesBitExact": true,
+        "firstAudioLatencyImprovementClaimed": false
+      }
+    },
+    {
+      "task": "C3.5",
+      "cause": "The native adapter ended a wire generation after 300 ms of quiet even inside a known literal answer. The next sentence waited for FINISHED, reprised the 100 ms priming lead and re-entered a bounded leading-audio buffer.",
+      "repair": "A token binds a literal speech part to one native playback generation. Internal pauses and quiet continuations remain inside it; explicit end flushes, waits for the actual receipt and preserves STOP. A stale token cannot flush a newer part.",
+      "inputBoundaryChange": false,
+      "reason": "No new evidence justifies increasing the existing 550 ms transcript debounce. Prior input fixes and tests remain valid within their original bounds."
+    },
+    {
+      "task": "C3.6",
+      "cause": "The inherited speaker session checked core readiness before local wake, allowing a temporary core outage to eject a passive standby socket.",
+      "repair": "Keep the same connection-local ICE prewarm while waiting for fresh local wake and checking authority. Only then use the unchanged core admission/capture/lease flow. Failure before handoff also closes the prewarmed media.",
+      "limits": "Active-disconnect cleanup and fresh admission already passed in the baseline; they are preserved, not claimed as a newly fixed bug."
+    },
+    {
+      "task": "C4.1",
+      "finding": "Pinned XMOS v1.3.1 maps channel 0 to the processed AGC path with AEC and uses I2S as its reference. Native output uses the same mixer/I2S speaker. No wrong-channel or reference bypass was proven.",
+      "runtimeChange": false,
+      "nextRequiredEvidence": "Labelled acoustic capture with actual speaker playback and a person speaking over it. Do not remove the native echo fence based only on firmware defaults or simulated receipts."
+    }
+  ],
+  "installation": {
+    "speaker": {
+      "base": "sha256:3dd607f14fb00bf163d542918b03a81ec665cf44929afe6f8a904709adec3730",
+      "candidate": "sha256:c2df976695f6691096806359e93259cb3f92f25d73e2dd9ba40ba945334588c5",
+      "hashes": {
+        "/app/eva/voice_service/codex_speaker_audio.py": "f642a715ebe83f8cef6b1e83966297a09b3a522bb060cefa8858a88620a1cc2b",
+        "/app/eva/voice_service/literal_speech.py": "9cafb92d5c9c121122a9bfc515a9e7dbe2465c416b731df2b073e06ae918fa42",
+        "/app/eva/voice_service/media.py": "032a5aae221784c287d082c1cd4937c316b7eba84406077ddcc15f5eff6c0e0b",
+        "/opt/eva/codex_speaker_service.py": "bec22f2895b34bc8f24e1ce7012a0022b3b1d8937a53c8da533a9175204e08ea"
+      },
+      "original_hashes": {
+        "/app/eva/voice_service/codex_speaker_audio.py": "4a90832cf449984b2c5e30f9b0ecb0773f930133ae278f617356aa1ab35525c9",
+        "/app/eva/voice_service/literal_speech.py": "3a88244980f81b85e00c78d0b6d057eac198e1159fb1a25a710abd521f83058b",
+        "/app/eva/voice_service/media.py": "a6df0cf6e5aac061df3dab8093d14582b278b533cd488c2204054633f20541a5",
+        "/opt/eva/codex_speaker_service.py": "01e1f7a202bceb6c38f2f6e2aab02f06f0793f2ea0806e6e31ea5159955d4c3d"
+      },
+      "installed_at": "2026-10-19T07:15:06.148152333Z",
+      "source_verified": true,
+      "configuration_preserved": true,
+      "pre_install_guard": {
+        "active_voice_leases": 0,
+        "active_delegated_work": 0,
+        "active_memory_outbox": 0,
+        "active_model_requests": 0,
+        "active_decision_claims": 0,
+        "active_conversation_claims": 0
+      }
+    },
+    "media": {
+      "base": "sha256:fe043d35c117b0eda6e725e015548f350c7c76b13596cae8bc9984bdfccbbae9",
+      "candidate": "sha256:0b86d5ad829fd92430c5b0e0ec4060f8389dbeb45f1dd962054bd628f80699a7",
+      "hashes": {
+        "/app/eva/voice_service/codex_speaker_audio.py": "f642a715ebe83f8cef6b1e83966297a09b3a522bb060cefa8858a88620a1cc2b",
+        "/app/eva/voice_service/literal_speech.py": "9cafb92d5c9c121122a9bfc515a9e7dbe2465c416b731df2b073e06ae918fa42",
+        "/app/eva/voice_service/media.py": "032a5aae221784c287d082c1cd4937c316b7eba84406077ddcc15f5eff6c0e0b"
+      },
+      "original_hashes": {
+        "/app/eva/voice_service/codex_speaker_audio.py": "4a90832cf449984b2c5e30f9b0ecb0773f930133ae278f617356aa1ab35525c9",
+        "/app/eva/voice_service/literal_speech.py": "3a88244980f81b85e00c78d0b6d057eac198e1159fb1a25a710abd521f83058b",
+        "/app/eva/voice_service/media.py": "a6df0cf6e5aac061df3dab8093d14582b278b533cd488c2204054633f20541a5"
+      },
+      "installed_at": "2026-10-19T07:15:19.781688787Z",
+      "source_verified": true,
+      "configuration_preserved": true,
+      "pre_install_guard": {
+        "active_voice_leases": 0,
+        "active_delegated_work": 0,
+        "active_memory_outbox": 0,
+        "active_model_requests": 0,
+        "active_decision_claims": 0,
+        "active_conversation_claims": 0
+      }
+    }
+  },
+  "runtimeReadback": {
+    "bothPhysicalDevicesReconnectedAfterServiceReplacement": true,
+    "bothDevicesIceReady": true,
+    "micToggleUsed": false,
+    "physicalWakeOrConversationClaimed": false,
+    "coreReplaced": false,
+    "firmwareFlashed": false
+  },
+  "verification": [
+    {
+      "scope": "Native explicit-utterance and existing wire/audio behavior",
+      "passed": 9,
+      "seconds": 7.08,
+      "imageBase": "3dd607f14fb00bf163d542918b03a81ec665cf44929afe6f8a904709adec3730",
+      "hardwareReceipts": "explicit simulated peer"
+    },
+    {
+      "scope": "Combined audio/media compatibility",
+      "passed": 93,
+      "harnessFailures": 2,
+      "reason": "Two new tests needed the existing tests package import root; no product failure. Those two passed in the subsequent installed-candidate bundle."
+    },
+    {
+      "scope": "Final immutable speaker candidate: cadence, literal speech, native utterance, native recovery",
+      "passed": 43,
+      "seconds": 8.21,
+      "image": "sha256:c2df976695f6691096806359e93259cb3f92f25d73e2dd9ba40ba945334588c5",
+      "network": "none; local TLS protocol test only"
+    },
+    {
+      "scope": "Standby readiness regression on exact actual import precedence",
+      "baselineFailed": 7,
+      "baselinePassed": 2,
+      "candidatePassed": 9,
+      "seconds": 7.06,
+      "coreAndHardware": "explicit doubles"
+    },
+    {
+      "scope": "New live HA TTS request through installed literal renderer, native source and wire output",
+      "installedImage": "sha256:c2df976695f6691096806359e93259cb3f92f25d73e2dd9ba40ba945334588c5",
+      "ttsRequests": 1,
+      "sentences": 3,
+      "nativeBeginCount": 1,
+      "sinkToPeerPcmBitExact": true,
+      "handlePendingUntilSimulatedFinished": true,
+      "internalQuietMsBefore": [
+        980,
+        920
+      ],
+      "internalQuietMsAfter": [
+        770,
+        680
+      ],
+      "exactZeroMsRemoved": 437.833,
+      "sourceMatchesPriorCapture": false,
+      "sameInputOfflineNonzeroSamplesBitExact": true,
+      "textRepeatedAndWarm": true,
+      "firstAudioMs": 472,
+      "coldLatencyImprovementClaimed": false,
+      "physicalPlayback": false,
+      "coreCalls": 0
+    }
+  ],
+  "review": "development/reviews/voice-fluency-review-20261019.json",
+  "usage": {
+    "evaCoreModelCalls": 0,
+    "homeEffects": 0,
+    "haTtsRequests": 2,
+    "developmentCredits": null,
+    "runtimeCredits": null,
+    "note": "Provider capture usage is counted separately from development tools; no fabricated monetary cost."
+  },
+  "physicalAcceptance": {
+    "status": "awaiting_owner_utterance",
+    "request": "A short answer on each speaker, then a spoken interruption while Eva is still talking. A user-input request is pending; no physical acceptance inferred."
+  },
+  "privateEvidence": "/var/lib/eva2/voice-session/fluency-20261019/evidence",
+  "primarySources": [
+    "https://github.com/esphome/voice-kit-xmos-firmware/blob/v1.3.1/src/ffva/src/configuration/configuration_servicer.c",
+    "https://github.com/esphome/voice-kit-xmos-firmware/blob/v1.3.1/src/ffva/src/main.c"
+  ],
+  "privateEvidenceHashes": {
+    "passive-pipeline-assessment.json": "d830b460e4166af2cc1471347847863c8485a920cf5e1bcefd297b3dfddc8c40",
+    "cadence-assessment.json": "ec29213a702b7f103964844d94ab6dd9f34fcba72d57dab1b39a596bbd3dd865",
+    "passive-pipeline-second-assessment.json": "d8a874f06e5608058cd2ffb9d39cbd31c202060d26d0767d19f2ada016a8eca9",
+    "hardware-aec-source-assessment.json": "9a7bcc2bbf603aef0b0838f9caff96e77cf6dbba09762dd480c73107204bf7f3",
+    "native-recovery/actual-service-imports.json": "5391f8bf9886853a7e55422c2df48a1f2e23866e77106d036dd5d76e17ad7a6a",
+    "native-recovery/assessment.json": "784a24de3a4a17c578aea53347720cb3e9b811b096ac870c00aa50a8e6e92c7b",
+    "runtime-capture/assessment.private.json": "f1b077ca6bb5536e4fb0b63bcf7cf6d45284bf487cddae330b9671dab1a4b5ed",
+    "tts-capture/assessment.json": "2719a79dd78c0c1f6e65862bb72cdba49b7c40b23199df89176bd2da873914b9"
+  }
+}

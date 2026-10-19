@@ -143,6 +143,27 @@ selectie wordt hergebruikt. De gezamenlijke persoonsgebonden overdracht van priv
 initiatief, interesses en leeruitkomsten blijft E2.7. E3.3/E3.4 beoordelen de bestaande
 consumers eerst. Geen nieuwe geheugenbank, dubbele dagselectie of spraakherbouw.
 
+
+### Gerichte spraakafronding
+
+De eigenaar heeft op 19 oktober de volgende vier werkpakketten en uitvoering
+gevraagd. Ze gebruiken de bestaande spraakroute, identiteit, geheugen en uitvoerder.
+
+| Taak | Concreet resultaat |
+| --- | --- |
+| C4.1 (bestaand) | Natuurlijk onderbreken op beide speakers, zonder eigen stem als nieuwe opdracht te herkennen. |
+| C3.4 | De oorzaak van onbedoelde spreekpauzes meten en herstellen, met behoud van woorden en natuurlijke rust. |
+| C3.5 | Zachte beginwoorden en korte vervolgen behouden, met correcte beurtgrenzen. |
+| C3.6 | Standby en herverbinden na tijdelijke uitval herstellen zonder microfoon uit/aan. |
+
+De drie nieuwe eindvoorwaarden zijn bevroren in
+[de spraakuitbreiding](../design/product/voice-fluency-task-scope-20261019.json).
+De bestaande C3.1/C4.1-criteria en eerdere acceptaties blijven behouden. Elke
+functie houdt beide apparaatcontroles bij elkaar. Een WSL-herstart is geen
+voorwaarde voor deze uitvoerbare spraakverbeteringen. Hardwaregedrag wordt op de
+werkelijke route gecontroleerd; tests en containergezondheid vervangen dat niet.
+De afzonderlijke E4.10/E5.2-opdracht behandelt gedeelde kern- en actielatentie.
+
 ## E3 — Alle bestanden beoordeelbaar maken
 
 ### Eén complete, herleidbare inventaris

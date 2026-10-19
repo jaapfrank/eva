@@ -5,7 +5,7 @@ from pathlib import Path
 from uuid import uuid4
 from livekit import rtc
 from eva.adapters.connectors.home_assistant_voice import HomeAssistantSpeechOutput
-from eva.voice_service.media import HomeAssistantTTS
+from eva.voice_service.media import HomeAssistantTTS, InternalDigitalSilence
 
 
 def literal_parts(text):
@@ -69,7 +69,10 @@ async def speak_literal(session, text, handle):
         offered=True
         marker=(session.source.playback_marker()
                 if hasattr(session.source,'playback_marker') else None)
+        utterance_token=(session.source.begin_utterance()
+                         if hasattr(session.source,"begin_utterance") else None)
         resampler=rtc.AudioResampler(24000,48000,num_channels=1)
+        cadence=InternalDigitalSilence()
         session._speaking_handle=handle
         session.output_suppressed=False
         audible=False
@@ -93,7 +96,14 @@ async def speak_literal(session, text, handle):
                 frame=event.frame
                 if frame.sample_rate!=24000 or frame.num_channels!=1:
                     raise ValueError('Literal TTS decoder format differs')
-                for output in resampler.push(frame):await deliver(output)
+                data=cadence.push(bytes(frame.data))
+                if data:
+                    for output in resampler.push(rtc.AudioFrame(data,24000,1,len(data)//2)):
+                        await deliver(output)
+        for data in cadence.finish():
+            session.current()
+            for output in resampler.push(rtc.AudioFrame(data,24000,1,len(data)//2)):
+                await deliver(output)
         for output in resampler.flush():await deliver(output)
         if not audible:raise ValueError('Literal TTS returned no audible speech')
         # Finish the same native source's 300 ms quiet-tail/FINISHED path. This
@@ -102,6 +112,8 @@ async def speak_literal(session, text, handle):
             session.current()
             await session.source.capture_frame(rtc.AudioFrame(bytes(1920),48000,1,960))
         session.current()
+        if utterance_token is not None:
+            session.source.finish_utterance(utterance_token)
         played=False
         output_finished=False
         try:
@@ -120,6 +132,7 @@ async def speak_literal(session, text, handle):
         confirmed=confirmed and played is True
         if output_finished:await session.caption('assistant',value,str(uuid4()))
         session.diagnostic('literal_speech_completed',frames=frames,
+                           internal_zero_samples_removed=cadence.removed_samples,
                            device_playout_confirmed=played is True)
         session.emit('agent_state_changed',new_state='listening')
     try:

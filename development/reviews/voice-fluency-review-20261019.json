@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-19T07:18:56.261522+00:00",
+  "decision": "GO_for_targeted_installed_repairs",
+  "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
+  "reviewers": [
+    {
+      "agent": "review_cursor",
+      "scope": "Native utterance token and standby-readiness composition",
+      "result": "GO; preserve local wake, authority, prewarm, STOP, stale-token fence and connection-local ownership."
+    },
+    {
+      "agent": "distinctive_eva_review",
+      "scope": "Digital-zero cadence filter and literal/native boundary integration",
+      "result": "GO; all nonzero samples survive, cancelled speech never confirms playout; existing fatal-task close resets held token on no-audio or synthesis failure."
+    }
+  ],
+  "limits": [
+    "No claim of free speech barge-in while the native echo fence remains active.",
+    "No claim of heard audio or physical family acceptance from a simulated wire receipt.",
+    "A provider cadence change does not fix shared core/action latency; E4.10/E5.2 remain separate."
+  ]
+}
