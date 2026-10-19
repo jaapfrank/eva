@@ -1,0 +1,99 @@
+{
+  "contract": "EvaHistoricalMemoryTextCompaction/v1",
+  "recordedAt": "2026-10-19T11:29:00.247359+00:00",
+  "taskId": "E4.11",
+  "status": "applied_to_installed_data",
+  "technicalTaskCompleted": false,
+  "ownerAcceptance": false,
+  "whatChanged": "Removed exact redundant original_text/chunk_text from the existing native projection for confirmed durable sources. No application/image/provider change, native retention, new model request or new memory platform.",
+  "selection": {
+    "confirmedCompletedSources": 1592,
+    "excludedRedactedOrUnusableSources": 60,
+    "matchedNativeDocuments": 1592,
+    "nativeChunks": 346,
+    "keyedBy": [
+      "bank_id",
+      "document_id"
+    ],
+    "required": [
+      "exact original source text",
+      "matching source and receipt content hash",
+      "unaltered canonical source payload binding",
+      "not file-backed",
+      "literal source chunks",
+      "no in-flight native operations in candidate banks"
+    ]
+  },
+  "beforeAfter": {
+    "nativeOriginalTextBytes": {
+      "before": 363733,
+      "after": 0
+    },
+    "nativeChunkTextBytes": {
+      "before": 193036,
+      "after": 0
+    },
+    "duplicateTextBytesRemoved": 556769,
+    "affectedNativeKnowledge": {
+      "countBefore": 1428,
+      "countAfter": 1428,
+      "worldFacts": 886,
+      "experiences": 45,
+      "observations": 497,
+      "allRowFieldsExactlyUnchanged": true
+    },
+    "canonicalSourcesAndReceipts": {
+      "count": 1592,
+      "allExactlyUnchanged": true
+    },
+    "allOtherNativeDocumentChunkFieldsUnchanged": true,
+    "nativeOriginalTimestampsPreserved": true
+  },
+  "execution": {
+    "elapsedSeconds": 13.062842143001035,
+    "nativeTransactionCommitted": true,
+    "hostExitCode": 0,
+    "existingRetentionGuardHeldAndReleased": true,
+    "nativeWriteAdmissionAndFactTablesLockedBeforeSnapshot": true,
+    "exactPrivateBackupSavedBeforeMutation": true,
+    "nativeImageAndStartTimeUnchanged": true,
+    "voiceChanged": false,
+    "freshReadOnlyPostVerification": true
+  },
+  "actualHttp": {
+    "ready": {
+      "status": 200,
+      "ready": true
+    },
+    "sources": {
+      "status": 200,
+      "returnedSources": 2
+    },
+    "overview": {
+      "status": 200,
+      "memoryState": "unavailable"
+    }
+  },
+  "independentReview": "development/reviews/historical-memory-text-compaction-review-20261019.json",
+  "usage": {
+    "newRuntimeModelRequestsTriggered": 0,
+    "newRetentionSubmissions": 0,
+    "newCompetitorSeries": false,
+    "developmentModelUsage": null,
+    "creditCosts": null
+  },
+  "auditCorrection": {
+    "privateCandidateExportHadWrongArrayIndexJoin": true,
+    "correctedAndValidatedByExactSourceIdentityBeforeAnyDataChange": true,
+    "noDataMutationUsedTheIncorrectExport": true,
+    "threeZeroSelectionSourcesAreSyntheticPC05Probes": true,
+    "notPromotedToFamilyMemory": true
+  },
+  "remaining": [
+    "Original conversation/source content and closed native async task payloads still have a separate retention lifecycle to finish; this did not delete the canonical day-history.",
+    "Old failed/probe/erasure registries and two original chronology anomalies still make the coarse memory overview unavailable.",
+    "This is duplicate UTF8 payload reduction, not proven model-token saving, answer-speed improvement or physically reclaimed filesystem space.",
+    "An external client could explicitly retain old documents again; this migration does not promise to prevent a future independent rewrite.",
+    "Irrelevant old derived knowledge, full day-source expiry, multi-day family use and full E4.11 completion remain unproven."
+  ]
+}

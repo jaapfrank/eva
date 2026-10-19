@@ -847,8 +847,8 @@
     "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
     "status": "in_progress",
     "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-    "nextAction": "De drie exact bewezen oude voltooiingen zonder nieuwe modelaanvraag verzoenen; de twee chronologiefouten en overige oude foutbronnen met behoud van bewijs afhandelen. Daarna historische bron-/kennisopschoning en bewaartermijnen binnen E4.11 afronden.",
-    "checkedAt": "2026-10-19T11:08:44.171480+00:00",
+    "nextAction": "De bestaande bronlevenscyclus afronden: tijdelijke dagtekst na bevestigde droomverwerking laten verlopen zonder compacte kennis of herkomst te verliezen. Oude proef-/wisregistraties met behoud van foutbewijs van actuele geheugenstatus scheiden; geen nieuwe modelproeven voor gesloten oude proeven.",
+    "checkedAt": "2026-10-19T11:29:00.247359+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,20 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.11 · Historische dubbele geheugenopslag opgeruimd",
+            "state": "installed",
+            "summary": "1.592 exacte projectiekopieën opgeschoond: 556.769 bytes dubbele tekst weg. Alle opgeslagen kennis en oorspronkelijke bronnen bleven exact gelijk. Onafhankelijke review en verse uitlezing bevestigd; geen nieuwe modelaanvragen.",
+            "remaining": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
+            "source": "development/evidence/product/historical-memory-text-compaction-20261019.json",
+            "review": "development/reviews/historical-memory-text-compaction-review-20261019.json",
+            "checkedAt": "2026-10-19T11:29:00.247359+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "completionScope": "Toegepaste historische duplicaatopschoning; volledige E4.11 nog open",
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E4.11 · Historie-uitlezing geïnstalleerd; oude integriteitsfouten vastgesteld",
             "state": "installed",
@@ -2641,16 +2655,16 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E4.11 · Historie-uitlezing geïnstalleerd; oude integriteitsfouten vastgesteld",
+          "title": "E4.11 · Historische dubbele geheugenopslag opgeruimd",
           "state": "installed",
-          "summary": "13 gerichte databasecontroles geslaagd; 270 bronnen in vier uitleesvragen. De echte geheugenstatus blijft onbeschikbaar door twee behouden oude tijdsvolgordefouten. Geen nieuwe extractie- of vergelijkingsproef.",
-          "remaining": "Dag-/droomoverdracht en historie-uitlezing in pagina’s zijn geïnstalleerd. De geheugenstatus blijft onbeschikbaar door twee echte chronologiefouten uit augustus. Van 38 oude foutcursors hebben drie native bewijs van voltooiing zonder geselecteerde feiten; 34 zijn native mislukt en één heeft geen gevonden uitkomst. Nog af te maken: verzoenen, historische bron-/kennisopschoning, bewaartermijnen en aantoonbaar efficiënt dagelijks gebruik.",
-          "source": "development/evidence/product/memory-history-reader-installed-20261019.json",
-          "review": "development/reviews/memory-history-reader-review-20261019.json",
-          "checkedAt": "2026-10-19T11:08:44.171480+00:00",
+          "summary": "1.592 exacte projectiekopieën opgeschoond: 556.769 bytes dubbele tekst weg. Alle opgeslagen kennis en oorspronkelijke bronnen bleven exact gelijk. Onafhankelijke review en verse uitlezing bevestigd; geen nieuwe modelaanvragen.",
+          "remaining": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
+          "source": "development/evidence/product/historical-memory-text-compaction-20261019.json",
+          "review": "development/reviews/historical-memory-text-compaction-review-20261019.json",
+          "checkedAt": "2026-10-19T11:29:00.247359+00:00",
           "newProductFunctionCompleted": false,
           "completedTaskIds": [],
-          "completionScope": "Geïnstalleerde historie-uitlezing; statusherstel en volledige E4.11 nog open",
+          "completionScope": "Toegepaste historische duplicaatopschoning; volledige E4.11 nog open",
           "ownerAcceptance": false,
           "familyAcceptance": false
         },
@@ -2659,10 +2673,10 @@
           "title": "Alleen belangrijke kennis als blijvend geheugen bewaren",
           "state": "in_progress",
           "status": "in_progress",
-          "summary": "Historie-uitlezing geïnstalleerd; oude geheugenfouten gericht afhandelen",
-          "detail": "Dag-/droomoverdracht en historie-uitlezing in pagina’s zijn geïnstalleerd. De geheugenstatus blijft onbeschikbaar door twee echte chronologiefouten uit augustus. Van 38 oude foutcursors hebben drie native bewijs van voltooiing zonder geselecteerde feiten; 34 zijn native mislukt en één heeft geen gevonden uitkomst. Nog af te maken: verzoenen, historische bron-/kennisopschoning, bewaartermijnen en aantoonbaar efficiënt dagelijks gebruik.",
+          "summary": "Dubbele geheugenopslag opgeruimd; bewaartermijnen afmaken",
+          "detail": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
           "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-          "checkedAt": "2026-10-19T11:08:44.171480+00:00"
+          "checkedAt": "2026-10-19T11:29:00.247359+00:00"
         },
         "next": {
           "taskId": "E4.11",
@@ -6669,9 +6683,9 @@
                 "ownerActionRequired": false,
                 "scopeOrigin": "selective-memory-20261019",
                 "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-                "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden.",
-                "gap": "Dag-/droomoverdracht en historie-uitlezing in pagina’s zijn geïnstalleerd. De geheugenstatus blijft onbeschikbaar door twee echte chronologiefouten uit augustus. Van 38 oude foutcursors hebben drie native bewijs van voltooiing zonder geselecteerde feiten; 34 zijn native mislukt en één heeft geen gevonden uitkomst. Nog af te maken: verzoenen, historische bron-/kennisopschoning, bewaartermijnen en aantoonbaar efficiënt dagelijks gebruik.",
-                "nextAction": "De drie exact bewezen oude voltooiingen zonder nieuwe modelaanvraag verzoenen; de twee chronologiefouten en overige oude foutbronnen met behoud van bewijs afhandelen. Daarna historische bron-/kennisopschoning en bewaartermijnen binnen E4.11 afronden.",
+                "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden. Historische dubbele native tekstkopieën van 1.592 bevestigde bronnen zijn op 19 oktober verwijderd; alle 1.428 betrokken kennisregels en oorspronkelijke bronnen bleven exact gelijk.",
+                "gap": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
+                "nextAction": "De bestaande bronlevenscyclus afronden: tijdelijke dagtekst na bevestigde droomverwerking laten verlopen zonder compacte kennis of herkomst te verliezen. Oude proef-/wisregistraties met behoud van foutbewijs van actuele geheugenstatus scheiden; geen nieuwe modelproeven voor gesloten oude proeven.",
                 "files": [
                   "src/eva/application/memory.py",
                   "src/eva/application/memory_background.py",
@@ -6685,11 +6699,11 @@
                 "dependsOn": [
                   "E2.2"
                 ],
-                "checkedAt": "2026-10-19T11:08:44.171480+00:00",
+                "checkedAt": "2026-10-19T11:29:00.247359+00:00",
                 "assignment": {
                   "coordinator": "/root",
                   "activeWorkers": [],
-                  "scope": "Root: bestaande E4.11. Onafhankelijke code-review gereed; alleen-lezen native audit van 38 oude foutcursors loopt. Spraak blijft bij de andere uitvoerder."
+                  "scope": "Root: bestaande E4.11 bronlevenscyclus; onafhankelijke dataopschoningreview gereed. Spraak blijft bij de andere uitvoerder."
                 },
                 "ownerInstructions": {
                   "availableNow": true,
@@ -6698,8 +6712,8 @@
                   ],
                   "blocksIndependentWork": false
                 },
-                "latestEvidence": "development/evidence/product/memory-history-reader-installed-20261019.json",
-                "independentReview": "development/reviews/memory-history-reader-review-20261019.json",
+                "latestEvidence": "development/evidence/product/historical-memory-text-compaction-20261019.json",
+                "independentReview": "development/reviews/historical-memory-text-compaction-review-20261019.json",
                 "installed": true,
                 "technicalCompletion": false,
                 "ownerClarification": {
@@ -6709,7 +6723,7 @@
                   "dreamConsolidation": "Nieuwe daginformatie bundelen, relevantie afwegen en vergelijken met bestaande kennis; nieuwe kennis toevoegen, gewijzigde kennis bijwerken, herhaling zonder nieuwe betekenis niet opnieuw toevoegen.",
                   "preserve": "Afspraak/correctie/lopende taak direct bruikbaar; persoonsgrenzen, bron/datum, stoppen, herstel en vergeten blijven werken. Tijdelijke bronnen pas laten vervallen na bewezen verwerking en noodzakelijke herkomstbinding.",
                   "reuse": "Bestaande coldworker/droomroute en Hindsight; geen tweede geheugen, planner, daemon of classificatiemodel per bericht.",
-                  "actualGap": "Dag-/droomoverdracht en historie-uitlezing in pagina’s zijn geïnstalleerd. De geheugenstatus blijft onbeschikbaar door twee echte chronologiefouten uit augustus. Van 38 oude foutcursors hebben drie native bewijs van voltooiing zonder geselecteerde feiten; 34 zijn native mislukt en één heeft geen gevonden uitkomst. Nog af te maken: verzoenen, historische bron-/kennisopschoning, bewaartermijnen en aantoonbaar efficiënt dagelijks gebruik.",
+                  "actualGap": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
                   "fullDreamHandoffImplemented": true,
                   "newTaskAdded": false,
                   "implementedScope": "Bestaande dagcontext→begrensde droomcohorten met brongebonden ontvangsten en wissen; historische opschoning/volledige E4.11 nog open."
@@ -11252,9 +11266,9 @@
               "ownerActionRequired": false,
               "scopeOrigin": "selective-memory-20261019",
               "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-              "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden.",
-              "gap": "Dag-/droomoverdracht en historie-uitlezing in pagina’s zijn geïnstalleerd. De geheugenstatus blijft onbeschikbaar door twee echte chronologiefouten uit augustus. Van 38 oude foutcursors hebben drie native bewijs van voltooiing zonder geselecteerde feiten; 34 zijn native mislukt en één heeft geen gevonden uitkomst. Nog af te maken: verzoenen, historische bron-/kennisopschoning, bewaartermijnen en aantoonbaar efficiënt dagelijks gebruik.",
-              "nextAction": "De drie exact bewezen oude voltooiingen zonder nieuwe modelaanvraag verzoenen; de twee chronologiefouten en overige oude foutbronnen met behoud van bewijs afhandelen. Daarna historische bron-/kennisopschoning en bewaartermijnen binnen E4.11 afronden.",
+              "existing": "Selectie en bronarchiefscheiding zijn geïnstalleerd. De bestaande native extractie bewaart later nuttige korte feiten; gemeten nulselectie telt niet als blijvende herinnering en veroorzaakt geen extra stijlreflectie. In zes synthetische gevallen: begroeting/test0/0; voorkeur/afspraak/correctie/herhaling1/1/1/1. Dezelfde voorkeur-observatie is bijgewerkt, de afspraak behouden. Historische dubbele native tekstkopieën van 1.592 bevestigde bronnen zijn op 19 oktober verwijderd; alle 1.428 betrokken kennisregels en oorspronkelijke bronnen bleven exact gelijk.",
+              "gap": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
+              "nextAction": "De bestaande bronlevenscyclus afronden: tijdelijke dagtekst na bevestigde droomverwerking laten verlopen zonder compacte kennis of herkomst te verliezen. Oude proef-/wisregistraties met behoud van foutbewijs van actuele geheugenstatus scheiden; geen nieuwe modelproeven voor gesloten oude proeven.",
               "files": [
                 "src/eva/application/memory.py",
                 "src/eva/application/memory_background.py",
@@ -11268,11 +11282,11 @@
               "dependsOn": [
                 "E2.2"
               ],
-              "checkedAt": "2026-10-19T11:08:44.171480+00:00",
+              "checkedAt": "2026-10-19T11:29:00.247359+00:00",
               "assignment": {
                 "coordinator": "/root",
                 "activeWorkers": [],
-                "scope": "Root: bestaande E4.11. Onafhankelijke code-review gereed; alleen-lezen native audit van 38 oude foutcursors loopt. Spraak blijft bij de andere uitvoerder."
+                "scope": "Root: bestaande E4.11 bronlevenscyclus; onafhankelijke dataopschoningreview gereed. Spraak blijft bij de andere uitvoerder."
               },
               "ownerInstructions": {
                 "availableNow": true,
@@ -11281,8 +11295,8 @@
                 ],
                 "blocksIndependentWork": false
               },
-              "latestEvidence": "development/evidence/product/memory-history-reader-installed-20261019.json",
-              "independentReview": "development/reviews/memory-history-reader-review-20261019.json",
+              "latestEvidence": "development/evidence/product/historical-memory-text-compaction-20261019.json",
+              "independentReview": "development/reviews/historical-memory-text-compaction-review-20261019.json",
               "installed": true,
               "technicalCompletion": false,
               "ownerClarification": {
@@ -11292,7 +11306,7 @@
                 "dreamConsolidation": "Nieuwe daginformatie bundelen, relevantie afwegen en vergelijken met bestaande kennis; nieuwe kennis toevoegen, gewijzigde kennis bijwerken, herhaling zonder nieuwe betekenis niet opnieuw toevoegen.",
                 "preserve": "Afspraak/correctie/lopende taak direct bruikbaar; persoonsgrenzen, bron/datum, stoppen, herstel en vergeten blijven werken. Tijdelijke bronnen pas laten vervallen na bewezen verwerking en noodzakelijke herkomstbinding.",
                 "reuse": "Bestaande coldworker/droomroute en Hindsight; geen tweede geheugen, planner, daemon of classificatiemodel per bericht.",
-                "actualGap": "Dag-/droomoverdracht en historie-uitlezing in pagina’s zijn geïnstalleerd. De geheugenstatus blijft onbeschikbaar door twee echte chronologiefouten uit augustus. Van 38 oude foutcursors hebben drie native bewijs van voltooiing zonder geselecteerde feiten; 34 zijn native mislukt en één heeft geen gevonden uitkomst. Nog af te maken: verzoenen, historische bron-/kennisopschoning, bewaartermijnen en aantoonbaar efficiënt dagelijks gebruik.",
+                "actualGap": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
                 "fullDreamHandoffImplemented": true,
                 "newTaskAdded": false,
                 "implementedScope": "Bestaande dagcontext→begrensde droomcohorten met brongebonden ontvangsten en wissen; historische opschoning/volledige E4.11 nog open."

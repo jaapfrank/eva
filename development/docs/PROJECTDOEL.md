@@ -63,9 +63,10 @@ kennis vastligt. Bij onderbreking of mislukking blijft het onafgehandelde materi
 bewaard. De bediening onderscheidt kortetermijncontext, wat tijdens dromen is verwerkt
 en de actuele blijvende kennis. Dit gebruikt één geheugenketen, geen tweede geheugen,
 extra permanent proces of classificatiemodel per bericht. De dag-/droomoverdracht is op 19 oktober geïnstalleerd en gericht gecontroleerd,
-inclusief brongebonden verwerking en wissen vóór of na een onderbreking. Historische
-opschoning, de volledige bewaartermijnen, aantoonbare besparing en gebruik over meerdere
-dagen zijn daarmee nog niet afgerond; E4.11 blijft daarvoor open.
+inclusief brongebonden verwerking en wissen vóór of na een onderbreking. Op 19 oktober zijn daarnaast exacte dubbele native tekstkopieën van 1.592 bevestigde
+bronnen verwijderd, met behoud van alle betrokken kennis en oorspronkelijke bronnen.
+De volledige historische kennisopschoning, bewaartermijnen, token-/snelheidsbesparing
+en gebruik over meerdere dagen zijn nog niet afgerond; E4.11 blijft daarvoor open.
 
 ## Dagelijks meedenken
 
