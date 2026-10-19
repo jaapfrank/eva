@@ -55,6 +55,6 @@
   "limitations": [
     "Een nieuwe echte Telegramreactie is na installatie nog niet waargenomen.",
     "De oorspronkelijke afgewezen modelargumenten zijn niet duurzaam bewaard; de vastgelegde gereproduceerde toolaanvraag bewijst de concrete routefout, niet alle mogelijke oorspronkelijke oorzaken.",
-    "Een normale modelreactie na eerder afgewezen toolinvoer kan elders nog door een algemene foutzin worden vervangen; dat pad is in deze gerichte wijziging niet veranderd."
+    "Het algemene foutantwoord na afgewezen toolinvoer is bewust behouden: een tekstuele taakstart zonder duurzame toelating mag niet worden gepubliceerd. De bestaande gerichte regressietest legt dat vast."
   ]
 }
