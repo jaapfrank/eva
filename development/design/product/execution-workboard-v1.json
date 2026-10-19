@@ -3405,7 +3405,7 @@
                 "doneWhen": "De bestaande TTS- en speakerroute speelt gewone Nederlandse antwoorden met behoud van alle woorden en natuurlijke zinsrust. Lange onverwachte stiltes zijn met bron-PCM, aanvoertijden en apparaatbevestiging gelokaliseerd en de aangetoonde oorzaak is verholpen. Geen ongefundeerd versnellen of wegknippen van betekenisvolle rust. Gewone, meerzinnige en onderbroken antwoorden zijn via de geïnstalleerde route gecontroleerd; werkelijk horen en technische ontvangst blijven onderscheiden.",
                 "existing": "Korte antwoorden gebruiken één letterlijke HA-TTS-aanvraag; tekst en stop-/afspeelbevestigingen blijven gekoppeld.",
                 "gap": "Eerdere ontvangst bevatte pauzes van 0,90–1,17 seconde; bronstilte en aanvoergaten zijn nog niet onderscheiden.",
-                "nextAction": "Installeer de getoetste interpunctiekandidaat op de actuele speakerroute en beoordeel de werkelijk gesproken pauzes; provider-PCM alleen is geen fysieke acceptatie.",
+                "nextAction": "Beoordeel de werkelijk gesproken pauzes op de geïnstalleerde interpunctiekandidaat tijdens de opnieuw voorbereide woonkamerproef; provider-PCM alleen is geen fysieke acceptatie.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
@@ -3423,8 +3423,8 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "acoustic_trial_armed",
-                  "updatedAt": "2026-10-19T10:23:49.456539+00:00",
+                  "status": "acoustic_trial_rearmed",
+                  "updatedAt": "2026-10-19T13:09:55.217852+00:00",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                   "ownerAcceptance": false
                 }
@@ -3454,8 +3454,8 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "acoustic_trial_armed",
-                  "updatedAt": "2026-10-19T10:23:49.456539+00:00",
+                  "status": "acoustic_trial_rearmed",
+                  "updatedAt": "2026-10-19T13:09:55.217852+00:00",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                   "ownerAcceptance": false
                 }
@@ -3483,8 +3483,8 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "acoustic_trial_armed",
-                  "updatedAt": "2026-10-19T10:23:49.456539+00:00",
+                  "status": "acoustic_trial_rearmed",
+                  "updatedAt": "2026-10-19T13:09:55.217852+00:00",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                   "ownerAcceptance": false
                 }
@@ -3519,11 +3519,11 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Voer de begrensde akoestiekproef uit en herstel onderbreken vanuit werkelijk paarmateriaal. GPU-herstel is voorbereid; WSL-herstart wacht op afstemming met ander lopend ontwikkelwerk.",
+                "nextAction": "Gebruik het opnieuw geactiveerde woonkamermeetvenster; de vorige poging verliep zonder opname. Beoordeel werkelijk paarmateriaal voordat onderbreken als hersteld geldt.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": true,
-                  "readyWhen": "Binnen het begrensde opnamevenster, anders na opnieuw afgesproken voorbereiding.",
+                  "readyWhen": "Nieuwe begrensde woonkamerproef opnieuw geactiveerd op 19 oktober om 15:07 lokaal; één opname van maximaal 30 seconden binnen het venster van 600 seconden na activeren.",
                   "steps": [
                     "Wek Eva in de woonkamer en vraag rustig tellen van één tot tien met pauzes.",
                     "Laat de eerste drie cijfers uitspreken; zeg tijdens het tellen: wacht even, ik bedoelde drie.",
@@ -3799,8 +3799,8 @@
                 },
                 "executionPlan": {
                   "path": "development/design/product/voice-recovery-execution-20261019.json",
-                  "status": "acoustic_trial_armed",
-                  "updatedAt": "2026-10-19T10:23:49.456539+00:00",
+                  "status": "acoustic_trial_rearmed",
+                  "updatedAt": "2026-10-19T13:09:55.217852+00:00",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                   "ownerAcceptance": false
                 }
@@ -7492,12 +7492,12 @@
           "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
           "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
           "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-          "updatedAt": "2026-10-19T10:23:49.456539+00:00",
+          "updatedAt": "2026-10-19T13:09:55.217852+00:00",
           "physicalAcceptance": "pending",
           "executionPlan": {
             "path": "development/design/product/voice-recovery-execution-20261019.json",
-            "status": "acoustic_trial_armed",
-            "updatedAt": "2026-10-19T10:23:49.456539+00:00",
+            "status": "acoustic_trial_rearmed",
+            "updatedAt": "2026-10-19T13:09:55.217852+00:00",
             "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json"
           }
         }
@@ -8009,7 +8009,7 @@
               "doneWhen": "De bestaande TTS- en speakerroute speelt gewone Nederlandse antwoorden met behoud van alle woorden en natuurlijke zinsrust. Lange onverwachte stiltes zijn met bron-PCM, aanvoertijden en apparaatbevestiging gelokaliseerd en de aangetoonde oorzaak is verholpen. Geen ongefundeerd versnellen of wegknippen van betekenisvolle rust. Gewone, meerzinnige en onderbroken antwoorden zijn via de geïnstalleerde route gecontroleerd; werkelijk horen en technische ontvangst blijven onderscheiden.",
               "existing": "Korte antwoorden gebruiken één letterlijke HA-TTS-aanvraag; tekst en stop-/afspeelbevestigingen blijven gekoppeld.",
               "gap": "Eerdere ontvangst bevatte pauzes van 0,90–1,17 seconde; bronstilte en aanvoergaten zijn nog niet onderscheiden.",
-              "nextAction": "Installeer de getoetste interpunctiekandidaat op de actuele speakerroute en beoordeel de werkelijk gesproken pauzes; provider-PCM alleen is geen fysieke acceptatie.",
+              "nextAction": "Beoordeel de werkelijk gesproken pauzes op de geïnstalleerde interpunctiekandidaat tijdens de opnieuw voorbereide woonkamerproef; provider-PCM alleen is geen fysieke acceptatie.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
@@ -8027,8 +8027,8 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "acoustic_trial_armed",
-                "updatedAt": "2026-10-19T10:23:49.456539+00:00",
+                "status": "acoustic_trial_rearmed",
+                "updatedAt": "2026-10-19T13:09:55.217852+00:00",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                 "ownerAcceptance": false
               }
@@ -8058,8 +8058,8 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "acoustic_trial_armed",
-                "updatedAt": "2026-10-19T10:23:49.456539+00:00",
+                "status": "acoustic_trial_rearmed",
+                "updatedAt": "2026-10-19T13:09:55.217852+00:00",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                 "ownerAcceptance": false
               }
@@ -8087,8 +8087,8 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "acoustic_trial_armed",
-                "updatedAt": "2026-10-19T10:23:49.456539+00:00",
+                "status": "acoustic_trial_rearmed",
+                "updatedAt": "2026-10-19T13:09:55.217852+00:00",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                 "ownerAcceptance": false
               }
@@ -8123,11 +8123,11 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Voer de begrensde akoestiekproef uit en herstel onderbreken vanuit werkelijk paarmateriaal. GPU-herstel is voorbereid; WSL-herstart wacht op afstemming met ander lopend ontwikkelwerk.",
+              "nextAction": "Gebruik het opnieuw geactiveerde woonkamermeetvenster; de vorige poging verliep zonder opname. Beoordeel werkelijk paarmateriaal voordat onderbreken als hersteld geldt.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": true,
-                "readyWhen": "Binnen het begrensde opnamevenster, anders na opnieuw afgesproken voorbereiding.",
+                "readyWhen": "Nieuwe begrensde woonkamerproef opnieuw geactiveerd op 19 oktober om 15:07 lokaal; één opname van maximaal 30 seconden binnen het venster van 600 seconden na activeren.",
                 "steps": [
                   "Wek Eva in de woonkamer en vraag rustig tellen van één tot tien met pauzes.",
                   "Laat de eerste drie cijfers uitspreken; zeg tijdens het tellen: wacht even, ik bedoelde drie.",
@@ -8403,8 +8403,8 @@
               },
               "executionPlan": {
                 "path": "development/design/product/voice-recovery-execution-20261019.json",
-                "status": "acoustic_trial_armed",
-                "updatedAt": "2026-10-19T10:23:49.456539+00:00",
+                "status": "acoustic_trial_rearmed",
+                "updatedAt": "2026-10-19T13:09:55.217852+00:00",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json",
                 "ownerAcceptance": false
               }
@@ -12096,12 +12096,12 @@
         "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
         "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
         "independentReview": "development/reviews/voice-fluency-review-20261019.json",
-        "updatedAt": "2026-10-19T10:23:49.456539+00:00",
+        "updatedAt": "2026-10-19T13:09:55.217852+00:00",
         "physicalAcceptance": "pending",
         "executionPlan": {
           "path": "development/design/product/voice-recovery-execution-20261019.json",
-          "status": "acoustic_trial_armed",
-          "updatedAt": "2026-10-19T10:23:49.456539+00:00",
+          "status": "acoustic_trial_rearmed",
+          "updatedAt": "2026-10-19T13:09:55.217852+00:00",
           "evidence": "development/evidence/product/subscription-voice-20261013/voice-cadence-runtime-binding-20261019.json"
         }
       }

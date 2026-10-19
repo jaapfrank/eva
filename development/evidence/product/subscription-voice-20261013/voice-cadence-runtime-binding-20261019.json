@@ -11,7 +11,7 @@
     "physicalCandidateUsed": false,
     "ownerAcceptance": false,
     "wholeVoiceRecoveryComplete": false,
-    "stage": "Cadence candidate installed; bounded acoustic observation armed; physical outcome and owner acceptance pending."
+    "stage": "The same reviewed diagnostic image was rearmed for one requested living-room observation. The preceding window expired without a capture; no physical success or acceptance is established."
   },
   "sourcePins": {
     "development/tools/voice/runtime_identity.py": "32351f703eac84fb7cf47bfa15c652cc2946c74d72aeef95a627ab544d905700",
@@ -186,5 +186,64 @@
     "armSeconds": 600,
     "collection": "Private host collection through docker exec; runtime/container binding checked; diagnostic overlay retired to cadence production only when the speaker remains unchanged and no voice lease is active.",
     "review": "Independent GO after fixing source module, closure publication, unchanged-config guards and mount ordering."
-  }
+  },
+  "acousticTrialAttempts": [
+    {
+      "attempt": 1,
+      "installedAt": "2026-10-19T10:22:07.550785984Z",
+      "diagnosticImage": "sha256:d7341495221af3a0be00a47a51a9358370442f062dcab1c591a1b7b9f570d435",
+      "outcome": {
+        "status": "expired_without_completed_capture",
+        "capture_recorded": false,
+        "owner_acceptance": false
+      },
+      "productionAfterDiagnostic": {
+        "status": "cadence_production_installed_observer_removed",
+        "image": "sha256:ab306753dea1a5d6d964140f6fe03fe1e0059613d0060c07406a9a09073c643f",
+        "installed_at": "2026-10-19T10:32:59.864345842Z",
+        "guard": {
+          "active_voice_leases": 0,
+          "active_delegated_work": 0,
+          "active_memory_outbox": 0,
+          "active_model_requests": 0,
+          "active_decision_claims": 0,
+          "active_conversation_claims": 0
+        },
+        "owner_acceptance": false
+      },
+      "limits": {
+        "maxCaptureSeconds": 30,
+        "maxRecordings": 1,
+        "armSeconds": 600
+      }
+    },
+    {
+      "attempt": 2,
+      "status": "armed",
+      "installedAt": "2026-10-19T13:07:18.947214948Z",
+      "diagnosticImage": "sha256:d7341495221af3a0be00a47a51a9358370442f062dcab1c591a1b7b9f570d435",
+      "productionBaseline": "sha256:ab306753dea1a5d6d964140f6fe03fe1e0059613d0060c07406a9a09073c643f",
+      "sameReviewedDiagnosticCodeAsAttempt1": true,
+      "activeClaimsBeforeInstall": {
+        "active_voice_leases": 0,
+        "active_delegated_work": 0,
+        "active_memory_outbox": 1,
+        "active_model_requests": 0,
+        "active_decision_claims": 0,
+        "active_conversation_claims": 0
+      },
+      "limits": {
+        "maxCaptureSeconds": 30,
+        "maxRecordings": 1,
+        "armSeconds": 600
+      },
+      "captureRecorded": false,
+      "runtimeBindingOfCapture": "pending",
+      "acousticSuccess": null,
+      "ownerAcceptance": false,
+      "reason": "Owner explicitly requested the same bounded living-room trial to be enabled again.",
+      "physicalClaim": "Arming the observer is not recording, interruption success or owner acceptance."
+    }
+  ],
+  "currentAcousticTrialAttempt": 2
 }
