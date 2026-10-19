@@ -1,0 +1,35 @@
+{
+  "contract": "EvaNativeInputResumeReview/v1",
+  "updatedAt": "2026-10-19T09:05:03.168928+00:00",
+  "reviewer": "distinctive_eva_review",
+  "decision": "GO_for_narrow_installed_listening_resume_repair",
+  "evidence": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json",
+  "reviewedSource": {
+    "path": "deploy/native-speaker/codex_service.py",
+    "sha256": "7034aa5d4880e5a135097c2f3feb99bc0f639a800cfbf46cb8e3570965bb3bf5",
+    "testSha256": "1677323ea182b20e2e60d4c542106c56a0a3ce0359dccc5e08a4c31372b8e51f"
+  },
+  "findings": [
+    "No material blocker in the source delta: the exception is native-only and applies only before admission without pending core, greeting or output.",
+    "The inherited resume handler calls clear_user_turn then interrupt synchronously; the one-use flag does not cross an await. A later unrelated interrupt uses ordinary invalidation.",
+    "Pending output and actual terminal END_SESSION/MUTED retain cancellation. No new authority, memory, model or browser path is introduced.",
+    "The added fragment-settlement regression covers the case where turn.done already arrived but its input is not yet admitted.",
+    "Nineteen relevant offline checks passed; the controlled live software test preserved generation 1/floor 0 and produced exactly one core final and one TTS request with nonzero PCM.",
+    "Installation receipt pins the reviewed source and image, preserves configuration and the core container at that installation moment, and records zero active claims at replacement. A later core replacement by another executor is outside this receipt."
+  ],
+  "validationProvenance": "Source and test diff independently read; private live result and installation receipt independently inspected. Offline pass counts are retained worker tool-output evidence, not a separately rerun or saved raw test log.",
+  "status": {
+    "built": true,
+    "installed": true,
+    "controlledLiveUsed": true,
+    "physicalMicrophoneUsed": false,
+    "physicalPlaybackProven": false,
+    "ownerAcceptance": false
+  },
+  "limits": [
+    "Actual owner wire-control causality was not explicitly logged; the deterministic reproduction supplies the proven failure mechanism.",
+    "The approximately 30-second close in the failed owner attempt has no established cause in this review.",
+    "No general latency, ordinary spoken barge-in, physical room or whole-product acceptance."
+  ],
+  "nextEvidence": "The next ordinary owner conversation can establish whether this installed listening-resume change resolves the observed silent-answer failure on the physical device; do not replace that observation with software-sink success."
+}

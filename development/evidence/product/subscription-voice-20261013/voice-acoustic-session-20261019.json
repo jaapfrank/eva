@@ -174,7 +174,7 @@
     "nextStatus": "owner_input_needed_for_bounded_input_diagnosis"
   },
   "inputObserver": {
-    "status": "armed_awaiting_single_living_room_repeat",
+    "status": "capture_complete_observer_removed",
     "installation": {
       "status": "armed_living_room_only",
       "startedAt": "2026-10-19T08:46:42.083831676Z",
@@ -202,7 +202,19 @@
       "actualV3ItemTextSchemaCovered": true
     },
     "independentReview": "GO by distinctive_eva_review; no production input/gate/authority behavior changed",
-    "physicalResult": "pending",
-    "privateState": "/var/lib/eva2/voice-session/fluency-20261019/input-probe/watch-status.json"
+    "physicalResult": "owner repeated counting request; no audible answer after 20 seconds",
+    "privateState": "/var/lib/eva2/voice-session/fluency-20261019/input-probe/watch-status.json",
+    "captureResult": {
+      "microphonePcmSeconds": 5.38,
+      "recordingWallSeconds": 5.213,
+      "closedBeforeSession": true,
+      "userTurnDoneMs": 10255,
+      "coreRequestMs": 10810,
+      "coreFinalMs": 26195,
+      "literalSpeechStarted": false,
+      "sessionCloseMs": 30009,
+      "causeScope": "early capture restart matches reproduced native listening-resume race; direct wire-control receipt unavailable"
+    },
+    "followup": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json"
   }
 }

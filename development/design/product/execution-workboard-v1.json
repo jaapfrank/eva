@@ -3310,21 +3310,21 @@
                 "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
                 "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
                 "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-                "nextAction": "Mislukte eigenaarinvoer onderzoeken: provider gaf turn.created zonder turn.done. Dezelfde telzin werkt met synthetische invoer en digitale stilte; werkelijke woonkamer-PCM ontbreekt nog.",
+                "nextAction": "Geïnstalleerd: native hervatting tijdens luisteren bewaart de onafgegeven vraag en beginbuffer. Echte volledige spraakketen met geïnjecteerde hervatting geslaagd; gewone woonkamerwerking volgen zonder opnieuw dezelfde onbewezen proef te vragen.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
                 "ownerActionRequired": true,
                 "execution": {
-                  "status": "installed_outgoing_boundary_fix",
+                  "status": "installed_input_resume_fix",
                   "startedAt": "2026-10-19T07:08:01.588667+00:00",
                   "owner": "voice_executor",
                   "runtimeChanged": true,
-                  "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+                  "updatedAt": "2026-10-19T09:02:43.056065434Z",
                   "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
-                  "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+                  "independentReview": "development/reviews/native-input-resume-20261019.json",
                   "ownerAcceptance": false,
-                  "inputDiagnosisEvidence": "development/evidence/product/subscription-voice-20261013/voice-acoustic-session-20261019.json"
+                  "inputDiagnosisEvidence": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json"
                 }
               },
               {
@@ -3379,7 +3379,7 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Eén korte woonkamerherhaling meten vanaf de gesproken invoer, inclusief privéprovider-events. Eerst de ontbrekende afgeronde gebruikersbeurt oplossen; onderbreken is in de mislukte proef niet bereikt.",
+                "nextAction": "De gevonden native listen-resume-race is hersteld en geïnstalleerd; eerst normale beantwoording volgen. Gewone gesproken onderbreking blijft een afzonderlijke open grens; geen herhaalde volledige proef op de tweede speaker vragen.",
                 "ownerActionRequired": true,
                 "ownerInstructions": {
                   "availableNow": false,
@@ -3633,13 +3633,14 @@
                   "ownerAcceptance": false,
                   "runtimeChanged": false,
                   "acousticProbe": {
-                    "status": "input_probe_armed_after_failed_owner_test",
-                    "evidence": "development/evidence/product/subscription-voice-20261013/voice-acoustic-session-20261019.json",
+                    "status": "captured_input_resume_fix_installed",
+                    "evidence": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json",
                     "scope": "living_room_only",
                     "ownerAcceptance": false,
-                    "failure": "user turn.created without turn.done; no core admission or answer",
-                    "controlledProbe": "same counting request finalized after 1030 ms of digital silence; core stub only",
-                    "next": "Capture the actual short room input and provider progress; no acoustic cause or production fix claimed."
+                    "failure": "repeated owner test: core final without renderer start; early capture restart",
+                    "reproduction": "LOCAL_STOP during unadmitted input raised response floor and suppressed reply",
+                    "installedFix": "Native listening-only resume preserves input generation and buffered prefix; busy and terminal controls unchanged",
+                    "liveResult": "one real STT/core/TTS turn after injected resume; first software PCM 8844.943 ms after input; no physical output claim"
                   }
                 }
               },
@@ -7706,21 +7707,21 @@
               "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
               "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
               "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-              "nextAction": "Mislukte eigenaarinvoer onderzoeken: provider gaf turn.created zonder turn.done. Dezelfde telzin werkt met synthetische invoer en digitale stilte; werkelijke woonkamer-PCM ontbreekt nog.",
+              "nextAction": "Geïnstalleerd: native hervatting tijdens luisteren bewaart de onafgegeven vraag en beginbuffer. Echte volledige spraakketen met geïnjecteerde hervatting geslaagd; gewone woonkamerwerking volgen zonder opnieuw dezelfde onbewezen proef te vragen.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
               "ownerActionRequired": true,
               "execution": {
-                "status": "installed_outgoing_boundary_fix",
+                "status": "installed_input_resume_fix",
                 "startedAt": "2026-10-19T07:08:01.588667+00:00",
                 "owner": "voice_executor",
                 "runtimeChanged": true,
-                "updatedAt": "2026-10-19T07:20:01.969123+00:00",
+                "updatedAt": "2026-10-19T09:02:43.056065434Z",
                 "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
-                "independentReview": "development/reviews/voice-fluency-review-20261019.json",
+                "independentReview": "development/reviews/native-input-resume-20261019.json",
                 "ownerAcceptance": false,
-                "inputDiagnosisEvidence": "development/evidence/product/subscription-voice-20261013/voice-acoustic-session-20261019.json"
+                "inputDiagnosisEvidence": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json"
               }
             },
             {
@@ -7775,7 +7776,7 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Eén korte woonkamerherhaling meten vanaf de gesproken invoer, inclusief privéprovider-events. Eerst de ontbrekende afgeronde gebruikersbeurt oplossen; onderbreken is in de mislukte proef niet bereikt.",
+              "nextAction": "De gevonden native listen-resume-race is hersteld en geïnstalleerd; eerst normale beantwoording volgen. Gewone gesproken onderbreking blijft een afzonderlijke open grens; geen herhaalde volledige proef op de tweede speaker vragen.",
               "ownerActionRequired": true,
               "ownerInstructions": {
                 "availableNow": false,
@@ -8029,13 +8030,14 @@
                 "ownerAcceptance": false,
                 "runtimeChanged": false,
                 "acousticProbe": {
-                  "status": "input_probe_armed_after_failed_owner_test",
-                  "evidence": "development/evidence/product/subscription-voice-20261013/voice-acoustic-session-20261019.json",
+                  "status": "captured_input_resume_fix_installed",
+                  "evidence": "development/evidence/product/subscription-voice-20261013/native-input-resume-20261019.json",
                   "scope": "living_room_only",
                   "ownerAcceptance": false,
-                  "failure": "user turn.created without turn.done; no core admission or answer",
-                  "controlledProbe": "same counting request finalized after 1030 ms of digital silence; core stub only",
-                  "next": "Capture the actual short room input and provider progress; no acoustic cause or production fix claimed."
+                  "failure": "repeated owner test: core final without renderer start; early capture restart",
+                  "reproduction": "LOCAL_STOP during unadmitted input raised response floor and suppressed reply",
+                  "installedFix": "Native listening-only resume preserves input generation and buffered prefix; busy and terminal controls unchanged",
+                  "liveResult": "one real STT/core/TTS turn after injected resume; first software PCM 8844.943 ms after input; no physical output claim"
                 }
               }
             },

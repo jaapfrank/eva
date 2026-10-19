@@ -1,0 +1,164 @@
+{
+  "contract": "EvaNativeInputResumeEvidence/v1",
+  "updatedAt": "2026-10-19T09:05:03.168928+00:00",
+  "status": "installed_with_controlled_live_evidence_physical_acceptance_pending",
+  "scope": "Preserve an unadmitted native listening turn across the existing LOCAL_STOP/capture-resume handshake.",
+  "change": {
+    "source": "deploy/native-speaker/codex_service.py",
+    "sourceSha256": "7034aa5d4880e5a135097c2f3feb99bc0f639a800cfbf46cb8e3570965bb3bf5",
+    "mechanism": "The native subclass preserves input generation and queued microphone prefix only while a user turn or settled fragment is unadmitted and no core work, greeting or output is pending. A one-use exemption applies to the immediately following native interrupt call. Busy output/work retains ordinary invalidation.",
+    "coreChanged": false,
+    "browserChanged": false,
+    "firmwareChanged": false,
+    "echoFenceRemoved": false,
+    "newModelOrMemoryRoute": false
+  },
+  "baseline": {
+    "ownerRepeat": {
+      "evidenceKind": "Private capture and native service diagnostics; no raw conversation is published.",
+      "microphoneSamples": 86080,
+      "microphoneRateHz": 16000,
+      "microphonePcmSeconds": 5.38,
+      "microphoneFrames": 269,
+      "lastCaptureRecordOffsetMs": 5213,
+      "fileFinalizationOffsetApproxMs": 5238,
+      "serviceTimelineMs": {
+        "userTurnCreated": 4769,
+        "userTurnDone": 10255,
+        "coreRequest": 10810,
+        "coreAcknowledged": 10870,
+        "coreFinal": 26195,
+        "sessionClosing": 30009
+      },
+      "literalSpeechRequested": false,
+      "observedProblem": "A final core answer existed but no literal speech request followed. The capture iterator ended early while the session continued.",
+      "causalityLimit": "No wire LOCAL_STOP packet was explicitly recorded in that owner session. Early capture termination supports a native resume explanation; the corresponding generation invalidation is reproduced separately. The reason for the later approximately 30-second close remains unestablished."
+    },
+    "deterministicReproduction": {
+      "resultSource": "Recorded tool stdout reported by the implementing worker; no raw pytest or replay stdout file was saved.",
+      "privateReplayPath": "/tmp/eva-probe-edit/replay_doublewake.py",
+      "generationAtCreated": 1,
+      "responseFloorAfterActiveWake": 2,
+      "coreRequests": 1,
+      "coreResults": 1,
+      "spokenResponses": 0,
+      "closedBeforeCleanup": false,
+      "explanation": "The baseline native clear/interrupt invalidates generation 1 before its final transcript arrives. The core still answers that input, but the response floor suppresses its speech."
+    }
+  },
+  "offlineValidation": {
+    "test": "development/tests/voice_service/test_native_input_resume.py",
+    "testSha256": "1677323ea182b20e2e60d4c542106c56a0a3ce0359dccc5e08a4c31372b8e51f",
+    "recoveryTest": "development/tests/voice_service/test_native_recovery_20261019.py",
+    "recoveryTestSha256": "8f080185c21248bcfa731b02d5ea8474f3e32a2dec1181e3036eaf02b72c7ce1",
+    "passed": 19,
+    "breakdown": {
+      "nativeInputResume": 10,
+      "existingRecovery": 9
+    },
+    "runs": [
+      {
+        "passed": 18,
+        "seconds": 10.95
+      },
+      {
+        "passed": 1,
+        "seconds": 4.18
+      }
+    ],
+    "network": "none",
+    "importPrecedence": "Actual native service /opt/eva before /app and /app/speaker.",
+    "checks": [
+      "Preserve open input and queued prefix when only listening.",
+      "Preserve a finalized fragment during its existing quiet-settlement interval.",
+      "Pending core work, queued speech, active output and greeting retain interruption invalidation.",
+      "The actual inherited LOCAL_STOP handler restarts capture and yields one complete answer.",
+      "The preservation exemption is consumed once.",
+      "Inherited END_SESSION and MUTED close during pending or completed answers without late speech.",
+      "Existing wake/readiness and authority recovery checks remain green."
+    ],
+    "evidenceLimit": "Pass counts and durations were retained from tool output in the private assessment, not a raw pytest log. Two initial recovery-fixture import failures were corrected to use actual /opt/eva precedence before the passing run."
+  },
+  "controlledLive": {
+    "resultSha256": "2180cea08f4bdd46750e9d53914cae6d190312f13d28381b493cac7684babfab",
+    "harnessSha256": "224aa601a2c653f5f5413af1b6986a1c8b7696386b3c21e5498fca5887d16d6c",
+    "candidateImage": "sha256:193e0a37a29d1bea0c9a0a9853cc38bdb00e5f88eab370ce6e9b0770034905bf",
+    "route": "One prerecorded synthetic input through the existing realtime recognizer, NativeCodexMediaSession, provisioned household core binding and existing literal HA TTS; paced software PCM output.",
+    "intervention": "Invoke the native clear_user_turn/interrupt capture-resume pair about 400 ms after the first provider user turn starts; restart capture at its retained input offset. This is software injection, not an observed physical wire control.",
+    "resume": {
+      "injectedAtHarnessMs": 10769.838,
+      "generationBefore": 1,
+      "responseFloorBefore": 0,
+      "generationAfter": 1,
+      "responseFloorAfter": 0,
+      "preserved": true
+    },
+    "error": null,
+    "coreRequests": 1,
+    "finalReplies": 1,
+    "ttsRequests": 1,
+    "recognizedInputMatchedFixture": true,
+    "ttsInputExactlyMatchesCoreFinal": true,
+    "timing": {
+      "clock": "All values below use the same harness monotonic clock.",
+      "inputEofHarnessMs": 14291.689,
+      "inputEofToTranscriptMs": 818.626,
+      "inputEofToCoreRequestMs": 1376.169,
+      "inputEofToCoreFinalMs": 8000.39,
+      "inputEofToFirstPcmFrameMs": 8634.825,
+      "inputEofToFirstSignalFrameMs": 8844.943,
+      "signalDefinition": "First submitted PCM frame with absolute signed-16-bit peak greater than 80; not exact acoustic onset.",
+      "inputEofToOutputCompletedMs": 17276.874
+    },
+    "pcm": {
+      "sampleRateHz": 24000,
+      "samples": 200144,
+      "submittedDurationSeconds": 8.339333,
+      "nonzeroSignalObserved": true,
+      "physicalMicrophone": false,
+      "physicalPlayback": false,
+      "physicalDeliveryConfirmed": false,
+      "independentOutputTranscriptionPerformed": false
+    },
+    "developmentUsage": {
+      "realtimeInputSessions": 1,
+      "coreRequests": 1,
+      "ttsAnswerRequests": 1,
+      "fixtureSynthesisRequests": 1,
+      "coreModelRequests": null,
+      "providerTokens": null,
+      "providerCredits": null,
+      "note": "Development test traffic. One core request is not a claim of one underlying model request. Costs and unreported usage remain unknown."
+    }
+  },
+  "installation": {
+    "status": "installed",
+    "installedAt": "2026-10-19T09:02:43.056065434Z",
+    "baseImage": "sha256:c2df976695f6691096806359e93259cb3f92f25d73e2dd9ba40ba945334588c5",
+    "installedImage": "sha256:193e0a37a29d1bea0c9a0a9853cc38bdb00e5f88eab370ce6e9b0770034905bf",
+    "sourceSha256": "7034aa5d4880e5a135097c2f3feb99bc0f639a800cfbf46cb8e3570965bb3bf5",
+    "receiptSha256": "c00acd2f55b5b988ef2d2e446ad1562de0bffa3e3f1174dbbc706add004a0e92",
+    "preInstallGuard": {
+      "active_voice_leases": 0,
+      "active_delegated_work": 0,
+      "active_memory_outbox": 0,
+      "active_model_requests": 0,
+      "active_decision_claims": 0,
+      "active_conversation_claims": 0
+    },
+    "configurationPreserved": true,
+    "coreContainerUnchanged": true,
+    "temporaryAcousticObserverRemoved": true,
+    "physicalAcceptance": false,
+    "coreContainerUnchangedScope": "At this speaker installation only. Another executor replaced the core afterward; this receipt does not claim the later core container remained unchanged."
+  },
+  "independentReview": "development/reviews/native-input-resume-20261019.json",
+  "limits": [
+    "The software reproduction and controlled live test establish this listening-resume repair, not that every physical input failure has the same cause.",
+    "No physical speaker output, room microphone quality, free spoken barge-in or owner acceptance is established.",
+    "The native echo guard remains active; this change does not implement ordinary speech interruption during Eva output.",
+    "The measured 8.845-second input-end to first signal delay is not a whole-voice latency acceptance.",
+    "Independent acoustic word fidelity was not remeasured in this run.",
+    "Private raw capture, request identifiers and transcripts remain outside the repository."
+  ]
+}

@@ -12,6 +12,32 @@ from speaker_livekit_session import LiveKitHouseholdSpeakerSession
 from eva.voice_service.codex_media import CodexMediaSession
 from eva.adapters.connectors.home_assistant_voice import HomeAssistantSpeechOutput
 
+class NativeCodexMediaSession(CodexMediaSession):
+    """Keep a listening utterance across the native LOCAL_STOP/resume handshake."""
+    def clear_user_turn(self):
+        output=self.renderer
+        source=self.source
+        busy=(self._core_pending>0
+              or bool(self.greeting and not self.greeting.done())
+              or bool(source and (getattr(source,'active',False)
+                                   or getattr(source,'queued_duration',0)>0))
+              or bool(output and (getattr(output,'_speaking_handle',None) is not None
+                    or any(not handle.done() for handle in output.speech_handles))))
+        self._preserve_native_input=bool(
+            (self._input_open or self._input_fragments) and not busy)
+        if not self._preserve_native_input:
+            super().clear_user_turn()
+
+    def interrupt(self):
+        preserve=getattr(self,'_preserve_native_input',False)
+        self._preserve_native_input=False
+        self.diagnostic('native_input_resume',preserved=preserve,
+            generation=self._generation,response_floor=self._response_floor,
+            reason='listening_capture_resume' if preserve else 'interrupt_pending_or_output')
+        if not preserve:
+            return super().interrupt()
+
+
 class CodexHouseholdSpeakerSession(LiveKitHouseholdSpeakerSession):
     async def __call__(self, binding, wire):
         self.check()
@@ -47,7 +73,7 @@ class CodexHouseholdSpeakerSession(LiveKitHouseholdSpeakerSession):
     def make_session(self):
         config={'wake_greeting':True,'codex_executable':os.environ['EVA_CODEX_EXECUTABLE'],
                 'codex_auth_file':os.environ['EVA_CODEX_AUTH_FILE']}
-        session=CodexMediaSession(config,None,self.check,speech_output=self.tts_source)
+        session=NativeCodexMediaSession(config,None,self.check,speech_output=self.tts_source)
         session.prewarm()
         return session
 
