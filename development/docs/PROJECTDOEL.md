@@ -184,6 +184,17 @@ of eerdere capabilityproef bewijst deze hele keten niet. Binnen het bestaande ge
 ingestelde bereik volgt geen nieuwe eigenaarvraag per kleine stap. Ruimer automatisch
 wijzigingsbereik groeit later op bewijs en maakt deze eerste oplevering niet eindeloos.
 
+Bij concrete tekorten gaat geschikt bestaand opensourcewerk vóór eigen bouw:
+een reeds gebruikte dependency, een standaard vaardigheidspakket of afgebakende
+upstreamcode wordt met versie, licentie en onderhoudsverantwoordelijkheid behouden.
+Eigen code verantwoordt het resterende integratiegat. Het actuele
+[hergebruikplan](AFRONDINGSPLAN.md#gericht-upstream-hergebruiken-voor-dagelijks-vervolg-en-ontwikkeling)
+onderscheidt meerdaags eigen vervolg (E1.4) van drie optionele technische kandidaten
+(E4.12–E4.14). Een uitgebreidere upstreamimplementatie bewijst geen hogere
+intelligentie; bewezen kwaliteit en minder hulp bij de echte gebruikersuitkomst
+bepalen toepassing. Geen extra agent-, geheugen- of planningssysteem alleen om
+een concurrentielijst af te vinken.
+
 ## Bestaande basis en bewijsgrens
 
 De Pythonkern, PostgreSQL met Hindsight-projectie, gedeelde uitvoering, initiatief-

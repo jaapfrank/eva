@@ -2770,16 +2770,16 @@
           "checkedAt": "2026-10-20T12:31:34.182190+00:00"
         },
         "next": {
-          "taskId": "E4.8",
-          "title": "Actuele modulecontext en resterende snelheid",
-          "detail": "E5.2 blijft open zolang oorspronkelijke snelheidsgrenzen niet bewezen zijn."
+          "taskId": "E1.4",
+          "title": "Blijvend eigen vervolg over dagen, na de huidige afgesproken uitvoering",
+          "detail": "Hergebruikplan geregistreerd: één noodzakelijke samenhangsuitkomst; drie optionele kandidaten voor bestaande vaardigheden, codefeedback en toolketens. Geen nieuwe benchmarkserie. Bron: development/evidence/reassessment/eva-living-capability-options-20261020.json"
         },
         "ownerAction": {
           "required": false,
           "detail": "Voor E4.6 geen handeling of herhaalde proef nodig. Gebruik Eva normaal; het eigen WhatsApp-nummer blijft een afzonderlijke optionele keuze.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T09:40:57.354545+00:00",
+        "checkedAt": "2026-10-20T12:48:01.802808+00:00",
         "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -5263,7 +5263,7 @@
             "phaseId": "E1",
             "dependsOn": [],
             "outcome": "Gewone autonome Eva",
-            "status": "completed",
+            "status": "planned",
             "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
             "endCondition": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
             "dashboardComponent": "finalization-E1",
@@ -5376,8 +5376,51 @@
                 "completedAt": "2026-10-15T15:00:50+00:00",
                 "completionEvidence": "development/evidence/product/e13-native-initiative-result-20261015.json",
                 "independentReview": "development/reviews/e13-native-initiative-completion-review-20261015.json"
+              },
+              {
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+                "ownerActionRequired": false,
+                "scopeOrigin": "upstream-reuse-20261020",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "assignment": "Gepland op eigenaarsverzoek; geen implementatie gestart door dit onderzoek.",
+                "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+                "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
+                "id": "E1.4",
+                "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
+                "requiredForCurrentDelivery": true,
+                "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
+                "existing": "Duurzame taken, persoonlijke interesses, verwachtingen/review_at, eigen aandacht, brongebonden vervolg en één echte E5.1-episode bestaan.",
+                "gap": "Het bewaarde E5.1-bewijs sluit meerdaags eigen projectvervolg en herhaald dagelijks nut expliciet uit.",
+                "implementation": [
+                  "Lees de huidige native keten en werkelijke open eigen doelen; onderscheid technische uitval, ontbrekende context en legitieme stilte.",
+                  "Verbind ontbrekende overdracht tussen bestaande verwachting/doel, actuele waarneming, voortgang en volgende aandacht; verander alleen de bewezen ontbrekende verbinding.",
+                  "Hergebruik scenario’s uit Hermes goalcontinuation en OpenClaw intent lifecycle; neem hun sessiestore of keywordplanner niet over.",
+                  "Volg gewone runtime over echte dagen; voer geen kunstmatig nieuw onderwerp in en herhaal gesloten HUE-proeven niet."
+                ],
+                "verification": [
+                  "Echte bron-, keuze-, taak-, resultaat- en vervolgketen met tijden; technische uitvoering los van gezinsnut.",
+                  "Correctie, intrekking, stoppen en ontbrekende bron blijven gelden; geen dubbele effectactie na hervatten."
+                ],
+                "files": [
+                  "src/eva/application/personal_interests.py",
+                  "src/eva/application/human_understanding.py",
+                  "src/eva/application/resident_attention.py",
+                  "src/eva/adapters/postgres/initiative_context.py",
+                  "src/eva/bootstrap/native_initiative_work.py"
+                ],
+                "dependsOn": [
+                  "E5.1"
+                ],
+                "nextAction": "Rond de lopende afgesproken uitvoering af; onderzoek daarna de werkelijke meerdaagse overdracht binnen bestaande native doelen en aandacht."
               }
-            ]
+            ],
+            "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
+            "previousBoundedCompletion": {
+              "status": "completed",
+              "endCondition": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback."
+            }
           },
           {
             "id": "FE2",
@@ -6876,6 +6919,116 @@
                   "Volledige historische verwerking niet als gezond verklaard; geheugenzoeken afzonderlijk bereikbaar.",
                   "Geen fysieke database-, token- of snelheidswinst en geen gezinsacceptatie geclaimd."
                 ]
+              },
+              {
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+                "ownerActionRequired": false,
+                "scopeOrigin": "upstream-reuse-20261020",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "assignment": "Gepland op eigenaarsverzoek; geen implementatie gestart door dit onderzoek.",
+                "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+                "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
+                "id": "E4.12",
+                "title": "Bestaande open vaardigheden importeren, gebruiken en gericht verbeteren",
+                "requiredForCurrentDelivery": false,
+                "scopeDecision": "Technische kandidaat uit eigenaargevraagde hergebruikstudie; wordt pas verplichte releasebouw bij aangetoonde ontbrekende behoefte en voordeel. Geen blokkade voor bestaande oplevering.",
+                "doneWhen": "Een passend bestaand open vaardigheidspakket wordt met exacte versie, bronhash en licentie via de bestaande procedure-/capabilityroute bruikbaar gemaakt en bij een andere passende opdracht hergebruikt. Een echte correctie of uitkomst werkt via dezelfde droom/AIDE-geïnspireerde keten door in een beoordeelde nieuwe versie, waarvan later gebruik traceerbaar is. Importtekst verleent geen bevoegdheid; persoonsgrenzen, scripts/supportbestanden en verwijzingen blijven juist. Geen tweede skillstore, automatische massainstallatie of leeftijd als verwijderbewijs. Als hergebruik geen aantoonbaar voordeel biedt wordt dat besluit expliciet vastgelegd; geen bruikbare functie als afgerond claimen.",
+                "existing": "Procedure aanwijzen, vinden, uitvoeren en onafhankelijke verbeter-/releaseketen bestaan.",
+                "gap": "Algemene AgentSkills-packagecompatibiliteit en automatische gebruiksgerichte onderhoudsketen zijn niet bevestigd in de onderzochte code.",
+                "implementation": [
+                  "Kies één werkelijk nuttig upstream pakket en controleer volledige pakketlicentie, scripts en afhankelijkheden; neem het pakket over waar het past.",
+                  "Pas kleine delen van Hermes skill guards en OpenClaw ervaringsreview toe op bestaande Eva-artifact- en reviewcontracten.",
+                  "Bewaar gebruik en uitkomst bij bestaande taak/receipt; samenvoegen alleen met aantoonbare opvolger en behoud van benodigde bestanden."
+                ],
+                "verification": [
+                  "Twee inhoudelijk verschillende opdrachten in dezelfde vaardigheidsklasse met correcte uitvoering; geen toolrecht uit SKILL.md.",
+                  "Echte les verandert latere uitvoering; versies, bron en eventueel winst/gelijkspel blijven zichtbaar."
+                ],
+                "files": [
+                  "src/eva/application/procedure_references.py",
+                  "src/eva/providers/procedure_reference_actions.py",
+                  "src/eva/application/component_improvements.py",
+                  "src/eva/operations/procedure_execution.py"
+                ],
+                "dependsOn": [
+                  "E4.5"
+                ],
+                "nextAction": "Beoordeel één pakket tegen de bestaande procedure-import en kies directe pakketovername vóór een nieuwe manager te schrijven."
+              },
+              {
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+                "ownerActionRequired": false,
+                "scopeOrigin": "upstream-reuse-20261020",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "assignment": "Gepland op eigenaarsverzoek; geen implementatie gestart door dit onderzoek.",
+                "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+                "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
+                "id": "E4.13",
+                "title": "Directe semantische feedback bij Eva-gemaakte code gebruiken",
+                "requiredForCurrentDelivery": false,
+                "scopeDecision": "Optionele programmeerverbetering; eerst aantoonbare toepasselijkheid, geen nieuwe noodzakelijke productmodule.",
+                "doneWhen": "Een bestaande language server geeft in Eva’s bestaande geïsoleerde programmeerroute bronversiegebonden feedback op een echte wijziging; Eva gebruikt die feedback om de kandidaat te verbeteren vóór de bestaande onafhankelijke eindcontrole. Verouderde diagnostiek, bestaande fouten en ontbrekende tooling worden niet als nieuwe correcte bevindingen verkocht. Eerste afgebakende taal is Python; gewone programmering blijft werken bij ontbrekende optionele LSP. Exacte upstream herkomst/licenties en gewijzigde adapter zijn vastgelegd; geen nieuwe programmeeragent.",
+                "existing": "Geïsoleerde programmeeromgeving, codevoorstellen en onafhankelijke beoordeling bestaan.",
+                "gap": "In de onderzochte uitvoercode is geen automatische LSP-feedback bij edit geïdentificeerd. Hermes heeft daarvoor concrete protocol-/clientcode.",
+                "implementation": [
+                  "Gebruik bestaande language server; hergebruik Hermes protocol/client waar extractie kleiner is dan een passende onderhouden clientdependency.",
+                  "Koppel aan bestaande bestandswijziging met documentversie/hash en voor-/nadiagnostiek; neem Hermes configmanager en installers niet mee.",
+                  "Controleer één relevante bestaande foutklasse en ontbrekende/late serverfeedback; geef alleen werkelijke nieuwe diagnostiek terug."
+                ],
+                "verification": [
+                  "Bronversiegebonden type-/naamfout wordt vroeg gevonden en door Eva verwerkt; syntaxischeck alleen telt niet als semantische diagnose.",
+                  "Onafhankelijke eindcriteria blijven ongewijzigd; geen claim dat LSP gebruikersgedrag bewijst."
+                ],
+                "files": [
+                  "src/eva/operations/programming_workspace.py",
+                  "src/eva/adapters/connectors/programming_workspace.py",
+                  "src/eva/adapters/postgres/programming_actions.py"
+                ],
+                "dependsOn": [
+                  "E4.5"
+                ],
+                "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server."
+              },
+              {
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+                "ownerActionRequired": false,
+                "scopeOrigin": "upstream-reuse-20261020",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "assignment": "Gepland op eigenaarsverzoek; geen implementatie gestart door dit onderzoek.",
+                "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+                "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
+                "id": "E4.14",
+                "title": "Een taak over meerdere diensten als programma uitvoeren",
+                "requiredForCurrentDelivery": false,
+                "scopeDecision": "Optionele uitvoeringsverbetering; alleen aansluiten waar echte herhaalde modelrondes of een ontbrekende algemene toolketen dit rechtvaardigen.",
+                "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
+                "existing": "Algemene duurzame uitvoerder, programmatuurwerkruimte en geïsoleerde procedures bestaan. Pure procedures draaien met network=none; dat is geen algemene tool-RPC-keten.",
+                "gap": "Hermes heeft concrete scriptbare tooldispatch; equivalente toegelaten multi-toolRPC is niet bevestigd in de onderzochte Eva-procedureroute.",
+                "implementation": [
+                  "Gebruik één bestaande echte werkopdracht als doel; leg benodigde contracten vooraf vast.",
+                  "Hergebruik passende Hermes RPC-/stubunits; vervang alleen Hermes registry/context door bestaande Eva-dispatch en bron-/taakbinding.",
+                  "Behoud bestaande geïsoleerde procesgrens en maak elke subcall duurzaam; geen Hermes hostkernel of tweede scheduler importeren."
+                ],
+                "verification": [
+                  "Zelfde volledige gebruikersresultaat met behoud van kwaliteit; modelrondes en tokens afzonderlijk zichtbaar.",
+                  "Een onzekere schrijfactie wordt niet herhaald en intrekking/STOP geldt ook voor de volgende subcall."
+                ],
+                "files": [
+                  "src/eva/operations/procedure_execution.py",
+                  "src/eva/adapters/connectors/programming_workspace.py",
+                  "src/eva/bootstrap/delegated_digital_runner.py",
+                  "src/eva/adapters/postgres/connector_results.py"
+                ],
+                "dependsOn": [
+                  "E4.5"
+                ],
+                "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter."
               }
             ],
             "previousBoundedCompletion": {
@@ -7367,7 +7520,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-20T09:40:57.354545+00:00",
+        "updatedAt": "2026-10-20T12:48:01.802808+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -7376,13 +7529,14 @@
             {
               "id": "E1",
               "title": "Gewone autonome Eva",
-              "status": "completed",
+              "status": "planned",
               "finish": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
-              "currentGap": "E1.1/E1.2/E1.3 en I1.2 technisch afgerond binnen hun expliciete bewijsgrenzen. Herhaald spontaan dagelijks nut en volledige gezinsacceptatie zijn niet aangetoond en blijven in E5/F2.",
+              "currentGap": "Oorspronkelijke E1.1–E1.3 en I1.2-afronding behouden. E1.4 sluit de expliciet nog onbewezen meerdaagse eigen continuïteit; herhaald gezinsnut en acceptatie blijven F2.",
               "taskIds": [
                 "E1.1",
                 "E1.2",
-                "E1.3"
+                "E1.3",
+                "E1.4"
               ],
               "existingTaskIds": [
                 "I1.2",
@@ -7390,7 +7544,21 @@
                 "HUE6.1"
               ],
               "completionEvidence": "development/evidence/product/i12-quiet-attention-installed-20261016.json",
-              "completionKind": "bounded_technical_phase"
+              "completionKind": "bounded_technical_phase",
+              "previousBoundedCompletion": {
+                "id": "E1",
+                "title": "Gewone autonome Eva",
+                "status": "completed",
+                "finish": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
+                "currentGap": "E1.1/E1.2/E1.3 en I1.2 technisch afgerond binnen hun expliciete bewijsgrenzen. Herhaald spontaan dagelijks nut en volledige gezinsacceptatie zijn niet aangetoond en blijven in E5/F2.",
+                "existingTaskIds": [
+                  "I1.2",
+                  "HUE5.1",
+                  "HUE6.1"
+                ],
+                "completionEvidence": "development/evidence/product/i12-quiet-attention-installed-20261016.json",
+                "completionKind": "bounded_technical_phase"
+              }
             },
             {
               "id": "E2",
@@ -7449,7 +7617,10 @@
                 "E4.8",
                 "E4.9",
                 "E4.10",
-                "E4.11"
+                "E4.11",
+                "E4.12",
+                "E4.13",
+                "E4.14"
               ],
               "currentGap": "Nieuwe eigenaaropdracht E4.6–E4.10: modulegrens voltooien en eenvoudige acties versnellen. Oorspronkelijke E4.1–E4.5-afronding blijft geldig binnen haar scope.",
               "previousBoundedCompletion": {
@@ -7612,6 +7783,30 @@
             "updatedAt": "2026-10-20T09:51:06.774021+00:00"
           },
           "latestEvidence": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json"
+        },
+        "upstreamReusePlan": {
+          "source": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+          "sourceScope": "development/design/product/upstream-reuse-task-scope-20261020.json",
+          "status": "planned",
+          "taskIds": [
+            "E1.4",
+            "E4.12",
+            "E4.13",
+            "E4.14"
+          ],
+          "mandatoryTaskIds": [
+            "E1.4"
+          ],
+          "optionalCandidateTaskIds": [
+            "E4.12",
+            "E4.13",
+            "E4.14"
+          ],
+          "runtimeChanged": false,
+          "currentImplementationPreserved": "E5.2",
+          "nextAfterCurrent": "E1.4",
+          "newComparisonSeries": false,
+          "checkedAt": "2026-10-20T12:48:01.802808+00:00"
         }
       }
     },
@@ -9919,7 +10114,7 @@
           "phaseId": "E1",
           "dependsOn": [],
           "outcome": "Gewone autonome Eva",
-          "status": "completed",
+          "status": "planned",
           "effort": "Zie AFRONDINGSPLAN; E3 bepaalt de eindige E4-lijst. Geen tijd- of creditbelofte.",
           "endCondition": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
           "dashboardComponent": "finalization-E1",
@@ -10032,8 +10227,51 @@
               "completedAt": "2026-10-15T15:00:50+00:00",
               "completionEvidence": "development/evidence/product/e13-native-initiative-result-20261015.json",
               "independentReview": "development/reviews/e13-native-initiative-completion-review-20261015.json"
+            },
+            {
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+              "ownerActionRequired": false,
+              "scopeOrigin": "upstream-reuse-20261020",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "assignment": "Gepland op eigenaarsverzoek; geen implementatie gestart door dit onderzoek.",
+              "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+              "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
+              "id": "E1.4",
+              "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
+              "requiredForCurrentDelivery": true,
+              "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
+              "existing": "Duurzame taken, persoonlijke interesses, verwachtingen/review_at, eigen aandacht, brongebonden vervolg en één echte E5.1-episode bestaan.",
+              "gap": "Het bewaarde E5.1-bewijs sluit meerdaags eigen projectvervolg en herhaald dagelijks nut expliciet uit.",
+              "implementation": [
+                "Lees de huidige native keten en werkelijke open eigen doelen; onderscheid technische uitval, ontbrekende context en legitieme stilte.",
+                "Verbind ontbrekende overdracht tussen bestaande verwachting/doel, actuele waarneming, voortgang en volgende aandacht; verander alleen de bewezen ontbrekende verbinding.",
+                "Hergebruik scenario’s uit Hermes goalcontinuation en OpenClaw intent lifecycle; neem hun sessiestore of keywordplanner niet over.",
+                "Volg gewone runtime over echte dagen; voer geen kunstmatig nieuw onderwerp in en herhaal gesloten HUE-proeven niet."
+              ],
+              "verification": [
+                "Echte bron-, keuze-, taak-, resultaat- en vervolgketen met tijden; technische uitvoering los van gezinsnut.",
+                "Correctie, intrekking, stoppen en ontbrekende bron blijven gelden; geen dubbele effectactie na hervatten."
+              ],
+              "files": [
+                "src/eva/application/personal_interests.py",
+                "src/eva/application/human_understanding.py",
+                "src/eva/application/resident_attention.py",
+                "src/eva/adapters/postgres/initiative_context.py",
+                "src/eva/bootstrap/native_initiative_work.py"
+              ],
+              "dependsOn": [
+                "E5.1"
+              ],
+              "nextAction": "Rond de lopende afgesproken uitvoering af; onderzoek daarna de werkelijke meerdaagse overdracht binnen bestaande native doelen en aandacht."
             }
-          ]
+          ],
+          "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
+          "previousBoundedCompletion": {
+            "status": "completed",
+            "endCondition": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback."
+          }
         },
         {
           "id": "FE2",
@@ -11532,6 +11770,116 @@
                 "Volledige historische verwerking niet als gezond verklaard; geheugenzoeken afzonderlijk bereikbaar.",
                 "Geen fysieke database-, token- of snelheidswinst en geen gezinsacceptatie geclaimd."
               ]
+            },
+            {
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+              "ownerActionRequired": false,
+              "scopeOrigin": "upstream-reuse-20261020",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "assignment": "Gepland op eigenaarsverzoek; geen implementatie gestart door dit onderzoek.",
+              "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+              "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
+              "id": "E4.12",
+              "title": "Bestaande open vaardigheden importeren, gebruiken en gericht verbeteren",
+              "requiredForCurrentDelivery": false,
+              "scopeDecision": "Technische kandidaat uit eigenaargevraagde hergebruikstudie; wordt pas verplichte releasebouw bij aangetoonde ontbrekende behoefte en voordeel. Geen blokkade voor bestaande oplevering.",
+              "doneWhen": "Een passend bestaand open vaardigheidspakket wordt met exacte versie, bronhash en licentie via de bestaande procedure-/capabilityroute bruikbaar gemaakt en bij een andere passende opdracht hergebruikt. Een echte correctie of uitkomst werkt via dezelfde droom/AIDE-geïnspireerde keten door in een beoordeelde nieuwe versie, waarvan later gebruik traceerbaar is. Importtekst verleent geen bevoegdheid; persoonsgrenzen, scripts/supportbestanden en verwijzingen blijven juist. Geen tweede skillstore, automatische massainstallatie of leeftijd als verwijderbewijs. Als hergebruik geen aantoonbaar voordeel biedt wordt dat besluit expliciet vastgelegd; geen bruikbare functie als afgerond claimen.",
+              "existing": "Procedure aanwijzen, vinden, uitvoeren en onafhankelijke verbeter-/releaseketen bestaan.",
+              "gap": "Algemene AgentSkills-packagecompatibiliteit en automatische gebruiksgerichte onderhoudsketen zijn niet bevestigd in de onderzochte code.",
+              "implementation": [
+                "Kies één werkelijk nuttig upstream pakket en controleer volledige pakketlicentie, scripts en afhankelijkheden; neem het pakket over waar het past.",
+                "Pas kleine delen van Hermes skill guards en OpenClaw ervaringsreview toe op bestaande Eva-artifact- en reviewcontracten.",
+                "Bewaar gebruik en uitkomst bij bestaande taak/receipt; samenvoegen alleen met aantoonbare opvolger en behoud van benodigde bestanden."
+              ],
+              "verification": [
+                "Twee inhoudelijk verschillende opdrachten in dezelfde vaardigheidsklasse met correcte uitvoering; geen toolrecht uit SKILL.md.",
+                "Echte les verandert latere uitvoering; versies, bron en eventueel winst/gelijkspel blijven zichtbaar."
+              ],
+              "files": [
+                "src/eva/application/procedure_references.py",
+                "src/eva/providers/procedure_reference_actions.py",
+                "src/eva/application/component_improvements.py",
+                "src/eva/operations/procedure_execution.py"
+              ],
+              "dependsOn": [
+                "E4.5"
+              ],
+              "nextAction": "Beoordeel één pakket tegen de bestaande procedure-import en kies directe pakketovername vóór een nieuwe manager te schrijven."
+            },
+            {
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+              "ownerActionRequired": false,
+              "scopeOrigin": "upstream-reuse-20261020",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "assignment": "Gepland op eigenaarsverzoek; geen implementatie gestart door dit onderzoek.",
+              "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+              "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
+              "id": "E4.13",
+              "title": "Directe semantische feedback bij Eva-gemaakte code gebruiken",
+              "requiredForCurrentDelivery": false,
+              "scopeDecision": "Optionele programmeerverbetering; eerst aantoonbare toepasselijkheid, geen nieuwe noodzakelijke productmodule.",
+              "doneWhen": "Een bestaande language server geeft in Eva’s bestaande geïsoleerde programmeerroute bronversiegebonden feedback op een echte wijziging; Eva gebruikt die feedback om de kandidaat te verbeteren vóór de bestaande onafhankelijke eindcontrole. Verouderde diagnostiek, bestaande fouten en ontbrekende tooling worden niet als nieuwe correcte bevindingen verkocht. Eerste afgebakende taal is Python; gewone programmering blijft werken bij ontbrekende optionele LSP. Exacte upstream herkomst/licenties en gewijzigde adapter zijn vastgelegd; geen nieuwe programmeeragent.",
+              "existing": "Geïsoleerde programmeeromgeving, codevoorstellen en onafhankelijke beoordeling bestaan.",
+              "gap": "In de onderzochte uitvoercode is geen automatische LSP-feedback bij edit geïdentificeerd. Hermes heeft daarvoor concrete protocol-/clientcode.",
+              "implementation": [
+                "Gebruik bestaande language server; hergebruik Hermes protocol/client waar extractie kleiner is dan een passende onderhouden clientdependency.",
+                "Koppel aan bestaande bestandswijziging met documentversie/hash en voor-/nadiagnostiek; neem Hermes configmanager en installers niet mee.",
+                "Controleer één relevante bestaande foutklasse en ontbrekende/late serverfeedback; geef alleen werkelijke nieuwe diagnostiek terug."
+              ],
+              "verification": [
+                "Bronversiegebonden type-/naamfout wordt vroeg gevonden en door Eva verwerkt; syntaxischeck alleen telt niet als semantische diagnose.",
+                "Onafhankelijke eindcriteria blijven ongewijzigd; geen claim dat LSP gebruikersgedrag bewijst."
+              ],
+              "files": [
+                "src/eva/operations/programming_workspace.py",
+                "src/eva/adapters/connectors/programming_workspace.py",
+                "src/eva/adapters/postgres/programming_actions.py"
+              ],
+              "dependsOn": [
+                "E4.5"
+              ],
+              "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server."
+            },
+            {
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+              "ownerActionRequired": false,
+              "scopeOrigin": "upstream-reuse-20261020",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "assignment": "Gepland op eigenaarsverzoek; geen implementatie gestart door dit onderzoek.",
+              "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+              "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
+              "id": "E4.14",
+              "title": "Een taak over meerdere diensten als programma uitvoeren",
+              "requiredForCurrentDelivery": false,
+              "scopeDecision": "Optionele uitvoeringsverbetering; alleen aansluiten waar echte herhaalde modelrondes of een ontbrekende algemene toolketen dit rechtvaardigen.",
+              "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
+              "existing": "Algemene duurzame uitvoerder, programmatuurwerkruimte en geïsoleerde procedures bestaan. Pure procedures draaien met network=none; dat is geen algemene tool-RPC-keten.",
+              "gap": "Hermes heeft concrete scriptbare tooldispatch; equivalente toegelaten multi-toolRPC is niet bevestigd in de onderzochte Eva-procedureroute.",
+              "implementation": [
+                "Gebruik één bestaande echte werkopdracht als doel; leg benodigde contracten vooraf vast.",
+                "Hergebruik passende Hermes RPC-/stubunits; vervang alleen Hermes registry/context door bestaande Eva-dispatch en bron-/taakbinding.",
+                "Behoud bestaande geïsoleerde procesgrens en maak elke subcall duurzaam; geen Hermes hostkernel of tweede scheduler importeren."
+              ],
+              "verification": [
+                "Zelfde volledige gebruikersresultaat met behoud van kwaliteit; modelrondes en tokens afzonderlijk zichtbaar.",
+                "Een onzekere schrijfactie wordt niet herhaald en intrekking/STOP geldt ook voor de volgende subcall."
+              ],
+              "files": [
+                "src/eva/operations/procedure_execution.py",
+                "src/eva/adapters/connectors/programming_workspace.py",
+                "src/eva/bootstrap/delegated_digital_runner.py",
+                "src/eva/adapters/postgres/connector_results.py"
+              ],
+              "dependsOn": [
+                "E4.5"
+              ],
+              "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter."
             }
           ],
           "previousBoundedCompletion": {
@@ -12023,7 +12371,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-20T09:40:57.354545+00:00",
+      "updatedAt": "2026-10-20T12:48:01.802808+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -12032,13 +12380,14 @@
           {
             "id": "E1",
             "title": "Gewone autonome Eva",
-            "status": "completed",
+            "status": "planned",
             "finish": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
-            "currentGap": "E1.1/E1.2/E1.3 en I1.2 technisch afgerond binnen hun expliciete bewijsgrenzen. Herhaald spontaan dagelijks nut en volledige gezinsacceptatie zijn niet aangetoond en blijven in E5/F2.",
+            "currentGap": "Oorspronkelijke E1.1–E1.3 en I1.2-afronding behouden. E1.4 sluit de expliciet nog onbewezen meerdaagse eigen continuïteit; herhaald gezinsnut en acceptatie blijven F2.",
             "taskIds": [
               "E1.1",
               "E1.2",
-              "E1.3"
+              "E1.3",
+              "E1.4"
             ],
             "existingTaskIds": [
               "I1.2",
@@ -12046,7 +12395,21 @@
               "HUE6.1"
             ],
             "completionEvidence": "development/evidence/product/i12-quiet-attention-installed-20261016.json",
-            "completionKind": "bounded_technical_phase"
+            "completionKind": "bounded_technical_phase",
+            "previousBoundedCompletion": {
+              "id": "E1",
+              "title": "Gewone autonome Eva",
+              "status": "completed",
+              "finish": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
+              "currentGap": "E1.1/E1.2/E1.3 en I1.2 technisch afgerond binnen hun expliciete bewijsgrenzen. Herhaald spontaan dagelijks nut en volledige gezinsacceptatie zijn niet aangetoond en blijven in E5/F2.",
+              "existingTaskIds": [
+                "I1.2",
+                "HUE5.1",
+                "HUE6.1"
+              ],
+              "completionEvidence": "development/evidence/product/i12-quiet-attention-installed-20261016.json",
+              "completionKind": "bounded_technical_phase"
+            }
           },
           {
             "id": "E2",
@@ -12105,7 +12468,10 @@
               "E4.8",
               "E4.9",
               "E4.10",
-              "E4.11"
+              "E4.11",
+              "E4.12",
+              "E4.13",
+              "E4.14"
             ],
             "currentGap": "Nieuwe eigenaaropdracht E4.6–E4.10: modulegrens voltooien en eenvoudige acties versnellen. Oorspronkelijke E4.1–E4.5-afronding blijft geldig binnen haar scope.",
             "previousBoundedCompletion": {
@@ -12268,6 +12634,30 @@
           "updatedAt": "2026-10-20T09:51:06.774021+00:00"
         },
         "latestEvidence": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json"
+      },
+      "upstreamReusePlan": {
+        "source": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+        "sourceScope": "development/design/product/upstream-reuse-task-scope-20261020.json",
+        "status": "planned",
+        "taskIds": [
+          "E1.4",
+          "E4.12",
+          "E4.13",
+          "E4.14"
+        ],
+        "mandatoryTaskIds": [
+          "E1.4"
+        ],
+        "optionalCandidateTaskIds": [
+          "E4.12",
+          "E4.13",
+          "E4.14"
+        ],
+        "runtimeChanged": false,
+        "currentImplementationPreserved": "E5.2",
+        "nextAfterCurrent": "E1.4",
+        "newComparisonSeries": false,
+        "checkedAt": "2026-10-20T12:48:01.802808+00:00"
       }
     },
     "goalRevision": {
@@ -13655,6 +14045,30 @@
       "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
       "independentReview": "development/reviews/voice-fluency-review-20261019.json",
       "physicalAcceptance": "pending"
+    },
+    "upstreamReuse20261020": {
+      "source": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+      "sourceScope": "development/design/product/upstream-reuse-task-scope-20261020.json",
+      "status": "planned",
+      "taskIds": [
+        "E1.4",
+        "E4.12",
+        "E4.13",
+        "E4.14"
+      ],
+      "mandatoryTaskIds": [
+        "E1.4"
+      ],
+      "optionalCandidateTaskIds": [
+        "E4.12",
+        "E4.13",
+        "E4.14"
+      ],
+      "runtimeChanged": false,
+      "currentImplementationPreserved": "E5.2",
+      "nextAfterCurrent": "E1.4",
+      "newComparisonSeries": false,
+      "checkedAt": "2026-10-20T12:48:01.802808+00:00"
     }
   },
   "updatedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -13712,6 +14126,11 @@
       "id": "optional-camera-observer-20261019",
       "path": "development/design/product/camera-observer-scope-20261019.json",
       "sha256": "6989f2ee57a5b84f48bbcc2407dc68332c3e11d5e6ae4d048ba43da37df9e20b"
+    },
+    {
+      "id": "upstream-reuse-20261020",
+      "path": "development/design/product/upstream-reuse-task-scope-20261020.json",
+      "sha256": "31f991e30e6275347d749eb7df79145dc955a32d7bc916a8e63091f1ba2029cb"
     }
   ],
   "lastUpdatedAt": "2026-10-20T09:40:57.354545+00:00",

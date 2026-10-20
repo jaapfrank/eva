@@ -1,0 +1,498 @@
+{
+  "contract": "EvaLivingCapabilityResearch/v2",
+  "recordedAt": "2026-10-20T12:42:12.272666+00:00",
+  "scope": "Actuele officiële opties en gerichte bronvergelijking; geen nieuwe runtimevergelijking, implementatieclaim of vervanging van E4.7.",
+  "method": "Officiële documentatie gelezen; geselecteerde bestaande Eva-modules en recentste relevante afgeronde episodes vergeleken. Afwezigheid in gerichte bronzoektocht is geen volledige repository-audit.",
+  "sources": [
+    {
+      "system": "OpenClaw",
+      "feature": "Standing intents / standing orders",
+      "url": "https://docs.openclaw.ai/concepts/standing-intents",
+      "secondUrl": "https://docs.openclaw.ai/automation/standing-orders",
+      "verified": "Vooruitgerichte gebeurtenisgebonden intenties; permanente opdrachten met scope. Standing intents worden voor passende interactieve antwoorden gecontroleerd; geen bewijs van vanzelf zelfstandig gezinsleven."
+    },
+    {
+      "system": "Hermes",
+      "feature": "Persistent Goals",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/goals",
+      "verified": "Vervolg in dezelfde sessie met modelbeoordeling; geen automatische koppeling tussen goals en kanban. Doorgaan bewijst niet dat een resultaat nuttig is."
+    },
+    {
+      "system": "Hermes",
+      "feature": "Skills + Curator",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/skills",
+      "secondUrl": "https://hermes-agent.nousresearch.com/docs/user-guide/features/curator",
+      "verified": "AgentSkills-compatibele instructiepakketten op aanvraag, onderhoud van zelfgemaakte vaardigheden. Curator telt gebruik en archiveert; samenvoeging met model is optioneel en kan veel calls gebruiken. Niet blind overnemen of ouderdom als verwijderbewijs hanteren."
+    },
+    {
+      "system": "Hermes / Honcho",
+      "feature": "Person modeling",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/honcho",
+      "verified": "Afgeleide persoonsinzichten en actuele sessiebehoefte via externe geheugenprovider. Geen aangetoonde kwaliteitsvoorsprong op Eva; geen tweede geheugen aanbevelen."
+    },
+    {
+      "system": "Hermes",
+      "feature": "Programmatic tool calling",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/code-execution",
+      "verified": "Script roept tools via RPC; geselecteerde uitvoer komt terug bij model. Potentieel minder tussenrondes; geen gemeten Eva-winst."
+    },
+    {
+      "system": "OpenCode / Hermes",
+      "feature": "Language-server diagnostics",
+      "url": "https://opencode.ai/docs/lsp/",
+      "secondUrl": "https://hermes-agent.nousresearch.com/docs/user-guide/features/lsp",
+      "verified": "Semantische codefeedback via bestaande language servers. Correcte diagnostiek vervangt geen eindcontrole van gebruikersgedrag."
+    },
+    {
+      "system": "Agent Zero",
+      "feature": "Plugin Hub + user plugins",
+      "url": "https://www.agent-zero.ai/p/docs/plugins/",
+      "verified": "Uitbreidingen voor tools, instellingen, hooks, providers en UI met afzonderlijke activering. Geen bewijs dat elke plugin overdraagbaar naar Eva is."
+    },
+    {
+      "system": "OpenClaw",
+      "feature": "MCP Events",
+      "url": "https://docs.openclaw.ai/automation/mcp-events",
+      "verified": "Optionele ondertekende eventcallbacks op bestaande automations; experimenteel en versiegebonden protocol, geen algemeen bewezen lokale compatibiliteit."
+    },
+    {
+      "system": "Hindsight",
+      "feature": "Mental models",
+      "url": "https://docs.hindsight.vectorize.io/cloud/mental-models/",
+      "verified": "Voorberekende reflectie, goedkope lookup en asynchrone vernieuwing. Eva gebruikt dezelfde API al voor een smalle communicatiestijlspiegel."
+    },
+    {
+      "system": "Letta",
+      "feature": "Sleep-time compute",
+      "url": "https://www.letta.com/blog/sleep-time-compute/",
+      "verified": "Offline nuttige context voorbereiden; onderzoek uit april2025, geen nieuwe unieke droomtechniek en geen bewezen Eva-kwaliteitswinst."
+    },
+    {
+      "system": "OpenClaw",
+      "feature": "Dreaming and self-learning",
+      "url": "https://docs.openclaw.ai/concepts/dreaming",
+      "secondUrl": "https://docs.openclaw.ai/tools/self-learning",
+      "verified": "Geheugenconsolidatie en geleerde vaardigheden bestaan ook daar; dromen of zelfleren als label is geen uniek onderscheid."
+    }
+  ],
+  "findings": [
+    {
+      "priority": 1,
+      "outcome": "Blijvende verantwoordelijkheid en zelfgekozen projectvervolg",
+      "evaState": "Duurzame taken, persoonlijke interesses en volgende aandacht bestaan. E5.1 bewijst één echte autonome episode en onmiddellijk later brongebruik; expliciet geen meerdaags projectvervolg of herhaald gezinsnut.",
+      "recommendation": "Bestaande doelen en intenties bij volgende gewone afweging prioriteren op werkelijk resultaat, voortgang en juiste vervolg-aanleiding; geen extra goalstore of timer.",
+      "evidence": [
+        "src/eva/application/personal_interests.py",
+        "src/eva/application/resident_attention.py",
+        "src/eva/adapters/postgres/initiative_context.py",
+        "development/evidence/reassessment/e51-native-unassisted-installed-20261019.json"
+      ],
+      "existingWork": "Dagelijkse continuïteit en eigen leven in PROJECTDOEL; F2.1/F2.2 echte beoordeling. Geen nieuwe kaart of ongewijzigde gesloten proef heropenen."
+    },
+    {
+      "priority": 2,
+      "outcome": "Verwachtingen toetsen en vooruitdenken",
+      "evaState": "Human-understanding kent verwachtingen, review_at, confirmed/refuted en bronbinding. Algemeen dagelijks gebruik en effect op initiatief zijn niet door deze bronlezing bewezen.",
+      "recommendation": "Verbind bestaande verwachtingen aan actuele waarneming en passende volgende aandacht. Model kiest relevantie, onzekerheid, vraag of actie; geen tandarts-/deurbel-/afvalregel.",
+      "evidence": [
+        "src/eva/application/human_understanding.py",
+        "src/eva/application/resident_attention.py",
+        "src/eva/adapters/postgres/initiative_context.py"
+      ],
+      "existingWork": "Geheugen/mensbegrip + dagelijks meedenken, bestaande kaarten nader koppelen bij uitvoering."
+    },
+    {
+      "priority": 3,
+      "outcome": "Geleerde mogelijkheden blijven bruikbaar en worden onderhouden",
+      "evaState": "Procedure aanwijzen/ophalen/uitvoeren en AIDE-geïnspireerde winstbeoordeling bestaan. E4.5 bewijst één vooraf toegelaten softwarewijzigingsklasse. Algemene AgentSkills-packagecompatibiliteit, automatische gebruiksgerichte curatie en breed later hergebruik niet bevestigd.",
+      "recommendation": "Hergebruik bestaande procedure-/verbeterketen. Standaardvaardigheden kunnen worden geïmporteerd als kandidaten; latere uitkomsten bepalen behoud, verbetering of samenvoeging. Geen skilltekst als bevoegdheid behandelen.",
+      "evidence": [
+        "src/eva/application/procedure_references.py",
+        "src/eva/operations/procedure_execution.py",
+        "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json"
+      ],
+      "existingWork": "Bestaande leer-/ontwikkelscope; kandidaatuitbreiding, niet automatisch nieuwe bouwfase."
+    },
+    {
+      "priority": 4,
+      "outcome": "Sneller betere uitbreidingen programmeren",
+      "evaState": "Programmeeromgeving, geïsoleerde uitvoering en onafhankelijke selectie bestaan. Geen gerichte LSP-koppeling aangetroffen in onderzochte uitvoercode.",
+      "recommendation": "Bestaande language-server feedback en eventueel scriptbare toegelaten toolcalls toevoegen aan bestaande uitvoerder wanneer deze concrete foutklassen/onnodige modelrondes verminderen.",
+      "evidence": [
+        "src/eva/operations/procedure_execution.py"
+      ],
+      "existingWork": "Ontwikkelvermogen en efficiëntie; optionele kandidaat, niet op eigen gezag geïnstalleerd."
+    },
+    {
+      "priority": 5,
+      "outcome": "Rijke actuele aanleiding zonder voortdurend pollen",
+      "evaState": "HA-events en geplande aandacht bestaan; huidige context benoemt ontbrekende live agenda/serviceinventaris expliciet. Geen bewijs dat alle aangesloten bronnen automatisch juiste relevante gebeurtenissen leveren.",
+      "recommendation": "Beschikbare events, e-mail-/agendawijzigingen en toestemmingen gericht ontdekken, modelgekozen aandacht aan bestaande bronnen koppelen. Push waar ondersteund, anders selectief verversen; geen serverbrede scan of duur heartbeatritueel.",
+      "evidence": [
+        "src/eva/application/resident_attention.py",
+        "src/eva/adapters/postgres/initiative_context.py"
+      ],
+      "existingWork": "E4.8 voor HA-context en bestaande algemene waarnemingskringloop; overige adapters alleen naar behoefte."
+    },
+    {
+      "priority": 6,
+      "outcome": "Mensbegrip en relatiecontinuïteit",
+      "evaState": "Hindsight-geheugen, hypothesen en stijlspiegel bestaan. De gelezen stijlspiegel vraagt expliciet maximaal100 woorden communicatievoorkeuren en sluit inhoudelijke interesses/projecten uit; andere kennis blijft gewone herinnering.",
+      "recommendation": "Onderzoek gerichte persoonsgebonden actuele synthese voor behoeften, afspraken en relatiecontext via bestaande Hindsight-mental-modelmogelijkheden. Hypothese blijft hypothese, urgente correctie wacht niet op droomfase. Geen Honcho naast Hindsight stapelen.",
+      "evidence": [
+        "src/eva/application/human_understanding.py",
+        "src/eva/adapters/projection/hindsight.py"
+      ],
+      "existingWork": "Bestaand mensbegrip en dagelijkse continuïteit; voorgestelde verdieping, geen bewezen ontbrekende hele geheugenmodule."
+    }
+  ],
+  "outOfTheBoxProposal": {
+    "status": "ontwerpvoorstel, niet geïmplementeerd of uniekheid bewezen",
+    "loop": "Waarneming -> verschil met verwachting of blijvend doel -> waarde voor betreffend gezinslid -> bestaande toegelaten uitvoering -> werkelijk resultaat -> verwachting/vaardigheid bijwerken -> passend later vervolg",
+    "selection": "Kies werk op verwachte concrete waarde, onzekerheid die zinvol te verminderen is, timing en benodigde middelen; niet op een verplichte hoeveelheid berichten.",
+    "acceptance": "Het gezin krijgt meerdere dagen aantoonbaar nuttige voortgang zonder herhaald aansturen; gedeelde en privécontext blijven onderscheiden. Levend betekent hier betrokken en doorlopend gedrag, geen bewustzijnsclaim."
+  },
+  "avoid": [
+    "Tweede agentframework of tweede geheugen alleen omdat het beschikbaar is.",
+    "Honderden connectors of persona-/mascotopties als vervanging van dagelijks nut.",
+    "Meer heartbeatcalls of verplichte berichtenquota als bewijs van eigen initiatief.",
+    "Blind skillcuratie op ouderdom of een grote nieuwe concurrentenmatrix."
+  ],
+  "provenance": {
+    "src/eva/application/human_understanding.py": "a2ea900bb07c27e983bd8b1bdce88966a19a8dfb5a9ad0eb140e4e1a8d5e180c",
+    "src/eva/application/personal_interests.py": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
+    "src/eva/application/resident_attention.py": "9bac918ca4a3eb1b121a0321c0dab1f97d90f5c6f2ba7876c8c8ecf0528af47b",
+    "src/eva/adapters/postgres/initiative_context.py": "6679edd99b235b10b4635387e77e0b74583d557d1b037b35efb3bcdf4a64f475",
+    "src/eva/application/procedure_references.py": "99762c1178a8ac8a9471cf34d09367e6559582c26e16e70d63342fbbbf9046fc",
+    "src/eva/operations/procedure_execution.py": "cf8a56271fa4a1e9c05d90d3492c3c675becda4f28f816cb7178be085dd1493e",
+    "src/eva/adapters/projection/hindsight.py": "da01df99af4baf5dafe4e4450412a7a64535aea6adb928e0e82c4525537b7089",
+    "development/evidence/reassessment/e51-native-unassisted-installed-20261019.json": "ea91d6513d24509c7a7fb3acdb1901bcc716df5ed6445f737a37e6bd3ad3088d",
+    "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json": "bc6e44760492818942efd8241def4228106b52cce6f05fa7cc2150f2fbfaef0d"
+  },
+  "costs": {
+    "newEvaRuntimeModelCalls": 0,
+    "newBenchmarkRuns": 0,
+    "developmentCredits": null
+  },
+  "e47Status": "Niet door dit onderzoek afgerond; actuele canonieke taakstatus van andere gelijktijdige uitvoering blijft leidend.",
+  "updatedAt": "2026-10-20T12:48:01.802808+00:00",
+  "sourceCodeReview": {
+    "method": "Pinned official source code; selected function bodies and imports examined. Complete protocol.py read and imported in isolation; not all downloaded source files fully read. No competitive runtime quality or cost ranking.",
+    "upstreams": [
+      {
+        "name": "hermes",
+        "repository": "NousResearch/hermes-agent",
+        "commit": "1f502aded81a07fa4127e6a90e06d04271a5b04a",
+        "committedAt": "2026-10-20T12:38:50Z",
+        "licenseObserved": "MIT",
+        "licenseSha256": "821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6",
+        "licenseRequirement": "Preserve upstream copyright and permission notice for copied/substantial code. Inspect per-file and dependency licenses before actual integration; Eva license unchanged.",
+        "sourceFiles": [
+          {
+            "path": "LICENSE",
+            "sha256": "821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6",
+            "bytes": 1070
+          },
+          {
+            "path": "pyproject.toml",
+            "sha256": "9bec0b5f97ba40a00fc52b482244d03d0e73b0b9f7380a91756cbeeefb7d660d",
+            "bytes": 43266
+          },
+          {
+            "path": "agent/curator.py",
+            "sha256": "fde73780c9b72336b0d6e67fb984f9b1506c624037376902972a7c4d3d1e9a6b",
+            "bytes": 67923
+          },
+          {
+            "path": "hermes_cli/goals.py",
+            "sha256": "f87f4115d790c0b17183cf3fb72f455b04b4dda6cbafe57efb081dd3d42a0023",
+            "bytes": 84566
+          },
+          {
+            "path": "tools/code_execution_tool.py",
+            "sha256": "b4915178f69f41b693d1ae4c379ce19df5af36b4b1e08d5854454bab4e5a5b98",
+            "bytes": 50769
+          },
+          {
+            "path": "tools/code_execution_env.py",
+            "sha256": "1c6e0c42a7f4c59f0c65a02aec397c92c87860226ab181de64751e00fecf2785",
+            "bytes": 16386
+          },
+          {
+            "path": "tools/skill_manager_guards.py",
+            "sha256": "ed92ed08bd4b399fdeacb13addb8aae6c3c51d75dbeb876622f3cc7a8b7a74f6",
+            "bytes": 11883
+          },
+          {
+            "path": "tools/code_execution_rpc.py",
+            "sha256": "90f18f0633688bb9397d38e33929303c8f78615174233dbf5361c9a19620be38",
+            "bytes": 12222
+          },
+          {
+            "path": "agent/lsp/client.py",
+            "sha256": "557af5ccf41dc4783cb33e52edd8b6f4c4e01324d83753876a0d90e04ff5be3d",
+            "bytes": 41506
+          },
+          {
+            "path": "agent/lsp/edit_check.py",
+            "sha256": "dd58f1c30e199256f58d328c0f1554cce42022062b5f5c02b0c650ccabd47a7f",
+            "bytes": 15114
+          },
+          {
+            "path": "agent/lsp/protocol.py",
+            "sha256": "5acb1c0b1cc442763e1cc2ddc2afeb734acb7fc00f9270f11fa86c54f7428d6b",
+            "bytes": 5761
+          },
+          {
+            "path": "agent/lsp/manager.py",
+            "sha256": "7c05a2f520bf09f3cef7355781786efdb10304eca0a7a3fdfa6e9361d678bff6",
+            "bytes": 39229
+          },
+          {
+            "path": "agent/lsp/__pycache__/protocol.cpython-312.pyc",
+            "sha256": "953e5b540040d13b2173351c294520a3325cf21689c136fa320355ab340d6167",
+            "bytes": 7776
+          }
+        ]
+      },
+      {
+        "name": "openclaw",
+        "repository": "openclaw/openclaw",
+        "commit": "2d03d5632a69d04181844f85b05d5509240dcc14",
+        "committedAt": "2026-10-20T12:40:01Z",
+        "licenseObserved": "MIT",
+        "licenseSha256": "9efd316ecf1c4c60f6fd5d26433142fff2b6794d7d328e9bc6179b29bf9c82a4",
+        "licenseRequirement": "Preserve upstream copyright and permission notice for copied/substantial code. Inspect per-file and dependency licenses before actual integration; Eva license unchanged.",
+        "sourceFiles": [
+          {
+            "path": "LICENSE",
+            "sha256": "9efd316ecf1c4c60f6fd5d26433142fff2b6794d7d328e9bc6179b29bf9c82a4",
+            "bytes": 1076
+          },
+          {
+            "path": "src/skills/workshop/skill-usage.kernel.ts",
+            "sha256": "ac927ec730c8bbb651547c9cdac572e8903f70e39e3c15cae089b8694279e153",
+            "bytes": 2402
+          },
+          {
+            "path": "src/skills/workshop/experience-review-scheduler.ts",
+            "sha256": "28b1f005b6b2a994637e87c2aed428740f05ed7d2d4d9df7e7bacfc1f27f099c",
+            "bytes": 11676
+          },
+          {
+            "path": "src/skills/workshop/skill-lint.ts",
+            "sha256": "e18cf2b189c77e83290ba302da307cd9edc5090aa11df6ffed9696c638d46bba",
+            "bytes": 3389
+          },
+          {
+            "path": "src/skills/workshop/experience-review-prompt.ts",
+            "sha256": "d47fb62e9138b11f68a6373d2b8aebcccd9b00a35f809e395f3771261897c701",
+            "bytes": 3182
+          },
+          {
+            "path": "extensions/code-mode-quickjs/package.json",
+            "sha256": "9b45b53c1a2e0755c69c0e3ec516b19c4a61816608423f7b0432868cd06617b3",
+            "bytes": 753
+          },
+          {
+            "path": "extensions/memory-core/src/standing-intents-kernel.ts",
+            "sha256": "ba5ecc45695c1a12fde7cba722e24d7a178d2e088077404165a141da8abb45a0",
+            "bytes": 10447
+          }
+        ]
+      },
+      {
+        "name": "agentzero",
+        "repository": "agent0ai/agent-zero",
+        "commit": "ff2a5b9c9c4e490ba38dd7c313e779510bb2071a",
+        "committedAt": "2026-10-13T15:23:11Z",
+        "licenseObserved": "MIT",
+        "licenseSha256": "23844ed5fb9976b15e6c0be1b617918cb1c32e13e8d70b74100dae08d40fbf23",
+        "licenseRequirement": "Preserve upstream copyright and permission notice for copied/substantial code. Inspect per-file and dependency licenses before actual integration; Eva license unchanged.",
+        "sourceFiles": [
+          {
+            "path": "LICENSE",
+            "sha256": "23844ed5fb9976b15e6c0be1b617918cb1c32e13e8d70b74100dae08d40fbf23",
+            "bytes": 1150
+          },
+          {
+            "path": "helpers/task_scheduler.py",
+            "sha256": "b3d008f0c613c2e0ff3c92363d52e35486ca35d469173b3699bf2293027c8600",
+            "bytes": 51083
+          },
+          {
+            "path": "helpers/plugins.py",
+            "sha256": "d9b4ce92d50a42179af73ccc4328c3f2fb8e8515910c6bac159e2e20c4476a0d",
+            "bytes": 30387
+          },
+          {
+            "path": "docs/developer/plugins.md",
+            "sha256": "e33970a8ee4f9be98e95a53539fa92eaebee795a65ed585fc46fd17c7a974ba0",
+            "bytes": 1777
+          }
+        ]
+      },
+      {
+        "name": "opencode",
+        "repository": "anomalyco/opencode",
+        "commit": "81b2d7a1b936083a8e16ed7bc740523baebb250e",
+        "committedAt": "2026-10-20T12:24:35Z",
+        "licenseObserved": "MIT",
+        "licenseSha256": "625f0f619133f89bbbb2abe37369613dfa1885eba1e50d02170deb62bb42cb6b",
+        "licenseRequirement": "Preserve upstream copyright and permission notice for copied/substantial code. Inspect per-file and dependency licenses before actual integration; Eva license unchanged.",
+        "sourceFiles": [
+          {
+            "path": "LICENSE",
+            "sha256": "625f0f619133f89bbbb2abe37369613dfa1885eba1e50d02170deb62bb42cb6b",
+            "bytes": 1065
+          },
+          {
+            "path": "packages/core/package.json",
+            "sha256": "bb56791c371af1f5cab7178cfd9aa7ed094becb9b17827e204f80484909bfef3",
+            "bytes": 4685
+          },
+          {
+            "path": "packages/core/src/skill/instructions.ts",
+            "sha256": "e85ce93e21093df9cc024040d859da6531e1d24a04b1eae3b1fe082f5e6a5561",
+            "bytes": 3818
+          },
+          {
+            "path": "packages/core/src/skill/discovery.ts",
+            "sha256": "0d1afd9977cf4937a24404f11a0859802d07d51a976ba21dba04c7e472c08da3",
+            "bytes": 8088
+          }
+        ]
+      }
+    ],
+    "reuseDecisions": [
+      {
+        "component": "LSP protocol and client",
+        "decision": "selective_code_adoption_candidate",
+        "upstream": "hermes",
+        "paths": [
+          "agent/lsp/protocol.py",
+          "agent/lsp/client.py",
+          "agent/lsp/edit_check.py"
+        ],
+        "directReuse": "Framing is stdlib-only; client needs import relocation and a small Windows-process helper. Keep original copyright/license and upstream hashes.",
+        "notAdopted": "Whole manager and all automatic installers: tied to Hermes config and workspace policy.",
+        "localPortabilityChecks": 8,
+        "installed": false
+      },
+      {
+        "component": "Programmatic tool bridge",
+        "decision": "adapt_reviewed_rpc_units",
+        "upstream": "hermes",
+        "paths": [
+          "tools/code_execution_rpc.py",
+          "tools/code_execution_tool.py"
+        ],
+        "directReuse": "Consider authenticated dispatch/framing and generated stubs; route every call through existing Eva task/authority/STOP/receipt boundary.",
+        "notAdopted": "Default host project kernel, hardcoded Hermes tool whitelist, Hermes process lifecycle guards, second agent runtime. Not a drop-in isolated Eva executor."
+      },
+      {
+        "component": "Skills review and maintenance",
+        "decision": "reuse_standard_packages_and_adapt_selected_policy",
+        "upstream": "hermes/openclaw",
+        "paths": [
+          "agent/curator.py",
+          "tools/skill_manager_guards.py",
+          "src/skills/workshop/experience-review-prompt.ts",
+          "src/skills/workshop/skill-usage.kernel.ts"
+        ],
+        "directReuse": "Import useful SKILL.md packages as untrusted candidates; adapt bounded experience-review guidance, evidence-based merging and per-version later-use bookkeeping to existing procedures.",
+        "notAdopted": "Full Hermes curator: creates AIAgent and permits max_iterations9999; age-only archival conflicts with Eva owner rules. OpenClaw SQL storage is not portable into Eva PostgreSQL contracts."
+      },
+      {
+        "component": "Goal continuation",
+        "decision": "reuse_existing_eva_state_with_upstream_scenarios",
+        "upstream": "hermes/openclaw",
+        "paths": [
+          "hermes_cli/goals.py",
+          "extensions/memory-core/src/standing-intents-kernel.ts"
+        ],
+        "directReuse": "Use explicit continuation/wait/blocked/done scenarios and outcome/verification contract shape where compatible.",
+        "notAdopted": "Hermes SessionDB goalstore and an extra judge every turn; OpenClaw keyword matching as the intelligence for household events. Their code does not prove superior autonomous family judgment."
+      },
+      {
+        "component": "Plugin management and scheduler",
+        "decision": "do_not_embed_framework",
+        "upstream": "agentzero",
+        "paths": [
+          "helpers/plugins.py",
+          "helpers/task_scheduler.py"
+        ],
+        "directReuse": "Useful lifecycle/enable-disable/update UX examples; selected independent utilities only if a concrete missing requirement arises.",
+        "notAdopted": "Importing Agent Zero Agent/AgentContext/initialize_agent and own scheduler into existing Eva. Adds second lifecycle/storage without demonstrated benefit."
+      }
+    ]
+  },
+  "implementationAdvantage": [
+    {
+      "upstream": "Hermes",
+      "betterSpecifiedOrImplemented": "Multi-tool code execution with authenticated dispatch, enabled-tool intersection and selected-output return.",
+      "evaGap": "Existing isolated procedures have network=none and no general tool-RPC bridge. Separate programming capability is not proof of equivalent tool orchestration.",
+      "userEffect": "Potentially fewer re-planning rounds while completing work across services.",
+      "qualityOrSpeedGainMeasured": false
+    },
+    {
+      "upstream": "Hermes / OpenCode",
+      "betterSpecifiedOrImplemented": "Automatic language-server feedback at edit time and document-version-aware diagnostics.",
+      "evaGap": "No corresponding automatic LSP integration identified in inspected programming/execution modules.",
+      "userEffect": "Earlier feedback on generated extensions, fewer avoidable corrective attempts.",
+      "qualityOrSpeedGainMeasured": false
+    },
+    {
+      "upstream": "Hermes / OpenClaw",
+      "betterSpecifiedOrImplemented": "Standard skill packages, agent-managed edits, maintenance and usage metadata are concretely implemented.",
+      "evaGap": "Procedure references and evaluated code releases exist; package interop and automatic library maintenance not confirmed.",
+      "userEffect": "Reuse existing expertise instead of authoring each integration or solving the same procedure again.",
+      "qualityOrSpeedGainMeasured": false
+    },
+    {
+      "upstream": "Hermes / OpenClaw",
+      "betterSpecifiedOrImplemented": "Goal continuation and event-conditioned intention lifecycles are explicit, user-visible features.",
+      "evaGap": "Native next attention, expectations and own interests exist, but repeated cross-day useful followthrough is explicitly not proven by E5.1.",
+      "userEffect": "A responsibility remains active after a conversation ends; actual comparative family-behavior superiority is unknown.",
+      "qualityOrSpeedGainMeasured": false
+    }
+  ],
+  "adoptionPolicy": {
+    "order": [
+      "already installed suitable dependency",
+      "existing standard package or independent upstream unit",
+      "small adapter to Eva contracts",
+      "new code only for documented remaining gap"
+    ],
+    "coreReplacement": "Not ruled out by sunk cost. Current inspected full framework units bring their own state/agent lifecycle; selective adoption is the supported recommendation. A future engine replacement needs concrete integration and quality evidence, not popularity.",
+    "pinning": "Commit + source hash + preserved license/notice + changed lines + upstream update owner; no floating main dependency.",
+    "acceptance": "Only affected user outcome is checked against current Eva; quality and human assistance first, time/tool/token counts separate, unknown costs stay unknown. No new competitors matrix.",
+    "rollback": "No routine reinstall loop. Stage a coherent change on actual current image, preserve peer work and data; inspect uncertain actions rather than replay."
+  },
+  "plan": {
+    "status": "planned_not_implemented",
+    "taskIds": [
+      "E1.4",
+      "E4.12",
+      "E4.13",
+      "E4.14"
+    ],
+    "executionOrder": [
+      "E4.7 current handoff state retained; no parallel voice ownership change",
+      "E1.4",
+      "E4.12",
+      "E4.13",
+      "E4.14"
+    ],
+    "newMandatoryFunctionalOutcome": "E1.4 closes already desired cross-day continuity, not a fifth product pillar.",
+    "optionalCandidates": [
+      "E4.12",
+      "E4.13",
+      "E4.14"
+    ],
+    "firstGate": "Reuse existing implementation and incoming actual runtime evidence before programming; no preassigned household scenario.",
+    "scopeFile": "development/design/product/upstream-reuse-task-scope-20261020.json",
+    "independentReview": "Required on resulting code/user outcome before deployment; this research is not implementation review.",
+    "runtimeInstalled": false
+  }
+}

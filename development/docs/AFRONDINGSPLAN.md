@@ -340,6 +340,48 @@ E4.10 kan onafhankelijk worden voorbereid binnen de bestaande teamomvang.
 Lopende E5.1-opvolging van de andere uitvoerder blijft actief. De gezamenlijke
 eindoplevering omvat ook E5.2; gezinsacceptatie blijft F2.1/F2.2.
 
+### Gericht upstream hergebruiken voor dagelijks vervolg en ontwikkeling
+
+Op 20 oktober vroeg de eigenaar expliciet te onderzoeken wat concurrenten beter
+uitwerken en hun code te gebruiken waar dat voordeel biedt. Het
+[brononderzoek](../evidence/reassessment/eva-living-capability-options-20261020.json)
+bindt vier actuele officiële repositories aan commit, bestandshash en onderzochte
+licentie. Het toont concrete implementatieverschillen; geen gemeten ranglijst van
+intelligentie, gezinsnut of kosten. De onderzochte bronbestanden hebben MIT-licenties;
+voor werkelijke overname blijven per-bestand-/dependencycontrole en behoud van
+copyright/licentietekst nodig. Eva's eigen licentie verandert niet.
+
+| Volgorde / kaart | Gebruikersuitkomst en hergebruik | Einde / grens |
+| --- | --- | --- |
+| E1.4 | Bestaande doelen, verwachtingen en aandacht laten samenwerken voor werkelijk eigen vervolg over dagen. Gebruik Hermes/OpenClaw-vervolgscenario's, behoud Eva's huidige staat en uitvoering. | Eenzelfde echt doel krijgt op een latere echte kalenderdag passend vervolg zonder nieuwe eigenaaropdracht; gecontroleerde uitkomst en later gebruik. Geen geforceerd onderwerp. Gezinsnut blijft F2. |
+| E4.12 · kandidaat | Een passend bestaand AgentSkills-pakket via bestaande procedures gebruiken; gerichte onderhoudslogica uit Hermes/OpenClaw aansluiten. | Andere passende opdracht hergebruikt het pakket; echte les leidt tot beoordeelde wijziging en later gebruik. Geen tweede bibliotheek of curator-agent. |
+| E4.13 · kandidaat | Bestaande language server plus afgebakende Hermes LSP-protocol/clientcode bij Eva's bestaande programmeerroute aansluiten. | Bronversiegebonden semantische feedback verbetert een echte kandidaat vóór de onafhankelijke eindcontrole. Begin alleen met Python. |
+| E4.14 · kandidaat | Passende Hermes RPC-/stubcode verbinden aan Eva's bestaande duurzame tooldispatch. | Eén programma maakt werk over twee diensten af, met actuele toegang/STOP per subcall en geverifieerde terugmelding. Geen hostkernel of credentials in script. |
+
+Dit is één noodzakelijke samenhangsuitkomst uit het bestaande huisgenootdoel en drie
+optionele technische kandidaten. De kandidaten vergroten de verplichte release niet
+vanzelf. Selecteer ze op een werkelijk tekort en aantoonbaar resultaatvoordeel;
+negatief of gelijk bewijs is reden voor behoud van de referentie. Een kandidaat
+waarvan wordt afgezien blijft als besluit zichtbaar, niet als geïnstalleerde functie.
+De lopende afgesproken taak en spraakverantwoordelijkheid worden niet overgenomen.
+
+Volgorde voor ieder onderdeel: eerst reeds geïnstalleerde geschikte dependency,
+dan passend bestaand standaardpakket of afgebakende upstreamcode, daarna een kleine
+adapter, en pas dan eigen code voor het aantoonbaar resterende gat. Behoud versie,
+herkomst, licentie, veranderde regels en een eigenaar voor upstreamupdates. Neem
+vervangen implementatie pas weg als haar consumers en gegevensroute zijn overgenomen.
+Hermes' volledige curator/goalstore, OpenClaw's keyword-intentstore en Agent Zero's
+scheduler importeren zou nu een tweede staat-/agentlevenscyclus toevoegen. Die
+worden daarom niet integraal ingebouwd; toekomstige vervanging is niet op grond
+van eerdere investering uitgesloten, maar vraagt werkelijk passend bewijs.
+
+Verifieer uitsluitend de geraakte uitkomst en noodzakelijke grenzen, hergebruik
+bestaande eindgevallen en beoordeel onafhankelijk vóór installatie. Kwaliteit en
+benodigde menselijke hulp gaan voor; snelheid, model-/toolgebruik en onbekende
+kosten blijven afzonderlijk. Geen nieuwe concurrentenmatrix, berichtquota,
+modelaanroep per sensorprikkel of algemene optimalisatiebouw. De concrete kaarten
+staan bevroren in [de scope-uitbreiding](../design/product/upstream-reuse-task-scope-20261020.json).
+
 ## E5 — Eén gezamenlijke oplevering
 
 1. Stel één kandidaat samen uit de werkelijk actuele bron, dependencies, configuratie,
