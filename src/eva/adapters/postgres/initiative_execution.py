@@ -724,6 +724,37 @@ class NativeInitiativeGuard:
             raise InitiativeMandateDenied("initiative stopped, superseded or no longer claimed before dispatch")
         return row
 
+    def explicit_resume_binding(self, turn):
+        """Host provenance for a fresh choice after explicit owner recovery only.
+
+        The admission-only resume guard cannot execute. The real successor
+        worker uses its normal current guard and retains the original namespace.
+        This metadata proves neither an earlier result nor absent provider use.
+        """
+        from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+        from eva.application.background_execution import background_execution_namespace, BackgroundExecutionScope
+        spec = self.work_spec
+        if (type(self) is not NativeInitiativeGuard or self.resume_work is not None
+                or type(spec) is not DelegatedInitiativeDigitalWorkSpec or spec.generation <= 1):
+            return None
+        self.check(turn)
+        namespace = background_execution_namespace(turn)
+        if namespace != BackgroundExecutionScope(turn, spec.execution_id).namespace:
+            return None
+        event = self.authority._work_admission(
+            self.authority.timeline.events(self.claim.thread_id), spec)
+        data = {} if event is None else event.payload.get("data", {})
+        if (data.get("recovery_kind") != "explicit_private_owner_native_resume"
+                or data.get("previous_work_id") != spec.parent_task_id):
+            return None
+        self.check(turn)
+        return {"work_id": spec.work_id, "spec_sha256": spec.sha256,
+            "parent_task_id": spec.parent_task_id,
+            "parent_spec_sha256": data["previous_spec_sha256"],
+            "source_ingress_sha256": spec.source_ingress_sha256,
+            "execution_namespace": namespace,
+            "recovery_ingress_sha256": data["recovery_ingress_sha256"]}
+
     def action_allowed(self, name):
         if self.resume_work is not None:
             return False  # Recovery admission is never tool execution authority.
@@ -787,7 +818,13 @@ class NativeInitiativeGuard:
 
     def instructions(self):
         policy, _ = self.authority.policy()
-        return ("Dit is Eva's eigen initiatief, geen verzoek of toestemming van de eigenaar. "
+        resume = self.explicit_resume_binding(self.turn)
+        origin = ("Dit onderwerp is door Eva gekozen. De eigenaar heeft dezezelfde duurzame "
+                  "taak expliciet hervat. Gebruik alleen de nu aangeboden toegelaten stappen; "
+                  "dit verruimt geen mandaat, budget, gegevensdeling of toestemming voor derden. "
+                  if resume is not None else
+                  "Dit is Eva's eigen initiatief, geen verzoek of toestemming van de eigenaar. ")
+        return (origin +
                 "Kies en voltooi de nuttige uitkomst met de beschikbare toegelaten tools. "
                 "Geen verplichte documentvorm. Claim alleen wat resultaat en toolbewijs dragen. "
                 "Geen nieuwe kosten, verplichtingen, identificatie of communicatie naar derden. "

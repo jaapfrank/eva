@@ -228,6 +228,15 @@ selectie van gecontroleerde bronlezingen bewijst geen volledig overzicht van eff
 Dezelfde afweging mag een inhoudelijk andere, kleinere toegelaten stap of pauze kiezen.
 Dit start geen automatische herhaling, heropent geen oude poging en geeft geen nieuwe
 bevoegdheid. De oorspronkelijke mislukking en het onbekende verbruik blijven behouden.
+Een expliciete eigenaarshervatting van dezelfde native taak kan een terminale openbare
+onderzoeksleesfout als context behouden. De host controleert de exacte hervatopdracht,
+werk-/bronbinding en uitsluitend de oorspronkelijke onderzoeksprovider; automatische
+profielverversing en onzekere schrijfacties krijgen deze uitzondering niet. De oude
+operatie wordt niet opnieuw uitgevoerd. Een nieuwe geïndexeerde keuze gebruikt het
+actuele mandaat en dezelfde uitvoernamespace, met afzonderlijke nieuwe pogingmeting;
+het onbekende oude providerverbruik blijft afzonderlijk onbekend. Zonder werkelijk
+nieuw gecontroleerd resultaat is de taak niet afgerond.
+
 
 Een nieuwe native uitkomst met geverifieerde bronlezing mag precies één
 vervolgafweging in dezelfde bestaande reviewroute veroorzaken. De werker leest

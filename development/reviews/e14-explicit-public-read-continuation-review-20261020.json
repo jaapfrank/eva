@@ -1,0 +1,24 @@
+{
+  "decision": "GO_SOURCE_AND_OPTIONAL_INSTALLATION",
+  "blockingFindings": [],
+  "sourceHashes": {
+    "src/eva/adapters/model/research_tools.py": "85dfec22a5ffbe3617ad4f6c33ca528f1f5720426446d9c409e2450ed987a43d",
+    "src/eva/adapters/postgres/initiative_execution.py": "cea9825ddfa2c47e9d340ab6c8b8398828a0b98c268de838ca89a9764a832735",
+    "src/eva/adapters/postgres/external_conversation_tools.py": "544959e3ed9855ecc218f62ff4bc77731e3e41245f2d95a7ce3529dc8a26855c",
+    "src/eva/adapters/connectors/delegated_completion.py": "29dbb1e57fe45f09e4aa5145f4a6178302cd6e1bdf34c5e28caf54201e268478"
+  },
+  "overlaySourceHashes": {
+    "src/eva/adapters/model/research_tools.py": "85dfec22a5ffbe3617ad4f6c33ca528f1f5720426446d9c409e2450ed987a43d",
+    "src/eva/adapters/postgres/initiative_execution.py": "cea9825ddfa2c47e9d340ab6c8b8398828a0b98c268de838ca89a9764a832735",
+    "src/eva/adapters/postgres/external_conversation_tools.py": "d020ca4ea0ef690ad255957a972222aed481cd9e2550ef7ab79d4f2d0d9f2bc6",
+    "src/eva/adapters/connectors/delegated_completion.py": "29dbb1e57fe45f09e4aa5145f4a6178302cd6e1bdf34c5e28caf54201e268478"
+  },
+  "executionPinCount": 68,
+  "capabilityCount": 26,
+  "contract": "EvaE14ExplicitReadContinuationReview/v1",
+  "reviewer": "e47_mcp_catalog",
+  "reviewedAt": "2026-10-20T18:38:49.415488+00:00",
+  "scope": "Exact explicit-owner native successor and bounded terminal public-read failure only; actual completion/later use separate.",
+  "privateReviewSha256": "0fc12f4a79d2b9022917e233039ee23860872da7fcb0ca2186696c4b02d31456",
+  "reviewerModelCalls": 0
+}

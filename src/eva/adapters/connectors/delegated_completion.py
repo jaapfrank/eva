@@ -17,6 +17,12 @@ from eva.adapters.postgres.programming_actions import (
 def recoverable_read_error(receipt):
     proof = receipt.output.get("proof")
     evidence = proof.get("evidence") if isinstance(proof, dict) else None
+    if isinstance(evidence, dict) and evidence.get("source") == "native_research_explicit_owner_resume":
+        return (receipt.call.name == "research_current_options"
+                and receipt.output.get("status") == "failed"
+                and receipt.output.get("recoverable_read_error") is True
+                and evidence.get("operation_kind") == "read"
+                and isinstance(evidence.get("resume_binding"), dict))
     return ((receipt.output.get("status") == "failed"
              or (receipt.output.get("status") == "timed_out"
                  and isinstance(evidence, dict)

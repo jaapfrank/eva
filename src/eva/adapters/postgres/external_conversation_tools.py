@@ -539,6 +539,9 @@ class PostgresExternalConversationTools:
         recovery = getattr(getattr(self, "_provider", None), "recoverable_pre_dispatch_refusal", None)
         if proof is None and status == "failed" and callable(recovery):
             proof = recovery(turn, events)
+        read_failure = getattr(getattr(self, "_provider", None), "recoverable_terminal_read_failure", None)
+        if proof is None and status == "failed" and callable(read_failure):
+            proof = read_failure(turn, events)
         from eva.providers.receipt_policies import receipt_policy, retains_observation
         policy = receipt_policy(action_name)
         if proof is None and policy is not None:
@@ -592,6 +595,17 @@ class PostgresExternalConversationTools:
                     "door de host geweigerd; er is geen onderzoeksresultaat. De hostconfiguratie "
                     "is opnieuw gecontroleerd. Je mag binnen dezelfde opdracht een nieuwe aanvraag "
                     "voorbereiden onder het actuele mandaat. De oude fout blijft bewaard.",
+            })
+        if (status == "failed" and isinstance(evidence, dict)
+                and evidence.get("source") == "native_research_explicit_owner_resume"):
+            observation_output.update({
+                "recoverable_read_error": True,
+                "completion_guidance": "Deze oude openbare bronlezing heeft geen bevestigd resultaat; "
+                    "de provider kan al zijn aangeroepen en het eerdere verbruik blijft onbekend. "
+                    "De eigenaar heeft deze duurzame taak expliciet hervat. De oude operatie-ID "
+                    "blijft afgesloten. Kies zelf of een nieuwe toegelaten bronaanvraag op een "
+                    "volgende stap het onderzoek kan afmaken, onder de huidige controles. "
+                    "De oude fout telt niet als voltooid werk.",
             })
         receipt = ConversationActionReceipt(
             ConversationActionCall(call_id, str(action_name), arguments),

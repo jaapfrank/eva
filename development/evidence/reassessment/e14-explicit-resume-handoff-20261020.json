@@ -1,0 +1,62 @@
+{
+  "contract": "EvaE14FactualResumeHandoff/v1",
+  "checkedAt": "2026-10-20T18:53:37.978450+00:00",
+  "state": "reviewed_ready_to_install_waiting_for_active_conversation",
+  "taskId": "E1.4",
+  "alreadyWorked": "Historical self-chosen cross-day continuation and ordinary later semantic use remain proved for the earlier episode; not general daily usefulness.",
+  "currentGap": "The newer independently chosen public implementation-code follow-up failed; its assisted successor also failed with no new tool dispatch.",
+  "added": [
+    "Actual explicit-owner-resume provenance replaces contradictory no-owner-request instruction only for current validated successor guards.",
+    "Failed-read instructions distinguish host-verified explicit resumption/new indexed public read from automatic retry. Old operation remains closed; unknown provider usage remains unknown."
+  ],
+  "sourceReview": {
+    "decision": "GO_SOURCE_AND_OPTIONAL_INSTALLATION",
+    "sha256": "7a2527622387666d7ddcfc7afc86afb2aaf527ffffb6c91d078496b004a5667d"
+  },
+  "checks": {
+    "providerlessModelPhase": {
+      "passed": 2,
+      "seconds": 1.24,
+      "providerCalls": 0
+    },
+    "realPostgresGuardInstructions": {
+      "passed": 1,
+      "seconds": 7.28,
+      "providerCalls": 0
+    }
+  },
+  "previousAttempt": {
+    "generation": 2,
+    "state": "failed",
+    "errorCode": "incomplete_work",
+    "elapsedSeconds": 44,
+    "newToolDispatches": 0,
+    "modelResponses": 2,
+    "recordedTokens": 28184,
+    "measurement": "partial",
+    "creditCost": null,
+    "preserved": true
+  },
+  "prospectiveAttempt": {
+    "generation": 3,
+    "started": false,
+    "maximumNewResumptions": 1,
+    "sameSelfChosenTaskGrantNamespaceAndCriteria": true,
+    "changedHypothesis": "Factual instruction and next-step handoff corrected; causality for previous refusal remains unproven.",
+    "onFailure": "Retain failure; no unchanged automatic retry."
+  },
+  "completion": {
+    "sameCurrentFollowupCompleted": false,
+    "ordinaryLaterSemanticUse": false,
+    "ownerAcceptance": false,
+    "fullProjectCompleted": false
+  },
+  "voiceChanged": false,
+  "creditCost": null,
+  "installationCoordination": {
+    "reason": "Actual recent voice/model traffic on shared core, not merely a lease heartbeat. Voice implementation remains untouched.",
+    "independentFindingSha256": "4743a062394faba18754ad502f5ced70b631df9fc860d652f5ceba50a528dcb4",
+    "noDockerServicesChanged": true,
+    "ownerAskedToCoordinateBriefQuietWindow": true
+  }
+}

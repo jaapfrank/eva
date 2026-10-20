@@ -847,8 +847,8 @@
     "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
     "status": "in_progress",
     "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-    "nextAction": "Herstel gericht de actuele zelfgekozen vervolgtaak die op budget_exceeded bleef hangen; behoud eerder voltooiingsbewijs en voorkom dubbele effecten.",
-    "checkedAt": "2026-10-20T18:26:07.721876+00:00",
+    "nextAction": "Gecorrigeerde hervattingsinstructies onafhankelijk controleren en gericht installeren; dezelfde eigen vervolgtaak afmaken en later resultaatgebruik controleren.",
+    "checkedAt": "2026-10-20T18:52:02.828259+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,31 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E1.4 · Hervattingsinstructies gecorrigeerd en beoordeeld",
+            "state": "built",
+            "summary": "Eigenaarshervatting wordt feitelijk herkend; alleen de huidige toegelaten vervolgstap blijft beschikbaar. Gerichte controles en onafhankelijke bronreview geslaagd.",
+            "remaining": "Gerichte installatie wacht op controle van actieve speakerverbinding; dezelfde eigen vervolgtaak en later gebruik zijn nog niet afgerond.",
+            "source": "development/evidence/reassessment/e14-explicit-resume-handoff-20261020.json",
+            "review": "development/reviews/e14-explicit-resume-handoff-review-20261020.json",
+            "checkedAt": "2026-10-20T18:52:02.828259+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
+            "title": "E1.4 · Expliciet hervat brononderzoek kan gecontroleerd verder",
+            "state": "installed",
+            "summary": "Oude openbare leesfout blijft als context behouden; een nieuwe geïndexeerde stap gebruikt de bestaande actuele controles. Geen automatische herhaling.",
+            "remaining": "De werkelijke uitvoering en latere toepassing lopen nog.",
+            "source": "development/evidence/reassessment/e14-explicit-public-read-continuation-20261020.json",
+            "review": "development/reviews/e14-explicit-public-read-continuation-review-20261020.json",
+            "date": "2026-10-20",
+            "checkedAt": "2026-10-20T18:41:17.042260+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": []
+          },
           {
             "title": "E1.4 · Foutcontext voor zelfstandig vervolg geïnstalleerd",
             "state": "installed",
@@ -2885,11 +2910,11 @@
           "taskId": "E1.4",
           "title": "E1.4 · Actueel zelfstandig vervolg herstellen",
           "status": "in_progress",
-          "state": "installed_observing",
-          "summary": "Foutcontext geïnstalleerd in gewone eigen afweging; werkelijk nieuw vervolg, afronding en later gebruik worden gevolgd.",
-          "detail": "Geen gedwongen proefopdracht of automatische herhaling. Historische E1.4-keten blijft geldig; actuele vervolgketen nog niet afgerond.",
+          "state": "repairing",
+          "summary": "Eva’s eigen vervolg is nog niet af. De hervatting kreeg tegenstrijdige instructies; die overdracht is gericht gecorrigeerd.",
+          "detail": "Controle zonder modelaanvraag bevestigt dat de vervolgstap beschikbaar blijft. Onafhankelijke review en installatie lopen; eerdere mislukking en verbruik blijven zichtbaar.",
           "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-          "checkedAt": "2026-10-20T18:26:07.721876+00:00"
+          "checkedAt": "2026-10-20T18:52:02.828259+00:00"
         },
         "next": {
           "taskId": "E4.14",
@@ -2901,8 +2926,8 @@
           "detail": "Geen handeling nodig. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T18:26:07.721876+00:00",
-        "reviewedAt": "2026-10-20T18:26:07.721876+00:00",
+        "checkedAt": "2026-10-20T18:52:02.828259+00:00",
+        "reviewedAt": "2026-10-20T18:42:33.564796+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -8140,7 +8165,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T18:26:07.721876+00:00",
+        "checkedAt": "2026-10-20T18:52:02.828259+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -13263,7 +13288,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T18:26:07.721876+00:00",
+      "checkedAt": "2026-10-20T18:52:02.828259+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -14774,13 +14799,13 @@
       "ownerAcceptance": false,
       "fullProjectGoalCompleted": false,
       "currentRuntimeRecheck": {
-        "checkedAt": "2026-10-20T18:26:07.721876+00:00",
+        "checkedAt": "2026-10-20T18:52:02.828259+00:00",
         "historicalCompletionRetained": true,
         "latestFollowupState": "failed_budget_exceeded",
         "ordinaryLaterDecisions": "paused_because_followup_remains_blocked",
         "newModelCallsByRecheck": 0,
         "voiceChanged": false,
-        "state": "installed_awaiting_ordinary_continuation",
+        "state": "factual_resume_handoff_prepared_no_new_model_attempt",
         "diagnosis": "Citation validation error left model usage incomplete; budget_exceeded was the subsequent accounting guard, not proven numeric exhaustion.",
         "runtimeChanged": true,
         "evidence": "development/evidence/reassessment/e14-failure-context-handoff-installed-20261020.json",
@@ -14794,7 +14819,43 @@
           "policyBytesUnchanged": true,
           "voiceChanged": false,
           "receiptSha256": "608964770181b4513dc719bd07c889c52c7206e5dea6ee4e9961ec2b32cdf0d2"
-        }
+        },
+        "ordinaryDecision": {
+          "decidedAt": "2026-10-20T18:30:31+00:00",
+          "decisionSha256": "250e49ad550a698a87126d86b8cb3eccefe6ee3d138eb62935780f6ec88dd3d6",
+          "state": "considered_pause",
+          "newInitiative": false,
+          "manualModelTrigger": false,
+          "usage": {
+            "measurement": "measured",
+            "modelAttempts": 1,
+            "inputTokens": 15276,
+            "outputTokens": 157,
+            "totalTokens": 15433,
+            "toolCalls": 1,
+            "creditCost": null
+          },
+          "limitation": "Ordinary current evaluation used the repaired context but chose no new work. This does not complete the current continuation request."
+        },
+        "explicitRecoveryEvidence": "development/evidence/reassessment/e14-explicit-public-read-continuation-20261020.json",
+        "explicitRecoveryReview": "development/reviews/e14-explicit-public-read-continuation-review-20261020.json",
+        "recoveryWorkSpec": "93d5f9845b2b70bc8dd8c60d9fcce52d612642dc5a7c2202297cc83da94c46c0",
+        "actualRecovery": {
+          "state": "failed",
+          "errorCode": "incomplete_work",
+          "completedAt": "2026-10-20T18:40:58+00:00",
+          "elapsedSeconds": 44,
+          "newToolDispatches": 0,
+          "modelResponses": 2,
+          "inputTokens": 27911,
+          "outputTokens": 273,
+          "recordedTotalTokens": 28184,
+          "measurement": "partial",
+          "creditCost": null
+        },
+        "toolAvailabilityClaimCorrected": true,
+        "provenGap": "Native instructions denied owner request even on actual explicit owner resume; failed-research guidance did not distinguish authorized new indexed read. Causality for prior model refusal remains unproved.",
+        "providerlessModelHandoffChecks": 2
       }
     },
     "e15CurrentPersonContext20261020": {

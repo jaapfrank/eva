@@ -4479,13 +4479,31 @@ class PydanticConversationModel:
                 )
             elif (completed_action.call.name == _CURRENT_RESEARCH_ACTION
                   and completed_action.output.get("status") != "verified"):
-                action_guidance_parts.append(
-                    "Deze onderzoeksstap heeft geen geverifieerd onderzoeksdocument "
-                    "opgeleverd. Meld alleen de zichtbare beperking en zeg niet dat "
-                    "er bronnen zijn onderzocht of een document is opgeslagen. "
-                    "Herhaal een mislukte of onzekere onderzoeksaanvraag niet "
-                    "automatisch. Presenteer de oorspronkelijke opdracht niet als klaar."
-                )
+                proof = completed_action.output.get("proof")
+                evidence = proof.get("evidence") if isinstance(proof, dict) else None
+                explicit_read_resume = (
+                    completed_action.output.get("recoverable_read_error") is True
+                    and isinstance(evidence, dict)
+                    and evidence.get("source") == "native_research_explicit_owner_resume"
+                    and evidence.get("operation_kind") == "read"
+                    and isinstance(evidence.get("resume_binding"), dict))
+                if explicit_read_resume:
+                    action_guidance_parts.append(
+                        "De host bevestigt expliciete eigenaarshervatting van dezelfde taak. "
+                        "De oude openbare leesoperatie is afgesloten zonder bevestigd document; "
+                        "oud providergebruik blijft onbekend. Een aangeboden nieuwe bronaanvraag "
+                        "op een volgende stap is nu toegestaan als die het bestaande onderzoek "
+                        "kan afmaken. Dit is geen automatische herhaling van de oude operatie. "
+                        "Kies inhoudelijk wat nodig is binnen het actuele mandaat en budget; "
+                        "claim geen voltooiing zonder nieuw gecontroleerd resultaat.")
+                else:
+                    action_guidance_parts.append(
+                        "Deze onderzoeksstap heeft geen geverifieerd onderzoeksdocument "
+                        "opgeleverd. Meld alleen de zichtbare beperking en zeg niet dat "
+                        "er bronnen zijn onderzocht of een document is opgeslagen. "
+                        "Herhaal een mislukte of onzekere onderzoeksaanvraag niet "
+                        "automatisch. Presenteer de oorspronkelijke opdracht niet als klaar."
+                    )
             elif completed_action.call.name == _CURRENT_RESEARCH_ACTION:
                 action_guidance_parts.append(
                     "De action receipt bevat een werkelijk uitgevoerd webonderzoek, een "

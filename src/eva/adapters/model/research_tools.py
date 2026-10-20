@@ -130,6 +130,89 @@ class NativeResearchTool:
         return {"evidence": {"source": "native_research_certified_pre_dispatch_refusal",
                 "certificate_sha256": digest, "provider_execution": "not_started"}}
 
+    def recoverable_terminal_read_failure(self, turn, events):
+        """Retain a failed public read as context during explicit owner recovery.
+
+        No old request is dispatched or reclassified as successful/not started.
+        Any fresh indexed request still needs the normal current guard, public
+        projection checks and independently bounded successor model journal.
+        """
+        if type(self) is not NativeResearchTool:
+            return None
+        guard = require_initiative_context(turn)
+        binding_reader = getattr(guard, "explicit_resume_binding", None)
+        binding = binding_reader(turn) if callable(binding_reader) else None
+        if not isinstance(binding, dict):
+            return None
+        try:
+            if ([event.event_type for event in events] != [
+                    "TOOL_REQUEST_ADMITTED", "TOOL_PREPARED", "RECOVERY_FAILED"]
+                    or any(canonical_sha256(event.payload) != event.payload_sha256 for event in events)):
+                return None
+            from eva.contracts.timestamps import parse_utc_timestamp
+            created = parse_utc_timestamp(guard.work_spec.created_at)
+            operation = events[0].payload["checkpoint"]["operation_id"]
+            for index, event in enumerate(events, 1):
+                checkpoint = event.payload["checkpoint"]
+                if (event.sequence != index or checkpoint["revision"] != index
+                        or checkpoint["operation_id"] != operation
+                        or event.thread_id != events[0].thread_id
+                        or event.occurred_at > created
+                        or (index > 1 and event.occurred_at < events[index - 2].occurred_at)):
+                    return None
+            admission, prepared, failed = (event.payload["data"] for event in events)
+            if (admission.get("action_name") != "research_current_options"
+                    or admission.get("principal_id") != turn.principal_id
+                    or admission.get("conversation_id") != turn.conversation_id
+                    or admission.get("source_message_id") != turn.message_id
+                    or admission.get("execution_namespace") != binding.get("execution_namespace")
+                    or admission.get("request_tool_name") != self.tool_name
+                    or admission.get("request_observation_tool_name") != self.tool_name
+                    or prepared.get("tool_name") != self.tool_name
+                    or prepared.get("observation_tool_name") != self.tool_name
+                    or events[-1].payload["checkpoint"].get("status") != "failed"
+                    or re.fullmatch(r"[0-9a-f]{64}", str(failed.get("error_fingerprint"))) is None):
+                return None
+            arguments = self.validate_arguments(admission["action_arguments"])
+            if ("options" not in arguments or arguments != admission["action_arguments"]
+                    or any(value != arguments for value in (
+                        admission.get("request_arguments"), admission.get("request_observation_arguments"),
+                        prepared.get("arguments"), prepared.get("observation_arguments")))):
+                return None
+            if "public_review" in arguments:
+                validate_public_projection(arguments)
+            output = admission["receipt_output"]
+            body = output["provider_request_body"]
+            body_hash = canonical_sha256(body)
+            expected = {"provider_envelope_sha256": body_hash}
+            if (output.get("verification_scope") != "research_artifact_only"
+                    or output.get("external_state_verified") is not False
+                    or body_hash != output.get("provider_request_body_sha256")
+                    or admission.get("request_expected_proof") != expected
+                    or prepared.get("expected_proof") != expected
+                    or body.get("tools") != [{"search_context_size": "low", "type": "web_search"}]
+                    or body.get("store") is not False
+                    or body.get("input") != [{"content":
+                        f"Te onderzoeken onderwerpen: {', '.join(arguments['options'])}\n\n{arguments['question']}",
+                        "role": "user", "type": "message"}]
+                    or any(key in output for key in ("result", "research_artifact"))
+                    or any(key in failed for key in ("proof", "dispatch", "result", "research_artifact"))
+                    or prepared.get("tool_configuration_sha256") != admission.get("request_tool_configuration_sha256")
+                    or re.fullmatch(r"[0-9a-f]{64}", str(admission.get("request_tool_configuration_sha256"))) is None):
+                return None
+            checks = output.get("public_input_checks", {})
+            if checks.get("policy") not in {"host_constant_public_sources", "abstract-projection-host-checks-v1"}:
+                return None
+        except (ConversationConflict, ConversationActionInputRejected, KeyError, TypeError, ValueError, AttributeError):
+            return None
+        return {"evidence": {"source": "native_research_explicit_owner_resume",
+            "operation_kind": "read", "provider_execution": "unknown",
+            "artifact_status": "no_recorded_artifact", "prior_usage": "unknown_or_partial",
+            "resume_binding": binding, "admission_sha256": events[0].payload_sha256,
+            "terminal_event_sha256": events[-1].payload_sha256,
+            "event_chain_sha256": canonical_sha256([
+                {"type": event.event_type, "payload_sha256": event.payload_sha256} for event in events])}}
+
     def _configuration_sha256(self):
         return self.research.research_configuration_sha256()
 

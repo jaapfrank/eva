@@ -1,8 +1,8 @@
 {
   "contract": "EvaE14CurrentContinuationRepair/v1",
   "taskId": "E1.4",
-  "checkedAt": "2026-10-20T18:27:35.408825+00:00",
-  "state": "installed_awaiting_ordinary_continuation",
+  "checkedAt": "2026-10-20T18:34:59.138224+00:00",
+  "state": "installed_ordinary_pause_current_execution_open",
   "historicalCompletionEvidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
   "historicalCompletionPreserved": true,
   "currentGap": "A later self-chosen task failed after citation validation and incomplete usage; subsequent ordinary reviews saw blocked status without useful failure context. Numeric budget exhaustion is not established.",
@@ -37,7 +37,23 @@
     "receiptSha256": "608964770181b4513dc719bd07c889c52c7206e5dea6ee4e9961ec2b32cdf0d2"
   },
   "independentReview": "development/reviews/e14-failure-context-handoff-review-20261020.json",
-  "actualOrdinaryHandoff": null,
+  "actualOrdinaryHandoff": {
+    "decidedAt": "2026-10-20T18:30:31+00:00",
+    "decisionSha256": "250e49ad550a698a87126d86b8cb3eccefe6ee3d138eb62935780f6ec88dd3d6",
+    "state": "considered_pause",
+    "newInitiative": false,
+    "manualModelTrigger": false,
+    "usage": {
+      "measurement": "measured",
+      "modelAttempts": 1,
+      "inputTokens": 15276,
+      "outputTokens": 157,
+      "totalTokens": 15433,
+      "toolCalls": 1,
+      "creditCost": null
+    },
+    "limitation": "Ordinary current evaluation used the repaired context but chose no new work. This does not complete the current continuation request."
+  },
   "newSelfChosenContinuation": null,
   "newContinuationCompleted": false,
   "newResultLaterUsed": false,

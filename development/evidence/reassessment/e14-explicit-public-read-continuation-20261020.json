@@ -1,0 +1,82 @@
+{
+  "contract": "EvaE14ExplicitPublicReadContinuation/v1",
+  "taskId": "E1.4",
+  "checkedAt": "2026-10-20T18:42:33.564796+00:00",
+  "state": "installed_actual_continuation_failed_no_new_dispatch",
+  "originalCriterionPreserved": true,
+  "changes": [
+    "Existing host guard exposes exact explicit-owner native resume provenance, without dispatch authority.",
+    "Existing public-research provider validates retained terminal read failure and grants no replay; only a fresh indexed choice may continue under the current guard.",
+    "Unknown prior provider use remains unknown; no automatic resume, model-prompt revision, new topic or recovery for uncertain writes."
+  ],
+  "tests": {
+    "pureProviderPredicates": {
+      "passed": 19,
+      "seconds": 1.47,
+      "initialFixtureError": "UTC timestamp fixture typo corrected; production predicates unchanged."
+    },
+    "realPostgresGuards": {
+      "passed": 6,
+      "seconds": 12.79
+    },
+    "existingReadErrorBoundaries": {
+      "passed": 14,
+      "seconds": 3.54
+    },
+    "testProviderCalls": 0
+  },
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "coreImage": "sha256:7eeba3a4d3142e8e5041cb21c01f631f6b1e8f7cd0c71b4eb3aaf7494fb93817",
+    "workerImage": "sha256:d0800659c6f0fa9e87d4da5b896f57cc493baed2d97f6a02087b9cbd45f19b31",
+    "executionPins": 68,
+    "capabilities": 26,
+    "policyBytesUnchanged": true,
+    "voiceChanged": false
+  },
+  "admission": {
+    "disposition": "inserted",
+    "state": "admitted",
+    "work_id": "work:eva-resume:130b775b-aa4b-5fc8-9e76-aeefd0bab2a3",
+    "spec_sha256": "93d5f9845b2b70bc8dd8c60d9fcce52d612642dc5a7c2202297cc83da94c46c0",
+    "generation": 2,
+    "execution_id": "work:eva-initiative:f7bca859f9e42711a2b6d53f5643160146f28192e733d3cd9e16365bca0ebad8",
+    "sameGrant": true,
+    "sameOriginalTask": true,
+    "owner_request_sha256": "5118c09651aaf014451342ce7e653b6722d7e7f133f65a1c6e9a004073b5418a",
+    "oldStatePreserved": "failed",
+    "oldUsagePreserved": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 2,
+      "tool_calls": 1,
+      "input_tokens": 12896,
+      "output_tokens": 285,
+      "total_tokens": 13181,
+      "cost_usd_micros": null
+    },
+    "modelCallsByOperator": 0
+  },
+  "operatorAssistance": "One explicit owner-authorized resume after concrete implementation repairs. Topic and continuation question were already chosen by Eva; no autonomous self-repair claim.",
+  "completion": {
+    "state": "failed",
+    "errorCode": "incomplete_work",
+    "completedAt": "2026-10-20T18:40:58+00:00",
+    "elapsedSeconds": 44,
+    "newToolDispatches": 0,
+    "modelResponses": 2,
+    "inputTokens": 27911,
+    "outputTokens": 273,
+    "recordedTotalTokens": 28184,
+    "measurement": "partial",
+    "creditCost": null
+  },
+  "ordinaryLaterUse": null,
+  "independentReview": "development/reviews/e14-explicit-public-read-continuation-review-20261020.json",
+  "runtimeCreditCost": null,
+  "developmentCreditCost": null,
+  "fullProjectComplete": false,
+  "actualIndependentDecision": "NO_GO_CURRENT_EXECUTION_NOT_COMPLETED",
+  "actualReviewSha256": "4394336b65140fdca2e17cfa359949d1f7f759cebdece6d46616a8ca30cd2409"
+}
