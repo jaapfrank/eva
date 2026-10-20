@@ -1,0 +1,142 @@
+{
+  "contract": "EvaE412OpenSkillImportExecution/v1",
+  "taskId": "E4.12",
+  "checkedAt": "2026-10-20T17:18:27.895144+00:00",
+  "state": "installed_partial_task_open",
+  "technicalTaskCompleted": false,
+  "ownerAcceptance": false,
+  "package": {
+    "name": "grounded-citations",
+    "upstreamVersion": "1.2.0",
+    "repository": "https://github.com/NousResearch/hermes-agent",
+    "revision": "1f502aded81a07fa4127e6a90e06d04271a5b04a",
+    "subdirectory": "skills/research/grounded-citations",
+    "license": "MIT",
+    "packageSha256": "82571a6c3940e265e9c7255beb91b6bc9ccd22d434b8c6a432c89ae77103e54c",
+    "resources": [
+      {
+        "path": "LICENSE",
+        "bytes": 1070,
+        "sha256": "821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6"
+      },
+      {
+        "path": "SKILL.md",
+        "bytes": 12652,
+        "sha256": "19fba3a4ceedf768af6851e094b268a66b62af750d4d0689c5d62d5d50c032b6"
+      },
+      {
+        "path": "references/citation-formats.md",
+        "bytes": 2418,
+        "sha256": "209312a46dd9516e44e78f617589f789e07d54660e347b6b3882e8ac60097d04"
+      },
+      {
+        "path": "references/grounding-rationale.md",
+        "bytes": 3127,
+        "sha256": "2835754857ea05a1c801e88a50d4c2b4cc6ebd52cc4cc1f5741dba05f5af73c1"
+      },
+      {
+        "path": "scripts/_hermes_home.py",
+        "bytes": 817,
+        "sha256": "e2fba7b30ee22afdb21e8411b6a18431da6efc9ec3ef55e2223481bf906f4376"
+      },
+      {
+        "path": "scripts/sources.py",
+        "bytes": 25790,
+        "sha256": "0c216e29e092faedcaa1ebae129db15dfc100465169490704b3628446db96788"
+      }
+    ],
+    "originalBytesPreserved": true
+  },
+  "whatWorks": [
+    "Exact complete bundle is stored/readback verified and designated by existing procedure reference route.",
+    "Existing resolver reads SKILL.md or selected relative UTF8 resource chunks with complete source hashes.",
+    "Existing offline Python executor runs packaged scripts with included helpers and returns selected task outputs.",
+    "Current same-owner/source/retention/STOP and uncertain-execution no-replay guards remain.",
+    "Actual deployed HTTP procedure-execution client ran the registered upstream package."
+  ],
+  "installation": {
+    "coreImage": "sha256:04297c9f921888b29cef3fe652b2fe16c4d393322f2fe412c5d8c5febd8987e3",
+    "workerImage": "sha256:65fcd81fa5312f8d8d5df229438281f3147de19fbade80d16130227f47152da4",
+    "executionPins": 67,
+    "capabilities": 26,
+    "equalRelease": true,
+    "actualInstalledOwnDeltaSources": {
+      "src/eva/application/procedure_references.py": "96c6b1e260fb66ea4f08c1d7606ed304d432715570beb4aa5128b8ca6ddbe542",
+      "src/eva/providers/procedure_reference_actions.py": "823938e6fc8c1a0bc692fea3c05ae32ba81aa5ecd7c485fd8cbbdff04e126a29",
+      "src/eva/application/skill_packages.py": "b9c15a3d0cd60a9165c4429c12dcad16c4dfb9bd7acfd52e08e466093275e8aa",
+      "src/eva/application/skill_package_execution.py": "60cf51d7a4523d6466f31222ac274aa164b8422fdde3bfa7a79a88d5caf97367",
+      "src/eva/bootstrap/delegated_digital_composition.py": "83942469d2e2c9d4d91d2b1891facac2d8867509f4f074533d4347868d6befbc",
+      "src/eva/adapters/postgres/external_conversation_tools.py": "14dacffb446c61e41aac2ea8859b7c9a194b1aac2f57a44a820b8611191e34b5"
+    },
+    "yamlVersion": "6.0.3",
+    "voiceChanged": false,
+    "policyBytesUnchanged": true,
+    "existingDataAndPeerChangesPreserved": true
+  },
+  "actualImport": {
+    "verifiedSavedAndDesignated": true,
+    "currentResourceRead": true,
+    "operatorAssistance": true,
+    "originalAuthenticatedIngressUnchanged": true,
+    "newUserMessageInvented": false,
+    "referenceContentSha256": "0b84eba7d9896ddb48860340ffb94d47444eb5d24cd873678fb38d1b807a56e4",
+    "separateStoreCreated": false
+  },
+  "actualUse": {
+    "operatorDirected": true,
+    "independentModelChoice": false,
+    "cases": [
+      {
+        "name": "english-source-index",
+        "status": "execution_completed",
+        "exitCode": 0,
+        "elapsedMs": 1108,
+        "stdoutTruncated": false
+      },
+      {
+        "name": "dutch-source-index",
+        "status": "execution_failed",
+        "exitCode": 1,
+        "elapsedMs": 1167,
+        "stdoutTruncated": false
+      }
+    ],
+    "observedLesson": "Existing upstream citation verifier does not recognize Dutch Bronnen header, despite syntactically correct ledger-bound source IDs/URL. English case passes; independent semantic fact verification is not claimed.",
+    "semanticFactVerification": false
+  },
+  "checks": {
+    "focusedPassed": 104,
+    "postgresPassed": 4,
+    "largeRetainedBodyRoutePassed": true,
+    "realOfflineUpstreamUses": 2,
+    "actualRegisteredRuntimeCases": 2,
+    "review": "development/reviews/e412-open-skill-import-run-review-20261020.json"
+  },
+  "failuresRetained": [
+    "Initial unit fixture mutated nonexistent plain text inside base64; corrected only fixture.",
+    "Initial new PostgreSQL fixture used forbidden step0; corrected to existing1/2 contract.",
+    "Actual minimal runtime lacked PyYAML despite its presence in historical full lock/toolchain; pinned direct dependency installed and both actual candidate imports confirmed.",
+    "Initial chosen nested output directory did not exist; exact provider-mounted-volume inspection established absence. Original rejection remains; flat existing directory chosen with new action identity.",
+    "Real large-save retained-body receipt reader lacked optional provider field. One guarded attribute lookup repaired; same verified save reused without a second write.",
+    "Expanded large-body fixture initially exceeded existing65KiB save schema, then corrected inside unchanged boundary.",
+    "One dependency update preflight refused an already existing receipt path before mutation; distinct receipt retained for each actual update."
+  ],
+  "remaining": [
+    "Package-resource-bound existing component/AIDE source, supporting context, assessment and complete-version publication.",
+    "Apply an independently assessed real correction (observed Dutch Bronnen header issue is a candidate), preserve reference on tie/loss, and demonstrate actual later use.",
+    "Independent model-led usefulness and family acceptance are not proved by these operator-directed cases."
+  ],
+  "usage": {
+    "additionalGenerativeProviderCallsForListedChecksAndInstallation": 0,
+    "developmentCreditCost": null,
+    "evaRuntimeCreditCost": null,
+    "note": "Coding-agent consumption not included in zero runtime model calls; unrelated ordinary background runtime not measured by this record."
+  },
+  "privateEvidenceHashes": {
+    "live-package-import.private.json": "b0f72a9c428b2a96e74d1e5447b550ec6f870d7c8bf07ebddc0bc651a28ac2b8",
+    "live-package-use.private.json": "4e9dd54ed6c17220e66c3fb54c6efde0f890443361d28830889f48c36435f860",
+    "focused-tests.private.txt": "ef8ade258ae477f889e8f630bd0858438a87b0f25079f0770cf180d0c21255f6",
+    "postgres-targeted-tests.private.txt": "611125eb6333eab208014f88ae205095efdb7c44fe784b6e512963c0234759f2",
+    "installed-source-check.private.json": "58ebebbefebb25b6df4bdc8127d51dd959f80f8cd7d307c6d6151b10ad4f139a"
+  }
+}

@@ -847,8 +847,8 @@
     "title": "Bestaande open vaardigheden importeren, gebruiken en gericht verbeteren",
     "status": "in_progress",
     "doneWhen": "Een passend bestaand open vaardigheidspakket wordt met exacte versie, bronhash en licentie via de bestaande procedure-/capabilityroute bruikbaar gemaakt en bij een andere passende opdracht hergebruikt. Een echte correctie of uitkomst werkt via dezelfde droom/AIDE-geïnspireerde keten door in een beoordeelde nieuwe versie, waarvan later gebruik traceerbaar is. Importtekst verleent geen bevoegdheid; persoonsgrenzen, scripts/supportbestanden en verwijzingen blijven juist. Geen tweede skillstore, automatische massainstallatie of leeftijd als verwijderbewijs. Als hergebruik geen aantoonbaar voordeel biedt wordt dat besluit expliciet vastgelegd; geen bruikbare functie als afgerond claimen.",
-    "nextAction": "Beoordeel één pakket tegen de bestaande procedure-import en kies directe pakketovername vóór een nieuwe manager te schrijven.",
-    "checkedAt": "2026-10-20T16:42:18.078240+00:00",
+    "nextAction": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie.",
+    "checkedAt": "2026-10-20T17:18:27.895144+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,17 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.12 · Open vaardigheidspakket geïnstalleerd; verbetercyclus nog open",
+            "state": "installed",
+            "summary": "Hermes grounded-citations is volledig geïmporteerd en via Eva uitgevoerd. Engelse broncontrole werkt; Nederlandse kop Bronnen levert een concrete correctie op. Geen volledige kaartafronding.",
+            "remaining": "Pakketgebonden AIDE-beoordeling, nieuwe versie en daadwerkelijk later gebruik.",
+            "source": "development/evidence/product/e412-open-skill-import-run-installed-20261020.json",
+            "date": "2026-10-20",
+            "checkedAt": "2026-10-20T17:18:27.895144+00:00",
+            "completedTaskIds": [],
+            "newProductFunctionCompleted": false
+          },
           {
             "title": "E1.6 · Afweging koos geen bron; eindbewijs blijft open",
             "state": "built",
@@ -2840,23 +2851,23 @@
           "title": "Bestaande open vaardigheden importeren, gebruiken en gericht verbeteren",
           "status": "in_progress",
           "state": "building",
-          "summary": "E4.12 gestart: één bestaande open vaardigheid bruikbaar maken en verbeteren.",
-          "detail": "Beoordeel één pakket tegen de bestaande procedure-import en kies directe pakketovername vóór een nieuwe manager te schrijven.",
+          "summary": "E4.12: open vaardigheidspakket geïnstalleerd en gebruikt; verbetering en later gebruik nog open.",
+          "detail": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie.",
           "doneWhen": "Een passend bestaand open vaardigheidspakket wordt met exacte versie, bronhash en licentie via de bestaande procedure-/capabilityroute bruikbaar gemaakt en bij een andere passende opdracht hergebruikt. Een echte correctie of uitkomst werkt via dezelfde droom/AIDE-geïnspireerde keten door in een beoordeelde nieuwe versie, waarvan later gebruik traceerbaar is. Importtekst verleent geen bevoegdheid; persoonsgrenzen, scripts/supportbestanden en verwijzingen blijven juist. Geen tweede skillstore, automatische massainstallatie of leeftijd als verwijderbewijs. Als hergebruik geen aantoonbaar voordeel biedt wordt dat besluit expliciet vastgelegd; geen bruikbare functie als afgerond claimen.",
-          "checkedAt": "2026-10-20T16:42:18.078240+00:00"
+          "checkedAt": "2026-10-20T17:18:27.895144+00:00"
         },
         "next": {
           "taskId": "E4.12",
-          "title": "Upstream pakket aan bestaande procedureketen koppelen",
-          "detail": "Eerst daadwerkelijk bestaande import/uitvoering en pakketlicentie controleren. Bronkeuze-E1.6 blijft afzonderlijk open; geen testvraag aan Jaap."
+          "title": "Pakketverbetering met bestaande AIDE-route afmaken",
+          "detail": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie."
         },
         "ownerAction": {
           "required": false,
           "detail": "Geen handeling nodig. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T16:42:18.078240+00:00",
-        "reviewedAt": "2026-10-20T16:42:18.078240+00:00",
+        "checkedAt": "2026-10-20T17:18:27.895144+00:00",
+        "reviewedAt": "2026-10-20T17:18:27.895144+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -7216,9 +7227,13 @@
                 "dependsOn": [
                   "E4.5"
                 ],
-                "nextAction": "Beoordeel één pakket tegen de bestaande procedure-import en kies directe pakketovername vóór een nieuwe manager te schrijven.",
+                "nextAction": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie.",
                 "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-                "checkedAt": "2026-10-20T16:42:18.078240+00:00"
+                "checkedAt": "2026-10-20T17:18:27.895144+00:00",
+                "progress": "Geïnstalleerd: volledig MIT-pakket met bronversie/licentie opgeslagen, resources leesbaar en echte scripts via bestaande sandbox uitvoerbaar. Engelse broncontrole werkt; Nederlandse Bronnen-kop wordt onterecht afgewezen. Pakketgebonden AIDE-verbetering en later gebruik nog open.",
+                "evidence": "development/evidence/product/e412-open-skill-import-run-installed-20261020.json",
+                "latestEvidence": "development/evidence/product/e412-open-skill-import-run-installed-20261020.json",
+                "independentReview": "development/reviews/e412-open-skill-import-run-review-20261020.json"
               },
               {
                 "status": "planned",
@@ -7807,7 +7822,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Beoordeel één pakket tegen de bestaande procedure-import en kies directe pakketovername vóór een nieuwe manager te schrijven.",
+        "nextAction": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7816,7 +7831,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-20T16:42:18.078240+00:00",
+        "updatedAt": "2026-10-20T17:18:27.895144+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -8058,7 +8073,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T16:42:18.078240+00:00",
+        "checkedAt": "2026-10-20T17:18:27.895144+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -12303,9 +12318,13 @@
               "dependsOn": [
                 "E4.5"
               ],
-              "nextAction": "Beoordeel één pakket tegen de bestaande procedure-import en kies directe pakketovername vóór een nieuwe manager te schrijven.",
+              "nextAction": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie.",
               "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-              "checkedAt": "2026-10-20T16:42:18.078240+00:00"
+              "checkedAt": "2026-10-20T17:18:27.895144+00:00",
+              "progress": "Geïnstalleerd: volledig MIT-pakket met bronversie/licentie opgeslagen, resources leesbaar en echte scripts via bestaande sandbox uitvoerbaar. Engelse broncontrole werkt; Nederlandse Bronnen-kop wordt onterecht afgewezen. Pakketgebonden AIDE-verbetering en later gebruik nog open.",
+              "evidence": "development/evidence/product/e412-open-skill-import-run-installed-20261020.json",
+              "latestEvidence": "development/evidence/product/e412-open-skill-import-run-installed-20261020.json",
+              "independentReview": "development/reviews/e412-open-skill-import-run-review-20261020.json"
             },
             {
               "status": "planned",
@@ -12894,7 +12913,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Beoordeel één pakket tegen de bestaande procedure-import en kies directe pakketovername vóór een nieuwe manager te schrijven.",
+      "nextAction": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -12903,7 +12922,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-20T16:42:18.078240+00:00",
+      "updatedAt": "2026-10-20T17:18:27.895144+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -13145,7 +13164,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T16:42:18.078240+00:00",
+      "checkedAt": "2026-10-20T17:18:27.895144+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -14717,12 +14736,23 @@
     },
     "e412OpenSkillReuse20261020": {
       "startedAt": "2026-10-20T16:42:18.078240+00:00",
-      "state": "investigating_existing_route",
+      "state": "installed_import_execution_task_open",
       "existing": "Procedure-import/uitvoering en beoordeelde componentrelease bestaan.",
-      "gap": "Volledig upstream vaardigheidspakket, supportbestanden en later gebruik/verbetering nog niet bewezen.",
+      "gap": "Bestaande component/AIDE-route aan volledige pakketidentiteit/supportfiles verbinden; echte correctie beoordelen, toepassen en later gebruiken.",
       "scope": "Eén pakket en bestaande keten; geen nieuwe store, massainstallatie of voice.",
       "criteriaPreserved": true,
-      "runtimeChanged": false
+      "runtimeChanged": true,
+      "checkedAt": "2026-10-20T17:18:27.895144+00:00",
+      "selectedPackage": {
+        "repository": "https://github.com/NousResearch/hermes-agent",
+        "revision": "1f502aded81a07fa4127e6a90e06d04271a5b04a",
+        "path": "skills/research/grounded-citations",
+        "version": "1.2.0",
+        "license": "MIT",
+        "packageSha256": "82571a6c3940e265e9c7255beb91b6bc9ccd22d434b8c6a432c89ae77103e54c"
+      },
+      "evidence": "development/evidence/product/e412-open-skill-import-run-installed-20261020.json",
+      "review": "development/reviews/e412-open-skill-import-run-review-20261020.json"
     }
   },
   "updatedAt": "2026-10-20T13:28:55.822181+00:00",

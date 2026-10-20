@@ -25,7 +25,7 @@ COPY src ./src
 RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r deploy/requirements-4d.lock \
     && if [ "$INSTALL_OPTIONAL_MODELS" = "1" ]; then python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r deploy/requirements-optional-models.lock; fi \
     && python -m pip install --no-cache-dir --no-index --no-deps --no-build-isolation . \
-    && python -c "from eva.providers.bundled import bundled_provider_factories; factories=bundled_provider_factories(); assert any(factory.provider_id == 'mcp_gateway' for factory in factories)" \
+    && python -c "from eva.application.skill_packages import AgentSkillPackage; from eva.providers.bundled import bundled_provider_factories; factories=bundled_provider_factories(); assert any(factory.provider_id == 'mcp_gateway' for factory in factories)" \
     && python -m pip check \
     && python -m pip uninstall -y pip wheel \
     && python -c "import importlib.util; assert importlib.util.find_spec('pip') is None; assert importlib.util.find_spec('wheel') is None" \

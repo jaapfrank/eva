@@ -53,6 +53,7 @@ MAX_RESOLVED_CONTENT_BYTES = 16384
 class ResolvedProcedure:
     reference: ProcedureReference
     untrusted_content: str
+    skill_package: object | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -205,12 +206,24 @@ class ProcedureReferences:
             except (ValueError, TypeError, KeyError) as error:
                 raise ProcedureReferenceRejected("invalid source reference") from error
             current = self._check_current(scope, reference, now)
-            total_bytes += len(current)
+            package = None
+            if reference.path.endswith(".skill.json"):
+                from eva.application.skill_packages import AgentSkillPackage, MAX_PACKAGE_BYTES
+                if len(current) > MAX_PACKAGE_BYTES * 2:
+                    raise ProcedureReferenceRejected("skill package envelope exceeds bound")
+                try:
+                    package = AgentSkillPackage.from_wire(json.loads(current))
+                except (ValueError, TypeError, KeyError, UnicodeError, RecursionError) as error:
+                    raise ProcedureReferenceRejected("invalid current skill package") from error
+                projected = package.resource("SKILL.md")
+            else:
+                projected = current
+            total_bytes += len(projected)
             if total_bytes > MAX_RESOLVED_CONTENT_BYTES:
                 raise ProcedureReferenceRejected("resolved content bound exceeded")
             try:
-                content = current.decode("utf-8", errors="strict")
+                content = projected.decode("utf-8", errors="strict")
             except UnicodeDecodeError as error:
                 raise ProcedureReferenceRejected("procedure is not UTF-8 text") from error
-            resolved.append(ResolvedProcedure(reference, content))
+            resolved.append(ResolvedProcedure(reference, content, package))
         return tuple(resolved)

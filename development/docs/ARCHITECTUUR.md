@@ -107,6 +107,38 @@ Een ontbrekende interne dependency van een aanwezige module blijft een echte fou
 Bronfingerprints komen uit de geïnstalleerde provider; core en uitvoerworker binden
 dezelfde bronversie. Uitschakelen verwijdert geen gegevens, taken of oude receipts.
 
+## Open vaardigheidspakketten
+
+De bestaande `ProcedureReference/v1` kan naast gewone documenten en Pythonbestanden
+één opgeslagen `.skill.json`-pakket aanwijzen. `application/skill_packages.py`
+valideert exacte resourcebytes, relatieve paden, vaste bronrevisie, licentie en
+`SKILL.md`-metadata; bronmetadata blijft een verklaring, geen downloadbewijs of
+uitvoertoestemming. De referencehash bindt de volledige opgeslagen envelope.
+De bestaande resolve-actie projecteert standaard `SKILL.md` en het manifest;
+`resource_path` en `resource_offset` lezen gericht een bijbehorende tekst, met
+volledige bronhash en maximaal de bestaande 16 KiB per projectie. Binaire bestanden
+blijven behouden en worden niet als tekst voorgesteld. PyYAML 6.0.3 is hiervoor een
+directe, hashgepinde runtimedependency; de historische oorspronkelijke locks en
+proefbindingen worden niet achteraf herschreven.
+
+`application/skill_package_execution.py` materialiseert de exacte pakketbestanden
+als invoer voor dezelfde bestaande offline Pythonuitvoerder. Meegeleverde scripts
+kunnen hun lokale helpers en referenties gebruiken. Eén aanvraag bevat seriële
+stappen in een tijdelijke taakmap; expliciet gekozen resultaatbestanden kunnen
+binnen de bestaande uitvoergrens terugkomen. Geen netwerk, hostprofiel of credentials;
+geen nieuw endpoint, rechtenmodel, skillstore of permanente manager. De oorspronkelijke
+16 KiB bron-, 32 KiB invoer- en uitvoergrenzen van de uitvoerder blijven gelden.
+Pakketten die niet passen worden duidelijk geweigerd. Exitstatus, teruggelezen bytes
+en inhoudelijke kwaliteit zijn afzonderlijk; afgekapt resultaat telt niet als voltooide
+uitvoer. Opslaan en herbruikbaar aanwijzen blijven de bestaande geverifieerde acties.
+
+Deze import-/uitvoerverbinding rondt E4.12 niet af. De bestaande AIDE-componentroute
+ondersteunt nog gewone Pythonartefacten. Een pakketgebonden verbeterkandidaat moet
+ook de ongewijzigde helpers, bronversie en licentie binden, in dezelfde omgeving worden
+beoordeeld en als nieuwe volledige versie worden gepubliceerd. De oude versie blijft
+behouden; alleen gemeten en onafhankelijk beoordeelde winst mag later worden gebruikt.
+Die overdracht en echt later gebruik blijven op dezelfde E4.12-kaart open.
+
 ## Moduleverantwoordelijkheden
 
 | Bestaande module / bron | Eigen verantwoordelijkheid | Interface en grens |

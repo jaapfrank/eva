@@ -1,0 +1,50 @@
+{
+  "contract": "EvaE412ImportExecutionReview/v1",
+  "decision": "GO",
+  "reviewedAt": "2026-10-20T17:14:33.969002+00:00",
+  "reviewer": "e47_mcp_catalog",
+  "scope": "Limited existing procedure package import/current resource/run integration and exact runtime dependency; not complete E4.12.",
+  "sourceHashes": {
+    "src/eva/application/procedure_references.py": "96c6b1e260fb66ea4f08c1d7606ed304d432715570beb4aa5128b8ca6ddbe542",
+    "src/eva/providers/procedure_reference_actions.py": "823938e6fc8c1a0bc692fea3c05ae32ba81aa5ecd7c485fd8cbbdff04e126a29",
+    "src/eva/application/skill_packages.py": "b9c15a3d0cd60a9165c4429c12dcad16c4dfb9bd7acfd52e08e466093275e8aa",
+    "src/eva/application/skill_package_execution.py": "60cf51d7a4523d6466f31222ac274aa164b8422fdde3bfa7a79a88d5caf97367",
+    "src/eva/bootstrap/delegated_digital_composition.py": "83942469d2e2c9d4d91d2b1891facac2d8867509f4f074533d4347868d6befbc",
+    "src/eva/adapters/postgres/external_conversation_tools.py": "c38197ca8c9d40512265dfec981bdcdf51031967d3528627afb28d3f6f03f942"
+  },
+  "dependencySourceHashes": {
+    "pyproject.toml": "5558c1b81dd1a7c02079b58f15f2107446b634bb7bc432b55f3a8beb19d03768",
+    "deploy/release/dependency-roots.in": "e4d04e2a08e164a7256a026d11489446cbe083a3480dcfbecbaeade23b647cc8",
+    "deploy/requirements-4d.lock": "5f2f51a6c8a862ff3c1e957b545a83de3532aea9c5e55d870b515488f046de74"
+  },
+  "blockingFindings": [],
+  "tests": {
+    "focusedChecksPassed": 104,
+    "postgresOriginalChecksPassed": 3,
+    "postgresNewRoutePassed": 1,
+    "newRouteNowIncludesLargeRetainedBody": true
+  },
+  "limits": [
+    "Operator-directed installation/import/use, no independently chosen skill adoption or learned variant claim.",
+    "AIDE package-bound candidate/evaluation/publication and actual later use of an improved version remain open.",
+    "Ledger syntax/evidence matching does not establish factual truth or claim entailment."
+  ],
+  "privateReviewHashes": {
+    "root-independent-review.private.json": "01d3956f85171312ed720f119891cd40909e57e5eb1831f3eb821c802c3895e0",
+    "runtime-dependency-review.private.json": "cd70ae81d237941dc00f7292636d47185fcc0a90ee93aa957dc5507b23081668",
+    "dockerfile-dependency-review.private.json": "5c6b59752a0a441e08e3f1f4c561cd753d4b2a5ea595d6c0bf46edc170daca80"
+  },
+  "installedOverlayReview": {
+    "decision": "GO",
+    "evidenceSha256": "d39e264eaf3dc2de385c8e89c5c6124ac555d0ad0d90532984a6dd2b6f8aef23",
+    "sourceHashes": {
+      "src/eva/application/procedure_references.py": "96c6b1e260fb66ea4f08c1d7606ed304d432715570beb4aa5128b8ca6ddbe542",
+      "src/eva/providers/procedure_reference_actions.py": "823938e6fc8c1a0bc692fea3c05ae32ba81aa5ecd7c485fd8cbbdff04e126a29",
+      "src/eva/application/skill_packages.py": "b9c15a3d0cd60a9165c4429c12dcad16c4dfb9bd7acfd52e08e466093275e8aa",
+      "src/eva/application/skill_package_execution.py": "60cf51d7a4523d6466f31222ac274aa164b8422fdde3bfa7a79a88d5caf97367",
+      "src/eva/bootstrap/delegated_digital_composition.py": "83942469d2e2c9d4d91d2b1891facac2d8867509f4f074533d4347868d6befbc",
+      "src/eva/adapters/postgres/external_conversation_tools.py": "14dacffb446c61e41aac2ea8859b7c9a194b1aac2f57a44a820b8611191e34b5"
+    },
+    "preservedPeerDifference": "Only unchanged conversation_instructions method position differs from worktree; installed base position retained and AST independently checked."
+  }
+}

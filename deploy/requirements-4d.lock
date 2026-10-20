@@ -948,3 +948,7 @@ regex==2026.9.3 --hash=sha256:665207e41bacd435db001099eeab44103197c2c1a729d73ade
 requests==2.34.2 --hash=sha256:2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0
 tiktoken==0.14.0 --hash=sha256:7896eea257fe497a2b7134474d909156c6744ce8da35bce88011a960e008aa0d
 urllib3==2.7.0 --hash=sha256:9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897
+
+# Direct AgentSkills frontmatter parser; existing pinned version, no dependencies.
+pyyaml==6.0.3 \
+    --hash=sha256:ba1cc08a7ccde2d2ec775841541641e4548226580ab850948cbfda66a1befcdc

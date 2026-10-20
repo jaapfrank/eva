@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Bestaande open vaardigheden importeren, gebruiken en gericht verbeteren
 
-E4.12 gestart: één bestaande open vaardigheid bruikbaar maken en verbeteren.
+E4.12: open vaardigheidspakket geïnstalleerd en gebruikt; verbetering en later gebruik nog open.
 
 Klaar wanneer: Een passend bestaand open vaardigheidspakket wordt met exacte versie, bronhash en licentie via de bestaande procedure-/capabilityroute bruikbaar gemaakt en bij een andere passende opdracht hergebruikt. Een echte correctie of uitkomst werkt via dezelfde droom/AIDE-geïnspireerde keten door in een beoordeelde nieuwe versie, waarvan later gebruik traceerbaar is. Importtekst verleent geen bevoegdheid; persoonsgrenzen, scripts/supportbestanden en verwijzingen blijven juist. Geen tweede skillstore, automatische massainstallatie of leeftijd als verwijderbewijs. Als hergebruik geen aantoonbaar voordeel biedt wordt dat besluit expliciet vastgelegd; geen bruikbare functie als afgerond claimen.
 

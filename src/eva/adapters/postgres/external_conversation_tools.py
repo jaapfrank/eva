@@ -536,7 +536,7 @@ class PostgresExternalConversationTools:
                 proof = {"evidence": {"source": "mcp_gateway_read_error",
                     "operation_kind": "read", "classification": "historical_host_dispatch",
                     "error": {"messages": ["Read failed; the provider cause is unknown. No successful result was recorded."]}}}
-        recovery = getattr(self._provider, "recoverable_pre_dispatch_refusal", None)
+        recovery = getattr(getattr(self, "_provider", None), "recoverable_pre_dispatch_refusal", None)
         if proof is None and status == "failed" and callable(recovery):
             proof = recovery(turn, events)
         from eva.providers.receipt_policies import receipt_policy, retains_observation

@@ -68,6 +68,8 @@ _EXECUTION_SOURCES = (
     "providers/procedure_reference_actions.py",
     "adapters/postgres/procedure_reference_host.py",
     "application/procedure_references.py",
+    "application/skill_packages.py",
+    "application/skill_package_execution.py",
     "adapters/postgres/memory_outbox.py",
     "adapters/postgres/external_conversation_tools.py",
     "adapters/connectors/mcp_gateway.py",
