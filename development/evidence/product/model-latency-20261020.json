@@ -1,6 +1,6 @@
 {
   "contract": "EvaModelLatencyFollowup/v1",
-  "status": "implementing_bounded_surface_reuse",
+  "status": "technically_completed_installed_and_live_verified",
   "startedAt": "2026-10-20T18:25:32.307332+00:00",
   "existing": "Known exact commands reuse a retained proven interpretation; unseen commands use one Sol/none decision, current person context and normal durable module execution. Latest actual unseen command4.482s; model2.677s;2816cached input tokens.",
   "gap": "First/unseen-command model latency remains the largest measured wait. Need measured packet composition and actual endpoint compatibility before changing prompts or cache behavior.",
@@ -14,7 +14,7 @@
   "originalE52CriteriaChanged": false,
   "voiceChanged": false,
   "credits": null,
-  "checkedAt": "2026-10-20T18:34:25.821195+00:00",
+  "checkedAt": "2026-10-20T18:51:01.629645+00:00",
   "finding": {
     "actual_packet_input_tokens": 9452,
     "instructions_characters": 28614,
@@ -23,10 +23,10 @@
     "tiny_baseline_input_tokens": 28,
     "tiny_baseline_output_tokens": 7,
     "tiny_baseline_ms": 2687.752,
-    "decision": "Keep full identity/current memory/context and unchanged Sol/none/provider. Reduce unnecessary new model decisions for known commands differing only in canonical Unicode composition, ASCII letter case, and ASCII whitespace."
+    "decision": "Keep full identity/current memory/context and unchanged Sol/none/provider. Skip unnecessary model decisions only for already proven commands differing in ASCII letter case and ASCII whitespace. NFC remains the original ingress requirement."
   },
   "candidate": {
-    "surface_scheme": "NFC + ASCII A-Z lowering + ASCII whitespace collapse only; versioned and bound to retained original raw text/hash. No full Unicode casefold, punctuation deletion, synonym expansion or core router.",
+    "surface_scheme": "Canonical NFC ingress + ASCII A-Z lowering + ASCII whitespace collapse only; versioned with Unicode version and bound to retained raw text/hash. No full Unicode casefold, punctuation deletion, synonym expansion or core router.",
     "conflicts": "Multiple current valid learned signatures for the normalized text cause a miss, never newest-wins. Legacy without scheme remains exact-only.",
     "verificationPlan": {
       "baseline_http": 3,
@@ -38,10 +38,275 @@
         "current source/config and idle claims before installation",
         "raw original source reconstruction",
         "erasure/authority/context/device/STOP boundaries unchanged",
-        "31old/new command reuse boundaries plus changed source tests",
+        "50 focused old/new cache boundaries passed on isolated PostgreSQL16.13; preserve initial SQL/bind/fixture failures.",
         "independent review",
         "exact owned fixture cleanup and prior-source hash preservation"
       ]
     }
-  }
+  },
+  "baselineHttp": {
+    "same_runtime_image": "sha256:e3492018dc774a6ad338fa118a5666a37babc5a9506c1790ef2e1e8bba707c0f",
+    "original_ms": 7448.079,
+    "exact_repeat_ms": 1146.119,
+    "case_whitespace_variant_ms": 4340.782,
+    "original_model_attempts": 1,
+    "exact_model_attempts": 0,
+    "variant_model_attempts": 1,
+    "fresh_off_verifications": 3,
+    "physical_switching_claimed": false
+  },
+  "tests": {
+    "passed": 50,
+    "postgres": "16.13",
+    "skipped": 0,
+    "initial_sql_bind_and_fixture_failures_retained": true,
+    "nfc_ingress_rejection_preserved": true
+  },
+  "liveSamples": [
+    {
+      "label": "baseline-original",
+      "saved_verified_final_ms": 7448.079,
+      "model_attempts": 1,
+      "provider": "eva:verified-action",
+      "operation_thread_sha256": "2e89392e5f4e40478cd77fa2eef3877fe8827815833684fb9bd771124c433491",
+      "source_image": "sha256:e3492018dc774a6ad338fa118a5666a37babc5a9506c1790ef2e1e8bba707c0f"
+    },
+    {
+      "label": "baseline-exact",
+      "saved_verified_final_ms": 1146.119,
+      "model_attempts": 0,
+      "provider": "eva:verified-reuse",
+      "operation_thread_sha256": "6281f7b13930b807510816bf7777459ac2b92f44a86cd332979d09c9d9be53a4",
+      "source_image": "sha256:e3492018dc774a6ad338fa118a5666a37babc5a9506c1790ef2e1e8bba707c0f"
+    },
+    {
+      "label": "baseline-variant",
+      "saved_verified_final_ms": 4340.782,
+      "model_attempts": 1,
+      "provider": "eva:verified-action",
+      "operation_thread_sha256": "bae6cc4cf35d5eb362c6471e8afb39c8e2ae91ce5842e4d6aca5979ec3dff1f4",
+      "source_image": "sha256:e3492018dc774a6ad338fa118a5666a37babc5a9506c1790ef2e1e8bba707c0f"
+    },
+    {
+      "label": "candidate-train",
+      "saved_verified_final_ms": 4423.048,
+      "model_attempts": 1,
+      "provider": "eva:verified-action",
+      "operation_thread_sha256": "bd696a77c5139c5b3683df3402956a30688c5651a5ce7647a69a5212ec040a36",
+      "source_image": "sha256:43e6bb80127edbe4af0ff5ff225df88485cbf3bb94daded7ea97d282f3f43450"
+    },
+    {
+      "label": "candidate-lower",
+      "saved_verified_final_ms": 753.436,
+      "model_attempts": 0,
+      "provider": "eva:verified-reuse",
+      "operation_thread_sha256": "dca21be89d0f8e24ea8cce71e78f06e0d1e2976d87e8b2a36eb25a07e71c92a6",
+      "source_image": "sha256:43e6bb80127edbe4af0ff5ff225df88485cbf3bb94daded7ea97d282f3f43450"
+    },
+    {
+      "label": "candidate-upper",
+      "saved_verified_final_ms": 754.539,
+      "model_attempts": 0,
+      "provider": "eva:verified-reuse",
+      "operation_thread_sha256": "7aadf5c74aef1a08347e242a601eef12071d8e9bea7a017c630ed99da1623d8d",
+      "source_image": "sha256:43e6bb80127edbe4af0ff5ff225df88485cbf3bb94daded7ea97d282f3f43450"
+    },
+    {
+      "label": "candidate-spaces",
+      "saved_verified_final_ms": 692.651,
+      "model_attempts": 0,
+      "provider": "eva:verified-reuse",
+      "operation_thread_sha256": "2fc46725e4a682be143e8b716cff80419348cdfcab0d6dc3c8c424b433269680",
+      "source_image": "sha256:43e6bb80127edbe4af0ff5ff225df88485cbf3bb94daded7ea97d282f3f43450"
+    },
+    {
+      "label": "candidate-tab",
+      "saved_verified_final_ms": 818.023,
+      "model_attempts": 0,
+      "provider": "eva:verified-reuse",
+      "operation_thread_sha256": "c1ead22a50d04172d40095873fe8967f8434b6b999de8d4876be9f6763b15438",
+      "source_image": "sha256:43e6bb80127edbe4af0ff5ff225df88485cbf3bb94daded7ea97d282f3f43450"
+    },
+    {
+      "label": "candidate-punctuation",
+      "saved_verified_final_ms": 3508.074,
+      "model_attempts": 1,
+      "provider": "eva:verified-action",
+      "operation_thread_sha256": "9887bc1546cec3ddcc19e159a8c6bb78b7b3e1abd60bfb5f2177051b6755e4f1",
+      "source_image": "sha256:43e6bb80127edbe4af0ff5ff225df88485cbf3bb94daded7ea97d282f3f43450"
+    }
+  ],
+  "variantResult": {
+    "attempts": 4,
+    "all_four_zero_model_fresh_operations": true,
+    "min_ms": 692.651,
+    "max_ms": 818.023,
+    "median_ms": 753.9875,
+    "same_candidate_runtime": true,
+    "before_identical_case_tab_variant_ms": 4340.782,
+    "after_identical_case_tab_variant_ms": 818.023,
+    "same_raw_case_tab_input_verified_by_cleanup": true,
+    "comparison_limit": "Baseline and candidate runtime starts also bracket peer integration. Timings are small actual samples, not a newp95benchmark or a claim that all milliseconds gained come solely from this file. The removed model decision is independently counted."
+  },
+  "installed": {
+    "core": {
+      "base": "sha256:7eeba3a4d3142e8e5041cb21c01f631f6b1e8f7cd0c71b4eb3aaf7494fb93817",
+      "candidate": "sha256:43e6bb80127edbe4af0ff5ff225df88485cbf3bb94daded7ea97d282f3f43450",
+      "installed_at": "2026-10-20T18:45:34.235288989Z",
+      "source_verified": true,
+      "configuration_preserved": true,
+      "healthy": true,
+      "idle_guard": {
+        "active_claims": {
+          "voice": 0,
+          "work": 0,
+          "models": 0,
+          "decisions": 0,
+          "conversation": 0,
+          "native_admissions": 0,
+          "memory": 0
+        },
+        "hindsight": 0
+      }
+    },
+    "worker": {
+      "base": "sha256:d0800659c6f0fa9e87d4da5b896f57cc493baed2d97f6a02087b9cbd45f19b31",
+      "candidate": "sha256:d029b2ba5358ca5ad10c5917b4216f262fa2c3127010708285ade2a634e48140",
+      "installed_at": "2026-10-20T18:44:16.862450571Z",
+      "source_verified": true,
+      "configuration_preserved": true,
+      "healthy": true,
+      "idle_guard": {
+        "active_claims": {
+          "voice": 0,
+          "work": 0,
+          "models": 0,
+          "decisions": 0,
+          "conversation": 0,
+          "native_admissions": 0,
+          "memory": 0
+        },
+        "hindsight": 0
+      }
+    }
+  },
+  "cacheCompatibilityComponent": {
+    "candidate_with_extra_option": {
+      "kind": "cache_option_component_canary",
+      "production_effects": 0,
+      "family_context_sent": false,
+      "accepted": false,
+      "error_type": "CodexProviderError",
+      "requests": 1,
+      "status": 400,
+      "elapsed_ms": 20020.314,
+      "observation": {
+        "network_started_ms": 29,
+        "headers_received_ms": 1178,
+        "response_status": 400,
+        "received_bytes": 0,
+        "received_chunks": 0,
+        "cached_input_tokens": null,
+        "sse_events": 0,
+        "text_deltas": 0,
+        "tool_argument_deltas": 0,
+        "reasoning_deltas": 0,
+        "completed_events": 0
+      }
+    },
+    "control_without_extra_option": {
+      "kind": "cache_option_component_canary",
+      "variant": "baseline_control",
+      "production_effects": 0,
+      "family_context_sent": false,
+      "accepted": true,
+      "usage": {
+        "input_tokens": 28,
+        "output_tokens": 7
+      },
+      "requests": 1,
+      "status": 200,
+      "elapsed_ms": 2687.752,
+      "observation": {
+        "network_started_ms": 24,
+        "headers_received_ms": 895,
+        "response_status": 200,
+        "received_bytes": 7574,
+        "received_chunks": 8,
+        "cached_input_tokens": 0,
+        "sse_events": 12,
+        "text_deltas": 3,
+        "tool_argument_deltas": 0,
+        "reasoning_deltas": 0,
+        "completed_events": 1
+      }
+    },
+    "production_settings_changed": false,
+    "conclusion": "No supported extra-cache-option path established on this endpoint. Control succeeds; candidate receives400 and times out draining the rejection body. No error body or token usage attested for the rejected request. Neither component sent family context or executed tools."
+  },
+  "usage": {
+    "evaluation_runtime": {
+      "model_attempts": 5,
+      "input_tokens": 45758,
+      "output_tokens": 200,
+      "setter_operations": 10,
+      "fresh_STATE_VERIFIED": 10,
+      "credits": null,
+      "other_provider_reads_completely_counted": false
+    },
+    "development": {
+      "component_outgoing_requests": 2,
+      "completed_model_responses": 1,
+      "rejected_request_usage_unknown": true,
+      "known_input_tokens": 28,
+      "known_output_tokens": 7,
+      "token_totals_complete": false,
+      "isolated_database_tests_model_requests": 0,
+      "agent_tokens_and_credits": null
+    }
+  },
+  "cleanup": {
+    "retained_http_exchanges_erased": 9,
+    "unretained_diagnostic_exchange_erased": 1,
+    "protected_hash_checks": [
+      {
+        "retained_exchange_erased": 3,
+        "unretained_raw_erased": 1,
+        "exact_failed_turns_stopped": 0,
+        "protected_events_unchanged": 7766
+      },
+      {
+        "retained_exchange_erased": 6,
+        "unretained_raw_erased": 0,
+        "exact_failed_turns_stopped": 0,
+        "protected_events_unchanged": 7781
+      }
+    ],
+    "original_pre_diagnostic_hashes_unchanged": 7766,
+    "final_outdoor_state": "off",
+    "previously_pinned_automation_count": 17,
+    "automation_states_match_previous_e48_baseline": true,
+    "complete_current_automation_inventory_claimed": false
+  },
+  "diagnosticFailure": {
+    "model_packet_and_verified_action_succeeded": true,
+    "later_cprofile_report_failed_because_profiling_disabled": true,
+    "failure_preserved": true,
+    "exact_owned_turn_recovered_from_canonical_source_hash": true,
+    "extra_runtime_attempts_replayed_for_this_failure": 0
+  },
+  "sourceCommit": "accea3b2a07b20bfe35c490affa0cbbd303d7916",
+  "independentReview": "development/reviews/model-latency-review-20261020.json",
+  "generalColdTargetMet": false,
+  "physicalAcceptance": false,
+  "wholeProjectComplete": false,
+  "limits": [
+    "A new interpretation still uses the existing model:4.423s in candidate training; punctuation change3.508s. The general1–2s cold-command goal is not met.",
+    "Only ASCII case and whitespace can differ. No synonyms, reordered words, punctuation stripping, non-ASCII space folding, or Unicode casefold expansion. NFC remains the original ingress requirement.",
+    "Four variants are a small actual sample. No generalp95, physical microphone/playback or new native speech latency claim.",
+    "The effect checks are off-state no-ops, not proof of new physical switching. Every operation has its own independent fresh readback.",
+    "Original E5.2 criteria, prior failure evidence, other work and full identity/current memory/context/provider settings remain preserved."
+  ],
+  "completedAt": "2026-10-20T18:53:02.430727+00:00",
+  "boundedOutcome": "Learned ASCII formatting variants use zero-model fresh execution; latest4variant finals692.651–818.023ms. Genuinely unseen interpretation remains a normal model decision."
 }

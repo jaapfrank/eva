@@ -7808,7 +7808,7 @@
                   "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                   "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
                 ],
-                "nextAction": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.878s,p951.107s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
+                "nextAction": "Oorspronkelijke warme20-pogingenproef afgerond (mediaan0.878s,p951.107s). Aanvullend geïnstalleerd: vier bekende ASCII-hoofdletter/spatievarianten in0.693–0.818s, ieder zonder model en met nieuwe geverifieerde uitvoering. Eerste interpretatie4.423s; geen algemene cold-, voice- of fysieke acceptatieclaim.",
                 "status": "completed",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -7827,7 +7827,7 @@
                   "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                   "ownerAcceptance": false
                 },
-                "checkedAt": "2026-10-20T16:02:01.946869+00:00",
+                "checkedAt": "2026-10-20T18:53:02.470269+00:00",
                 "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
                 "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
                 "findings": [
@@ -7848,6 +7848,12 @@
                     "finding": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.878s,p951.107s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
                     "blocksOriginalE51": false,
                     "newTaskCreated": false
+                  },
+                  {
+                    "source": "development/evidence/product/model-latency-20261020.json",
+                    "finding": "Learned ASCII formatting variants use zero-model fresh execution; latest4variant finals692.651–818.023ms. Genuinely unseen interpretation remains a normal model decision.",
+                    "blocksOriginalE51": false,
+                    "newTaskCreated": false
                   }
                 ],
                 "technicalCompletedAt": "2026-10-20T16:02:01.946869+00:00",
@@ -7860,8 +7866,8 @@
                   "scope": "Read checkpoint and full ordered source history in one statement snapshot, preserving hashes/projection/scope checks and fresh authority/STOP checks. Adopt only after focused PostgreSQL corruption/scope/concurrency tests, paired source-read evidence and independent review, then guard installation and test actual authenticated HTTP. Keep original cold failures and report total latency without claiming one-second cold commands."
                 },
                 "modelLatencyFollowup": {
-                  "status": "implementing_bounded_surface_reuse",
-                  "checkedAt": "2026-10-20T18:35:05.542341+00:00",
+                  "status": "technically_completed_installed_and_live_verified",
+                  "checkedAt": "2026-10-20T18:53:02.470269+00:00",
                   "evidence": "development/evidence/product/model-latency-20261020.json",
                   "originalCompletionPreserved": true,
                   "scope": "Inspect the actual packet and bounded existing-endpoint cache capability with no unapproved effects. Compare a concrete candidate only if a supported avoidable cost is found. Preserve identity/current memory/authority/STOP and normal model quality, record failed or neutral candidates, keep the reference unless gain is demonstrated, independently review and install any adopted change with current runtime guards, then verify actual HTTP use. Do not claim general cold1–2s from warm reuse."
@@ -12925,7 +12931,7 @@
                 "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                 "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
               ],
-              "nextAction": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.878s,p951.107s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
+              "nextAction": "Oorspronkelijke warme20-pogingenproef afgerond (mediaan0.878s,p951.107s). Aanvullend geïnstalleerd: vier bekende ASCII-hoofdletter/spatievarianten in0.693–0.818s, ieder zonder model en met nieuwe geverifieerde uitvoering. Eerste interpretatie4.423s; geen algemene cold-, voice- of fysieke acceptatieclaim.",
               "status": "completed",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -12944,7 +12950,7 @@
                 "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                 "ownerAcceptance": false
               },
-              "checkedAt": "2026-10-20T16:02:01.946869+00:00",
+              "checkedAt": "2026-10-20T18:53:02.470269+00:00",
               "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
               "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
               "findings": [
@@ -12965,6 +12971,12 @@
                   "finding": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.878s,p951.107s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
                   "blocksOriginalE51": false,
                   "newTaskCreated": false
+                },
+                {
+                  "source": "development/evidence/product/model-latency-20261020.json",
+                  "finding": "Learned ASCII formatting variants use zero-model fresh execution; latest4variant finals692.651–818.023ms. Genuinely unseen interpretation remains a normal model decision.",
+                  "blocksOriginalE51": false,
+                  "newTaskCreated": false
                 }
               ],
               "technicalCompletedAt": "2026-10-20T16:02:01.946869+00:00",
@@ -12977,8 +12989,8 @@
                 "scope": "Read checkpoint and full ordered source history in one statement snapshot, preserving hashes/projection/scope checks and fresh authority/STOP checks. Adopt only after focused PostgreSQL corruption/scope/concurrency tests, paired source-read evidence and independent review, then guard installation and test actual authenticated HTTP. Keep original cold failures and report total latency without claiming one-second cold commands."
               },
               "modelLatencyFollowup": {
-                "status": "implementing_bounded_surface_reuse",
-                "checkedAt": "2026-10-20T18:35:05.542341+00:00",
+                "status": "technically_completed_installed_and_live_verified",
+                "checkedAt": "2026-10-20T18:53:02.470269+00:00",
                 "evidence": "development/evidence/product/model-latency-20261020.json",
                 "originalCompletionPreserved": true,
                 "scope": "Inspect the actual packet and bounded existing-endpoint cache capability with no unapproved effects. Compare a concrete candidate only if a supported avoidable cost is found. Preserve identity/current memory/authority/STOP and normal model quality, record failed or neutral candidates, keep the reference unless gain is demonstrated, independently review and install any adopted change with current runtime guards, then verify actual HTTP use. Do not claim general cold1–2s from warm reuse."

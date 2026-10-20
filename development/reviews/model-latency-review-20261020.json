@@ -21,5 +21,22 @@
     "Index reseed and wrong scheme/hash covered."
   ],
   "voiceChanged": false,
-  "generalColdSpeedClaim": false
+  "generalColdSpeedClaim": false,
+  "deliveryReview": {
+    "decision": "GO",
+    "reviewer": "/root/review_cursor",
+    "checkedAt": "2026-10-20T18:53:02.430727+00:00",
+    "evidence": "development/evidence/product/model-latency-20261020.json",
+    "finalEvidenceSha256": "84ed1645d530980a096253ff2f7c5c9b5faba8d46797c0aeaa1c6fce4df4e69d",
+    "scope": "Bounded ASCII case/whitespace cache only. No general cold-speed,p95,native speech latency or physical acceptance claim.",
+    "confirmed": [
+      "Source-only overlay installed on actual current core and worker, configuration preserved and idle claims checked.",
+      "Four predeclared actual HTTP variants completed without models and with four new operations/fresh independent state verifications.",
+      "Punctuation remains a model-route miss; original raw text/hash and source lineage retained.",
+      "Combined canonical evidence has10effects/proofs and5modelrecords.",
+      "9retainedHTTP+1rawdiagnostic exchanges erased; original7766hashes unchanged.",
+      "NFC wording corrected to reflect the existing ingress contract."
+    ],
+    "additionalTestsRequired": false
+  }
 }
