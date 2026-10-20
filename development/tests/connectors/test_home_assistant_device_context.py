@@ -88,3 +88,27 @@ def test_unknown_entity_delta_disconnects_and_invalidates_snapshot():
         while not errors and time.monotonic()<deadline:time.sleep(.002)
         with pytest.raises(RuntimeError):context.snapshot()
     assert len(errors)==1 and isinstance(errors[0],ValueError)
+
+
+def test_added_renamed_and_removed_entity_never_survives_as_old_context():
+    with connected() as (context,socket,errors):
+        before=context.snapshot()["binding_sha256"]
+        socket.delta({"a":{"switch.new":{"s":"off","a":{"friendly_name":"Nieuw"},"lc":102.5}}})
+        assert context.catalog("switch")[0]["entity_id"]=="switch.new"
+        socket.delta({"c":{"light.yard":{"+":{"a":{"friendly_name":"Achtertuin"}}}}})
+        changed=context.snapshot()
+        assert changed["binding_sha256"]!=before
+        assert changed["states"][0]["attributes"]["friendly_name"]=="Achtertuin"
+        socket.delta({"r":["switch.new"]})
+        assert context.catalog("switch")==[]
+    assert not errors
+
+
+def test_rejected_registry_refresh_cannot_keep_an_authorized_old_snapshot():
+    with connected() as (context,socket,errors):
+        context.snapshot()
+        socket.push({"id":3,"type":"result","success":False,"error":{"code":"unauthorized"}})
+        deadline=time.monotonic()+2
+        while not errors and time.monotonic()<deadline:time.sleep(.002)
+        with pytest.raises(RuntimeError):context.snapshot()
+    assert len(errors)==1 and isinstance(errors[0],RuntimeError)

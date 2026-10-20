@@ -115,6 +115,13 @@ def test_revoked_authority_propagates_and_cannot_dispatch(rig):
     assert len(rig.effects)==1
 
 
+def test_unrelated_cache_miss_does_not_require_a_home_assistant_grant(rig):
+    rig.respond(rig.turn());rig.revoked[0]=True
+    current=rig.turn("Hoe gaat het met je?");rig.journal.admit(current)
+    assert rig.port.reuse_verified_action(current) is None
+    assert len(rig.effects)==1
+
+
 def test_qualified_alternating_commands_and_rebuilt_index_can_reuse(rig):
     rig.respond(rig.turn());rig.respond(rig.turn("Zet de lamp light.yard aan"))
     fresh=HomeAssistantCommandCache(rig.database,configuration_sha256="a"*64,device_context=rig.device,capability_profile=rig.profile)

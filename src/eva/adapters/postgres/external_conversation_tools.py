@@ -146,7 +146,7 @@ class PostgresExternalConversationTools:
         prepare = getattr(self._planner, "prepare_reusable", None)
         if not callable(prepare):
             return None
-        self._ensure_running(turn)
+        check_cancellation()
 
         def retained(source, thread, admission):
             if (any(getattr(source, key) != getattr(turn, key) for key in
@@ -164,9 +164,9 @@ class PostgresExternalConversationTools:
             return self._receipt(source, history, project=False)
 
         chosen = asyncio.run(prepare(turn, retained))
-        self._ensure_running(turn)
         if chosen is None:
             return None
+        self._ensure_running(turn)
         call, preparation = chosen
         if (not isinstance(call, ConversationActionCall) or call.name not in self.action_names
                 or not isinstance(preparation, ConversationToolPreparation)):
