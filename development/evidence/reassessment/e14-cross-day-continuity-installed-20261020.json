@@ -1,7 +1,7 @@
 {
   "contract": "EvaCrossDayContinuityInstalled/v1",
   "taskId": "E1.4",
-  "checkedAt": "2026-10-20T13:28:55.822181+00:00",
+  "checkedAt": "2026-10-20T13:32:57.057834+00:00",
   "state": "installed_partial",
   "technicalTaskCompleted": false,
   "ownerAcceptance": false,
@@ -42,7 +42,15 @@
     "storedSuccessfulFollowup": false,
     "ambiguousAttemptRewrittenOrRepeated": false,
     "sourceChainPrivateEvidenceSha256": "01fce94773f86dd6aed615bb5c0632fce912433577b740aefb8747338ce5a487",
-    "failureFingerprintEvidenceSha256": "00d8b3e98a0fad386286178327eb4ab8bcb601fb4e933c64aef765c8ad63a55d"
+    "failureFingerprintEvidenceSha256": "00d8b3e98a0fad386286178327eb4ab8bcb601fb4e933c64aef765c8ad63a55d",
+    "subsequentOrdinaryDecision": {
+      "at": "2026-10-20 13:24:26+00:00",
+      "disposition": "silence",
+      "usedRetainedBlockedFollowup": true,
+      "reasonedPauseRatherThanRepeatingOldMeasurements": true,
+      "successfulCompletedFollowupNotProven": true,
+      "privateEvidenceSha256": "fa4a0b3a68cc21b7d7ad4e3bc9e300a3b4680c0040fa10cd05bf5aef23ed0c86"
+    }
   },
   "installed": {
     "coreImage": "sha256:51cfe1ec8de436e8c86feb7b33a6da2672f6add3aa213a6b986028d36011bad3",
@@ -98,7 +106,15 @@
     "runtimeObservedExternalDispatches": 0,
     "codingAgentCredits": null,
     "creditCost": null,
-    "isolatedProbeProviderCalls": 0
+    "isolatedProbeProviderCalls": 0,
+    "subsequentOrdinaryReview": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 14185,
+      "output_tokens": 138,
+      "model_attempts": 1
+    },
+    "elapsedWallSecondsAtFinalObservation": 2280.1
   },
   "remaining": [
     "A successful real self-chosen follow-up through the repaired research route and later ordinary use of its outcome have not yet been observed.",
