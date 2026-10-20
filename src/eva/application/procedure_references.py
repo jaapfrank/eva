@@ -54,6 +54,7 @@ class ResolvedProcedure:
     reference: ProcedureReference
     untrusted_content: str
     skill_package: object | None = None
+    skill_package_content: bytes | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -225,5 +226,5 @@ class ProcedureReferences:
                 content = projected.decode("utf-8", errors="strict")
             except UnicodeDecodeError as error:
                 raise ProcedureReferenceRejected("procedure is not UTF-8 text") from error
-            resolved.append(ResolvedProcedure(reference, content, package))
+            resolved.append(ResolvedProcedure(reference, content, package, current if package is not None else None))
         return tuple(resolved)

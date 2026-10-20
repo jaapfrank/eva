@@ -1,0 +1,170 @@
+{
+  "contract": "EvaE412PublishedIndependentCompletionReview/v1",
+  "reviewer": "e47_mcp_catalog",
+  "reviewedAt": "2026-10-20T17:50:03.136940+00:00",
+  "decision": "GO_E4_12_TECHNICAL_COMPLETION",
+  "blockingFindings": [],
+  "taskId": "E4.12",
+  "frozenDoneWhen": "Een passend bestaand open vaardigheidspakket wordt met exacte versie, bronhash en licentie via de bestaande procedure-/capabilityroute bruikbaar gemaakt en bij een andere passende opdracht hergebruikt. Een echte correctie of uitkomst werkt via dezelfde droom/AIDE-geïnspireerde keten door in een beoordeelde nieuwe versie, waarvan later gebruik traceerbaar is. Importtekst verleent geen bevoegdheid; persoonsgrenzen, scripts/supportbestanden en verwijzingen blijven juist. Geen tweede skillstore, automatische massainstallatie of leeftijd als verwijderbewijs. Als hergebruik geen aantoonbaar voordeel biedt wordt dat besluit expliciet vastgelegd; geen bruikbare functie als afgerond claimen.",
+  "criterionMatrix": [
+    {
+      "criterion": "Pinned upstream package, full resources/license and existing procedure route",
+      "met": true,
+      "evidence": [
+        "prior import/run independent source review",
+        "live-package-import.private.json",
+        "later existing reference resolver validates original and new package"
+      ]
+    },
+    {
+      "criterion": "Two different appropriate tasks in the same skill class",
+      "met": true,
+      "evidence": [
+        "source-verification-limits-run.private.json",
+        "standalone-helper-dependency-run.private.json",
+        "new separate Dutch two-source package note through installed run_reusable_procedure"
+      ]
+    },
+    {
+      "criterion": "Real observed correction enters same AIDE-inspired component chain",
+      "met": true,
+      "evidence": [
+        "real original Dutch Bronnen refusal retained in live-package-use.private.json",
+        "READ/DRAFT/EVALUATE/COMPARE/PREPARE verified in actual worker trace",
+        "one actual candidate development measurement, not a replacement wrapper"
+      ]
+    },
+    {
+      "criterion": "Independently reviewed improved full package version",
+      "met": true,
+      "evidence": [
+        "frozen final 8/12 to 12/12, no preservation regressions",
+        "exact unchanged helper/resources/license/origin and derivation",
+        "same queued application completed with verified saved-and-designated reference"
+      ]
+    },
+    {
+      "criterion": "Later actual use of that new version is traceable",
+      "met": true,
+      "evidence": [
+        "later-package-use.private.json: new exact reference/raw/manifest/script hashes",
+        "separate execution namespace and different Dutch two-source note",
+        "existing installed executor exit0/citations OK, no timeout/truncation, 1167ms"
+      ]
+    },
+    {
+      "criterion": "Import text grants no extra authority; no second store or mass installation",
+      "met": true,
+      "evidence": [
+        "prior independent exact-source GO and current owner/source-bound procedure grants retained",
+        "same existing artifact/procedure/sandbox/component publication contracts",
+        "no new store, no mass installation"
+      ]
+    },
+    {
+      "criterion": "Measured benefit and original provenance remain visible",
+      "met": true,
+      "evidence": [
+        "original and failed original use retained",
+        "development 5/8 to8/8; final8/12 to12/12",
+        "original and other five package files byte-compared by later runtime resolver script"
+      ]
+    }
+  ],
+  "sourceIntegrationDecision": "GO",
+  "sourceHashes": {
+    "src/eva/adapters/connectors/component_evaluation.py": "fb9671063d82e8b6c651cf504d1b28ccdbcf344fdf40ea2b1959154c8eb65df5",
+    "src/eva/adapters/postgres/component_improvement_actions.py": "8c4deefea5f0885fe053ae358a2151b654c1d3b946e4c5ed1d1ed3071acab3d9",
+    "src/eva/adapters/postgres/initiative_execution.py": "8c9c29d9a970b3037bff26fed5f2bea4a4b47ba6619995f3ade96e9e811dca93",
+    "src/eva/application/procedure_references.py": "fcb3064d84bd02f0461a263b1e0dd7df50d433629a5aa567268a11b509d015ce",
+    "src/eva/application/skill_packages.py": "58e5b80a6c54123d05750548d0c3a9cc7d79d594aec5411ee035512931f62e3b",
+    "src/eva/bootstrap/delegated_digital_composition.py": "2510ac6592975110d0cc390b3c900d1a3a68122530d5a60d7a90166886e54bdd",
+    "src/eva/contracts/component_target.py": "bbc0e38e5060ace7c8891091ab26fcabe20734c5b742d6e01ab72c39edc831b4",
+    "src/eva/operations/component_evaluation.py": "c2b9cf52ced6a02ca21c290c71518ec8c50e035e948123bc8e48911ff9f575cd",
+    "src/eva/operations/component_evaluation_service.py": "70359feaebe03bee7c520b3c0afa1171e07f8a36c65940417f9b90cdff863c1e",
+    "src/eva/operations/component_final_assessment.py": "7cd09366111850e9fa7db73c6efff0192660a3ca46072658c7703fe7052110d2",
+    "src/eva/operations/saved_artifact_application.py": "a20b018e2b2810626264ca613286f51c7eaebd1f20d2da27b6113ec2638fefd4",
+    "src/eva/providers/procedure_reference_actions.py": "56d2c4bf14453705d495d3554c2c28eeb4550e74bd06c113a2578358b51d91b5"
+  },
+  "development": {
+    "candidate_evaluations": 1,
+    "maximum": 2,
+    "baseline": {
+      "case_count": 8,
+      "dutch_case_count": 3,
+      "dutch_correct": 0,
+      "preservation_failures": 0,
+      "total_correct": 5
+    },
+    "candidate": {
+      "case_count": 8,
+      "dutch_case_count": 3,
+      "dutch_correct": 3,
+      "preservation_failures": 0,
+      "total_correct": 8
+    },
+    "elapsed_ms": {
+      "baseline": 3125,
+      "candidate": 3375
+    }
+  },
+  "independentFinal": {
+    "assessments": 1,
+    "maximum": 1,
+    "baseline": {
+      "case_count": 12,
+      "preservation_failures": 0,
+      "dutch_correct": 0,
+      "dutch_case_count": 4,
+      "total_correct": 8
+    },
+    "candidate": {
+      "case_count": 12,
+      "preservation_failures": 0,
+      "dutch_correct": 4,
+      "dutch_case_count": 4,
+      "total_correct": 12
+    },
+    "decision": "accept",
+    "correctness_regressions": 0,
+    "model_calls": 0,
+    "elapsed_ms": {
+      "baseline": 3726,
+      "candidate": 3925
+    },
+    "both_complete": {
+      "baseline": true,
+      "candidate": true
+    }
+  },
+  "assistance": {
+    "operator_directed": true,
+    "model_authored_and_executed_component_improvement": true,
+    "independent_fixed_assessment": true,
+    "operator_selected_later_task_and_new_reference": true,
+    "spontaneous_automatic_skill_selection_proven": false,
+    "unattended_dream_trigger_proven_by_this_case": false,
+    "prior_unstarted_expired_ingress_recovery_retained": true,
+    "host_health_probe_address_error_separately_retained": true
+  },
+  "limits": [
+    "Technical E4.12 doneWhen is met for one bounded imported skill and a real corrected package version, including later installed use.",
+    "Operator-assisted execution and selected later use do not prove autonomous opportunity discovery, unattended dream scheduling, or autonomous skill selection.",
+    "The verifier demonstrates citation ledger/header consistency; semantic_success_verified remains false for general factual truth.",
+    "This does not close family acceptance F2, other project tasks, E1.6, or the whole project; no competitor superiority claim."
+  ],
+  "runtimeUsage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 7,
+    "tool_calls": 11,
+    "input_tokens": 189968,
+    "output_tokens": 1062,
+    "total_tokens": 191030,
+    "cost_usd_micros": null
+  },
+  "provenanceCaveat": "Inherited publisher reviewer label refers to earlier E4.5; actual immutable registration/criteria/dataset/runner/scorer binding is exact E4.12. Original receipt retained.",
+  "originalIndependentReportSha256": "359930a9a49291c54632b8851f21f08ffd092b1db6f8dc2e4f540339a368d0a5",
+  "privateContentsPublished": false
+}

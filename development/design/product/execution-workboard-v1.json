@@ -841,14 +841,14 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.12",
+  "activeTaskId": "E4.13",
   "currentWork": {
-    "id": "E4.12",
-    "title": "Bestaande open vaardigheden importeren, gebruiken en gericht verbeteren",
+    "id": "E4.13",
+    "title": "Directe semantische feedback bij Eva-gemaakte code gebruiken",
     "status": "in_progress",
-    "doneWhen": "Een passend bestaand open vaardigheidspakket wordt met exacte versie, bronhash en licentie via de bestaande procedure-/capabilityroute bruikbaar gemaakt en bij een andere passende opdracht hergebruikt. Een echte correctie of uitkomst werkt via dezelfde droom/AIDE-geïnspireerde keten door in een beoordeelde nieuwe versie, waarvan later gebruik traceerbaar is. Importtekst verleent geen bevoegdheid; persoonsgrenzen, scripts/supportbestanden en verwijzingen blijven juist. Geen tweede skillstore, automatische massainstallatie of leeftijd als verwijderbewijs. Als hergebruik geen aantoonbaar voordeel biedt wordt dat besluit expliciet vastgelegd; geen bruikbare functie als afgerond claimen.",
-    "nextAction": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie.",
-    "checkedAt": "2026-10-20T17:18:27.895144+00:00",
+    "doneWhen": "Een bestaande language server geeft in Eva’s bestaande geïsoleerde programmeerroute bronversiegebonden feedback op een echte wijziging; Eva gebruikt die feedback om de kandidaat te verbeteren vóór de bestaande onafhankelijke eindcontrole. Verouderde diagnostiek, bestaande fouten en ontbrekende tooling worden niet als nieuwe correcte bevindingen verkocht. Eerste afgebakende taal is Python; gewone programmering blijft werken bij ontbrekende optionele LSP. Exacte upstream herkomst/licenties en gewijzigde adapter zijn vastgelegd; geen nieuwe programmeeragent.",
+    "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
+    "checkedAt": "2026-10-20T17:50:52.808889+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,19 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.12 · Open vaardigheid gebruikt, aantoonbaar verbeterd en opnieuw toegepast",
+            "state": "installed",
+            "summary": "Volledig pakket geïmporteerd. Echte correctie onafhankelijk 8/12→12/12, geen regressies; verbeterde versie later succesvol gebruikt. Operatorhulp blijft vermeld.",
+            "remaining": "Geen technische E4.12-stap. Zelfstandig kiezen in gewoon gezinsgebruik is hiermee niet bewezen.",
+            "source": "development/evidence/product/e412-skill-package-improvement-20261020.json",
+            "date": "2026-10-20",
+            "checkedAt": "2026-10-20T17:50:52.808889+00:00",
+            "completedTaskIds": [
+              "E4.12"
+            ],
+            "newProductFunctionCompleted": true
+          },
           {
             "title": "E4.12 · Open vaardigheidspakket geïnstalleerd; verbetercyclus nog open",
             "state": "installed",
@@ -2847,27 +2860,27 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.12",
-          "title": "Bestaande open vaardigheden importeren, gebruiken en gericht verbeteren",
+          "taskId": "E4.13",
+          "title": "Directe semantische feedback bij Eva-gemaakte code gebruiken",
           "status": "in_progress",
           "state": "building",
-          "summary": "E4.12: open vaardigheidspakket geïnstalleerd en gebruikt; verbetering en later gebruik nog open.",
-          "detail": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie.",
-          "doneWhen": "Een passend bestaand open vaardigheidspakket wordt met exacte versie, bronhash en licentie via de bestaande procedure-/capabilityroute bruikbaar gemaakt en bij een andere passende opdracht hergebruikt. Een echte correctie of uitkomst werkt via dezelfde droom/AIDE-geïnspireerde keten door in een beoordeelde nieuwe versie, waarvan later gebruik traceerbaar is. Importtekst verleent geen bevoegdheid; persoonsgrenzen, scripts/supportbestanden en verwijzingen blijven juist. Geen tweede skillstore, automatische massainstallatie of leeftijd als verwijderbewijs. Als hergebruik geen aantoonbaar voordeel biedt wordt dat besluit expliciet vastgelegd; geen bruikbare functie als afgerond claimen.",
-          "checkedAt": "2026-10-20T17:18:27.895144+00:00"
+          "summary": "E4.13: directe semantische feedback op Eva-gemaakte Pythoncode aansluiten.",
+          "detail": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
+          "doneWhen": "Een bestaande language server geeft in Eva’s bestaande geïsoleerde programmeerroute bronversiegebonden feedback op een echte wijziging; Eva gebruikt die feedback om de kandidaat te verbeteren vóór de bestaande onafhankelijke eindcontrole. Verouderde diagnostiek, bestaande fouten en ontbrekende tooling worden niet als nieuwe correcte bevindingen verkocht. Eerste afgebakende taal is Python; gewone programmering blijft werken bij ontbrekende optionele LSP. Exacte upstream herkomst/licenties en gewijzigde adapter zijn vastgelegd; geen nieuwe programmeeragent.",
+          "checkedAt": "2026-10-20T17:50:52.808889+00:00"
         },
         "next": {
-          "taskId": "E4.12",
-          "title": "Pakketverbetering met bestaande AIDE-route afmaken",
-          "detail": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie."
+          "taskId": "E4.13",
+          "title": "Directe semantische feedback bij Eva-gemaakte code gebruiken",
+          "detail": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server."
         },
         "ownerAction": {
           "required": false,
           "detail": "Geen handeling nodig. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T17:18:27.895144+00:00",
-        "reviewedAt": "2026-10-20T17:18:27.895144+00:00",
+        "checkedAt": "2026-10-20T17:50:52.808889+00:00",
+        "reviewedAt": "2026-10-20T17:50:52.808889+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -7189,7 +7202,7 @@
                 ]
               },
               {
-                "status": "in_progress",
+                "status": "completed",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
                 "ownerActionRequired": false,
@@ -7198,7 +7211,7 @@
                 "assignment": {
                   "coordinator": "/root",
                   "activeWorkers": [],
-                  "scope": "Bestaande procedure-/capabilityroute, één open pakket en zijn gebruik/verbetering. Geen voice of nieuwe skillstore."
+                  "scope": "Coördinator: bronbinding/publicatie; E46: evaluator en gerichte review; E47: onafhankelijke vaste criteria/eindbeoordeling. Geen spraak."
                 },
                 "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
                 "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
@@ -7208,7 +7221,7 @@
                 "scopeDecision": "Eigenaar20oktober bevestigt opname en uitvoering van alle nuttige onderdelen. Geen vrijblijvende kandidaat meer. Concrete upstreamkeuze en code worden alleen toegepast met behouden kwaliteit; een afgewezen variant sluit de gevraagde uitkomst niet automatisch af.",
                 "doneWhen": "Een passend bestaand open vaardigheidspakket wordt met exacte versie, bronhash en licentie via de bestaande procedure-/capabilityroute bruikbaar gemaakt en bij een andere passende opdracht hergebruikt. Een echte correctie of uitkomst werkt via dezelfde droom/AIDE-geïnspireerde keten door in een beoordeelde nieuwe versie, waarvan later gebruik traceerbaar is. Importtekst verleent geen bevoegdheid; persoonsgrenzen, scripts/supportbestanden en verwijzingen blijven juist. Geen tweede skillstore, automatische massainstallatie of leeftijd als verwijderbewijs. Als hergebruik geen aantoonbaar voordeel biedt wordt dat besluit expliciet vastgelegd; geen bruikbare functie als afgerond claimen.",
                 "existing": "Procedure aanwijzen, vinden, uitvoeren en onafhankelijke verbeter-/releaseketen bestaan.",
-                "gap": "Algemene AgentSkills-packagecompatibiliteit en automatische gebruiksgerichte onderhoudsketen zijn niet bevestigd in de onderzochte code.",
+                "gap": "Geen resterende technische E4.12-voorwaarde. Gewoon autonoom kiezen en gezinsnut blijven afzonderlijk zichtbaar.",
                 "implementation": [
                   "Kies één werkelijk nuttig upstream pakket en controleer volledige pakketlicentie, scripts en afhankelijkheden; neem het pakket over waar het past.",
                   "Pas kleine delen van Hermes skill guards en OpenClaw ervaringsreview toe op bestaande Eva-artifact- en reviewcontracten.",
@@ -7227,22 +7240,29 @@
                 "dependsOn": [
                   "E4.5"
                 ],
-                "nextAction": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie.",
+                "nextAction": "Behoud deze geïnstalleerde keten; vervolg met E4.13 voor directe semantische feedback in de bestaande programmeerroute.",
                 "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-                "checkedAt": "2026-10-20T17:18:27.895144+00:00",
-                "progress": "Geïnstalleerd: volledig MIT-pakket met bronversie/licentie opgeslagen, resources leesbaar en echte scripts via bestaande sandbox uitvoerbaar. Engelse broncontrole werkt; Nederlandse Bronnen-kop wordt onterecht afgewezen. Pakketgebonden AIDE-verbetering en later gebruik nog open.",
-                "evidence": "development/evidence/product/e412-open-skill-import-run-installed-20261020.json",
-                "latestEvidence": "development/evidence/product/e412-open-skill-import-run-installed-20261020.json",
-                "independentReview": "development/reviews/e412-open-skill-import-run-review-20261020.json"
+                "checkedAt": "2026-10-20T17:50:52.808889+00:00",
+                "progress": "Technisch afgerond en geïnstalleerd: volledig upstream pakket geïmporteerd; echte Bronnen-correctie via bestaande AIDE-route ontwikkeld, onafhankelijk 8/12→12/12 zonder regressies, complete nieuwe versie toegepast en later bij andere bronnotitie gebruikt.",
+                "evidence": "development/evidence/product/e412-skill-package-improvement-20261020.json",
+                "latestEvidence": "development/evidence/product/e412-skill-package-improvement-20261020.json",
+                "independentReview": "development/reviews/e412-skill-package-improvement-review-20261020.json",
+                "completedAt": "2026-10-20T17:49:13.190902+00:00",
+                "result": "Eva kan een bestaande open vaardigheid volledig gebruiken en één echte tekortkoming in dezelfde beoordeelde verbeterroute verhelpen en hergebruiken. Deze episode had operatorhulp; geen claim van spontane vaardigheidskeuze, algemene superioriteit of efficiëntiewinst.",
+                "completionEvidence": "development/evidence/product/e412-skill-package-improvement-20261020.json"
               },
               {
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
                 "ownerActionRequired": false,
                 "scopeOrigin": "upstream-reuse-20261020",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-                "assignment": "Gepland op eigenaarsverzoek; geen implementatie gestart door dit onderzoek.",
+                "assignment": {
+                  "coordinator": "/root",
+                  "activeWorkers": [],
+                  "scope": "E4.13: bestaande programmeerservice en optionele bronversiegebonden Python-LSP-feedback. Geen spraak of nieuwe programmeeragent."
+                },
                 "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
                 "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
                 "id": "E4.13",
@@ -7271,7 +7291,8 @@
                 ],
                 "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
                 "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-                "checkedAt": "2026-10-20T12:52:02.251252+00:00"
+                "checkedAt": "2026-10-20T17:50:52.808889+00:00",
+                "progress": "E4.12 afgerond; begin met controle van de werkelijk geïnstalleerde programmeerservice en bestaande upstream-grens. Nog geen LSP-wijziging geïnstalleerd."
               },
               {
                 "status": "planned",
@@ -7822,7 +7843,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie.",
+        "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7831,7 +7852,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-20T17:18:27.895144+00:00",
+        "updatedAt": "2026-10-20T17:50:52.808889+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -8073,7 +8094,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T17:18:27.895144+00:00",
+        "checkedAt": "2026-10-20T17:50:52.808889+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -12280,7 +12301,7 @@
               ]
             },
             {
-              "status": "in_progress",
+              "status": "completed",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
               "ownerActionRequired": false,
@@ -12289,7 +12310,7 @@
               "assignment": {
                 "coordinator": "/root",
                 "activeWorkers": [],
-                "scope": "Bestaande procedure-/capabilityroute, één open pakket en zijn gebruik/verbetering. Geen voice of nieuwe skillstore."
+                "scope": "Coördinator: bronbinding/publicatie; E46: evaluator en gerichte review; E47: onafhankelijke vaste criteria/eindbeoordeling. Geen spraak."
               },
               "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
               "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
@@ -12299,7 +12320,7 @@
               "scopeDecision": "Eigenaar20oktober bevestigt opname en uitvoering van alle nuttige onderdelen. Geen vrijblijvende kandidaat meer. Concrete upstreamkeuze en code worden alleen toegepast met behouden kwaliteit; een afgewezen variant sluit de gevraagde uitkomst niet automatisch af.",
               "doneWhen": "Een passend bestaand open vaardigheidspakket wordt met exacte versie, bronhash en licentie via de bestaande procedure-/capabilityroute bruikbaar gemaakt en bij een andere passende opdracht hergebruikt. Een echte correctie of uitkomst werkt via dezelfde droom/AIDE-geïnspireerde keten door in een beoordeelde nieuwe versie, waarvan later gebruik traceerbaar is. Importtekst verleent geen bevoegdheid; persoonsgrenzen, scripts/supportbestanden en verwijzingen blijven juist. Geen tweede skillstore, automatische massainstallatie of leeftijd als verwijderbewijs. Als hergebruik geen aantoonbaar voordeel biedt wordt dat besluit expliciet vastgelegd; geen bruikbare functie als afgerond claimen.",
               "existing": "Procedure aanwijzen, vinden, uitvoeren en onafhankelijke verbeter-/releaseketen bestaan.",
-              "gap": "Algemene AgentSkills-packagecompatibiliteit en automatische gebruiksgerichte onderhoudsketen zijn niet bevestigd in de onderzochte code.",
+              "gap": "Geen resterende technische E4.12-voorwaarde. Gewoon autonoom kiezen en gezinsnut blijven afzonderlijk zichtbaar.",
               "implementation": [
                 "Kies één werkelijk nuttig upstream pakket en controleer volledige pakketlicentie, scripts en afhankelijkheden; neem het pakket over waar het past.",
                 "Pas kleine delen van Hermes skill guards en OpenClaw ervaringsreview toe op bestaande Eva-artifact- en reviewcontracten.",
@@ -12318,22 +12339,29 @@
               "dependsOn": [
                 "E4.5"
               ],
-              "nextAction": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie.",
+              "nextAction": "Behoud deze geïnstalleerde keten; vervolg met E4.13 voor directe semantische feedback in de bestaande programmeerroute.",
               "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-              "checkedAt": "2026-10-20T17:18:27.895144+00:00",
-              "progress": "Geïnstalleerd: volledig MIT-pakket met bronversie/licentie opgeslagen, resources leesbaar en echte scripts via bestaande sandbox uitvoerbaar. Engelse broncontrole werkt; Nederlandse Bronnen-kop wordt onterecht afgewezen. Pakketgebonden AIDE-verbetering en later gebruik nog open.",
-              "evidence": "development/evidence/product/e412-open-skill-import-run-installed-20261020.json",
-              "latestEvidence": "development/evidence/product/e412-open-skill-import-run-installed-20261020.json",
-              "independentReview": "development/reviews/e412-open-skill-import-run-review-20261020.json"
+              "checkedAt": "2026-10-20T17:50:52.808889+00:00",
+              "progress": "Technisch afgerond en geïnstalleerd: volledig upstream pakket geïmporteerd; echte Bronnen-correctie via bestaande AIDE-route ontwikkeld, onafhankelijk 8/12→12/12 zonder regressies, complete nieuwe versie toegepast en later bij andere bronnotitie gebruikt.",
+              "evidence": "development/evidence/product/e412-skill-package-improvement-20261020.json",
+              "latestEvidence": "development/evidence/product/e412-skill-package-improvement-20261020.json",
+              "independentReview": "development/reviews/e412-skill-package-improvement-review-20261020.json",
+              "completedAt": "2026-10-20T17:49:13.190902+00:00",
+              "result": "Eva kan een bestaande open vaardigheid volledig gebruiken en één echte tekortkoming in dezelfde beoordeelde verbeterroute verhelpen en hergebruiken. Deze episode had operatorhulp; geen claim van spontane vaardigheidskeuze, algemene superioriteit of efficiëntiewinst.",
+              "completionEvidence": "development/evidence/product/e412-skill-package-improvement-20261020.json"
             },
             {
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
               "ownerActionRequired": false,
               "scopeOrigin": "upstream-reuse-20261020",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-              "assignment": "Gepland op eigenaarsverzoek; geen implementatie gestart door dit onderzoek.",
+              "assignment": {
+                "coordinator": "/root",
+                "activeWorkers": [],
+                "scope": "E4.13: bestaande programmeerservice en optionele bronversiegebonden Python-LSP-feedback. Geen spraak of nieuwe programmeeragent."
+              },
               "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
               "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
               "id": "E4.13",
@@ -12362,7 +12390,8 @@
               ],
               "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
               "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-              "checkedAt": "2026-10-20T12:52:02.251252+00:00"
+              "checkedAt": "2026-10-20T17:50:52.808889+00:00",
+              "progress": "E4.12 afgerond; begin met controle van de werkelijk geïnstalleerde programmeerservice en bestaande upstream-grens. Nog geen LSP-wijziging geïnstalleerd."
             },
             {
               "status": "planned",
@@ -12913,7 +12942,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Verbind de echte pakketcorrectie (Nederlandse Bronnen-kop) aan dezelfde brongebonden AIDE-componentbeoordeling, volledige nieuwe pakketversie en later gebruik. Geen nieuwe store of vergelijkingsserie.",
+      "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -12922,7 +12951,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-20T17:18:27.895144+00:00",
+      "updatedAt": "2026-10-20T17:50:52.808889+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -13164,7 +13193,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T17:18:27.895144+00:00",
+      "checkedAt": "2026-10-20T17:50:52.808889+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -14736,13 +14765,13 @@
     },
     "e412OpenSkillReuse20261020": {
       "startedAt": "2026-10-20T16:42:18.078240+00:00",
-      "state": "installed_import_execution_task_open",
+      "state": "installed_technical_task_completed",
       "existing": "Procedure-import/uitvoering en beoordeelde componentrelease bestaan.",
       "gap": "Bestaande component/AIDE-route aan volledige pakketidentiteit/supportfiles verbinden; echte correctie beoordelen, toepassen en later gebruiken.",
       "scope": "Eén pakket en bestaande keten; geen nieuwe store, massainstallatie of voice.",
       "criteriaPreserved": true,
       "runtimeChanged": true,
-      "checkedAt": "2026-10-20T17:18:27.895144+00:00",
+      "checkedAt": "2026-10-20T17:50:52.808889+00:00",
       "selectedPackage": {
         "repository": "https://github.com/NousResearch/hermes-agent",
         "revision": "1f502aded81a07fa4127e6a90e06d04271a5b04a",
@@ -14752,7 +14781,21 @@
         "packageSha256": "82571a6c3940e265e9c7255beb91b6bc9ccd22d434b8c6a432c89ae77103e54c"
       },
       "evidence": "development/evidence/product/e412-open-skill-import-run-installed-20261020.json",
-      "review": "development/reviews/e412-open-skill-import-run-review-20261020.json"
+      "review": "development/reviews/e412-open-skill-import-run-review-20261020.json",
+      "improvement": {
+        "built": true,
+        "installed": true,
+        "development": "5/8 to8/8",
+        "independentFinal": "8/12 to12/12",
+        "regressions": 0,
+        "applied": true,
+        "laterUse": true,
+        "operatorDirected": true,
+        "efficiencyAdvantageProven": false
+      },
+      "latestEvidence": "development/evidence/product/e412-skill-package-improvement-20261020.json",
+      "independentReview": "development/reviews/e412-skill-package-improvement-review-20261020.json",
+      "completedAt": "2026-10-20T17:49:13.190902+00:00"
     }
   },
   "updatedAt": "2026-10-20T13:28:55.822181+00:00",

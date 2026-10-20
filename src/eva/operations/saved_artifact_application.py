@@ -15,19 +15,91 @@ def publication_plan(package):
     target = validate_saved_artifact_target(package.get("source_target"),
         relative_path=package["path"], baseline_sha256=package["baseline_sha256"])
     source = package["candidate_content"]
-    if len(source.encode()) > 16384:
-        raise ValueError("saved procedure source exceeds its existing resolution bound")
-    original = PurePosixPath(target["artifact_path"])
-    if not original.is_absolute() or ".." in original.parts or original.suffix != ".py":
-        raise ValueError("saved procedure destination differs")
-    destination = str(original.with_name(original.stem + ".improved-" + package["candidate_sha256"] + ".py"))
+    package_binding = target.get("skill_package_binding")
+    if len(source.encode()) > (65536 if package_binding is not None else 16384):
+        raise ValueError("saved procedure source exceeds its existing improvement bound")
+    destination = _destination(target, package["candidate_sha256"])
     if len(destination) > 240:
         raise ValueError("saved procedure destination exceeds the existing tool schema")
     return {"contract": "EvaSavedArtifactPublication/v1",
         "review_id": package["candidate_package_sha256"], "source_target": target,
         "baseline_sha256": package["baseline_sha256"],
         "candidate_sha256": package["candidate_sha256"], "destination_path": destination,
-        "improvement_description": package["expected_gain"]}
+        "improvement_description": package["expected_gain"],
+        **(_skill_publication(target, source) if package_binding is not None else {})}
+
+
+def _destination(target, candidate_sha256):
+    original = PurePosixPath(target["artifact_path"])
+    if not original.is_absolute() or ".." in original.parts:
+        raise ValueError("saved procedure destination differs")
+    if target.get("skill_package_binding") is not None:
+        if not original.name.endswith(".skill.json"):
+            raise ValueError("saved package destination differs")
+        return str(original.with_name(original.name[:-len(".skill.json")]
+            + ".improved-" + candidate_sha256 + ".skill.json"))
+    if original.suffix != ".py":
+        raise ValueError("saved procedure destination differs")
+    return str(original.with_name(original.stem + ".improved-" + candidate_sha256 + ".py"))
+
+
+def _skill_publication(target, source):
+    from eva.application.skill_packages import derived_manifest
+    binding = target["skill_package_binding"]
+    manifest = derived_manifest(binding["package_manifest"], binding["resource_path"], source.encode())
+    return {"skill_package": {"candidate_manifest": manifest,
+        "candidate_package_sha256": canonical_sha256(manifest)}}
+
+
+def validate_candidate_artifact(publication, candidate_content, artifact_content):
+    """Verify only the already reviewed bytes/manifest; this grants no authority."""
+    if not isinstance(artifact_content, str) or not isinstance(candidate_content, str):
+        return False
+    if hashlib.sha256(candidate_content.encode()).hexdigest() != publication["candidate_sha256"]:
+        return False
+    if "skill_package" not in publication:
+        return len(artifact_content.encode()) <= 16384 and artifact_content == candidate_content
+    if len(artifact_content.encode()) > 65536:
+        return False
+    from eva.application.skill_packages import matches_reviewed_package
+    expected = publication["skill_package"]
+    binding = publication["source_target"]["skill_package_binding"]
+    return (canonical_sha256(expected["candidate_manifest"]) == expected["candidate_package_sha256"]
+        and matches_reviewed_package(artifact_content, expected["candidate_manifest"],
+            binding["resource_path"], candidate_content.encode()))
+
+
+def materialize_candidate_artifact(publication, candidate_content, resolved):
+    """Rebuild one immutable package variant from the fresh host-bound source."""
+    target = publication["source_target"]
+    if "skill_package_binding" not in target:
+        artifact = candidate_content
+    else:
+        import json
+        from eva.application.skill_packages import AgentSkillPackage, replace_python_resource
+        from eva.contracts.canonical_json import canonical_json_bytes
+        binding = target["skill_package_binding"]
+        raw = resolved.get("baseline_package_content")
+        if (not isinstance(raw, str)
+                or hashlib.sha256(raw.encode()).hexdigest() != binding["package_content_sha256"]):
+            raise ValueError("current complete package source changed")
+        original = AgentSkillPackage.from_wire(json.loads(raw))
+        if (original.manifest() != binding["package_manifest"]
+                or hashlib.sha256(original.resource(binding["resource_path"])).hexdigest()
+                   != target["content_sha256"]):
+            raise ValueError("current package resource or support context differs")
+        variant = replace_python_resource(original, binding["resource_path"], candidate_content.encode())
+        artifact = canonical_json_bytes(variant.to_wire()).decode("utf-8")
+    if not validate_candidate_artifact(publication, candidate_content, artifact):
+        raise ValueError("candidate artifact differs from the reviewed publication")
+    return artifact
+
+
+def _resolve_original(procedures, turn, target):
+    resource_path = target.get("skill_package_binding", {}).get("resource_path")
+    if resource_path is None:
+        return procedures.resolve_improvement_source(turn, target["procedure_reference_id"])
+    return procedures.resolve_improvement_source(turn, target["procedure_reference_id"], resource_path=resource_path)
 
 
 def verify_saved_release(review_id, release):
@@ -74,7 +146,13 @@ def receipt_confirms_application(receipt, publication, task_id):
         and receipt.get("publication") == publication
         and receipt.get("old_source_unchanged") is True
         and ref.get("path") == publication["destination_path"]
-        and ref.get("content_sha256") == publication["candidate_sha256"]
+        and ref.get("content_sha256") == (
+            receipt.get("candidate_artifact_sha256") if "skill_package" in publication
+            else publication["candidate_sha256"])
+        and ("skill_package" not in publication or (
+            isinstance(receipt.get("candidate_artifact_sha256"), str)
+            and re.fullmatch(r"[0-9a-f]{64}", receipt["candidate_artifact_sha256"]) is not None
+            and receipt.get("skill_package_sha256") == publication["skill_package"]["candidate_package_sha256"]))
         and isinstance(ref.get("document_id"), str)
         and ref["document_id"] == expected_id
         and isinstance(ref.get("receipt_sha256"), str)
@@ -92,10 +170,9 @@ def apply_in_core(publication, candidate_content, task_id, *, engine, procedures
     target = validate_saved_artifact_target(publication["source_target"],
         baseline_sha256=publication["baseline_sha256"])
     if (hashlib.sha256(candidate_content.encode()).hexdigest() != publication["candidate_sha256"]
-            or len(candidate_content.encode()) > 16384):
+            or len(candidate_content.encode()) > (65536 if "skill_package_binding" in target else 16384)):
         raise ValueError("saved application candidate changed")
-    expected_path = str(PurePosixPath(target["artifact_path"]).with_name(
-        PurePosixPath(target["artifact_path"]).stem + ".improved-" + publication["candidate_sha256"] + ".py"))
+    expected_path = _destination(target, publication["candidate_sha256"])
     if publication["destination_path"] != expected_path:
         raise ValueError("saved application destination changed")
     improvement = publication.get("improvement_description")
@@ -116,7 +193,7 @@ def apply_in_core(publication, candidate_content, task_id, *, engine, procedures
                                      authorize_dispatch=guard)
     with background_execution(scope):
         guard(source_turn)
-        resolved = procedures.resolve_improvement_source(source_turn, target["procedure_reference_id"])
+        resolved = _resolve_original(procedures, source_turn, target)
         if resolved["source_target"] != target:
             raise ValueError("saved application baseline changed")
         store = PostgresMemoryOutbox(engine, tenant_id=source_turn.tenant_id,
@@ -126,9 +203,10 @@ def apply_in_core(publication, candidate_content, task_id, *, engine, procedures
         if old is None:
             raise ValueError("saved application baseline metadata unavailable")
         use_when = json.loads(old.content)["use_when"]
+        artifact_content = materialize_candidate_artifact(publication, candidate_content, resolved)
         save = tools.execute(source_turn, ConversationActionCall(
             "reviewed-artifact-save:" + publication["review_id"], "save_workspace_document",
-            {"path": publication["destination_path"], "content": candidate_content}), step_index=0)
+            {"path": publication["destination_path"], "content": artifact_content}), step_index=0)
         if save.output.get("status") != "verified":
             raise ValueError("saved application write is not verified")
         guard(source_turn)
@@ -146,13 +224,16 @@ def apply_in_core(publication, candidate_content, task_id, *, engine, procedures
         if designation.output.get("status") != "designated":
             raise ValueError("saved application designation is not verified")
         guard(source_turn)
-        old_after = procedures.resolve_improvement_source(source_turn, target["procedure_reference_id"])
+        old_after = _resolve_original(procedures, source_turn, target)
         if old_after != resolved:
             raise ValueError("original saved source changed during application")
         return {"contract": "EvaSavedArtifactApplication/v1", "status": "saved_and_designated",
             "task_id": task_id, "publication": publication,
             "reference": designation.output["reference"], "old_source_unchanged": True,
-            "new_model_requests": 0}
+            "new_model_requests": 0,
+            **({"candidate_artifact_sha256": hashlib.sha256(artifact_content.encode()).hexdigest(),
+                "skill_package_sha256": publication["skill_package"]["candidate_package_sha256"]}
+               if "skill_package" in publication else {})}
 
 
 def _verify_source_binding(spec, turn):

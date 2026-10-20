@@ -1,0 +1,228 @@
+{
+  "contract": "EvaSkillPackageImprovement/v1",
+  "taskId": "E4.12",
+  "checkedAt": "2026-10-20T17:50:52.808889+00:00",
+  "state": "installed_technical_task_completed",
+  "technicalTaskCompleted": true,
+  "ownerAcceptance": false,
+  "existing": "Pinned complete MIT grounded-citations package import, resource reads and ordinary isolated execution installed. Actual English source-header validation worked; Dutch Bronnen failed.",
+  "added": [
+    "Bind a selected Python resource to its whole exact saved package, receipt and current source scope.",
+    "Evaluate original and candidate with identical full readonly supporting package context using existing component evaluator.",
+    "Publish one immutable complete package variant with preserved upstream origin/license/support bytes and explicit derivation.",
+    "Retain old plain Python route and current source/grant/stop checks."
+  ],
+  "source": {
+    "repository": "https://github.com/NousResearch/hermes-agent",
+    "revision": "1f502aded81a07fa4127e6a90e06d04271a5b04a",
+    "path": "skills/research/grounded-citations",
+    "license": "MIT",
+    "packageSha256": "82571a6c3940e265e9c7255beb91b6bc9ccd22d434b8c6a432c89ae77103e54c",
+    "resource": "scripts/sources.py",
+    "baselineResourceSha256": "0c216e29e092faedcaa1ebae129db15dfc100465169490704b3628446db96788"
+  },
+  "installation": {
+    "state": "running_with_retained_mounts",
+    "coreImage": "sha256:5ab4260116f2806c6d4ee7d3b5c1e359debfe187d1f794568d9376ceeabab7f6",
+    "workerImage": "sha256:2540f851d08f29b45344148f629bd29ac5cd4370a61543441553cdc70b26124b",
+    "executionPins": 68,
+    "capabilityCount": 26,
+    "releaseParity": true,
+    "sourceHashes": {
+      "src/eva/adapters/connectors/component_evaluation.py": "fb9671063d82e8b6c651cf504d1b28ccdbcf344fdf40ea2b1959154c8eb65df5",
+      "src/eva/adapters/postgres/component_improvement_actions.py": "8c4deefea5f0885fe053ae358a2151b654c1d3b946e4c5ed1d1ed3071acab3d9",
+      "src/eva/adapters/postgres/initiative_execution.py": "8c9c29d9a970b3037bff26fed5f2bea4a4b47ba6619995f3ade96e9e811dca93",
+      "src/eva/application/procedure_references.py": "fcb3064d84bd02f0461a263b1e0dd7df50d433629a5aa567268a11b509d015ce",
+      "src/eva/application/skill_packages.py": "58e5b80a6c54123d05750548d0c3a9cc7d79d594aec5411ee035512931f62e3b",
+      "src/eva/bootstrap/delegated_digital_composition.py": "2510ac6592975110d0cc390b3c900d1a3a68122530d5a60d7a90166886e54bdd",
+      "src/eva/contracts/component_target.py": "bbc0e38e5060ace7c8891091ab26fcabe20734c5b742d6e01ab72c39edc831b4",
+      "src/eva/operations/component_evaluation.py": "c2b9cf52ced6a02ca21c290c71518ec8c50e035e948123bc8e48911ff9f575cd",
+      "src/eva/operations/component_evaluation_service.py": "70359feaebe03bee7c520b3c0afa1171e07f8a36c65940417f9b90cdff863c1e",
+      "src/eva/operations/component_final_assessment.py": "7cd09366111850e9fa7db73c6efff0192660a3ca46072658c7703fe7052110d2",
+      "src/eva/operations/saved_artifact_application.py": "a20b018e2b2810626264ca613286f51c7eaebd1f20d2da27b6113ec2638fefd4",
+      "src/eva/providers/procedure_reference_actions.py": "56d2c4bf14453705d495d3554c2c28eeb4550e74bd06c113a2578358b51d91b5"
+    },
+    "voiceChanged": false,
+    "policyBytesChanged": false
+  },
+  "verification": {
+    "rootIntegration": {
+      "passed": 34,
+      "seconds": 9.85,
+      "scope": "Real PG save/source/publication/another-task execution and targeted source binding contracts; synthetic gain is not actual quality evidence."
+    },
+    "nativeAdmission": {
+      "passed": 14,
+      "scope": "Package >16KiB and unreviewed manifest/source/grant rejection"
+    },
+    "legacyCompatibilityCorrection": {
+      "passed": 1,
+      "earlierFailed": 1
+    },
+    "evaluator": {
+      "initialPassed": 160,
+      "afterRoutingChangePassed": 124,
+      "overlappingRunsNotSummed": true,
+      "actualOfflineContainers": 2
+    },
+    "candidateReadOnlyPreflight": {
+      "exactSavedEnvelopeBytes": 62300,
+      "sourceAndAuthorityVerified": true,
+      "mutations": false
+    },
+    "testModelCalls": 0
+  },
+  "independentAssessment": {
+    "criteriaFrozenBeforeCandidate": true,
+    "protocolSha256": "46e4b53e96d1c1d4b6239a81497d181e47ed2635b1243532e1e9f7271e7db909",
+    "maximumDevelopmentMeasurements": 2,
+    "maximumFinalAssessments": 1,
+    "developerReadsHeldoutContents": false,
+    "result": "accept",
+    "development": {
+      "candidate_evaluations": 1,
+      "maximum": 2,
+      "baseline": {
+        "case_count": 8,
+        "dutch_case_count": 3,
+        "dutch_correct": 0,
+        "preservation_failures": 0,
+        "total_correct": 5
+      },
+      "candidate": {
+        "case_count": 8,
+        "dutch_case_count": 3,
+        "dutch_correct": 3,
+        "preservation_failures": 0,
+        "total_correct": 8
+      },
+      "elapsed_ms": {
+        "baseline": 3125,
+        "candidate": 3375
+      }
+    },
+    "independentFinal": {
+      "assessments": 1,
+      "maximum": 1,
+      "baseline": {
+        "case_count": 12,
+        "preservation_failures": 0,
+        "dutch_correct": 0,
+        "dutch_case_count": 4,
+        "total_correct": 8
+      },
+      "candidate": {
+        "case_count": 12,
+        "preservation_failures": 0,
+        "dutch_correct": 4,
+        "dutch_case_count": 4,
+        "total_correct": 12
+      },
+      "decision": "accept",
+      "correctness_regressions": 0,
+      "model_calls": 0,
+      "elapsed_ms": {
+        "baseline": 3726,
+        "candidate": 3925
+      },
+      "both_complete": {
+        "baseline": true,
+        "candidate": true
+      }
+    },
+    "candidateResourceSha256": "99d1f4452930315f3f9e143417fbd67b4f539159ddbb4173c6c760e765f448ab",
+    "candidatePackageSha256": "53f4f4d04d1f4c792ebf554d174580967cc6093cb25ebe2938dcffd866f21a49",
+    "actualApplicationCount": 1
+  },
+  "actualExecution": {
+    "operatorDirected": true,
+    "autonomousTopicSelectionClaimed": false,
+    "originalIngressRewritten": false,
+    "firstAdmission": {
+      "state": "needs_help",
+      "error": "deadline_expired",
+      "modelCalls": 0,
+      "toolCalls": 0,
+      "cause": "Retained original owner source time was reused as creation time. No model dispatch happened."
+    },
+    "currentContinuation": "Existing durable scheduled-resume route reserves current admission time; original failed attempt retained.",
+    "status": "completed_and_later_used",
+    "developmentProposalModelChosen": true,
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 7,
+      "tool_calls": 11,
+      "input_tokens": 189968,
+      "output_tokens": 1062,
+      "total_tokens": 191030,
+      "cost_usd_micros": null
+    }
+  },
+  "operationalIncidents": [
+    {
+      "stage": "Evaluator health observation",
+      "failure": "Helper probed loopback while service bound existing172.28.0.1. Same live PID/listener later confirmed200ready; no repeat activation/restart."
+    },
+    {
+      "stage": "Candidate alternate-config preflight",
+      "failure": "Private artifact config not readable by container user. No model/evaluation; actual mounted client configuration retains its established mode."
+    }
+  ],
+  "measurement": {
+    "runtimeModelUsage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 7,
+      "tool_calls": 11,
+      "input_tokens": 189968,
+      "output_tokens": 1062,
+      "total_tokens": 191030,
+      "cost_usd_micros": null
+    },
+    "developmentCredits": null,
+    "runtimeCredits": null,
+    "efficiencyAdvantageProven": false,
+    "laterUseModelCalls": 0
+  },
+  "remaining": "No remaining technical E4.12 condition. Autonomous unprompted skill selection, everyday household utility and full family acceptance are not established by this directed episode.",
+  "notClaimed": [
+    "Complete AIDE2",
+    "General intelligence or competitor superiority",
+    "Efficiency gain",
+    "Family acceptance"
+  ],
+  "completedAt": "2026-10-20T17:49:13.190902+00:00",
+  "laterUse": {
+    "operatorDirected": true,
+    "automaticSkillSelectionClaimed": false,
+    "newTask": "A separate two-source Dutch package note, not a development/final case",
+    "packageSha256": "53f4f4d04d1f4c792ebf554d174580967cc6093cb25ebe2938dcffd866f21a49",
+    "resourceSha256": "99d1f4452930315f3f9e143417fbd67b4f539159ddbb4173c6c760e765f448ab",
+    "originalUnchanged": true,
+    "otherPackageFilesIdentical": true,
+    "originAndLicensePreserved": true,
+    "usedAt": "2026-10-20T17:49:13.190902+00:00",
+    "modelCalls": 0,
+    "status": "execution_completed",
+    "elapsedMs": 1167,
+    "semanticSuccessVerified": false,
+    "note": "Citation consistency only; not proof that the claims or external sources are true."
+  },
+  "application": {
+    "status": "saved_and_designated",
+    "fullArtifactSha256": "904970c63f22097ef37b46bdad07ae3bbcbeea5c1b49cc5641c5c6c1852a7400",
+    "oldSourceUnchanged": true,
+    "newCompletePackageReusable": true,
+    "operatorDirected": true
+  },
+  "limitations": [
+    "Operator started the improvement task and explicitly selected the new version for later use; this is not spontaneous skill selection or a dream-trigger proof.",
+    "Runtime model usage is partial:191030tokens,7responses,11tools. No efficiency gain; credit costs unknown.",
+    "Inherited publisher reviewer label mentions E4.5 while immutable actual criteria/bindings match E4.12; original receipt preserved.",
+    "Complete AIDE2, broad intelligence, superiority and family acceptance are not proven."
+  ],
+  "independentReview": "development/reviews/e412-skill-package-improvement-review-20261020.json"
+}

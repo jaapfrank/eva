@@ -132,11 +132,23 @@ Pakketten die niet passen worden duidelijk geweigerd. Exitstatus, teruggelezen b
 en inhoudelijke kwaliteit zijn afzonderlijk; afgekapt resultaat telt niet als voltooide
 uitvoer. Opslaan en herbruikbaar aanwijzen blijven de bestaande geverifieerde acties.
 
-Deze import-/uitvoerverbinding rondt E4.12 niet af. De bestaande AIDE-componentroute
-ondersteunt nog gewone Pythonartefacten. Een pakketgebonden verbeterkandidaat moet
-ook de ongewijzigde helpers, bronversie en licentie binden, in dezelfde omgeving worden
-beoordeeld en als nieuwe volledige versie worden gepubliceerd. De oude versie blijft
-behouden; alleen gemeten en onafhankelijk beoordeelde winst mag later worden gebruikt.
+De bestaande AIDE-componentroute ondersteunt ook één geselecteerde Pythonresource
+in een exact opgeslagen vaardigheidspakket. Het broncontract bindt afzonderlijk de
+resourcehash, volledige envelopehash en pakketmanifest. De volledige envelope blijft
+hostcontext en wordt niet aan modelvoorstellen of meetrapporten toegevoegd. Beide
+geïsoleerde metingen krijgen hetzelfde alleen-lezen pakket met één vervangen resource;
+de onafhankelijke eindbeoordeling gebruikt een vaste hostbinding. Een additieve suite
+per virtueel bronpad behoudt bestaande suites en criteria.
+
+Een geaccepteerde verbetering wordt via dezelfde geverifieerde save-/designationroute
+als nieuwe volledige `.skill.json`-versie gepubliceerd. Alle andere resourcebytes,
+licentie en upstreamherkomst blijven gelijk; een afleidingsrecord noemt het ouderpakket
+en de oude resourcehash. Actuele bron, bevoegdheid, stoppen en taakstatus worden opnieuw
+gecontroleerd. De oorspronkelijke versie blijft behouden. Deze verbinding is geïnstalleerd;
+de echte Bronnen-correctie is afzonderlijk beoordeeld (8/12 naar 12/12), toegepast en bij
+een andere notitie gebruikt. E4.12 is technisch afgerond; operatorhulp en de nog niet
+bewezen autonome vaardigheidskeuze blijven zichtbaar. Alleen gemeten en onafhankelijk
+beoordeelde winst mag worden toegepast.
 Die overdracht en echt later gebruik blijven op dezelfde E4.12-kaart open.
 
 ## Moduleverantwoordelijkheden

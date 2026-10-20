@@ -535,7 +535,7 @@ class PostgresInitiativeAuthority:
         """Host-only binding for one independently accepted saved-source publication."""
         from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore
         from eva.operations.component_evaluation import validate_saved_artifact_target
-        from pathlib import PurePosixPath
+        from eva.operations.saved_artifact_application import _destination, _skill_publication
         import hashlib
         now = datetime.now(UTC).replace(microsecond=0)
         work, turn = self.reviewed_work_current(work_id, now=now)
@@ -544,12 +544,15 @@ class PostgresInitiativeAuthority:
         actual_scope = {key: getattr(turn, key) for key in
                         ("tenant_id", "installation_id", "principal_id", "project_id")}
         candidate_sha = hashlib.sha256(candidate_content.encode()).hexdigest()
-        expected_path = str(PurePosixPath(target["artifact_path"]).with_name(
-            PurePosixPath(target["artifact_path"]).stem + ".improved-" + candidate_sha + ".py"))
+        package_bound = "skill_package_binding" in target
+        expected_path = _destination(target, candidate_sha)
+        expected_package = _skill_publication(target, candidate_content).get("skill_package") if package_bound else None
         if (publication.get("contract") != "EvaSavedArtifactPublication/v1"
                 or re.fullmatch(r"[0-9a-f]{64}", publication.get("review_id", "")) is None
                 or target["scope"] != actual_scope
-                or not 0 < len(candidate_content.encode()) <= 16384
+                or not 0 < len(candidate_content.encode()) <= (65536 if package_bound else 16384)
+                or (publication.get("skill_package") != expected_package
+                    or ("skill_package" in publication) != package_bound)
                 or publication.get("candidate_sha256") != candidate_sha
                 or publication.get("destination_path") != expected_path
                 or datetime.fromisoformat(target["retention_until"].replace("Z", "+00:00")) <= now
@@ -844,6 +847,8 @@ class ReviewedNativeSavedArtifactGuard(NativeInitiativeGuard):
         expected = {"document_id": target["procedure_reference_id"], "path": target["artifact_path"],
             **{key: target[key] for key in ("content_sha256", "receipt_sha256", "source_call_id",
                 "source_message_id", "tool_configuration_sha256", "retention_until")}}
+        if "skill_package_binding" in target:
+            expected["content_sha256"] = target["skill_package_binding"]["package_content_sha256"]
         if (wire.get("contract") != "ProcedureReference/v1"
                 or any(wire.get(key) != value for key, value in expected.items())
                 or doc.source_ref != target["source_message_id"]
@@ -884,14 +889,25 @@ class ReviewedNativeSavedArtifactGuard(NativeInitiativeGuard):
         target = self.publication["source_target"]
         arguments = request.arguments
         path, content = arguments.get("path"), arguments.get("content")
-        allowed = {target["artifact_path"]: target["content_sha256"],
-                   self.publication["destination_path"]: self.publication["candidate_sha256"]}
+        package_binding = target.get("skill_package_binding")
+        candidate_matches = content == self.candidate_content
+        if package_binding is not None:
+            from eva.application.skill_packages import matches_reviewed_package
+            candidate_matches = matches_reviewed_package(content,
+                self.publication["skill_package"]["candidate_manifest"],
+                package_binding["resource_path"], self.candidate_content.encode())
+        candidate_digest = (hashlib.sha256(content.encode()).hexdigest()
+                            if candidate_matches and isinstance(content, str) else None)
+        allowed = {target["artifact_path"]: (package_binding["package_content_sha256"]
+                   if package_binding is not None else target["content_sha256"]),
+                   self.publication["destination_path"]: (candidate_digest if package_binding is not None
+                   else self.publication["candidate_sha256"])}
         if (phase not in {"execute", "observe"}
                 or request.tool_configuration_sha256 != target["tool_configuration_sha256"]
                 or path not in allowed or not isinstance(content, str)
                 or hashlib.sha256(content.encode()).hexdigest() != allowed[path]
                 or (phase == "execute" and (path != self.publication["destination_path"]
-                    or content != self.candidate_content))
+                    or not candidate_matches))
                 or (request.observation_arguments is not None
                     and request.observation_arguments != {"path": path})):
             raise InitiativeMandateDenied("reviewed native request differs from the accepted package")

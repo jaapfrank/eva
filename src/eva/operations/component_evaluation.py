@@ -10,6 +10,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 import ast
 import base64
+import csv
+import io
 import hashlib
 import json
 import os
@@ -88,6 +90,7 @@ class CandidateRequest:
     source: str
     baseline_source: str | None = None
     source_target: dict | None = None
+    baseline_package_content: str | None = None
 
     def __post_init__(self):
         if not isinstance(self.relative_path, str):
@@ -111,6 +114,33 @@ class CandidateRequest:
             object.__setattr__(self, "source_target", validate_saved_artifact_target(
                 self.source_target, relative_path=self.relative_path,
                 baseline_sha256=self.baseline_sha256))
+        if self.baseline_package_content is not None:
+            validated_skill_package_context(self.source_target, self.baseline_package_content,
+                                            baseline_source=self.baseline_source)
+
+
+def validated_skill_package_context(source_target, package_content, *, baseline_source=None):
+    """Validate a transport-only copy against the original saved package identity."""
+    binding = source_target.get("skill_package_binding") if isinstance(source_target, dict) else None
+    if binding is None:
+        if package_content is not None:
+            raise ValueError("package context requires a saved package resource target")
+        return None
+    from eva.application.skill_packages import AgentSkillPackage, MAX_PACKAGE_BYTES
+    if (not isinstance(package_content, str)
+            or not 1 <= len(package_content.encode("utf-8")) <= MAX_PACKAGE_BYTES * 2):
+        raise ValueError("saved skill package context is missing or exceeds bound")
+    raw = package_content.encode("utf-8")
+    if hashlib.sha256(raw).hexdigest() != binding["package_content_sha256"]:
+        raise ValueError("saved skill package envelope hash differs")
+    package = AgentSkillPackage.from_wire(json.loads(package_content))
+    if package.manifest() != binding["package_manifest"]:
+        raise ValueError("saved skill package manifest differs")
+    resource = package.resource(binding["resource_path"])
+    if (hashlib.sha256(resource).hexdigest() != source_target["content_sha256"]
+            or (baseline_source is not None and resource != baseline_source.encode("utf-8"))):
+        raise ValueError("saved skill package resource baseline differs")
+    return package
 
 
 def _capture(argv, *, deadline, limit):
@@ -155,7 +185,7 @@ class ComponentEvaluator:
         self.assessment = assessment
         self.source_target = None if source_target is None else validate_saved_artifact_target(source_target)
 
-    def _container(self, image_id, command, *, mount=None, output_limit=None):
+    def _container(self, image_id, command, *, mount=None, output_limit=None, extra_mounts=()):
         cfg = self.config
         name = "eva-component-evaluation-" + uuid.uuid4().hex
         argv = ["docker", "run", "--rm", "--no-healthcheck", "--pull", "never", "--name", name,
@@ -166,9 +196,12 @@ class ComponentEvaluator:
                 "--user", "65534:65534", "--workdir", "/opt/eva/src",
                 "--tmpfs", "/tmp:rw,noexec,nosuid,nodev,size=16777216,mode=1777",
                 "--entrypoint", "/usr/local/bin/python"]
-        if mount is not None:
-            source, destination = mount
-            argv += ["--mount", f"type=bind,src={source},dst={destination},readonly"]
+        for source, destination in (*extra_mounts, *((mount,) if mount is not None else ())):
+            # Docker parses --mount as CSV; valid package paths may contain commas.
+            encoded = io.StringIO()
+            csv.writer(encoded, lineterminator="").writerow(
+                ("type=bind", f"src={source}", f"dst={destination}", "readonly"))
+            argv += ["--mount", encoded.getvalue()]
         # The existing minimal runtime image has no shell or /usr/bin/env.
         bootstrap = ("import os,sys; os.execve(sys.argv[1],sys.argv[1:],"
                      "{'PATH':'/usr/local/bin:/usr/bin:/bin','HOME':'/tmp',"
@@ -188,6 +221,12 @@ class ComponentEvaluator:
     def evaluate(self, request: CandidateRequest) -> dict:
         if self.source_target is not None and request.source_target != self.source_target:
             raise ValueError("saved artifact differs from fixed assessment target")
+        # Revalidate before any image/container access, including mutated requests.
+        request = CandidateRequest(request.relative_path, request.baseline_sha256,
+            request.source, request.baseline_source, request.source_target,
+            request.baseline_package_content)
+        package = validated_skill_package_context(request.source_target,
+            request.baseline_package_content, baseline_source=request.baseline_source)
         cfg = self.config
         inspection = _capture(["docker", "image", "inspect", "--format", "{{.Id}}", cfg.image],
                               deadline=10, limit=1024)
@@ -226,20 +265,40 @@ class ComponentEvaluator:
         else:
             # Revalidate the copied manifest at dispatch; both legs use the same
             # trusted image/command and identical virtual module destination.
-            request = CandidateRequest(request.relative_path, request.baseline_sha256,
-                request.source, request.baseline_source, request.source_target)
             manifest = request.source_target
         candidate_bytes = request.source.encode("utf-8")
         with tempfile.TemporaryDirectory(prefix="eva-component-evaluation-") as directory:
-            if manifest is not None:
-                original = Path(directory) / "baseline.py"
-                original.write_bytes(request.baseline_source.encode("utf-8"))
-                original.chmod(0o444)
-                baseline = self._container(image_id, cfg.command, mount=(str(original), target))
-            candidate = Path(directory) / "candidate.py"
-            candidate.write_bytes(candidate_bytes)
-            candidate.chmod(0o444)
-            measured = self._container(image_id, cfg.command, mount=(str(candidate), target))
+            context = {}
+            package_directories = []
+            if package is not None:
+                package_root = Path(directory) / "package"
+                package_root.mkdir()
+                for resource in package.files:
+                    destination = package_root / resource.path
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    destination.write_bytes(resource.content)
+                    destination.chmod(0o444)
+                package_directories = [package_root, *(p for p in package_root.rglob("*") if p.is_dir())]
+                for path in package_directories:
+                    path.chmod(0o555)
+                context = {"extra_mounts": ((str(package_root), "/eva-skill"),)}
+                target = "/eva-skill/" + manifest["skill_package_binding"]["resource_path"]
+            try:
+                if manifest is not None:
+                    original = Path(directory) / "baseline.py"
+                    original.write_bytes(request.baseline_source.encode("utf-8"))
+                    original.chmod(0o444)
+                    baseline = self._container(image_id, cfg.command,
+                        mount=(str(original), target), **context)
+                candidate = Path(directory) / "candidate.py"
+                candidate.write_bytes(candidate_bytes)
+                candidate.chmod(0o444)
+                measured = self._container(image_id, cfg.command,
+                    mount=(str(candidate), target), **context)
+            finally:
+                # Only the host's disposable directory regains cleanup access.
+                for path in package_directories:
+                    path.chmod(0o700)
         command_json = json.dumps(cfg.command, separators=(",", ":")).encode()
         report = {"contract": "EvaIsolatedComponentEvaluation/v1", "configured_image": cfg.image,
                 "image_id": image_id, "relative_path": request.relative_path,

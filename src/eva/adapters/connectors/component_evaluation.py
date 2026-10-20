@@ -90,11 +90,12 @@ class ComponentEvaluationClient:
             raise ValueError("independent round metadata binding differs")
         return result
 
-    def evaluate(self, draft, *, execution_binding=None, remaining_seconds=None):
+    def evaluate(self, draft, *, execution_binding=None, remaining_seconds=None,
+                 baseline_package_content=None):
         path = draft["path"]
         target = draft.get("source_target")
         if target is None:
-            if draft.get("baseline_content") is not None:
+            if draft.get("baseline_content") is not None or baseline_package_content is not None:
                 raise ValueError("saved artifact baseline has no source target")
             if path not in self.allowed_paths:
                 raise ValueError("no installed functional evaluation suite for this component")
@@ -102,19 +103,23 @@ class ComponentEvaluationClient:
                        "source": draft["candidate_content"]}
             suite = dict(self.suite_bindings).get(path, self.suite_sha256)
         else:
-            from eva.operations.component_evaluation import CandidateRequest
-            if (not isinstance(self.saved_artifact_suite_sha256, str)
-                    or not re.fullmatch(r"[0-9a-f]{64}", self.saved_artifact_suite_sha256)):
+            from eva.operations.component_evaluation import CandidateRequest, validated_skill_package_context
+            suite = dict(self.suite_bindings).get(path, self.saved_artifact_suite_sha256)
+            if (not isinstance(suite, str) or not re.fullmatch(r"[0-9a-f]{64}", suite)
+                    or (path in dict(self.suite_bindings) and path not in self.allowed_paths)):
                 raise ValueError("no installed saved artifact evaluation suite")
             request = CandidateRequest(path, draft["source_sha256"], draft["candidate_content"],
-                draft.get("baseline_content"), target)
+                draft.get("baseline_content"), target, baseline_package_content)
+            validated_skill_package_context(request.source_target, baseline_package_content,
+                                            baseline_source=request.baseline_source)
             if hashlib.sha256(request.source.encode("utf-8")).hexdigest() != draft["candidate_sha256"]:
                 raise ValueError("saved artifact candidate source hash differs")
             target = request.source_target
             payload = {"relative_path": path, "baseline_sha256": request.baseline_sha256,
                 "source": request.source, "baseline_source": request.baseline_source,
                 "source_target": target}
-            suite = self.saved_artifact_suite_sha256
+            if baseline_package_content is not None:
+                payload["baseline_package_content"] = baseline_package_content
         work_execution = target is None and path in self.work_execution_paths
         if work_execution:
             fields = {"contract", "task_id", "draft_step", "evaluation_step",

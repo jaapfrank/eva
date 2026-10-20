@@ -117,7 +117,7 @@ class ProcedureReferenceActions:
         return tuple(ProcedureScope(turn.tenant_id, turn.installation_id, p, turn.project_id)
                      for p in principals)
 
-    def resolve_improvement_source(self, turn, document_id):
+    def resolve_improvement_source(self, turn, document_id, *, resource_path=None):
         """Host-only fresh source binding for the existing component evaluator."""
         host = self._host(turn)
         from eva.application.initiative_execution import current_initiative
@@ -131,9 +131,32 @@ class ProcedureReferenceActions:
             refs = service.resolve_candidates(scope, (document_id,), now=self.clock())
             if not refs:
                 continue
-            if len(refs) != 1 or not refs[0].reference.path.endswith(".py"):
+            if len(refs) != 1:
+                raise ProcedureReferenceRejected("improvement requires one current reusable artifact")
+            item = refs[0]
+            reference = item.reference
+            baseline_content = item.untrusted_content
+            package_binding = None
+            package_content = None
+            skill_package = getattr(item, "skill_package", None)
+            if skill_package is not None:
+                from eva.application.skill_packages import package_path
+                if resource_path is None or not package_path(resource_path).endswith(".py"):
+                    raise ProcedureReferenceRejected("select the exact packaged Python resource to improve")
+                raw = skill_package.resource(resource_path)
+                if not 1 <= len(raw) <= 65536:
+                    raise ProcedureReferenceRejected("saved Python resource exceeds the existing improvement bound")
+                try:
+                    baseline_content = raw.decode("utf-8", errors="strict")
+                except UnicodeDecodeError as error:
+                    raise ProcedureReferenceRejected("saved Python resource is not UTF8") from error
+                if not isinstance(item.skill_package_content, bytes):
+                    raise ProcedureReferenceRejected("exact current package envelope is unavailable")
+                package_content = item.skill_package_content.decode("utf-8", errors="strict")
+                package_binding = {"package_content_sha256": reference.content_sha256,
+                    "package_manifest": skill_package.manifest(), "resource_path": resource_path}
+            elif resource_path is not None or not reference.path.endswith(".py"):
                 raise ProcedureReferenceRejected("improvement requires a reusable Python artifact")
-            reference = refs[0].reference
             target = {"kind": "saved_artifact", "procedure_reference_id": reference.document_id,
                 "scope": asdict(scope), "artifact_path": reference.path,
                 "content_sha256": reference.content_sha256,
@@ -142,14 +165,19 @@ class ProcedureReferenceActions:
                 "source_message_id": reference.source_message_id,
                 "tool_configuration_sha256": reference.tool_configuration_sha256,
                 "retention_until": reference.retention_until}
-            from eva.operations.component_evaluation import validate_saved_artifact_target
-            path = "saved_artifact_" + reference.document_id.split(":", 1)[1] + ".py"
+            if package_binding is not None:
+                import hashlib
+                target["content_sha256"] = hashlib.sha256(baseline_content.encode()).hexdigest()
+                target["skill_package_binding"] = package_binding
+            from eva.contracts.component_target import validate_saved_artifact_target, saved_artifact_virtual_path
+            path = saved_artifact_virtual_path(target)
             target = validate_saved_artifact_target(target, relative_path=path,
-                                                   baseline_sha256=reference.content_sha256)
+                                                   baseline_sha256=target["content_sha256"])
             host.require_scope(scope)
             host.require_current()
-            return {"path": path, "baseline_content": refs[0].untrusted_content,
-                    "source_target": target}
+            return {"path": path, "baseline_content": baseline_content,
+                    "source_target": target,
+                    **({"baseline_package_content": package_content} if package_binding is not None else {})}
         raise ProcedureReferenceRejected("saved improvement source unavailable")
 
     def resolve_contribution_artifact(self, turn, source_work_id, artifact_path):

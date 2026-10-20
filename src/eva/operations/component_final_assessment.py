@@ -11,6 +11,7 @@ import threading
 from eva.application.component_improvements import bind_selected_release
 from eva.operations.component_evaluation import (
     CandidateRequest, ComponentEvaluator, EvaluationConfig, validate_saved_artifact_target,
+    validated_skill_package_context,
 )
 from eva.operations.reviewed_component_application import _artifact, _identifier, _path, _save
 from eva.operations.component_release_import import canonical, digest, load_object
@@ -144,17 +145,40 @@ class HostFinalAssessment:
             source = _path(binding["path"])
             if digest(source.read_bytes()) != binding["sha256"]:
                 raise ValueError("independent assessment inputs changed")
+        self._baseline_package_content()
         self.registration = registration
         spec = importlib.util.spec_from_file_location("eva_final_" + self.config["registration"]["sha256"], scorer)
         self.scorer = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.scorer)
+
+    def _baseline_package_content(self):
+        """Read only the host-pinned baseline envelope, never developer context."""
+        target = self.config.get("source_target")
+        skill_binding = target.get("skill_package_binding") if isinstance(target, dict) else None
+        binding = self.config["bindings"].get("baseline_skill_package")
+        if skill_binding is None:
+            if binding is not None:
+                raise ValueError("baseline skill package requires a fixed package target")
+            return None
+        if (not isinstance(binding, dict) or set(binding) != {"path", "sha256"}
+                or binding["sha256"] != skill_binding["package_content_sha256"]):
+            raise ValueError("fixed baseline skill package binding is missing or differs")
+        from eva.application.skill_packages import MAX_PACKAGE_BYTES
+        with _path(binding["path"]).open("rb") as stream:
+            raw = stream.read(MAX_PACKAGE_BYTES * 2 + 1)
+        if len(raw) > MAX_PACKAGE_BYTES * 2 or digest(raw) != binding["sha256"]:
+            raise ValueError("fixed baseline skill package content changed")
+        content = raw.decode("utf-8", errors="strict")
+        validated_skill_package_context(target, content)
+        return content
 
     def _candidate(self, package):
         validate_selected_package(package)
         request = CandidateRequest(
             package["path"], package["baseline_sha256"], package["candidate_content"],
             **({"baseline_source": package["baseline_content"],
-                "source_target": package["source_target"]} if "source_target" in package else {}))
+                "source_target": package["source_target"]} if "source_target" in package else {}),
+            baseline_package_content=self._baseline_package_content())
         if request.source_target != self.evaluator.source_target:
             raise ValueError("selected source differs from fixed independent target")
         return request

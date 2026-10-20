@@ -13,6 +13,7 @@ import threading
 
 from eva.operations.component_evaluation import (
     CandidateRequest, ComponentEvaluator, EvaluationConfig, validate_saved_artifact_target,
+    validated_skill_package_context,
 )
 
 _MAX_BODY = 96 * 1024
@@ -65,6 +66,11 @@ def load_config(path):
                 or not isinstance(value["evaluation"], dict) or not isinstance(value["assessment"], dict)):
             raise ValueError("invalid fixed saved artifact development suite")
         validate_saved_artifact_target(value["source_target"])
+    suites = config.get("component_suites", {})
+    if not isinstance(suites, dict) or set(suites) - set(paths):
+        raise ValueError("component development suites must use admitted paths")
+    for relative_path, value in suites.items():
+        _validate_component_suite(relative_path, value)
     settings = EvaluationConfig(image=config["image"], command=tuple(config["command"]),
         **{key: config[key] for key in limits if key in config})
     with Path(config["token_file"]).open("rb") as stream:
@@ -75,6 +81,15 @@ def load_config(path):
     return settings, token, frozenset(paths), (str(address), config["port"])
 
 
+def _validate_component_suite(path, value):
+    if (not isinstance(value, dict) or not {"evaluation", "assessment"} <= set(value)
+            or set(value) - {"evaluation", "assessment", "source_target"}
+            or not isinstance(value["evaluation"], dict) or not isinstance(value["assessment"], dict)):
+        raise ValueError("invalid fixed component development suite")
+    if "source_target" in value:
+        validate_saved_artifact_target(value["source_target"], relative_path=path)
+
+
 class EvaluationServer(ThreadingHTTPServer):
     daemon_threads = False
     request_queue_size = 8
@@ -82,6 +97,9 @@ class EvaluationServer(ThreadingHTTPServer):
     def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None, final_assessments=None, saved_artifact_suite=None, work_execution_producers=None):
         self.evaluator = evaluator
         self.component_suites = component_suites or {}
+        for path, suite in self.component_suites.items():
+            if getattr(suite, "source_target", None) is not None:
+                validate_saved_artifact_target(suite.source_target, relative_path=path)
         if saved_artifact_suite is not None:
             validate_saved_artifact_target(saved_artifact_suite.source_target)
         self.saved_artifact_suite = saved_artifact_suite
@@ -359,18 +377,30 @@ class EvaluationHandler(BaseHTTPRequestHandler):
                 else:
                     package_fields = {"relative_path", "baseline_sha256", "source"}
                     allowed = (package_fields, package_fields | {"baseline_source", "source_target"},
+                               package_fields | {"baseline_source", "source_target", "baseline_package_content"},
                                package_fields | {"execution_binding"})
                     if not isinstance(payload, dict) or set(payload) not in allowed:
                         raise ValueError()
                     binding = payload.get("execution_binding")
                     request = CandidateRequest(**{key: value for key, value in payload.items()
                                                   if key != "execution_binding"})
-                    if request.source_target is not None:
-                        if (self.server.saved_artifact_suite is None
-                                or request.source_target != self.server.saved_artifact_suite.source_target):
-                            raise ValueError()
-                    elif request.relative_path not in self.server.allowed_paths:
+                    if ("baseline_package_content" in payload and (
+                            request.source_target is None
+                            or "skill_package_binding" not in request.source_target)):
                         raise ValueError()
+                    validated_skill_package_context(request.source_target,
+                        request.baseline_package_content, baseline_source=request.baseline_source)
+                    configured = self.server.component_suites.get(request.relative_path)
+                    if request.source_target is not None:
+                        evaluator = configured if configured is not None else self.server.saved_artifact_suite
+                        if (evaluator is None
+                                or request.source_target != getattr(evaluator, "source_target", None)):
+                            raise ValueError()
+                    else:
+                        if (request.relative_path not in self.server.allowed_paths
+                                or getattr(configured, "source_target", None) is not None):
+                            raise ValueError()
+                        evaluator = configured if configured is not None else self.server.evaluator
                     producer = self.server.work_execution_producers.get(request.relative_path)
                     if (binding is not None) != (producer is not None):
                         raise ValueError()
@@ -391,8 +421,6 @@ class EvaluationHandler(BaseHTTPRequestHandler):
                 if procedure:
                     report = self.server.procedure_executor.execute(**request)
                 else:
-                    evaluator = (self.server.saved_artifact_suite if request.source_target is not None
-                        else self.server.component_suites.get(request.relative_path, self.server.evaluator))
                     if producer is not None:
                         report = producer.evaluate(request, execution_binding=binding,
                             evaluator=evaluator, static_lock=self.server.execution_lock)
@@ -444,13 +472,11 @@ def main():
     if not isinstance(suites, dict) or set(suites) - allowed_paths:
         raise ValueError("component development suites must use admitted paths")
     for path, value in suites.items():
-        if (not isinstance(value, dict) or set(value) != {"evaluation", "assessment"}
-                or not isinstance(value["evaluation"], dict)):
-            raise ValueError("invalid fixed component development suite")
+        _validate_component_suite(path, value)
         evaluation = dict(value["evaluation"])
         evaluation["command"] = tuple(evaluation["command"])
         component_suites[path] = ComponentEvaluator(EvaluationConfig(**evaluation),
-            assessment=DevelopmentAssessment(value["assessment"]))
+            assessment=DevelopmentAssessment(value["assessment"]), source_target=value.get("source_target"))
     saved_artifact_suite = None
     if "saved_artifact_suite" in config:
         value = config["saved_artifact_suite"]

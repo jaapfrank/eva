@@ -8,6 +8,7 @@ from __future__ import annotations
 import base64
 from dataclasses import dataclass
 import hashlib
+import json
 from pathlib import PurePosixPath
 import re
 from urllib.parse import urlsplit
@@ -106,6 +107,7 @@ class AgentSkillPackage:
     license_id: str
     license_path: str
     files: tuple[SkillResource, ...]
+    derivation: tuple[tuple[str, str], ...] = ()
 
     def __post_init__(self):
         try:
@@ -142,6 +144,19 @@ class AgentSkillPackage:
             if not self.resource(self.license_path).strip():
                 raise ValueError("license notice empty")
             _metadata(self.resource("SKILL.md"))
+            if not isinstance(self.derivation, tuple):
+                raise ValueError("package derivation must be immutable")
+            if self.derivation:
+                if any(not isinstance(row, tuple) or len(row) != 2 for row in self.derivation):
+                    raise ValueError("invalid package derivation")
+                data = dict(self.derivation)
+                if (set(data) != {"parent_package_sha256", "resource_path", "baseline_resource_sha256"}
+                        or tuple(sorted(data.items())) != self.derivation
+                        or any(not isinstance(data[key], str) or not re.fullmatch(r"[0-9a-f]{64}", data[key])
+                               for key in ("parent_package_sha256", "baseline_resource_sha256"))):
+                    raise ValueError("unbound package derivation")
+                package_path(data["resource_path"])
+                self.resource(data["resource_path"])
         except (ValueError, TypeError, UnicodeError, KeyError, AttributeError) as error:
             raise SkillPackageRejected("invalid skill package") from error
 
@@ -162,7 +177,8 @@ class AgentSkillPackage:
                 "subdirectory": self.subdirectory, "license_id": self.license_id,
                 "license_path": self.license_path},
             "files": [{"path": item.path, "bytes": len(item.content), "sha256": item.sha256}
-                for item in sorted(self.files, key=lambda x:x.path)]}
+                for item in sorted(self.files, key=lambda x:x.path)],
+            **({"derivation": dict(self.derivation)} if self.derivation else {})}
 
     @property
     def sha256(self) -> str:
@@ -176,7 +192,9 @@ class AgentSkillPackage:
     @classmethod
     def from_wire(cls, value: dict) -> AgentSkillPackage:
         try:
-            if (not isinstance(value, dict) or set(value) != {"contract", "origin", "files", "package_sha256"}
+            if (not isinstance(value, dict)
+                    or set(value) not in ({"contract", "origin", "files", "package_sha256"},
+                                         {"contract", "origin", "files", "package_sha256", "derivation"})
                     or value["contract"] != PACKAGE_CONTRACT or not isinstance(value["files"], list)
                     or not 1 <= len(value["files"]) <= MAX_PACKAGE_FILES
                     or len(canonical_json_bytes(value)) > MAX_PACKAGE_BYTES * 2):
@@ -189,7 +207,10 @@ class AgentSkillPackage:
                 if resource.sha256 != item["sha256"]:
                     raise ValueError("resource digest mismatch")
                 files.append(resource)
-            package = cls(**value["origin"], files=tuple(files))
+            if "derivation" in value and (not isinstance(value["derivation"], dict) or not value["derivation"]):
+                raise ValueError("invalid package derivation")
+            package = cls(**value["origin"], files=tuple(files),
+                derivation=tuple(sorted(value.get("derivation", {}).items())))
             if package.sha256 != value["package_sha256"]:
                 raise ValueError("package digest mismatch")
             return package
@@ -219,3 +240,48 @@ def resource_projection(package: AgentSkillPackage, resource_path: str, *, offse
         "untrusted_content": selected, "offset": offset,
         "next_offset": end if end < len(text) else None, "total_bytes": len(raw),
         "projection": "UTF8_text_character_offsets", "complete": end == len(text) and offset == 0}
+
+
+def derived_manifest(manifest: dict, resource_path: str, content: bytes) -> dict:
+    """Describe exactly one replacement without claiming an upstream revision."""
+    if (not isinstance(content, bytes) or not 1 <= len(content) <= 65536
+            or not package_path(resource_path).endswith(".py")
+            or resource_path == manifest["origin"]["license_path"]):
+        raise SkillPackageRejected("improvement requires one bounded Python resource")
+    content.decode("utf-8", errors="strict")
+    result = json.loads(canonical_json_bytes(manifest))
+    entries = [entry for entry in result["files"] if entry["path"] == resource_path]
+    if len(entries) != 1:
+        raise SkillPackageRejected("improvement resource is unavailable")
+    entry = entries[0]
+    result["derivation"] = {"parent_package_sha256": canonical_sha256(manifest),
+        "resource_path": resource_path, "baseline_resource_sha256": entry["sha256"]}
+    entry.update(bytes=len(content), sha256=hashlib.sha256(content).hexdigest())
+    return result
+
+
+def replace_python_resource(package: AgentSkillPackage, resource_path: str, content: bytes) -> AgentSkillPackage:
+    """Keep the complete original package immutable; return a traceable variant."""
+    from dataclasses import replace
+    manifest = derived_manifest(package.manifest(), resource_path, content)
+    variant = replace(package,
+        files=tuple(SkillResource(item.path, content) if item.path == resource_path else item
+                    for item in package.files),
+        derivation=tuple(sorted(manifest["derivation"].items())))
+    if variant.manifest() != manifest:
+        raise SkillPackageRejected("derived package manifest differs")
+    return variant
+
+
+def matches_reviewed_package(artifact_content: str, manifest: dict,
+                             resource_path: str, resource_content: bytes) -> bool:
+    """Match exact reviewed package bytes through their manifest, without I/O."""
+    if not isinstance(artifact_content, str):
+        return False
+    try:
+        if len(artifact_content.encode()) > 65536:
+            return False
+        current = AgentSkillPackage.from_wire(json.loads(artifact_content))
+        return current.manifest() == manifest and current.resource(resource_path) == resource_content
+    except (ValueError, TypeError, KeyError, UnicodeError, RecursionError):
+        return False
