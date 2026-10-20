@@ -1,0 +1,12 @@
+{
+  "contract": "EvaHaContextCommandReuse/v1",
+  "status": "implementing",
+  "startedAt": "2026-10-20T13:45:31.504018+00:00",
+  "ownerRequest": "Bekende opdrachten hergebruiken en sneller uitvoeren via dezelfde Eva in chat en spraak.",
+  "existing": "Optional HA profile and verified setter are installed; plain successful commands complete silently.",
+  "gap": "Repeated interpretation still costs a model phase; setter separately refetches state and household inventory.",
+  "endCondition": "A previously model-qualified complete single command reuses its interpretation only while source, context, identity, permission and exact freshly resolved target remain valid. New dispatch and independent proof use the existing durable executor. Unknown or invalidated requests use the ordinary route. Current context uses the existing HA event lifecycle and supported snapshot/delta APIs.",
+  "privateEvidenceRoot": "/var/lib/eva2/voice-session/e48-command-cache-20261020",
+  "targetTwoSecondsMet": false,
+  "physicalAcceptance": false
+}

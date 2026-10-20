@@ -6849,14 +6849,20 @@
                   "Bekend doel gebruikt aanwezige context; onbekend of ambigu doel leidt tot passende ontdekking of vraag.",
                   "Privé- en huishoudcontext blijven gescheiden."
                 ],
-                "nextAction": "Vergelijk de bestaande event-/snapshotbron met de gewone gespreksoverdracht en sluit het ontbrekende hergebruik aan.",
-                "status": "planned",
+                "nextAction": "Bestaande HA-events koppelen aan actuele modulecontext; exacte eerder geverifieerde zelfstandige opdrachten hergebruiken met actuele bron-/context-/doelcontrole, installeren en live meten.",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
                 "ownerActionRequired": false,
                 "scopeOrigin": "home-module-latency-20261019",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-                "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+                "assignment": {
+                  "coordinator": "/root",
+                  "activeWorkers": [
+                    "/root/review_cursor"
+                  ],
+                  "scope": "Bestaande spraak-/HA-overdracht; E1.4 van de andere uitvoerder blijft ongemoeid. Geen tweede router/geheugen en geen afzwakking van E4.8/E5.2."
+                },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
                 "findings": [
                   {
@@ -6872,7 +6878,9 @@
                     "blocksOriginalE51": false,
                     "newTaskCreated": false
                   }
-                ]
+                ],
+                "checkedAt": "2026-10-20T13:45:31.504018+00:00",
+                "progressEvidence": "development/evidence/product/e48-ha-context-command-cache-20261020.json"
               },
               {
                 "id": "E4.9",
@@ -11820,14 +11828,20 @@
                 "Bekend doel gebruikt aanwezige context; onbekend of ambigu doel leidt tot passende ontdekking of vraag.",
                 "Privé- en huishoudcontext blijven gescheiden."
               ],
-              "nextAction": "Vergelijk de bestaande event-/snapshotbron met de gewone gespreksoverdracht en sluit het ontbrekende hergebruik aan.",
-              "status": "planned",
+              "nextAction": "Bestaande HA-events koppelen aan actuele modulecontext; exacte eerder geverifieerde zelfstandige opdrachten hergebruiken met actuele bron-/context-/doelcontrole, installeren en live meten.",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
               "ownerActionRequired": false,
               "scopeOrigin": "home-module-latency-20261019",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-              "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+              "assignment": {
+                "coordinator": "/root",
+                "activeWorkers": [
+                  "/root/review_cursor"
+                ],
+                "scope": "Bestaande spraak-/HA-overdracht; E1.4 van de andere uitvoerder blijft ongemoeid. Geen tweede router/geheugen en geen afzwakking van E4.8/E5.2."
+              },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
               "findings": [
                 {
@@ -11843,7 +11857,9 @@
                   "blocksOriginalE51": false,
                   "newTaskCreated": false
                 }
-              ]
+              ],
+              "checkedAt": "2026-10-20T13:45:31.504018+00:00",
+              "progressEvidence": "development/evidence/product/e48-ha-context-command-cache-20261020.json"
             },
             {
               "id": "E4.9",
