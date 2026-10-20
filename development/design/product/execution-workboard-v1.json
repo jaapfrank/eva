@@ -6931,15 +6931,23 @@
                   "Ambiguïteit, onbereikbaar groepslid, stop en onduidelijke effectuitkomst gecontroleerd zonder extra productie-effecten.",
                   "Geen herhaalde modelrondes voor vaste substeps; daadwerkelijke effect- en verificatietijd apart geregistreerd."
                 ],
-                "nextAction": "Maak één complete bediening via de bestaande capabilitygrens; hergebruik de huidige geverifieerde uitvoerder en provider.",
-                "status": "planned",
+                "nextAction": "Onafhankelijke toets van bestaande implementatie tegen de oorspronkelijke criteria; echte modelkeuze en normale route aanvullen waar bewijs ontbrak.",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
                 "ownerActionRequired": false,
                 "scopeOrigin": "home-module-latency-20261019",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-                "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
-                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+                "assignment": {
+                  "coordinator": "/root",
+                  "activeWorkers": [
+                    "/root/review_cursor"
+                  ],
+                  "scope": "Bestaande module en gedeelde geheugenflow beoordelen; geen tweede planner of geheugen."
+                },
+                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
+                "checkedAt": "2026-10-20T15:28:41.843854+00:00",
+                "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json"
               },
               {
                 "id": "E4.10",
@@ -6968,15 +6976,23 @@
                   "Nieuwe sessie, correctie/vergeten, privéscope, verwijzende opdracht en herinneringsvraag blijven inhoudelijk juist.",
                   "Voorbereiding, eerste modelbeslissing en effecttijd afzonderlijk gemeten; winst komt niet alleen uit opgewarmde scores."
                 ],
-                "nextAction": "Ontkoppel de aantoonbare verplichte retrieval-wachtstap binnen de gedeelde contextcontracten, met behoud van relevante herinneringen.",
-                "status": "planned",
+                "nextAction": "Onafhankelijke toets van bestaande implementatie tegen de oorspronkelijke criteria; echte modelkeuze en normale route aanvullen waar bewijs ontbrak.",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
                 "ownerActionRequired": false,
                 "scopeOrigin": "home-module-latency-20261019",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-                "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
-                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+                "assignment": {
+                  "coordinator": "/root",
+                  "activeWorkers": [
+                    "/root/review_cursor"
+                  ],
+                  "scope": "Bestaande module en gedeelde geheugenflow beoordelen; geen tweede planner of geheugen."
+                },
+                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
+                "checkedAt": "2026-10-20T15:28:41.843854+00:00",
+                "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json"
               },
               {
                 "id": "E4.11",
@@ -7611,7 +7627,7 @@
                   "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                   "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
                 ],
-                "nextAction": "Installeer de geteste gebeurtenisindex en gerichte HA-contextprojectie met actuele guards en schemacontrole. Meet daarna de vooraf vastgelegde 20 warme chatpogingen en dezelfde spraakroute tegen de oorspronkelijke criteria.",
+                "nextAction": "De vooraf bepaalde tweede 20-pogingenmeting haalt mediaan0.971s/p951.185s met20verse nulmodeluitvoeringen. Rond originele E4.9/E4.10-integratiegrenzen, onafhankelijke review en exacte proefopschoning af.",
                 "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -7623,7 +7639,7 @@
                   "activeWorkers": [
                     "/root/review_cursor"
                   ],
-                  "scope": "Gerichte vervolgstap op E4.8: database- en contextwachttijd. Primaire E1.4-uitvoering blijft behouden; geen nieuwe router, geheugenbron of verruiming van fysieke testtoestemming."
+                  "scope": "Gemeten snelheidswinst geïnstalleerd; originele technische grenzen blijven gelden. Primaire E1.4-uitvoering en fysieke acceptatie behouden."
                 },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
                 "executionPlan": {
@@ -7632,7 +7648,7 @@
                   "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                   "ownerAcceptance": false
                 },
-                "checkedAt": "2026-10-20T15:03:12.914059+00:00",
+                "checkedAt": "2026-10-20T15:28:41.843854+00:00",
                 "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
                 "independentReview": "development/reviews/e48-ha-context-command-cache-review-20261020.json",
                 "findings": [
@@ -11936,15 +11952,23 @@
                 "Ambiguïteit, onbereikbaar groepslid, stop en onduidelijke effectuitkomst gecontroleerd zonder extra productie-effecten.",
                 "Geen herhaalde modelrondes voor vaste substeps; daadwerkelijke effect- en verificatietijd apart geregistreerd."
               ],
-              "nextAction": "Maak één complete bediening via de bestaande capabilitygrens; hergebruik de huidige geverifieerde uitvoerder en provider.",
-              "status": "planned",
+              "nextAction": "Onafhankelijke toets van bestaande implementatie tegen de oorspronkelijke criteria; echte modelkeuze en normale route aanvullen waar bewijs ontbrak.",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
               "ownerActionRequired": false,
               "scopeOrigin": "home-module-latency-20261019",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-              "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
-              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+              "assignment": {
+                "coordinator": "/root",
+                "activeWorkers": [
+                  "/root/review_cursor"
+                ],
+                "scope": "Bestaande module en gedeelde geheugenflow beoordelen; geen tweede planner of geheugen."
+              },
+              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
+              "checkedAt": "2026-10-20T15:28:41.843854+00:00",
+              "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json"
             },
             {
               "id": "E4.10",
@@ -11973,15 +11997,23 @@
                 "Nieuwe sessie, correctie/vergeten, privéscope, verwijzende opdracht en herinneringsvraag blijven inhoudelijk juist.",
                 "Voorbereiding, eerste modelbeslissing en effecttijd afzonderlijk gemeten; winst komt niet alleen uit opgewarmde scores."
               ],
-              "nextAction": "Ontkoppel de aantoonbare verplichte retrieval-wachtstap binnen de gedeelde contextcontracten, met behoud van relevante herinneringen.",
-              "status": "planned",
+              "nextAction": "Onafhankelijke toets van bestaande implementatie tegen de oorspronkelijke criteria; echte modelkeuze en normale route aanvullen waar bewijs ontbrak.",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
               "ownerActionRequired": false,
               "scopeOrigin": "home-module-latency-20261019",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-              "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
-              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+              "assignment": {
+                "coordinator": "/root",
+                "activeWorkers": [
+                  "/root/review_cursor"
+                ],
+                "scope": "Bestaande module en gedeelde geheugenflow beoordelen; geen tweede planner of geheugen."
+              },
+              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
+              "checkedAt": "2026-10-20T15:28:41.843854+00:00",
+              "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json"
             },
             {
               "id": "E4.11",
@@ -12616,7 +12648,7 @@
                 "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                 "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
               ],
-              "nextAction": "Installeer de geteste gebeurtenisindex en gerichte HA-contextprojectie met actuele guards en schemacontrole. Meet daarna de vooraf vastgelegde 20 warme chatpogingen en dezelfde spraakroute tegen de oorspronkelijke criteria.",
+              "nextAction": "De vooraf bepaalde tweede 20-pogingenmeting haalt mediaan0.971s/p951.185s met20verse nulmodeluitvoeringen. Rond originele E4.9/E4.10-integratiegrenzen, onafhankelijke review en exacte proefopschoning af.",
               "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -12628,7 +12660,7 @@
                 "activeWorkers": [
                   "/root/review_cursor"
                 ],
-                "scope": "Gerichte vervolgstap op E4.8: database- en contextwachttijd. Primaire E1.4-uitvoering blijft behouden; geen nieuwe router, geheugenbron of verruiming van fysieke testtoestemming."
+                "scope": "Gemeten snelheidswinst geïnstalleerd; originele technische grenzen blijven gelden. Primaire E1.4-uitvoering en fysieke acceptatie behouden."
               },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
               "executionPlan": {
@@ -12637,7 +12669,7 @@
                 "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                 "ownerAcceptance": false
               },
-              "checkedAt": "2026-10-20T15:03:12.914059+00:00",
+              "checkedAt": "2026-10-20T15:28:41.843854+00:00",
               "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
               "independentReview": "development/reviews/e48-ha-context-command-cache-review-20261020.json",
               "findings": [

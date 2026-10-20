@@ -1,6 +1,6 @@
 {
   "contract": "EvaWarmHouseControlLatency/v1",
-  "status": "installing_pending_live_measurement",
+  "status": "installed_speed_sample_passed_boundary_review_pending",
   "startedAt": "2026-10-20T15:03:12.914059+00:00",
   "sourceCommit": "846de4380c89af184247dc08aa128e69fe47d0ff",
   "privateEvidenceRoot": "/var/lib/eva2/voice-session/e52-warm-route-20261020",
@@ -41,6 +41,430 @@
   "developmentTests": {
     "core_schema_worker": 34,
     "postgres_cache_and_migration": 19,
-    "strengthened_migration_repeat": 3
+    "strengthened_migration_repeat": 3,
+    "context_refresh_regressions": 13
+  },
+  "sourceCommits": [
+    "846de4380c89af184247dc08aa128e69fe47d0ff",
+    "7b32fab976818e2989b936ec1ff58b3de05547f0"
+  ],
+  "chatBeforeContextFix": {
+    "samples": [
+      {
+        "label": "warm-01",
+        "receipt_ms": 1035.438,
+        "final_ms": 1065.086,
+        "reuse": true
+      },
+      {
+        "label": "warm-02",
+        "receipt_ms": 701.814,
+        "final_ms": 731.487,
+        "reuse": true
+      },
+      {
+        "label": "warm-03",
+        "receipt_ms": 1055.289,
+        "final_ms": 1084.383,
+        "reuse": true
+      },
+      {
+        "label": "warm-04",
+        "receipt_ms": 743.4,
+        "final_ms": 777.434,
+        "reuse": true
+      },
+      {
+        "label": "warm-05",
+        "receipt_ms": 1088.248,
+        "final_ms": 1126.218,
+        "reuse": true
+      },
+      {
+        "label": "warm-06",
+        "receipt_ms": 766.823,
+        "final_ms": 801.257,
+        "reuse": true
+      },
+      {
+        "label": "warm-07",
+        "receipt_ms": 1018.177,
+        "final_ms": 1056.638,
+        "reuse": true
+      },
+      {
+        "label": "warm-08",
+        "receipt_ms": 746.282,
+        "final_ms": 773.945,
+        "reuse": true
+      },
+      {
+        "label": "warm-09",
+        "receipt_ms": 1022.95,
+        "final_ms": 1061.998,
+        "reuse": true
+      },
+      {
+        "label": "warm-10",
+        "receipt_ms": 1083.667,
+        "final_ms": 1127.487,
+        "reuse": true
+      },
+      {
+        "label": "warm-11",
+        "receipt_ms": 946.056,
+        "final_ms": 982.532,
+        "reuse": true
+      },
+      {
+        "label": "warm-12",
+        "receipt_ms": 7426.369,
+        "final_ms": 7644.478,
+        "reuse": false
+      },
+      {
+        "label": "warm-13",
+        "receipt_ms": 5687.96,
+        "final_ms": 5862.469,
+        "reuse": false
+      },
+      {
+        "label": "warm-14",
+        "receipt_ms": 4895.694,
+        "final_ms": 5021.661,
+        "reuse": false
+      },
+      {
+        "label": "warm-15",
+        "receipt_ms": 999.502,
+        "final_ms": 1025.213,
+        "reuse": true
+      },
+      {
+        "label": "warm-16",
+        "receipt_ms": 692.23,
+        "final_ms": 724.528,
+        "reuse": true
+      },
+      {
+        "label": "warm-17",
+        "receipt_ms": 1072.671,
+        "final_ms": 1118.832,
+        "reuse": true
+      },
+      {
+        "label": "warm-18",
+        "receipt_ms": 727.558,
+        "final_ms": 786.069,
+        "reuse": true
+      },
+      {
+        "label": "warm-19",
+        "receipt_ms": 1045.315,
+        "final_ms": 1092.164,
+        "reuse": true
+      },
+      {
+        "label": "warm-20",
+        "receipt_ms": 979.52,
+        "final_ms": 1019.544,
+        "reuse": true
+      }
+    ],
+    "median_ms": 1020.5635,
+    "p95_ms": 5687.96,
+    "hits": 17,
+    "all20_target_met": false
+  },
+  "chatAfterContextFix": {
+    "samples": [
+      {
+        "label": "context-train-on",
+        "receipt_ms": 9140.72,
+        "final_ms": 9270.216,
+        "reuse": false
+      },
+      {
+        "label": "context-train-off",
+        "receipt_ms": 4007.968,
+        "final_ms": 4194.631,
+        "reuse": false
+      },
+      {
+        "label": "context-warm-01",
+        "receipt_ms": 987.266,
+        "final_ms": 1019.89,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-02",
+        "receipt_ms": 714.591,
+        "final_ms": 744.279,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-03",
+        "receipt_ms": 1012.976,
+        "final_ms": 1041.368,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-04",
+        "receipt_ms": 770.769,
+        "final_ms": 804.672,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-05",
+        "receipt_ms": 1262.169,
+        "final_ms": 1286.768,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-06",
+        "receipt_ms": 767.497,
+        "final_ms": 800.813,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-07",
+        "receipt_ms": 997.752,
+        "final_ms": 1024.816,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-08",
+        "receipt_ms": 740.22,
+        "final_ms": 771.911,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-09",
+        "receipt_ms": 1034.442,
+        "final_ms": 1068.248,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-10",
+        "receipt_ms": 1124.389,
+        "final_ms": 1167.85,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-11",
+        "receipt_ms": 1148.084,
+        "final_ms": 1176.663,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-12",
+        "receipt_ms": 826.938,
+        "final_ms": 868.308,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-13",
+        "receipt_ms": 1185.301,
+        "final_ms": 1213.68,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-14",
+        "receipt_ms": 924.062,
+        "final_ms": 958.608,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-15",
+        "receipt_ms": 1098.66,
+        "final_ms": 1124.977,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-16",
+        "receipt_ms": 799.551,
+        "final_ms": 839.769,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-17",
+        "receipt_ms": 986.521,
+        "final_ms": 1026.345,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-18",
+        "receipt_ms": 784.662,
+        "final_ms": 813.845,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-19",
+        "receipt_ms": 956.131,
+        "final_ms": 982.514,
+        "reuse": true
+      },
+      {
+        "label": "context-warm-20",
+        "receipt_ms": 803.186,
+        "final_ms": 841.496,
+        "reuse": true
+      }
+    ],
+    "median_ms": 971.326,
+    "p95_ms": 1185.301,
+    "hits": 20,
+    "all20_target_met": true
+  },
+  "nativeVoice": [
+    {
+      "label": "native-five",
+      "samples": [
+        {
+          "input_index": 0,
+          "input_end_to_verified_event_ms": 7103.356,
+          "recognized_request_to_verified_event_ms": 5485.913,
+          "reused": false,
+          "silent": true,
+          "same_as_previous_recognized_text": false
+        },
+        {
+          "input_index": 1,
+          "input_end_to_verified_event_ms": 6468.367,
+          "recognized_request_to_verified_event_ms": 4857.124,
+          "reused": false,
+          "silent": true,
+          "same_as_previous_recognized_text": false
+        },
+        {
+          "input_index": 2,
+          "input_end_to_verified_event_ms": 2680.573,
+          "recognized_request_to_verified_event_ms": 1075.995,
+          "reused": true,
+          "silent": true,
+          "same_as_previous_recognized_text": true
+        },
+        {
+          "input_index": 3,
+          "input_end_to_verified_event_ms": 2769.158,
+          "recognized_request_to_verified_event_ms": 1082.191,
+          "reused": true,
+          "silent": true,
+          "same_as_previous_recognized_text": true
+        }
+      ],
+      "weather_input_end_to_first_pcm_ms": 7345.402,
+      "weather_first_audio_is_bridge": true,
+      "weather_final_reply_received": true,
+      "weather_tts_requests": 2,
+      "physical_audio": false
+    },
+    {
+      "label": "native-context-five",
+      "samples": [
+        {
+          "input_index": 0,
+          "input_end_to_verified_event_ms": 9921.462,
+          "recognized_request_to_verified_event_ms": 8251.296,
+          "reused": false,
+          "silent": true,
+          "same_as_previous_recognized_text": false
+        },
+        {
+          "input_index": 1,
+          "input_end_to_verified_event_ms": 6829.916,
+          "recognized_request_to_verified_event_ms": 5330.958,
+          "reused": false,
+          "silent": true,
+          "same_as_previous_recognized_text": false
+        },
+        {
+          "input_index": 2,
+          "input_end_to_verified_event_ms": 2602.298,
+          "recognized_request_to_verified_event_ms": 907.351,
+          "reused": true,
+          "silent": true,
+          "same_as_previous_recognized_text": true
+        },
+        {
+          "input_index": 3,
+          "input_end_to_verified_event_ms": 2682.859,
+          "recognized_request_to_verified_event_ms": 920.751,
+          "reused": true,
+          "silent": true,
+          "same_as_previous_recognized_text": true
+        }
+      ],
+      "weather_input_end_to_first_pcm_ms": 10100.719,
+      "weather_first_audio_is_bridge": true,
+      "weather_final_reply_received": true,
+      "weather_tts_requests": 2,
+      "physical_audio": false
+    }
+  ],
+  "speedSampleMet": true,
+  "remaining": "Original E4.9/E4.10 integration and independent boundary review, exact fixture cleanup. Physical acceptance remains separate.",
+  "contextCorrection": {
+    "observed": "Only entityregistry media_player modified_at and refreshgeneration changed; complete raw context retained privately.",
+    "change": "Exclude only refreshgeneration and top-level entity modified_at from comparison; retain raw rows, allothercontent/account/epoch/fences.",
+    "review": "GO /root/review_cursor",
+    "original20FailuresRetained": true
+  },
+  "componentTiming": {
+    "turns": [
+      {
+        "provider": "eva:verified-action",
+        "response_mode": "silent",
+        "model_usage": {
+          "input_tokens": 8078,
+          "measurement": "measured",
+          "model_attempts": 1,
+          "output_tokens": 40,
+          "tool_calls": 1
+        },
+        "elapsed_ms": 8425.235,
+        "components": [
+          {
+            "phase": "mcp_effect",
+            "ms": 256.497
+          },
+          {
+            "phase": "independent_rest_readback",
+            "ms": 7.358
+          },
+          {
+            "phase": "independent_rest_readback",
+            "ms": 7.957
+          }
+        ]
+      },
+      {
+        "provider": "eva:verified-action",
+        "response_mode": "silent",
+        "model_usage": {
+          "input_tokens": 8078,
+          "measurement": "measured",
+          "model_attempts": 1,
+          "output_tokens": 40,
+          "tool_calls": 1
+        },
+        "elapsed_ms": 5631.244,
+        "components": [
+          {
+            "phase": "mcp_effect",
+            "ms": 263.833
+          },
+          {
+            "phase": "independent_rest_readback",
+            "ms": 8.145
+          }
+        ]
+      }
+    ],
+    "effect_count": 2,
+    "readback_count": 3,
+    "no_effect_retries": true,
+    "harness_final_assertion": "Expected exactly two reads; actual state propagation required one extra read for first action. All raw observations retained; verification only, no effect rerun.",
+    "http_benchmark": false
   }
 }
