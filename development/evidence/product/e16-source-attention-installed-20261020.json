@@ -36,7 +36,27 @@
       "contextBytes": 8013,
       "paidModelCalls": 0
     },
-    "liveCausalUse": "pending; bounded observer follows the actual installed lane, does not start/restart work"
+    "liveCausalUse": {
+      "state": "not_demonstrated",
+      "normalReviewAt": "2026-10-20T16:14:54+00:00",
+      "modelSelectedContinuation": true,
+      "modelSelectedSource": false,
+      "nextAttention": null,
+      "sourceWatch": null,
+      "actualNaturalChangeDecisionChain": false,
+      "productionReviewForced": false,
+      "unchangedRepeatCalls": 0,
+      "independentEvidenceBoundaryReview": "confirmed"
+    },
+    "subsequentContinuation": {
+      "state": "failed",
+      "finishedAt": "2026-10-20T16:21:06+00:00",
+      "errorCode": "budget_exceeded",
+      "errorSource": "scoped delegated_work_runs state; generic initiative-blocked wording is not evidence of authority denial",
+      "confirmedResult": false,
+      "automaticRetryStartedByDeveloper": false,
+      "doesNotReopenEarlierCompletedTasks": true
+    }
   },
   "preservedFindings": [
     "Outer unavailable fallback could be selected after a configuration return; prevented and regression-tested",
@@ -46,7 +66,8 @@
     "HA coverage is state value changes only, not arbitrary calendar attributes or MCP events",
     "Configured coverage is not evidence of live external access or action permission",
     "Controlled synthetic contracts do not prove an actual new model-chosen source or family use",
-    "F2 family utility and acceptance remain separate"
+    "F2 family utility and acceptance remain separate",
+    "Een later zelfgekozen onderzoek mislukte met budget_exceeded; dit is geen geslaagd resultaat of bewijs voor bronbewaking. Eerdere E1.4-afronding blijft uitsluitend op haar eigen oorspronkelijke bewijs berusten."
   ],
   "usage": {
     "developmentModelTokens": null,
@@ -54,6 +75,23 @@
     "runtimeCredits": null,
     "extraModelPerRawEvent": false,
     "technicalTestsProviderCalls": 0,
-    "actualLiveUsage": "observing normal review; not yet claimed"
-  }
+    "actualLiveUsage": {
+      "ordinaryReview": {
+        "modelAttempts": 1,
+        "inputTokens": 14195,
+        "outputTokens": 453,
+        "toolCalls": 1
+      },
+      "subsequentAutonomousWork": {
+        "completedModelResponses": 2,
+        "inputTokens": 12896,
+        "outputTokens": 285,
+        "toolCalls": 1,
+        "measurement": "partial"
+      },
+      "credits": null,
+      "separateAdditionalProbeModelRequests": 0
+    }
+  },
+  "observedAt": "2026-10-20T16:25:20.365895+00:00"
 }

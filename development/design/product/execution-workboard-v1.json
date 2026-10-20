@@ -847,8 +847,8 @@
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Werkelijke bronkeuze en latere bronaanleiding op dezelfde geïnstalleerde aandacht-/modelroute vastleggen; geen vooraf gekozen huishoudcasus.",
-    "checkedAt": "2026-10-20T16:11:46.841997+00:00",
+    "nextAction": "De geïnstalleerde bronroute behouden en alleen nieuwe relevante causale gegevens beoordelen. Geen bronkeuze afdwingen, identieke modelaanvraag of nieuwe vergelijkingsserie. De concrete uitvoeringsfout budget_exceeded blijft zichtbaar en vereist gerichte oorzaakcontrole vóór een hervatting.",
+    "checkedAt": "2026-10-20T16:25:20.365895+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1634,13 +1634,13 @@
           {
             "title": "E1.6 · Brongebonden aandacht geïnstalleerd; gebruiksbewijs nog open",
             "state": "installed",
-            "summary": "Geïnstalleerd en onafhankelijk bron-GO. Gerichte contracten gecontroleerd, vijf echte beschikbare bronkeuzes binnen contextlimiet. Werkelijke modelkeuze/veranderingsketen wordt op de gewone route gevolgd; kaart blijft daarvoor open.",
-            "remaining": "Werkelijke modelgekozen bron en latere gebeurtenis/afweging nog vastleggen. Geen nieuwe gebruikersproef nodig.",
+            "summary": "Geïnstalleerd. De gewone afweging koos zelfstandig vervolgonderzoek, maar geen bron om te volgen. Dat onderzoek eindigde met budget_exceeded, zonder bevestigd resultaat. Bronkeuze → echte verandering → afweging blijft onbewezen; E1.6 is niet afgerond.",
+            "remaining": "Echte modelgekozen bron en bronveranderingsafweging ontbreken; laatste vervolgonderzoek mislukte. Geen eigenaarhandeling nodig.",
             "source": "development/evidence/product/e16-source-attention-installed-20261020.json",
             "review": "development/reviews/e16-source-attention-review-20261020.json",
             "date": "2026-10-20",
             "installedAt": "2026-10-20T16:11:46.841997+00:00",
-            "checkedAt": "2026-10-20T16:11:46.841997+00:00",
+            "checkedAt": "2026-10-20T16:25:20.365895+00:00",
             "completedTaskIds": [],
             "newProductFunctionCompleted": false
           },
@@ -2816,23 +2816,23 @@
           "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
           "status": "in_progress",
           "state": "installed",
-          "summary": "E1.6 aangesloten en geïnstalleerd; echt gebruik wordt gecontroleerd.",
-          "detail": "Geïnstalleerd en onafhankelijk bron-GO. Gerichte contracten gecontroleerd, vijf echte beschikbare bronkeuzes binnen contextlimiet. Werkelijke modelkeuze/veranderingsketen wordt op de gewone route gevolgd; kaart blijft daarvoor open.",
+          "summary": "Bronroute geïnstalleerd; echt brongebruik nog niet bewezen.",
+          "detail": "Geïnstalleerd. De gewone afweging koos zelfstandig vervolgonderzoek, maar geen bron om te volgen. Dat onderzoek eindigde met budget_exceeded, zonder bevestigd resultaat. Bronkeuze → echte verandering → afweging blijft onbewezen; E1.6 is niet afgerond.",
           "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-          "checkedAt": "2026-10-20T16:11:46.841997+00:00"
+          "checkedAt": "2026-10-20T16:25:20.365895+00:00"
         },
         "next": {
           "taskId": "E1.6",
-          "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
-          "detail": "Volgende bestaande kaart. Bronveranderingen op dezelfde eigen-aandachtsroute aansluiten; spraak blijft bij de andere uitvoerder."
+          "title": "E1.6 afmaken met echt gebruiksbewijs",
+          "detail": "De geïnstalleerde bronroute behouden en alleen nieuwe relevante causale gegevens beoordelen. Geen bronkeuze afdwingen, identieke modelaanvraag of nieuwe vergelijkingsserie. De concrete uitvoeringsfout budget_exceeded blijft zichtbaar en vereist gerichte oorzaakcontrole vóór een hervatting."
         },
         "ownerAction": {
           "required": false,
           "detail": "Geen handeling nodig. Eerst de bestaande gekoppelde bron en contracten gebruiken.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T16:11:46.841997+00:00",
-        "reviewedAt": "2026-10-20T15:49:27.587345+00:00",
+        "checkedAt": "2026-10-20T16:25:20.365895+00:00",
+        "reviewedAt": "2026-10-20T16:25:20.365895+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -5580,9 +5580,9 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Werkelijke bronkeuze en latere bronaanleiding op dezelfde geïnstalleerde aandacht-/modelroute vastleggen; geen vooraf gekozen huishoudcasus.",
-                "checkedAt": "2026-10-20T16:11:46.841997+00:00",
-                "progress": "Geïnstalleerd en onafhankelijk bron-GO. Gerichte contracten gecontroleerd, vijf echte beschikbare bronkeuzes binnen contextlimiet. Werkelijke modelkeuze/veranderingsketen wordt op de gewone route gevolgd; kaart blijft daarvoor open.",
+                "nextAction": "De geïnstalleerde bronroute behouden en alleen nieuwe relevante causale gegevens beoordelen. Geen bronkeuze afdwingen, identieke modelaanvraag of nieuwe vergelijkingsserie. De concrete uitvoeringsfout budget_exceeded blijft zichtbaar en vereist gerichte oorzaakcontrole vóór een hervatting.",
+                "checkedAt": "2026-10-20T16:25:20.365895+00:00",
+                "progress": "Geïnstalleerd. De gewone afweging koos zelfstandig vervolgonderzoek, maar geen bron om te volgen. Dat onderzoek eindigde met budget_exceeded, zonder bevestigd resultaat. Bronkeuze → echte verandering → afweging blijft onbewezen; E1.6 is niet afgerond.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
                   "development/reviews/e16-source-attention-review-20261020.json"
@@ -7769,7 +7769,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E1.6 als volgende bestaande kaart; E1.4 en E1.5 afgerond. Meerdaags gezinsnut en eigenaaracceptatie blijven F2.",
+        "nextAction": "De geïnstalleerde bronroute behouden en alleen nieuwe relevante causale gegevens beoordelen. Geen bronkeuze afdwingen, identieke modelaanvraag of nieuwe vergelijkingsserie. De concrete uitvoeringsfout budget_exceeded blijft zichtbaar en vereist gerichte oorzaakcontrole vóór een hervatting.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7778,7 +7778,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-20T15:49:27.587345+00:00",
+        "updatedAt": "2026-10-20T16:25:20.365895+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -8020,7 +8020,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T15:49:27.587345+00:00",
+        "checkedAt": "2026-10-20T16:25:20.365895+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -10653,9 +10653,9 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Werkelijke bronkeuze en latere bronaanleiding op dezelfde geïnstalleerde aandacht-/modelroute vastleggen; geen vooraf gekozen huishoudcasus.",
-              "checkedAt": "2026-10-20T16:11:46.841997+00:00",
-              "progress": "Geïnstalleerd en onafhankelijk bron-GO. Gerichte contracten gecontroleerd, vijf echte beschikbare bronkeuzes binnen contextlimiet. Werkelijke modelkeuze/veranderingsketen wordt op de gewone route gevolgd; kaart blijft daarvoor open.",
+              "nextAction": "De geïnstalleerde bronroute behouden en alleen nieuwe relevante causale gegevens beoordelen. Geen bronkeuze afdwingen, identieke modelaanvraag of nieuwe vergelijkingsserie. De concrete uitvoeringsfout budget_exceeded blijft zichtbaar en vereist gerichte oorzaakcontrole vóór een hervatting.",
+              "checkedAt": "2026-10-20T16:25:20.365895+00:00",
+              "progress": "Geïnstalleerd. De gewone afweging koos zelfstandig vervolgonderzoek, maar geen bron om te volgen. Dat onderzoek eindigde met budget_exceeded, zonder bevestigd resultaat. Bronkeuze → echte verandering → afweging blijft onbewezen; E1.6 is niet afgerond.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
                 "development/reviews/e16-source-attention-review-20261020.json"
@@ -12842,7 +12842,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E1.6 als volgende bestaande kaart; E1.4 en E1.5 afgerond. Meerdaags gezinsnut en eigenaaracceptatie blijven F2.",
+      "nextAction": "De geïnstalleerde bronroute behouden en alleen nieuwe relevante causale gegevens beoordelen. Geen bronkeuze afdwingen, identieke modelaanvraag of nieuwe vergelijkingsserie. De concrete uitvoeringsfout budget_exceeded blijft zichtbaar en vereist gerichte oorzaakcontrole vóór een hervatting.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -12851,7 +12851,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-20T15:49:27.587345+00:00",
+      "updatedAt": "2026-10-20T16:25:20.365895+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -13093,7 +13093,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T15:49:27.587345+00:00",
+      "checkedAt": "2026-10-20T16:25:20.365895+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -14633,7 +14633,13 @@
       "experiment": "Eerst gerichte isolatie en read-only echte broninvoer; geen nieuwe concurrentenserie of herhaling zonder gewijzigde oorzaak. Nieuw live bewijs alleen op bestaande providerroute.",
       "installedAt": "2026-10-20T16:11:46.841997+00:00",
       "independentReview": "GO",
-      "sourceEvidence": "development/evidence/product/e16-source-attention-installed-20261020.json"
+      "sourceEvidence": "development/evidence/product/e16-source-attention-installed-20261020.json",
+      "observedAt": "2026-10-20T16:25:20.365895+00:00",
+      "liveSourceChoice": false,
+      "subsequentContinuationState": "failed",
+      "subsequentErrorCode": "budget_exceeded",
+      "actualCausalUseProven": false,
+      "extraDevelopmentProbeModelRequests": 0
     }
   },
   "updatedAt": "2026-10-20T13:28:55.822181+00:00",
