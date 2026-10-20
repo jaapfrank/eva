@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-E4.6 · Home Assistant-modulegrens geïnstalleerd
+Officiële API en MCP binnen één HA-module aansluiten
 
-HA-regels en broninterpretatie komen uit de provider. Eva kan zonder HA starten en gewoon chatten; andere connectors blijven beschikbaar. Oude gegevens en resultaten behouden. Werkend op actuele kern en uitvoerworker.
+Bestaande E4.7-overdracht in dezelfde HA-module afronden en op echte installatie meten.
 
-Klaar wanneer: De bestaande HA-provider bezit alle HA-specifieke instructies, doel- en toolclassificatie, broninterpretatie, configuratie en afleveradapter. Eva-kern en algemene modeladapter werken via generieke capability-, context- en receiptcontracten. Zonder geïnstalleerde of ingeschakelde HA-module blijven chat, geheugen, initiatief en andere connectors werken; HA-tools en instructies ontbreken dan. Aan-/uitzetten en bijwerken behouden gegevens, lopende taakstatus en bestaande receipts. Geen tweede Eva, geheugen of moduleplatform.
+Klaar wanneer: De module gebruikt één vastgelegd capabilityprofiel voor de werkelijk geïnstalleerde HA-versie, beschikbare officiële MCP-tools en REST/WebSocket-API. Bestaande Assist-MCP- en API-code wordt hergebruikt. Per capability zijn gekozen transport, toegang, schemas, actuele dekking en controle vastgelegd; normale bediening en geautoriseerd beheer blijven beschikbaar. Ontbrekend MCP-bereik veroorzaakt geen stille bevoegdheidsverruiming of blinde herhaling via een ander transport. Geen eigen HA-planner of tweede gespreksagent.
 
 ## Afmaakvolgorde
 

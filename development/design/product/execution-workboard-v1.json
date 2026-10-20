@@ -841,14 +841,14 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.6",
+  "activeTaskId": "E4.7",
   "currentWork": {
-    "id": "E4.6",
-    "title": "E4.6 · Home Assistant-modulegrens geïnstalleerd",
-    "status": "completed",
-    "doneWhen": "De bestaande HA-provider bezit alle HA-specifieke instructies, doel- en toolclassificatie, broninterpretatie, configuratie en afleveradapter. Eva-kern en algemene modeladapter werken via generieke capability-, context- en receiptcontracten. Zonder geïnstalleerde of ingeschakelde HA-module blijven chat, geheugen, initiatief en andere connectors werken; HA-tools en instructies ontbreken dan. Aan-/uitzetten en bijwerken behouden gegevens, lopende taakstatus en bestaande receipts. Geen tweede Eva, geheugen of moduleplatform.",
-    "nextAction": "Gebruik dezelfde bestaande Eva-chat en HA-koppeling; geen handeling nodig. Ga verder met bestaande E4.7-capabilityprofielkaart. Spraak blijft bij andere uitvoerder.",
-    "checkedAt": "2026-10-20T09:40:57.354545+00:00",
+    "id": "E4.7",
+    "title": "Officiële API en MCP binnen één HA-module aansluiten",
+    "status": "in_progress",
+    "doneWhen": "De module gebruikt één vastgelegd capabilityprofiel voor de werkelijk geïnstalleerde HA-versie, beschikbare officiële MCP-tools en REST/WebSocket-API. Bestaande Assist-MCP- en API-code wordt hergebruikt. Per capability zijn gekozen transport, toegang, schemas, actuele dekking en controle vastgelegd; normale bediening en geautoriseerd beheer blijven beschikbaar. Ontbrekend MCP-bereik veroorzaakt geen stille bevoegdheidsverruiming of blinde herhaling via een ander transport. Geen eigen HA-planner of tweede gespreksagent.",
+    "nextAction": "Bestaande E4.7-overdracht afronden: gedeeld MCP/API-profiel installeren, catalogushergebruik en buitenlicht werkelijk controleren; dezelfde chat- en spraakvraag meten.",
+    "checkedAt": "2026-10-20T11:06:25.724796+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2745,19 +2745,18 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.6",
-          "title": "E4.6 · Home Assistant-modulegrens geïnstalleerd",
-          "state": "completed",
-          "status": "completed",
-          "summary": "HA-regels en broninterpretatie komen uit de provider. Eva kan zonder HA starten en gewoon chatten; andere connectors blijven beschikbaar. Oude gegevens en resultaten behouden. Werkend op actuele kern en uitvoerworker.",
-          "detail": "E4.7–E4.10/E5.2: bestaande kaarten voor capabilityprofiel, actuele context, gebundelde bediening en gemeten snelheid. Spraak en gezinsacceptatie blijven afzonderlijk.",
-          "doneWhen": "De bestaande HA-provider bezit alle HA-specifieke instructies, doel- en toolclassificatie, broninterpretatie, configuratie en afleveradapter. Eva-kern en algemene modeladapter werken via generieke capability-, context- en receiptcontracten. Zonder geïnstalleerde of ingeschakelde HA-module blijven chat, geheugen, initiatief en andere connectors werken; HA-tools en instructies ontbreken dan. Aan-/uitzetten en bijwerken behouden gegevens, lopende taakstatus en bestaande receipts. Geen tweede Eva, geheugen of moduleplatform.",
-          "checkedAt": "2026-10-20T09:40:57.354545+00:00"
+          "taskId": "E4.7",
+          "title": "Officiële API en MCP binnen één HA-module aansluiten",
+          "status": "in_progress",
+          "state": "in_progress",
+          "summary": "Bestaande E4.7-overdracht in dezelfde HA-module afronden en op echte installatie meten.",
+          "doneWhen": "De module gebruikt één vastgelegd capabilityprofiel voor de werkelijk geïnstalleerde HA-versie, beschikbare officiële MCP-tools en REST/WebSocket-API. Bestaande Assist-MCP- en API-code wordt hergebruikt. Per capability zijn gekozen transport, toegang, schemas, actuele dekking en controle vastgelegd; normale bediening en geautoriseerd beheer blijven beschikbaar. Ontbrekend MCP-bereik veroorzaakt geen stille bevoegdheidsverruiming of blinde herhaling via een ander transport. Geen eigen HA-planner of tweede gespreksagent.",
+          "checkedAt": "2026-10-20T11:06:25.724796+00:00"
         },
         "next": {
-          "taskId": "E4.7",
-          "title": "Bestaande officiële HA-transports aan één capabilityprofiel koppelen",
-          "detail": "Volgende bestaande kaart; eerst actuele API/MCP-dekking en bestaande bevoegdheden binden. Geen nieuwe vergelijkingsserie of spraakbouw."
+          "taskId": "E4.8",
+          "title": "Bestaande volgende HA-contextkaart",
+          "detail": "Eerst E4.7 werkend installeren."
         },
         "ownerAction": {
           "required": false,
@@ -6647,15 +6646,22 @@
                   "Schemawijziging, onbekende effectuitkomst en ingetrokken toegang geven geen dubbele actie of bredere toegang.",
                   "Huidige beheer-/automatiseringsfuncties behouden hun bestaande resultaatcontrole."
                 ],
-                "nextAction": "Controleer huidige API/MCP-dekking en koppel bestaande transporten aan één module-capabilityprofiel vóór transportwijzigingen.",
-                "status": "planned",
+                "nextAction": "Bestaande E4.7-overdracht afronden: gedeeld MCP/API-profiel installeren, catalogushergebruik en buitenlicht werkelijk controleren; dezelfde chat- en spraakvraag meten.",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
                 "ownerActionRequired": false,
                 "scopeOrigin": "home-module-latency-20261019",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-                "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
-                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+                "assignment": {
+                  "coordinator": "/root",
+                  "activeWorkers": [
+                    "/root/review_cursor"
+                  ],
+                  "scope": "Eigenaar heeft vorige uitvoerder gestopt. Overname bestaande E4.7-module; onafhankelijke review, geen nieuw spraakplatform."
+                },
+                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
+                "checkedAt": "2026-10-20T11:06:25.724796+00:00"
               },
               {
                 "id": "E4.8",
@@ -11288,15 +11294,22 @@
                 "Schemawijziging, onbekende effectuitkomst en ingetrokken toegang geven geen dubbele actie of bredere toegang.",
                 "Huidige beheer-/automatiseringsfuncties behouden hun bestaande resultaatcontrole."
               ],
-              "nextAction": "Controleer huidige API/MCP-dekking en koppel bestaande transporten aan één module-capabilityprofiel vóór transportwijzigingen.",
-              "status": "planned",
+              "nextAction": "Bestaande E4.7-overdracht afronden: gedeeld MCP/API-profiel installeren, catalogushergebruik en buitenlicht werkelijk controleren; dezelfde chat- en spraakvraag meten.",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
               "ownerActionRequired": false,
               "scopeOrigin": "home-module-latency-20261019",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-              "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
-              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+              "assignment": {
+                "coordinator": "/root",
+                "activeWorkers": [
+                  "/root/review_cursor"
+                ],
+                "scope": "Eigenaar heeft vorige uitvoerder gestopt. Overname bestaande E4.7-module; onafhankelijke review, geen nieuw spraakplatform."
+              },
+              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
+              "checkedAt": "2026-10-20T11:06:25.724796+00:00"
             },
             {
               "id": "E4.8",

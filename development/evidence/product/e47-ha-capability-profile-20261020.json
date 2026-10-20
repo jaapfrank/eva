@@ -1,0 +1,24 @@
+{
+  "contract": "EvaHaCapabilityProfileTakeover/v1",
+  "status": "integrating_existing_draft",
+  "recordedAt": "2026-10-20T10:57:23.613615+00:00",
+  "ownerDirection": "Andere Codex op verzoek eigenaar gestopt; neem bestaand E4.7 MCP/API-profiel over en hergebruik catalogus in één module.",
+  "builtBeforeTakeover": {
+    "ha_version": "2026.9.2",
+    "mcp_tools": 25,
+    "mcp_endpoints_measured": [
+      "/api/mcp/assist",
+      "/api/mcp"
+    ],
+    "weather_forecast_tool_present": false,
+    "catalog_reuse": "Initialized MCP session/catalog reused in a credential/version/scope-bound in-memory cache, max60s in the shared profile. No database catalogue claimed.",
+    "tests": "69 focused checks in prior draft;26MCP checks separately recorded; no installed E4.7 claim."
+  },
+  "fixesBeforeIntegration": [
+    "Recheck current capture authority and STOP after discovery immediately before actual REST/WS/MCP dispatch.",
+    "Count catalog/profile/effect lock waiting within original discovery deadline."
+  ],
+  "endCondition": "Install shared provider profile and validate real read-only discovery/cache reuse, authorized outdoor effect with fresh readback, and same chat/voice route; preserve management and no automatic cross-transport effect retry.",
+  "privateEvidenceRoot": "/var/lib/eva2/voice-session/e47-takeover-20261020",
+  "otherScope": "Chat target2s remains unmet; no fresh UI ack or source catalogue alone counted as completion."
+}
