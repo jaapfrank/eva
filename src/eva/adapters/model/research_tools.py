@@ -52,7 +52,7 @@ def validate_public_projection(arguments):
         r"(?i)(?:\b[A-Z]:[\\/]|\\\\|/(?:home|users|run|var|etc|mnt|private|tmp|proof-state)/)",
         r"(?i)\b(?:mijn|m'n|onze|ons|my|our)\b",
         r"(?i)\b[A-Za-zÀ-ÿ]+(?:straat|laan|weg|dreef|plein)\s+\d+",
-        r"(?i)\b(?:localhost|[\w.-]+\.(?:local|lan|internal|home))\b",
+        r"(?i)\b(?:localhost|[\w.-]+\.(?:local|lan|internal|home))\b(?![\w-]|\.[\w-])",
         r"(?<!\w)(?:\d{1,3}\.){3}\d{1,3}(?!\w)",
         r"(?i)\b(?:adres|telefoonnummer|contactgegevens|woonadres)\s+van\b",
         r"\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}:\d{2})\b",

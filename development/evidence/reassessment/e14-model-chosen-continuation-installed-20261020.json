@@ -73,6 +73,18 @@
       "toolCalls": 0,
       "measurement": "partial",
       "creditCost": null
+    },
+    "fourthAttempt": {
+      "state": "failed",
+      "error": "incomplete_work",
+      "cause": "No verified completed task-tool results",
+      "modelResponses": 3,
+      "inputTokens": 32138,
+      "outputTokens": 597,
+      "totalTokens": 32735,
+      "toolCalls": 0,
+      "measurement": "partial",
+      "creditCost": null
     }
   },
   "usage": {
@@ -133,7 +145,7 @@
       "review": "development/reviews/e14-model-chosen-continuation-review-20261020.json"
     }
   },
-  "remaining": "Real fourth generation running: require completed retained result and subsequent ordinary decision using it.",
+  "remaining": "Original fifth generation running; completion and later result use still required.",
   "certifiedTechnicalRecovery": {
     "status": "installed_original_self_chosen_followup_running",
     "operatorAssistance": true,
@@ -222,6 +234,36 @@
       "generation": 4,
       "oldStatePreserved": "ambiguous",
       "modelCallsByOperator": 0
+    }
+  },
+  "publicHostBoundaryRepair": {
+    "state": "installed_original_self_chosen_followup_running",
+    "checkedAt": "2026-10-20T14:50:45.385011+00:00",
+    "diagnosis": "Private-DNS pattern falsely matches www.home inside the public official www.home-assistant.io domain. Exact old rejected model arguments were not retained; this does not prove that it caused every earlier refusal.",
+    "change": "Match complete DNS labels; keep real private hosts, trailing dots, normalization, disclosure checks and uncontrolled URL rejection.",
+    "tests": {
+      "publicAndPrivateHostCases": 23,
+      "existingRepairCases": 5,
+      "passed": 28,
+      "seconds": 0.66,
+      "providerCalls": 0
+    },
+    "independentReview": "GO",
+    "voiceChanged": false,
+    "installation": {
+      "coreImage": "sha256:65501c8734c4f91b301105cc2ec7615778c18ea314c2168b50163d40136310fb",
+      "workerImage": "sha256:750cf0159186b35aa560b8770587dcb725d28f13334f812a5e32afe93aa544b7",
+      "releaseEqual": true,
+      "executionPinCount": 65,
+      "voiceChanged": false
+    },
+    "recovery": {
+      "generation": 5,
+      "source": "Actual direct owner request through Codex; same existing explicit recovery path",
+      "operatorAssistance": true,
+      "originalStatePreserved": "failed",
+      "ownerRequestSha256": "3f5ef2a2de3abc7e9362268b8440c41450f28a0fd0978ec91128cfda29c8fe92",
+      "operatorModelCalls": 0
     }
   }
 }

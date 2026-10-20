@@ -230,6 +230,30 @@
         "Any operator recovery is explicit technical help and does not establish unattended autonomy.",
         "Actual completion, useful result and later use remain required for E1.4."
       ]
+    },
+    {
+      "reviewer": "e47_mcp_catalog",
+      "reviewedAt": "2026-10-20T14:48:31.863080+00:00",
+      "decision": "GO",
+      "blockingFindings": [],
+      "sourceHashes": {
+        "src/eva/adapters/model/research_tools.py": "5a327e57436a979fe9b46c3caf3752ed32ca8fd63717dba65b88229849b5a9db"
+      },
+      "testSourceHashes": {
+        "development/tests/model/test_public_research_host_boundaries.py": "5f75cf4b5951d7798b3d876509acf799d557445ee13a143e2647742cd908114c"
+      },
+      "scope": "Only one regex-label-boundary delta plus23case public/private host tests, no source edits, deployment or provider calls by reviewer.",
+      "findings": [
+        "Exact production delta consists solely of a negative lookahead after existing private host boundary. The detector no longer accepts partial DNS label home inside home-assistant or a private suffix before another public label.",
+        "Actual .home/.local/.lan/.internal terminal labels and localhost remain rejected before URL parsing, including trailing dots, percent-decoded dotted names and port punctuation.",
+        "Existing normalization, private/IP checks, public-review requirement and URL scheme/auth/query/fragment/port restrictions unchanged.",
+        "Tests include actual official home-assistant.io path, public dotted/hyphenated names, real private suffixes, encoding/case/trailing dot, loopback, credentials and uncontrolled destination parameters."
+      ],
+      "testEvidence": "Coordinator reports28passed:23newhostcases+5existinginputrepairchecks,0.66s,0provider. Reviewer inspected assertions and exact one-line delta; no redundant rerun.",
+      "limitations": [
+        "This proves the public-domain false positive and narrow correction. Original rejected model arguments are unavailable, so this is not proof of the historic generation3 rejection cause.",
+        "This source GO does not close E1.4 or prove actual research completion."
+      ]
     }
   ],
   "limitation": "Source and handoff review is not actual independent evaluation of later result use."
