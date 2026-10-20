@@ -1,0 +1,16 @@
+{
+  "contract": "EvaModelLatencyFollowup/v1",
+  "status": "investigating_existing_model_route",
+  "startedAt": "2026-10-20T18:25:32.307332+00:00",
+  "existing": "Known exact commands reuse a retained proven interpretation; unseen commands use one Sol/none decision, current person context and normal durable module execution. Latest actual unseen command4.482s; model2.677s;2816cached input tokens.",
+  "gap": "First/unseen-command model latency remains the largest measured wait. Need measured packet composition and actual endpoint compatibility before changing prompts or cache behavior.",
+  "route": [
+    "src/eva/adapters/model/pydantic_conversation.py",
+    "src/eva/adapters/model/openai_codex_provider.py"
+  ],
+  "endCondition": "Inspect the actual packet and bounded existing-endpoint cache capability with no unapproved effects. Compare a concrete candidate only if a supported avoidable cost is found. Preserve identity/current memory/authority/STOP and normal model quality, record failed or neutral candidates, keep the reference unless gain is demonstrated, independently review and install any adopted change with current runtime guards, then verify actual HTTP use. Do not claim general cold1–2s from warm reuse.",
+  "privateEvidenceRoot": "/var/lib/eva2/voice-session/model-latency-20261020",
+  "originalE52CriteriaChanged": false,
+  "voiceChanged": false,
+  "credits": null
+}
