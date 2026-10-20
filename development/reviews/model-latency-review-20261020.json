@@ -1,0 +1,25 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "reviewer": "/root/review_cursor",
+  "checkedAt": "2026-10-20T18:44:07.177672+00:00",
+  "decision": "GO",
+  "scope": "Source only; actual installation, fresh operation and live verification remain required.",
+  "sourceHashes": {
+    "src/eva/providers/home_assistant_command_cache.py": "c2ddc99eaab97cb350187410d0c274a873ee043b293f5fcb852cac3ba134b403"
+  },
+  "tests": {
+    "passed": 50,
+    "postgres": "16.13",
+    "log_private": "/var/lib/eva2/voice-session/model-latency-20261020/core-tests.private.log"
+  },
+  "confirmed": [
+    "Only ASCII letter case and ASCII whitespace change; NFC ingress contract retained, no Unicode casefold expansion.",
+    "Original source text and raw hash retained; scheme/hash bound to original durable admission.",
+    "Legacy without scheme remains exact-only. Distinct current action signatures cause a miss.",
+    "Original context/erasure/authority/STOP/fresh-prepare/new-operation/independent-readback checks retained.",
+    "Signature SQL expressions reused for PostgreSQL DISTINCT ON and ORDER BY; raw failed tests retained.",
+    "Index reseed and wrong scheme/hash covered."
+  ],
+  "voiceChanged": false,
+  "generalColdSpeedClaim": false
+}

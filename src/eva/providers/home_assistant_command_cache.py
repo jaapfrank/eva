@@ -11,7 +11,9 @@ from dataclasses import asdict, dataclass
 from collections import OrderedDict
 from datetime import UTC, datetime, timedelta
 import hashlib
+import re
 import threading
+import unicodedata
 from uuid import uuid5, NAMESPACE_URL
 
 import sqlalchemy as sa
@@ -24,6 +26,16 @@ from eva.contracts.canonical_json import canonical_sha256
 
 _SETTERS = ("set_home_assistant_light", "set_home_assistant_switch")
 _VERSION = "ha-exact-command-reuse-v1"
+_SURFACE_VERSION = "ha-command-nfc-ascii-case-space-v1:" + unicodedata.unidata_version
+_ASCII_LOWER = str.maketrans("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz")
+
+
+def _surface_digest(text):
+    # Preserve words, punctuation, non-ASCII case and non-ASCII spaces. In
+    # particular, do not expand Unicode casefold pairs such as ß and ss.
+    surface = unicodedata.normalize("NFC", text).translate(_ASCII_LOWER)
+    surface = re.sub(r"[ \t\r\n\f\v]+", " ", surface).strip(" ")
+    return hashlib.sha256(surface.encode()).hexdigest()
 
 
 def turn_scope(turn):
@@ -110,19 +122,22 @@ class HomeAssistantCommandCache:
                 ledger = _Ledger(self._engine, turn)
                 meta = events.c.payload["data"]["interpretation_reuse"]
                 with ledger.read() as c:
-                    hashes = c.execute(sa.select(meta["input_sha256"].astext).where(*ledger.scoped(),
+                    hashes = c.execute(sa.select(meta["input_sha256"].astext,
+                        meta["surface_input_sha256"].astext, meta["surface_scheme"].astext).where(*ledger.scoped(),
                         events.c.event_type == "TOOL_REQUEST_ADMITTED",
                         meta["configuration_sha256"].astext == self._configuration,
                         meta["turn_scope_sha256"].astext == scope,
                         events.c.occurred_at >= datetime.now(UTC) - timedelta(hours=24))
-                        .order_by(events.c.occurred_at.desc()).limit(256)).scalars().all()
-                for digest in reversed(hashes):
+                        .order_by(events.c.occurred_at.desc()).limit(256)).all()
+                for raw_digest, surface_digest, scheme in reversed(hashes):
+                    digest = surface_digest if scheme == _SURFACE_VERSION else raw_digest
                     if isinstance(digest, str):
                         self._remember_key((scope, digest))
                 self._seeded[scope] = True
                 while len(self._seeded) > 256:
                     self._seeded.popitem(last=False)
-            return (scope, hashlib.sha256(turn.text.encode()).hexdigest()) in self._index
+            return ((scope, _surface_digest(turn.text)) in self._index
+                    or (scope, hashlib.sha256(turn.text.encode()).hexdigest()) in self._index)
 
     @staticmethod
     def _ordinary(turn):
@@ -158,8 +173,9 @@ class HomeAssistantCommandCache:
                     or any(not self._independent_command(c, ledger, ledger.checked(r)) for r in others)):
                 return None
         digest = hashlib.sha256(turn.text.encode()).hexdigest()
-        self._remember_key((binding["turn_scope_sha256"], digest))
+        self._remember_key((binding["turn_scope_sha256"], _surface_digest(turn.text)))
         return {**binding, "input_sha256": digest,
+            "surface_scheme": _SURFACE_VERSION, "surface_input_sha256": _surface_digest(turn.text),
             "ingress_count": frame["ingress_count"], "erasure_epoch": frame["erasure_epoch"],
             "baseline_event_ids": [str(r["event_id"]) for r in frame["rows"]]}
 
@@ -170,9 +186,13 @@ class HomeAssistantCommandCache:
         admission = events.alias("cached_admission")
         ingress = events.alias("cached_ingress")
         a, s = admission.c.payload["data"], ingress.c.payload["data"]
-        # Exact retained text and source scope; no fuzzy/semantic or cross-user match.
+        # Reuse the same bound JSON-path expressions in DISTINCT and ORDER BY;
+        # equal path strings with different SQL parameters are not equivalent.
+        signature = (a["action_name"].astext, a["action_arguments"])
+        # Retained raw text or an explicitly admitted surface scheme, same scope.
+        # One newest source per literal action signature bounds conflict checking.
         with ledger.read() as c:
-            row = c.execute(sa.select(admission.c.thread_id, admission.c.payload,
+            rows = c.execute(sa.select(admission.c.thread_id, admission.c.payload,
                 admission.c.payload_sha256, ingress.c.payload.label("source_payload"),
                 ingress.c.payload_sha256.label("source_hash"), ingress.c.occurred_at.label("source_at"))
                 .select_from(admission.join(ingress, sa.and_(admission.c.tenant_id == ingress.c.tenant_id,
@@ -181,49 +201,74 @@ class HomeAssistantCommandCache:
                 .where(admission.c.tenant_id == ledger._scope_value.tenant_id,
                     admission.c.installation_id == ledger._scope_value.installation_id,
                     admission.c.event_type == "TOOL_REQUEST_ADMITTED", ingress.c.event_type == "INGRESS_COMMITTED",
-                    a["action_name"].astext.in_(_SETTERS), s["text"].astext == turn.text,
+                    a["action_name"].astext.in_(_SETTERS), s["text"].astext.isnot(None),
+                    sa.or_(s["text"].astext == turn.text, sa.and_(
+                        a["interpretation_reuse"]["surface_scheme"].astext == _SURFACE_VERSION,
+                        a["interpretation_reuse"]["surface_input_sha256"].astext == _surface_digest(turn.text))),
                     s["principal_id"].astext == turn.principal_id,
                     a["interpretation_reuse"]["configuration_sha256"].astext == self._configuration,
                     a["interpretation_reuse"]["turn_scope_sha256"].astext == turn_scope(turn),
                     ingress.c.occurred_at >= datetime.now(UTC) - timedelta(hours=24),
                     s["message_id"].astext != turn.message_id)
-                .order_by(ingress.c.occurred_at.desc(), admission.c.event_id).limit(1)).mappings().first()
-            if row is None:
+                .distinct(*signature)
+                .order_by(*signature, ingress.c.occurred_at.desc(),
+                          admission.c.event_id).limit(17)).mappings().all()
+            if not rows or len(rows) == 17:
                 return None
-            source = row["source_payload"]["data"]
-            if canonical_sha256(row["source_payload"]) != bytes(row["source_hash"]).hex():
-                return None
-            stored = ledger.checked(row)
-            meta = stored.get("interpretation_reuse")
-            if not isinstance(meta, dict) or meta.get("version") != _VERSION:
-                return None
-            replies = c.execute(sa.select(events).where(*ledger.scoped(),
-                events.c.thread_id == "conversation:" + source["message_id"],
-                events.c.event_type == "REPLY_COMMITTED")).mappings().all()
-            if len(replies) != 1:
-                return None
-            reply = ledger.checked(replies[0])
-            if (reply.get("response_mode") != "silent" or not reply.get("text")
-                    or reply.get("content_erasure") or reply.get("content_compaction")
-                    or reply.get("provider") not in {"eva:verified-action", "eva:verified-reuse"}
-                    or any(reply.get(k) != source.get(k) for k in ("principal_id", "conversation_id", "message_id"))):
-                return None
-            args = stored.get("action_arguments")
-            if (not isinstance(args, dict) or args.get("reusable_command") is not True
-                    or args.get("finish_without_reply") is not True
-                    or meta.get("input_sha256") != hashlib.sha256(turn.text.encode()).hexdigest()):
-                return None
-            source_turn = ConversationTurn(tenant_id=turn.tenant_id, installation_id=turn.installation_id,
-                principal_id=turn.principal_id, audience=turn.audience, project_id=None,
-                conversation_id=source["conversation_id"], message_id=source["message_id"], text=turn.text,
-                occurred_at=row["source_at"].astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"))
-            candidate = RetainedCommand(ConversationActionCall(str(uuid5(NAMESPACE_URL,
-                "eva:reuse:" + turn.message_id + ":" + canonical_sha256(args))), stored["action_name"], args),
-                source_turn, row["thread_id"], stored, meta)
-            if not self._context_valid(c, ledger, candidate, turn):
-                return None
+            selected = []
+            for row in sorted(rows, key=lambda item: item["source_at"], reverse=True):
+                candidate = self._source_candidate(c, ledger, row, turn)
+                if candidate is None:
+                    return None  # Incomplete or damaged source evidence never wins a tie.
+                if self._context_valid(c, ledger, candidate, turn):
+                    selected.append(candidate)
+        if not selected:
+            return None
+        # Keep the existing device/profile read barrier AFTER source validation.
         binding = self._binding(turn)
-        return candidate if all(meta.get(k) == v for k, v in binding.items()) else None
+        current = [candidate for candidate in selected
+                   if all(candidate.metadata.get(k) == v for k, v in binding.items())]
+        # Conflicting current interpretations require Eva again, never newest-wins.
+        return current[0] if len(current) == 1 else None
+
+    def _source_candidate(self, c, ledger, row, turn):
+        source = row["source_payload"]["data"]
+        if canonical_sha256(row["source_payload"]) != bytes(row["source_hash"]).hex():
+            return None
+        stored = ledger.checked(row)
+        meta = stored.get("interpretation_reuse")
+        if not isinstance(meta, dict) or meta.get("version") != _VERSION:
+            return None
+        replies = c.execute(sa.select(events).where(*ledger.scoped(),
+            events.c.thread_id == "conversation:" + source["message_id"],
+            events.c.event_type == "REPLY_COMMITTED")).mappings().all()
+        if len(replies) != 1:
+            return None
+        reply = ledger.checked(replies[0])
+        if (reply.get("response_mode") != "silent" or not reply.get("text")
+                or reply.get("content_erasure") or reply.get("content_compaction")
+                or reply.get("provider") not in {"eva:verified-action", "eva:verified-reuse"}
+                or any(reply.get(k) != source.get(k) for k in ("principal_id", "conversation_id", "message_id"))):
+            return None
+        args = stored.get("action_arguments")
+        if (not isinstance(args, dict) or args.get("reusable_command") is not True
+                or args.get("finish_without_reply") is not True
+                or meta.get("input_sha256") != hashlib.sha256(source["text"].encode()).hexdigest()):
+            return None
+        if source["text"] != turn.text and (
+            meta.get("surface_scheme") != _SURFACE_VERSION
+            or meta.get("surface_input_sha256") != _surface_digest(source["text"])
+            or _surface_digest(source["text"]) != _surface_digest(turn.text)
+        ):
+            return None
+        source_turn = ConversationTurn(tenant_id=turn.tenant_id, installation_id=turn.installation_id,
+            principal_id=turn.principal_id, audience=turn.audience, project_id=None,
+            conversation_id=source["conversation_id"], message_id=source["message_id"], text=source["text"],
+            occurred_at=row["source_at"].astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"))
+        candidate = RetainedCommand(ConversationActionCall(str(uuid5(NAMESPACE_URL,
+            "eva:reuse:" + turn.message_id + ":" + canonical_sha256(args))), stored["action_name"], args),
+            source_turn, row["thread_id"], stored, meta)
+        return candidate
 
     def _context_valid(self, c, ledger, candidate, turn):
         meta = candidate.metadata
