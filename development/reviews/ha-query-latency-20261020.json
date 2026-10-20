@@ -1,0 +1,18 @@
+{
+  "contract": "EvaTargetedIndependentReview/v1",
+  "recordedAt": "2026-10-20T09:49:31.643524+00:00",
+  "reviewer": "/root/review_cursor",
+  "decision": "go",
+  "scope": "Reviewed r3 API/helper correctness, actual release provenance, production tool captures, exact live voice measurements and exact cleanup plan.",
+  "findings": [
+    "Current parent provider hooks and compact description preserved; only own schema/prepare/context changes added.",
+    "Actual combined query was the only tool action, HTTP200 with success and source discovery; weather2model phases, followup1withouttool.",
+    "PCM timing independently recalculated:14007.858ms and7740.866ms; answer onset, not complete playback.",
+    "Historical22.823s is unpaired. No physical speaker/outputASR/general speed proof.",
+    "r2fallback worked;150s harness deadline is not user silence.",
+    "Exact4synthetic sources and204protected ownerrecords independently verified; supported cleanup GO bound to manifest and fresh validation."
+  ],
+  "cleanupManifestSha256": "a8687015cc048a79234e178600e87ecbdf5518bb8c5e334cb17ca6159ed190e2",
+  "criteriaChanged": false,
+  "ownerAcceptance": false
+}

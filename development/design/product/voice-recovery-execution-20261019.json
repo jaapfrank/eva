@@ -6,7 +6,7 @@
   "ownerDirection": {
     "technologyPreference": "De techniek is vrij binnen de bestaande projectafspraken; bruikbaarheid en snelheid bepalen de keuze. Geen verdere stemvoorkeurvraag nodig.",
     "evidenceRule": "Een test van uitvoering A bewijst geen werking van uitvoering B.",
-    "currentTurn": "Laatste eigenaarmelding onderzocht: bronverlies na weersvraag en circa een minuut stilte. Begrensde broncontinuïteit, terminale invoerafhandeling en correcte Codex-cachekoppeling zijn geïnstalleerd en door de echte native softwareketen gebruikt. Eerste weersopvraag blijft te traag door opeenvolgende modelrondes; daar blijft de bestaande spraaktaak op gericht. Geen nieuwe provider of fysieke acceptatie geclaimd.",
+    "currentTurn": "De HA-bronvraag is op 20 oktober geïnstalleerd en werkelijk gebruikt: één gecombineerde provideractie, twee modelrondes, eerste antwoordaudio na 14,008 s. De bronvervolgvraag behield de gebruikte bron en kreeg audio na 7,741 s zonder nieuwe toolactie. De historische referentie was 22,823 s; dit is geen gepaarde algemene benchmark of fysieke acceptatie. De resterende antwoordlatentie en oorspronkelijke spraakcriteria blijven op de bestaande kaarten.",
     "previousTurnScope": "Uitwerking en alleen-lezen controle; geen runtimewijziging, providerproef, opname, firmwareflash of WSL-herstart."
   },
   "baseline": {
@@ -341,5 +341,12 @@
     "implementationEvidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json",
     "updatedAt": "2026-10-19T18:37:15.035445+00:00",
     "ownerAccepted": false
+  },
+  "haQueryLatency20261020": {
+    "status": "installed_measured_targeted_repair",
+    "evidence": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
+    "independentReview": "development/reviews/ha-query-latency-20261020.json",
+    "ownerAcceptance": false,
+    "runtimeConfigurationPreserved": true
   }
 }

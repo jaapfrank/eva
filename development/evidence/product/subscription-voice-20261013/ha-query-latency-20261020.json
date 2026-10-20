@@ -1,7 +1,7 @@
 {
   "contract": "EvaHaQueryLatency/v1",
-  "recordedAt": "2026-10-20T09:09:18.475645+00:00",
-  "status": "implementing",
+  "recordedAt": "2026-10-20T09:49:31.643524+00:00",
+  "status": "installed_measured_targeted_repair",
   "ownerDirection": "Onderzoek de vier modelrondes voor een gewone HA-vraag en vergelijk Google/Siri; maak de bestaande route concreet sneller.",
   "baseline": {
     "core_image": "sha256:f24c0e843100ee48e1218413b02f2db9103a486ab9d94433f48da42411a8533f",
@@ -11,12 +11,268 @@
     "input_end_to_final_pcm_ms": 22823.008,
     "evidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
   },
-  "candidate": "Optional bounded target/service resolution in the existing HA API tool; model chooses service and data once; current HA definitions and actual unique entity determine execution; same core phrases result.",
+  "candidate": "Installed combined provider service resolution; actual weather call selected it directly.",
   "endCondition": "Actual installed voice weather request uses two model phases with a lower input-end→final-PCM latency; source follow-up preserved; denied/ambiguous/unknown target cannot cause an invocation.",
   "acceptance": {
     "ownerAccepted": false,
     "voiceFluencyComplete": false
   },
   "privateEvidenceRoot": "/var/lib/eva2/voice-session/ha-query-20261020",
-  "criteriaUnchanged": true
+  "criteriaUnchanged": true,
+  "implementation": {
+    "module": "existing optional HomeAssistantApiTool, not core language routing",
+    "feature": "target_query resolves one eligible current entity and validates the mandatory-response service inside the existing tool invocation",
+    "guards": [
+      "exact service schema and supported entity selectors",
+      "only one eligible target; absent/ambiguous/unavailable rejected before service invocation",
+      "caller target IDs cannot be mixed with automatic resolution",
+      "mandatory response does not imply read-only or idempotent",
+      "existing durable captures recheck STOP and authority immediately before actual POST",
+      "uncertain captured effects are not repeated",
+      "bounded discovery and execution deadline",
+      "discovery source label and hashes remain in the existing source receipt; no parallel memory"
+    ],
+    "input_repair": "Malformed local JSON/WebSocket envelopes return bounded local feedback. Invalid composite shape uses the existing one-time action-input repair; auth/session commands remain hard denials.",
+    "known_service_guidance": "Existing provider active_context hook and schema field ordering make the combined route visible before generating body_json."
+  },
+  "runtime": {
+    "core_image": "sha256:5c97cf3b264d5b7cc239f5881541be951166abcb04a8f40b448d4b83d936c795",
+    "parent_image": "sha256:e51f4dc414744a17fd157dbb47d02573f6aff08668e3ab817609fb1521d0010e",
+    "speaker_image": "sha256:edf417b7af3dcb4c404e5f8e67a1f92ce9472e57e717e2124190b00f870d6c79",
+    "speaker_restarted": false,
+    "configuration_preserved": true,
+    "source_verified": true,
+    "pre_install_guard": {
+      "voice": 0,
+      "work": 0,
+      "models": 0,
+      "decisions": 0,
+      "conversation": 0,
+      "memory": 0
+    },
+    "concurrent_provider_hooks_preserved": true,
+    "concurrent_source_note": "Candidate preserves the independently installed optional provider module from parent e51f. That module was subsequently committed as66dab1e8. Delivery adds only this repair onto that commit and stages the exact installed API, preserving its provider hooks and compact description. Earlier owned-only API snapshots remain private preparation evidence.",
+    "integration_parent_commit": "66dab1e8d30c41b35f62a0e5a0be9d2192df771c"
+  },
+  "actual": {
+    "chain": "existing input transcription → household Eva core → real HA API → same core answer → existing Fenna literal renderer → paced software PCM",
+    "validation_exit_code": 0,
+    "execute_exit_code": 0,
+    "runtime_unchanged_during_probe": true,
+    "turns": [
+      {
+        "question": "tomorrow_weather",
+        "model_phases": 2,
+        "input_end_to_final_answer_first_pcm_ms": 14007.858,
+        "input_tokens": 16995,
+        "output_tokens": 126
+      },
+      {
+        "question": "source_followup",
+        "model_phases": 1,
+        "input_end_to_final_answer_first_pcm_ms": 7740.866,
+        "input_tokens": 9677,
+        "output_tokens": 35
+      }
+    ],
+    "tool_actions": 1,
+    "tool_action": "home_assistant_request with target_query=* and type=daily",
+    "provider_elapsed_including_durable_ms": 336.339,
+    "weather_model_elapsed_ms": 7507,
+    "weather_context_preparation_ms": 1585,
+    "source_followup_preserved": true,
+    "source_name_not_precise_town": true,
+    "source_followup_new_tool_actions": 0,
+    "external_state_verified": false,
+    "physical_microphone": false,
+    "physical_speaker_playback": false,
+    "independent_output_asr": false
+  },
+  "comparison": {
+    "reference": "Historical successful 2026-10-19 weather probe, not a paired baseline",
+    "reference_final_pcm_ms": 22823.008,
+    "candidate_final_pcm_ms": 14007.858,
+    "reference_model_phases": 4,
+    "candidate_model_phases": 2,
+    "limit": "One candidate pair; changed day/load and parent provider policy. No median/p95, general speed guarantee, competitor speed benchmark, one-second claim or full voice acceptance."
+  },
+  "failed_attempts": [
+    {
+      "case": "native-before",
+      "result": "Three model phases then malformed WebSocket shape caused core failure; exact malformed body was not retained. Existing spoken fallback was rendered; no confirmed final. Harness finalization then failed at its150s deadline.",
+      "accepted_as_speed_evidence": false
+    },
+    {
+      "case": "native-after",
+      "result": "Succeeded but weather still used four model phases; not accepted as a speed win.",
+      "accepted_as_speed_evidence": false
+    },
+    {
+      "case": "native-after-r2",
+      "result": "Inventory then conflicting caller entity_id/automatic target shape caused a core failure. Existing terminal error and spoken fallback worked; first fallback PCM13.522s after input end.150s was the harness waiting for a confirmed final, not150s silence. Fixed using existing bounded input repair plus earlier schema choice.",
+      "accepted_as_speed_evidence": false
+    }
+  ],
+  "tests": {
+    "result": "80 passed in 5.83s",
+    "scope": [
+      "new service query tests",
+      "existing HA API tests",
+      "existing contact confirmation policy tests"
+    ],
+    "source": "exact deploy-r3 API and helper on current installed parent",
+    "security_criteria_unchanged": true
+  },
+  "research": [
+    {
+      "system": "Google Home",
+      "url": "https://developers.home.google.com/cloud-to-cloud/primer/intents",
+      "documented": "SYNC registers devices and capabilities; QUERY and EXECUTE carry structured requests for known devices.",
+      "inference_for_eva": "Let the optional provider resolve and execute a declared action without repeated model discovery. Public documentation does not reveal the whole language pipeline."
+    },
+    {
+      "system": "Google Local Home",
+      "url": "https://developers.home.google.com/local-home/overview",
+      "documented": "Optional local execution/query runs on Home or Nest devices with cloud fallback.",
+      "inference_for_eva": "Local fulfillment can reduce transport overhead; it does not establish that language understanding runs offline or remove model latency."
+    },
+    {
+      "system": "Siri",
+      "url": "https://developer.apple.com/videos/play/wwdc2026/240/",
+      "documented": "App Intents describe actions and parameters; App Entities and schemas make entities resolvable. Siri interprets the request and the app performs the action.",
+      "inference_for_eva": "Expose provider-owned action contracts while retaining one conversational identity, memory and authority. No proprietary routing or device speed is inferred."
+    },
+    {
+      "system": "Home Assistant MCP",
+      "url": "https://www.home-assistant.io/integrations/mcp_server/",
+      "documented": "The MCP server exposes the configured LLM API tools and context.",
+      "inference_for_eva": "A different transport alone does not prove fewer model round trips; retain the working API provider for this repair."
+    }
+  ],
+  "usage": {
+    "runtime_cases": [
+      {
+        "case": "before_failure",
+        "turns": 1,
+        "model_attempts": 3,
+        "input_tokens": 23912,
+        "output_tokens": 172,
+        "tool_admissions": 2
+      },
+      {
+        "case": "prototype_no_gain",
+        "turns": 2,
+        "model_attempts": 5,
+        "input_tokens": 46291,
+        "output_tokens": 299,
+        "tool_admissions": 3
+      },
+      {
+        "case": "r2_failure",
+        "turns": 1,
+        "model_attempts": 2,
+        "input_tokens": 16182,
+        "output_tokens": 134,
+        "tool_admissions": 1
+      },
+      {
+        "case": "installed_r3",
+        "turns": 2,
+        "model_attempts": 3,
+        "input_tokens": 26672,
+        "output_tokens": 161,
+        "tool_admissions": 1
+      }
+    ],
+    "total": {
+      "turns": 6,
+      "model_attempts": 13,
+      "input_tokens": 113057,
+      "output_tokens": 766,
+      "tool_admissions": 7
+    },
+    "input_transcription_sessions": 4,
+    "literal_tts_requests": 9,
+    "fixture_generation_requests": 0,
+    "provider_credits": null,
+    "development_agent_usage": null
+  },
+  "independentReview": "development/reviews/ha-query-latency-20261020.json",
+  "cleanup": {
+    "status": "verified_supported_erasure_complete",
+    "completed_synthetic_turns": 4,
+    "failed_synthetic_turns_stopped_and_raw_erased": 2,
+    "protected_owner_events": 204,
+    "verification": {
+      "storage_removed": 4,
+      "raw_exchanges_erased": 4,
+      "outbox_erased": 4,
+      "semantic_documents_absent": 4,
+      "protected_owner_events_unchanged": 204
+    },
+    "scope": "4 exact completed diagnostic exchanges plus2exact failed raw ingresses; not a broad derivative-removal claim",
+    "manifest_sha256": "a8687015cc048a79234e178600e87ecbdf5518bb8c5e334cb17ca6159ed190e2"
+  },
+  "remaining": {
+    "performance": "The measured14s first answer still contains model, transcription and voice handoff latency; this narrow repair does not close C4.1/C3.5 or the whole voice task.",
+    "acceptance": "Physical conversation rhythm, interruption and family judgement remain in the existing tasks; no new owner test requested in this delivery."
+  },
+  "privateArtifacts": [
+    {
+      "relative_path": "all-probe-journal.private.json",
+      "sha256": "e10f122350b7cc2ee312c9aa1248ab5169d289ea25780242fae165cda2c8c3a9"
+    },
+    {
+      "relative_path": "after-r3-core.private.log",
+      "sha256": "da7b0e84adef898a804a46736e29511f298d02c6924fdf506c10d828d3944492"
+    },
+    {
+      "relative_path": "native-after-r3/result/result.private.json",
+      "sha256": "01b0c939591bf5dda0dbbbc16f512501dbbf41d921fed62bbc734a12648f8612"
+    },
+    {
+      "relative_path": "native-after-r3/manifest.private.json",
+      "sha256": "4b1bee5b3e86ccce661f9a59d7f410e365715e7b720d0b8aba8d5eea2190720c"
+    },
+    {
+      "relative_path": "native-after-r3/execute-binding.json",
+      "sha256": "3ca39760986118f589ba796b8ad5c0670050a07af081975709aba5bb3b3208b1"
+    },
+    {
+      "relative_path": "native-after-r3/validate-binding.json",
+      "sha256": "1b44298a467b9ddcc35086436c609d95f5b54258c9a5971af31fdd71fe13c7c9"
+    },
+    {
+      "relative_path": "deploy-r3/installed.private.json",
+      "sha256": "84ab73ddf81baec283c867bb9bc3dbb48ceba1ed91de06731c736c6d712ce309"
+    },
+    {
+      "relative_path": "home_assistant_api.owned.py",
+      "sha256": "86edc1828a6d5f7aca262438928333dc075b0a3954b167242e1b0f08ffa0ea4f"
+    },
+    {
+      "relative_path": "home_assistant_api.deploy-r3.py",
+      "sha256": "31cec29a870ef8638fce57bde00ea9b91a5ec297b557d34d4c62886e6e2dfd07"
+    },
+    {
+      "relative_path": "candidate-tests.private.log",
+      "sha256": "b6355a1a8628e1dfd976e0f6b5c189b7644780b7d30e87da805ffff21032f7e2"
+    },
+    {
+      "relative_path": "after-r2-failure-assessment.json",
+      "sha256": "f8d2420460e5c915cd46beb7880f45f10b3e8112d1882c99f4a0ff148aa094e1"
+    },
+    {
+      "relative_path": "usage-summary.json",
+      "sha256": "5ff43a3feef08ad2dfdc8581966e0af2ac8647fb2141a25d2781d40cc2384121"
+    },
+    {
+      "relative_path": "cleanup-preparation/apply-20261020T094830-f3f336ab.private.log",
+      "sha256": "e8af54d22db944c98708eabb17aa3f6307d89d3d3c1b6027373087ac5d7b484e"
+    },
+    {
+      "relative_path": "cleanup-preparation/manifest.private.json",
+      "sha256": "a8687015cc048a79234e178600e87ecbdf5518bb8c5e334cb17ca6159ed190e2"
+    }
+  ]
 }

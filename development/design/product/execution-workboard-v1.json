@@ -3480,7 +3480,7 @@
                 "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
                 "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
                 "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-                "nextAction": "Onderzoek en verkort de opeenvolgende HA-modelrondes. Combineer bron-/serviceschemaresolutie in de bestaande module en vergelijk de werkelijk geïnstalleerde spraakketen met de vastgelegde vier-rondenreferentie; behoud gesprek, bron en bevoegdheden.",
+                "nextAction": "De gecombineerde HA-bronvraag is geïnstalleerd en werkelijk gebruikt: twee modelrondes, antwoordaudio na 14,008 s. Vervolg de resterende antwoordlatentie en oorspronkelijke spraakcriteria binnen deze bestaande kaart; volledige fysieke acceptatie is hiermee niet ingevuld.",
                 "status": "planned",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "scopeOrigin": "voice-fluency-20261019",
@@ -3499,10 +3499,12 @@
                 },
                 "executionPlan": {
                   "path": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
-                  "status": "implementing",
-                  "updatedAt": "2026-10-20T09:09:18.475645+00:00",
-                  "ownerAcceptance": false
-                }
+                  "status": "installed_measured_targeted_repair",
+                  "updatedAt": "2026-10-20T09:51:06.774021+00:00",
+                  "ownerAcceptance": false,
+                  "independentReview": "development/reviews/ha-query-latency-20261020.json"
+                },
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json"
               },
               {
                 "id": "C3.6",
@@ -3553,7 +3555,7 @@
                 "kind": "verbeteren",
                 "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
                 "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
-                "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
+                "latestEvidence": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
                 "ownerTrial": {
                   "status": "partial_with_false_interruptions_and_stop_failure",
                   "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -3563,7 +3565,7 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Onderzoek en verkort de opeenvolgende HA-modelrondes. Combineer bron-/serviceschemaresolutie in de bestaande module en vergelijk de werkelijk geïnstalleerde spraakketen met de vastgelegde vier-rondenreferentie; behoud gesprek, bron en bevoegdheden.",
+                "nextAction": "De gecombineerde HA-bronvraag is geïnstalleerd en werkelijk gebruikt: twee modelrondes, antwoordaudio na 14,008 s. Vervolg de resterende antwoordlatentie en oorspronkelijke spraakcriteria binnen deze bestaande kaart; volledige fysieke acceptatie is hiermee niet ingevuld.",
                 "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
@@ -3840,9 +3842,10 @@
                 },
                 "executionPlan": {
                   "path": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
-                  "status": "implementing",
-                  "updatedAt": "2026-10-20T09:09:18.475645+00:00",
-                  "ownerAcceptance": false
+                  "status": "installed_measured_targeted_repair",
+                  "updatedAt": "2026-10-20T09:51:06.774021+00:00",
+                  "ownerAcceptance": false,
+                  "independentReview": "development/reviews/ha-query-latency-20261020.json"
                 }
               },
               {
@@ -7560,18 +7563,18 @@
             "C3.5",
             "C3.6"
           ],
-          "status": "ha_query_latency_implementation",
+          "status": "ha_query_latency_repair_installed_measured",
           "startedAt": "2026-10-19T07:08:01.588667+00:00",
           "activeOtherWorkPreserved": "E5.1",
           "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
           "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
-          "independentReview": "development/reviews/weather-followup-repair-20261019.json",
-          "updatedAt": "2026-10-20T09:09:18.475645+00:00",
+          "independentReview": "development/reviews/ha-query-latency-20261020.json",
+          "updatedAt": "2026-10-20T09:51:06.774021+00:00",
           "physicalAcceptance": "not_observed_after_repair",
           "executionPlan": {
-            "path": "development/design/product/voice-recovery-execution-20261019.json",
-            "status": "weather_followup_repair_installed_measured",
-            "updatedAt": "2026-10-19T18:37:15.035445+00:00"
+            "path": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
+            "status": "installed_measured_targeted_repair",
+            "updatedAt": "2026-10-20T09:51:06.774021+00:00"
           },
           "latestEvidence": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json"
         }
@@ -8113,7 +8116,7 @@
               "doneWhen": "De bestaande spraakingang behoudt zachte beginwoorden, korte vervolgen en gewone aarzelingen zonder dubbele of afgekapt opgenomen opdrachten. Dezelfde Eva-kern ontvangt één bedoelde beurt; stoppen en nieuwe echte spraak blijven direct bruikbaar. De gerichte verbetering is gemeten op de geïnstalleerde route met volledige invoer/uitvoer en een controle van beide speakers; extra wachttijd wordt alleen toegevoegd wanneer de gemeten grens die vereist.",
               "existing": "Een 550 ms fragmentvenster bundelt korte transcriptfragmenten; stille aanloop en native STOP zijn behouden.",
               "gap": "De vaste grens en native heropening na playback moeten nog aan werkelijk beurtgedrag worden getoetst.",
-              "nextAction": "Onderzoek en verkort de opeenvolgende HA-modelrondes. Combineer bron-/serviceschemaresolutie in de bestaande module en vergelijk de werkelijk geïnstalleerde spraakketen met de vastgelegde vier-rondenreferentie; behoud gesprek, bron en bevoegdheden.",
+              "nextAction": "De gecombineerde HA-bronvraag is geïnstalleerd en werkelijk gebruikt: twee modelrondes, antwoordaudio na 14,008 s. Vervolg de resterende antwoordlatentie en oorspronkelijke spraakcriteria binnen deze bestaande kaart; volledige fysieke acceptatie is hiermee niet ingevuld.",
               "status": "planned",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "scopeOrigin": "voice-fluency-20261019",
@@ -8132,10 +8135,12 @@
               },
               "executionPlan": {
                 "path": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
-                "status": "implementing",
-                "updatedAt": "2026-10-20T09:09:18.475645+00:00",
-                "ownerAcceptance": false
-              }
+                "status": "installed_measured_targeted_repair",
+                "updatedAt": "2026-10-20T09:51:06.774021+00:00",
+                "ownerAcceptance": false,
+                "independentReview": "development/reviews/ha-query-latency-20261020.json"
+              },
+              "latestEvidence": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json"
             },
             {
               "id": "C3.6",
@@ -8186,7 +8191,7 @@
               "kind": "verbeteren",
               "doneWhen": "Tijdens Eva’s spraak kunnen onderbreken en met de nieuwe vraag doorgaan.",
               "owner": "Andere Codex in WSL · spraak; Jaap · uiteindelijke fysieke beoordeling",
-              "latestEvidence": "development/evidence/product/subscription-voice-20261013/voice-live-completion-20261018.json",
+              "latestEvidence": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
               "ownerTrial": {
                 "status": "partial_with_false_interruptions_and_stop_failure",
                 "report": "Onderbreken lijkt te werken, maar Eva wordt bij elk geluidje onderbroken en de stream is niet meer te stoppen.",
@@ -8196,7 +8201,7 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Onderzoek en verkort de opeenvolgende HA-modelrondes. Combineer bron-/serviceschemaresolutie in de bestaande module en vergelijk de werkelijk geïnstalleerde spraakketen met de vastgelegde vier-rondenreferentie; behoud gesprek, bron en bevoegdheden.",
+              "nextAction": "De gecombineerde HA-bronvraag is geïnstalleerd en werkelijk gebruikt: twee modelrondes, antwoordaudio na 14,008 s. Vervolg de resterende antwoordlatentie en oorspronkelijke spraakcriteria binnen deze bestaande kaart; volledige fysieke acceptatie is hiermee niet ingevuld.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -8473,9 +8478,10 @@
               },
               "executionPlan": {
                 "path": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
-                "status": "implementing",
-                "updatedAt": "2026-10-20T09:09:18.475645+00:00",
-                "ownerAcceptance": false
+                "status": "installed_measured_targeted_repair",
+                "updatedAt": "2026-10-20T09:51:06.774021+00:00",
+                "ownerAcceptance": false,
+                "independentReview": "development/reviews/ha-query-latency-20261020.json"
               }
             },
             {
@@ -12193,18 +12199,18 @@
           "C3.5",
           "C3.6"
         ],
-        "status": "ha_query_latency_implementation",
+        "status": "ha_query_latency_repair_installed_measured",
         "startedAt": "2026-10-19T07:08:01.588667+00:00",
         "activeOtherWorkPreserved": "E5.1",
         "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
         "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
-        "independentReview": "development/reviews/weather-followup-repair-20261019.json",
-        "updatedAt": "2026-10-20T09:09:18.475645+00:00",
+        "independentReview": "development/reviews/ha-query-latency-20261020.json",
+        "updatedAt": "2026-10-20T09:51:06.774021+00:00",
         "physicalAcceptance": "not_observed_after_repair",
         "executionPlan": {
-          "path": "development/design/product/voice-recovery-execution-20261019.json",
-          "status": "weather_followup_repair_installed_measured",
-          "updatedAt": "2026-10-19T18:37:15.035445+00:00"
+          "path": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
+          "status": "installed_measured_targeted_repair",
+          "updatedAt": "2026-10-20T09:51:06.774021+00:00"
         },
         "latestEvidence": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json"
       }

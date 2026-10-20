@@ -164,6 +164,8 @@ voorwaarde voor deze uitvoerbare spraakverbeteringen. Hardwaregedrag wordt op de
 werkelijke route gecontroleerd; tests en containergezondheid vervangen dat niet.
 De afzonderlijke E4.10/E5.2-opdracht behandelt gedeelde kern- en actielatentie.
 
+Op 20 oktober is de [gecombineerde HA-bronvraag](../evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json) geïnstalleerd en via de echte native softwareketen gebruikt. De weersvraag koos één provideractie en twee modelrondes; antwoordaudio begon na 14,008 s, tegenover de historische 22,823 s. De bronvervolgvraag gebruikte één modelronde en behield de bronnaam. Dit is een gerichte verbetering met ongepaarde metingen; fysieke gesprekskwaliteit en volledige spraakacceptatie blijven bij de bestaande kaarten.
+
 ## E3 — Alle bestanden beoordeelbaar maken
 
 ### Eén complete, herleidbare inventaris
