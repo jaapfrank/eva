@@ -1,0 +1,29 @@
+{
+  "contract": "EvaColdCommandSourceRead/v1",
+  "status": "diagnosed_pending_lossless_candidate",
+  "startedAt": "2026-10-20T16:56:43.177959+00:00",
+  "existing": "Installed exact reuse remains completed under original E5.2 criteria; unseen formulations use the normal model route.",
+  "gap": "Current direct runtime profile:5.816s, one3.276s model request,1206 SQL calls/954.768ms;14 source-loader calls661.827ms. Each loader separately reads checkpoint and complete timeline.",
+  "route": [
+    "src/eva/adapters/postgres/operational_timeline.py",
+    "src/eva/providers/mcp_autonomy.py"
+  ],
+  "endCondition": "Read checkpoint and full ordered source history in one statement snapshot, preserving hashes/projection/scope checks and fresh authority/STOP checks. Adopt only after focused PostgreSQL corruption/scope/concurrency tests, paired source-read evidence and independent review, then guard installation and test actual authenticated HTTP. Keep original cold failures and report total latency without claiming one-second cold commands.",
+  "privateEvidenceRoot": "/var/lib/eva2/voice-session/cold-command-20261020",
+  "baselineDiagnostic": {
+    "actual_http_benchmark": false,
+    "runtime_ms": 5815.738,
+    "model_ms": 3276,
+    "model_attempts": 1,
+    "input_tokens": 9382,
+    "output_tokens": 40,
+    "cached_input_tokens": 0,
+    "sql_count": 1206,
+    "sql_ms": 954.768,
+    "source_loader_calls": 14,
+    "source_loader_total_ms": 661.827
+  },
+  "credits": null,
+  "voiceChanged": false,
+  "originalE52CriteriaChanged": false
+}
