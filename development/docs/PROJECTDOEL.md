@@ -189,8 +189,11 @@ een reeds gebruikte dependency, een standaard vaardigheidspakket of afgebakende
 upstreamcode wordt met versie, licentie en onderhoudsverantwoordelijkheid behouden.
 Eigen code verantwoordt het resterende integratiegat. Het actuele
 [hergebruikplan](AFRONDINGSPLAN.md#gericht-upstream-hergebruiken-voor-dagelijks-vervolg-en-ontwikkeling)
-onderscheidt meerdaags eigen vervolg (E1.4) van drie optionele technische kandidaten
-(E4.12–E4.14). Een uitgebreidere upstreamimplementatie bewijst geen hogere
+bevat de goedgekeurde uitkomsten E1.4–E1.6 (eigen vervolg, actueel mensbegrip en
+relevante bronaanleidingen) en E4.12–E4.14 (vaardigheden hergebruiken/onderhouden,
+codefeedback en scriptbare toolketens). Alle bruikbare onderzoeksbevindingen hebben
+een bestaande of expliciet toegevoegde uitvoerkaart; optionele verbindingen blijven
+per installatie gekozen. Een uitgebreidere upstreamimplementatie bewijst geen hogere
 intelligentie; bewezen kwaliteit en minder hulp bij de echte gebruikersuitkomst
 bepalen toepassing. Geen extra agent-, geheugen- of planningssysteem alleen om
 een concurrentielijst af te vinken.

@@ -175,7 +175,7 @@
     "developmentCredits": null
   },
   "e47Status": "Niet door dit onderzoek afgerond; actuele canonieke taakstatus van andere gelijktijdige uitvoering blijft leidend.",
-  "updatedAt": "2026-10-20T12:48:01.802808+00:00",
+  "updatedAt": "2026-10-20T12:52:02.251252+00:00",
   "sourceCodeReview": {
     "method": "Pinned official source code; selected function bodies and imports examined. Complete protocol.py read and imported in isolation; not all downloaded source files fully read. No competitive runtime quality or cost ranking.",
     "upstreams": [
@@ -470,29 +470,108 @@
     "rollback": "No routine reinstall loop. Stage a coherent change on actual current image, preserve peer work and data; inspect uncertain actions rather than replay."
   },
   "plan": {
-    "status": "planned_not_implemented",
+    "status": "approved_for_implementation",
     "taskIds": [
       "E1.4",
+      "E1.5",
+      "E1.6",
       "E4.12",
       "E4.13",
       "E4.14"
     ],
     "executionOrder": [
-      "E4.7 current handoff state retained; no parallel voice ownership change",
       "E1.4",
+      "E1.5",
+      "E1.6",
       "E4.12",
       "E4.13",
       "E4.14"
     ],
     "newMandatoryFunctionalOutcome": "E1.4 closes already desired cross-day continuity, not a fifth product pillar.",
-    "optionalCandidates": [
+    "optionalCandidates": [],
+    "firstGate": "Reuse existing implementation and incoming actual runtime evidence before programming; no preassigned household scenario.",
+    "scopeFile": "development/design/product/useful-upstream-adoption-scope-20261020.json",
+    "independentReview": "Required on resulting code/user outcome before deployment; this research is not implementation review.",
+    "runtimeInstalled": false
+  },
+  "ownerAdoption": {
+    "status": "approved_for_implementation",
+    "authorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
+    "scopeFile": "development/design/product/useful-upstream-adoption-scope-20261020.json",
+    "taskIds": [
+      "E1.4",
+      "E1.5",
+      "E1.6",
       "E4.12",
       "E4.13",
       "E4.14"
     ],
-    "firstGate": "Reuse existing implementation and incoming actual runtime evidence before programming; no preassigned household scenario.",
-    "scopeFile": "development/design/product/upstream-reuse-task-scope-20261020.json",
-    "independentReview": "Required on resulting code/user outcome before deployment; this research is not implementation review.",
-    "runtimeInstalled": false
-  }
+    "runtimeInstalledByThisChange": false
+  },
+  "coverageMap": [
+    {
+      "finding": "Blijvende verantwoordelijkheid en projectvervolg",
+      "tasks": [
+        "E1.4"
+      ]
+    },
+    {
+      "finding": "Verwachtingen, mensbegrip en actuele voorbereiding",
+      "tasks": [
+        "E1.5",
+        "E1.4"
+      ],
+      "reuse": "Bestaand Hindsight/HUE; geen Honcho erbij."
+    },
+    {
+      "finding": "Vaardigheden, standaarden en onderhoud",
+      "tasks": [
+        "E4.12"
+      ],
+      "reuse": "AgentSkills-pakketten en passende Hermes/OpenClaw-code in bestaande procedure-/AIDE²-route."
+    },
+    {
+      "finding": "Programmeervermogen en minder onnodige modelrondes",
+      "tasks": [
+        "E4.13",
+        "E4.14"
+      ],
+      "reuse": "Afgebakende LSP-/RPC-code, bestaande geisoleerde uitvoerder."
+    },
+    {
+      "finding": "Relevante bronveranderingen, hooks en aandacht",
+      "tasks": [
+        "E1.6",
+        "E4.8"
+      ],
+      "reuse": "Bestaande events/connectoren; versiegebonden MCP Events alleen indien werkelijk passend."
+    },
+    {
+      "finding": "Dromen en geheugenconsolidatie",
+      "tasks": [
+        "E4.11",
+        "E1.5"
+      ],
+      "reuse": "Bestaande dag-/droomroute, geen nieuwe daemon."
+    },
+    {
+      "finding": "Modulaire plugins, enable/disable en updates",
+      "tasks": [
+        "E4.4",
+        "E4.6",
+        "E4.12"
+      ],
+      "reuse": "Bestaande modulelevenscyclus; geen Agent Zero-runtime importeren."
+    },
+    {
+      "finding": "Zelfverbetering en latere toepassing",
+      "tasks": [
+        "E4.5",
+        "E4.12",
+        "E4.13",
+        "E4.14"
+      ],
+      "reuse": "Bestaande onafhankelijke AIDE²-geïnspireerde selectie en toepassingsroute."
+    }
+  ]
 }

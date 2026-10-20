@@ -1,0 +1,95 @@
+{
+  "contract": "EvaWorkboardScopeExtension/v1",
+  "id": "useful-upstream-adoption-20261020",
+  "ownerAuthorized": true,
+  "authorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
+  "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+  "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+  "adoptionOfExistingTasks": {
+    "taskIds": [
+      "E4.12",
+      "E4.13",
+      "E4.14"
+    ],
+    "requiredForCurrentDelivery": true,
+    "originalEndConditionsUnchanged": true
+  },
+  "tasks": [
+    {
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+      "ownerActionRequired": false,
+      "scopeOrigin": "useful-upstream-adoption-20261020",
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "requiredForCurrentDelivery": true,
+      "assignment": "Opgenomen op expliciet eigenaarsverzoek; gepland, niet gebouwd of geïnstalleerd.",
+      "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+      "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
+      "id": "E1.5",
+      "title": "Actuele behoeften en verwachtingen per persoon laten doorwerken",
+      "doneWhen": "De bestaande persoonsgebonden geheugen-/contextketen levert een compacte brongebonden actuele synthese van relevante behoeften, voorkeuren, open afspraken en verwachtingen aan gewone afweging en vervolg. Minstens één echte correctie of weerlegde verwachting verandert later passend gedrag. Feit, hypothese en onzekerheid blijven onderscheiden; correctie, intrekking en vergeten werken ook vóór de volgende droomverwerking door. Bestaande Hindsight-mental-modelvoorziening en mensbegrip worden hergebruikt, zonder tweede geheugen of verplicht extra beoordelingsmodel per beurt. Werkelijk meerdaags gezinsnut en acceptatie blijven F2.",
+      "existing": "Hindsight-observaties, een beperkte communicatiestijlspiegel, getypeerde persoonshypothesen/verwachtingen en brongebonden correcties bestaan.",
+      "gap": "De stijlspiegel sluit inhoudelijke doelen en interesses bewust uit. Een gezamenlijke actuele synthese voor dagelijks meedenken en aantoonbare gedragsdoorwerking daarvan zijn niet bevestigd door het onderzochte bewijs.",
+      "implementation": [
+        "Controleer welke relevante persoonscontext al bij gesprek/initiatief aankomt en bepaal het concrete ontbrekende stukje; hergebruik voldoende bestaande context.",
+        "Gebruik bestaande Hindsight-synthese en PostgreSQL-bron-/revisiecontrole voor begrensde actuele context, met zichtbare dekking en verse operationele afspraken.",
+        "Verbind bestaande verwachting/review_at en eigen aandacht met bewijs voor bevestigen, weerleggen of nog onbekend; model bepaalt passend handelen.",
+        "Controleer latere toepassing via bestaande gewone taak-/initiatiefbewijzen. Geen profielclaim of gevoelig persoonsfeit uit een enkel vermoeden."
+      ],
+      "verification": [
+        "Een relevante correctie beïnvloedt de latere beslissing; oude en weerlegde inhoud wordt niet als actueel feit gebruikt.",
+        "Persoon/audience, bronrevisie, vergeten en ontbrekende dekking blijven juist; vooraf voorbereide context bewijst geen actuele huisactie."
+      ],
+      "files": [
+        "src/eva/application/human_understanding.py",
+        "src/eva/adapters/projection/hindsight.py",
+        "src/eva/adapters/postgres/initiative_context.py",
+        "src/eva/application/resident_attention.py"
+      ],
+      "dependsOn": [
+        "E4.11"
+      ],
+      "nextAction": "Controleer de echte contextoverdracht en hergebruik bestaande mental-model/reflection-interface voor uitsluitend het bewezen ontbrekende actuele persoonsbeeld."
+    },
+    {
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+      "ownerActionRequired": false,
+      "scopeOrigin": "useful-upstream-adoption-20261020",
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "requiredForCurrentDelivery": true,
+      "assignment": "Opgenomen op expliciet eigenaarsverzoek; gepland, niet gebouwd of geïnstalleerd.",
+      "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+      "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
+      "id": "E1.6",
+      "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+      "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
+      "existing": "HA-eventstroom, algemene connectorontdekking, geplande aandacht en duurzame uitvoering bestaan. E4.8 verzorgt actuele apparaatcontext; die wordt hier hergebruikt.",
+      "gap": "De algemene modelgekozen verbinding tussen blijvende doelen, beschikbare bronveranderingen en toegestane aandacht is nog niet als geheel bewezen. Alleen historische context of elk uur dezelfde vrije vraag bewijst dat niet.",
+      "implementation": [
+        "Herleid de bestaande event-, connector-, aandacht- en bevoegdheidscontracten; hergebruik al aangesloten bronnen zonder nieuwe connector te schrijven.",
+        "Laat Eva op basis van bronmetadata kiezen welke relevante verandering telt en wanneer opnieuw kijken nuttig is; brondata is geen opdracht.",
+        "Gebruik bestaande ondersteunde events/webhooks waar beschikbaar; anders gericht geplande broncontrole. OpenClaw MCP Events is een versiegebonden kandidaat, geen verplichte nieuwe protocolstack.",
+        "Behoud huidige scope en resultaatbinding bij starten/stoppen, reconnect, dubbele aflevering en toegang intrekken. Vraag alleen ontbrekende benodigde aanmelding en geef dan één duidelijke handeling."
+      ],
+      "verification": [
+        "Een echte beschikbare bronaanleiding leidt via de huidige afweging tot passend vervolg; geen vooraf opgelegde huishoudcasus.",
+        "Dubbele bronmelding en stale/ingetrokken toegang geven geen dubbele actie; geen betaald model bij iedere ruismelding."
+      ],
+      "files": [
+        "src/eva/application/sensory.py",
+        "src/eva/application/resident_attention.py",
+        "src/eva/adapters/postgres/initiative_attention.py",
+        "src/eva/providers/mcp_discovery.py",
+        "src/eva/providers/mcp_registration.py",
+        "src/eva/bootstrap/household_initiative.py"
+      ],
+      "dependsOn": [
+        "E1.4"
+      ],
+      "nextAction": "Gebruik eerst de bestaande gekoppelde bron en eventroute; leg vast waar de algemene doel-/aandachtoverdracht ontbreekt voordat een extra adapter wordt gemaakt."
+    }
+  ]
+}

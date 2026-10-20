@@ -2771,15 +2771,15 @@
         },
         "next": {
           "taskId": "E1.4",
-          "title": "Blijvend eigen vervolg over dagen, na de huidige afgesproken uitvoering",
-          "detail": "Hergebruikplan geregistreerd: één noodzakelijke samenhangsuitkomst; drie optionele kandidaten voor bestaande vaardigheden, codefeedback en toolketens. Geen nieuwe benchmarkserie. Bron: development/evidence/reassessment/eva-living-capability-options-20261020.json"
+          "title": "Zelfstandig eigen vervolg, daarna alle goedgekeurde hergebruikuitkomsten",
+          "detail": "E1.4–E1.6: eigen vervolg, actueel mensbegrip en relevante bronaanleidingen. E4.12–E4.14: vaardigheden, codefeedback en toolketens. Alle zes gepland en expliciet goedgekeurd; niet geïnstalleerd door registratie. Spraak blijft bij andere uitvoerder."
         },
         "ownerAction": {
           "required": false,
           "detail": "Voor E4.6 geen handeling of herhaalde proef nodig. Gebruik Eva normaal; het eigen WhatsApp-nummer blijft een afzonderlijke optionele keuze.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T12:48:01.802808+00:00",
+        "checkedAt": "2026-10-20T12:52:02.251252+00:00",
         "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -5414,6 +5414,82 @@
                   "E5.1"
                 ],
                 "nextAction": "Rond de lopende afgesproken uitvoering af; onderzoek daarna de werkelijke meerdaagse overdracht binnen bestaande native doelen en aandacht."
+              },
+              {
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+                "ownerActionRequired": false,
+                "scopeOrigin": "useful-upstream-adoption-20261020",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "requiredForCurrentDelivery": true,
+                "assignment": "Opgenomen op expliciet eigenaarsverzoek; gepland, niet gebouwd of geïnstalleerd.",
+                "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+                "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
+                "id": "E1.5",
+                "title": "Actuele behoeften en verwachtingen per persoon laten doorwerken",
+                "doneWhen": "De bestaande persoonsgebonden geheugen-/contextketen levert een compacte brongebonden actuele synthese van relevante behoeften, voorkeuren, open afspraken en verwachtingen aan gewone afweging en vervolg. Minstens één echte correctie of weerlegde verwachting verandert later passend gedrag. Feit, hypothese en onzekerheid blijven onderscheiden; correctie, intrekking en vergeten werken ook vóór de volgende droomverwerking door. Bestaande Hindsight-mental-modelvoorziening en mensbegrip worden hergebruikt, zonder tweede geheugen of verplicht extra beoordelingsmodel per beurt. Werkelijk meerdaags gezinsnut en acceptatie blijven F2.",
+                "existing": "Hindsight-observaties, een beperkte communicatiestijlspiegel, getypeerde persoonshypothesen/verwachtingen en brongebonden correcties bestaan.",
+                "gap": "De stijlspiegel sluit inhoudelijke doelen en interesses bewust uit. Een gezamenlijke actuele synthese voor dagelijks meedenken en aantoonbare gedragsdoorwerking daarvan zijn niet bevestigd door het onderzochte bewijs.",
+                "implementation": [
+                  "Controleer welke relevante persoonscontext al bij gesprek/initiatief aankomt en bepaal het concrete ontbrekende stukje; hergebruik voldoende bestaande context.",
+                  "Gebruik bestaande Hindsight-synthese en PostgreSQL-bron-/revisiecontrole voor begrensde actuele context, met zichtbare dekking en verse operationele afspraken.",
+                  "Verbind bestaande verwachting/review_at en eigen aandacht met bewijs voor bevestigen, weerleggen of nog onbekend; model bepaalt passend handelen.",
+                  "Controleer latere toepassing via bestaande gewone taak-/initiatiefbewijzen. Geen profielclaim of gevoelig persoonsfeit uit een enkel vermoeden."
+                ],
+                "verification": [
+                  "Een relevante correctie beïnvloedt de latere beslissing; oude en weerlegde inhoud wordt niet als actueel feit gebruikt.",
+                  "Persoon/audience, bronrevisie, vergeten en ontbrekende dekking blijven juist; vooraf voorbereide context bewijst geen actuele huisactie."
+                ],
+                "files": [
+                  "src/eva/application/human_understanding.py",
+                  "src/eva/adapters/projection/hindsight.py",
+                  "src/eva/adapters/postgres/initiative_context.py",
+                  "src/eva/application/resident_attention.py"
+                ],
+                "dependsOn": [
+                  "E4.11"
+                ],
+                "nextAction": "Controleer de echte contextoverdracht en hergebruik bestaande mental-model/reflection-interface voor uitsluitend het bewezen ontbrekende actuele persoonsbeeld."
+              },
+              {
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+                "ownerActionRequired": false,
+                "scopeOrigin": "useful-upstream-adoption-20261020",
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "requiredForCurrentDelivery": true,
+                "assignment": "Opgenomen op expliciet eigenaarsverzoek; gepland, niet gebouwd of geïnstalleerd.",
+                "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+                "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
+                "id": "E1.6",
+                "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+                "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
+                "existing": "HA-eventstroom, algemene connectorontdekking, geplande aandacht en duurzame uitvoering bestaan. E4.8 verzorgt actuele apparaatcontext; die wordt hier hergebruikt.",
+                "gap": "De algemene modelgekozen verbinding tussen blijvende doelen, beschikbare bronveranderingen en toegestane aandacht is nog niet als geheel bewezen. Alleen historische context of elk uur dezelfde vrije vraag bewijst dat niet.",
+                "implementation": [
+                  "Herleid de bestaande event-, connector-, aandacht- en bevoegdheidscontracten; hergebruik al aangesloten bronnen zonder nieuwe connector te schrijven.",
+                  "Laat Eva op basis van bronmetadata kiezen welke relevante verandering telt en wanneer opnieuw kijken nuttig is; brondata is geen opdracht.",
+                  "Gebruik bestaande ondersteunde events/webhooks waar beschikbaar; anders gericht geplande broncontrole. OpenClaw MCP Events is een versiegebonden kandidaat, geen verplichte nieuwe protocolstack.",
+                  "Behoud huidige scope en resultaatbinding bij starten/stoppen, reconnect, dubbele aflevering en toegang intrekken. Vraag alleen ontbrekende benodigde aanmelding en geef dan één duidelijke handeling."
+                ],
+                "verification": [
+                  "Een echte beschikbare bronaanleiding leidt via de huidige afweging tot passend vervolg; geen vooraf opgelegde huishoudcasus.",
+                  "Dubbele bronmelding en stale/ingetrokken toegang geven geen dubbele actie; geen betaald model bij iedere ruismelding."
+                ],
+                "files": [
+                  "src/eva/application/sensory.py",
+                  "src/eva/application/resident_attention.py",
+                  "src/eva/adapters/postgres/initiative_attention.py",
+                  "src/eva/providers/mcp_discovery.py",
+                  "src/eva/providers/mcp_registration.py",
+                  "src/eva/bootstrap/household_initiative.py"
+                ],
+                "dependsOn": [
+                  "E1.4"
+                ],
+                "nextAction": "Gebruik eerst de bestaande gekoppelde bron en eventroute; leg vast waar de algemene doel-/aandachtoverdracht ontbreekt voordat een extra adapter wordt gemaakt."
               }
             ],
             "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -6932,8 +7008,8 @@
                 "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
                 "id": "E4.12",
                 "title": "Bestaande open vaardigheden importeren, gebruiken en gericht verbeteren",
-                "requiredForCurrentDelivery": false,
-                "scopeDecision": "Technische kandidaat uit eigenaargevraagde hergebruikstudie; wordt pas verplichte releasebouw bij aangetoonde ontbrekende behoefte en voordeel. Geen blokkade voor bestaande oplevering.",
+                "requiredForCurrentDelivery": true,
+                "scopeDecision": "Eigenaar20oktober bevestigt opname en uitvoering van alle nuttige onderdelen. Geen vrijblijvende kandidaat meer. Concrete upstreamkeuze en code worden alleen toegepast met behouden kwaliteit; een afgewezen variant sluit de gevraagde uitkomst niet automatisch af.",
                 "doneWhen": "Een passend bestaand open vaardigheidspakket wordt met exacte versie, bronhash en licentie via de bestaande procedure-/capabilityroute bruikbaar gemaakt en bij een andere passende opdracht hergebruikt. Een echte correctie of uitkomst werkt via dezelfde droom/AIDE-geïnspireerde keten door in een beoordeelde nieuwe versie, waarvan later gebruik traceerbaar is. Importtekst verleent geen bevoegdheid; persoonsgrenzen, scripts/supportbestanden en verwijzingen blijven juist. Geen tweede skillstore, automatische massainstallatie of leeftijd als verwijderbewijs. Als hergebruik geen aantoonbaar voordeel biedt wordt dat besluit expliciet vastgelegd; geen bruikbare functie als afgerond claimen.",
                 "existing": "Procedure aanwijzen, vinden, uitvoeren en onafhankelijke verbeter-/releaseketen bestaan.",
                 "gap": "Algemene AgentSkills-packagecompatibiliteit en automatische gebruiksgerichte onderhoudsketen zijn niet bevestigd in de onderzochte code.",
@@ -6955,7 +7031,9 @@
                 "dependsOn": [
                   "E4.5"
                 ],
-                "nextAction": "Beoordeel één pakket tegen de bestaande procedure-import en kies directe pakketovername vóór een nieuwe manager te schrijven."
+                "nextAction": "Beoordeel één pakket tegen de bestaande procedure-import en kies directe pakketovername vóór een nieuwe manager te schrijven.",
+                "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
+                "checkedAt": "2026-10-20T12:52:02.251252+00:00"
               },
               {
                 "status": "planned",
@@ -6969,8 +7047,8 @@
                 "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
                 "id": "E4.13",
                 "title": "Directe semantische feedback bij Eva-gemaakte code gebruiken",
-                "requiredForCurrentDelivery": false,
-                "scopeDecision": "Optionele programmeerverbetering; eerst aantoonbare toepasselijkheid, geen nieuwe noodzakelijke productmodule.",
+                "requiredForCurrentDelivery": true,
+                "scopeDecision": "Eigenaar20oktober bevestigt opname en uitvoering van alle nuttige onderdelen. Geen vrijblijvende kandidaat meer. Concrete upstreamkeuze en code worden alleen toegepast met behouden kwaliteit; een afgewezen variant sluit de gevraagde uitkomst niet automatisch af.",
                 "doneWhen": "Een bestaande language server geeft in Eva’s bestaande geïsoleerde programmeerroute bronversiegebonden feedback op een echte wijziging; Eva gebruikt die feedback om de kandidaat te verbeteren vóór de bestaande onafhankelijke eindcontrole. Verouderde diagnostiek, bestaande fouten en ontbrekende tooling worden niet als nieuwe correcte bevindingen verkocht. Eerste afgebakende taal is Python; gewone programmering blijft werken bij ontbrekende optionele LSP. Exacte upstream herkomst/licenties en gewijzigde adapter zijn vastgelegd; geen nieuwe programmeeragent.",
                 "existing": "Geïsoleerde programmeeromgeving, codevoorstellen en onafhankelijke beoordeling bestaan.",
                 "gap": "In de onderzochte uitvoercode is geen automatische LSP-feedback bij edit geïdentificeerd. Hermes heeft daarvoor concrete protocol-/clientcode.",
@@ -6991,7 +7069,9 @@
                 "dependsOn": [
                   "E4.5"
                 ],
-                "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server."
+                "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
+                "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
+                "checkedAt": "2026-10-20T12:52:02.251252+00:00"
               },
               {
                 "status": "planned",
@@ -7005,8 +7085,8 @@
                 "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
                 "id": "E4.14",
                 "title": "Een taak over meerdere diensten als programma uitvoeren",
-                "requiredForCurrentDelivery": false,
-                "scopeDecision": "Optionele uitvoeringsverbetering; alleen aansluiten waar echte herhaalde modelrondes of een ontbrekende algemene toolketen dit rechtvaardigen.",
+                "requiredForCurrentDelivery": true,
+                "scopeDecision": "Eigenaar20oktober bevestigt opname en uitvoering van alle nuttige onderdelen. Geen vrijblijvende kandidaat meer. Concrete upstreamkeuze en code worden alleen toegepast met behouden kwaliteit; een afgewezen variant sluit de gevraagde uitkomst niet automatisch af.",
                 "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
                 "existing": "Algemene duurzame uitvoerder, programmatuurwerkruimte en geïsoleerde procedures bestaan. Pure procedures draaien met network=none; dat is geen algemene tool-RPC-keten.",
                 "gap": "Hermes heeft concrete scriptbare tooldispatch; equivalente toegelaten multi-toolRPC is niet bevestigd in de onderzochte Eva-procedureroute.",
@@ -7028,7 +7108,9 @@
                 "dependsOn": [
                   "E4.5"
                 ],
-                "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter."
+                "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
+                "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
+                "checkedAt": "2026-10-20T12:52:02.251252+00:00"
               }
             ],
             "previousBoundedCompletion": {
@@ -7520,7 +7602,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-20T12:48:01.802808+00:00",
+        "updatedAt": "2026-10-20T12:52:02.251252+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -7531,12 +7613,14 @@
               "title": "Gewone autonome Eva",
               "status": "planned",
               "finish": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
-              "currentGap": "Oorspronkelijke E1.1–E1.3 en I1.2-afronding behouden. E1.4 sluit de expliciet nog onbewezen meerdaagse eigen continuïteit; herhaald gezinsnut en acceptatie blijven F2.",
+              "currentGap": "Oorspronkelijke E1-uitkomsten blijven afgerond. Nieuwe E1.4–E1.6 verbinden meerdaags eigen vervolg, actueel mensbegrip en modelgekozen bronaanleidingen; gezinsacceptatie blijft F2.",
               "taskIds": [
                 "E1.1",
                 "E1.2",
                 "E1.3",
-                "E1.4"
+                "E1.4",
+                "E1.5",
+                "E1.6"
               ],
               "existingTaskIds": [
                 "I1.2",
@@ -7787,26 +7871,40 @@
         "upstreamReusePlan": {
           "source": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
           "sourceScope": "development/design/product/upstream-reuse-task-scope-20261020.json",
-          "status": "planned",
+          "status": "approved_for_implementation",
           "taskIds": [
             "E1.4",
+            "E1.5",
+            "E1.6",
             "E4.12",
             "E4.13",
             "E4.14"
           ],
           "mandatoryTaskIds": [
-            "E1.4"
-          ],
-          "optionalCandidateTaskIds": [
+            "E1.4",
+            "E1.5",
+            "E1.6",
             "E4.12",
             "E4.13",
             "E4.14"
           ],
+          "optionalCandidateTaskIds": [],
           "runtimeChanged": false,
           "currentImplementationPreserved": "E5.2",
           "nextAfterCurrent": "E1.4",
           "newComparisonSeries": false,
-          "checkedAt": "2026-10-20T12:48:01.802808+00:00"
+          "checkedAt": "2026-10-20T12:52:02.251252+00:00",
+          "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
+          "additionalScope": "development/design/product/useful-upstream-adoption-scope-20261020.json",
+          "executionOrder": [
+            "E1.4",
+            "E1.5",
+            "E1.6",
+            "E4.12",
+            "E4.13",
+            "E4.14"
+          ],
+          "adoptionRule": "Alle bruikbare uitkomsten uitvoeren. Exacte upstreamcode toepassen als de integratie passend is; bij afgewezen codekeuze blijft de gevraagde uitkomst open en wordt dezelfde kaart gericht opgelost."
         }
       }
     },
@@ -10265,6 +10363,82 @@
                 "E5.1"
               ],
               "nextAction": "Rond de lopende afgesproken uitvoering af; onderzoek daarna de werkelijke meerdaagse overdracht binnen bestaande native doelen en aandacht."
+            },
+            {
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+              "ownerActionRequired": false,
+              "scopeOrigin": "useful-upstream-adoption-20261020",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "requiredForCurrentDelivery": true,
+              "assignment": "Opgenomen op expliciet eigenaarsverzoek; gepland, niet gebouwd of geïnstalleerd.",
+              "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+              "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
+              "id": "E1.5",
+              "title": "Actuele behoeften en verwachtingen per persoon laten doorwerken",
+              "doneWhen": "De bestaande persoonsgebonden geheugen-/contextketen levert een compacte brongebonden actuele synthese van relevante behoeften, voorkeuren, open afspraken en verwachtingen aan gewone afweging en vervolg. Minstens één echte correctie of weerlegde verwachting verandert later passend gedrag. Feit, hypothese en onzekerheid blijven onderscheiden; correctie, intrekking en vergeten werken ook vóór de volgende droomverwerking door. Bestaande Hindsight-mental-modelvoorziening en mensbegrip worden hergebruikt, zonder tweede geheugen of verplicht extra beoordelingsmodel per beurt. Werkelijk meerdaags gezinsnut en acceptatie blijven F2.",
+              "existing": "Hindsight-observaties, een beperkte communicatiestijlspiegel, getypeerde persoonshypothesen/verwachtingen en brongebonden correcties bestaan.",
+              "gap": "De stijlspiegel sluit inhoudelijke doelen en interesses bewust uit. Een gezamenlijke actuele synthese voor dagelijks meedenken en aantoonbare gedragsdoorwerking daarvan zijn niet bevestigd door het onderzochte bewijs.",
+              "implementation": [
+                "Controleer welke relevante persoonscontext al bij gesprek/initiatief aankomt en bepaal het concrete ontbrekende stukje; hergebruik voldoende bestaande context.",
+                "Gebruik bestaande Hindsight-synthese en PostgreSQL-bron-/revisiecontrole voor begrensde actuele context, met zichtbare dekking en verse operationele afspraken.",
+                "Verbind bestaande verwachting/review_at en eigen aandacht met bewijs voor bevestigen, weerleggen of nog onbekend; model bepaalt passend handelen.",
+                "Controleer latere toepassing via bestaande gewone taak-/initiatiefbewijzen. Geen profielclaim of gevoelig persoonsfeit uit een enkel vermoeden."
+              ],
+              "verification": [
+                "Een relevante correctie beïnvloedt de latere beslissing; oude en weerlegde inhoud wordt niet als actueel feit gebruikt.",
+                "Persoon/audience, bronrevisie, vergeten en ontbrekende dekking blijven juist; vooraf voorbereide context bewijst geen actuele huisactie."
+              ],
+              "files": [
+                "src/eva/application/human_understanding.py",
+                "src/eva/adapters/projection/hindsight.py",
+                "src/eva/adapters/postgres/initiative_context.py",
+                "src/eva/application/resident_attention.py"
+              ],
+              "dependsOn": [
+                "E4.11"
+              ],
+              "nextAction": "Controleer de echte contextoverdracht en hergebruik bestaande mental-model/reflection-interface voor uitsluitend het bewezen ontbrekende actuele persoonsbeeld."
+            },
+            {
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
+              "ownerActionRequired": false,
+              "scopeOrigin": "useful-upstream-adoption-20261020",
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "requiredForCurrentDelivery": true,
+              "assignment": "Opgenomen op expliciet eigenaarsverzoek; gepland, niet gebouwd of geïnstalleerd.",
+              "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+              "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
+              "id": "E1.6",
+              "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+              "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
+              "existing": "HA-eventstroom, algemene connectorontdekking, geplande aandacht en duurzame uitvoering bestaan. E4.8 verzorgt actuele apparaatcontext; die wordt hier hergebruikt.",
+              "gap": "De algemene modelgekozen verbinding tussen blijvende doelen, beschikbare bronveranderingen en toegestane aandacht is nog niet als geheel bewezen. Alleen historische context of elk uur dezelfde vrije vraag bewijst dat niet.",
+              "implementation": [
+                "Herleid de bestaande event-, connector-, aandacht- en bevoegdheidscontracten; hergebruik al aangesloten bronnen zonder nieuwe connector te schrijven.",
+                "Laat Eva op basis van bronmetadata kiezen welke relevante verandering telt en wanneer opnieuw kijken nuttig is; brondata is geen opdracht.",
+                "Gebruik bestaande ondersteunde events/webhooks waar beschikbaar; anders gericht geplande broncontrole. OpenClaw MCP Events is een versiegebonden kandidaat, geen verplichte nieuwe protocolstack.",
+                "Behoud huidige scope en resultaatbinding bij starten/stoppen, reconnect, dubbele aflevering en toegang intrekken. Vraag alleen ontbrekende benodigde aanmelding en geef dan één duidelijke handeling."
+              ],
+              "verification": [
+                "Een echte beschikbare bronaanleiding leidt via de huidige afweging tot passend vervolg; geen vooraf opgelegde huishoudcasus.",
+                "Dubbele bronmelding en stale/ingetrokken toegang geven geen dubbele actie; geen betaald model bij iedere ruismelding."
+              ],
+              "files": [
+                "src/eva/application/sensory.py",
+                "src/eva/application/resident_attention.py",
+                "src/eva/adapters/postgres/initiative_attention.py",
+                "src/eva/providers/mcp_discovery.py",
+                "src/eva/providers/mcp_registration.py",
+                "src/eva/bootstrap/household_initiative.py"
+              ],
+              "dependsOn": [
+                "E1.4"
+              ],
+              "nextAction": "Gebruik eerst de bestaande gekoppelde bron en eventroute; leg vast waar de algemene doel-/aandachtoverdracht ontbreekt voordat een extra adapter wordt gemaakt."
             }
           ],
           "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -11783,8 +11957,8 @@
               "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
               "id": "E4.12",
               "title": "Bestaande open vaardigheden importeren, gebruiken en gericht verbeteren",
-              "requiredForCurrentDelivery": false,
-              "scopeDecision": "Technische kandidaat uit eigenaargevraagde hergebruikstudie; wordt pas verplichte releasebouw bij aangetoonde ontbrekende behoefte en voordeel. Geen blokkade voor bestaande oplevering.",
+              "requiredForCurrentDelivery": true,
+              "scopeDecision": "Eigenaar20oktober bevestigt opname en uitvoering van alle nuttige onderdelen. Geen vrijblijvende kandidaat meer. Concrete upstreamkeuze en code worden alleen toegepast met behouden kwaliteit; een afgewezen variant sluit de gevraagde uitkomst niet automatisch af.",
               "doneWhen": "Een passend bestaand open vaardigheidspakket wordt met exacte versie, bronhash en licentie via de bestaande procedure-/capabilityroute bruikbaar gemaakt en bij een andere passende opdracht hergebruikt. Een echte correctie of uitkomst werkt via dezelfde droom/AIDE-geïnspireerde keten door in een beoordeelde nieuwe versie, waarvan later gebruik traceerbaar is. Importtekst verleent geen bevoegdheid; persoonsgrenzen, scripts/supportbestanden en verwijzingen blijven juist. Geen tweede skillstore, automatische massainstallatie of leeftijd als verwijderbewijs. Als hergebruik geen aantoonbaar voordeel biedt wordt dat besluit expliciet vastgelegd; geen bruikbare functie als afgerond claimen.",
               "existing": "Procedure aanwijzen, vinden, uitvoeren en onafhankelijke verbeter-/releaseketen bestaan.",
               "gap": "Algemene AgentSkills-packagecompatibiliteit en automatische gebruiksgerichte onderhoudsketen zijn niet bevestigd in de onderzochte code.",
@@ -11806,7 +11980,9 @@
               "dependsOn": [
                 "E4.5"
               ],
-              "nextAction": "Beoordeel één pakket tegen de bestaande procedure-import en kies directe pakketovername vóór een nieuwe manager te schrijven."
+              "nextAction": "Beoordeel één pakket tegen de bestaande procedure-import en kies directe pakketovername vóór een nieuwe manager te schrijven.",
+              "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
+              "checkedAt": "2026-10-20T12:52:02.251252+00:00"
             },
             {
               "status": "planned",
@@ -11820,8 +11996,8 @@
               "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
               "id": "E4.13",
               "title": "Directe semantische feedback bij Eva-gemaakte code gebruiken",
-              "requiredForCurrentDelivery": false,
-              "scopeDecision": "Optionele programmeerverbetering; eerst aantoonbare toepasselijkheid, geen nieuwe noodzakelijke productmodule.",
+              "requiredForCurrentDelivery": true,
+              "scopeDecision": "Eigenaar20oktober bevestigt opname en uitvoering van alle nuttige onderdelen. Geen vrijblijvende kandidaat meer. Concrete upstreamkeuze en code worden alleen toegepast met behouden kwaliteit; een afgewezen variant sluit de gevraagde uitkomst niet automatisch af.",
               "doneWhen": "Een bestaande language server geeft in Eva’s bestaande geïsoleerde programmeerroute bronversiegebonden feedback op een echte wijziging; Eva gebruikt die feedback om de kandidaat te verbeteren vóór de bestaande onafhankelijke eindcontrole. Verouderde diagnostiek, bestaande fouten en ontbrekende tooling worden niet als nieuwe correcte bevindingen verkocht. Eerste afgebakende taal is Python; gewone programmering blijft werken bij ontbrekende optionele LSP. Exacte upstream herkomst/licenties en gewijzigde adapter zijn vastgelegd; geen nieuwe programmeeragent.",
               "existing": "Geïsoleerde programmeeromgeving, codevoorstellen en onafhankelijke beoordeling bestaan.",
               "gap": "In de onderzochte uitvoercode is geen automatische LSP-feedback bij edit geïdentificeerd. Hermes heeft daarvoor concrete protocol-/clientcode.",
@@ -11842,7 +12018,9 @@
               "dependsOn": [
                 "E4.5"
               ],
-              "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server."
+              "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
+              "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
+              "checkedAt": "2026-10-20T12:52:02.251252+00:00"
             },
             {
               "status": "planned",
@@ -11856,8 +12034,8 @@
               "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
               "id": "E4.14",
               "title": "Een taak over meerdere diensten als programma uitvoeren",
-              "requiredForCurrentDelivery": false,
-              "scopeDecision": "Optionele uitvoeringsverbetering; alleen aansluiten waar echte herhaalde modelrondes of een ontbrekende algemene toolketen dit rechtvaardigen.",
+              "requiredForCurrentDelivery": true,
+              "scopeDecision": "Eigenaar20oktober bevestigt opname en uitvoering van alle nuttige onderdelen. Geen vrijblijvende kandidaat meer. Concrete upstreamkeuze en code worden alleen toegepast met behouden kwaliteit; een afgewezen variant sluit de gevraagde uitkomst niet automatisch af.",
               "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
               "existing": "Algemene duurzame uitvoerder, programmatuurwerkruimte en geïsoleerde procedures bestaan. Pure procedures draaien met network=none; dat is geen algemene tool-RPC-keten.",
               "gap": "Hermes heeft concrete scriptbare tooldispatch; equivalente toegelaten multi-toolRPC is niet bevestigd in de onderzochte Eva-procedureroute.",
@@ -11879,7 +12057,9 @@
               "dependsOn": [
                 "E4.5"
               ],
-              "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter."
+              "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
+              "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
+              "checkedAt": "2026-10-20T12:52:02.251252+00:00"
             }
           ],
           "previousBoundedCompletion": {
@@ -12371,7 +12551,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-20T12:48:01.802808+00:00",
+      "updatedAt": "2026-10-20T12:52:02.251252+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -12382,12 +12562,14 @@
             "title": "Gewone autonome Eva",
             "status": "planned",
             "finish": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback.",
-            "currentGap": "Oorspronkelijke E1.1–E1.3 en I1.2-afronding behouden. E1.4 sluit de expliciet nog onbewezen meerdaagse eigen continuïteit; herhaald gezinsnut en acceptatie blijven F2.",
+            "currentGap": "Oorspronkelijke E1-uitkomsten blijven afgerond. Nieuwe E1.4–E1.6 verbinden meerdaags eigen vervolg, actueel mensbegrip en modelgekozen bronaanleidingen; gezinsacceptatie blijft F2.",
             "taskIds": [
               "E1.1",
               "E1.2",
               "E1.3",
-              "E1.4"
+              "E1.4",
+              "E1.5",
+              "E1.6"
             ],
             "existingTaskIds": [
               "I1.2",
@@ -12638,26 +12820,40 @@
       "upstreamReusePlan": {
         "source": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
         "sourceScope": "development/design/product/upstream-reuse-task-scope-20261020.json",
-        "status": "planned",
+        "status": "approved_for_implementation",
         "taskIds": [
           "E1.4",
+          "E1.5",
+          "E1.6",
           "E4.12",
           "E4.13",
           "E4.14"
         ],
         "mandatoryTaskIds": [
-          "E1.4"
-        ],
-        "optionalCandidateTaskIds": [
+          "E1.4",
+          "E1.5",
+          "E1.6",
           "E4.12",
           "E4.13",
           "E4.14"
         ],
+        "optionalCandidateTaskIds": [],
         "runtimeChanged": false,
         "currentImplementationPreserved": "E5.2",
         "nextAfterCurrent": "E1.4",
         "newComparisonSeries": false,
-        "checkedAt": "2026-10-20T12:48:01.802808+00:00"
+        "checkedAt": "2026-10-20T12:52:02.251252+00:00",
+        "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
+        "additionalScope": "development/design/product/useful-upstream-adoption-scope-20261020.json",
+        "executionOrder": [
+          "E1.4",
+          "E1.5",
+          "E1.6",
+          "E4.12",
+          "E4.13",
+          "E4.14"
+        ],
+        "adoptionRule": "Alle bruikbare uitkomsten uitvoeren. Exacte upstreamcode toepassen als de integratie passend is; bij afgewezen codekeuze blijft de gevraagde uitkomst open en wordt dezelfde kaart gericht opgelost."
       }
     },
     "goalRevision": {
@@ -14049,26 +14245,40 @@
     "upstreamReuse20261020": {
       "source": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
       "sourceScope": "development/design/product/upstream-reuse-task-scope-20261020.json",
-      "status": "planned",
+      "status": "approved_for_implementation",
       "taskIds": [
         "E1.4",
+        "E1.5",
+        "E1.6",
         "E4.12",
         "E4.13",
         "E4.14"
       ],
       "mandatoryTaskIds": [
-        "E1.4"
-      ],
-      "optionalCandidateTaskIds": [
+        "E1.4",
+        "E1.5",
+        "E1.6",
         "E4.12",
         "E4.13",
         "E4.14"
       ],
+      "optionalCandidateTaskIds": [],
       "runtimeChanged": false,
       "currentImplementationPreserved": "E5.2",
       "nextAfterCurrent": "E1.4",
       "newComparisonSeries": false,
-      "checkedAt": "2026-10-20T12:48:01.802808+00:00"
+      "checkedAt": "2026-10-20T12:52:02.251252+00:00",
+      "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
+      "additionalScope": "development/design/product/useful-upstream-adoption-scope-20261020.json",
+      "executionOrder": [
+        "E1.4",
+        "E1.5",
+        "E1.6",
+        "E4.12",
+        "E4.13",
+        "E4.14"
+      ],
+      "adoptionRule": "Alle bruikbare uitkomsten uitvoeren. Exacte upstreamcode toepassen als de integratie passend is; bij afgewezen codekeuze blijft de gevraagde uitkomst open en wordt dezelfde kaart gericht opgelost."
     }
   },
   "updatedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -14131,6 +14341,11 @@
       "id": "upstream-reuse-20261020",
       "path": "development/design/product/upstream-reuse-task-scope-20261020.json",
       "sha256": "31f991e30e6275347d749eb7df79145dc955a32d7bc916a8e63091f1ba2029cb"
+    },
+    {
+      "id": "useful-upstream-adoption-20261020",
+      "path": "development/design/product/useful-upstream-adoption-scope-20261020.json",
+      "sha256": "7d6826043b212e19ef15f45ca223aaf5adfbd21a1c79651575c4278e4c4ce5db"
     }
   ],
   "lastUpdatedAt": "2026-10-20T09:40:57.354545+00:00",

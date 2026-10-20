@@ -354,16 +354,32 @@ copyright/licentietekst nodig. Eva's eigen licentie verandert niet.
 | Volgorde / kaart | Gebruikersuitkomst en hergebruik | Einde / grens |
 | --- | --- | --- |
 | E1.4 | Bestaande doelen, verwachtingen en aandacht laten samenwerken voor werkelijk eigen vervolg over dagen. Gebruik Hermes/OpenClaw-vervolgscenario's, behoud Eva's huidige staat en uitvoering. | Eenzelfde echt doel krijgt op een latere echte kalenderdag passend vervolg zonder nieuwe eigenaaropdracht; gecontroleerde uitkomst en later gebruik. Geen geforceerd onderwerp. Gezinsnut blijft F2. |
-| E4.12 · kandidaat | Een passend bestaand AgentSkills-pakket via bestaande procedures gebruiken; gerichte onderhoudslogica uit Hermes/OpenClaw aansluiten. | Andere passende opdracht hergebruikt het pakket; echte les leidt tot beoordeelde wijziging en later gebruik. Geen tweede bibliotheek of curator-agent. |
-| E4.13 · kandidaat | Bestaande language server plus afgebakende Hermes LSP-protocol/clientcode bij Eva's bestaande programmeerroute aansluiten. | Bronversiegebonden semantische feedback verbetert een echte kandidaat vóór de onafhankelijke eindcontrole. Begin alleen met Python. |
-| E4.14 · kandidaat | Passende Hermes RPC-/stubcode verbinden aan Eva's bestaande duurzame tooldispatch. | Eén programma maakt werk over twee diensten af, met actuele toegang/STOP per subcall en geverifieerde terugmelding. Geen hostkernel of credentials in script. |
+| E1.5 | Bestaande Hindsight-synthese en mensbegrip gebruiken voor actuele behoeften, afspraken en verwachtingen per persoon. | Echte correctie/weerlegging beïnvloedt latere afweging; bronbinding, privacy en vergeten blijven werken. Geen tweede geheugen. |
+| E1.6 | Bestaande connectorontdekking, events en geplande aandacht verbinden aan Eva's eigen relevante doelen. | Een echte ondersteunde bronverandering krijgt passend vervolg; toegang, deduplicatie en stoppen blijven gelden. Geen huishouden-specifieke regel. |
+| E4.12 | Een passend bestaand AgentSkills-pakket via bestaande procedures gebruiken; gerichte onderhoudslogica uit Hermes/OpenClaw aansluiten. | Andere passende opdracht hergebruikt het pakket; echte les leidt tot beoordeelde wijziging en later gebruik. Geen tweede bibliotheek of curator-agent. |
+| E4.13 | Bestaande language server plus afgebakende Hermes LSP-protocol/clientcode bij Eva's bestaande programmeerroute aansluiten. | Bronversiegebonden semantische feedback verbetert een echte kandidaat vóór de onafhankelijke eindcontrole. Begin alleen met Python. |
+| E4.14 | Passende Hermes RPC-/stubcode verbinden aan Eva's bestaande duurzame tooldispatch. | Eén programma maakt werk over twee diensten af, met actuele toegang/STOP per subcall en geverifieerde terugmelding. Geen hostkernel of credentials in script. |
 
-Dit is één noodzakelijke samenhangsuitkomst uit het bestaande huisgenootdoel en drie
-optionele technische kandidaten. De kandidaten vergroten de verplichte release niet
-vanzelf. Selecteer ze op een werkelijk tekort en aantoonbaar resultaatvoordeel;
-negatief of gelijk bewijs is reden voor behoud van de referentie. Een kandidaat
-waarvan wordt afgezien blijft als besluit zichtbaar, niet als geïnstalleerde functie.
-De lopende afgesproken taak en spraakverantwoordelijkheid worden niet overgenomen.
+De eigenaar heeft daarna op 20 oktober opdracht gegeven alle interessante en nuttige
+bevindingen aan het project toe te voegen. E1.4–E1.6 en E4.12–E4.14 zijn daarmee
+uitvoeropdrachten, geen vrijblijvende kandidaten. De extra twee kaarten maken de
+resterende concrete gaten in actueel mensbegrip en bronaanleidingen zichtbaar;
+geen nieuwe productpijler of aparte bouwfase. De oorspronkelijke eindvoorwaarden
+blijven exact behouden. Het [opnamebesluit](../design/product/useful-upstream-adoption-scope-20261020.json)
+legt de eigenaarinstructie, brondekking en aanvullende scope vast.
+
+Maak eerst de bestaande overdracht compleet, daarna de vaardigheden en hun
+programmeer-/uitvoersteun: E1.4 → E1.5 → E1.6 → E4.12 → E4.13 → E4.14. Eén actieve
+uitkomst tegelijk; de huidige afgesproken uitvoering en spraakverantwoordelijkheid
+worden niet stil overgenomen. Alleen reeds aanwezige bruikbare code hergebruiken;
+een bestaande capability wordt niet opnieuw gebouwd om een kaart te vullen.
+
+Een ongeschikte upstreamvariant wordt niet toegepast. Dat sluit de gevraagde
+gebruikersuitkomst niet automatisch af: behoud het foutbewijs en los hetzelfde
+concrete gat op binnen dezelfde kaart. De keuze van optionele kanalen, accounts en
+huisapparaten blijft per installatie; deze opdracht verplicht niemand alle
+koppelingen te installeren. De bestaande AIDE²-/droomroute, Hindsight en module-
+levenscyclus worden gebruikt voor selectie, verbetering, correctie en later gebruik.
 
 Volgorde voor ieder onderdeel: eerst reeds geïnstalleerde geschikte dependency,
 dan passend bestaand standaardpakket of afgebakende upstreamcode, daarna een kleine
