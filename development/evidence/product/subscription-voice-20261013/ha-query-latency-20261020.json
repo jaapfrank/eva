@@ -1,0 +1,22 @@
+{
+  "contract": "EvaHaQueryLatency/v1",
+  "recordedAt": "2026-10-20T09:09:18.475645+00:00",
+  "status": "implementing",
+  "ownerDirection": "Onderzoek de vier modelrondes voor een gewone HA-vraag en vergelijk Google/Siri; maak de bestaande route concreet sneller.",
+  "baseline": {
+    "core_image": "sha256:f24c0e843100ee48e1218413b02f2db9103a486ab9d94433f48da42411a8533f",
+    "weather_model_phases": 4,
+    "model_ms": 15604,
+    "provider_ms": 1421,
+    "input_end_to_final_pcm_ms": 22823.008,
+    "evidence": "development/evidence/product/subscription-voice-20261013/weather-followup-repair-20261019.json"
+  },
+  "candidate": "Optional bounded target/service resolution in the existing HA API tool; model chooses service and data once; current HA definitions and actual unique entity determine execution; same core phrases result.",
+  "endCondition": "Actual installed voice weather request uses two model phases with a lower input-end→final-PCM latency; source follow-up preserved; denied/ambiguous/unknown target cannot cause an invocation.",
+  "acceptance": {
+    "ownerAccepted": false,
+    "voiceFluencyComplete": false
+  },
+  "privateEvidenceRoot": "/var/lib/eva2/voice-session/ha-query-20261020",
+  "criteriaUnchanged": true
+}
