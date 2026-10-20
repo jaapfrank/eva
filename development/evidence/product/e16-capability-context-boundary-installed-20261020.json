@@ -1,0 +1,74 @@
+{
+  "contract": "EvaE16CapabilityContextBoundary/v1",
+  "taskId": "E1.6",
+  "checkedAt": "2026-10-20T20:51:29.634313+00:00",
+  "state": "installed_projection_blocker_fixed_actual_source_causality_unproven",
+  "technicalTaskCompleted": false,
+  "actualFailure": {
+    "beforeAnyModelRequest": true,
+    "error": "private capability name and scope metadata exceeds its bound",
+    "actualPermittedNames": 26,
+    "previousMinimumDescriptionBytes": 32,
+    "previousEncodedBytes": 8260,
+    "envelopeBytes": 8192,
+    "sourceFailureSha256": "cf90d26ee2813a2170095fcdb0e6eaedb10d1e3f59dfdfafe9a5bde2c22bbb43"
+  },
+  "change": "Preserve every permitted name, route, scope, cost flag and full original definition hash. Fit optional UTF-8 descriptions to actual encoded envelope; include schemas only atomically as before. Mandatory overflow remains explicit failure.",
+  "validation": {
+    "pureCasesPassed": 16,
+    "seconds": 2.43,
+    "actualInstalledCatalog": {
+      "at": "2026-10-20T20:50:51+00:00",
+      "actualCatalogCount": 26,
+      "bytes": 8182,
+      "maxDescriptionBytes": 29,
+      "allNamesPreserved": true,
+      "consumerValidated": true,
+      "configurationSha256": "6f2b37a91b0ee0f33a74110790cc2c2d1d12d7ab92b53bd9206a69af7e1ced44",
+      "modelCalls": 0
+    },
+    "modelsForVerification": 0
+  },
+  "independentSourceReviewSha256": "d475bf08016e6baa19c45099415a233014d20da762bffc7bc664039ddeecb55b",
+  "installation": {
+    "at": "2026-10-20T20:51:29.634313+00:00",
+    "state": "candidate_healthy_with_retained_mounts_after_declared_network_restoration",
+    "checks": {
+      "core": {
+        "image": "sha256:0512deb12916d20040be99ff286a118ab9b2d1214f9638653748dc827dcd0d58",
+        "container": "b011ecfe46a5779fb524a4b7c11260e8d371bdf3b2590fb04c4b31a696d645f9",
+        "health": "healthy",
+        "sourceSha256": "6345d19195456e8b866b2b8815e4a40ad3e6a1e6044e68ef60d399123d293342",
+        "mountsPreserved": true,
+        "restartsBeforeNetworkRestoration": 6
+      },
+      "worker": {
+        "image": "sha256:776064ef1c86bacfa41698c8ae43864317ca1fd323873934978409db7d82525e",
+        "container": "53602aaad9894d0713cf4584d7e1026a5eeb4ff6299bafd29869364b38bb8a9b",
+        "health": "healthy",
+        "sourceSha256": "6345d19195456e8b866b2b8815e4a40ad3e6a1e6044e68ef60d399123d293342",
+        "mountsPreserved": true,
+        "restartsBeforeNetworkRestoration": 0
+      }
+    },
+    "policyBytesUnchanged": true,
+    "voiceChanged": false
+  },
+  "initialDeploymentFailure": {
+    "retained": true,
+    "cause": "Transient host port collision left newly created core without its declared default database network.",
+    "completion": "Started same exact already-created candidate containers and restored only the unchanged declared network; no recreation, rollback, data reset or voice change.",
+    "originalReceiptSha256": "75b3de952aad179748633af14d4a81263f2166aa5cc5d539a26cd5842169dd76"
+  },
+  "limitations": [
+    "Actual autonomous source selection and subsequent real change decision are still unproven; E1.6 remains open.",
+    "Compacted descriptions may lose detail; exact names/scopes/hashes remain and ordinary discovery/execution supplies full supported definitions.",
+    "A still larger mandatory catalog can exceed the bound and fail explicitly. No unbounded catalog support claimed."
+  ],
+  "usage": {
+    "extraTargetedRuntimeModelRequests": 0,
+    "developmentCreditCost": null,
+    "runtimeCreditCost": null,
+    "concurrentAutonomousUsageNotMeasuredHere": true
+  }
+}

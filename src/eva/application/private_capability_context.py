@@ -75,13 +75,24 @@ def build_private_capability_context(policy, mandate_sha, *, observed_at, descri
 
     # Every description precedes optional schemas. Digest binds the full original
     # description and selected schema even when either detail cannot fit inline.
-    for limit in (256, 160, 96, 64, 48, 32):
+    def description_size(limit):
         for row in rows:
             row["description"] = descriptions[row["name"]].encode("utf-8")[:limit].decode("utf-8", errors="ignore")
-        if seal() <= _MAX_BYTES:
-            break
-    else:
+        return seal()
+
+    # Names, scope and definition hashes are mandatory; descriptions are not.
+    # Long real tool names can exceed the envelope even at the former 32-byte
+    # floor. Keep the largest common description budget that actually fits.
+    if description_size(0) > _MAX_BYTES:
         raise ValueError("private capability name and scope metadata exceeds its bound")
+    low, high = 0, 256
+    while low < high:
+        limit = (low + high + 1) // 2
+        if description_size(limit) <= _MAX_BYTES:
+            low = limit
+        else:
+            high = limit - 1
+    description_size(low)
     for row in rows:
         schema = schemas[row["name"]]
         if schema is None:

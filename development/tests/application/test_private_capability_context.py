@@ -153,3 +153,33 @@ def test_full_action_catalog_keeps_meaning_before_schemas(count):
     assert all(not row["parameters_included"] and "parameters" not in row for row in result["capabilities"])
     assert result["omitted_schema_count"] == result["omitted_description_count"] == count
     check_hash(result)
+
+
+@pytest.mark.parametrize("description", ["Discover and use an existing permitted capability. " * 20, "Onderzoek échte mogelijkheden. " * 40])
+def test_long_catalog_names_do_not_block_review_when_mandatory_metadata_fits(description):
+    names = [f"supported_existing_optional_action_{i:02d}" for i in range(26)]
+    huge = {"type": "object", "description": "x" * 9000}
+    p = policy(*(capability(name, huge) for name in names[:12]), digital=names[12:])
+    descriptors = {name: {"description": description, "parameters": huge} for name in names}
+    before = deepcopy((p, descriptors))
+    result = build(p, descriptors)
+    assert [row["name"] for row in result["capabilities"]] == names
+    assert all(row["description"] and description.startswith(row["description"])
+               for row in result["capabilities"])
+    assert all(len(row["description"].encode()) < 32 for row in result["capabilities"])
+    assert result["omitted_description_count"] == result["omitted_schema_count"] == len(names)
+    for row in result["capabilities"]:
+        assert row["definition_sha256"] == canonical_sha256({"description": description, "parameters": huge})
+        if "native" in row["routes"]:
+            assert row["data_scope"] == "owner_private_local"
+            assert row["communication_scope"] == "none"
+            assert row["new_cost_eur_cents"] == 0 and row["new_obligation"] is False
+    assert (p, descriptors) == before
+    assert build(p, descriptors) == result
+    check_hash(result)
+
+
+def test_catalog_that_cannot_fit_mandatory_identity_is_not_silently_truncated():
+    p = policy(digital=tuple(f"permitted_action_{i:03d}" for i in range(100)))
+    with pytest.raises(ValueError, match="name and scope metadata exceeds"):
+        build(p)

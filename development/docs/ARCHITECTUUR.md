@@ -96,6 +96,11 @@ nieuwste gebeurtenissen, met huidige providerdekking en oorspronkelijke hashes.
 Zonder zo’n bewaarde bron/dekking ontstaat geen verzonnen event of nieuwe toegang.
 Een latere geschiedenislezing valideert ook de bestaande source_watch strikt;
 zij bewaart de oorspronkelijke beslissing zonder nieuwe uitvoerbevoegdheid.
+De privé-mogelijkhedencatalogus behoudt alle toegelaten namen, scopevelden en
+volledige definitiehashes binnen dezelfde 8 KiB. Alleen optionele toelichtingen
+worden op werkelijk gecodeerde omvang verkort; parameters passen volledig of
+blijven expliciet weggelaten. Een lange toolnaam blokkeert zo niet de afweging
+wanneer de verplichte metadata wel past; ontbrekende verplichte ruimte blijft fout.
 Oude waarnemingen zijn geen actuele
 uitvoerbevoegdheid: de native uitvoerder controleert benodigde actuele bronnen opnieuw.
 De bestaande HA-stream dekt toestandwaarden; attribuutwijzigingen en willekeurige

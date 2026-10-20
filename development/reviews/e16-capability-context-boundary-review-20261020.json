@@ -1,0 +1,18 @@
+{
+  "contract": "EvaIndependentReviewSummary/v1",
+  "taskId": "E1.6",
+  "checkedAt": "2026-10-20T20:51:29.634313+00:00",
+  "decision": "GO_INSTALLED_CATALOG_BOUNDARY_FIX_ONLY",
+  "sourceDecision": "GO_SOURCE_AND_OPTIONAL_INSTALLATION",
+  "sourceReviewSha256": "d475bf08016e6baa19c45099415a233014d20da762bffc7bc664039ddeecb55b",
+  "evidence": "development/evidence/product/e16-capability-context-boundary-installed-20261020.json",
+  "sourceHashes": {
+    "src/eva/application/private_capability_context.py": "6345d19195456e8b866b2b8815e4a40ad3e6a1e6044e68ef60d399123d293342"
+  },
+  "casesPassed": 16,
+  "actualInstalledConsumerAccepted": true,
+  "all26NamesPreserved": true,
+  "taskCompleted": false,
+  "actualSourceCausalUseProven": false,
+  "voiceChanged": false
+}
