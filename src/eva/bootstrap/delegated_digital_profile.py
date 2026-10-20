@@ -150,6 +150,11 @@ class DelegatedDigitalProfile:
                 profiles.append({**payload, "capability_ids": [
                     name for name in payload["capability_ids"]
                     if name != "research_current_options"]})
+            # Retained reads may use the exact pre-program capability profile.
+            # This never grants a new call or changes an admitted envelope.
+            profiles += [{**value, "capability_ids": [
+                name for name in value["capability_ids"] if name != "run_tool_program"]}
+                for value in tuple(profiles) if "run_tool_program" in value["capability_ids"]]
             if any(profile_release == canonical_sha256({
                     "profile": DIGITAL_PROFILE_ID, "grant": value}) for value in profiles):
                 return True

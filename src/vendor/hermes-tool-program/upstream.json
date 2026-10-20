@@ -1,0 +1,24 @@
+{
+  "repository": "https://github.com/NousResearch/hermes-agent",
+  "revision": "1f502aded81a07fa4127e6a90e06d04271a5b04a",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2025 Nous Research",
+  "sourceFiles": {
+    "LICENSE": "821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6",
+    "tools/code_execution_tool.py": "b4915178f69f41b693d1ae4c379ce19df5af36b4b1e08d5854454bab4e5a5b98",
+    "tools/code_execution_rpc.py": "90f18f0633688bb9397d38e33929303c8f78615174233dbf5361c9a19620be38"
+  },
+  "adaptedUnit": "tools/code_execution_tool.py _UDS_TRANSPORT_HEADER._call and its serialization lock (lines 250-329)",
+  "destination": "src/eva/application/tool_program.py _BOOTSTRAP._call",
+  "changes": [
+    "Replace the socket transport and token-bearing request with exact ordered host-provided receipt-prefix replay.",
+    "Suspend at the first new tool request and emit exactly one source/input-bound JSON frame through the existing offline procedure stdout.",
+    "Retain serialization across callers; reject cached name/arguments drift and incomplete prefix consumption.",
+    "Remove reconnect/retry behavior, Hermes tool whitelist, terminal and agent dispatch imports, host paths and environment credentials.",
+    "Add existing Eva source/input/output byte limits and complete isolated-report validation.",
+    "Include the full upstream MIT notice in each generated wrapper as well as this directory."
+  ],
+  "inspectedNotCopied": "tools/code_execution_rpc.py host allow-list/call-budget/dispatch pipeline; Eva keeps its own durable authorized dispatcher.",
+  "maintenanceOwner": "Eva executor module maintainer; re-review pinned stub and local adaptations before any upstream update",
+  "newRuntimeDependencies": []
+}

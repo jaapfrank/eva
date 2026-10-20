@@ -14,6 +14,7 @@ from eva.adapters.postgres.background_work_progress import progress_descriptor
 from eva.adapters.postgres.component_improvement_actions import component_descriptors
 from eva.adapters.postgres.programming_actions import programming_descriptors
 from eva.adapters.connectors.programming_workspace import configured_programming_workspace
+from eva.adapters.postgres.tool_program_actions import program_descriptors
 from eva.adapters.connectors.component_evaluation import configured_component_evaluator
 from eva.adapters.connectors.procedure_execution import configured_procedure_executor
 
@@ -49,6 +50,8 @@ _EXECUTION_SOURCES = (
     "adapters/postgres/work_corrections.py",
     "adapters/postgres/component_improvement_actions.py",
     "adapters/postgres/programming_actions.py",
+    "adapters/postgres/tool_program_actions.py",
+    "application/tool_program.py",
     "adapters/connectors/programming_workspace.py",
     "application/component_improvements.py",
     "adapters/connectors/component_evaluation.py",
@@ -123,7 +126,8 @@ def digital_tools(bundle):
     if not names or names != {name for tool in routes for name in tool.action_names if name in admitted}:
         raise ValueError("digital connector descriptions and routes differ")
     return (*descriptors, *DelegatedWorkResultReader.conversation_tools(),
-            progress_descriptor(), *component_descriptors(), *programming_descriptors()), routes
+            progress_descriptor(), *component_descriptors(), *programming_descriptors(),
+            *program_descriptors()), routes
 
 
 def _configuration_value(value):

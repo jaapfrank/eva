@@ -841,14 +841,14 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E1.4",
+  "activeTaskId": "E4.14",
   "currentWork": {
-    "id": "E1.4",
-    "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
-    "status": "completed",
-    "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-    "nextAction": "E1.4 is technisch afgerond met actuele taakvoltooiing en gewone latere toepassing. Daarna de bestaande E4.14-kaart; spraak blijft bij de andere uitvoerder.",
-    "checkedAt": "2026-10-20T19:26:59.261526+00:00",
+    "id": "E4.14",
+    "title": "Een taak over meerdere diensten als programma uitvoeren",
+    "status": "in_progress",
+    "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
+    "nextAction": "Installeer de gerichte invoerterugmelding na bronreview en vrije werkclaims; voer één afzonderlijke vervolgproef uit zonder oude onzekere poging automatisch te herstarten.",
+    "checkedAt": "2026-10-20T19:55:03.649746+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2925,14 +2925,14 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E1.4",
-          "title": "E1.4 · Actueel zelfstandig vervolg herstellen",
-          "status": "completed",
-          "state": "completed",
-          "summary": "Eva heeft haar eigen vervolg afgemaakt en het resultaat later inhoudelijk gebruikt.",
-          "detail": "Onafhankelijk bevestigd: bestaand onderzoek en opgeslagen document hergebruikt; daarna onderbouwd geen extra bericht of herhaling gekozen. Ontwikkelaarshulp en hoog verbruik blijven zichtbaar; gezinsacceptatie blijft apart.",
-          "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-          "checkedAt": "2026-10-20T19:26:59.261526+00:00"
+          "taskId": "E4.14",
+          "title": "Een taak over meerdere diensten als programma uitvoeren",
+          "status": "in_progress",
+          "state": "in_progress",
+          "summary": "Een taakprogramma verbinden met bestaande diensten en duurzame resultaten.",
+          "detail": "Geïnstalleerde eerste programmapoging veilig gestopt na twee bevestigde lezingen: invoer met tussenresultaten te groot. Geen document of huisactie uitgevoerd. Gerichte terugmeldingscorrectie gebouwd en 22 relevante checks geslaagd; nog niet geïnstalleerd. Eerste mislukking en 37.826 gedeeltelijk gemeten tokens blijven bewaard.",
+          "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
+          "checkedAt": "2026-10-20T19:55:03.649746+00:00"
         },
         "next": {
           "taskId": "E4.14",
@@ -3126,7 +3126,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E1.4",
+        "currentStep": "E4.14",
         "steps": [
           {
             "number": 1,
@@ -7380,7 +7380,7 @@
                 "independentReview": "development/reviews/e413-programming-semantic-feedback-review-20261020.json"
               },
               {
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
                 "ownerActionRequired": false,
@@ -7388,7 +7388,10 @@
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "assignment": {
                   "coordinator": "/root",
-                  "activeWorkers": [],
+                  "activeWorkers": [
+                    "/root/e46_receipt_boundary · gerichte PostgreSQL-controle",
+                    "/root/e47_mcp_catalog · onafhankelijke review"
+                  ],
                   "scope": "E4.14: één bestaande algemene taak als programma over minimaal twee diensten, via dezelfde actuele tool-/stop-/receiptgrens. Geen spraak of nieuw agentplatform."
                 },
                 "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
@@ -7418,10 +7421,11 @@
                 "dependsOn": [
                   "E4.5"
                 ],
-                "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
+                "nextAction": "Installeer de gerichte invoerterugmelding na bronreview en vrije werkclaims; voer één afzonderlijke vervolgproef uit zonder oude onzekere poging automatisch te herstarten.",
                 "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-                "checkedAt": "2026-10-20T18:08:24.596249+00:00",
-                "progress": "Alleen bestaande route en mogelijk RPC-hergebruik gelezen; implementatie/proef niet gestart. Actuele eigenaaropdracht E1.4 gaat voor."
+                "checkedAt": "2026-10-20T19:55:03.649746+00:00",
+                "progress": "Geïnstalleerde eerste programmapoging veilig gestopt na twee bevestigde lezingen: invoer met tussenresultaten te groot. Geen document of huisactie uitgevoerd. Gerichte terugmeldingscorrectie gebouwd en 22 relevante checks geslaagd; nog niet geïnstalleerd. Eerste mislukking en 37.826 gedeeltelijk gemeten tokens blijven bewaard.",
+                "evidence": "development/evidence/reassessment/e414-task-program-installed-20261020.json"
               }
             ],
             "previousBoundedCompletion": {
@@ -7946,7 +7950,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E1.4 actuele vervolgketen afgerond. Volgende: bestaande E4.14, geen nieuwe vergelijkingsserie of spraakwerk.",
+        "nextAction": "Installeer de gerichte invoerterugmelding na bronreview en vrije werkclaims; voer één afzonderlijke vervolgproef uit zonder oude onzekere poging automatisch te herstarten.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -8197,7 +8201,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T19:26:59.261526+00:00",
+        "checkedAt": "2026-10-20T19:55:03.649746+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -8263,7 +8267,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E1.4",
+      "currentStep": "E4.14",
       "steps": [
         {
           "number": 1,
@@ -12517,7 +12521,7 @@
               "independentReview": "development/reviews/e413-programming-semantic-feedback-review-20261020.json"
             },
             {
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
               "ownerActionRequired": false,
@@ -12525,7 +12529,10 @@
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "assignment": {
                 "coordinator": "/root",
-                "activeWorkers": [],
+                "activeWorkers": [
+                  "/root/e46_receipt_boundary · gerichte PostgreSQL-controle",
+                  "/root/e47_mcp_catalog · onafhankelijke review"
+                ],
                 "scope": "E4.14: één bestaande algemene taak als programma over minimaal twee diensten, via dezelfde actuele tool-/stop-/receiptgrens. Geen spraak of nieuw agentplatform."
               },
               "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
@@ -12555,10 +12562,11 @@
               "dependsOn": [
                 "E4.5"
               ],
-              "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
+              "nextAction": "Installeer de gerichte invoerterugmelding na bronreview en vrije werkclaims; voer één afzonderlijke vervolgproef uit zonder oude onzekere poging automatisch te herstarten.",
               "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-              "checkedAt": "2026-10-20T18:08:24.596249+00:00",
-              "progress": "Alleen bestaande route en mogelijk RPC-hergebruik gelezen; implementatie/proef niet gestart. Actuele eigenaaropdracht E1.4 gaat voor."
+              "checkedAt": "2026-10-20T19:55:03.649746+00:00",
+              "progress": "Geïnstalleerde eerste programmapoging veilig gestopt na twee bevestigde lezingen: invoer met tussenresultaten te groot. Geen document of huisactie uitgevoerd. Gerichte terugmeldingscorrectie gebouwd en 22 relevante checks geslaagd; nog niet geïnstalleerd. Eerste mislukking en 37.826 gedeeltelijk gemeten tokens blijven bewaard.",
+              "evidence": "development/evidence/reassessment/e414-task-program-installed-20261020.json"
             }
           ],
           "previousBoundedCompletion": {
@@ -13083,7 +13091,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E1.4 actuele vervolgketen afgerond. Volgende: bestaande E4.14, geen nieuwe vergelijkingsserie of spraakwerk.",
+      "nextAction": "Installeer de gerichte invoerterugmelding na bronreview en vrije werkclaims; voer één afzonderlijke vervolgproef uit zonder oude onzekere poging automatisch te herstarten.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -13334,7 +13342,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T19:26:59.261526+00:00",
+      "checkedAt": "2026-10-20T19:55:03.649746+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -15090,6 +15098,11 @@
         "cost_usd_micros": null
       },
       "technicalTaskCompleted": true
+    },
+    "e414ProgrammaticExecution20261020": {
+      "status": "installed_practice_execution_in_progress",
+      "evidence": "development/evidence/reassessment/e414-task-program-installed-20261020.json",
+      "checkedAt": "2026-10-20T19:50:43.209479+00:00"
     }
   },
   "updatedAt": "2026-10-20T13:28:55.822181+00:00",

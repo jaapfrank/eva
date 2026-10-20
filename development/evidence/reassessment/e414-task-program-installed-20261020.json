@@ -1,0 +1,74 @@
+{
+  "contract": "EvaTaskProgramDelivery/v1",
+  "taskId": "E4.14",
+  "checkedAt": "2026-10-20T19:55:03.649746+00:00",
+  "state": "installed_known_input_transfer_gap_being_corrected",
+  "existing": "Existing durable digital tasks, isolated offline Python executor and current connector dispatch/receipts.",
+  "added": "Pinned Hermes-derived call stub, bounded suspend/replay handoff and per-subcall normal durable dispatch; no second agent/platform or credentials in script.",
+  "installation": {
+    "coreImage": "sha256:f0c3fca939c2418c44b2976b724fb0630d9a3ffcb463523a6ea98df926ea5bf1",
+    "workerImage": "sha256:73e356331a2c93595a644f69383d6bc0497652eaa3701c1cf2c3c90997ea5f0c",
+    "executionPins": 70,
+    "capabilities": 27,
+    "sameRelease": true,
+    "retainedMounts": true,
+    "voiceChanged": false,
+    "nativePolicyOnlyProfileAndProgramCapabilityUpdated": true,
+    "policyBeforeSha256": "f6e5f53a4efb146ae4b83c9ed0f270164a20bec116227580ad88b2756a35f646",
+    "policyAfterSha256": "f20717f03902afbbbf73257a8df9f27b1d6d6f2dd441078ac20fdaa1177bf83b"
+  },
+  "checks": {
+    "protocol": 46,
+    "adapter": 10,
+    "postgresDurableReceipts": 2,
+    "configuredProfileAndContracts": 49,
+    "existingRunnerAndCompositionPassed": 143,
+    "existingHouseholdReadFailures": 3,
+    "sameHouseholdFailuresConfirmedWithPreChangeComposition": true,
+    "externalModelCallsByTests": 0
+  },
+  "comparison": {
+    "scope": "One existing read-only task, ordinary route versus program route; no competitor series.",
+    "baseline": {
+      "state": "succeeded",
+      "independentContentReview": "passed",
+      "elapsedSeconds": 85,
+      "completedModelResponses": 9,
+      "toolCalls": 8,
+      "registeredTokens": 160278,
+      "measurement": "partial",
+      "creditCost": null
+    },
+    "candidate": {
+      "state": "ambiguous",
+      "errorCode": "internal_error",
+      "knownCause": "bounded_input_history_transfer_exceeded_before_next_dispatch",
+      "completedModelResponses": 3,
+      "toolCalls": 6,
+      "registeredTokens": 37826,
+      "measurement": "partial",
+      "creditCost": null,
+      "documentWriteOrHouseholdEffect": false,
+      "oldOutcomePreserved": true
+    },
+    "generalQualityOrEfficiencyWinProved": false
+  },
+  "sourceHashes": {
+    "src/eva/application/tool_program.py": "b06d053839da22a0ff269f9c3a694d866e397c525023246ee2c21b17ff939a65",
+    "src/eva/adapters/postgres/tool_program_actions.py": "d015dc900c548ca142fbbe2dbec4eb019b122d96c53ce0b45aafd2e386b41b87",
+    "src/eva/bootstrap/delegated_digital_runner.py": "e030c9671defd00e94c61af6fd1ca0bc7f5e7f072184853c8efd4fae494c0320",
+    "src/eva/bootstrap/delegated_digital_composition.py": "9217953f7ea5deed713dcb3cdf929ebd8902a496e755c50334bd48cb07e7e10d",
+    "src/eva/adapters/connectors/delegated_completion.py": "bf9767f346be4b4cfa3f7a0a6908f6c1abcbd27ea06db98c8bf046605039594d",
+    "src/eva/contracts/delegated_digital_work.py": "315b77aa80074e1b578f24b769ee319856b96454150ed04e4335185d09d913b2",
+    "src/eva/bootstrap/delegated_digital_profile.py": "e32e206a7fd8f1f05fae1162863b76557a1eae4d3250ae28466d3aff9c90ae43"
+  },
+  "sourceReviewSha256": "b3b82236fdfca7e427c6c492a64a7574590b6d2a385ccc36daa11c2b38f13cd1",
+  "limitations": [
+    "Candidate real program execution and final independent assessment still required.",
+    "Pure computation restarts at each suspension; repeated service effects are never authorized by replay.",
+    "Combined source/stub and input/history keep existing 16 KiB and 32 KiB bounds; oversize is refused, not truncated.",
+    "Credit costs and incomplete usage remain unknown; family acceptance is separate."
+  ],
+  "fullProjectComplete": false,
+  "correction": "Expected local transfer refusal gets non-success guidance and retained receipt references; it cannot count as completed work. No bound increase or automatic retry of old ambiguous work."
+}

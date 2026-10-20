@@ -18,6 +18,7 @@ from eva.adapters.postgres.background_model_journal import BackgroundModelJourna
 from eva.adapters.postgres.background_work_progress import BackgroundWorkProgress, load_work_progress
 from eva.adapters.postgres.component_improvement_actions import ComponentImprovementActions, DRAFT, EVALUATE, PREPARE, COMPARE
 from eva.adapters.postgres.programming_actions import ProgrammingActions, programming_tool_name, LIST as PROGRAMMING_LIST, CALL as PROGRAMMING_CALL, WRITE as PROGRAMMING_WRITE, START as PROGRAMMING_START
+from eva.adapters.postgres.tool_program_actions import ToolProgramActions
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.delegated_work import DelegatedWorkCall, DelegatedWorkReleaseSelector
 from eva.adapters.postgres.operational_timeline import external_timeline_scope
@@ -511,7 +512,11 @@ class DelegatedDigitalRunner:
                 connector_tools = (*connector_tools, task_research_tools(
                     self.store._engine, self.model, turn=source, journal=journal,
                     authorize=authorize, grant=spec.grant, profile=self.profile))
-            actions = BackgroundConnectorActions((*connector_tools, progress, improvements, programming), spec.grant.capability_ids,
+            program = ToolProgramActions(self.store._engine, spec, source, authorize,
+                dispatch_guard, self.clock, actions=lambda: actions,
+                allowed_names={name for tool in connector_tools for name in tool.action_names}
+                    & set(spec.grant.capability_ids))
+            actions = BackgroundConnectorActions((*connector_tools, progress, improvements, programming, program), spec.grant.capability_ids,
                                                   authorize, spec.grant.maximum_tool_calls)
             from eva.adapters.postgres.work_corrections import work_corrections
             corrections = tuple(work_corrections(self.store._engine, spec))

@@ -124,6 +124,18 @@ def completed_tool_evidence(receipts):
         if receipt.call.name in {"save_work_progress", "get_delegated_work", PROGRAMMING_LIST}:
             # Planning and reading a predecessor are context, not new completed work.
             continue
+        if receipt.call.name == "run_tool_program":
+            # Pure output is never service success; each actual subreceipt is
+            # rehydrated by the action adapter and judged normally above/below.
+            result = output.get("program_result", {})
+            if (output.get("status") != "verified"
+                    or result.get("contract") != "EvaTaskToolProgram/v1"):
+                return False
+            if result.get("state") == "input_not_transferable":
+                completed = False
+            elif result.get("state") != "completed":
+                return False
+            continue
         if receipt.call.name == "read_home_assistant_inventory":
             if output.get("status") != "verified":
                 return False

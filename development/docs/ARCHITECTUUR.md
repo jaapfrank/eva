@@ -107,6 +107,32 @@ Een ontbrekende interne dependency van een aanwezige module blijft een echte fou
 Bronfingerprints komen uit de geïnstalleerde provider; core en uitvoerworker binden
 dezelfde bronversie. Uitschakelen verwijdert geen gegevens, taken of oude receipts.
 
+## Programma's binnen dezelfde duurzame taak
+
+`application/tool_program.py` past een kleine gepinde Hermes-aanroepstub aan voor
+Eva's bestaande netwerkloze Pythonuitvoerder. `ToolProgramActions` verzorgt alleen
+de overdracht naar dezelfde actuele connectorroutes; geen eigen registry, scheduler,
+hostkernel of credentials in het script. De capability wordt alleen aangeboden
+wanneer de bestaande procedure-uitvoerder werkelijk is geconfigureerd.
+
+Een programma onderbreekt bij één nieuw toolverzoek. De host bindt programma,
+invoer, oorspronkelijke taak en modelsleuf, laat de normale route bevoegdheid,
+stoppen, uitvoering en bewijs controleren en bewaart alleen receiptverwijzingen
+op dezelfde operationele tijdlijn. Het programma herloopt daarna zuivere berekening
+met de exacte eerder bevestigde antwoorden. Gewijzigde callvolgorde/argumenten,
+onzeker effect of ingetrokken toegang stopt de keten; hervatten geeft geen nieuwe
+identiteit aan dezelfde handeling. Een afzonderlijk hoog, exact I-JSON-indexbereik
+scheidt subcalls van gewone modelstappen zonder afgekapte hashidentiteiten.
+
+Tussenantwoorden blijven taakgebonden buiten de modelcontext. Alleen gekozen
+standaarduitvoer en een klein ontvangstmanifest komen terug; stdout bewijst geen
+service- of inhoudelijk succes. De gewone completionpolicy beoordeelt de echte
+subreceipts en vereiste teruglezing. De bestaande 16 KiB bron- en 32 KiB totale
+invoergrenzen blijven gelden, inclusief stub en alle eerdere antwoorden; te grote
+ketens worden zichtbaar geweigerd, niet stil afgekapt. Sandboxstarts blijven over
+hervatten meegeteld binnen het bestaande taakbudget. Dit vermijdt nieuwe host-IPC,
+maar herhaalt lokale berekening; snelheids- of tokenwinst vraagt echte meting.
+
 ## Semantische feedback in de bestaande programmeerroute
 
 Optionele Pyright-feedback draait als stdio-kind binnen dezelfde netwerkloze,

@@ -1,0 +1,29 @@
+{
+  "contract": "EvaIndependentReviewSummary/v1",
+  "taskId": "E4.14",
+  "checkedAt": "2026-10-20T19:59:08.785091+00:00",
+  "decision": "GO_SOURCE_AND_COORDINATED_INSTALLATION_ONLY",
+  "sourceHashes": {
+    "src/eva/application/tool_program.py": "b06d053839da22a0ff269f9c3a694d866e397c525023246ee2c21b17ff939a65",
+    "src/eva/adapters/postgres/tool_program_actions.py": "a9283bbb4ab9995b29940afcaf1181f51c68c8d68789bc853af0d8fc20f60f76",
+    "src/eva/bootstrap/delegated_digital_runner.py": "e030c9671defd00e94c61af6fd1ca0bc7f5e7f072184853c8efd4fae494c0320",
+    "src/eva/bootstrap/delegated_digital_composition.py": "9217953f7ea5deed713dcb3cdf929ebd8902a496e755c50334bd48cb07e7e10d",
+    "src/eva/adapters/connectors/delegated_completion.py": "05442fab1f040b5d4a5af908ef9b64d93e2774c81063125636fe83efa6a259df",
+    "src/eva/contracts/delegated_digital_work.py": "315b77aa80074e1b578f24b769ee319856b96454150ed04e4335185d09d913b2",
+    "src/eva/bootstrap/delegated_digital_profile.py": "e32e206a7fd8f1f05fae1162863b76557a1eae4d3250ae28466d3aff9c90ae43"
+  },
+  "initialNoGoPreserved": true,
+  "durableReceiptsChecks": 2,
+  "knownInputBoundCorrectionChecked": true,
+  "existingBoundReaderHandoffChecked": true,
+  "originalCandidateState": "ambiguous",
+  "originalCandidateRegisteredTokens": 37826,
+  "newAssistedFollowupRequired": true,
+  "originalFrozenComparisonPassed": false,
+  "fullProjectComplete": false,
+  "voiceChanged": false,
+  "limitations": [
+    "Source approval is not task completion or household acceptance.",
+    "Original program failed; the corrected route still needs actual execution, independent content review and original-recipient result access."
+  ]
+}

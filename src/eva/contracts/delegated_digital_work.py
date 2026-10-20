@@ -96,7 +96,7 @@ class DelegatedDigitalWorkGrant(DelegatedWorkGrant):
                    "list_reusable_procedures", "resolve_reusable_procedure",
                    "designate_reusable_procedure", "save_workspace_document", "save_work_progress",
                    "register_own_contribution",
-                   "list_programming_tools", "use_programming_tool", "write_programming_file", "start_programming_process",
+                   "list_programming_tools", "use_programming_tool", "write_programming_file", "start_programming_process", "run_tool_program",
                    "read_own_component_source", "draft_own_component_improvement",
                    "evaluate_own_component_improvement", "compare_own_component_improvements",
                    "prepare_own_component_release",
@@ -171,7 +171,7 @@ INITIATIVE_LOCAL_CAPABILITIES = frozenset({
     # require their exact zero-cost tool/configuration/argument profile.
     "use_connector_tool",
     "save_work_progress", "list_programming_tools", "use_programming_tool",
-    "write_programming_file", "start_programming_process",
+    "write_programming_file", "start_programming_process", "run_tool_program",
     "read_own_component_source", "draft_own_component_improvement",
     "evaluate_own_component_improvement", "compare_own_component_improvements",
     "prepare_own_component_release", "apply_reviewed_component_improvement",
