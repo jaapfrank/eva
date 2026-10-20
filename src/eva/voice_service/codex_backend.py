@@ -179,6 +179,7 @@ class EvaVoiceBackend:
         self.notify({'type':'work_started','message_id':message_id,'text':text})
         try:
             final = None
+            silent = False
             update_seen = False
             async for event in self.backend.events(payload):
                 self.current()
@@ -186,6 +187,7 @@ class EvaVoiceBackend:
                     self.diagnostic('core_'+event['type'])
                 if event.get('type') == 'final':
                     final = event['reply']['text']
+                    silent = event['reply'].get('response_mode') == 'silent'
                 elif event.get('type') == 'spoken_update':
                     # Only explicit, final speech from Eva's core; never model deltas.
                     value = event.get('text')
@@ -206,9 +208,12 @@ class EvaVoiceBackend:
             if not isinstance(final,str) or not final.strip() or len(final)>16000:
                 raise RuntimeError('EVA core did not confirm an answer')
             self.current()
-            self.results[message_id] = final
-            self.notify({'type':'work_finished','message_id':message_id,'text':final})
-            return final
+            if not silent:
+                self.results[message_id] = final
+            self.notify({'type':'work_finished','message_id':message_id,
+                         'text':'' if silent else final,
+                         **({'response_mode':'silent'} if silent else {})})
+            return '' if silent else final
         finally:
             self.active.pop(message_id,None)
 

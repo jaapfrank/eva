@@ -22,6 +22,7 @@ from eva.application.conversation import (
     GroundedReply,
     RecentConversationMessage,
     stream_conversation_text,
+    silent_completion_scope,
 )
 
 
@@ -119,7 +120,8 @@ DASHBOARD_CONVERSATION_HTML = """<!doctype html><html lang="nl"><head>
 </main><script>
 const chat=document.getElementById('chat'),form=document.getElementById('form'),input=document.getElementById('text'),send=document.getElementById('send'),stop=document.getElementById('stop');
 let activeRequests=0;
-function message(role,text,messageId=null,userNode=null){const node=document.createElement('div');node.className='message '+role;node.textContent=text;if(role==='eva'&&messageId){const forget=document.createElement('button');forget.type='button';forget.textContent='Vergeet deze beurt';forget.addEventListener('click',async()=>{forget.disabled=true;try{const response=await fetch('/internal/v1/dashboard/conversation/erase',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({message_id:messageId})});const data=await response.json();if(!response.ok||!data||data.contract!=='EvaDashboardConversationErasure/v1')throw new Error('unavailable');if(userNode)userNode.textContent='Deze beurt is verwijderd.';node.textContent='Deze beurt is verwijderd.';}catch(_error){forget.disabled=false;forget.textContent='Wissen lukte nog niet — probeer opnieuw';}});node.append(document.createElement('br'),forget);}if(userNode)userNode.after(node);else chat.append(node);node.scrollIntoView({block:'end'});return node;}
+function forgetControl(node,messageId,userNode){const forget=document.createElement('button');forget.type='button';forget.textContent='Vergeet deze beurt';forget.addEventListener('click',async()=>{forget.disabled=true;try{const response=await fetch('/internal/v1/dashboard/conversation/erase',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({message_id:messageId})});const data=await response.json();if(!response.ok||!data||data.contract!=='EvaDashboardConversationErasure/v1')throw new Error('unavailable');if(userNode)userNode.textContent='Deze beurt is verwijderd.';node.textContent='Deze beurt is verwijderd.';}catch(_error){forget.disabled=false;forget.textContent='Wissen lukte nog niet — probeer opnieuw';}});node.append(document.createElement('br'),forget);}
+function message(role,text,messageId=null,userNode=null){const node=document.createElement('div');node.className='message '+role;node.textContent=text;if(role==='eva'&&messageId){forgetControl(node,messageId,userNode);}if(userNode)userNode.after(node);else chat.append(node);node.scrollIntoView({block:'end'});return node;}
 function state(text,error=false){const node=document.createElement('div');node.className='state'+(error?' error':'');node.textContent=text;chat.append(node);node.scrollIntoView({block:'end'});return node;}
 
 async function readReplyStream(response, onDelta) {
@@ -156,7 +158,8 @@ async function submitMessage(text,clearInput=true){
     const data=await readReplyStream(response,delta=>{
       draft+=delta;pending.className='message eva';pending.textContent=draft+'\\n\\nEva schrijft…';
     });
-    const saved=message('eva',data.text,data.message_id,userNode);pending.replaceWith(saved);
+    if(data.response_mode==='silent') {pending.remove();forgetControl(userNode,data.message_id,null);}
+    else {const saved=message('eva',data.text,data.message_id,userNode);pending.replaceWith(saved);}
     userNode.dataset.messageId=data.message_id;window.dispatchEvent(new Event('eva-reply-saved'));
   } catch(_error) {
     pending.textContent=(draft?draft+'\\n\\n':'')+(_error.message==='provider_rate_limited'?'De modelprovider weigert momenteel aanvragen wegens een gebruiks- of snelheidslimiet. Er is geen nieuw antwoord beschikbaar.':'Dit antwoord is niet bevestigd. Bekijk de taakstatus voordat je een opdracht opnieuw verstuurt.');
@@ -180,7 +183,8 @@ def grounded_reply_wire(reply: GroundedReply) -> dict[str, Any]:
     return {"contract": "EvaInternalGroundedReply/v1", "conversation_id": reply.conversation_id,
             "evidence_memory_ids": list(reply.evidence_memory_ids), "generated_at": reply.generated_at,
             "message_id": reply.message_id, "provider": reply.provider,
-            "text": reply.text, "text_sha256": reply.text_sha256}
+            "text": reply.text, "text_sha256": reply.text_sha256,
+            **({"response_mode": "silent"} if reply.response_mode == "silent" else {})}
 
 
 def dashboard_stream_response(runtime: Any, text: str) -> StreamingResponse:
@@ -191,7 +195,7 @@ def dashboard_stream_response(runtime: Any, text: str) -> StreamingResponse:
         turn = None
         stage = "respond"
         try:
-            with stream_conversation_text(lambda delta: queue.put(("delta", delta))):
+            with silent_completion_scope(), stream_conversation_text(lambda delta: queue.put(("delta", delta))):
                 turn, reply = runtime.dashboard_turn(text)
             if not isinstance(turn, ConversationTurn) or not isinstance(reply, GroundedReply):
                 raise ValueError("owner conversation result is invalid")
@@ -229,7 +233,7 @@ def conversation_stream_response(runtime: Any, turn: ConversationTurn,
     def run() -> None:
         stage = "respond"
         try:
-            with stream_conversation_text(lambda delta: queue.put(("delta", delta))):
+            with silent_completion_scope(), stream_conversation_text(lambda delta: queue.put(("delta", delta))):
                 reply = runtime.respond(turn, recent)
             queue.put(("final", reply))
             stage = "after_response"

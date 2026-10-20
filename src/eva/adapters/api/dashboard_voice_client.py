@@ -170,7 +170,7 @@ DASHBOARD_VOICE_CLIENT_JS = r"""
       } else if(data.generation===this.generation && data.generation>this.discardThrough) {
         if(data.type==='reply') {
           if(typeof data.text!=='string'||typeof data.message_id!=='string')throw new Error('reply');
-          this.onReply(data.text,data.message_id);
+          if(data.response_mode!=='silent')this.onReply(data.text,data.message_id);
         } else if(data.type==='audio') {
           if(!['audio/mpeg','audio/wav','audio/ogg','audio/flac'].includes(data.mime_type)
              ||typeof data.data!=='string'||data.data.length>90000)throw new Error('audio');

@@ -341,6 +341,13 @@ class PostgresConversationActions:
             turn, call, step_index=step_index,
         )
 
+    def silent_completion_allowed(self, turn, receipts):
+        if len(receipts) != 1:
+            return False
+        provider = self._external_tool_by_action.get(receipts[0].call.name)
+        eligible = getattr(provider, "silent_completion_allowed", None)
+        return callable(eligible) and eligible(turn, receipts) is True
+
     def reply_guard(self, turn, receipts):
         """Delegate final consistency checks only to tools used by this turn."""
         guards = []

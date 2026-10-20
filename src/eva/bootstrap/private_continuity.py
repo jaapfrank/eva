@@ -81,7 +81,7 @@ def _exchange_content(runtime, doc, *, before=None, before_exclusive=False):
         reply = None
     reply_time = (None if reply is None else datetime.strptime(
         reply.generated_at, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC))
-    if reply is None or (before is not None and (
+    if reply is None or getattr(reply, "response_mode", "reply") == "silent" or (before is not None and (
             reply_time >= before if before_exclusive else reply_time > before)):
         return _fragment(doc.content, 1800)
     user = _fragment(doc.content, 900)

@@ -602,6 +602,7 @@ class PostgresConversationJournal(PostgresScopedRole):
                 or not text
                 or not isinstance(provider, str)
                 or not provider
+                or data.get("response_mode", "reply") not in ("reply", "silent")
             ):
                 raise ConversationConflict(
                     "durable conversation reply fields are invalid"
@@ -630,6 +631,7 @@ class PostgresConversationJournal(PostgresScopedRole):
                 provider=provider,
                 model_usage=usage,
                 model_timing=timing,
+                response_mode=data.get("response_mode", "reply"),
             )
             if data.get("text_sha256") != reply.text_sha256:
                 raise ConversationConflict("durable conversation reply hash differs")
@@ -792,6 +794,8 @@ class PostgresConversationJournal(PostgresScopedRole):
             "text": reply.text,
             "text_sha256": reply.text_sha256,
         }
+        if reply.response_mode != "reply":
+            data["response_mode"] = reply.response_mode
         if turn.project_id is not None:
             data["project_id"] = turn.project_id
         return data
@@ -868,6 +872,8 @@ class PostgresConversationJournal(PostgresScopedRole):
                 continue
             if exclude_message_id and value.get("message_id") == exclude_message_id:
                 continue
+            if row.event_type == "REPLY_COMMITTED" and value.get("response_mode") == "silent":
+                continue  # A completion status was never an assistant utterance.
             text = value.get("text")
             if not isinstance(text, str) or not text:
                 continue

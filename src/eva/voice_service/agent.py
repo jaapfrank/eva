@@ -490,6 +490,10 @@ class EvaAgent(Agent):
                 elif kind == "final":
                     final_seen = True
                     final = event["reply"]["text"]
+                    if event["reply"].get("response_mode") == "silent":
+                        state.notify({"type": "work_finished", "message_id": message_id,
+                                      "text": "", "response_mode": "silent"})
+                        continue
                     state.results[message_id] = final
                     if message_id not in state.suppressed:
                         state.notify({"type": "work_finished", "message_id": message_id, "text": final})

@@ -229,7 +229,8 @@ class HouseholdConversationContext:
             if reply is None:
                 continue
             answer = reply["payload"]["data"]
-            if (any(answer.get(key) != value.get(key) for key in ("conversation_id", "principal_id", "message_id", "project_id"))
+            if (answer.get("response_mode") == "silent"
+                    or any(answer.get(key) != value.get(key) for key in ("conversation_id", "principal_id", "message_id", "project_id"))
                     or not isinstance(answer.get("text"), str) or not answer["text"].strip()):
                 continue
             result.append(RecentConversationMessage("Eva", provenance + answer["text"][:1200],

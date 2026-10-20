@@ -22,7 +22,7 @@ from fastapi import FastAPI, HTTPException, Request, Response, WebSocket, WebSoc
 from eva.adapters.api.dashboard_voice_client import DASHBOARD_VOICE_CLIENT_JS
 
 from eva.adapters.api.dashboard_access import DashboardAccess
-from eva.application.conversation import ConversationTurn, GroundedReply
+from eva.application.conversation import ConversationTurn, GroundedReply, silent_completion_scope
 from eva.application.voice import SpeechAudioChunk, admit_final_voice_turn
 from eva.contracts.voice import VoiceSession, VoiceTurn
 
@@ -212,7 +212,8 @@ class _Connection:
             # Cancelling a to_thread await does not stop tools. Keep ownership until
             # respond AND the canonical memory callback finish, even on disconnect.
             def respond() -> GroundedReply:
-                reply = self.runtime.respond(turn)
+                with silent_completion_scope():
+                    reply = self.runtime.respond(turn)
                 self.runtime.after_response(turn, reply)
                 return reply
             work = asyncio.create_task(asyncio.to_thread(respond))
@@ -224,7 +225,10 @@ class _Connection:
             self.config.check(self.session)
             if self.suppressed or not self.connected:
                 return
-            await self.send("reply", text=reply.text, message_id=turn.message_id)
+            await self.send("reply", text=reply.text, message_id=turn.message_id,
+                            **({"response_mode": "silent"} if reply.response_mode == "silent" else {}))
+            if reply.response_mode == "silent":
+                return
             self.config.check(self.session)
             if self.suppressed or not self.connected:
                 return

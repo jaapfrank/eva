@@ -17,7 +17,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from eva.adapters.api.dashboard_access import DashboardAccess
 from eva.adapters.api.dashboard_voice import DashboardVoice
 from eva.adapters.api.dashboard_conversation import grounded_reply_wire, _record_stream_failure
-from eva.application.conversation import ConversationTurn, RecentConversationMessage, stream_conversation_text
+from eva.application.conversation import ConversationTurn, RecentConversationMessage, stream_conversation_text, silent_completion_scope
 from eva.application.voice_context import VoiceContext, voice_context
 
 class HeardMessage(BaseModel):
@@ -158,7 +158,7 @@ def stream_voice_turn(*, runtime, payload: VoiceRequest, turn: ConversationTurn,
             text_stream = (stream_conversation_text(
                 lambda text: event({"type": "delta", "text": text})
             ) if payload.stream_deltas else nullcontext())
-            with voice_context(context), text_stream:
+            with silent_completion_scope(), voice_context(context), text_stream:
                 reply = runtime.respond(turn)
             if reply.conversation_id != turn.conversation_id or reply.message_id != turn.message_id:
                 raise ValueError("Voice reply crossed its request binding")

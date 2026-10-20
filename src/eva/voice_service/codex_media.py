@@ -614,6 +614,9 @@ class CodexMediaSession:
         # A provisional input turn may be background noise. Wait for its final
         # transcript before discarding an answer that has never been offered.
         # A cancelled speech handle is never replayed by this path.
+        if not answer:
+            self.last_activity=time.monotonic()
+            return  # Verified silent completion keeps listening; no empty TTS.
         if not await self.response_allowed(generation):return
         handle=self.say(answer)
         try:

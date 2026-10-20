@@ -6,7 +6,7 @@ from contextlib import contextmanager, nullcontext
 from contextvars import ContextVar, copy_context
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field, replace
-from datetime import datetime
+from datetime import UTC, datetime
 import hashlib
 import json
 import logging
@@ -25,6 +25,18 @@ from eva.contracts.memory import MemoryRecall
 
 MEMORY_SEARCH_ACTION = "search_personal_memory"
 DEFERRED_MEMORY_PROJECTION = "conversation-not-retrieved-v1"
+
+_SILENT_COMPLETION_SUPPORTED = ContextVar("silent_completion_supported", default=False)
+
+
+@contextmanager
+def silent_completion_scope():
+    """A trusted response adapter can render verified completion without speech."""
+    token = _SILENT_COMPLETION_SUPPORTED.set(True)
+    try:
+        yield
+    finally:
+        _SILENT_COMPLETION_SUPPORTED.reset(token)
 
 _INITIAL_MEMORY_TIMING_LOG = logging.getLogger(__name__ + ".initial_memory_timing")
 _INITIAL_MEMORY_TIMING_LOG.setLevel(logging.INFO)
@@ -530,8 +542,12 @@ class GroundedReply:
     model_timing: ConversationModelTiming = field(
         default_factory=ConversationModelTiming.unmeasured
     )
+    # text is a verified status fallback for older clients, not spoken dialogue.
+    response_mode: Literal["reply", "silent"] = "reply"
 
     def __post_init__(self) -> None:
+        if not isinstance(self.response_mode, str) or self.response_mode not in {"reply", "silent"}:
+            raise ValueError("grounded reply response mode is invalid")
         if not isinstance(self.model_usage, ConversationModelUsage):
             raise ValueError("grounded reply model usage is invalid")
         if not isinstance(self.model_timing, ConversationModelTiming):
@@ -1156,6 +1172,23 @@ class LivingConversation:
             check_cancellation()
 
         while True:
+            silent = getattr(self._actions, "silent_completion_allowed", None)
+            if (_SILENT_COMPLETION_SUPPORTED.get() and len(receipts) == 1
+                    and receipts[0].output.get("status") == "verified"
+                    and callable(silent)):
+                checkpoint()
+                check_cancellation()
+                if silent(turn, tuple(receipts)) is True:
+                    checkpoint()
+                    check_cancellation()
+                    return GroundedReply(
+                        conversation_id=turn.conversation_id, message_id=turn.message_id,
+                        text="Opdracht uitgevoerd.", response_mode="silent",
+                        evidence_memory_ids=tuple(item.fact_id for item in memory.recall.selected),
+                        generated_at=turn.occurred_at, provider="eva:verified-action",
+                        model_usage=total_usage(),
+                        model_timing=ConversationModelTiming.aggregate(tuple(timings)),
+                    )
             if contact_model is not None:
                 # Offer admitted background work instead of new synchronous
                 # execution. Reapply after lookups; retained receipts are replayed
@@ -1345,6 +1378,11 @@ class LivingConversation:
                     model_timing=ConversationModelTiming.aggregate(tuple(timings)),
                 )
             receipts.append(completed)
+            _INITIAL_MEMORY_TIMING_LOG.info("conversation_action_completion %s", json.dumps({
+                "message_id_sha256": hashlib.sha256(turn.message_id.encode()).hexdigest(),
+                "action": call.name, "status": completed.output.get("status", "unknown"),
+                "received_at": datetime.now(UTC).isoformat(),
+            }, separators=(",", ":")))
             if voice is not None:
                 voice.event({"type": "action_finished", "name": call.name,
                              "status": completed.output.get("status", "unknown")})

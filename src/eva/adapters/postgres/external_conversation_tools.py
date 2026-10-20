@@ -121,6 +121,27 @@ class PostgresExternalConversationTools:
         self._authorize(turn)
         return eligible(turn, receipt) is True
 
+    def silent_completion_allowed(self, turn, receipts):
+        """Presentation may stop only at this turn's unchanged verified receipt."""
+        eligible = getattr(self._planner, "silent_completion_allowed", None)
+        if (len(receipts) != 1 or receipts[0].call.name not in self.action_names
+                or not callable(eligible)):
+            return False
+        self._ensure_running(turn)
+        receipt = receipts[0]
+        events = self._timeline(turn).events(self._thread_id(turn, receipt.call.name))
+        if not events or events[-1].event_type != "STATE_VERIFIED":
+            return False
+        admission = events[0].payload["data"]
+        if (self._configuration_sha256 is not None
+                and admission.get("request_tool_configuration_sha256") != self._configuration_sha256):
+            raise ConversationConflict("silent completion configuration changed")
+        if self._receipt(turn, events, project=False) != receipt:
+            raise ConversationConflict("silent completion receipt changed")
+        allowed = eligible(turn, receipt) is True
+        self._ensure_running(turn)
+        return allowed
+
     def available_for(self, turn: ConversationTurn) -> bool:
         """Filter model offerings; execution still rechecks authorization."""
         try:

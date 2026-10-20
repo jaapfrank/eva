@@ -25,6 +25,9 @@ DIRECT_EFFECT_GUIDANCE = ('For ordinary light/switch on or off, choose the offer
     'do not precede them with a separate inventory, state or service lookup merely to resolve that target. '
     'A verified state proof needs no second status lookup unless new evidence contradicts it. '
     'An ambiguous name remains a clarification; do not choose another matching lamp. '
+    'For a plain control command fully satisfied by this one action, set finish_without_reply=true: '
+    'the household does not want a success reply. Use false if any additional action or question '
+    'remains, or the user explicitly asks for confirmation. Failures and ambiguity still require a useful reply. '
     'Use the general API for operations beyond these offered effects, within its existing authority.')
 
 

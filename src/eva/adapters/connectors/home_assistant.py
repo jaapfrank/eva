@@ -98,6 +98,9 @@ _CONVERSATION_TOOLS = (
             "target": _conversation_schema(
                 "De letterlijke lamp- of ruimtenaam uit het verzoek."
             ),
+            "finish_without_reply": {"type": "boolean", "description":
+                "True for a plain control command fully satisfied by this action, without a success reply. "
+                "False if the user also asks a question, requests another action or explicitly wants confirmation."},
         },
         (
             "Het toolresultaat bevat de onafhankelijk gecontroleerde eindtoestand. "
@@ -123,6 +126,9 @@ _CONVERSATION_TOOLS = (
             "target": _conversation_schema(
                 "De natuurlijke apparaat- of ruimtenaam uit het gesprek."
             ),
+            "finish_without_reply": {"type": "boolean", "description":
+                "True only when this action fully satisfies a plain command without a success reply. "
+                "False for any additional question/action or explicitly requested confirmation."},
         },
         (
             "Het toolresultaat bevat de onafhankelijk gecontroleerde eindtoestand. "
@@ -195,6 +201,34 @@ class HomeAssistantConversationEffectPlanner:
 
     action_names = ("set_home_assistant_light", "set_home_assistant_switch")
 
+    @staticmethod
+    def conversation_instructions(turn, available_names):
+        from eva.providers.home_assistant_policy import conversation_instructions
+        return conversation_instructions(turn, available_names)
+
+    def silent_completion_allowed(self, turn, receipt):
+        if (receipt.call.name not in self.action_names
+                or receipt.call.arguments.get("finish_without_reply") is not True
+                or receipt.output.get("status") != "verified"
+                or hashlib.sha256(turn.principal_id.encode()).hexdigest() not in self._principal_sha256_allowlist):
+            return False
+        state = receipt.call.arguments.get("state")
+        proof = receipt.output.get("proof")
+        if not isinstance(proof, dict) or state not in {"on", "off"}:
+            return False
+        expected, observed = proof.get("expected"), proof.get("observed")
+        if (not isinstance(expected, dict) or not isinstance(observed, dict)
+                or expected.get("state") != state or receipt.output.get("requested_state") != state
+                or not all(observed.get(key) == value for key, value in expected.items())):
+            return False
+        ids = receipt.output.get("entity_ids", [receipt.output.get("entity_id")])
+        if (expected.get("entity_ids") != ids if "entity_ids" in receipt.output
+                else expected.get("entity_id") != receipt.output.get("entity_id")):
+            return False
+        service = "turn_on" if state == "on" else "turn_off"
+        return (bool(ids) and all(isinstance(entity, str) and
+                (self._allowlist is None or (entity, service) in self._allowlist) for entity in ids))
+
     def contact_reply_allowed(self, turn, receipt):
         """Keep a checked state or bounded member uncertainty in ordinary contact."""
         if (receipt.call.name not in self.action_names
@@ -257,8 +291,10 @@ class HomeAssistantConversationEffectPlanner:
             raise ConversationClarificationRequired(
                 "Met dit profiel mag je deze externe tool nog niet bedienen."
             )
-        if set(call.arguments) != {"state", "target"}:
+        if not {"state", "target"} <= set(call.arguments) <= {"state", "target", "finish_without_reply"}:
             raise ConversationConflict("provider effect action has wrong fields")
+        if "finish_without_reply" in call.arguments and type(call.arguments["finish_without_reply"]) is not bool:
+            raise ConversationConflict("provider effect completion choice is invalid")
         state = call.arguments.get("state")
         target = call.arguments.get("target")
         if state not in {"on", "off"}:
