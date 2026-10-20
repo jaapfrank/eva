@@ -7598,7 +7598,7 @@
                   "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                   "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
                 ],
-                "nextAction": "E4.8 is technisch afgerond. Profileer de actuele warme volledige chat-/spraakroute en verkort resterende database- en overdrachtswachttijd; beoordeel E4.9/E4.10 op hun oorspronkelijke criteria. Behoud ASR-cachemisses, koude interpretatie en oorspronkelijke mediaan≤1s/p95≤2s als aparte bewijsgrenzen.",
+                "nextAction": "Installeer de geteste gebeurtenisindex en gerichte HA-contextprojectie met actuele guards en schemacontrole. Meet daarna de vooraf vastgelegde 20 warme chatpogingen en dezelfde spraakroute tegen de oorspronkelijke criteria.",
                 "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -7607,8 +7607,10 @@
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "assignment": {
                   "coordinator": "/root",
-                  "activeWorkers": [],
-                  "scope": "Stille geverifieerde afronding geleverd; snelheid en hergebruik bekende volledige opdrachten blijven bestaande open kaarten."
+                  "activeWorkers": [
+                    "/root/review_cursor"
+                  ],
+                  "scope": "Gerichte vervolgstap op E4.8: database- en contextwachttijd. Primaire E1.4-uitvoering blijft behouden; geen nieuwe router, geheugenbron of verruiming van fysieke testtoestemming."
                 },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
                 "executionPlan": {
@@ -7617,8 +7619,8 @@
                   "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                   "ownerAcceptance": false
                 },
-                "checkedAt": "2026-10-20T14:38:30.814671+00:00",
-                "progressEvidence": "development/evidence/product/e48-ha-context-command-cache-20261020.json",
+                "checkedAt": "2026-10-20T15:03:12.914059+00:00",
+                "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
                 "independentReview": "development/reviews/e48-ha-context-command-cache-review-20261020.json",
                 "findings": [
                   {
@@ -12590,7 +12592,7 @@
                 "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                 "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
               ],
-              "nextAction": "E4.8 is technisch afgerond. Profileer de actuele warme volledige chat-/spraakroute en verkort resterende database- en overdrachtswachttijd; beoordeel E4.9/E4.10 op hun oorspronkelijke criteria. Behoud ASR-cachemisses, koude interpretatie en oorspronkelijke mediaan≤1s/p95≤2s als aparte bewijsgrenzen.",
+              "nextAction": "Installeer de geteste gebeurtenisindex en gerichte HA-contextprojectie met actuele guards en schemacontrole. Meet daarna de vooraf vastgelegde 20 warme chatpogingen en dezelfde spraakroute tegen de oorspronkelijke criteria.",
               "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -12599,8 +12601,10 @@
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "assignment": {
                 "coordinator": "/root",
-                "activeWorkers": [],
-                "scope": "Stille geverifieerde afronding geleverd; snelheid en hergebruik bekende volledige opdrachten blijven bestaande open kaarten."
+                "activeWorkers": [
+                  "/root/review_cursor"
+                ],
+                "scope": "Gerichte vervolgstap op E4.8: database- en contextwachttijd. Primaire E1.4-uitvoering blijft behouden; geen nieuwe router, geheugenbron of verruiming van fysieke testtoestemming."
               },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
               "executionPlan": {
@@ -12609,8 +12613,8 @@
                 "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                 "ownerAcceptance": false
               },
-              "checkedAt": "2026-10-20T14:38:30.814671+00:00",
-              "progressEvidence": "development/evidence/product/e48-ha-context-command-cache-20261020.json",
+              "checkedAt": "2026-10-20T15:03:12.914059+00:00",
+              "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
               "independentReview": "development/reviews/e48-ha-context-command-cache-review-20261020.json",
               "findings": [
                 {

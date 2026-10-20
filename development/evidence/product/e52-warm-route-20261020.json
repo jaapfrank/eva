@@ -1,0 +1,46 @@
+{
+  "contract": "EvaWarmHouseControlLatency/v1",
+  "status": "installing_pending_live_measurement",
+  "startedAt": "2026-10-20T15:03:12.914059+00:00",
+  "sourceCommit": "846de4380c89af184247dc08aa128e69fe47d0ff",
+  "privateEvidenceRoot": "/var/lib/eva2/voice-session/e52-warm-route-20261020",
+  "existing": "E4.8 context and exact reuse installed; current warm chat2.466/2.959s, exact voice input end to receipt4.370–4.934s.",
+  "measuredDiagnostic": {
+    "actual_http_server_benchmark": false,
+    "real_module_and_durable_execution": true,
+    "warm_runtime_ms_with_cprofile": 2702.159,
+    "sql_statements": 470,
+    "sql_ms": 1340.33,
+    "ha_effect_ms": 377.221,
+    "full_context_reads": 5
+  },
+  "change": "Add a scoped event-type/time index through the supported schema installer and project only requested HA context. Preserve all source/context/authority/STOP and independent proof checks.",
+  "rollout": "Candidate and recovery workers accept only index-compatible0010/0011. Check on0010, guarded install, explicit transactional schema upgrade with2s lock/30s statement bounds, drift/worker checks on0011. Keep the index during application recovery.",
+  "plannedMeasurement": {
+    "chat_training_commands": 2,
+    "warm_chat_attempts": 20,
+    "warm_sequence": "alternate allowed outdoor on/off; initial/final off",
+    "voice_utterances": 5,
+    "voice_sequence": "four identical authorized off recordings then one existing weather question",
+    "asr_variants": "retain every hit/miss",
+    "timers": [
+      "receipt_received",
+      "saved_final",
+      "voice_input_end",
+      "voice_recognized_text",
+      "voice_first_pcm"
+    ],
+    "benchmark_rule": "all20 planned warm attempts retained; nearest-rank p95; cold and unknown/changed contexts reported separately"
+  },
+  "originalSpeedCriteria": {
+    "chat_median_ms_max": 1000,
+    "chat_p95_ms_max": 2000
+  },
+  "speedTargetMet": false,
+  "physicalAcceptance": false,
+  "developmentTests": {
+    "core_schema_worker": 34,
+    "postgres_cache_and_migration": 19,
+    "strengthened_migration_repeat": 3
+  }
+}
