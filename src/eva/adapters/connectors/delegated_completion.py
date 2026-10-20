@@ -29,6 +29,15 @@ def recoverable_read_error(receipt):
 
 
 def recoverable_completion_context(receipt):
+    proof = receipt.output.get("proof")
+    evidence = proof.get("evidence") if isinstance(proof, dict) else None
+    if (receipt.call.name == "research_current_options" and receipt.output.get("status") == "failed"
+            and receipt.output.get("recoverable_pre_dispatch_refusal") is True
+            and isinstance(evidence, dict)
+            and evidence.get("source") == "native_research_certified_pre_dispatch_refusal"
+            and evidence.get("certificate_sha256") == "f9707883bf69747df06f1b42fd24fdf4d07e16b87f103108f7e054a75f3256b1"
+            and evidence.get("provider_execution") == "not_started"):
+        return True
     if recoverable_read_error(receipt):
         return True
     from eva.adapters.postgres.connector_results import READER_PREFIX

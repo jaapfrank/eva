@@ -15,6 +15,9 @@ from eva.application.orchestration import ToolDispatchResult, ToolProofObservati
 from eva.contracts.canonical_json import canonical_sha256
 
 
+_CERTIFIED_RESEARCH_REFUSAL_SHA256 = "f9707883bf69747df06f1b42fd24fdf4d07e16b87f103108f7e054a75f3256b1"
+
+
 class PublicProjectionRejected(ConversationConflict):
     """Rejected before public research preparation, admission or tool dispatch."""
 
@@ -110,6 +113,22 @@ class NativeResearchTool:
                     "Herschrijf vraag en bronopties algemeen, zonder persoonlijke verwijzingen, "
                     "locaties, adressen, tijden, sleutels of interne URL's.") from error
         return self._preparation(arguments, review)
+
+    def recoverable_pre_dispatch_refusal(self, turn, events):
+        # Finite migration of one independently audited historical refusal. This
+        # does not infer no effect from RECOVERY_FAILED or a missing result alone.
+        if require_initiative_context(turn) is None:
+            return None
+        binding = []
+        for event in events:
+            if canonical_sha256(event.payload) != event.payload_sha256:
+                return None
+            binding.append({"type": event.event_type, "payload_sha256": event.payload_sha256})
+        digest = canonical_sha256(binding)
+        if digest != _CERTIFIED_RESEARCH_REFUSAL_SHA256:
+            return None
+        return {"evidence": {"source": "native_research_certified_pre_dispatch_refusal",
+                "certificate_sha256": digest, "provider_execution": "not_started"}}
 
     def _configuration_sha256(self):
         return self.research.research_configuration_sha256()

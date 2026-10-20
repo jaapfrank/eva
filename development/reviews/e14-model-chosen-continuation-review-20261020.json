@@ -299,6 +299,73 @@
         "Completion, stored content and ordinary later use remain necessary for current E1.4 outcome."
       ],
       "testEvidence": "Coordinator reports121existing runner checks passed. Two new cases initially had a fixture missing required measured tool_calls; corrected fixture only and2/2passed2.01s. Reviewer inspected final test source. No provider calls or redundant reviewer tests."
+    },
+    {
+      "reviewer": "e47_mcp_catalog",
+      "reviewedAt": "2026-10-20T15:07:01.332682+00:00",
+      "decision": "GO",
+      "blockingFindings": [],
+      "sourceHashes": {
+        "src/eva/adapters/model/research_tools.py": "b7e6f270615c8ea176d5271f9a43bebf41ec157730517bcd585457c91ae62d5e",
+        "src/eva/adapters/postgres/external_conversation_tools.py": "2fe926ff9be5d263e350b2b951121233ed45cb0ff7483fb98378f5041db02ea3",
+        "src/eva/adapters/connectors/delegated_completion.py": "0775e8a71016b6c5b10edbc371d53852752900be3fd0ad34b55aad8627978866"
+      },
+      "testSourceHashes": {
+        "development/tests/model/test_native_research_refusal_recovery.py": "34aa566bd52c12543968a87c06efbf24147138f5dcea30d4741b76be5b4d57ed"
+      },
+      "independentHistoricalProof": {
+        "files": "independent-historical-refusal/",
+        "immutableImage": "sha256:18af536aa3208d1d8758e9762188cd24a588c8312875047818e976b76e84d4ab",
+        "computedProducerProgramSha256": "e559e576b0af965caddb8b46dea6b48eb3486c4fda6a3f7f20484e7ce8e4589c",
+        "executionPinsVerified": 65,
+        "exactThreeEventBinding": [
+          {
+            "type": "TOOL_REQUEST_ADMITTED",
+            "payload_sha256": "575526374bbff330b625dff447031a4377e11d1df93f2c288115fcb5716ca88a"
+          },
+          {
+            "type": "TOOL_PREPARED",
+            "payload_sha256": "a666fcf4232b7674d28c2a940de4e4875cd20d20e2c948e9c4df15b33ebec01d"
+          },
+          {
+            "type": "RECOVERY_FAILED",
+            "payload_sha256": "2edcd1d7f9d404d1890b80f8dbecaf6cdec367e2974de453c9c1f6e0479bb724"
+          }
+        ],
+        "certificateSha256": "f9707883bf69747df06f1b42fd24fdf4d07e16b87f103108f7e054a75f3256b1",
+        "databaseTransactionReadOnly": true,
+        "originalGen4Usage": {
+          "tool_calls": 0,
+          "completed_model_responses": 3,
+          "input_tokens": 32138,
+          "output_tokens": 597,
+          "total_tokens": 32735,
+          "measurement": "partial"
+        },
+        "closure": "Exact producer StopCheckedProvider.execute calls NativeInitiativeGuard.authorize_request before authorize_background_dispatch and provider.execute. Exact historical request profile41dea… matches no researchcap under original00a106… mandate, yielding retained guard fingerprint c3ee1290…. Retained gen4 dispatchcounter0, original three-event chain and earlier separately-proven no-dispatch ancestors exclude uncertain provider effects. Fingerprint or missing TOOL_EXECUTED alone would not be sufficient."
+      },
+      "findings": [
+        "Provider hook requires current native guard and checks every retained payload digest plus exact finite entire event-chain hash. No arbitrary RECOVERY_FAILED/absent result treated as safe.",
+        "Existing _receipt owner/principal/conversation/message/step checks run before hook; exact certificate additionally fixes original admission and request.",
+        "Failure status remains failed; explicit host proof permits ordinary next slot under current authority and same task budget. New request is prepared anew and all profile/authorization/stop checks remain.",
+        "Completion classifier treats certified refusal as context only, resets completed evidence, and requires a later verified result. Unknown/altered failures still prevent continuation and completion.",
+        "Old operation is never rewritten, reclassified as success or dispatched again. No provider/model calls by reviewer."
+      ],
+      "policyPlanReview": {
+        "oldMandateSha256": "8e7d0ef4ddb9d14089f4ff3c34ec5dbb310e3fec53feb8902cfab44d693266cf",
+        "oneFieldCandidateMandateSha256": "ac1bd3d2d6b66f50cd344fd1e8decf371c32987addc54c2f2ae87c408710ef69",
+        "onlyChange": "Exactly one research_current_options configuration_sha25600a106…→41dea3f…; no other payload field altered.",
+        "routeVerified": "Independent current worker-scoped config computation yields41dea3f… for existing Codex subscription endpoint/Astra-medium,120s existing background phase. Outside phase55s hasf547… and is intentionally not substituted.",
+        "admission": "Existing owner-only admit_revision(expected,candidate) CAS; preserve exact old file and direct owner request provenance. No new approval required for authorized repair.",
+        "actualWriteReviewed": false
+      },
+      "testEvidence": "Coordinator reports134scoped model/runner checks passed5.15s with0provider calls. Reviewer inspected new6cases including altered payload/type/cert/proof/context and failure-not-completion invariants.",
+      "limitations": [
+        "Exact historical migration only; not a general uncertain retry policy.",
+        "Policy plan is approved for exact single-field change; actual post-install private policy/revision receipt remains coordinator verification.",
+        "Source GO does not prove completed research, useful family contribution, autonomous process recovery or E1.4 acceptance.",
+        "Actual credit cost remains unknown; existing partial usage preserved."
+      ]
     }
   ],
   "limitation": "Source and handoff review is not actual independent evaluation of later result use."

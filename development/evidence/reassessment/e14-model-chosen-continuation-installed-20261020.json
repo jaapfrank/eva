@@ -97,6 +97,18 @@
       "toolCalls": 0,
       "measurement": "partial",
       "creditCost": null
+    },
+    "sixthAttempt": {
+      "state": "failed",
+      "error": "incomplete_work",
+      "modelResponses": 2,
+      "inputTokens": 17953,
+      "outputTokens": 200,
+      "totalTokens": 18153,
+      "toolCalls": 0,
+      "measurement": "partial",
+      "creditCost": null,
+      "diagnostic": "Old retained failed research receipt was returned; no verified research document; substantive meaning still unknown."
     }
   },
   "usage": {
@@ -157,7 +169,7 @@
       "review": "development/reviews/e14-model-chosen-continuation-review-20261020.json"
     }
   },
-  "remaining": "Same original follow-up running with completion feedback; require retained result and later ordinary use.",
+  "remaining": "Seventh generation follows exact certified old refusal as context, prepares fresh step under current profile; actual completion and later use still required.",
   "certifiedTechnicalRecovery": {
     "status": "installed_original_self_chosen_followup_running",
     "operatorAssistance": true,
@@ -306,6 +318,44 @@
       "operatorAssistance": true,
       "originalStatePreserved": "failed",
       "ownerRequestSha256": "3203529b186947fa9d4d4f9f47c589fd6196911cda36df1a706317b3a43af620",
+      "operatorModelCalls": 0
+    }
+  },
+  "researchMandateHandoff": {
+    "state": "installed_same_own_followup_running",
+    "cause": "Historical operation was refused by native guard before provider execution: current background configuration41dea3f0 differs from old policy00a106aa. Foreground and background hash differ because fingerprint contains context-specific timeout.",
+    "exactHistoricalRefusalCertificate": "f9707883bf69747df06f1b42fd24fdf4d07e16b87f103108f7e054a75f3256b1",
+    "changes": [
+      "Only exact current existing subscription/Astra-medium/background research profile admitted through owner-only mandate CAS; other boundaries unchanged.",
+      "Only independently certified retained refusal becomes recoverable context; old failure is not removed or counted as completion. Ordinary next indexed step is freshly prepared under current guard."
+    ],
+    "tests": {
+      "passed": 134,
+      "seconds": 5.15,
+      "providerCalls": 0
+    },
+    "operatorAssistance": true,
+    "voiceChanged": false,
+    "checkedAt": "2026-10-20T15:10:26.241855+00:00",
+    "installation": {
+      "coreImage": "sha256:f7904a02a945845e8d0cd679b6d57ce2f9335d9422cf183492f870b07da04559",
+      "workerImage": "sha256:c5838f801928b2a2a9057bd458606b35a596ea30107392366643f90d3483a02b",
+      "releaseEqual": true,
+      "executionPinCount": 65,
+      "voiceChanged": false
+    },
+    "mandateRevision": {
+      "status": "revised",
+      "oldSha256": "8e7d0ef4ddb9d14089f4ff3c34ec5dbb310e3fec53feb8902cfab44d693266cf",
+      "newSha256": "ac1bd3d2d6b66f50cd344fd1e8decf371c32987addc54c2f2ae87c408710ef69",
+      "onlyChanged": "One research configuration fingerprint",
+      "initialFileOwnershipRefusal": "Atomic file replacement metadata corrected to existing runtime UID before CAS; no provider calls during refusal."
+    },
+    "recovery": {
+      "generation": 7,
+      "operatorAssistance": true,
+      "oldStatePreserved": "failed",
+      "ownerRequestSha256": "3662635393023af182c4e70fe499a81d17267a032199209f600a644076445d3f",
       "operatorModelCalls": 0
     }
   }
