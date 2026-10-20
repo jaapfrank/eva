@@ -1,12 +1,188 @@
 {
   "contract": "EvaSilentVerifiedAction/v1",
-  "status": "implementing",
-  "ownerDirection": "Geen antwoord nadat een bedienopdracht is uitgevoerd; meet de echte tijd.",
-  "existing": "MCP setter resolves, dispatches and independently verifies one action; current response still asks a second model for success wording.",
-  "gap": "Post-success response adds avoidable model latency. Silent completion must preserve proof, STOP, current authority, replay and follow-up listening.",
-  "endCondition": "One model decision executes and verifies the plain command, then completes silently in current chat/voice. Errors, ambiguity and additional questions continue normally. Measure reception/input-end to fresh verification separately from final/audio.",
-  "startedAt": "2026-10-20T12:31:34.135320+00:00",
+  "status": "installed_live_verified_partial_speed_milestone",
+  "ownerDirection": "Geen antwoord nadat een gewone bedienopdracht is uitgevoerd; meet de echte tijd. Bekende volledige opdrachten later hergebruiken.",
+  "sourceCommit": "aa9de14dae0bb5528bde607e704fafd3a69d238c",
   "privateEvidenceRoot": "/var/lib/eva2/voice-session/silent-action-20261020",
+  "source_files": 15,
+  "owner_voice_variant_files": 3,
+  "mechanism": "Trusted chat/voice adapters opt into an explicit silent terminal status. Exactly one unchanged, freshly verified HA setter receipt, current authority and STOP checks are required. The second success-wording model phase is skipped. Errors, ambiguity and explicit confirmation remain replies.",
+  "tests": {
+    "core_primary": {
+      "passed": 264,
+      "initial_missing_node_harness_failure": 1
+    },
+    "javascript_and_private_helpers_followup": {
+      "passed": 2,
+      "skipped": 12
+    },
+    "stop_after_effect_and_silent_route": {
+      "passed": 8
+    },
+    "speaker": {
+      "passed": 88
+    },
+    "owner_media": {
+      "passed": 15
+    },
+    "postgresql": {
+      "passed_before_harness_or_assertion_fix": 21,
+      "previous_two_failures_after_fix_passed": 2,
+      "skipped": 0,
+      "test_only_schema_metadata_overlay": true,
+      "note": "Disposable PostgreSQL, matching installed migrations; installed current_catalog lacks the restore_activation metadata declaration, so test-only repository declaration was mounted. No production schema/source change for that issue."
+    },
+    "owned_staged_source": {
+      "passed": 18
+    }
+  },
+  "chat": [
+    {
+      "case": "outdoor-on-r4",
+      "saved_final_ms": 9373.744,
+      "first_text_delta_ms": null,
+      "response_mode": "silent",
+      "effect_attempts": 1,
+      "fresh_verified_receipts": 1,
+      "model_phases": 1,
+      "input_tokens": 8049,
+      "output_tokens": 34,
+      "verified_receipt_received_ms": 9013.555,
+      "runtime_core_image": "sha256:f4530e40c52ba21cd21f294ae88d9140a4597c21b56abe3a5d4b579660afb525"
+    },
+    {
+      "case": "outdoor-off",
+      "saved_final_ms": 11648.397,
+      "first_text_delta_ms": null,
+      "response_mode": "silent",
+      "effect_attempts": 1,
+      "fresh_verified_receipts": 1,
+      "model_phases": 1,
+      "input_tokens": 7922,
+      "output_tokens": 34,
+      "verified_receipt_received_ms": 11278.699,
+      "runtime_core_image": "sha256:f4530e40c52ba21cd21f294ae88d9140a4597c21b56abe3a5d4b579660afb525"
+    },
+    {
+      "case": "outdoor-off-confirm",
+      "saved_final_ms": 15441.867,
+      "first_text_delta_ms": 15060.69,
+      "response_mode": "reply",
+      "effect_attempts": 1,
+      "fresh_verified_receipts": 1,
+      "model_phases": 2,
+      "input_tokens": 15772,
+      "output_tokens": 46,
+      "runtime_core_image": "sha256:8a87fda909721d57dc77f6390cab7d1733824117f028494388412f263837de53"
+    }
+  ],
+  "native_voice": {
+    "utterances": 2,
+    "same_transport_sessions": 1,
+    "first_response_mode": "silent",
+    "first_effect_attempts": 1,
+    "first_action_initial_state": "off",
+    "first_action_is_verified_no_op": true,
+    "first_action_tts_requests": 0,
+    "input_end_to_verified_receipt_received_ms": 7083.009,
+    "recognized_text_to_verified_receipt_received_ms": 5475.898,
+    "input_end_to_silent_final_ms": 7445.116,
+    "following_question_answered": true,
+    "following_question_input_end_to_first_pcm_ms": 7975.661,
+    "following_question_tts_requests": 2,
+    "physical_microphone": false,
+    "physical_playback": false,
+    "model_phases": 3,
+    "input_tokens": 25845,
+    "output_tokens": 183,
+    "runtime_core_image": "sha256:f4530e40c52ba21cd21f294ae88d9140a4597c21b56abe3a5d4b579660afb525",
+    "runtime_speaker_image": "sha256:f246bee4426470fede7e9864a1b5fc37b57661f5aef3f23679d44051a0a800a2"
+  },
+  "successful_runtime_usage": {
+    "model_requests": 7,
+    "input_tokens": 57588,
+    "output_tokens": 297,
+    "additional_failed_http_model_attempts": 5,
+    "failed_request_tokens": null,
+    "credits": null
+  },
+  "development_usage": {
+    "model_outbound_attempts": 10,
+    "successful_model_requests": 4,
+    "known_input_tokens_lower_bound": 9656,
+    "known_output_tokens_lower_bound": 44,
+    "one_success_usage_not_retained": true,
+    "failed_model_attempts": 6,
+    "capture_only_model_admissions_without_outbound": 1,
+    "new_fixture_tts_calls": 1,
+    "guarded_asr_attempt_without_core_request": 1,
+    "credits": null
+  },
+  "networkRecovery": {
+    "existing_home_wifi_profile_reconnected": true,
+    "identical_large_model_request_failed_on_previous_default_and_succeeded_on_home_wifi": true,
+    "current_wsl_default_preference": "home_wifi_metric20; previous_default_preserved",
+    "windows_interface_metrics_changed": false,
+    "persistence_after_reboot_verified": false,
+    "private_record": "network-recovery.private.json"
+  },
+  "cleanup": {
+    "chat": {
+      "retained_exchange_erased": 3,
+      "unretained_raw_erased": 7,
+      "exact_failed_turns_stopped": 6,
+      "protected_events_unchanged": 7168
+    },
+    "native_voice": {
+      "verification": {
+        "storage_removed": 2,
+        "raw_exchanges_erased": 2,
+        "outbox_erased": 2,
+        "semantic_documents_absent": 2,
+        "protected_owner_events_unchanged": 204
+      },
+      "scope": "2 exact development exchanges only; no broad derivative-removal claim"
+    },
+    "outdoor_initial_and_final_state": "off"
+  },
+  "currentRuntime": {
+    "core": {
+      "image": "sha256:a704f6c6dd3a07cec3bebfbe45afc12e44168792ae30d9db5ad0e35fc2ecc493",
+      "original_candidate_image": "sha256:f4530e40c52ba21cd21f294ae88d9140a4597c21b56abe3a5d4b579660afb525",
+      "owned_sources_preserved": true,
+      "running": true
+    },
+    "worker": {
+      "image": "sha256:26b822d9d9e2454e76dc3bb6e1b1bff5a5b22f16a486aa5b772505b429386b93",
+      "original_candidate_image": "sha256:28b672e06589017801a040bc566e6e976d464bfd8b48101b360a60c8ae2066f7",
+      "owned_sources_preserved": true,
+      "running": true
+    },
+    "speaker": {
+      "image": "sha256:f246bee4426470fede7e9864a1b5fc37b57661f5aef3f23679d44051a0a800a2",
+      "original_candidate_image": "sha256:f246bee4426470fede7e9864a1b5fc37b57661f5aef3f23679d44051a0a800a2",
+      "owned_sources_preserved": true,
+      "running": true
+    },
+    "owner": {
+      "image": "sha256:55eef88386767f8a63944fd47c107b76ac56326fcae1a9f81825056d1866abb1",
+      "original_candidate_image": "sha256:55eef88386767f8a63944fd47c107b76ac56326fcae1a9f81825056d1866abb1",
+      "owned_sources_preserved": true,
+      "running": true
+    }
+  },
+  "cache": {
+    "existing": "HA tool/catalogue profile reused for up to 60 seconds, bound to account/scope/version/schema.",
+    "planned": "E4.8 module context and bounded reuse of validated complete commands; no learned command cache installed in this milestone.",
+    "fresh_execution_proof_required": true
+  },
   "targetTwoSecondsMet": false,
-  "physicalAcceptance": false
+  "benchmark_median_or_p95_claimed": false,
+  "physicalAcceptance": false,
+  "limitations": [
+    "Individual live observations, not the E5.2 benchmark. A silent reply alone is not proof of performance.",
+    "The successful native action was already off; chat exercised the on/off cycle.",
+    "A concurrent core update followed the first measurements. Owned sources are preserved; explicit confirmation was verified on the later core. No baseline/candidate speed win claimed.",
+    "Plain commands still use one interpretation model. E4.8/E4.9/E4.10/E5.2 remain open against their original criteria."
+  ]
 }

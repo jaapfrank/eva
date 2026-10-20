@@ -847,8 +847,8 @@
     "title": "Snelle modulaire huisbediening via chat en spraak live opleveren",
     "status": "in_progress",
     "doneWhen": "E4.6–E4.10 zijn op de werkelijk actuele installatie geïntegreerd en onafhankelijk beoordeeld. Gelijke bekende toegelaten opdrachten werken via gewone chat en bestaande spraak met dezelfde module, identiteit, geheugen en bevoegdheden. In de vooraf vastgelegde proef voldoet chatontvangst tot verse HA-eindbevestiging aan mediaan maximaal 1 seconde en p95 maximaal 2 seconden bij een gereedstaande installatie; koude context en onbekende doelen worden afzonderlijk gerapporteerd. Spraak meet ook vanaf einde invoeraudio en vanaf herkende tekst. Een tussenreactie of service-ack vervangt geen eindbevestiging. Ruwe steekproef, fouten, context/cache, model-/toolgebruik en beperkingen blijven bewaard; niet gehaalde grenzen sluiten deze taak niet af. Installatie, bron/configuratie, herstelmogelijkheid en module-uitgedrag zijn gecontroleerd, zonder fysieke hoorbaarheid of gezinsacceptatie te verzinnen.",
-    "nextAction": "Eenvoudige bediening na verse eindcontrole stil afronden zonder tweede model; uitvoeringstijd via echte chat en spraak meten.",
-    "checkedAt": "2026-10-20T12:31:34.182190+00:00",
+    "nextAction": "Stille afronding is geïnstalleerd en live bewezen. Vervolg E4.8/E4.9/E4.10 voor bekende opdrachten zonder onnodige context-/modelwachttijd; oorspronkelijke ≤2s-criteria blijven gelden.",
+    "checkedAt": "2026-10-20T13:22:23.010369+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2765,9 +2765,9 @@
           "title": "Snelle modulaire huisbediening via chat en spraak live opleveren",
           "status": "in_progress",
           "state": "in_progress",
-          "summary": "Bestaande E5.2-overdracht in dezelfde HA-module afronden en op echte installatie meten.",
+          "summary": "Stille bediening live geleverd; bekende-opdrachtcache en oorspronkelijke snelheid blijven open.",
           "doneWhen": "E4.6–E4.10 zijn op de werkelijk actuele installatie geïntegreerd en onafhankelijk beoordeeld. Gelijke bekende toegelaten opdrachten werken via gewone chat en bestaande spraak met dezelfde module, identiteit, geheugen en bevoegdheden. In de vooraf vastgelegde proef voldoet chatontvangst tot verse HA-eindbevestiging aan mediaan maximaal 1 seconde en p95 maximaal 2 seconden bij een gereedstaande installatie; koude context en onbekende doelen worden afzonderlijk gerapporteerd. Spraak meet ook vanaf einde invoeraudio en vanaf herkende tekst. Een tussenreactie of service-ack vervangt geen eindbevestiging. Ruwe steekproef, fouten, context/cache, model-/toolgebruik en beperkingen blijven bewaard; niet gehaalde grenzen sluiten deze taak niet af. Installatie, bron/configuratie, herstelmogelijkheid en module-uitgedrag zijn gecontroleerd, zonder fysieke hoorbaarheid of gezinsacceptatie te verzinnen.",
-          "checkedAt": "2026-10-20T12:31:34.182190+00:00"
+          "checkedAt": "2026-10-20T13:22:23.010369+00:00"
         },
         "next": {
           "taskId": "E1.4",
@@ -6809,7 +6809,8 @@
                   "Hergebruik home_assistant_events en de bestaande bronopslag; kies een begrensde modulecache met bron-/versie- en toegangsbinding.",
                   "Controleer welke officiële WS-subscriptie door de geïnstalleerde versie wordt ondersteund; begin met een complete snapshot en verwerk wijzigingen zonder gat.",
                   "Lever alleen relevante geautoriseerde doelen en compacte capabilitycontext aan Eva; geen volledige huisinventaris in iedere prompt.",
-                  "Maak meerdere gelijknamige doelen, groepsleden en onbekende toestand expliciet. Geen stil gokken of oneindige warme-cacheaanname."
+                  "Maak meerdere gelijknamige doelen, groepsleden en onbekende toestand expliciet. Geen stil gokken of oneindige warme-cacheaanname.",
+                  "Beoordeel op eigenaarverzoek begrensd hergebruik van een eerder gevalideerde volledige zelfstandige opdracht, zoals buitenlampen uit: bind betekenis/doel/actie aan actuele apparaatversie, identiteit en bevoegdheden. Alleen een geldige herhaling kan interpretatie overslaan; voer en verifieer iedere nieuwe opdracht opnieuw. Contextafhankelijke of dubbelzinnige taal blijft bij Eva’s gewone gespreksroute, zonder tweede kernrouter."
                 ],
                 "files": [
                   "src/eva/adapters/connectors/home_assistant_events.py",
@@ -6840,6 +6841,12 @@
                     "source": "development/evidence/reassessment/e51-native-unassisted-installed-20261019.json",
                     "finding": "Gecontroleerde historybody6726bytes wordt geheel uit vervolgcontext weggelaten bij4096inlinegrens; alle23state/tijdrijen passen met expliciete attribuutomissie in3133bytes. Oorspronkelijke uitkomst correct; vervolg heeft alleen snapshot/tijd.",
                     "owner": "Bestaande WSL-contextuitvoerder",
+                    "blocksOriginalE51": false,
+                    "newTaskCreated": false
+                  },
+                  {
+                    "source": "development/evidence/product/silent-action-completion-20261020.json",
+                    "finding": "Eigenaar vraagt hergebruik van bekende volledige acties. Cataloguscache bestaat; apparaat-/actiehergebruik is in deze levering nog niet geïnstalleerd.",
                     "blocksOriginalE51": false,
                     "newTaskCreated": false
                   }
@@ -7554,7 +7561,7 @@
                   "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                   "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
                 ],
-                "nextAction": "Eenvoudige bediening na verse eindcontrole stil afronden zonder tweede model; uitvoeringstijd via echte chat en spraak meten.",
+                "nextAction": "Stille afronding is geïnstalleerd en live bewezen. Vervolg E4.8/E4.9/E4.10 voor bekende opdrachten zonder onnodige context-/modelwachttijd; oorspronkelijke ≤2s-criteria blijven gelden.",
                 "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -7563,10 +7570,8 @@
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "assignment": {
                   "coordinator": "/root",
-                  "activeWorkers": [
-                    "/root/review_cursor"
-                  ],
-                  "scope": "Eigenaar vraagt geen antwoord na geslaagde bediening en directe tijdmeting; behoud bestaande module-/spraakroute en onafhankelijke review."
+                  "activeWorkers": [],
+                  "scope": "Stille geverifieerde afronding geleverd; snelheid en hergebruik bekende volledige opdrachten blijven bestaande open kaarten."
                 },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
                 "executionPlan": {
@@ -7575,7 +7580,17 @@
                   "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                   "ownerAcceptance": false
                 },
-                "checkedAt": "2026-10-20T12:31:34.182190+00:00"
+                "checkedAt": "2026-10-20T13:22:23.010369+00:00",
+                "progressEvidence": "development/evidence/product/silent-action-completion-20261020.json",
+                "independentReview": "development/reviews/silent-action-completion-review-20261020.json",
+                "findings": [
+                  {
+                    "source": "development/evidence/product/silent-action-completion-20261020.json",
+                    "finding": "Gewone aan/uit-opdrachten eindigen stil na één modelbesluit, één MCP-effect en verse eindcontrole; expliciet gevraagde bevestiging krijgt antwoord. Chatfinal9.374/11.648s; spraakinputeinde→geverifieerd receipt7.083s, daarna volgende vraag in dezelfde sessie. Geen ≤2s-, mediaan/p95- of fysieke acceptatieclaim.",
+                    "blocksOriginalE51": false,
+                    "newTaskCreated": false
+                  }
+                ]
               }
             ],
             "completion": {
@@ -11758,7 +11773,8 @@
                 "Hergebruik home_assistant_events en de bestaande bronopslag; kies een begrensde modulecache met bron-/versie- en toegangsbinding.",
                 "Controleer welke officiële WS-subscriptie door de geïnstalleerde versie wordt ondersteund; begin met een complete snapshot en verwerk wijzigingen zonder gat.",
                 "Lever alleen relevante geautoriseerde doelen en compacte capabilitycontext aan Eva; geen volledige huisinventaris in iedere prompt.",
-                "Maak meerdere gelijknamige doelen, groepsleden en onbekende toestand expliciet. Geen stil gokken of oneindige warme-cacheaanname."
+                "Maak meerdere gelijknamige doelen, groepsleden en onbekende toestand expliciet. Geen stil gokken of oneindige warme-cacheaanname.",
+                "Beoordeel op eigenaarverzoek begrensd hergebruik van een eerder gevalideerde volledige zelfstandige opdracht, zoals buitenlampen uit: bind betekenis/doel/actie aan actuele apparaatversie, identiteit en bevoegdheden. Alleen een geldige herhaling kan interpretatie overslaan; voer en verifieer iedere nieuwe opdracht opnieuw. Contextafhankelijke of dubbelzinnige taal blijft bij Eva’s gewone gespreksroute, zonder tweede kernrouter."
               ],
               "files": [
                 "src/eva/adapters/connectors/home_assistant_events.py",
@@ -11789,6 +11805,12 @@
                   "source": "development/evidence/reassessment/e51-native-unassisted-installed-20261019.json",
                   "finding": "Gecontroleerde historybody6726bytes wordt geheel uit vervolgcontext weggelaten bij4096inlinegrens; alle23state/tijdrijen passen met expliciete attribuutomissie in3133bytes. Oorspronkelijke uitkomst correct; vervolg heeft alleen snapshot/tijd.",
                   "owner": "Bestaande WSL-contextuitvoerder",
+                  "blocksOriginalE51": false,
+                  "newTaskCreated": false
+                },
+                {
+                  "source": "development/evidence/product/silent-action-completion-20261020.json",
+                  "finding": "Eigenaar vraagt hergebruik van bekende volledige acties. Cataloguscache bestaat; apparaat-/actiehergebruik is in deze levering nog niet geïnstalleerd.",
                   "blocksOriginalE51": false,
                   "newTaskCreated": false
                 }
@@ -12503,7 +12525,7 @@
                 "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                 "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
               ],
-              "nextAction": "Eenvoudige bediening na verse eindcontrole stil afronden zonder tweede model; uitvoeringstijd via echte chat en spraak meten.",
+              "nextAction": "Stille afronding is geïnstalleerd en live bewezen. Vervolg E4.8/E4.9/E4.10 voor bekende opdrachten zonder onnodige context-/modelwachttijd; oorspronkelijke ≤2s-criteria blijven gelden.",
               "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -12512,10 +12534,8 @@
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "assignment": {
                 "coordinator": "/root",
-                "activeWorkers": [
-                  "/root/review_cursor"
-                ],
-                "scope": "Eigenaar vraagt geen antwoord na geslaagde bediening en directe tijdmeting; behoud bestaande module-/spraakroute en onafhankelijke review."
+                "activeWorkers": [],
+                "scope": "Stille geverifieerde afronding geleverd; snelheid en hergebruik bekende volledige opdrachten blijven bestaande open kaarten."
               },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
               "executionPlan": {
@@ -12524,7 +12544,17 @@
                 "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                 "ownerAcceptance": false
               },
-              "checkedAt": "2026-10-20T12:31:34.182190+00:00"
+              "checkedAt": "2026-10-20T13:22:23.010369+00:00",
+              "progressEvidence": "development/evidence/product/silent-action-completion-20261020.json",
+              "independentReview": "development/reviews/silent-action-completion-review-20261020.json",
+              "findings": [
+                {
+                  "source": "development/evidence/product/silent-action-completion-20261020.json",
+                  "finding": "Gewone aan/uit-opdrachten eindigen stil na één modelbesluit, één MCP-effect en verse eindcontrole; expliciet gevraagde bevestiging krijgt antwoord. Chatfinal9.374/11.648s; spraakinputeinde→geverifieerd receipt7.083s, daarna volgende vraag in dezelfde sessie. Geen ≤2s-, mediaan/p95- of fysieke acceptatieclaim.",
+                  "blocksOriginalE51": false,
+                  "newTaskCreated": false
+                }
+              ]
             }
           ],
           "completion": {

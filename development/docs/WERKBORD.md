@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Snelle modulaire huisbediening via chat en spraak live opleveren
 
-Bestaande E5.2-overdracht in dezelfde HA-module afronden en op echte installatie meten.
+Stille bediening live geleverd; bekende-opdrachtcache en oorspronkelijke snelheid blijven open.
 
 Klaar wanneer: E4.6–E4.10 zijn op de werkelijk actuele installatie geïntegreerd en onafhankelijk beoordeeld. Gelijke bekende toegelaten opdrachten werken via gewone chat en bestaande spraak met dezelfde module, identiteit, geheugen en bevoegdheden. In de vooraf vastgelegde proef voldoet chatontvangst tot verse HA-eindbevestiging aan mediaan maximaal 1 seconde en p95 maximaal 2 seconden bij een gereedstaande installatie; koude context en onbekende doelen worden afzonderlijk gerapporteerd. Spraak meet ook vanaf einde invoeraudio en vanaf herkende tekst. Een tussenreactie of service-ack vervangt geen eindbevestiging. Ruwe steekproef, fouten, context/cache, model-/toolgebruik en beperkingen blijven bewaard; niet gehaalde grenzen sluiten deze taak niet af. Installatie, bron/configuratie, herstelmogelijkheid en module-uitgedrag zijn gecontroleerd, zonder fysieke hoorbaarheid of gezinsacceptatie te verzinnen.
 
