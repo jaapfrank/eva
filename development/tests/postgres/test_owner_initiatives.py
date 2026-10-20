@@ -607,10 +607,10 @@ def test_native_public_research_uses_indexed_journal_and_never_repeats_uncertain
     with initiative_execution(guard):
         assert "research_current_options" in actions.continuation_action_names(turn)
         private = ConversationActionCall("private", "research_current_options", {**args, "question": "Private secret from memory"})
-        from eva.application.conversation import ConversationConflict
+        from eva.application.conversation import ConversationConflict, ConversationActionInputRejected
         try:
             denied = actions.execute_step(turn, private, step_index=1)
-        except ConversationConflict:
+        except (ConversationConflict, ConversationActionInputRejected):
             assert general
         else:
             assert denied.output["status"] in {"failed", "needs_help"}

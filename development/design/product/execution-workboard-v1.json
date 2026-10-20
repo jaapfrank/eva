@@ -847,8 +847,8 @@
     "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
     "status": "in_progress",
     "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-    "nextAction": "Echte uitvoering van Eva’s oorspronkelijke zelfgekozen vervolg volgen; opgeslagen resultaat en later inhoudelijk gebruik aantonen.",
-    "checkedAt": "2026-10-20T14:30:51.603771+00:00",
+    "nextAction": "Eva’s eigen vervolg loopt via de herstelde onderzoeksoverdracht. Afgerond resultaat en later inhoudelijk gebruik aantonen.",
+    "checkedAt": "2026-10-20T14:43:17.640522+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2779,10 +2779,10 @@
           "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
           "status": "in_progress",
           "state": "in_progress",
-          "summary": "Herstelde gewone uitvoerder werkt aan Eva’s oorspronkelijke zelfgekozen vervolg. Eindresultaat en later gebruik worden gevolgd.",
-          "detail": "Exact bewezen voorbereidingsfout met technische hulp hervat; oude onzekere poging blijft intact. E1.4 nog open. Spraak blijft bij de andere uitvoerder.",
+          "summary": "Eva werkt aan haar eigen eerdere onderzoek. Een herstelbare invoerfout blokkeert de hele opdracht niet meer.",
+          "detail": "Nieuwe overdracht geïnstalleerd; uitvoering en later gebruik worden gevolgd. E1.4 blijft open tot die keten werkelijk werkt. Spraak blijft elders.",
           "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-          "checkedAt": "2026-10-20T14:30:51.603771+00:00"
+          "checkedAt": "2026-10-20T14:43:17.640522+00:00"
         },
         "next": {
           "taskId": "E1.5",
@@ -5432,10 +5432,10 @@
                 "dependsOn": [
                   "E5.1"
                 ],
-                "nextAction": "Zelfgekozen vervolg expliciet aan het eigen eerdere doel en resultaat binden; actuele uitvoerversie zichtbaar maken; vervolgens echte uitvoering en later brongebruik afronden.",
-                "checkedAt": "2026-10-20T13:38:11.755130+00:00",
-                "progress": "Geïnstalleerd: versievaste overdracht en juiste adapter voor eigen brononderzoek. Echt eigen vervolg over 19 en 20 oktober vastgesteld; één hervatte poging strandde vóór onderzoeksdispatch. Succesvol vervolg en later gebruik zijn nog niet bewezen.",
-                "evidence": "development/evidence/reassessment/e14-cross-day-continuity-installed-20261020.json"
+                "nextAction": "Eva’s eigen vervolg loopt via de herstelde onderzoeksoverdracht. Afgerond resultaat en later inhoudelijk gebruik aantonen.",
+                "checkedAt": "2026-10-20T14:43:17.640522+00:00",
+                "progress": "Geïnstalleerd: eigen vervolg aan eerder resultaat binden en herstelbare openbare onderzoeksinvoer één keer door Eva laten corrigeren. Oorspronkelijk zelfgekozen vervolg loopt; afronding en later gebruik nog open.",
+                "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json"
               },
               {
                 "status": "planned",
@@ -10424,10 +10424,10 @@
               "dependsOn": [
                 "E5.1"
               ],
-              "nextAction": "Zelfgekozen vervolg expliciet aan het eigen eerdere doel en resultaat binden; actuele uitvoerversie zichtbaar maken; vervolgens echte uitvoering en later brongebruik afronden.",
-              "checkedAt": "2026-10-20T13:38:11.755130+00:00",
-              "progress": "Geïnstalleerd: versievaste overdracht en juiste adapter voor eigen brononderzoek. Echt eigen vervolg over 19 en 20 oktober vastgesteld; één hervatte poging strandde vóór onderzoeksdispatch. Succesvol vervolg en later gebruik zijn nog niet bewezen.",
-              "evidence": "development/evidence/reassessment/e14-cross-day-continuity-installed-20261020.json"
+              "nextAction": "Eva’s eigen vervolg loopt via de herstelde onderzoeksoverdracht. Afgerond resultaat en later inhoudelijk gebruik aantonen.",
+              "checkedAt": "2026-10-20T14:43:17.640522+00:00",
+              "progress": "Geïnstalleerd: eigen vervolg aan eerder resultaat binden en herstelbare openbare onderzoeksinvoer één keer door Eva laten corrigeren. Oorspronkelijk zelfgekozen vervolg loopt; afronding en later gebruik nog open.",
+              "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json"
             },
             {
               "status": "planned",
@@ -14393,10 +14393,10 @@
         "ownerActionRequired": false
       },
       "ownerInstruction": "Maak E1.4 echt af: zelfstandig vervolg kiezen, afmaken en resultaat later gebruiken. Spraak blijft elders.",
-      "state": "original_self_chosen_followup_running_after_certified_operator_recovery",
+      "state": "original_followup_running_after_public_input_repair",
       "runtimeChanged": true,
       "diagnosis": "Actual self-chosen cross-day follow-up was admitted but never claimed because queue/core/worker execution source releases differed.",
-      "checkedAt": "2026-10-20T14:30:51.603771+00:00",
+      "checkedAt": "2026-10-20T14:43:17.640522+00:00",
       "voiceChanged": false,
       "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
       "review": "development/reviews/e14-model-chosen-continuation-review-20261020.json",

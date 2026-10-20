@@ -8,11 +8,15 @@ import re
 import unicodedata
 from urllib.parse import unquote, urlsplit
 
-from eva.application.conversation import ConversationConflict, ConversationToolPreparation
+from eva.application.conversation import ConversationConflict, ConversationToolPreparation, ConversationActionInputRejected
 from eva.application.cancellation import run_cancellable, run_in_cancellation_thread
 from eva.application.initiative_execution import require_initiative_context
 from eva.application.orchestration import ToolDispatchResult, ToolProofObservation
 from eva.contracts.canonical_json import canonical_sha256
+
+
+class PublicProjectionRejected(ConversationConflict):
+    """Rejected before public research preparation, admission or tool dispatch."""
 
 
 def validate_public_projection(arguments):
@@ -54,7 +58,7 @@ def validate_public_projection(arguments):
         r"\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}:\d{2})\b",
     )
     if any(re.search(pattern, text) for pattern in blocked):
-        raise ConversationConflict("public research input contains possible private details")
+        raise PublicProjectionRejected("public research input contains possible private details")
     for match in re.finditer(r"(?i)\b(?:https?|ftp|file)://[^\s<>()]+", text):
         raw = match.group().rstrip(".,;")
         try:
@@ -97,8 +101,14 @@ class NativeResearchTool:
         arguments = self.validate_arguments(call.arguments)
         if "options" not in arguments:
             raise ConversationConflict("native research requires admitted public sources")
-        review = (validate_public_projection(arguments) if "public_review" in arguments
-                  else {"policy": "host_constant_public_sources"})
+        try:
+            review = (validate_public_projection(arguments) if "public_review" in arguments
+                      else {"policy": "host_constant_public_sources"})
+        except PublicProjectionRejected as error:
+            raise ConversationActionInputRejected(("question", "title", "options", "public_review"),
+                prompt="Het onderzoek is niet gestart: de openbare invoer bevat mogelijk privécontext. "
+                    "Herschrijf vraag en bronopties algemeen, zonder persoonlijke verwijzingen, "
+                    "locaties, adressen, tijden, sleutels of interne URL's.") from error
         return self._preparation(arguments, review)
 
     def _configuration_sha256(self):

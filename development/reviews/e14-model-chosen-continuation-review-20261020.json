@@ -194,6 +194,42 @@
         "Old ambiguous state and usage remain unchanged. No automatic selector enlargement.",
         "No tests, model calls or deployments executed by reviewer; root targeted run remains separately recorded."
       ]
+    },
+    {
+      "reviewer": "e47_mcp_catalog",
+      "reviewedAt": "2026-10-20T14:39:11.703438+00:00",
+      "decision": "GO",
+      "blockingFindings": [],
+      "scope": "Three exact production deltas, new native input repair tests and two small test changes. No voice, model calls or deployment by reviewer.",
+      "sourceHashes": {
+        "src/eva/adapters/model/research_tools.py": "43d460b60b6e4180180eaa81099a1539169de0593f0f6ff508a1dcc05489bd06",
+        "src/eva/application/conversation.py": "200c2c345b2522b1a4146ccea668070770f99e486b48fef48e491b1ba9660422",
+        "src/eva/application/initiative_execution.py": "e7cfc7fd059a42209bf59aac468f4f83841c0fcf7ea2c07d2d9df599e86f001a"
+      },
+      "testSourceHashes": {
+        "development/tests/model/test_native_research_input_repair.py": "2112ab03ae32d952b48991192715bf876f06fe770b12518e6a91d1a46b0fad65",
+        "development/tests/application/test_background_research_contact.py": "6d62ac85080a415c76492d3f4a6651036a5f9934cc91825500d858241e53ecaa",
+        "development/tests/postgres/test_owner_initiatives.py": "5bb404239ffc6a27a49a6b2039a3da75279910c8c7fd7f3b6b3e7cb7a228f893"
+      },
+      "independentChecks": {
+        "publicProjectionValidationAstUnchangedExceptExceptionSubclass": true,
+        "exactAttemptCertificateRecomputedFromIndependentProof": "aac8aeca4077805e37b30afd9fc64fcf541fa551c0ddea0770d92db9335062ad",
+        "previousCertificatePreserved": true
+      },
+      "findings": [
+        "Catch is strictly around public projection validation in NativeResearchTool.prepare. Context/authority validation occurs before it and other ConversationConflict exceptions still propagate.",
+        "The dedicated rejection has a fixed redacted reformulation hint; rejected question is not copied into reason.",
+        "Execution-time validation unchanged. All privacy patterns and URL rules remain byte/AST equivalent modulo typed exception.",
+        "Existing ConversationActionInputRejected one-repair path reused. The sole conversation-core addition exposes its prompt as reason in the invalid_input receipt; no second planner/loop or widened budget.",
+        "Second recovery whitelist certificate includes exact independently proven work/spec/call/usage/program/error; no automatic selector expansion or rewriting of old ambiguous rows.",
+        "Tests preserve denial behavior, add reason visibility and cover authority propagation, invalid public review, one successful repair and second rejection."
+      ],
+      "testEvidence": "Reviewer read assertions. Root reports 11 targeted checks and existing privacy21/21; unrelated existing contact text assertions remain separately reported, not silently changed.",
+      "limitations": [
+        "Source GO is not proof of actual model choosing a safe reformulation or successful research.",
+        "Any operator recovery is explicit technical help and does not establish unattended autonomy.",
+        "Actual completion, useful result and later use remain required for E1.4."
+      ]
     }
   ],
   "limitation": "Source and handoff review is not actual independent evaluation of later result use."

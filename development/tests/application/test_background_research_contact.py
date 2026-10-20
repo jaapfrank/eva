@@ -67,6 +67,7 @@ def test_research_input_is_corrected_once_before_any_admission(repeated_invalid)
             assert not actions.jobs
             assert receipt.output["action_admitted"] is False
             assert receipt.output["invalid_fields"] == ["question"]
+            assert "nog niet gestart" in receipt.output["reason"]
             assert "start_background_research" in context["available_actions"]
             return ConversationActionCall("corrected-second", "start_background_research", {"invalid": repeated_invalid})
         assert context["available_actions"] == ()

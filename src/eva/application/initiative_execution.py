@@ -74,13 +74,19 @@ def unstarted_profile_refresh(work) -> bool:
 # OwnerResearchContinuationTool.prepare before tool admission or dispatch.
 # This is a finite repair certificate, not a retry policy for uncertain work.
 _PREPARATION_FAILURE_PRODUCERS = {
+    ("3af2711588f5613ec52aa15232ae8335f93b8fa08af6f4ce94609d1009f2abad",
+     "4e9ad0325ee0840cfe16d2212b3a465413f44870d52aba11cac46b68f2874cea"):
+        "native-research-public-projection-before-first-dispatch-v1",
     ("f478f99bc3c99816bf41cd64a09a50e5553ce9a82aee1f80cc17e83891d21f93",
      "02e70758637b3ceefec093f5fede3d74a5e42d5081a68ab2fb228e5de1e774a9"):
         "owner-research-native-prepare-before-first-dispatch-v1",
 }
 
 
-_CERTIFIED_PREPARATION_EVIDENCE_SHA256 = frozenset({"c23436b8afb3077371bfa73aba97c58da689e3ee6936ca2b77a10e7c934a4219"})
+_CERTIFIED_PREPARATION_EVIDENCE_SHA256 = frozenset({
+    "c23436b8afb3077371bfa73aba97c58da689e3ee6936ca2b77a10e7c934a4219",
+    "aac8aeca4077805e37b30afd9fc64fcf541fa551c0ddea0770d92db9335062ad",
+})
 
 
 def certified_preparation_evidence(work):

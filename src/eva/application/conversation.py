@@ -1400,6 +1400,7 @@ class LivingConversation:
                     completed = ConversationActionReceipt(call, {
                         "status": "invalid_input", "action_admitted": False,
                         "invalid_fields": list(clarification.fields),
+                        "reason": clarification.prompt,
                         "instruction": "Correct the tool arguments using its schema. No work has started.",
                     })
                     continue
