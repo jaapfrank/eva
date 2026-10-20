@@ -1021,8 +1021,13 @@ def test_learning_source_rehydrates_exact_retained_chain_and_keeps_direct_source
     # The ordinary three-source budget, original layout, and source trust do not change.
     direct = [case.seed("direct-" + str(i), "Original direct " + str(i)) for i in range(3)]
     sources = case.reader.selected_private_sources(case.query, tuple(ref for _doc, ref in direct), now=NOW)
-    assert len(sources) == 3 and all("learning_context" not in item for item in sources)
-    assert [item["text"] for item in sources] == ["Original direct " + str(i) for i in range(3)]
+    # The existing resolver also appends current typed learning, independently
+    # of semantic selection. The ordinary source allowance remains exactly three.
+    ordinary = [item for item in sources if "learning_context" not in item]
+    assert len(ordinary) == 3
+    assert [item["text"] for item in ordinary] == ["Original direct " + str(i) for i in range(3)]
+    assert all(item["learning_context"]["records"][0]["record"]["outcome"] == "refuted"
+               for item in sources if "learning_context" in item)
     case.outbox.erase_content(principal_sha256=hashlib.sha256(str(case.owner).encode()).hexdigest(),
         document_id=parent.document_id, operation_sha256="ab" * 32, erased_at=NOW)
     assert case.reader.learning_source(case.query, revised.source_ref, revised.evidence_ref, now=NOW) is None

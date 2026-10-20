@@ -845,10 +845,10 @@
   "currentWork": {
     "id": "E1.5",
     "title": "Actuele behoeften en verwachtingen per persoon laten doorwerken",
-    "status": "in_progress",
+    "status": "completed",
     "doneWhen": "De bestaande persoonsgebonden geheugen-/contextketen levert een compacte brongebonden actuele synthese van relevante behoeften, voorkeuren, open afspraken en verwachtingen aan gewone afweging en vervolg. Minstens één echte correctie of weerlegde verwachting verandert later passend gedrag. Feit, hypothese en onzekerheid blijven onderscheiden; correctie, intrekking en vergeten werken ook vóór de volgende droomverwerking door. Bestaande Hindsight-mental-modelvoorziening en mensbegrip worden hergebruikt, zonder tweede geheugen of verplicht extra beoordelingsmodel per beurt. Werkelijk meerdaags gezinsnut en acceptatie blijven F2.",
-    "nextAction": "Bestaande actuele persoonscontext, Hindsight-synthese en correctieoverdracht vergelijken met de werkelijk gebruikte gespreks- en initiatiefroute; alleen het bewezen ontbrekende deel aansluiten.",
-    "checkedAt": "2026-10-20T15:28:06.965812+00:00",
+    "nextAction": "E1.5 technisch afgerond en geïnstalleerd. Volgende bestaande kaart E1.6; geen gezinsactie nodig.",
+    "checkedAt": "2026-10-20T15:49:27.587345+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,25 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E1.5 · Actuele persoonscorrecties in gesprek en initiatief",
+            "state": "installed",
+            "summary": "Geïnstalleerd: dezelfde huidige bron-/revisiecontext bij licht gesprek en privé-initiatief. Native observaties en getypeerde ketenkoppen compact en zonder dubbele geschiedenis; onbewezen stijlspiegel geen fallback. HUE5 echte correctie/later gedrag hergebruikt, nieuwe overdracht technisch gecontroleerd. F2 blijft open.",
+            "remaining": "Geen resterende technische stap binnen E1.5. Nieuwe live gedragsproef en meerdaags gezinsnut niet geclaimd; gezinsacceptatie blijft F2.",
+            "source": "development/evidence/product/e15-current-person-context-installed-20261020.json",
+            "review": "development/reviews/e15-current-person-context-review-20261020.json",
+            "date": "2026-10-20",
+            "installedAt": "2026-10-20T15:49:27.587345+00:00",
+            "completedAt": "2026-10-20T15:49:27.587345+00:00",
+            "checkedAt": "2026-10-20T15:49:27.587345+00:00",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "E1.5"
+            ],
+            "completionScope": "Bestaand ongewijzigd E1.5-criterium: geïnstalleerde contextoverdracht met hergebruik van echt historisch correctie/later-gebruikbewijs. Geen volledig persoonsprofiel of gezinsacceptatie.",
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E1.4 · Eigen vervolg over dagen afgerond en later gebruikt",
             "state": "installed",
@@ -2761,43 +2780,46 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E1.4 · Eigen vervolg over dagen afgerond en later gebruikt",
+          "title": "E1.5 · Actuele persoonscorrecties in gesprek en initiatief",
           "state": "installed",
-          "summary": "Eva koos zelf vervolg op eerdere eigen metingen, voerde het onderzoek uit, bewaarde het resultaat en gebruikte de uitkomst bij een volgende gewone afweging. De gekozen terugkoppeling is via Telegram afgeleverd.",
-          "remaining": "Geen resterende technische stap binnen E1.4. Gezinsnut en eigenaaracceptatie blijven F2. Technische herstelhulp en hoog geregistreerd verbruik zijn geen efficiëntiewinst.",
-          "source": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
-          "review": "development/reviews/e14-cross-day-final-completion-review-20261020.json",
-          "checkedAt": "2026-10-20T15:25:11.654850+00:00",
+          "summary": "Geïnstalleerd: dezelfde huidige bron-/revisiecontext bij licht gesprek en privé-initiatief. Native observaties en getypeerde ketenkoppen compact en zonder dubbele geschiedenis; onbewezen stijlspiegel geen fallback. HUE5 echte correctie/later gedrag hergebruikt, nieuwe overdracht technisch gecontroleerd. F2 blijft open.",
+          "remaining": "Geen resterende technische stap binnen E1.5. Nieuwe live gedragsproef en meerdaags gezinsnut niet geclaimd; gezinsacceptatie blijft F2.",
+          "source": "development/evidence/product/e15-current-person-context-installed-20261020.json",
+          "review": "development/reviews/e15-current-person-context-review-20261020.json",
+          "date": "2026-10-20",
+          "installedAt": "2026-10-20T15:49:27.587345+00:00",
+          "completedAt": "2026-10-20T15:49:27.587345+00:00",
+          "checkedAt": "2026-10-20T15:49:27.587345+00:00",
           "newProductFunctionCompleted": true,
           "completedTaskIds": [
-            "E1.4"
+            "E1.5"
           ],
-          "completionScope": "Ongewijzigd technisch criterium van bestaande E1.4; geen volledige Eva- of gezinsacceptatie.",
+          "completionScope": "Bestaand ongewijzigd E1.5-criterium: geïnstalleerde contextoverdracht met hergebruik van echt historisch correctie/later-gebruikbewijs. Geen volledig persoonsprofiel of gezinsacceptatie.",
           "ownerAcceptance": false,
           "familyAcceptance": false
         },
         "now": {
           "taskId": "E1.5",
           "title": "Actuele behoeften en verwachtingen per persoon laten doorwerken",
-          "status": "in_progress",
-          "state": "in_progress",
-          "summary": "E1.5 gestart: Eva’s actuele behoeften, voorkeuren en verwachtingen laten doorwerken in gesprek en initiatief.",
-          "detail": "E1.4 blijft afgerond. Bestaande geheugen- en mensbegriproute eerst controleren; geen tweede geheugen of nieuwe proefvragen aan jou. Spraak blijft bij de andere uitvoerder.",
+          "status": "completed",
+          "state": "installed",
+          "summary": "E1.5 technisch afgerond en geïnstalleerd.",
+          "detail": "Geïnstalleerd: dezelfde huidige bron-/revisiecontext bij licht gesprek en privé-initiatief. Native observaties en getypeerde ketenkoppen compact en zonder dubbele geschiedenis; onbewezen stijlspiegel geen fallback. HUE5 echte correctie/later gedrag hergebruikt, nieuwe overdracht technisch gecontroleerd. F2 blijft open.",
           "doneWhen": "De bestaande persoonsgebonden geheugen-/contextketen levert een compacte brongebonden actuele synthese van relevante behoeften, voorkeuren, open afspraken en verwachtingen aan gewone afweging en vervolg. Minstens één echte correctie of weerlegde verwachting verandert later passend gedrag. Feit, hypothese en onzekerheid blijven onderscheiden; correctie, intrekking en vergeten werken ook vóór de volgende droomverwerking door. Bestaande Hindsight-mental-modelvoorziening en mensbegrip worden hergebruikt, zonder tweede geheugen of verplicht extra beoordelingsmodel per beurt. Werkelijk meerdaags gezinsnut en acceptatie blijven F2.",
-          "checkedAt": "2026-10-20T15:28:06.965812+00:00"
+          "checkedAt": "2026-10-20T15:49:27.587345+00:00"
         },
         "next": {
-          "taskId": "E1.5",
-          "title": "Actuele behoeften en verwachtingen per persoon laten doorwerken",
-          "detail": "Volgende bestaande kaart; Hindsight en mensbegrip hergebruiken. Spraak blijft bij de andere uitvoerder."
+          "taskId": "E1.6",
+          "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+          "detail": "Volgende bestaande kaart. Bronveranderingen op dezelfde eigen-aandachtsroute aansluiten; spraak blijft bij de andere uitvoerder."
         },
         "ownerAction": {
           "required": false,
-          "detail": "Geen handeling nodig. Bestaande echte correcties en feedback worden eerst hergebruikt.",
+          "detail": "Geen handeling nodig voor deze oplevering. Meerdaagse gezinsacceptatie blijft apart.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T15:28:06.965812+00:00",
-        "reviewedAt": "2026-10-20T15:23:56.103797+00:00",
+        "checkedAt": "2026-10-20T15:49:27.587345+00:00",
+        "reviewedAt": "2026-10-20T15:49:27.587345+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -5451,7 +5473,7 @@
                 }
               },
               {
-                "status": "in_progress",
+                "status": "completed",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
                 "ownerActionRequired": false,
@@ -5489,8 +5511,20 @@
                 "dependsOn": [
                   "E4.11"
                 ],
-                "nextAction": "Bestaande actuele persoonscontext, Hindsight-synthese en correctieoverdracht vergelijken met de werkelijk gebruikte gespreks- en initiatiefroute; alleen het bewezen ontbrekende deel aansluiten.",
-                "checkedAt": "2026-10-20T15:28:06.965812+00:00"
+                "nextAction": "Geen resterend technisch werk binnen E1.5; meerdaags gezinsnut en acceptatie blijven F2.",
+                "checkedAt": "2026-10-20T15:49:27.587345+00:00",
+                "completedAt": "2026-10-20T15:49:27.587345+00:00",
+                "installedAt": "2026-10-20T15:49:27.587345+00:00",
+                "progress": "Geïnstalleerd: dezelfde huidige bron-/revisiecontext bij licht gesprek en privé-initiatief. Native observaties en getypeerde ketenkoppen compact en zonder dubbele geschiedenis; onbewezen stijlspiegel geen fallback. HUE5 echte correctie/later gedrag hergebruikt, nieuwe overdracht technisch gecontroleerd. F2 blijft open.",
+                "evidence": [
+                  "development/evidence/product/e15-current-person-context-installed-20261020.json",
+                  "development/reviews/e15-current-person-context-review-20261020.json"
+                ],
+                "technicalCompletion": true,
+                "ownerAcceptance": false,
+                "familyAcceptance": false,
+                "completionEvidence": "development/evidence/product/e15-current-person-context-installed-20261020.json",
+                "independentReview": "development/reviews/e15-current-person-context-review-20261020.json"
               },
               {
                 "status": "planned",
@@ -7711,7 +7745,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Werkelijk geslaagd zelfgekozen vervolg en gebruik daarvan in een latere gewone afweging aantonen; de onzekere poging behouden en niet blind herhalen.",
+        "nextAction": "E1.6 als volgende bestaande kaart; E1.4 en E1.5 afgerond. Meerdaags gezinsnut en eigenaaracceptatie blijven F2.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7720,7 +7754,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-20T13:28:55.822181+00:00",
+        "updatedAt": "2026-10-20T15:49:27.587345+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -7962,7 +7996,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T13:28:55.822181+00:00",
+        "checkedAt": "2026-10-20T15:49:27.587345+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -10501,7 +10535,7 @@
               }
             },
             {
-              "status": "in_progress",
+              "status": "completed",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
               "ownerActionRequired": false,
@@ -10539,8 +10573,20 @@
               "dependsOn": [
                 "E4.11"
               ],
-              "nextAction": "Bestaande actuele persoonscontext, Hindsight-synthese en correctieoverdracht vergelijken met de werkelijk gebruikte gespreks- en initiatiefroute; alleen het bewezen ontbrekende deel aansluiten.",
-              "checkedAt": "2026-10-20T15:28:06.965812+00:00"
+              "nextAction": "Geen resterend technisch werk binnen E1.5; meerdaags gezinsnut en acceptatie blijven F2.",
+              "checkedAt": "2026-10-20T15:49:27.587345+00:00",
+              "completedAt": "2026-10-20T15:49:27.587345+00:00",
+              "installedAt": "2026-10-20T15:49:27.587345+00:00",
+              "progress": "Geïnstalleerd: dezelfde huidige bron-/revisiecontext bij licht gesprek en privé-initiatief. Native observaties en getypeerde ketenkoppen compact en zonder dubbele geschiedenis; onbewezen stijlspiegel geen fallback. HUE5 echte correctie/later gedrag hergebruikt, nieuwe overdracht technisch gecontroleerd. F2 blijft open.",
+              "evidence": [
+                "development/evidence/product/e15-current-person-context-installed-20261020.json",
+                "development/reviews/e15-current-person-context-review-20261020.json"
+              ],
+              "technicalCompletion": true,
+              "ownerAcceptance": false,
+              "familyAcceptance": false,
+              "completionEvidence": "development/evidence/product/e15-current-person-context-installed-20261020.json",
+              "independentReview": "development/reviews/e15-current-person-context-review-20261020.json"
             },
             {
               "status": "planned",
@@ -12761,7 +12807,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Werkelijk geslaagd zelfgekozen vervolg en gebruik daarvan in een latere gewone afweging aantonen; de onzekere poging behouden en niet blind herhalen.",
+      "nextAction": "E1.6 als volgende bestaande kaart; E1.4 en E1.5 afgerond. Meerdaags gezinsnut en eigenaaracceptatie blijven F2.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -12770,7 +12816,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-20T13:28:55.822181+00:00",
+      "updatedAt": "2026-10-20T15:49:27.587345+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -13012,7 +13058,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T13:28:55.822181+00:00",
+      "checkedAt": "2026-10-20T15:49:27.587345+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -14525,12 +14571,18 @@
     },
     "e15CurrentPersonContext20261020": {
       "startedAt": "2026-10-20T15:28:06.965812+00:00",
-      "state": "investigating_existing_route",
+      "state": "installed_technically_completed",
       "previousGoalTurn": "progress",
       "previousProgress": "E1.4 actually completed, installed and independently verified including later result use.",
-      "runtimeChanged": false,
+      "runtimeChanged": true,
       "voiceChanged": false,
-      "sameScopeCriteriaPreserved": true
+      "sameScopeCriteriaPreserved": true,
+      "completedAt": "2026-10-20T15:49:27.587345+00:00",
+      "evidence": "development/evidence/product/e15-current-person-context-installed-20261020.json",
+      "review": "development/reviews/e15-current-person-context-review-20261020.json",
+      "independentReview": "GO",
+      "newRealBehaviorTrial": false,
+      "historicalGenuineFeedbackEvidenceReused": true
     }
   },
   "updatedAt": "2026-10-20T13:28:55.822181+00:00",

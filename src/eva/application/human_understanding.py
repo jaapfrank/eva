@@ -153,3 +153,114 @@ def validate_human_understanding_context(context: object, *, source_ref: str,
     if source_ref is not None or evidence_ref is not None or selected not in seen:
         raise ValueError("learning context dependency is absent")
     return context
+
+
+def current_person_context(memory, *, maximum_bytes: int = 8192) -> dict[str, Any]:
+    """Project current, already source-checked memory; never infer another profile.
+
+    Native Hindsight observations provide synthesis. Typed records provide exact
+    corrections and expectations. Neither becomes a proven trait or a mandate.
+    Unbound legacy facts stay in ordinary recall, outside this current view.
+    """
+    result = {
+        "contract": "EvaCurrentPersonContext/v1",
+        "as_of": memory.recall.requested_valid_at,
+        "coverage": "selected_current_sources_only",
+        "history_deferred": memory.recall.projection_version == "conversation-not-retrieved-v1",
+        "is_execution_permission": False,
+        "entries": [],
+        "omitted_by_limit": 0,
+    }
+    seen = set()
+    for fact in memory.confirmed_facts:
+        value = fact.value
+        if not isinstance(value, dict):
+            continue
+        learning = value.get("learning_context")
+        entry = None
+        if learning is not None:
+            provenance = value.get("reference_provenance", {})
+            try:
+                context = validate_human_understanding_context(learning,
+                    source_ref=provenance.get("source_ref", fact.source_ref),
+                    evidence_ref=provenance.get("evidence_ref", fact.evidence_ref))
+            except (ValueError, TypeError, KeyError):
+                continue
+            head = context["records"][0]
+            record = head["record"]
+            key = (fact.subject, head["source_ref"], head["evidence_ref"])
+            entry = {
+                "fact_id": fact.fact_id, "kind": record["kind"],
+                "text": record["interpretation"], "recorded_at": record["recorded_at"],
+                "epistemic_status": "model_inference_unconfirmed",
+                "outcome": record["outcome"], "uncertainty_reason": record["uncertainty_reason"],
+                "source_refs": [{"principal_id": fact.subject,
+                    "source_ref": head["source_ref"], "evidence_ref": head["evidence_ref"],
+                    "source_text_sha256": record["source_text_sha256"]}],
+                "supersedes": None if record["previous_source_ref"] is None else {
+                    "source_ref": record["previous_source_ref"],
+                    "evidence_ref": record["previous_evidence_ref"]},
+                "review_at": record["review_at"],
+                "review_due": bool(record["review_at"] is not None
+                    and record["outcome"] in ("open", "unknown")
+                    and record["review_at"] <= memory.recall.requested_valid_at),
+            }
+        elif fact.predicate == "memory.observation":
+            sources = value.get("observation_sources")
+            refs = value.get("observation_source_refs")
+            if (not isinstance(sources, list) or not 1 <= len(sources) <= 3
+                    or not isinstance(refs, list) or len(sources) != len(refs)
+                    or value.get("semantic_trust") != "model_inference_unconfirmed"
+                    or not isinstance(value.get("text"), str)):
+                continue
+            keys = ("principal_id", "source_ref", "evidence_ref")
+            if any(not isinstance(s, dict) or not isinstance(ref, dict)
+                    or any(not isinstance(s.get(k), str) or s.get(k) != ref.get(k) for k in keys)
+                    or not (isinstance(s.get("text"), str) or (s.get("raw_state") == "compacted"
+                        and s.get("text") is None and isinstance(s.get("content_sha256"), str)
+                        and _SHA256.fullmatch(s["content_sha256"])))
+                    for s, ref in zip(sources, refs)):
+                continue
+            try:
+                for source in sources:
+                    if _timestamp(source.get("occurred_at")) > memory.recall.requested_valid_at:
+                        raise ValueError("future observation source")
+            except ValueError:
+                continue
+            key = ("observation", fact.fact_id)
+            entry = {
+                "fact_id": fact.fact_id, "kind": "native_observation",
+                "text": value["text"], "recorded_at": value.get("source_observed_at"),
+                "epistemic_status": "model_inference_unconfirmed",
+                "source_refs": [{**{k: s[k] for k in keys},
+                    "source_text_sha256": (s["content_sha256"] if s.get("raw_state") == "compacted"
+                        else hashlib.sha256(s["text"].encode()).hexdigest()),
+                    "occurred_at": s["occurred_at"]} for s in sources],
+            }
+        if entry is None or key in seen:
+            continue
+        seen.add(key)
+        if len(result["entries"]) >= MAX_LEARNING_RECORDS:
+            result["omitted_by_limit"] += 1
+            continue
+        trial = {**result, "entries": [*result["entries"], entry]}
+        if len(canonical_json_bytes(trial)) > maximum_bytes - 32:
+            result["omitted_by_limit"] += 1
+            continue
+        result["entries"].append(entry)
+    return result
+
+
+def person_context_fact_ids(memory, context: dict[str, Any]) -> set[str]:
+    """Remove all representations of a projected head, even with distinct IDs."""
+    ids = {entry["fact_id"] for entry in context["entries"]}
+    heads = {(ref["principal_id"], ref["source_ref"], ref["evidence_ref"])
+        for entry in context["entries"] if entry["kind"] in ("person_hypothesis", "expectation")
+        for ref in entry["source_refs"]}
+    for fact in memory.confirmed_facts:
+        learning = fact.value.get("learning_context") if isinstance(fact.value, dict) else None
+        if isinstance(learning, dict) and isinstance(learning.get("records"), list) and learning["records"]:
+            head = learning["records"][0]
+            if isinstance(head, dict) and (fact.subject, head.get("source_ref"), head.get("evidence_ref")) in heads:
+                ids.add(fact.fact_id)
+    return ids

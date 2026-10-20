@@ -426,6 +426,24 @@ class HindsightMemoryEngine:
             return None
         return style
 
+    def read_contact_context(self, query: RecallCurrentFacts) -> PresenceMemory:
+        """Read current typed revisions without semantic history or a model call.
+
+        The conversation service keeps its deferred-history marker. Source checks
+        run on every turn, so a cold-path summary never delays a correction.
+        """
+        if not query.subject_ids or query.principal_id not in query.subject_ids:
+            raise HindsightMemoryScopeError("memory recall must include the admitted principal")
+        if query.audience.kind == "private_person":
+            self._require_private_recall_audience(query)
+        principals = self._private_recall_principals(query)
+        # The native style mirror has no current PG source/revision proof. It
+        # cannot serve as a fallback when a fresh correction is pending/erased.
+        memory = self._with_private_sources(query, self._empty_presence(query))
+        if principals != self._private_recall_principals(query):
+            return self._empty_presence(query)
+        return memory
+
     def recall_for_presence_fast(self, query: RecallCurrentFacts) -> PresenceMemory:
         """Supply relevant memory before answering, including the first turn.
 
@@ -608,7 +626,9 @@ class HindsightMemoryEngine:
             [item for item in memory.recall.selected if item.fact_id in ids] + added, start=1)]
         recall = memory.recall.model_copy(update={"selected":selected,"excluded_reasons":excluded,
             "admitted_fact_ids_sha256":canonical_sha256(sorted(ids))}) if added or len(enriched) != len(facts) else memory.recall
-        return replace(memory, recall=recall, confirmed_facts=tuple(enriched))
+        return replace(memory, recall=recall, confirmed_facts=tuple(enriched),
+            style_mirror=(None if self._private_source_resolver is not None
+                and query.audience.kind == "private_person" else memory.style_mirror))
 
     @staticmethod
     def _project_partition(installation_id: str, project_id: str) -> str:

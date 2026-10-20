@@ -1111,8 +1111,10 @@ class LivingConversation:
                         and turn.observation_binding is None)
         if defer_memory:
             query = recall_query(turn.text)  # Retain the same scope validation.
+            contact_reader = getattr(self._memory, "read_contact_context", None)
             style_reader = getattr(self._memory, "read_style_context", None)
-            style_mirror = style_reader(query) if callable(style_reader) else None
+            style_mirror = (style_reader(query)
+                            if not callable(contact_reader) and callable(style_reader) else None)
             memory = PresenceMemory(MemoryRecall(
                 schema_version=1, contract="MemoryRecall/v1",
                 recall_id=query.recall_id, query_purpose=query.query_purpose,
@@ -1123,6 +1125,13 @@ class LivingConversation:
                 excluded_reasons={}, projection_version=DEFERRED_MEMORY_PROJECTION,
                 scope_sha256=canonical_sha256(query.scope), created_at=turn.occurred_at,
             ), (), style_mirror)
+            if callable(contact_reader):
+                # Same source/revision checks as full recall; history is still
+                # deferred and remains available through the ordinary memory tool.
+                current = contact_reader(query)
+                memory = replace(current, recall=current.recall.model_copy(update={
+                    "projection_version": DEFERRED_MEMORY_PROJECTION,
+                }))
             self_context = (() if self._actions is None
                             else self._actions.active_context(turn))
         elif self._actions is None:

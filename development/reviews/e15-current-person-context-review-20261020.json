@@ -1,0 +1,19 @@
+{
+  "taskId": "E1.5",
+  "reviewer": "e47_mcp_catalog",
+  "reviewedAt": "2026-10-20T15:45:29.597502+00:00",
+  "decision": "GO",
+  "blockingFindings": [],
+  "sourceHashes": {
+    "src/eva/application/human_understanding.py": "1776dc1247e4a50a8d9a57aaa9ed2af0c8da62e06a329bbffb7e81eba295c77b",
+    "src/eva/application/conversation.py": "87cedbb9344cda3d7b02bd79840e3adbc73775069684e9cb93629d16513a813f",
+    "src/eva/adapters/projection/hindsight.py": "afac6de0185446745f511a825d48207ed82442b895c56aec22944c098f967cc7",
+    "src/eva/adapters/model/pydantic_conversation.py": "d2319b207f77985c0c9fa74ae44b9e163d1f768a9109330c6803d39d2eef603e"
+  },
+  "closedFindings": [
+    "Unproven old style cannot return after a current correction is pending or erased.",
+    "Distinct semantic fact IDs of one current typed head are presented once."
+  ],
+  "evidenceBoundary": "HUE5 genuine correction and later behavior is reused only within original scope; new context transfer technically verified, no newly claimed live behavioral trial or family acceptance.",
+  "voiceReviewedOrChanged": false
+}

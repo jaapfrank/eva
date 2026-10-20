@@ -3139,7 +3139,11 @@ class PydanticConversationModel:
 
         # Keep the existing recall selection and its provenance. A past test
         # statement must not look like a current, unqualified owner preference.
-        remembered = [fact.model_dump(mode="json") for fact in memory.confirmed_facts]
+        from eva.application.human_understanding import current_person_context, person_context_fact_ids
+        person_context = current_person_context(memory) if event.source == "initiative-review" else None
+        projected_ids = person_context_fact_ids(memory, person_context) if person_context else set()
+        remembered = [fact.model_dump(mode="json") for fact in memory.confirmed_facts
+                      if fact.fact_id not in projected_ids]
         private_learning = (
             {"style_mirror": memory.style_mirror,
              "source": "current_private_presence_recall",
@@ -3163,6 +3167,8 @@ class PydanticConversationModel:
                             },
                             "reviewed_at": memory.recall.requested_valid_at,
                             "recalled_context": remembered,
+                            **({"current_person_context": person_context}
+                               if person_context is not None else {}),
                             **({"private_learning_context": private_learning}
                                if private_learning is not None else {}),
                             "prior_private_initiatives": initiative_history,
@@ -3192,7 +3198,13 @@ class PydanticConversationModel:
                   "stijlspiegel uit dezelfde toegelaten privéherinnering. Pas relevante "
                   "geleerde bijsturing passend toe; bron, tijd en betrouwbaarheid van "
                   "herinneringen blijven gelden. Dit is geen nieuwe opdracht, bewezen "
-                  "behoefte of uitvoertoestemming."
+                  "behoefte of uitvoertoestemming. current_person_context bevat alleen "
+                  "de huidige brongecontroleerde selectie, geen volledig persoonsprofiel. "
+                  "Verse correcties gaan vóór de oudere stijlspiegel. confirmed/refuted "
+                  "beoordeelt een eerdere interpretatie en maakt geen persoonsfeit. "
+                  "Een vervallen review_at vraagt passende herbeoordeling met echte bronnen "
+                  "of zichtbare onzekerheid, geen nieuw mandaat. Operationele open afspraken "
+                  "komen uit de afzonderlijke actuele life_context, niet uit oude verwachtingen."
                 if event.source == "initiative-review" else (
                 f"Je bent {identity.name}. {identity.description} "
                 f"{self._identity_instructions(identity)}"
@@ -4220,8 +4232,13 @@ class PydanticConversationModel:
         completed_action: ConversationActionReceipt | None = None,
         self_context: tuple[str, ...] = (),
     ) -> str:
+        from eva.application.human_understanding import current_person_context, person_context_fact_ids
+        person_context = current_person_context(memory)
+        projected_ids = person_context_fact_ids(memory, person_context)
         remembered: list[str] = []
         for rank, fact in enumerate(memory.confirmed_facts, start=1):
+            if fact.fact_id in projected_ids:
+                continue  # Current heads appear once, not again as historical chains.
             value = fact.value
             text = value.get("text") if isinstance(value, dict) else None
             if not isinstance(text, str) or not text.strip():
@@ -4572,7 +4589,14 @@ class PydanticConversationModel:
             "aanbod toe, tenzij daarom wordt gevraagd. Claim een handeling alleen met "
             "werkelijk bewijs.\n\n"
             f"{self._identity_instructions(identity)}"
-            f"Duurzame stijlspiegel:\n{style_mirror}\n\n"
+            f"Duurzame stijlspiegel (afgeleid; verse correcties gaan voor):\n{style_mirror}\n\n"
+            "Actuele brongebonden persoonscontext (alleen deze selectie; geen volledig profiel):\n"
+            + json.dumps(person_context, ensure_ascii=False, separators=(",", ":")) + "\n"
+            "Interpretaties blijven voorlopig. confirmed/refuted betreft de eerdere interpretatie, "
+            "geen bewezen persoonsfeit. review_due vraagt herbeoordeling, geen nieuwe opdracht. "
+            "Gebruik voor een herziening record_human_understanding met exact de nieuwste "
+            "source_ref/evidence_ref als previous_source_ref/previous_evidence_ref en echte huidige "
+            "tegeninformatie. Open werk en beloften staan afzonderlijk in de actuele eigen toestand.\n\n"
             f"Relevante herinneringen:\n{memories}\n\n"
             f"Jouw duurzame eigen toestand:\n{durable_self}\n\n"
             f"Recente gesprekstijdlijn:\n{recent}\n\n"

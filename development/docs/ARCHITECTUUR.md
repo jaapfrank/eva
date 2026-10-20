@@ -71,6 +71,18 @@ gebonden payloads blijven behouden, zonder automatische herhaling. Het addendum 
 Hindsight 0.9.1 staat met versiecontrole en installatie-instructies onder
 `deploy/living-core/hindsight-memory`; een native update vereist compatibiliteitsreview.
 
+E1.5 projecteert reeds brongecontroleerde native observaties en actuele getypeerde
+persoonshypothesen/verwachtingen eenmaal als `EvaCurrentPersonContext/v1` naar gesprek
+en privé-initiatief. De projectie blijft beperkt tot de geselecteerde bronnen (maximaal
+acht bijdragen en 8 KiB), met onzekerheid, actuele ketenkop, bronhash en zichtbare
+ontbrekende dekking. Operationele afspraken blijven in de bestaande verse taakcontext.
+De lichte contactvoorbereiding leest dezelfde huidige PostgreSQL-bron-/revisieketen
+zonder semantische zoek- of modelaanvraag; overige geschiedenis blijft opvraagbaar.
+Een pending of gewiste correctie laat geen eerdere interpretatie terugkeren. De oude
+native communicatiestijlspiegel blijft in reflectie/beheer bestaan, maar wordt zonder
+actuele bron-/revisiecontrole niet als actuele voorkeur aan deze routes doorgegeven.
+Dit is een projectie van bestaand geheugen, geen nieuw profielarchief of oordeelmodel.
+
 Home Assistant levert sinds E4.6 haar eigen gespreksinstructies, gewone-readclassificatie,
 toolpresentatie, digitale capabilities en pure interpretatie van bewaarde receipts.
 De algemene kern vraagt die bestaande providerpoorten aan en kent geen HA-toolnamen

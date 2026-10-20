@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "taskId": "E1.5",
+  "title": "Actuele persoonscontext in gesprek en initiatief",
+  "status": "installed",
+  "technicalCompletion": true,
+  "completedAt": "2026-10-20T15:48:48.998945+00:00",
+  "alreadyExisted": [
+    "Hindsight-native brongebonden observaties en koude reflectie",
+    "PostgreSQL-bronautoriteit, getypeerde voorlopige interpretaties en exacte herzieningsketens",
+    "HUE5 echte feedback met later veranderd gedrag; niet opnieuw uitgevoerd",
+    "Actuele werk-/afsprakencontext in gesprek en initiatief"
+  ],
+  "gapClosed": "Lichte contactvoorbereiding gaf alleen de afgeleide stijlspiegel door en miste actuele getypeerde correcties. Volle recall kreeg huidige bronnen al.",
+  "changes": [
+    "Bestaande bron-/revisiecontrole ook bij licht contact; semantische geschiedenis blijft bewust uitgesteld en opvraagbaar",
+    "Eén compacte actuele selectie van gevalideerde ketenkoppen en brongebonden native observaties in gewone modelinvoer en privé-initiatief",
+    "Onzekerheid, outcome, bronhashes en review_at blijven expliciet; geen nieuwe toestemming uit een verwachting",
+    "Oude stijlspiegel zonder actuele bron-/revisiecontrole niet doorgegeven; native reflectie niet verwijderd",
+    "Geen dubbele koppen met verschillende semantische fact-IDs"
+  ],
+  "installed": {
+    "coreImage": "sha256:76648df990aafe70b446441b46e2d89f3e811ab637472426fca7fa31f8a55ed2",
+    "workerImage": "sha256:40e0d5ce2c1db7085c78fe81e229359977f8a0115c2ee74a2d2270acf2f28719",
+    "currentBasePreserved": true,
+    "reviewedSourcesExactInBothRoles": true,
+    "retainedMounts": true,
+    "policyBytesUnchanged": true,
+    "voiceChanged": false
+  },
+  "verification": {
+    "contactAndModelChecks": {
+      "passed": 72,
+      "includesNewBoundaryTests": 7
+    },
+    "focusedMemoryRecheck": {
+      "passed": 44,
+      "deselected": 77,
+      "overlapWithContactChecks": 7
+    },
+    "postgresChecks": {
+      "uniquePassed": 23,
+      "database": "isolated PostgreSQL 16.13",
+      "productionWrites": false
+    },
+    "existingMemorySuiteBeforeFinalReviewFix": {
+      "passed": 114,
+      "scope": "native memory adapter; final source/style cases selectively rechecked"
+    },
+    "installedReadOnlyContext": {
+      "at": "2026-10-20T15:48:11.436987+00:00",
+      "currentEntries": 1,
+      "kinds": [
+        "native_observation"
+      ],
+      "snapshotBytes": 1392,
+      "contextSha256": "49487d60a53adcb6d6a29c925c5fdba885f47be0912b059d1a0d48d2c1062ea7",
+      "contactCurrentEntries": 0,
+      "contactReadMs": 29.306,
+      "contactStyle": null,
+      "hindsightCallsForContact": 0,
+      "providerModelCalls": 0,
+      "productionWrites": false,
+      "realModelDecision": false,
+      "legacyFactsPromoted": false
+    },
+    "independentReview": "GO",
+    "reviewEvidence": "development/reviews/e15-current-person-context-review-20261020.json"
+  },
+  "realFeedbackLaterUse": {
+    "reusedEvidence": "development/evidence/product/hue5-feedback-later-use-outcome-20261014.json",
+    "sha256": "8b4c2351c752170d49dc4ce2397ffef9e273c3513c87de6f036c6af8e81a216d",
+    "summary": "Echte inhoudelijke afwijzing van een eigen bijdrage veranderde een latere passende afweging; timing/hinder afzonderlijk beoordeeld.",
+    "limitations": [
+      "Historisch bewijs binnen oorspronkelijke scope; geen nieuwe proef van de herziene kandidaat",
+      "Latere vraag was door de operator aangeboden, geen spontaan meerdaags gebruik",
+      "Oorspronkelijke volledige modelinvoer ontbreekt; exclusieve causaliteit niet bewezen"
+    ]
+  },
+  "preservedFailures": [
+    "Nieuwe testfixture miste verplicht observed_at; fixture hersteld",
+    "Eerste isolatie gebruikte PostgreSQL18.6 waar bestaande gate16.13 vereist; geen productieaanpassing, opnieuw juiste lokale16.13 gebruikt",
+    "Oude unittestasert verwachtte alleen3directe bronnen terwijl bestaande resolver reeds getypeerde recente context toevoegt; directe3-bronvoorwaarde behouden",
+    "Onafhankelijke eerste review NO_GO wegens oude stijl als fallback; gericht gecorrigeerd en GO na herreview"
+  ],
+  "usage": {
+    "runtimeGenerativeModelAttemptsStartedForThisDelivery": 0,
+    "extraPerTurnModelAttemptsIntroduced": 0,
+    "developmentModelTokens": null,
+    "developmentCredits": null,
+    "runtimeCredits": null,
+    "note": "Gerichte technische controles en read-only broninvoer zijn geen echte nieuwe gezinsbeslissing. Ontwikkelverbruik is niet uit runtimebewijs af te leiden."
+  },
+  "remaining": [
+    "Selectie bewijst geen volledig of actueel compleet persoonsprofiel",
+    "Meerdaags gezinsnut en eigenaaracceptatie blijven F2",
+    "Geen algemene kwaliteits- of concurrentievoorsprong uit deze overdrachtscontrole"
+  ]
+}
