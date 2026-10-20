@@ -6936,8 +6936,8 @@
                   "Ambiguïteit, onbereikbaar groepslid, stop en onduidelijke effectuitkomst gecontroleerd zonder extra productie-effecten.",
                   "Geen herhaalde modelrondes voor vaste substeps; daadwerkelijke effect- en verificatietijd apart geregistreerd."
                 ],
-                "nextAction": "Onafhankelijke toets van bestaande implementatie tegen de oorspronkelijke criteria; echte modelkeuze en normale route aanvullen waar bewijs ontbrak.",
-                "status": "in_progress",
+                "nextAction": "Bestaande HA-setters bundelen doelvalidatie, MCP-bediening en onafhankelijke actuele eindcontrole onder één duurzame moduleactie. Live toegepast met behouden stop-, ambiguïteit-, gedeeltelijk en onzeker-resultaatgrenzen.",
+                "status": "completed",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
                 "ownerActionRequired": false,
@@ -6945,14 +6945,23 @@
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "assignment": {
                   "coordinator": "/root",
-                  "activeWorkers": [
-                    "/root/review_cursor"
-                  ],
-                  "scope": "Bestaande module en gedeelde geheugenflow beoordelen; geen tweede planner of geheugen."
+                  "activeWorkers": [],
+                  "scope": "Technisch geïnstalleerd, werkelijk gebruikt en onafhankelijk beoordeeld binnen de oorspronkelijke kaartcriteria. Hoofdwerk en gezinsacceptatie behouden."
                 },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
-                "checkedAt": "2026-10-20T15:28:41.843854+00:00",
-                "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json"
+                "checkedAt": "2026-10-20T15:47:05.869268+00:00",
+                "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
+                "technicalCompletedAt": "2026-10-20T15:47:05.869268+00:00",
+                "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json",
+                "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
+                "findings": [
+                  {
+                    "source": "development/evidence/product/e52-warm-route-20261020.json",
+                    "finding": "Bestaande HA-setters bundelen doelvalidatie, MCP-bediening en onafhankelijke actuele eindcontrole onder één duurzame moduleactie. Live toegepast met behouden stop-, ambiguïteit-, gedeeltelijk en onzeker-resultaatgrenzen.",
+                    "blocksOriginalE51": false,
+                    "newTaskCreated": false
+                  }
+                ]
               },
               {
                 "id": "E4.10",
@@ -6981,8 +6990,8 @@
                   "Nieuwe sessie, correctie/vergeten, privéscope, verwijzende opdracht en herinneringsvraag blijven inhoudelijk juist.",
                   "Voorbereiding, eerste modelbeslissing en effecttijd afzonderlijk gemeten; winst komt niet alleen uit opgewarmde scores."
                 ],
-                "nextAction": "Onafhankelijke toets van bestaande implementatie tegen de oorspronkelijke criteria; echte modelkeuze en normale route aanvullen waar bewijs ontbrak.",
-                "status": "in_progress",
+                "nextAction": "Gedeelde identiteit en geheugenflow behouden. Benodigde geschiedenis wordt voor routine/correctiehandeling opgehaald; zes echte modelcomponentgevallen en normale HTTP-geheugenroute gecontroleerd met expliciete fixturegrenzen. Expliciete actuele bediening wacht niet verplicht op semantische recall.",
+                "status": "completed",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
                 "ownerActionRequired": false,
@@ -6990,14 +6999,23 @@
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "assignment": {
                   "coordinator": "/root",
-                  "activeWorkers": [
-                    "/root/review_cursor"
-                  ],
-                  "scope": "Bestaande module en gedeelde geheugenflow beoordelen; geen tweede planner of geheugen."
+                  "activeWorkers": [],
+                  "scope": "Technisch geïnstalleerd, werkelijk gebruikt en onafhankelijk beoordeeld binnen de oorspronkelijke kaartcriteria. Hoofdwerk en gezinsacceptatie behouden."
                 },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
-                "checkedAt": "2026-10-20T15:28:41.843854+00:00",
-                "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json"
+                "checkedAt": "2026-10-20T15:47:05.869268+00:00",
+                "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
+                "technicalCompletedAt": "2026-10-20T15:47:05.869268+00:00",
+                "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json",
+                "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
+                "findings": [
+                  {
+                    "source": "development/evidence/product/e52-warm-route-20261020.json",
+                    "finding": "Gedeelde identiteit en geheugenflow behouden. Benodigde geschiedenis wordt voor routine/correctiehandeling opgehaald; zes echte modelcomponentgevallen en normale HTTP-geheugenroute gecontroleerd met expliciete fixturegrenzen. Expliciete actuele bediening wacht niet verplicht op semantische recall.",
+                    "blocksOriginalE51": false,
+                    "newTaskCreated": false
+                  }
+                ]
               },
               {
                 "id": "E4.11",
@@ -7632,8 +7650,8 @@
                   "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                   "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
                 ],
-                "nextAction": "De vooraf bepaalde tweede 20-pogingenmeting haalt mediaan0.971s/p951.185s met20verse nulmodeluitvoeringen. Rond originele E4.9/E4.10-integratiegrenzen, onafhankelijke review en exacte proefopschoning af.",
-                "status": "in_progress",
+                "nextAction": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.904s,p951.581s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
+                "status": "completed",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
                 "ownerActionRequired": false,
@@ -7641,10 +7659,8 @@
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "assignment": {
                   "coordinator": "/root",
-                  "activeWorkers": [
-                    "/root/review_cursor"
-                  ],
-                  "scope": "Gemeten snelheidswinst geïnstalleerd; originele technische grenzen blijven gelden. Primaire E1.4-uitvoering en fysieke acceptatie behouden."
+                  "activeWorkers": [],
+                  "scope": "Technisch geïnstalleerd, werkelijk gebruikt en onafhankelijk beoordeeld binnen de oorspronkelijke kaartcriteria. Hoofdwerk en gezinsacceptatie behouden."
                 },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
                 "executionPlan": {
@@ -7653,9 +7669,9 @@
                   "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                   "ownerAcceptance": false
                 },
-                "checkedAt": "2026-10-20T15:28:41.843854+00:00",
+                "checkedAt": "2026-10-20T15:47:05.869268+00:00",
                 "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
-                "independentReview": "development/reviews/e48-ha-context-command-cache-review-20261020.json",
+                "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
                 "findings": [
                   {
                     "source": "development/evidence/product/silent-action-completion-20261020.json",
@@ -7668,8 +7684,16 @@
                     "finding": "Exact hergebruik is live bewezen via dezelfde module in chat en spraak. Nieuwste chatfinal: 2.466/2.959 s; eerste interpretaties: 11.163/12.713 s. Native herhaling van invoereinde tot verse eindcontrole: 4.370–4.934 s. De oorspronkelijke prestatiedoelen zijn niet gehaald; E5.2 blijft open.",
                     "blocksOriginalE51": false,
                     "newTaskCreated": false
+                  },
+                  {
+                    "source": "development/evidence/product/e52-warm-route-20261020.json",
+                    "finding": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.904s,p951.581s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
+                    "blocksOriginalE51": false,
+                    "newTaskCreated": false
                   }
-                ]
+                ],
+                "technicalCompletedAt": "2026-10-20T15:47:05.869268+00:00",
+                "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json"
               }
             ],
             "completion": {
@@ -11962,8 +11986,8 @@
                 "Ambiguïteit, onbereikbaar groepslid, stop en onduidelijke effectuitkomst gecontroleerd zonder extra productie-effecten.",
                 "Geen herhaalde modelrondes voor vaste substeps; daadwerkelijke effect- en verificatietijd apart geregistreerd."
               ],
-              "nextAction": "Onafhankelijke toets van bestaande implementatie tegen de oorspronkelijke criteria; echte modelkeuze en normale route aanvullen waar bewijs ontbrak.",
-              "status": "in_progress",
+              "nextAction": "Bestaande HA-setters bundelen doelvalidatie, MCP-bediening en onafhankelijke actuele eindcontrole onder één duurzame moduleactie. Live toegepast met behouden stop-, ambiguïteit-, gedeeltelijk en onzeker-resultaatgrenzen.",
+              "status": "completed",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
               "ownerActionRequired": false,
@@ -11971,14 +11995,23 @@
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "assignment": {
                 "coordinator": "/root",
-                "activeWorkers": [
-                  "/root/review_cursor"
-                ],
-                "scope": "Bestaande module en gedeelde geheugenflow beoordelen; geen tweede planner of geheugen."
+                "activeWorkers": [],
+                "scope": "Technisch geïnstalleerd, werkelijk gebruikt en onafhankelijk beoordeeld binnen de oorspronkelijke kaartcriteria. Hoofdwerk en gezinsacceptatie behouden."
               },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
-              "checkedAt": "2026-10-20T15:28:41.843854+00:00",
-              "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json"
+              "checkedAt": "2026-10-20T15:47:05.869268+00:00",
+              "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
+              "technicalCompletedAt": "2026-10-20T15:47:05.869268+00:00",
+              "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json",
+              "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
+              "findings": [
+                {
+                  "source": "development/evidence/product/e52-warm-route-20261020.json",
+                  "finding": "Bestaande HA-setters bundelen doelvalidatie, MCP-bediening en onafhankelijke actuele eindcontrole onder één duurzame moduleactie. Live toegepast met behouden stop-, ambiguïteit-, gedeeltelijk en onzeker-resultaatgrenzen.",
+                  "blocksOriginalE51": false,
+                  "newTaskCreated": false
+                }
+              ]
             },
             {
               "id": "E4.10",
@@ -12007,8 +12040,8 @@
                 "Nieuwe sessie, correctie/vergeten, privéscope, verwijzende opdracht en herinneringsvraag blijven inhoudelijk juist.",
                 "Voorbereiding, eerste modelbeslissing en effecttijd afzonderlijk gemeten; winst komt niet alleen uit opgewarmde scores."
               ],
-              "nextAction": "Onafhankelijke toets van bestaande implementatie tegen de oorspronkelijke criteria; echte modelkeuze en normale route aanvullen waar bewijs ontbrak.",
-              "status": "in_progress",
+              "nextAction": "Gedeelde identiteit en geheugenflow behouden. Benodigde geschiedenis wordt voor routine/correctiehandeling opgehaald; zes echte modelcomponentgevallen en normale HTTP-geheugenroute gecontroleerd met expliciete fixturegrenzen. Expliciete actuele bediening wacht niet verplicht op semantische recall.",
+              "status": "completed",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
               "ownerActionRequired": false,
@@ -12016,14 +12049,23 @@
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "assignment": {
                 "coordinator": "/root",
-                "activeWorkers": [
-                  "/root/review_cursor"
-                ],
-                "scope": "Bestaande module en gedeelde geheugenflow beoordelen; geen tweede planner of geheugen."
+                "activeWorkers": [],
+                "scope": "Technisch geïnstalleerd, werkelijk gebruikt en onafhankelijk beoordeeld binnen de oorspronkelijke kaartcriteria. Hoofdwerk en gezinsacceptatie behouden."
               },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
-              "checkedAt": "2026-10-20T15:28:41.843854+00:00",
-              "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json"
+              "checkedAt": "2026-10-20T15:47:05.869268+00:00",
+              "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
+              "technicalCompletedAt": "2026-10-20T15:47:05.869268+00:00",
+              "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json",
+              "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
+              "findings": [
+                {
+                  "source": "development/evidence/product/e52-warm-route-20261020.json",
+                  "finding": "Gedeelde identiteit en geheugenflow behouden. Benodigde geschiedenis wordt voor routine/correctiehandeling opgehaald; zes echte modelcomponentgevallen en normale HTTP-geheugenroute gecontroleerd met expliciete fixturegrenzen. Expliciete actuele bediening wacht niet verplicht op semantische recall.",
+                  "blocksOriginalE51": false,
+                  "newTaskCreated": false
+                }
+              ]
             },
             {
               "id": "E4.11",
@@ -12658,8 +12700,8 @@
                 "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                 "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
               ],
-              "nextAction": "De vooraf bepaalde tweede 20-pogingenmeting haalt mediaan0.971s/p951.185s met20verse nulmodeluitvoeringen. Rond originele E4.9/E4.10-integratiegrenzen, onafhankelijke review en exacte proefopschoning af.",
-              "status": "in_progress",
+              "nextAction": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.904s,p951.581s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
+              "status": "completed",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
               "ownerActionRequired": false,
@@ -12667,10 +12709,8 @@
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "assignment": {
                 "coordinator": "/root",
-                "activeWorkers": [
-                  "/root/review_cursor"
-                ],
-                "scope": "Gemeten snelheidswinst geïnstalleerd; originele technische grenzen blijven gelden. Primaire E1.4-uitvoering en fysieke acceptatie behouden."
+                "activeWorkers": [],
+                "scope": "Technisch geïnstalleerd, werkelijk gebruikt en onafhankelijk beoordeeld binnen de oorspronkelijke kaartcriteria. Hoofdwerk en gezinsacceptatie behouden."
               },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
               "executionPlan": {
@@ -12679,9 +12719,9 @@
                 "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                 "ownerAcceptance": false
               },
-              "checkedAt": "2026-10-20T15:28:41.843854+00:00",
+              "checkedAt": "2026-10-20T15:47:05.869268+00:00",
               "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
-              "independentReview": "development/reviews/e48-ha-context-command-cache-review-20261020.json",
+              "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
               "findings": [
                 {
                   "source": "development/evidence/product/silent-action-completion-20261020.json",
@@ -12694,8 +12734,16 @@
                   "finding": "Exact hergebruik is live bewezen via dezelfde module in chat en spraak. Nieuwste chatfinal: 2.466/2.959 s; eerste interpretaties: 11.163/12.713 s. Native herhaling van invoereinde tot verse eindcontrole: 4.370–4.934 s. De oorspronkelijke prestatiedoelen zijn niet gehaald; E5.2 blijft open.",
                   "blocksOriginalE51": false,
                   "newTaskCreated": false
+                },
+                {
+                  "source": "development/evidence/product/e52-warm-route-20261020.json",
+                  "finding": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.904s,p951.581s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
+                  "blocksOriginalE51": false,
+                  "newTaskCreated": false
                 }
-              ]
+              ],
+              "technicalCompletedAt": "2026-10-20T15:47:05.869268+00:00",
+              "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json"
             }
           ],
           "completion": {
