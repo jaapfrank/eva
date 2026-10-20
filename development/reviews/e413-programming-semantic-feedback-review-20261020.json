@@ -1,0 +1,131 @@
+{
+  "contract": "EvaE413IndependentTechnicalCompletionReview/v1",
+  "reviewed_at": "2026-10-20T18:07:32.586759+00:00",
+  "decision": "GO_E4_13_TECHNICAL_COMPLETION",
+  "blockingFindings": [],
+  "frozen_doneWhen": "Een bestaande language server geeft in Eva’s bestaande geïsoleerde programmeerroute bronversiegebonden feedback op een echte wijziging; Eva gebruikt die feedback om de kandidaat te verbeteren vóór de bestaande onafhankelijke eindcontrole. Verouderde diagnostiek, bestaande fouten en ontbrekende tooling worden niet als nieuwe correcte bevindingen verkocht. Eerste afgebakende taal is Python; gewone programmering blijft werken bij ontbrekende optionele LSP. Exacte upstream herkomst/licenties en gewijzigde adapter zijn vastgelegd; geen nieuwe programmeeragent.",
+  "frozen_verification": [
+    "Bronversiegebonden type-/naamfout wordt vroeg gevonden en door Eva verwerkt; syntaxischeck alleen telt niet als semantische diagnose.",
+    "Onafhankelijke eindcriteria blijven ongewijzigd; geen claim dat LSP gebruikersgedrag bewijst."
+  ],
+  "registration_sha256": "6b1152e017de0895cafdd895995c4ef0d9a7b03b582674bdfc45aeecd53f0f78",
+  "criteria_sha256": "8861ed04ce602a1b7743d4556b70430f67a632e9952632c999357b10f498482b",
+  "protected_cases_sha256": "9c9fc329c3ee7d5594893d057f2a3e1535afb9b6ce9b78700606aaf0b275fe4d",
+  "protected_runner_sha256": "ced6c41c4cb18f76de7410cb5c5ee4a73e60ef4bd0b8778e6d43dd2ecf67c146",
+  "criteria_changed": false,
+  "heldout_contents_disclosed_to_builder": false,
+  "model_task_attempts": 1,
+  "independent_final_evaluations": 1,
+  "sourceHashes": {
+    "src/eva/operations/programming_workspace.py": "6af24c1152474677ee900bd3283e0765d002c0fb245829b736c63c5cec43a1b5",
+    "src/eva/adapters/postgres/programming_actions.py": "198bf100815a531ee9cd2db2268552f909bac06b1ce2ed87032d257cb7911fa2",
+    "deploy/programming/Dockerfile": "a6a444ffe964aa0416b7ca50fead104cc389fda23891dd5265b70651ef6bfdba",
+    "deploy/programming/upstream.json": "39c76e0cf888da2148cb851d74c1af9fc156a01ba11a5f3060974717f2ebfce0",
+    "deploy/programming/README.md": "fc0b5db28a5b54e237eb50a3b308ae4fb00dc2a4321ba059c02013d35d0572fa",
+    "development/docs/ARCHITECTUUR.md": "459d39fc9856680f0c5e2dcf200e8186ad640c46b1f04695264fbdb5288cd74d",
+    "src/eva/operations/programming_diagnostics.py": "540f306e636500bf175be4f083b8a75d99187b07176431fc219d8830a6511001",
+    "src/eva/operations/_hermes_lsp_protocol.py": "ec4a95673a491a60ba5828d661512f22f464761ce6459bc30e3a66c72351fa91",
+    "deploy/programming/python-language-server/package.json": "7be6cb272a7b8b499400ce46fb444a87a16ffeb4dd45b6ea546dac6fba5183cb",
+    "deploy/programming/python-language-server/package-lock.json": "072e6e1bc741747b56256c3bd1141f6f6ad802bf707832ce1d2de2f34780b61f",
+    "deploy/programming/python-language-server/upstream.json": "e465f8a9700ea29e39967cfe9b860747a3ad96ad4d2550517cfdb11725e8cd1f"
+  },
+  "criterionMatrix": [
+    {
+      "criterion": "Existing isolated programming route obtains actual semantic diagnostics on a real write",
+      "met": true,
+      "proof": "Actual ordinary write_programming_file, valid Python AST, Pyright reportUndefinedVariable, exact after content hash and document version, same pinned sandbox image."
+    },
+    {
+      "criterion": "Model uses feedback and improves candidate before independent endcheck",
+      "met": true,
+      "proof": "Actual next ordinary model-generated write fixes precisely the diagnosed identifier; receipt before hash binds initial after hash and reports one resolved finding. Existing exact production projection preserves the new completed action feedback for the next request; this is source-closure evidence, not a retained raw provider-input capture."
+    },
+    {
+      "criterion": "Pre-existing, stale, evicted-old and missing optional feedback remain distinct and non-authoritative",
+      "met": true,
+      "proof": "Prior independent exact-source review and bounded contract regressions; session-monotonic versions close eviction/reopen stale-result hole; no false clean result on missing/unversioned/oversized output."
+    },
+    {
+      "criterion": "Separate frozen end check validates actual repaired bytes",
+      "met": true,
+      "proof": "One independent fixed6case check after final source freeze; 6/6 correct on exact candidate SHA; final scorer was not available in model workspace before freeze."
+    },
+    {
+      "criterion": "Optional server, provenance/license and existing boundaries maintained",
+      "met": true,
+      "proof": "Official Pyright1.1.414 pinned npm integrity+source commit+MIT/typeshed licenses; minimal MIT Hermes framing exact advertised change; original sandbox/grants/receipt replay/stop preserved, no new agent."
+    }
+  ],
+  "actualFeedback": {
+    "initial_source_sha256": "66192828b0104546ce5d0d7c8119174ba837ff535579fa93c1709fed9b8aab0f",
+    "initial_version": 1,
+    "semantic_error_count": 1,
+    "repair_before_version": 2,
+    "repaired_source_sha256": "cbd1178e5e542ffc980016fd47815ec61c9514fc9aa7408d2d558ed90d8115f8",
+    "repair_after_version": 3,
+    "resolved_count": 1,
+    "remaining_diagnostic_count": 0,
+    "same_image": true,
+    "sandbox_image": "sha256:c4812d352454b89a9e92b934e5def5802f321fe583382cfc2b109ae5a1ecbdca",
+    "only_diagnosed_identifier_changed": true
+  },
+  "final_check": {
+    "case_count": 6,
+    "correct": 6,
+    "all_correct": true,
+    "source_sha256": "cbd1178e5e542ffc980016fd47815ec61c9514fc9aa7408d2d558ed90d8115f8",
+    "source_frozen_at": "2026-10-20T18:04:21.115546+00:00",
+    "after_model_completed_at": "2026-10-20 18:03:16+00:00",
+    "ordinary_existing_programming_start_process_route": true,
+    "model_calls": 0,
+    "separate_process_exit_code_observed": null,
+    "terminal_interpretation": "Fixed runner completed all6cases and emitted the frozen all_correct result; upstream start_process does not supply a separate terminal exitcode, so none is claimed.",
+    "session_closed_and_container_absent": true
+  },
+  "usage": {
+    "eva_model_task": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 6,
+      "tool_calls": 5,
+      "input_tokens": 62023,
+      "output_tokens": 869,
+      "total_tokens": 62892,
+      "cost_usd_micros": null
+    },
+    "elapsed_task_ms": 57000,
+    "independent_runner_model_calls": 0,
+    "developer_codex_usage_not_included": true,
+    "credit_cost": null
+  },
+  "technical_assistance": {
+    "operator_directed_seed_and_task": true,
+    "spontaneous_error_discovery_or_autonomous_task_selection_proven": false,
+    "runtime_or_source_manually_changed_during_task": false,
+    "observer_setup_attribute_error": {
+      "effect_dispatches": 0,
+      "retained": "observation-1.stderr.private.txt"
+    },
+    "finalcheck_host_client_import_setup_error": {
+      "effect_dispatches": 0,
+      "retained": "final-check-host-import-failure.private.txt",
+      "correction": "Same fixed check through installed core client; no model retry or second actual check."
+    }
+  },
+  "nonblockingFindings": [
+    {
+      "finding": "Final model summary contains an unrelated historical timestamp-task disclaimer. Actual program task and result remain scoped and correct; no corresponding timestamp change was executed.",
+      "scope": "Existing broader task-context relevance issue, not a failure of the frozen semantic-feedback criterion."
+    }
+  ],
+  "limitations": [
+    "One operator-stimulated Python semantic repair task proves the bounded installed handoff; it does not prove general code quality, all languages, autonomous discovery or superiority to competitors.",
+    "General semantic_success_verified remains false in programming receipts; independent6case result is restricted to the stated technical task.",
+    "Model accounting is partial and actual credit costs unknown.",
+    "Family acceptance F2, E1.6 and the full project remain separate and open."
+  ],
+  "reviewer": "e47_mcp_catalog",
+  "originalIndependentReportSha256": "5367dd7d617dcd7a3df4a30e5166ba1354a98a0ca5d372ac2b3ab17a8cff6d5e",
+  "privateContentsPublished": false
+}

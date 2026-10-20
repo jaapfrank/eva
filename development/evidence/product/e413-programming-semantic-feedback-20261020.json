@@ -1,0 +1,192 @@
+{
+  "contract": "EvaProgrammingSemanticFeedback/v1",
+  "taskId": "E4.13",
+  "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+  "state": "installed_technical_task_completed",
+  "technicalTaskCompleted": true,
+  "ownerAcceptance": false,
+  "existing": "The same durable isolated DesktopCommander programming workspace and receipt lifecycle.",
+  "added": [
+    "Optional pinned Pyright stdio feedback inside the same unprivileged network-none sandbox.",
+    "Hash/version-bound before-and-after Python direct edit feedback, distinguishing new, preexisting and resolved diagnostics.",
+    "Keep acknowledged edit success and receipt replay even when optional diagnostics are unavailable or too large."
+  ],
+  "upstream": {
+    "version": "1.1.414",
+    "official_release": "https://github.com/microsoft/pyright/releases/tag/1.1.414",
+    "npm_metadata_url": "https://registry.npmjs.org/pyright/latest",
+    "source_commit": "a28cce4077d87b80bead12de809f79845e39c8ba",
+    "tarball": "https://registry.npmjs.org/pyright/-/pyright-1.1.414.tgz",
+    "tarball_sha256": "bf5f473f6167c0d14175492c3263d783b4489a6956e1c06c18e15228e3a3fa42",
+    "npm_integrity": "sha512-FPZZb51jepDX4eP7TEYDeNFtmE3WgwkkEcJpvH3/QmUSsj0EAy3LXu+xB4T/FWDejtsXlCfFr/rbWFjwuwuXww==",
+    "integrity_verified": true,
+    "node_engine": ">=14.0.0",
+    "runtime_dependencies": {},
+    "entrypoint": "pyright-langserver --stdio -> /opt/pyright/node_modules/pyright/langserver.index.js",
+    "license_files": {
+      "package/dist/typeshed-fallback/LICENSE": {
+        "bytes": 12657,
+        "sha256": "295f8538c94ae5c3043301cf7cff1c852dab6a786a8ddee471e061b40d5ecabe"
+      },
+      "package/LICENSE.txt": {
+        "bytes": 1150,
+        "sha256": "f7c936bc43f132b08497ac952e9376cbc102e5eedb4bf6ec902ea8442bd9c68d"
+      }
+    },
+    "retrievedAt": "2026-10-20",
+    "optionalDependencies": "macOS fsevents is omitted in the Linux runtime; retain upstream complete package/typeshed licenses.",
+    "optional_dependencies": {
+      "fsevents": "~2.3.3, macOS-only; omitted in Linux sandbox"
+    }
+  },
+  "hermesReuse": {
+    "repository": "https://github.com/NousResearch/hermes-agent",
+    "revision": "1f502aded81a07fa4127e6a90e06d04271a5b04a",
+    "file": "agent/lsp/protocol.py",
+    "sha256": "5acb1c0b1cc442763e1cc2ddc2afeb734acb7fc00f9270f11fa86c54f7428d6b",
+    "license": "MIT notice retained",
+    "adaptation": "Bound message body to2MiB; existing manager/installers/agent loop not imported."
+  },
+  "installation": {
+    "coreImage": "sha256:9c25fa5c86317bf529cef9114c86d8a4b7961ce0fcc0f8da4dec716cd51c3716",
+    "workerImage": "sha256:39de78cbf0acfcedfe1b1bf756143e617c774830da314107042051f6fc7725c8",
+    "programmingImage": "sha256:c4812d352454b89a9e92b934e5def5802f321fe583382cfc2b109ae5a1ecbdca",
+    "referenceProgrammingImage": "sha256:4355cfe6db617e43e81d1679bf8c7b8beed71db8ec137378dbb46e809a2452d7",
+    "executionPins": 68,
+    "capabilityCount": 26,
+    "sameRuntimeRelease": true,
+    "pythonDiagnostics": true,
+    "defaultForUnconfiguredInstallations": false,
+    "diagnosticsTimeoutSeconds": 5,
+    "voiceChanged": false,
+    "policyBytesChanged": false
+  },
+  "sourceReview": {
+    "decision": "GO_SOURCE_AND_OPTIONAL_INSTALLATION",
+    "blockingFindings": [],
+    "sourceHashes": {
+      "src/eva/operations/programming_workspace.py": "6af24c1152474677ee900bd3283e0765d002c0fb245829b736c63c5cec43a1b5",
+      "src/eva/adapters/postgres/programming_actions.py": "198bf100815a531ee9cd2db2268552f909bac06b1ce2ed87032d257cb7911fa2",
+      "deploy/programming/Dockerfile": "a6a444ffe964aa0416b7ca50fead104cc389fda23891dd5265b70651ef6bfdba",
+      "deploy/programming/upstream.json": "39c76e0cf888da2148cb851d74c1af9fc156a01ba11a5f3060974717f2ebfce0",
+      "deploy/programming/README.md": "fc0b5db28a5b54e237eb50a3b308ae4fb00dc2a4321ba059c02013d35d0572fa",
+      "development/docs/ARCHITECTUUR.md": "459d39fc9856680f0c5e2dcf200e8186ad640c46b1f04695264fbdb5288cd74d",
+      "src/eva/operations/programming_diagnostics.py": "540f306e636500bf175be4f083b8a75d99187b07176431fc219d8830a6511001",
+      "src/eva/operations/_hermes_lsp_protocol.py": "ec4a95673a491a60ba5828d661512f22f464761ce6459bc30e3a66c72351fa91",
+      "deploy/programming/python-language-server/package.json": "7be6cb272a7b8b499400ce46fb444a87a16ffeb4dd45b6ea546dac6fba5183cb",
+      "deploy/programming/python-language-server/package-lock.json": "072e6e1bc741747b56256c3bd1141f6f6ad802bf707832ce1d2de2f34780b61f",
+      "deploy/programming/python-language-server/upstream.json": "e465f8a9700ea29e39967cfe9b860747a3ad96ad4d2550517cfdb11725e8cd1f"
+    }
+  },
+  "developmentVerification": {
+    "existingAndIntegration": {
+      "passed": 49,
+      "seconds": 7.88,
+      "includesRealOfflinePyright": true
+    },
+    "optionalFeedbackBoundRegression": {
+      "passed": 1,
+      "seconds": 0.09
+    },
+    "helperContracts": "27 original/followup checks plus1 eviction/reopen stale-report regression; overlapping runs not summed",
+    "modelCalls": 0,
+    "productionTestDataInjected": false
+  },
+  "resolvedPreinstallationFindings": [
+    "Never reuse documentversion after evict/reopen; late old server feedback remains unavailable.",
+    "Oversized optional diagnostic data cannot turn an acknowledged write into uncertain started receipt."
+  ],
+  "independentFinal": {
+    "criteriaSha256": "8861ed04ce602a1b7743d4556b70430f67a632e9952632c999357b10f498482b",
+    "registrationSha256": "6b1152e017de0895cafdd895995c4ef0d9a7b03b582674bdfc45aeecd53f0f78",
+    "criteriaModified": false,
+    "builderReadsHeldout": false,
+    "maximumModelTasks": 1,
+    "maximumFinalChecks": 1,
+    "state": "passed",
+    "modelTasks": 1,
+    "actualFinalChecks": 1,
+    "actualFeedback": {
+      "initial_source_sha256": "66192828b0104546ce5d0d7c8119174ba837ff535579fa93c1709fed9b8aab0f",
+      "initial_version": 1,
+      "semantic_error_count": 1,
+      "repair_before_version": 2,
+      "repaired_source_sha256": "cbd1178e5e542ffc980016fd47815ec61c9514fc9aa7408d2d558ed90d8115f8",
+      "repair_after_version": 3,
+      "resolved_count": 1,
+      "remaining_diagnostic_count": 0,
+      "same_image": true,
+      "sandbox_image": "sha256:c4812d352454b89a9e92b934e5def5802f321fe583382cfc2b109ae5a1ecbdca",
+      "only_diagnosed_identifier_changed": true
+    },
+    "finalCheck": {
+      "case_count": 6,
+      "correct": 6,
+      "all_correct": true,
+      "source_sha256": "cbd1178e5e542ffc980016fd47815ec61c9514fc9aa7408d2d558ed90d8115f8",
+      "source_frozen_at": "2026-10-20T18:04:21.115546+00:00",
+      "after_model_completed_at": "2026-10-20 18:03:16+00:00",
+      "ordinary_existing_programming_start_process_route": true,
+      "model_calls": 0,
+      "separate_process_exit_code_observed": null,
+      "terminal_interpretation": "Fixed runner completed all6cases and emitted the frozen all_correct result; upstream start_process does not supply a separate terminal exitcode, so none is claimed.",
+      "session_closed_and_container_absent": true
+    }
+  },
+  "limits": [
+    "Automatic hook covers direct write_file/edit_block Python edits, not arbitrary shell edits.",
+    "Missing/timeout/stale/versionless/truncated feedback is unavailable, not a clean result.",
+    "Diagnostics are untrusted data, not proof of program behavior or authorization.",
+    "No speed/token/credit advantage or autonomous daily usefulness is claimed.",
+    "One operator-stimulated Python semantic repair task proves the bounded installed handoff; it does not prove general code quality, all languages, autonomous discovery or superiority to competitors.",
+    "General semantic_success_verified remains false in programming receipts; independent6case result is restricted to the stated technical task.",
+    "Model accounting is partial and actual credit costs unknown.",
+    "Family acceptance F2, E1.6 and the full project remain separate and open."
+  ],
+  "usage": {
+    "testProviderModelCalls": 0,
+    "runtimeModelUsage": {
+      "eva_model_task": {
+        "schema_version": 1,
+        "contract": "DelegatedWorkUsage/v1",
+        "measurement": "partial",
+        "completed_model_responses": 6,
+        "tool_calls": 5,
+        "input_tokens": 62023,
+        "output_tokens": 869,
+        "total_tokens": 62892,
+        "cost_usd_micros": null
+      },
+      "elapsed_task_ms": 57000,
+      "independent_runner_model_calls": 0,
+      "developer_codex_usage_not_included": true,
+      "credit_cost": null
+    },
+    "developmentCreditCost": null,
+    "runtimeCreditCost": null,
+    "taskElapsedMs": 57000
+  },
+  "remaining": "No remaining technical E4.13 condition. Family utility, spontaneous task/error discovery, E1.6 and full project acceptance remain separate.",
+  "completedAt": "2026-10-20T18:07:32.586759+00:00",
+  "independentReview": "development/reviews/e413-programming-semantic-feedback-review-20261020.json",
+  "technicalAssistance": {
+    "operator_directed_seed_and_task": true,
+    "spontaneous_error_discovery_or_autonomous_task_selection_proven": false,
+    "runtime_or_source_manually_changed_during_task": false,
+    "observer_setup_attribute_error": {
+      "effect_dispatches": 0,
+      "retained": "observation-1.stderr.private.txt"
+    },
+    "finalcheck_host_client_import_setup_error": {
+      "effect_dispatches": 0,
+      "retained": "final-check-host-import-failure.private.txt",
+      "correction": "Same fixed check through installed core client; no model retry or second actual check."
+    }
+  },
+  "nonblockingFindings": [
+    {
+      "finding": "Final model summary contains an unrelated historical timestamp-task disclaimer. Actual program task and result remain scoped and correct; no corresponding timestamp change was executed.",
+      "scope": "Existing broader task-context relevance issue, not a failure of the frozen semantic-feedback criterion."
+    }
+  ]
+}

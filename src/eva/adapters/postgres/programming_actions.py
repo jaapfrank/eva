@@ -40,7 +40,12 @@ def programming_descriptors():
             "Schrijf een tekst-/codebestand in je blijvende taakwerkruimte /workspace. "
             "Geef content rechtstreeks als tekst: geen extra JSON-string of shellverpakking. "
             "Gebruik mode rewrite om te schrijven en append om aan te vullen. "
-            "Dit gebruikt dezelfde geïsoleerde programmeerwerkruimte en installeert niets.",
+            "Dit gebruikt dezelfde geïsoleerde programmeerwerkruimte en installeert niets. "
+            "Bij ingeschakelde Python-LSP bevat eva_diagnostics actuele bronhash/versie en "
+            "nieuwe, bestaande en opgeloste diagnostiek na write_file/edit_block. Gebruik nieuwe "
+            "semantische fouten om de code te verbeteren vóór de onafhankelijke eindcontrole. "
+            "Ontbrekende/verouderde feedback is geen foutloze controle; shellwijzigingen vallen "
+            "niet automatisch onder deze edit-feedback.",
             _SCHEMAS[WRITE], "Een geschreven bestand bewijst nog geen werkende code; "
             "voer relevante controles uit en lees het echte resultaat terug."),
         ConversationToolDescriptor(START,

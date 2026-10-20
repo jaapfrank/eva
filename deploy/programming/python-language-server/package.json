@@ -1,0 +1,9 @@
+{
+  "name": "eva-python-language-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Optional pinned Python semantic diagnostics inside the existing offline programming sandbox",
+  "dependencies": {
+    "pyright": "1.1.414"
+  }
+}

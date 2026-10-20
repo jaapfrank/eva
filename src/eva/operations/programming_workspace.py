@@ -74,6 +74,8 @@ class ProgrammingWorkspaceConfig:
     pids: int = 128
     tool_timeout_seconds: int = 300
     max_result_bytes: int = 4 * 1024 * 1024
+    python_diagnostics: bool = False
+    diagnostics_timeout_seconds: int = 5
 
     def __post_init__(self):
         if not isinstance(self.image, str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", self.image):
@@ -92,6 +94,10 @@ class ProgrammingWorkspaceConfig:
                 or type(self.tool_timeout_seconds) is not int or not 1 <= self.tool_timeout_seconds <= 3600
                 or type(self.max_result_bytes) is not int or not 1024 <= self.max_result_bytes <= 16 * 1024 * 1024):
             raise ValueError("invalid trusted programming resource limits")
+        if (type(self.python_diagnostics) is not bool
+                or type(self.diagnostics_timeout_seconds) is not int
+                or not 1 <= self.diagnostics_timeout_seconds <= 30):
+            raise ValueError("invalid trusted programming diagnostics settings")
         object.__setattr__(self, "workspace_root", root)
         object.__setattr__(self, "receipt_root", receipts)
 
@@ -270,6 +276,11 @@ class _Session:
     def __init__(self, config, session_key, workspace, receipts):
         self.config, self.key = config, session_key
         self.workspace, self.receipts = workspace, receipts
+        self.diagnostics = None
+        if config.python_diagnostics:
+            from eva.operations.programming_diagnostics import ProgrammingDiagnostics
+            self.diagnostics = ProgrammingDiagnostics(workspace, _container_name(session_key),
+                timeout_seconds=config.diagnostics_timeout_seconds)
         self.closed = threading.Event()
         self.ready = threading.Event()
         self.guard = threading.Lock()
@@ -331,6 +342,11 @@ class _Session:
             pass
         finally:
             self.closed.set()
+            if self.diagnostics is not None:
+                try:
+                    await self.diagnostics.close()
+                except Exception:
+                    pass  # The fixed child container is still removed below.
             try:
                 self.remove_container()
             except (OSError, RuntimeError, subprocess.SubprocessError):
@@ -371,10 +387,38 @@ class _Session:
         _save_receipt(path, receipt, initial=True)
         # A crash, disconnect or cancelled call deliberately leaves 'started'.
         # It must not dispatch again, including after a host-service restart.
+        before, feedback = None, None
+        if self.diagnostics is not None:
+            try:
+                before = await self.diagnostics.before(name, arguments)
+            except Exception:
+                feedback = {"status": "unavailable", "reason": "diagnostics_failed"}
         response = await client.call_tool(name, arguments)
         result = response.model_dump(mode="json", by_alias=True, exclude_none=True)
         if len(_canonical(result)) > self.config.max_result_bytes:
             raise RuntimeError("programming result exceeds its bound; inspect workspace before continuing")
+        if self.diagnostics is not None:
+            try:
+                feedback = await self.diagnostics.after(before, result) or feedback
+            except Exception:
+                feedback = {"status": "unavailable", "reason": "diagnostics_failed"}
+            if feedback is not None:
+                original = result
+                result = {**original, "eva_diagnostics": {**feedback,
+                    "sandbox_image": self.config.image, "semantic_success_verified": False}}
+                if len(_canonical(result)) > self.config.max_result_bytes:
+                    # Optional analysis must not make an acknowledged write uncertain.
+                    summary = {"contract": "EvaProgrammingDiagnostics/v1", "status": "unavailable",
+                        "comparison_status": "unavailable", "reason": "diagnostics_result_bound",
+                        "sandbox_image": self.config.image, "semantic_success_verified": False}
+                    for phase in ("before", "after"):
+                        observed = feedback.get(phase)
+                        if isinstance(observed, dict):
+                            summary[phase] = {key: observed[key] for key in
+                                ("content_sha256", "document_version") if key in observed}
+                    result = {**original, "eva_diagnostics": summary}
+                    if len(_canonical(result)) > self.config.max_result_bytes:
+                        result = original  # Missing diagnostics is never a clean result.
         _save_receipt(path, {**receipt, "state": "completed", "result": result})
         return result
 

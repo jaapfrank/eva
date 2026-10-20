@@ -841,14 +841,14 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.13",
+  "activeTaskId": "E4.14",
   "currentWork": {
-    "id": "E4.13",
-    "title": "Directe semantische feedback bij Eva-gemaakte code gebruiken",
+    "id": "E4.14",
+    "title": "Een taak over meerdere diensten als programma uitvoeren",
     "status": "in_progress",
-    "doneWhen": "Een bestaande language server geeft in Eva’s bestaande geïsoleerde programmeerroute bronversiegebonden feedback op een echte wijziging; Eva gebruikt die feedback om de kandidaat te verbeteren vóór de bestaande onafhankelijke eindcontrole. Verouderde diagnostiek, bestaande fouten en ontbrekende tooling worden niet als nieuwe correcte bevindingen verkocht. Eerste afgebakende taal is Python; gewone programmering blijft werken bij ontbrekende optionele LSP. Exacte upstream herkomst/licenties en gewijzigde adapter zijn vastgelegd; geen nieuwe programmeeragent.",
-    "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
-    "checkedAt": "2026-10-20T17:50:52.808889+00:00",
+    "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
+    "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
+    "checkedAt": "2026-10-20T18:08:24.596249+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,19 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.13 · Semantische codefeedback geïnstalleerd en door Eva gebruikt",
+            "state": "installed",
+            "summary": "Echte Pythonfout op actuele bronversie gevonden, door Eva gericht opgelost en daarna onafhankelijk 6/6 gedragsgevallen geslaagd. Dezelfde geïsoleerde programmeerroute; geen nieuwe agent.",
+            "remaining": "Geen technische E4.13-stap. Python directe edits zijn de eerste scope; algemene codekwaliteit/gezinsnut niet hiermee bewezen.",
+            "source": "development/evidence/product/e413-programming-semantic-feedback-20261020.json",
+            "date": "2026-10-20",
+            "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+            "completedTaskIds": [
+              "E4.13"
+            ],
+            "newProductFunctionCompleted": true
+          },
           {
             "title": "E4.12 · Open vaardigheid gebruikt, aantoonbaar verbeterd en opnieuw toegepast",
             "state": "installed",
@@ -2860,27 +2873,27 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.13",
-          "title": "Directe semantische feedback bij Eva-gemaakte code gebruiken",
+          "taskId": "E4.14",
+          "title": "Een taak over meerdere diensten als programma uitvoeren",
           "status": "in_progress",
           "state": "building",
-          "summary": "E4.13: directe semantische feedback op Eva-gemaakte Pythoncode aansluiten.",
-          "detail": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
-          "doneWhen": "Een bestaande language server geeft in Eva’s bestaande geïsoleerde programmeerroute bronversiegebonden feedback op een echte wijziging; Eva gebruikt die feedback om de kandidaat te verbeteren vóór de bestaande onafhankelijke eindcontrole. Verouderde diagnostiek, bestaande fouten en ontbrekende tooling worden niet als nieuwe correcte bevindingen verkocht. Eerste afgebakende taal is Python; gewone programmering blijft werken bij ontbrekende optionele LSP. Exacte upstream herkomst/licenties en gewijzigde adapter zijn vastgelegd; geen nieuwe programmeeragent.",
-          "checkedAt": "2026-10-20T17:50:52.808889+00:00"
+          "summary": "E4.14: één programma over meerdere diensten aansluiten op de bestaande uitvoerder.",
+          "detail": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
+          "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
+          "checkedAt": "2026-10-20T18:08:24.596249+00:00"
         },
         "next": {
-          "taskId": "E4.13",
-          "title": "Directe semantische feedback bij Eva-gemaakte code gebruiken",
-          "detail": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server."
+          "taskId": "E4.14",
+          "title": "Een taak over meerdere diensten als programma uitvoeren",
+          "detail": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter."
         },
         "ownerAction": {
           "required": false,
           "detail": "Geen handeling nodig. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T17:50:52.808889+00:00",
-        "reviewedAt": "2026-10-20T17:50:52.808889+00:00",
+        "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+        "reviewedAt": "2026-10-20T18:08:24.596249+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -7252,7 +7265,7 @@
                 "completionEvidence": "development/evidence/product/e412-skill-package-improvement-20261020.json"
               },
               {
-                "status": "in_progress",
+                "status": "completed",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
                 "ownerActionRequired": false,
@@ -7261,7 +7274,7 @@
                 "assignment": {
                   "coordinator": "/root",
                   "activeWorkers": [],
-                  "scope": "E4.13: bestaande programmeerservice en optionele bronversiegebonden Python-LSP-feedback. Geen spraak of nieuwe programmeeragent."
+                  "scope": "Root: bestaande workspace/editroute en installatie. E46: minimale gepinde LSP-protocol/clientadapter. E47: onafhankelijke bronreview en vaste semantische eindcontrole; geen spraak."
                 },
                 "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
                 "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
@@ -7271,7 +7284,7 @@
                 "scopeDecision": "Eigenaar20oktober bevestigt opname en uitvoering van alle nuttige onderdelen. Geen vrijblijvende kandidaat meer. Concrete upstreamkeuze en code worden alleen toegepast met behouden kwaliteit; een afgewezen variant sluit de gevraagde uitkomst niet automatisch af.",
                 "doneWhen": "Een bestaande language server geeft in Eva’s bestaande geïsoleerde programmeerroute bronversiegebonden feedback op een echte wijziging; Eva gebruikt die feedback om de kandidaat te verbeteren vóór de bestaande onafhankelijke eindcontrole. Verouderde diagnostiek, bestaande fouten en ontbrekende tooling worden niet als nieuwe correcte bevindingen verkocht. Eerste afgebakende taal is Python; gewone programmering blijft werken bij ontbrekende optionele LSP. Exacte upstream herkomst/licenties en gewijzigde adapter zijn vastgelegd; geen nieuwe programmeeragent.",
                 "existing": "Geïsoleerde programmeeromgeving, codevoorstellen en onafhankelijke beoordeling bestaan.",
-                "gap": "In de onderzochte uitvoercode is geen automatische LSP-feedback bij edit geïdentificeerd. Hermes heeft daarvoor concrete protocol-/clientcode.",
+                "gap": "Geen resterende technische E4.13-voorwaarde. Automatische editfeedback geldt eerst voor directe Python-writes/edits; bredere kwaliteit en gezinsnut blijven afzonderlijk.",
                 "implementation": [
                   "Gebruik bestaande language server; hergebruik Hermes protocol/client waar extractie kleiner is dan een passende onderhouden clientdependency.",
                   "Koppel aan bestaande bestandswijziging met documentversie/hash en voor-/nadiagnostiek; neem Hermes configmanager en installers niet mee.",
@@ -7289,19 +7302,29 @@
                 "dependsOn": [
                   "E4.5"
                 ],
-                "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
+                "nextAction": "Behoud deze geïnstalleerde edit-feedback; vervolg met E4.14 voor één toegelaten programma over meerdere diensten.",
                 "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-                "checkedAt": "2026-10-20T17:50:52.808889+00:00",
-                "progress": "E4.12 afgerond; begin met controle van de werkelijk geïnstalleerde programmeerservice en bestaande upstream-grens. Nog geen LSP-wijziging geïnstalleerd."
+                "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+                "progress": "Geïnstalleerd en werkelijk gebruikt: actuele Pyrightfout op bronhash/v1, gerichte modelcorrectie op v3 met één opgeloste fout, daarna aparte vaste gedragscontrole 6/6 geslaagd. Geen extra modeltaak of gewijzigde eindcriteria.",
+                "latestEvidence": "development/evidence/product/e413-programming-semantic-feedback-20261020.json",
+                "completedAt": "2026-10-20T18:07:32.586759+00:00",
+                "result": "Eva krijgt bij directe Pythonbestandswijzigingen semantische feedback binnen haar bestaande geïsoleerde programmeerroute en heeft die in één echte taak gebruikt vóór onafhankelijke eindcontrole. Optionele afwezigheid/stale feedback blokkeert gewone programmering niet. Operatorseed en gedeeltelijk gemeten verbruik blijven vermeld.",
+                "evidence": "development/evidence/product/e413-programming-semantic-feedback-20261020.json",
+                "completionEvidence": "development/evidence/product/e413-programming-semantic-feedback-20261020.json",
+                "independentReview": "development/reviews/e413-programming-semantic-feedback-review-20261020.json"
               },
               {
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
                 "ownerActionRequired": false,
                 "scopeOrigin": "upstream-reuse-20261020",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-                "assignment": "Gepland op eigenaarsverzoek; geen implementatie gestart door dit onderzoek.",
+                "assignment": {
+                  "coordinator": "/root",
+                  "activeWorkers": [],
+                  "scope": "E4.14: één bestaande algemene taak als programma over minimaal twee diensten, via dezelfde actuele tool-/stop-/receiptgrens. Geen spraak of nieuw agentplatform."
+                },
                 "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
                 "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
                 "id": "E4.14",
@@ -7331,7 +7354,8 @@
                 ],
                 "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
                 "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-                "checkedAt": "2026-10-20T12:52:02.251252+00:00"
+                "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+                "progress": "E4.13 technisch afgerond. Controleer nu de bestaande echte opdracht, scriptbare upstream RPC en huidige subcalloverdracht vóór programmeren; nog geen RPC-wijziging geïnstalleerd."
               }
             ],
             "previousBoundedCompletion": {
@@ -7843,7 +7867,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
+        "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7852,7 +7876,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-20T17:50:52.808889+00:00",
+        "updatedAt": "2026-10-20T18:08:24.596249+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -8094,7 +8118,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T17:50:52.808889+00:00",
+        "checkedAt": "2026-10-20T18:08:24.596249+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -12351,7 +12375,7 @@
               "completionEvidence": "development/evidence/product/e412-skill-package-improvement-20261020.json"
             },
             {
-              "status": "in_progress",
+              "status": "completed",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
               "ownerActionRequired": false,
@@ -12360,7 +12384,7 @@
               "assignment": {
                 "coordinator": "/root",
                 "activeWorkers": [],
-                "scope": "E4.13: bestaande programmeerservice en optionele bronversiegebonden Python-LSP-feedback. Geen spraak of nieuwe programmeeragent."
+                "scope": "Root: bestaande workspace/editroute en installatie. E46: minimale gepinde LSP-protocol/clientadapter. E47: onafhankelijke bronreview en vaste semantische eindcontrole; geen spraak."
               },
               "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
               "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
@@ -12370,7 +12394,7 @@
               "scopeDecision": "Eigenaar20oktober bevestigt opname en uitvoering van alle nuttige onderdelen. Geen vrijblijvende kandidaat meer. Concrete upstreamkeuze en code worden alleen toegepast met behouden kwaliteit; een afgewezen variant sluit de gevraagde uitkomst niet automatisch af.",
               "doneWhen": "Een bestaande language server geeft in Eva’s bestaande geïsoleerde programmeerroute bronversiegebonden feedback op een echte wijziging; Eva gebruikt die feedback om de kandidaat te verbeteren vóór de bestaande onafhankelijke eindcontrole. Verouderde diagnostiek, bestaande fouten en ontbrekende tooling worden niet als nieuwe correcte bevindingen verkocht. Eerste afgebakende taal is Python; gewone programmering blijft werken bij ontbrekende optionele LSP. Exacte upstream herkomst/licenties en gewijzigde adapter zijn vastgelegd; geen nieuwe programmeeragent.",
               "existing": "Geïsoleerde programmeeromgeving, codevoorstellen en onafhankelijke beoordeling bestaan.",
-              "gap": "In de onderzochte uitvoercode is geen automatische LSP-feedback bij edit geïdentificeerd. Hermes heeft daarvoor concrete protocol-/clientcode.",
+              "gap": "Geen resterende technische E4.13-voorwaarde. Automatische editfeedback geldt eerst voor directe Python-writes/edits; bredere kwaliteit en gezinsnut blijven afzonderlijk.",
               "implementation": [
                 "Gebruik bestaande language server; hergebruik Hermes protocol/client waar extractie kleiner is dan een passende onderhouden clientdependency.",
                 "Koppel aan bestaande bestandswijziging met documentversie/hash en voor-/nadiagnostiek; neem Hermes configmanager en installers niet mee.",
@@ -12388,19 +12412,29 @@
               "dependsOn": [
                 "E4.5"
               ],
-              "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
+              "nextAction": "Behoud deze geïnstalleerde edit-feedback; vervolg met E4.14 voor één toegelaten programma over meerdere diensten.",
               "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-              "checkedAt": "2026-10-20T17:50:52.808889+00:00",
-              "progress": "E4.12 afgerond; begin met controle van de werkelijk geïnstalleerde programmeerservice en bestaande upstream-grens. Nog geen LSP-wijziging geïnstalleerd."
+              "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+              "progress": "Geïnstalleerd en werkelijk gebruikt: actuele Pyrightfout op bronhash/v1, gerichte modelcorrectie op v3 met één opgeloste fout, daarna aparte vaste gedragscontrole 6/6 geslaagd. Geen extra modeltaak of gewijzigde eindcriteria.",
+              "latestEvidence": "development/evidence/product/e413-programming-semantic-feedback-20261020.json",
+              "completedAt": "2026-10-20T18:07:32.586759+00:00",
+              "result": "Eva krijgt bij directe Pythonbestandswijzigingen semantische feedback binnen haar bestaande geïsoleerde programmeerroute en heeft die in één echte taak gebruikt vóór onafhankelijke eindcontrole. Optionele afwezigheid/stale feedback blokkeert gewone programmering niet. Operatorseed en gedeeltelijk gemeten verbruik blijven vermeld.",
+              "evidence": "development/evidence/product/e413-programming-semantic-feedback-20261020.json",
+              "completionEvidence": "development/evidence/product/e413-programming-semantic-feedback-20261020.json",
+              "independentReview": "development/reviews/e413-programming-semantic-feedback-review-20261020.json"
             },
             {
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
               "ownerActionRequired": false,
               "scopeOrigin": "upstream-reuse-20261020",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-              "assignment": "Gepland op eigenaarsverzoek; geen implementatie gestart door dit onderzoek.",
+              "assignment": {
+                "coordinator": "/root",
+                "activeWorkers": [],
+                "scope": "E4.14: één bestaande algemene taak als programma over minimaal twee diensten, via dezelfde actuele tool-/stop-/receiptgrens. Geen spraak of nieuw agentplatform."
+              },
               "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
               "effort": "Eén bestaande keten gericht aanvullen; geen tijd- of creditbelofte. Werkelijk verbruik apart meten.",
               "id": "E4.14",
@@ -12430,7 +12464,8 @@
               ],
               "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
               "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-              "checkedAt": "2026-10-20T12:52:02.251252+00:00"
+              "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+              "progress": "E4.13 technisch afgerond. Controleer nu de bestaande echte opdracht, scriptbare upstream RPC en huidige subcalloverdracht vóór programmeren; nog geen RPC-wijziging geïnstalleerd."
             }
           ],
           "previousBoundedCompletion": {
@@ -12942,7 +12977,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Controleer de werkelijk geïnstalleerde programmeerservice en hergebruik de getoetste upstream protocol/client-grens met een bestaande language server.",
+      "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -12951,7 +12986,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-20T17:50:52.808889+00:00",
+      "updatedAt": "2026-10-20T18:08:24.596249+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -13193,7 +13228,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T17:50:52.808889+00:00",
+      "checkedAt": "2026-10-20T18:08:24.596249+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -14796,6 +14831,46 @@
       "latestEvidence": "development/evidence/product/e412-skill-package-improvement-20261020.json",
       "independentReview": "development/reviews/e412-skill-package-improvement-review-20261020.json",
       "completedAt": "2026-10-20T17:49:13.190902+00:00"
+    },
+    "e413SemanticFeedback20261020": {
+      "startedAt": "2026-10-20T17:57:17.651308+00:00",
+      "state": "installed_technical_task_completed",
+      "existing": "Blijvende geïsoleerde MCP-programmeerwerkruimte en geverifieerde editreceipts.",
+      "gap": "Semantische edit-feedback en werkelijk gebruik daarvan door de bestaande Eva-uitvoerder.",
+      "built": true,
+      "installed": true,
+      "upstream": {
+        "package": "pyright",
+        "version": "1.1.414",
+        "license": "MIT",
+        "sha256": "bf5f473f6167c0d14175492c3263d783b4489a6956e1c06c18e15228e3a3fa42"
+      },
+      "targetedTests": {
+        "passed": 49,
+        "seconds": 7.88,
+        "modelCalls": 0
+      },
+      "independentCriteriaFrozen": true,
+      "voiceChanged": false,
+      "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+      "latestEvidence": "development/evidence/product/e413-programming-semantic-feedback-20261020.json",
+      "completedAt": "2026-10-20T18:07:32.586759+00:00",
+      "independentReview": "development/reviews/e413-programming-semantic-feedback-review-20261020.json",
+      "finalResult": "6/6",
+      "actualModelTaskCount": 1,
+      "actualEndcheckCount": 1,
+      "runtimeUsage": {
+        "schema_version": 1,
+        "contract": "DelegatedWorkUsage/v1",
+        "measurement": "partial",
+        "completed_model_responses": 6,
+        "tool_calls": 5,
+        "input_tokens": 62023,
+        "output_tokens": 869,
+        "total_tokens": 62892,
+        "cost_usd_micros": null
+      },
+      "technicalTaskCompleted": true
     }
   },
   "updatedAt": "2026-10-20T13:28:55.822181+00:00",

@@ -107,6 +107,20 @@ Een ontbrekende interne dependency van een aanwezige module blijft een echte fou
 Bronfingerprints komen uit de geïnstalleerde provider; core en uitvoerworker binden
 dezelfde bronversie. Uitschakelen verwijdert geen gegevens, taken of oude receipts.
 
+## Semantische feedback in de bestaande programmeerroute
+
+Optionele Pyright-feedback draait als stdio-kind binnen dezelfde netwerkloze,
+ongeprivilegieerde taakcontainer. Een minimale adapter hergebruikt de gepinde MIT-
+framing uit Hermes; de manager, installers en agentloop worden niet overgenomen.
+Directe `write_file`-/`edit_block`-wijzigingen aan Pythonbestanden leveren
+`EvaProgrammingDiagnostics/v1` op met voor-/nahash, sessiebreed oplopende documentversie
+en onderscheid tussen bestaande, nieuwe en opgeloste diagnostiek. Ontbrekende,
+verouderde of te grote feedback is onbekend, geen foutloze controle. Shellwijzigingen
+vallen buiten deze eerste automatische editkoppeling. De bestaande effectreceipt
+blijft leidend: optionele analyse veroorzaakt geen tweede schrijfhandeling. Stoppen
+verwijdert dezelfde container met taalserver. Diagnostiek helpt bij een volgende
+codecorrectie; onafhankelijke gedragsbeoordeling en installatie blijven afzonderlijk.
+
 ## Open vaardigheidspakketten
 
 De bestaande `ProcedureReference/v1` kan naast gewone documenten en Pythonbestanden

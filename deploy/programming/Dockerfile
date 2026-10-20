@@ -10,6 +10,9 @@ RUN npm ci --ignore-scripts --omit=dev --audit=false --fund=false
 COPY --from=reference /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=reference /opt/eva/src/eva /opt/eva-source/eva
 COPY default-config.json start.sh /opt/eva-programming/
+WORKDIR /opt/pyright
+COPY python-language-server/package.json python-language-server/package-lock.json ./
+RUN npm ci --ignore-scripts --omit=dev --omit=optional --audit=false --fund=false && ln -s /opt/pyright/node_modules/pyright/langserver.index.js /usr/local/bin/pyright-langserver
 ENV HOME=/workspace/.home PYTHONPATH=/opt/eva-source PYTHONDONTWRITEBYTECODE=1 MCP_CLIENT_DOCKER=true
 USER 10001:10001
 WORKDIR /workspace

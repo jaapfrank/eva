@@ -52,3 +52,26 @@ Maintenance: project coordinator; verify the exact lock, compatibility and relev
 advisories at the next dependency change. Upstream activity alone is no security
 or quality guarantee. Network-enabled dependency retrieval and automatic channel
 activation are not supplied by this workspace.
+
+## Optional Python semantic edit feedback
+
+Set trusted `programming_workspace.python_diagnostics` to `true` with an image
+containing the pinned `python-language-server` distribution. The default is false;
+`diagnostics_timeout_seconds` defaults to 5. The existing sandbox runs the fixed
+`pyright-langserver --stdio` process as its existing UID, without network or a new
+agent. `python-language-server/upstream.json` and its npm lock record Pyright and
+bundled license provenance. The Linux build omits the macOS-only optional fsevents.
+
+After direct `write_file` or `edit_block` calls on canonical `/workspace/*.py`
+paths, `eva_diagnostics` adds before/after source hashes, monotone document versions
+and new, preexisting and resolved diagnostics to the ordinary MCP result. Diagnostic
+text remains untrusted. Shell-created edits are outside this first automatic hook.
+Missing server, timeout, versionless/stale feedback, oversized or unsafe sources
+are unavailable, never a clean check. Oversized optional feedback becomes a compact
+unavailable summary or is omitted if even that cannot fit the existing result bound;
+an acknowledged write is not retried because diagnostics could not be returned.
+
+Receipts retain the exact returned feedback across replay. Closing/cancelling the
+existing session removes its language-server child with the same sandbox. Semantic
+feedback helps Eva revise code before independent final checks; it grants no extra
+capability and does not prove runtime correctness or installation.

@@ -1,0 +1,28 @@
+{
+  "version": "1.1.414",
+  "official_release": "https://github.com/microsoft/pyright/releases/tag/1.1.414",
+  "npm_metadata_url": "https://registry.npmjs.org/pyright/latest",
+  "source_commit": "a28cce4077d87b80bead12de809f79845e39c8ba",
+  "tarball": "https://registry.npmjs.org/pyright/-/pyright-1.1.414.tgz",
+  "tarball_sha256": "bf5f473f6167c0d14175492c3263d783b4489a6956e1c06c18e15228e3a3fa42",
+  "npm_integrity": "sha512-FPZZb51jepDX4eP7TEYDeNFtmE3WgwkkEcJpvH3/QmUSsj0EAy3LXu+xB4T/FWDejtsXlCfFr/rbWFjwuwuXww==",
+  "integrity_verified": true,
+  "node_engine": ">=14.0.0",
+  "runtime_dependencies": {},
+  "entrypoint": "pyright-langserver --stdio -> /opt/pyright/node_modules/pyright/langserver.index.js",
+  "license_files": {
+    "package/dist/typeshed-fallback/LICENSE": {
+      "bytes": 12657,
+      "sha256": "295f8538c94ae5c3043301cf7cff1c852dab6a786a8ddee471e061b40d5ecabe"
+    },
+    "package/LICENSE.txt": {
+      "bytes": 1150,
+      "sha256": "f7c936bc43f132b08497ac952e9376cbc102e5eedb4bf6ec902ea8442bd9c68d"
+    }
+  },
+  "retrievedAt": "2026-10-20",
+  "optionalDependencies": "macOS fsevents is omitted in the Linux runtime; retain upstream complete package/typeshed licenses.",
+  "optional_dependencies": {
+    "fsevents": "~2.3.3, macOS-only; omitted in Linux sandbox"
+  }
+}
