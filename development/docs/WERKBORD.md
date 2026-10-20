@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Actuele behoeften en verwachtingen per persoon laten doorwerken
+Zelf relevante bronveranderingen aansluiten op eigen aandacht
 
-E1.5 technisch afgerond en geïnstalleerd.
+Eva’s zelfgekozen aandacht verbinden aan de exact gekozen bron.
 
-Klaar wanneer: De bestaande persoonsgebonden geheugen-/contextketen levert een compacte brongebonden actuele synthese van relevante behoeften, voorkeuren, open afspraken en verwachtingen aan gewone afweging en vervolg. Minstens één echte correctie of weerlegde verwachting verandert later passend gedrag. Feit, hypothese en onzekerheid blijven onderscheiden; correctie, intrekking en vergeten werken ook vóór de volgende droomverwerking door. Bestaande Hindsight-mental-modelvoorziening en mensbegrip worden hergebruikt, zonder tweede geheugen of verplicht extra beoordelingsmodel per beurt. Werkelijk meerdaags gezinsnut en acceptatie blijven F2.
+Klaar wanneer: Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.
 
 ## Afmaakvolgorde
 
@@ -129,7 +129,7 @@ E5.1 heeft beperkt oorspronkelijk technisch bewijs. E1.4 controleert nu werkelij
 
 ## Van jou
 
-Geen handeling nodig voor deze oplevering. Meerdaagse gezinsacceptatie blijft apart.
+Geen handeling nodig. Eerst de bestaande gekoppelde bron en contracten gebruiken.
 
 ## Historie
 

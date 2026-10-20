@@ -841,14 +841,14 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E1.5",
+  "activeTaskId": "E1.6",
   "currentWork": {
-    "id": "E1.5",
-    "title": "Actuele behoeften en verwachtingen per persoon laten doorwerken",
-    "status": "completed",
-    "doneWhen": "De bestaande persoonsgebonden geheugen-/contextketen levert een compacte brongebonden actuele synthese van relevante behoeften, voorkeuren, open afspraken en verwachtingen aan gewone afweging en vervolg. Minstens één echte correctie of weerlegde verwachting verandert later passend gedrag. Feit, hypothese en onzekerheid blijven onderscheiden; correctie, intrekking en vergeten werken ook vóór de volgende droomverwerking door. Bestaande Hindsight-mental-modelvoorziening en mensbegrip worden hergebruikt, zonder tweede geheugen of verplicht extra beoordelingsmodel per beurt. Werkelijk meerdaags gezinsnut en acceptatie blijven F2.",
-    "nextAction": "E1.5 technisch afgerond en geïnstalleerd. Volgende bestaande kaart E1.6; geen gezinsactie nodig.",
-    "checkedAt": "2026-10-20T15:49:27.587345+00:00",
+    "id": "E1.6",
+    "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+    "status": "in_progress",
+    "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
+    "nextAction": "Getypeerde bronkeuze binden aan een werkelijk aangeboden, nog toegelaten gebeurtenisbron; bestaande aandacht hergebruiken voor verandering of gerichte controle.",
+    "checkedAt": "2026-10-20T15:55:04.713312+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2799,14 +2799,14 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E1.5",
-          "title": "Actuele behoeften en verwachtingen per persoon laten doorwerken",
-          "status": "completed",
-          "state": "installed",
-          "summary": "E1.5 technisch afgerond en geïnstalleerd.",
-          "detail": "Geïnstalleerd: dezelfde huidige bron-/revisiecontext bij licht gesprek en privé-initiatief. Native observaties en getypeerde ketenkoppen compact en zonder dubbele geschiedenis; onbewezen stijlspiegel geen fallback. HUE5 echte correctie/later gedrag hergebruikt, nieuwe overdracht technisch gecontroleerd. F2 blijft open.",
-          "doneWhen": "De bestaande persoonsgebonden geheugen-/contextketen levert een compacte brongebonden actuele synthese van relevante behoeften, voorkeuren, open afspraken en verwachtingen aan gewone afweging en vervolg. Minstens één echte correctie of weerlegde verwachting verandert later passend gedrag. Feit, hypothese en onzekerheid blijven onderscheiden; correctie, intrekking en vergeten werken ook vóór de volgende droomverwerking door. Bestaande Hindsight-mental-modelvoorziening en mensbegrip worden hergebruikt, zonder tweede geheugen of verplicht extra beoordelingsmodel per beurt. Werkelijk meerdaags gezinsnut en acceptatie blijven F2.",
-          "checkedAt": "2026-10-20T15:49:27.587345+00:00"
+          "taskId": "E1.6",
+          "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+          "status": "in_progress",
+          "state": "in_progress",
+          "summary": "Eva’s zelfgekozen aandacht verbinden aan de exact gekozen bron.",
+          "detail": "Bestaande eventstroom en scheduler hergebruiken. Geen vooraf gekozen huishoudcasus; alleen ondersteunde veranderingen en bestaande toegelaten uitlezing.",
+          "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
+          "checkedAt": "2026-10-20T15:55:04.713312+00:00"
         },
         "next": {
           "taskId": "E1.6",
@@ -2815,10 +2815,10 @@
         },
         "ownerAction": {
           "required": false,
-          "detail": "Geen handeling nodig voor deze oplevering. Meerdaagse gezinsacceptatie blijft apart.",
+          "detail": "Geen handeling nodig. Eerst de bestaande gekoppelde bron en contracten gebruiken.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T15:49:27.587345+00:00",
+        "checkedAt": "2026-10-20T15:55:04.713312+00:00",
         "reviewedAt": "2026-10-20T15:49:27.587345+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -5527,14 +5527,18 @@
                 "independentReview": "development/reviews/e15-current-person-context-review-20261020.json"
               },
               {
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
                 "ownerActionRequired": false,
                 "scopeOrigin": "useful-upstream-adoption-20261020",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "requiredForCurrentDelivery": true,
-                "assignment": "Opgenomen op expliciet eigenaarsverzoek; gepland, niet gebouwd of geïnstalleerd.",
+                "assignment": {
+                  "coordinator": "/root",
+                  "activeWorkers": [],
+                  "scope": "Bronbinding aan bestaande aandacht; geen voice of nieuwe scheduler."
+                },
                 "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
                 "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
                 "id": "E1.6",
@@ -5563,7 +5567,8 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Gebruik eerst de bestaande gekoppelde bron en eventroute; leg vast waar de algemene doel-/aandachtoverdracht ontbreekt voordat een extra adapter wordt gemaakt."
+                "nextAction": "Getypeerde bronkeuze binden aan een werkelijk aangeboden, nog toegelaten gebeurtenisbron; bestaande aandacht hergebruiken voor verandering of gerichte controle.",
+                "checkedAt": "2026-10-20T15:55:04.713312+00:00"
               }
             ],
             "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -10589,14 +10594,18 @@
               "independentReview": "development/reviews/e15-current-person-context-review-20261020.json"
             },
             {
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
               "ownerActionRequired": false,
               "scopeOrigin": "useful-upstream-adoption-20261020",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "requiredForCurrentDelivery": true,
-              "assignment": "Opgenomen op expliciet eigenaarsverzoek; gepland, niet gebouwd of geïnstalleerd.",
+              "assignment": {
+                "coordinator": "/root",
+                "activeWorkers": [],
+                "scope": "Bronbinding aan bestaande aandacht; geen voice of nieuwe scheduler."
+              },
               "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
               "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
               "id": "E1.6",
@@ -10625,7 +10634,8 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Gebruik eerst de bestaande gekoppelde bron en eventroute; leg vast waar de algemene doel-/aandachtoverdracht ontbreekt voordat een extra adapter wordt gemaakt."
+              "nextAction": "Getypeerde bronkeuze binden aan een werkelijk aangeboden, nog toegelaten gebeurtenisbron; bestaande aandacht hergebruiken voor verandering of gerichte controle.",
+              "checkedAt": "2026-10-20T15:55:04.713312+00:00"
             }
           ],
           "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -14583,6 +14593,19 @@
       "independentReview": "GO",
       "newRealBehaviorTrial": false,
       "historicalGenuineFeedbackEvidenceReused": true
+    },
+    "e16SourceAttention20261020": {
+      "startedAt": "2026-10-20T15:55:04.713312+00:00",
+      "state": "existing_seam_identified",
+      "previousGoalTurn": "progress",
+      "previousProgress": "E1.5 geïnstalleerd en op dashboard/GitHub afgerond; E1.4 blijft afgerond.",
+      "existing": "Native eventstroom, hostbroncontrole, duurzame NextAttention en bestaande afweging/uitvoering.",
+      "gap": "Geen getypeerde keuze van exact relevante bron/revisie op modelgekozen aandacht.",
+      "scope": "Eén bestaande private aandachtketen met bronbinding, detectie en gecontroleerd vervolg; geen nieuwe connector, scheduler, huiscasus of voicewijziging.",
+      "criteriaPreserved": true,
+      "runtimeChanged": false,
+      "voiceChanged": false,
+      "experiment": "Eerst gerichte isolatie en read-only echte broninvoer; geen nieuwe concurrentenserie of herhaling zonder gewijzigde oorzaak. Nieuw live bewijs alleen op bestaande providerroute."
     }
   },
   "updatedAt": "2026-10-20T13:28:55.822181+00:00",
