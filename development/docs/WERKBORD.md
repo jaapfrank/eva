@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Een blijvend eigen doel over dagen zelfstandig voortzetten
+Actuele behoeften en verwachtingen per persoon laten doorwerken
 
-E1.4 afgerond: Eva koos zelf vervolg, maakte het af en gebruikte de nieuwe uitkomst later.
+E1.5 gestart: Eva’s actuele behoeften, voorkeuren en verwachtingen laten doorwerken in gesprek en initiatief.
 
-Klaar wanneer: De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.
+Klaar wanneer: De bestaande persoonsgebonden geheugen-/contextketen levert een compacte brongebonden actuele synthese van relevante behoeften, voorkeuren, open afspraken en verwachtingen aan gewone afweging en vervolg. Minstens één echte correctie of weerlegde verwachting verandert later passend gedrag. Feit, hypothese en onzekerheid blijven onderscheiden; correctie, intrekking en vergeten werken ook vóór de volgende droomverwerking door. Bestaande Hindsight-mental-modelvoorziening en mensbegrip worden hergebruikt, zonder tweede geheugen of verplicht extra beoordelingsmodel per beurt. Werkelijk meerdaags gezinsnut en acceptatie blijven F2.
 
 ## Afmaakvolgorde
 
@@ -129,7 +129,7 @@ E5.1 heeft beperkt oorspronkelijk technisch bewijs. E1.4 controleert nu werkelij
 
 ## Van jou
 
-Voor E1.4 hoef jij niets te doen. Technisch afgerond; dagelijks gezinsnut en acceptatie blijven de bestaande gezinsproef.
+Geen handeling nodig. Bestaande echte correcties en feedback worden eerst hergebruikt.
 
 ## Historie
 
