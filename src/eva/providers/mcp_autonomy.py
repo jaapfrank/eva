@@ -69,10 +69,9 @@ class _SourceTurnLoader:
             raise ConversationConflict("connector source is not a private owner ingress")
         thread_id = "conversation:" + source["message_id"]
         try:
-            self._timeline.load(thread_id)  # Retain the ordinary corruption check.
+            _, events = self._timeline.load_with_events(thread_id)
         except TimelineNotFound:
             raise ConversationConflict("connector source ingress is absent") from None
-        events = self._timeline.events(thread_id)
         if not events or events[0].event_type != "INGRESS_COMMITTED":
             raise ConversationConflict("connector source ingress is absent")
         event = events[0]

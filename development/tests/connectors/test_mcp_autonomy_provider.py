@@ -109,7 +109,7 @@ def source_loader(monkeypatch):
     data = PostgresConversationJournal._ingress_data(turn)
     event = SimpleNamespace(event_type="INGRESS_COMMITTED", payload={"data": data},
         occurred_at=datetime(2026, 9, 9, 12, tzinfo=UTC))
-    timeline = SimpleNamespace(load=lambda key: None, events=lambda key: (event,))
+    timeline = SimpleNamespace(load_with_events=lambda key: (None, (event,)))
     monkeypatch.setattr(module, "PostgresOperationalTimeline", lambda *args: timeline)
     authority = Authority()
     return module._SourceTurnLoader(None, authority), source_reference(turn), event, authority, timeline
@@ -150,12 +150,12 @@ def test_loader_refuses_missing_or_erased_ingress_and_propagates_corruption(monk
         loader(source)
     def absent(key):
         raise TimelineNotFound("absent")
-    timeline.load = absent
+    timeline.load_with_events = absent
     with pytest.raises(ConversationConflict, match="absent"):
         loader(source)
     def corrupt(key):
         raise RuntimeError("corrupt projection")
-    timeline.load = corrupt
+    timeline.load_with_events = corrupt
     with pytest.raises(RuntimeError, match="corrupt projection"):
         loader(source)
 

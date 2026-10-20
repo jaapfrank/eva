@@ -404,6 +404,66 @@ class PostgresOperationalTimeline:
             finally:
                 transaction.rollback()
 
+    def load_with_events(
+        self, thread_id: str,
+    ) -> tuple[CheckpointState, tuple[TimelineEvent, ...]]:
+        """Read a checked projection and complete history from one statement snapshot.
+
+        Source authorization needs both views. Joining them avoids a second
+        scoped transaction and cannot straddle a concurrent append or erasure.
+        This is a fresh read, not a cache or execution authorization.
+        """
+        checkpoint = operational_checkpoints.c
+        history = operational_events.c
+        with self._engine.connect() as connection:
+            transaction = connection.begin()
+            try:
+                self._scope(connection)
+                rows = connection.execute(sa.select(
+                    operational_checkpoints,
+                    *(column.label("history_" + column.name) for column in history),
+                ).select_from(operational_checkpoints.outerjoin(
+                    operational_events,
+                    sa.and_(checkpoint.tenant_id == history.tenant_id,
+                            checkpoint.installation_id == history.installation_id,
+                            checkpoint.thread_id == history.thread_id),
+                )).where(
+                    checkpoint.tenant_id == self._scope_value.tenant_id,
+                    checkpoint.installation_id == self._scope_value.installation_id,
+                    checkpoint.thread_id == thread_id,
+                ).order_by(history.sequence)).all()
+                if not rows:
+                    raise TimelineNotFound("thread does not exist")
+                state = _state_from_row(rows[0])
+                events = tuple(TimelineEvent(
+                    event_id=row.history_event_id,
+                    thread_id=row.history_thread_id,
+                    sequence=row.history_sequence,
+                    checkpoint_id=row.history_checkpoint_id,
+                    operation_id=row.history_operation_id,
+                    event_type=row.history_event_type,
+                    payload=row.history_payload,
+                    payload_sha256=bytes(row.history_payload_sha256).hex(),
+                    occurred_at=row.history_occurred_at,
+                ) for row in rows if row.history_event_id is not None)
+                for event in events:
+                    if canonical_sha256(event.payload) != event.payload_sha256:
+                        raise OperationalTimelineError(
+                            "append-only event payload hash differs from its payload"
+                        )
+                if (not events or len(events) != state.revision
+                    or any(event.sequence != index for index, event in enumerate(events, 1))
+                    or _state_from_event(events[-1]) != state):
+                    raise OperationalTimelineError(
+                        "checkpoint projection differs from append-only timeline"
+                    )
+                if any(later.occurred_at < earlier.occurred_at
+                       for earlier, later in zip(events, events[1:])):
+                    raise OperationalTimelineError("timeline time moved backwards")
+                return state, events
+            finally:
+                transaction.rollback()
+
     def events(self, thread_id: str) -> tuple[TimelineEvent, ...]:
         with self._engine.connect() as connection:
             transaction = connection.begin()

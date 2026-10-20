@@ -46,9 +46,9 @@ def test_media_ingress_identity_roundtrips_without_replaying_analysis_as_user_te
     checked = []
     loader = _SourceTurnLoader.__new__(_SourceTurnLoader)
     loader._authority = SimpleNamespace(scope=scope, authorize_turn=checked.append)
-    loader._timeline = SimpleNamespace(load=lambda _: None, events=lambda _: (
+    loader._timeline = SimpleNamespace(load_with_events=lambda _: (None, (
         SimpleNamespace(event_type="INGRESS_COMMITTED", payload={"data": data},
-            occurred_at=datetime(2026, 10, 12, 12, tzinfo=UTC)),))
+            occurred_at=datetime(2026, 10, 12, 12, tzinfo=UTC)),)))
     restored = loader(_source(turn))
     assert restored.text == turn.text
     assert restored.media_context is None

@@ -1,0 +1,22 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "reviewer": "/root/review_cursor",
+  "checkedAt": "2026-10-20T17:01:17.506077+00:00",
+  "decision": "GO",
+  "scope": "Bounded source-read change only; installation and actual HTTP evidence remain required.",
+  "findings": [
+    "One scoped OUTER JOIN statement binds checkpoint and full history to one MVCC snapshot.",
+    "Complete hash/sequence/revision/time/checkpoint validation retained; fresh authorize_turn remains after source reconstruction.",
+    "Concurrent erasure test proves snapshot consistency, not immediate visibility of changes committed after the snapshot.",
+    "Paired microbenchmark improvement is about34ms per14-source-read batch; not complete cold-command speed."
+  ],
+  "focusedTests": {
+    "passed": 31,
+    "postgres": "16.13",
+    "fixtureFailuresPreserved": true
+  },
+  "sourceHashes": {
+    "src/eva/adapters/postgres/operational_timeline.py": "e7b113105c976bbdc33b500d000ff10ff7f8e95e147fbf5b6021a051d54c247a",
+    "src/eva/providers/mcp_autonomy.py": "4a76c4d977c657bb2e13060983796d2dac54218d0a4da9f75a6a23578c19060c"
+  }
+}
