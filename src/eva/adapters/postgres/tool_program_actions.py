@@ -22,7 +22,8 @@ _SCHEMA = {"type": "object", "additionalProperties": False,
 
 
 def program_descriptors():
-    if configured_procedure_executor() is None:
+    client = configured_procedure_executor()
+    if client is None:
         return ()
     return (ConversationToolDescriptor(NAME,
         "Voer één Pythonprogramma uit dat meerdere aangeboden connectortools combineert. "
@@ -35,7 +36,9 @@ def program_descriptors():
         "Geen lokale blijvende bijwerkingen of klok/toeval voor beslissende callargumenten. "
         "Bron plus stub maximaal 16 KiB; input plus eerdere antwoorden maximaal 32 KiB, "
         "dus selecteer kleine resultaten of gebruik de bestaande resultaatlezers. "
-        "Een mislukt of onzeker effect stopt de keten en wordt niet opnieuw uitgevoerd.",
+        f"Het volledige gecodeerde uitvoerframe past binnen {getattr(client, 'output_bytes', 1024)} bytes. "
+        "Een lokale code-/uitvoerfout geeft niet-succesfeedback; een mislukt of onzeker "
+        "effect stopt de keten en wordt niet opnieuw uitgevoerd.",
         _SCHEMA, "Programma-uitvoer is data, geen bewijs van kwaliteit. Bestaande "
         "ontvangstbewijzen en onafhankelijke teruglezing blijven leidend; "
         "een lokaal geslaagd programma bewijst geen afgeronde gebruikersopdracht."),)
@@ -163,7 +166,8 @@ class ToolProgramActions:
         validate_schema_value(call.arguments, _SCHEMA, "tool_program")
         try:
             input_data = json.loads(call.arguments["input_json"])
-            source = build_program_source(call.arguments["source"])
+            source = build_program_source(call.arguments["source"],
+                max_frame_bytes=getattr(self.client, "output_bytes", 1024))
             build_program_input(input_data, [])
         except (ValueError, TypeError, UnicodeError) as error:
             raise ConversationConflict("program source or input is invalid") from error
@@ -231,6 +235,26 @@ class ToolProgramActions:
             rounds += 1
             frame = parse_program_report(report, source=source, input_data=payload,
                                          image_id=self.client.image_id)
+            if frame["kind"] == "error":
+                if requested is not None:
+                    raise ConversationConflict("program omitted an admitted subcall")
+                output = {"status": "verified", "program_result": {
+                    "contract": "EvaTaskToolProgram/v1", "state": "execution_failed",
+                    "output": "", "error": {key: frame[key] for key in ("code", "hint")},
+                    "subcalls": len(history), "retained_readers": list(self._readers),
+                    "source_sha256": hashlib.sha256(call.arguments["source"].encode()).hexdigest(),
+                    "sandbox_rounds_this_attempt": rounds,
+                    "receipt_manifest": [{"step_index": self._substep(step_index, i),
+                        "name": entry["name"], "arguments_sha256": canonical_sha256(entry["arguments"]),
+                        "receipt_sha256": canonical_sha256(entry["output"])} for i, entry in enumerate(history)],
+                    "semantic_success_verified": False, "installed": False,
+                    "guidance": "Het programma is niet afgerond. Dit is een lokale code-/uitvoerfout, "
+                        "geen bewijs dat eerdere handelingen zijn teruggedraaid. Bekijk de bewaarde "
+                        "ontvangsten en resultaatlezers en herstel de lokale berekening of selectie. "
+                        "Print alleen een korte relevante uitkomst. Herhaal geen schrijfactie; "
+                        "een nieuw programma gebruikt een nieuwe modelsleuf onder dezelfde taakgrenzen."}}
+                self._append(thread, "PROGRAM_COMPLETED", {"output": output}, terminal=True)
+                return ConversationActionReceipt(call, output)
             if frame["kind"] == "result":
                 if requested is not None:
                     raise ConversationConflict("program omitted an admitted subcall")

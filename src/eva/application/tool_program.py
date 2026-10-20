@@ -162,30 +162,44 @@ class _Output(_io.StringIO):
     def write(self,value):
         global _fault
         self.bytes+=len(value.encode("utf-8"))
-        if self.bytes>16384:
-            _fault="program stdout exceeds bound"
+        if self.bytes>_FRAME_LIMIT:
+            if _fault is None:_fault="program stdout exceeds bound"
             raise _Failure(_fault)
         return super().write(value)
 
-_output=_Output()
+_output=_Output();_program_error=None
 _globals={"__name__":"__main__","input_data":_request["input_data"],"eva_tools":_tools}
 with _contextlib.redirect_stdout(_output):
     try:exec(compile(_base64.b64decode(_USER_SOURCE).decode("utf-8"),"<eva-tool-program>","exec"),_globals)
     except _Suspend:pass
-if _fault is not None:raise _Failure(_fault)
+    except _Failure:
+        if _fault!="program stdout exceeds bound":raise
+    except Exception as error:
+        _program_error={"code":"user_exception","hint":type(error).__name__+": "+str(error)[:512]}
+if _fault is not None and _fault!="program stdout exceeds bound":raise _Failure(_fault)
 if _index!=len(_history):raise _Failure("program did not consume the complete replay prefix")
-_frame=_pending if _pending is not None else {"kind":"result","output":_output.getvalue()}
-_frame.update({"contract":"EvaToolProgramFrame/v1","history_length":_index,
+# Expected local failures are data, never result/effect evidence. Bind them to
+# the same complete cached prefix; integrity or incomplete replay stays hard.
+if _fault=="program stdout exceeds bound":
+    _program_error={"code":"stdout_bound","hint":"Print a short selected result; do not print full receipt or source objects."}
+_frame=({"kind":"error",**_program_error} if _program_error is not None else
+    _pending if _pending is not None else {"kind":"result","output":_output.getvalue()})
+_binding={"contract":"EvaToolProgramFrame/v1","history_length":_index,
     "source_sha256":_hashlib.sha256(open(__file__,"rb").read()).hexdigest(),
-    "input_sha256":_hashlib.sha256(_raw_input).hexdigest()})
+    "input_sha256":_hashlib.sha256(_raw_input).hexdigest()}
+_frame.update(_binding)
 _wire=_encoded(_frame)+b"\n"
-if len(_wire)>16384:raise _Failure("program frame exceeds bound")
+if len(_wire)>_FRAME_LIMIT:
+    _wire=_encoded({**_binding,"kind":"error","code":"frame_bound",
+        "hint":"Encoded output exceeds the frame bound. Print a short selected result."})+b"\n"
 _sys.stdout.buffer.write(_wire);_sys.stdout.buffer.flush()
 '''
 
 
-def build_program_source(user_source: str) -> str:
+def build_program_source(user_source: str, *, max_frame_bytes: int = MAX_FRAME_BYTES) -> str:
     """Wrap Python source without interpolating it as executable framework code."""
+    if type(max_frame_bytes) is not int or not 1024 <= max_frame_bytes <= MAX_FRAME_BYTES:
+        raise ToolProgramRejected("program output bound is invalid")
     if not isinstance(user_source, str) or not user_source.strip():
         raise ToolProgramRejected("program source must be nonempty UTF-8 Python")
     try:
@@ -194,7 +208,7 @@ def build_program_source(user_source: str) -> str:
     except (UnicodeError, ValueError, SyntaxError, RecursionError) as error:
         raise ToolProgramRejected("program source is invalid") from error
     notice = "".join("# " + line + "\n" for line in _MIT_NOTICE.splitlines())
-    source = notice + "_USER_SOURCE=" + repr(base64.b64encode(raw).decode("ascii")) + "\n" + _BOOTSTRAP
+    source = notice + "_USER_SOURCE=" + repr(base64.b64encode(raw).decode("ascii")) + "\n_FRAME_LIMIT=" + str(max_frame_bytes) + "\n" + _BOOTSTRAP
     if len(source.encode("utf-8")) > MAX_SOURCE_BYTES:
         raise ToolProgramRejected("program plus wrapper exceeds 16384 bytes")
     return source
@@ -256,6 +270,10 @@ def parse_program_report(report, *, source: str, input_data: dict, image_id: str
             return {key: frame[key] for key in ("kind", "index", "name", "arguments")}
         if frame["kind"] == "result" and set(frame) == common | {"output"} and isinstance(frame["output"], str):
             return {"kind": "result", "output": frame["output"]}
+        if (frame["kind"] == "error" and set(frame) == common | {"code", "hint"}
+                and frame["code"] in {"user_exception", "stdout_bound", "frame_bound"}
+                and isinstance(frame["hint"], str) and len(frame["hint"].encode("utf-8")) <= 4096):
+            return {key: frame[key] for key in ("kind", "code", "hint")}
         raise ToolProgramRejected("program frame shape differs")
     except (KeyError, TypeError, AttributeError, ValueError, UnicodeError, OverflowError, RecursionError) as error:
         raise ToolProgramRejected("program report is unavailable or invalid") from error

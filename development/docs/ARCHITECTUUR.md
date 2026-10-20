@@ -132,6 +132,12 @@ invoergrenzen blijven gelden, inclusief stub en alle eerdere antwoorden; te grot
 ketens worden zichtbaar geweigerd, niet stil afgekapt. Sandboxstarts blijven over
 hervatten meegeteld binnen het bestaande taakbudget. Dit vermijdt nieuwe host-IPC,
 maar herhaalt lokale berekening; snelheids- of tokenwinst vraagt echte meting.
+Verwachte lokale code-/uitvoerfouten geven gebonden niet-succesfeedback aan dezelfde
+modelkringloop, met bestaande resultaatlezers waar beschikbaar. Een fout is geen
+resultaat; alleen latere gecontroleerde service-uitkomsten kunnen de taak afronden.
+Bron-/invoerbinding, volledig replayprefix, stoppen en onbekende effecten blijven
+harde grenzen. Een nieuwe capability/profielbinding vereist naast configuratie ook
+de bestaande eigenaargebonden `admit_revision`-overdracht naar het mandaatregister.
 
 ## Semantische feedback in de bestaande programmeerroute
 

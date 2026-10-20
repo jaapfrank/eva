@@ -21,8 +21,8 @@ def encoded(value):
                       separators=(",", ":"), allow_nan=False).encode()
 
 
-def run(tmp_path, user_source, history=None, input_data=None):
-    source = build_program_source(user_source)
+def run(tmp_path, user_source, history=None, input_data=None, max_frame_bytes=16384):
+    source = build_program_source(user_source, max_frame_bytes=max_frame_bytes)
     payload = build_program_input(input_data, [] if history is None else history)
     path = tmp_path / "wrapped.py"
     path.write_text(source)
@@ -100,8 +100,7 @@ def test_caught_suspend_still_emits_only_first_new_call(tmp_path):
 
 
 @pytest.mark.parametrize("user", [
-    "raise RuntimeError('synthetic failure')", "raise SystemExit(0)",
-    "print('x'*17000)", "import os; os.write(1,b'not a protocol frame\\n')",
+    "raise SystemExit(0)", "import os; os.write(1,b'not a protocol frame\\n')",
     "eva_tools.call('invalid-name')",
 ])
 def test_crash_oversize_direct_stdout_and_invalid_calls_never_become_results(tmp_path, user):
@@ -174,3 +173,57 @@ def test_source_and_generated_wrapper_retain_upstream_notice_and_exact_bounds():
     root = Path(__file__).resolve().parents[3]
     notice = root / "src/vendor/hermes-tool-program/LICENSE"
     assert hashlib.sha256(notice.read_bytes()).hexdigest() == "821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6"
+
+
+@pytest.mark.parametrize("user,code", [
+    ("raise RuntimeError('synthetic failure')", "user_exception"),
+    ("print('x'*17000)", "stdout_bound"),
+    ("print('\\x01'*4000)", "frame_bound"),
+])
+def test_expected_local_failure_is_bound_non_success_context(tmp_path, user, code):
+    report, args = run(tmp_path, user)
+    frame = parse_program_report(report, **args)
+    assert frame["kind"] == "error" and frame["code"] == code
+    assert "output" not in frame and report["result"]["exit_code"] == 0
+    report["input_sha256"] = "b" * 64
+    with pytest.raises(ToolProgramRejected):
+        parse_program_report(report, **args)
+
+
+def test_error_after_verified_prefix_keeps_history_binding(tmp_path):
+    user = "a=eva_tools.call('read'); print(a['missing'])"
+    history = [{"name":"read", "arguments":{}, "output":{"value":1}}]
+    report, args = run(tmp_path, user, history)
+    assert parse_program_report(report, **args)["code"] == "user_exception"
+    frame = json.loads(report["result"]["stdout"]); frame["history_length"] = 0
+    report["result"]["stdout"] = json.dumps(frame)
+    with pytest.raises(ToolProgramRejected):
+        parse_program_report(report, **args)
+
+
+def test_error_before_complete_retained_prefix_does_not_hide_replay_omission(tmp_path):
+    report, args = run(tmp_path, "raise ValueError('before replay')",
+        [{"name":"read", "arguments":{}, "output":{}}])
+    with pytest.raises(ToolProgramRejected):
+        parse_program_report(report, **args)
+
+
+def test_swallowed_drift_cannot_be_replaced_by_later_stdout_error(tmp_path):
+    user = "try:\n eva_tools.call('wrong')\nexcept BaseException:\n pass\neva_tools.call('read')\nprint('x'*17000)"
+    report, args = run(tmp_path, user, [{"name":"read", "arguments":{}, "output":{}}])
+    with pytest.raises(ToolProgramRejected):
+        parse_program_report(report, **args)
+
+
+@pytest.mark.parametrize("limit", [1024,4096,16384])
+def test_encoded_frame_uses_the_actual_executor_capture_bound(tmp_path, limit):
+    report,args=run(tmp_path,"print('x'*11000)",max_frame_bytes=limit)
+    assert len(report["result"]["stdout"].encode()) <= limit
+    frame=parse_program_report(report,**args)
+    assert frame["kind"] == ("result" if limit==16384 else "error")
+
+
+@pytest.mark.parametrize("limit", [0,1023,16385,True,"4096"])
+def test_untrusted_or_unsupported_output_bound_rejected(limit):
+    with pytest.raises(ToolProgramRejected):
+        build_program_source("print('small')",max_frame_bytes=limit)

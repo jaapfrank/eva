@@ -1,13 +1,13 @@
 {
   "contract": "EvaTaskProgramDelivery/v1",
   "taskId": "E4.14",
-  "checkedAt": "2026-10-20T19:55:03.649746+00:00",
-  "state": "installed_known_input_transfer_gap_being_corrected",
+  "checkedAt": "2026-10-20T20:24:00.268364+00:00",
+  "state": "installed_technically_completed_owner_acceptance_separate",
   "existing": "Existing durable digital tasks, isolated offline Python executor and current connector dispatch/receipts.",
   "added": "Pinned Hermes-derived call stub, bounded suspend/replay handoff and per-subcall normal durable dispatch; no second agent/platform or credentials in script.",
   "installation": {
-    "coreImage": "sha256:f0c3fca939c2418c44b2976b724fb0630d9a3ffcb463523a6ea98df926ea5bf1",
-    "workerImage": "sha256:73e356331a2c93595a644f69383d6bc0497652eaa3701c1cf2c3c90997ea5f0c",
+    "coreImage": "sha256:d45e1946e23d6f7bbe136bd77a7fa1ad4664ab10938dca1c2b4488073095e35b",
+    "workerImage": "sha256:ac572a5bb4cdf80b54b5a80f5d9e3def02986de87cc87d5674d3253f0c222fb6",
     "executionPins": 70,
     "capabilities": 27,
     "sameRelease": true,
@@ -15,17 +15,23 @@
     "voiceChanged": false,
     "nativePolicyOnlyProfileAndProgramCapabilityUpdated": true,
     "policyBeforeSha256": "f6e5f53a4efb146ae4b83c9ed0f270164a20bec116227580ad88b2756a35f646",
-    "policyAfterSha256": "f20717f03902afbbbf73257a8df9f27b1d6d6f2dd441078ac20fdaa1177bf83b"
+    "policyAfterSha256": "f20717f03902afbbbf73257a8df9f27b1d6d6f2dd441078ac20fdaa1177bf83b",
+    "clientOutputBytes": 4096,
+    "profileEqualityConfirmedAfterInstallation": true,
+    "oldSelectedProcessesStoppedBeforeClientConfigChange": true,
+    "policyUnchangedThisCorrection": true
   },
   "checks": {
-    "protocol": 46,
-    "adapter": 10,
+    "protocol": 58,
+    "adapter": 13,
     "postgresDurableReceipts": 2,
     "configuredProfileAndContracts": 49,
     "existingRunnerAndCompositionPassed": 143,
     "existingHouseholdReadFailures": 3,
     "sameHouseholdFailuresConfirmedWithPreChangeComposition": true,
-    "externalModelCallsByTests": 0
+    "externalModelCallsByTests": 0,
+    "clientConfig": 17,
+    "completion": 11
   },
   "comparison": {
     "scope": "One existing read-only task, ordinary route versus program route; no competitor series.",
@@ -51,24 +57,119 @@
       "documentWriteOrHouseholdEffect": false,
       "oldOutcomePreserved": true
     },
-    "generalQualityOrEfficiencyWinProved": false
+    "generalQualityOrEfficiencyWinProved": false,
+    "assistedFollowup": {
+      "state": "ambiguous",
+      "errorCode": "internal_error",
+      "knownCause": "actual_executor_capture_4096_bytes_truncated_11692_byte_program_frame",
+      "inputTransferFeedbackUsed": true,
+      "existingStoredResultReaderUsed": true,
+      "completedModelResponses": 5,
+      "toolCalls": 12,
+      "registeredTokens": 74424,
+      "measurement": "partial",
+      "creditCost": null,
+      "oldOutcomesPreserved": true,
+      "elapsedSeconds": 104
+    },
+    "correctiveFollowupV3": {
+      "state": "succeeded",
+      "independentContentReview": "passed_at_task_level_strict_single_program_gap_preserved",
+      "elapsedSeconds": 144,
+      "completedModelResponses": 8,
+      "toolCalls": 24,
+      "registeredTokens": 140915,
+      "measurement": "partial",
+      "creditCost": null,
+      "operatorAssistance": "Separate explicit task admission and general boundary/error corrections; no program code supplied to Eva.",
+      "actualProgramAttempts": 3,
+      "localInputTransferRefusals": 1,
+      "localCodeFailuresHandled": 1,
+      "completedPrograms": 1,
+      "currentEntityRecountPerformed": false,
+      "noteCharacters": 1309,
+      "outputSha256": "140403f5500999e000d61d7c9e33e1e0b41e889459259a095be44c553a54d991",
+      "usesActualHAReceiptViaStoredReaderInCompletedProgram": true,
+      "directHAReadInEarlierProgramSameExecution": true,
+      "originalRecipient": "private dashboard task source; no human receipt claimed",
+      "independentReviewSha256": "d4b84cd477bf2c0fd0f21fcab32b87546f425fff8eb012a1984a109478db3e53"
+    },
+    "allLegsRegisteredPartialTokens": 542159,
+    "originalBaselineAndThreeCandidatesRegisteredPartialTokens": 413443,
+    "sourceIdenticalBaselineComparisonForFunctionalFollowup": false,
+    "totalCompletedModelResponses": 33,
+    "totalToolDispatches": 67,
+    "developmentUsage": "unknown_separate_from_measured_runtime",
+    "creditCost": null
   },
   "sourceHashes": {
-    "src/eva/application/tool_program.py": "b06d053839da22a0ff269f9c3a694d866e397c525023246ee2c21b17ff939a65",
-    "src/eva/adapters/postgres/tool_program_actions.py": "d015dc900c548ca142fbbe2dbec4eb019b122d96c53ce0b45aafd2e386b41b87",
+    "src/eva/application/tool_program.py": "080f6c3bfdbdaa9189d2fccc64fe2633a62f382aedac6f58686689da2591731b",
+    "src/eva/adapters/postgres/tool_program_actions.py": "8c7c3d06784573ca9df1f3e1c799a1b4cd67a365e42aa8d77857b3327ce3b572",
     "src/eva/bootstrap/delegated_digital_runner.py": "e030c9671defd00e94c61af6fd1ca0bc7f5e7f072184853c8efd4fae494c0320",
     "src/eva/bootstrap/delegated_digital_composition.py": "9217953f7ea5deed713dcb3cdf929ebd8902a496e755c50334bd48cb07e7e10d",
-    "src/eva/adapters/connectors/delegated_completion.py": "bf9767f346be4b4cfa3f7a0a6908f6c1abcbd27ea06db98c8bf046605039594d",
+    "src/eva/adapters/connectors/delegated_completion.py": "9134ba16c4fa8376462a739bcdb5c6ab573c40d074f98f1a93eda13fc09092ff",
     "src/eva/contracts/delegated_digital_work.py": "315b77aa80074e1b578f24b769ee319856b96454150ed04e4335185d09d913b2",
-    "src/eva/bootstrap/delegated_digital_profile.py": "e32e206a7fd8f1f05fae1162863b76557a1eae4d3250ae28466d3aff9c90ae43"
+    "src/eva/bootstrap/delegated_digital_profile.py": "e32e206a7fd8f1f05fae1162863b76557a1eae4d3250ae28466d3aff9c90ae43",
+    "src/eva/adapters/connectors/procedure_execution.py": "16d74fb37dcb91894bbe7edb8ec724478677827ee4822fcacb2d00214096a245"
   },
-  "sourceReviewSha256": "b3b82236fdfca7e427c6c492a64a7574590b6d2a385ccc36daa11c2b38f13cd1",
+  "sourceReviewSha256": "c5a5eae2c4d81e6881e5c49ae9d3d90ff9699471a4cba329b471b06b3b0b2db0",
   "limitations": [
-    "Candidate real program execution and final independent assessment still required.",
-    "Pure computation restarts at each suspension; repeated service effects are never authorized by replay.",
-    "Combined source/stub and input/history keep existing 16 KiB and 32 KiB bounds; oversize is refused, not truncated.",
-    "Credit costs and incomplete usage remain unknown; family acceptance is separate."
+    "Original frozen candidate comparison remains failed; both initial ambiguous tasks and the R3 single-program gap are preserved.",
+    "R4 proves the installed function and actual later use of a short saved result; it has different intake from baseline and proves no source-identical efficiency or quality advantage.",
+    "All542159 registered tokens are partial runtime measurements, not a complete cost accounting; development and credit costs are unknown.",
+    "Operator-admitted technical use is not spontaneous family initiative, human receipt, family acceptance or proof of autonomous self-repair.",
+    "No full-project completion or general superiority claim."
   ],
   "fullProjectComplete": false,
-  "correction": "Expected local transfer refusal gets non-success guidance and retained receipt references; it cannot count as completed work. No bound increase or automatic retry of old ambiguous work."
+  "correction": "Expected local transfer refusal gets non-success guidance and retained receipt references; it cannot count as completed work. No bound increase or automatic retry of old ambiguous work.",
+  "nativeMandateAdmission": {
+    "state": "revised",
+    "canonicalDigest": "40cde52da097143cc17a1e9521ae190f56749cd922bc984918f6bc208e347519",
+    "transientAdmissionGapPreserved": true
+  },
+  "correctionV3": {
+    "actualExecutorOutputBytes": 4096,
+    "boundIncreased": false,
+    "trustedClientBudgetAdded": true,
+    "encodedProgramFrameUsesActualClientBudget": true,
+    "localFailureIsNonSuccessContext": true,
+    "unverifiableOrTruncatedReportsStillRejected": true,
+    "originalFailuresPreserved": true,
+    "diagnosticProviderModelCalls": 0,
+    "diagnosticIsolatedExecutions": 3,
+    "diagnosticElapsedMs": 3489,
+    "initialFaultPrecedenceReviewNoGoPreserved": true,
+    "independentReviewPending": false,
+    "installed": true
+  },
+  "strictFunctionalFollowup": {
+    "purpose": "Later use of actual verified short result; not a source-identical new baseline comparison",
+    "state": "succeeded",
+    "createdAt": "2026-10-20T20:19:24Z",
+    "completedAt": "2026-10-20T20:21:03Z",
+    "elapsedSeconds": 99,
+    "completedModelResponses": 8,
+    "toolCalls": 17,
+    "registeredTokens": 128716,
+    "measurement": "partial",
+    "creditCost": null,
+    "programAttempts": 2,
+    "firstLocalCodeFailureHandled": true,
+    "completedProgramDirectCalls": [
+      "workspace_document_read",
+      "home_assistant_request",
+      "workspace_document_save"
+    ],
+    "noteCharacters": 1079,
+    "outputSha256": "0756d9fb6171b802f9926051dda599ec2ed233bb5fcb6c7d8dbc2655faf18df3",
+    "originalRecipient": "same configured private dashboard owner; no human receipt claimed",
+    "independentReview": "passed_strict_single_program_direct_two_services",
+    "noteSha256": "83036f18006901857ea4776ca6c2aa5c8935db66b8cb463e029431757ab32913",
+    "independentReadbackExpectedEqualsObserved": true,
+    "originalReceiverNormalOwnerAccess": true
+  },
+  "technicalCompletedAt": "2026-10-20T20:21:03Z",
+  "independentFinalReviewSha256": "40bf7527abc399b3edc6170b4fe5ffdae8da6f2f8217dfbd82005998dc1cdeca",
+  "ownerAcceptance": false,
+  "familyAcceptance": false
 }

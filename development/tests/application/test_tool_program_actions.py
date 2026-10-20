@@ -180,3 +180,21 @@ def test_oversize_local_history_is_actionable_not_an_ambiguous_task_failure(fixt
     # refused transfer itself supplies no success evidence.
     later=ConversationActionReceipt(ConversationActionCall("later","service",{}),{"status":"verified"})
     assert completed_tool_evidence([r,later]) is True
+
+
+@pytest.mark.parametrize("source,code", [
+    ("a=eva_tools.call('first_service'); print(a['missing'])", "user_exception"),
+    ("a=eva_tools.call('first_service'); print('x'*17000)", "stdout_bound"),
+])
+def test_expected_local_failure_is_retained_context_not_task_success_or_retry(fixture, source, code):
+    from eva.adapters.connectors.delegated_completion import completed_tool_evidence
+    f=fixture; c=call(source); r=f.build().execute(f.source,c)
+    assert r.output["program_result"]["state"]=="execution_failed"
+    assert r.output["program_result"]["error"]["code"]==code
+    assert r.output["program_result"]["subcalls"]==1
+    assert len(f.actions.effects)==1 and f.client.rounds==2
+    assert completed_tool_evidence([*f.actions.receipts,r]) is False
+    assert f.build().execute(f.source,c)==r
+    assert len(f.actions.effects)==1 and f.client.rounds==2
+    later=ConversationActionReceipt(ConversationActionCall("later","service",{}),{"status":"verified"})
+    assert completed_tool_evidence([*f.actions.receipts,r,later]) is True

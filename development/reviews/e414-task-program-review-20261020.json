@@ -1,16 +1,17 @@
 {
   "contract": "EvaIndependentReviewSummary/v1",
   "taskId": "E4.14",
-  "checkedAt": "2026-10-20T19:59:08.785091+00:00",
-  "decision": "GO_SOURCE_AND_COORDINATED_INSTALLATION_ONLY",
+  "checkedAt": "2026-10-20T20:24:00.268364+00:00",
+  "decision": "GO_TECHNICAL_E414_ONLY_NO_EFFICIENCY_WIN",
   "sourceHashes": {
-    "src/eva/application/tool_program.py": "b06d053839da22a0ff269f9c3a694d866e397c525023246ee2c21b17ff939a65",
-    "src/eva/adapters/postgres/tool_program_actions.py": "a9283bbb4ab9995b29940afcaf1181f51c68c8d68789bc853af0d8fc20f60f76",
+    "src/eva/application/tool_program.py": "080f6c3bfdbdaa9189d2fccc64fe2633a62f382aedac6f58686689da2591731b",
+    "src/eva/adapters/postgres/tool_program_actions.py": "8c7c3d06784573ca9df1f3e1c799a1b4cd67a365e42aa8d77857b3327ce3b572",
     "src/eva/bootstrap/delegated_digital_runner.py": "e030c9671defd00e94c61af6fd1ca0bc7f5e7f072184853c8efd4fae494c0320",
     "src/eva/bootstrap/delegated_digital_composition.py": "9217953f7ea5deed713dcb3cdf929ebd8902a496e755c50334bd48cb07e7e10d",
-    "src/eva/adapters/connectors/delegated_completion.py": "05442fab1f040b5d4a5af908ef9b64d93e2774c81063125636fe83efa6a259df",
+    "src/eva/adapters/connectors/delegated_completion.py": "9134ba16c4fa8376462a739bcdb5c6ab573c40d074f98f1a93eda13fc09092ff",
     "src/eva/contracts/delegated_digital_work.py": "315b77aa80074e1b578f24b769ee319856b96454150ed04e4335185d09d913b2",
-    "src/eva/bootstrap/delegated_digital_profile.py": "e32e206a7fd8f1f05fae1162863b76557a1eae4d3250ae28466d3aff9c90ae43"
+    "src/eva/bootstrap/delegated_digital_profile.py": "e32e206a7fd8f1f05fae1162863b76557a1eae4d3250ae28466d3aff9c90ae43",
+    "src/eva/adapters/connectors/procedure_execution.py": "16d74fb37dcb91894bbe7edb8ec724478677827ee4822fcacb2d00214096a245"
   },
   "initialNoGoPreserved": true,
   "durableReceiptsChecks": 2,
@@ -18,12 +19,25 @@
   "existingBoundReaderHandoffChecked": true,
   "originalCandidateState": "ambiguous",
   "originalCandidateRegisteredTokens": 37826,
-  "newAssistedFollowupRequired": true,
+  "newAssistedFollowupRequired": false,
   "originalFrozenComparisonPassed": false,
   "fullProjectComplete": false,
   "voiceChanged": false,
   "limitations": [
-    "Source approval is not task completion or household acceptance.",
-    "Original program failed; the corrected route still needs actual execution, independent content review and original-recipient result access."
-  ]
+    "Original failed comparison and R3 partial review are preserved; no rescore or criterion change.",
+    "The final functional follow-up reuses a short real saved result, so it is not a source-identical baseline comparison.",
+    "Technical completion does not prove general superiority, autonomous self-repair or family acceptance."
+  ],
+  "latestSourceReviewSha256": "c5a5eae2c4d81e6881e5c49ae9d3d90ff9699471a4cba329b471b06b3b0b2db0",
+  "actualOutputBudget4096Checked": true,
+  "localCodeFailureNonSuccessChecked": true,
+  "sourceDriftFaultPrecedenceReviewPreserved": true,
+  "installed": true,
+  "realOutcomeAssessment": "passed_strict_single_program_in_separate_functional_followup",
+  "independentFinalReviewSha256": "40bf7527abc399b3edc6170b4fe5ffdae8da6f2f8217dfbd82005998dc1cdeca",
+  "originalFailuresPreserved": true,
+  "allLegsRegisteredPartialTokens": 542159,
+  "creditCost": null,
+  "ownerAcceptance": false,
+  "familyAcceptance": false
 }

@@ -20,6 +20,13 @@ class ProcedureExecutionClient:
     token_file: str
     image_id: str
     timeout_seconds: int = 60
+    output_bytes: int = 1024
+
+    def __post_init__(self):
+        # This is trusted host configuration, never program/model input. An
+        # older client file cannot promise more than the executor's minimum.
+        if type(self.output_bytes) is not int or not 1024 <= self.output_bytes <= 16384:
+            raise ValueError("invalid procedure executor output bound")
 
     def execute(self, source, input_data):
         source_bytes = source.encode("utf-8")
@@ -53,7 +60,9 @@ def configured_procedure_executor():
     if not path:
         return None
     data = json.loads(Path(path).read_text())
-    if set(data) != {"url", "token_file", "image_id", "timeout_seconds"}:
+    required = {"url", "token_file", "image_id", "timeout_seconds"}
+    if (not isinstance(data, dict) or not required <= set(data)
+            or set(data) - required - {"output_bytes"}):
         raise ValueError("procedure executor configuration fields differ")
     url = urlsplit(data["url"])
     import re

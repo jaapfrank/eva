@@ -131,7 +131,7 @@ def completed_tool_evidence(receipts):
             if (output.get("status") != "verified"
                     or result.get("contract") != "EvaTaskToolProgram/v1"):
                 return False
-            if result.get("state") == "input_not_transferable":
+            if result.get("state") in {"input_not_transferable", "execution_failed"}:
                 completed = False
             elif result.get("state") != "completed":
                 return False

@@ -841,14 +841,14 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.14",
+  "activeTaskId": "E1.6",
   "currentWork": {
-    "id": "E4.14",
-    "title": "Een taak over meerdere diensten als programma uitvoeren",
+    "id": "E1.6",
+    "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
-    "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
-    "nextAction": "Installeer de gerichte invoerterugmelding na bronreview en vrije werkclaims; voer één afzonderlijke vervolgproef uit zonder oude onzekere poging automatisch te herstarten.",
-    "checkedAt": "2026-10-20T19:55:03.649746+00:00",
+    "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
+    "nextAction": "Controleer de bestaande bron-aandachtketen en sluit uitsluitend het concrete ontbrekende vervolg van E1.6 af. Geen nieuwe vergelijkingsserie; spraak blijft bij de andere uitvoerder.",
+    "checkedAt": "2026-10-20T20:24:00.268364+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,23 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.14 · Eén Eva-programma werkt over meerdere diensten",
+            "state": "installed",
+            "summary": "Eva hergebruikte een echt opgeslagen resultaat, las rechtstreeks Home Assistant en bewaarde vanuit hetzelfde programma een gecontroleerde vervolgnotitie.",
+            "remaining": "Technisch afgerond. Geen bewezen efficiëntie- of kwaliteitsvoorsprong; alle vijf uitvoeringen samen542.159 geregistreerde runtime-tokens (onvolledige meting), creditkosten onbekend. Dagelijks gezinsnut en eigenaaracceptatie blijven F2.",
+            "source": "development/evidence/reassessment/e414-task-program-installed-20261020.json",
+            "review": "development/reviews/e414-task-program-review-20261020.json",
+            "checkedAt": "2026-10-20T20:24:00.268364+00:00",
+            "completedAt": "2026-10-20T20:21:03Z",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "E4.14"
+            ],
+            "completionScope": "Begrensde algemene programma-uitvoering; geen nieuwe voorbeeldfunctie of voltooiing van een geheel hoofdonderdeel.",
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E1.4 · Eigen vervolg afgemaakt en later inhoudelijk gebruikt",
             "state": "installed",
@@ -2908,44 +2925,44 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E1.4 · Eigen vervolg afgemaakt en later inhoudelijk gebruikt",
+          "title": "E4.14 · Eén Eva-programma werkt over meerdere diensten",
           "state": "installed",
-          "summary": "Eva heeft haar eigen vervolg afgemaakt en het resultaat later inhoudelijk gebruikt.",
-          "remaining": "Geen resterende technische stap voor deze bestaande E1.4-uitkomst. Dagelijks gezinsnut en eigenaaracceptatie blijven F2. Herstelhulp is geen bewezen zelfstandig foutherstel; geen extra Telegrambericht geclaimd.",
-          "source": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
-          "review": "development/reviews/e14-verified-result-completion-review-20261020.json",
-          "checkedAt": "2026-10-20T19:26:59.261526+00:00",
-          "completedAt": "2026-10-20T19:22:58Z",
-          "newProductFunctionCompleted": false,
+          "summary": "Eva hergebruikte een echt opgeslagen resultaat, las rechtstreeks Home Assistant en bewaarde vanuit hetzelfde programma een gecontroleerde vervolgnotitie.",
+          "remaining": "Technisch afgerond. Geen bewezen efficiëntie- of kwaliteitsvoorsprong; alle vijf uitvoeringen samen542.159 geregistreerde runtime-tokens (onvolledige meting), creditkosten onbekend. Dagelijks gezinsnut en eigenaaracceptatie blijven F2.",
+          "source": "development/evidence/reassessment/e414-task-program-installed-20261020.json",
+          "review": "development/reviews/e414-task-program-review-20261020.json",
+          "checkedAt": "2026-10-20T20:24:00.268364+00:00",
+          "completedAt": "2026-10-20T20:21:03Z",
+          "newProductFunctionCompleted": true,
           "completedTaskIds": [
-            "E1.4"
+            "E4.14"
           ],
-          "completionScope": "Actuele vervolgketen van de al historisch afgeronde kaart; oorspronkelijke criteria en telling behouden, geen extra nieuwe productfunctie geteld.",
+          "completionScope": "Begrensde algemene programma-uitvoering; geen nieuwe voorbeeldfunctie of voltooiing van een geheel hoofdonderdeel.",
           "ownerAcceptance": false,
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.14",
-          "title": "Een taak over meerdere diensten als programma uitvoeren",
+          "taskId": "E1.6",
+          "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
           "status": "in_progress",
           "state": "in_progress",
-          "summary": "Een taakprogramma verbinden met bestaande diensten en duurzame resultaten.",
-          "detail": "Geïnstalleerde eerste programmapoging veilig gestopt na twee bevestigde lezingen: invoer met tussenresultaten te groot. Geen document of huisactie uitgevoerd. Gerichte terugmeldingscorrectie gebouwd en 22 relevante checks geslaagd; nog niet geïnstalleerd. Eerste mislukking en 37.826 gedeeltelijk gemeten tokens blijven bewaard.",
-          "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
-          "checkedAt": "2026-10-20T19:55:03.649746+00:00"
+          "summary": "Bestaande relevante bronveranderingen verbinden met eigen aandacht en passend vervolg.",
+          "detail": "Geïnstalleerd; bronverwijzingsfout hersteld en werkelijk gecontroleerd. Eén technisch gestimuleerde afweging met huidige context koos geen bron. Echte bronveranderingsketen blijft open, geen herhaling tot succes.",
+          "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
+          "checkedAt": "2026-10-20T20:24:00.268364+00:00"
         },
         "next": {
-          "taskId": "E4.14",
-          "title": "Een taak over meerdere diensten als programma uitvoeren",
-          "detail": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter."
+          "taskId": "F2.1",
+          "title": "Zeven dagen gezinsgebruik",
+          "detail": "Bestaande echte gezinsproef; geen vervanging door technische tests. Spraak blijft bij de andere uitvoerder."
         },
         "ownerAction": {
           "required": false,
           "detail": "Geen handeling nodig. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T19:26:59.261526+00:00",
-        "reviewedAt": "2026-10-20T19:26:59.261526+00:00",
+        "checkedAt": "2026-10-20T20:24:00.268364+00:00",
+        "reviewedAt": "2026-10-20T20:24:00.268364+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -7380,7 +7397,7 @@
                 "independentReview": "development/reviews/e413-programming-semantic-feedback-review-20261020.json"
               },
               {
-                "status": "in_progress",
+                "status": "completed",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
                 "ownerActionRequired": false,
@@ -7388,10 +7405,7 @@
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "assignment": {
                   "coordinator": "/root",
-                  "activeWorkers": [
-                    "/root/e46_receipt_boundary · gerichte PostgreSQL-controle",
-                    "/root/e47_mcp_catalog · onafhankelijke review"
-                  ],
+                  "activeWorkers": [],
                   "scope": "E4.14: één bestaande algemene taak als programma over minimaal twee diensten, via dezelfde actuele tool-/stop-/receiptgrens. Geen spraak of nieuw agentplatform."
                 },
                 "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
@@ -7402,7 +7416,7 @@
                 "scopeDecision": "Eigenaar20oktober bevestigt opname en uitvoering van alle nuttige onderdelen. Geen vrijblijvende kandidaat meer. Concrete upstreamkeuze en code worden alleen toegepast met behouden kwaliteit; een afgewezen variant sluit de gevraagde uitkomst niet automatisch af.",
                 "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
                 "existing": "Algemene duurzame uitvoerder, programmatuurwerkruimte en geïsoleerde procedures bestaan. Pure procedures draaien met network=none; dat is geen algemene tool-RPC-keten.",
-                "gap": "Hermes heeft concrete scriptbare tooldispatch; equivalente toegelaten multi-toolRPC is niet bevestigd in de onderzochte Eva-procedureroute.",
+                "gap": "Geen resterende technische stap voor de begrensde programma-uitkomst; efficiëntieverbetering en gezinsacceptatie worden niet geclaimd.",
                 "implementation": [
                   "Gebruik één bestaande echte werkopdracht als doel; leg benodigde contracten vooraf vast.",
                   "Hergebruik passende Hermes RPC-/stubunits; vervang alleen Hermes registry/context door bestaande Eva-dispatch en bron-/taakbinding.",
@@ -7421,11 +7435,18 @@
                 "dependsOn": [
                   "E4.5"
                 ],
-                "nextAction": "Installeer de gerichte invoerterugmelding na bronreview en vrije werkclaims; voer één afzonderlijke vervolgproef uit zonder oude onzekere poging automatisch te herstarten.",
+                "nextAction": "Geen resterende technische handeling voor E4.14. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
                 "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-                "checkedAt": "2026-10-20T19:55:03.649746+00:00",
-                "progress": "Geïnstalleerde eerste programmapoging veilig gestopt na twee bevestigde lezingen: invoer met tussenresultaten te groot. Geen document of huisactie uitgevoerd. Gerichte terugmeldingscorrectie gebouwd en 22 relevante checks geslaagd; nog niet geïnstalleerd. Eerste mislukking en 37.826 gedeeltelijk gemeten tokens blijven bewaard.",
-                "evidence": "development/evidence/reassessment/e414-task-program-installed-20261020.json"
+                "checkedAt": "2026-10-20T20:24:00.268364+00:00",
+                "progress": "Geïnstalleerd en onafhankelijk technisch afgerond: één door Eva gemaakt programma gebruikte rechtstreeks HA en de documentdienst, hergebruikte de echte eerdere notitie en bewaarde een nieuwe notitie met volledig onafhankelijk terugleesbewijs. Lokale invoer-/code-/uitvoerfouten leveren niet-succesfeedback in dezelfde taak; STOP en onzekere effecten blijven hard. Alle vijf uitvoeringen: 542.159 gedeeltelijk gemeten runtime-tokens; credits en ontwikkelverbruik onbekend. Geen algemene kwaliteits- of efficiëntiewinst.",
+                "evidence": "development/evidence/reassessment/e414-task-program-installed-20261020.json",
+                "completedAt": "2026-10-20T20:21:03Z",
+                "technicalCompletedAt": "2026-10-20T20:21:03Z",
+                "ownerAcceptance": false,
+                "familyAcceptance": false,
+                "review": "development/reviews/e414-task-program-review-20261020.json",
+                "completionEvidence": "development/evidence/reassessment/e414-task-program-installed-20261020.json",
+                "independentReview": "development/reviews/e414-task-program-review-20261020.json"
               }
             ],
             "previousBoundedCompletion": {
@@ -7950,7 +7971,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Installeer de gerichte invoerterugmelding na bronreview en vrije werkclaims; voer één afzonderlijke vervolgproef uit zonder oude onzekere poging automatisch te herstarten.",
+        "nextAction": "Controleer de bestaande bron-aandachtketen en sluit uitsluitend het concrete ontbrekende vervolg van E1.6 af. Geen nieuwe vergelijkingsserie; spraak blijft bij de andere uitvoerder.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7959,7 +7980,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-20T19:26:59.261526+00:00",
+        "updatedAt": "2026-10-20T20:24:00.268364+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -8201,7 +8222,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T19:55:03.649746+00:00",
+        "checkedAt": "2026-10-20T20:24:00.268364+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -12521,7 +12542,7 @@
               "independentReview": "development/reviews/e413-programming-semantic-feedback-review-20261020.json"
             },
             {
-              "status": "in_progress",
+              "status": "completed",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
               "ownerActionRequired": false,
@@ -12529,10 +12550,7 @@
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "assignment": {
                 "coordinator": "/root",
-                "activeWorkers": [
-                  "/root/e46_receipt_boundary · gerichte PostgreSQL-controle",
-                  "/root/e47_mcp_catalog · onafhankelijke review"
-                ],
+                "activeWorkers": [],
                 "scope": "E4.14: één bestaande algemene taak als programma over minimaal twee diensten, via dezelfde actuele tool-/stop-/receiptgrens. Geen spraak of nieuw agentplatform."
               },
               "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
@@ -12543,7 +12561,7 @@
               "scopeDecision": "Eigenaar20oktober bevestigt opname en uitvoering van alle nuttige onderdelen. Geen vrijblijvende kandidaat meer. Concrete upstreamkeuze en code worden alleen toegepast met behouden kwaliteit; een afgewezen variant sluit de gevraagde uitkomst niet automatisch af.",
               "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
               "existing": "Algemene duurzame uitvoerder, programmatuurwerkruimte en geïsoleerde procedures bestaan. Pure procedures draaien met network=none; dat is geen algemene tool-RPC-keten.",
-              "gap": "Hermes heeft concrete scriptbare tooldispatch; equivalente toegelaten multi-toolRPC is niet bevestigd in de onderzochte Eva-procedureroute.",
+              "gap": "Geen resterende technische stap voor de begrensde programma-uitkomst; efficiëntieverbetering en gezinsacceptatie worden niet geclaimd.",
               "implementation": [
                 "Gebruik één bestaande echte werkopdracht als doel; leg benodigde contracten vooraf vast.",
                 "Hergebruik passende Hermes RPC-/stubunits; vervang alleen Hermes registry/context door bestaande Eva-dispatch en bron-/taakbinding.",
@@ -12562,11 +12580,18 @@
               "dependsOn": [
                 "E4.5"
               ],
-              "nextAction": "Installeer de gerichte invoerterugmelding na bronreview en vrije werkclaims; voer één afzonderlijke vervolgproef uit zonder oude onzekere poging automatisch te herstarten.",
+              "nextAction": "Geen resterende technische handeling voor E4.14. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
               "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
-              "checkedAt": "2026-10-20T19:55:03.649746+00:00",
-              "progress": "Geïnstalleerde eerste programmapoging veilig gestopt na twee bevestigde lezingen: invoer met tussenresultaten te groot. Geen document of huisactie uitgevoerd. Gerichte terugmeldingscorrectie gebouwd en 22 relevante checks geslaagd; nog niet geïnstalleerd. Eerste mislukking en 37.826 gedeeltelijk gemeten tokens blijven bewaard.",
-              "evidence": "development/evidence/reassessment/e414-task-program-installed-20261020.json"
+              "checkedAt": "2026-10-20T20:24:00.268364+00:00",
+              "progress": "Geïnstalleerd en onafhankelijk technisch afgerond: één door Eva gemaakt programma gebruikte rechtstreeks HA en de documentdienst, hergebruikte de echte eerdere notitie en bewaarde een nieuwe notitie met volledig onafhankelijk terugleesbewijs. Lokale invoer-/code-/uitvoerfouten leveren niet-succesfeedback in dezelfde taak; STOP en onzekere effecten blijven hard. Alle vijf uitvoeringen: 542.159 gedeeltelijk gemeten runtime-tokens; credits en ontwikkelverbruik onbekend. Geen algemene kwaliteits- of efficiëntiewinst.",
+              "evidence": "development/evidence/reassessment/e414-task-program-installed-20261020.json",
+              "completedAt": "2026-10-20T20:21:03Z",
+              "technicalCompletedAt": "2026-10-20T20:21:03Z",
+              "ownerAcceptance": false,
+              "familyAcceptance": false,
+              "review": "development/reviews/e414-task-program-review-20261020.json",
+              "completionEvidence": "development/evidence/reassessment/e414-task-program-installed-20261020.json",
+              "independentReview": "development/reviews/e414-task-program-review-20261020.json"
             }
           ],
           "previousBoundedCompletion": {
@@ -13091,7 +13116,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Installeer de gerichte invoerterugmelding na bronreview en vrije werkclaims; voer één afzonderlijke vervolgproef uit zonder oude onzekere poging automatisch te herstarten.",
+      "nextAction": "Controleer de bestaande bron-aandachtketen en sluit uitsluitend het concrete ontbrekende vervolg van E1.6 af. Geen nieuwe vergelijkingsserie; spraak blijft bij de andere uitvoerder.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -13100,7 +13125,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-20T19:26:59.261526+00:00",
+      "updatedAt": "2026-10-20T20:24:00.268364+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -13342,7 +13367,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T19:55:03.649746+00:00",
+      "checkedAt": "2026-10-20T20:24:00.268364+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -15100,9 +15125,16 @@
       "technicalTaskCompleted": true
     },
     "e414ProgrammaticExecution20261020": {
-      "status": "installed_practice_execution_in_progress",
+      "status": "installed_technically_completed",
       "evidence": "development/evidence/reassessment/e414-task-program-installed-20261020.json",
-      "checkedAt": "2026-10-20T19:50:43.209479+00:00"
+      "checkedAt": "2026-10-20T20:24:00.268364+00:00",
+      "registeredRuntimeTokensPartial": 542159,
+      "completedModelResponses": 33,
+      "toolDispatches": 67,
+      "creditCost": null,
+      "independentFinalReviewSha256": "40bf7527abc399b3edc6170b4fe5ffdae8da6f2f8217dfbd82005998dc1cdeca",
+      "ownerAcceptance": false,
+      "familyAcceptance": false
     }
   },
   "updatedAt": "2026-10-20T13:28:55.822181+00:00",
