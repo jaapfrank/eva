@@ -879,6 +879,9 @@ class PydanticConversationModel:
         view = receipt.model_output
         if view is None:
             return receipt.output
+        from eva.providers.receipt_policies import retains_action_body
+        if not retains_action_body(receipt.call.name):
+            return receipt.output
         if "ancestor_model_projection" in view:
             from eva.adapters.postgres.connector_results import ancestor_action_presentation
             try:
@@ -890,52 +893,14 @@ class PydanticConversationModel:
             view = {key: value for key, value in view.items() if key != "ancestor_model_projection"}
             if not view:
                 return receipt.output
-        from eva.adapters.postgres.connector_results import (
-            _encoded, READER_PREFIX, SOURCE_RESPONSE_FIELDS, LEGACY_SOURCE_RESPONSE_FIELDS,
-            retained_source_navigation,
-        )
-        output = receipt.output
-        metadata = view.get("model_projection")
-        proof = output.get("proof")
-        key = metadata.get("observation_key") if isinstance(metadata, dict) else None
-        observation = output.get(key) if key in {"result", "inventory"} else None
-        manifest = view.get(key) if key in {"result", "inventory"} else None
-        if (output.get("contract") != "EvaConversationActionReceipt/v1"
-                or output.get("durable") is not True or output.get("status") != "verified"
-                or receipt.call.name not in {"home_assistant_request", "read_home_assistant_inventory"}
-                or not isinstance(proof, dict) or not isinstance(observation, dict)
-                or proof.get("evidence", {}).get("observation") != observation
-                or not isinstance(manifest, dict)
-                or manifest.get("contract") != "EvaStoredConnectorResult/v1"
-                or manifest.get("stored_complete") is not True
-                or manifest.get("external_state_verified") is not False
-                or manifest.get("sha256") != hashlib.sha256(_encoded(observation)).hexdigest()
-                or manifest.get("byte_length") != len(_encoded(observation))
-                or manifest.get("source_output_truncated") != (observation.get("truncated") is True)
-                or manifest.get("source_response") not in (
-                    {key: observation[key] for key in SOURCE_RESPONSE_FIELDS if key in observation},
-                    {key: observation[key] for key in LEGACY_SOURCE_RESPONSE_FIELDS if key in observation},
-                )
-                or ("source_navigation" in manifest and (
-                    retained_source_navigation(observation) is None
-                    or manifest["source_navigation"] != retained_source_navigation(observation)))
-                or not isinstance(manifest.get("reader"), dict)
-                or manifest["reader"].get("action") != "use_connector_tool"
-                or not str(manifest["reader"].get("tool_id", "")).startswith(READER_PREFIX)):
-            raise ConversationModelError("retained action model projection is invalid")
-        expected_metadata = {"contract": "EvaRetainedActionModelView/v1",
-            "source_receipt_sha256": hashlib.sha256(canonical_json_bytes(output)).hexdigest(),
-            "source_proof_sha256": hashlib.sha256(canonical_json_bytes(proof)).hexdigest(),
-            "observation_key": key}
-        reference = {"model_view_reference": "/" + key,
-            "observation_sha256": hashlib.sha256(canonical_json_bytes(observation)).hexdigest(),
-            "durable_proof_sha256": expected_metadata["source_proof_sha256"]}
-        expected = {**output, key: manifest,
-            "proof": {**proof, "evidence": {**proof["evidence"], "observation": reference}},
-            "model_projection": expected_metadata}
-        if view != expected or len(canonical_json_bytes(view)) >= len(canonical_json_bytes(output)):
-            raise ConversationModelError("retained action model projection differs from original receipt")
-        return view
+        from eva.providers.receipt_policies import receipt_policy
+        policy = receipt_policy(receipt.call.name)
+        if policy is None:
+            return receipt.output
+        try:
+            return policy.receipt_presentation(receipt, view)
+        except ValueError as error:
+            raise ConversationModelError(str(error)) from error
 
     @staticmethod
     def _receipt_arguments(receipt: ConversationActionReceipt, *, ancestor: bool = False):
@@ -1337,60 +1302,13 @@ class PydanticConversationModel:
     @staticmethod
     def _checkpoint_source_read(receipt: ConversationActionReceipt) -> dict[str, Any] | None:
         """Index an old proven read through its unchanged scoped source reader."""
-        output, arguments = receipt.output, receipt.call.arguments
-        if (output.get("contract") != "EvaConversationActionReceipt/v1"
-                or output.get("durable") is not True or output.get("status") != "verified"
-                or output.get("external_state_verified") is True):
+        from eva.providers.receipt_policies import receipt_policy
+        policy = receipt_policy(receipt.call.name)
+        source_read = policy.checkpoint_source_read(receipt) if policy is not None else None
+        if source_read is None:
             return None
-        if receipt.call.name == "home_assistant_request":
-            # These exact commands already back the read-only HA inventory.
-            # GET on a WebSocket request alone says nothing about its effects.
-            if arguments.get("method") != "GET":
-                return None
-            if arguments.get("transport") == "rest":
-                if not str(arguments.get("path", "")).startswith("/api/"):
-                    return None
-            elif arguments.get("transport") == "websocket":
-                try:
-                    command = json.loads(arguments.get("body_json", ""))
-                except (TypeError, ValueError):
-                    return None
-                if (not isinstance(command, dict) or command.get("type") not in {
-                    "get_states", "get_config", "config_entries/get",
-                    "config/area_registry/list", "config/device_registry/list",
-                    "config/entity_registry/list", "hacs/repositories/list",
-                    # The upstream handlers return saved config/entries; their
-                    # save/update/remove commands remain separate and excluded.
-                    "lovelace/config", "lovelace/dashboards/list",
-                    "config/entity_registry/get_entries",
-                }):
-                    return None
-            else:
-                return None
-            key = "result"
-            if not isinstance(output.get(key), dict) or output[key].get("success") is not True:
-                return None
-        elif receipt.call.name == "read_home_assistant_inventory":
-            key = "inventory"
-        else:
-            return None
-        observation, proof = output.get(key), output.get("proof")
-        if (not isinstance(observation, dict) or not isinstance(proof, dict)
-                or proof.get("evidence", {}).get("observation") != observation
-                or observation.get("external_state_verified") is True
-                or any(observation.get(k) for k in ("error", "errors", "selection_error"))):
-            return None
-        if key == "inventory":
-            coverage = observation.get("coverage")
-            if (isinstance(coverage, dict) and coverage.get("complete") is False
-                    or observation.get("missing")):
-                return None
-            for row in observation.get("automations", ()):
-                if (not isinstance(row, dict)
-                        or row.get("configuration_read") is False
-                        or isinstance(row.get("coverage"), dict) and row["coverage"].get("complete") is False
-                        or row.get("reason")):
-                    return None
+        key, metadata = source_read
+        arguments = receipt.call.arguments
         view = receipt.model_output or {}
         body_projection = view.get("ancestor_model_projection")
         if body_projection is not None:
@@ -1409,12 +1327,6 @@ class PydanticConversationModel:
             proof_hash = source["source_proof_sha256"]
         else:
             return None
-        from eva.adapters.postgres.connector_results import SOURCE_RESPONSE_FIELDS
-        metadata = {k: observation[k] for k in SOURCE_RESPONSE_FIELDS if k in observation}
-        for k in ("total", "next_offset", "missing", "coverage", "requested",
-                  "configurations_read", "configurations_requested"):
-            if k in observation:
-                metadata[k] = observation[k]
         return {"call": {"call_id": receipt.call.call_id, "name": receipt.call.name,
                          "arguments": arguments}, "status": "verified",
                 "read_only_observation": True, "task_completion_verified": False,

@@ -77,9 +77,51 @@ def home_assistant_read_configuration_sha256(endpoint_url: str) -> str:
 
 class HomeAssistantProviderFactory:
     provider_id = "home_assistant"
+    supports_digital_work = True
+    supports_household_digital_work = True
+    execution_sources = (
+        "providers/home_assistant.py", "providers/home_assistant_policy.py",
+        "providers/home_assistant_receipts.py", "providers/receipt_policies.py",
+        "adapters/connectors/home_assistant_completion.py",
+        "adapters/connectors/home_assistant.py",
+        "adapters/connectors/home_assistant_api.py",
+        "adapters/connectors/home_assistant_admin.py",
+        "adapters/connectors/home_assistant_automations.py",
+    )
+
+    @staticmethod
+    def build_owner_media(provider_settings, runtime_settings, **identity):
+        from eva.bootstrap.dashboard_voice import build_dashboard_voice
+        return build_dashboard_voice(runtime_settings, **identity)
+
+    @staticmethod
+    def build_services(settings, context):
+        from eva.providers.contracts import ProviderServices
+        if context.work_server is None:
+            return ProviderServices()
+        from eva.bootstrap.native_work_delivery import NativeWorkDelivery
+        tasks = [NativeWorkDelivery(context.work_server, settings).run_once]
+        owns_sensory = False
+        if (context.principal_id is not None and context.shared_output is not None
+                and context.budget is not None):
+            from eva.bootstrap.household_initiative import HouseholdInitiativeLoop
+            loop = HouseholdInitiativeLoop(
+                engine=context.engine, voice=context.shared_output,
+                server=context.work_server, provider=settings, model=context.model,
+                memory=context.memory, identity=context.identity, budget=context.budget,
+                principal_id=context.principal_id,
+                authorize_initiative=context.current_authority,
+                source_store=context.source_store,
+                can_decide=lambda: not context.foreground_active())
+            tasks.append(loop.run_once)
+            owns_sensory = context.source_store is not None
+        return ProviderServices(tuple(tasks), owns_sensory)
+
 
     @staticmethod
     def load_settings() -> HomeAssistantProviderSettings | None:
+        if "home_assistant" in _items("EVA_EXTERNAL_PROVIDERS_DISABLED"):
+            return None
         endpoint = _value("EVA_HOME_ASSISTANT_URL")
         if "EVA_HOME_ASSISTANT_TOKEN" in os.environ:
             raise RuntimeError(
@@ -322,6 +364,8 @@ class HomeAssistantProviderFactory:
                 if descriptor.name in available_actions
             ),
             external_tools=tuple(external_tools),
+            digital_action_names=tuple(sorted(available_actions & {
+                "home_assistant_request", "read_home_assistant_inventory"})),
             event_source=HomeAssistantEventStream(
                 base_url=settings.endpoint_url,
                 token=settings.credential,

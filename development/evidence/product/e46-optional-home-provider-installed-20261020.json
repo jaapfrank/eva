@@ -1,0 +1,169 @@
+{
+  "contract": "EvaOptionalHomeProviderInstalled/v1",
+  "taskId": "E4.6",
+  "recordedAt": "2026-10-20T09:40:57.354545+00:00",
+  "status": "installed",
+  "technicalCompletion": true,
+  "ownerAcceptance": false,
+  "familyAcceptance": false,
+  "wholeProjectComplete": false,
+  "existing": "Bestaande optionele HA-provider, providerbijdragen, API/adapters, duurzame taken en bron-/receiptcontracten.",
+  "outcome": "Home Assistant is een optionele provider van dezelfde Eva. Zonder die module blijft gewone chat en de overige connectorsamenstelling werken; HA-tools/instructies/services verdwijnen bij uitschakelen. Bestaande gegevens en resultaten blijven behouden.",
+  "changes": [
+    "HA-gespreks- en gewone-readbeleid naar pure eigen providerpolicy; neutrale bestaande toolpoorten leveren instructies en contactclassificatie.",
+    "HA-namespace/direct-toolmetadata uit algemene modeladapter; disabledmodule wordt ook bij andere toolpresentatie niet geladen.",
+    "Lazy expliciete bestaande providerregistratie en generieke uitschakeling via EVA_EXTERNAL_PROVIDERS_DISABLED, met fail-closed bij defecte interne dependencies.",
+    "Pure optionele receiptpolicy bezit HA-bronprojectie, checkpointclassificatie, historische mislukte leesbewijsinterpretatie en initiatiefbronkeuze; SQL/scope/hashcontrole blijft in algemene opslag.",
+    "Bestaande HA-aflevering en gedeeld initiatief vanuit provider samengesteld; algemene runtime kent geen HA-instellingen. Spraakimplementatie niet veranderd.",
+    "Digitale capabilities en bronfingerprints worden door dezelfde providerbijdrage geleverd; geen verplichte HA-bronbestanden in afwezige modulesamenstelling."
+  ],
+  "validation": {
+    "ordinaryChatWithoutInstalledModule": "passed_with_fixture_model_and_real_LivingConversation",
+    "actualApplicationComposition": {
+      "enabledActions": 67,
+      "disabledActions": 56,
+      "otherConnectorPresentBoth": true,
+      "modelCalls": 0,
+      "lifespanStarted": false
+    },
+    "rootAffectedChecks": {
+      "result": "28 passed",
+      "pytestSeconds": 6.07
+    },
+    "independentDisabledImportCorrection": {
+      "result": "1 passed",
+      "pytestSeconds": 1.17
+    },
+    "receiptBoundary": {
+      "result": "14 passed",
+      "pytestSeconds": 5.46
+    },
+    "initiativeAndReceiptDatabase": {
+      "result": "46 passed",
+      "pytestSeconds": 45.3,
+      "database": "disposable PostgreSQL16.13 tmpfs"
+    },
+    "broaderExistingReceiptChecks": {
+      "passed": 197,
+      "failed": 2,
+      "seconds": 102.83,
+      "failureMeaning": "Bestaandeengine=Nonefixtureretentie; met originele code exactgereproduceerd, bronfoutbewijs behouden."
+    },
+    "countsOverlap": true,
+    "newComparisonSeries": false
+  },
+  "installation": {
+    "coreImage": "sha256:e51f4dc414744a17fd157dbb47d02573f6aff08668e3ab817609fb1521d0010e",
+    "coreBaseImage": "sha256:761dd8ecdd66e3d4c0d7e5ac41c001a229c4cc1f6d8931594388cd2cc53bf52e",
+    "workerImage": "sha256:bbec3cdeb8e29d2bf222d47996f70c55de3b07d07662c1ed482206cfd363b3ef",
+    "workerBaseImage": "sha256:820afb50716b7721b0e1783db366e186f0cb47b771ba3e49251c2f5c45ce8dd1",
+    "coreSourceCount": 395,
+    "workerSourceCount": 375,
+    "executionPinCount": 60,
+    "executionPinsEqual": true,
+    "configuredCapabilityCount": 26,
+    "initiativeAllowedCapabilitiesUnchanged": 13,
+    "mandateBytesUnchanged": true,
+    "dataMountsPreserved": true,
+    "voiceContainersChanged": false,
+    "partialPeerCodeNotCopiedFromCheckout": true,
+    "methodEditsAppliedToActualLiveBaseline": true,
+    "sourceHashes": {
+      "src/eva/providers/contracts.py": "24588dd540c70d8e5620a6ff35692f56ae3481ec2020f33db453843aed062420",
+      "src/eva/providers/runtime.py": "0962f5e42886e8c9a945d8076e88d315fc6c3ab9dd90865006889d1ba4486643",
+      "src/eva/providers/bundled.py": "8dfd923b9e220401f3ef010eea4042bd410f65e72a0339036a7bb44df33d19de",
+      "src/eva/providers/home_assistant.py": "b77b8ce5135d900146b9ca9540a1a9296c25240697ff3be0c341224aa1bb19b4",
+      "src/eva/application/conversation.py": "a4f2938e657ceaee0069e3dda7338453ad308ba7deba197ef511dafa7b937b98",
+      "src/eva/adapters/postgres/conversation_actions.py": "e1123b05ab38f630fda88368c424d7384222bfffcbebdd0022a6440c6543dfc6",
+      "src/eva/adapters/postgres/external_conversation_tools.py": "46869a90873e0a7d7e072d042bc841e4e6f0cf32a59e5e0fc152ddfa65b15956",
+      "src/eva/adapters/model/tool_namespaces.py": "e1200b0359d605461334ab7c1b184e49011a3b0091e51a6ab6684ee026f8b71f",
+      "src/eva/bootstrap/runtime.py": "13ff43e27745f17f5c863879011f14ebb7ab83786c7239ea392e3904a8994459",
+      "src/eva/bootstrap/delegated_digital_runner.py": "c78938545cb514077ca07b38908e25bf0a1821e0ca5d08324bb5c4719d60a80e",
+      "src/eva/adapters/connectors/home_assistant.py": "1be92a0268d1de2824a7f97f8c6c7926cd0ce83b3599e2bd7e7b08f496897339",
+      "src/eva/adapters/connectors/home_assistant_api.py": "1d671f3fe765fb9b387c1efd36719e24e0d592546311474c12faf14159718bb0",
+      "src/eva/adapters/connectors/home_assistant_admin.py": "5046fd7cc05dbf29e92e4097c96b2e98e80c4121c58ee0a64dc46f19d1622f95",
+      "src/eva/providers/home_assistant_policy.py": "5c56d22cceeab357ec914c49e8947c93723087bedc7b3735b464dd73a85490e7",
+      "src/eva/bootstrap/delegated_digital_composition.py": "f5ed97830c9537ae469da4d703ec034349739eed3d843a6d2f0fc8faf729e5f6",
+      "src/eva/bootstrap/household_digital_work.py": "235084d968806cc0b27a9bdda54b5ff0873505985b2b869572350ad01655b555",
+      "src/eva/providers/home_assistant_receipts.py": "14f2e4957acfab76b1e5df1894126a5d6d18697606c8cd830ea253a60568c43e",
+      "src/eva/providers/receipt_policies.py": "ba34a818fe40a8e9df356aaac9ea808557350d8ef0a4438da044c20e4ab576ff",
+      "src/eva/adapters/model/pydantic_conversation.py": "b7c75536f1047a29624bf48194e505aa4dd3838757c062dc1e50bdd0a3e34b1f",
+      "src/eva/adapters/postgres/connector_results.py": "72fffdb3da85e287b36534c6059c7407421732669d70d4cc8723758fbd75a152",
+      "src/eva/adapters/postgres/initiative_source_outcomes.py": "b8043085cb1eae066e0206f00b82a30284b70df2124d5f1d846daf158b24ce96"
+    }
+  },
+  "retained": [
+    "Gesprekken, geselecteerd geheugen, taken, oorspronkelijke receipts en oude foutregistraties.",
+    "Alle wijzigingen van de gelijktijdige uitvoerder buiten de afgebakende eigen wijzigingen.",
+    "Bestaande bevoegdheden, oorspronkelijke actor/ontvanger, stoppen, readback en geen blinde effectherhaling."
+  ],
+  "limits": [
+    "Geen nieuwe1seconde- of concurrentieclaim; E4.7–E4.10/E5.2 blijven bestaande aparte kaarten.",
+    "197 gerichte oude checks geslaagd met2 reeds bestaande engine=None-fixturefouten; beide met originele receiptfunctie gereproduceerd. Geen volledige repository-testclaim.",
+    "Oude ongeldige geheugenhistories uit E4.11 blijven zichtbaar; niet door deze modulegrens gerepareerd of gewist.",
+    "Andere uitvoerder veranderde HA-API tijdens deze taak; diens reeds geïnstalleerde gedrag is behouden en geen onderdeel van deze onafhankelijke functionaliteitsclaim."
+  ],
+  "nextExistingTask": "E4.7",
+  "userActionRequired": false,
+  "use": "Gebruik dezelfde Eva-chat en bestaande HA-koppeling. Voor een installatie zonderHA kan de bestaande moduleconfiguratie worden uitgeschakeld; gegevens worden niet verwijderd. Geen nieuwe speaker- of Telegramproef nodig voor E4.6.",
+  "fileDecisions": [
+    {
+      "path": "src/eva/providers/home_assistant_policy.py",
+      "decision": "keep",
+      "purpose": "Pure provider-owned gesprek/presentatiemetadata, gebruikt door HA-toolplanners en bestaande algemene toolpresentatie.",
+      "reviewed": true
+    },
+    {
+      "path": "src/eva/providers/home_assistant_receipts.py",
+      "decision": "keep",
+      "purpose": "Pure verwerking van originele HA-receipts, gebruikt door modelprojectie/retainedread/initiative via neutralelookup.",
+      "reviewed": true
+    },
+    {
+      "path": "src/eva/providers/receipt_policies.py",
+      "decision": "keep",
+      "purpose": "Gesloten lazylookup achter bestaandeprovidergrens; geen pluginplatform of uitvoeringsbevoegdheid.",
+      "reviewed": true
+    },
+    {
+      "path": "development/tests/providers/test_optional_home_module.py",
+      "decision": "keep",
+      "purpose": "Gerichte moduleafwezig/uit, gewonechat, andereprovider en authoritycontracten.",
+      "reviewed": true
+    },
+    {
+      "path": "development/tests/providers/test_home_assistant_receipt_boundary.py",
+      "decision": "keep",
+      "purpose": "Gerichte behoud-/readclassificatie en foutbindingscontracten.",
+      "reviewed": true
+    }
+  ],
+  "usage": {
+    "taskSpecificEvaModelCalls": 0,
+    "externalEffectCallsForThisVerification": 0,
+    "retentionSubmissions": 0,
+    "developmentCreditCost": null,
+    "developmentAssistantTokens": null,
+    "unrelatedRuntimeUsage": null,
+    "meaning": "Nul geldt voor deze lokale controles en samenstelling; ontwikkelmodelverbruik en onafhankelijk lopende Eva-activiteit zijn niet nul gemeten."
+  },
+  "independentReview": "development/reviews/e46-optional-home-provider-review-20261020.json",
+  "privateEvidenceSha256": {
+    "root-independent-review.private.json": "ba1a291426a92ed2a273f62b0797d66783f3c930ff5e68720cbf0149ec4b8d8b",
+    "receipt-independent-review.private.json": "62992f922c6019b7809efc53b3acdc562e2fd3ba2173c81ce41614b6bc0e7826",
+    "root-tests.metadata.json": "5c75add0c204764155568d5d1ff4c41e473d1fa92d8ca5a92569c8e2b2910595",
+    "receipt-boundary/targeted-test-results.json": "fc9b8e913e53b177b95b525922cc7d085268dc638240f2435bb24045bf342c23",
+    "receipt-boundary/initiative-targeted-tests.json": "1abbf2147bb72f47f8876e82366b2c88ffd978f03b1f829df5db9624a0b0c651",
+    "receipt-boundary/receipt-boundary-result.json": "491ff0734a0af37a6a5bb5ad4772b8c441e5f87cf963cb7a3d97a13006c8e5ba",
+    "overlay.metadata.private.json": "63d3c5dcf61e895d93194c8fd9ee6072d429ad8bbc22ab7d76482beba19916fd",
+    "candidates.metadata.private.json": "a90980822083b74bb8cff6d94ab4eeba07614a9fa7298488fd8db3da67042e19",
+    "core-profile.private.json": "f4d641edae6af52910b048f5611cddf3ff35d5fb58ee8a07eb5e68d2e27654a5",
+    "worker-profile.private.json": "f4d641edae6af52910b048f5611cddf3ff35d5fb58ee8a07eb5e68d2e27654a5",
+    "candidate-app-enabled.private.json": "af54b5aee11dba42a4d341ed0cf272c679330e203ff74d088a87790b118e7aef",
+    "candidate-app-disabled.private.json": "84cbe3bea6aed3cc4d98e7841a7a3db437477b68699efcdb286fbe07f05cfbcb",
+    "install-preflight.private.json": "dd68ac3fc8d4f360b94a7dc383dce57df011f7798eff758ad1baf773f19d5bb3",
+    "installation-receipt.private.json": "f4356a043d72fddc1809c3300b9193f42c05ef6c620377a5ec0270322729aa50",
+    "installed-verification.private.json": "3baa4a9da6cd9d3a55f4838556161cffc84a02d56a296fc123320288ac316a18",
+    "policy-at-install.exact.private.json": "3a7b88129ee103b4ceffd23be9c542a0fe5d3f8f68f358fdfcb98cc7c243c467"
+  }
+}

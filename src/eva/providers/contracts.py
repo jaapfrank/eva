@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any, Protocol
+from collections.abc import Callable
 
 import sqlalchemy as sa
 
@@ -32,6 +33,7 @@ class ProviderContribution:
     conversation_tools: tuple[ConversationToolDescriptor, ...]
     external_tools: tuple[ConversationExternalToolPort, ...]
     event_source: SensoryEventSourcePort | None = None
+    digital_action_names: tuple[str, ...] = ()
 
 
 class RuntimeProviderFactory(Protocol):
@@ -47,6 +49,7 @@ class ExternalProviderBundle:
     conversation_tools: tuple[ConversationToolDescriptor, ...]
     external_tools: tuple[ConversationExternalToolPort, ...]
     event_source: SensoryEventSourcePort | None
+    digital_action_names: tuple[str, ...] = ()
 
 
 __all__ = [
@@ -56,3 +59,24 @@ __all__ = [
     "ProviderContribution",
     "RuntimeProviderFactory",
 ]
+
+
+@dataclass(frozen=True, slots=True)
+class ProviderServiceContext:
+    engine: Any
+    work_server: Any
+    shared_output: Any
+    model: Any
+    memory: Any
+    identity: Any
+    budget: Any
+    principal_id: str | None
+    current_authority: Callable[[], Any]
+    source_store: Any
+    foreground_active: Callable[[], bool]
+
+
+@dataclass(frozen=True, slots=True)
+class ProviderServices:
+    tasks: tuple[Callable[[], Any], ...] = ()
+    owns_sensory_decisions: bool = False

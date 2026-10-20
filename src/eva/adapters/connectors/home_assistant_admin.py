@@ -602,6 +602,16 @@ class HomeAssistantHouseholdTool:
 
     action_names = ("read_home_assistant_inventory",)
 
+    @staticmethod
+    def conversation_instructions(turn, available_names):
+        from eva.providers.home_assistant_policy import conversation_instructions
+        return conversation_instructions(turn, available_names)
+
+    @staticmethod
+    def contact_reply_allowed(turn, receipt):
+        from eva.providers.home_assistant_policy import contact_reply_allowed
+        return contact_reply_allowed(turn, receipt)
+
     def __init__(self, reader: HomeAssistantAdminAdapter) -> None:
         self._reader = reader
 

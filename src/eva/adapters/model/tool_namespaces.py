@@ -21,26 +21,36 @@ _GROUPS = (
       "start_prepared_document_project", "get_prepared_document_project", "stop_prepared_document_project")),
     ("eva_project_templates", "Create workspace document projects from available templates.",
      ("workspace_create_document_project_1", "workspace_create_document_project_2", "workspace_create_document_project_dynamic")),
-    ("eva_home", "Use Home Assistant devices, services, states, history, and automations.",
-     ("home_assistant_request", "read_home_assistant_inventory", "read_home_assistant_state", "read_home_assistant_history",
-      "set_home_assistant_light", "set_home_assistant_switch", "create_home_assistant_state_automation", "create_home_assistant_advanced_state_automation")),
     ("eva_connections", "Connect services and discover or use their available tools.",
      ("connect_service", "manage_connected_services", "discover_connector_tools", "use_connector_tool")),
     ("eva_procedures", "Find, designate, resolve, or run learned reusable procedures.",
      ("designate_reusable_procedure", "list_reusable_procedures", "resolve_reusable_procedure", "run_reusable_procedure")),
-    ("eva_localtuya", "Plan or perform approved LocalTuya integration changes.",
-     ("plan_tuya_to_localtuya_migration", "register_approved_localtuya_repository", "install_approved_localtuya_package")),
+
 )
-_BY_FUNCTION = {name: (namespace, description) for namespace, description, names in _GROUPS for name in names}
+def _presentation():
+    from eva.providers.bundled import bundled_presentations
+    modules = bundled_presentations()
+    groups = (*_GROUPS, *(group for module in modules for group in module.TOOL_GROUPS))
+    by_function = {}
+    for namespace, description, names in groups:
+        for name in names:
+            if name in by_function:
+                raise ValueError("provider presentation tool is duplicated")
+            by_function[name] = (namespace, description)
+    direct = frozenset(name for module in modules for name in module.DIRECT_ACTIONS)
+    return by_function, direct
+
 
 
 def function_defer_loading(name):
     """Keep immediate voice reactions available without a discovery round."""
-    return name not in {"speak_and_continue", "set_home_assistant_light", "set_home_assistant_switch"}
+    _, direct = _presentation()
+    return name not in (direct | {"speak_and_continue"})
 
 
 def deferred_namespaces(tools):
     """Preserve every definition and native tool; return replay namespace mapping."""
+    by_function, _ = _presentation()
     names = {tool["name"] for tool in tools if tool.get("type") == "function"}
     occupied = names | {tool.get("name") for tool in tools if tool.get("type") == "namespace"}
     result, groups, mapping = [], {}, {}
@@ -54,7 +64,7 @@ def deferred_namespaces(tools):
             # native flat shape, including when replaying a retained tool call.
             result.append({**tool, "defer_loading": False})
             continue
-        namespace, description = _BY_FUNCTION.get(name, (name, name.replace("_", " ")))
+        namespace, description = by_function.get(name, (name, name.replace("_", " ")))
         if namespace != name and namespace in occupied:
             namespace, description = name, name.replace("_", " ")
         mapping[name] = namespace

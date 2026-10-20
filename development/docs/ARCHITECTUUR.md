@@ -71,6 +71,17 @@ gebonden payloads blijven behouden, zonder automatische herhaling. Het addendum 
 Hindsight 0.9.1 staat met versiecontrole en installatie-instructies onder
 `deploy/living-core/hindsight-memory`; een native update vereist compatibiliteitsreview.
 
+Home Assistant levert sinds E4.6 haar eigen gespreksinstructies, gewone-readclassificatie,
+toolpresentatie, digitale capabilities en pure interpretatie van bewaarde receipts.
+De algemene kern vraagt die bestaande providerpoorten aan en kent geen HA-toolnamen
+of media-instellingen. Dezelfde bestaande initiatief-/afleveradapters worden door de
+provider samengesteld; hun spraakwerking is niet gewijzigd. Uitgeschakelde modules
+bieden geen tools/instructies; aanwezige pure receiptpolicy blijft oude bewijzen lezen.
+Bij fysiek ontbrekende policy blijft de oorspronkelijke receipt letterlijk bruikbaar.
+Een ontbrekende interne dependency van een aanwezige module blijft een echte fout.
+Bronfingerprints komen uit de geïnstalleerde provider; core en uitvoerworker binden
+dezelfde bronversie. Uitschakelen verwijdert geen gegevens, taken of oude receipts.
+
 ## Moduleverantwoordelijkheden
 
 | Bestaande module / bron | Eigen verantwoordelijkheid | Interface en grens |

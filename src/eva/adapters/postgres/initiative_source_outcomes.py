@@ -22,10 +22,10 @@ from eva.application.conversation import ConversationConflict
 from eva.application.schema_validation import validate_schema_value
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+from eva.providers.receipt_policies import retained_source_action_names, retained_source_observation
 
 _MAX_BYTES = 8192
 _READS = 4
-_ACTIONS = ("home_assistant_request", "read_home_assistant_inventory")
 
 
 def _current_work(authority, work_id, now):
@@ -155,8 +155,9 @@ def _component_reads(authority, work, turn, now):
 
 
 def _retained_reads(authority, work, turn, now):
+    action_names = retained_source_action_names()
     port = object.__new__(PostgresExternalConversationTools)
-    port._engine, port._action_names = authority.owner._engine, _ACTIONS
+    port._engine, port._action_names = authority.owner._engine, action_names
     timeline = port._timeline(turn)
     scope, e = timeline._scope_value, operational_events.c
     with authority.owner._engine.begin() as connection:
@@ -167,7 +168,7 @@ def _retained_reads(authority, work, turn, now):
             e.payload["data"]["principal_id"].astext == turn.principal_id,
             e.payload["data"]["conversation_id"].astext == turn.conversation_id,
             e.payload["data"]["source_message_id"].astext == turn.message_id,
-            e.payload["data"]["action_name"].astext.in_(_ACTIONS),
+            e.payload["data"]["action_name"].astext.in_(action_names),
         ).order_by(e.occurred_at.desc(), e.thread_id).limit(_READS + 1)).all()
 
     def authorize(source):
@@ -187,10 +188,9 @@ def _retained_reads(authority, work, turn, now):
                 admission = row.payload["data"]
                 name, step = admission["action_name"], admission.get("step_index", 0)
                 arguments = admission.get("action_arguments", {})
-                if name == "home_assistant_request" and not (
-                    arguments.get("transport") == "rest" and arguments.get("method") == "GET"
-                ):
-                    unavailable.append({"status": "not_a_read", "reason": "only_retained_rest_get_or_inventory"})
+                key, decline_reason = retained_source_observation(name, arguments)
+                if key is None:
+                    unavailable.append({"status": "not_a_read", "reason": decline_reason})
                     continue
                 if type(step) is not int or step < 0 or row.thread_id != port._thread_id(turn, name, step):
                     raise ConversationConflict("retained read namespace differs")
@@ -204,7 +204,6 @@ def _retained_reads(authority, work, turn, now):
                 if any(event.occurred_at > now for event in events):
                     raise ConversationConflict("retained read is from the future")
                 receipt = port._receipt(turn, events, step, project=False)
-                key = "inventory" if name == "read_home_assistant_inventory" else "result"
                 proof = receipt.output.get("proof")
                 source = {"thread_id": row.thread_id, "call_id": receipt.call.call_id,
                     "step_index": step, "observation_key": key,

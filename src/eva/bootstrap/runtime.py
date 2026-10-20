@@ -63,7 +63,6 @@ from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
     external_timeline_scope,
 )
-from eva.bootstrap.dashboard_voice import build_dashboard_voice
 from eva.bootstrap.action_chain_effect_controls import (
     DashboardActionChainEffectController,
     DashboardActionChainEffectStop,
@@ -94,6 +93,8 @@ from eva.providers.runtime import (
     ExternalProviderSettings,
     build_external_provider_bundle,
     load_external_provider_settings,
+    build_provider_owner_media,
+    build_provider_services,
 )
 from eva.application.memory import (
     BudgetedConversationMemoryWriter,
@@ -1250,8 +1251,8 @@ def create_runtime_app() -> FastAPI:
         settings, engine, group_consent=group_consent,
         household_voice=household_voice, identity_pack=identity_pack,
     )
-    dashboard_voice = build_dashboard_voice(
-        settings, runtime_identity=identity_pack, identity_loader=current_identity_pack,
+    dashboard_voice = build_provider_owner_media(
+        settings.external_provider, settings, runtime_identity=identity_pack, identity_loader=current_identity_pack,
     )
     delegated_work_store = None
     delegated_work_commands = None
@@ -1817,32 +1818,20 @@ def create_runtime_app() -> FastAPI:
         household_schedules = HouseholdScheduledWork(household_work_server)
         service_tasks = (*service_tasks, household_schedules.run_once)
     if settings.delegated_result_delivery_enabled and household_work_server is not None:
-        from eva.providers.home_assistant import HomeAssistantProviderSettings
-        from eva.bootstrap.native_work_delivery import NativeWorkDelivery
-        ha_providers = (() if settings.external_provider is None else
-                        settings.external_provider.providers)
-        native_media = [item.settings for item in ha_providers
-                        if item.provider_id == "home_assistant"
-                        and isinstance(item.settings, HomeAssistantProviderSettings)]
-        if len(native_media) == 1:
-            native_returns = NativeWorkDelivery(household_work_server, native_media[0])
-            service_tasks = (*service_tasks, native_returns.run_once)
-            if (settings.background_principal_id is not None and household_voice is not None
-                    and reflection_budget is not None):
-                from eva.bootstrap.household_initiative import HouseholdInitiativeLoop
-                household_initiatives = HouseholdInitiativeLoop(
-                    engine=engine, voice=household_voice, server=household_work_server,
-                    provider=native_media[0], model=model, memory=memory, identity=identity,
-                    budget=reflection_budget, principal_id=settings.background_principal_id,
-                    authorize_initiative=lambda: runtime._initiative_authority().policy(),
-                    source_store=sensory_store,
-                    can_decide=lambda: not runtime._cold_path.foreground_active)
-                # Shared sensory decisions are real-time service work. They use
-                # household context, not the owner's private event decision lane.
-                service_tasks = (*service_tasks, household_initiatives.run_once)
-                if sensory_store is not None:
-                    idle_tasks = tuple(task for task in idle_tasks
-                                       if task is not evaluate_one_sensory_event)
+        from eva.providers.contracts import ProviderServiceContext
+        provider_services = build_provider_services(settings.external_provider,
+            ProviderServiceContext(
+                engine=engine, work_server=household_work_server,
+                shared_output=household_voice, model=model, memory=memory,
+                identity=identity, budget=reflection_budget,
+                principal_id=settings.background_principal_id,
+                current_authority=lambda: runtime._initiative_authority().policy(),
+                source_store=sensory_store,
+                foreground_active=lambda: runtime._cold_path.foreground_active))
+        service_tasks = (*service_tasks, *provider_services.tasks)
+        if provider_services.owns_sensory_decisions:
+            idle_tasks = tuple(task for task in idle_tasks
+                               if task is not evaluate_one_sensory_event)
     if delegated_work_service is not None:
         from eva.bootstrap.delegated_work_memory import DelegatedWorkMemory
         work_memory = DelegatedWorkMemory(

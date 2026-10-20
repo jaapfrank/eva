@@ -84,3 +84,25 @@ root-owned `0600` wachtwoordbestand op
 `/run/eva2/postgres-password`, zet hostauthenticatie bij een nieuwe database op
 SCRAM en gebruikt een gepind volume. Hij is geen toestemming om de huidige B
 te vervangen of te herstarten.
+
+
+## Optional provider enablement
+
+`EVA_EXTERNAL_PROVIDERS_DISABLED` is a comma-separated list of registered provider
+IDs. For example, setting it to `home_assistant` in the existing installed Compose
+service environment disables that provider after a coordinated core/worker update.
+Use the same value for both roles. Remove the ID to enable the retained configuration
+again; credentials remain in their existing private files. This does not delete any
+stored conversation, memory, task or receipt, and does not replay old effects.
+
+A disabled provider contributes no tools, guidance, event stream or provider service.
+Other providers and ordinary chat remain available. Reading an immutable historical
+receipt can still use its installed pure policy; absence of that policy keeps the
+original literal receipt instead of a compact presentation. A missing dependency
+inside an installed module is an error, not an excuse to silently drop it.
+
+An update must retain the actual current service configuration and data mounts,
+check active conversations/model and work claims immediately before replacement,
+and verify that core and worker have the same execution source pins. The existing
+Home Assistant delivery/voice adapters remain owned by their current executor; this
+setting does not replace the speaker firmware or build another voice service.

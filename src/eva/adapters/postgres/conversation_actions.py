@@ -299,6 +299,14 @@ class PostgresConversationActions:
         eligible = getattr(provider, "contact_reply_allowed", None)
         return callable(eligible) and eligible(turn, receipt) is True
 
+    def conversation_instructions(self, turn, available_names):
+        values = []
+        for provider in self._external_tools:
+            guidance = getattr(provider, "conversation_instructions", None)
+            if callable(guidance):
+                values.extend(guidance(turn, available_names))
+        return tuple(dict.fromkeys(values))
+
     def continuation_action_names(self, turn: ConversationTurn) -> tuple[str, ...]:
         allowed = set(self.available_action_names(turn))
         return tuple(

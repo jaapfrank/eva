@@ -22,8 +22,7 @@ _CONNECTORS = frozenset({"connect_service", "discover_connector_tools",
 _PROCEDURES = frozenset({"list_reusable_procedures", "resolve_reusable_procedure",
                          "designate_reusable_procedure", "save_workspace_document", "run_reusable_procedure",
                          "register_own_contribution"})
-_HOME_ASSISTANT = frozenset({"home_assistant_request", "read_home_assistant_inventory"})
-_DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references", "mcp_gateway", "home_assistant"})
+_DIGITAL_PROVIDERS = frozenset({"mcp_autonomy", "procedure_references", "mcp_gateway"})
 _ROOT = Path(__file__).resolve().parents[1]
 _EXECUTION_SOURCES = (
     "bootstrap/completed_contributions.py",
@@ -40,7 +39,6 @@ _EXECUTION_SOURCES = (
     "adapters/postgres/delegated_work_actions.py",
     "bootstrap/delegated_digital_runner.py", "bootstrap/native_initiative_work.py",
     "adapters/connectors/delegated_completion.py",
-    "adapters/connectors/home_assistant_completion.py",
     "contracts/tool_deadlines.py",
     "contracts/component_target.py",
     "adapters/postgres/initiative_execution.py", "application/initiative_execution.py",
@@ -63,6 +61,10 @@ _EXECUTION_SOURCES = (
     "providers/mcp_owner_authority.py",
     "adapters/postgres/mcp_connector_registry.py",
     "adapters/postgres/connector_results.py",
+    "providers/bundled.py", "providers/runtime.py", "providers/contracts.py",
+    "providers/receipt_policies.py",
+    "application/conversation.py", "adapters/model/tool_namespaces.py",
+    "adapters/postgres/conversation_actions.py",
     "providers/procedure_reference_actions.py",
     "adapters/postgres/procedure_reference_host.py",
     "application/procedure_references.py",
@@ -70,11 +72,27 @@ _EXECUTION_SOURCES = (
     "adapters/postgres/external_conversation_tools.py",
     "adapters/connectors/mcp_gateway.py",
     "providers/mcp_gateway.py",
-    "providers/home_assistant.py",
-    "adapters/connectors/home_assistant_api.py",
-    "adapters/connectors/home_assistant_admin.py",
-    "adapters/connectors/home_assistant_automations.py",
 )
+
+
+def _digital_provider(loaded):
+    return (loaded.provider_id in _DIGITAL_PROVIDERS
+            or getattr(loaded.factory, "supports_digital_work", False) is True)
+
+
+def execution_sources(settings):
+    sources = list(_EXECUTION_SOURCES)
+    for loaded in (() if settings.external_provider is None else settings.external_provider.providers):
+        if not _digital_provider(loaded):
+            continue
+        for relative in getattr(loaded.factory, "execution_sources", ()):
+            path = _ROOT / relative
+            if (not isinstance(relative, str) or path.is_symlink()
+                    or not path.resolve().is_relative_to(_ROOT.resolve())
+                    or not path.is_file()):
+                raise ValueError("provider execution source is invalid")
+            sources.append(relative)
+    return tuple(dict.fromkeys(sources))
 
 
 def _digital_document_descriptor(tool):
@@ -95,7 +113,7 @@ def _digital_document_descriptor(tool):
 def digital_tools(bundle):
     if bundle is None:
         raise ValueError("digital work requires existing connector tools")
-    admitted = _CONNECTORS | _PROCEDURES | _HOME_ASSISTANT
+    admitted = _CONNECTORS | _PROCEDURES | frozenset(getattr(bundle, "digital_action_names", ()))
     descriptors = tuple(_digital_document_descriptor(tool) for tool in bundle.conversation_tools if tool.name in admitted)
     routes = tuple(tool for tool in bundle.external_tools if set(tool.action_names) & admitted)
     names = {tool.name for tool in descriptors}
@@ -130,7 +148,7 @@ def build_digital_profile(settings, provider_bundle):
     # provider authority still checks rotating credentials/mandates at execution.
     providers = []
     for loaded in settings.external_provider.providers:
-        if loaded.provider_id not in _DIGITAL_PROVIDERS:
+        if not _digital_provider(loaded):
             continue
         if loaded.provider_id == "mcp_autonomy" and not is_dataclass(loaded.settings):
             raise ValueError("digital work requires serializable provider settings")
@@ -157,7 +175,7 @@ def build_digital_profile(settings, provider_bundle):
         configuration_sha256=fingerprint, engine_release_sha256=ENGINE_RELEASE_SHA256,
         capability_ids=(*tuple(tool.name for tool in descriptors), "research_current_options"),
         execution_source_sha256=tuple((name, hashlib.sha256((_ROOT / name).read_bytes()).hexdigest())
-                                      for name in _EXECUTION_SOURCES),
+                                      for name in execution_sources(settings)),
         maximum_input_tokens=budget.max_input_tokens * min(settings.conversation_maximum_requests, 8),
         maximum_response_input_tokens=budget.max_input_tokens,
         maximum_output_tokens=budget.max_output_tokens * min(settings.conversation_maximum_requests, 8),
@@ -200,7 +218,7 @@ def build_digital_runner(settings, store, *, provider_bundle=None, household_aut
     engine = store._engine
     selected_providers = ExternalProviderSettings(tuple(loaded for loaded in
         (() if settings.external_provider is None else settings.external_provider.providers)
-        if loaded.provider_id in _DIGITAL_PROVIDERS))
+        if _digital_provider(loaded)))
     from eva.bootstrap.completed_contributions import with_completed_contributions
     bundle = with_completed_contributions(settings, engine,
         provider_bundle or build_external_provider_bundle(selected_providers, engine))

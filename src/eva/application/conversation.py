@@ -1098,7 +1098,7 @@ class LivingConversation:
         if "start_digital_work" in available_names:
             self_context = (*self_context,
                 "Use start_digital_work BEFORE discovery or partial execution for multi-step "
-                "connector work: reading, comparison, saving, actions, HA automation/configuration "
+                "connector work: reading, comparison, saving, actions, automation/configuration "
                 "analysis, learning and skill reuse. A simple current-state read or known house "
                 "action may run directly. The worker has its own authorized tools; do not infer "
                 "missing capability from the foreground catalog. Let it check access within the "
@@ -1118,6 +1118,9 @@ class LivingConversation:
                 "Use start_background_research for explicit public-source research, with only "
                 "the public question, never private context or recalled memories. Confirm durable "
                 "admission, remain available, and use existing task controls for status/stop/resume.")
+        provider_instructions = getattr(self._actions, "conversation_instructions", None)
+        if callable(provider_instructions):
+            self_context = (*self_context, *provider_instructions(turn, available_names))
         if voice is not None:
             self_context = (*self_context, *voice.instructions())
             if not any(item.call.name == SPEAK_AND_CONTINUE for item in receipts):

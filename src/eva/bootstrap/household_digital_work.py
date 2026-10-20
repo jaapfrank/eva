@@ -82,8 +82,8 @@ class HouseholdDigitalAuthority:
 
 
 def with_household_digital(parent, profile, settings_loader=None):
-    from eva.providers.home_assistant import HomeAssistantProviderFactory
-    loader = settings_loader or HomeAssistantProviderFactory.load_settings
+    from eva.providers.runtime import load_provider_digital_settings
+    loader = settings_loader or load_provider_digital_settings
     settings = loader()
     if profile is None or settings is None or not settings.api_enabled:
         return parent

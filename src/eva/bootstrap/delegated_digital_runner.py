@@ -299,6 +299,16 @@ class BackgroundConnectorActions:
         self._authorize(turn)
         return manifest
 
+    def conversation_instructions(self, turn, available_names):
+        self._authorize(turn)
+        names = tuple(name for name in available_names if name in self._allowed)
+        values = []
+        for provider in self._tools:
+            guidance = getattr(provider, "conversation_instructions", None)
+            if callable(guidance):
+                values.extend(guidance(turn, names))
+        return tuple(dict.fromkeys(values))
+
     def active_context(self, turn):
         self._authorize(turn)
         return tuple(item for tool in self._tools if tool.available_for(turn)

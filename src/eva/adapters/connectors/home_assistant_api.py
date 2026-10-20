@@ -31,6 +31,16 @@ class _InvalidRequestBody(ConversationConflict):
 
 
 class HomeAssistantApiTool:
+    @staticmethod
+    def contact_reply_allowed(turn, receipt):
+        from eva.providers.home_assistant_policy import contact_reply_allowed
+        return contact_reply_allowed(turn, receipt)
+
+    @staticmethod
+    def conversation_instructions(turn, available_names):
+        from eva.providers.home_assistant_policy import conversation_instructions
+        return conversation_instructions(turn, available_names)
+
     action_names = (_ACTION,)
     supports_stored_results = True
 
@@ -45,60 +55,7 @@ class HomeAssistantApiTool:
         return (ConversationToolDescriptor(
             name=_ACTION,
             description=(
-                "Gebruik voor gewoon aan/uit-bedienen bij voorkeur de aangeboden "
-                "set_home_assistant_light of set_home_assistant_switch: die combineren "
-                "doelresolutie, toegestane uitvoering en onafhankelijke eindcontrole. "
-                "Daarvoor zijn geen losse inventaris-, service- en statusrondes nodig. "
-                "Deze algemene API blijft beschikbaar voor andere bedieningen en bronvragen. "
-                "Gebruik de echte Home Assistant REST- of WebSocket-API. Ontdek alleen "
-                "ontbrekende doelentiteiten of onbekende servicevelden. Gebruik voldoende "
-                "actuele, brongebonden informatie uit deze beurt opnieuw; een bekende "
-                "service met bekende velden vereist geen volledige servicecatalogus. "
-                "Kies de passende API en parameters voor de gebruikersvraag. Geen vaste lijst "
-                "apparaattypen of automatiseringssjablonen. REST: GET /api/services, "
-                "GET /api/states, GET /api/states/<entity_id>, POST "
-                "/api/services/<domain>/<service>. Automatiseringsconfiguratie: "
-                "GET/POST /api/config/automation/config/<id>; lees bestaande inhoud "
-                "voor wijzigingen, behoud niet-gevraagde instellingen en lees daarna terug. "
-                "WebSocket: body_json bevat een command met type, bijvoorbeeld get_services, "
-                "config/area_registry/list of config/entity_registry/list. Gebruik levende "
-                "API-resultaten/documentatie; verzin geen apparaatnamen of schema's. "
-                "Gebruik read_home_assistant_inventory als die beschikbaar is voor compacte "
-                "ontdekking per sectie; haal niet eerst alle /api/states op voor één onderwerp. "
-                "Voor meerdere volledige automatiseringsconfiguraties gebruik je de sectie "
-                "automation_configurations van die inventaris; deze API blijft voor andere "
-                "gerichte leesaanvragen en wijzigingen beschikbaar. "
-                "For current states of multiple discovered entities, prefer one bounded POST "
-                "/api/template with body_json containing a template, instead of a separate "
-                "model/tool round trip per entity. Render explicit JSON records with entity_id, "
-                "state and all attributes needed for the requested action or restoration; do not "
-                "serialize HA State objects directly. Template collections returned by state_attr "
-                "may be sets: convert collections to lists before embedding them in JSON, "
-                "including group member IDs, and materialize map/select results with |list. "
-                "Use ordinary JSON scalars, lists and dictionaries only. "
-                "Include every requested entity, retain "
-                "unknown/unavailable states, and check completeness, pagination and truncation. "
-                "A grouped read can verify each target. Make a fresh read after every mutation "
-                "phase; an earlier snapshot or service acknowledgement is not post-action proof. "
-                "For REST service calls that return data, include ?return_response and read "
-                "service_response; omit that parameter for services without response data. "
-                "The REST body contains service fields and entity_id directly, not a WebSocket "
-                "command envelope. Use known service fields; if unknown, inspect the relevant "
-                "service definition rather than guessing fields or template functions. "
-                "For one unknown service schema, use transport=websocket, method=GET, "
-                "path empty, body_json={\"type\":\"get_services\"}, and response_pointer "
-                "/<domain>/<service> to receive only that definition, rather than GET "
-                "/api/services with its full catalog. When current source evidence proves "
-                "a group already includes the requested members, target the group or those "
-                "members once, not both; never infer group membership from names alone. "
-                "Een API-antwoord bewijst geen fysiek resultaat. Controleer veranderingen "
-                "met een aparte leesaanvraag. Lang werk kan via start_digital_work doorgaan. "
-                "response_pointer is een JSON Pointer om in een groot antwoord te kijken; "
-                "offset/limit pagineren arrays of objectvelden. Leeg pointer toont de root."
-                " GET /api/camera_proxy/<camera.entity> kan bij geïnstalleerde lokale "
-                "beeldanalyse een beschrijving geven. Ontdek de camera in de inventaris; "
-                "een beeldinterpretatie is geen geverifieerd feit. Zonder beeldmodule "
-                "meldt de API dat beeldanalyse niet beschikbaar is."
+                'Gebruik voor gewoon aan/uit-bedienen bij voorkeur de aangeboden set_home_assistant_light of set_home_assistant_switch: die combineren doelresolutie, toegestane uitvoering en onafhankelijke eindcontrole. Daarvoor zijn geen losse inventaris-, service- en statusrondes nodig. Deze algemene API blijft beschikbaar voor andere bedieningen en bronvragen. Gebruik de echte Home Assistant REST- of WebSocket-API. Ontdek alleen ontbrekende doelentiteiten of onbekende servicevelden. Gebruik voldoende actuele, brongebonden informatie uit deze beurt opnieuw; een bekende service met bekende velden vereist geen volledige servicecatalogus. Kies de passende API en parameters voor de gebruikersvraag. Geen vaste lijst apparaattypen of automatiseringssjablonen. REST: GET /api/services, GET /api/states, GET /api/states/<entity_id>, POST /api/services/<domain>/<service>. Automatiseringsconfiguratie: GET/POST /api/config/automation/config/<id>; lees bestaande inhoud voor wijzigingen, behoud niet-gevraagde instellingen en lees daarna terug. WebSocket: body_json bevat een command met type, bijvoorbeeld get_services, config/area_registry/list of config/entity_registry/list. Gebruik levende API-resultaten/documentatie; verzin geen apparaatnamen of schema\'s. Gebruik read_home_assistant_inventory als die beschikbaar is voor compacte ontdekking per sectie; haal niet eerst alle /api/states op voor één onderwerp. Voor meerdere volledige automatiseringsconfiguraties gebruik je de sectie automation_configurations van die inventaris; deze API blijft voor andere gerichte leesaanvragen en wijzigingen beschikbaar. For REST service calls that return data, include ?return_response and read service_response; omit that parameter for services without response data. The REST body contains service fields and entity_id directly, not a WebSocket command envelope. Use known service fields; if unknown, inspect the relevant service definition rather than guessing fields or template functions. For one unknown service schema, use transport=websocket, method=GET, path empty, body_json={"type":"get_services"}, and response_pointer /<domain>/<service> to receive only that definition, rather than GET /api/services with its full catalog. When current source evidence proves a group already includes the requested members, target the group or those members once, not both; never infer group membership from names alone. Een API-antwoord bewijst geen fysiek resultaat. Controleer veranderingen met een aparte leesaanvraag. Lang werk kan via start_digital_work doorgaan. response_pointer is een JSON Pointer om in een groot antwoord te kijken; offset/limit pagineren arrays of objectvelden. Leeg pointer toont de root. GET /api/camera_proxy/<camera.entity> kan bij geïnstalleerde lokale beeldanalyse een beschrijving geven. Ontdek de camera in de inventaris; een beeldinterpretatie is geen geverifieerd feit. Zonder beeldmodule meldt de API dat beeldanalyse niet beschikbaar is.'
             ),
             input_schema={"type": "object", "additionalProperties": False,
                 "properties": {

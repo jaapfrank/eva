@@ -326,7 +326,8 @@ class ConnectorResults:
             raise ConversationConflict("retained read proof is absent")
         self.timeline.load(source["thread_id"])
         admission = events[0].payload["data"]
-        if (admission.get("action_name") not in {"home_assistant_request", "read_home_assistant_inventory"}
+        from eva.providers.receipt_policies import retains_observation
+        if (not retains_observation(admission.get("action_name"))
                 or admission.get("execution_namespace") != background_execution_namespace(self.turn)
                 or admission.get("action_call_id") != source["call_id"]):
             raise ConversationConflict("retained read namespace or call differs")
@@ -372,7 +373,8 @@ class ConnectorResults:
                     or receipt.output.get("result") != self.read(reader, arguments)):
                 raise ConversationConflict("retained local selection source differs")
         else:
-            if (name not in {"home_assistant_request", "read_home_assistant_inventory", "save_workspace_document", "use_connector_tool"}
+            from eva.providers.receipt_policies import retains_action_body
+            if (not retains_action_body(name)
                     or events[0].event_type != "TOOL_REQUEST_ADMITTED"
                     or events[-1].event_type != "STATE_VERIFIED"
                     or admission.get("execution_namespace") != background_execution_namespace(self.turn)):

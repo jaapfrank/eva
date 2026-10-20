@@ -335,6 +335,16 @@ class HomeAssistantConversationReadPlanner:
 
     action_names = ("read_home_assistant_history", "read_home_assistant_state")
 
+    @staticmethod
+    def conversation_instructions(turn, available_names):
+        from eva.providers.home_assistant_policy import conversation_instructions
+        return conversation_instructions(turn, available_names)
+
+    @staticmethod
+    def contact_reply_allowed(turn, receipt):
+        from eva.providers.home_assistant_policy import contact_reply_allowed
+        return contact_reply_allowed(turn, receipt)
+
     def __init__(self, provider: HomeAssistantToolAdapter) -> None:
         self._provider = provider
 

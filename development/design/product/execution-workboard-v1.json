@@ -841,14 +841,14 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.11",
+  "activeTaskId": "E4.6",
   "currentWork": {
-    "id": "E4.11",
-    "title": "Geheugen · E4.11 technisch afgerond en geïnstalleerd",
+    "id": "E4.6",
+    "title": "E4.6 · Home Assistant-modulegrens geïnstalleerd",
     "status": "completed",
-    "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-    "nextAction": "Volg de bestaande resterende kaarten. HA-/spraakwerk blijft bij de toegewezen uitvoerder; gezinsacceptatie blijft afzonderlijk en blokkeert ander werk niet.",
-    "checkedAt": "2026-10-19T14:24:28.236415+00:00",
+    "doneWhen": "De bestaande HA-provider bezit alle HA-specifieke instructies, doel- en toolclassificatie, broninterpretatie, configuratie en afleveradapter. Eva-kern en algemene modeladapter werken via generieke capability-, context- en receiptcontracten. Zonder geïnstalleerde of ingeschakelde HA-module blijven chat, geheugen, initiatief en andere connectors werken; HA-tools en instructies ontbreken dan. Aan-/uitzetten en bijwerken behouden gegevens, lopende taakstatus en bestaande receipts. Geen tweede Eva, geheugen of moduleplatform.",
+    "nextAction": "Gebruik dezelfde bestaande Eva-chat en HA-koppeling; geen handeling nodig. Ga verder met bestaande E4.7-capabilityprofielkaart. Spraak blijft bij andere uitvoerder.",
+    "checkedAt": "2026-10-20T09:40:57.354545+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,22 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.6 · Home Assistant werkt als optionele module van dezelfde Eva",
+            "state": "installed",
+            "summary": "HA-regels en broninterpretatie komen uit de provider. Eva kan zonder HA starten en gewoon chatten; andere connectors blijven beschikbaar. Oude gegevens en resultaten behouden. Werkend op actuele kern en uitvoerworker.",
+            "remaining": "E4.7–E4.10/E5.2: bestaande kaarten voor capabilityprofiel, actuele context, gebundelde bediening en gemeten snelheid. Spraak en gezinsacceptatie blijven afzonderlijk.",
+            "source": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
+            "review": "development/reviews/e46-optional-home-provider-review-20261020.json",
+            "checkedAt": "2026-10-20T09:40:57.354545+00:00",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "E4.6"
+            ],
+            "completionScope": "Technische eindvoorwaarde van bestaande E4.6-modulekaart; geen hele Eva- of gezinsacceptatie.",
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E4.11 · Selectief geheugen, opschoning en status technisch afgerond",
             "state": "installed",
@@ -2713,52 +2729,47 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E4.11 · Selectief geheugen, opschoning en status technisch afgerond",
+          "title": "E4.6 · Home Assistant werkt als optionele module van dezelfde Eva",
           "state": "installed",
-          "summary": "Gesprekken eerst als dagcontext; bestaande droomroute selecteert en actualiseert blijvende kennis. Automatische opruiming van bewezen dubbele uitvoertekst en correcte wis-/reflectiestatus zijn actief. Drie oude nulresultaten zonder herhaling afgehandeld.",
-          "remaining": "Historische fouten en onbewezen bron/payloadgegevens bewust behouden met afzonderlijke waarschuwing. Meerdaags nut en gezinsacceptatie blijven apart; fysieke database-, token- en snelheidswinst onbekend.",
-          "source": "development/evidence/product/e411-selective-memory-completed-20261019.json",
-          "review": "development/reviews/e411-selective-memory-final-review-20261019.json",
-          "checkedAt": "2026-10-19T14:24:28.236415+00:00",
+          "summary": "HA-regels en broninterpretatie komen uit de provider. Eva kan zonder HA starten en gewoon chatten; andere connectors blijven beschikbaar. Oude gegevens en resultaten behouden. Werkend op actuele kern en uitvoerworker.",
+          "remaining": "E4.7–E4.10/E5.2: bestaande kaarten voor capabilityprofiel, actuele context, gebundelde bediening en gemeten snelheid. Spraak en gezinsacceptatie blijven afzonderlijk.",
+          "source": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
+          "review": "development/reviews/e46-optional-home-provider-review-20261020.json",
+          "checkedAt": "2026-10-20T09:40:57.354545+00:00",
           "newProductFunctionCompleted": true,
           "completedTaskIds": [
-            "E4.11"
+            "E4.6"
           ],
-          "completionScope": "Technische eindvoorwaarde van bestaande kleine kaart E4.11; geen volledige Eva- of gezinsacceptatie.",
+          "completionScope": "Technische eindvoorwaarde van bestaande E4.6-modulekaart; geen hele Eva- of gezinsacceptatie.",
           "ownerAcceptance": false,
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.11",
-          "title": "Geheugen · E4.11 technisch afgerond en geïnstalleerd",
+          "taskId": "E4.6",
+          "title": "E4.6 · Home Assistant-modulegrens geïnstalleerd",
           "state": "completed",
           "status": "completed",
-          "summary": "Gesprekken eerst als dagcontext; bestaande droomroute selecteert en actualiseert blijvende kennis. Automatische opruiming van bewezen dubbele uitvoertekst en correcte wis-/reflectiestatus zijn actief. Drie oude nulresultaten zonder herhaling afgehandeld.",
-          "detail": "Historische fouten en onbewezen bron/payloadgegevens bewust behouden met afzonderlijke waarschuwing. Meerdaags nut en gezinsacceptatie blijven apart; fysieke database-, token- en snelheidswinst onbekend.",
-          "doneWhen": "Alleen later bruikbare persoonlijke kennis, voorkeuren, relaties, correcties, afspraken en blijvende voortgang worden via de bestaande geheugenroute geselecteerd en samengevoegd. Onbelangrijke uitwisselingen worden geen blijvend zoekgeheugen. Gespreksgeschiedenis en geselecteerde herinneringen zijn zichtbaar gescheiden; persoonsgrenzen, bron/datum, correcties en vergeten blijven werken. Bestaande gegevens worden onderbouwd opgeschoond; werkelijk opslag-/contextgebruik vóór en na blijft meetbaar. Geen tweede geheugen en geen extra classificatiemodel per beurt.",
-          "checkedAt": "2026-10-19T14:24:28.236415+00:00"
+          "summary": "HA-regels en broninterpretatie komen uit de provider. Eva kan zonder HA starten en gewoon chatten; andere connectors blijven beschikbaar. Oude gegevens en resultaten behouden. Werkend op actuele kern en uitvoerworker.",
+          "detail": "E4.7–E4.10/E5.2: bestaande kaarten voor capabilityprofiel, actuele context, gebundelde bediening en gemeten snelheid. Spraak en gezinsacceptatie blijven afzonderlijk.",
+          "doneWhen": "De bestaande HA-provider bezit alle HA-specifieke instructies, doel- en toolclassificatie, broninterpretatie, configuratie en afleveradapter. Eva-kern en algemene modeladapter werken via generieke capability-, context- en receiptcontracten. Zonder geïnstalleerde of ingeschakelde HA-module blijven chat, geheugen, initiatief en andere connectors werken; HA-tools en instructies ontbreken dan. Aan-/uitzetten en bijwerken behouden gegevens, lopende taakstatus en bestaande receipts. Geen tweede Eva, geheugen of moduleplatform.",
+          "checkedAt": "2026-10-20T09:40:57.354545+00:00"
         },
         "next": {
-          "taskId": "E4.6",
-          "title": "Bestaande Home Assistant-moduleafwerking",
-          "detail": "Bestaande E4.6–E4.10/E5.2 bij de toegewezen HA-/spraakcoördinator; geen nieuwe kaarten of startclaim. Deze oplevering wijzigt diens spraakwerk niet.",
-          "followingAcceptance": {
-            "taskId": "F2.1",
-            "title": "Gewoon gezinsgebruik en afzonderlijke acceptatie",
-            "detail": "Bestaande beoordeling; geen herhaling van geaccepteerde geheugenproeven en geen blokkade voor ander uitvoerbaar werk."
-          }
+          "taskId": "E4.7",
+          "title": "Bestaande officiële HA-transports aan één capabilityprofiel koppelen",
+          "detail": "Volgende bestaande kaart; eerst actuele API/MCP-dekking en bestaande bevoegdheden binden. Geen nieuwe vergelijkingsserie of spraakbouw."
         },
         "ownerAction": {
           "required": false,
-          "detail": "Voor E4.11 geen handeling of herhaalde Telegramproef nodig. Gebruik Eva normaal; eigen WhatsApp-nummer blijft een afzonderlijke optionele keuze.",
+          "detail": "Voor E4.6 geen handeling of herhaalde proef nodig. Gebruik Eva normaal; het eigen WhatsApp-nummer blijft een afzonderlijke optionele keuze.",
           "steps": []
         },
-        "checkedAt": "2026-10-19T14:24:28.236415+00:00",
-        "reviewedAt": "2026-10-19T14:24:28.236415+00:00",
+        "checkedAt": "2026-10-20T09:40:57.354545+00:00",
+        "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-19T14:24:28.236415+00:00",
-      "checkedAt": "2026-10-19T14:24:28.236415+00:00",
+      "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
+      "checkedAt": "2026-10-20T09:40:57.354545+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -2892,7 +2903,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-19T14:24:28.236415+00:00",
+      "lastUpdatedAt": "2026-10-20T09:40:57.354545+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -2926,7 +2937,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-19T14:24:28.236415+00:00",
+      "updatedAt": "2026-10-20T09:40:57.354545+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -6544,8 +6555,8 @@
                 "id": "E4.6",
                 "title": "Home Assistant volledig achter de optionele modulegrens plaatsen",
                 "doneWhen": "De bestaande HA-provider bezit alle HA-specifieke instructies, doel- en toolclassificatie, broninterpretatie, configuratie en afleveradapter. Eva-kern en algemene modeladapter werken via generieke capability-, context- en receiptcontracten. Zonder geïnstalleerde of ingeschakelde HA-module blijven chat, geheugen, initiatief en andere connectors werken; HA-tools en instructies ontbreken dan. Aan-/uitzetten en bijwerken behouden gegevens, lopende taakstatus en bestaande receipts. Geen tweede Eva, geheugen of moduleplatform.",
-                "existing": "ProviderContribution, external-provider entry points en een optionele HomeAssistantProviderFactory bestaan. HA-beleid lekt nog naar gesprek, modeladapter en bootstrap.",
-                "gap": "De huidige optionele configuratie levert nog geen volledige product- en codegrens; alleen bestanden verplaatsen verwijdert die afhankelijkheid niet.",
+                "existing": "HA-provider levert eigen instructies/toolclassificatie, pure bron-/receiptinterpretatie, digitale capabilities en dezelfde bestaande initiatief-/afleveradapters. Algemene kern/modeladapter/runtime kennen geen HA-toolnamen of settingsvertakkingen. Appconstructie op de echte configuratie:67 acties metHA,56zonderHA; overigeconnector blijft bereikbaar. Core/worker60bronpins gelijk en reeds toegelaten bevoegdheden behouden.",
+                "gap": "Geen open technische E4.6-voorwaarde. E4.7–E4.10/E5.2 blijven aparte bestaande werkzaamheden voor transport/context/bediening/snelheid. Geen nieuwe fysieke spraakproef, algemene kwaliteitsvoorsprong of gezinsacceptatie geclaimd.",
                 "implementation": [
                   "Verplaats HA-specifieke prompttekst en classificatie naar de bestaande providerbijdrage; de kern consumeert neutrale metadata.",
                   "Verplaats HA-bronprojectie en lees-/schrijfinterpretatie uit de modeladapter met behoud van bronhash, bevoegdheid, replay en bestaande opgeslagen resultaten.",
@@ -6569,15 +6580,40 @@
                   "Aan/uit, uitval en heraansluiting zonder verloren gegevens of opnieuw uitgevoerde effecten.",
                   "Bestaande opgeslagen receipts en andere provider blijven bruikbaar."
                 ],
-                "nextAction": "Leg de echte HA-consumers en generieke overdrachtscontracten vast; migreer de bestaande verantwoordelijkheden in één beoordeelbare wijziging.",
-                "status": "planned",
+                "nextAction": "Gebruik dezelfde bestaande Eva-chat en HA-koppeling; geen handeling nodig. Ga verder met bestaande E4.7-capabilityprofielkaart. Spraak blijft bij andere uitvoerder.",
+                "status": "completed",
                 "kind": "owner_requested_followup",
-                "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+                "owner": "Codex · kernuitvoerder; bestaande spraak bij andere uitvoerder",
                 "ownerActionRequired": false,
                 "scopeOrigin": "home-module-latency-20261019",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-                "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
-                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+                "assignment": {
+                  "coordinator": "/root",
+                  "activeWorkers": [],
+                  "scope": "E4.6 technisch afgerond en geïnstalleerd; geen spraakcode of spraakcontainer gewijzigd."
+                },
+                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
+                "technicalCompletion": true,
+                "installed": true,
+                "ownerAcceptance": false,
+                "familyAcceptance": false,
+                "checkedAt": "2026-10-20T09:40:57.354545+00:00",
+                "completedAt": "2026-10-20T09:40:57.354545+00:00",
+                "completionEvidence": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
+                "latestEvidence": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
+                "independentReview": "development/reviews/e46-optional-home-provider-review-20261020.json",
+                "latestReview": "development/reviews/e46-optional-home-provider-review-20261020.json",
+                "ownerInstructions": {
+                  "availableNow": true,
+                  "steps": [
+                    "Gebruik Eva normaal via dezelfde chat. De bestaande HA-koppeling blijft actief; voor deze modulegrens hoef je geen proef te herhalen."
+                  ],
+                  "blocksIndependentWork": false
+                },
+                "knownLimitations": [
+                  "Geen nieuwe transport-/latencyclaim; volgende bestaande kaarten behouden hun criteria.",
+                  "Oorspronkelijk foutbewijs en2 bestaande engine=None fixturefouten bewaard; geen volledige repository-testclaim."
+                ]
               },
               {
                 "id": "E4.7",
@@ -7293,7 +7329,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-19T14:24:28.236415+00:00",
+        "updatedAt": "2026-10-20T09:40:57.354545+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -7515,7 +7551,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-19T14:24:28.236415+00:00",
+        "checkedAt": "2026-10-20T09:40:57.354545+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -11152,8 +11188,8 @@
               "id": "E4.6",
               "title": "Home Assistant volledig achter de optionele modulegrens plaatsen",
               "doneWhen": "De bestaande HA-provider bezit alle HA-specifieke instructies, doel- en toolclassificatie, broninterpretatie, configuratie en afleveradapter. Eva-kern en algemene modeladapter werken via generieke capability-, context- en receiptcontracten. Zonder geïnstalleerde of ingeschakelde HA-module blijven chat, geheugen, initiatief en andere connectors werken; HA-tools en instructies ontbreken dan. Aan-/uitzetten en bijwerken behouden gegevens, lopende taakstatus en bestaande receipts. Geen tweede Eva, geheugen of moduleplatform.",
-              "existing": "ProviderContribution, external-provider entry points en een optionele HomeAssistantProviderFactory bestaan. HA-beleid lekt nog naar gesprek, modeladapter en bootstrap.",
-              "gap": "De huidige optionele configuratie levert nog geen volledige product- en codegrens; alleen bestanden verplaatsen verwijdert die afhankelijkheid niet.",
+              "existing": "HA-provider levert eigen instructies/toolclassificatie, pure bron-/receiptinterpretatie, digitale capabilities en dezelfde bestaande initiatief-/afleveradapters. Algemene kern/modeladapter/runtime kennen geen HA-toolnamen of settingsvertakkingen. Appconstructie op de echte configuratie:67 acties metHA,56zonderHA; overigeconnector blijft bereikbaar. Core/worker60bronpins gelijk en reeds toegelaten bevoegdheden behouden.",
+              "gap": "Geen open technische E4.6-voorwaarde. E4.7–E4.10/E5.2 blijven aparte bestaande werkzaamheden voor transport/context/bediening/snelheid. Geen nieuwe fysieke spraakproef, algemene kwaliteitsvoorsprong of gezinsacceptatie geclaimd.",
               "implementation": [
                 "Verplaats HA-specifieke prompttekst en classificatie naar de bestaande providerbijdrage; de kern consumeert neutrale metadata.",
                 "Verplaats HA-bronprojectie en lees-/schrijfinterpretatie uit de modeladapter met behoud van bronhash, bevoegdheid, replay en bestaande opgeslagen resultaten.",
@@ -11177,15 +11213,40 @@
                 "Aan/uit, uitval en heraansluiting zonder verloren gegevens of opnieuw uitgevoerde effecten.",
                 "Bestaande opgeslagen receipts en andere provider blijven bruikbaar."
               ],
-              "nextAction": "Leg de echte HA-consumers en generieke overdrachtscontracten vast; migreer de bestaande verantwoordelijkheden in één beoordeelbare wijziging.",
-              "status": "planned",
+              "nextAction": "Gebruik dezelfde bestaande Eva-chat en HA-koppeling; geen handeling nodig. Ga verder met bestaande E4.7-capabilityprofielkaart. Spraak blijft bij andere uitvoerder.",
+              "status": "completed",
               "kind": "owner_requested_followup",
-              "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+              "owner": "Codex · kernuitvoerder; bestaande spraak bij andere uitvoerder",
               "ownerActionRequired": false,
               "scopeOrigin": "home-module-latency-20261019",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-              "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
-              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+              "assignment": {
+                "coordinator": "/root",
+                "activeWorkers": [],
+                "scope": "E4.6 technisch afgerond en geïnstalleerd; geen spraakcode of spraakcontainer gewijzigd."
+              },
+              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
+              "technicalCompletion": true,
+              "installed": true,
+              "ownerAcceptance": false,
+              "familyAcceptance": false,
+              "checkedAt": "2026-10-20T09:40:57.354545+00:00",
+              "completedAt": "2026-10-20T09:40:57.354545+00:00",
+              "completionEvidence": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
+              "latestEvidence": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
+              "independentReview": "development/reviews/e46-optional-home-provider-review-20261020.json",
+              "latestReview": "development/reviews/e46-optional-home-provider-review-20261020.json",
+              "ownerInstructions": {
+                "availableNow": true,
+                "steps": [
+                  "Gebruik Eva normaal via dezelfde chat. De bestaande HA-koppeling blijft actief; voor deze modulegrens hoef je geen proef te herhalen."
+                ],
+                "blocksIndependentWork": false
+              },
+              "knownLimitations": [
+                "Geen nieuwe transport-/latencyclaim; volgende bestaande kaarten behouden hun criteria.",
+                "Oorspronkelijk foutbewijs en2 bestaande engine=None fixturefouten bewaard; geen volledige repository-testclaim."
+              ]
             },
             {
               "id": "E4.7",
@@ -11901,7 +11962,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-19T14:24:28.236415+00:00",
+      "updatedAt": "2026-10-20T09:40:57.354545+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -12123,7 +12184,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-19T14:24:28.236415+00:00",
+      "checkedAt": "2026-10-20T09:40:57.354545+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -13535,7 +13596,7 @@
       "physicalAcceptance": "pending"
     }
   },
-  "updatedAt": "2026-10-19T14:24:28.236415+00:00",
+  "updatedAt": "2026-10-20T09:40:57.354545+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -13592,6 +13653,6 @@
       "sha256": "6989f2ee57a5b84f48bbcc2407dc68332c3e11d5e6ae4d048ba43da37df9e20b"
     }
   ],
-  "lastUpdatedAt": "2026-10-19T14:24:28.236415+00:00",
-  "checkedAt": "2026-10-19T14:24:28.236415+00:00"
+  "lastUpdatedAt": "2026-10-20T09:40:57.354545+00:00",
+  "checkedAt": "2026-10-20T09:40:57.354545+00:00"
 }
