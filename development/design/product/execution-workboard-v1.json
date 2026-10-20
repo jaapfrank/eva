@@ -6849,8 +6849,8 @@
                   "Bekend doel gebruikt aanwezige context; onbekend of ambigu doel leidt tot passende ontdekking of vraag.",
                   "Privé- en huishoudcontext blijven gescheiden."
                 ],
-                "nextAction": "Bestaande HA-events koppelen aan actuele modulecontext; exacte eerder geverifieerde zelfstandige opdrachten hergebruiken met actuele bron-/context-/doelcontrole, installeren en live meten.",
-                "status": "in_progress",
+                "nextAction": "Technisch geleverd en geïnstalleerd: actuele HA-modulecontext en exacte gevalideerde opdrachten hergebruiken. Verdere snelheidswinst en de oorspronkelijke acceptatiegrenzen blijven bij E5.2.",
+                "status": "completed",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
                 "ownerActionRequired": false,
@@ -6858,10 +6858,8 @@
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "assignment": {
                   "coordinator": "/root",
-                  "activeWorkers": [
-                    "/root/review_cursor"
-                  ],
-                  "scope": "Bestaande spraak-/HA-overdracht; E1.4 van de andere uitvoerder blijft ongemoeid. Geen tweede router/geheugen en geen afzwakking van E4.8/E5.2."
+                  "activeWorkers": [],
+                  "scope": "E4.8 technisch geïnstalleerd, live gebruikt en onafhankelijk beoordeeld. Andere primaire werkzaamheden behouden; geen fysieke of algemene snelheidacceptatie."
                 },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
                 "findings": [
@@ -6877,10 +6875,19 @@
                     "finding": "Eigenaar vraagt hergebruik van bekende volledige acties. Cataloguscache bestaat; apparaat-/actiehergebruik is in deze levering nog niet geïnstalleerd.",
                     "blocksOriginalE51": false,
                     "newTaskCreated": false
+                  },
+                  {
+                    "source": "development/evidence/product/e48-ha-context-command-cache-20261020.json",
+                    "finding": "Modulecontext gebruikt de bestaande snapshot/delta-eventroute.12chatproeven met8herhalingen zondermodel;10nativebeurten,waaronder3opeenvolgendeexacteherhalingenzondermodel/TTS. ElkeactieheeftnieuweuitvoeringenverseSTATE_VERIFIED. ASR-variantenblijvengewonecachemisses. Nieuwstechatfinal2.466/2.959s;nativeexactinputeinde→receipt4.370–4.934s. Geen≤2s-of fysiekeclaim. Eigenproefinhoudexactverwijderd;beschermdebronhashesbehouden.",
+                    "blocksOriginalE51": false,
+                    "newTaskCreated": false
                   }
                 ],
-                "checkedAt": "2026-10-20T13:45:31.504018+00:00",
-                "progressEvidence": "development/evidence/product/e48-ha-context-command-cache-20261020.json"
+                "checkedAt": "2026-10-20T14:37:45.174705+00:00",
+                "progressEvidence": "development/evidence/product/e48-ha-context-command-cache-20261020.json",
+                "technicalCompletedAt": "2026-10-20T14:37:45.174705+00:00",
+                "completionEvidence": "development/evidence/product/e48-ha-context-command-cache-20261020.json",
+                "independentReview": "development/reviews/e48-ha-context-command-cache-review-20261020.json"
               },
               {
                 "id": "E4.9",
@@ -7591,7 +7598,7 @@
                   "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                   "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
                 ],
-                "nextAction": "Stille afronding is geïnstalleerd en live bewezen. Vervolg E4.8/E4.9/E4.10 voor bekende opdrachten zonder onnodige context-/modelwachttijd; oorspronkelijke ≤2s-criteria blijven gelden.",
+                "nextAction": "E4.8 is technisch afgerond. Profileer de actuele warme volledige chat-/spraakroute en verkort resterende database- en overdrachtswachttijd; beoordeel E4.9/E4.10 op hun oorspronkelijke criteria. Behoud ASR-cachemisses, koude interpretatie en oorspronkelijke mediaan≤1s/p95≤2s als aparte bewijsgrenzen.",
                 "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -7610,13 +7617,19 @@
                   "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                   "ownerAcceptance": false
                 },
-                "checkedAt": "2026-10-20T13:22:23.010369+00:00",
-                "progressEvidence": "development/evidence/product/silent-action-completion-20261020.json",
-                "independentReview": "development/reviews/silent-action-completion-review-20261020.json",
+                "checkedAt": "2026-10-20T14:37:45.174705+00:00",
+                "progressEvidence": "development/evidence/product/e48-ha-context-command-cache-20261020.json",
+                "independentReview": "development/reviews/e48-ha-context-command-cache-review-20261020.json",
                 "findings": [
                   {
                     "source": "development/evidence/product/silent-action-completion-20261020.json",
                     "finding": "Gewone aan/uit-opdrachten eindigen stil na één modelbesluit, één MCP-effect en verse eindcontrole; expliciet gevraagde bevestiging krijgt antwoord. Chatfinal9.374/11.648s; spraakinputeinde→geverifieerd receipt7.083s, daarna volgende vraag in dezelfde sessie. Geen ≤2s-, mediaan/p95- of fysieke acceptatieclaim.",
+                    "blocksOriginalE51": false,
+                    "newTaskCreated": false
+                  },
+                  {
+                    "source": "development/evidence/product/e48-ha-context-command-cache-20261020.json",
+                    "finding": "Exact hergebruik is live bewezen via dezelfde module in chat/spraak. Nieuwstechatfinal2.466/2.959s en koudeinterpretaties11.163/12.713s;nativeexactherhalinginputeinde→verse receipt4.370–4.934s. De oorspronkelijke prestatiedoelen zijn niet gehaald; E5.2 blijft open.",
                     "blocksOriginalE51": false,
                     "newTaskCreated": false
                   }
@@ -11828,8 +11841,8 @@
                 "Bekend doel gebruikt aanwezige context; onbekend of ambigu doel leidt tot passende ontdekking of vraag.",
                 "Privé- en huishoudcontext blijven gescheiden."
               ],
-              "nextAction": "Bestaande HA-events koppelen aan actuele modulecontext; exacte eerder geverifieerde zelfstandige opdrachten hergebruiken met actuele bron-/context-/doelcontrole, installeren en live meten.",
-              "status": "in_progress",
+              "nextAction": "Technisch geleverd en geïnstalleerd: actuele HA-modulecontext en exacte gevalideerde opdrachten hergebruiken. Verdere snelheidswinst en de oorspronkelijke acceptatiegrenzen blijven bij E5.2.",
+              "status": "completed",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
               "ownerActionRequired": false,
@@ -11837,10 +11850,8 @@
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "assignment": {
                 "coordinator": "/root",
-                "activeWorkers": [
-                  "/root/review_cursor"
-                ],
-                "scope": "Bestaande spraak-/HA-overdracht; E1.4 van de andere uitvoerder blijft ongemoeid. Geen tweede router/geheugen en geen afzwakking van E4.8/E5.2."
+                "activeWorkers": [],
+                "scope": "E4.8 technisch geïnstalleerd, live gebruikt en onafhankelijk beoordeeld. Andere primaire werkzaamheden behouden; geen fysieke of algemene snelheidacceptatie."
               },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
               "findings": [
@@ -11856,10 +11867,19 @@
                   "finding": "Eigenaar vraagt hergebruik van bekende volledige acties. Cataloguscache bestaat; apparaat-/actiehergebruik is in deze levering nog niet geïnstalleerd.",
                   "blocksOriginalE51": false,
                   "newTaskCreated": false
+                },
+                {
+                  "source": "development/evidence/product/e48-ha-context-command-cache-20261020.json",
+                  "finding": "Modulecontext gebruikt de bestaande snapshot/delta-eventroute.12chatproeven met8herhalingen zondermodel;10nativebeurten,waaronder3opeenvolgendeexacteherhalingenzondermodel/TTS. ElkeactieheeftnieuweuitvoeringenverseSTATE_VERIFIED. ASR-variantenblijvengewonecachemisses. Nieuwstechatfinal2.466/2.959s;nativeexactinputeinde→receipt4.370–4.934s. Geen≤2s-of fysiekeclaim. Eigenproefinhoudexactverwijderd;beschermdebronhashesbehouden.",
+                  "blocksOriginalE51": false,
+                  "newTaskCreated": false
                 }
               ],
-              "checkedAt": "2026-10-20T13:45:31.504018+00:00",
-              "progressEvidence": "development/evidence/product/e48-ha-context-command-cache-20261020.json"
+              "checkedAt": "2026-10-20T14:37:45.174705+00:00",
+              "progressEvidence": "development/evidence/product/e48-ha-context-command-cache-20261020.json",
+              "technicalCompletedAt": "2026-10-20T14:37:45.174705+00:00",
+              "completionEvidence": "development/evidence/product/e48-ha-context-command-cache-20261020.json",
+              "independentReview": "development/reviews/e48-ha-context-command-cache-review-20261020.json"
             },
             {
               "id": "E4.9",
@@ -12570,7 +12590,7 @@
                 "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                 "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
               ],
-              "nextAction": "Stille afronding is geïnstalleerd en live bewezen. Vervolg E4.8/E4.9/E4.10 voor bekende opdrachten zonder onnodige context-/modelwachttijd; oorspronkelijke ≤2s-criteria blijven gelden.",
+              "nextAction": "E4.8 is technisch afgerond. Profileer de actuele warme volledige chat-/spraakroute en verkort resterende database- en overdrachtswachttijd; beoordeel E4.9/E4.10 op hun oorspronkelijke criteria. Behoud ASR-cachemisses, koude interpretatie en oorspronkelijke mediaan≤1s/p95≤2s als aparte bewijsgrenzen.",
               "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -12589,13 +12609,19 @@
                 "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                 "ownerAcceptance": false
               },
-              "checkedAt": "2026-10-20T13:22:23.010369+00:00",
-              "progressEvidence": "development/evidence/product/silent-action-completion-20261020.json",
-              "independentReview": "development/reviews/silent-action-completion-review-20261020.json",
+              "checkedAt": "2026-10-20T14:37:45.174705+00:00",
+              "progressEvidence": "development/evidence/product/e48-ha-context-command-cache-20261020.json",
+              "independentReview": "development/reviews/e48-ha-context-command-cache-review-20261020.json",
               "findings": [
                 {
                   "source": "development/evidence/product/silent-action-completion-20261020.json",
                   "finding": "Gewone aan/uit-opdrachten eindigen stil na één modelbesluit, één MCP-effect en verse eindcontrole; expliciet gevraagde bevestiging krijgt antwoord. Chatfinal9.374/11.648s; spraakinputeinde→geverifieerd receipt7.083s, daarna volgende vraag in dezelfde sessie. Geen ≤2s-, mediaan/p95- of fysieke acceptatieclaim.",
+                  "blocksOriginalE51": false,
+                  "newTaskCreated": false
+                },
+                {
+                  "source": "development/evidence/product/e48-ha-context-command-cache-20261020.json",
+                  "finding": "Exact hergebruik is live bewezen via dezelfde module in chat/spraak. Nieuwstechatfinal2.466/2.959s en koudeinterpretaties11.163/12.713s;nativeexactherhalinginputeinde→verse receipt4.370–4.934s. De oorspronkelijke prestatiedoelen zijn niet gehaald; E5.2 blijft open.",
                   "blocksOriginalE51": false,
                   "newTaskCreated": false
                 }

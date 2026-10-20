@@ -1,6 +1,6 @@
 {
   "contract": "EvaHaContextCommandReuse/v1",
-  "status": "implementing",
+  "status": "installed_live_verified_technical_completion",
   "startedAt": "2026-10-20T13:45:31.504018+00:00",
   "ownerRequest": "Bekende opdrachten hergebruiken en sneller uitvoeren via dezelfde Eva in chat en spraak.",
   "existing": "Optional HA profile and verified setter are installed; plain successful commands complete silently.",
@@ -8,5 +8,423 @@
   "endCondition": "A previously model-qualified complete single command reuses its interpretation only while source, context, identity, permission and exact freshly resolved target remain valid. New dispatch and independent proof use the existing durable executor. Unknown or invalidated requests use the ordinary route. Current context uses the existing HA event lifecycle and supported snapshot/delta APIs.",
   "privateEvidenceRoot": "/var/lib/eva2/voice-session/e48-command-cache-20261020",
   "targetTwoSecondsMet": false,
-  "physicalAcceptance": false
+  "physicalAcceptance": false,
+  "completedAt": "2026-10-20T14:36:04.086167+00:00",
+  "sourceCommits": [
+    "690a07e9429ec8db0cb27f6d803d38fcbafbff53",
+    "d298381d8c7079648df649723f78d35400852345"
+  ],
+  "mechanism": {
+    "device_context": "One scope-bound subscribe_entities snapshot/delta and registry view on the existing HA event lifecycle; ping fences previously processed HA events. Fresh fallback if unavailable.",
+    "interpretation_cache": "Bounded hash index over original model-qualified canonical admissions; exact retained input, current identity/audience/configuration/device binding, unchanged context and retained silent verified source required. New operation, normal fresh preparation, grant/STOP and independent state readback for every use.",
+    "bounds": {
+      "index_keys": 256,
+      "source_age_hours": 24,
+      "context_window_maximum_ingresses": 64
+    },
+    "invalidation": [
+      "rename/group/registry changes",
+      "connection epoch/restart",
+      "source/configuration/schema changes",
+      "conversation correction or other unqualified ingress",
+      "source erasure or memory removal",
+      "current grant/STOP and fresh target resolution"
+    ],
+    "unrelated_conversations": "A cachemiss does not require a Home Assistant grant.",
+    "freshness_visibility": "Source, checked_at, complete and binding are available inside the module snapshot and diagnostic evidence; catalog/inventory projections retain their existing contracts."
+  },
+  "tests": {
+    "core_and_protocol": 71,
+    "postgres_real_disposable": 16,
+    "provider_mcp_inventory": 106,
+    "owned_staged_source": 14,
+    "skipped": 0,
+    "postgres_test_only_catalog_metadata_overlay": true,
+    "test_only_note": "Repository current_catalog metadata mounted only for matching disposable schema admission; no production schema modification."
+  },
+  "chat": [
+    {
+      "case": "train-off",
+      "response_mode": "silent",
+      "first_text_delta_ms": null,
+      "saved_final_ms": 11164.687,
+      "model_phases": 1,
+      "interpretation_reused": false,
+      "new_effect_attempts": 1,
+      "fresh_state_verified": 1,
+      "core_image": "sha256:7abee812db5257e4d0ac7781b014ed9f4d48e5a29bfb24450f1b66a2d99c0824"
+    },
+    {
+      "case": "warm-off-1",
+      "response_mode": "silent",
+      "first_text_delta_ms": null,
+      "saved_final_ms": 2469.173,
+      "model_phases": 0,
+      "interpretation_reused": true,
+      "new_effect_attempts": 1,
+      "fresh_state_verified": 1,
+      "core_image": "sha256:7abee812db5257e4d0ac7781b014ed9f4d48e5a29bfb24450f1b66a2d99c0824"
+    },
+    {
+      "case": "warm-off-2",
+      "response_mode": "silent",
+      "first_text_delta_ms": null,
+      "saved_final_ms": 2191.248,
+      "model_phases": 0,
+      "interpretation_reused": true,
+      "new_effect_attempts": 1,
+      "fresh_state_verified": 1,
+      "core_image": "sha256:7abee812db5257e4d0ac7781b014ed9f4d48e5a29bfb24450f1b66a2d99c0824"
+    },
+    {
+      "case": "train-on",
+      "response_mode": "silent",
+      "first_text_delta_ms": null,
+      "saved_final_ms": 8977.197,
+      "model_phases": 1,
+      "interpretation_reused": false,
+      "new_effect_attempts": 1,
+      "fresh_state_verified": 1,
+      "core_image": "sha256:7abee812db5257e4d0ac7781b014ed9f4d48e5a29bfb24450f1b66a2d99c0824"
+    },
+    {
+      "case": "warm-on-1",
+      "response_mode": "silent",
+      "first_text_delta_ms": null,
+      "saved_final_ms": 2970.479,
+      "model_phases": 0,
+      "interpretation_reused": true,
+      "new_effect_attempts": 1,
+      "fresh_state_verified": 1,
+      "core_image": "sha256:7abee812db5257e4d0ac7781b014ed9f4d48e5a29bfb24450f1b66a2d99c0824"
+    },
+    {
+      "case": "warm-off-3",
+      "response_mode": "silent",
+      "first_text_delta_ms": null,
+      "saved_final_ms": 3110.754,
+      "model_phases": 0,
+      "interpretation_reused": true,
+      "new_effect_attempts": 1,
+      "fresh_state_verified": 1,
+      "core_image": "sha256:7abee812db5257e4d0ac7781b014ed9f4d48e5a29bfb24450f1b66a2d99c0824"
+    },
+    {
+      "case": "warm-on-2",
+      "response_mode": "silent",
+      "first_text_delta_ms": null,
+      "saved_final_ms": 3532.611,
+      "model_phases": 0,
+      "interpretation_reused": true,
+      "new_effect_attempts": 1,
+      "fresh_state_verified": 1,
+      "core_image": "sha256:7abee812db5257e4d0ac7781b014ed9f4d48e5a29bfb24450f1b66a2d99c0824"
+    },
+    {
+      "case": "warm-off-4",
+      "response_mode": "silent",
+      "first_text_delta_ms": null,
+      "saved_final_ms": 3239.23,
+      "model_phases": 0,
+      "interpretation_reused": true,
+      "new_effect_attempts": 1,
+      "fresh_state_verified": 1,
+      "core_image": "sha256:7abee812db5257e4d0ac7781b014ed9f4d48e5a29bfb24450f1b66a2d99c0824"
+    },
+    {
+      "case": "current-train-on",
+      "response_mode": "silent",
+      "first_text_delta_ms": null,
+      "saved_final_ms": 12712.868,
+      "model_phases": 1,
+      "interpretation_reused": false,
+      "new_effect_attempts": 1,
+      "fresh_state_verified": 1,
+      "core_image": "sha256:db200171fd3b6ab4dbc9d91ae02a2f227c14f0d09cc5462040255ceca717edb9"
+    },
+    {
+      "case": "current-train-off",
+      "response_mode": "silent",
+      "first_text_delta_ms": null,
+      "saved_final_ms": 11163.472,
+      "model_phases": 1,
+      "interpretation_reused": false,
+      "new_effect_attempts": 1,
+      "fresh_state_verified": 1,
+      "core_image": "sha256:db200171fd3b6ab4dbc9d91ae02a2f227c14f0d09cc5462040255ceca717edb9"
+    },
+    {
+      "case": "current-warm-on",
+      "response_mode": "silent",
+      "first_text_delta_ms": null,
+      "saved_final_ms": 2959.234,
+      "model_phases": 0,
+      "interpretation_reused": true,
+      "new_effect_attempts": 1,
+      "fresh_state_verified": 1,
+      "core_image": "sha256:db200171fd3b6ab4dbc9d91ae02a2f227c14f0d09cc5462040255ceca717edb9"
+    },
+    {
+      "case": "current-warm-off",
+      "response_mode": "silent",
+      "first_text_delta_ms": null,
+      "saved_final_ms": 2466.122,
+      "model_phases": 0,
+      "interpretation_reused": true,
+      "new_effect_attempts": 1,
+      "fresh_state_verified": 1,
+      "core_image": "sha256:db200171fd3b6ab4dbc9d91ae02a2f227c14f0d09cc5462040255ceca717edb9"
+    }
+  ],
+  "native_voice": [
+    {
+      "probe": "native-reuse",
+      "core_image": "sha256:7abee812db5257e4d0ac7781b014ed9f4d48e5a29bfb24450f1b66a2d99c0824",
+      "speaker_image": "sha256:f246bee4426470fede7e9864a1b5fc37b57661f5aef3f23679d44051a0a800a2",
+      "utterances": 3,
+      "same_transport_sessions": 1,
+      "recognized_control_text_variants": 1,
+      "tts_requests": 2,
+      "physical_microphone": false,
+      "physical_playback": false,
+      "physical_delivery_confirmed": false,
+      "turns": [
+        {
+          "turn": 0,
+          "response_mode": "silent",
+          "interpretation_reused": false,
+          "model_phases": 1,
+          "input_end_to_verified_receipt_received_ms": 8508.95,
+          "recognized_text_to_verified_receipt_received_ms": 6883.445,
+          "input_end_to_final_ms": 9159.067,
+          "effect_attempts": 1,
+          "fresh_state_verified": 1,
+          "tts_requests": 0,
+          "initial_state": "off",
+          "verified_no_op": true
+        },
+        {
+          "turn": 1,
+          "response_mode": "silent",
+          "interpretation_reused": true,
+          "model_phases": 0,
+          "input_end_to_verified_receipt_received_ms": 5382.036,
+          "recognized_text_to_verified_receipt_received_ms": 3718.697,
+          "input_end_to_final_ms": 5598.902,
+          "effect_attempts": 1,
+          "fresh_state_verified": 1,
+          "tts_requests": 0,
+          "initial_state": "off",
+          "verified_no_op": true
+        },
+        {
+          "turn": 2,
+          "response_mode": "reply",
+          "interpretation_reused": false,
+          "model_phases": 2,
+          "input_end_to_verified_receipt_received_ms": 12030.963,
+          "recognized_text_to_verified_receipt_received_ms": 9846.009,
+          "input_end_to_final_ms": 17149.466,
+          "input_end_to_first_pcm_ms": 11920.625,
+          "following_question_answered": true
+        }
+      ]
+    },
+    {
+      "probe": "native-current",
+      "core_image": "sha256:db200171fd3b6ab4dbc9d91ae02a2f227c14f0d09cc5462040255ceca717edb9",
+      "speaker_image": "sha256:f246bee4426470fede7e9864a1b5fc37b57661f5aef3f23679d44051a0a800a2",
+      "utterances": 3,
+      "same_transport_sessions": 1,
+      "recognized_control_text_variants": 2,
+      "tts_requests": 2,
+      "physical_microphone": false,
+      "physical_playback": false,
+      "physical_delivery_confirmed": false,
+      "turns": [
+        {
+          "turn": 0,
+          "response_mode": "silent",
+          "interpretation_reused": false,
+          "model_phases": 1,
+          "input_end_to_verified_receipt_received_ms": 9175.394,
+          "recognized_text_to_verified_receipt_received_ms": 7173.467,
+          "input_end_to_final_ms": 9544.988,
+          "effect_attempts": 1,
+          "fresh_state_verified": 1,
+          "tts_requests": 0,
+          "initial_state": "off",
+          "verified_no_op": true
+        },
+        {
+          "turn": 1,
+          "response_mode": "silent",
+          "interpretation_reused": false,
+          "model_phases": 1,
+          "input_end_to_verified_receipt_received_ms": 9020.68,
+          "recognized_text_to_verified_receipt_received_ms": 7378.531,
+          "input_end_to_final_ms": 9482.63,
+          "effect_attempts": 1,
+          "fresh_state_verified": 1,
+          "tts_requests": 0,
+          "initial_state": "off",
+          "verified_no_op": true
+        },
+        {
+          "turn": 2,
+          "response_mode": "reply",
+          "interpretation_reused": false,
+          "model_phases": 2,
+          "input_end_to_verified_receipt_received_ms": 9433.545,
+          "recognized_text_to_verified_receipt_received_ms": 7658.34,
+          "input_end_to_final_ms": 14360.977,
+          "input_end_to_first_pcm_ms": 9613.319,
+          "following_question_answered": true
+        }
+      ]
+    },
+    {
+      "probe": "native-exact",
+      "core_image": "sha256:0c250835b203e8c285c5b305bea86cd7d6c729215b0b9ea9061d5af9e4566707",
+      "speaker_image": "sha256:f246bee4426470fede7e9864a1b5fc37b57661f5aef3f23679d44051a0a800a2",
+      "utterances": 4,
+      "same_transport_sessions": 1,
+      "recognized_control_text_variants": 1,
+      "tts_requests": 0,
+      "physical_microphone": false,
+      "physical_playback": false,
+      "physical_delivery_confirmed": false,
+      "turns": [
+        {
+          "turn": 0,
+          "response_mode": "silent",
+          "interpretation_reused": false,
+          "model_phases": 1,
+          "input_end_to_verified_receipt_received_ms": 10126.434,
+          "recognized_text_to_verified_receipt_received_ms": 8399.633,
+          "input_end_to_final_ms": 10502.025,
+          "effect_attempts": 1,
+          "fresh_state_verified": 1,
+          "tts_requests": 0,
+          "initial_state": "off",
+          "verified_no_op": true
+        },
+        {
+          "turn": 1,
+          "response_mode": "silent",
+          "interpretation_reused": true,
+          "model_phases": 0,
+          "input_end_to_verified_receipt_received_ms": 4934.167,
+          "recognized_text_to_verified_receipt_received_ms": 3238.082,
+          "input_end_to_final_ms": 5091.653,
+          "effect_attempts": 1,
+          "fresh_state_verified": 1,
+          "tts_requests": 0,
+          "initial_state": "off",
+          "verified_no_op": true
+        },
+        {
+          "turn": 2,
+          "response_mode": "silent",
+          "interpretation_reused": true,
+          "model_phases": 0,
+          "input_end_to_verified_receipt_received_ms": 4475.502,
+          "recognized_text_to_verified_receipt_received_ms": 2981.093,
+          "input_end_to_final_ms": 4625.322,
+          "effect_attempts": 1,
+          "fresh_state_verified": 1,
+          "tts_requests": 0,
+          "initial_state": "off",
+          "verified_no_op": true
+        },
+        {
+          "turn": 3,
+          "response_mode": "silent",
+          "interpretation_reused": true,
+          "model_phases": 0,
+          "input_end_to_verified_receipt_received_ms": 4369.719,
+          "recognized_text_to_verified_receipt_received_ms": 2809.171,
+          "input_end_to_final_ms": 4591.046,
+          "effect_attempts": 1,
+          "fresh_state_verified": 1,
+          "tts_requests": 0,
+          "initial_state": "off",
+          "verified_no_op": true
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "evaluation_runtime": {
+      "model_phases": 12,
+      "model_attempts": 12,
+      "recorded_model_tool_calls": 10,
+      "input_tokens": 102320,
+      "output_tokens": 623,
+      "new_setter_effect_attempts": 20,
+      "new_fresh_setter_proofs": 20,
+      "other_read_actions": 2,
+      "asr_utterances": 10,
+      "new_synthetic_fixture_tts_requests": 0,
+      "answer_tts_requests": 4,
+      "credits": null
+    },
+    "development_agent_tokens_and_credits": null
+  },
+  "cleanup": {
+    "chat": {
+      "retained_exchange_erased": 12,
+      "unretained_raw_erased": 0,
+      "exact_failed_turns_stopped": 0,
+      "protected_events_unchanged": 7197
+    },
+    "native_voice": {
+      "storage_removed": 10,
+      "raw_exchanges_erased": 10,
+      "outbox_erased": 10,
+      "semantic_documents_absent": 10,
+      "protected_owner_events_unchanged": 204
+    },
+    "outside_initial_final_state": "off",
+    "automation_enabled_states_preserved": 17
+  },
+  "currentRuntime": {
+    "core": {
+      "image": "sha256:0c250835b203e8c285c5b305bea86cd7d6c729215b0b9ea9061d5af9e4566707",
+      "owned_sources_verified": 10,
+      "healthy": true
+    },
+    "worker": {
+      "image": "sha256:22daf0c5762cf5dcba0fcb86bab284fad3adf930f2be459144b25a0da2845856",
+      "owned_sources_verified": 10,
+      "healthy": true
+    }
+  },
+  "independentReview": "development/reviews/e48-ha-context-command-cache-review-20261020.json",
+  "overallSpeedBenchmarkCompleted": false,
+  "limitations": [
+    "Exact text reuse intentionally misses when speech recognition writes the same recording differently; the missed native pair is retained as evidence. No fuzzy or cross-user action reuse.",
+    "Initial interpretations still use a model. Current chat first interpretations were 11.163 and 12.713 seconds; repeated chat finals were 2.466 and 2.959 seconds. E5.2 original median<=1s/p95<=2s remains open.",
+    "Native exact-repeat trials were off-state verified no-ops. Live chat separately exercised real on/off effects. No physical microphone/playback/owner acceptance claimed.",
+    "Protocol invalidations and grant/STOP races were tested in isolation; owner device names, accounts and group membership were not modified for testing.",
+    "A parallel managed core update preserved all ten owned sources. Samples retain actual image identities; no same-image general performance benchmark claimed."
+  ],
+  "protocolSources": {
+    "ha_version": "2026.9.2",
+    "sources": [
+      {
+        "url": "https://raw.githubusercontent.com/home-assistant/core/2026.9.2/homeassistant/components/websocket_api/commands.py",
+        "sha256": "77208b87ab671b7254d52306a016f2719f4ce3d9f3798f20d05adb2f7db42c26"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/home-assistant/core/2026.9.2/homeassistant/components/websocket_api/connection.py",
+        "sha256": "17094427aa6b93df4a18d1b50a375a84d0a222aad565761e8cb5e4e748221a8c"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/home-assistant/core/2026.9.2/homeassistant/components/websocket_api/http.py",
+        "sha256": "68aba32731adfea02364a1bb7121580f6cab8d51df60dad81fac094dba12cb2f"
+      }
+    ],
+    "semantics": "Initial subscription is installed without await. Entity deltas and ping enqueue through the same FIFO; no separate entity debounce. A pong fences previously handled HA events, not future state changes or external atomicity. Eva does not enable message coalescing."
+  }
 }
