@@ -1,16 +1,47 @@
 {
   "contract": "EvaModelLatencyFollowup/v1",
-  "status": "investigating_existing_model_route",
+  "status": "implementing_bounded_surface_reuse",
   "startedAt": "2026-10-20T18:25:32.307332+00:00",
   "existing": "Known exact commands reuse a retained proven interpretation; unseen commands use one Sol/none decision, current person context and normal durable module execution. Latest actual unseen command4.482s; model2.677s;2816cached input tokens.",
   "gap": "First/unseen-command model latency remains the largest measured wait. Need measured packet composition and actual endpoint compatibility before changing prompts or cache behavior.",
   "route": [
     "src/eva/adapters/model/pydantic_conversation.py",
-    "src/eva/adapters/model/openai_codex_provider.py"
+    "src/eva/adapters/model/openai_codex_provider.py",
+    "src/eva/providers/home_assistant_command_cache.py"
   ],
   "endCondition": "Inspect the actual packet and bounded existing-endpoint cache capability with no unapproved effects. Compare a concrete candidate only if a supported avoidable cost is found. Preserve identity/current memory/authority/STOP and normal model quality, record failed or neutral candidates, keep the reference unless gain is demonstrated, independently review and install any adopted change with current runtime guards, then verify actual HTTP use. Do not claim general cold1–2s from warm reuse.",
   "privateEvidenceRoot": "/var/lib/eva2/voice-session/model-latency-20261020",
   "originalE52CriteriaChanged": false,
   "voiceChanged": false,
-  "credits": null
+  "credits": null,
+  "checkedAt": "2026-10-20T18:34:25.821195+00:00",
+  "finding": {
+    "actual_packet_input_tokens": 9452,
+    "instructions_characters": 28614,
+    "gateway_cache_option_http": 400,
+    "identical_baseline_without_option_http": 200,
+    "tiny_baseline_input_tokens": 28,
+    "tiny_baseline_output_tokens": 7,
+    "tiny_baseline_ms": 2687.752,
+    "decision": "Keep full identity/current memory/context and unchanged Sol/none/provider. Reduce unnecessary new model decisions for known commands differing only in canonical Unicode composition, ASCII letter case, and ASCII whitespace."
+  },
+  "candidate": {
+    "surface_scheme": "NFC + ASCII A-Z lowering + ASCII whitespace collapse only; versioned and bound to retained original raw text/hash. No full Unicode casefold, punctuation deletion, synonym expansion or core router.",
+    "conflicts": "Multiple current valid learned signatures for the normalized text cause a miss, never newest-wins. Legacy without scheme remains exact-only.",
+    "verificationPlan": {
+      "baseline_http": 3,
+      "baseline_sequence": "one original off command, exact repeat, case/whitespace variant",
+      "candidate_http": 6,
+      "candidate_sequence": "one original off training; four different ASCII-case/whitespace variants; one punctuation variant reported separately as normal model route",
+      "effects": "Only authorized outdoor target; off no-ops are verification, not physical switching proof.",
+      "checks": [
+        "current source/config and idle claims before installation",
+        "raw original source reconstruction",
+        "erasure/authority/context/device/STOP boundaries unchanged",
+        "31old/new command reuse boundaries plus changed source tests",
+        "independent review",
+        "exact owned fixture cleanup and prior-source hash preservation"
+      ]
+    }
+  }
 }

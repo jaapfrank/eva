@@ -7860,8 +7860,8 @@
                   "scope": "Read checkpoint and full ordered source history in one statement snapshot, preserving hashes/projection/scope checks and fresh authority/STOP checks. Adopt only after focused PostgreSQL corruption/scope/concurrency tests, paired source-read evidence and independent review, then guard installation and test actual authenticated HTTP. Keep original cold failures and report total latency without claiming one-second cold commands."
                 },
                 "modelLatencyFollowup": {
-                  "status": "investigating_existing_model_route",
-                  "checkedAt": "2026-10-20T18:25:32.364604+00:00",
+                  "status": "implementing_bounded_surface_reuse",
+                  "checkedAt": "2026-10-20T18:35:05.542341+00:00",
                   "evidence": "development/evidence/product/model-latency-20261020.json",
                   "originalCompletionPreserved": true,
                   "scope": "Inspect the actual packet and bounded existing-endpoint cache capability with no unapproved effects. Compare a concrete candidate only if a supported avoidable cost is found. Preserve identity/current memory/authority/STOP and normal model quality, record failed or neutral candidates, keep the reference unless gain is demonstrated, independently review and install any adopted change with current runtime guards, then verify actual HTTP use. Do not claim general cold1–2s from warm reuse."
@@ -12977,8 +12977,8 @@
                 "scope": "Read checkpoint and full ordered source history in one statement snapshot, preserving hashes/projection/scope checks and fresh authority/STOP checks. Adopt only after focused PostgreSQL corruption/scope/concurrency tests, paired source-read evidence and independent review, then guard installation and test actual authenticated HTTP. Keep original cold failures and report total latency without claiming one-second cold commands."
               },
               "modelLatencyFollowup": {
-                "status": "investigating_existing_model_route",
-                "checkedAt": "2026-10-20T18:25:32.364604+00:00",
+                "status": "implementing_bounded_surface_reuse",
+                "checkedAt": "2026-10-20T18:35:05.542341+00:00",
                 "evidence": "development/evidence/product/model-latency-20261020.json",
                 "originalCompletionPreserved": true,
                 "scope": "Inspect the actual packet and bounded existing-endpoint cache capability with no unapproved effects. Compare a concrete candidate only if a supported avoidable cost is found. Preserve identity/current memory/authority/STOP and normal model quality, record failed or neutral candidates, keep the reference unless gain is demonstrated, independently review and install any adopted change with current runtime guards, then verify actual HTTP use. Do not claim general cold1–2s from warm reuse."
