@@ -1,0 +1,58 @@
+{
+  "contract": "EvaModelChosenContinuation/v1",
+  "taskId": "E1.4",
+  "checkedAt": "2026-10-20T13:55:00.954213+00:00",
+  "state": "installed_observing_ordinary_followup",
+  "technicalTaskCompleted": false,
+  "ownerAcceptance": false,
+  "changes": [
+    "Expose exact prior intent identities in existing private initiative context.",
+    "Private model may choose a new step tied to an exact completed own result; historical result is not a fact, instruction or execution permission.",
+    "Host validates same-owner retained result, immutable ancestry, exact hashes, existing stop fences and current mandate before admission and every dispatch.",
+    "Reuse existing native claim, work queue, result storage and later decision; no additional planner or daemon.",
+    "Retain original ambiguous work without rewriting or replaying it."
+  ],
+  "tests": {
+    "initialRun": {
+      "passed": 108,
+      "failed": 1,
+      "seconds": 149.52,
+      "cause": "Existing exact projection assertion lacked the newly exposed intent_id; no runtime failure."
+    },
+    "providerCalls": 0,
+    "database": "own disposable PostgreSQL16.13",
+    "correctionRun": {
+      "passed": 1,
+      "failed": 0,
+      "seconds": 6.63,
+      "scope": "only changed legacy exact projection assertion"
+    },
+    "uniquePassedChecks": 109
+  },
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "coreImage": "sha256:1dcaf6c3fa06dd7251ac6a687a15b47266bf026ee19a53cf6dc34eaaf449a081",
+    "workerImage": "sha256:e8fb8561939d0c399fd47386c8c26c60ee0fc1fdc0178adf7e9a485f3ce7a204",
+    "releaseEqual": true,
+    "executionPinCount": 63,
+    "voiceChanged": false
+  },
+  "runtimeEvidence": {
+    "observedThrough": "2026-10-20T13:53:46+00:00",
+    "newFollowupSelected": false,
+    "newFollowupCompleted": false,
+    "laterResultUsed": false,
+    "note": "Normal idle lane has five-minute idle interval; no manually selected topic or synthetic calendar advancement."
+  },
+  "usage": {
+    "isolatedCheckProviderCalls": 0,
+    "candidateProbeProviderCalls": 0,
+    "developmentCreditCost": null,
+    "runtimeCreditCost": null
+  },
+  "limits": [
+    "Synthetic checks prove contract transfer, not actual later model use.",
+    "E1.4 remains in progress until its unchanged criterion is met.",
+    "Family utility and acceptance remain separate."
+  ]
+}

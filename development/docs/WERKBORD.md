@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Een blijvend eigen doel over dagen zelfstandig voortzetten
 
-Geïnstalleerd: versievaste overdracht en juiste adapter voor eigen brononderzoek. Echt eigen vervolg over 19 en 20 oktober vastgesteld; één hervatte poging strandde vóór onderzoeksdispatch. Succesvol vervolg en later gebruik zijn nog niet bewezen.
+Vervolg met binding aan eerder eigen resultaat geïnstalleerd; echte keuze, uitvoering en later gebruik worden gevolgd.
 
 Klaar wanneer: De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.
 

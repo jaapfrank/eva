@@ -1350,7 +1350,11 @@ class PostgresSensoryEventStore:
             feedback = next((event.payload["data"].get("feedback")
                 for event in reversed(events)
                 if event.event_type == "PERSONAL_INITIATIVE_FEEDBACK"), None)
-            item = {"title": row.payload["data"]["title"],
+            item = {"intent_id": row.payload["data"]["intent_id"],
+                "title": row.payload["data"]["title"],
+                **({"followup_source": {k: row.payload["data"]["followup_source"][k]
+                    for k in ("intent_id", "content_sha256", "event_sha256")}}
+                   if "followup_source" in row.payload["data"] else {}),
                 "question": row.payload["data"]["next_exploration"], "phase": row.phase,
                 **({"owner_feedback": feedback} if feedback else {})}
             if row.phase in {"completed", "release_ready", "initiative_completed"} and completed_seen < 3:

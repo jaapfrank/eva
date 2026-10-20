@@ -30,6 +30,7 @@ class PersonalInterestClaim:
     occurred_at: str
     revision: int
     execution_mode: str = "private_prototype"
+    followup_source: dict | None = None
 
 
 @dataclass(frozen=True, slots=True)

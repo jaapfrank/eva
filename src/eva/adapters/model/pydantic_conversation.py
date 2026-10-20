@@ -649,6 +649,13 @@ def _private_opportunity_tool() -> dict[str, Any]:
     fields["urgency"]["description"] = (
         "Uitsluitend de urgentie van eventuele privéberichtgeving; geen urgentievereiste voor eigen werk."
     )
+    fields["initiative"]["properties"].update({
+        "parent_intent_id": _schema("Bij nieuw vervolg: exacte intent_id van je voltooide eigen bijdrage; anders null.",
+            type_=["string", "null"], pattern="^personal-interest:[0-9a-f]{64}$"),
+        "parent_result_sha256": _schema("De content_sha256 van precies dat recorded_result; anders null.",
+            type_=["string", "null"], pattern="^[0-9a-f]{64}$"),
+    })
+    fields["initiative"]["required"] += ["parent_intent_id", "parent_result_sha256"]
     fields["initiative"]["description"] = (
         "Een zelfgekozen onderzoeksintentie of verifieerbare uitvoerstap op eigen interesse "
         "of voortgang; anders null. Een informatiegat mag de aanleiding zijn. "
@@ -2928,7 +2935,7 @@ class PydanticConversationModel:
             raise ConversationModelError("web research artifact is invalid", model_usage=usage) from error
 
     supports_private_context_search = True
-    private_opportunity_profile = "private-orientation-curiosity-contract-v4"
+    private_opportunity_profile = "private-orientation-continuation-contract-v5"
 
     def _request_private_opportunity(self, body, search):
         """One optional read through the existing private memory port, then decide.
@@ -3061,7 +3068,15 @@ class PydanticConversationModel:
             "Bestaand modelverbruik blijft begrensd; stop, privacy en persoonsgrenzen gelden. "
             "prior_private_initiatives bevat eerdere uitvoering en echte feedback. Herhaal "
             "afgerond, gestopt of onzeker werk niet, ook niet onder een nieuwe titel. Een "
-            "afgeronde stap verbiedt niet het hele onderwerp: een inhoudelijk nieuwe vervolgvraag "
+            "afgeronde stap verbiedt niet het hele onderwerp. Kies bij een nieuwe stap die op "
+            "je eigen voltooide werk voortbouwt parent_intent_id uit die eerdere bijdrage en "
+            "parent_result_sha256 uit haar recorded_result.content_sha256. De host controleert "
+            "de bron en geeft haar voortgang aan dezelfde uitvoerder mee. Dat is een nieuwe "
+            "stap van hetzelfde eigen doel, geen herhaling of hervatting van een onzekere poging. "
+            "Een nieuwe titel maakt dezelfde vraag niet nieuw. Een changed installed profile "
+            "is een aanleiding om mogelijkheden opnieuw af te wegen, geen bewijs dat een oude "
+            "mislukking veilig herhaald kan worden. Kies beide velden null bij een geheel nieuw "
+            "idee; geen verplicht vervolg of onderwerp. Een inhoudelijk nieuwe vervolgvraag "
             "mag op bewaarde voortgang bouwen, zonder de vorige uitvoering te herhalen. Een "
             "herinnerd verzoek bewijst niet dat er nog een opdracht openstaat. Negatieve "
             "feedback op één bijdrage is geen afwijzing van alle initiatief; gebruik de "
@@ -3347,8 +3362,12 @@ class PydanticConversationModel:
         ):
             raise rejected("sensory decision values are invalid", "invalid_values")
         raw_initiative = arguments.get("initiative")
+        initiative_fields = {"title", "motivation", "next_exploration"}
+        permitted_fields = [initiative_fields]
+        if event.source == "initiative-review" and event.event_type == "private_opportunity_review":
+            permitted_fields.append(initiative_fields | {"parent_intent_id", "parent_result_sha256"})
         if raw_initiative is not None and (not isinstance(raw_initiative, dict) or
-                set(raw_initiative) != {"title", "motivation", "next_exploration"}):
+                set(raw_initiative) not in permitted_fields):
             raise rejected("personal initiative fields are invalid", "invalid_initiative_fields")
         try:
             from eva.application.resident_attention import NextAttention

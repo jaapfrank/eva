@@ -112,7 +112,7 @@ def test_stopped_initiative_context_is_owner_scoped_and_same_title_cannot_restar
         connection.exec_driver_sql("SET LOCAL ROLE eva_dbos")
     sa.event.listen(postgres_engine, "begin", runtime_role)
     try:
-        assert source.recent_initiatives() == ({"title": "A useful plan",
+        assert source.recent_initiatives() == ({"intent_id": intent_id, "title": "A useful plan",
             "question": "Create a proposal", "phase": "personal_stopped"},)
         other = PostgresSensoryEventStore(postgres_engine, tenant_id=tenant,
             installation_id=installation, initiative_principal_id=str(_id(label, "other")))

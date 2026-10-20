@@ -3236,6 +3236,7 @@ class PostgresPersonalInterestStore(_PostgresPersonalClaimStore):
             occurred_at=adopted.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
             revision=revision,
             execution_mode=str(data.get("execution_mode", "private_prototype")),
+            followup_source=data.get("followup_source"),
         )
 
 

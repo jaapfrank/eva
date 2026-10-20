@@ -847,8 +847,8 @@
     "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
     "status": "in_progress",
     "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-    "nextAction": "Werkelijk geslaagd zelfgekozen vervolg en gebruik daarvan in een latere gewone afweging aantonen; de onzekere poging behouden en niet blind herhalen.",
-    "checkedAt": "2026-10-20T13:28:55.822181+00:00",
+    "nextAction": "Geïnstalleerde gewone afweging volgen: zelfgekozen vervolg uitvoeren en later inhoudelijk gebruiken.",
+    "checkedAt": "2026-10-20T13:52:50.684669+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2779,10 +2779,10 @@
           "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
           "status": "in_progress",
           "state": "in_progress",
-          "summary": "Geïnstalleerd: versievaste overdracht en juiste adapter voor eigen brononderzoek. Echt eigen vervolg over 19 en 20 oktober vastgesteld; één hervatte poging strandde vóór onderzoeksdispatch. Succesvol vervolg en later gebruik zijn nog niet bewezen.",
-          "detail": "E1.4 blijft open. Spraak blijft bij de andere uitvoerder; geen nieuwe gebruikersproef gevraagd.",
+          "summary": "Vervolg met binding aan eerder eigen resultaat geïnstalleerd; echte keuze, uitvoering en later gebruik worden gevolgd.",
+          "detail": "109 gerichte controles en onafhankelijke bronreview geslaagd. Geen spraakwijziging. E1.4 blijft open tot werkelijk vervolg en later gebruik blijken.",
           "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-          "checkedAt": "2026-10-20T13:28:55.822181+00:00"
+          "checkedAt": "2026-10-20T13:52:50.684669+00:00"
         },
         "next": {
           "taskId": "E1.5",
@@ -5432,8 +5432,8 @@
                 "dependsOn": [
                   "E5.1"
                 ],
-                "nextAction": "Werkelijk geslaagd zelfgekozen vervolg en gebruik daarvan in een latere gewone afweging aantonen; de onzekere poging behouden en niet blind herhalen.",
-                "checkedAt": "2026-10-20T13:28:55.822181+00:00",
+                "nextAction": "Zelfgekozen vervolg expliciet aan het eigen eerdere doel en resultaat binden; actuele uitvoerversie zichtbaar maken; vervolgens echte uitvoering en later brongebruik afronden.",
+                "checkedAt": "2026-10-20T13:38:11.755130+00:00",
                 "progress": "Geïnstalleerd: versievaste overdracht en juiste adapter voor eigen brononderzoek. Echt eigen vervolg over 19 en 20 oktober vastgesteld; één hervatte poging strandde vóór onderzoeksdispatch. Succesvol vervolg en later gebruik zijn nog niet bewezen.",
                 "evidence": "development/evidence/reassessment/e14-cross-day-continuity-installed-20261020.json"
               },
@@ -10411,8 +10411,8 @@
               "dependsOn": [
                 "E5.1"
               ],
-              "nextAction": "Werkelijk geslaagd zelfgekozen vervolg en gebruik daarvan in een latere gewone afweging aantonen; de onzekere poging behouden en niet blind herhalen.",
-              "checkedAt": "2026-10-20T13:28:55.822181+00:00",
+              "nextAction": "Zelfgekozen vervolg expliciet aan het eigen eerdere doel en resultaat binden; actuele uitvoerversie zichtbaar maken; vervolgens echte uitvoering en later brongebruik afronden.",
+              "checkedAt": "2026-10-20T13:38:11.755130+00:00",
               "progress": "Geïnstalleerd: versievaste overdracht en juiste adapter voor eigen brononderzoek. Echt eigen vervolg over 19 en 20 oktober vastgesteld; één hervatte poging strandde vóór onderzoeksdispatch. Succesvol vervolg en later gebruik zijn nog niet bewezen.",
               "evidence": "development/evidence/reassessment/e14-cross-day-continuity-installed-20261020.json"
             },
@@ -14366,14 +14366,14 @@
         "checkedAt": "2026-10-20T12:31:34.182190+00:00",
         "ownerActionRequired": false
       },
-      "ownerInstruction": "Begin bij de eerste toegevoegde taak: E1.4. Spraak blijft bij andere uitvoerder.",
-      "state": "installed_partial_followup_open",
+      "ownerInstruction": "Maak E1.4 echt af: zelfstandig vervolg kiezen, afmaken en resultaat later gebruiken. Spraak blijft elders.",
+      "state": "installed_observing_ordinary_followup",
       "runtimeChanged": true,
       "diagnosis": "Actual self-chosen cross-day follow-up was admitted but never claimed because queue/core/worker execution source releases differed.",
-      "checkedAt": "2026-10-20T13:28:55.822181+00:00",
+      "checkedAt": "2026-10-20T13:52:50.684669+00:00",
       "voiceChanged": false,
-      "evidence": "development/evidence/reassessment/e14-cross-day-continuity-installed-20261020.json",
-      "review": "development/reviews/e14-cross-day-continuity-review-20261020.json",
+      "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
+      "review": "development/reviews/e14-model-chosen-continuation-review-20261020.json",
       "technicalTaskCompleted": false
     }
   },

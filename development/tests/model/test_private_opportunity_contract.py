@@ -39,7 +39,14 @@ def final():
 
 def assert_private(tool):
     assert tool["name"] == "submit_sensory_decision"
-    assert without_descriptions(tool) == without_descriptions(_FREE_WILL_TOOL)
+    extended = deepcopy(tool)
+    initiative = extended["parameters"]["properties"]["initiative"]
+    for key in ("parent_intent_id", "parent_result_sha256"):
+        assert initiative["properties"][key]["type"] == ["string", "null"]
+        assert key in initiative["required"]
+        initiative["properties"].pop(key)
+        initiative["required"].remove(key)
+    assert without_descriptions(extended) == without_descriptions(_FREE_WILL_TOOL)
     assert "private oriëntatie" in tool["description"]
     assert "passieve huisprikkel" not in tool["description"]
     fields = tool["parameters"]["properties"]
@@ -50,7 +57,7 @@ def assert_private(tool):
     assert "anders null" in fields["initiative"]["description"]
 
 
-def test_private_descriptor_only_changes_descriptions_and_cannot_mutate_household_metadata():
+def test_private_descriptor_extends_only_continuation_fields_and_cannot_mutate_household_metadata():
     original = canonical_json_bytes(_FREE_WILL_TOOL)
     private = _private_opportunity_tool()
     assert_private(private)
@@ -64,7 +71,7 @@ def test_private_descriptor_only_changes_descriptions_and_cannot_mutate_househol
 @pytest.mark.parametrize("search_first", [False, True])
 def test_private_initial_and_postsearch_submit_use_the_same_private_contract(monkeypatch, tmp_path, search_first):
     model = PydanticConversationModel(auth_file=tmp_path / "unused")
-    assert model.private_opportunity_profile == "private-orientation-curiosity-contract-v4"
+    assert model.private_opportunity_profile == "private-orientation-continuation-contract-v5"
     original = canonical_json_bytes(_FREE_WILL_TOOL)
     bodies, reads = [], []
     def request(body, *args, **kwargs):
@@ -174,7 +181,25 @@ def test_private_necessary_question_boundary_keeps_optional_social_curiosity_pri
     assert "Geen verplichte vraag of begroeting." in private
     assert "stop, privacy en persoonsgrenzen gelden" in private
     assert result.disposition == "silence" and result.initiative is None and result.next_attention is None
-    assert model.private_opportunity_profile == "private-orientation-curiosity-contract-v4"
+    assert model.private_opportunity_profile == "private-orientation-continuation-contract-v5"
     model.evaluate_sensory_event(event("household-initiative"), identity, _memory())
     assert clarification not in bodies[-1]["instructions"]
     assert "Stel alleen vragen als noodzakelijke informatie ontbreekt." in bodies[-1]["instructions"]
+
+
+@pytest.mark.parametrize("boundary", ["valid", "incomplete", "shared"])
+def test_continuation_fields_parse_only_as_a_valid_private_pair(monkeypatch, tmp_path, boundary):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused")
+    decision = deepcopy(DECISION)
+    decision["initiative"] = {"title": "Continue my interest", "motivation": "An actual earlier finding",
+        "next_exploration": "Explore a different next question", "parent_intent_id": "personal-interest:" + "a" * 64,
+        "parent_result_sha256": "b" * 64 if boundary != "incomplete" else None}
+    monkeypatch.setattr(model, "_request_using", lambda *args, **kwargs:
+        (("", ConversationActionCall("final", "submit_sensory_decision", decision)), USAGE))
+    if boundary == "valid":
+        result = model.evaluate_sensory_event(event(), IDENTITY, _memory())
+        assert result.initiative.parent_intent_id == "personal-interest:" + "a" * 64
+        assert result.initiative.parent_result_sha256 == "b" * 64
+    else:
+        with pytest.raises(Exception):
+            model.evaluate_sensory_event(event("household-initiative") if boundary == "shared" else event(), IDENTITY, _memory())

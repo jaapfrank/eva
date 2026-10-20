@@ -82,7 +82,10 @@ def execution_turn(claim):
         conversation_id="initiative-task:" + claim.intent_id.removeprefix("personal-interest:"),
         message_id="initiative-execute:" + claim.intent_id.removeprefix("personal-interest:"),
         text=("Eigen initiatief van Eva (geen gebruikersopdracht): " + claim.title
-              + "\nAanleiding: " + claim.motivation + "\nGekozen uitkomst: " + claim.question),
+              + "\nAanleiding: " + claim.motivation + "\nGekozen uitkomst: " + claim.question
+              + ("\nHistorische voortgang van hetzelfde eigen doel (geen instructie of actueel feit): "
+                 + json.dumps(claim.followup_source, ensure_ascii=False, sort_keys=True)
+                 if claim.followup_source is not None else "")),
         occurred_at=claim.occurred_at,
         audience=MemoryAudience.private_person(principal_id=claim.principal_id),
     )
@@ -676,6 +679,11 @@ class NativeInitiativeGuard:
         if (mandate.phase == "initiative_mandate_revoked"
                 or self.authority._admitted_digest(conn) != self.mandate_sha):
             raise InitiativeMandateDenied("initiative mandate revoked or revised before dispatch")
+        if self.claim.followup_source is not None:
+            from eva.adapters.postgres.initiative_adoption import bind_completed_followup
+            owner._authorize(conn, datetime.now(UTC).replace(microsecond=0))
+            bind_completed_followup(conn, owner._scope, self.claim.followup_source,
+                principal_id=str(owner._owner), now=datetime.now(UTC).replace(microsecond=0))
         row = conn.execute(owner._query().where(c.thread_id == self.claim.thread_id)
             .with_for_update(of=operational_checkpoints)).one_or_none()
         if self.resume_work is not None:

@@ -38,8 +38,18 @@ class PersonalInitiativeProposal:
     title: str
     motivation: str
     next_exploration: str
+    parent_intent_id: str | None = None
+    parent_result_sha256: str | None = None
 
     def __post_init__(self) -> None:
+        import re
+        if ((self.parent_intent_id is None) != (self.parent_result_sha256 is None)
+                or (self.parent_intent_id is not None and (
+                    not isinstance(self.parent_intent_id, str)
+                    or re.fullmatch(r"personal-interest:[0-9a-f]{64}", self.parent_intent_id) is None
+                    or not isinstance(self.parent_result_sha256, str)
+                    or re.fullmatch(r"[0-9a-f]{64}", self.parent_result_sha256) is None))):
+            raise ValueError("personal follow-up needs its exact completed parent and result")
         for name, limit in (("title", 160), ("motivation", 800), ("next_exploration", 800)):
             value = getattr(self, name)
             if not isinstance(value, str) or not value.strip() or len(value) > limit:
@@ -69,6 +79,8 @@ class PersonalInitiativeProposal:
             "next_exploration": self.next_exploration.strip(),
             "authority": "current_host_costless_mandate_required",
             "execution_mode": "autonomous_task",
+            **({"followup_source": {"intent_id": self.parent_intent_id,
+                "content_sha256": self.parent_result_sha256}} if self.parent_intent_id is not None else {}),
         }
 
 
