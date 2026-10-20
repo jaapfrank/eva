@@ -418,5 +418,20 @@
     }
   },
   "completedAt": "2026-10-20T15:21:42+00:00",
-  "finalIndependentReview": "development/reviews/e14-cross-day-final-completion-review-20261020.json"
+  "finalIndependentReview": "development/reviews/e14-cross-day-final-completion-review-20261020.json",
+  "finalInstalledSourceVerification": {
+    "checkedAt": "2026-10-20T15:26:46.361910+00:00",
+    "peerUpdatedSharedImages": true,
+    "coreImage": "sha256:2b4302a5336bcc319d93a65ef63e6547d7e75d15ad7259675a4f6883c95770db",
+    "workerImage": "sha256:8f775a1ccf83a0b1e0aad84f0941a2520b7b929a11e77107c7e140464e211dc7",
+    "finalOwnedSourcesPreservedExactlyOnBothRoles": true,
+    "sources": [
+      "src/eva/adapters/model/research_tools.py",
+      "src/eva/adapters/postgres/external_conversation_tools.py",
+      "src/eva/adapters/connectors/delegated_completion.py",
+      "src/eva/bootstrap/delegated_digital_runner.py"
+    ],
+    "newInstallationByThisCheck": false,
+    "providerCalls": 0
+  }
 }
