@@ -1,0 +1,35 @@
+{
+  "contract": "EvaE16ExecutionAvailability/v1",
+  "checkedAt": "2026-10-20T21:04:38.351795+00:00",
+  "taskId": "E1.6",
+  "state": "blocked_on_actual_source_choice_and_natural_use_evidence",
+  "builtAndInstalled": true,
+  "ordinaryAutonomousCycleConfirmed": true,
+  "technicalTaskCompleted": false,
+  "lastOrdinaryReviewAt": "2026-10-20 20:55:54+00:00",
+  "lastOrdinaryDecision": "reasoned_silence_no_next_attention",
+  "pendingExecution": false,
+  "threeConsecutiveNoProgressTurnsVerified": true,
+  "noAdditionalImplementationFaultDemonstrated": true,
+  "operatorStartedModelRequestsDuringAudits": 0,
+  "liveRuntimeHealthy": true,
+  "voiceChanged": false,
+  "noOwnerPermissionRequired": true,
+  "independentOtherWork": {
+    "voice": "other executor; unchanged",
+    "familyTrial": "real use and owner judgment still required",
+    "whatsapp": "optional; Eva number not provided yet",
+    "comparisons": "parked by owner instruction"
+  },
+  "resumeWhen": [
+    "A real model-selected source watch or scheduled source follow-up and natural change are available to inspect.",
+    "A concrete new implementation failure is found in ordinary use.",
+    "Peer voice delivery or real family-use evidence becomes available."
+  ],
+  "limitations": [
+    "No current source-change decision chain or complete family acceptance is proved.",
+    "Healthy services alone are not a live pending source-choice task.",
+    "A waiting evidence state is not product completion."
+  ],
+  "developmentCredits": null
+}
