@@ -1,0 +1,12 @@
+{
+  "contract": "EvaSilentVerifiedAction/v1",
+  "status": "implementing",
+  "ownerDirection": "Geen antwoord nadat een bedienopdracht is uitgevoerd; meet de echte tijd.",
+  "existing": "MCP setter resolves, dispatches and independently verifies one action; current response still asks a second model for success wording.",
+  "gap": "Post-success response adds avoidable model latency. Silent completion must preserve proof, STOP, current authority, replay and follow-up listening.",
+  "endCondition": "One model decision executes and verifies the plain command, then completes silently in current chat/voice. Errors, ambiguity and additional questions continue normally. Measure reception/input-end to fresh verification separately from final/audio.",
+  "startedAt": "2026-10-20T12:31:34.135320+00:00",
+  "privateEvidenceRoot": "/var/lib/eva2/voice-session/silent-action-20261020",
+  "targetTwoSecondsMet": false,
+  "physicalAcceptance": false
+}

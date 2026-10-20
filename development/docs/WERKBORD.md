@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-E4.7 · Gedeelde HA-catalogus en transportkeuze geïnstalleerd
+Snelle modulaire huisbediening via chat en spraak live opleveren
 
-Kern en uitvoerworker delen dezelfde HA-module. MCP-catalogus en service-schema worden hergebruikt; aan/uit via MCP werkelijk uitgevoerd en vers gecontroleerd. Chat-/spraaksnelheid is gemeten en voldoet nog niet aan de2s-grens.
+Bestaande E5.2-overdracht in dezelfde HA-module afronden en op echte installatie meten.
 
-Klaar wanneer: De module gebruikt één vastgelegd capabilityprofiel voor de werkelijk geïnstalleerde HA-versie, beschikbare officiële MCP-tools en REST/WebSocket-API. Bestaande Assist-MCP- en API-code wordt hergebruikt. Per capability zijn gekozen transport, toegang, schemas, actuele dekking en controle vastgelegd; normale bediening en geautoriseerd beheer blijven beschikbaar. Ontbrekend MCP-bereik veroorzaakt geen stille bevoegdheidsverruiming of blinde herhaling via een ander transport. Geen eigen HA-planner of tweede gespreksagent.
+Klaar wanneer: E4.6–E4.10 zijn op de werkelijk actuele installatie geïntegreerd en onafhankelijk beoordeeld. Gelijke bekende toegelaten opdrachten werken via gewone chat en bestaande spraak met dezelfde module, identiteit, geheugen en bevoegdheden. In de vooraf vastgelegde proef voldoet chatontvangst tot verse HA-eindbevestiging aan mediaan maximaal 1 seconde en p95 maximaal 2 seconden bij een gereedstaande installatie; koude context en onbekende doelen worden afzonderlijk gerapporteerd. Spraak meet ook vanaf einde invoeraudio en vanaf herkende tekst. Een tussenreactie of service-ack vervangt geen eindbevestiging. Ruwe steekproef, fouten, context/cache, model-/toolgebruik en beperkingen blijven bewaard; niet gehaalde grenzen sluiten deze taak niet af. Installatie, bron/configuratie, herstelmogelijkheid en module-uitgedrag zijn gecontroleerd, zonder fysieke hoorbaarheid of gezinsacceptatie te verzinnen.
 
 ## Afmaakvolgorde
 

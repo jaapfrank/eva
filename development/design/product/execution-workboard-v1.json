@@ -841,14 +841,14 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.7",
+  "activeTaskId": "E5.2",
   "currentWork": {
-    "id": "E4.7",
-    "title": "Officiële API en MCP binnen één HA-module aansluiten",
-    "status": "completed",
-    "doneWhen": "De module gebruikt één vastgelegd capabilityprofiel voor de werkelijk geïnstalleerde HA-versie, beschikbare officiële MCP-tools en REST/WebSocket-API. Bestaande Assist-MCP- en API-code wordt hergebruikt. Per capability zijn gekozen transport, toegang, schemas, actuele dekking en controle vastgelegd; normale bediening en geautoriseerd beheer blijven beschikbaar. Ontbrekend MCP-bereik veroorzaakt geen stille bevoegdheidsverruiming of blinde herhaling via een ander transport. Geen eigen HA-planner of tweede gespreksagent.",
-    "nextAction": "E4.7 is geïnstalleerd en werkelijk gebruikt. Vervolg bestaande E4.8 voor actueel apparaatbeeld en E4.9/E4.10/E5.2 voor de gemeten totale wachttijd; geen herbouw van de catalogus.",
-    "checkedAt": "2026-10-20T11:31:22.747952+00:00",
+    "id": "E5.2",
+    "title": "Snelle modulaire huisbediening via chat en spraak live opleveren",
+    "status": "in_progress",
+    "doneWhen": "E4.6–E4.10 zijn op de werkelijk actuele installatie geïntegreerd en onafhankelijk beoordeeld. Gelijke bekende toegelaten opdrachten werken via gewone chat en bestaande spraak met dezelfde module, identiteit, geheugen en bevoegdheden. In de vooraf vastgelegde proef voldoet chatontvangst tot verse HA-eindbevestiging aan mediaan maximaal 1 seconde en p95 maximaal 2 seconden bij een gereedstaande installatie; koude context en onbekende doelen worden afzonderlijk gerapporteerd. Spraak meet ook vanaf einde invoeraudio en vanaf herkende tekst. Een tussenreactie of service-ack vervangt geen eindbevestiging. Ruwe steekproef, fouten, context/cache, model-/toolgebruik en beperkingen blijven bewaard; niet gehaalde grenzen sluiten deze taak niet af. Installatie, bron/configuratie, herstelmogelijkheid en module-uitgedrag zijn gecontroleerd, zonder fysieke hoorbaarheid of gezinsacceptatie te verzinnen.",
+    "nextAction": "Eenvoudige bediening na verse eindcontrole stil afronden zonder tweede model; uitvoeringstijd via echte chat en spraak meten.",
+    "checkedAt": "2026-10-20T12:31:34.182190+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2761,18 +2761,18 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.7",
-          "title": "E4.7 · Gedeelde HA-catalogus en transportkeuze geïnstalleerd",
-          "status": "completed",
-          "state": "completed",
-          "summary": "Kern en uitvoerworker delen dezelfde HA-module. MCP-catalogus en service-schema worden hergebruikt; aan/uit via MCP werkelijk uitgevoerd en vers gecontroleerd. Chat-/spraaksnelheid is gemeten en voldoet nog niet aan de2s-grens.",
-          "doneWhen": "De module gebruikt één vastgelegd capabilityprofiel voor de werkelijk geïnstalleerde HA-versie, beschikbare officiële MCP-tools en REST/WebSocket-API. Bestaande Assist-MCP- en API-code wordt hergebruikt. Per capability zijn gekozen transport, toegang, schemas, actuele dekking en controle vastgelegd; normale bediening en geautoriseerd beheer blijven beschikbaar. Ontbrekend MCP-bereik veroorzaakt geen stille bevoegdheidsverruiming of blinde herhaling via een ander transport. Geen eigen HA-planner of tweede gespreksagent.",
-          "checkedAt": "2026-10-20T11:31:22.747952+00:00"
+          "taskId": "E5.2",
+          "title": "Snelle modulaire huisbediening via chat en spraak live opleveren",
+          "status": "in_progress",
+          "state": "in_progress",
+          "summary": "Bestaande E5.2-overdracht in dezelfde HA-module afronden en op echte installatie meten.",
+          "doneWhen": "E4.6–E4.10 zijn op de werkelijk actuele installatie geïntegreerd en onafhankelijk beoordeeld. Gelijke bekende toegelaten opdrachten werken via gewone chat en bestaande spraak met dezelfde module, identiteit, geheugen en bevoegdheden. In de vooraf vastgelegde proef voldoet chatontvangst tot verse HA-eindbevestiging aan mediaan maximaal 1 seconde en p95 maximaal 2 seconden bij een gereedstaande installatie; koude context en onbekende doelen worden afzonderlijk gerapporteerd. Spraak meet ook vanaf einde invoeraudio en vanaf herkende tekst. Een tussenreactie of service-ack vervangt geen eindbevestiging. Ruwe steekproef, fouten, context/cache, model-/toolgebruik en beperkingen blijven bewaard; niet gehaalde grenzen sluiten deze taak niet af. Installatie, bron/configuratie, herstelmogelijkheid en module-uitgedrag zijn gecontroleerd, zonder fysieke hoorbaarheid of gezinsacceptatie te verzinnen.",
+          "checkedAt": "2026-10-20T12:31:34.182190+00:00"
         },
         "next": {
           "taskId": "E4.8",
-          "title": "Actueel apparaatbeeld binnen dezelfde module hergebruiken",
-          "detail": "Daarna bestaande E4.9/E4.10/E5.2: totale chat-/spraaklatency oplossen; catalogus kost warm minder dan1ms, modelrondes blijven seconden kosten."
+          "title": "Actuele modulecontext en resterende snelheid",
+          "detail": "E5.2 blijft open zolang oorspronkelijke snelheidsgrenzen niet bewezen zijn."
         },
         "ownerAction": {
           "required": false,
@@ -7319,21 +7319,28 @@
                   "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                   "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
                 ],
-                "nextAction": "Actuele gelijke route gemeten: lichtchat6.3–9.4s en weerchat8.3s; inhoudelijke weerspraak14.0s. Werk bestaande modulecontext/uitvoering en modelvoorbereiding af; beoordeel oorspronkelijke snelheids-/onderbreekcriteria afzonderlijk.",
-                "status": "planned",
+                "nextAction": "Eenvoudige bediening na verse eindcontrole stil afronden zonder tweede model; uitvoeringstijd via echte chat en spraak meten.",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
                 "ownerActionRequired": false,
                 "scopeOrigin": "home-module-latency-20261019",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-                "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+                "assignment": {
+                  "coordinator": "/root",
+                  "activeWorkers": [
+                    "/root/review_cursor"
+                  ],
+                  "scope": "Eigenaar vraagt geen antwoord na geslaagde bediening en directe tijdmeting; behoud bestaande module-/spraakroute en onafhankelijke review."
+                },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
                 "executionPlan": {
                   "path": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json",
                   "status": "measured_latency_target_unmet",
                   "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                   "ownerAcceptance": false
-                }
+                },
+                "checkedAt": "2026-10-20T12:31:34.182190+00:00"
               }
             ],
             "completion": {
@@ -11968,21 +11975,28 @@
                 "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                 "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
               ],
-              "nextAction": "Actuele gelijke route gemeten: lichtchat6.3–9.4s en weerchat8.3s; inhoudelijke weerspraak14.0s. Werk bestaande modulecontext/uitvoering en modelvoorbereiding af; beoordeel oorspronkelijke snelheids-/onderbreekcriteria afzonderlijk.",
-              "status": "planned",
+              "nextAction": "Eenvoudige bediening na verse eindcontrole stil afronden zonder tweede model; uitvoeringstijd via echte chat en spraak meten.",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
               "ownerActionRequired": false,
               "scopeOrigin": "home-module-latency-20261019",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
-              "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
+              "assignment": {
+                "coordinator": "/root",
+                "activeWorkers": [
+                  "/root/review_cursor"
+                ],
+                "scope": "Eigenaar vraagt geen antwoord na geslaagde bediening en directe tijdmeting; behoud bestaande module-/spraakroute en onafhankelijke review."
+              },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
               "executionPlan": {
                 "path": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json",
                 "status": "measured_latency_target_unmet",
                 "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                 "ownerAcceptance": false
-              }
+              },
+              "checkedAt": "2026-10-20T12:31:34.182190+00:00"
             }
           ],
           "completion": {
