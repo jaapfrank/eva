@@ -26,6 +26,30 @@ class SensoryEvent:
         validate_json_value(self.payload)
 
 
+@dataclass(frozen=True, slots=True)
+class SensoryAttentionSource:
+    """Provider-owned event coverage, not an action or a subscription grant."""
+    source: str
+    event_type: str
+    selector_key: str
+    selector_value: str
+    configuration_sha256: str
+    coverage: str
+
+    def __post_init__(self):
+        import re
+        if (any(not isinstance(v, str) or not v or len(v) > 255 for v in
+                (self.source, self.event_type, self.selector_key, self.selector_value, self.coverage))
+                or not self.selector_key.isidentifier() or len(self.selector_key) > 80
+                or not isinstance(self.configuration_sha256, str)
+                or re.fullmatch(r"[0-9a-f]{64}", self.configuration_sha256) is None):
+            raise ValueError("source attention coverage is invalid")
+
+    def to_payload(self):
+        from dataclasses import asdict
+        return asdict(self)
+
+
 class SensoryEventSourcePort(Protocol):
     def listen(
         self,

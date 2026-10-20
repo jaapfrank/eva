@@ -1680,6 +1680,8 @@ def create_runtime_app() -> FastAPI:
                 private_review_profile=getattr(model, "private_opportunity_profile", None),
                 private_capability_context_reader=(private_capability_context
                     if callable(getattr(model, "private_action_descriptors", None)) else None),
+                attention_source_resolver=(None if provider_bundle is None else
+                    getattr(provider_bundle.event_source, "attention_source", None)),
                 private_work_context_reader=(None if delegated_work_service is None
                     else delegated_work_service.private_initiative_work_context),
             )

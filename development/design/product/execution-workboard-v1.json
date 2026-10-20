@@ -847,8 +847,8 @@
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Getypeerde bronkeuze binden aan een werkelijk aangeboden, nog toegelaten gebeurtenisbron; bestaande aandacht hergebruiken voor verandering of gerichte controle.",
-    "checkedAt": "2026-10-20T15:55:04.713312+00:00",
+    "nextAction": "Werkelijke bronkeuze en latere bronaanleiding op dezelfde geïnstalleerde aandacht-/modelroute vastleggen; geen vooraf gekozen huishoudcasus.",
+    "checkedAt": "2026-10-20T16:11:46.841997+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,19 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E1.6 · Brongebonden aandacht geïnstalleerd; gebruiksbewijs nog open",
+            "state": "installed",
+            "summary": "Geïnstalleerd en onafhankelijk bron-GO. Gerichte contracten gecontroleerd, vijf echte beschikbare bronkeuzes binnen contextlimiet. Werkelijke modelkeuze/veranderingsketen wordt op de gewone route gevolgd; kaart blijft daarvoor open.",
+            "remaining": "Werkelijke modelgekozen bron en latere gebeurtenis/afweging nog vastleggen. Geen nieuwe gebruikersproef nodig.",
+            "source": "development/evidence/product/e16-source-attention-installed-20261020.json",
+            "review": "development/reviews/e16-source-attention-review-20261020.json",
+            "date": "2026-10-20",
+            "installedAt": "2026-10-20T16:11:46.841997+00:00",
+            "checkedAt": "2026-10-20T16:11:46.841997+00:00",
+            "completedTaskIds": [],
+            "newProductFunctionCompleted": false
+          },
           {
             "title": "E1.5 · Actuele persoonscorrecties in gesprek en initiatief",
             "state": "installed",
@@ -2802,11 +2815,11 @@
           "taskId": "E1.6",
           "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
           "status": "in_progress",
-          "state": "in_progress",
-          "summary": "Eva’s zelfgekozen aandacht verbinden aan de exact gekozen bron.",
-          "detail": "Bestaande eventstroom en scheduler hergebruiken. Geen vooraf gekozen huishoudcasus; alleen ondersteunde veranderingen en bestaande toegelaten uitlezing.",
+          "state": "installed",
+          "summary": "E1.6 aangesloten en geïnstalleerd; echt gebruik wordt gecontroleerd.",
+          "detail": "Geïnstalleerd en onafhankelijk bron-GO. Gerichte contracten gecontroleerd, vijf echte beschikbare bronkeuzes binnen contextlimiet. Werkelijke modelkeuze/veranderingsketen wordt op de gewone route gevolgd; kaart blijft daarvoor open.",
           "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-          "checkedAt": "2026-10-20T15:55:04.713312+00:00"
+          "checkedAt": "2026-10-20T16:11:46.841997+00:00"
         },
         "next": {
           "taskId": "E1.6",
@@ -2818,7 +2831,7 @@
           "detail": "Geen handeling nodig. Eerst de bestaande gekoppelde bron en contracten gebruiken.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T15:55:04.713312+00:00",
+        "checkedAt": "2026-10-20T16:11:46.841997+00:00",
         "reviewedAt": "2026-10-20T15:49:27.587345+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -5567,8 +5580,14 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Getypeerde bronkeuze binden aan een werkelijk aangeboden, nog toegelaten gebeurtenisbron; bestaande aandacht hergebruiken voor verandering of gerichte controle.",
-                "checkedAt": "2026-10-20T15:55:04.713312+00:00"
+                "nextAction": "Werkelijke bronkeuze en latere bronaanleiding op dezelfde geïnstalleerde aandacht-/modelroute vastleggen; geen vooraf gekozen huishoudcasus.",
+                "checkedAt": "2026-10-20T16:11:46.841997+00:00",
+                "progress": "Geïnstalleerd en onafhankelijk bron-GO. Gerichte contracten gecontroleerd, vijf echte beschikbare bronkeuzes binnen contextlimiet. Werkelijke modelkeuze/veranderingsketen wordt op de gewone route gevolgd; kaart blijft daarvoor open.",
+                "evidence": [
+                  "development/evidence/product/e16-source-attention-installed-20261020.json",
+                  "development/reviews/e16-source-attention-review-20261020.json"
+                ],
+                "installedAt": "2026-10-20T16:11:46.841997+00:00"
               }
             ],
             "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -10634,8 +10653,14 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Getypeerde bronkeuze binden aan een werkelijk aangeboden, nog toegelaten gebeurtenisbron; bestaande aandacht hergebruiken voor verandering of gerichte controle.",
-              "checkedAt": "2026-10-20T15:55:04.713312+00:00"
+              "nextAction": "Werkelijke bronkeuze en latere bronaanleiding op dezelfde geïnstalleerde aandacht-/modelroute vastleggen; geen vooraf gekozen huishoudcasus.",
+              "checkedAt": "2026-10-20T16:11:46.841997+00:00",
+              "progress": "Geïnstalleerd en onafhankelijk bron-GO. Gerichte contracten gecontroleerd, vijf echte beschikbare bronkeuzes binnen contextlimiet. Werkelijke modelkeuze/veranderingsketen wordt op de gewone route gevolgd; kaart blijft daarvoor open.",
+              "evidence": [
+                "development/evidence/product/e16-source-attention-installed-20261020.json",
+                "development/reviews/e16-source-attention-review-20261020.json"
+              ],
+              "installedAt": "2026-10-20T16:11:46.841997+00:00"
             }
           ],
           "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -14596,16 +14621,19 @@
     },
     "e16SourceAttention20261020": {
       "startedAt": "2026-10-20T15:55:04.713312+00:00",
-      "state": "existing_seam_identified",
+      "state": "installed_waiting_actual_causal_use",
       "previousGoalTurn": "progress",
       "previousProgress": "E1.5 geïnstalleerd en op dashboard/GitHub afgerond; E1.4 blijft afgerond.",
       "existing": "Native eventstroom, hostbroncontrole, duurzame NextAttention en bestaande afweging/uitvoering.",
       "gap": "Geen getypeerde keuze van exact relevante bron/revisie op modelgekozen aandacht.",
       "scope": "Eén bestaande private aandachtketen met bronbinding, detectie en gecontroleerd vervolg; geen nieuwe connector, scheduler, huiscasus of voicewijziging.",
       "criteriaPreserved": true,
-      "runtimeChanged": false,
+      "runtimeChanged": true,
       "voiceChanged": false,
-      "experiment": "Eerst gerichte isolatie en read-only echte broninvoer; geen nieuwe concurrentenserie of herhaling zonder gewijzigde oorzaak. Nieuw live bewijs alleen op bestaande providerroute."
+      "experiment": "Eerst gerichte isolatie en read-only echte broninvoer; geen nieuwe concurrentenserie of herhaling zonder gewijzigde oorzaak. Nieuw live bewijs alleen op bestaande providerroute.",
+      "installedAt": "2026-10-20T16:11:46.841997+00:00",
+      "independentReview": "GO",
+      "sourceEvidence": "development/evidence/product/e16-source-attention-installed-20261020.json"
     }
   },
   "updatedAt": "2026-10-20T13:28:55.822181+00:00",

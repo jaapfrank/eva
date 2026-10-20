@@ -21,6 +21,7 @@ class NextAttention:
     """A model-selected future review; never an action or delivery permission."""
     at: datetime
     reason: str
+    source_event_id: str | None = None
 
     def __post_init__(self):
         from eva.contracts.timestamps import require_utc_second
@@ -29,22 +30,26 @@ class NextAttention:
         require_utc_second(self.at, "next attention")
         if not isinstance(self.reason, str) or not self.reason.strip() or len(self.reason) > 400:
             raise ValueError("next attention reason is invalid")
+        if self.source_event_id is not None and (not isinstance(self.source_event_id, str)
+                or not self.source_event_id.strip() or len(self.source_event_id) > 240):
+            raise ValueError("next attention source reference is invalid")
 
     def to_payload(self):
         from eva.contracts.timestamps import format_required_utc_timestamp
-        return {"at": format_required_utc_timestamp(self.at), "reason": self.reason}
+        return {"at": format_required_utc_timestamp(self.at), "reason": self.reason,
+                **({"source_event_id": self.source_event_id} if self.source_event_id is not None else {})}
 
     @classmethod
     def from_payload(cls, value):
         from eva.contracts.timestamps import parse_utc_timestamp
-        if not isinstance(value, dict) or set(value) != {"at", "reason"}:
+        if not isinstance(value, dict) or not {"at", "reason"} <= set(value) <= {"at", "reason", "source_event_id"}:
             raise ValueError("next attention fields are invalid")
         if not isinstance(value["at"], str):
             raise ValueError("next attention time must be a UTC timestamp")
         at = parse_utc_timestamp(value["at"])
         if at.strftime("%Y-%m-%dT%H:%M:%SZ") != value["at"]:
             raise ValueError("next attention time must be canonical UTC")
-        return cls(at, value["reason"])
+        return cls(at, value["reason"], value.get("source_event_id"))
 
 
 AttentionDisposition = Literal["silence", "model"]

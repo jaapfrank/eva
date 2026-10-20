@@ -1,0 +1,18 @@
+{
+  "taskId": "E1.6",
+  "reviewedAt": "2026-10-20T16:08:28.975865+00:00",
+  "reviewer": "/root/e47_mcp_catalog",
+  "decision": "GO",
+  "sourceHashes": {
+    "src/eva/application/sensory.py": "49849eb3fa5e3fcab026cd16505336fc0a70da0ec132a80f212eba66ae30fd17",
+    "src/eva/application/resident_attention.py": "787d7c5efec1cbaf8c30cff99a138b8efa41d27b75c2eb3eedb754f1db529294",
+    "src/eva/adapters/postgres/initiative_attention.py": "d1d76cee5e29b6b43feae28776c64a0a455f0503e38720700383a964b17d0114",
+    "src/eva/adapters/postgres/sensory_events.py": "bf0d461e816891908ae791e30eddfd6592afd43f3f40904a42734c58ecbaf6f3",
+    "src/eva/adapters/connectors/home_assistant_events.py": "5d37ab34764e510bb16adc5ca1d7fd43573a1330370a0ef97fc85a66e023acf2",
+    "src/eva/bootstrap/runtime.py": "9bdfe29c50de2ef6c91c634fcf256986f88896e80877e1c1a55cadf7f73f3eb4",
+    "src/eva/adapters/model/pydantic_conversation.py": "d90e3420ea6174351aefedee48605ea78d3db40e937f9fd6be011a06112faa6e"
+  },
+  "blockingFindings": [],
+  "scope": "Seven source deltas, binding/revision/authority, coalescing, STOP, byte budget and existing-route compatibility. Source GO is not live behavioral proof.",
+  "voiceChanged": false
+}

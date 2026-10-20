@@ -83,6 +83,19 @@ native communicatiestijlspiegel blijft in reflectie/beheer bestaan, maar wordt z
 actuele bron-/revisiecontrole niet als actuele voorkeur aan deze routes doorgegeven.
 Dit is een projectie van bestaand geheugen, geen nieuw profielarchief of oordeelmodel.
 
+E1.6 verbindt de optionele `source_event_id` op private `NextAttention` aan een exact
+in dezelfde afweging aangeboden bron en haar hash/configuratie. De bestaande provider
+beschrijft uitsluitend haar eigen werkelijke eventdekking. De bestaande aandachtlane
+bundelt passende nieuwe bronmeldingen en de geplande terugvalcontrole tot één identiteit;
+herstart/reconnect maakt geen tweede beoordeling. Maximaal de bestaande contextomvang,
+minimaal de bestaande vijf minuten tussen beoordelingen en de normale bronversheid
+blijven gelden. De selectie bewaart bruikbare dekking op minder nieuwste waarnemingen
+in plaats van alle descriptors weg te laten. Oude waarnemingen zijn geen actuele
+uitvoerbevoegdheid: de native uitvoerder controleert benodigde actuele bronnen opnieuw.
+De bestaande HA-stream dekt toestandwaarden; attribuutwijzigingen en willekeurige
+MCP-events zijn daarmee niet bewezen. Daarvoor blijft een gerichte, toegelaten native
+uitlezing op het gekozen moment beschikbaar. Geen tweede scheduler of abonnementstore.
+
 Home Assistant levert sinds E4.6 haar eigen gespreksinstructies, gewone-readclassificatie,
 toolpresentatie, digitale capabilities en pure interpretatie van bewaarde receipts.
 De algemene kern vraagt die bestaande providerpoorten aan en kent geen HA-toolnamen

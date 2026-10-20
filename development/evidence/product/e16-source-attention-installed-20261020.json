@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "taskId": "E1.6",
+  "title": "Eigen aandacht aan exact gekozen bron verbinden",
+  "status": "installed_pending_actual_causal_use",
+  "installedAt": "2026-10-20T16:11:24.666887+00:00",
+  "technicalCompletion": false,
+  "voiceChanged": false,
+  "existing": [
+    "Bestaande SensoryEvent-ingest en providerrevalidatie",
+    "Duurzame NextAttention, huidige mandaat-/STOP-controle en normale model-/uitvoeringsroute"
+  ],
+  "gapClosed": "Een modelkeuze kon alleen tijd/reden bewaren, niet een exact aangeboden bronrevisie volgen.",
+  "implementation": [
+    "Private bronkeuze op bestaande NextAttention; host valideert frozen bronhash, aangeboden beschikbaarheid en actuele providerconfiguratie",
+    "Native providerdekking met generieke SensoryAttentionSource; geen nieuwe connector of protocolstack",
+    "Verandering en timerfallback gebruiken dezelfde eenmalige aandachtidentiteit; oude bron is geen nieuwe opdracht of actuele toestand",
+    "Compacte metadata binnen bestaande contextlimiet, met zichtbare selectie/dekking"
+  ],
+  "installed": {
+    "coreImage": "sha256:f1b76d7a6882bf063de389595b2549f624b7a3af5484ff66f04a7dc908eae808",
+    "workerImage": "sha256:633f72ed7f64edce29741080977bd9fa30c6ea1fa8fb7ff116fae6a82db45ba9",
+    "reviewedSourcesExact": true,
+    "currentBaseAndRetainedMountsPreserved": true,
+    "policyBytesUnchanged": true,
+    "voiceChanged": false
+  },
+  "verification": {
+    "applicationAndModelChecks": 22,
+    "postgresUniqueChecks": 26,
+    "postgresVersion": "16.13 isolated disposable; production not mutated by test cases",
+    "independentReview": "GO",
+    "candidateWithRealReadOnlySources": {
+      "offered": 5,
+      "supported": 5,
+      "contextBytes": 8013,
+      "paidModelCalls": 0
+    },
+    "liveCausalUse": "pending; bounded observer follows the actual installed lane, does not start/restart work"
+  },
+  "preservedFindings": [
+    "Outer unavailable fallback could be selected after a configuration return; prevented and regression-tested",
+    "First real context offered zero descriptors because original trimming removed all coverage; compact metadata now survives on fewer newest sources within same8192bytebound"
+  ],
+  "limitations": [
+    "HA coverage is state value changes only, not arbitrary calendar attributes or MCP events",
+    "Configured coverage is not evidence of live external access or action permission",
+    "Controlled synthetic contracts do not prove an actual new model-chosen source or family use",
+    "F2 family utility and acceptance remain separate"
+  ],
+  "usage": {
+    "developmentModelTokens": null,
+    "developmentCredits": null,
+    "runtimeCredits": null,
+    "extraModelPerRawEvent": false,
+    "technicalTestsProviderCalls": 0,
+    "actualLiveUsage": "observing normal review; not yet claimed"
+  }
+}

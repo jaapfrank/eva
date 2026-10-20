@@ -101,3 +101,149 @@ def assign_attention_sequence(connection, store, data):
         e.thread_id.startswith(store._decision_prefix),
         e.event_type.in_(("WILL_DECIDED", "PROACTIVE_EXPRESSION_PREPARED"))))
     data["next_attention"]["selection_sequence"] = (previous or 0) + 1
+
+
+def _retained_source(connection, store, source_event_id):
+    """Read an exact retained observation under the existing installation scope."""
+    from eva.application.sensory import SensoryEvent
+    if not isinstance(source_event_id, str) or not 0 < len(source_event_id) <= 240:
+        raise ValueError("attention source identity is invalid")
+    e, scope = events.c, store._timeline._scope_value
+    row = connection.execute(sa.select(e.payload, e.payload_sha256, e.occurred_at).where(
+        e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+        e.thread_id == "sensory:" + source_event_id, e.sequence == 1,
+        e.event_type == "SENSORY_EVENT_OBSERVED")).one()
+    if canonical_sha256(row.payload) != bytes(row.payload_sha256).hex():
+        raise ValueError("attention observation hash differs")
+    data = row.payload["data"]
+    if data["source_event_id"] != source_event_id:
+        raise ValueError("attention observation identity differs")
+    return row, SensoryEvent(data["source"], source_event_id, data["event_type"],
+                            row.occurred_at, data["payload"])
+
+
+def _current_source(store, event):
+    from eva.application.sensory import SensoryAttentionSource
+    resolver = store._attention_source_resolver
+    if resolver is None:
+        raise ValueError("configured source has no supported event coverage")
+    value = resolver(event)
+    if (not isinstance(value, SensoryAttentionSource) or value.source != event.source
+            or value.event_type != event.event_type
+            or event.payload.get(value.selector_key) != value.selector_value):
+        raise ValueError("current event source coverage differs")
+    return value.to_payload()
+
+
+def annotate_attention_sources(connection, store, context):
+    """Offer bounded provider-owned metadata, never a new tool/subscription grant."""
+    for observation in context.get("observations", ()):
+        try:
+            row, event = _retained_source(connection, store, observation["source_event_id"])
+            if bytes(row.payload_sha256).hex() != observation["source_sha256"]:
+                raise ValueError("offered observation hash differs")
+            source = _current_source(store, event)
+            observation["source_attention"] = {"available": True,
+                "configuration_sha256": source["configuration_sha256"], "coverage": source["coverage"],
+                "classification": "configured_coverage_not_live_access_or_action_permission"}
+        except Exception:
+            observation["source_attention"] = {"available": False,
+                "reason": "no_current_supported_event_coverage; use_existing_native_read_if_permitted"}
+    # Keep actionable coverage on the newest offered sources instead of silently
+    # removing every descriptor from an already full context. This only narrows a
+    # read projection; original observations and active commitments are unchanged.
+    from eva.contracts.canonical_json import canonical_json_bytes
+    omitted = 0
+    while len(canonical_json_bytes(context)) > 8192 and context.get("observations"):
+        context["observations"].pop()
+        omitted += 1
+    if omitted:
+        # Existing coverage flags preserve the original contract and byte bound.
+        coverage = context.get("coverage", {})
+        for key in ("observations_truncated", "byte_budget_truncated"):
+            if key in coverage:
+                coverage[key] = True
+
+
+def bind_attention_source(connection, store, choice, original, *, now):
+    """Bind a model-chosen offered source to its exact revision and own reason."""
+    if choice.source_event_id is None:
+        return None
+    if store._household_binding is not None or store._attention_source_resolver is None:
+        raise ValueError("source attention requires its configured private source route")
+    store._initiative_authorizer()
+    payload = original.payload
+    options = list(payload.get("life_context", {}).get("observations", ()))
+    options += [payload[k] for k in ("attention_source", "attention_source_change")
+                if isinstance(payload.get(k), dict)]
+    selected = next((item for item in options if item.get("source_event_id") == choice.source_event_id), None)
+    if selected is None:
+        raise ValueError("attention source was not offered to this decision")
+    row, event = _retained_source(connection, store, choice.source_event_id)
+    if bytes(row.payload_sha256).hex() != selected.get("source_sha256") or event.occurred_at > original.occurred_at:
+        raise ValueError("attention source revision differs from its offered context")
+    current = _current_source(store, event)
+    offered = selected.get("source_attention", selected.get("binding"))
+    offered_keys = (("configuration_sha256", "coverage") if "source_attention" in selected else tuple(current))
+    if (selected.get("available", True) is not True or not isinstance(offered, dict)
+            or offered.get("available", True) is not True
+            or any(offered.get(k) != current[k] for k in offered_keys)):
+        raise ValueError("attention source coverage changed before commit")
+    return {"source_event_id": event.source_event_id, "source_sha256": bytes(row.payload_sha256).hex(),
+        "selected_at": format_required_utc_timestamp(now), "binding": current}
+
+
+def source_attention_trigger(connection, store, reference, *, now):
+    """Match one current source revision in the existing one-shot attention lane."""
+    if store._household_binding is not None:
+        return None
+    e, scope = events.c, store._timeline._scope_value
+    row = connection.execute(sa.select(e.payload, e.payload_sha256).where(
+        e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+        e.thread_id == reference["source_thread_id"], e.sequence == reference["source_decision_sequence"])).one()
+    if (canonical_sha256(row.payload) != bytes(row.payload_sha256).hex()
+            or bytes(row.payload_sha256).hex() != reference["source_decision_sha256"]):
+        raise ValueError("source attention decision hash differs")
+    watch = row.payload["data"]["next_attention"].get("source_watch")
+    if watch is None:
+        return None
+    retained, original = _retained_source(connection, store, watch["source_event_id"])
+    if bytes(retained.payload_sha256).hex() != watch["source_sha256"]:
+        raise ValueError("source attention retained revision differs")
+    source = {**watch, "available": False, "is_current_proof": False,
+        "classification": "configured_coverage_not_live_access_or_action_permission"}
+    try:
+        current = _current_source(store, original)
+        if current != watch["binding"]:
+            raise ValueError("source configuration changed")
+    except Exception:
+        source["reason"] = "configured_source_no_longer_available; discover_or_reconnect_before_native_read"
+        return {"source": source, "change": None}
+    source["available"] = True
+    selected_at = parse_utc_timestamp(watch["selected_at"])
+    if now < selected_at + timedelta(seconds=300):
+        return {"source": source, "change": None}
+    # Pure indexed source selection; no provider/model polling. One attention
+    # identity consumes all reconnects/duplicates until Eva explicitly chooses again.
+    changed = connection.execute(sa.select(e.payload, e.payload_sha256, e.occurred_at).where(
+        e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+        e.event_type == "SENSORY_EVENT_OBSERVED", e.sequence == 1,
+        e.payload["data"]["source"].astext == current["source"],
+        e.payload["data"]["event_type"].astext == current["event_type"],
+        e.payload["data"]["payload"][current["selector_key"]].astext == current["selector_value"],
+        e.occurred_at > selected_at, e.occurred_at <= now,
+        e.occurred_at >= now - store._observation_freshness,
+    ).order_by(e.occurred_at.desc(), e.thread_id).limit(1)).first()
+    if changed is None:
+        return {"source": source, "change": None}
+    if canonical_sha256(changed.payload) != bytes(changed.payload_sha256).hex():
+        raise ValueError("changed source hash differs")
+    data = changed.payload["data"]
+    change = {"source_event_id": data["source_event_id"], "source_sha256": bytes(changed.payload_sha256).hex(),
+        "source": current["source"], "observed_at": format_required_utc_timestamp(changed.occurred_at),
+        "event_type": data["event_type"], "observation": data["payload"],
+        "binding": current, "is_current_proof": False, "replayed": False}
+    from eva.contracts.canonical_json import canonical_json_bytes
+    if len(canonical_json_bytes(change)) > 4096:
+        return {"source": source, "change": None}  # Scheduled exact-source read remains available.
+    return {"source": source, "change": change}

@@ -11,7 +11,7 @@ from urllib.parse import urlsplit, urlunsplit
 
 from websockets.sync.client import connect
 
-from eva.application.sensory import SensoryEvent
+from eva.application.sensory import SensoryEvent, SensoryAttentionSource
 from eva.adapters.connectors.home_assistant import HomeAssistantConfig, HomeAssistantToolAdapter
 from eva.contracts.canonical_json import canonical_json_bytes
 
@@ -46,6 +46,19 @@ class HomeAssistantEventStream:
         self._device_context = device_context
         self._domains = frozenset(domains)
         self._states = HomeAssistantToolAdapter(HomeAssistantConfig(base_url, token))
+
+    def attention_source(self, event: SensoryEvent) -> SensoryAttentionSource:
+        """Describe only coverage already delivered by this configured stream."""
+        entity = event.payload.get("entity_id")
+        if (event.source != "home_assistant" or event.event_type != "state_changed"
+                or not isinstance(entity, str) or "." not in entity
+                or len(entity) > 255 or entity.split(".", 1)[0] not in self._domains):
+            raise ValueError("source is not covered by the current event stream")
+        from eva.contracts.canonical_json import canonical_sha256
+        return SensoryAttentionSource(event.source, event.event_type, "entity_id", entity,
+            canonical_sha256({"url": self._url, "domains": sorted(self._domains),
+                "credential_sha256": hashlib.sha256(self._token.encode()).hexdigest()}),
+            "state_value_changes_only; other_changes_require_scheduled_native_read")
 
     def revalidate(self, event: SensoryEvent, *, now: datetime) -> SensoryEvent:
         """Read only the admitted entity; retain history separately from current evidence."""

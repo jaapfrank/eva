@@ -69,6 +69,7 @@ class PostgresSensoryEventStore:
         private_work_context_reader=None,
         private_review_profile: str | None = None,
         private_capability_context_reader=None,
+        attention_source_resolver=None,
     ) -> None:
         self._timeline = PostgresOperationalTimeline(
             engine,
@@ -120,6 +121,10 @@ class PostgresSensoryEventStore:
                 not callable(private_capability_context_reader) or not context_reviews_only
                 or household_binding is not None):
             raise ValueError("private capability context requires the private owner review store")
+        if attention_source_resolver is not None and (not callable(attention_source_resolver)
+                or not context_reviews_only or household_binding is not None):
+            raise ValueError("source attention requires the private owner review store")
+        self._attention_source_resolver = attention_source_resolver
         self._private_capability_context_reader = private_capability_context_reader
         self._private_review_profile = private_review_profile
         self._private_work_context_reader = private_work_context_reader
@@ -154,6 +159,11 @@ class PostgresSensoryEventStore:
             from eva.contracts.timestamps import parse_utc_timestamp
             attention = pending_attention(connection, self, now=now)
             attention_due = attention is not None and parse_utc_timestamp(attention["effective_at"]) <= now
+            from eva.adapters.postgres.initiative_attention import source_attention_trigger
+            source_attention = (None if attention is None else
+                source_attention_trigger(connection, self, attention, now=now))
+            source_changed = bool(source_attention and source_attention.get("change") is not None)
+            attention_due = attention_due or source_changed
             # A completed native read returns to the same private decision lane.
             # Its original result identity permits one follow-up, not another
             # timer, tool invocation, or retry of an uncertain decision.
@@ -274,6 +284,10 @@ class PostgresSensoryEventStore:
                 payload["review_cause"] = "installed_profile_change"
             if attention_due:
                 payload["attention_origin"] = attention
+                if source_attention is not None:
+                    payload["attention_source"] = source_attention["source"]
+                    if source_changed:
+                        payload["attention_source_change"] = source_attention["change"]
             elif attention is not None:
                 payload["pending_attention"] = attention
             if completion_source is not None and not attention_due:
@@ -296,6 +310,8 @@ class PostgresSensoryEventStore:
                 payload["life_context"] = read_private_initiative_context(
                     connection, scope, self._initiative_principal_id, now,
                     ordinary_work=ordinary_work)
+                from eva.adapters.postgres.initiative_attention import annotate_attention_sources
+                annotate_attention_sources(connection, self, payload["life_context"])
             data = {"event_type": "private_opportunity_review", "source": "initiative-review",
                     "source_event_id": source_id, "payload": payload}
             if self._household_binding is not None:
@@ -590,13 +606,20 @@ class PostgresSensoryEventStore:
             connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                 {"key": schedule_prefix})
             current = pending_attention(connection, self, now=now, include_consumed=True)
+            cancellation_reason = "attention_replaced_or_origin_stopped"
             if current == reference and claim.thread_id == self._decision_prefix + attention_suffix(reference):
-                return False
+                from eva.adapters.postgres.initiative_attention import source_attention_trigger
+                selected_source = claim.event.payload.get("attention_source")
+                fresh = source_attention_trigger(connection, self, reference, now=now)
+                if (not isinstance(selected_source, dict) or selected_source.get("available") is not True
+                        or fresh is not None and fresh["source"]["available"] is True):
+                    return False
+                cancellation_reason = "attention_source_configuration_changed"
             transition_timeline_thread(connection, scope, thread_id=claim.thread_id,
                 expected_revision=claim.revision, operation_id=claim.operation_id,
                 checkpoint_id=f"{claim.thread_id}:attention-cancelled:{claim.revision + 1}",
                 event_type="WILL_ATTENTION_CANCELLED", phase="will_decided", status="completed",
-                occurred_at=now, data={"reason": "attention_replaced_or_origin_stopped",
+                occurred_at=now, data={"reason": cancellation_reason,
                     "provider_dispatched": False, "source_event_id": claim.event.source_event_id})
         return True
 
@@ -1278,6 +1301,10 @@ class PostgresSensoryEventStore:
             self._timeline._scope(connection)
             if "next_attention" in attention:
                 from eva.adapters.postgres.initiative_attention import assign_attention_sequence
+                from eva.adapters.postgres.initiative_attention import bind_attention_source
+                watch = bind_attention_source(connection, self, decision.next_attention, original, now=now)
+                if watch is not None:
+                    transition["data"]["next_attention"]["source_watch"] = watch
                 assign_attention_sequence(connection, self, transition["data"])
             if decision.initiative is not None:
                 transition["data"]["initiative"] = self._adopt_initiative(
