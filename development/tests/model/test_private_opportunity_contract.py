@@ -46,6 +46,10 @@ def assert_private(tool):
         assert key in initiative["required"]
         initiative["properties"].pop(key)
         initiative["required"].remove(key)
+    attention = extended["parameters"]["properties"]["next_attention"]
+    assert attention["properties"]["source_event_id"]["type"] == ["string", "null"]
+    attention["properties"].pop("source_event_id")
+    attention["required"].remove("source_event_id")
     assert without_descriptions(extended) == without_descriptions(_FREE_WILL_TOOL)
     assert "private oriëntatie" in tool["description"]
     assert "passieve huisprikkel" not in tool["description"]
@@ -71,7 +75,7 @@ def test_private_descriptor_extends_only_continuation_fields_and_cannot_mutate_h
 @pytest.mark.parametrize("search_first", [False, True])
 def test_private_initial_and_postsearch_submit_use_the_same_private_contract(monkeypatch, tmp_path, search_first):
     model = PydanticConversationModel(auth_file=tmp_path / "unused")
-    assert model.private_opportunity_profile == "private-orientation-context-search-contract-v6"
+    assert model.private_opportunity_profile == "private-orientation-failure-context-contract-v8"
     original = canonical_json_bytes(_FREE_WILL_TOOL)
     bodies, reads = [], []
     def request(body, *args, **kwargs):
@@ -181,7 +185,7 @@ def test_private_necessary_question_boundary_keeps_optional_social_curiosity_pri
     assert "Geen verplichte vraag of begroeting." in private
     assert "stop, privacy en persoonsgrenzen gelden" in private
     assert result.disposition == "silence" and result.initiative is None and result.next_attention is None
-    assert model.private_opportunity_profile == "private-orientation-context-search-contract-v6"
+    assert model.private_opportunity_profile == "private-orientation-failure-context-contract-v8"
     model.evaluate_sensory_event(event("household-initiative"), identity, _memory())
     assert clarification not in bodies[-1]["instructions"]
     assert "Stel alleen vragen als noodzakelijke informatie ontbreekt." in bodies[-1]["instructions"]

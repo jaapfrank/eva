@@ -1,0 +1,58 @@
+{
+  "decision": "GO_SOURCE_AND_OPTIONAL_INSTALLATION",
+  "reviewedAt": "2026-10-20T18:24:33.070843+00:00",
+  "scope": "Bounded terminal native failure context into existing ordinary private initiative review only. No current continuation completion claim.",
+  "blockingFindings": [],
+  "criteriaSha256": "c443ef66d6ce8de4453a1317c36c47643f32de24cc160b962da42f297059a57d",
+  "sourceHashes": {
+    "src/eva/adapters/model/pydantic_conversation.py": "cc06ef9b5c087094b364f085e4798a2cc7f21176097a6857ce8a3535593052bb",
+    "src/eva/bootstrap/runtime.py": "924b091a4e2ea7a7ad4a04a99f315a899bc3338698fcfbd318fb28ae7bd83720",
+    "src/eva/adapters/postgres/sensory_events.py": "2c982c49ea3967085d0f768565b3b2a7f96afdce70cadb4fd2a0ced128d86e8e",
+    "src/eva/adapters/postgres/initiative_failure_context.py": "e0e32aa9b5cbfcd4c8a4cc0b313618be51cea2b73010738cf62d95afb69b590d"
+  },
+  "overlaySourceHashes": {
+    "src/eva/adapters/model/pydantic_conversation.py": "cc06ef9b5c087094b364f085e4798a2cc7f21176097a6857ce8a3535593052bb",
+    "src/eva/bootstrap/runtime.py": "924b091a4e2ea7a7ad4a04a99f315a899bc3338698fcfbd318fb28ae7bd83720",
+    "src/eva/adapters/postgres/sensory_events.py": "2c982c49ea3967085d0f768565b3b2a7f96afdce70cadb4fd2a0ced128d86e8e",
+    "src/eva/adapters/postgres/initiative_failure_context.py": "e0e32aa9b5cbfcd4c8a4cc0b313618be51cea2b73010738cf62d95afb69b590d"
+  },
+  "executionPinCount": 68,
+  "capabilityCount": 26,
+  "reviewChecks": {
+    "private_context_only_callback_and_constructor_guard": true,
+    "current_owner_binding_scope_and_exact_native_adoption_blocked_spec_source_validation": true,
+    "terminal_failed_ambiguous_needs_help_only_no_live_or_verified_promotion": true,
+    "retention_stop_source_checks_before_and_after_read": true,
+    "original_failed_record_spec_grant_usage_error_and_receipts_never_written": true,
+    "missing_report_explicitly_unavailable": true,
+    "immutable_report_hash_validator_and_bounded_utf8_excerpt_reused": true,
+    "partial_counts_not_total_unknown_usage_and_costs_preserved": true,
+    "positive_verified_read_selection_never_claims_complete_effect_coverage_or_zero_effects": true,
+    "one_recent_failure_max3072_bytes_no_new_store_scheduler_or_execution": true,
+    "generic_instructions_no_selected_topic_no_auto_retry_valid_pause": true,
+    "future_native_choice_retains_current_authority_and_completed_parent_admission": true,
+    "existing_shared_contract_and_voice_unchanged": true,
+    "exact_four_overlay_files_equal_reviewed_workspace": true
+  },
+  "testNotes": {
+    "new_disposable_pg_cases": {
+      "passed": 15,
+      "seconds": 21.500556709012017,
+      "model_calls": 0,
+      "production_mutations": false,
+      "initial_failure": "14pass1failure from historical fixture clock hid optional retained report; exact existing report validator now reads under explicit authorized clock/retention. Recheck all15 passed."
+    },
+    "root_private_model_contract_checks": "17 passed1.39s, existing E16field/profile fixture updated plus v8 instruction;0provider.",
+    "independent_repeated_tests_or_provider_calls": 0
+  },
+  "limits": [
+    "Source/overlay GO authorizes one coordinated exact candidate installation after fresh shared work/model/conversation preflight; reviewer did not deploy.",
+    "Candidate build metadata and overlay source hashes reviewed; actual installed file hashes must be checked after installation.",
+    "Actual ordinary handoff and any genuinely chosen continuation/completion/later use are still unobserved for this change. A pause alone cannot close current execution.",
+    "No paid review/retry/new topic or independent criteria change by reviewer; original partial usage and unknown costs remain unknown."
+  ],
+  "contract": "EvaE14FailureContextIndependentReview/v1",
+  "reviewer": "e47_mcp_catalog",
+  "privateReviewSha256": "d9980f2c6eb44ce7f2a6398b2fc84083fb52b1d25dc19590d1946bdc78e78601",
+  "reviewerModelCalls": 0
+}

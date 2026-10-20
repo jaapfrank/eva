@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Een taak over meerdere diensten als programma uitvoeren
+E1.4 · Actueel zelfstandig vervolg herstellen
 
-E4.14: één programma over meerdere diensten aansluiten op de bestaande uitvoerder.
+Foutcontext geïnstalleerd in gewone eigen afweging; werkelijk nieuw vervolg, afronding en later gebruik worden gevolgd.
 
-Klaar wanneer: Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.
+Klaar wanneer: De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.
 
 ## Afmaakvolgorde
 

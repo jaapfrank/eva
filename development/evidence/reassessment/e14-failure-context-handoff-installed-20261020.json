@@ -1,0 +1,81 @@
+{
+  "contract": "EvaE14CurrentContinuationRepair/v1",
+  "taskId": "E1.4",
+  "checkedAt": "2026-10-20T18:27:35.408825+00:00",
+  "state": "installed_awaiting_ordinary_continuation",
+  "historicalCompletionEvidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
+  "historicalCompletionPreserved": true,
+  "currentGap": "A later self-chosen task failed after citation validation and incomplete usage; subsequent ordinary reviews saw blocked status without useful failure context. Numeric budget exhaustion is not established.",
+  "changes": [
+    "Expose one bounded same-owner retained failure through existing private initiative history.",
+    "Validate original intent, work/spec, retention, stop and immutable report binding; preserve missing reports and partial counts as unknown.",
+    "Same private decision may choose a distinct smaller authorized next step or pause. No automatic retry, old result manufacture, added scheduler or new topic."
+  ],
+  "tests": {
+    "modelAndContext": {
+      "passed": 17,
+      "seconds": 1.39,
+      "initialLegacyFixtureFailures": 5,
+      "fixtureCorrection": "Existing private source-attention field and current private profile were absent from old expectations."
+    },
+    "realPostgresFailureContext": {
+      "passed": 15,
+      "seconds": 18.86,
+      "initialFailure": 1,
+      "correction": "Read immutable optional report using explicit read-time authority/retention, rather than implicit wall-clock presentation field."
+    },
+    "testProviderCalls": 0
+  },
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "coreImage": "sha256:e3492018dc774a6ad338fa118a5666a37babc5a9506c1790ef2e1e8bba707c0f",
+    "workerImage": "sha256:0809da2482f67e3aeffed3524df4991fa06c83d35796d85d6f5c9751f6d1ded7",
+    "executionPins": 68,
+    "capabilities": 26,
+    "policyBytesUnchanged": true,
+    "voiceChanged": false,
+    "receiptSha256": "608964770181b4513dc719bd07c889c52c7206e5dea6ee4e9961ec2b32cdf0d2"
+  },
+  "independentReview": "development/reviews/e14-failure-context-handoff-review-20261020.json",
+  "actualOrdinaryHandoff": null,
+  "newSelfChosenContinuation": null,
+  "newContinuationCompleted": false,
+  "newResultLaterUsed": false,
+  "usage": {
+    "manualNewModelProbes": 0,
+    "developmentCreditCost": null,
+    "runtimeCreditCost": null,
+    "historicalCurrentFailedAttempt": {
+      "measurement": "partial",
+      "inputTokens": 12896,
+      "outputTokens": 285,
+      "recordedTotalTokens": 13181,
+      "completedModelResponses": 2,
+      "toolCalls": 1,
+      "unknownAdditionalUsage": true
+    },
+    "threeObservedSubsequentReviews": {
+      "measurement": "measured",
+      "inputTokens": 43732,
+      "outputTokens": 416,
+      "totalTokens": 44148,
+      "modelAttempts": 3,
+      "toolCalls": 3
+    }
+  },
+  "limitations": [
+    "Original E1.4 technical criterion remains supported by its original cross-day episode, with operator repair assistance disclosed.",
+    "This current repair is not yet a new completed autonomous continuation.",
+    "Family usefulness, acceptance and broad superiority remain unproven here; full project goal stays active."
+  ],
+  "actualPrivateHistoryHandoff": {
+    "observedAt": "2026-10-20T18:26:30.251720+00:00",
+    "profile": "private-orientation-failure-context-contract-v8",
+    "status": "available",
+    "sameFailedWorkAndSpecVerified": true,
+    "originalFailureUnchanged": true,
+    "partialUsageAndMissingReportPreserved": true,
+    "unknownEffectsPreserved": true,
+    "newModelCallsForThisRead": 0
+  }
+}

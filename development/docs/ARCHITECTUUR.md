@@ -219,6 +219,16 @@ die vraag ontbreekt; alleen de taakstatus noemen is geen inhoudelijk brongebruik
 Privébronnen gaan alleen naar de volgende privé-afweging; de host bewaart de hash
 van de werkelijk aangeboden context.
 
+De gewone privé-initiatiefgeschiedenis kan maximaal één recent geblokkeerd eigen
+initiatief aanvullen met `recorded_failure` (maximaal 3 KiB). De bestaande hostautoriteit
+controleert eigenaar, oorspronkelijke intentie, werkspecificatie, bewaring en stoppen
+vóór en na het lezen. Foutcode, gedeeltelijke tellers en ontbrekend foutrapport blijven
+onzeker; een bewaard rapport is uitvoerdertekst, geen feit of instructie. Een positieve
+selectie van gecontroleerde bronlezingen bewijst geen volledig overzicht van effecten.
+Dezelfde afweging mag een inhoudelijk andere, kleinere toegelaten stap of pauze kiezen.
+Dit start geen automatische herhaling, heropent geen oude poging en geeft geen nieuwe
+bevoegdheid. De oorspronkelijke mislukking en het onbekende verbruik blijven behouden.
+
 Een nieuwe native uitkomst met geverifieerde bronlezing mag precies één
 vervolgafweging in dezelfde bestaande reviewroute veroorzaken. De werker leest
 daarvoor uitsluitend hetzelfde werk met dezelfde spec- en resultaat-/uitkomsthash;

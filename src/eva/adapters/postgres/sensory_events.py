@@ -70,6 +70,7 @@ class PostgresSensoryEventStore:
         private_review_profile: str | None = None,
         private_capability_context_reader=None,
         attention_source_resolver=None,
+        initiative_failure_context_reader=None,
     ) -> None:
         self._timeline = PostgresOperationalTimeline(
             engine,
@@ -124,6 +125,11 @@ class PostgresSensoryEventStore:
         if attention_source_resolver is not None and (not callable(attention_source_resolver)
                 or not context_reviews_only or household_binding is not None):
             raise ValueError("source attention requires the private owner review store")
+        if initiative_failure_context_reader is not None and (
+                not callable(initiative_failure_context_reader) or not context_reviews_only
+                or household_binding is not None):
+            raise ValueError("failure context requires the private owner review store")
+        self._initiative_failure_context_reader = initiative_failure_context_reader
         self._attention_source_resolver = attention_source_resolver
         self._private_capability_context_reader = private_capability_context_reader
         self._private_review_profile = private_review_profile
@@ -1383,6 +1389,7 @@ class PostgresSensoryEventStore:
             raise RuntimeError("initiative history payload hash differs")
         result = []
         completed_seen = 0
+        failure_seen = False
         for row in rows:
             events = self._timeline.events(row.thread_id)
             feedback = next((event.payload["data"].get("feedback")
@@ -1395,6 +1402,17 @@ class PostgresSensoryEventStore:
                    if "followup_source" in row.payload["data"] else {}),
                 "question": row.payload["data"]["next_exploration"], "phase": row.phase,
                 **({"owner_feedback": feedback} if feedback else {})}
+            failure_reader = getattr(self, "_initiative_failure_context_reader", None)
+            if row.phase == "initiative_blocked" and not failure_seen and failure_reader is not None:
+                from eva.adapters.postgres.initiative_failure_context import unavailable_failure
+                failure_seen = True
+                try:
+                    self._initiative_authorizer()
+                    item["recorded_failure"] = failure_reader(item["intent_id"],
+                        now=datetime.now(UTC).replace(microsecond=0))
+                    self._initiative_authorizer()
+                except Exception:
+                    item["recorded_failure"] = unavailable_failure()
             if row.phase in {"completed", "release_ready", "initiative_completed"} and completed_seen < 3:
                 completed_seen += 1
                 artifact = next((event for event in reversed(events) if event.event_type in {

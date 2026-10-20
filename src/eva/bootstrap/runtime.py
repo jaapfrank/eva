@@ -1670,12 +1670,15 @@ def create_runtime_app() -> FastAPI:
                 policy, mandate_sha, observed_at=now, descriptors=descriptors,
             )
 
+        from eva.adapters.postgres.initiative_failure_context import recorded_failure
         context_review_store = (
             None if settings.background_principal_id is None else PostgresSensoryEventStore(
                 engine, tenant_id=settings.background_tenant_id,
                 installation_id=settings.background_installation_id,
                 initiative_principal_id=settings.background_principal_id,
                 initiative_authorizer=lambda: runtime._initiative_authority().policy(),
+                initiative_failure_context_reader=lambda intent_id, now: recorded_failure(
+                    runtime._initiative_authority(), intent_id, now=now),
                 context_reviews_only=True, decision_lease_seconds=300,
                 private_review_profile=getattr(model, "private_opportunity_profile", None),
                 private_capability_context_reader=(private_capability_context

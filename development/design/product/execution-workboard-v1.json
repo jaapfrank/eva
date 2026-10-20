@@ -841,14 +841,14 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.14",
+  "activeTaskId": "E1.4",
   "currentWork": {
-    "id": "E4.14",
-    "title": "Een taak over meerdere diensten als programma uitvoeren",
+    "id": "E1.4",
+    "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
     "status": "in_progress",
-    "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
-    "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
-    "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+    "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
+    "nextAction": "Herstel gericht de actuele zelfgekozen vervolgtaak die op budget_exceeded bleef hangen; behoud eerder voltooiingsbewijs en voorkom dubbele effecten.",
+    "checkedAt": "2026-10-20T18:26:07.721876+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,18 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E1.4 · Foutcontext voor zelfstandig vervolg geïnstalleerd",
+            "state": "installed",
+            "summary": "Gewone afweging krijgt bij één geblokkeerd eigen initiatief de exacte foutstatus en meetonzekerheid. Geen automatische herhaling.",
+            "remaining": "Nieuwe gewone vervolgkeuze, uitvoering en later gebruik nog volgen. Historische meerdaagse keten blijft apart geldig.",
+            "source": "development/evidence/reassessment/e14-failure-context-handoff-installed-20261020.json",
+            "review": "development/reviews/e14-failure-context-handoff-review-20261020.json",
+            "date": "2026-10-20",
+            "checkedAt": "2026-10-20T18:26:07.721876+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": []
+          },
           {
             "title": "E4.13 · Semantische codefeedback geïnstalleerd en door Eva gebruikt",
             "state": "installed",
@@ -2854,33 +2866,30 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E1.5 · Actuele persoonscorrecties in gesprek en initiatief",
+          "title": "E4.13 · Semantische codefeedback geïnstalleerd en door Eva gebruikt",
           "state": "installed",
-          "summary": "Geïnstalleerd: dezelfde huidige bron-/revisiecontext bij licht gesprek en privé-initiatief. Native observaties en getypeerde ketenkoppen compact en zonder dubbele geschiedenis; onbewezen stijlspiegel geen fallback. HUE5 echte correctie/later gedrag hergebruikt, nieuwe overdracht technisch gecontroleerd. F2 blijft open.",
-          "remaining": "Geen resterende technische stap binnen E1.5. Nieuwe live gedragsproef en meerdaags gezinsnut niet geclaimd; gezinsacceptatie blijft F2.",
-          "source": "development/evidence/product/e15-current-person-context-installed-20261020.json",
-          "review": "development/reviews/e15-current-person-context-review-20261020.json",
+          "summary": "Echte Pythonfout op actuele bronversie gevonden, door Eva gericht opgelost en daarna onafhankelijk 6/6 gedragsgevallen geslaagd. Dezelfde geïsoleerde programmeerroute; geen nieuwe agent.",
+          "remaining": "Geen technische E4.13-stap. Python directe edits zijn de eerste scope; algemene codekwaliteit/gezinsnut niet hiermee bewezen.",
+          "source": "development/evidence/product/e413-programming-semantic-feedback-20261020.json",
           "date": "2026-10-20",
-          "installedAt": "2026-10-20T15:49:27.587345+00:00",
-          "completedAt": "2026-10-20T15:49:27.587345+00:00",
-          "checkedAt": "2026-10-20T15:49:27.587345+00:00",
-          "newProductFunctionCompleted": true,
+          "checkedAt": "2026-10-20T18:08:24.596249+00:00",
           "completedTaskIds": [
-            "E1.5"
+            "E4.13"
           ],
-          "completionScope": "Bestaand ongewijzigd E1.5-criterium: geïnstalleerde contextoverdracht met hergebruik van echt historisch correctie/later-gebruikbewijs. Geen volledig persoonsprofiel of gezinsacceptatie.",
+          "newProductFunctionCompleted": true,
+          "completedAt": "2026-10-20T18:07:32.586759+00:00",
           "ownerAcceptance": false,
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.14",
-          "title": "Een taak over meerdere diensten als programma uitvoeren",
+          "taskId": "E1.4",
+          "title": "E1.4 · Actueel zelfstandig vervolg herstellen",
           "status": "in_progress",
-          "state": "building",
-          "summary": "E4.14: één programma over meerdere diensten aansluiten op de bestaande uitvoerder.",
-          "detail": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
-          "doneWhen": "Eva maakt binnen de bestaande duurzame taak één programma dat ten minste twee beschikbare diensten gebruikt en een gecontroleerd resultaat aan de oorspronkelijke ontvanger oplevert. Een afgebakende hergebruikte RPC-/stublaag roept iedere tool via de bestaande actuele bevoegdheids-, stop- en receiptgrens aan; code krijgt geen losse credentials of ambient hostrechten. Tussenresultaten blijven lokaal waar passend; alleen relevante uitkomst gaat terug naar het model. Stoppen, gedeeltelijke mislukking, intrekking en hervatten veroorzaken geen blinde dubbele actie. Resultaatkwaliteit, benodigde hulp, model-/toolgebruik en tijd worden met de huidige route voor deze taak apart vergeleken; geen nieuwe concurrentenserie.",
-          "checkedAt": "2026-10-20T18:08:24.596249+00:00"
+          "state": "installed_observing",
+          "summary": "Foutcontext geïnstalleerd in gewone eigen afweging; werkelijk nieuw vervolg, afronding en later gebruik worden gevolgd.",
+          "detail": "Geen gedwongen proefopdracht of automatische herhaling. Historische E1.4-keten blijft geldig; actuele vervolgketen nog niet afgerond.",
+          "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
+          "checkedAt": "2026-10-20T18:26:07.721876+00:00"
         },
         "next": {
           "taskId": "E4.14",
@@ -2892,8 +2901,8 @@
           "detail": "Geen handeling nodig. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T18:08:24.596249+00:00",
-        "reviewedAt": "2026-10-20T18:08:24.596249+00:00",
+        "checkedAt": "2026-10-20T18:26:07.721876+00:00",
+        "reviewedAt": "2026-10-20T18:26:07.721876+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -3074,7 +3083,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.7",
+        "currentStep": "E1.4",
         "steps": [
           {
             "number": 1,
@@ -5509,7 +5518,7 @@
                 "requiredForCurrentDelivery": true,
                 "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
                 "existing": "Duurzame taken, persoonlijke interesses, verwachtingen/review_at, eigen aandacht, brongebonden vervolg en één echte E5.1-episode bestaan.",
-                "gap": "Geen resterende technische stap binnen E1.4. Meerdaags gezinsnut en eigenaaracceptatie blijven afzonderlijk bij F2.",
+                "gap": "Oorspronkelijke technische keten blijft afgerond. Actuele controle: nieuw zelfgekozen vervolg faalde op uitvoerbudget en houdt latere afwegingen in pauze; gerichte diagnose/herstel loopt.",
                 "implementation": [
                   "Lees de huidige native keten en werkelijke open eigen doelen; onderscheid technische uitval, ontbrekende context en legitieme stilte.",
                   "Verbind ontbrekende overdracht tussen bestaande verwachting/doel, actuele waarneming, voortgang en volgende aandacht; verander alleen de bewezen ontbrekende verbinding.",
@@ -5531,7 +5540,7 @@
                   "E5.1"
                 ],
                 "nextAction": "Behoud de geïnstalleerde keten. Vervolg met de bestaande E1.5-kaart; F2-gezinsacceptatie blijft apart.",
-                "checkedAt": "2026-10-20T15:25:11.654850+00:00",
+                "checkedAt": "2026-10-20T18:15:15.411801+00:00",
                 "progress": "Echte meerdaagse keten afgerond: eigen vervolg gekozen, onderzoek uitgevoerd en bewaard, uitkomst later inhoudelijk toegepast en privé afgeleverd.",
                 "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
                 "result": "Eva zette haar eigen interesse over 19 en 20 oktober voort, rondde het zelfgekozen onderzoek af en gebruikte de uitkomst bij de volgende gewone afweging voor een genuanceerde terugkoppeling via Telegram. Technische herstelhulp en eerdere mislukkingen blijven zichtbaar; gezinsnut/acceptatie blijven F2.",
@@ -7314,7 +7323,7 @@
                 "independentReview": "development/reviews/e413-programming-semantic-feedback-review-20261020.json"
               },
               {
-                "status": "in_progress",
+                "status": "planned",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
                 "ownerActionRequired": false,
@@ -7355,7 +7364,7 @@
                 "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
                 "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
                 "checkedAt": "2026-10-20T18:08:24.596249+00:00",
-                "progress": "E4.13 technisch afgerond. Controleer nu de bestaande echte opdracht, scriptbare upstream RPC en huidige subcalloverdracht vóór programmeren; nog geen RPC-wijziging geïnstalleerd."
+                "progress": "Alleen bestaande route en mogelijk RPC-hergebruik gelezen; implementatie/proef niet gestart. Actuele eigenaaropdracht E1.4 gaat voor."
               }
             ],
             "previousBoundedCompletion": {
@@ -7874,7 +7883,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
+        "nextAction": "Herstel gericht de actuele zelfgekozen vervolgtaak die op budget_exceeded bleef hangen; behoud eerder voltooiingsbewijs en voorkom dubbele effecten.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -8125,7 +8134,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+        "checkedAt": "2026-10-20T18:26:07.721876+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -8191,7 +8200,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.7",
+      "currentStep": "E1.4",
       "steps": [
         {
           "number": 1,
@@ -10626,7 +10635,7 @@
               "requiredForCurrentDelivery": true,
               "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
               "existing": "Duurzame taken, persoonlijke interesses, verwachtingen/review_at, eigen aandacht, brongebonden vervolg en één echte E5.1-episode bestaan.",
-              "gap": "Geen resterende technische stap binnen E1.4. Meerdaags gezinsnut en eigenaaracceptatie blijven afzonderlijk bij F2.",
+              "gap": "Oorspronkelijke technische keten blijft afgerond. Actuele controle: nieuw zelfgekozen vervolg faalde op uitvoerbudget en houdt latere afwegingen in pauze; gerichte diagnose/herstel loopt.",
               "implementation": [
                 "Lees de huidige native keten en werkelijke open eigen doelen; onderscheid technische uitval, ontbrekende context en legitieme stilte.",
                 "Verbind ontbrekende overdracht tussen bestaande verwachting/doel, actuele waarneming, voortgang en volgende aandacht; verander alleen de bewezen ontbrekende verbinding.",
@@ -10648,7 +10657,7 @@
                 "E5.1"
               ],
               "nextAction": "Behoud de geïnstalleerde keten. Vervolg met de bestaande E1.5-kaart; F2-gezinsacceptatie blijft apart.",
-              "checkedAt": "2026-10-20T15:25:11.654850+00:00",
+              "checkedAt": "2026-10-20T18:15:15.411801+00:00",
               "progress": "Echte meerdaagse keten afgerond: eigen vervolg gekozen, onderzoek uitgevoerd en bewaard, uitkomst later inhoudelijk toegepast en privé afgeleverd.",
               "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
               "result": "Eva zette haar eigen interesse over 19 en 20 oktober voort, rondde het zelfgekozen onderzoek af en gebruikte de uitkomst bij de volgende gewone afweging voor een genuanceerde terugkoppeling via Telegram. Technische herstelhulp en eerdere mislukkingen blijven zichtbaar; gezinsnut/acceptatie blijven F2.",
@@ -12431,7 +12440,7 @@
               "independentReview": "development/reviews/e413-programming-semantic-feedback-review-20261020.json"
             },
             {
-              "status": "in_progress",
+              "status": "planned",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraak bij andere uitvoerder",
               "ownerActionRequired": false,
@@ -12472,7 +12481,7 @@
               "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
               "ownerAuthorization": "Eigenaar20oktober2026: zorg dat je alles wat interessant en nuttig is toevoegt aan het project. Dit bevestigt uitvoering van de eerder voorgestelde drie technische kandidaten en opname van de overige bruikbare onderzoeksbevindingen; toepassing blijft gebonden aan kwaliteit en bestaande bevoegdheden.",
               "checkedAt": "2026-10-20T18:08:24.596249+00:00",
-              "progress": "E4.13 technisch afgerond. Controleer nu de bestaande echte opdracht, scriptbare upstream RPC en huidige subcalloverdracht vóór programmeren; nog geen RPC-wijziging geïnstalleerd."
+              "progress": "Alleen bestaande route en mogelijk RPC-hergebruik gelezen; implementatie/proef niet gestart. Actuele eigenaaropdracht E1.4 gaat voor."
             }
           ],
           "previousBoundedCompletion": {
@@ -12991,7 +13000,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Bepaal bij één passende huidige opdracht of RPC-hergebruik voordeel oplevert boven de bestaande algemene uitvoerder; kies pas daarna de kleine adapter.",
+      "nextAction": "Herstel gericht de actuele zelfgekozen vervolgtaak die op budget_exceeded bleef hangen; behoud eerder voltooiingsbewijs en voorkom dubbele effecten.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -13242,7 +13251,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+      "checkedAt": "2026-10-20T18:26:07.721876+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -14751,7 +14760,30 @@
       "technicalTaskCompleted": true,
       "finalReview": "development/reviews/e14-cross-day-final-completion-review-20261020.json",
       "ownerAcceptance": false,
-      "fullProjectGoalCompleted": false
+      "fullProjectGoalCompleted": false,
+      "currentRuntimeRecheck": {
+        "checkedAt": "2026-10-20T18:26:07.721876+00:00",
+        "historicalCompletionRetained": true,
+        "latestFollowupState": "failed_budget_exceeded",
+        "ordinaryLaterDecisions": "paused_because_followup_remains_blocked",
+        "newModelCallsByRecheck": 0,
+        "voiceChanged": false,
+        "state": "installed_awaiting_ordinary_continuation",
+        "diagnosis": "Citation validation error left model usage incomplete; budget_exceeded was the subsequent accounting guard, not proven numeric exhaustion.",
+        "runtimeChanged": true,
+        "evidence": "development/evidence/reassessment/e14-failure-context-handoff-installed-20261020.json",
+        "review": "development/reviews/e14-failure-context-handoff-review-20261020.json",
+        "installation": {
+          "status": "running_with_retained_mounts",
+          "coreImage": "sha256:e3492018dc774a6ad338fa118a5666a37babc5a9506c1790ef2e1e8bba707c0f",
+          "workerImage": "sha256:0809da2482f67e3aeffed3524df4991fa06c83d35796d85d6f5c9751f6d1ded7",
+          "executionPins": 68,
+          "capabilities": 26,
+          "policyBytesUnchanged": true,
+          "voiceChanged": false,
+          "receiptSha256": "608964770181b4513dc719bd07c889c52c7206e5dea6ee4e9961ec2b32cdf0d2"
+        }
+      }
     },
     "e15CurrentPersonContext20261020": {
       "startedAt": "2026-10-20T15:28:06.965812+00:00",

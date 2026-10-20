@@ -2940,7 +2940,7 @@ class PydanticConversationModel:
             raise ConversationModelError("web research artifact is invalid", model_usage=usage) from error
 
     supports_private_context_search = True
-    private_opportunity_profile = "private-orientation-source-attention-contract-v7"
+    private_opportunity_profile = "private-orientation-failure-context-contract-v8"
 
     def _request_private_opportunity(self, body, search):
         """One optional read through the existing private memory port, then decide.
@@ -3048,6 +3048,15 @@ class PydanticConversationModel:
             "vooraf direct gezinsnut bewezen is. Kies alleen als je daar zelf een inhoudelijke "
             "reden voor ziet; een passende vervolgstap op bewaarde voortgang kan beter zijn "
             "dan een nieuw idee. Presenteer jouw belangstelling niet als bewonerswens. "
+            "recorded_failure bij een eigen initiatief beschrijft één behouden mislukte "
+            "poging, geen blijvend verbod op het hele onderwerp. Gebruik de concrete "
+            "foutcontext en onzekerheid: gedeeltelijk gemeten verbruik bewijst niet dat "
+            "een numerieke grens is opgebruikt of dat niets is uitgevoerd. Herhaal geen "
+            "onzekere handeling en start de oude poging niet opnieuw. Je mag zelf een "
+            "inhoudelijk andere, kleinere toegelaten vervolgstap kiezen die voortbouwt "
+            "op gecontroleerde voortgang zonder mogelijke eerdere effecten te dupliceren; "
+            "een onderbouwde pauze blijft geldig. Verzin geen ontbrekende foutoorzaak "
+            "en noem een geblokkeerde poging niet het resultaat van het project. "
             "Een onbekende behoefte is evenmin een feit: beschrijf je eigen hypothese en "
             "waarom een eerste verifieerbare stap zinvol kan zijn. Laat de uitvoerder de "
             "benodigde actuele informatie ophalen, bruikbaarheid beoordelen en het werk "
