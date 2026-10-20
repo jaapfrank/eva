@@ -28,6 +28,7 @@ from eva.contracts.delegated_work import (
 from eva.contracts.delegated_digital_work import DelegatedHouseholdDigitalWorkSpec, DelegatedInitiativeDigitalWorkSpec
 from eva.contracts.workboard import WorkBoard
 from eva.application.delegated_work_delivery import PrivateWorkDestination
+from eva.application.initiative_execution import unstarted_profile_refresh
 from eva.adapters.postgres.delegated_work_delivery import record_admission_destination
 
 principal_bindings = metadata.tables["eva_core.principal_bindings"]
@@ -408,7 +409,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 if isinstance(previous.spec, DelegatedInitiativeDigitalWorkSpec):
                     if (not isinstance(spec, DelegatedInitiativeDigitalWorkSpec)
                             or spec.origin != previous.spec.origin
-                            or previous.state != "failed" or previous.stop_requested_at is not None
+                            or (previous.state != "failed" and not unstarted_profile_refresh(previous))
+                            or previous.stop_requested_at is not None
                             or previous.lease_owner is not None or previous.retention_until <= occurred_at
                             or _native_guard is None
                             or _native_guard.resume_work.spec.sha256 != previous.spec.sha256):
@@ -543,6 +545,109 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             record_admission_destination(connection, self.scope, spec=spec,
                 destination=delivery_destination, occurred_at=occurred_at, existing=False)
         return DelegatedWorkAdmission("inserted", loaded)
+
+    def retire_one_unstarted_native(self, *, release, owner_principal_id,
+            principal_binding_id, now):
+        """Retire one obsolete native admission, retaining its immutable no-call proof.
+
+        Selection is independent of the old deadline/release claim filter. A crash
+        after retirement is recoverable through the same terminal row next time.
+        Started work and uncertain leases are deliberately excluded.
+        """
+        c = delegated_work_runs.c
+        successor = delegated_work_runs.alias("native_successor")
+        mismatch = sa.and_(c.spec_payload["worker_program_sha256"].as_string() != release.worker_program_sha256,
+            *(c.spec_payload[name].as_string() == getattr(release, name)
+              for name in ("worker_profile_release_sha256", "model_profile_release_sha256",
+                           "engine_release_sha256", "output_schema_sha256")))
+        with self._engine.begin() as conn:
+            self._scope(conn)
+            row = conn.execute(sa.select(delegated_work_runs).where(
+                c.tenant_id == self.scope.tenant_id, c.installation_id == self.scope.installation_id,
+                c.spec_payload["contract"].as_string() == "DelegatedInitiativeDigitalWork/v1",
+                c.owner_principal_id == owner_principal_id,
+                c.principal_binding_id == principal_binding_id,
+                sa.or_(c.state == "admitted", sa.and_(c.state == "needs_help",
+                    c.error_code == "unstarted_profile_superseded")),
+                c.claim_count == 0, c.call_id.is_(None), c.call_started_at.is_(None),
+                c.lease_owner.is_(None), c.lease_expires_at.is_(None),
+                c.stop_requested_at.is_(None), c.retention_until > now, mismatch,
+                ~sa.exists(sa.select(1).where(
+                    successor.c.tenant_id == c.tenant_id,
+                    successor.c.installation_id == c.installation_id,
+                    successor.c.parent_task_id == c.work_id)),
+            ).order_by(c.created_at, c.work_id).with_for_update(
+                of=delegated_work_runs, skip_locked=True).limit(1)).mappings().one_or_none()
+            if row is None:
+                return None
+            work = self._validated(conn, row)
+            self._validate_owner_binding(conn, owner_principal_id=owner_principal_id,
+                principal_binding_id=principal_binding_id)
+            authority = self._initiative_authority_loader()
+            owner = authority.owner
+            if (owner._owner != owner_principal_id or owner._binding != principal_binding_id
+                    or owner._authority != self.scope):
+                raise DelegatedWorkConflict("native refresh owner authority differs")
+            owner._authorize(conn, now)
+            parent_query = owner._query().where(
+                operational_checkpoints.c.thread_id == work.spec.origin.thread_id)
+            # Queue-to-parent lock order also exists in claim_next. Never wait on
+            # a resume that already holds the parent and is waiting for this row.
+            parent = conn.execute(parent_query.with_for_update(
+                of=operational_checkpoints, skip_locked=True)).one_or_none()
+            if parent is None and conn.execute(parent_query).one_or_none() is not None:
+                return None  # Parent is busy; do not confuse a lock with deletion.
+            events = authority.timeline.events(work.spec.origin.thread_id) if parent is not None else ()
+            event = events[-1] if events else None
+            data = {} if event is None else event.payload.get("data", {})
+            expected_phase = "initiative_work_waiting" if work.state == "admitted" else "initiative_blocked"
+            current = (parent is not None and parent.phase == expected_phase
+                and event is not None and event.sequence == parent.revision
+                and canonical_sha256(event.payload) == event.payload_sha256
+                and data.get("work_id") == work.spec.work_id
+                and data.get("spec_sha256") == work.spec.sha256)
+            PostgresOperationalTimeline(self._engine, self.scope)._scope(conn)
+            if not current:
+                if work.state == "admitted":
+                    self._mark_needs_help(conn, work, now=now,
+                        error_code="unstarted_profile_refresh_withdrawn", settle_parent=False)
+                else:
+                    self._withdraw_unstarted_refresh(conn, work, now=now)
+                return None
+            if work.state == "admitted":
+                self._mark_needs_help(conn, work, now=now,
+                    error_code="unstarted_profile_superseded")
+                work = self._load_locked(conn, work.spec.work_id)
+            if not unstarted_profile_refresh(work):
+                raise DelegatedWorkConflict("profile refresh lacks its unstarted evidence")
+            return work
+
+    def withdraw_unstarted_refresh(self, work, *, now):
+        """A denied refresh must not starve ordinary initiative reviews forever."""
+        with self._engine.begin() as conn:
+            self._scope(conn)
+            current = self._load_terminal_locked(conn, work_id=work.spec.work_id,
+                missing_message="native refresh source absent")
+            if current.spec.sha256 != work.spec.sha256:
+                raise DelegatedWorkConflict("native refresh source changed")
+            if current.state == "needs_help" and current.error_code == "unstarted_profile_refresh_withdrawn":
+                return  # Concurrent refusal already recorded this same immutable source.
+            self._withdraw_unstarted_refresh(conn, current, now=now)
+
+    def _withdraw_unstarted_refresh(self, conn, work, *, now):
+        if not unstarted_profile_refresh(work):
+            raise DelegatedWorkConflict("only proven unstarted refresh may be withdrawn")
+        c = delegated_work_runs.c
+        successor = delegated_work_runs.alias("refresh_successor")
+        conn.execute(sa.update(delegated_work_runs).where(
+            c.tenant_id == self.scope.tenant_id, c.installation_id == self.scope.installation_id,
+            c.work_id == work.spec.work_id, c.revision == work.revision,
+            ~sa.exists(sa.select(1).where(successor.c.tenant_id == c.tenant_id,
+                successor.c.installation_id == c.installation_id,
+                successor.c.parent_task_id == c.work_id)),
+        ).values(error_code="unstarted_profile_refresh_withdrawn",
+            error_fingerprint=bytes.fromhex(canonical_sha256({"error": "unstarted_profile_refresh_withdrawn"})),
+            revision=work.revision + 1, updated_at=now))
 
     def claim_next(
         self,
@@ -1496,6 +1601,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         *,
         now: datetime,
         error_code: str,
+        settle_parent: bool = True,
     ) -> None:
         fingerprint = canonical_sha256({"error": error_code})
         work_result = connection.execute(
@@ -1521,7 +1627,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         )
         if work_result.rowcount != 1:
             raise DelegatedWorkConflict("delegated work help transition raced")
-        self._settle_native(connection, work.spec, state="needs_help", now=now)
+        if settle_parent:
+            self._settle_native(connection, work.spec, state="needs_help", now=now)
 
     def _validate_owner_binding(
         self,

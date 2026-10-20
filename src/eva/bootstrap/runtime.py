@@ -1812,7 +1812,16 @@ def create_runtime_app() -> FastAPI:
     if delegated_work_service is not None:
         from eva.adapters.postgres.scheduled_work import ScheduledOwnerWork
         scheduled_work = ScheduledOwnerWork(delegated_work_service)
-        service_tasks = (scheduled_work.run_once, *service_tasks)
+        from eva.bootstrap.native_initiative_work import refresh_one_unstarted_native
+
+        def refresh_one_native_admission():
+            # Deterministic queue maintenance must run even while pending work
+            # intentionally closes the optional model/idle capacity gate.
+            if not settings.background_work_enabled:
+                return "idle"
+            return refresh_one_unstarted_native(delegated_work_service)
+
+        service_tasks = (refresh_one_native_admission, scheduled_work.run_once, *service_tasks)
     if household_work_server is not None and getattr(household_work_server.authority, "digital_profile", None) is not None:
         from eva.bootstrap.household_work_corrections import HouseholdScheduledWork
         household_schedules = HouseholdScheduledWork(household_work_server)

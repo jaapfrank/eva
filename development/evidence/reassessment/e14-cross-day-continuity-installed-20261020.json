@@ -1,0 +1,113 @@
+{
+  "contract": "EvaCrossDayContinuityInstalled/v1",
+  "taskId": "E1.4",
+  "checkedAt": "2026-10-20T13:28:55.822181+00:00",
+  "state": "installed_partial",
+  "technicalTaskCompleted": false,
+  "ownerAcceptance": false,
+  "existingReused": [
+    "Durable personal interests and next attention",
+    "Owner-bound native digital work queue and immutable resume generations",
+    "Existing deterministic service tasks and optional model idle lane",
+    "Existing accounted research and native public disclosure adapter"
+  ],
+  "diagnosis": [
+    "A real self-chosen follow-up on the next calendar day was admitted under obsolete source pins and remained unclaimed, even after its deadline.",
+    "Core and worker initially had different program source hashes.",
+    "Placing queue maintenance behind the idle gate deadlocked it against pending work; this was corrected in the existing service lane.",
+    "The actual follow-up then selected public research, but background research incorrectly always composed the ordinary-owner adapter. Exact error fingerprint matched that refusal before research dispatch."
+  ],
+  "changes": [
+    "Retain original spec and proven no-dispatch state; create exactly one current-program generation under unchanged logical profile, mandate, grant, source and execution.",
+    "Exclude started, claimed, uncertain, stopped, expired-retention and incompatible-profile work from automatic refresh.",
+    "Withdraw refused/stopped/superseded no-call refresh markers so they do not permanently starve later reviews.",
+    "Run deterministic maintenance in the existing service lane, respecting disabled background work.",
+    "Select the existing native research adapter only with a checked native context, preserving public projection, accounting, receipt and stop checks.",
+    "Include background research implementation in program source pins; install core and worker with equal release selectors and execution pins."
+  ],
+  "realRuntime": {
+    "dayOne": "2026-10-19",
+    "dayOneCompletedAt": "2026-10-19T08:01:55Z",
+    "dayTwoSelfChosenAt": "2026-10-20T09:43:01Z",
+    "dayTwoOriginalAdmissionAt": "2026-10-20T09:50:38Z",
+    "hostRefreshAt": "2026-10-20T13:19:04Z",
+    "developerSelectedTopic": false,
+    "originalSpecUnchanged": true,
+    "originalClaimCount": 0,
+    "refreshedGeneration": 2,
+    "refreshedAttemptState": "ambiguous",
+    "refreshedAttemptError": "internal_error",
+    "exactMatchedCause": "ConversationConflict:owner research continuation requires an ordinary turn",
+    "researchDispatches": 0,
+    "storedSuccessfulFollowup": false,
+    "ambiguousAttemptRewrittenOrRepeated": false,
+    "sourceChainPrivateEvidenceSha256": "01fce94773f86dd6aed615bb5c0632fce912433577b740aefb8747338ce5a487",
+    "failureFingerprintEvidenceSha256": "00d8b3e98a0fad386286178327eb4ab8bcb601fb4e933c64aef765c8ad63a55d"
+  },
+  "installed": {
+    "coreImage": "sha256:51cfe1ec8de436e8c86feb7b33a6da2672f6add3aa213a6b986028d36011bad3",
+    "workerImage": "sha256:e67a14cb8d996c4dfd96dae47401b3013ab47b5e343f7003affd2ee303afefbc",
+    "release": {
+      "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+      "model_profile_release_sha256": "9e5080ecc5bcc5ca26df9174fc6796d75beb966a58b1c167586d7efc675b8ff7",
+      "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7",
+      "worker_profile_release_sha256": "7b26d8da7d93c740b179b87b27148a56b31e312f047a2f89974858d4b41f1be4",
+      "worker_program_sha256": "1add0f679a3086ee4eb3fec03f1b383ba3b7e4f092595f0e4937b5fb7039c0dd"
+    },
+    "equalInstalledReleaseSelectors": true,
+    "equalInstalledExecutionPins": true,
+    "changedServices": [
+      "core",
+      "delegated-work-worker"
+    ],
+    "voiceCodeChanged": false,
+    "mandateBytesChanged": false,
+    "receiptSha256": "1788167821e601c4bf6e0da6d89212ed0bff01479685a957286ea8c5bf628cd3"
+  },
+  "verification": {
+    "nativeAndExistingResumeTests": {
+      "passed": 75,
+      "providerCalls": 0
+    },
+    "finalNativeRouteTests": {
+      "passed": 14,
+      "providerCalls": 0
+    },
+    "existingOwnerResearchRegressionTests": {
+      "passed": 8,
+      "providerCalls": 0
+    },
+    "review": "development/reviews/e14-cross-day-continuity-review-20261020.json",
+    "reviewDecision": "GO",
+    "earlierFindingsAndFailedPreparationsPreserved": true,
+    "familyAcceptanceNotInferred": true
+  },
+  "usage": {
+    "runtimeFollowup": {
+      "contract": "DelegatedWorkUsage/v1",
+      "tool_calls": 0,
+      "measurement": "partial",
+      "input_tokens": 11270,
+      "total_tokens": 11570,
+      "output_tokens": 300,
+      "schema_version": 1,
+      "cost_usd_micros": null,
+      "completed_model_responses": 1
+    },
+    "runtimeReportedModelToolCalls": 1,
+    "runtimeObservedExternalDispatches": 0,
+    "codingAgentCredits": null,
+    "creditCost": null,
+    "isolatedProbeProviderCalls": 0
+  },
+  "remaining": [
+    "A successful real self-chosen follow-up through the repaired research route and later ordinary use of its outcome have not yet been observed.",
+    "Daily usefulness and owner/family acceptance remain in existing F2 assessment.",
+    "No autonomous rerun of the ambiguous attempt; preserve its uncertainty and original evidence."
+  ],
+  "limits": [
+    "This does not complete E1.4 or the whole project.",
+    "No new planner, goalstore, model judge, communications quota or example-specific rule.",
+    "No measured efficiency or quality advantage over Eva1/competitors is claimed."
+  ]
+}

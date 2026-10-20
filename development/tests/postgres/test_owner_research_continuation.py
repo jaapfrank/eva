@@ -28,6 +28,7 @@ USAGE = ConversationModelUsage.measured(model_attempts=1, tool_calls=1, input_to
 
 class Research:
     def __init__(self, fail=False): self.calls, self.fail = 0, fail
+    def native_research_timeout_seconds(self): return 55
     def research_configuration_sha256(self): return 'b'*64
     def research_request_payload(self, *, question, options, research_mode='comparison'):
         return {'question':question, 'options':list(options), 'mode':research_mode}

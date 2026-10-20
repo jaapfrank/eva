@@ -22,6 +22,7 @@ _ROOT = Path(__file__).resolve().parents[1]
 _SOURCES = (
     "contracts/delegated_work.py", "contracts/delegated_digital_work.py",
     "bootstrap/delegated_digital_profile.py", "bootstrap/household_work_corrections.py",
+    "bootstrap/background_research.py",
     "adapters/postgres/scheduled_work.py", "adapters/postgres/work_corrections.py",
     "application/background_execution.py", "application/initiative_execution.py",
     "adapters/postgres/initiative_execution.py", "bootstrap/native_initiative_work.py",

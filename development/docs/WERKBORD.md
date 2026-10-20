@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Snelle modulaire huisbediening via chat en spraak live opleveren
+Een blijvend eigen doel over dagen zelfstandig voortzetten
 
-Stille bediening live geleverd; bekende-opdrachtcache en oorspronkelijke snelheid blijven open.
+Geïnstalleerd: versievaste overdracht en juiste adapter voor eigen brononderzoek. Echt eigen vervolg over 19 en 20 oktober vastgesteld; één hervatte poging strandde vóór onderzoeksdispatch. Succesvol vervolg en later gebruik zijn nog niet bewezen.
 
-Klaar wanneer: E4.6–E4.10 zijn op de werkelijk actuele installatie geïntegreerd en onafhankelijk beoordeeld. Gelijke bekende toegelaten opdrachten werken via gewone chat en bestaande spraak met dezelfde module, identiteit, geheugen en bevoegdheden. In de vooraf vastgelegde proef voldoet chatontvangst tot verse HA-eindbevestiging aan mediaan maximaal 1 seconde en p95 maximaal 2 seconden bij een gereedstaande installatie; koude context en onbekende doelen worden afzonderlijk gerapporteerd. Spraak meet ook vanaf einde invoeraudio en vanaf herkende tekst. Een tussenreactie of service-ack vervangt geen eindbevestiging. Ruwe steekproef, fouten, context/cache, model-/toolgebruik en beperkingen blijven bewaard; niet gehaalde grenzen sluiten deze taak niet af. Installatie, bron/configuratie, herstelmogelijkheid en module-uitgedrag zijn gecontroleerd, zonder fysieke hoorbaarheid of gezinsacceptatie te verzinnen.
+Klaar wanneer: De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.
 
 ## Afmaakvolgorde
 
@@ -27,7 +27,7 @@ Klaar wanneer: E4.6–E4.10 zijn op de werkelijk actuele installatie geïntegree
 | Eigen initiatief | Context hersteld · dagelijks vervolg nog open | Zonder aansturing passende eigen activiteiten voortzetten, resultaat terugbrengen en later gebruiken; dagelijks nut blijft onbewezen. |
 | Zelfstandig werk | Werkend en geïnstalleerd · gezinsgebruik open | Bediening en afgebakende onderhoudsfase technisch afgerond. Samenhangend dagelijks gezinsgebruik en jouw acceptatie blijven F2.1/F2.2. |
 
-E5.1 blijft open: de echte nieuwe gewone afweging koos stilte. De geïnstalleerde zoekmogelijkheid is een technische verbetering, geen bewijs van zelfstandig dagelijks leven.
+E5.1 heeft beperkt oorspronkelijk technisch bewijs. E1.4 controleert nu werkelijk eigen vervolg over dagen; geïnstalleerd herstel en een begonnen taak zijn geen bewezen dagelijks meeleven.
 
 ## Alle geregistreerde kleine taken
 
@@ -129,7 +129,7 @@ E5.1 blijft open: de echte nieuwe gewone afweging koos stilte. De geïnstalleerd
 
 ## Van jou
 
-Voor E4.6 geen handeling of herhaalde proef nodig. Gebruik Eva normaal; het eigen WhatsApp-nummer blijft een afzonderlijke optionele keuze.
+Voor E1.4 hoef jij niets te doen. Codex moet het echte resultaat en latere gebruik nog vaststellen. Gebruik Eva gewoon; spraak blijft bij de andere uitvoerder.
 
 ## Historie
 

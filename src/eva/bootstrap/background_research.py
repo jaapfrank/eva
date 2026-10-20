@@ -62,14 +62,19 @@ class AccountedResearch:
 
 def task_research_tools(engine, model, *, turn, journal, authorize, grant, profile):
     """Keep the existing durable receipt, cancellation and no-replay machinery."""
-    from eva.adapters.model.research_tools import OwnerResearchContinuationTool
+    from eva.adapters.model.research_tools import NativeResearchTool, OwnerResearchContinuationTool
+    from eva.application.initiative_execution import require_initiative_context
     from eva.adapters.postgres.conversation_actions import PostgresConversationActions
     from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
 
     research = AccountedResearch(model, turn=turn, journal=journal, authorize=authorize,
         grant=grant, input_bound=profile.maximum_response_input_tokens,
         output_bound=profile.maximum_response_output_tokens)
-    adapter = OwnerResearchContinuationTool(research, PostgresConversationActions._validated_research_arguments)
+    # The same budget/journal serves both sources, but their disclosure policies
+    # differ. Never present a native initiative as an ordinary owner request.
+    adapter_type = (NativeResearchTool if require_initiative_context(turn) is not None
+                    else OwnerResearchContinuationTool)
+    adapter = adapter_type(research, PostgresConversationActions._validated_research_arguments)
     class TaskResearchTools(PostgresExternalConversationTools):
         # The generic orchestrator first persists its failed tool receipt. Surface
         # the original deadline before unknown usage can mask it as budget failure.

@@ -15,6 +15,7 @@ from eva.adapters.postgres.operational_timeline import (
 )
 from eva.application.conversation import ConversationConflict, ConversationTurn
 from eva.application.memory_audience import MemoryAudience
+from eva.application.initiative_execution import unstarted_profile_refresh
 from eva.contracts.canonical_json import canonical_sha256
 
 
@@ -339,7 +340,15 @@ class PostgresInitiativeAuthority:
                 if (prior is None or type(data.get("generation")) is not int
                         or data["generation"] != prior[1] + 1
                         or data.get("source_ingress_sha256") != spec.source_ingress_sha256
-                        or data.get("recovery_kind") != "explicit_private_owner_native_resume"
+                        or data.get("recovery_kind") not in {"explicit_private_owner_native_resume",
+                            "host_unstarted_profile_refresh"}
+                        or (data.get("recovery_kind") == "host_unstarted_profile_refresh"
+                            and (data.get("previous_mandate_sha256") != digest
+                                or data.get("unstarted_evidence_sha256") != canonical_sha256({
+                                    "work_id": data.get("previous_work_id"),
+                                    "spec_sha256": data.get("previous_spec_sha256"),
+                                    "claim_count": 0, "call_id": None, "call_started_at": None,
+                                    "error_code": "unstarted_profile_superseded"})))
                         or not isinstance(data.get("recovery_ingress_sha256"), str)
                         or re.fullmatch(r"[0-9a-f]{64}", data["recovery_ingress_sha256"]) is None):
                     continue
@@ -373,7 +382,8 @@ class PostgresInitiativeAuthority:
         from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
         if (type(previous.spec) is not DelegatedInitiativeDigitalWorkSpec
                 or type(spec) is not DelegatedInitiativeDigitalWorkSpec
-                or previous.state != "failed" or previous.stop_requested_at is not None
+                or (previous.state != "failed" and not unstarted_profile_refresh(previous))
+                or previous.stop_requested_at is not None
                 or previous.lease_owner is not None or previous.retention_until <= now
                 or spec.origin != previous.spec.origin or spec.source != previous.spec.source
                 or spec.source_ingress_sha256 != previous.spec.source_ingress_sha256
@@ -678,7 +688,8 @@ class NativeInitiativeGuard:
                     or outcome.event_type != "PERSONAL_INITIATIVE_BLOCKED"
                     or data.get("work_id") != previous.spec.work_id
                     or data.get("spec_sha256") != previous.spec.sha256
-                    or data.get("work_state") != "failed"
+                    or data.get("work_state") != previous.state
+                    or (previous.state != "failed" and not unstarted_profile_refresh(previous))
                     or data.get("delegated_usage") != (None if previous.usage is None else previous.usage.to_payload())
                     or self.authority._work_admission(events, previous.spec) is None):
                 raise InitiativeMandateDenied("native failure was stopped, superseded or is uncertain")

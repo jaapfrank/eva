@@ -13,7 +13,7 @@ from eva.adapters.postgres.conversation_journal import PostgresConversationJourn
 from eva.contracts.canonical_json import canonical_sha256
 
 
-from eva.application.initiative_execution import NativeInitiativeDelegation
+from eva.application.initiative_execution import NativeInitiativeDelegation, unstarted_profile_refresh
 
 
 def configured_initiative_authority(owner_store):
@@ -74,9 +74,9 @@ def admit_native_initiative(authority, claim, service):
     return NativeInitiativeDelegation(spec.work_id)
 
 
-def resume_native_initiative(service, previous, *, created, recovery_ingress_sha256,
-        recovery_conversation_id, recovery_message_id):
-    """Explicit owner recovery, retaining the original native execution namespace."""
+def resume_native_initiative(service, previous, *, created, recovery_ingress_sha256=None,
+        recovery_conversation_id=None, recovery_message_id=None, _profile_refresh=False):
+    """Retain the native namespace for explicit recovery or proven unstarted refresh."""
     import sqlalchemy as sa
     from eva.adapters.postgres.current_catalog import delegated_work_runs
     from eva.adapters.postgres.delegated_work import DelegatedWorkAdmission, DelegatedWorkConflict
@@ -100,6 +100,19 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
         raise InitiativeMandateDenied("native recovery requires its original typed source")
     _, mandate_sha = authority.policy()
     previous_mandate_sha = authority._work_mandate(old)
+    if _profile_refresh:
+        from eva.adapters.postgres.delegated_work import DelegatedWorkReleaseSelector
+        old_release = DelegatedWorkReleaseSelector.from_spec(old)
+        current_release = service.digital_profile.release
+        if (not unstarted_profile_refresh(previous) or mandate_sha != previous_mandate_sha
+                or old_release.worker_program_sha256 == current_release.worker_program_sha256
+                or any(getattr(old_release, name) != getattr(current_release, name) for name in (
+                    "worker_profile_release_sha256", "model_profile_release_sha256",
+                    "engine_release_sha256", "output_schema_sha256"))):
+            raise InitiativeMandateDenied("automatic refresh requires unstarted obsolete work under the same mandate")
+    elif not all(isinstance(v, str) and v for v in (
+            recovery_ingress_sha256, recovery_conversation_id, recovery_message_id)):
+        raise InitiativeMandateDenied("explicit native recovery requires its owner ingress")
     current_grant = authority.digital_grant(service.digital_profile)
     if not set(old.grant.capability_ids) <= set(current_grant.capability_ids):
         raise InitiativeMandateDenied("native recovery grant no longer authorized")
@@ -150,6 +163,8 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
             raise DelegatedWorkConflict("native previous attempt changed")
         if parse_utc_timestamp(spec.deadline) <= now:
             raise InitiativeMandateDenied("native recovery admission deadline expired")
+        if _profile_refresh and not unstarted_profile_refresh(current):
+            raise InitiativeMandateDenied("unstarted refresh evidence changed before admission")
         authority.timeline._scope(conn)
         guard, _ = authority.bind_resume_work(current, spec, now=now, _connection=conn)
         if guard.mandate_sha != mandate_sha:
@@ -170,11 +185,40 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
                 "generation": spec.generation,
                 "previous_work_id": old.work_id, "previous_spec_sha256": old.sha256,
                 "source_ingress_sha256": old.source_ingress_sha256,
-                "recovery_kind": "explicit_private_owner_native_resume",
-                "recovery_ingress_sha256": recovery_ingress_sha256,
+                "recovery_kind": ("host_unstarted_profile_refresh" if _profile_refresh
+                    else "explicit_private_owner_native_resume"),
+                **({"unstarted_evidence_sha256": canonical_sha256({
+                    "work_id": old.work_id, "spec_sha256": old.sha256,
+                    "claim_count": 0, "call_id": None, "call_started_at": None,
+                    "error_code": "unstarted_profile_superseded"})} if _profile_refresh else {}),
+                "recovery_ingress_sha256": (canonical_sha256({
+                    "work_id": old.work_id, "spec_sha256": old.sha256,
+                    "current_program_sha256": spec.worker_program_sha256})
+                    if _profile_refresh else recovery_ingress_sha256),
                 "recovery_conversation_id": recovery_conversation_id,
                 "recovery_message_id": recovery_message_id})
         return admission
+
+
+def refresh_one_unstarted_native(service):
+    """Existing idle-loop maintenance; no model call, new planner or owner ingress."""
+    if service is None or service.digital_profile is None:
+        return "idle"
+    previous = service.store.retire_one_unstarted_native(
+        release=service.digital_profile.release, owner_principal_id=service.owner_principal_id,
+        principal_binding_id=service.principal_binding_id, now=service.now())
+    if previous is None:
+        return "idle"
+    from eva.adapters.postgres.delegated_work import DelegatedWorkConflict
+    try:
+        admission = resume_native_initiative(service, previous, created=service.now(),
+            _profile_refresh=True)
+    except (InitiativeMandateDenied, DelegatedWorkConflict):
+        # No execution started. Preserve that fact without retrying a changed
+        # authority forever or preventing the next ordinary model review.
+        service.store.withdraw_unstarted_refresh(previous, now=service.now())
+        return "refresh_not_authorized"
+    return "profile_refreshed" if admission.disposition == "inserted" else "already_present"
 
 
 def subscription_initiative_available(authority, model):

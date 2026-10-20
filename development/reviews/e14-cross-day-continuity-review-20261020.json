@@ -1,0 +1,76 @@
+{
+  "reviewedAt": "2026-10-20T13:25:34.760303+00:00",
+  "reviewer": "e47_mcp_catalog",
+  "decision": "GO",
+  "scope": "Independent source review of root E1.4 delta against exact before snapshots; no source edits/deployment/model calls",
+  "sourceSha256": {
+    "src/eva/application/initiative_execution.py": "2a3b662f1bf560fe35b254f4e4e917f564354b13d183381fc964a317eb30a691",
+    "src/eva/adapters/postgres/delegated_work.py": "94b3c93f02c20e5e43a4752fa0458fb9a4ff37833e4d81e19033f3ae5f172e57",
+    "src/eva/adapters/postgres/initiative_execution.py": "62c218b720c75a0720e51c09019456ddbab0aa4551257f077e694adee0044182",
+    "src/eva/bootstrap/native_initiative_work.py": "273393636b2586d776e39e7819e6085af161fc92287cf2156880ead64109c7f8",
+    "src/eva/bootstrap/runtime.py": "359aa94d88133b431711c0c27a7d47bdd976fdb24429524c7707f67a5b4178c1",
+    "development/tests/postgres/test_native_initiative_profile_refresh.py": "c9b7e906237a67c2523a81bd72983d7d64a6ea9e5ee4b2ec0d0cd579c2b6e50e",
+    "src/eva/bootstrap/background_research.py": "eb1afeae33c8ec89fe5f232f14e9b43fdd81d7775816920be4c9835ec0d7f5e3",
+    "src/eva/bootstrap/delegated_digital_profile.py": "f1e10aac4db06dd8fe55a1d97697a661da98ec8c54e5debdf36a2396e001e4a7"
+  },
+  "blockingFindings": [],
+  "resolvedFindings": [
+    {
+      "id": "R1",
+      "resolution": "Automatic selection now program-only; exact current parent receipt checked with nonblocking parent lock. Stopped/superseded queue withdrawn without changing parent; denied retired refresh durably excluded so ordinary review progresses."
+    },
+    {
+      "id": "N1",
+      "resolution": "Direct host refresh now independently enforces unchanged four logical release hashes plus changed worker program."
+    },
+    {
+      "id": "N2",
+      "resolution": "Same-spec already-withdrawn marker is idempotently accepted in public withdrawal; concurrent denials cannot rethrow solely because first withdrew it."
+    },
+    {
+      "id": "I1",
+      "resolution": "Composition now attaches maintenance to existing service_tasks before scheduled work, outside idle_capacity_available gating. Pending native work therefore no longer blocks its own release refresh. Added real _run_services regression with idle_capacity=False."
+    },
+    {
+      "id": "I2",
+      "resolution": "Background research composition now chooses NativeResearchTool only from require_initiative_context live checked host guard; ordinary turns retain OwnerResearchContinuationTool. Existing submitted-input disclosure rules, AccountedResearch journal/budget, cancellation and receipt/readback are reused. Changed bridge added to existing execution source pins."
+    }
+  ],
+  "checks": [
+    "Original task/source/grant/execution identity and old spec bytes preserved in successor chain.",
+    "Strict claimcount0/callnull/startnull/leasenull/stopnull/resultnull/usagenull required; failed/ambiguous/started work not auto-replayed.",
+    "Fresh ownerbinding and current native authority checked; same mandate and current capability grant required before automatic successor.",
+    "Parent lock uses SKIP LOCKED and independent existence read; a busy parent is not misclassified as absent.",
+    "Existing native explicit recovery kind and chain remain supported, new host refresh is separately identified.",
+    "CAS withdrawal excludes existing successor; old retired rows cannot spawn repeated successors.",
+    "Existing deterministic service lane reused outside optional idle-capacity gate; background_work_enabled still gates maintenance; no added service thread, planner, model call or external effect.",
+    "All six reviewed Python sources parse."
+  ],
+  "nonBlockingNotes": [],
+  "testsRunByReviewer": [],
+  "validationLimitations": [
+    "Root owns targeted database tests and current-image deployment verification; this is a source review, not evidence of installation or household acceptance.",
+    "Review hashes include existing peer code; evaluated changes are root delta against before snapshots only."
+  ],
+  "runtimeModelCalls": 0,
+  "integrationReview": {
+    "beforeRuntimeSha256": "13ff43e27745f17f5c863879011f14ebb7ab83786c7239ea392e3904a8994459",
+    "firstInstalledRuntimeSha256": "a1899ce665ae576d7d466d32c18c49c50097596868d6fc2bfe6ea744d98e96dc",
+    "currentRuntimeSha256": "359aa94d88133b431711c0c27a7d47bdd976fdb24429524c7707f67a5b4178c1",
+    "scope": "Narrow service-lane composition delta and added regression source only; no additional tests/deploy performed."
+  },
+  "researchSeamReview": {
+    "beforeSha256": {
+      "src/eva/bootstrap/background_research.py": "a71afbac8bab6fb505b50593d568c4552cb114080495df51acce9c8fa9442179",
+      "src/eva/bootstrap/delegated_digital_profile.py": "4fa279f15560e18e83bed5e2642d2a049c46c26f0e464f4999f48c3f9bd5f3f3"
+    },
+    "checks": [
+      "Actual delegated runner enters native context before task_research_tools; require_initiative_context rejects missing native guard or initiative guard on ordinary user turn.",
+      "NativeResearchTool validates native context and public projection for the existing required public_review schema; ordinary adapter semantics remain unchanged.",
+      "Existing AccountedResearch budget and exact journal no-replay flow unchanged.",
+      "New synthetic regression checks native adapter selection, public_unlinked receipt and uncertain/not-reviewed rejection without provider execution.",
+      "No old ambiguous attempt rewritten or retried by these source deltas."
+    ],
+    "limitation": "Source seam correction and synthetic regression are not a completed autonomous cross-day followup; E1.4 remains open absent actual successful execution."
+  }
+}

@@ -54,3 +54,17 @@ def authorize_initiative_action(turn: ConversationTurn, name: str) -> None:
 class NativeInitiativeDelegation:
     """Host queue receipt, never a completed native reply."""
     work_id: str
+
+
+def unstarted_profile_refresh(work) -> bool:
+    """Host evidence for a retired admission that never crossed a call boundary.
+
+    This is not a retry policy for failed, uncertain, stopped or leased work.
+    The immutable queue row remains the source of the zero-dispatch evidence.
+    """
+    from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+    return (type(work.spec) is DelegatedInitiativeDigitalWorkSpec
+        and work.state == "needs_help" and work.error_code == "unstarted_profile_superseded"
+        and work.claim_count == 0 and work.call_id is None and work.call_started_at is None
+        and work.lease_owner is None and work.lease_expires_at is None
+        and work.stop_requested_at is None and work.result is None and work.usage is None)
