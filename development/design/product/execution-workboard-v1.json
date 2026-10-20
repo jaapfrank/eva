@@ -6988,9 +6988,9 @@
                   "scope": "Technisch geïnstalleerd, werkelijk gebruikt en onafhankelijk beoordeeld binnen de oorspronkelijke kaartcriteria. Hoofdwerk en gezinsacceptatie behouden."
                 },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
-                "checkedAt": "2026-10-20T15:47:05.869268+00:00",
+                "checkedAt": "2026-10-20T16:02:01.946869+00:00",
                 "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
-                "technicalCompletedAt": "2026-10-20T15:47:05.869268+00:00",
+                "technicalCompletedAt": "2026-10-20T16:02:01.946869+00:00",
                 "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json",
                 "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
                 "findings": [
@@ -7042,9 +7042,9 @@
                   "scope": "Technisch geïnstalleerd, werkelijk gebruikt en onafhankelijk beoordeeld binnen de oorspronkelijke kaartcriteria. Hoofdwerk en gezinsacceptatie behouden."
                 },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
-                "checkedAt": "2026-10-20T15:47:05.869268+00:00",
+                "checkedAt": "2026-10-20T16:02:01.946869+00:00",
                 "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
-                "technicalCompletedAt": "2026-10-20T15:47:05.869268+00:00",
+                "technicalCompletedAt": "2026-10-20T16:02:01.946869+00:00",
                 "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json",
                 "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
                 "findings": [
@@ -7689,7 +7689,7 @@
                   "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                   "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
                 ],
-                "nextAction": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.904s,p951.581s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
+                "nextAction": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.878s,p951.107s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
                 "status": "completed",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -7708,7 +7708,7 @@
                   "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                   "ownerAcceptance": false
                 },
-                "checkedAt": "2026-10-20T15:47:05.869268+00:00",
+                "checkedAt": "2026-10-20T16:02:01.946869+00:00",
                 "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
                 "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
                 "findings": [
@@ -7726,12 +7726,12 @@
                   },
                   {
                     "source": "development/evidence/product/e52-warm-route-20261020.json",
-                    "finding": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.904s,p951.581s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
+                    "finding": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.878s,p951.107s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
                     "blocksOriginalE51": false,
                     "newTaskCreated": false
                   }
                 ],
-                "technicalCompletedAt": "2026-10-20T15:47:05.869268+00:00",
+                "technicalCompletedAt": "2026-10-20T16:02:01.946869+00:00",
                 "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json"
               }
             ],
@@ -12055,9 +12055,9 @@
                 "scope": "Technisch geïnstalleerd, werkelijk gebruikt en onafhankelijk beoordeeld binnen de oorspronkelijke kaartcriteria. Hoofdwerk en gezinsacceptatie behouden."
               },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
-              "checkedAt": "2026-10-20T15:47:05.869268+00:00",
+              "checkedAt": "2026-10-20T16:02:01.946869+00:00",
               "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
-              "technicalCompletedAt": "2026-10-20T15:47:05.869268+00:00",
+              "technicalCompletedAt": "2026-10-20T16:02:01.946869+00:00",
               "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json",
               "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
               "findings": [
@@ -12109,9 +12109,9 @@
                 "scope": "Technisch geïnstalleerd, werkelijk gebruikt en onafhankelijk beoordeeld binnen de oorspronkelijke kaartcriteria. Hoofdwerk en gezinsacceptatie behouden."
               },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
-              "checkedAt": "2026-10-20T15:47:05.869268+00:00",
+              "checkedAt": "2026-10-20T16:02:01.946869+00:00",
               "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
-              "technicalCompletedAt": "2026-10-20T15:47:05.869268+00:00",
+              "technicalCompletedAt": "2026-10-20T16:02:01.946869+00:00",
               "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json",
               "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
               "findings": [
@@ -12756,7 +12756,7 @@
                 "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                 "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
               ],
-              "nextAction": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.904s,p951.581s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
+              "nextAction": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.878s,p951.107s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
               "status": "completed",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -12775,7 +12775,7 @@
                 "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                 "ownerAcceptance": false
               },
-              "checkedAt": "2026-10-20T15:47:05.869268+00:00",
+              "checkedAt": "2026-10-20T16:02:01.946869+00:00",
               "progressEvidence": "development/evidence/product/e52-warm-route-20261020.json",
               "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
               "findings": [
@@ -12793,12 +12793,12 @@
                 },
                 {
                   "source": "development/evidence/product/e52-warm-route-20261020.json",
-                  "finding": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.904s,p951.581s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
+                  "finding": "Op de actuele installatie voldoen20vooraf bepaalde warme bekende chatopdrachten:mediaan0.878s,p951.107s,20verse nulmodeluitvoeringen. Bestaande spraakroute apart gemeten; eerdere failures, coldinterpretaties en ASRmisses behouden. Geen fysieke of gezinsacceptatieclaim.",
                   "blocksOriginalE51": false,
                   "newTaskCreated": false
                 }
               ],
-              "technicalCompletedAt": "2026-10-20T15:47:05.869268+00:00",
+              "technicalCompletedAt": "2026-10-20T16:02:01.946869+00:00",
               "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json"
             }
           ],

@@ -1,7 +1,7 @@
 {
   "contract": "EvaIndependentDeliveryReview/v1",
   "reviewer": "/root/review_cursor",
-  "reviewedAt": "2026-10-20T15:47:05.611043+00:00",
+  "reviewedAt": "2026-10-20T16:02:01.857807+00:00",
   "verdict": "GO_E4_9_E4_10_E5_2_technical",
   "taskIds": [
     "E4.9",
@@ -14,27 +14,71 @@
     "c165107477df2ff13206d3a21591e69fb7b78c84"
   ],
   "evidence": "development/evidence/product/e52-warm-route-20261020.json",
-  "reviewedDraftEvidenceSha256": "6df41379b269fee6adb46478579b2914434ef36995b9f5c9b973a534af199ccb",
-  "finalEvidenceSha256": "9cfbb54ed740a48fc6e7ebc61c6d78fa8d37bf572fe102b7750b52069df47daf",
+  "reviewedDraftEvidenceSha256": "0545adf384742c070dd039db7fe1c1d6ef5bef21b43c38450711f8e0892e0ce1",
+  "finalEvidenceSha256": "e2372af246d6b767709629f247b76288f64c4c5fe6bdfa0a5cb556c98d0a051a",
   "confirmed": [
     "Existing optional HA module owns target validation, MCP effect and independent current readback through the ordinary durable executor. No provider-specific core router.",
-    "Original known warm-chat criterion met on actual final source:20/20fresh zero-model operations, median904.438ms and nearest-rankp951580.972ms. Earlier failed20-sample round and cold/ASRmisses retained.",
+    "Original known warm-chat criterion met on actual final source:20/20fresh zero-model operations, median878.4515ms and nearest-rankp951107.45ms. Earlier failed20-sample round and cold/ASRmisses retained.",
     "Same module and existing native speech route verified; exact repeats retain source/proof/authority and silent completion. No physical microphone/playback claim.",
     "Shared identity/context and lazy recall retained. Actual installed model selected scoped memory before routine/correction effects, clarified missing references, kept private/householdscope and omitted recall for direct control in6declared componentcases.",
     "Component fixtures and restricted offered toolset are explicit; real normal HTTP question used actual memory/source-bound reply. No scripted model choices.",
     "Current10optional-module checks on final source, original E4.6 evidence and review explicitly bound.",
     "Actual index0011 installed with driftcheck, known0010/0011workercompatibility, source/configuration/idleclaim guards and prepared compatible recovery.",
-    "Exact cleanup completed87ownsynthetic exchanges,15native storage/raw/outbox/semantic sources absent;204original owner hashes and all scoped nonfixture guards preserved. Outdooroff and17automations unchanged."
+    "Exact cleanup completed116ownsynthetic exchanges,21native storage/raw/outbox/semantic sources absent;204original owner hashes and all scoped nonfixture guards preserved. Outdooroff and17automations unchanged.",
+    "Latest peer-integrated766/40e independently revalidated. New current_contact_context fixture branch, real scoped reader call and separately inferred observed HTTP branch are explicit.116exact ownsynthetic sources erased; the one prior nativeharnessfailure and unknown audible content are retained."
   ],
   "limits": [
-    "Exact retained standalone commands only; relevant context/source/authority changes, erasure, questions and different recognized text may require interpretation again.",
-    "Final first chat interpretations took7.407/9.193s to receipt. First native interpretations took7.534/7.293s from audio end; different ASR text stayed a real miss.",
-    "Final repeated native controls took2.833–2.897s from input end and0.913–1.046s from recognized request to verified event. These were off commands already in the requested state; actual chat toggled on/off.",
-    "Weather question produced a final reply in the same native session; first PCM was a thinking bridge, not proof of the final answer or HA completion.",
-    "Physical microphone/playback, all phrasing/devices, owner acceptance and the household week are not claimed.",
-    "Application recovery images/configuration prepared and compatible workers checked; no production rollback/reboot was executed."
+    "Known exact retained standalone commands only; context/source/authority/erasure/recognition changes can require interpretation again.",
+    "Latest first chat interpretations remain separately reported in chatFinal.samples; no general cold<=2s claim. Latest first native unseen recognition took10.216s from audio end.",
+    "Latest3exact native reuse samples took2.634–2.748s from audio end and0.902–1.225s from recognized request; off was already requested state. Actual chat toggled on/off.",
+    "Normal latest authenticated memory question took10.169s and used an actual source-bound reply. The new current typed-source reader was separately invoked successfully without a model or semantic recall; ordinary deferred HTTP branch was observed.",
+    "One additional native harness failure is retained with missing resultJSON and canonical ledger recovery. The reconstructed ledger alone does not establish audible content.",
+    "Current6modelcomponent cases use fixture memory/current-context and blocked effects with a restricted offered toolset. No universal model-reliability claim.",
+    "Physical microphone/playback, all devices/phrasing, owner or familyacceptance, production rollback and reboot are not claimed."
   ],
   "criterionChanged": false,
   "originalEndConditionsPreserved": true,
-  "wholeProjectComplete": false
+  "wholeProjectComplete": false,
+  "priorIndependentReview": {
+    "contract": "EvaIndependentDeliveryReview/v1",
+    "reviewer": "/root/review_cursor",
+    "reviewedAt": "2026-10-20T15:47:05.611043+00:00",
+    "verdict": "GO_E4_9_E4_10_E5_2_technical",
+    "taskIds": [
+      "E4.9",
+      "E4.10",
+      "E5.2"
+    ],
+    "sourceCommits": [
+      "846de4380c89af184247dc08aa128e69fe47d0ff",
+      "7b32fab976818e2989b936ec1ff58b3de05547f0",
+      "c165107477df2ff13206d3a21591e69fb7b78c84"
+    ],
+    "evidence": "development/evidence/product/e52-warm-route-20261020.json",
+    "reviewedDraftEvidenceSha256": "6df41379b269fee6adb46478579b2914434ef36995b9f5c9b973a534af199ccb",
+    "finalEvidenceSha256": "9cfbb54ed740a48fc6e7ebc61c6d78fa8d37bf572fe102b7750b52069df47daf",
+    "confirmed": [
+      "Existing optional HA module owns target validation, MCP effect and independent current readback through the ordinary durable executor. No provider-specific core router.",
+      "Original known warm-chat criterion met on actual final source:20/20fresh zero-model operations, median904.438ms and nearest-rankp951580.972ms. Earlier failed20-sample round and cold/ASRmisses retained.",
+      "Same module and existing native speech route verified; exact repeats retain source/proof/authority and silent completion. No physical microphone/playback claim.",
+      "Shared identity/context and lazy recall retained. Actual installed model selected scoped memory before routine/correction effects, clarified missing references, kept private/householdscope and omitted recall for direct control in6declared componentcases.",
+      "Component fixtures and restricted offered toolset are explicit; real normal HTTP question used actual memory/source-bound reply. No scripted model choices.",
+      "Current10optional-module checks on final source, original E4.6 evidence and review explicitly bound.",
+      "Actual index0011 installed with driftcheck, known0010/0011workercompatibility, source/configuration/idleclaim guards and prepared compatible recovery.",
+      "Exact cleanup completed87ownsynthetic exchanges,15native storage/raw/outbox/semantic sources absent;204original owner hashes and all scoped nonfixture guards preserved. Outdooroff and17automations unchanged."
+    ],
+    "limits": [
+      "Exact retained standalone commands only; relevant context/source/authority changes, erasure, questions and different recognized text may require interpretation again.",
+      "Final first chat interpretations took7.407/9.193s to receipt. First native interpretations took7.534/7.293s from audio end; different ASR text stayed a real miss.",
+      "Final repeated native controls took2.833–2.897s from input end and0.913–1.046s from recognized request to verified event. These were off commands already in the requested state; actual chat toggled on/off.",
+      "Weather question produced a final reply in the same native session; first PCM was a thinking bridge, not proof of the final answer or HA completion.",
+      "Physical microphone/playback, all phrasing/devices, owner acceptance and the household week are not claimed.",
+      "Application recovery images/configuration prepared and compatible workers checked; no production rollback/reboot was executed."
+    ],
+    "criterionChanged": false,
+    "originalEndConditionsPreserved": true,
+    "wholeProjectComplete": false
+  },
+  "latestValidatedCoreImage": "sha256:76648df990aafe70b446441b46e2d89f3e811ab637472426fca7fa31f8a55ed2",
+  "latestValidatedWorkerImage": "sha256:40e0d5ce2c1db7085c78fe81e229359977f8a0115c2ee74a2d2270acf2f28719"
 }

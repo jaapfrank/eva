@@ -406,7 +406,7 @@
     }
   ],
   "speedSampleMet": true,
-  "remaining": "Geen open technische voorwaarde binnen deze drie kaarten. Fysiek microfoon/speakergebruik, algemene coldcommand-snelheid en gezinsacceptatie zijn hiermee niet geclaimd.",
+  "remaining": "Geen open technische voorwaarde binnen deze drie kaarten na controle op de actuele gedeelde installatie. Coldopdrachten, fysieke spraak en gezinsacceptatie zijn geen algemene snelheidsclaim.",
   "contextCorrection": {
     "observed": "Only entityregistry media_player modified_at and refreshgeneration changed; complete raw context retained privately.",
     "change": "Exclude only refreshgeneration and top-level entity modified_at from comparison; retain raw rows, allothercontent/account/epoch/fences.",
@@ -470,8 +470,526 @@
     "harness_final_assertion": "Expected exactly two reads; actual state propagation required one extra read for first action. All raw observations retained; verification only, no effect rerun.",
     "http_benchmark": false
   },
-  "checkedAt": "2026-10-20T15:42:59.692202+00:00",
+  "checkedAt": "2026-10-20T16:00:55.192850+00:00",
   "chatFinal": {
+    "samples": [
+      {
+        "label": "latest-train-on",
+        "receipt_ms": 6089.843,
+        "final_ms": 6229.745,
+        "reuse": false
+      },
+      {
+        "label": "latest-train-off",
+        "receipt_ms": 5217.025,
+        "final_ms": 5352.367,
+        "reuse": false
+      },
+      {
+        "label": "latest-warm-01",
+        "receipt_ms": 1034.948,
+        "final_ms": 1065.029,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-02",
+        "receipt_ms": 787.27,
+        "final_ms": 827.092,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-03",
+        "receipt_ms": 1136.419,
+        "final_ms": 1189.371,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-04",
+        "receipt_ms": 818.564,
+        "final_ms": 853.999,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-05",
+        "receipt_ms": 909.084,
+        "final_ms": 932.427,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-06",
+        "receipt_ms": 783.024,
+        "final_ms": 811.379,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-07",
+        "receipt_ms": 1040.943,
+        "final_ms": 1088.538,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-08",
+        "receipt_ms": 786.906,
+        "final_ms": 812.822,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-09",
+        "receipt_ms": 735.501,
+        "final_ms": 763.841,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-10",
+        "receipt_ms": 754.405,
+        "final_ms": 793.155,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-11",
+        "receipt_ms": 999.986,
+        "final_ms": 1024.681,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-12",
+        "receipt_ms": 765.166,
+        "final_ms": 794.068,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-13",
+        "receipt_ms": 1107.45,
+        "final_ms": 1138.362,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-14",
+        "receipt_ms": 713.677,
+        "final_ms": 741.556,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-15",
+        "receipt_ms": 1049.544,
+        "final_ms": 1097.454,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-16",
+        "receipt_ms": 779.13,
+        "final_ms": 852.195,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-17",
+        "receipt_ms": 956.797,
+        "final_ms": 984.792,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-18",
+        "receipt_ms": 847.819,
+        "final_ms": 884.318,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-19",
+        "receipt_ms": 983.359,
+        "final_ms": 1015.647,
+        "reuse": true
+      },
+      {
+        "label": "latest-warm-20",
+        "receipt_ms": 1031.476,
+        "final_ms": 1074.931,
+        "reuse": true
+      }
+    ],
+    "median_ms": 878.4515,
+    "p95_ms": 1107.45,
+    "hits": 20,
+    "all20_target_met": true
+  },
+  "nativeVoiceFinal": {
+    "label": "native-post-peer-five",
+    "samples": [
+      {
+        "input_index": 0,
+        "input_end_to_verified_event_ms": 10216.486,
+        "recognized_request_to_verified_event_ms": 8605.122,
+        "reused": false,
+        "silent": true,
+        "thinking_bridges": 0,
+        "same_as_previous_recognized_text": false
+      },
+      {
+        "input_index": 1,
+        "input_end_to_verified_event_ms": 2747.959,
+        "recognized_request_to_verified_event_ms": 950.433,
+        "reused": true,
+        "silent": true,
+        "thinking_bridges": 0,
+        "same_as_previous_recognized_text": true
+      },
+      {
+        "input_index": 2,
+        "input_end_to_verified_event_ms": 2706.188,
+        "recognized_request_to_verified_event_ms": 1225.02,
+        "reused": true,
+        "silent": true,
+        "thinking_bridges": 0,
+        "same_as_previous_recognized_text": true
+      },
+      {
+        "input_index": 3,
+        "input_end_to_verified_event_ms": 2634.31,
+        "recognized_request_to_verified_event_ms": 902.384,
+        "reused": true,
+        "silent": true,
+        "thinking_bridges": 0,
+        "same_as_previous_recognized_text": true
+      }
+    ],
+    "weather_input_end_to_first_pcm_ms": 7338.805,
+    "weather_first_audio_is_bridge": true,
+    "weather_final_reply_received": true,
+    "weather_tts_requests": 2,
+    "physical_audio": false,
+    "preceding_harness_failure_retained": true
+  },
+  "runtime": {
+    "core": {
+      "image": "sha256:76648df990aafe70b446441b46e2d89f3e811ab637472426fca7fa31f8a55ed2",
+      "started_at": "2026-10-20T15:47:03.334575252Z",
+      "configuration_sha256": "0ee8acdff3964d53378f57fcffe6d4d72c527830a7f680e13741d103c7e3d2d1",
+      "source_hashes": {
+        "/opt/eva/src/eva/adapters/connectors/home_assistant_context.py": "236afb450a639a703a1d3898f0562ccfd6c9d74797622fe7d37f1f9be575494e",
+        "/opt/eva/src/eva/providers/home_assistant_command_cache.py": "5b6328f956ccd649fe472cc1f91b5b8f057604988512184b416b2c56cd09304b",
+        "/opt/eva/src/eva/adapters/postgres/operational_timeline.py": "5c37a74d5370d3f965c157da9019c8e417d69aece7f81ff88c29dbe4b0712275",
+        "/opt/eva/src/eva/operations/install_schema.py": "0b6a2c55102b037971ff90583d2af7ec54af818e84b23960a2d4a20728945ef1",
+        "/opt/eva/src/eva/bootstrap/delegated_work_service.py": "d71be86e5f4a9b2896d32a7a6d48a6cef58a0183cd3616718bd95f72d44be201",
+        "/opt/eva/src/eva/adapters/postgres/current_catalog.py": "e920ad751655945eca554743a6ff83d2f644d654d023e6cc3a4bf8c2b85b6859",
+        "/opt/eva/migrations/versions/4e_0011_timeline_type_time.py": "ab45971f51bf38d501173bb693534d38a37b1ba99692bf178b18a041e05258c7",
+        "/opt/eva/src/eva/adapters/connectors/home_assistant.py": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82",
+        "/opt/eva/src/eva/providers/home_assistant_policy.py": "2510ec912a11766d7b6c3196feae8f43b9f014d2ce3a786bb95162c3ec5fe893"
+      },
+      "healthy": true,
+      "configuration_stable_during_measurement": true
+    },
+    "worker": {
+      "image": "sha256:40e0d5ce2c1db7085c78fe81e229359977f8a0115c2ee74a2d2270acf2f28719",
+      "started_at": "2026-10-20T15:47:15.383142321Z",
+      "configuration_sha256": "beb7466625d9f4e2145f9be855210f5466c5825944e25b9ec37bbfeec32adf01",
+      "source_hashes": {
+        "/opt/eva/src/eva/adapters/connectors/home_assistant_context.py": "236afb450a639a703a1d3898f0562ccfd6c9d74797622fe7d37f1f9be575494e",
+        "/opt/eva/src/eva/providers/home_assistant_command_cache.py": "5b6328f956ccd649fe472cc1f91b5b8f057604988512184b416b2c56cd09304b",
+        "/opt/eva/src/eva/adapters/postgres/operational_timeline.py": "5c37a74d5370d3f965c157da9019c8e417d69aece7f81ff88c29dbe4b0712275",
+        "/opt/eva/src/eva/operations/install_schema.py": "0b6a2c55102b037971ff90583d2af7ec54af818e84b23960a2d4a20728945ef1",
+        "/opt/eva/src/eva/bootstrap/delegated_work_service.py": "d71be86e5f4a9b2896d32a7a6d48a6cef58a0183cd3616718bd95f72d44be201",
+        "/opt/eva/src/eva/adapters/postgres/current_catalog.py": "e920ad751655945eca554743a6ff83d2f644d654d023e6cc3a4bf8c2b85b6859",
+        "/opt/eva/migrations/versions/4e_0011_timeline_type_time.py": "ab45971f51bf38d501173bb693534d38a37b1ba99692bf178b18a041e05258c7",
+        "/opt/eva/src/eva/adapters/connectors/home_assistant.py": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82",
+        "/opt/eva/src/eva/providers/home_assistant_policy.py": "2510ec912a11766d7b6c3196feae8f43b9f014d2ce3a786bb95162c3ec5fe893"
+      },
+      "healthy": true,
+      "configuration_stable_during_measurement": true
+    }
+  },
+  "outdoor": {
+    "final_off": true,
+    "automation_states_unchanged": 17
+  },
+  "schemaInstall": {
+    "receipt": {
+      "source_revision": "4e_0010_memory_compaction",
+      "final_revision": "4e_0011_timeline_type_time",
+      "route": [
+        "online_empty_admission_or_forward_upgrade_to_head"
+      ],
+      "drift_check": "no_new_upgrade_operations_and_exact_foreign_keys"
+    },
+    "elapsed_ms": 1284.213,
+    "index_bytes": 15450112,
+    "data_mutation": "index and schema revision only"
+  },
+  "workerCompatibility": {
+    "candidate": {
+      "image": "sha256:c05f94233d293e76b3da5966b4974a40d4960ecb96881637b0f699aacd65ed3f",
+      "exit": 0
+    },
+    "recovery": {
+      "image": "sha256:8f775a1ccf83a0b1e0aad84f0941a2520b7b929a11e77107c7e140464e211dc7",
+      "exit": 0
+    }
+  },
+  "actualUsage": {
+    "actual_runtime": {
+      "turns": 116,
+      "recorded_model_phases": 36,
+      "usage": {
+        "model_attempts": 36,
+        "input_tokens": 312606,
+        "output_tokens": 1751,
+        "tool_calls": 29
+      },
+      "ha_setter_new_operations": 109,
+      "credits": null
+    },
+    "development_real_model_component": {
+      "calls": 32,
+      "usage": {
+        "model_attempts": 32,
+        "input_tokens": 82076,
+        "output_tokens": 1153,
+        "tool_calls": 23
+      },
+      "production_effects": 0,
+      "credits": null
+    },
+    "measurement": "Scoped exact-target canonical model records deduplicated; actual model components separate. Credits unknown."
+  },
+  "finalChatProof": {
+    "admissions": 22,
+    "fresh_state_verified": 22,
+    "new_operations": 22,
+    "journal_file": "journal-41c0bdff6b9a1b06.private.json"
+  },
+  "modelMemoryBoundary": {
+    "baseline": {
+      "passed": 5,
+      "total": 6,
+      "retainedFailure": "Correction source was consulted, but the old alias was submitted rather than its corrected exact ID. No production effect occurred.",
+      "harnessDifference": "Baseline omitted pure module guidance; final includes it. This is not an isolated causal comparison of the metadata patch."
+    },
+    "final": {
+      "passed": 6,
+      "total": 6,
+      "cases": [
+        {
+          "id": "routine-first",
+          "passed": true,
+          "sequence": [
+            "current_contact_context",
+            "model:search_personal_memory",
+            "recall",
+            "model:set_home_assistant_light",
+            "effect-request"
+          ]
+        },
+        {
+          "id": "corrected-reference",
+          "passed": true,
+          "sequence": [
+            "current_contact_context",
+            "model:search_personal_memory",
+            "recall",
+            "model:set_home_assistant_light",
+            "effect-request"
+          ]
+        },
+        {
+          "id": "missing-reference",
+          "passed": true,
+          "sequence": [
+            "current_contact_context",
+            "model:search_personal_memory",
+            "recall",
+            "model:answer"
+          ]
+        },
+        {
+          "id": "private-first",
+          "passed": true,
+          "sequence": [
+            "current_contact_context",
+            "model:search_personal_memory",
+            "recall",
+            "model:answer"
+          ]
+        },
+        {
+          "id": "household-isolation",
+          "passed": true,
+          "sequence": [
+            "current_contact_context",
+            "model:search_personal_memory",
+            "recall",
+            "model:answer"
+          ]
+        },
+        {
+          "id": "simple-current-control",
+          "passed": true,
+          "sequence": [
+            "current_contact_context",
+            "model:set_home_assistant_light",
+            "effect-request"
+          ]
+        }
+      ],
+      "fixture_scoped_memory": true,
+      "blocked_effects": true,
+      "offered_tool_subset": "Actual installed lightsetter descriptor plus the shared memory tool",
+      "actual_installed_identity_adapter_prompts_coreflow": true,
+      "scripted_model_choices": false,
+      "context_dependent_effects_not_reusable": true,
+      "current_contact_reader_fixture_implemented": true,
+      "legacy_style_fallback_forbidden": true
+    },
+    "realAuthenticatedHttp": {
+      "normal_authenticated_http": true,
+      "saved_final_ms": 10168.517,
+      "selected_memory_source_count": 1,
+      "source_bound_reply_sha256": "b01b46381e2f6d5a1f945c0f240137cf95b696f0a6ea2439f959bbe5f9e3ff14",
+      "deferred_contact_preparation": {
+        "message_id_sha256": "c2edf02fb6cf61cde77e4e89077a0edf39219c0de11bfef3828efb23d7dbac2a",
+        "elapsed_ms": 479,
+        "historical_recall_deferred": true
+      },
+      "current_reader_actual_backend_direct_check": {
+        "reader_module": "eva.adapters.projection.hindsight",
+        "reader_class": "HindsightMemoryEngine",
+        "reader_source_sha256": "a3ced964e3c326e769726cb6d1497bb57eed1a8047b109d026a9e560f2778c5d",
+        "adapter_source_sha256": "afac6de0185446745f511a825d48207ed82442b895c56aec22944c098f967cc7",
+        "call_succeeded": true,
+        "elapsed_ms": 56.08,
+        "selected_current_source_count": 0,
+        "scope_hash_matches": true,
+        "model_calls": 0,
+        "conversation_admission": false,
+        "retention": false,
+        "external_effects": 0,
+        "semantic_recall": false
+      },
+      "reader_execution_evidence": "Actual backend exposes current reader; current core unconditionally calls it in this observed deferred branch before first model. Separate direct scoped reader invocation succeeded; no injected HTTP hooks.",
+      "first_turn": true
+    },
+    "scope": "Technical evidence for these boundaries, not universal model reliability or production effects from the component fixtures."
+  },
+  "sourceCorrection": "HA tool descriptors and module guidance now accept the exact target from a needed authorized current correction/reference, rather than requiring the original literal nickname. No executor, authority, readback or core provider branch changed.",
+  "timingDefinition": {
+    "chat": "Client timestamp immediately before actual authenticated HTTP POST to application receipt log after new canonical STATE_VERIFIED from independent current HA readback. Same-host UTC clocks. saved_final is separately retained.",
+    "percentile": "Nearest-rank p95 across all20 declared warm attempts in each round; retain failed first round and both subsequent rounds separately.",
+    "voice": "Recorded input-end and recognized-request timestamps to core action_finished verified event in the real existing native media path. No physical microphone/playback claim.",
+    "transportComponent": "Separate instrumented actual module runtime: MCP effects256.497/263.833ms, three independent REST readbacks7.358/7.957/8.145ms. First action needed an extra state read; no repeated effect. Not an HTTP server speed sample."
+  },
+  "limits": [
+    "Known exact retained standalone commands only; context/source/authority/erasure/recognition changes can require interpretation again.",
+    "Latest first chat interpretations remain separately reported in chatFinal.samples; no general cold<=2s claim. Latest first native unseen recognition took10.216s from audio end.",
+    "Latest3exact native reuse samples took2.634–2.748s from audio end and0.902–1.225s from recognized request; off was already requested state. Actual chat toggled on/off.",
+    "Normal latest authenticated memory question took10.169s and used an actual source-bound reply. The new current typed-source reader was separately invoked successfully without a model or semantic recall; ordinary deferred HTTP branch was observed.",
+    "One additional native harness failure is retained with missing resultJSON and canonical ledger recovery. The reconstructed ledger alone does not establish audible content.",
+    "Current6modelcomponent cases use fixture memory/current-context and blocked effects with a restricted offered toolset. No universal model-reliability claim.",
+    "Physical microphone/playback, all devices/phrasing, owner or familyacceptance, production rollback and reboot are not claimed."
+  ],
+  "references": [
+    {
+      "title": "HA2026.9.2 entity registry serialization and update timestamps",
+      "url": "https://raw.githubusercontent.com/home-assistant/core/2026.9.2/homeassistant/helpers/entity_registry.py"
+    }
+  ],
+  "harnessCorrections": [
+    "Initial cleanup protection list accidentally included22 own outbox records; after erasure, read-only verification proved only these changed and7309 nonfixture records unchanged.",
+    "First native cleanup verification accidentally expected504 instead of404 after a count-template substitution; read-only verification confirmed all five erasures and204 owner hashes, without repeating deletion.",
+    "Transport component expected exactly two state reads; actual state propagation needed three. Both original effect calls and all read timings retained, no effect repeated."
+  ],
+  "cleanup": {
+    "prior_total_erased": 87,
+    "additional_chat_erased": 23,
+    "additional_native_erased": 6,
+    "additional_native_includes_recovered_failed_harness_turn": true,
+    "total_own_synthetic_exchanges_erased": 116,
+    "total_chat_diagnostic_exchanges_erased": 95,
+    "total_native_storage_raw_outbox_semantic_erased": 21,
+    "owner_hashes_preserved": 204,
+    "latest_chat_nonfixture_hashes_preserved": 7653,
+    "native_verification": {
+      "storage_removed": 6,
+      "raw_exchanges_erased": 6,
+      "outbox_erased": 6,
+      "semantic_documents_absent": 6,
+      "protected_owner_events_unchanged": 204
+    },
+    "no_mutation_retries": true
+  },
+  "moduleOptionality": {
+    "originalEvidence": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
+    "originalReview": "development/reviews/e46-optional-home-provider-review-20261020.json",
+    "currentImage": "sha256:76648df990aafe70b446441b46e2d89f3e811ab637472426fca7fa31f8a55ed2",
+    "currentContainerUnchanged": true,
+    "actualInstalledGeneralSourcePins": {
+      "/opt/eva/src/eva/application/conversation.py": "87cedbb9344cda3d7b02bd79840e3adbc73775069684e9cb93629d16513a813f",
+      "/opt/eva/src/eva/adapters/model/pydantic_conversation.py": "d2319b207f77985c0c9fa74ae44b9e163d1f768a9109330c6803d39d2eef603e",
+      "/opt/eva/src/eva/adapters/model/tool_namespaces.py": "e1200b0359d605461334ab7c1b184e49011a3b0091e51a6ab6684ee026f8b71f",
+      "/opt/eva/src/eva/providers/runtime.py": "0962f5e42886e8c9a945d8076e88d315fc6c3ab9dd90865006889d1ba4486643",
+      "/opt/eva/src/eva/bootstrap/runtime.py": "359aa94d88133b431711c0c27a7d47bdd976fdb24429524c7707f67a5b4178c1"
+    },
+    "tests": 10,
+    "testSeconds": 6.83,
+    "network": "none",
+    "actualInstalledSourcePlusExactCandidateOverlay": true,
+    "fixtureModelForModuleAbsentChat": true,
+    "modelCalls": 0,
+    "externalEffects": 0,
+    "checks": [
+      "Disabled module reads no HA credentials and exposes no HA tools/services.",
+      "Core imports and ordinary chat work when HA module is physically blocked.",
+      "Other-provider services and non-HA tool presentation work with HA disabled.",
+      "Current installed generic core/model contains no home-specific routing rules.",
+      "Enabled provider guidance remains owned by current authorized provider."
+    ]
+  },
+  "technicalCompletion": true,
+  "taskIds": [
+    "E4.9",
+    "E4.10",
+    "E5.2"
+  ],
+  "completedAt": "2026-10-20T16:02:01.946869+00:00",
+  "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
+  "ownerAcceptance": false,
+  "familyAcceptance": false,
+  "wholeProjectComplete": false,
+  "runtimeBeforePeer": {
+    "core": {
+      "image": "sha256:59dde042ffb355289bb2b433f35a988295040b14756ce4cb301589072e12ef83",
+      "started_at": "2026-10-20T15:33:44.753760317Z",
+      "healthy": true,
+      "configuration_sha256": "473db65eda0a7f522e52a6ab01d88fe935f5ce076c780016c68eea526fcf0ef3",
+      "source_hashes": {
+        "/opt/eva/src/eva/adapters/connectors/home_assistant_context.py": "236afb450a639a703a1d3898f0562ccfd6c9d74797622fe7d37f1f9be575494e",
+        "/opt/eva/src/eva/providers/home_assistant_command_cache.py": "5b6328f956ccd649fe472cc1f91b5b8f057604988512184b416b2c56cd09304b",
+        "/opt/eva/src/eva/adapters/postgres/operational_timeline.py": "5c37a74d5370d3f965c157da9019c8e417d69aece7f81ff88c29dbe4b0712275",
+        "/opt/eva/src/eva/operations/install_schema.py": "0b6a2c55102b037971ff90583d2af7ec54af818e84b23960a2d4a20728945ef1",
+        "/opt/eva/src/eva/bootstrap/delegated_work_service.py": "d71be86e5f4a9b2896d32a7a6d48a6cef58a0183cd3616718bd95f72d44be201",
+        "/opt/eva/src/eva/adapters/postgres/current_catalog.py": "e920ad751655945eca554743a6ff83d2f644d654d023e6cc3a4bf8c2b85b6859",
+        "/opt/eva/migrations/versions/4e_0011_timeline_type_time.py": "ab45971f51bf38d501173bb693534d38a37b1ba99692bf178b18a041e05258c7",
+        "/opt/eva/src/eva/adapters/connectors/home_assistant.py": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82",
+        "/opt/eva/src/eva/providers/home_assistant_policy.py": "2510ec912a11766d7b6c3196feae8f43b9f014d2ce3a786bb95162c3ec5fe893"
+      },
+      "expected_environment_mounts_authority_unchanged": true
+    },
+    "worker": {
+      "image": "sha256:c05f94233d293e76b3da5966b4974a40d4960ecb96881637b0f699aacd65ed3f",
+      "started_at": "2026-10-20T15:34:16.947895424Z",
+      "healthy": true,
+      "configuration_sha256": "32e42b8c3d53d44f15beeddb46fa06ea1ced2566037effeb56a49840b06e22b8",
+      "source_hashes": {
+        "/opt/eva/src/eva/adapters/connectors/home_assistant_context.py": "236afb450a639a703a1d3898f0562ccfd6c9d74797622fe7d37f1f9be575494e",
+        "/opt/eva/src/eva/providers/home_assistant_command_cache.py": "5b6328f956ccd649fe472cc1f91b5b8f057604988512184b416b2c56cd09304b",
+        "/opt/eva/src/eva/adapters/postgres/operational_timeline.py": "5c37a74d5370d3f965c157da9019c8e417d69aece7f81ff88c29dbe4b0712275",
+        "/opt/eva/src/eva/operations/install_schema.py": "0b6a2c55102b037971ff90583d2af7ec54af818e84b23960a2d4a20728945ef1",
+        "/opt/eva/src/eva/bootstrap/delegated_work_service.py": "d71be86e5f4a9b2896d32a7a6d48a6cef58a0183cd3616718bd95f72d44be201",
+        "/opt/eva/src/eva/adapters/postgres/current_catalog.py": "e920ad751655945eca554743a6ff83d2f644d654d023e6cc3a4bf8c2b85b6859",
+        "/opt/eva/migrations/versions/4e_0011_timeline_type_time.py": "ab45971f51bf38d501173bb693534d38a37b1ba99692bf178b18a041e05258c7",
+        "/opt/eva/src/eva/adapters/connectors/home_assistant.py": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82",
+        "/opt/eva/src/eva/providers/home_assistant_policy.py": "2510ec912a11766d7b6c3196feae8f43b9f014d2ce3a786bb95162c3ec5fe893"
+      },
+      "expected_environment_mounts_authority_unchanged": true
+    }
+  },
+  "chatFinalBeforePeer": {
     "samples": [
       {
         "label": "final-train-on",
@@ -611,7 +1129,7 @@
     "hits": 20,
     "all20_target_met": true
   },
-  "nativeVoiceFinal": {
+  "nativeVoiceFinalBeforePeer": {
     "label": "native-final-five",
     "samples": [
       {
@@ -653,72 +1171,7 @@
     "weather_tts_requests": 2,
     "physical_audio": false
   },
-  "runtime": {
-    "core": {
-      "image": "sha256:59dde042ffb355289bb2b433f35a988295040b14756ce4cb301589072e12ef83",
-      "started_at": "2026-10-20T15:33:44.753760317Z",
-      "healthy": true,
-      "configuration_sha256": "473db65eda0a7f522e52a6ab01d88fe935f5ce076c780016c68eea526fcf0ef3",
-      "source_hashes": {
-        "/opt/eva/src/eva/adapters/connectors/home_assistant_context.py": "236afb450a639a703a1d3898f0562ccfd6c9d74797622fe7d37f1f9be575494e",
-        "/opt/eva/src/eva/providers/home_assistant_command_cache.py": "5b6328f956ccd649fe472cc1f91b5b8f057604988512184b416b2c56cd09304b",
-        "/opt/eva/src/eva/adapters/postgres/operational_timeline.py": "5c37a74d5370d3f965c157da9019c8e417d69aece7f81ff88c29dbe4b0712275",
-        "/opt/eva/src/eva/operations/install_schema.py": "0b6a2c55102b037971ff90583d2af7ec54af818e84b23960a2d4a20728945ef1",
-        "/opt/eva/src/eva/bootstrap/delegated_work_service.py": "d71be86e5f4a9b2896d32a7a6d48a6cef58a0183cd3616718bd95f72d44be201",
-        "/opt/eva/src/eva/adapters/postgres/current_catalog.py": "e920ad751655945eca554743a6ff83d2f644d654d023e6cc3a4bf8c2b85b6859",
-        "/opt/eva/migrations/versions/4e_0011_timeline_type_time.py": "ab45971f51bf38d501173bb693534d38a37b1ba99692bf178b18a041e05258c7",
-        "/opt/eva/src/eva/adapters/connectors/home_assistant.py": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82",
-        "/opt/eva/src/eva/providers/home_assistant_policy.py": "2510ec912a11766d7b6c3196feae8f43b9f014d2ce3a786bb95162c3ec5fe893"
-      },
-      "expected_environment_mounts_authority_unchanged": true
-    },
-    "worker": {
-      "image": "sha256:c05f94233d293e76b3da5966b4974a40d4960ecb96881637b0f699aacd65ed3f",
-      "started_at": "2026-10-20T15:34:16.947895424Z",
-      "healthy": true,
-      "configuration_sha256": "32e42b8c3d53d44f15beeddb46fa06ea1ced2566037effeb56a49840b06e22b8",
-      "source_hashes": {
-        "/opt/eva/src/eva/adapters/connectors/home_assistant_context.py": "236afb450a639a703a1d3898f0562ccfd6c9d74797622fe7d37f1f9be575494e",
-        "/opt/eva/src/eva/providers/home_assistant_command_cache.py": "5b6328f956ccd649fe472cc1f91b5b8f057604988512184b416b2c56cd09304b",
-        "/opt/eva/src/eva/adapters/postgres/operational_timeline.py": "5c37a74d5370d3f965c157da9019c8e417d69aece7f81ff88c29dbe4b0712275",
-        "/opt/eva/src/eva/operations/install_schema.py": "0b6a2c55102b037971ff90583d2af7ec54af818e84b23960a2d4a20728945ef1",
-        "/opt/eva/src/eva/bootstrap/delegated_work_service.py": "d71be86e5f4a9b2896d32a7a6d48a6cef58a0183cd3616718bd95f72d44be201",
-        "/opt/eva/src/eva/adapters/postgres/current_catalog.py": "e920ad751655945eca554743a6ff83d2f644d654d023e6cc3a4bf8c2b85b6859",
-        "/opt/eva/migrations/versions/4e_0011_timeline_type_time.py": "ab45971f51bf38d501173bb693534d38a37b1ba99692bf178b18a041e05258c7",
-        "/opt/eva/src/eva/adapters/connectors/home_assistant.py": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82",
-        "/opt/eva/src/eva/providers/home_assistant_policy.py": "2510ec912a11766d7b6c3196feae8f43b9f014d2ce3a786bb95162c3ec5fe893"
-      },
-      "expected_environment_mounts_authority_unchanged": true
-    }
-  },
-  "outdoor": {
-    "final_off": true,
-    "enabled_automations_unchanged": 17
-  },
-  "schemaInstall": {
-    "receipt": {
-      "source_revision": "4e_0010_memory_compaction",
-      "final_revision": "4e_0011_timeline_type_time",
-      "route": [
-        "online_empty_admission_or_forward_upgrade_to_head"
-      ],
-      "drift_check": "no_new_upgrade_operations_and_exact_foreign_keys"
-    },
-    "elapsed_ms": 1284.213,
-    "index_bytes": 15450112,
-    "data_mutation": "index and schema revision only"
-  },
-  "workerCompatibility": {
-    "candidate": {
-      "image": "sha256:c05f94233d293e76b3da5966b4974a40d4960ecb96881637b0f699aacd65ed3f",
-      "exit": 0
-    },
-    "recovery": {
-      "image": "sha256:8f775a1ccf83a0b1e0aad84f0941a2520b7b929a11e77107c7e140464e211dc7",
-      "exit": 0
-    }
-  },
-  "actualUsage": {
+  "actualUsageBeforePeer": {
     "actual_runtime": {
       "turns": 87,
       "recorded_model_phases": 28,
@@ -744,13 +1197,68 @@
     },
     "measurement": "Canonical exact-target usage records, deduplicated by scoped thread/sequence; component actual resultusage separately. Unknowncreditsremainunknown."
   },
-  "finalChatProof": {
-    "admissions": 22,
-    "fresh_state_verified": 22,
-    "new_operations": 22,
-    "journal_file": "journal-41c0bdff6b9a1b06.private.json"
+  "cleanupBeforePeer": {
+    "chat_and_diagnostics_erased": 72,
+    "retained_chat_erased": 68,
+    "unretained_diagnostics_erased": 4,
+    "native_exchanges_storage_raw_outbox_semantic_erased": 15,
+    "total_own_synthetic_exchanges_erased": 87,
+    "original_owner_events_unchanged": 204,
+    "chat_protection_verified_each_round": [
+      7309,
+      7421,
+      7537
+    ],
+    "rounds": {
+      "first": {
+        "exchanges_erased": 24,
+        "retained_exchange_erased": 22,
+        "unretained_raw_erased": 2,
+        "protected_nonfixture_events_unchanged": 7309,
+        "own_outbox_in_original_protection_selection": 22,
+        "all_other_original_protected_hashes_unchanged": true,
+        "scope": "Read-only verification after final assertion found own outbox in protection selection; no mutation retry",
+        "owned_outbox_excluded_from_protection": 22
+      },
+      "second": {
+        "retained_exchange_erased": 23,
+        "unretained_raw_erased": 2,
+        "exact_failed_turns_stopped": 0,
+        "protected_events_unchanged": 7421
+      },
+      "final": {
+        "retained_exchange_erased": 23,
+        "unretained_raw_erased": 0,
+        "exact_failed_turns_stopped": 0,
+        "protected_events_unchanged": 7537
+      },
+      "native": [
+        {
+          "storage_removed": 5,
+          "raw_exchanges_erased": 5,
+          "outbox_erased": 5,
+          "semantic_documents_absent": 5,
+          "protected_owner_events_unchanged": 204
+        },
+        {
+          "storage_removed": 5,
+          "raw_exchanges_erased": 5,
+          "outbox_erased": 5,
+          "semantic_documents_absent": 5,
+          "protected_owner_events_unchanged": 204
+        },
+        {
+          "storage_removed": 5,
+          "raw_exchanges_erased": 5,
+          "outbox_erased": 5,
+          "semantic_documents_absent": 5,
+          "protected_owner_events_unchanged": 204
+        }
+      ]
+    },
+    "no_mutation_retries": true
   },
-  "modelMemoryBoundary": {
+  "modelMemoryBoundaryBeforePeer": {
     "baseline": {
       "passed": 5,
       "total": 6,
@@ -837,94 +1345,7 @@
     },
     "scope": "Technical evidence for these boundaries, not universal model reliability or production effects from the component fixtures."
   },
-  "sourceCorrection": "HA tool descriptors and module guidance now accept the exact target from a needed authorized current correction/reference, rather than requiring the original literal nickname. No executor, authority, readback or core provider branch changed.",
-  "timingDefinition": {
-    "chat": "Client timestamp immediately before actual authenticated HTTP POST to application receipt log after new canonical STATE_VERIFIED from independent current HA readback. Same-host UTC clocks. saved_final is separately retained.",
-    "percentile": "Nearest-rank p95 across all20 declared warm attempts in each round; retain failed first round and both subsequent rounds separately.",
-    "voice": "Recorded input-end and recognized-request timestamps to core action_finished verified event in the real existing native media path. No physical microphone/playback claim.",
-    "transportComponent": "Separate instrumented actual module runtime: MCP effects256.497/263.833ms, three independent REST readbacks7.358/7.957/8.145ms. First action needed an extra state read; no repeated effect. Not an HTTP server speed sample."
-  },
-  "limits": [
-    "Exact retained standalone commands only; relevant context/source/authority changes, erasure, questions and different recognized text may require interpretation again.",
-    "Final first chat interpretations took7.407/9.193s to receipt. First native interpretations took7.534/7.293s from audio end; different ASR text stayed a real miss.",
-    "Final repeated native controls took2.833–2.897s from input end and0.913–1.046s from recognized request to verified event. These were off commands already in the requested state; actual chat toggled on/off.",
-    "Weather question produced a final reply in the same native session; first PCM was a thinking bridge, not proof of the final answer or HA completion.",
-    "Physical microphone/playback, all phrasing/devices, owner acceptance and the household week are not claimed.",
-    "Application recovery images/configuration prepared and compatible workers checked; no production rollback/reboot was executed."
-  ],
-  "references": [
-    {
-      "title": "HA2026.9.2 entity registry serialization and update timestamps",
-      "url": "https://raw.githubusercontent.com/home-assistant/core/2026.9.2/homeassistant/helpers/entity_registry.py"
-    }
-  ],
-  "harnessCorrections": [
-    "Initial cleanup protection list accidentally included22 own outbox records; after erasure, read-only verification proved only these changed and7309 nonfixture records unchanged.",
-    "First native cleanup verification accidentally expected504 instead of404 after a count-template substitution; read-only verification confirmed all five erasures and204 owner hashes, without repeating deletion.",
-    "Transport component expected exactly two state reads; actual state propagation needed three. Both original effect calls and all read timings retained, no effect repeated."
-  ],
-  "cleanup": {
-    "chat_and_diagnostics_erased": 72,
-    "retained_chat_erased": 68,
-    "unretained_diagnostics_erased": 4,
-    "native_exchanges_storage_raw_outbox_semantic_erased": 15,
-    "total_own_synthetic_exchanges_erased": 87,
-    "original_owner_events_unchanged": 204,
-    "chat_protection_verified_each_round": [
-      7309,
-      7421,
-      7537
-    ],
-    "rounds": {
-      "first": {
-        "exchanges_erased": 24,
-        "retained_exchange_erased": 22,
-        "unretained_raw_erased": 2,
-        "protected_nonfixture_events_unchanged": 7309,
-        "own_outbox_in_original_protection_selection": 22,
-        "all_other_original_protected_hashes_unchanged": true,
-        "scope": "Read-only verification after final assertion found own outbox in protection selection; no mutation retry",
-        "owned_outbox_excluded_from_protection": 22
-      },
-      "second": {
-        "retained_exchange_erased": 23,
-        "unretained_raw_erased": 2,
-        "exact_failed_turns_stopped": 0,
-        "protected_events_unchanged": 7421
-      },
-      "final": {
-        "retained_exchange_erased": 23,
-        "unretained_raw_erased": 0,
-        "exact_failed_turns_stopped": 0,
-        "protected_events_unchanged": 7537
-      },
-      "native": [
-        {
-          "storage_removed": 5,
-          "raw_exchanges_erased": 5,
-          "outbox_erased": 5,
-          "semantic_documents_absent": 5,
-          "protected_owner_events_unchanged": 204
-        },
-        {
-          "storage_removed": 5,
-          "raw_exchanges_erased": 5,
-          "outbox_erased": 5,
-          "semantic_documents_absent": 5,
-          "protected_owner_events_unchanged": 204
-        },
-        {
-          "storage_removed": 5,
-          "raw_exchanges_erased": 5,
-          "outbox_erased": 5,
-          "semantic_documents_absent": 5,
-          "protected_owner_events_unchanged": 204
-        }
-      ]
-    },
-    "no_mutation_retries": true
-  },
-  "moduleOptionality": {
+  "moduleOptionalityBeforePeer": {
     "originalEvidence": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
     "originalReview": "development/reviews/e46-optional-home-provider-review-20261020.json",
     "currentImage": "sha256:59dde042ffb355289bb2b433f35a988295040b14756ce4cb301589072e12ef83",
@@ -951,15 +1372,53 @@
       "Enabled provider guidance remains owned by current authorized provider."
     ]
   },
-  "technicalCompletion": true,
-  "taskIds": [
-    "E4.9",
-    "E4.10",
-    "E5.2"
+  "limitsBeforePeer": [
+    "Exact retained standalone commands only; relevant context/source/authority changes, erasure, questions and different recognized text may require interpretation again.",
+    "Final first chat interpretations took7.407/9.193s to receipt. First native interpretations took7.534/7.293s from audio end; different ASR text stayed a real miss.",
+    "Final repeated native controls took2.833–2.897s from input end and0.913–1.046s from recognized request to verified event. These were off commands already in the requested state; actual chat toggled on/off.",
+    "Weather question produced a final reply in the same native session; first PCM was a thinking bridge, not proof of the final answer or HA completion.",
+    "Physical microphone/playback, all phrasing/devices, owner acceptance and the household week are not claimed.",
+    "Application recovery images/configuration prepared and compatible workers checked; no production rollback/reboot was executed."
   ],
-  "completedAt": "2026-10-20T15:47:05.869268+00:00",
-  "independentReview": "development/reviews/e52-warm-route-review-20261020.json",
-  "ownerAcceptance": false,
-  "familyAcceptance": false,
-  "wholeProjectComplete": false
+  "postPeerIntegration": {
+    "reason": "Parallel E1.5 replaced core/worker after the previous completed delivery. All9ownedsourcefiles retained. Revalidate latest composition rather than transfer old timing claims.",
+    "changedPeerSourceFiles": [
+      "eva/application/human_understanding.py",
+      "eva/adapters/model/pydantic_conversation.py",
+      "eva/application/conversation.py",
+      "eva/adapters/projection/hindsight.py"
+    ],
+    "validationPlan": {
+      "reason": "PeerE1.5installationafterpreviousmeasurement. Owned9sourcesretained. Revalidate actuallatestfullroute.",
+      "core_image": "sha256:76648df990aafe70b446441b46e2d89f3e811ab637472426fca7fa31f8a55ed2",
+      "training": 2,
+      "warm_attempts": 20,
+      "native_utterances": 5,
+      "no_previous_rounds_dropped": true,
+      "before_execution": true
+    },
+    "newCodeChangesByThisTask": false,
+    "oldCompletedSampleRetained": true,
+    "currentContactReaderInvoked": true,
+    "workerCheckExit": 0,
+    "currentKnownWorkingRecoveryPinned": true,
+    "recoveryScope": "Exact current healthy images and actual configuration, preserves peerE1.5 and index0011. No rollback/reboot exercised.",
+    "nativeHarnessFailure": {
+      "actualOwnTurnCount": 1,
+      "runtimeUnchanged": true,
+      "canonicalStateVerifiedAndSilentReply": true,
+      "resultFileMissing": true,
+      "rawLogAndPCMRetained": true,
+      "recoveredLedgerDoesNotProveAudibleText": true,
+      "meaning": "Overlystrict private probe forbade all cold thinking TTS; optional metric then prevented saving its result. No production patch. A separate five-turn retry checks approved spoken_update before proof, no spokenfinal and zeroTTSonreuse; every attempt retained."
+    },
+    "freshNativeRetry": {
+      "utterances": 5,
+      "sameAudio": true,
+      "complete": true,
+      "additionalModelComponentCases": 6,
+      "noScriptedModelChoices": true
+    },
+    "status": "independently_reviewed_complete"
+  }
 }
