@@ -93,5 +93,12 @@
       "separateAdditionalProbeModelRequests": 0
     }
   },
-  "observedAt": "2026-10-20T16:25:20.365895+00:00"
+  "observedAt": "2026-10-20T16:25:20.365895+00:00",
+  "sourceResearchRecovery": {
+    "status": "installed",
+    "evidence": "development/evidence/product/e16-research-source-recovery-installed-20261020.json",
+    "liveSameResponseImprovement": true,
+    "historicalFailurePreserved": true,
+    "sourceChoiceCausalityStillOpen": true
+  }
 }

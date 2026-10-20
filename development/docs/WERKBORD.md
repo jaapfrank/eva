@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Zelf relevante bronveranderingen aansluiten op eigen aandacht
 
-Bronroute geïnstalleerd; echt brongebruik nog niet bewezen.
+Onderzoeksfout verholpen en geïnstalleerd; bronkeuzeketen nog open.
 
 Klaar wanneer: Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.
 
@@ -129,7 +129,7 @@ E5.1 heeft beperkt oorspronkelijk technisch bewijs. E1.4 controleert nu werkelij
 
 ## Van jou
 
-Geen handeling nodig. Eerst de bestaande gekoppelde bron en contracten gebruiken.
+Geen handeling nodig. Spraak blijft bij de andere uitvoerder.
 
 ## Historie
 

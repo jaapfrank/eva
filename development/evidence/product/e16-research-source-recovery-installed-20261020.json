@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "taskId": "E1.6",
+  "title": "Bronverwijzingen verwerken zonder misleidende budgetfout",
+  "status": "installed",
+  "installedAt": "2026-10-20T16:34:23.042136+00:00",
+  "scope": "Gerichte reparatie van bronverwerking in de bestaande autonome onderzoeksroute; geen E1.6-kaartafronding.",
+  "before": {
+    "observedFailure": "research citation is invalid",
+    "sourceFailureFingerprint": "c19adb7c42189a5eaa0978d4c2bbfee80c9eea16a71b8726065c2ef916954069",
+    "downstreamMisclassification": "budget_exceeded",
+    "exactInvalidCitationMetadata": "not retained; title vs URL cause unknown",
+    "historicalUsage": "partial, unchanged"
+  },
+  "after": [
+    "Titelmetadata krijgt een begrensde bruikbare weergave zonder bron-URL te wijzigen.",
+    "Ongeldige URL blijft fout; volledig ontvangen gevalideerde providerusage blijft meetbaar.",
+    "Bestaande failed-toolreceipt blijft behouden; oorspronkelijke typed fout leidt tot incomplete_work met concrete uitleg, geen succes of automatische herhaling."
+  ],
+  "installed": {
+    "core": {
+      "image": "sha256:06bacf47f4f241ab0f098140eb62e5c4c838add6fdce7dc37f378c13c1a08d90",
+      "state": "running",
+      "health": "healthy",
+      "reviewedSourcesExact": true
+    },
+    "worker": {
+      "image": "sha256:c879570f9780c3a9cfb8c9c37cbc827222faf00e459da448052f801e46b70167",
+      "state": "running",
+      "health": "healthy",
+      "reviewedSourcesExact": true
+    }
+  },
+  "verification": {
+    "modelAndApplicationChecks": 47,
+    "isolatedPostgresChecks": 10,
+    "databaseVersion": "16.13 disposable; no production test mutation",
+    "independentReview": "GO",
+    "sourceHashes": {
+      "src/eva/adapters/model/contracts.py": "8770fc0a247894f88819a35b0f45be30a911a1c517d610c3aaaaa18da31d2e48",
+      "src/eva/adapters/model/pydantic_conversation.py": "89ff0f7ef7d8b4d4342d30f5fcc94177a72ae5b1b0c308c0263adf9dd1a3e069",
+      "src/eva/bootstrap/background_research.py": "c06535c3845c10808f6b8de28957ee6e4810a599afe9a35f79f10b73263fc1b2",
+      "src/eva/bootstrap/delegated_digital_runner.py": "83dbe80faf778193fe543492d25e736f7b56e6d910a6c949a1df06b66a3b6799"
+    },
+    "providerCallsInTechnicalTests": 0,
+    "realPublicProviderCheck": {
+      "status": "research_artifact_returned",
+      "scope": "One transparent technical existing-route research request; no production initiative resumed, E1.6 source choice not forced.",
+      "providerRequests": 1,
+      "model": "gpt-6-astra",
+      "reasoning": "medium",
+      "elapsedSeconds": 28.23,
+      "sourceCount": 4,
+      "resultSha256": "c3b7d473f10864348a8e758a78486b9017993f7c5bf03b92ba143bec9d44129e",
+      "usage": {
+        "input_tokens": 14350,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 749,
+        "tool_calls": 4
+      }
+    },
+    "sameCapturedProviderResponse": {
+      "sameCapturedResponse": true,
+      "responseSha256": "fdc01c9fd9afbd3145389999231f68b4b8abe2b0af839e9a86f07474b6b576d5",
+      "reference": {
+        "status": "rejected",
+        "errorType": "ConversationModelError",
+        "error": "research citation is invalid"
+      },
+      "installedCandidate": {
+        "status": "accepted",
+        "citedSources": 3,
+        "consultedSources": 2
+      },
+      "extraProviderRequests": 0,
+      "sourceUrlsUnchanged": true
+    }
+  },
+  "voiceChanged": false,
+  "policyBytesUnchanged": true,
+  "limitations": [
+    "Oorspronkelijke fout en ontbrekend historisch verbruik blijven behouden.",
+    "Geen bewijs van modelgekozen bronbewaking, dagelijkse gezinswaarde of algemene kwaliteitssprong.",
+    "E1.6 blijft open tot de oorspronkelijke bronveranderingsketen is aangetoond.",
+    "De nieuwe echte respons faalde bij de bewaarde oude parser en slaagt bij de nieuwe parser. Dit bewijst het titelmetadataherstel op die nieuwe respons, niet welke concrete metadata de eerdere mislukking bevatte."
+  ],
+  "usage": {
+    "developmentModelTokens": null,
+    "developmentCredits": null,
+    "runtimeCredits": null,
+    "realProviderProbe": "completed; one request, measured usage above, no automatic repeat"
+  }
+}

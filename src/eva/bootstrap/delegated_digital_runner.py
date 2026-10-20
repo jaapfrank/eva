@@ -630,13 +630,14 @@ class DelegatedDigitalRunner:
             outcome = ToolFreeChildOutcome("succeeded", result, usage, False, None)
         except Exception as error:
             from eva.adapters.model.pydantic_conversation import _InputBudgetError
+            from eva.adapters.model.contracts import ResearchCitationError
             if journal is not None and source is not None:
                 with suppress(Exception):
                     usage = self._usage(journal.model_usage(source), 0 if actions is None else actions.dispatches)
             status = ("cancelled" if cancellation_event is not None and cancellation_event.is_set()
                 else "timed_out" if isinstance(error, ConversationModelDeadlineExceeded) or self.clock() >= deadline
                 else "budget_exceeded" if isinstance(error, (_DigitalBudgetExceeded, ConversationExecutionLimitReached, _InputBudgetError))
-                else "incomplete_work" if isinstance(error, _UnfinishedWorkPlan)
+                else "incomplete_work" if isinstance(error, (_UnfinishedWorkPlan, ResearchCitationError))
                 else "provider_unavailable" if type(error) is McpGatewayUnavailable
                 else "internal_error")
             # Preserve only a complete returned reply, never streamed fragments or
@@ -656,6 +657,10 @@ class DelegatedDigitalRunner:
             if status == "budget_exceeded" and isinstance(error, _InputBudgetError):
                 report = ("input_budget_exceeded: De behouden taakcontext past niet binnen "
                           "de invoergrens. De opdracht is niet afgerond.")
+            if isinstance(error, ResearchCitationError) and status == "incomplete_work":
+                report = ("Het onderzoek is niet afgerond: de provider leverde een ongeldige "
+                          "bronverwijzing. Er is geen gecontroleerd eindresultaat en het "
+                          "onderzoek is niet automatisch herhaald.")
             outcome = ToolFreeChildOutcome(status, None, usage, False,
                 hashlib.sha256((type(error).__name__ + ":" + str(error)).encode()).hexdigest(),
                 failure_report=report)

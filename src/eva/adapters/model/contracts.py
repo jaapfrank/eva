@@ -19,6 +19,10 @@ class ConversationModelError(RuntimeError):
         super().__init__(*args)
 
 
+class ResearchCitationError(ConversationModelError):
+    """A completed research response has an unusable cited source URL."""
+
+
 class ConversationModelRateLimited(ConversationModelError):
     """The provider refused this request with HTTP 429; no immediate retry."""
 

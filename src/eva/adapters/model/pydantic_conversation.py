@@ -3688,22 +3688,38 @@ class PydanticConversationModel:
                     hosted_search_ids: set[str] | None = (
                         set() if parser == self._parse_research_sse else None
                     )
-                    stream = (
-                        self._capture_terminal_usage(
+                    capture_finished = False
+
+                    def captured_stream():
+                        nonlocal capture_finished
+                        yield from self._capture_terminal_usage(
                             response, terminal_usage, hosted_search_ids=hosted_search_ids,
                         )
-                        if self._resource_budget is not None or include_usage
-                        else response
-                    )
-                    parsed = (
-                        parser(
-                            stream,
-                            started_at=started_at,
-                            tools_disabled=body.get("tool_choice") == "none",
+                        capture_finished = True
+
+                    stream = (captured_stream()
+                              if self._resource_budget is not None or include_usage
+                              else response)
+                    try:
+                        parsed = (
+                            parser(
+                                stream,
+                                started_at=started_at,
+                                tools_disabled=body.get("tool_choice") == "none",
+                            )
+                            if include_timing
+                            else parser(stream)
                         )
-                        if include_timing
-                        else parser(stream)
-                    )
+                    except ConversationModelError as error:
+                        # Validation can fail after a complete paid response.
+                        # A truncated/contradictory stream is never measured here.
+                        if (include_usage and hosted_search_ids is not None
+                                and capture_finished and len(terminal_usage) == 1
+                                and error.model_usage is None):
+                            error.model_usage = ConversationModelUsage.measured(
+                                model_attempts=attempt + 1, tool_calls=len(hosted_search_ids),
+                                input_tokens=terminal_usage[0][0], output_tokens=terminal_usage[0][1])
+                        raise
                     if research_deadline is not None:
                         check_cancellation()
                         if monotonic() >= research_deadline:
@@ -4107,8 +4123,16 @@ class PydanticConversationModel:
             if not isinstance(citation, dict):
                 return
             url, title = citation.get("url"), citation.get("title")
-            if isinstance(url, str) and isinstance(title, str):
-                cited.setdefault(url, title)
+            if isinstance(url, str):
+                # A label is presentation metadata, never source identity.
+                # Keep the URL exact; ResearchSource still enforces its policy.
+                label = title.strip() if isinstance(title, str) else ""
+                if not label:
+                    try:
+                        label = urlparse(url).hostname or "Bron"
+                    except ValueError:
+                        label = "Bron"
+                cited.setdefault(url, label[:500])
 
         def read_part(part):
             if not isinstance(part, dict):
@@ -4187,7 +4211,8 @@ class PydanticConversationModel:
             try:
                 cited_sources.append(ResearchSource(title.strip(), url))
             except ValueError as error:
-                raise ConversationModelError("research citation is invalid") from error
+                from eva.adapters.model.contracts import ResearchCitationError
+                raise ResearchCitationError("research citation URL is invalid") from error
         consulted_sources: list[ResearchSource] = []
         for url, title in consulted.items():
             if url in cited:

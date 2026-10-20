@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "taskId": "E1.6",
+  "decision": "GO",
+  "reviewedAt": "2026-10-20T16:31:49.001179+00:00",
+  "scope": "Focused four-file research citation failure/usage handoff delta only. Not E1.6 source-change causality or family acceptance.",
+  "sourceHashes": {
+    "src/eva/adapters/model/contracts.py": "8770fc0a247894f88819a35b0f45be30a911a1c517d610c3aaaaa18da31d2e48",
+    "src/eva/adapters/model/pydantic_conversation.py": "89ff0f7ef7d8b4d4342d30f5fcc94177a72ae5b1b0c308c0263adf9dd1a3e069",
+    "src/eva/bootstrap/background_research.py": "c06535c3845c10808f6b8de28957ee6e4810a599afe9a35f79f10b73263fc1b2",
+    "src/eva/bootstrap/delegated_digital_runner.py": "83dbe80faf778193fe543492d25e736f7b56e6d910a6c949a1df06b66a3b6799"
+  },
+  "blockingFindings": [],
+  "limitations": [
+    "Original live citation metadata was not retained, so label length/blank title is not proven as the specific cause of that historical citation failure.",
+    "Source GO proves this targeted error/accounting contract, not a live successful follow-up, spontaneous source watch, E1.6 end-to-end completion, comparative quality or F2 acceptance.",
+    "Known registered usage remains partial or unknown where earlier evidence was incomplete; this change does not retroactively recover missing historical counters."
+  ],
+  "testSummary": "47 focused model/application and 10 isolated PG cases passed. Reviewer inspected, did not call model or repeat tests.",
+  "additionalEvidenceReview": {
+    "decision": "confirmed",
+    "sameCapturedResponse": true,
+    "referenceRejected": true,
+    "candidateAccepted": true,
+    "citedUrlsUnchanged": true,
+    "actualBlankCitationTitles": 3,
+    "reviewerModelCalls": 0,
+    "scope": "Parser improvement only; original historical metadata, research truth, E1.6 causal source-choice and F2 remain unproven."
+  }
+}

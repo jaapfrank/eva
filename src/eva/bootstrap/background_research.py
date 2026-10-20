@@ -12,6 +12,7 @@ class AccountedResearch:
             raise ValueError("research requires configured per-response bounds")
         self.input_bound, self.output_bound = input_bound, output_bound
         self.deadline_failure = None
+        self.citation_failure = None
 
     def native_research_timeout_seconds(self):
         return self.research.native_research_timeout_seconds()
@@ -43,9 +44,11 @@ class AccountedResearch:
             if not isinstance(usage, ConversationModelUsage):
                 usage = ConversationModelUsage.unmeasured()
             self.journal.complete_model_request(self.turn, request_id, usage, outcome="failed")
-            from eva.adapters.model.contracts import ConversationModelDeadlineExceeded
+            from eva.adapters.model.contracts import ConversationModelDeadlineExceeded, ResearchCitationError
             if isinstance(error, ConversationModelDeadlineExceeded):
                 self.deadline_failure = error
+            elif isinstance(error, ResearchCitationError):
+                self.citation_failure = error
             raise
         # Complete once, before any subsequent validation or cancellation can fail.
         self.journal.complete_model_request(self.turn, request_id, artifact.usage)
@@ -82,12 +85,16 @@ def task_research_tools(engine, model, *, turn, journal, authorize, grant, profi
             result = super().execute(*args, **kwargs)
             if research.deadline_failure is not None:
                 raise research.deadline_failure
+            if research.citation_failure is not None:
+                raise research.citation_failure
             return result
 
         def pending(self, *args, **kwargs):
             result = super().pending(*args, **kwargs)
             if research.deadline_failure is not None:
                 raise research.deadline_failure
+            if research.citation_failure is not None:
+                raise research.citation_failure
             return result
 
     return TaskResearchTools(engine, adapter, adapter, authorize_turn=authorize)
