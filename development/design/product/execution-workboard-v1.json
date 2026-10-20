@@ -7784,8 +7784,8 @@
                 "technicalCompletedAt": "2026-10-20T16:02:01.946869+00:00",
                 "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json",
                 "coldCommandFollowup": {
-                  "status": "diagnosed_pending_lossless_candidate",
-                  "checkedAt": "2026-10-20T16:56:43.177959+00:00",
+                  "status": "technically_completed_installed_and_live_verified",
+                  "checkedAt": "2026-10-20T17:09:17.742316+00:00",
                   "evidence": "development/evidence/product/cold-command-source-read-20261020.json",
                   "originalCompletionPreserved": true,
                   "scope": "Read checkpoint and full ordered source history in one statement snapshot, preserving hashes/projection/scope checks and fresh authority/STOP checks. Adopt only after focused PostgreSQL corruption/scope/concurrency tests, paired source-read evidence and independent review, then guard installation and test actual authenticated HTTP. Keep original cold failures and report total latency without claiming one-second cold commands."
@@ -12871,8 +12871,8 @@
               "technicalCompletedAt": "2026-10-20T16:02:01.946869+00:00",
               "completionEvidence": "development/evidence/product/e52-warm-route-20261020.json",
               "coldCommandFollowup": {
-                "status": "diagnosed_pending_lossless_candidate",
-                "checkedAt": "2026-10-20T16:56:43.177959+00:00",
+                "status": "technically_completed_installed_and_live_verified",
+                "checkedAt": "2026-10-20T17:09:17.742316+00:00",
                 "evidence": "development/evidence/product/cold-command-source-read-20261020.json",
                 "originalCompletionPreserved": true,
                 "scope": "Read checkpoint and full ordered source history in one statement snapshot, preserving hashes/projection/scope checks and fresh authority/STOP checks. Adopt only after focused PostgreSQL corruption/scope/concurrency tests, paired source-read evidence and independent review, then guard installation and test actual authenticated HTTP. Keep original cold failures and report total latency without claiming one-second cold commands."

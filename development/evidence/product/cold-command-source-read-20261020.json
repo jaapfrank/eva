@@ -1,6 +1,6 @@
 {
   "contract": "EvaColdCommandSourceRead/v1",
-  "status": "diagnosed_pending_lossless_candidate",
+  "status": "technically_completed_installed_and_live_verified",
   "startedAt": "2026-10-20T16:56:43.177959+00:00",
   "existing": "Installed exact reuse remains completed under original E5.2 criteria; unseen formulations use the normal model route.",
   "gap": "Current direct runtime profile:5.816s, one3.276s model request,1206 SQL calls/954.768ms;14 source-loader calls661.827ms. Each loader separately reads checkpoint and complete timeline.",
@@ -25,5 +25,241 @@
   },
   "credits": null,
   "voiceChanged": false,
-  "originalE52CriteriaChanged": false
+  "originalE52CriteriaChanged": false,
+  "pairedSourceReadBenchmark": {
+    "kind": "paired_readonly_source_benchmark",
+    "results": [
+      {
+        "pair": 0,
+        "variant": "baseline",
+        "elapsed_ms": 81.295,
+        "source_reads": 14,
+        "sql_statements": 112
+      },
+      {
+        "pair": 0,
+        "variant": "candidate",
+        "elapsed_ms": 37.772,
+        "source_reads": 14,
+        "sql_statements": 56
+      },
+      {
+        "pair": 1,
+        "variant": "candidate",
+        "elapsed_ms": 36.813,
+        "source_reads": 14,
+        "sql_statements": 56
+      },
+      {
+        "pair": 1,
+        "variant": "baseline",
+        "elapsed_ms": 69.374,
+        "source_reads": 14,
+        "sql_statements": 112
+      },
+      {
+        "pair": 2,
+        "variant": "baseline",
+        "elapsed_ms": 59.27,
+        "source_reads": 14,
+        "sql_statements": 112
+      },
+      {
+        "pair": 2,
+        "variant": "candidate",
+        "elapsed_ms": 45.352,
+        "source_reads": 14,
+        "sql_statements": 56
+      },
+      {
+        "pair": 3,
+        "variant": "candidate",
+        "elapsed_ms": 50.105,
+        "source_reads": 14,
+        "sql_statements": 56
+      },
+      {
+        "pair": 3,
+        "variant": "baseline",
+        "elapsed_ms": 92.84,
+        "source_reads": 14,
+        "sql_statements": 112
+      },
+      {
+        "pair": 4,
+        "variant": "baseline",
+        "elapsed_ms": 76.932,
+        "source_reads": 14,
+        "sql_statements": 112
+      },
+      {
+        "pair": 4,
+        "variant": "candidate",
+        "elapsed_ms": 43.189,
+        "source_reads": 14,
+        "sql_statements": 56
+      }
+    ],
+    "authorization_calls": 140,
+    "production_model_calls": 0,
+    "production_effects": 0,
+    "authorization_fixture_only": true,
+    "baseline_median_ms": 76.932,
+    "candidate_median_ms": 43.189
+  },
+  "actualHttp": {
+    "http-before": {
+      "saved_verified_final_ms": 7845.749,
+      "first_text_delta_ms": null,
+      "model_usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 9272,
+        "output_tokens": 40,
+        "model_attempts": 1
+      },
+      "silent_verified_action": true,
+      "image": "sha256:06bacf47f4f241ab0f098140eb62e5c4c838add6fdce7dc37f378c13c1a08d90"
+    },
+    "http-after": {
+      "saved_verified_final_ms": 4723.364,
+      "first_text_delta_ms": null,
+      "model_usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 9387,
+        "output_tokens": 40,
+        "model_attempts": 1
+      },
+      "silent_verified_action": true,
+      "image": "sha256:55408e71e302609d75a59d807d1a520376e6296ec6cd49259e7ded91be4aa065"
+    },
+    "http-integrated": {
+      "saved_verified_final_ms": 4481.53,
+      "first_text_delta_ms": null,
+      "model_usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 9384,
+        "output_tokens": 40,
+        "model_attempts": 1
+      },
+      "silent_verified_action": true,
+      "image": "sha256:4af5822b0b0bd5f6362532fabe5b9c010850507a298c94be0985300a75473c0d"
+    },
+    "comparisonLimit": "Different unseen formulations on three runtime starts, including a peer-integrated runtime. Actual use, not a paired latency benchmark; do not attribute the measured differences to this small source-read change.",
+    "afterModelTiming": {
+      "preparation_ms": 616,
+      "model_ms": 2738,
+      "model_transport_setup_ms": 113,
+      "response_headers_ms": 1072,
+      "cached_input_tokens": 0
+    },
+    "integratedModelTiming": {
+      "preparation_ms": 472,
+      "model_ms": 2677,
+      "model_transport_setup_ms": 108,
+      "response_headers_ms": 969,
+      "cached_input_tokens": 2816
+    }
+  },
+  "freshProofs": {
+    "distinct_operations": 4,
+    "fresh_STATE_VERIFIED": 4,
+    "final_state": "off",
+    "already_off_commands_not_new_physical_switch_proof": true
+  },
+  "usage": {
+    "evaluation_runtime": {
+      "model_attempts": 4,
+      "input_tokens": 37425,
+      "output_tokens": 160,
+      "setter_operations": 4,
+      "credits": null
+    },
+    "development": {
+      "benchmark_model_attempts": 0,
+      "benchmark_effects": 0,
+      "agent_tokens_and_credits": null
+    }
+  },
+  "tests": {
+    "passed": 31,
+    "postgres_version": "16.13",
+    "skipped": 0,
+    "first_fixture_timestamp_failure_retained": true,
+    "second_fixture_stop_thread_failure_retained": true
+  },
+  "installed": {
+    "core": {
+      "base": "sha256:06bacf47f4f241ab0f098140eb62e5c4c838add6fdce7dc37f378c13c1a08d90",
+      "candidate": "sha256:55408e71e302609d75a59d807d1a520376e6296ec6cd49259e7ded91be4aa065",
+      "installed_at": "2026-10-20T17:02:51.592223224Z",
+      "source_verified": true,
+      "configuration_preserved": true,
+      "healthy": true,
+      "subsequentlyIntegratedRuntime": {
+        "image": "sha256:4af5822b0b0bd5f6362532fabe5b9c010850507a298c94be0985300a75473c0d",
+        "started_at": "2026-10-20T17:05:44.04801411Z",
+        "name": "eva2-managed-b-slot3-core",
+        "source_hashes": {
+          "/opt/eva/src/eva/adapters/postgres/operational_timeline.py": "e7b113105c976bbdc33b500d000ff10ff7f8e95e147fbf5b6021a051d54c247a",
+          "/opt/eva/src/eva/providers/mcp_autonomy.py": "4a76c4d977c657bb2e13060983796d2dac54218d0a4da9f75a6a23578c19060c"
+        },
+        "healthy": true
+      }
+    },
+    "worker": {
+      "base": "sha256:c879570f9780c3a9cfb8c9c37cbc827222faf00e459da448052f801e46b70167",
+      "candidate": "sha256:65ca2458f0bfa1eaa2129730fe27a60198fbc6b1fb7d8fcba7982b92d7a19a93",
+      "installed_at": "2026-10-20T17:02:13.780785975Z",
+      "source_verified": true,
+      "configuration_preserved": true,
+      "healthy": true,
+      "subsequentlyIntegratedRuntime": {
+        "image": "sha256:8fab11a6ad1f5a3928a0ee3854ba29e8819647685e5ed1a6209df63c8eb12fbe",
+        "started_at": "2026-10-20T17:05:55.610073465Z",
+        "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "source_hashes": {
+          "/opt/eva/src/eva/adapters/postgres/operational_timeline.py": "e7b113105c976bbdc33b500d000ff10ff7f8e95e147fbf5b6021a051d54c247a",
+          "/opt/eva/src/eva/providers/mcp_autonomy.py": "4a76c4d977c657bb2e13060983796d2dac54218d0a4da9f75a6a23578c19060c"
+        },
+        "healthy": true
+      }
+    }
+  },
+  "sourceCommit": "a7806235cfe219c19369d669528a62831c2125a5",
+  "independentReview": "development/reviews/cold-command-source-read-review-20261020.json",
+  "cleanup": {
+    "retained_http_exchanges_erased": 3,
+    "unretained_diagnostic_exchange_erased": 1,
+    "original_pre_diagnostic_hashes_unchanged": 7747,
+    "before_install_protected_events_unchanged": 7747,
+    "after_install_protected_events_unchanged": 7753,
+    "integrated_cleanup_protected_events_unchanged": 7757,
+    "final_outdoor_state": "off",
+    "previously_pinned17automation_states_match_e48_baseline": true,
+    "complete_current_automation_inventory_claimed": false,
+    "diagnostic_full_state_array_bound_failure_retained": true
+  },
+  "limits": [
+    "The source-read optimization saves about34ms in a14-read microbenchmark batch; no complete cold-command speedup established.",
+    "First unseen commands still require one ordinary model decision; observed4.723s and4.482s finals do not meet a general1–2s cold-command goal.",
+    "Source snapshots are internally consistent. Changes committed after the statement snapshot are not visible in that snapshot. Existing fresh authority and STOP checks remain unchanged; this patch does not add a universal erasure recheck immediately before every use.",
+    "No voice source/configuration or speaker image changed, and no new physical microphone/playback acceptance claim.",
+    "Original completed warm-chat E5.2 criteria and E4.12 currentWork remain preserved."
+  ],
+  "cacheInvestigation": {
+    "officialDocumentation": [
+      "https://developers.openai.com/api/docs/guides/latency-optimization",
+      "https://developers.openai.com/api/docs/guides/prompt-caching"
+    ],
+    "finding": "Deployed requests already use stable scope-bound prompt-cache/session keys. Diagnostic and first installed requests reported0cached tokens; the integrated request actually reused2816cached tokens. Mutable instruction context changes across turns. The installed Codex transport admits no explicit cache-breakpoint fields.",
+    "decision": "Do not blindly forward public-API-only options, drop current person/memory context, or claim guaranteed cache reuse. No model/provider/prompt change included."
+  },
+  "checkedAt": "2026-10-20T17:08:10.485058+00:00",
+  "wholeProjectComplete": false,
+  "ownerAcceptance": false,
+  "completedAt": "2026-10-20T17:09:17.694873+00:00",
+  "boundedOutcome": "Fresh source-read optimization and atomic snapshot installed, integrated and live verified; general cold-command latency remains4.482s in the latest single observation."
 }

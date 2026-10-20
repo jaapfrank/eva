@@ -18,5 +18,21 @@
   "sourceHashes": {
     "src/eva/adapters/postgres/operational_timeline.py": "e7b113105c976bbdc33b500d000ff10ff7f8e95e147fbf5b6021a051d54c247a",
     "src/eva/providers/mcp_autonomy.py": "4a76c4d977c657bb2e13060983796d2dac54218d0a4da9f75a6a23578c19060c"
+  },
+  "deliveryReview": {
+    "decision": "GO",
+    "reviewer": "/root/review_cursor",
+    "checkedAt": "2026-10-20T17:09:17.694873+00:00",
+    "evidence": "development/evidence/product/cold-command-source-read-20261020.json",
+    "finalEvidenceSha256": "f6f17e0f3b21ed6032d2c66bf814c7a63d4c9ada79814110d8a120f297959499",
+    "scope": "Bounded source-read followup only, no general cold-speed or physical/voice acceptance.",
+    "confirmed": [
+      "31focused tests passed.",
+      "Paired source-read batch median76.932→43.189ms;112→56SQL statements.",
+      "Actual ordinary authenticated HTTP executed one allowed MCP action plus freshSTATE_VERIFIED on candidate and later peer-integrated runtime.",
+      "Exact cleanup3retainedHTTP+1unretaineddiagnostic;7747pre-diagnostic hashes unchanged.",
+      "Source hashes preserved by subsequent peer integration; no voice source/configuration changes."
+    ],
+    "requestedTextCorrectionApplied": true
   }
 }
