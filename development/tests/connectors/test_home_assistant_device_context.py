@@ -112,3 +112,21 @@ def test_rejected_registry_refresh_cannot_keep_an_authorized_old_snapshot():
         while not errors and time.monotonic()<deadline:time.sleep(.002)
         with pytest.raises(RuntimeError):context.snapshot()
     assert len(errors)==1 and isinstance(errors[0],RuntimeError)
+
+
+def test_binding_and_catalog_reads_keep_fences_without_building_unused_inventory(monkeypatch):
+    with connected() as (context,socket,errors):
+        expected=context.snapshot()
+        monkeypatch.setattr(context,"_inventory",lambda:pytest.fail("unused full inventory"))
+        binding=context.binding_snapshot()
+        assert binding["binding_sha256"]==expected["binding_sha256"] and binding["complete"]
+        binding["binding_sha256"]="caller modified"
+        catalog=context.catalog("light");assert catalog==expected["states"]
+        catalog[0]["attributes"]["friendly_name"]="caller modified"
+        assert context.catalog("light")[0]["attributes"]["friendly_name"]=="Tuin"
+        socket.delta({"c":{"light.yard":{"+":{"a":{"friendly_name":"Achtertuin"}}}}})
+        assert context.binding_snapshot()["binding_sha256"]!=expected["binding_sha256"]
+        socket.pongs=False
+        with pytest.raises(TimeoutError):context.binding_snapshot(timeout=.02)
+    assert not errors
+    with pytest.raises(RuntimeError):context.binding_snapshot()

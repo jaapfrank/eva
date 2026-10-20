@@ -137,8 +137,13 @@ def test_provider_entrypoint_accepts_only_file_and_release_authority() -> None:
             )
 
 
+@pytest.mark.parametrize("revision,accepted", [
+    ("4e_0010_memory_compaction", True), ("4e_0011_timeline_type_time", True),
+    ("4e_0009_restore_hold", False), ("unknown-future-schema", False), (None, False),
+])
 def test_health_check_validates_dependencies_lease_database_and_schema(
     monkeypatch: pytest.MonkeyPatch,
+    revision, accepted,
 ) -> None:
     observed: list[object] = []
     settings = OpenAIDelegatedWorkSettings.from_environment(
@@ -160,7 +165,7 @@ def test_health_check_validates_dependencies_lease_database_and_schema(
 
         def scalar(self, statement):  # type: ignore[no-untyped-def]
             observed.append(str(statement))
-            return service_module._SCHEMA_HEAD
+            return revision
 
     class Engine:
         def connect(self) -> Connection:
@@ -184,7 +189,11 @@ def test_health_check_validates_dependencies_lease_database_and_schema(
     )
     monkeypatch.setattr(service_module.sa, "create_engine", lambda dsn, **_k: Engine())
 
-    assert check_openai_delegated_work(settings) is None
+    if accepted:
+        assert check_openai_delegated_work(settings) is None
+    else:
+        with pytest.raises(RuntimeError, match="schema head differs"):
+            check_openai_delegated_work(settings)
     assert observed == [
         "dependencies",
         Path("/run/eva/model-lease/auth.json"),

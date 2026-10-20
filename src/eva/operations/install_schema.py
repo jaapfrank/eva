@@ -56,8 +56,9 @@ _KNOWN_FORWARD_REVISIONS = {
     "4e_0008_portable_current",
     "4e_0009_restore_hold",
     "4e_0010_memory_compaction",
+    "4e_0011_timeline_type_time",
 }
-_HEAD_REVISION = "4e_0010_memory_compaction"
+_HEAD_REVISION = "4e_0011_timeline_type_time"
 
 
 @dataclass(frozen=True, slots=True)

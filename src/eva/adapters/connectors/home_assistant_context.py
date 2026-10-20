@@ -194,7 +194,7 @@ class HomeAssistantDeviceContext:
         finally:
             self.disconnect()
 
-    def snapshot(self, *, timeout=2):
+    def _read(self, project, *, timeout=2):
         waiter = threading.Event()
         with self._lock:
             if not self._ready():
@@ -207,31 +207,42 @@ class HomeAssistantDeviceContext:
             with self._lock:
                 if not self._ready() or number in self._waiters or self._clock() - self._last_pong > 8:
                     raise RuntimeError("HA live context changed during read")
-                from eva.adapters.connectors.home_assistant_admin import HomeAssistantAdminAdapter
-                inventory = HomeAssistantAdminAdapter._project_household(
-                    self._registries["areas"], self._registries["devices"],
-                    self._registries["entities"], list(self._states.values()))
-                if self._binding is None:
-                    observed = {"scope": self._scope_sha256,
-                        "version": self._version, "generation": self._generation,
-                        "connection_epoch": self._connection_epoch,
-                        "registries": self._registries,
-                        "names_and_groups": {k: {field: v["attributes"].get(field)
-                            for field in ("friendly_name", "entity_id")} for k, v in self._states.items()
-                            if k.startswith(("light.", "switch."))}}
-                    # HA registry metadata is external JSON (including finite
-                    # float timestamps), not an EvaCanonicalJSON contract.
-                    self._binding = hashlib.sha256(json.dumps(observed, ensure_ascii=False,
-                        sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
-                return {"states": deepcopy(list(self._states.values())), "inventory": inventory,
-                    "binding_sha256": self._binding, "source": "ha_subscribe_entities",
-                    "checked_at": datetime.now(UTC).isoformat(), "complete": True}
+                return project()
         finally:
             with self._lock:
                 self._waiters.pop(number, None)
 
+    def _metadata(self):
+        if self._binding is None:
+            observed = {"scope": self._scope_sha256,
+                "version": self._version, "generation": self._generation,
+                "connection_epoch": self._connection_epoch,
+                "registries": self._registries,
+                "names_and_groups": {k: {field: v["attributes"].get(field)
+                    for field in ("friendly_name", "entity_id")} for k, v in self._states.items()
+                    if k.startswith(("light.", "switch."))}}
+            # HA registry metadata includes external finite JSON floats.
+            self._binding = hashlib.sha256(json.dumps(observed, ensure_ascii=False,
+                sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+        return {"binding_sha256": self._binding, "source": "ha_subscribe_entities",
+                "checked_at": datetime.now(UTC).isoformat(), "complete": True}
+
+    def _inventory(self):
+        from eva.adapters.connectors.home_assistant_admin import HomeAssistantAdminAdapter
+        return HomeAssistantAdminAdapter._project_household(
+            self._registries["areas"], self._registries["devices"],
+            self._registries["entities"], list(self._states.values()))
+
+    def binding_snapshot(self, *, timeout=2):
+        return self._read(self._metadata, timeout=timeout)
+
+    def snapshot(self, *, timeout=2):
+        return self._read(lambda: {**self._metadata(),
+            "states": deepcopy(list(self._states.values())), "inventory": self._inventory()}, timeout=timeout)
+
     def inventory(self):
-        return self.snapshot()["inventory"]
+        return self._read(self._inventory)
 
     def catalog(self, domain):
-        return [row for row in self.snapshot()["states"] if row["entity_id"].startswith(domain + ".")]
+        return self._read(lambda: deepcopy([row for row in self._states.values()
+            if row["entity_id"].startswith(domain + ".")]))

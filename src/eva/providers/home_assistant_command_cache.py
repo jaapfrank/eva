@@ -133,7 +133,7 @@ class HomeAssistantCommandCache:
                 and require_initiative_context(turn) is None)
 
     def _binding(self, turn):
-        snapshot = self._devices.snapshot()
+        snapshot = self._devices.binding_snapshot()
         profile = self._profile.snapshot()
         stable_profile = {k: v for k, v in profile.items() if k not in {"observed_at", "profile_sha256"}}
         return {"version": _VERSION, "configuration_sha256": self._configuration,

@@ -22,6 +22,7 @@ from tests.postgres.test_scheduled_failure_return import database
 class Devices:
     binding="a"*64
     def snapshot(self):return {"binding_sha256":self.binding}
+    binding_snapshot=snapshot
 class Profile:
     def snapshot(self):return {"supported":True,"ha_version":"2026.9.2"}
 

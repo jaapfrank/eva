@@ -33,7 +33,10 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.operations.delegated_work_worker import ChildRunner, DelegatedWorkWorker
 
-_SCHEMA_HEAD = "4e_0010_memory_compaction"
+# The new revision adds only a nonunique lookup index. Both revisions have
+# identical worker authority/data contracts during installation and recovery.
+_SCHEMA_HEAD = "4e_0011_timeline_type_time"
+_COMPATIBLE_SCHEMA_HEADS = frozenset({"4e_0010_memory_compaction", _SCHEMA_HEAD})
 
 
 def _provider_release() -> DelegatedWorkReleaseSelector:
@@ -452,7 +455,7 @@ def check_openai_delegated_work(
             revision = connection.scalar(
                 sa.text("SELECT version_num FROM public.eva_alembic_version")
             )
-            if revision != _SCHEMA_HEAD:
+            if revision not in _COMPATIBLE_SCHEMA_HEADS:
                 raise RuntimeError("delegated worker schema head differs")
     finally:
         engine.dispose()

@@ -122,6 +122,13 @@ sa.Index(
     operational_events.c.operation_id,
 )
 sa.Index(
+    "ix_operational_events__type_time",
+    operational_events.c.tenant_id,
+    operational_events.c.installation_id,
+    operational_events.c.event_type,
+    operational_events.c.occurred_at,
+)
+sa.Index(
     "ix_operational_checkpoints__status",
     operational_checkpoints.c.tenant_id,
     operational_checkpoints.c.installation_id,
