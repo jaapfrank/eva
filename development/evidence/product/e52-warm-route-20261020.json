@@ -753,7 +753,8 @@
     "admissions": 22,
     "fresh_state_verified": 22,
     "new_operations": 22,
-    "journal_file": "journal-41c0bdff6b9a1b06.private.json"
+    "journal_file": "journal-dbbbcb9f0e928df4.private.json",
+    "measured_core_image": "sha256:76648df990aafe70b446441b46e2d89f3e811ab637472426fca7fa31f8a55ed2"
   },
   "modelMemoryBoundary": {
     "baseline": {
@@ -1420,5 +1421,11 @@
       "noScriptedModelChoices": true
     },
     "status": "independently_reviewed_complete"
+  },
+  "finalChatProofBeforePeer": {
+    "admissions": 22,
+    "fresh_state_verified": 22,
+    "new_operations": 22,
+    "journal_file": "journal-41c0bdff6b9a1b06.private.json"
   }
 }

@@ -15,7 +15,7 @@
   ],
   "evidence": "development/evidence/product/e52-warm-route-20261020.json",
   "reviewedDraftEvidenceSha256": "0545adf384742c070dd039db7fe1c1d6ef5bef21b43c38450711f8e0892e0ce1",
-  "finalEvidenceSha256": "e2372af246d6b767709629f247b76288f64c4c5fe6bdfa0a5cb556c98d0a051a",
+  "finalEvidenceSha256": "3a4db8aa58343b68380e273a9f3441fe8f836267cd22abc77bf93f962b00e37b",
   "confirmed": [
     "Existing optional HA module owns target validation, MCP effect and independent current readback through the ordinary durable executor. No provider-specific core router.",
     "Original known warm-chat criterion met on actual final source:20/20fresh zero-model operations, median878.4515ms and nearest-rankp951107.45ms. Earlier failed20-sample round and cold/ASRmisses retained.",
@@ -80,5 +80,6 @@
     "wholeProjectComplete": false
   },
   "latestValidatedCoreImage": "sha256:76648df990aafe70b446441b46e2d89f3e811ab637472426fca7fa31f8a55ed2",
-  "latestValidatedWorkerImage": "sha256:40e0d5ce2c1db7085c78fe81e229359977f8a0115c2ee74a2d2270acf2f28719"
+  "latestValidatedWorkerImage": "sha256:40e0d5ce2c1db7085c78fe81e229359977f8a0115c2ee74a2d2270acf2f28719",
+  "evidenceReferenceCorrection": "FinalChatProof now explicitly points to22current peer-integrated operations; older journal retained in finalChatProofBeforePeer. No measurement or criterion changed."
 }
