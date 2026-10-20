@@ -28,7 +28,7 @@ from eva.contracts.delegated_work import (
 from eva.contracts.delegated_digital_work import DelegatedHouseholdDigitalWorkSpec, DelegatedInitiativeDigitalWorkSpec
 from eva.contracts.workboard import WorkBoard
 from eva.application.delegated_work_delivery import PrivateWorkDestination
-from eva.application.initiative_execution import unstarted_profile_refresh
+from eva.application.initiative_execution import unstarted_profile_refresh, certified_preparation_evidence, valid_preparation_evidence
 from eva.adapters.postgres.delegated_work_delivery import record_admission_destination
 
 principal_bindings = metadata.tables["eva_core.principal_bindings"]
@@ -409,7 +409,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 if isinstance(previous.spec, DelegatedInitiativeDigitalWorkSpec):
                     if (not isinstance(spec, DelegatedInitiativeDigitalWorkSpec)
                             or spec.origin != previous.spec.origin
-                            or (previous.state != "failed" and not unstarted_profile_refresh(previous))
+                            or (previous.state != "failed" and not unstarted_profile_refresh(previous)
+                    and certified_preparation_evidence(previous) is None)
                             or previous.stop_requested_at is not None
                             or previous.lease_owner is not None or previous.retention_until <= occurred_at
                             or _native_guard is None

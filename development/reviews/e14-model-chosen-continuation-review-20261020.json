@@ -158,6 +158,42 @@
         "network": "none",
         "operation": "Read candidate source hashes only; app not started, no secrets or live volumes"
       }
+    },
+    {
+      "reviewer": "independent-subagent-e47_mcp_catalog",
+      "decision": "GO",
+      "reviewedAt": "2026-10-20T14:27:19.848666+00:00",
+      "scope": "Four owned production deltas and new regression test; read-only source review. No model calls, deployment or voice changes.",
+      "sourceHashes": {
+        "src/eva/application/initiative_execution.py": "4a74058e014b71655a9d9845a6ef3966b236b6dfa7e59e9e50fbc98a603dd061",
+        "src/eva/adapters/postgres/initiative_execution.py": "35dfd668c66b0370fd3e384373725ba87e54bf25d52c3fe0dabeaf99b0643374",
+        "src/eva/adapters/postgres/delegated_work.py": "d7c8123e758d445ff30acb7604a43e78c332c2ee134deadb8714d3ff5f0c23ef",
+        "src/eva/bootstrap/native_initiative_work.py": "223799a7528bad44dc50cc813a268dfc20e9cef8425f17f0600b5b54ebd2ce5b"
+      },
+      "blockingFindings": [],
+      "positiveFindings": [
+        "No automatic selector widened; ordinary unstarted selector still excludes ambiguous work.",
+        "Host recovery requires changed program with same four logical release hashes, same mandate and current grant coverage.",
+        "Locked previous row is reloaded and certificate rechecked before admission.",
+        "Deterministic successor, same task/source/execution/grant, retained ambiguous state and real usage preserved.",
+        "Existing parent/block/owner-scope checks and tool-execution guard remain in use."
+      ],
+      "proofReference": "../e14-cross-day-continuity-20261020/producer-no-dispatch-independent/proof.private.json",
+      "testNote": "Read new test source; root reports its targeted run. No additional test execution by reviewer.",
+      "closedFindings": [
+        {
+          "id": "CERTIFICATE_ATTEMPT_SCOPE",
+          "resolution": "Both emission and acceptance require frozen full canonical evidence hash. Independently reconstructed from the retained forensic proof: c23436b8afb3077371bfa73aba97c58da689e3ee6936ca2b77a10e7c934a4219. Exact work/spec/call/usage/program/fingerprint/cause/scope therefore bound; distinct work/call/usage explicitly rejected by regression cases."
+        }
+      ],
+      "testSourceHashes": {
+        "development/tests/postgres/test_certified_native_preparation_recovery.py": "6e7503f96e77ea581ef4cd9449b0065c7b226fe41bd88487d2d9c94215dde576"
+      },
+      "limitations": [
+        "GO covers only bounded code recovery and exact audited attempt, not independent autonomous execution/completion/later use.",
+        "Old ambiguous state and usage remain unchanged. No automatic selector enlargement.",
+        "No tests, model calls or deployments executed by reviewer; root targeted run remains separately recorded."
+      ]
     }
   ],
   "limitation": "Source and handoff review is not actual independent evaluation of later result use."

@@ -15,7 +15,7 @@ from eva.adapters.postgres.operational_timeline import (
 )
 from eva.application.conversation import ConversationConflict, ConversationTurn
 from eva.application.memory_audience import MemoryAudience
-from eva.application.initiative_execution import unstarted_profile_refresh
+from eva.application.initiative_execution import unstarted_profile_refresh, certified_preparation_evidence, valid_preparation_evidence
 from eva.contracts.canonical_json import canonical_sha256
 
 
@@ -344,7 +344,7 @@ class PostgresInitiativeAuthority:
                         or data["generation"] != prior[1] + 1
                         or data.get("source_ingress_sha256") != spec.source_ingress_sha256
                         or data.get("recovery_kind") not in {"explicit_private_owner_native_resume",
-                            "host_unstarted_profile_refresh"}
+                            "host_unstarted_profile_refresh", "host_certified_prepare_recovery"}
                         or (data.get("recovery_kind") == "host_unstarted_profile_refresh"
                             and (data.get("previous_mandate_sha256") != digest
                                 or data.get("unstarted_evidence_sha256") != canonical_sha256({
@@ -352,6 +352,11 @@ class PostgresInitiativeAuthority:
                                     "spec_sha256": data.get("previous_spec_sha256"),
                                     "claim_count": 0, "call_id": None, "call_started_at": None,
                                     "error_code": "unstarted_profile_superseded"})))
+                        or (data.get("recovery_kind") == "host_certified_prepare_recovery"
+                            and (data.get("previous_mandate_sha256") != digest
+                                or not valid_preparation_evidence(data.get("preparation_evidence"),
+                                    work_id=data.get("previous_work_id"), spec_sha256=data.get("previous_spec_sha256"))
+                                or data.get("preparation_evidence_sha256") != canonical_sha256(data.get("preparation_evidence"))))
                         or not isinstance(data.get("recovery_ingress_sha256"), str)
                         or re.fullmatch(r"[0-9a-f]{64}", data["recovery_ingress_sha256"]) is None):
                     continue
@@ -385,7 +390,8 @@ class PostgresInitiativeAuthority:
         from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
         if (type(previous.spec) is not DelegatedInitiativeDigitalWorkSpec
                 or type(spec) is not DelegatedInitiativeDigitalWorkSpec
-                or (previous.state != "failed" and not unstarted_profile_refresh(previous))
+                or (previous.state != "failed" and not unstarted_profile_refresh(previous)
+                    and certified_preparation_evidence(previous) is None)
                 or previous.stop_requested_at is not None
                 or previous.lease_owner is not None or previous.retention_until <= now
                 or spec.origin != previous.spec.origin or spec.source != previous.spec.source
@@ -697,7 +703,8 @@ class NativeInitiativeGuard:
                     or data.get("work_id") != previous.spec.work_id
                     or data.get("spec_sha256") != previous.spec.sha256
                     or data.get("work_state") != previous.state
-                    or (previous.state != "failed" and not unstarted_profile_refresh(previous))
+                    or (previous.state != "failed" and not unstarted_profile_refresh(previous)
+                    and certified_preparation_evidence(previous) is None)
                     or data.get("delegated_usage") != (None if previous.usage is None else previous.usage.to_payload())
                     or self.authority._work_admission(events, previous.spec) is None):
                 raise InitiativeMandateDenied("native failure was stopped, superseded or is uncertain")

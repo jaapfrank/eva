@@ -13,7 +13,7 @@ from eva.adapters.postgres.conversation_journal import PostgresConversationJourn
 from eva.contracts.canonical_json import canonical_sha256
 
 
-from eva.application.initiative_execution import NativeInitiativeDelegation, unstarted_profile_refresh
+from eva.application.initiative_execution import NativeInitiativeDelegation, unstarted_profile_refresh, certified_preparation_evidence
 
 
 def configured_initiative_authority(owner_store):
@@ -75,7 +75,8 @@ def admit_native_initiative(authority, claim, service):
 
 
 def resume_native_initiative(service, previous, *, created, recovery_ingress_sha256=None,
-        recovery_conversation_id=None, recovery_message_id=None, _profile_refresh=False):
+        recovery_conversation_id=None, recovery_message_id=None, _profile_refresh=False,
+        _certified_prepare_recovery=False):
     """Retain the native namespace for explicit recovery or proven unstarted refresh."""
     import sqlalchemy as sa
     from eva.adapters.postgres.current_catalog import delegated_work_runs
@@ -100,11 +101,14 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
         raise InitiativeMandateDenied("native recovery requires its original typed source")
     _, mandate_sha = authority.policy()
     previous_mandate_sha = authority._work_mandate(old)
-    if _profile_refresh:
+    preparation = certified_preparation_evidence(previous) if _certified_prepare_recovery else None
+    if _certified_prepare_recovery and (_profile_refresh or preparation is None):
+        raise InitiativeMandateDenied("certified recovery requires its exact historical preparation failure")
+    if _profile_refresh or _certified_prepare_recovery:
         from eva.adapters.postgres.delegated_work import DelegatedWorkReleaseSelector
         old_release = DelegatedWorkReleaseSelector.from_spec(old)
         current_release = service.digital_profile.release
-        if (not unstarted_profile_refresh(previous) or mandate_sha != previous_mandate_sha
+        if ((_profile_refresh and not unstarted_profile_refresh(previous)) or mandate_sha != previous_mandate_sha
                 or old_release.worker_program_sha256 == current_release.worker_program_sha256
                 or any(getattr(old_release, name) != getattr(current_release, name) for name in (
                     "worker_profile_release_sha256", "model_profile_release_sha256",
@@ -165,6 +169,8 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
             raise InitiativeMandateDenied("native recovery admission deadline expired")
         if _profile_refresh and not unstarted_profile_refresh(current):
             raise InitiativeMandateDenied("unstarted refresh evidence changed before admission")
+        if _certified_prepare_recovery and certified_preparation_evidence(current) != preparation:
+            raise InitiativeMandateDenied("certified preparation evidence changed before admission")
         authority.timeline._scope(conn)
         guard, _ = authority.bind_resume_work(current, spec, now=now, _connection=conn)
         if guard.mandate_sha != mandate_sha:
@@ -185,8 +191,10 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
                 "generation": spec.generation,
                 "previous_work_id": old.work_id, "previous_spec_sha256": old.sha256,
                 "source_ingress_sha256": old.source_ingress_sha256,
-                "recovery_kind": ("host_unstarted_profile_refresh" if _profile_refresh
-                    else "explicit_private_owner_native_resume"),
+                "recovery_kind": ("host_certified_prepare_recovery" if _certified_prepare_recovery else
+                    "host_unstarted_profile_refresh" if _profile_refresh else "explicit_private_owner_native_resume"),
+                **({"preparation_evidence": preparation,
+                    "preparation_evidence_sha256": canonical_sha256(preparation)} if _certified_prepare_recovery else {}),
                 **({"unstarted_evidence_sha256": canonical_sha256({
                     "work_id": old.work_id, "spec_sha256": old.sha256,
                     "claim_count": 0, "call_id": None, "call_started_at": None,
@@ -194,7 +202,7 @@ def resume_native_initiative(service, previous, *, created, recovery_ingress_sha
                 "recovery_ingress_sha256": (canonical_sha256({
                     "work_id": old.work_id, "spec_sha256": old.sha256,
                     "current_program_sha256": spec.worker_program_sha256})
-                    if _profile_refresh else recovery_ingress_sha256),
+                    if (_profile_refresh or _certified_prepare_recovery) else recovery_ingress_sha256),
                 "recovery_conversation_id": recovery_conversation_id,
                 "recovery_message_id": recovery_message_id})
         return admission

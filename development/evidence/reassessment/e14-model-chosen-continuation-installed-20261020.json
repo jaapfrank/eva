@@ -1,7 +1,7 @@
 {
   "contract": "EvaModelChosenContinuation/v1",
   "taskId": "E1.4",
-  "checkedAt": "2026-10-20T14:09:09.534648+00:00",
+  "checkedAt": "2026-10-20T14:30:51.603771+00:00",
   "state": "installed_observing_ordinary_followup",
   "technicalTaskCompleted": false,
   "ownerAcceptance": false,
@@ -38,7 +38,7 @@
     "voiceChanged": false
   },
   "runtimeEvidence": {
-    "observedThrough": "2026-10-20T13:57:47+00:00",
+    "observedThrough": "2026-10-20T14:14:07+00:00",
     "newFollowupSelected": false,
     "newFollowupCompleted": false,
     "laterResultUsed": false,
@@ -52,13 +52,30 @@
       "toolCalls": 1,
       "newInitiative": false,
       "usedOfferedMemorySearch": false
+    },
+    "v6Review": {
+      "decidedAt": "2026-10-20T14:13:48+00:00",
+      "choice": "considered_pause",
+      "modelResponses": 1,
+      "inputTokens": 15161,
+      "outputTokens": 136,
+      "toolCalls": 1,
+      "newInitiative": false,
+      "usedOfferedMemorySearch": false
     }
   },
   "usage": {
     "isolatedCheckProviderCalls": 0,
     "candidateProbeProviderCalls": 0,
     "developmentCreditCost": null,
-    "runtimeCreditCost": null
+    "runtimeCreditCost": null,
+    "observedNewOrientationTotals": {
+      "modelResponses": 2,
+      "inputTokens": 30284,
+      "outputTokens": 279,
+      "totalTokens": 30563,
+      "toolCalls": 2
+    }
   },
   "limits": [
     "Synthetic checks prove contract transfer, not actual later model use.",
@@ -103,6 +120,53 @@
       "voiceChanged": false,
       "executionPinCount": 63,
       "review": "development/reviews/e14-model-chosen-continuation-review-20261020.json"
+    }
+  },
+  "remaining": "No completed follow-up observed. Investigate whether the exact old first-tool preparation refusal can independently prove no execution effect; no uncertain task was reclassified or replayed.",
+  "certifiedTechnicalRecovery": {
+    "status": "installed_original_self_chosen_followup_running",
+    "operatorAssistance": true,
+    "originalAttemptState": "ambiguous_preserved",
+    "proofSha256": "59a661eccc7aa181f8d15d540c17dec296aa3c06125fc6ad4e757103b510d414",
+    "certificateSha256": "c23436b8afb3077371bfa73aba97c58da689e3ee6936ca2b77a10e7c934a4219",
+    "scope": "Exactly audited retained native attempt: no task-tool dispatch. The original model call and database activity were not zero.",
+    "binding": [
+      "Exact work/spec/call/usage/producer/fingerprint",
+      "Current same owner, mandate, grant, source, execution and four logical release hashes",
+      "Changed program and one deterministic successor",
+      "No automatic ambiguous selector expansion"
+    ],
+    "tests": {
+      "certifiedRecovery": {
+        "passed": 11,
+        "seconds": 13.06
+      },
+      "ordinaryUnstartedRecovery": {
+        "passed": 14,
+        "seconds": 18.4,
+        "firstRunIncludedFixtureFailures": 8
+      },
+      "fixtureCorrections": [
+        "Existing usage object must remain typed; corrected synthetic test fixture.",
+        "Frozen full certificate binding added after independent blocker; targeted eleven cases passed."
+      ],
+      "modelCalls": 0
+    },
+    "limitation": "This is operator repair, not independently learned problem-solving; actual completion and later result use still required.",
+    "installation": {
+      "status": "running_with_retained_mounts",
+      "coreImage": "sha256:0c250835b203e8c285c5b305bea86cd7d6c729215b0b9ea9061d5af9e4566707",
+      "workerImage": "sha256:22daf0c5762cf5dcba0fcb86bab284fad3adf930f2be459144b25a0da2845856",
+      "releaseEqual": true,
+      "executionPinCount": 65,
+      "voiceChanged": false
+    },
+    "admission": {
+      "disposition": "inserted",
+      "spec_sha256": "7668780fe9d49396a37e9d3a11a094aa7a2da08e3d47a5ea7cfd0af7f3960256",
+      "generation": 3,
+      "oldStatePreserved": "ambiguous",
+      "modelCallsByOperator": 0
     }
   }
 }
