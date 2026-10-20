@@ -3565,7 +3565,7 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "De gecombineerde HA-bronvraag is geïnstalleerd en werkelijk gebruikt: twee modelrondes, antwoordaudio na 14,008 s. Vervolg de resterende antwoordlatentie en oorspronkelijke spraakcriteria binnen deze bestaande kaart; volledige fysieke acceptatie is hiermee niet ingevuld.",
+                "nextAction": "Meet dezelfde weersvraag via echte dashboardchat en spraak; grens maximaal 2 seconden voor inhoudelijk chatantwoord. Splits voorbereiding, model en brontransport uit en verbeter het gemeten knelpunt zonder identiteit/geheugen/bevoegdheden te verliezen.",
                 "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
@@ -3841,11 +3841,10 @@
                   "ownerAccepted": false
                 },
                 "executionPlan": {
-                  "path": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
-                  "status": "installed_measured_targeted_repair",
-                  "updatedAt": "2026-10-20T09:51:06.774021+00:00",
-                  "ownerAcceptance": false,
-                  "independentReview": "development/reviews/ha-query-latency-20261020.json"
+                  "path": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json",
+                  "status": "baseline_measured_optimization_in_progress",
+                  "updatedAt": "2026-10-20T10:25:20.831607+00:00",
+                  "ownerAcceptance": false
                 }
               },
               {
@@ -7297,7 +7296,7 @@
                   "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                   "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
                 ],
-                "nextAction": "Na de bouw eerst meetopzet en grenzen vastzetten, daarna de huidige installatie gericht integreren en echte uitkomst meten.",
+                "nextAction": "Meet dezelfde weersvraag via echte dashboardchat en spraak; grens maximaal 2 seconden voor inhoudelijk chatantwoord. Splits voorbereiding, model en brontransport uit en verbeter het gemeten knelpunt zonder identiteit/geheugen/bevoegdheden te verliezen.",
                 "status": "planned",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -7305,7 +7304,13 @@
                 "scopeOrigin": "home-module-latency-20261019",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
-                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+                "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
+                "executionPlan": {
+                  "path": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json",
+                  "status": "baseline_measured_optimization_in_progress",
+                  "updatedAt": "2026-10-20T10:25:20.831607+00:00",
+                  "ownerAcceptance": false
+                }
               }
             ],
             "completion": {
@@ -7563,20 +7568,20 @@
             "C3.5",
             "C3.6"
           ],
-          "status": "ha_query_latency_repair_installed_measured",
+          "status": "chat_voice_latency_optimization",
           "startedAt": "2026-10-19T07:08:01.588667+00:00",
           "activeOtherWorkPreserved": "E5.1",
           "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
           "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
           "independentReview": "development/reviews/ha-query-latency-20261020.json",
-          "updatedAt": "2026-10-20T09:51:06.774021+00:00",
+          "updatedAt": "2026-10-20T10:25:20.831607+00:00",
           "physicalAcceptance": "not_observed_after_repair",
           "executionPlan": {
             "path": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
             "status": "installed_measured_targeted_repair",
             "updatedAt": "2026-10-20T09:51:06.774021+00:00"
           },
-          "latestEvidence": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json"
+          "latestEvidence": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json"
         }
       }
     },
@@ -8201,7 +8206,7 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "De gecombineerde HA-bronvraag is geïnstalleerd en werkelijk gebruikt: twee modelrondes, antwoordaudio na 14,008 s. Vervolg de resterende antwoordlatentie en oorspronkelijke spraakcriteria binnen deze bestaande kaart; volledige fysieke acceptatie is hiermee niet ingevuld.",
+              "nextAction": "Meet dezelfde weersvraag via echte dashboardchat en spraak; grens maximaal 2 seconden voor inhoudelijk chatantwoord. Splits voorbereiding, model en brontransport uit en verbeter het gemeten knelpunt zonder identiteit/geheugen/bevoegdheden te verliezen.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -8477,11 +8482,10 @@
                 "ownerAccepted": false
               },
               "executionPlan": {
-                "path": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
-                "status": "installed_measured_targeted_repair",
-                "updatedAt": "2026-10-20T09:51:06.774021+00:00",
-                "ownerAcceptance": false,
-                "independentReview": "development/reviews/ha-query-latency-20261020.json"
+                "path": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json",
+                "status": "baseline_measured_optimization_in_progress",
+                "updatedAt": "2026-10-20T10:25:20.831607+00:00",
+                "ownerAcceptance": false
               }
             },
             {
@@ -11933,7 +11937,7 @@
                 "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                 "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
               ],
-              "nextAction": "Na de bouw eerst meetopzet en grenzen vastzetten, daarna de huidige installatie gericht integreren en echte uitkomst meten.",
+              "nextAction": "Meet dezelfde weersvraag via echte dashboardchat en spraak; grens maximaal 2 seconden voor inhoudelijk chatantwoord. Splits voorbereiding, model en brontransport uit en verbeter het gemeten knelpunt zonder identiteit/geheugen/bevoegdheden te verliezen.",
               "status": "planned",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -11941,7 +11945,13 @@
               "scopeOrigin": "home-module-latency-20261019",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "assignment": "Gepland; geen nieuwe implementatie of installatie gestart bij registratie.",
-              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte."
+              "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
+              "executionPlan": {
+                "path": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json",
+                "status": "baseline_measured_optimization_in_progress",
+                "updatedAt": "2026-10-20T10:25:20.831607+00:00",
+                "ownerAcceptance": false
+              }
             }
           ],
           "completion": {
@@ -12199,20 +12209,20 @@
           "C3.5",
           "C3.6"
         ],
-        "status": "ha_query_latency_repair_installed_measured",
+        "status": "chat_voice_latency_optimization",
         "startedAt": "2026-10-19T07:08:01.588667+00:00",
         "activeOtherWorkPreserved": "E5.1",
         "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
         "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
         "independentReview": "development/reviews/ha-query-latency-20261020.json",
-        "updatedAt": "2026-10-20T09:51:06.774021+00:00",
+        "updatedAt": "2026-10-20T10:25:20.831607+00:00",
         "physicalAcceptance": "not_observed_after_repair",
         "executionPlan": {
           "path": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
           "status": "installed_measured_targeted_repair",
           "updatedAt": "2026-10-20T09:51:06.774021+00:00"
         },
-        "latestEvidence": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json"
+        "latestEvidence": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json"
       }
     },
     "goalRevision": {

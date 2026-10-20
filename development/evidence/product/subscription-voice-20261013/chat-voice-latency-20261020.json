@@ -1,0 +1,23 @@
+{
+  "contract": "EvaChatVoiceLatency/v1",
+  "recordedAt": "2026-10-20T10:23:00.815749+00:00",
+  "status": "measuring_baseline",
+  "ownerDirection": "Blijf verbeteren en test dezelfde vraag via echte chat; chat mag maximaal1tot2seconden duren.",
+  "question": "Wat wordt morgen het weer?",
+  "existing": "Combined HA service query installed, actual voice2modelrounds14.007858s to final-answer PCM.",
+  "gap": "Actual dashboard chat reception→substantive text and saved final not measured on this candidate.",
+  "endCondition": "Measure real chat first substantive delta and confirmed final; improve the actual bottleneck without losing Eva identity, source continuity, authority or STOP. Owner target2s; never count ack/filler as substantive result.",
+  "target_ms": 2000,
+  "core_image": "sha256:5c97cf3b264d5b7cc239f5881541be951166abcb04a8f40b448d4b83d936c795",
+  "voiceReference": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
+  "privateEvidenceRoot": "/var/lib/eva2/voice-session/chat-latency-20261020",
+  "physicalAcceptance": false,
+  "baseline": {
+    "first_substantive_delta_ms": 7239.578,
+    "saved_final_ms": 8305.809,
+    "model_phases": 2,
+    "model_elapsed_ms": 5737,
+    "preparation_ms": 1069,
+    "target_met": false
+  }
+}
