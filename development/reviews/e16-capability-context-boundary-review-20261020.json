@@ -1,7 +1,7 @@
 {
   "contract": "EvaIndependentReviewSummary/v1",
   "taskId": "E1.6",
-  "checkedAt": "2026-10-20T20:51:29.634313+00:00",
+  "checkedAt": "2026-10-20T20:58:46.878305+00:00",
   "decision": "GO_INSTALLED_CATALOG_BOUNDARY_FIX_ONLY",
   "sourceDecision": "GO_SOURCE_AND_OPTIONAL_INSTALLATION",
   "sourceReviewSha256": "d475bf08016e6baa19c45099415a233014d20da762bffc7bc664039ddeecb55b",
@@ -14,5 +14,10 @@
   "all26NamesPreserved": true,
   "taskCompleted": false,
   "actualSourceCausalUseProven": false,
-  "voiceChanged": false
+  "voiceChanged": false,
+  "independentInstallationReviewSha256": "0c6c2d048e77e517ede81a548a5c73c10c86d4bd3e30c706d390e0c3acb56975",
+  "installationDecision": "GO_INSTALLED_LIMITED_CATALOG_BOUNDARY",
+  "ordinaryInstalledReviewObserved": true,
+  "ordinaryReviewDecisionSha256": "e7a642ee7627656d179150521c5931c6f522875d1a91f9c0a5d7d3bac9201e5f",
+  "independentOrdinaryReviewSupplementSha256": "980c6362984f94647c404a40da96cbb9c0c20461c3ea5201a3deaa115072f45f"
 }

@@ -847,8 +847,8 @@
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Volg de gewone zelfstandige afweging; de contextomvangblokkade is geïnstalleerd verholpen. E1.6 pas afronden met echte broncausaliteit.",
-    "checkedAt": "2026-10-20T20:51:29.634313+00:00",
+    "nextAction": "Volg werkelijke nieuwe bronkeuze en bronverandering; de gewone autonome cyclus heeft na de geïnstalleerde correctie zelf een afgeronde afweging geleverd.",
+    "checkedAt": "2026-10-20T20:58:46.878305+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1636,10 +1636,11 @@
             "status": "installed",
             "date": "2026-10-20T20:51:29.634313+00:00",
             "source": "development/evidence/product/e16-capability-context-boundary-installed-20261020.json",
-            "summary": "Geïnstalleerde blokkade vóór zelfstandige afweging opgelost: alle 26 mogelijkheden passen nu met scope en bronhashes in 8.182 bytes (voorheen 8.260 > 8.192). Zestien controles en onafhankelijke review geslaagd; werkelijke consument accepteert de geïnstalleerde context. Bronkeuze → echte wijziging → passende afweging blijft nog onbewezen; geen geforceerde modelproef.",
+            "summary": "De contextomvangblokkade is geïnstalleerd verholpen. Om 20:55:54 UTC voerde de gewone scheduler zelf weer een Astra-afweging uit: bestaande onderzoeksconclusie gebruikt, geen herhaald werk of onnodig laat bericht. Eén gemeten runtime-modelpoging, 15.546 tokens, creditkosten onbekend. Echte bronkeuze → bronverandering → passende afweging blijft nog open.",
             "completedTaskIds": [],
             "newProductFunctionCompleted": false,
-            "remaining": "Werkelijke zelfstandige bronkeuze en passende afweging op bronverandering zijn nog niet aangetoond."
+            "remaining": "Werkelijke zelfstandige bronkeuze en passende afweging op bronverandering zijn nog niet aangetoond.",
+            "ordinaryRuntimeDecisionObserved": true
           },
           {
             "title": "E1.6 · Gerichte bronoverdracht en latere teruglezing hersteld",
@@ -2971,9 +2972,9 @@
           "status": "in_progress",
           "state": "in_progress",
           "summary": "Bestaande relevante bronveranderingen verbinden met eigen aandacht en passend vervolg.",
-          "detail": "Geïnstalleerde blokkade vóór zelfstandige afweging opgelost: alle 26 mogelijkheden passen nu met scope en bronhashes in 8.182 bytes (voorheen 8.260 > 8.192). Zestien controles en onafhankelijke review geslaagd; werkelijke consument accepteert de geïnstalleerde context. Bronkeuze → echte wijziging → passende afweging blijft nog onbewezen; geen geforceerde modelproef.",
+          "detail": "De contextomvangblokkade is geïnstalleerd verholpen. Om 20:55:54 UTC voerde de gewone scheduler zelf weer een Astra-afweging uit: bestaande onderzoeksconclusie gebruikt, geen herhaald werk of onnodig laat bericht. Eén gemeten runtime-modelpoging, 15.546 tokens, creditkosten onbekend. Echte bronkeuze → bronverandering → passende afweging blijft nog open.",
           "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-          "checkedAt": "2026-10-20T20:40:29.879378+00:00"
+          "checkedAt": "2026-10-20T20:58:46.878305+00:00"
         },
         "next": {
           "taskId": "F2.1",
@@ -2985,8 +2986,8 @@
           "detail": "Geen handeling nodig. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T20:51:29.634313+00:00",
-        "reviewedAt": "2026-10-20T20:51:29.634313+00:00",
+        "checkedAt": "2026-10-20T20:58:46.878305+00:00",
+        "reviewedAt": "2026-10-20T20:58:46.878305+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -5748,9 +5749,9 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Volg de gewone zelfstandige cyclus na herstel van de bewezen contextblokkade; leg echte bronkeuze en bronverandering vast zodra die plaatsvinden. Geen ongewijzigde betaalde proef herhalen.",
-                "checkedAt": "2026-10-20T20:51:29.634313+00:00",
-                "progress": "Geïnstalleerde blokkade vóór zelfstandige afweging opgelost: alle 26 mogelijkheden passen nu met scope en bronhashes in 8.182 bytes (voorheen 8.260 > 8.192). Zestien controles en onafhankelijke review geslaagd; werkelijke consument accepteert de geïnstalleerde context. Bronkeuze → echte wijziging → passende afweging blijft nog onbewezen; geen geforceerde modelproef.",
+                "nextAction": "De gewone cyclus werkt weer; volg een werkelijke nieuwe bronkeuze en bronverandering. Geen ongewijzigde no_source-proef herhalen of doel voor Eva kiezen.",
+                "checkedAt": "2026-10-20T20:58:46.878305+00:00",
+                "progress": "De contextomvangblokkade is geïnstalleerd verholpen. Om 20:55:54 UTC voerde de gewone scheduler zelf weer een Astra-afweging uit: bestaande onderzoeksconclusie gebruikt, geen herhaald werk of onnodig laat bericht. Eén gemeten runtime-modelpoging, 15.546 tokens, creditkosten onbekend. Echte bronkeuze → bronverandering → passende afweging blijft nog open.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
                   "development/reviews/e16-source-attention-review-20261020.json",
@@ -8009,7 +8010,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-20T20:51:29.634313+00:00",
+        "updatedAt": "2026-10-20T20:58:46.878305+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -8251,7 +8252,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T20:51:29.634313+00:00",
+        "checkedAt": "2026-10-20T20:58:46.878305+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -10898,9 +10899,9 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Volg de gewone zelfstandige cyclus na herstel van de bewezen contextblokkade; leg echte bronkeuze en bronverandering vast zodra die plaatsvinden. Geen ongewijzigde betaalde proef herhalen.",
-              "checkedAt": "2026-10-20T20:51:29.634313+00:00",
-              "progress": "Geïnstalleerde blokkade vóór zelfstandige afweging opgelost: alle 26 mogelijkheden passen nu met scope en bronhashes in 8.182 bytes (voorheen 8.260 > 8.192). Zestien controles en onafhankelijke review geslaagd; werkelijke consument accepteert de geïnstalleerde context. Bronkeuze → echte wijziging → passende afweging blijft nog onbewezen; geen geforceerde modelproef.",
+              "nextAction": "De gewone cyclus werkt weer; volg een werkelijke nieuwe bronkeuze en bronverandering. Geen ongewijzigde no_source-proef herhalen of doel voor Eva kiezen.",
+              "checkedAt": "2026-10-20T20:58:46.878305+00:00",
+              "progress": "De contextomvangblokkade is geïnstalleerd verholpen. Om 20:55:54 UTC voerde de gewone scheduler zelf weer een Astra-afweging uit: bestaande onderzoeksconclusie gebruikt, geen herhaald werk of onnodig laat bericht. Eén gemeten runtime-modelpoging, 15.546 tokens, creditkosten onbekend. Echte bronkeuze → bronverandering → passende afweging blijft nog open.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
                 "development/reviews/e16-source-attention-review-20261020.json",
@@ -13159,7 +13160,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-20T20:51:29.634313+00:00",
+      "updatedAt": "2026-10-20T20:58:46.878305+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -13401,7 +13402,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T20:51:29.634313+00:00",
+      "checkedAt": "2026-10-20T20:58:46.878305+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -15083,12 +15084,32 @@
       "isolatedModelChoice": "no_source",
       "isolatedExtraModelRequests": 1,
       "doesNotBlockIndependentTask": "E4.12",
-      "checkedAt": "2026-10-20T20:51:29.634313+00:00",
+      "checkedAt": "2026-10-20T20:58:46.878305+00:00",
       "latestEvidence": "development/evidence/product/e16-capability-context-boundary-installed-20261020.json",
       "latestReview": "development/reviews/e16-capability-context-boundary-review-20261020.json",
       "extraTargetedModelRequestsThisContinuation": 0,
       "extraTargetedModelRequests": 0,
-      "capabilityContextBlockerFixed": true
+      "capabilityContextBlockerFixed": true,
+      "ordinaryReviewAfterCatalogFix": {
+        "decidedAt": "2026-10-20 20:55:54+00:00",
+        "sourceEventSha256": "6bdecfe8199a749e931d7984b5f362d937bb288394f3dc470281f8f49216be74",
+        "decisionEventSha256": "e7a642ee7627656d179150521c5931c6f522875d1a91f9c0a5d7d3bac9201e5f",
+        "ordinaryScheduler": true,
+        "manuallyTriggered": false,
+        "modelRequestsByOperator": 0,
+        "disposition": "silence",
+        "semanticUse": "Retains the existing research conclusion and its commit/local-installation uncertainty; rejects redundant work and a late unnecessary message.",
+        "sourceChangeCausalUse": false,
+        "runtimeUsage": {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 15406,
+          "output_tokens": 140,
+          "model_attempts": 1
+        },
+        "registeredTokens": 15546,
+        "creditCost": null
+      }
     },
     "e412OpenSkillReuse20261020": {
       "startedAt": "2026-10-20T16:42:18.078240+00:00",

@@ -1,7 +1,7 @@
 {
   "contract": "EvaE16CapabilityContextBoundary/v1",
   "taskId": "E1.6",
-  "checkedAt": "2026-10-20T20:51:29.634313+00:00",
+  "checkedAt": "2026-10-20T20:58:46.878305+00:00",
   "state": "installed_projection_blocker_fixed_actual_source_causality_unproven",
   "technicalTaskCompleted": false,
   "actualFailure": {
@@ -69,6 +69,37 @@
     "extraTargetedRuntimeModelRequests": 0,
     "developmentCreditCost": null,
     "runtimeCreditCost": null,
-    "concurrentAutonomousUsageNotMeasuredHere": true
+    "concurrentAutonomousUsageNotMeasuredHere": true,
+    "observedOrdinaryRuntimeRegisteredTokens": 15546,
+    "observedOrdinaryRuntimeModelAttempts": 1
+  },
+  "ordinaryInstalledReview": {
+    "decidedAt": "2026-10-20T20:55:54+00:00",
+    "sourceEventSha256": "6bdecfe8199a749e931d7984b5f362d937bb288394f3dc470281f8f49216be74",
+    "decisionEventSha256": "e7a642ee7627656d179150521c5931c6f522875d1a91f9c0a5d7d3bac9201e5f",
+    "ordinaryScheduler": true,
+    "manuallyTriggered": false,
+    "modelRequestsByOperator": 0,
+    "disposition": "silence",
+    "semanticUse": "Retains the existing research conclusion and its commit/local-installation uncertainty; rejects redundant work and a late unnecessary message.",
+    "sourceChangeCausalUse": false,
+    "runtimeUsage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 15406,
+      "output_tokens": 140,
+      "model_attempts": 1
+    },
+    "registeredTokens": 15546,
+    "creditCost": null,
+    "reviewCause": "installed_profile_change",
+    "fourEventHashesVerifiedAgainstDatabase": true,
+    "eventVerificationSha256": "c2f3560627c1963df892d3cf712b5a80d08e05a5c016fe4953613c009fa783c9"
+  },
+  "verificationObserverCorrection": {
+    "initialEmptyQueryWasInvalid": true,
+    "reason": "Observation used literal settings IDs instead of the runtime external timeline scope; empty rows were not evidence of inactivity.",
+    "correctScopeDatabaseReadConfirmedOrdinaryReview": true,
+    "privateCorrectionSha256": "08e77dd377cc97c6d10dd41c8d10c7e877b33defe3440d718d7b2adf9a168b69"
   }
 }
