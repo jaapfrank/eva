@@ -8,7 +8,7 @@ import pytest
 from eva.adapters.connectors.home_assistant_context import HomeAssistantDeviceContext
 
 class Socket:
-    def __init__(self):self.frames=queue.Queue();self.pongs=True
+    def __init__(self):self.frames=queue.Queue();self.pongs=True;self.results={}
     def send(self,raw):
         request=json.loads(raw);number=request["id"];kind=request["type"]
         if kind=="ping":
@@ -19,6 +19,7 @@ class Socket:
         elif kind=="config/device_registry/list":result["result"]=[]
         elif kind=="config/entity_registry/list":result["result"]=[{"entity_id":"light.yard","area_id":"yard","device_id":None,"disabled_by":None,"created_at":1234.5}]
         elif kind=="auth/current_user":result["result"]={"id":"owner","is_admin":True,"created_at":1234.5}
+        if kind in self.results:result["result"]=self.results[kind]
         self.push(result)
         if kind=="subscribe_entities":self.delta({"a":{"light.yard":{"s":"off","a":{"friendly_name":"Tuin","entity_id":["light.a"]},"lc":100.5}}})
     def push(self,frame):self.frames.put(json.dumps(frame))
@@ -57,7 +58,7 @@ def test_initial_external_floats_and_queued_deltas_are_fenced_before_read():
     with pytest.raises(RuntimeError):context.snapshot()
 
 
-def test_registry_update_refreshes_before_snapshot_and_reconnect_changes_binding():
+def test_identical_registry_refresh_keeps_binding_but_reconnect_changes_it():
     context=HomeAssistantDeviceContext(scope_sha256="scope")
     with connected(context) as (_,socket,errors):
         before=context.snapshot()["binding_sha256"]
@@ -68,7 +69,7 @@ def test_registry_update_refreshes_before_snapshot_and_reconnect_changes_binding
             try:after=context.snapshot()["binding_sha256"];break
             except RuntimeError:
                 assert time.monotonic()<deadline;time.sleep(.002)
-        assert after!=before
+        assert after==before
     with connected(context):assert context.snapshot()["binding_sha256"]!=after
     with connected() as (other,_,_):assert other.snapshot()["binding_sha256"]!=after
     assert not errors
@@ -78,6 +79,71 @@ def test_missing_pong_never_returns_stale_state():
     with connected() as (context,socket,errors):
         context.snapshot();socket.pongs=False
         with pytest.raises(TimeoutError):context.snapshot(timeout=.02)
+    assert not errors
+
+
+@pytest.mark.parametrize("kind,result",[
+    ("config/area_registry/list",[{"area_id":"yard","name":"Achtertuin"}]),
+    ("config/device_registry/list",[{"id":"lamp-device","area_id":"yard"}]),
+    ("config/entity_registry/list",[{"entity_id":"light.yard","area_id":"other","disabled_by":None}]),
+    ("auth/current_user",{"id":"owner","is_admin":False,"created_at":1234.5}),
+])
+def test_changed_registry_content_still_invalidates_after_refresh(kind,result):
+    with connected() as (context,socket,errors):
+        before=context.binding_snapshot()["binding_sha256"]
+        socket.results[kind]=result
+        socket.push({"id":3,"type":"event","event":{"event_type":"area_registry_updated"}})
+        deadline=time.monotonic()+2
+        while True:
+            try:after=context.binding_snapshot()["binding_sha256"];break
+            except RuntimeError:
+                assert time.monotonic()<deadline;time.sleep(.002)
+        assert after!=before
+    assert not errors
+
+
+def test_overlapping_refresh_cannot_expose_the_previous_binding():
+    with connected() as (context,socket,errors):
+        before=context.binding_snapshot()["binding_sha256"]
+        held=[];send=socket.send
+        def hold(raw):
+            if json.loads(raw)["type"]!="ping":held.append(raw)
+            else:send(raw)
+        with context._lock:
+            context._sender=hold
+            context._refresh();context._refresh()
+        with pytest.raises(RuntimeError):context.binding_snapshot()
+        first=list(held);held.clear()
+        for raw in first:send(raw)
+        deadline=time.monotonic()+2
+        while len(held)<4:
+            assert time.monotonic()<deadline;time.sleep(.002)
+        with pytest.raises(RuntimeError):context.binding_snapshot()
+        for raw in held:send(raw)
+        while True:
+            try:after=context.binding_snapshot()["binding_sha256"];break
+            except RuntimeError:
+                assert time.monotonic()<deadline;time.sleep(.002)
+        assert after==before
+    assert not errors
+
+
+def test_entity_bookkeeping_timestamp_does_not_discard_an_unchanged_selection():
+    with connected() as (context,socket,errors):
+        before=context.snapshot()
+        rows=[{"entity_id":"light.yard","area_id":"yard","device_id":None,
+               "disabled_by":None,"created_at":1234.5,"modified_at":5678.5}]
+        socket.results["config/entity_registry/list"]=rows
+        socket.push({"id":5,"type":"event","event":{"event_type":"entity_registry_updated"}})
+        deadline=time.monotonic()+2
+        while True:
+            try:after=context.binding_snapshot();break
+            except RuntimeError:
+                assert time.monotonic()<deadline;time.sleep(.002)
+        assert after["binding_sha256"]==before["binding_sha256"]
+        # Filtering belongs only to the comparison; retain the actual source.
+        with context._lock:
+            assert context._registries["entities"][0]["modified_at"]==5678.5
     assert not errors
 
 

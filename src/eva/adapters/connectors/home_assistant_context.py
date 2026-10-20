@@ -214,10 +214,16 @@ class HomeAssistantDeviceContext:
 
     def _metadata(self):
         if self._binding is None:
+            # A refresh fences reads but is not itself a selection change.
+            # HA also updates an entity's bookkeeping timestamp when its
+            # serialized selection/permission content remains identical.
+            registries = {**self._registries, "entities": [
+                {key: value for key, value in row.items() if key != "modified_at"}
+                for row in self._registries["entities"]]}
             observed = {"scope": self._scope_sha256,
-                "version": self._version, "generation": self._generation,
+                "version": self._version,
                 "connection_epoch": self._connection_epoch,
-                "registries": self._registries,
+                "registries": registries,
                 "names_and_groups": {k: {field: v["attributes"].get(field)
                     for field in ("friendly_name", "entity_id")} for k, v in self._states.items()
                     if k.startswith(("light.", "switch."))}}
