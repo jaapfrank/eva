@@ -85,6 +85,18 @@
       "toolCalls": 0,
       "measurement": "partial",
       "creditCost": null
+    },
+    "fifthAttempt": {
+      "state": "failed",
+      "error": "incomplete_work",
+      "cause": "Final answer without completed tool evidence",
+      "modelResponses": 1,
+      "inputTokens": 8938,
+      "outputTokens": 114,
+      "totalTokens": 9052,
+      "toolCalls": 0,
+      "measurement": "partial",
+      "creditCost": null
     }
   },
   "usage": {
@@ -145,7 +157,7 @@
       "review": "development/reviews/e14-model-chosen-continuation-review-20261020.json"
     }
   },
-  "remaining": "Original fifth generation running; completion and later result use still required.",
+  "remaining": "Same original follow-up running with completion feedback; require retained result and later ordinary use.",
   "certifiedTechnicalRecovery": {
     "status": "installed_original_self_chosen_followup_running",
     "operatorAssistance": true,
@@ -263,6 +275,37 @@
       "operatorAssistance": true,
       "originalStatePreserved": "failed",
       "ownerRequestSha256": "3f5ef2a2de3abc7e9362268b8440c41450f28a0fd0978ec91128cfda29c8fe92",
+      "operatorModelCalls": 0
+    }
+  },
+  "missingCompletionFeedback": {
+    "state": "installed_original_self_chosen_followup_running",
+    "reason": "Without a progress plan execute() returned the initial final reply before enforcing completed evidence. Failure afterwards dropped its explanation.",
+    "changes": [
+      "Existing bounded continuation now exposes concrete missing work before no-plan failure; no-progress guard and same budget/deadline remain.",
+      "Retain a completed worker explanation only as explicitly unverified failure data, never as a result."
+    ],
+    "tests": {
+      "existingRunnerChecksPassed": 121,
+      "newChecksPassed": 2,
+      "initialNewFixtureErrors": 2,
+      "fixtureFix": "measured usage fixture missing required tool_calls; corrected only fixture",
+      "providerCalls": 0
+    },
+    "voiceChanged": false,
+    "checkedAt": "2026-10-20T14:57:00.272669+00:00",
+    "installation": {
+      "coreImage": "sha256:cde16deb81b74eb50a88069972c7c1944f8a227c3aa436a913d466c9e6a900dc",
+      "workerImage": "sha256:d80425f16a83da071b6a9e4eb3ff51589344307edec8c507c26e9ff55ebe20e1",
+      "releaseEqual": true,
+      "executionPinCount": 65,
+      "voiceChanged": false
+    },
+    "recovery": {
+      "generation": 6,
+      "operatorAssistance": true,
+      "originalStatePreserved": "failed",
+      "ownerRequestSha256": "3203529b186947fa9d4d4f9f47c589fd6196911cda36df1a706317b3a43af620",
       "operatorModelCalls": 0
     }
   }

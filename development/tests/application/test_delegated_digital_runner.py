@@ -1493,7 +1493,8 @@ def test_blocked_plan_keeps_returned_findings_only_after_verified_work(monkeypat
     assert outcome.status == "incomplete_work" and outcome.result is None
     assert outcome.retryable is False
     assert outcome.failure_report == ("Observed provider error. Further access is unavailable."
-                                      if verified_observation else None)
+        if verified_observation else "Niet afgerond; geen gecontroleerd taakresultaat. "
+        "Onbevestigde verklaring van de uitvoerder: Observed provider error. Further access is unavailable.")
 
 
 def test_programming_launch_without_terminal_process_state_is_not_completed(monkeypatch):
@@ -1662,3 +1663,33 @@ def test_bound_task_memory_never_sends_private_context_under_another_query(chang
     memory = _TaskMemory(NoDispatch(), source, "Privéopdracht.", ())
     with pytest.raises(ConversationConflict, match="background memory query differs"):
         memory.recall_for_presence_fast(replace(query, **change))
+
+
+@pytest.mark.parametrize("use_feedback", [True, False])
+def test_no_plan_no_evidence_gets_one_bounded_completion_feedback(use_feedback):
+    _, spec, _, tools, journal, runner, _ = fixture()
+    tools.release.set()
+    class PrematureFinish(Model):
+        responses = 0
+        def generate(self, *args, **kwargs):
+            self.responses += 1
+            feedback = any("geen gecontroleerde taakresultaten" in item
+                           for item in kwargs["self_context"])
+            if not feedback or not use_feedback:
+                return ConversationModelResult("No current source has been checked.", "controlled",
+                    usage=ConversationModelUsage.measured(input_tokens=30, output_tokens=10, tool_calls=0))
+            return super().generate(*args, **kwargs)
+    model = PrematureFinish()
+    runner.model = model
+    outcome = asyncio.run(runner.run(spec, call_id="call:missing-completion"))
+    if use_feedback:
+        assert outcome.status == "succeeded" and outcome.result is not None
+        assert [c[1] for c in tools.calls] == ["discover_connector_tools", "use_connector_tool"]
+        assert model.responses == 4 and outcome.usage.tool_calls == 2
+    else:
+        assert outcome.status == "incomplete_work" and outcome.result is None
+        assert model.responses == 2 and not tools.calls
+        assert outcome.failure_report == ("Niet afgerond; geen gecontroleerd taakresultaat. "
+            "Onbevestigde verklaring van de uitvoerder: No current source has been checked.")
+    assert len(journal.usages) == model.responses
+    _validate_usage(spec, outcome.usage, successful=use_feedback)

@@ -847,8 +847,8 @@
     "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
     "status": "in_progress",
     "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-    "nextAction": "Geïnstalleerde domeincorrectie: hetzelfde eigen onderzoek loopt. Afgerond resultaat en later inhoudelijk gebruik volgen.",
-    "checkedAt": "2026-10-20T14:50:45.385011+00:00",
+    "nextAction": "Zelfgekozen onderzoek afronden met de geïnstalleerde uitvoerder; daarna de eerstvolgende gewone afweging op werkelijk resultaatgebruik controleren.",
+    "checkedAt": "2026-10-20T14:57:00.272669+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2779,10 +2779,10 @@
           "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
           "status": "in_progress",
           "state": "in_progress",
-          "summary": "Domeincorrectie geïnstalleerd. Eva voert haar oorspronkelijke zelfgekozen vervolg uit.",
-          "detail": "Oude mislukkingen blijven zichtbaar; E1.4 nog open tot afronding én later gebruik bewezen zijn. Spraak is niet gewijzigd.",
+          "summary": "Uitvoerder hersteld en geïnstalleerd. Eva werkt verder aan haar oorspronkelijke eigen onderzoek.",
+          "detail": "Afronding en later inhoudelijk gebruik worden gevolgd; E1.4 blijft open. Oude mislukkingen blijven zichtbaar. Spraak is ongemoeid.",
           "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-          "checkedAt": "2026-10-20T14:50:45.385011+00:00"
+          "checkedAt": "2026-10-20T14:57:00.272669+00:00"
         },
         "next": {
           "taskId": "E1.5",
@@ -5432,9 +5432,9 @@
                 "dependsOn": [
                   "E5.1"
                 ],
-                "nextAction": "Geïnstalleerde domeincorrectie: hetzelfde eigen onderzoek loopt. Afgerond resultaat en later inhoudelijk gebruik volgen.",
-                "checkedAt": "2026-10-20T14:50:45.385011+00:00",
-                "progress": "Eigen vervolg over echte dagen vastgesteld. Geïnstalleerde overdracht, invoerherstel en domeincorrectie; echte uitvoering en later gebruik worden gevolgd.",
+                "nextAction": "Zelfgekozen onderzoek afronden met de geïnstalleerde uitvoerder; daarna de eerstvolgende gewone afweging op werkelijk resultaatgebruik controleren.",
+                "checkedAt": "2026-10-20T14:57:00.272669+00:00",
+                "progress": "Geïnstalleerd: eigen vervolg binden, invoerherstel, openbare domeinen correct herkennen en ontbrekende uitvoering binnen dezelfde poging terugmelden. Werkelijke afronding en later gebruik worden gevolgd.",
                 "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json"
               },
               {
@@ -10424,9 +10424,9 @@
               "dependsOn": [
                 "E5.1"
               ],
-              "nextAction": "Geïnstalleerde domeincorrectie: hetzelfde eigen onderzoek loopt. Afgerond resultaat en later inhoudelijk gebruik volgen.",
-              "checkedAt": "2026-10-20T14:50:45.385011+00:00",
-              "progress": "Eigen vervolg over echte dagen vastgesteld. Geïnstalleerde overdracht, invoerherstel en domeincorrectie; echte uitvoering en later gebruik worden gevolgd.",
+              "nextAction": "Zelfgekozen onderzoek afronden met de geïnstalleerde uitvoerder; daarna de eerstvolgende gewone afweging op werkelijk resultaatgebruik controleren.",
+              "checkedAt": "2026-10-20T14:57:00.272669+00:00",
+              "progress": "Geïnstalleerd: eigen vervolg binden, invoerherstel, openbare domeinen correct herkennen en ontbrekende uitvoering binnen dezelfde poging terugmelden. Werkelijke afronding en later gebruik worden gevolgd.",
               "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json"
             },
             {
@@ -14393,10 +14393,10 @@
         "ownerActionRequired": false
       },
       "ownerInstruction": "Maak E1.4 echt af: zelfstandig vervolg kiezen, afmaken en resultaat later gebruiken. Spraak blijft elders.",
-      "state": "original_followup_running_after_public_dns_correction",
+      "state": "original_followup_running_with_completion_feedback",
       "runtimeChanged": true,
       "diagnosis": "Actual self-chosen cross-day follow-up was admitted but never claimed because queue/core/worker execution source releases differed.",
-      "checkedAt": "2026-10-20T14:50:45.385011+00:00",
+      "checkedAt": "2026-10-20T14:57:00.272669+00:00",
       "voiceChanged": false,
       "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
       "review": "development/reviews/e14-model-chosen-continuation-review-20261020.json",

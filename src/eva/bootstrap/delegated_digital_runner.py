@@ -542,18 +542,19 @@ class DelegatedDigitalRunner:
                         reply = conversation.respond(source, before_step=checkpoint, model_journal=journal)
                         authorize(source)
                         progress_state = load_work_progress(self.store._engine, spec)
-                        if not progress_state:
+                        if not progress_state and _has_completed_tool_evidence(actions.receipts):
                             return reply
-                        remaining = [step for step in progress_state["steps"]
-                                     if step["state"] not in {"done", "skipped"}]
+                        remaining = ([] if not progress_state else [
+                            step for step in progress_state["steps"]
+                            if step["state"] not in {"done", "skipped"}])
                         if not remaining and _has_completed_tool_evidence(actions.receipts):
                             return reply
-                        if (progress_state.get("work_id") == spec.work_id
+                        if (progress_state and progress_state.get("work_id") == spec.work_id
                                 and any(step["state"] == "blocked" for step in remaining)):
                             raise _UnfinishedWorkPlan("task plan contains a recorded blocker")
                         actual = journal.model_usage(source)
                         checkpoint(source, actual)
-                        state_key = (progress_state["revision"], actions.calls)
+                        state_key = (None if not progress_state else progress_state["revision"], actions.calls)
                         if state_key in prompted_states:
                             raise _UnfinishedWorkPlan("task made no progress after continuation")
                         if actual.measurement != "measured":
@@ -583,6 +584,13 @@ class DelegatedDigitalRunner:
                             "Bij een echte blokkade: bewaar die met state blocked, de reden en een "
                             "bruikbare hervatnotitie; verzin geen succes en vergroot het mandaat niet."
                         ),)
+                        if not progress_state:
+                            task_model.continuation_feedback = (
+                                "Je slotantwoord sluit de opdracht nog niet af: er zijn geen "
+                                "gecontroleerde taakresultaten die dat onderbouwen. Gebruik de aangeboden "
+                                "tools voor het ontbrekende werk binnen dezelfde opdracht. Als uitvoering "
+                                "echt niet kan, leg concreet uit welke mogelijkheid of bron ontbreekt; "
+                                "verzin geen afronding en herhaal geen onzekere externe handeling.",)
             worker = asyncio.create_task(asyncio.to_thread(execute))
             try:
                 reply = await asyncio.shield(worker)
@@ -638,6 +646,13 @@ class DelegatedDigitalRunner:
                            and actions is not None
                            and any(_has_completed_tool_evidence([receipt]) for receipt in actions.receipts)))
                       and len(reply.text.encode("utf-8")) <= 65_536 else None)
+            if (report is None and status == "incomplete_work" and reply is not None
+                    and actions is not None and not _has_completed_tool_evidence(actions.receipts)):
+                # Keep the completed worker explanation as failure data, never as
+                # a result or verified progress. Missing evidence must not erase
+                # the reason and invite an undiagnosed model retry.
+                report = ("Niet afgerond; geen gecontroleerd taakresultaat. "
+                          "Onbevestigde verklaring van de uitvoerder: " + reply.text)[:4_096]
             if status == "budget_exceeded" and isinstance(error, _InputBudgetError):
                 report = ("input_budget_exceeded: De behouden taakcontext past niet binnen "
                           "de invoergrens. De opdracht is niet afgerond.")
