@@ -150,9 +150,10 @@ def _own_orientation_history(connection, scope, principal_id, now):
             raise RuntimeError("private orientation admission status is malformed")
         attention = data.get("next_attention")
         if attention is not None:
-            from eva.application.resident_attention import NextAttention
+            from eva.application.resident_attention import NextAttention, validate_attention_source_watch
             from eva.contracts.timestamps import parse_utc_timestamp
-            if not isinstance(attention, dict) or set(attention) != {"requested_at", "at", "reason", "selection_sequence"}:
+            required = {"requested_at", "at", "reason", "selection_sequence"}
+            if not isinstance(attention, dict) or not required <= set(attention) <= required | {"source_watch"}:
                 raise RuntimeError("private orientation attention is malformed")
             try:
                 selected = NextAttention.from_payload({"at": attention["requested_at"], "reason": attention["reason"]})
@@ -160,6 +161,9 @@ def _own_orientation_history(connection, scope, principal_id, now):
                 if (selected.at <= row["decided_at"] or effective < selected.at
                         or type(attention["selection_sequence"]) is not int or attention["selection_sequence"] < 1):
                     raise ValueError("attention chronology differs")
+                if "source_watch" in attention:
+                    validate_attention_source_watch(attention["source_watch"],
+                        decided_at=row["decided_at"], observed_at=row["source_at"])
             except (ValueError, TypeError):
                 raise RuntimeError("private orientation attention is malformed") from None
         result.append({

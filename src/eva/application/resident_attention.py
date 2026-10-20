@@ -52,6 +52,37 @@ class NextAttention:
         return cls(at, value["reason"], value.get("source_event_id"))
 
 
+def validate_attention_source_watch(value, *, decided_at: datetime, observed_at: datetime):
+    """Validate retained selection metadata, never current source authority."""
+    import re
+    from dataclasses import fields
+    from eva.application.sensory import SensoryAttentionSource
+    from eva.contracts.timestamps import parse_utc_timestamp, require_utc_second
+
+    if not isinstance(value, dict) or set(value) != {
+            "source_event_id", "source_sha256", "selected_at", "binding"}:
+        raise ValueError("attention source watch fields differ")
+    source_id, digest = value["source_event_id"], value["source_sha256"]
+    if (not isinstance(source_id, str) or not source_id.strip() or len(source_id) > 240
+            or source_id != source_id.strip() or any(ord(c) < 32 or ord(c) == 127 for c in source_id)
+            or not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None):
+        raise ValueError("attention source watch identity differs")
+    if not isinstance(value["selected_at"], str):
+        raise ValueError("attention source watch time differs")
+    selected_at = parse_utc_timestamp(value["selected_at"])
+    for clock in (decided_at, observed_at):
+        if not isinstance(clock, datetime):
+            raise ValueError("attention source watch clock differs")
+        require_utc_second(clock, "attention source watch")
+    if selected_at != decided_at or observed_at > selected_at:
+        raise ValueError("attention source watch chronology differs")
+    binding = value["binding"]
+    if not isinstance(binding, dict) or set(binding) != {field.name for field in fields(SensoryAttentionSource)}:
+        raise ValueError("attention source watch binding fields differ")
+    SensoryAttentionSource(**binding)
+    return value
+
+
 AttentionDisposition = Literal["silence", "model"]
 
 

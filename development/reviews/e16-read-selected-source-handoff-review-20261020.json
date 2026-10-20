@@ -1,0 +1,22 @@
+{
+  "contract": "EvaIndependentAttentionHandoffReview/v1",
+  "taskId": "E1.6",
+  "checkedAt": "2026-10-20T20:40:29.879378+00:00",
+  "decision": "GO_INSTALLED_HANDOFF_ONLY_ACTUAL_CAUSAL_USE_UNPROVEN",
+  "sourceReviewSha256": "ee75113880b4dbf3edff62566b5c2ac7738f8021979fa55191f90c2d98c613ed",
+  "sourceHashes": {
+    "src/eva/application/resident_attention.py": "fa58c5c6ad6a4a6fcc4c8dff260b39620184eb13820f3ef35db67289d051018d",
+    "src/eva/adapters/postgres/initiative_context.py": "4d40c131a67f57a575827fa11a2891205905a11bd47c29033419e2a95b99da4a",
+    "src/eva/providers/receipt_policies.py": "53661196a21059dcd88f861dbafaedf6ed915bd9890251babaf4deef18fb25c5",
+    "src/eva/providers/home_assistant_receipts.py": "783c9be8f0690fb40265ae2a426520b56ccb473c4b908c70e420eb3fd6342910",
+    "src/eva/adapters/postgres/initiative_source_outcomes.py": "95fc435ed1ea47381ebbd646fe888b290630744dbba2db5e491f9cf0e136c805",
+    "src/eva/adapters/postgres/initiative_attention.py": "93abb13aa90f91049f90e3ea9c5aabf23f198862be2e4ec4e7f627360f67c02f",
+    "src/eva/adapters/postgres/sensory_events.py": "afcdfd4aca9f7d97617877a4295b8c2dcd259295dca72a480dcf7e64f8281cf8"
+  },
+  "technicalTaskCompleted": false,
+  "testCasesReviewed": 82,
+  "actualContextReadable": true,
+  "voiceChanged": false,
+  "fullProjectComplete": false,
+  "limitations": "Source/test approval and controlledcausalfixtures do not prove a naturalmodelchosen source or actualfamilyutility."
+}

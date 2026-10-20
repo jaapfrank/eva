@@ -135,8 +135,79 @@ def _current_source(store, event):
     return value.to_payload()
 
 
-def annotate_attention_sources(connection, store, context):
+def _read_selected_observations(connection, store, context, source_outcomes, now):
+    """Join host-verified native read selectors to real retained event revisions.
+
+    A tool receipt is not a sensory event. Missing history/current provider coverage
+    leaves a target unavailable; no synthetic change, connector call or new grant.
+    """
+    import re
+    from eva.application.sensory import SensoryEvent
+    if (now is None or now.tzinfo is None or now.utcoffset() != timedelta(0)
+            or now.microsecond or context["observed_at_utc"] != now.isoformat()):
+        raise ValueError("read-selected attention context clock differs")
+    e, scope = events.c, store._timeline._scope_value
+    selected, seen = [], set()
+    text = lambda value, limit: value[:limit] if isinstance(value, str) else None
+    for outcome in source_outcomes[:3]:
+        for read in outcome.get("verified_reads", ())[:4]:
+            if read.get("status") != "verified_original_read":
+                continue
+            receipt_sha = read.get("source", {}).get("receipt_sha256")
+            if re.fullmatch(r"[0-9a-f]{64}", str(receipt_sha)) is None:
+                continue
+            for target in read.get("attention_selectors", ())[:4]:
+                keys = {"source", "event_type", "selector_key", "selector_value"}
+                if (not isinstance(target, dict) or set(target) != keys
+                        or any(not isinstance(v, str) or not v or len(v) > 255 for v in target.values())
+                        or not target["selector_key"].isidentifier() or len(target["selector_key"]) > 80):
+                    continue
+                key = tuple(target[k] for k in sorted(keys))
+                if key in seen:
+                    continue
+                seen.add(key)
+                row = connection.execute(sa.select(e.payload, e.payload_sha256, e.occurred_at).where(
+                    e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+                    e.event_type == "SENSORY_EVENT_OBSERVED", e.sequence == 1,
+                    e.payload["data"]["source"].astext == target["source"],
+                    e.payload["data"]["event_type"].astext == target["event_type"],
+                    e.payload["data"]["payload"][target["selector_key"]].astext == target["selector_value"],
+                    e.occurred_at >= now - timedelta(hours=24), e.occurred_at <= now,
+                ).order_by(e.occurred_at.desc(), e.thread_id).limit(1)).first()
+                if row is None:
+                    continue
+                if canonical_sha256(row.payload) != bytes(row.payload_sha256).hex():
+                    raise ValueError("read-selected attention observation hash differs")
+                data = row.payload["data"]; payload = data["payload"]
+                event = SensoryEvent(data["source"], data["source_event_id"], data["event_type"], row.occurred_at, payload)
+                try:
+                    _current_source(store, event)
+                except Exception:
+                    continue
+                selected.append({"source": event.source, "source_event_id": event.source_event_id,
+                    "source_sha256": bytes(row.payload_sha256).hex(), "observed_at": row.occurred_at.isoformat(),
+                    "entity_id": text(payload.get("entity_id"), 255), "friendly_name": text(payload.get("friendly_name"), 80),
+                    "state": text(payload.get("new_state"), 80), "device_class": text(payload.get("device_class"), 40),
+                    "unit_of_measurement": text(payload.get("unit_of_measurement"), 24),
+                    "historical": True, "is_current_proof": False,
+                    "attention_selection": {"kind": "verified_native_read_target",
+                        "work_id": outcome.get("work_id"), "receipt_sha256": receipt_sha}})
+                if len(selected) == 4:
+                    return selected
+    context.get("coverage", {})["read_selected_sources_without_current_coverage"] = len(seen) - len(selected)
+    return selected
+
+
+def annotate_attention_sources(connection, store, context, *, source_outcomes=(), now=None):
     """Offer bounded provider-owned metadata, never a new tool/subscription grant."""
+    if source_outcomes:
+        preferred = _read_selected_observations(connection, store, context, source_outcomes, now)
+        identities = {v["source_event_id"] for v in preferred}
+        values = preferred + [v for v in context.get("observations", ()) if v["source_event_id"] not in identities]
+        context["observations"] = values[:8]
+        context.get("coverage", {})["verified_read_targets_offered"] = len(preferred)
+        if len(values) > 8:
+            context.get("coverage", {})["observations_truncated"] = True
     for observation in context.get("observations", ()):
         try:
             row, event = _retained_source(connection, store, observation["source_event_id"])

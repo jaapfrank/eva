@@ -18,7 +18,7 @@ from tests.postgres.test_native_initiative_digital_work import native_digital, a
 from tests.postgres.test_owner_initiatives import costless_native, NOW
 
 
-def _read(f, work, *, step=0, payload=None, terminal="STATE_VERIFIED", namespace=None, method="GET"):
+def _read(f, work, *, step=0, payload=None, terminal="STATE_VERIFIED", namespace=None, method="GET", path="/api/calendars/calendar.fixture"):
     _, turn = f.auth.bind_work(work.spec)
     port = object.__new__(PostgresExternalConversationTools)
     port._engine, port._action_names = f.control._engine, ("home_assistant_request",)
@@ -27,7 +27,7 @@ def _read(f, work, *, step=0, payload=None, terminal="STATE_VERIFIED", namespace
     with background_execution(BackgroundExecutionScope(turn, work.spec.execution_id)):
         thread = port._thread_id(turn, "home_assistant_request", step)
         timeline = port._timeline(turn)
-        args = {"transport": "rest", "method": method, "path": "/api/calendars/calendar.fixture",
+        args = {"transport": "rest", "method": method, "path": path,
             "body_json": "", "response_pointer": "", "offset": 0, "limit": 10}
         timeline.create_thread(thread_id=thread, checkpoint_id=thread+":admitted",
             event_type="TOOL_REQUEST_ADMITTED", phase="admitted", status="active", occurred_at=NOW,

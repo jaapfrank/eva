@@ -89,8 +89,14 @@ beschrijft uitsluitend haar eigen werkelijke eventdekking. De bestaande aandacht
 bundelt passende nieuwe bronmeldingen en de geplande terugvalcontrole tot één identiteit;
 herstart/reconnect maakt geen tweede beoordeling. Maximaal de bestaande contextomvang,
 minimaal de bestaande vijf minuten tussen beoordelingen en de normale bronversheid
-blijven gelden. De selectie bewaart bruikbare dekking op minder nieuwste waarnemingen
-in plaats van alle descriptors weg te laten. Oude waarnemingen zijn geen actuele
+blijven gelden. Exacte, geverifieerde native lezingen leveren via de bestaande pure
+providerpolicy hoogstens vier concrete bronselectoren. Dezelfde privécontext geeft
+de overeenkomstige werkelijk bewaarde waarnemingen voorrang op ongerelateerde
+nieuwste gebeurtenissen, met huidige providerdekking en oorspronkelijke hashes.
+Zonder zo’n bewaarde bron/dekking ontstaat geen verzonnen event of nieuwe toegang.
+Een latere geschiedenislezing valideert ook de bestaande source_watch strikt;
+zij bewaart de oorspronkelijke beslissing zonder nieuwe uitvoerbevoegdheid.
+Oude waarnemingen zijn geen actuele
 uitvoerbevoegdheid: de native uitvoerder controleert benodigde actuele bronnen opnieuw.
 De bestaande HA-stream dekt toestandwaarden; attribuutwijzigingen en willekeurige
 MCP-events zijn daarmee niet bewezen. Daarvoor blijft een gerichte, toegelaten native

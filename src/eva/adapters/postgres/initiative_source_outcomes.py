@@ -22,7 +22,8 @@ from eva.application.conversation import ConversationConflict
 from eva.application.schema_validation import validate_schema_value
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
-from eva.providers.receipt_policies import retained_source_action_names, retained_source_observation
+from eva.providers.receipt_policies import (retained_source_action_names, retained_source_observation,
+    retained_source_attention_selectors)
 
 _MAX_BYTES = 8192
 _READS = 4
@@ -226,6 +227,9 @@ def _retained_reads(authority, work, turn, now):
                 item["source_status"] = {key: observation[key] for key in (
                     "success", "http_status", "truncated", "selection_error",
                     "external_state_verified", "has_more") if key in observation}
+                targets = retained_source_attention_selectors(name, arguments, observation)
+                if targets:
+                    item["attention_selectors"] = list(targets)
                 verified.append(item)
             except (ConversationConflict, InitiativeMandateDenied, ValueError, KeyError, TypeError):
                 unavailable.append({"status": "unavailable", "reason": "retained_read_binding_or_proof_invalid"})

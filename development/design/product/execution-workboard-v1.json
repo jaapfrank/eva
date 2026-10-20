@@ -847,8 +847,8 @@
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Controleer de bestaande bron-aandachtketen en sluit uitsluitend het concrete ontbrekende vervolg van E1.6 af. Geen nieuwe vergelijkingsserie; spraak blijft bij de andere uitvoerder.",
-    "checkedAt": "2026-10-20T20:24:00.268364+00:00",
+    "nextAction": "Bij een werkelijk nieuw relevant bronresultaat of natuurlijke bronkeuze de gewone keten volgen. Geen ongewijzigde no_source-proef herhalen of huishoudvoorbeeld opleggen; E1.6 blijft open tot echte causale afweging is aangetoond.",
+    "checkedAt": "2026-10-20T20:40:29.879378+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,20 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E1.6 · Gerichte bronoverdracht en latere teruglezing hersteld",
+            "state": "installed",
+            "summary": "Eva kan een gericht onderzochte bron buiten recente eventruis aangeboden krijgen; een gekozen bron blijft in volgende afwegingen leesbaar.",
+            "remaining": "Werkelijke autonome bronkeuze en natuurlijke bronverandering→afweging nog niet aangetoond; E1.6 blijft open. 82 gerichte controles, geen extra modelproef.",
+            "source": "development/evidence/product/e16-read-selected-source-handoff-installed-20261020.json",
+            "review": "development/reviews/e16-read-selected-source-handoff-review-20261020.json",
+            "checkedAt": "2026-10-20T20:40:29.879378+00:00",
+            "installedAt": "2026-10-20T20:40:29.879378+00:00",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E4.14 · Eén Eva-programma werkt over meerdere diensten",
             "state": "installed",
@@ -2947,9 +2961,9 @@
           "status": "in_progress",
           "state": "in_progress",
           "summary": "Bestaande relevante bronveranderingen verbinden met eigen aandacht en passend vervolg.",
-          "detail": "Geïnstalleerd; bronverwijzingsfout hersteld en werkelijk gecontroleerd. Eén technisch gestimuleerde afweging met huidige context koos geen bron. Echte bronveranderingsketen blijft open, geen herhaling tot succes.",
+          "detail": "Twee overdrachtsfouten geïnstalleerd: geverifieerde bronlezingen kunnen relevante bestaande bronnen vóór recente eventruis aanbieden; opgeslagen bronkeuzes blijven bij de volgende afweging geldig leesbaar. 82 gerichte controles geslaagd, actuele kern/werker en privécontext gecontroleerd. Geen extra betaalde modelproef. Werkelijke autonome bronkeuze en natuurlijke veranderingsketen blijven nog onbewezen; kaart niet afgerond.",
           "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-          "checkedAt": "2026-10-20T20:24:00.268364+00:00"
+          "checkedAt": "2026-10-20T20:40:29.879378+00:00"
         },
         "next": {
           "taskId": "F2.1",
@@ -2961,8 +2975,8 @@
           "detail": "Geen handeling nodig. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T20:24:00.268364+00:00",
-        "reviewedAt": "2026-10-20T20:24:00.268364+00:00",
+        "checkedAt": "2026-10-20T20:40:29.879378+00:00",
+        "reviewedAt": "2026-10-20T20:40:29.879378+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -5724,17 +5738,20 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Alleen bij een werkelijk relevant nieuw doel of bronkeuze nieuw causaal bewijs verzamelen. Geen technische blokkade voor onafhankelijke E4.12; E1.6 niet als afgerond tellen.",
-                "checkedAt": "2026-10-20T16:42:18.078240+00:00",
-                "progress": "Geïnstalleerd; bronverwijzingsfout hersteld en werkelijk gecontroleerd. Eén technisch gestimuleerde afweging met huidige context koos geen bron. Echte bronveranderingsketen blijft open, geen herhaling tot succes.",
+                "nextAction": "Bij een werkelijk nieuw relevant bronresultaat of natuurlijke bronkeuze de gewone keten volgen. Geen ongewijzigde no_source-proef herhalen of huishoudvoorbeeld opleggen; E1.6 blijft open tot echte causale afweging is aangetoond.",
+                "checkedAt": "2026-10-20T20:40:29.879378+00:00",
+                "progress": "Twee overdrachtsfouten geïnstalleerd: geverifieerde bronlezingen kunnen relevante bestaande bronnen vóór recente eventruis aanbieden; opgeslagen bronkeuzes blijven bij de volgende afweging geldig leesbaar. 82 gerichte controles geslaagd, actuele kern/werker en privécontext gecontroleerd. Geen extra betaalde modelproef. Werkelijke autonome bronkeuze en natuurlijke veranderingsketen blijven nog onbewezen; kaart niet afgerond.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
                   "development/reviews/e16-source-attention-review-20261020.json",
                   "development/evidence/product/e16-research-source-recovery-installed-20261020.json",
                   "development/reviews/e16-research-source-recovery-review-20261020.json",
-                  "development/evidence/product/e16-source-choice-observation-20261020.json"
+                  "development/evidence/product/e16-source-choice-observation-20261020.json",
+                  "development/evidence/product/e16-read-selected-source-handoff-installed-20261020.json",
+                  "development/reviews/e16-read-selected-source-handoff-review-20261020.json"
                 ],
-                "installedAt": "2026-10-20T16:11:46.841997+00:00"
+                "installedAt": "2026-10-20T16:11:46.841997+00:00",
+                "lastInstalledAt": "2026-10-20T20:40:29.879378+00:00"
               }
             ],
             "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -7971,7 +7988,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Controleer de bestaande bron-aandachtketen en sluit uitsluitend het concrete ontbrekende vervolg van E1.6 af. Geen nieuwe vergelijkingsserie; spraak blijft bij de andere uitvoerder.",
+        "nextAction": "Bij een werkelijk nieuw relevant bronresultaat of natuurlijke bronkeuze de gewone keten volgen. Geen ongewijzigde no_source-proef herhalen of huishoudvoorbeeld opleggen; E1.6 blijft open tot echte causale afweging is aangetoond.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -8222,7 +8239,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T20:24:00.268364+00:00",
+        "checkedAt": "2026-10-20T20:40:29.879378+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -10869,17 +10886,20 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Alleen bij een werkelijk relevant nieuw doel of bronkeuze nieuw causaal bewijs verzamelen. Geen technische blokkade voor onafhankelijke E4.12; E1.6 niet als afgerond tellen.",
-              "checkedAt": "2026-10-20T16:42:18.078240+00:00",
-              "progress": "Geïnstalleerd; bronverwijzingsfout hersteld en werkelijk gecontroleerd. Eén technisch gestimuleerde afweging met huidige context koos geen bron. Echte bronveranderingsketen blijft open, geen herhaling tot succes.",
+              "nextAction": "Bij een werkelijk nieuw relevant bronresultaat of natuurlijke bronkeuze de gewone keten volgen. Geen ongewijzigde no_source-proef herhalen of huishoudvoorbeeld opleggen; E1.6 blijft open tot echte causale afweging is aangetoond.",
+              "checkedAt": "2026-10-20T20:40:29.879378+00:00",
+              "progress": "Twee overdrachtsfouten geïnstalleerd: geverifieerde bronlezingen kunnen relevante bestaande bronnen vóór recente eventruis aanbieden; opgeslagen bronkeuzes blijven bij de volgende afweging geldig leesbaar. 82 gerichte controles geslaagd, actuele kern/werker en privécontext gecontroleerd. Geen extra betaalde modelproef. Werkelijke autonome bronkeuze en natuurlijke veranderingsketen blijven nog onbewezen; kaart niet afgerond.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
                 "development/reviews/e16-source-attention-review-20261020.json",
                 "development/evidence/product/e16-research-source-recovery-installed-20261020.json",
                 "development/reviews/e16-research-source-recovery-review-20261020.json",
-                "development/evidence/product/e16-source-choice-observation-20261020.json"
+                "development/evidence/product/e16-source-choice-observation-20261020.json",
+                "development/evidence/product/e16-read-selected-source-handoff-installed-20261020.json",
+                "development/reviews/e16-read-selected-source-handoff-review-20261020.json"
               ],
-              "installedAt": "2026-10-20T16:11:46.841997+00:00"
+              "installedAt": "2026-10-20T16:11:46.841997+00:00",
+              "lastInstalledAt": "2026-10-20T20:40:29.879378+00:00"
             }
           ],
           "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -13116,7 +13136,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Controleer de bestaande bron-aandachtketen en sluit uitsluitend het concrete ontbrekende vervolg van E1.6 af. Geen nieuwe vergelijkingsserie; spraak blijft bij de andere uitvoerder.",
+      "nextAction": "Bij een werkelijk nieuw relevant bronresultaat of natuurlijke bronkeuze de gewone keten volgen. Geen ongewijzigde no_source-proef herhalen of huishoudvoorbeeld opleggen; E1.6 blijft open tot echte causale afweging is aangetoond.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -13367,7 +13387,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T20:24:00.268364+00:00",
+      "checkedAt": "2026-10-20T20:40:29.879378+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -15008,7 +15028,7 @@
     },
     "e16SourceAttention20261020": {
       "startedAt": "2026-10-20T15:55:04.713312+00:00",
-      "state": "installed_waiting_actual_causal_use",
+      "state": "read_selected_source_and_history_handoff_installed_actual_causal_use_unproven",
       "previousGoalTurn": "progress",
       "previousProgress": "Bronverwijzingsherstel geïnstalleerd en één echte respons vóór/na met exact dezelfde bytes getoetst. Geen E1.6afronding.",
       "existing": "Native eventstroom, hostbroncontrole, duurzame NextAttention en bestaande afweging/uitvoering.",
@@ -15048,7 +15068,11 @@
       "isolatedChoiceEvidence": "development/evidence/product/e16-source-choice-observation-20261020.json",
       "isolatedModelChoice": "no_source",
       "isolatedExtraModelRequests": 1,
-      "doesNotBlockIndependentTask": "E4.12"
+      "doesNotBlockIndependentTask": "E4.12",
+      "checkedAt": "2026-10-20T20:40:29.879378+00:00",
+      "latestEvidence": "development/evidence/product/e16-read-selected-source-handoff-installed-20261020.json",
+      "latestReview": "development/reviews/e16-read-selected-source-handoff-review-20261020.json",
+      "extraTargetedModelRequestsThisContinuation": 0
     },
     "e412OpenSkillReuse20261020": {
       "startedAt": "2026-10-20T16:42:18.078240+00:00",

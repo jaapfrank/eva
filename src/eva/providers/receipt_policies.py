@@ -44,3 +44,10 @@ def retained_source_observation(action_name, arguments):
     if policy is None:
         return None, "provider_receipt_policy_unavailable"
     return policy.retained_source_observation(action_name, arguments)
+
+
+def retained_source_attention_selectors(action_name, arguments, observation):
+    """Provider-owned exact read targets; neither subscriptions nor authority."""
+    policy = receipt_policy(action_name)
+    select = None if policy is None else getattr(policy, "retained_source_attention_selectors", None)
+    return () if select is None else select(action_name, arguments, observation)

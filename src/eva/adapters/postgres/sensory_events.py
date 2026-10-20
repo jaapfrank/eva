@@ -317,7 +317,8 @@ class PostgresSensoryEventStore:
                     connection, scope, self._initiative_principal_id, now,
                     ordinary_work=ordinary_work)
                 from eva.adapters.postgres.initiative_attention import annotate_attention_sources
-                annotate_attention_sources(connection, self, payload["life_context"])
+                annotate_attention_sources(connection, self, payload["life_context"],
+                    source_outcomes=source_outcomes, now=now)
             data = {"event_type": "private_opportunity_review", "source": "initiative-review",
                     "source_event_id": source_id, "payload": payload}
             if self._household_binding is not None:

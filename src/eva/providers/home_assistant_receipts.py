@@ -192,3 +192,41 @@ def retained_source_observation(action_name, arguments):
             and arguments.get("method") == "GET"):
         return "result", None
     return None, "only_retained_rest_get_or_inventory"
+
+
+def retained_source_attention_selectors(action_name, arguments, observation):
+    """Only IDs from an actual read target/page, never query prose or a write."""
+    import json
+    import re
+    if not isinstance(observation, dict):
+        return ()
+    entities = []
+    if (action_name == "home_assistant_request" and arguments.get("transport") == "rest"
+            and arguments.get("method") == "GET" and observation.get("success") is True
+            and observation.get("http_status") == 200 and not observation.get("selection_error")):
+        path = arguments.get("path", "")
+        exact = re.fullmatch(r"/api/states/([a-z][a-z0-9_]*\.[a-zA-Z0-9_]+)", path)
+        if exact:
+            entities = [exact.group(1)]
+        elif path == "/api/states" and observation.get("truncated") is False:
+            try:
+                page = json.loads(observation.get("response_json", ""))
+            except (TypeError, ValueError):
+                return ()
+            if isinstance(page, list):
+                entities = [v.get("entity_id") for v in page if isinstance(v, dict)]
+    elif (action_name == "read_home_assistant_inventory" and arguments.get("section") == "entities"
+            and observation.get("section") == "entities" and isinstance(observation.get("items"), list)):
+        entities = [v.get("entity_id") for v in observation["items"] if isinstance(v, dict)]
+    selected = []
+    for entity in entities:
+        if (not isinstance(entity, str) or len(entity) > 255
+                or re.fullmatch(r"[a-z][a-z0-9_]*\.[a-zA-Z0-9_]+", entity) is None):
+            continue
+        value = {"source": "home_assistant", "event_type": "state_changed",
+                 "selector_key": "entity_id", "selector_value": entity}
+        if value not in selected:
+            selected.append(value)
+        if len(selected) == 4:
+            break
+    return tuple(selected)
