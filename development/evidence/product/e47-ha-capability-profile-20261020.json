@@ -1,6 +1,6 @@
 {
   "contract": "EvaHaCapabilityProfileTakeover/v1",
-  "status": "integrating_existing_draft",
+  "status": "technically_completed_installed",
   "recordedAt": "2026-10-20T10:57:23.613615+00:00",
   "ownerDirection": "Andere Codex op verzoek eigenaar gestopt; neem bestaand E4.7 MCP/API-profiel over en hergebruik catalogus in één module.",
   "builtBeforeTakeover": {
@@ -20,5 +20,327 @@
   ],
   "endCondition": "Install shared provider profile and validate real read-only discovery/cache reuse, authorized outdoor effect with fresh readback, and same chat/voice route; preserve management and no automatic cross-transport effect retry.",
   "privateEvidenceRoot": "/var/lib/eva2/voice-session/e47-takeover-20261020",
-  "otherScope": "Chat target2s remains unmet; no fresh UI ack or source catalogue alone counted as completion."
+  "otherScope": "Chat target2s remains unmet; no fresh UI ack or source catalogue alone counted as completion.",
+  "completedAt": "2026-10-20T11:30:11.496360+00:00",
+  "sourceCommit": "ed17d4d9af91e966c6463d47ec5ecf1f278bef14",
+  "installation": {
+    "core_image": "sha256:1a0569ee4e0a0479ba9115009cb8d8a2e3258ea87115d8f571575eaeacff1f34",
+    "worker_image": "sha256:a7177b69e1d836928df7fa7697dee215ac5e3caee486ac1514055e13782f710d",
+    "healthy": true,
+    "exact_source_hashes_verified": true,
+    "configuration_preserved": true,
+    "pre_install_active_claims": {
+      "voice": 0,
+      "work": 0,
+      "models": 0,
+      "decisions": 0,
+      "conversation": 0,
+      "native_admissions": 0,
+      "memory": 0
+    },
+    "worker_active_claims": {
+      "voice": 0,
+      "work": 0,
+      "models": 0,
+      "decisions": 0,
+      "conversation": 0,
+      "native_admissions": 0,
+      "memory": 0
+    },
+    "speaker_image": "sha256:edf417b7af3dcb4c404e5f8e67a1f92ce9472e57e717e2124190b00f870d6c79",
+    "speaker_restarted": false
+  },
+  "catalog": {
+    "ha_version": "2026.9.2",
+    "mcp_tool_count": 25,
+    "cold_profile_ms": 252.337,
+    "warm_profile_and_service_schema_ms": 0.222,
+    "mcp_initialize_calls_for_two_observations": 1,
+    "mcp_tools_list_calls_for_two_observations": 1,
+    "effect_calls_during_discovery": 0,
+    "max_metadata_age_seconds": 60,
+    "storage": "One module-owned in-memory profile per provider composition; no second semantic memory or new database. Entity states/effects are not cached as new proof.",
+    "binding": "Endpoint, credential, Eva scope, observed HA version/account/exposure and service/tool schemas. Configuration replacement creates a new profile; expiry/explicit invalidation refresh metadata. No instantaneous change notification or persistent TCP connection claim."
+  },
+  "capabilityMatrix": [
+    {
+      "capability": "ordinary_light_switch_on_off",
+      "transport": "Assist MCP",
+      "proof": "Real dashboard light on/off selected one set_home_assistant_light each; intent__HassTurnOn/Off recorded and independent exact fresh state verified. Unique names/IDs required; duplicate names remain a clarification. No live execution claim for other MCP tools."
+    },
+    {
+      "capability": "future_forecasts",
+      "transport": "REST service response + WebSocket fresh target states",
+      "proof": "No forecast tool in measured MCP catalog. Real weather query used API in one combined action. Shared observed service schema reused, current states fetched each invocation; follow-up retained source without a new tool."
+    },
+    {
+      "capability": "exact_current_state",
+      "transport": "REST",
+      "proof": "Real independent on/off state observations and final off readback. This is a point-in-time observation, not a lasting state guarantee."
+    },
+    {
+      "capability": "changes",
+      "transport": "existing WebSocket event route",
+      "proof": "WebSocket authentication/config/account/services/exposure discovery actually read. Existing event subscription kept; no new subscription or reconnect acceptance claim in this E4.7 trial."
+    },
+    {
+      "capability": "history",
+      "transport": "existing REST history route",
+      "proof": "Recorder component observed and existing route preserved. Availability indicator, not a new live history acceptance trial."
+    },
+    {
+      "capability": "automation_management_and_general_API",
+      "transport": "existing authorized REST/WebSocket routes",
+      "proof": "Actual account/admin/config/component and schemas observed; selected API routes passed targeted transport/authority checks. Existing management/result checks preserved. No new live automation write performed."
+    }
+  ],
+  "checks": {
+    "focused_unique_checks": 193,
+    "exact_core_candidate_tests": "193 passed in49.11s; revised module193passed47.22s",
+    "exact_worker_parent_tests": "193passed47.52s",
+    "context_optimization_checks": "229passed10.35s in separate earlier context candidate",
+    "independent_review": "development/reviews/e47-ha-capability-profile-review-20261020.json",
+    "covered_failures": [
+      "STOP and current capture authorization after discovery before dispatch",
+      "Lock acquisition and post-authorization deadline checks",
+      "Catalog expiry/explicit refresh, deep-copy isolation, schema/version drift",
+      "Missing MCP coverage never broadens API authority or triggers automatic effect fallback",
+      "Uncertain call is not retried internally; no cross-transport replay claim beyond the existing durable execution boundary",
+      "Cached service metadata does not turn unavailable/ambiguous target into a usable target"
+    ]
+  },
+  "liveComparisons": {
+    "same_installed_core": "sha256:1a0569ee4e0a0479ba9115009cb8d8a2e3258ea87115d8f571575eaeacff1f34",
+    "chat": {
+      "weather-r2": {
+        "first_substantive_text_ms": 6896.476,
+        "saved_final_reply_ms": 8298.884,
+        "stages": [
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 769,
+            "historical_recall_deferred": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 3157,
+            "first_content_ms": null,
+            "input_tokens": 8272,
+            "output_tokens": 63,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 1,
+            "receipt_count": 1,
+            "elapsed_ms": 2988,
+            "first_content_ms": 1601,
+            "input_tokens": 9535,
+            "output_tokens": 52,
+            "requested_action": false
+          }
+        ]
+      },
+      "source-r2": {
+        "first_substantive_text_ms": 4013.856,
+        "saved_final_reply_ms": 4808.726,
+        "stages": [
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 735,
+            "historical_recall_deferred": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 3429,
+            "first_content_ms": 2628,
+            "input_tokens": 9452,
+            "output_tokens": 45,
+            "requested_action": false
+          }
+        ]
+      },
+      "outdoor-on-r2": {
+        "first_substantive_text_ms": 8666.212,
+        "saved_final_reply_ms": 9386.533,
+        "stages": [
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 858,
+            "historical_recall_deferred": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 3316,
+            "first_content_ms": null,
+            "input_tokens": 8516,
+            "output_tokens": 28,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 1,
+            "receipt_count": 1,
+            "elapsed_ms": 2910,
+            "first_content_ms": 2113,
+            "input_tokens": 8626,
+            "output_tokens": 14,
+            "requested_action": false
+          }
+        ]
+      },
+      "outdoor-off-r2": {
+        "first_substantive_text_ms": 5921.75,
+        "saved_final_reply_ms": 6298.484,
+        "stages": [
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 714,
+            "historical_recall_deferred": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 2180,
+            "first_content_ms": null,
+            "input_tokens": 8370,
+            "output_tokens": 28,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 1,
+            "receipt_count": 1,
+            "elapsed_ms": 1698,
+            "first_content_ms": 1293,
+            "input_tokens": 8480,
+            "output_tokens": 14,
+            "requested_action": false
+          }
+        ]
+      }
+    },
+    "voice": {
+      "weather": {
+        "core_final_from_input_end_ms": 13084.87,
+        "final_answer_first_audible_pcm_from_input_end_ms": 13997.488,
+        "final_tts_to_first_audible_pcm_ms": 544.399
+      },
+      "source_followup": {
+        "core_final_from_input_end_ms": 6463.906,
+        "final_answer_first_audible_pcm_from_input_end_ms": 6996.247,
+        "final_tts_to_first_audible_pcm_ms": 520.817
+      },
+      "stages": {
+        "voice-0": [
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 1063,
+            "historical_recall_deferred": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 4657,
+            "first_content_ms": 4582,
+            "input_tokens": 8343,
+            "output_tokens": 80,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 1,
+            "receipt_count": 1,
+            "elapsed_ms": 3677,
+            "first_content_ms": 1694,
+            "input_tokens": 8925,
+            "output_tokens": 62,
+            "requested_action": false
+          }
+        ],
+        "voice-1": [
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 1262,
+            "historical_recall_deferred": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 2282,
+            "first_content_ms": 1719,
+            "input_tokens": 9637,
+            "output_tokens": 31,
+            "requested_action": false
+          }
+        ]
+      },
+      "source_followup_model_phases": 1,
+      "physical_microphone_or_playback": false,
+      "route": "Real input ASR -> existing household Eva core -> literal HA/Fenna TTS -> paced software PCM."
+    },
+    "previous_light_trial": {
+      "model_phases": 3,
+      "saved_final_reply_ms": 12483.236
+    },
+    "latest_light_trial": {
+      "model_phases_each": 2,
+      "module_actions_each": 1
+    },
+    "two_second_target_met": false,
+    "statistics": "Individual actual fixtures, not a median/p95 speed acceptance sample. Text-delta/final-reply and PCM times are distinguished; a short acknowledgement is not counted as task completion."
+  },
+  "runtimeUsage": {
+    "model_requests": 23,
+    "measured_input_tokens": 210212,
+    "measured_output_tokens": 953,
+    "tool_calls_reported": 11,
+    "provider_credits": null,
+    "scope": "Own E4.7 live dashboard and native voice fixtures only; excludes development/review and earlier context optimization probes."
+  },
+  "cleanup": {
+    "exact_dashboard_fixtures_erased_via_supported_API": 10,
+    "dashboard_protected_events_checked_per_erasure": [
+      7112,
+      7116,
+      7120,
+      7124,
+      7128,
+      7132,
+      7144,
+      7148,
+      7152,
+      7156
+    ],
+    "exact_native_voice_fixtures_erased": 6,
+    "native_semantic_documents_absent": 6,
+    "original_owner_events_unchanged": 204,
+    "scope": "Only bound own synthetic fixtures, backups and original failure evidence retained. No broad derivative removal claim."
+  },
+  "limits": [
+    "E4.7 module integration is technically complete; E4.8/E4.9/E4.10 and E5.2 are not closed by these measurements.",
+    "The latest weather chat saved answer takes8.299s and the voice final-answer PCM13.997s; no general speed win or1–2s claim.",
+    "The final outdoor lamp is restored to its initial off state. An earlier after-on read observed another HA context turning it off shortly after the verified on proof; no existing automation changed.",
+    "Physical speaker/microphone experience and family acceptance remain separate.",
+    "Provider credits and development/review model usage are unknown."
+  ],
+  "privateEvidenceHashes": {
+    "source-manifest.private.json": "ea8e869cbb0fc43cf8f898594329a6675a763fa2c5ee2fca8f9c43f05fb0131e",
+    "revision/source-manifest.private.json": "b7687696a64cefae08125ab37cb2750f7758b9ccd7bf66b7a194bdabebc005d2",
+    "worker/source-manifest.private.json": "4b110b81b3a083fee35ab7a349b576c2eff4123fc3c2251443e56d563c1f3480",
+    "readonly-discovery-r2.private.json": "d3bd3c08a02b48032ba4e8e0dc00eb78c84a4f04e94435e2d8536252ebb502af",
+    "worker/installed-discovery.private.json": "02c33573fb03b06b1348121b9fc39ab203bf066201d257fe70eeef3e60292c53",
+    "runtime-usage.json": "f2d92cd43984414bf950b58099c60b8543418e0288788c31b0ddf31f82429328",
+    "final-stage-timing.json": "085621ff0a92f92c11bf72d27910933601b99d961b6ba68713a83321927e0cdf",
+    "cleanup-preparation/manifest.private.json": "8ca8e46b1abac51623a967c365cb11eb487e07152b7ac09b66c2b5c03a29595f"
+  }
 }

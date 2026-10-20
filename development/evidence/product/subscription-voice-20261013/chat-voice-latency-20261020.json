@@ -1,14 +1,14 @@
 {
   "contract": "EvaChatVoiceLatency/v1",
   "recordedAt": "2026-10-20T10:23:00.815749+00:00",
-  "status": "measuring_baseline",
+  "status": "installed_module_integrated_latency_target_unmet",
   "ownerDirection": "Blijf verbeteren en test dezelfde vraag via echte chat; chat mag maximaal1tot2seconden duren.",
   "question": "Wat wordt morgen het weer?",
   "existing": "Combined HA service query installed, actual voice2modelrounds14.007858s to final-answer PCM.",
-  "gap": "Actual dashboard chat reception→substantive text and saved final not measured on this candidate.",
+  "gap": "Chat is measured on the real dashboard. Latest weather saved reply8.299s/source4.809s;1–2s target unmet. The measured model round trips dominate; catalog reuse alone does not satisfy the target.",
   "endCondition": "Measure real chat first substantive delta and confirmed final; improve the actual bottleneck without losing Eva identity, source continuity, authority or STOP. Owner target2s; never count ack/filler as substantive result.",
   "target_ms": 2000,
-  "core_image": "sha256:5c97cf3b264d5b7cc239f5881541be951166abcb04a8f40b448d4b83d936c795",
+  "core_image": "sha256:1a0569ee4e0a0479ba9115009cb8d8a2e3258ea87115d8f571575eaeacff1f34",
   "voiceReference": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
   "privateEvidenceRoot": "/var/lib/eva2/voice-session/chat-latency-20261020",
   "physicalAcceptance": false,
@@ -19,5 +19,216 @@
     "model_elapsed_ms": 5737,
     "preparation_ms": 1069,
     "target_met": false
-  }
+  },
+  "updatedAt": "2026-10-20T11:31:22.614519+00:00",
+  "contextOptimization": {
+    "installed": true,
+    "request_scoped_parallel_reads": true,
+    "model_prompt_prefix_order_improved": true,
+    "candidate_weather_first_substantive_ms": 7433.548,
+    "candidate_weather_saved_final_ms": 8886.549,
+    "candidate_preparation_ms": 767,
+    "baseline_preparation_ms": 1069,
+    "overall_latency_win_proven": false,
+    "evidenceBoundary": "Unpaired live observations; lower preparation time and cached input do not prove faster total replies."
+  },
+  "homeAssistantIntegration": {
+    "task": "E4.7",
+    "technicallyComplete": true,
+    "evidence": "development/evidence/product/e47-ha-capability-profile-20261020.json",
+    "review": "development/reviews/e47-ha-capability-profile-review-20261020.json"
+  },
+  "latestMeasurements": {
+    "same_installed_core": "sha256:1a0569ee4e0a0479ba9115009cb8d8a2e3258ea87115d8f571575eaeacff1f34",
+    "chat": {
+      "weather-r2": {
+        "first_substantive_text_ms": 6896.476,
+        "saved_final_reply_ms": 8298.884,
+        "stages": [
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 769,
+            "historical_recall_deferred": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 3157,
+            "first_content_ms": null,
+            "input_tokens": 8272,
+            "output_tokens": 63,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 1,
+            "receipt_count": 1,
+            "elapsed_ms": 2988,
+            "first_content_ms": 1601,
+            "input_tokens": 9535,
+            "output_tokens": 52,
+            "requested_action": false
+          }
+        ]
+      },
+      "source-r2": {
+        "first_substantive_text_ms": 4013.856,
+        "saved_final_reply_ms": 4808.726,
+        "stages": [
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 735,
+            "historical_recall_deferred": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 3429,
+            "first_content_ms": 2628,
+            "input_tokens": 9452,
+            "output_tokens": 45,
+            "requested_action": false
+          }
+        ]
+      },
+      "outdoor-on-r2": {
+        "first_substantive_text_ms": 8666.212,
+        "saved_final_reply_ms": 9386.533,
+        "stages": [
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 858,
+            "historical_recall_deferred": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 3316,
+            "first_content_ms": null,
+            "input_tokens": 8516,
+            "output_tokens": 28,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 1,
+            "receipt_count": 1,
+            "elapsed_ms": 2910,
+            "first_content_ms": 2113,
+            "input_tokens": 8626,
+            "output_tokens": 14,
+            "requested_action": false
+          }
+        ]
+      },
+      "outdoor-off-r2": {
+        "first_substantive_text_ms": 5921.75,
+        "saved_final_reply_ms": 6298.484,
+        "stages": [
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 714,
+            "historical_recall_deferred": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 2180,
+            "first_content_ms": null,
+            "input_tokens": 8370,
+            "output_tokens": 28,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 1,
+            "receipt_count": 1,
+            "elapsed_ms": 1698,
+            "first_content_ms": 1293,
+            "input_tokens": 8480,
+            "output_tokens": 14,
+            "requested_action": false
+          }
+        ]
+      }
+    },
+    "voice": {
+      "weather": {
+        "core_final_from_input_end_ms": 13084.87,
+        "final_answer_first_audible_pcm_from_input_end_ms": 13997.488,
+        "final_tts_to_first_audible_pcm_ms": 544.399
+      },
+      "source_followup": {
+        "core_final_from_input_end_ms": 6463.906,
+        "final_answer_first_audible_pcm_from_input_end_ms": 6996.247,
+        "final_tts_to_first_audible_pcm_ms": 520.817
+      },
+      "stages": {
+        "voice-0": [
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 1063,
+            "historical_recall_deferred": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 4657,
+            "first_content_ms": 4582,
+            "input_tokens": 8343,
+            "output_tokens": 80,
+            "requested_action": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 1,
+            "receipt_count": 1,
+            "elapsed_ms": 3677,
+            "first_content_ms": 1694,
+            "input_tokens": 8925,
+            "output_tokens": 62,
+            "requested_action": false
+          }
+        ],
+        "voice-1": [
+          {
+            "kind": "conversation_preparation_timing",
+            "elapsed_ms": 1262,
+            "historical_recall_deferred": true
+          },
+          {
+            "kind": "conversation_model_phase_timing",
+            "phase_index": 0,
+            "receipt_count": 0,
+            "elapsed_ms": 2282,
+            "first_content_ms": 1719,
+            "input_tokens": 9637,
+            "output_tokens": 31,
+            "requested_action": false
+          }
+        ]
+      },
+      "source_followup_model_phases": 1,
+      "physical_microphone_or_playback": false,
+      "route": "Real input ASR -> existing household Eva core -> literal HA/Fenna TTS -> paced software PCM."
+    },
+    "previous_light_trial": {
+      "model_phases": 3,
+      "saved_final_reply_ms": 12483.236
+    },
+    "latest_light_trial": {
+      "model_phases_each": 2,
+      "module_actions_each": 1
+    },
+    "two_second_target_met": false,
+    "statistics": "Individual actual fixtures, not a median/p95 speed acceptance sample. Text-delta/final-reply and PCM times are distinguished; a short acknowledgement is not counted as task completion."
+  },
+  "targetMet": false,
+  "ownerAcceptance": false,
+  "nextAction": "Bestaande E4.8/E4.9/E4.10/E5.2-kaarten volgen: bekende doelen in de module hergebruiken, minder modelrondes en voorbereiding meten met bron-/bevoegdheidscontrole behouden. Geen verdere catalogusoptimalisatie als verklaring voor secondenlange modelwachttijd."
 }

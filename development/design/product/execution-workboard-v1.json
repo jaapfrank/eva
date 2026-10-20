@@ -845,10 +845,10 @@
   "currentWork": {
     "id": "E4.7",
     "title": "Officiële API en MCP binnen één HA-module aansluiten",
-    "status": "in_progress",
+    "status": "completed",
     "doneWhen": "De module gebruikt één vastgelegd capabilityprofiel voor de werkelijk geïnstalleerde HA-versie, beschikbare officiële MCP-tools en REST/WebSocket-API. Bestaande Assist-MCP- en API-code wordt hergebruikt. Per capability zijn gekozen transport, toegang, schemas, actuele dekking en controle vastgelegd; normale bediening en geautoriseerd beheer blijven beschikbaar. Ontbrekend MCP-bereik veroorzaakt geen stille bevoegdheidsverruiming of blinde herhaling via een ander transport. Geen eigen HA-planner of tweede gespreksagent.",
-    "nextAction": "Bestaande E4.7-overdracht afronden: gedeeld MCP/API-profiel installeren, catalogushergebruik en buitenlicht werkelijk controleren; dezelfde chat- en spraakvraag meten.",
-    "checkedAt": "2026-10-20T11:06:25.724796+00:00",
+    "nextAction": "E4.7 is geïnstalleerd en werkelijk gebruikt. Vervolg bestaande E4.8 voor actueel apparaatbeeld en E4.9/E4.10/E5.2 voor de gemeten totale wachttijd; geen herbouw van de catalogus.",
+    "checkedAt": "2026-10-20T11:31:22.747952+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1631,6 +1631,22 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.7 · Gedeelde HA-catalogus en transportkeuze geïnstalleerd",
+            "state": "installed",
+            "summary": "Kern en uitvoerworker delen dezelfde HA-module. MCP-catalogus en service-schema worden hergebruikt; aan/uit via MCP werkelijk uitgevoerd en vers gecontroleerd. Chat-/spraaksnelheid is gemeten en voldoet nog niet aan de2s-grens.",
+            "remaining": "E4.8/E4.9/E4.10/E5.2, fysieke spraak en gezinsacceptatie blijven open. Geen benchmarkmediaan/p95 geclaimd.",
+            "source": "development/evidence/product/e47-ha-capability-profile-20261020.json",
+            "review": "development/reviews/e47-ha-capability-profile-review-20261020.json",
+            "checkedAt": "2026-10-20T11:31:22.747952+00:00",
+            "newProductFunctionCompleted": true,
+            "completedTaskIds": [
+              "E4.7"
+            ],
+            "completionScope": "Gedeeld MCP/API/WS-profiel op kern en uitvoerworker; live catalogushergebruik, MCP-effect en verse state-proof; geen algemene ≤2s- of volledige beheerwrite-claim.",
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E4.6 · Home Assistant werkt als optionele module van dezelfde Eva",
             "state": "installed",
@@ -2746,17 +2762,17 @@
         },
         "now": {
           "taskId": "E4.7",
-          "title": "Officiële API en MCP binnen één HA-module aansluiten",
-          "status": "in_progress",
-          "state": "in_progress",
-          "summary": "Bestaande E4.7-overdracht in dezelfde HA-module afronden en op echte installatie meten.",
+          "title": "E4.7 · Gedeelde HA-catalogus en transportkeuze geïnstalleerd",
+          "status": "completed",
+          "state": "completed",
+          "summary": "Kern en uitvoerworker delen dezelfde HA-module. MCP-catalogus en service-schema worden hergebruikt; aan/uit via MCP werkelijk uitgevoerd en vers gecontroleerd. Chat-/spraaksnelheid is gemeten en voldoet nog niet aan de2s-grens.",
           "doneWhen": "De module gebruikt één vastgelegd capabilityprofiel voor de werkelijk geïnstalleerde HA-versie, beschikbare officiële MCP-tools en REST/WebSocket-API. Bestaande Assist-MCP- en API-code wordt hergebruikt. Per capability zijn gekozen transport, toegang, schemas, actuele dekking en controle vastgelegd; normale bediening en geautoriseerd beheer blijven beschikbaar. Ontbrekend MCP-bereik veroorzaakt geen stille bevoegdheidsverruiming of blinde herhaling via een ander transport. Geen eigen HA-planner of tweede gespreksagent.",
-          "checkedAt": "2026-10-20T11:06:25.724796+00:00"
+          "checkedAt": "2026-10-20T11:31:22.747952+00:00"
         },
         "next": {
           "taskId": "E4.8",
-          "title": "Bestaande volgende HA-contextkaart",
-          "detail": "Eerst E4.7 werkend installeren."
+          "title": "Actueel apparaatbeeld binnen dezelfde module hergebruiken",
+          "detail": "Daarna bestaande E4.9/E4.10/E5.2: totale chat-/spraaklatency oplossen; catalogus kost warm minder dan1ms, modelrondes blijven seconden kosten."
         },
         "ownerAction": {
           "required": false,
@@ -2945,7 +2961,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E5.1",
+        "currentStep": "E4.7",
         "steps": [
           {
             "number": 1,
@@ -3564,7 +3580,7 @@
                   "currentCandidateStatus": "not_yet_assessed",
                   "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
                 },
-                "nextAction": "Meet dezelfde weersvraag via echte dashboardchat en spraak; grens maximaal 2 seconden voor inhoudelijk chatantwoord. Splits voorbereiding, model en brontransport uit en verbeter het gemeten knelpunt zonder identiteit/geheugen/bevoegdheden te verliezen.",
+                "nextAction": "Actuele gelijke route gemeten: lichtchat6.3–9.4s en weerchat8.3s; inhoudelijke weerspraak14.0s. Werk bestaande modulecontext/uitvoering en modelvoorbereiding af; beoordeel oorspronkelijke snelheids-/onderbreekcriteria afzonderlijk.",
                 "ownerActionRequired": false,
                 "ownerInstructions": {
                   "availableNow": false,
@@ -3841,8 +3857,8 @@
                 },
                 "executionPlan": {
                   "path": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json",
-                  "status": "baseline_measured_optimization_in_progress",
-                  "updatedAt": "2026-10-20T10:25:20.831607+00:00",
+                  "status": "measured_latency_target_unmet",
+                  "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                   "ownerAcceptance": false
                 }
               },
@@ -6646,8 +6662,8 @@
                   "Schemawijziging, onbekende effectuitkomst en ingetrokken toegang geven geen dubbele actie of bredere toegang.",
                   "Huidige beheer-/automatiseringsfuncties behouden hun bestaande resultaatcontrole."
                 ],
-                "nextAction": "Bestaande E4.7-overdracht afronden: gedeeld MCP/API-profiel installeren, catalogushergebruik en buitenlicht werkelijk controleren; dezelfde chat- en spraakvraag meten.",
-                "status": "in_progress",
+                "nextAction": "E4.7 is geïnstalleerd en werkelijk gebruikt. Vervolg bestaande E4.8 voor actueel apparaatbeeld en E4.9/E4.10/E5.2 voor de gemeten totale wachttijd; geen herbouw van de catalogus.",
+                "status": "completed",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
                 "ownerActionRequired": false,
@@ -6655,13 +6671,14 @@
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "assignment": {
                   "coordinator": "/root",
-                  "activeWorkers": [
-                    "/root/review_cursor"
-                  ],
-                  "scope": "Eigenaar heeft vorige uitvoerder gestopt. Overname bestaande E4.7-module; onafhankelijke review, geen nieuw spraakplatform."
+                  "activeWorkers": [],
+                  "scope": "E4.7 technisch afgerond op overgedragen module; maximale chatsnelheid en fysieke/gezinsacceptatie blijven afzonderlijk."
                 },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
-                "checkedAt": "2026-10-20T11:06:25.724796+00:00"
+                "checkedAt": "2026-10-20T11:31:22.747952+00:00",
+                "completionEvidence": "development/evidence/product/e47-ha-capability-profile-20261020.json",
+                "independentReview": "development/reviews/e47-ha-capability-profile-review-20261020.json",
+                "completionScope": "Gedeeld MCP/API/WS-profiel op kern en uitvoerworker; live catalogushergebruik, MCP-effect en verse state-proof; geen algemene ≤2s- of volledige beheerwrite-claim."
               },
               {
                 "id": "E4.8",
@@ -7302,7 +7319,7 @@
                   "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                   "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
                 ],
-                "nextAction": "Meet dezelfde weersvraag via echte dashboardchat en spraak; grens maximaal 2 seconden voor inhoudelijk chatantwoord. Splits voorbereiding, model en brontransport uit en verbeter het gemeten knelpunt zonder identiteit/geheugen/bevoegdheden te verliezen.",
+                "nextAction": "Actuele gelijke route gemeten: lichtchat6.3–9.4s en weerchat8.3s; inhoudelijke weerspraak14.0s. Werk bestaande modulecontext/uitvoering en modelvoorbereiding af; beoordeel oorspronkelijke snelheids-/onderbreekcriteria afzonderlijk.",
                 "status": "planned",
                 "kind": "owner_requested_followup",
                 "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -7313,8 +7330,8 @@
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
                 "executionPlan": {
                   "path": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json",
-                  "status": "baseline_measured_optimization_in_progress",
-                  "updatedAt": "2026-10-20T10:25:20.831607+00:00",
+                  "status": "measured_latency_target_unmet",
+                  "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                   "ownerAcceptance": false
                 }
               }
@@ -7334,7 +7351,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Hervat de afgesproken kortetermijn-dagcontext → bestaande droomfase → compacte bijgewerkte langetermijnkennis. Cameramodule is technisch geïnstalleerd; geen herhaalde camera- of geheugenproef zonder nieuwe oorzaak.",
+        "nextAction": "E4.7 is geïnstalleerd en werkelijk gebruikt. Vervolg bestaande E4.8 voor actueel apparaatbeeld en E4.9/E4.10/E5.2 voor de gemeten totale wachttijd; geen herbouw van de catalogus.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7565,7 +7582,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T09:40:57.354545+00:00",
+        "checkedAt": "2026-10-20T11:31:22.747952+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -7574,13 +7591,13 @@
             "C3.5",
             "C3.6"
           ],
-          "status": "chat_voice_latency_optimization",
+          "status": "ha_module_integrated_latency_target_open",
           "startedAt": "2026-10-19T07:08:01.588667+00:00",
           "activeOtherWorkPreserved": "E5.1",
           "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
           "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
           "independentReview": "development/reviews/ha-query-latency-20261020.json",
-          "updatedAt": "2026-10-20T10:25:20.831607+00:00",
+          "updatedAt": "2026-10-20T11:31:22.747952+00:00",
           "physicalAcceptance": "not_observed_after_repair",
           "executionPlan": {
             "path": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",
@@ -7593,7 +7610,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E5.1",
+      "currentStep": "E4.7",
       "steps": [
         {
           "number": 1,
@@ -8212,7 +8229,7 @@
                 "currentCandidateStatus": "not_yet_assessed",
                 "candidateEvidence": "development/evidence/product/c4-stop-and-noise-installed-20261005.json"
               },
-              "nextAction": "Meet dezelfde weersvraag via echte dashboardchat en spraak; grens maximaal 2 seconden voor inhoudelijk chatantwoord. Splits voorbereiding, model en brontransport uit en verbeter het gemeten knelpunt zonder identiteit/geheugen/bevoegdheden te verliezen.",
+              "nextAction": "Actuele gelijke route gemeten: lichtchat6.3–9.4s en weerchat8.3s; inhoudelijke weerspraak14.0s. Werk bestaande modulecontext/uitvoering en modelvoorbereiding af; beoordeel oorspronkelijke snelheids-/onderbreekcriteria afzonderlijk.",
               "ownerActionRequired": false,
               "ownerInstructions": {
                 "availableNow": false,
@@ -8489,8 +8506,8 @@
               },
               "executionPlan": {
                 "path": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json",
-                "status": "baseline_measured_optimization_in_progress",
-                "updatedAt": "2026-10-20T10:25:20.831607+00:00",
+                "status": "measured_latency_target_unmet",
+                "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                 "ownerAcceptance": false
               }
             },
@@ -11294,8 +11311,8 @@
                 "Schemawijziging, onbekende effectuitkomst en ingetrokken toegang geven geen dubbele actie of bredere toegang.",
                 "Huidige beheer-/automatiseringsfuncties behouden hun bestaande resultaatcontrole."
               ],
-              "nextAction": "Bestaande E4.7-overdracht afronden: gedeeld MCP/API-profiel installeren, catalogushergebruik en buitenlicht werkelijk controleren; dezelfde chat- en spraakvraag meten.",
-              "status": "in_progress",
+              "nextAction": "E4.7 is geïnstalleerd en werkelijk gebruikt. Vervolg bestaande E4.8 voor actueel apparaatbeeld en E4.9/E4.10/E5.2 voor de gemeten totale wachttijd; geen herbouw van de catalogus.",
+              "status": "completed",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
               "ownerActionRequired": false,
@@ -11303,13 +11320,14 @@
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "assignment": {
                 "coordinator": "/root",
-                "activeWorkers": [
-                  "/root/review_cursor"
-                ],
-                "scope": "Eigenaar heeft vorige uitvoerder gestopt. Overname bestaande E4.7-module; onafhankelijke review, geen nieuw spraakplatform."
+                "activeWorkers": [],
+                "scope": "E4.7 technisch afgerond op overgedragen module; maximale chatsnelheid en fysieke/gezinsacceptatie blijven afzonderlijk."
               },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
-              "checkedAt": "2026-10-20T11:06:25.724796+00:00"
+              "checkedAt": "2026-10-20T11:31:22.747952+00:00",
+              "completionEvidence": "development/evidence/product/e47-ha-capability-profile-20261020.json",
+              "independentReview": "development/reviews/e47-ha-capability-profile-review-20261020.json",
+              "completionScope": "Gedeeld MCP/API/WS-profiel op kern en uitvoerworker; live catalogushergebruik, MCP-effect en verse state-proof; geen algemene ≤2s- of volledige beheerwrite-claim."
             },
             {
               "id": "E4.8",
@@ -11950,7 +11968,7 @@
                 "Tijd tot eerste reactie, effect-ack, verse eindtoestand, eindtekst en complete audio afzonderlijk.",
                 "Gerichte onafhankelijke review plus alle oorspronkelijke fouten en onbekende credits behouden."
               ],
-              "nextAction": "Meet dezelfde weersvraag via echte dashboardchat en spraak; grens maximaal 2 seconden voor inhoudelijk chatantwoord. Splits voorbereiding, model en brontransport uit en verbeter het gemeten knelpunt zonder identiteit/geheugen/bevoegdheden te verliezen.",
+              "nextAction": "Actuele gelijke route gemeten: lichtchat6.3–9.4s en weerchat8.3s; inhoudelijke weerspraak14.0s. Werk bestaande modulecontext/uitvoering en modelvoorbereiding af; beoordeel oorspronkelijke snelheids-/onderbreekcriteria afzonderlijk.",
               "status": "planned",
               "kind": "owner_requested_followup",
               "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
@@ -11961,8 +11979,8 @@
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
               "executionPlan": {
                 "path": "development/evidence/product/subscription-voice-20261013/chat-voice-latency-20261020.json",
-                "status": "baseline_measured_optimization_in_progress",
-                "updatedAt": "2026-10-20T10:25:20.831607+00:00",
+                "status": "measured_latency_target_unmet",
+                "updatedAt": "2026-10-20T11:31:22.747952+00:00",
                 "ownerAcceptance": false
               }
             }
@@ -11982,7 +12000,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Hervat de afgesproken kortetermijn-dagcontext → bestaande droomfase → compacte bijgewerkte langetermijnkennis. Cameramodule is technisch geïnstalleerd; geen herhaalde camera- of geheugenproef zonder nieuwe oorzaak.",
+      "nextAction": "E4.7 is geïnstalleerd en werkelijk gebruikt. Vervolg bestaande E4.8 voor actueel apparaatbeeld en E4.9/E4.10/E5.2 voor de gemeten totale wachttijd; geen herbouw van de catalogus.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -12213,7 +12231,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T09:40:57.354545+00:00",
+      "checkedAt": "2026-10-20T11:31:22.747952+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -12222,13 +12240,13 @@
           "C3.5",
           "C3.6"
         ],
-        "status": "chat_voice_latency_optimization",
+        "status": "ha_module_integrated_latency_target_open",
         "startedAt": "2026-10-19T07:08:01.588667+00:00",
         "activeOtherWorkPreserved": "E5.1",
         "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
         "evidence": "development/evidence/product/subscription-voice-20261013/voice-fluency-20261019.json",
         "independentReview": "development/reviews/ha-query-latency-20261020.json",
-        "updatedAt": "2026-10-20T10:25:20.831607+00:00",
+        "updatedAt": "2026-10-20T11:31:22.747952+00:00",
         "physicalAcceptance": "not_observed_after_repair",
         "executionPlan": {
           "path": "development/evidence/product/subscription-voice-20261013/ha-query-latency-20261020.json",

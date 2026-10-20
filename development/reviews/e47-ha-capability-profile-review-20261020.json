@@ -1,0 +1,30 @@
+{
+  "contract": "EvaHaCapabilityProfileReview/v1",
+  "reviewer": "/root/review_cursor",
+  "decision": "GO_technical_completion_E4.7_only",
+  "reviewedAt": "2026-10-20T11:30:11.496360+00:00",
+  "evidence": "development/evidence/product/e47-ha-capability-profile-20261020.json",
+  "scope": "Inherited E4.7 implementation, deadline/authority fixes, direct setter guidance, exact core/worker deployment, actual catalog/cache/effects and shared chat/voice results.",
+  "findingsResolved": [
+    "Fresh capture authority and cancellation immediately before dispatch",
+    "Catalog/profile lock wait within original deadline",
+    "WebSocket connect/auth inherits deadline; REST/WS deadline checked after authorization",
+    "Service-query helper included in provider execution source binding",
+    "Worker and core use same final HA module sources; existing task bindings are not silently migrated"
+  ],
+  "proofBoundary": [
+    "25 tools discovered, only tested on/off intents executed",
+    "Config/component/schema observation does not prove every management/history operation",
+    "Unknown effects are not automatically replayed or routed through REST fallback",
+    "No chat≤2s, physical audio or family acceptance claim"
+  ],
+  "cleanupReview": {
+    "decision": "GO_after_fresh_validation",
+    "exact_voice_turns": 6,
+    "protected_owner_events": 204,
+    "manifest_sha256": "8ca8e46b1abac51623a967c365cb11eb487e07152b7ac09b66c2b5c03a29595f",
+    "actual_apply_succeeded": true
+  },
+  "ownerAcceptance": false,
+  "familyAcceptance": false
+}
