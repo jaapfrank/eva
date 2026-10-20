@@ -845,10 +845,10 @@
   "currentWork": {
     "id": "E1.4",
     "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
-    "status": "in_progress",
+    "status": "completed",
     "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-    "nextAction": "Gecorrigeerde hervattingsinstructies onafhankelijk controleren en gericht installeren; dezelfde eigen vervolgtaak afmaken en later resultaatgebruik controleren.",
-    "checkedAt": "2026-10-20T18:52:02.828259+00:00",
+    "nextAction": "E1.4 is technisch afgerond met actuele taakvoltooiing en gewone latere toepassing. Daarna de bestaande E4.14-kaart; spraak blijft bij de andere uitvoerder.",
+    "checkedAt": "2026-10-20T19:26:59.261526+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1632,13 +1632,30 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E1.4 · Eigen vervolg afgemaakt en later inhoudelijk gebruikt",
+            "state": "installed",
+            "summary": "Eva heeft haar eigen vervolg afgemaakt en het resultaat later inhoudelijk gebruikt.",
+            "remaining": "Geen resterende technische stap voor deze bestaande E1.4-uitkomst. Dagelijks gezinsnut en eigenaaracceptatie blijven F2. Herstelhulp is geen bewezen zelfstandig foutherstel; geen extra Telegrambericht geclaimd.",
+            "source": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
+            "review": "development/reviews/e14-verified-result-completion-review-20261020.json",
+            "checkedAt": "2026-10-20T19:26:59.261526+00:00",
+            "completedAt": "2026-10-20T19:22:58Z",
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [
+              "E1.4"
+            ],
+            "completionScope": "Actuele vervolgketen van de al historisch afgeronde kaart; oorspronkelijke criteria en telling behouden, geen extra nieuwe productfunctie geteld.",
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
             "title": "E1.4 · Hervattingsinstructies gecorrigeerd en beoordeeld",
-            "state": "built",
-            "summary": "Eigenaarshervatting wordt feitelijk herkend; alleen de huidige toegelaten vervolgstap blijft beschikbaar. Gerichte controles en onafhankelijke bronreview geslaagd.",
-            "remaining": "Gerichte installatie wacht op controle van actieve speakerverbinding; dezelfde eigen vervolgtaak en later gebruik zijn nog niet afgerond.",
+            "state": "installed",
+            "summary": "Onderzoek en documentcontrole zijn gelukt. Een extra connectorstatus blokkeerde daarna de taakafronding.",
+            "remaining": "Taakafronding en later gebruik blijven open. Laatste poging:105.428 geregistreerde tokens, onvolledige meting; creditkosten onbekend.",
             "source": "development/evidence/reassessment/e14-explicit-resume-handoff-20261020.json",
             "review": "development/reviews/e14-explicit-resume-handoff-review-20261020.json",
-            "checkedAt": "2026-10-20T18:52:02.828259+00:00",
+            "checkedAt": "2026-10-20T19:09:58.697092+00:00",
             "newProductFunctionCompleted": false,
             "completedTaskIds": [],
             "ownerAcceptance": false,
@@ -2891,30 +2908,31 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E4.13 · Semantische codefeedback geïnstalleerd en door Eva gebruikt",
+          "title": "E1.4 · Eigen vervolg afgemaakt en later inhoudelijk gebruikt",
           "state": "installed",
-          "summary": "Echte Pythonfout op actuele bronversie gevonden, door Eva gericht opgelost en daarna onafhankelijk 6/6 gedragsgevallen geslaagd. Dezelfde geïsoleerde programmeerroute; geen nieuwe agent.",
-          "remaining": "Geen technische E4.13-stap. Python directe edits zijn de eerste scope; algemene codekwaliteit/gezinsnut niet hiermee bewezen.",
-          "source": "development/evidence/product/e413-programming-semantic-feedback-20261020.json",
-          "date": "2026-10-20",
-          "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+          "summary": "Eva heeft haar eigen vervolg afgemaakt en het resultaat later inhoudelijk gebruikt.",
+          "remaining": "Geen resterende technische stap voor deze bestaande E1.4-uitkomst. Dagelijks gezinsnut en eigenaaracceptatie blijven F2. Herstelhulp is geen bewezen zelfstandig foutherstel; geen extra Telegrambericht geclaimd.",
+          "source": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
+          "review": "development/reviews/e14-verified-result-completion-review-20261020.json",
+          "checkedAt": "2026-10-20T19:26:59.261526+00:00",
+          "completedAt": "2026-10-20T19:22:58Z",
+          "newProductFunctionCompleted": false,
           "completedTaskIds": [
-            "E4.13"
+            "E1.4"
           ],
-          "newProductFunctionCompleted": true,
-          "completedAt": "2026-10-20T18:07:32.586759+00:00",
+          "completionScope": "Actuele vervolgketen van de al historisch afgeronde kaart; oorspronkelijke criteria en telling behouden, geen extra nieuwe productfunctie geteld.",
           "ownerAcceptance": false,
           "familyAcceptance": false
         },
         "now": {
           "taskId": "E1.4",
           "title": "E1.4 · Actueel zelfstandig vervolg herstellen",
-          "status": "in_progress",
-          "state": "repairing",
-          "summary": "Eva’s eigen vervolg is nog niet af. De hervatting kreeg tegenstrijdige instructies; die overdracht is gericht gecorrigeerd.",
-          "detail": "Controle zonder modelaanvraag bevestigt dat de vervolgstap beschikbaar blijft. Onafhankelijke review en installatie lopen; eerdere mislukking en verbruik blijven zichtbaar.",
+          "status": "completed",
+          "state": "completed",
+          "summary": "Eva heeft haar eigen vervolg afgemaakt en het resultaat later inhoudelijk gebruikt.",
+          "detail": "Onafhankelijk bevestigd: bestaand onderzoek en opgeslagen document hergebruikt; daarna onderbouwd geen extra bericht of herhaling gekozen. Ontwikkelaarshulp en hoog verbruik blijven zichtbaar; gezinsacceptatie blijft apart.",
           "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-          "checkedAt": "2026-10-20T18:52:02.828259+00:00"
+          "checkedAt": "2026-10-20T19:26:59.261526+00:00"
         },
         "next": {
           "taskId": "E4.14",
@@ -2926,8 +2944,8 @@
           "detail": "Geen handeling nodig. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-20T18:52:02.828259+00:00",
-        "reviewedAt": "2026-10-20T18:42:33.564796+00:00",
+        "checkedAt": "2026-10-20T19:26:59.261526+00:00",
+        "reviewedAt": "2026-10-20T19:26:59.261526+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -5543,7 +5561,7 @@
                 "requiredForCurrentDelivery": true,
                 "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
                 "existing": "Duurzame taken, persoonlijke interesses, verwachtingen/review_at, eigen aandacht, brongebonden vervolg en één echte E5.1-episode bestaan.",
-                "gap": "Oorspronkelijke technische keten blijft afgerond. Actuele controle: nieuw zelfgekozen vervolg faalde op uitvoerbudget en houdt latere afwegingen in pauze; gerichte diagnose/herstel loopt.",
+                "gap": "Geen resterende technische stap voor de huidige vervolgketen. Dagelijks gezinsnut en eigenaaracceptatie blijven F2.",
                 "implementation": [
                   "Lees de huidige native keten en werkelijke open eigen doelen; onderscheid technische uitval, ontbrekende context en legitieme stilte.",
                   "Verbind ontbrekende overdracht tussen bestaande verwachting/doel, actuele waarneming, voortgang en volgende aandacht; verander alleen de bewezen ontbrekende verbinding.",
@@ -5564,21 +5582,35 @@
                 "dependsOn": [
                   "E5.1"
                 ],
-                "nextAction": "Behoud de geïnstalleerde keten. Vervolg met de bestaande E1.5-kaart; F2-gezinsacceptatie blijft apart.",
-                "checkedAt": "2026-10-20T18:15:15.411801+00:00",
-                "progress": "Echte meerdaagse keten afgerond: eigen vervolg gekozen, onderzoek uitgevoerd en bewaard, uitkomst later inhoudelijk toegepast en privé afgeleverd.",
-                "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
-                "result": "Eva zette haar eigen interesse over 19 en 20 oktober voort, rondde het zelfgekozen onderzoek af en gebruikte de uitkomst bij de volgende gewone afweging voor een genuanceerde terugkoppeling via Telegram. Technische herstelhulp en eerdere mislukkingen blijven zichtbaar; gezinsnut/acceptatie blijven F2.",
-                "completedAt": "2026-10-20T15:21:42+00:00",
-                "completionEvidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
-                "independentReview": "development/reviews/e14-cross-day-final-completion-review-20261020.json",
-                "latestEvidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
+                "nextAction": "Behoud de geïnstalleerde keten; volgende bestaande bouwkaart E4.14. Spraak blijft bij de andere uitvoerder.",
+                "checkedAt": "2026-10-20T19:27:27.884316+00:00",
+                "progress": "Actueel eigen vervolg afgerond; volgende gewone afweging gebruikt conclusie en onzekerheden en kiest onderbouwd pauze. Geen extra onderzoek, opslag of Telegrambericht geforceerd.",
+                "evidence": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
+                "result": "Het door Eva gekozen codeonderzoek en opgeslagen document zijn met technische herstelhulp afgerond. Zij gebruikte de nieuwe conclusie later inhoudelijk, hield lokale werking onbevestigd en besloot geen onnodige herhaling of extra bericht te sturen. Eerdere fouten en verbruik blijven behouden.",
+                "completedAt": "2026-10-20T19:22:58Z",
+                "completionEvidence": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
+                "independentReview": "development/reviews/e14-verified-result-completion-review-20261020.json",
+                "latestEvidence": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Geen handeling nodig voor deze technisch afgeronde kaart.",
                   "steps": [],
                   "blocksIndependentWork": false
-                }
+                },
+                "completionHistory": [
+                  {
+                    "gap": "Oorspronkelijke technische keten blijft afgerond. Actuele controle: nieuw zelfgekozen vervolg faalde op uitvoerbudget en houdt latere afwegingen in pauze; gerichte diagnose/herstel loopt.",
+                    "nextAction": "Behoud de geïnstalleerde keten. Vervolg met de bestaande E1.5-kaart; F2-gezinsacceptatie blijft apart.",
+                    "checkedAt": "2026-10-20T18:15:15.411801+00:00",
+                    "progress": "Echte meerdaagse keten afgerond: eigen vervolg gekozen, onderzoek uitgevoerd en bewaard, uitkomst later inhoudelijk toegepast en privé afgeleverd.",
+                    "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
+                    "result": "Eva zette haar eigen interesse over 19 en 20 oktober voort, rondde het zelfgekozen onderzoek af en gebruikte de uitkomst bij de volgende gewone afweging voor een genuanceerde terugkoppeling via Telegram. Technische herstelhulp en eerdere mislukkingen blijven zichtbaar; gezinsnut/acceptatie blijven F2.",
+                    "completedAt": "2026-10-20T15:21:42+00:00",
+                    "completionEvidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
+                    "independentReview": "development/reviews/e14-cross-day-final-completion-review-20261020.json",
+                    "latestEvidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json"
+                  }
+                ]
               },
               {
                 "status": "completed",
@@ -7914,7 +7946,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Herstel gericht de actuele zelfgekozen vervolgtaak die op budget_exceeded bleef hangen; behoud eerder voltooiingsbewijs en voorkom dubbele effecten.",
+        "nextAction": "E1.4 actuele vervolgketen afgerond. Volgende: bestaande E4.14, geen nieuwe vergelijkingsserie of spraakwerk.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -7923,7 +7955,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-20T18:08:24.596249+00:00",
+        "updatedAt": "2026-10-20T19:26:59.261526+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -8165,7 +8197,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-20T18:52:02.828259+00:00",
+        "checkedAt": "2026-10-20T19:26:59.261526+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -10666,7 +10698,7 @@
               "requiredForCurrentDelivery": true,
               "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
               "existing": "Duurzame taken, persoonlijke interesses, verwachtingen/review_at, eigen aandacht, brongebonden vervolg en één echte E5.1-episode bestaan.",
-              "gap": "Oorspronkelijke technische keten blijft afgerond. Actuele controle: nieuw zelfgekozen vervolg faalde op uitvoerbudget en houdt latere afwegingen in pauze; gerichte diagnose/herstel loopt.",
+              "gap": "Geen resterende technische stap voor de huidige vervolgketen. Dagelijks gezinsnut en eigenaaracceptatie blijven F2.",
               "implementation": [
                 "Lees de huidige native keten en werkelijke open eigen doelen; onderscheid technische uitval, ontbrekende context en legitieme stilte.",
                 "Verbind ontbrekende overdracht tussen bestaande verwachting/doel, actuele waarneming, voortgang en volgende aandacht; verander alleen de bewezen ontbrekende verbinding.",
@@ -10687,21 +10719,35 @@
               "dependsOn": [
                 "E5.1"
               ],
-              "nextAction": "Behoud de geïnstalleerde keten. Vervolg met de bestaande E1.5-kaart; F2-gezinsacceptatie blijft apart.",
-              "checkedAt": "2026-10-20T18:15:15.411801+00:00",
-              "progress": "Echte meerdaagse keten afgerond: eigen vervolg gekozen, onderzoek uitgevoerd en bewaard, uitkomst later inhoudelijk toegepast en privé afgeleverd.",
-              "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
-              "result": "Eva zette haar eigen interesse over 19 en 20 oktober voort, rondde het zelfgekozen onderzoek af en gebruikte de uitkomst bij de volgende gewone afweging voor een genuanceerde terugkoppeling via Telegram. Technische herstelhulp en eerdere mislukkingen blijven zichtbaar; gezinsnut/acceptatie blijven F2.",
-              "completedAt": "2026-10-20T15:21:42+00:00",
-              "completionEvidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
-              "independentReview": "development/reviews/e14-cross-day-final-completion-review-20261020.json",
-              "latestEvidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
+              "nextAction": "Behoud de geïnstalleerde keten; volgende bestaande bouwkaart E4.14. Spraak blijft bij de andere uitvoerder.",
+              "checkedAt": "2026-10-20T19:27:27.884316+00:00",
+              "progress": "Actueel eigen vervolg afgerond; volgende gewone afweging gebruikt conclusie en onzekerheden en kiest onderbouwd pauze. Geen extra onderzoek, opslag of Telegrambericht geforceerd.",
+              "evidence": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
+              "result": "Het door Eva gekozen codeonderzoek en opgeslagen document zijn met technische herstelhulp afgerond. Zij gebruikte de nieuwe conclusie later inhoudelijk, hield lokale werking onbevestigd en besloot geen onnodige herhaling of extra bericht te sturen. Eerdere fouten en verbruik blijven behouden.",
+              "completedAt": "2026-10-20T19:22:58Z",
+              "completionEvidence": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
+              "independentReview": "development/reviews/e14-verified-result-completion-review-20261020.json",
+              "latestEvidence": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Geen handeling nodig voor deze technisch afgeronde kaart.",
                 "steps": [],
                 "blocksIndependentWork": false
-              }
+              },
+              "completionHistory": [
+                {
+                  "gap": "Oorspronkelijke technische keten blijft afgerond. Actuele controle: nieuw zelfgekozen vervolg faalde op uitvoerbudget en houdt latere afwegingen in pauze; gerichte diagnose/herstel loopt.",
+                  "nextAction": "Behoud de geïnstalleerde keten. Vervolg met de bestaande E1.5-kaart; F2-gezinsacceptatie blijft apart.",
+                  "checkedAt": "2026-10-20T18:15:15.411801+00:00",
+                  "progress": "Echte meerdaagse keten afgerond: eigen vervolg gekozen, onderzoek uitgevoerd en bewaard, uitkomst later inhoudelijk toegepast en privé afgeleverd.",
+                  "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
+                  "result": "Eva zette haar eigen interesse over 19 en 20 oktober voort, rondde het zelfgekozen onderzoek af en gebruikte de uitkomst bij de volgende gewone afweging voor een genuanceerde terugkoppeling via Telegram. Technische herstelhulp en eerdere mislukkingen blijven zichtbaar; gezinsnut/acceptatie blijven F2.",
+                  "completedAt": "2026-10-20T15:21:42+00:00",
+                  "completionEvidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
+                  "independentReview": "development/reviews/e14-cross-day-final-completion-review-20261020.json",
+                  "latestEvidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json"
+                }
+              ]
             },
             {
               "status": "completed",
@@ -13037,7 +13083,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Herstel gericht de actuele zelfgekozen vervolgtaak die op budget_exceeded bleef hangen; behoud eerder voltooiingsbewijs en voorkom dubbele effecten.",
+      "nextAction": "E1.4 actuele vervolgketen afgerond. Volgende: bestaande E4.14, geen nieuwe vergelijkingsserie of spraakwerk.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -13046,7 +13092,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-20T18:08:24.596249+00:00",
+      "updatedAt": "2026-10-20T19:26:59.261526+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -13288,7 +13334,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-20T18:52:02.828259+00:00",
+      "checkedAt": "2026-10-20T19:26:59.261526+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -14799,13 +14845,13 @@
       "ownerAcceptance": false,
       "fullProjectGoalCompleted": false,
       "currentRuntimeRecheck": {
-        "checkedAt": "2026-10-20T18:52:02.828259+00:00",
+        "checkedAt": "2026-10-20T19:26:59.261526+00:00",
         "historicalCompletionRetained": true,
-        "latestFollowupState": "failed_budget_exceeded",
-        "ordinaryLaterDecisions": "paused_because_followup_remains_blocked",
+        "latestFollowupState": "succeeded_after_operator_recovery",
+        "ordinaryLaterDecisions": "current_result_semantically_used_considered_pause",
         "newModelCallsByRecheck": 0,
         "voiceChanged": false,
-        "state": "factual_resume_handoff_prepared_no_new_model_attempt",
+        "state": "completed_current_followup_with_ordinary_semantic_later_use",
         "diagnosis": "Citation validation error left model usage incomplete; budget_exceeded was the subsequent accounting guard, not proven numeric exhaustion.",
         "runtimeChanged": true,
         "evidence": "development/evidence/reassessment/e14-failure-context-handoff-installed-20261020.json",
@@ -14855,7 +14901,61 @@
         },
         "toolAvailabilityClaimCorrected": true,
         "provenGap": "Native instructions denied owner request even on actual explicit owner resume; failed-research guidance did not distinguish authorized new indexed read. Causality for prior model refusal remains unproved.",
-        "providerlessModelHandoffChecks": 2
+        "providerlessModelHandoffChecks": 2,
+        "factualHandoffEvidence": "development/evidence/reassessment/e14-explicit-resume-handoff-20261020.json",
+        "currentRecoverySpec": "7f9b05ae8485e58286d00bf9efe79c142f052cef50bb7234f96ee1463fcf065b",
+        "latestAttempt": {
+          "generation": 4,
+          "state": "succeeded",
+          "elapsedSeconds": 59,
+          "modelResponses": 3,
+          "localStoredReceiptReads": 2,
+          "newResearch": 0,
+          "newSaves": 0,
+          "newExternalDispatches": 0,
+          "inputTokens": 62380,
+          "outputTokens": 506,
+          "registeredTokens": 62886,
+          "measurement": "partial",
+          "creditCost": null
+        },
+        "currentGap": null,
+        "verifiedResultFinalizationEvidence": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
+        "technicalTaskCompleted": true,
+        "completionEvidence": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
+        "completionReview": "development/reviews/e14-verified-result-completion-review-20261020.json",
+        "ordinaryLaterUse": {
+          "decidedAt": "2026-10-20T19:22:58Z",
+          "decisionSha256": "b1bc55f0bda1849d0851f23197d98bbc47729acd4654b71f4a4cca83724284c4",
+          "sourceContextSha256": "63a834eadf853b41f651dd38480e1d18bac4eeeee9eaa06e20947ff235c33f71",
+          "exactCurrentResultBound": true,
+          "disposition": "silence",
+          "semanticUse": "Uses the new bit16 conclusion, keeps code/commit/local-installation limitations, rejects redundant investigation and an unnecessary extra message.",
+          "manuallyTriggered": false,
+          "telegramExpressionDelivered": false,
+          "usage": {
+            "measurement": "measured",
+            "modelAttempts": 1,
+            "toolCalls": 1,
+            "inputTokens": 16546,
+            "outputTokens": 135,
+            "totalTokens": 16681,
+            "creditCost": null
+          }
+        },
+        "usageSummary": {
+          "fourLinkedWorkAttemptsRegisteredTokens": 209679,
+          "finalOrdinaryReviewTokens": 16681,
+          "linkedAttemptsAndFinalReviewRegisteredTokens": 226360,
+          "precedingOrdinaryReviewTokens": 15433,
+          "selectedKnownTokensIncludingPrecedingReview": 241793,
+          "fullRuntimeTotalKnown": false,
+          "missingHistoricalResearchUsageRetained": true,
+          "runtimeCreditCost": null,
+          "developmentCreditCost": null
+        },
+        "ownerAcceptance": false,
+        "fullProjectGoalCompleted": false
       }
     },
     "e15CurrentPersonContext20261020": {

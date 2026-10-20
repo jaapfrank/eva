@@ -11,5 +11,8 @@
     "Providerless phase tests validate offered descriptor and instructions, not model competence or actual success."
   ],
   "completionBoundary": "Prior bounded successor remains failed. Separate changed-handoff hypothesis may run once under existing owner mandate; current completion and later semantic result use remain open.",
-  "voiceChanged": false
+  "voiceChanged": false,
+  "actualExecutionDecision": "NO_GO_CURRENT_EXECUTION_NOT_COMPLETED",
+  "actualReviewSha256": "b99a3384b700426fa9263ed17ae6c180c2c6c8e19becbc2463b76773bbdf5b55",
+  "subsequentRemediationEvidence": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json"
 }

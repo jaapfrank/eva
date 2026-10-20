@@ -607,6 +607,16 @@ class PostgresExternalConversationTools:
                     "volgende stap het onderzoek kan afmaken, onder de huidige controles. "
                     "De oude fout telt niet als voltooid werk.",
             })
+        if (status == "failed" and isinstance(evidence, dict)
+                and evidence.get("source") == "native_connector_status_pre_dispatch_refusal"):
+            observation_output.update({
+                "recoverable_pre_dispatch_refusal": True,
+                "completion_guidance": "Deze aanvullende statuslezing is vóór uitvoering geweigerd; "
+                    "zij levert geen status of voltooiingsbewijs. Gebruik de eerdere werkelijk "
+                    "geverifieerde resultaten van deze taak, inclusief een al uitgevoerde "
+                    "onafhankelijke documentteruglezing. Bepaal wat inhoudelijk nog ontbreekt; "
+                    "herhaal geen afgerond onderzoek, opslag of voldoende controle.",
+            })
         receipt = ConversationActionReceipt(
             ConversationActionCall(call_id, str(action_name), arguments),
             {

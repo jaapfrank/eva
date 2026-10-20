@@ -235,7 +235,13 @@ profielverversing en onzekere schrijfacties krijgen deze uitzondering niet. De o
 operatie wordt niet opnieuw uitgevoerd. Een nieuwe geïndexeerde keuze gebruikt het
 actuele mandaat en dezelfde uitvoernamespace, met afzonderlijke nieuwe pogingmeting;
 het onbekende oude providerverbruik blijft afzonderlijk onbekend. Zonder werkelijk
-nieuw gecontroleerd resultaat is de taak niet afgerond.
+nieuw gecontroleerd resultaat is de taak niet afgerond. Een reeds onafhankelijk geverifieerde
+teruglezing van de documenttool telt als documentcontrole; een extra modelgestuurde
+teruglezing is alleen nodig bij ontbrekend of ontoereikend bewijs. Een exact gebonden,
+aantoonbaar vóór uitvoering geweigerde aanvullende statuslezing blijft een mislukking,
+maar wist eerder geverifieerd werk niet uit en telt zelf nooit als voltooid werk.
+De connectorprovider gebruikt voor toegelaten native stappen de echte actuele
+initiatiefguard en bronidentiteit; hij maakt daarvan geen eigenaaropdracht.
 
 
 Een nieuwe native uitkomst met geverifieerde bronlezing mag precies één

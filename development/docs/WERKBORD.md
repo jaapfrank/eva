@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 E1.4 · Actueel zelfstandig vervolg herstellen
 
-Eva’s eigen vervolg is nog niet af. De hervatting kreeg tegenstrijdige instructies; die overdracht is gericht gecorrigeerd.
+Eva heeft haar eigen vervolg afgemaakt en het resultaat later inhoudelijk gebruikt.
 
 Klaar wanneer: De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.
 

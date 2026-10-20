@@ -1,7 +1,7 @@
 {
   "contract": "EvaE14FactualResumeHandoff/v1",
-  "checkedAt": "2026-10-20T18:53:37.978450+00:00",
-  "state": "reviewed_ready_to_install_waiting_for_active_conversation",
+  "checkedAt": "2026-10-20T19:09:58.697092+00:00",
+  "state": "installed_research_and_verified_save_task_failed_on_extra_status",
   "taskId": "E1.4",
   "alreadyWorked": "Historical self-chosen cross-day continuation and ordinary later semantic use remain proved for the earlier episode; not general daily usefulness.",
   "currentGap": "The newer independently chosen public implementation-code follow-up failed; its assisted successor also failed with no new tool dispatch.",
@@ -39,7 +39,7 @@
   },
   "prospectiveAttempt": {
     "generation": 3,
-    "started": false,
+    "started": true,
     "maximumNewResumptions": 1,
     "sameSelfChosenTaskGrantNamespaceAndCriteria": true,
     "changedHypothesis": "Factual instruction and next-step handoff corrected; causality for previous refusal remains unproven.",
@@ -49,14 +49,84 @@
     "sameCurrentFollowupCompleted": false,
     "ordinaryLaterSemanticUse": false,
     "ownerAcceptance": false,
-    "fullProjectCompleted": false
+    "fullProjectCompleted": false,
+    "actualState": "failed",
+    "errorCode": "incomplete_work",
+    "elapsedSeconds": 160,
+    "modelResponses": 6,
+    "toolDispatches": 3,
+    "inputTokens": 102556,
+    "outputTokens": 2872,
+    "recordedTokens": 105428,
+    "measurement": "partial",
+    "creditCost": null
   },
   "voiceChanged": false,
   "creditCost": null,
   "installationCoordination": {
     "reason": "Actual recent voice/model traffic on shared core, not merely a lease heartbeat. Voice implementation remains untouched.",
     "independentFindingSha256": "4743a062394faba18754ad502f5ced70b631df9fc860d652f5ceba50a528dcb4",
-    "noDockerServicesChanged": true,
-    "ownerAskedToCoordinateBriefQuietWindow": true
+    "noDockerServicesChanged": false,
+    "ownerAskedToCoordinateBriefQuietWindow": true,
+    "voiceServicesChanged": false,
+    "quietWindowActuallyFound": true
+  },
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "coreImage": "sha256:9210eabd2ff84960b9210e60a797210a2001e74cc849e52362db7b2914b5900b",
+    "workerImage": "sha256:427a27fbfdc4ac281b6af56ec2635c1401c69a328ff34f6cc45f8745c3d783d9",
+    "executionPins": 68,
+    "capabilities": 26,
+    "voiceChanged": false,
+    "policyBytesUnchanged": true,
+    "receiptSha256": "301469b689677b402905ad148fda23303519e289e030c8cf0ec31f491f8dcdca",
+    "freshPreflight": {
+      "at": "2026-10-20T19:00:44.543095+00:00",
+      "pending_or_running_work": false,
+      "blocking_claims": [],
+      "unfiltered_pending_flag": false,
+      "blocking_queue": [],
+      "expired_unstarted_preserved": []
+    }
+  },
+  "admission": {
+    "disposition": "inserted",
+    "state": "admitted",
+    "work_id": "work:eva-resume:53bd407b-e3f4-5b85-896d-4a75bd6e20de",
+    "spec_sha256": "642bb81a5d5afa2aed2c25f5b5dcd753644c229c8ee7b0c5bb265662fe95b6dc",
+    "generation": 3,
+    "execution_id": "work:eva-initiative:f7bca859f9e42711a2b6d53f5643160146f28192e733d3cd9e16365bca0ebad8",
+    "sameGrant": true,
+    "sameOriginalTask": true,
+    "owner_request_sha256": "8ab0f1ef3cc8ab72caf8ab6780c445739b9b98b908949e8edc1b941f28459aa6",
+    "oldStatePreserved": "failed",
+    "oldUsagePreserved": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 2,
+      "tool_calls": 0,
+      "input_tokens": 27911,
+      "output_tokens": 273,
+      "total_tokens": 28184,
+      "cost_usd_micros": null
+    },
+    "modelCallsByOperator": 0
+  },
+  "diagnosis": {
+    "researchVerified": true,
+    "documentSavedWithIndependentReadback": true,
+    "extraFailedAction": {
+      "name": "manage_connected_services",
+      "arguments": {
+        "action": "status"
+      },
+      "providerStarted": false,
+      "cause": "Native source loader rejects the advertised initiative source before connector status execution."
+    },
+    "instructionConflict": "General work strategy demanded an additional read even though the save receipt already had independently verified readback. Effect on model decision is not independently isolated.",
+    "newUnchangedAttemptStarted": false,
+    "independentActualDecision": "NO_GO_CURRENT_EXECUTION_NOT_COMPLETED",
+    "reviewSha256": "b99a3384b700426fa9263ed17ae6c180c2c6c8e19becbc2463b76773bbdf5b55"
   }
 }

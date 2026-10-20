@@ -1,0 +1,148 @@
+{
+  "contract": "EvaE14VerifiedResultCompletion/v1",
+  "taskId": "E1.4",
+  "checkedAt": "2026-10-20T19:26:59.261526+00:00",
+  "state": "completed_current_followup_with_ordinary_semantic_later_use",
+  "existingResult": "The same self-chosen implementation-code research and document already have actual verified source and independent gateway readback receipts. No new research or save is requested.",
+  "changes": [
+    "Current native connector source is loaded from its actual checked guard/turn, not manufactured as an owner ingress. Existing capability, request, stop and endpoint gates remain.",
+    "Only exactly validated historical non-dispatched read-only connector status refusal is context on explicit legitimate resume. It remains failed, proves no new completed work, and cannot hide another unknown write or failure.",
+    "Existing independently verified readback satisfies document verification; a second read is required only when evidence is missing or insufficient."
+  ],
+  "checks": {
+    "executor": {
+      "passed": 45,
+      "solePostgresCaseSeconds": 6.72
+    },
+    "completionRegression": {
+      "passed": 11,
+      "seconds": 1.56
+    },
+    "existingReadBoundaryRegression": {
+      "passed": 14,
+      "seconds": 3.63
+    },
+    "providerCalls": 0,
+    "aideLiteralTargetBoundaryPreserved": true
+  },
+  "sourceReviewSha256": "76971139f7a780b34aa75187a6b0f23c1ca0c9d3ac2fd93e864908ae4c65291c",
+  "installation": {
+    "status": "running_with_retained_mounts",
+    "coreImage": "sha256:c13b44c867ad13f569f1bb46e8ac7e329d803e3350296706b14fbd85b9fa3dfc",
+    "workerImage": "sha256:9084a12ac0e656db53c0f7c84f71c648e26216760416ad938356c3be8568a974",
+    "executionPins": 68,
+    "capabilities": 26,
+    "policyBytesUnchanged": true,
+    "voiceChanged": false,
+    "receiptSha256": "bbfd0481150604f28c98f031663a9acc3d984549c64b177913f15e08dca93a72"
+  },
+  "admission": {
+    "disposition": "inserted",
+    "state": "admitted",
+    "work_id": "work:eva-resume:57939b6c-bffc-5f56-8fb8-96741091aa84",
+    "spec_sha256": "7f9b05ae8485e58286d00bf9efe79c142f052cef50bb7234f96ee1463fcf065b",
+    "generation": 4,
+    "execution_id": "work:eva-initiative:f7bca859f9e42711a2b6d53f5643160146f28192e733d3cd9e16365bca0ebad8",
+    "sameGrant": true,
+    "sameOriginalTask": true,
+    "owner_request_sha256": "ce80ddd21a855b1d78be001ab96c3f3270e07279fa2bbdf9e93e7818fa437666",
+    "oldStatePreserved": "failed",
+    "oldUsagePreserved": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 6,
+      "tool_calls": 3,
+      "input_tokens": 102556,
+      "output_tokens": 2872,
+      "total_tokens": 105428,
+      "cost_usd_micros": null
+    },
+    "modelCallsByOperator": 0
+  },
+  "previousAttempts": {
+    "states": [
+      "failed",
+      "failed",
+      "failed"
+    ],
+    "registeredTokens": 146793,
+    "measurement": "partial",
+    "creditCost": null,
+    "preserved": true,
+    "evidence": [
+      "development/evidence/reassessment/e14-explicit-public-read-continuation-20261020.json",
+      "development/evidence/reassessment/e14-explicit-resume-handoff-20261020.json"
+    ]
+  },
+  "completion": {
+    "currentWorkCompleted": true,
+    "ordinarySemanticLaterUse": true,
+    "ownerAcceptance": false,
+    "familyAcceptance": false,
+    "fullProjectCompleted": false,
+    "completedAt": "2026-10-20T19:17:42Z",
+    "resultSha256": "50ab1598f60dbe2d49e048aadff972aef5acd915d9e8a84d7c7e32162b437940",
+    "outputSha256": "80801cf75e727e905b08df508b5e6dde785898a77fdb7e3ceeb392bfc27edf90"
+  },
+  "runtimeCreditCost": null,
+  "developmentCreditCost": null,
+  "voiceChanged": false,
+  "completedAt": "2026-10-20T19:22:58Z",
+  "independentFinalReviewSha256": "2d5c3146f939b627351db507efad87a3ef552bd1890e0a03a6950183dad25603",
+  "actualFinalization": {
+    "elapsedSeconds": 59,
+    "modelResponses": 3,
+    "localStoredReceiptReads": 2,
+    "newResearch": 0,
+    "newSaves": 0,
+    "newExternalDispatches": 0,
+    "inputTokens": 62380,
+    "outputTokens": 506,
+    "registeredTokens": 62886,
+    "measurement": "partial",
+    "creditCost": null
+  },
+  "ordinaryLaterUse": {
+    "decidedAt": "2026-10-20T19:22:58Z",
+    "decisionSha256": "b1bc55f0bda1849d0851f23197d98bbc47729acd4654b71f4a4cca83724284c4",
+    "sourceContextSha256": "63a834eadf853b41f651dd38480e1d18bac4eeeee9eaa06e20947ff235c33f71",
+    "exactCurrentResultBound": true,
+    "disposition": "silence",
+    "semanticUse": "Uses the new bit16 conclusion, keeps code/commit/local-installation limitations, rejects redundant investigation and an unnecessary extra message.",
+    "manuallyTriggered": false,
+    "telegramExpressionDelivered": false,
+    "usage": {
+      "measurement": "measured",
+      "modelAttempts": 1,
+      "toolCalls": 1,
+      "inputTokens": 16546,
+      "outputTokens": 135,
+      "totalTokens": 16681,
+      "creditCost": null
+    }
+  },
+  "usageSummary": {
+    "fourLinkedWorkAttemptsRegisteredTokens": 209679,
+    "finalOrdinaryReviewTokens": 16681,
+    "linkedAttemptsAndFinalReviewRegisteredTokens": 226360,
+    "precedingOrdinaryReviewTokens": 15433,
+    "selectedKnownTokensIncludingPrecedingReview": 241793,
+    "fullRuntimeTotalKnown": false,
+    "missingHistoricalResearchUsageRetained": true,
+    "runtimeCreditCost": null,
+    "developmentCreditCost": null
+  },
+  "limitations": [
+    "The original E1.4 technical criterion is met for this retained episode, not broad daily usefulness or family acceptance.",
+    "Operator assistance repaired and explicitly resumed execution; autonomous self-repair and efficiency superiority are not proved.",
+    "Prior failures and high registered use remain preserved; no fabricated credit price or unknown-as-zero."
+  ],
+  "sourceHashes": {
+    "src/eva/bootstrap/delegated_digital_runner.py": "6a3c551034a33a783245d180f61c5562635beb25f2a57510f53bde0f2723c441",
+    "src/eva/adapters/postgres/external_conversation_tools.py": "762a071822c00e95d19e83163e24a43c771e478f397fd3bb484ef821240213ce",
+    "src/eva/adapters/connectors/delegated_completion.py": "5594fea8bb0d24d90820069e6bb70aca6a6d5522520be269c805170c70728302",
+    "src/eva/providers/mcp_autonomy.py": "b3f3af4822787b1e9cdb10968762e42fe433ca768c0a05edb1c0930ecf5fcccc",
+    "src/eva/providers/mcp_registration.py": "8763971df86dcc5ed427d21ba8e6fb736799bd3641fc2e9f41be86e80c81a78c"
+  }
+}

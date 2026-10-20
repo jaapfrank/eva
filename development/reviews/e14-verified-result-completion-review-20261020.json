@@ -1,0 +1,19 @@
+{
+  "contract": "EvaIndependentReviewSummary/v1",
+  "taskId": "E1.4",
+  "checkedAt": "2026-10-20T19:26:59.261526+00:00",
+  "decision": "GO_E14_CURRENT_TECHNICAL_CONTINUATION_WITH_EXPLICIT_ASSISTANCE",
+  "sourceInstallationDecision": "GO_SOURCE_AND_OPTIONAL_INSTALLATION",
+  "sourceReviewSha256": "76971139f7a780b34aa75187a6b0f23c1ca0c9d3ac2fd93e864908ae4c65291c",
+  "actualFinalReviewSha256": "2d5c3146f939b627351db507efad87a3ef552bd1890e0a03a6950183dad25603",
+  "evidence": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
+  "currentCompletionConfirmed": true,
+  "ordinarySemanticLaterUseConfirmed": true,
+  "previousThreeFailuresRetained": true,
+  "criteriaUnchanged": true,
+  "operatorAssistanceRequired": true,
+  "familyAcceptance": false,
+  "fullProjectComplete": false,
+  "telegramExpressionClaimed": false,
+  "voiceChanged": false
+}

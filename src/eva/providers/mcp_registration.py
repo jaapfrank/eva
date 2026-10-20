@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass
+import hashlib
 import re
 from typing import Callable, Protocol
 from uuid import NAMESPACE_URL, uuid5
@@ -163,6 +164,96 @@ class McpRegistrationToolAdapter:
 
     def planner(self) -> _RegistrationPlanner:
         return _RegistrationPlanner(self.authority, self.owner_key)
+
+    def recoverable_pre_dispatch_refusal(self, turn, events):
+        """Retain one refused status read during an explicit native recovery.
+
+        This proves only that this adapter's old source-loader refusal happened
+        before status execution. It grants no owner ingress or connector effect,
+        and says nothing about any earlier research request or its usage.
+        """
+        from eva.application.initiative_execution import current_initiative
+        from eva.adapters.postgres.initiative_execution import NativeInitiativeGuard
+        from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+        from eva.contracts.timestamps import parse_utc_timestamp
+        from eva.providers.mcp_autonomy import _SourceTurnLoader
+
+        guard = current_initiative()
+        if (type(self) is not McpRegistrationToolAdapter
+                or type(self.load_source_turn) is not _SourceTurnLoader
+                or self.load_source_turn._authority is not self.authority
+                or type(guard) is not NativeInitiativeGuard or guard.turn != turn):
+            return None
+        binding = guard.explicit_resume_binding(turn)
+        if not isinstance(binding, dict):
+            return None
+        fingerprint = hashlib.sha256(
+            b"ConversationConflict: native initiative is not an owner connector instruction").hexdigest()
+        try:
+            if ([event.event_type for event in events] != [
+                    "TOOL_REQUEST_ADMITTED", "TOOL_PREPARED", "RECOVERY_FAILED"]
+                    or any(canonical_sha256(event.payload) != event.payload_sha256 for event in events)):
+                return None
+            admission, prepared, failed = (event.payload["data"] for event in events)
+            step = admission["step_index"]
+            call_id = admission["action_call_id"]
+            arguments = {"action": "status", "source": _source(turn)}
+            tool = "manage_connected_services"
+            configuration = self.authority.configuration_sha256
+            if (not isinstance(call_id, str) or not call_id
+                    or re.fullmatch(r"[0-9a-f]{64}", configuration) is None
+                    or admission != {
+                        "step_index": step, "action_name": tool, "action_call_id": call_id,
+                        "action_arguments": {"action": "status"}, "receipt_output": {},
+                        "principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
+                        "source_message_id": turn.message_id,
+                        "execution_namespace": binding["execution_namespace"],
+                        "request_tool_name": tool, "request_arguments": arguments,
+                        "request_expected_proof": {}, "request_observation_tool_name": tool,
+                        "request_observation_arguments": arguments,
+                        "request_tool_configuration_sha256": configuration,
+                        "request_execution_timeout_seconds": 60,
+                        "request_verification_timeout_seconds": 60,
+                        "observation_output_key": "result"}
+                    or prepared != {"tool_name": tool, "arguments": arguments,
+                        "expected_proof": {}, "observation_tool_name": tool,
+                        "observation_arguments": arguments, "tool_configuration_sha256": configuration}
+                    or failed != {"retry_count": 1, "error_fingerprint": fingerprint}):
+                return None
+            operation = PostgresExternalConversationTools._historical_operation_id(
+                turn, tool, admission, step)
+            created = parse_utc_timestamp(guard.work_spec.created_at)
+            phases = (("admitted", "active", "admitted"),
+                      ("tool_prepared", "waiting_for_proof", "prepared"),
+                      ("tool_prepared", "failed", "recovery:1"))
+            for index, (event, (phase, status, suffix)) in enumerate(zip(events, phases), 1):
+                checkpoint = event.payload["checkpoint"]
+                checkpoint_id = f"checkpoint:{operation}:{suffix}"
+                if (event.sequence != index or checkpoint["revision"] != index
+                        or event.thread_id != "tool:" + operation
+                        or event.operation_id != operation or checkpoint["operation_id"] != operation
+                        or event.checkpoint_id != checkpoint_id or checkpoint["checkpoint_id"] != checkpoint_id
+                        or checkpoint["phase"] != phase or checkpoint["status"] != status
+                        or parse_utc_timestamp(checkpoint["updated_at"]) != event.occurred_at
+                        or event.occurred_at > created
+                        or (index > 1 and event.occurred_at < events[index - 2].occurred_at)):
+                    return None
+            if events[-1].payload["checkpoint"]["last_error_fingerprint"] != fingerprint:
+                return None
+        except (ConversationConflict, KeyError, TypeError, ValueError, AttributeError):
+            return None
+        # Current source/owner/stop checks remain live even though no old command
+        # is executed and the original failed receipt is never changed.
+        if self.load_source_turn(_source(turn)) != turn:
+            return None
+        guard.check(turn)
+        return {"evidence": {"source": "native_connector_status_pre_dispatch_refusal",
+            "operation_kind": "read", "provider_execution": "not_started",
+            "scope": "retained_connector_status_request_only", "resume_binding": binding,
+            "admission_sha256": events[0].payload_sha256,
+            "terminal_event_sha256": events[-1].payload_sha256,
+            "event_chain_sha256": canonical_sha256([
+                {"type": event.event_type, "payload_sha256": event.payload_sha256} for event in events])}}
 
     def _bound(self, command: ToolRequest) -> ConversationTurn:
         if (command.tool_name not in _RegistrationPlanner.action_names

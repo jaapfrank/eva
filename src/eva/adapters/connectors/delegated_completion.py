@@ -14,6 +14,22 @@ from eva.adapters.postgres.programming_actions import (
 )
 
 
+def undispatched_native_status_refusal(receipt):
+    """A host-proved refused lookup is context, never a successful operation."""
+    proof = receipt.output.get("proof")
+    evidence = proof.get("evidence") if isinstance(proof, dict) else None
+    return (receipt.call.name == "manage_connected_services"
+            and receipt.call.arguments == {"action": "status"}
+            and receipt.output.get("status") == "failed"
+            and receipt.output.get("recoverable_pre_dispatch_refusal") is True
+            and isinstance(evidence, dict)
+            and evidence.get("source") == "native_connector_status_pre_dispatch_refusal"
+            and evidence.get("operation_kind") == "read"
+            and evidence.get("provider_execution") == "not_started"
+            and isinstance(evidence.get("resume_binding"), dict)
+            and bool(evidence["resume_binding"]))
+
+
 def recoverable_read_error(receipt):
     proof = receipt.output.get("proof")
     evidence = proof.get("evidence") if isinstance(proof, dict) else None
@@ -35,6 +51,8 @@ def recoverable_read_error(receipt):
 
 
 def recoverable_completion_context(receipt):
+    if undispatched_native_status_refusal(receipt):
+        return True
     proof = receipt.output.get("proof")
     evidence = proof.get("evidence") if isinstance(proof, dict) else None
     if (receipt.call.name == "research_current_options" and receipt.output.get("status") == "failed"
@@ -94,6 +112,9 @@ def completed_tool_evidence(receipts):
     last_procedure_success = None
     pending_automation_readbacks = set()
     for receipt in receipts:
+        if undispatched_native_status_refusal(receipt):
+            # Preserve earlier verified work; this refused lookup proves nothing new.
+            continue
         if recoverable_completion_context(receipt):
             # A recoverable read failure is context, not completed work. A later
             # verified result in the same admitted execution may resolve it.

@@ -29,7 +29,7 @@ from eva.application.conversation import (
 )
 from eva.providers.contracts import ProviderContribution
 from eva.providers.mcp_discovery import McpDiscoveryToolAdapter
-from eva.providers.mcp_registration import McpRegistrationToolAdapter, connector_id_for
+from eva.providers.mcp_registration import McpRegistrationToolAdapter, connector_id_for, _source
 from eva.providers.mcp_gateway import McpGatewayProviderFactory, McpGatewayProviderSettings
 
 
@@ -58,7 +58,20 @@ class _SourceTurnLoader:
                 or any(not isinstance(source[key], str) or not source[key] for key in fields)):
             raise ConversationConflict("connector source reference is invalid")
         if source["conversation_id"].startswith("initiative-task:"):
-            raise ConversationConflict("native initiative is not an owner connector instruction")
+            # Keep the actual durable native turn. A native execution context is
+            # neither an owner ingress nor permission beyond its existing grant.
+            from eva.application.initiative_execution import current_initiative
+            from eva.adapters.postgres.initiative_execution import NativeInitiativeGuard
+
+            guard = current_initiative()
+            if (type(guard) is not NativeInitiativeGuard or guard.resume_work is not None
+                    or source != _source(guard.turn)):
+                raise ConversationConflict("native initiative is not an owner connector instruction")
+            turn = guard.turn
+            guard.check(turn)
+            self._authority.authorize_turn(turn)
+            guard.check(turn)
+            return turn
         # The ingress journal predates audience storage. The real-turn planner
         # authorizes this private audience before sealing the durable request;
         # replay retains that attestation rather than inferring it from names.
