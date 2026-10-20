@@ -1,7 +1,7 @@
 {
   "contract": "EvaModelChosenContinuation/v1",
   "taskId": "E1.4",
-  "checkedAt": "2026-10-20T13:55:00.954213+00:00",
+  "checkedAt": "2026-10-20T14:09:09.534648+00:00",
   "state": "installed_observing_ordinary_followup",
   "technicalTaskCompleted": false,
   "ownerAcceptance": false,
@@ -38,11 +38,21 @@
     "voiceChanged": false
   },
   "runtimeEvidence": {
-    "observedThrough": "2026-10-20T13:53:46+00:00",
+    "observedThrough": "2026-10-20T13:57:47+00:00",
     "newFollowupSelected": false,
     "newFollowupCompleted": false,
     "laterResultUsed": false,
-    "note": "Normal idle lane has five-minute idle interval; no manually selected topic or synthetic calendar advancement."
+    "note": "Normal idle lane has five-minute idle interval; no manually selected topic or synthetic calendar advancement.",
+    "v5Review": {
+      "decidedAt": "2026-10-20T13:57:16+00:00",
+      "choice": "considered_pause",
+      "modelResponses": 1,
+      "inputTokens": 15123,
+      "outputTokens": 143,
+      "toolCalls": 1,
+      "newInitiative": false,
+      "usedOfferedMemorySearch": false
+    }
   },
   "usage": {
     "isolatedCheckProviderCalls": 0,
@@ -54,5 +64,45 @@
     "Synthetic checks prove contract transfer, not actual later model use.",
     "E1.4 remains in progress until its unchanged criterion is met.",
     "Family utility and acceptance remain separate."
-  ]
+  ],
+  "contextTransferRepair": {
+    "diagnosis": "Actual review cited missing personal context without using the existing optional focused memory search. A current read-only recall inspection selected old synthetic/legacy context, not daily family life.",
+    "rejectedQueryCandidate": {
+      "originalSelectedFacts": 6,
+      "candidateSelectedFacts": 4,
+      "relevanceImprovement": false,
+      "adopted": false,
+      "generativeModelCalls": 0
+    },
+    "changes": [
+      "When missing context determines the decision, use the offered unused focused search first; no mandatory activity or repeated search without a new cause.",
+      "A retained completed own result triggers at most one ordinary private review even without HA read receipts; prose remains semantically unverified."
+    ],
+    "tests": {
+      "modelContract": {
+        "passed": 11,
+        "seconds": 1.33
+      },
+      "existingSourceFeedback": {
+        "passed": 7,
+        "seconds": 11.11
+      },
+      "newResultFeedback": {
+        "passed": 3,
+        "seconds": 9.94
+      },
+      "initialNewFixtureErrors": 3,
+      "fixtureFix": "Import existing costless_native fixture; no production change",
+      "modelCalls": 0
+    },
+    "status": "installed_observing_ordinary_followup",
+    "installation": {
+      "status": "running_with_retained_mounts",
+      "coreImage": "sha256:2e428bba502edea5af5c8a21fb70da7091150ff54c0d688e349685157a8ee9ce",
+      "workerImage": "sha256:c06aca308795d334b78b02a1b4df73b92c0fd0b533dc6fc320bd356437198b58",
+      "voiceChanged": false,
+      "executionPinCount": 63,
+      "review": "development/reviews/e14-model-chosen-continuation-review-20261020.json"
+    }
+  }
 }

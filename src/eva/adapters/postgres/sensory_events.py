@@ -161,8 +161,19 @@ class PostgresSensoryEventStore:
             if self._household_binding is None:
                 import re
                 for outcome in source_outcomes:
-                    if not outcome.get("verified_reads"):
-                        continue  # No source read: status history suffices; no paid readback review.
+                    reported = outcome.get("reported_output")
+                    completed_result = (
+                        outcome.get("work_outcome", {}).get("state") in {"succeeded", "verified"}
+                        and isinstance(reported, dict)
+                        and isinstance(reported.get("text"), str) and bool(reported["text"].strip())
+                        and re.fullmatch(r"[0-9a-f]{64}", str(reported.get("output_sha256"))) is not None
+                        and re.fullmatch(r"[0-9a-f]{64}", str(outcome.get("result_sha256"))) is not None
+                    )
+                    if not outcome.get("verified_reads") and not completed_result:
+                        continue  # An uncertain failure alone is not a new paid review.
+                    # A retained completed own result can be used as historical
+                    # progress even without an HA receipt. Its prose is not a
+                    # verified world fact; original semantic-verification flags stay.
                     outcome_key = ("result_sha256" if outcome.get("result_sha256") is not None
                                    else "outcome_sha256")
                     binding = {k: outcome.get(k) for k in ("work_id", "spec_sha256", outcome_key)}

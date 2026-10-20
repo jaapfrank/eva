@@ -71,7 +71,7 @@ def test_private_descriptor_extends_only_continuation_fields_and_cannot_mutate_h
 @pytest.mark.parametrize("search_first", [False, True])
 def test_private_initial_and_postsearch_submit_use_the_same_private_contract(monkeypatch, tmp_path, search_first):
     model = PydanticConversationModel(auth_file=tmp_path / "unused")
-    assert model.private_opportunity_profile == "private-orientation-continuation-contract-v5"
+    assert model.private_opportunity_profile == "private-orientation-context-search-contract-v6"
     original = canonical_json_bytes(_FREE_WILL_TOOL)
     bodies, reads = [], []
     def request(body, *args, **kwargs):
@@ -181,7 +181,7 @@ def test_private_necessary_question_boundary_keeps_optional_social_curiosity_pri
     assert "Geen verplichte vraag of begroeting." in private
     assert "stop, privacy en persoonsgrenzen gelden" in private
     assert result.disposition == "silence" and result.initiative is None and result.next_attention is None
-    assert model.private_opportunity_profile == "private-orientation-continuation-contract-v5"
+    assert model.private_opportunity_profile == "private-orientation-context-search-contract-v6"
     model.evaluate_sensory_event(event("household-initiative"), identity, _memory())
     assert clarification not in bodies[-1]["instructions"]
     assert "Stel alleen vragen als noodzakelijke informatie ontbreekt." in bodies[-1]["instructions"]
@@ -203,3 +203,20 @@ def test_continuation_fields_parse_only_as_a_valid_private_pair(monkeypatch, tmp
     else:
         with pytest.raises(Exception):
             model.evaluate_sensory_event(event("household-initiative") if boundary == "shared" else event(), IDENTITY, _memory())
+
+
+def test_private_missing_context_uses_existing_search_without_forcing_activity(monkeypatch, tmp_path):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused")
+    bodies = []
+    monkeypatch.setattr(model, "_request_using", lambda body, *args, **kwargs:
+        (bodies.append(deepcopy(body)) or final(), USAGE))
+    decision = model.evaluate_sensory_event(event(), IDENTITY, _memory(), private_context_search=lambda _: {})
+    instructions = bodies[-1]["instructions"]
+    assert "De eerste geheugenselectie is onvolledig." in instructions
+    assert "controleer dat informatiegat eerst" in instructions
+    assert "Kies zelf de inhoudelijke zoektermen" in instructions
+    assert "Zoek niet als je afweging al op voldoende relevante context berust." in instructions
+    assert "Ook na zoeken blijft een onderbouwde pauze geldig" in instructions
+    assert decision.initiative is None
+    model.evaluate_sensory_event(event("household-initiative"), IDENTITY, _memory())
+    assert "De eerste geheugenselectie is onvolledig." not in bodies[-1]["instructions"]

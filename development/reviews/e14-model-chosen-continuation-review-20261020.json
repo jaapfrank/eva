@@ -1,76 +1,164 @@
 {
-  "reviewedAt": "2026-10-20T13:49:52.564579+00:00",
-  "reviewer": "e47_mcp_catalog",
+  "contract": "EvaBundledContinuityReview/v1",
   "decision": "GO",
   "blockingFindings": [],
-  "scope": "Bundled final independent source review: eight owned production-file deltas against exact before snapshots plus two focused test sources. No source edits, model calls, voice changes, test execution or installation.",
-  "sourceSha256": {
-    "src/eva/application/free_will.py": "ebc6a90068eb52fdb8dfd369f97109227597ffd0abb383496190068bb2ac5fc5",
-    "src/eva/application/personal_interests.py": "b60f63c15d2cdf1a08db458cb5fd57753e269a693799bb4127af385e8ca7e875",
-    "src/eva/adapters/postgres/initiative_adoption.py": "1be1bab412bf29f1f403e6e37bf566557914ecbee0aafe1a81cf4ea81ad4f803",
-    "src/eva/adapters/postgres/sensory_events.py": "80a9a72e8152788da971e8b62faf184d84a8cb4e03bd735e53577dea4b14725b",
-    "src/eva/adapters/postgres/conversation_actions.py": "c7ffb86ce5751e60ad2022ae64dd9f972cacf8bd01da6533408cf7a4c14357b8",
-    "src/eva/adapters/postgres/initiative_execution.py": "c56492af9fb0adafc22e74f93f36ea3555c0962ce53ece034af839227e254c26",
-    "src/eva/adapters/model/pydantic_conversation.py": "8168a92b0869292fd29189171f49ab395bebb34ba237579ebae286ec7b5fb333",
-    "src/eva/bootstrap/delegated_digital_profile.py": "95c495c06d64aabb135ce2b4ad3dced136cda73a064325ff3a140a3daa3c4a20"
-  },
-  "beforeSha256": {
-    "src/eva/application/free_will.py": "b25040ae7a6fc2f919f2b03c19fd766ef3fb8dfd67b3de3e68cccaa0f41efa2c",
-    "src/eva/application/personal_interests.py": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
-    "src/eva/adapters/postgres/initiative_adoption.py": "35beb8b25323beb3ef6491728d8bf093a8774a2d9ab1be5412a975bf414ab729",
-    "src/eva/adapters/postgres/sensory_events.py": "cc71481bb51ab6dec23fa7b607b5ca4e487c81dc4ca2b44e6febaf1895e3badd",
-    "src/eva/adapters/postgres/conversation_actions.py": "a9b0906b734d57110c53bbee4530c15bcd4de10f09961cb204da9dda3c652705",
-    "src/eva/adapters/postgres/initiative_execution.py": "62c218b720c75a0720e51c09019456ddbab0aa4551257f077e694adee0044182",
-    "src/eva/adapters/model/pydantic_conversation.py": "72b29a8ad2aa87db5d0d25a5d8ff1212ed51fcb455b2c082577f8db14721e007",
-    "src/eva/bootstrap/delegated_digital_profile.py": "f1e10aac4db06dd8fe55a1d97697a661da98ec8c54e5debdf36a2396e001e4a7"
-  },
-  "resolvedFindings": [
+  "scopedReviews": [
     {
-      "id": "R1",
-      "finding": "Private schema acquired two parent fields but initial response parser accepted only three initiative fields.",
-      "resolution": "Current parser accepts original three fields and complete five-field set only for private_opportunity_review; shared/source schemas remain unchanged."
+      "reviewedAt": "2026-10-20T13:49:52.564579+00:00",
+      "reviewer": "e47_mcp_catalog",
+      "decision": "GO",
+      "blockingFindings": [],
+      "scope": "Bundled final independent source review: eight owned production-file deltas against exact before snapshots plus two focused test sources. No source edits, model calls, voice changes, test execution or installation.",
+      "sourceSha256": {
+        "src/eva/application/free_will.py": "ebc6a90068eb52fdb8dfd369f97109227597ffd0abb383496190068bb2ac5fc5",
+        "src/eva/application/personal_interests.py": "b60f63c15d2cdf1a08db458cb5fd57753e269a693799bb4127af385e8ca7e875",
+        "src/eva/adapters/postgres/initiative_adoption.py": "1be1bab412bf29f1f403e6e37bf566557914ecbee0aafe1a81cf4ea81ad4f803",
+        "src/eva/adapters/postgres/sensory_events.py": "80a9a72e8152788da971e8b62faf184d84a8cb4e03bd735e53577dea4b14725b",
+        "src/eva/adapters/postgres/conversation_actions.py": "c7ffb86ce5751e60ad2022ae64dd9f972cacf8bd01da6533408cf7a4c14357b8",
+        "src/eva/adapters/postgres/initiative_execution.py": "c56492af9fb0adafc22e74f93f36ea3555c0962ce53ece034af839227e254c26",
+        "src/eva/adapters/model/pydantic_conversation.py": "8168a92b0869292fd29189171f49ab395bebb34ba237579ebae286ec7b5fb333",
+        "src/eva/bootstrap/delegated_digital_profile.py": "95c495c06d64aabb135ce2b4ad3dced136cda73a064325ff3a140a3daa3c4a20"
+      },
+      "beforeSha256": {
+        "src/eva/application/free_will.py": "b25040ae7a6fc2f919f2b03c19fd766ef3fb8dfd67b3de3e68cccaa0f41efa2c",
+        "src/eva/application/personal_interests.py": "dc68b7cdd0759f0485aa637624fd8097d05ee0512b7bc543fba789f1bc0d72e6",
+        "src/eva/adapters/postgres/initiative_adoption.py": "35beb8b25323beb3ef6491728d8bf093a8774a2d9ab1be5412a975bf414ab729",
+        "src/eva/adapters/postgres/sensory_events.py": "cc71481bb51ab6dec23fa7b607b5ca4e487c81dc4ca2b44e6febaf1895e3badd",
+        "src/eva/adapters/postgres/conversation_actions.py": "a9b0906b734d57110c53bbee4530c15bcd4de10f09961cb204da9dda3c652705",
+        "src/eva/adapters/postgres/initiative_execution.py": "62c218b720c75a0720e51c09019456ddbab0aa4551257f077e694adee0044182",
+        "src/eva/adapters/model/pydantic_conversation.py": "72b29a8ad2aa87db5d0d25a5d8ff1212ed51fcb455b2c082577f8db14721e007",
+        "src/eva/bootstrap/delegated_digital_profile.py": "f1e10aac4db06dd8fe55a1d97697a661da98ec8c54e5debdf36a2396e001e4a7"
+      },
+      "resolvedFindings": [
+        {
+          "id": "R1",
+          "finding": "Private schema acquired two parent fields but initial response parser accepted only three initiative fields.",
+          "resolution": "Current parser accepts original three fields and complete five-field set only for private_opportunity_review; shared/source schemas remain unchanged."
+        },
+        {
+          "id": "N1",
+          "resolution": "Arbitrary16-ancestor refusal removed; valid historical project chains continue while cycles remain rejected."
+        },
+        {
+          "id": "N2",
+          "resolution": "Dispatch now rechecks existing durable ancestor stop markers under the existing stop fence; public owner stop API behavior unchanged."
+        }
+      ],
+      "checks": [
+        "Proposal parent fields require exact paired native intent ID and content hash; null/null preserves existing new-interest form.",
+        "Host adoption binds an actually completed same-owner native result; verifies all retained event hashes, content hash and original owner/origin, plus cycle-checked ancestor chain.",
+        "Host chooses bounded UTF-8 historical excerpt and hashes; model cannot supply arbitrary parent content or claim it is current fact/instruction.",
+        "Original one-pending-initiative rule and replay idempotency retained; exact previously attempted next_exploration is rejected even under a different title; repeated project title requires validated completed-parent binding.",
+        "Stored claim carries original immutable parent source; execution turn/ingress hash binds historical context to actual child work.",
+        "Dispatch guard rechecks complete ancestors with shared locks and current owner authority; existing child stop/mandate guards still decide actions.",
+        "No unrelated sibling or ambiguous task is resumed, rewritten or converted to successful/failed.",
+        "Private schema is a deepcopy; public/shared three-field decision contract unchanged.",
+        "Existing worker admission, output delivery and source-outcome/later-review route reused; execution source pins include new policy-bearing sources.",
+        "All eight reviewed Python files parse.",
+        "Removed arbitrary ancestry-depth cutoff; explicit cycle detection remains.",
+        "Each ancestor source checks existing durable conversation-stop marker under the exact same existing journal stop fence; child dispatch does not bypass a stopped source.",
+        "Historical followup context JSON uses sort_keys=True for deterministic source ingress reconstruction after JSONB storage.",
+        "Focused DB tests cover completed-parent native handoff/output/later-context availability, invalid hash/owner/stop, repeated question under changed title, idempotent adoption, and already-started descendant authority rejection after durable ancestor stop.",
+        "Model tests cover private continuation-field shape, shared schema preservation, valid private pair and rejection of incomplete/shared pair.",
+        "Test does not misrepresent public stop API: existing completed-parent stop may return already_completed; ancestor regression deliberately creates the existing durable execution stop marker.",
+        "Actual merged overlay bytes, working sources and transfer manifest hashes match all eight reviewed production files."
+      ],
+      "nonBlockingNotes": [
+        "Exact text deduplication is not a semantic novelty proof; same-question paraphrases remain a model-quality question under the unchanged no-replay instructions."
+      ],
+      "validationLimitations": [
+        "Root owns synthetic/DB tests and installed image verification.",
+        "E1.4 remains open until Eva autonomously chooses a suitable linked step, completes it and later demonstrably uses its real outcome.",
+        "Recorded prior output remains historical model interpretation; valid transport/content hashes do not prove all substantive claims.",
+        "Synthetic later-context availability is not proof of a later real model decision using the result.",
+        "Full ancestor validation cost grows with retained project lineage; this review establishes correctness of the present route, not long-horizon performance."
+      ],
+      "runtimeModelCalls": 0,
+      "testSourceSha256": {
+        "development/tests/postgres/test_native_goal_followup.py": "c48498ac2012d16353d2a9d66d750ba8b09462db001ffa3b14522b5af6fd1a40",
+        "development/tests/model/test_private_opportunity_contract.py": "cc390085fa86700ff08829d21c6ab4e8320169b538d70ac8a1a7ccc3435ad018"
+      }
     },
     {
-      "id": "N1",
-      "resolution": "Arbitrary16-ancestor refusal removed; valid historical project chains continue while cycles remain rejected."
-    },
-    {
-      "id": "N2",
-      "resolution": "Dispatch now rechecks existing durable ancestor stop markers under the existing stop fence; public owner stop API behavior unchanged."
+      "reviewedAt": "2026-10-20T14:07:38.972481+00:00",
+      "reviewer": "e47_mcp_catalog",
+      "decision": "GO",
+      "blockingFindings": [],
+      "scope": "Final bundled review of two owned production-file deltas, private contract test and new completed-native-result trigger test, with direct source-hash verification in both built candidate images. No model calls, live installation, voice edits or test execution by reviewer.",
+      "sourceSha256": {
+        "src/eva/adapters/model/pydantic_conversation.py": "8d8a8701dd9c37a44a0b655351442186a34242fd8850560a728e6eb40be7df98",
+        "src/eva/adapters/postgres/sensory_events.py": "e7a20dec81437aab559188164bea7bb201a80b6d4c533b2cf880fddb7a2564e6",
+        "development/tests/model/test_private_opportunity_contract.py": "7e1d761a5761e205b82e07ef61e77233f2d2e1a248d8955464c6c6a35a6d8ae4",
+        "development/tests/postgres/test_native_result_attention.py": "7bafd3df9aad67324a6b523518608507cd1ea9498c3abce0feaef9edbd076da1"
+      },
+      "beforeSha256": {
+        "src/eva/adapters/model/pydantic_conversation.py": "8168a92b0869292fd29189171f49ab395bebb34ba237579ebae286ec7b5fb333",
+        "src/eva/adapters/postgres/sensory_events.py": "80a9a72e8152788da971e8b62faf184d84a8cb4e03bd735e53577dea4b14725b",
+        "development/tests/model/test_private_opportunity_contract.py": "cc390085fa86700ff08829d21c6ab4e8320169b538d70ac8a1a7ccc3435ad018"
+      },
+      "checks": [
+        "New instruction is private opportunity only; shared/public sensory contract and ordinary conversation route unchanged.",
+        "Search request is conditioned on missing personal context being decisive and existing search being offered and unused; existing one-search then final-submit mechanism unchanged.",
+        "No repeated uncertain/failed search; recent same search and unchanged knowledge gap is a reason not to search again.",
+        "Eva chooses search concepts; no fixed household topic, required initiative, forced social message or retrospective task success.",
+        "Sufficient current context or an informed pause remains valid; rights, personal scope, original receipt/budget and unknown old attempt unchanged.",
+        "Source profilev6 provides changed-cause provenance for one installed-profile re-evaluation; not a new polling/judging loop.",
+        "Focused stub test inspects private instructions and ensures shared route unchanged, while existing search-first/nonsearch contract tests remain.",
+        "Working production source, core overlay, worker overlay, overlay manifest and core/worker source pin are byte/hash equal.",
+        "Candidate core and worker have identical release and63 execution pins.",
+        "Completed native succeeded/verified work with retained nonempty reported_output and valid output/result digests can trigger one existing private result review even without HA/component verified_reads.",
+        "Input remains supplied by existing authorized read_recent_source_outcomes reader, which validates same-owner retained work/result; decision later re-reads and filters exact work/spec/result binding.",
+        "Result text stays reported historical interpretation with semantic_verification=False; this is not verified world-state evidence.",
+        "Existing completion binding dedup schedules each exact result at most once; ambiguous/no-content result without verified reads does not create a paid result review.",
+        "Source-feedback tests remain unchanged; new parametrized test covers completed/ambiguous/no-content and once-only binding. Required costless_native fixture import is present.",
+        "Both final candidate image files were read directly in temporary containers with network none, no live volumes or app startup; two production hashes match working sources, overlays and manifest."
+      ],
+      "overlayTransfer": {
+        "baseImage": "sha256:1dcaf6c3fa06dd7251ac6a687a15b47266bf026ee19a53cf6dc34eaaf449a081",
+        "sourceSha256": {
+          "src/eva/adapters/model/pydantic_conversation.py": "8d8a8701dd9c37a44a0b655351442186a34242fd8850560a728e6eb40be7df98",
+          "src/eva/adapters/postgres/sensory_events.py": "e7a20dec81437aab559188164bea7bb201a80b6d4c533b2cf880fddb7a2564e6"
+        },
+        "coreWorkerReleaseEqual": true,
+        "executionPinsEqual": true,
+        "pinCount": 63,
+        "installedByReviewer": false,
+        "sourceCount": 2,
+        "directImageHashesMatch": true
+      },
+      "testsRunByReviewer": [],
+      "runtimeModelCalls": 0,
+      "limitations": [
+        "This is instruction guidance; source/stub checks do not prove a real model will choose search, useful work or later use.",
+        "The read-only alternative recall-query comparison showed no improvement and was not adopted; no recalled facts or memory were manually rewritten.",
+        "E1.4 remains open until real autonomous continuation, completion and later result use are evidenced.",
+        "No claim that existing ambiguous research attempt was safely retried or reclassified.",
+        "A scheduled result review is not evidence that a real later model decision substantively used the result; E1.4 completion still requires that observation."
+      ],
+      "candidateSourceVerification": {
+        "images": {
+          "core": "sha256:2e428bba502edea5af5c8a21fb70da7091150ff54c0d688e349685157a8ee9ce",
+          "worker": "sha256:c06aca308795d334b78b02a1b4df73b92c0fd0b533dc6fc320bd356437198b58"
+        },
+        "sources": {
+          "core": {
+            "src/eva/adapters/model/pydantic_conversation.py": "8d8a8701dd9c37a44a0b655351442186a34242fd8850560a728e6eb40be7df98",
+            "src/eva/adapters/postgres/sensory_events.py": "e7a20dec81437aab559188164bea7bb201a80b6d4c533b2cf880fddb7a2564e6"
+          },
+          "worker": {
+            "src/eva/adapters/model/pydantic_conversation.py": "8d8a8701dd9c37a44a0b655351442186a34242fd8850560a728e6eb40be7df98",
+            "src/eva/adapters/postgres/sensory_events.py": "e7a20dec81437aab559188164bea7bb201a80b6d4c533b2cf880fddb7a2564e6"
+          }
+        },
+        "expected": {
+          "src/eva/adapters/model/pydantic_conversation.py": "8d8a8701dd9c37a44a0b655351442186a34242fd8850560a728e6eb40be7df98",
+          "src/eva/adapters/postgres/sensory_events.py": "e7a20dec81437aab559188164bea7bb201a80b6d4c533b2cf880fddb7a2564e6"
+        },
+        "modelCalls": 0,
+        "network": "none",
+        "operation": "Read candidate source hashes only; app not started, no secrets or live volumes"
+      }
     }
   ],
-  "checks": [
-    "Proposal parent fields require exact paired native intent ID and content hash; null/null preserves existing new-interest form.",
-    "Host adoption binds an actually completed same-owner native result; verifies all retained event hashes, content hash and original owner/origin, plus cycle-checked ancestor chain.",
-    "Host chooses bounded UTF-8 historical excerpt and hashes; model cannot supply arbitrary parent content or claim it is current fact/instruction.",
-    "Original one-pending-initiative rule and replay idempotency retained; exact previously attempted next_exploration is rejected even under a different title; repeated project title requires validated completed-parent binding.",
-    "Stored claim carries original immutable parent source; execution turn/ingress hash binds historical context to actual child work.",
-    "Dispatch guard rechecks complete ancestors with shared locks and current owner authority; existing child stop/mandate guards still decide actions.",
-    "No unrelated sibling or ambiguous task is resumed, rewritten or converted to successful/failed.",
-    "Private schema is a deepcopy; public/shared three-field decision contract unchanged.",
-    "Existing worker admission, output delivery and source-outcome/later-review route reused; execution source pins include new policy-bearing sources.",
-    "All eight reviewed Python files parse.",
-    "Removed arbitrary ancestry-depth cutoff; explicit cycle detection remains.",
-    "Each ancestor source checks existing durable conversation-stop marker under the exact same existing journal stop fence; child dispatch does not bypass a stopped source.",
-    "Historical followup context JSON uses sort_keys=True for deterministic source ingress reconstruction after JSONB storage.",
-    "Focused DB tests cover completed-parent native handoff/output/later-context availability, invalid hash/owner/stop, repeated question under changed title, idempotent adoption, and already-started descendant authority rejection after durable ancestor stop.",
-    "Model tests cover private continuation-field shape, shared schema preservation, valid private pair and rejection of incomplete/shared pair.",
-    "Test does not misrepresent public stop API: existing completed-parent stop may return already_completed; ancestor regression deliberately creates the existing durable execution stop marker.",
-    "Actual merged overlay bytes, working sources and transfer manifest hashes match all eight reviewed production files."
-  ],
-  "nonBlockingNotes": [
-    "Exact text deduplication is not a semantic novelty proof; same-question paraphrases remain a model-quality question under the unchanged no-replay instructions."
-  ],
-  "validationLimitations": [
-    "Root owns synthetic/DB tests and installed image verification.",
-    "E1.4 remains open until Eva autonomously chooses a suitable linked step, completes it and later demonstrably uses its real outcome.",
-    "Recorded prior output remains historical model interpretation; valid transport/content hashes do not prove all substantive claims.",
-    "Synthetic later-context availability is not proof of a later real model decision using the result.",
-    "Full ancestor validation cost grows with retained project lineage; this review establishes correctness of the present route, not long-horizon performance."
-  ],
-  "runtimeModelCalls": 0,
-  "testSourceSha256": {
-    "development/tests/postgres/test_native_goal_followup.py": "c48498ac2012d16353d2a9d66d750ba8b09462db001ffa3b14522b5af6fd1a40",
-    "development/tests/model/test_private_opportunity_contract.py": "cc390085fa86700ff08829d21c6ab4e8320169b538d70ac8a1a7ccc3435ad018"
-  }
+  "limitation": "Source and handoff review is not actual independent evaluation of later result use."
 }

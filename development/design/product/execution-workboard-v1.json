@@ -847,8 +847,8 @@
     "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
     "status": "in_progress",
     "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-    "nextAction": "Geïnstalleerde gewone afweging volgen: zelfgekozen vervolg uitvoeren en later inhoudelijk gebruiken.",
-    "checkedAt": "2026-10-20T13:52:50.684669+00:00",
+    "nextAction": "Gewone autonome afweging na installatie volgen: gericht ontbrekende context zoeken, zelf vervolg kiezen, afmaken en later resultaat gebruiken.",
+    "checkedAt": "2026-10-20T14:09:09.534648+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2779,10 +2779,10 @@
           "title": "Een blijvend eigen doel over dagen zelfstandig voortzetten",
           "status": "in_progress",
           "state": "in_progress",
-          "summary": "Vervolg met binding aan eerder eigen resultaat geïnstalleerd; echte keuze, uitvoering en later gebruik worden gevolgd.",
-          "detail": "109 gerichte controles en onafhankelijke bronreview geslaagd. Geen spraakwijziging. E1.4 blijft open tot werkelijk vervolg en later gebruik blijken.",
+          "summary": "Gerichte geheugenzoeking bij ontbrekende context en terugkeer van eigen onderzoeksresultaten geïnstalleerd. Werkelijke vervolgkeuze en later gebruik worden gevolgd.",
+          "detail": "De eerdere afweging koos stilte; nog geen nieuwe afgeronde vervolgstap. E1.4 blijft open, zonder geforceerd onderwerp. Spraak blijft bij de andere uitvoerder.",
           "doneWhen": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
-          "checkedAt": "2026-10-20T13:52:50.684669+00:00"
+          "checkedAt": "2026-10-20T14:09:09.534648+00:00"
         },
         "next": {
           "taskId": "E1.5",
@@ -14367,10 +14367,10 @@
         "ownerActionRequired": false
       },
       "ownerInstruction": "Maak E1.4 echt af: zelfstandig vervolg kiezen, afmaken en resultaat later gebruiken. Spraak blijft elders.",
-      "state": "installed_observing_ordinary_followup",
+      "state": "installed_observing_context_search_and_result_return",
       "runtimeChanged": true,
       "diagnosis": "Actual self-chosen cross-day follow-up was admitted but never claimed because queue/core/worker execution source releases differed.",
-      "checkedAt": "2026-10-20T13:52:50.684669+00:00",
+      "checkedAt": "2026-10-20T14:09:09.534648+00:00",
       "voiceChanged": false,
       "evidence": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
       "review": "development/reviews/e14-model-chosen-continuation-review-20261020.json",

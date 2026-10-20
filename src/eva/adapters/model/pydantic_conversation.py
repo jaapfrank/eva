@@ -2935,7 +2935,7 @@ class PydanticConversationModel:
             raise ConversationModelError("web research artifact is invalid", model_usage=usage) from error
 
     supports_private_context_search = True
-    private_opportunity_profile = "private-orientation-continuation-contract-v5"
+    private_opportunity_profile = "private-orientation-context-search-contract-v6"
 
     def _request_private_opportunity(self, body, search):
         """One optional read through the existing private memory port, then decide.
@@ -3024,6 +3024,15 @@ class PydanticConversationModel:
             "Geen passend bericht op dit tijdstip betekent niet dat stil onderzoek of "
             "voorbereiding onwenselijk is. Weinig persoonlijke kennis is een informatiegat "
             "dat je gericht kunt verkennen, geen algemene reden om passief te blijven. "
+            "De eerste geheugenselectie is onvolledig. Als ontbrekende persoonlijke context "
+            "je reden is om geen zinvol vervolg te zien of op een antwoord te wachten, "
+            "controleer dat informatiegat eerst met één gerichte search_personal_memory, als die "
+            "zoekactie aangeboden en nog ongebruikt is. Een onzekere of mislukte zoeking herhaal je niet. "
+            "Als een recente eigen afweging dezelfde gerichte zoeking en kenniskloof al beschrijft "
+            "en er geen nieuwe bron of aanleiding is, gebruik die beperking en zoek niet opnieuw. "
+            "Kies zelf de inhoudelijke zoektermen en gebruik de gevonden bronnen met hun tijd "
+            "en onzekerheid. Zoek niet als je afweging al op voldoende relevante context berust. "
+            "Ook na zoeken blijft een onderbouwde pauze geldig; verzin geen behoefte of taak. "
             "Je wacht niet "
             "alleen op opdrachten of meldenswaardige gebeurtenissen. Bekijk de toegelaten "
             "context, je belangstelling, eerdere bijdragen en feedback en beschikbare "
