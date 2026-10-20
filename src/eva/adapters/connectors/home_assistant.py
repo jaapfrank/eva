@@ -89,14 +89,15 @@ _CONVERSATION_TOOLS = (
     _conversation_tool(
         "set_home_assistant_light",
         (
-            "Zet een bestaande lamp of de lampen in een genoemde ruimte/groep aan of uit. Gebruik de naam "
-            "die de gebruiker noemt; de provideradapter resolveert die fail-closed "
+            "Zet een bestaande lamp of de lampen in een genoemde ruimte/groep aan of uit. Gebruik het doel "
+            "uit het actuele verzoek en de benodigde bevoegde context; de provideradapter resolveert fail-closed "
             "en geeft pas een resultaat na onafhankelijke statuscontrole."
         ),
         {
             "state": _conversation_schema(enum=("on", "off")),
             "target": _conversation_schema(
-                "De letterlijke lamp- of ruimtenaam uit het verzoek."
+                "De genoemde lamp- of ruimtenaam, of het exacte entity_id uit de "
+                "benodigde actuele bron bij een verwijzing of gecorrigeerde naam."
             ),
             "finish_without_reply": {"type": "boolean", "description":
                 "True for a plain control command fully satisfied by this action, without a success reply. "
@@ -127,7 +128,8 @@ _CONVERSATION_TOOLS = (
         {
             "state": _conversation_schema(enum=("on", "off")),
             "target": _conversation_schema(
-                "De natuurlijke apparaat- of ruimtenaam uit het gesprek."
+                "De natuurlijke apparaat- of ruimtenaam, of het exacte entity_id "
+                "uit de benodigde actuele bron bij een verwijzing of correctie."
             ),
             "finish_without_reply": {"type": "boolean", "description":
                 "True only when this action fully satisfies a plain command without a success reply. "

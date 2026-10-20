@@ -20,6 +20,9 @@ API_SOURCE_GUIDANCE = 'For current states of multiple discovered entities, prefe
 
 DIRECT_EFFECT_GUIDANCE = ('For ordinary light/switch on or off, choose the offered '
     'set_home_assistant_light or set_home_assistant_switch directly with the requested name or exact entity ID. '
+    'If a reference or routine needs missing history, retrieve it before choosing the target or state. '
+    'When an authorized current source resolves or corrects that reference to an exact entity ID, '
+    'pass that ID rather than the old nickname. Ask if the source does not resolve the intended action. '
     'Those tools already resolve current targets, check ambiguity and permission, execute via the module, '
     'and independently read the resulting state. Their internal discovery fulfills source discovery: '
     'do not precede them with a separate inventory, state or service lookup merely to resolve that target. '
