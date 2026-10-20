@@ -36,6 +36,8 @@ from eva.providers.contracts import ProviderContribution
 from eva.adapters.connectors.home_assistant_api import HomeAssistantApiTool
 from eva.adapters.connectors.local_vision import LocalVisionHttpAnalyzer
 from eva.providers.home_assistant_capabilities import HomeAssistantCapabilityProfile
+from eva.adapters.connectors.home_assistant_context import HomeAssistantDeviceContext
+from eva.providers.home_assistant_command_cache import HomeAssistantCommandCache
 from eva.contracts.canonical_json import canonical_sha256
 
 
@@ -83,6 +85,8 @@ class HomeAssistantProviderFactory:
     execution_sources = (
         "providers/home_assistant.py", "providers/home_assistant_policy.py",
         "providers/home_assistant_capabilities.py",
+        "providers/home_assistant_command_cache.py",
+        "adapters/connectors/home_assistant_context.py",
         "adapters/connectors/home_assistant_mcp.py",
         "providers/home_assistant_receipts.py", "providers/receipt_policies.py",
         "adapters/connectors/home_assistant_completion.py",
@@ -206,14 +210,26 @@ class HomeAssistantProviderFactory:
         settings: HomeAssistantProviderSettings, engine: sa.Engine
     ) -> ProviderContribution:
         capability_profile = HomeAssistantCapabilityProfile(settings)
+        reuse_configuration = canonical_sha256({"version": "ha-exact-command-reuse-v1",
+            "endpoint": settings.endpoint_url, "credential_sha256": hashlib.sha256(settings.credential.encode()).hexdigest(),
+            "effects": settings.effects_enabled, "allowlist": list(settings.effect_allowlist),
+            "principals": list(settings.effect_principal_sha256_allowlist),
+            "setter_schemas": [tool.input_schema for tool in HomeAssistantToolAdapter.conversation_tools()
+                               if tool.name in {"set_home_assistant_light", "set_home_assistant_switch"}]})
+        device_context = HomeAssistantDeviceContext(scope_sha256=reuse_configuration)
         inventory_reader = HomeAssistantAdminAdapter(
             base_url=settings.endpoint_url, token=settings.credential,
+            device_context=device_context,
         )
         provider = HomeAssistantToolAdapter(
             HomeAssistantConfig(settings.endpoint_url, settings.credential),
             household_inventory=inventory_reader.household_inventory,
             capability_profile=capability_profile,
+            device_context=device_context,
         )
+        provider._command_cache = HomeAssistantCommandCache(engine,
+            configuration_sha256=reuse_configuration, device_context=device_context,
+            capability_profile=capability_profile)
         management_reader = (
             HomeAssistantAdminAdapter(
                 base_url=settings.endpoint_url,
@@ -376,6 +392,7 @@ class HomeAssistantProviderFactory:
                 base_url=settings.endpoint_url,
                 token=settings.credential,
                 admitted_domains=settings.event_domains,
+                device_context=device_context,
             ),
         )
 

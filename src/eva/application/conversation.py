@@ -187,7 +187,8 @@ class ConversationModelUsage:
         ):
             raise ValueError("measured model usage is invalid")
         attempts, tools, inputs, outputs = (int(value) for value in values)
-        if attempts < 1 or min(tools, inputs, outputs) < 0:
+        if attempts < 0 or min(tools, inputs, outputs) < 0 or (
+                attempts == 0 and (self.measurement != "measured" or any((tools, inputs, outputs)))):
             raise ValueError("measured model usage is invalid")
 
     @classmethod
@@ -1035,6 +1036,43 @@ class LivingConversation:
                     raise ConversationConflict("conversation replay has duplicate call IDs")
                 receipts.append(recovered)
                 completed = recovered
+        # Optional modules may reuse a retained interpretation. Pending work
+        # always wins; the module still owns fresh resolution, durable dispatch
+        # and independent proof. No lexical/provider routing lives here.
+        reuse = getattr(self._actions, "reuse_verified_action", None)
+        from eva.application.cancellation import check_cancellation
+        if (_SILENT_COMPLETION_SUPPORTED.get() and not receipts and callable(reuse)
+                and initiative is None and total_usage().measurement == "unmeasured"):
+            checkpoint()
+            check_cancellation()
+            reused = reuse(turn)
+            checkpoint()
+            check_cancellation()
+            if reused is not None:
+                if not isinstance(reused, ConversationActionReceipt):
+                    raise ConversationConflict("reused action returned an invalid receipt")
+                receipts.append(reused)
+                completed = reused
+                from eva.application.voice_context import current_voice_context
+                cached_voice = current_voice_context()
+                if cached_voice is not None:
+                    cached_voice.event({"type": "action_finished", "name": reused.call.name,
+                                        "status": reused.output.get("status", "unknown")})
+                _INITIAL_MEMORY_TIMING_LOG.info("conversation_action_completion %s", json.dumps({
+                    "message_id_sha256": hashlib.sha256(turn.message_id.encode()).hexdigest(),
+                    "action": reused.call.name, "status": reused.output.get("status", "unknown"),
+                    "interpretation_reused": True, "received_at": datetime.now(UTC).isoformat(),
+                }, separators=(",", ":")))
+                eligible = getattr(self._actions, "silent_completion_allowed", None)
+                if (reused.output.get("status") == "verified" and callable(eligible)
+                        and eligible(turn, tuple(receipts)) is True):
+                    checkpoint()
+                    check_cancellation()
+                    return GroundedReply(conversation_id=turn.conversation_id,
+                        message_id=turn.message_id, text="Opdracht uitgevoerd.", response_mode="silent",
+                        evidence_memory_ids=(), generated_at=turn.occurred_at,
+                        provider="eva:verified-reuse", model_usage=ConversationModelUsage.measured(
+                            model_attempts=0, tool_calls=0, input_tokens=0, output_tokens=0))
         available_names: tuple[str, ...] = ()
         if self._actions is not None:
             if completed is None:

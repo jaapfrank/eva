@@ -101,6 +101,9 @@ _CONVERSATION_TOOLS = (
             "finish_without_reply": {"type": "boolean", "description":
                 "True for a plain control command fully satisfied by this action, without a success reply. "
                 "False if the user also asks a question, requests another action or explicitly wants confirmation."},
+            "reusable_command": {"type": "boolean", "description":
+                "True only when the entire current utterance is a standalone unconditional request for this exact target/state. "
+                "False for references, inferred targets, remembered preferences, conditions, corrections, questions or further work."},
         },
         (
             "Het toolresultaat bevat de onafhankelijk gecontroleerde eindtoestand. "
@@ -129,6 +132,9 @@ _CONVERSATION_TOOLS = (
             "finish_without_reply": {"type": "boolean", "description":
                 "True only when this action fully satisfies a plain command without a success reply. "
                 "False for any additional question/action or explicitly requested confirmation."},
+            "reusable_command": {"type": "boolean", "description":
+                "True only for a complete standalone unconditional utterance naming this target and state. "
+                "False for context references, conditions, preferences, corrections, questions or further work."},
         },
         (
             "Het toolresultaat bevat de onafhankelijk gecontroleerde eindtoestand. "
@@ -279,6 +285,43 @@ class HomeAssistantConversationEffectPlanner:
         self._provider = provider
         self._allowlist = allowlist
         self._principal_sha256_allowlist = principal_sha256_allowlist
+        self._command_cache = getattr(provider, "_command_cache", None)
+
+    def interpretation_reuse_metadata(self, turn, call, preparation):
+        if self._command_cache is None:
+            return None
+        try:
+            return self._command_cache.admission_metadata(turn, call, preparation)
+        except (OSError, RuntimeError, ValueError):
+            return None  # Optional learning cannot break ordinary execution.
+
+    async def prepare_reusable(self, turn, source_receipt):
+        if self._command_cache is None:
+            return None
+        try:
+            candidate = self._command_cache.lookup(turn)
+            if candidate is None:
+                return None
+            original = source_receipt(candidate.source_turn, candidate.source_thread_id, candidate.admission)
+            if (original is None or original.call.name != candidate.call.name
+                    or original.call.arguments != candidate.call.arguments
+                    or not self.silent_completion_allowed(candidate.source_turn, original)):
+                return None
+            prepared = await self.prepare(turn, candidate.call)
+            if (prepared.arguments != candidate.admission.get("request_arguments")
+                    or prepared.expected_proof != candidate.admission.get("request_expected_proof")
+                    or prepared.tool_name != candidate.admission.get("request_tool_name")):
+                return None
+            # Fence the freshly resolved target against intervening registry,
+            # context, source erasure or permission changes before admission.
+            checked = self._command_cache.lookup(turn)
+            if checked != candidate:
+                return None
+            return candidate.call, prepared
+        except ConversationConflict:
+            raise
+        except (OSError, RuntimeError, ValueError):
+            return None
 
     async def prepare(
         self, turn: ConversationTurn, call: ConversationActionCall
@@ -291,10 +334,12 @@ class HomeAssistantConversationEffectPlanner:
             raise ConversationClarificationRequired(
                 "Met dit profiel mag je deze externe tool nog niet bedienen."
             )
-        if not {"state", "target"} <= set(call.arguments) <= {"state", "target", "finish_without_reply"}:
+        if not {"state", "target"} <= set(call.arguments) <= {"state", "target", "finish_without_reply", "reusable_command"}:
             raise ConversationConflict("provider effect action has wrong fields")
         if "finish_without_reply" in call.arguments and type(call.arguments["finish_without_reply"]) is not bool:
             raise ConversationConflict("provider effect completion choice is invalid")
+        if "reusable_command" in call.arguments and type(call.arguments["reusable_command"]) is not bool:
+            raise ConversationConflict("provider effect reuse choice is invalid")
         state = call.arguments.get("state")
         target = call.arguments.get("target")
         if state not in {"on", "off"}:
@@ -482,10 +527,11 @@ class HomeAssistantConfig:
 
 
 class HomeAssistantToolAdapter:
-    def __init__(self, config: HomeAssistantConfig, *, household_inventory=None, capability_profile=None) -> None:
+    def __init__(self, config: HomeAssistantConfig, *, household_inventory=None, capability_profile=None, device_context=None) -> None:
         self._config = config
         self._household_inventory = household_inventory
         self._capability_profile = capability_profile
+        self._device_context = device_context
 
     def _call_assist_effect(self, **arguments):
         if self._capability_profile is None:
@@ -798,9 +844,19 @@ class HomeAssistantToolAdapter:
         return payload
 
     def _light_catalog_sync(self) -> list[dict[str, Any]]:
+        if self._device_context is not None:
+            try:
+                return self._device_context.catalog("light")
+            except (OSError, RuntimeError, ValueError):
+                pass
         return self._state_catalog_sync()
 
     def _switch_catalog_sync(self) -> list[dict[str, Any]]:
+        if self._device_context is not None:
+            try:
+                return self._device_context.catalog("switch")
+            except (OSError, RuntimeError, ValueError):
+                pass
         return self._state_catalog_sync()
 
     def _state_catalog_sync(self) -> list[dict[str, Any]]:

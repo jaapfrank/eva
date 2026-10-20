@@ -50,7 +50,7 @@ class HomeAssistantInventorySnapshotUnavailable(RuntimeError):
 
 
 class HomeAssistantAdminAdapter:
-    def __init__(self, *, base_url: str, token: str) -> None:
+    def __init__(self, *, base_url: str, token: str, device_context=None) -> None:
         parsed = urlsplit(base_url)
         if parsed.scheme not in {"http", "https"} or not parsed.netloc:
             raise ValueError("Home Assistant admin URL is invalid")
@@ -66,6 +66,7 @@ class HomeAssistantAdminAdapter:
             )
         )
         self._token = token
+        self._device_context = device_context
         self._household_snapshots = OrderedDict()
         self._household_snapshot_lock = Lock()
         self._automation_reader = HomeAssistantAutomationAdapter(HomeAssistantAutomationConfig(base_url, token))
@@ -135,6 +136,11 @@ class HomeAssistantAdminAdapter:
         return await asyncio.to_thread(self._household_inventory_sync)
 
     def _household_inventory_sync(self) -> dict[str, Any]:
+        if self._device_context is not None:
+            try:
+                return self._device_context.inventory()
+            except (RuntimeError, OSError, ValueError):
+                pass  # No current stream: retain the existing fresh read route.
         with self._session() as socket:
             areas = self._command(socket, 1, "config/area_registry/list")
             devices = self._command(socket, 2, "config/device_registry/list")

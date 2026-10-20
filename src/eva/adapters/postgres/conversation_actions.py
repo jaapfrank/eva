@@ -348,6 +348,20 @@ class PostgresConversationActions:
         eligible = getattr(provider, "silent_completion_allowed", None)
         return callable(eligible) and eligible(turn, receipts) is True
 
+    def reuse_verified_action(self, turn):
+        seen = set()
+        for provider in self._external_tool_by_action.values():
+            if id(provider) in seen:
+                continue
+            seen.add(id(provider))
+            reuse = getattr(provider, "reuse_verified_action", None)
+            if callable(reuse):
+                receipt = reuse(turn)
+                if receipt is not None:
+                    return receipt
+        return None
+
+
     def reply_guard(self, turn, receipts):
         """Delegate final consistency checks only to tools used by this turn."""
         guards = []

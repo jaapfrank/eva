@@ -23,6 +23,7 @@ class HomeAssistantEventStream:
         base_url: str,
         token: str,
         admitted_domains: tuple[str, ...] = ("light",),
+        device_context=None,
     ) -> None:
         parsed = urlsplit(base_url)
         if parsed.scheme not in {"http", "https"} or not parsed.netloc:
@@ -42,6 +43,7 @@ class HomeAssistantEventStream:
             )
         )
         self._token = token
+        self._device_context = device_context
         self._domains = frozenset(domains)
         self._states = HomeAssistantToolAdapter(HomeAssistantConfig(base_url, token))
 
@@ -104,13 +106,22 @@ class HomeAssistantEventStream:
             self._url,
             open_timeout=5,
             close_timeout=2,
-            max_size=1_048_576,
+            max_size=8_388_608 if self._device_context is not None else 1_048_576,
             ping_interval=20,
             ping_timeout=10,
         ) as socket:
             self._expect_type(socket.recv(timeout=5), "auth_required")
             socket.send(json.dumps({"access_token": self._token, "type": "auth"}))
-            self._expect_type(socket.recv(timeout=5), "auth_ok")
+            authenticated = self._decode(socket.recv(timeout=5))
+            if authenticated.get("type") != "auth_ok":
+                raise RuntimeError("Home Assistant websocket authentication failed")
+            if self._device_context is not None:
+                def retain(raw):
+                    event = self._event_from_frame(raw)
+                    if event is not None:
+                        handler(event)
+                self._device_context.listen(socket, stop, retain, version=authenticated.get("ha_version"))
+                return
             socket.send(
                 json.dumps(
                     {"event_type": "state_changed", "id": 1, "type": "subscribe_events"}

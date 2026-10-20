@@ -37,7 +37,7 @@ from eva.application.orchestration import (
     ToolProofObservation,
     VerifiedToolOrchestrator,
 )
-from eva.contracts.base import JsonValue
+from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.canonical_json import canonical_json_bytes
 
 
@@ -141,6 +141,41 @@ class PostgresExternalConversationTools:
         allowed = eligible(turn, receipt) is True
         self._ensure_running(turn)
         return allowed
+
+    def reuse_verified_action(self, turn):
+        prepare = getattr(self._planner, "prepare_reusable", None)
+        if not callable(prepare):
+            return None
+        self._ensure_running(turn)
+
+        def retained(source, thread, admission):
+            if (any(getattr(source, key) != getattr(turn, key) for key in
+                    ("tenant_id", "installation_id", "principal_id", "audience", "project_id"))
+                    or thread != self._thread_id(source, admission.get("action_name"))):
+                return None
+            history = self._timeline(turn).events(thread)
+            if (not history or history[-1].event_type != "STATE_VERIFIED"
+                    or history[0].payload.get("data") != admission):
+                return None
+            if (self._configuration_sha256 is not None
+                    and admission.get("request_tool_configuration_sha256") != self._configuration_sha256):
+                return None
+            self._ensure_running(turn)
+            return self._receipt(source, history, project=False)
+
+        chosen = asyncio.run(prepare(turn, retained))
+        self._ensure_running(turn)
+        if chosen is None:
+            return None
+        call, preparation = chosen
+        if (not isinstance(call, ConversationActionCall) or call.name not in self.action_names
+                or not isinstance(preparation, ConversationToolPreparation)):
+            raise ConversationConflict("cached interpretation is malformed")
+        from eva.application.initiative_execution import authorize_initiative_action
+        authorize_initiative_action(turn, call.name)
+        with self._execution_lock(self._thread_id(turn, call.name)):
+            return self._execute(turn, call, step_index=0, preparation=preparation)
+
 
     def available_for(self, turn: ConversationTurn) -> bool:
         """Filter model offerings; execution still rechecks authorization."""
@@ -376,6 +411,14 @@ class PostgresExternalConversationTools:
             ),
             "source_message_id": turn.message_id,
         }
+        metadata_reader = getattr(self._planner, "interpretation_reuse_metadata", None)
+        metadata = (existing[0].payload.get("data", {}).get("interpretation_reuse") if existing else
+                    metadata_reader(turn, call, preparation) if callable(metadata_reader) else None)
+        if metadata is not None:
+            validate_json_value(metadata)
+            if not isinstance(metadata, dict) or len(canonical_json_bytes(metadata)) > 8192:
+                raise ConversationConflict("interpretation reuse metadata exceeds its bound")
+            admission["interpretation_reuse"] = metadata
         from eva.application.background_execution import background_execution_namespace
         namespace = background_execution_namespace(turn)
         if namespace is not None:

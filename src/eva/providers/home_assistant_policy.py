@@ -28,6 +28,9 @@ DIRECT_EFFECT_GUIDANCE = ('For ordinary light/switch on or off, choose the offer
     'For a plain control command fully satisfied by this one action, set finish_without_reply=true: '
     'the household does not want a success reply. Use false if any additional action or question '
     'remains, or the user explicitly asks for confirmation. Failures and ambiguity still require a useful reply. '
+    'Set reusable_command=true only when the entire current utterance independently names this target and state, '
+    'unconditionally and without needing earlier conversation, remembered preferences or an inferred location. '
+    'References such as "that one", confirmations, conditions, corrections and combined requests must use false. '
     'Use the general API for operations beyond these offered effects, within its existing authority.')
 
 
