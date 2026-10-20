@@ -590,10 +590,8 @@ class PostgresConversationActions:
             context.append(summary)
             if len(context) == 2:
                 break
-        for provider in self._external_tools:
-            provider_context = getattr(provider, "active_context", None)
-            if provider_context is not None:
-                context.extend(provider_context(turn))
+        from eva.application.provider_context import collect_provider_context
+        context.extend(collect_provider_context(self._external_tools, turn))
         from eva.adapters.postgres.conversation_grounding import recent_tool_context
         context.extend(recent_tool_context(self, turn))
         if self._durable_goal_provider is not None:

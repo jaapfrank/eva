@@ -35,6 +35,7 @@ from eva.providers.home_assistant_advanced_store import PostgresAdvancedTaskStor
 from eva.providers.contracts import ProviderContribution
 from eva.adapters.connectors.home_assistant_api import HomeAssistantApiTool
 from eva.adapters.connectors.local_vision import LocalVisionHttpAnalyzer
+from eva.providers.home_assistant_capabilities import HomeAssistantCapabilityProfile
 from eva.contracts.canonical_json import canonical_sha256
 
 
@@ -81,10 +82,13 @@ class HomeAssistantProviderFactory:
     supports_household_digital_work = True
     execution_sources = (
         "providers/home_assistant.py", "providers/home_assistant_policy.py",
+        "providers/home_assistant_capabilities.py",
+        "adapters/connectors/home_assistant_mcp.py",
         "providers/home_assistant_receipts.py", "providers/receipt_policies.py",
         "adapters/connectors/home_assistant_completion.py",
         "adapters/connectors/home_assistant.py",
         "adapters/connectors/home_assistant_api.py",
+        "adapters/connectors/home_assistant_service_query.py",
         "adapters/connectors/home_assistant_admin.py",
         "adapters/connectors/home_assistant_automations.py",
     )
@@ -201,12 +205,14 @@ class HomeAssistantProviderFactory:
     def build(
         settings: HomeAssistantProviderSettings, engine: sa.Engine
     ) -> ProviderContribution:
+        capability_profile = HomeAssistantCapabilityProfile(settings)
         inventory_reader = HomeAssistantAdminAdapter(
             base_url=settings.endpoint_url, token=settings.credential,
         )
         provider = HomeAssistantToolAdapter(
             HomeAssistantConfig(settings.endpoint_url, settings.credential),
             household_inventory=inventory_reader.household_inventory,
+            capability_profile=capability_profile,
         )
         management_reader = (
             HomeAssistantAdminAdapter(
@@ -322,7 +328,7 @@ class HomeAssistantProviderFactory:
             vision = (LocalVisionHttpAnalyzer(endpoint=settings.vision_endpoint,
                       model=settings.vision_model, revision=settings.vision_revision)
                       if settings.vision_endpoint else None)
-            api = HomeAssistantApiTool(base_url=settings.endpoint_url, token=settings.credential, vision=vision)
+            api = HomeAssistantApiTool(base_url=settings.endpoint_url, token=settings.credential, vision=vision, capability_profile=capability_profile)
             api_configuration = home_assistant_read_configuration_sha256(settings.endpoint_url)
             if vision is not None:
                 api_configuration = canonical_sha256({"home_assistant": api_configuration,

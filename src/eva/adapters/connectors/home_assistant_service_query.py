@@ -93,9 +93,16 @@ def resolve_service_query(tool, arguments, body, deadline):
         return frame.get("result")
 
     check_deadline(deadline)
-    with tool.admin._session() as socket:
-        services = read(socket, 1, "get_services")
-        definition = services.get(domain, {}).get(service) if isinstance(services, dict) else None
+    profile = getattr(tool, "capability_profile", None)
+    schema_observation = (profile.service_definition(domain, service,
+        timeout=max(.001, deadline-time.monotonic())) if profile is not None else None)
+    check_deadline(deadline)
+    with tool.admin._session(deadline=deadline) as socket:
+        if schema_observation is None:
+            services = read(socket, 1, "get_services")
+            definition = services.get(domain, {}).get(service) if isinstance(services, dict) else None
+        else:
+            definition = schema_observation["definition"]
         if not isinstance(definition, dict) or definition.get("response") != {"optional": False}:
             return rejected("mandatory_response_service_unavailable")
         # Supported-feature masks are an OR of allowed alternatives, as in HA.
@@ -160,4 +167,7 @@ def resolve_service_query(tool, arguments, body, deadline):
         "service": domain + "." + service, "service_definition_sha256": _sha(definition),
         "entity_catalog_sha256": _sha(states), "captured_at": datetime.now(UTC).isoformat(),
         "guidance": "This entity label is source evidence, not proof of a precise town. No service result proves physical state."}
+    if schema_observation is not None:
+        discovery["service_schema_observation"] = {key: value for key, value in schema_observation.items()
+                                                  if key != "definition"}
     return resolved, discovery

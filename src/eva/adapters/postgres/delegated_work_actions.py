@@ -178,6 +178,11 @@ class PostgresDelegatedWorkActions:
     def available_for(self, turn: ConversationTurn) -> bool:
         return self._service.available_for(turn)
 
+    @property
+    def parallel_context_reads(self):
+        # The legacy execute('list') fallback is not a read-only contract.
+        return callable(getattr(self._service, "active_work_metadata", None))
+
     def active_context(self, turn: ConversationTurn) -> tuple[str, ...]:
         """Supply bounded current task identities without another model tool roundtrip."""
         if not self.available_for(turn):

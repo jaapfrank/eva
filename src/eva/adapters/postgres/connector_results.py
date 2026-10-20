@@ -120,6 +120,16 @@ def captured_call(command, phase, call):
     return call() if capture is None else capture.call(command, phase, call)
 
 
+def check_capture_authority():
+    """Recheck the owning request after discovery, immediately before dispatch."""
+    from eva.application.cancellation import check_cancellation
+    check_cancellation()
+    capture = _current.get()
+    if capture is not None:
+        capture.authorize(capture.turn)
+    check_cancellation()
+
+
 def recovered_result(command, phase):
     capture = _current.get()
     if capture is None:

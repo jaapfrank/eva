@@ -62,11 +62,12 @@ class HomeAssistantApiTool:
             "be discovered through the ordinary API. This metadata grants no authority.",)
 
 
-    def __init__(self, *, base_url, token, vision=None):
+    def __init__(self, *, base_url, token, vision=None, capability_profile=None):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self.admin = HomeAssistantAdminAdapter(base_url=base_url, token=token)
         self.vision = vision
+        self.capability_profile = capability_profile
 
     @staticmethod
     def conversation_tools():
@@ -189,9 +190,15 @@ class HomeAssistantApiTool:
             raise ConversationConflict("Targeted service requests require the durable query path")
         from eva.adapters.connectors.home_assistant_service_query import check_deadline
         if deadline is not None:check_deadline(deadline)
+        profile_receipt = (self.capability_profile.require_transport(a["transport"],
+                               timeout=5 if deadline is None else max(.001, min(5, deadline-time.monotonic())))
+                           if self.capability_profile is not None else None)
         if a["transport"] == "rest":
             timeout = 15 if deadline is None else max(.001, min(15, deadline-time.monotonic()))
             with httpx.Client(timeout=timeout, follow_redirects=False, trust_env=False) as client:
+                if deadline is not None:check_deadline(deadline)
+                from eva.adapters.postgres.connector_results import check_capture_authority
+                check_capture_authority()
                 if deadline is not None:check_deadline(deadline)
                 with client.stream(a["method"], self.base_url + a["path"],
                         headers={"Authorization": "Bearer " + self.token},
@@ -205,6 +212,8 @@ class HomeAssistantApiTool:
                         chunks.append(chunk)
                     raw = b"".join(chunks)
                     status = {"http_status": response.status_code, "success": 200 <= response.status_code < 300}
+                    if response.status_code in {401, 403} and self.capability_profile is not None:
+                        self.capability_profile.invalidate()
                     media_type = getattr(response, "headers", {}).get("content-type", "").split(";", 1)[0].strip().lower()
                     if media_type.startswith("image/"):
                         match = re.fullmatch(r"/api/camera_proxy/(camera\.[a-z0-9_]+)", urlsplit(a["path"]).path)
@@ -223,9 +232,13 @@ class HomeAssistantApiTool:
                         except ValueError:
                             value = raw.decode("utf-8", errors="replace")
         else:
-            with self.admin._session() as socket:
+            with self.admin._session(**({"deadline": deadline} if deadline is not None else {})) as socket:
+                from eva.adapters.postgres.connector_results import check_capture_authority
+                check_capture_authority()
+                if deadline is not None:check_deadline(deadline)
                 socket.send(json.dumps({**body, "id": 1}))
-                frame = self.admin._decode(socket.recv(timeout=15))
+                frame = self.admin._decode(socket.recv(timeout=15 if deadline is None else min(15, max(.001, deadline-time.monotonic()))))
+                if deadline is not None:check_deadline(deadline)
                 if frame.get("type") != "result" or frame.get("id") != 1:
                     raise RuntimeError("Home Assistant WebSocket response does not match request")
                 status = {"success": frame.get("success") is True}
@@ -260,6 +273,8 @@ class HomeAssistantApiTool:
             or ((a["response_pointer"] or result.get("selection_error"))
                 and len(source_json) > 40_000)):
             result["source_response_json"] = source_json
+        if profile_receipt is not None:
+            result["capability_profile"] = profile_receipt
         return result
 
     @staticmethod

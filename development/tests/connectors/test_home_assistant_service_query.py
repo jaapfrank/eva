@@ -36,7 +36,7 @@ def fixture(monkeypatch, *, definitions=None, states=None, after_states=lambda: 
             if self.command["type"] == "get_states":after_states()
             return json.dumps({"id": self.command["id"], "type": "result", "success": True, "result": value})
     @contextmanager
-    def session():yield Socket()
+    def session(**kwargs):yield Socket()
     class Response:
         status_code = 200
         headers = {"content-type": "application/json"}
@@ -57,6 +57,37 @@ def fixture(monkeypatch, *, definitions=None, states=None, after_states=lambda: 
 
 def request(args=None):
     return ToolRequest("thread", "query-operation", "checkpoint", "home_assistant.api.request", args or arguments(), {})
+
+
+def test_shared_schema_skips_rediscovery_but_observes_current_targets(monkeypatch):
+    from eva.adapters.connectors.home_assistant_service_query import resolve_service_query
+    import time
+    tool, reads, posts, definition = fixture(monkeypatch)
+    class Profile:
+        def service_definition(self, domain, service, *, timeout):
+            assert (domain, service) == ("sample", "get_values") and 0 < timeout <= 5
+            return {"definition": copy.deepcopy(definition), "observed_at": "2026-10-20T10:00:00+00:00",
+                "version": "test", "profile_sha256": "a"*64, "freshness_seconds": 60}
+    tool.capability_profile = Profile()
+    for _ in range(2):
+        resolved, discovery = resolve_service_query(tool, arguments(), {"mode": "daily"}, time.monotonic()+5)
+        assert json.loads(resolved["body_json"])["entity_id"] == "sample.actual"
+        assert discovery["service_schema_observation"]["observed_at"] == "2026-10-20T10:00:00+00:00"
+        assert "definition" not in discovery["service_schema_observation"]
+    assert reads == ["get_states", "get_states"] and posts == []
+
+
+def test_cached_schema_does_not_make_unavailable_target_usable(monkeypatch):
+    from eva.adapters.connectors.home_assistant_service_query import resolve_service_query
+    import time
+    tool, reads, posts, definition = fixture(monkeypatch, states=[
+        {"entity_id": "sample.actual", "state": "unavailable", "attributes": {"supported_features": 1}}])
+    class Profile:
+        def service_definition(self, *args, **kwargs):return {"definition": definition}
+    tool.capability_profile = Profile()
+    resolved, result = resolve_service_query(tool, arguments(), {"mode": "daily"}, time.monotonic()+5)
+    assert resolved is None and result["error_code"] == "target_unavailable"
+    assert reads == ["get_states"] and not posts
 
 
 def test_resolves_live_target_once_and_preserves_source_without_registry(monkeypatch):

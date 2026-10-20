@@ -67,6 +67,12 @@ class ScopedDelegatedWorkActions:
             return ()
         return actions.active_context(turn)
 
+    def parallel_context_reads(self, turn):
+        # Household selection retains its existing serialized path. The private
+        # reader still reselects and checks current authority inside active_context.
+        return (turn.audience.kind == "private_person" and self.private is not None
+                and getattr(self.private, "parallel_context_reads", False) is True)
+
     def pending(self, turn, *, step_index=0):
         try:
             actions = self._select(turn)

@@ -446,9 +446,26 @@ class HomeAssistantConfig:
 
 
 class HomeAssistantToolAdapter:
-    def __init__(self, config: HomeAssistantConfig, *, household_inventory=None) -> None:
+    def __init__(self, config: HomeAssistantConfig, *, household_inventory=None, capability_profile=None) -> None:
         self._config = config
         self._household_inventory = household_inventory
+        self._capability_profile = capability_profile
+
+    def _call_assist_effect(self, **arguments):
+        if self._capability_profile is None:
+            return call_assist_effect(**arguments)
+        import time
+        deadline = time.monotonic() + arguments["timeout"]
+        client, digest = self._capability_profile.effect_binding(arguments["timeout"])
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise HomeAssistantMcpError("HA discovery expired before effect dispatch")
+        arguments["timeout"] = remaining
+        try:
+            return call_assist_effect(**arguments, client=client, expected_catalog_sha256=digest)
+        except HomeAssistantMcpError:
+            self._capability_profile.invalidate()
+            raise
 
     @staticmethod
     def conversation_tools() -> tuple[ConversationToolDescriptor, ...]:
@@ -808,7 +825,7 @@ class HomeAssistantToolAdapter:
             async def dispatch_one(identifier):
                 try:
                     async with semaphore:
-                        await asyncio.to_thread(call_assist_effect, base_url=self._config.base_url,
+                        await asyncio.to_thread(self._call_assist_effect, base_url=self._config.base_url,
                         token=self._config.token, timeout=self._config.request_timeout_seconds,
                         domain="light", service=service, entity_id=identifier)
                     return identifier
@@ -821,7 +838,7 @@ class HomeAssistantToolAdapter:
         domain, service, entity_id, _service_data = _command_fields(command)
         try:
             details = await asyncio.to_thread(
-                call_assist_effect,
+                self._call_assist_effect,
                 base_url=self._config.base_url,
                 token=self._config.token,
                 timeout=self._config.request_timeout_seconds,

@@ -12,6 +12,7 @@ import json
 import hashlib
 import math
 import re
+import time
 from typing import Any
 from urllib.parse import urlsplit, urlunsplit
 from urllib.error import URLError
@@ -33,6 +34,15 @@ from eva.adapters.connectors.home_assistant_advanced_tasks import (
     HomeAssistantInventory,
     HomeAssistantRepository,
 )
+
+
+def _remaining(deadline, maximum):
+    if deadline is None:
+        return maximum
+    remaining = deadline - time.monotonic()
+    if remaining <= 0:
+        raise TimeoutError("Home Assistant discovery deadline expired before dispatch")
+    return min(maximum, remaining)
 
 
 class HomeAssistantInventorySnapshotUnavailable(RuntimeError):
@@ -103,20 +113,20 @@ class HomeAssistantAdminAdapter:
         )
 
     @contextmanager
-    def _session(self):
+    def _session(self, *, deadline=None):
         """Share the authenticated, read-only registry transport."""
         with connect(
             self._url,
-            open_timeout=5,
+            open_timeout=_remaining(deadline, 5),
             close_timeout=2,
             max_size=8_388_608,
             ping_interval=20,
             ping_timeout=10,
         ) as socket:
-            if self._decode(socket.recv(timeout=5)).get("type") != "auth_required":
+            if self._decode(socket.recv(timeout=_remaining(deadline, 5))).get("type") != "auth_required":
                 raise RuntimeError("Home Assistant admin auth challenge is invalid")
             socket.send(json.dumps({"access_token": self._token, "type": "auth"}))
-            if self._decode(socket.recv(timeout=5)).get("type") != "auth_ok":
+            if self._decode(socket.recv(timeout=_remaining(deadline, 5))).get("type") != "auth_ok":
                 raise RuntimeError("Home Assistant admin authentication failed")
             yield socket
 
@@ -449,12 +459,14 @@ class HomeAssistantAdminAdapter:
         request_id: int,
         command_type: str,
         extra: dict[str, object] | None = None,
+        *, deadline=None,
     ) -> object:
         message: dict[str, object] = {"id": request_id, "type": command_type}
         if extra is not None:
             message.update(extra)
+        _remaining(deadline, 8)
         socket.send(json.dumps(message))
-        frame = cls._decode(socket.recv(timeout=8))
+        frame = cls._decode(socket.recv(timeout=_remaining(deadline, 8)))
         if (
             frame.get("type") != "result"
             or frame.get("id") != request_id

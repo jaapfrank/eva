@@ -86,6 +86,7 @@ class _ProcedureSourceLoader:
 class ProcedureReferenceActions:
     action_names = _NAMES
     supports_indexed_steps = True
+    parallel_context_reads = True
 
     def __init__(self, engine, *, authority, gateway_factory, clock=None, authorize_turn=None, private_owner_resolver=None, executor=None, native_authority_loader=None):
         self.source_loader = _ProcedureSourceLoader(engine, authority, native_authority_loader)

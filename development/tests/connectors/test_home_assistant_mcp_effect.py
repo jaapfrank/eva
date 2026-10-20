@@ -51,6 +51,9 @@ class _State:
     omit_data: bool = False
     calls: list[dict[str, Any]] = field(default_factory=list)
     rest_services_calls: int = 0
+    reject_effect: bool = False
+    effect_disconnect: bool = False
+    session_headers: list[str | None] = field(default_factory=list)
 
 
 @contextmanager
@@ -67,6 +70,7 @@ def _server(state: _State) -> Iterator[str]:
             assert self.path == "/api/mcp/assist"
             body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
             state.calls.append(body)
+            state.session_headers.append(self.headers.get("Mcp-Session-Id"))
             method = body["method"]
             if method == "notifications/initialized":
                 self.send_response(202)
@@ -80,6 +84,12 @@ def _server(state: _State) -> Iterator[str]:
                 if state.duplicate_name is not None:
                     result["tools"].append({"name": state.duplicate_name, "inputSchema": state.schema})
             elif method == "tools/call":
+                if state.reject_effect:
+                    self.send_error(401)
+                    return
+                if state.effect_disconnect:
+                    self.close_connection = True
+                    return
                 success = [] if state.failed else [{"id": state.result_id}]
                 effect = {"response_type": "action_done", "data": {"failed": state.failed, "success": success}}
                 if state.omit_data:
@@ -90,6 +100,8 @@ def _server(state: _State) -> Iterator[str]:
             raw = json.dumps({"jsonrpc": "2.0", "id": body["id"], "result": result}).encode()
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
+            if method == "initialize":
+                self.send_header("Mcp-Session-Id", "test-session")
             self.send_header("Content-Length", str(len(raw)))
             self.end_headers()
             self.wfile.write(raw)
@@ -187,3 +199,134 @@ def test_only_enum_order_and_exact_official_alias_are_compatible(drift):
             asyncio.run(HomeAssistantToolAdapter(HomeAssistantConfig(origin, "token")).execute(_command()))
     assert [call["method"] for call in state.calls] == ["initialize", "notifications/initialized", "tools/list"]
     assert state.rest_services_calls == 0
+
+
+def test_provider_client_reuses_catalog_and_preserves_session() -> None:
+    from eva.adapters.connectors.home_assistant_mcp import HomeAssistantAssistClient, call_assist_effect
+    state = _State()
+    with _server(state) as origin:
+        client = HomeAssistantAssistClient(base_url=origin, token="token", scope_binding="lights", server_version="2026.10")
+        catalog = client.catalog(5)
+        catalog["tools"].clear()  # The caller cannot mutate trusted discovery.
+        for _ in range(2):
+            call_assist_effect(base_url=origin, token="token", timeout=5, domain="light", service="turn_off",
+                               entity_id="light.test", client=client)
+    assert [call["method"] for call in state.calls] == [
+        "initialize", "notifications/initialized", "tools/list", "tools/call", "tools/call"]
+    assert state.session_headers == [None, "test-session", "test-session", "test-session", "test-session"]
+    assert len({call["id"] for call in state.calls if "id" in call}) == 4
+    assert state.rest_services_calls == 0
+
+
+@pytest.mark.parametrize("failure", ["revoked", "disconnect"])
+def test_uncertain_effect_is_not_repeated_and_evicts_catalog(failure: str) -> None:
+    from eva.adapters.connectors.home_assistant_mcp import HomeAssistantAssistClient, HomeAssistantMcpError, call_assist_effect
+    state = _State()
+    with _server(state) as origin:
+        client = HomeAssistantAssistClient(base_url=origin, token="token")
+        original = client.catalog(5)
+        state.reject_effect = failure == "revoked"
+        state.effect_disconnect = failure == "disconnect"
+        with pytest.raises(HomeAssistantMcpError):
+            call_assist_effect(base_url=origin, token="token", timeout=5, domain="light", service="turn_off",
+                               entity_id="light.test", client=client)
+        assert len([call for call in state.calls if call["method"] == "tools/call"]) == 1
+        state.reject_effect = state.effect_disconnect = False
+        assert client.catalog(5)["catalog_sha256"] == original["catalog_sha256"]
+    assert [call["method"] for call in state.calls].count("initialize") == 2
+    assert state.rest_services_calls == 0
+
+
+def test_refresh_schema_and_catalog_change_fail_before_effect() -> None:
+    from eva.adapters.connectors.home_assistant_mcp import HomeAssistantAssistClient, HomeAssistantMcpError, call_assist_effect
+    state = _State(schema=deepcopy(SCHEMA))
+    with _server(state) as origin:
+        client = HomeAssistantAssistClient(base_url=origin, token="token")
+        original = client.catalog(5)
+        state.schema["required"] = ["area"]
+        changed = client.catalog(5, force_refresh=True)
+        assert changed["catalog_sha256"] != original["catalog_sha256"]
+        with pytest.raises(HomeAssistantMcpError, match="catalog binding changed"):
+            call_assist_effect(base_url=origin, token="token", timeout=5, domain="light", service="turn_off",
+                               entity_id="light.test", client=client, expected_catalog_sha256=original["catalog_sha256"])
+        with pytest.raises(HomeAssistantMcpError, match="schema drifted"):
+            call_assist_effect(base_url=origin, token="token", timeout=5, domain="light", service="turn_off",
+                               entity_id="light.test", client=client)
+    assert not [call for call in state.calls if call["method"] == "tools/call"]
+    assert state.rest_services_calls == 0
+
+
+def test_catalog_expiry_refreshes_and_changed_binding_is_rejected(monkeypatch: pytest.MonkeyPatch) -> None:
+    import eva.adapters.connectors.home_assistant_mcp as mcp
+    clock = [100.0]
+    monkeypatch.setattr(mcp.time, "monotonic", lambda: clock[0])
+    state = _State()
+    with _server(state) as origin:
+        client = mcp.HomeAssistantAssistClient(base_url=origin, token="token", catalog_ttl_seconds=60)
+        client.catalog(5)
+        clock[0] = 159.0
+        client.catalog(5)
+        assert [call["method"] for call in state.calls].count("initialize") == 1
+        clock[0] = 160.0
+        client.catalog(5)
+        assert [call["method"] for call in state.calls].count("initialize") == 2
+        with pytest.raises(mcp.HomeAssistantMcpError, match="client binding differs"):
+            mcp.call_assist_effect(base_url=origin, token="changed", timeout=5, domain="light", service="turn_off",
+                                   entity_id="light.test", client=client)
+    assert not [call for call in state.calls if call["method"] == "tools/call"]
+
+
+def test_version_and_scope_bindings_are_separate_without_exposing_credentials() -> None:
+    from eva.adapters.connectors.home_assistant_mcp import HomeAssistantAssistClient
+    state = _State()
+    with _server(state) as origin:
+        profiles = [HomeAssistantAssistClient(base_url=origin, token="private-token", scope_binding=scope,
+                                              server_version=version).catalog(5)
+                    for scope, version in [("lights", "2026.10"), ("all", "2026.10"), ("lights", "2026.11")]]
+    assert len({profile["binding_sha256"] for profile in profiles}) == 3
+    assert all("private-token" not in json.dumps(profile) for profile in profiles)
+
+
+@pytest.mark.parametrize("failure", ["stop", "revoked"])
+def test_discovery_cannot_outlive_current_stop_or_authority(monkeypatch, failure):
+    from types import SimpleNamespace
+    from eva.adapters.connectors.home_assistant_mcp import HomeAssistantAssistClient
+    from eva.adapters.postgres.connector_results import result_capture
+    from eva.application.cancellation import CancellationSignal, WorkInterrupted, cancellation_scope
+    state = _State()
+    signal = CancellationSignal()
+    revoked = [False]
+    def authorize(turn):
+        if revoked[0]:raise PermissionError("revoked")
+    with _server(state) as origin:
+        client = HomeAssistantAssistClient(base_url=origin, token="token")
+        original = client._catalog_locked
+        def discover(**kwargs):
+            result = original(**kwargs)
+            if failure == "stop":signal.cancel()
+            else:revoked[0] = True
+            return result
+        monkeypatch.setattr(client, "_catalog_locked", discover)
+        with cancellation_scope(signal), result_capture(SimpleNamespace(
+                authorize=authorize, turn=object())):
+            with pytest.raises(WorkInterrupted if failure == "stop" else PermissionError):
+                client.effect(timeout=5, tool_name="HassTurnOff", entity_id="light.test")
+    assert [call["method"] for call in state.calls].count("tools/list") == 1
+    assert not [call for call in state.calls if call["method"] == "tools/call"]
+
+
+def test_catalog_lock_wait_uses_original_deadline(monkeypatch):
+    import eva.adapters.connectors.home_assistant_mcp as mcp
+    clock = [100.0]
+    monkeypatch.setattr(mcp.time, "monotonic", lambda: clock[0])
+    class Lock:
+        def acquire(self, *, timeout):
+            assert timeout == 5
+            clock[0] += 6
+            return True
+        def release(self):pass
+    client = mcp.HomeAssistantAssistClient(base_url="http://unused.test", token="test")
+    client._lock = Lock()
+    monkeypatch.setattr(client, "_post", lambda *a, **kw:pytest.fail("late discovery"))
+    with pytest.raises(mcp.HomeAssistantMcpError, match="timed out"):
+        client.catalog(timeout=5)

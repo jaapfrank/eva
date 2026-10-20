@@ -4523,7 +4523,6 @@ class PydanticConversationModel:
             "maar niet als huidige voorkeur. Een korte bevestiging van jouw "
             "direct voorafgaande voorstel is een uitvoeringsverzoek. Vraag alleen door "
             "wanneer meerdere doelen openblijven. Verzin geen fysieke feiten. "
-            f"{action_guidance} "
             "Berichten met dezelfde beurtcode horen bij dezelfde oorspronkelijke vraag. "
             "Antwoorden kunnen later dan een tussenvraag verschijnen; koppel ze niet "
             "automatisch aan het direct voorafgaande bericht. "
@@ -4553,6 +4552,7 @@ class PydanticConversationModel:
             "Een lagere, toepasselijke expliciete woordlimiet van deze persoon gaat "
             "voor deze algemene bovengrens. Houd ook expliciete opmaakverboden aan; "
             "controleer lengte en opmaak voordat je antwoordt."
+            f"\n\n{action_guidance}"
             f"{spoken_contract}"
         )
 

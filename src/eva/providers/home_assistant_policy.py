@@ -18,8 +18,20 @@ LOCAL_SOURCE_GUIDANCE = 'For questions about this household or its local environ
 API_SOURCE_GUIDANCE = 'For current states of multiple discovered entities, prefer one bounded POST /api/template with body_json containing a template, instead of a separate model/tool round trip per entity. Render explicit JSON records with entity_id, state and all attributes needed for the requested action or restoration; do not serialize HA State objects directly. Template collections returned by state_attr may be sets: convert collections to lists before embedding them in JSON, including group member IDs, and materialize map/select results with |list. Use ordinary JSON scalars, lists and dictionaries only. Include every requested entity, retain unknown/unavailable states, and check completeness, pagination and truncation. A grouped read can verify each target. Make a fresh read after every mutation phase; an earlier snapshot or service acknowledgement is not post-action proof.'
 
 
+DIRECT_EFFECT_GUIDANCE = ('For ordinary light/switch on or off, choose the offered '
+    'set_home_assistant_light or set_home_assistant_switch directly with the requested name or exact entity ID. '
+    'Those tools already resolve current targets, check ambiguity and permission, execute via the module, '
+    'and independently read the resulting state. Their internal discovery fulfills source discovery: '
+    'do not precede them with a separate inventory, state or service lookup merely to resolve that target. '
+    'A verified state proof needs no second status lookup unless new evidence contradicts it. '
+    'An ambiguous name remains a clarification; do not choose another matching lamp. '
+    'Use the general API for operations beyond these offered effects, within its existing authority.')
+
+
 def conversation_instructions(turn, available_names):
     instructions = (LOCAL_SOURCE_GUIDANCE,) if READ_ACTIONS.intersection(available_names) else ()
+    if {"set_home_assistant_light", "set_home_assistant_switch"}.intersection(available_names):
+        instructions += (DIRECT_EFFECT_GUIDANCE,)
     if "home_assistant_request" in available_names:
         instructions += (API_SOURCE_GUIDANCE,)
     return instructions
