@@ -1,9 +1,9 @@
 {
   "contract": "EvaModelChosenContinuation/v1",
   "taskId": "E1.4",
-  "checkedAt": "2026-10-20T14:30:51.603771+00:00",
-  "state": "installed_observing_ordinary_followup",
-  "technicalTaskCompleted": false,
+  "checkedAt": "2026-10-20T15:25:11.654850+00:00",
+  "state": "installed_technical_task_completed",
+  "technicalTaskCompleted": true,
   "ownerAcceptance": false,
   "changes": [
     "Expose exact prior intent identities in existing private initiative context.",
@@ -38,10 +38,10 @@
     "voiceChanged": false
   },
   "runtimeEvidence": {
-    "observedThrough": "2026-10-20T14:14:07+00:00",
-    "newFollowupSelected": false,
-    "newFollowupCompleted": false,
-    "laterResultUsed": false,
+    "observedThrough": "2026-10-20T15:23:56.103797+00:00",
+    "newFollowupSelected": true,
+    "newFollowupCompleted": true,
+    "laterResultUsed": true,
     "note": "Normal idle lane has five-minute idle interval; no manually selected topic or synthetic calendar advancement.",
     "v5Review": {
       "decidedAt": "2026-10-20T13:57:16+00:00",
@@ -109,6 +109,55 @@
       "measurement": "partial",
       "creditCost": null,
       "diagnostic": "Old retained failed research receipt was returned; no verified research document; substantive meaning still unknown."
+    },
+    "seventhAttempt": {
+      "state": "succeeded",
+      "completedAt": "2026-10-20T15:11:10Z",
+      "resultSha256": "c599df2c840759f71688ed6e1cdbdc13b4a3687ee8e9a5a4b9ca61379560683e",
+      "outputSha256": "550346002c0a664570036fdc7b0f2f4a9b553377d1d0673579d116c68eade32f",
+      "completionEventSha256": "072e486d3c7add836ea70c6dc5229e349a5f2df7f7679e58cf75dec7e743e725",
+      "nativeParentState": "initiative_completed",
+      "usage": {
+        "contract": "DelegatedWorkUsage/v1",
+        "tool_calls": 1,
+        "measurement": "partial",
+        "input_tokens": 46639,
+        "total_tokens": 47791,
+        "output_tokens": 1152,
+        "schema_version": 1,
+        "cost_usd_micros": null,
+        "completed_model_responses": 3
+      },
+      "creditCost": null,
+      "operatorRecoveryAssistance": true,
+      "topicChosenByOperator": false,
+      "scope": "Primary public research only; no local device state or unverified semantic certainty claimed."
+    },
+    "selectedBeforeRepairs": true,
+    "laterOrdinaryUse": {
+      "sourceObservedAt": "2026-10-20T15:21:26+00:00",
+      "usedAt": "2026-10-20T15:21:42+00:00",
+      "sourceEventSha256": "b86ad872ab1d7d41eecea3b8d4260d6a891889feef5faf18be0a54a4ebf495c3",
+      "decisionEventSha256": "acac3ae89725a8cb6d787cf602ff5e2d548f42fd7ecd43055a1c1dd3f652030e",
+      "sourceContextSha256": "be9939f8e477ae44fe5e888b558a02ab05288607ae4adda47c3e8ff8ee190ae8",
+      "sourceResultSha256": "c599df2c840759f71688ed6e1cdbdc13b4a3687ee8e9a5a4b9ca61379560683e",
+      "application": "Substantive qualification of earlier interpretation using new result; no repeated investigation or invented extra project.",
+      "delivery": {
+        "channel": "telegram",
+        "deliveredAt": "2026-10-20T15:21:42+00:00",
+        "eventSha256": "28304caa3ad4f4d8e3d8490b57fdbe6d2371d8f18c82b45429d2564e1888e22e",
+        "recipientReceiptRetainedPrivately": true,
+        "ownerReadOrAccepted": false
+      },
+      "usage": {
+        "measurement": "measured",
+        "modelResponses": 1,
+        "inputTokens": 16083,
+        "outputTokens": 215,
+        "toolCalls": 1,
+        "creditCost": null
+      },
+      "manualReviewTrigger": false
     }
   },
   "usage": {
@@ -122,12 +171,21 @@
       "outputTokens": 279,
       "totalTokens": 30563,
       "toolCalls": 2
+    },
+    "registeredRuntimeAcrossListedStages": {
+      "inputTokens": 174576,
+      "outputTokens": 3135,
+      "totalTokens": 177711,
+      "modelResponses": 14,
+      "measurement": "mixed_measured_and_partial_not_account_total",
+      "includes": "Two ordinary orientation decisions, retained generations2–7 and later ordinary result use; original earlier task/any unrelated runtime not included.",
+      "creditCost": null
     }
   },
   "limits": [
-    "Synthetic checks prove contract transfer, not actual later model use.",
-    "E1.4 remains in progress until its unchanged criterion is met.",
-    "Family utility and acceptance remain separate."
+    "Technical E1.4 criterion met in one genuine cross-day chain; no guarantee of indefinite repeatability.",
+    "Several operator repairs/resumes were required; no autonomous repair or efficiency advantage claimed.",
+    "Family utility, owner acceptance and full project completion remain separate."
   ],
   "contextTransferRepair": {
     "diagnosis": "Actual review cited missing personal context without using the existing optional focused memory search. A current read-only recall inspection selected old synthetic/legacy context, not daily family life.",
@@ -169,7 +227,7 @@
       "review": "development/reviews/e14-model-chosen-continuation-review-20261020.json"
     }
   },
-  "remaining": "Seventh generation follows exact certified old refusal as context, prepares fresh step under current profile; actual completion and later use still required.",
+  "remaining": "No remaining technical E1.4 step. Ongoing family utility/acceptance remain F2; complete project goal stays active.",
   "certifiedTechnicalRecovery": {
     "status": "installed_original_self_chosen_followup_running",
     "operatorAssistance": true,
@@ -322,7 +380,7 @@
     }
   },
   "researchMandateHandoff": {
-    "state": "installed_same_own_followup_running",
+    "state": "installed_original_followup_completed",
     "cause": "Historical operation was refused by native guard before provider execution: current background configuration41dea3f0 differs from old policy00a106aa. Foreground and background hash differ because fingerprint contains context-specific timeout.",
     "exactHistoricalRefusalCertificate": "f9707883bf69747df06f1b42fd24fdf4d07e16b87f103108f7e054a75f3256b1",
     "changes": [
@@ -358,5 +416,7 @@
       "ownerRequestSha256": "3662635393023af182c4e70fe499a81d17267a032199209f600a644076445d3f",
       "operatorModelCalls": 0
     }
-  }
+  },
+  "completedAt": "2026-10-20T15:21:42+00:00",
+  "finalIndependentReview": "development/reviews/e14-cross-day-final-completion-review-20261020.json"
 }

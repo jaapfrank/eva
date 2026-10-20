@@ -1,0 +1,138 @@
+{
+  "contract": "EvaE14IndependentFrozenCriterionReview/v1",
+  "reviewer": "e47_mcp_catalog",
+  "reviewedAt": "2026-10-20T15:23:56.103797+00:00",
+  "decision": "GO",
+  "blockingFindings": [],
+  "scope": "Technical E1.4 frozen criterion only; not full project completion, broad superiority or family acceptance.",
+  "frozenCriterion": "De bestaande gewone afweging houdt een echte zelfgekozen verantwoordelijkheid of interesse met voortgang, volgende relevante aanleiding en resultaatbinding vast over ten minste twee echte kalenderdagen, ook na een nieuw gesprek of legitieme proceshervatting. Zij kiest passend vervolg of een onderbouwde pauze, voert nodig toegelaten werk via dezelfde uitvoerder af en gebruikt de latere uitkomst bij een volgende afweging. Geen door Codex gekozen proefonderwerp, nieuwe goalstore, verplichte berichtenquota of extra oordeelmodel per beurt. Dagelijks nut en eigenaaracceptatie blijven de bestaande F2-beoordeling.",
+  "criteriaAssessment": [
+    {
+      "criterion": "Existing self-chosen responsibility/interest persists across at least two actual calendar days",
+      "result": "PASS",
+      "evidence": "19Oct independently chosen completed RaspberryPi signal-history study;20Oct09:43 independent own-opportunity choice explicitly identifies new question based on earlier durations and persistent interest in reliable household interpretation.",
+      "caveat": "18→19 exact result use is not claimed. Original20Oct adoption predates typed parent fields, so no retroactive cryptographic parent pointer is invented."
+    },
+    {
+      "criterion": "Progress, relevant next occasion and retained result binding survive new evaluation/legitimate process recovery",
+      "result": "PASS_WITH_RECORDED_TECHNICAL_ASSISTANCE",
+      "evidence": "Original own-interest ID/task/source/execution/grant preserved through deterministic retained generations. Actualgen7 completes under current owner-admitted one-field research profile revision; old failures and usage retained.",
+      "caveat": "Several operator repairs/resumes were needed. This is not evidence of autonomous self-repair or zero human help."
+    },
+    {
+      "criterion": "Necessary authorized work is executed and checked by the same worker route",
+      "result": "PASS",
+      "evidence": "Gen7 succeeded15:11:10 with actual native researchslot1 executed15:10:52 and stateverified15:10:53, matching result/output/spec/nativecompletion hashes.",
+      "caveat": "Exact HA measurement condition remained unestablished by chosen documentation. Original task explicitly allowed a concrete evidence limitation. Semantic external fact verification remainsFalse."
+    },
+    {
+      "criterion": "Later ordinary evaluation actually uses the completed result",
+      "result": "PASS",
+      "evidence": "Normal completion-bound review scheduled15:21:26 after genuine foreground quiet period. Same configured model prepared15:21:42 a substantive nuance: earlier signal counts cannot automatically mean separate new undervoltage episodes; exact measurement condition remains unknown. It explicitly avoids repeating research or house read and chooses no artificial extra project.",
+      "caveat": "This is one real episode, not a guarantee of indefinite repeatability."
+    },
+    {
+      "criterion": "No Codex chosen trial topic/new store/message quota/extra per-turn judge",
+      "result": "PASS",
+      "evidence": "Topic andfollowupchosen09:43 before implementation fixes. Laterreviewcamefromexistingquiet/result-bound scheduler without manual paidreview; same existing model1attempt. No source/board edits or modelcalls by independentreviewer."
+    },
+    {
+      "criterion": "Correction, withdrawal, stop, unavailable source and no repeated uncertain action retained",
+      "result": "PASS_WITH_EXISTING_TARGETED_CODE_REVIEW",
+      "evidence": "Reviewed host guards, old ambiguous record preservation, exact finite refusal migration and current policy admission remained in use; actual newresearchslot dispatched once. Earlier uncertain rows not rewritten or blindly rerun.",
+      "caveat": "This recorded episode does not itself physically exercise every stop/erasure boundary; those retain applicable source review/regression evidence."
+    }
+  ],
+  "sourceChain": [
+    {
+      "stage": "priorCompletedOwnStudy",
+      "at": "2026-10-19T08:01:55+00:00",
+      "eventSha256": "e337a4be5018491b97905726d3b1dc1488d159c10a7e573be16a0fe1415215fb",
+      "resultSha256": "37f35815c6a403fc2d9dd6f9e31e9ae21b2217a03a06eac146ed7a31f811c5f9",
+      "contentSha256": "c83785d47877e8f47a06f1673b467d85564bcecff4008ad6ee43294965645fb5"
+    },
+    {
+      "stage": "selfChosenNextQuestion",
+      "at": "2026-10-20T09:43:01+00:00",
+      "adoptionEventSha256": "4efaae83ee6f9189d09e99738ee424900d8a4ddc2ca148d4afabd3dcd5a09d15",
+      "originalDecisionSha256": "ba3451d26a143f349901a374d0f322104e39c351f2cb51a18b46e4b2210ca336",
+      "originalObservedSourceSha256": "44ae7e5220cf08f4c7bc79fa52c20986043f722afd328da6a10ff84b7414b920"
+    },
+    {
+      "stage": "actualCompletedContinuation",
+      "at": "2026-10-20 15:11:10+00:00",
+      "specSha256": "0d66aa9b6beefa51fa15a660694f92e86d7c1c5216919ae9056de7e909edca70",
+      "resultSha256": "c599df2c840759f71688ed6e1cdbdc13b4a3687ee8e9a5a4b9ca61379560683e",
+      "contentSha256": "550346002c0a664570036fdc7b0f2f4a9b553377d1d0673579d116c68eade32f",
+      "completionEventSha256": "072e486d3c7add836ea70c6dc5229e349a5f2df7f7679e58cf75dec7e743e725"
+    },
+    {
+      "stage": "ordinaryBoundResultReview",
+      "at": "2026-10-20 15:21:26+00:00",
+      "sourceEventSha256": "b86ad872ab1d7d41eecea3b8d4260d6a891889feef5faf18be0a54a4ebf495c3",
+      "nativeCompletionSource": {
+        "spec_sha256": "0d66aa9b6beefa51fa15a660694f92e86d7c1c5216919ae9056de7e909edca70",
+        "result_sha256": "c599df2c840759f71688ed6e1cdbdc13b4a3687ee8e9a5a4b9ca61379560683e"
+      },
+      "deterministicResultBindingThreadVerified": true
+    },
+    {
+      "stage": "laterSemanticUse",
+      "at": "2026-10-20 15:21:42+00:00",
+      "eventSha256": "acac3ae89725a8cb6d787cf602ff5e2d548f42fd7ecd43055a1c1dd3f652030e",
+      "retainedSourceContextSha256": "be9939f8e477ae44fe5e888b558a02ab05288607ae4adda47c3e8ff8ee190ae8",
+      "sourceContextHashNote": "Retained host-bound context digest; full original model input not separately reconstructed by reviewer.",
+      "applicationSummary": "The later ordinary decision uses the completed result to qualify an earlier interpretation, retains the unresolved measurement condition, avoids inferring local cause and does not repeat the investigation."
+    },
+    {
+      "stage": "actualPrivateDelivery",
+      "at": "2026-10-20 15:21:42+00:00",
+      "eventSha256": "28304caa3ad4f4d8e3d8490b57fdbe6d2371d8f18c82b45429d2564e1888e22e",
+      "channel": "telegram",
+      "providerReceiptStoredPrivately": true,
+      "receiptNote": "Provider delivery receipt proves sending, not owner reading, usefulness or acceptance."
+    }
+  ],
+  "measuredUsage": {
+    "successfulGen7": {
+      "contract": "DelegatedWorkUsage/v1",
+      "tool_calls": 1,
+      "measurement": "partial",
+      "input_tokens": 46639,
+      "total_tokens": 47791,
+      "output_tokens": 1152,
+      "schema_version": 1,
+      "cost_usd_micros": null,
+      "completed_model_responses": 3
+    },
+    "laterOrdinaryReview": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 16083,
+      "output_tokens": 215,
+      "model_attempts": 1
+    },
+    "tokensForTheseTwoStages": 64089,
+    "earlierFailedAttempts": "Retained separately; not zeroed or excluded from final project cost discussion.",
+    "creditCost": "unknown",
+    "developmentUsage": "not measured by this runtime evidence"
+  },
+  "artifacts": {
+    "independent-original-source-event.private.json": "0e3b683b7ea1ad42db9775f3d71fcf01c023e9a9f58c9aa32f6e4b2279f77e0d",
+    "independent-three-day-choice-sources.private.json": "1d2d5412abe4f70389ed35bf090635d929e9add0d779cfab129f14d2b7ac46cd",
+    "observed-recovery-11.private.json": "eac9429230fba6487a30af1fbb248fe0d552d3061b1ad7e93fe5ed8ae3f27436",
+    "goals-after-completion.private.json": "a3b937f7584eeac0d26f4bf0e30b4e80e8c3c7860fc7bb41b0772e04cac3bead",
+    "independent-gen7-research-step.private.json": "9197196023d4f9f06c80998d632f8216844c98f15755021ea462cdb3780517ce",
+    "independent-gen7-ordinary-later-use.private.json": "dcd83b000544029b263677c053e72b20cb46c3db49da572279727afd66e54303",
+    "independent-idle-delay-cause.private.json": "f0cbc3a8880571471828f565e9b5346480fcf23f535dcf70b1b7e9785c4079b8"
+  },
+  "explicitNonClaims": [
+    "Daily household benefit and family F2acceptance remain separate and open unless independently recorded elsewhere.",
+    "No claim Eva is the best/smartest competitor or full project is finished.",
+    "No claim all these repairs were autonomous or efficient: operator help and recorded high token use remain material limitations.",
+    "No requirement for another arbitrary topic/day/probe added; frozen criterion applied to the actual existing chain."
+  ],
+  "reviewerActions": "Read retained artifacts and exact original/later event threads in explicit read-only DB transactions; verified payload/spec/result/output hashes and source control flow. No source/board/policy edits, deployment, provider/model calls or manual review trigger.",
+  "privateReviewSha256": "5586515a34d2854c29109ec6873b7b7ebefb5004dccdc663ee856819f18fccfb",
+  "privateContentPublication": "Raw family context, generated private message text and provider recipient receipt remain private; exact underlying evidence retained."
+}
