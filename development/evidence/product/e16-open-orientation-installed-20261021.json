@@ -2,7 +2,7 @@
   "contract": "EvaE16OpenOrientationInstalled/v1",
   "task": "E1.6",
   "checkedAt": "2026-10-21T08:52:18.838436+00:00",
-  "status": "installed_actual_model_selection_still_pending",
+  "status": "installed_actual_private_search_but_no_source_choice",
   "existing": "Original source-bound attention, source validation/history and ordinary private review remain in use.",
   "causes": [
     "Private broad recall automatically split into generic word anchors; max fusion compared uncalibrated scores and promoted old technical restrictions.",
@@ -58,7 +58,25 @@
     "distinctTargetedCases": 65,
     "modelRequests": 0
   },
-  "actualOrdinaryDecision": null,
+  "actualOrdinaryDecision": {
+    "decidedAt": "2026-10-21 08:58:22+00:00",
+    "ordinaryScheduler": true,
+    "operatorTriggered": false,
+    "decisionSha256": "5e4e5d5a582ffd3df0ef17ad52c5c1ec4aedd58a7b17064ec183cc86b151c388",
+    "disposition": "silence",
+    "initiative": null,
+    "nextAttention": null,
+    "semanticResult": "Model independently searched private memory, found only historical technical tasks, and chose no new work/source attention. This does not complete E1.6.",
+    "usage": {
+      "tool_calls": 2,
+      "measurement": "measured",
+      "input_tokens": 29803,
+      "output_tokens": 182,
+      "model_attempts": 2
+    },
+    "registeredTokens": 29985,
+    "creditCost": null
+  },
   "completion": {
     "originalCriteriaUnchanged": true,
     "taskCompleted": false,
@@ -70,7 +88,8 @@
     "developmentCreditCost": null,
     "runtimeCreditCost": null,
     "extraOperatorModelRequests": 0,
-    "ordinaryRuntimeTokensAfterInstall": null
+    "ordinaryRuntimeTokensAfterInstall": 29985
   },
-  "remaining": "Actual autonomous useful source choice and real source-change causal follow-up still need observation. Installed correction alone does not complete E1.6."
+  "remaining": "Actual autonomous useful source choice and real source-change causal follow-up still need observation. Installed correction alone does not complete E1.6.",
+  "nextCausalFinding": "Four genuine recent private day sources exist but do not reach initiative before dream consolidation. Current authorized owner day-source projection is being connected."
 }

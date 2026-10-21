@@ -268,6 +268,7 @@ class FreeWillModelPort(Protocol):
         initiative_capabilities: tuple[str, ...] = (),
         initiative_source_outcomes: tuple[dict, ...] = (),
         private_context_search: Callable[[str], dict] | None = None,
+        private_day_context: dict | None = None,
     ) -> FreeWillDecision: ...
 
 
@@ -303,6 +304,8 @@ class SensoryDecisionWorker:
         household_context=None,
         dispatch_ready: Callable[[], bool] | None = None,
         source_outcome_reader: Callable[..., tuple[dict, ...]] | None = None,
+        private_day_context_reader: Callable[..., dict] | None = None,
+        private_day_context_revalidator: Callable[..., bool] | None = None,
     ) -> None:
         self._store = store
         self._model = model
@@ -324,6 +327,10 @@ class SensoryDecisionWorker:
         self._household_context = household_context
         self._dispatch_ready = dispatch_ready
         self._source_outcome_reader = source_outcome_reader
+        if (private_day_context_reader is None) != (private_day_context_revalidator is None):
+            raise ValueError("private day context requires its current source revalidator")
+        self._private_day_context_reader = private_day_context_reader
+        self._private_day_context_revalidator = private_day_context_revalidator
         self._prefer_revalidation = False
 
     def _current_time(self, previous: datetime) -> datetime:
@@ -456,12 +463,13 @@ class SensoryDecisionWorker:
                     },
                     subject_ids=(memory_principal,),
                     query_text=(
-                        "Persoonlijke plannen, dagelijkse behoeften, interesses en voorkeuren "
-                        "voor een nuttige eigen bijdrage. "
-                        + (_private_review_recall_context(event) if event.source == "initiative-review" else
-                           "Context bij deze waarneming: "
-                           f"{event.source} {event.event_type} "
-                           f"{event.payload.get('entity_id', '')} {state_description}")
+                        ("Wie zijn de mensen in dit gezin, wat houdt hen bezig en welke persoonlijke "
+                         "interesses, gewoonten en langlopende doelen zijn bekend? "
+                         + _private_review_recall_context(event)) if event.source == "initiative-review" else
+                        ("Persoonlijke plannen, dagelijkse behoeften, interesses en voorkeuren "
+                         "voor een nuttige eigen bijdrage. Context bij deze waarneming: "
+                         f"{event.source} {event.event_type} "
+                         f"{event.payload.get('entity_id', '')} {state_description}")
                     ),
                     maximum_facts=8,
                 )
@@ -566,6 +574,19 @@ class SensoryDecisionWorker:
                     search_context = _bounded_private_memory_search_context(expanded, query_text)
                     return deepcopy(search_context)
 
+            day_context = None
+            if (context_review and not household_review and event.source == "initiative-review"
+                    and self._private_day_context_reader is not None):
+                day_context = self._private_day_context_reader(now=self._current_time(now))
+                self._context_review_authorizer()
+                if callable(cancel_attention) and cancel_attention(claim, now=self._current_time(now)):
+                    return "cancelled"
+                if not self._store.context_review_claim_is_current(claim, now=self._current_time(now)):
+                    raise RuntimeError("private day context claim expired before dispatch")
+                if self._dispatch_ready is not None and not self._dispatch_ready():
+                    self._store.defer_before_dispatch(claim, reason="foreground_active",
+                        now=self._current_time(now))
+                    return "deferred"
             model_entered = True  # All later failures remain potentially dispatched.
             decision = self._model.evaluate_sensory_event(
                 event,
@@ -577,6 +598,7 @@ class SensoryDecisionWorker:
                 **({"initiative_capabilities": capabilities} if callable(capability_reader) else {}),
                 **({"initiative_source_outcomes": source_outcomes} if source_outcomes else {}),
                 **({"private_context_search": private_context_search} if private_context_search is not None else {}),
+                **({"private_day_context": deepcopy(day_context)} if day_context is not None else {}),
             )
             # Only actual host lookup output can be committed, never model-supplied metadata.
             if search_context is not None:
@@ -589,7 +611,29 @@ class SensoryDecisionWorker:
                         error.validation_failure_stage = "sensory_decision"
                         error.validation_failure_code = "private_context_changed_before_commit"
                     raise
-            decision = replace(decision, memory_search_context=deepcopy(search_context))
+            recorded_context = deepcopy(search_context)
+            if day_context is not None and day_context.get("available") is True:
+                from eva.contracts.canonical_json import canonical_sha256
+                try:
+                    self._context_review_authorizer()
+                    if ((callable(cancel_attention) and cancel_attention(claim, now=self._current_time(now)))
+                            or not self._store.context_review_claim_is_current(claim, now=self._current_time(now))
+                            or not self._private_day_context_revalidator(deepcopy(day_context), now=self._current_time(now))):
+                        raise RuntimeError("private day source changed before commit")
+                except Exception as error:
+                    if isinstance(decision.usage, ConversationModelUsage):
+                        error.model_usage = decision.usage
+                        error.validation_failure_stage = "sensory_decision"
+                        error.validation_failure_code = "private_day_context_changed_before_commit"
+                    raise
+                recorded_context = recorded_context or {"is_execution_permission": False}
+                recorded_context["private_day_context"] = {
+                    "context_sha256": canonical_sha256(day_context),
+                    "as_of": day_context["as_of"], "source_count": len(day_context["sources"]),
+                    "sources_sha256": canonical_sha256([{key: value for key, value in item.items()
+                        if key not in {"text", "truncated", "retention_state"}} for item in day_context["sources"]]),
+                    "is_execution_permission": False}
+            decision = replace(decision, memory_search_context=recorded_context)
             if source_outcomes:
                 from eva.contracts.canonical_json import canonical_sha256
                 decision = replace(decision, source_context_sha256=canonical_sha256(list(source_outcomes)))

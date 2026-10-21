@@ -88,3 +88,54 @@ def _exchange_content(runtime, doc, *, before=None, before_exclusive=False):
     label = ("\nEerdere reactie van Eva (modeluitvoer, geen geverifieerd feit; "
              "niet bewezen gelezen of gehoord): ")
     return user + label + _fragment(reply.text, 1800-len(user)-len(label))
+
+
+def private_initiative_day_context(runtime, *, now):
+    """Reuse current authorized day sources before dream consolidation, no retain."""
+    from hashlib import sha256
+    from eva.contracts.canonical_json import canonical_json_bytes
+    try:
+        found = runtime._owner_memory_sources().recent_private_exchanges(now=now, limit=3)
+        sources = []
+        for doc, state in found:
+            raw = doc.content.encode("utf-8")
+            fragment = raw[:512].decode("utf-8", errors="ignore")
+            item = {"document_id": doc.document_id, "principal_id": doc.principal_id,
+                "source_ref": doc.source_ref, "evidence_ref": doc.evidence_ref,
+                "occurred_at": doc.occurred_at, "content_sha256": sha256(raw).hexdigest(),
+                "text": fragment, "truncated": len(fragment.encode("utf-8")) < len(raw),
+                "retention_state": state}
+            sources.append(item)
+        view = {"contract": "EvaPrivateDayContext/v1", "available": True,
+            "as_of": now.strftime("%Y-%m-%dT%H:%M:%SZ"), "sources": sources,
+            "coverage": "at_most_3_current_authorized_private_exchanges_in_last_24h_not_all_family_knowledge",
+            "classification": "retained_exchange_not_new_request_or_verified_world_fact",
+            "is_execution_permission": False, "truncated": False}
+        while len(canonical_json_bytes(view)) > 4096:
+            sources.pop()
+            view["truncated"] = True
+        return view
+    except Exception:
+        return {"contract": "EvaPrivateDayContext/v1", "available": False,
+            "reason": "current_private_day_context_unavailable", "is_execution_permission": False}
+
+
+def private_initiative_day_context_current(runtime, context, *, now):
+    """Recheck the exact selected source, including erasure; new messages may arrive."""
+    from hashlib import sha256
+    try:
+        reader = runtime._owner_memory_sources()
+        for item in context["sources"]:
+            found = reader.document_reference(item["principal_id"], item["source_ref"],
+                item["evidence_ref"], now=now, recent_private_exchange=True)
+            if found is None:
+                return False
+            _identifier, doc, state = found
+            if (doc.document_id != item["document_id"] or doc.occurred_at != item["occurred_at"]
+                    or doc.retention_mode != "dream" or doc.trust != "direct_user"
+                    or doc.project_id is not None or state == "not_selected"
+                    or sha256(doc.content.encode("utf-8")).hexdigest() != item["content_sha256"]):
+                return False
+        return True
+    except Exception:
+        return False

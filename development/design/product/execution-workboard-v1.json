@@ -847,8 +847,8 @@
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Volg de gewone autonome afweging en haar eventueel gekozen bronvervolg; geen geforceerd onderwerp.",
-    "checkedAt": "2026-10-21T08:52:18.838436+00:00",
+    "nextAction": "Volg de gewone v11-afweging en haar daadwerkelijk gekozen vervolg; geen ongegronde herhaalproef.",
+    "checkedAt": "2026-10-21T09:26:38.499837+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1632,9 +1632,21 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E1.6 · Dag- en persoonscontext aangesloten op eigen initiatief",
+            "state": "installed",
+            "summary": "Recente privé-dagcontext is werkelijk gebruikt. De te taakgerichte geheugenvraag is daarnaast persoonsgericht gemaakt; de nieuwe echte afweging volgt nog.",
+            "remaining": "De inhoudelijke bronkeuze ontbreekt nog. Werkelijke bronverandering→vervolg blijft onbewezen. Twee onderzochte privéafwegingen samen44.937 runtime-tokens; credits onbekend.",
+            "source": "development/evidence/product/e16-private-day-context-installed-20261021.json",
+            "review": "development/reviews/e16-private-day-context-review-20261021.json",
+            "checkedAt": "2026-10-21T09:12:36.445972+00:00",
+            "installedAt": "2026-10-21T09:12:36.445972+00:00",
+            "completedTaskIds": [],
+            "newProductFunctionCompleted": false
+          },
+          {
             "title": "E1.6 · Contextselectie en open oriëntatie gecorrigeerd",
             "state": "installed",
-            "summary": "Dezelfde private route gebruikt de volledige geheugenvraag en onderscheidt historische projecten van werkelijk gekozen vervolg.",
+            "summary": "Contextselectie geïnstalleerd. Echte afweging deed een gerichte geheugenzoeking, maar koos nog geen vervolg; 29.985 runtime-tokens, creditkosten onbekend. De ontbrekende privé-dagcontextoverdracht wordt nu hersteld.",
             "remaining": "Echte autonome bronkeuze en passende afweging op bronverandering blijven open.",
             "source": "development/evidence/product/e16-open-orientation-installed-20261021.json",
             "review": "development/reviews/e16-open-orientation-review-20261021.json",
@@ -2984,10 +2996,10 @@
           "status": "in_progress",
           "state": "in_progress",
           "summary": "Bestaande relevante bronveranderingen verbinden met eigen aandacht en passend vervolg.",
-          "detail": "Geïnstalleerd: verkeerde woordankerselectie in privégeheugen en verwarring tussen historische projecten en actueel gekozen vervolg gecorrigeerd. 65 gerichte controles en onafhankelijke review geslaagd. Echte autonome bronkeuze wordt nu via de gewone route gevolgd; oorspronkelijke eindvoorwaarde blijft open.",
+          "detail": "Dagcontext is in de echte afweging gebruikt, maar keuze bleef stilte. Nu ook persoonsgerichte bronvraag geïnstalleerd: zij haalt andere historische gezins-/interessecontext op in plaats van alleen een oude ontwikkeluitnodiging. Geen actuele wens of succes verondersteld; één nieuwe gewone afweging wordt gevolgd.",
           "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-          "checkedAt": "2026-10-21T08:52:18.838436+00:00",
-          "nextAction": "Volg de gewone autonome afweging en haar eventueel gekozen bronvervolg; geen geforceerd onderwerp."
+          "checkedAt": "2026-10-21T09:26:38.499837+00:00",
+          "nextAction": "Volg de gewone v11-afweging en haar daadwerkelijk gekozen vervolg; geen ongegronde herhaalproef."
         },
         "next": {
           "taskId": "F2.1",
@@ -2999,7 +3011,7 @@
           "detail": "Geen handeling nodig. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-21T08:52:18.838436+00:00",
+        "checkedAt": "2026-10-21T09:26:38.499837+00:00",
         "reviewedAt": "2026-10-21T08:34:18.091941+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -5757,14 +5769,19 @@
                   "src/eva/adapters/postgres/initiative_attention.py",
                   "src/eva/providers/mcp_discovery.py",
                   "src/eva/providers/mcp_registration.py",
-                  "src/eva/bootstrap/household_initiative.py"
+                  "src/eva/bootstrap/household_initiative.py",
+                  "src/eva/application/free_will.py",
+                  "src/eva/bootstrap/private_continuity.py",
+                  "src/eva/adapters/postgres/people_memory_overview.py",
+                  "src/eva/adapters/model/pydantic_conversation.py",
+                  "src/eva/bootstrap/runtime.py"
                 ],
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Volg de gewone autonome afweging en haar eventueel gekozen bronvervolg; geen geforceerd onderwerp.",
-                "checkedAt": "2026-10-21T08:52:18.838436+00:00",
-                "progress": "Geïnstalleerd: verkeerde woordankerselectie in privégeheugen en verwarring tussen historische projecten en actueel gekozen vervolg gecorrigeerd. 65 gerichte controles en onafhankelijke review geslaagd. Echte autonome bronkeuze wordt nu via de gewone route gevolgd; oorspronkelijke eindvoorwaarde blijft open.",
+                "nextAction": "Volg de gewone v11-afweging en haar daadwerkelijk gekozen vervolg; geen ongegronde herhaalproef.",
+                "checkedAt": "2026-10-21T09:26:38.499837+00:00",
+                "progress": "Dagcontext is in de echte afweging gebruikt, maar keuze bleef stilte. Nu ook persoonsgerichte bronvraag geïnstalleerd: zij haalt andere historische gezins-/interessecontext op in plaats van alleen een oude ontwikkeluitnodiging. Geen actuele wens of succes verondersteld; één nieuwe gewone afweging wordt gevolgd.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
                   "development/reviews/e16-source-attention-review-20261020.json",
@@ -5776,10 +5793,12 @@
                   "development/evidence/product/e16-capability-context-boundary-installed-20261020.json",
                   "development/reviews/e16-capability-context-boundary-review-20261020.json",
                   "development/evidence/product/e16-open-orientation-installed-20261021.json",
-                  "development/reviews/e16-open-orientation-review-20261021.json"
+                  "development/reviews/e16-open-orientation-review-20261021.json",
+                  "development/evidence/product/e16-private-day-context-installed-20261021.json",
+                  "development/reviews/e16-private-day-context-review-20261021.json"
                 ],
                 "installedAt": "2026-10-20T16:11:46.841997+00:00",
-                "lastInstalledAt": "2026-10-21T08:52:18.838436+00:00"
+                "lastInstalledAt": "2026-10-21T09:26:38.499837+00:00"
               },
               {
                 "id": "E1.7",
@@ -8311,7 +8330,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Volg de gewone autonome afweging en haar eventueel gekozen bronvervolg; geen geforceerd onderwerp.",
+        "nextAction": "Volg de gewone v11-afweging en haar daadwerkelijk gekozen vervolg; geen ongegronde herhaalproef.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -8588,7 +8607,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-21T08:52:18.838436+00:00",
+        "checkedAt": "2026-10-21T09:26:38.499837+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -11262,14 +11281,19 @@
                 "src/eva/adapters/postgres/initiative_attention.py",
                 "src/eva/providers/mcp_discovery.py",
                 "src/eva/providers/mcp_registration.py",
-                "src/eva/bootstrap/household_initiative.py"
+                "src/eva/bootstrap/household_initiative.py",
+                "src/eva/application/free_will.py",
+                "src/eva/bootstrap/private_continuity.py",
+                "src/eva/adapters/postgres/people_memory_overview.py",
+                "src/eva/adapters/model/pydantic_conversation.py",
+                "src/eva/bootstrap/runtime.py"
               ],
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Volg de gewone autonome afweging en haar eventueel gekozen bronvervolg; geen geforceerd onderwerp.",
-              "checkedAt": "2026-10-21T08:52:18.838436+00:00",
-              "progress": "Geïnstalleerd: verkeerde woordankerselectie in privégeheugen en verwarring tussen historische projecten en actueel gekozen vervolg gecorrigeerd. 65 gerichte controles en onafhankelijke review geslaagd. Echte autonome bronkeuze wordt nu via de gewone route gevolgd; oorspronkelijke eindvoorwaarde blijft open.",
+              "nextAction": "Volg de gewone v11-afweging en haar daadwerkelijk gekozen vervolg; geen ongegronde herhaalproef.",
+              "checkedAt": "2026-10-21T09:26:38.499837+00:00",
+              "progress": "Dagcontext is in de echte afweging gebruikt, maar keuze bleef stilte. Nu ook persoonsgerichte bronvraag geïnstalleerd: zij haalt andere historische gezins-/interessecontext op in plaats van alleen een oude ontwikkeluitnodiging. Geen actuele wens of succes verondersteld; één nieuwe gewone afweging wordt gevolgd.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
                 "development/reviews/e16-source-attention-review-20261020.json",
@@ -11281,10 +11305,12 @@
                 "development/evidence/product/e16-capability-context-boundary-installed-20261020.json",
                 "development/reviews/e16-capability-context-boundary-review-20261020.json",
                 "development/evidence/product/e16-open-orientation-installed-20261021.json",
-                "development/reviews/e16-open-orientation-review-20261021.json"
+                "development/reviews/e16-open-orientation-review-20261021.json",
+                "development/evidence/product/e16-private-day-context-installed-20261021.json",
+                "development/reviews/e16-private-day-context-review-20261021.json"
               ],
               "installedAt": "2026-10-20T16:11:46.841997+00:00",
-              "lastInstalledAt": "2026-10-21T08:52:18.838436+00:00"
+              "lastInstalledAt": "2026-10-21T09:26:38.499837+00:00"
             },
             {
               "id": "E1.7",
@@ -13816,7 +13842,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Volg de gewone autonome afweging en haar eventueel gekozen bronvervolg; geen geforceerd onderwerp.",
+      "nextAction": "Volg de gewone v11-afweging en haar daadwerkelijk gekozen vervolg; geen ongegronde herhaalproef.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -14093,7 +14119,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-21T08:52:18.838436+00:00",
+      "checkedAt": "2026-10-21T09:26:38.499837+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -15794,7 +15820,7 @@
     },
     "e16SourceAttention20261020": {
       "startedAt": "2026-10-20T15:55:04.713312+00:00",
-      "state": "open_orientation_relevance_correction_installed_observing_real_source_selection",
+      "state": "private_day_context_used_but_actual_source_selection_still_absent",
       "previousGoalTurn": "progress",
       "previousProgress": "Bronverwijzingsherstel geïnstalleerd en één echte respons vóór/na met exact dezelfde bytes getoetst. Geen E1.6afronding.",
       "existing": "Native eventstroom, hostbroncontrole, duurzame NextAttention en bestaande afweging/uitvoering.",
@@ -15835,9 +15861,9 @@
       "isolatedModelChoice": "no_source",
       "isolatedExtraModelRequests": 1,
       "doesNotBlockIndependentTask": "E4.12",
-      "checkedAt": "2026-10-21T08:52:18.838436+00:00",
-      "latestEvidence": "development/evidence/product/e16-open-orientation-installed-20261021.json",
-      "latestReview": "development/reviews/e16-open-orientation-review-20261021.json",
+      "checkedAt": "2026-10-21T09:18:16.287411+00:00",
+      "latestEvidence": "development/evidence/product/e16-private-day-context-installed-20261021.json",
+      "latestReview": "development/reviews/e16-private-day-context-review-20261021.json",
       "extraTargetedModelRequestsThisContinuation": 0,
       "extraTargetedModelRequests": 0,
       "capabilityContextBlockerFixed": true,
@@ -15859,6 +15885,14 @@
           "model_attempts": 1
         },
         "registeredTokens": 15546,
+        "creditCost": null
+      },
+      "ordinaryV10Decision": {
+        "at": "2026-10-21 09:15:47+00:00",
+        "decisionSha256": "1bfed66eff4e199a59d2077eea85a99f055b755ab3a261f882540a2eea88a108",
+        "disposition": "silence",
+        "daySourceCount": 1,
+        "runtimeRegisteredTokens": 14952,
         "creditCost": null
       }
     },

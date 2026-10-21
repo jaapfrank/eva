@@ -106,12 +106,14 @@ class PostgresOwnerMemorySources:
             raise LookupError("owner memory source unavailable")
         return found
 
-    def document_reference(self, principal_id, source_ref, evidence_ref, *, now):
+    def document_reference(self, principal_id, source_ref, evidence_ref, *, now,
+                           recent_private_exchange: bool = False):
         """Resolve a semantic result to its exact current private source ID."""
         values = (principal_id, source_ref, evidence_ref)
         if any(not isinstance(v, str) or not v or len(v) > 1024 for v in values):
             raise ValueError("memory reference is invalid")
-        return self._read(now=now, limit=1, _reference_lookup=values)
+        return self._read(now=now, limit=1, _reference_lookup=values,
+                          _recent_private_exchanges=recent_private_exchange)
 
     def owner_identity(self, *, now):
         """Only the configured person; never enumerate another person's profile."""
@@ -147,6 +149,16 @@ class PostgresOwnerMemorySources:
                          if value is not None and value != turn.conversation_id)
         return self._read(now=now, limit=1, context_conversations=channels, after=after,
                           context_voice=True, exclude_conversation=turn.conversation_id)
+
+    def recent_private_exchanges(self, *, now: datetime, limit: int = 3):
+        """Current owner's bounded day sources, before optional dream retention.
+
+        Original conversation evidence is history, never an instruction or grant.
+        The same snapshot rechecks owner/bridge authority, erasure and source hashes.
+        """
+        if type(limit) is not int or not 1 <= limit <= 3:
+            raise ValueError("recent private exchange limit is invalid")
+        return self._read(now=now, limit=limit, _recent_private_exchanges=True)
 
     def search_private_history(self, turn, query_text: str, *, now: datetime,
                                limit: int = 3) -> tuple[tuple[ConversationMemoryDocument, str], ...]:
@@ -377,7 +389,7 @@ class PostgresOwnerMemorySources:
               selected_refs=None, selected_query: RecallCurrentFacts | None = None,
               _connection=None, _learning_document: bool = False,
               _follow_learning_revisions: bool = True, _recent_learning: bool = False,
-              _reference_lookup=None):
+              _reference_lookup=None, _recent_private_exchanges: bool = False):
         cursor = memory_source_page_request(limit, before)
         if now.tzinfo is None or now.utcoffset() != timedelta(0) or now.microsecond:
             raise ValueError("memory source time must be whole-second UTC")
@@ -436,6 +448,47 @@ class PostgresOwnerMemorySources:
                     sa.or_(data["retention_until"].astext.is_(None),
                            data["retention_until"].astext > stamp),
                 )
+                if _recent_private_exchanges:
+                    # The canonical owner and its current private bridge are the
+                    # only admitted channels. Shared devices never become aliases.
+                    channels = sa.and_(data["principal_id"].astext == str(self._owner),
+                        sa.or_(data["conversation_id"].astext == f"dashboard:{self._binding}",
+                               data["conversation_id"].astext.startswith("voice:")))
+                    if alias is not None:
+                        channels = sa.or_(channels, sa.and_(
+                            data["principal_id"].astext == alias,
+                            data["conversation_id"].astext == alias))
+                    day_ingress = operational_events.alias("recent_private_ingress")
+                    original = day_ingress.c.payload["data"]
+                    query = query.join(day_ingress, sa.and_(
+                        day_ingress.c.tenant_id == e.tenant_id,
+                        day_ingress.c.installation_id == e.installation_id,
+                        day_ingress.c.thread_id == sa.literal("conversation:") + data["source_ref"].astext,
+                        day_ingress.c.sequence == 1,
+                        day_ingress.c.event_type == "INGRESS_COMMITTED",
+                        day_ingress.c.occurred_at >= now - timedelta(hours=24),
+                        day_ingress.c.occurred_at <= now,
+                        original["kind"].astext == "conversation_ingress",
+                        original["principal_id"].astext == data["principal_id"].astext,
+                        original["conversation_id"].astext == data["conversation_id"].astext,
+                        original["message_id"].astext == data["source_ref"].astext,
+                        original["project_id"].astext.is_(None),
+                        sa.not_(original.has_key("content_erasure")),
+                        original["text"].astext.is_not(None),
+                    )).add_columns(
+                        day_ingress.c.payload.label("day_ingress_payload"),
+                        day_ingress.c.payload_sha256.label("day_ingress_payload_sha256"),
+                    ).where(
+                        channels, audience["kind"].astext == "private_person",
+                        e.occurred_at >= now - timedelta(hours=24),
+                        data["occurred_at"].astext <= stamp,
+                        data["project_id"].astext.is_(None),
+                        data["trust"].astext == "direct_user",
+                        data["retention_mode"].astext == "dream",
+                        data["evidence_ref"].astext == sa.literal("conversation-reply:") + data["source_ref"].astext,
+                        sa.not_(data.has_key("content_compaction")),
+                        c.phase != "memory_not_selected",
+                    )
                 if context_conversations is not None:
                     query = query.where(c.phase != "memory_not_selected",
                         sa.not_(data.has_key("content_compaction")))
@@ -571,6 +624,16 @@ class PostgresOwnerMemorySources:
                              "needs_help" if row.phase == "memory_needs_help" else
                              "day_context" if doc.retention_mode == "dream" and row.phase == "memory_queued" else
                              "dream_processing" if doc.retention_mode == "dream" else "pending")
+                    if _recent_private_exchanges:
+                        if canonical_sha256(row.day_ingress_payload) != bytes(row.day_ingress_payload_sha256).hex():
+                            raise PeopleMemoryOverviewError("recent private ingress hash differs")
+                        original = row.day_ingress_payload["data"]
+                        if not isinstance(original.get("text"), str) or not original["text"].strip():
+                            raise PeopleMemoryOverviewError("recent private ingress text is unavailable")
+                        if _reference_lookup is not None:
+                            return str(row.event_id), doc, state
+                        sources.append((doc, state))
+                        continue
                     if selected_refs is not None:
                         assert selected_query is not None
                         if (doc.project_id != selected_query.project_id
@@ -653,7 +716,9 @@ class PostgresOwnerMemorySources:
                     order = {key: index for index, key in enumerate(dict.fromkeys(
                         (ref[0], ref[1]) for ref in selected_refs))}
                     return tuple(sorted(sources, key=lambda item: order[(item["principal_id"], item["source_ref"])]))
-                if history_query is not None:
+                if _recent_private_exchanges and _reference_lookup is not None:
+                    return None
+                if history_query is not None or _recent_private_exchanges:
                     return tuple(sources)
                 if source_id is not None or context_conversations is not None or _reference_lookup is not None:
                     return None

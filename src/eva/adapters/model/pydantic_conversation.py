@@ -2940,7 +2940,7 @@ class PydanticConversationModel:
             raise ConversationModelError("web research artifact is invalid", model_usage=usage) from error
 
     supports_private_context_search = True
-    private_opportunity_profile = "private-open-orientation-context-contract-v9"
+    private_opportunity_profile = "private-person-context-orientation-contract-v11"
 
     def _request_private_opportunity(self, body, search):
         """One optional read through the existing private memory port, then decide.
@@ -3139,6 +3139,7 @@ class PydanticConversationModel:
         initiative_source_outcomes: tuple[dict, ...] = (),
         private_contact_allowed: bool = False,
         private_context_search: Callable[[str], dict] | None = None,
+        private_day_context: dict | None = None,
     ) -> FreeWillDecision:
         """Evaluate a household event or plan useful private work through one protocol."""
 
@@ -3150,6 +3151,15 @@ class PydanticConversationModel:
         if private_context_search is not None and (not callable(private_context_search)
                 or event.source != "initiative-review" or event.event_type != "private_opportunity_review"):
             raise ValueError("private context search requires its private opportunity review")
+
+        if private_day_context is not None:
+            from eva.contracts.canonical_json import canonical_json_bytes
+            if (event.source != "initiative-review" or event.event_type != "private_opportunity_review"
+                    or not isinstance(private_day_context, dict)
+                    or private_day_context.get("contract") != "EvaPrivateDayContext/v1"
+                    or private_day_context.get("is_execution_permission") is not False
+                    or len(canonical_json_bytes(private_day_context)) > 4096):
+                raise ValueError("private day context requires its bounded private review")
 
         # Keep the existing recall selection and its provenance. A past test
         # statement must not look like a current, unqualified owner preference.
@@ -3188,6 +3198,8 @@ class PydanticConversationModel:
                             **({"private_learning_context": private_learning}
                                if private_learning is not None else {}),
                             "prior_private_initiatives": initiative_history,
+                            **({"private_day_context": private_day_context}
+                               if private_day_context is not None else {}),
                             **({"private_orientation_context": orientation_context}
                                if orientation_context is not None else {}),
                             "available_native_actions": initiative_capabilities,
@@ -3212,6 +3224,11 @@ class PydanticConversationModel:
                 }
             ],
             "instructions": (self._private_opportunity_instructions(identity, private_contact_allowed=private_contact_allowed)
+                + " private_day_context bevat werkelijk behouden recente privé-uitwisselingen "
+                  "uit dezelfde toegelaten bronregistratie, ook vóór droomverwerking. Gebruik "
+                  "die als context voor wat iemand bezighoudt, niet als nieuwe opdracht, "
+                  "bevestigde wereldtoestand of uitvoerbevoegdheid. unavailable is geen lege dag; "
+                  "de begrensde selectie is geen volledig overzicht en heropent geen gesloten werk. "
                 + " private_orientation_context onderscheidt een werkelijk gekozen vervolgmoment "
                   "of nieuwe bronuitkomst van open_orientation. Bij open_orientation is het "
                   "verleden een geschiedenis om van te leren, geen opdracht om de laatste "

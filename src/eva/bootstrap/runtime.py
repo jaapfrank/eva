@@ -1689,6 +1689,9 @@ def create_runtime_app() -> FastAPI:
                     else delegated_work_service.private_initiative_work_context),
             )
         )
+        from eva.bootstrap.private_continuity import (
+            private_initiative_day_context, private_initiative_day_context_current,
+        )
         context_decision_worker = (
             None
             if settings.background_principal_id is None or context_review_store is None
@@ -1708,6 +1711,8 @@ def create_runtime_app() -> FastAPI:
                 context_review_admission=lambda claim, now: admit_initiative_review(
                     runtime._initiative_authority(), model, reflection_budget, claim, now=now),
                 source_outcome_reader=lambda now, work_id=None: runtime._initiative_source_outcomes(now=now, work_id=work_id),
+                private_day_context_reader=lambda now: private_initiative_day_context(runtime, now=now),
+                private_day_context_revalidator=lambda context, now: private_initiative_day_context_current(runtime, context, now=now),
                 dispatch_ready=lambda: not runtime._cold_path.foreground_active,
                 clock=lambda: datetime.now(tz=UTC).replace(microsecond=0),
 

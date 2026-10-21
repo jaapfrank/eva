@@ -1,0 +1,67 @@
+{
+  "contract": "EvaE16PrivateDayHandoffReview/v1",
+  "checkedAt": "2026-10-21T09:10:53.230996+00:00",
+  "decision": "GO_SOURCE_AND_OPTIONAL_INSTALLATION",
+  "blockingFindings": [],
+  "sourceHashes": {
+    "src/eva/bootstrap/private_continuity.py": "5f07545af09a3802bb742775ceb2d3a540ace88853907c2b53a6cc7a2d78969a",
+    "src/eva/bootstrap/runtime.py": "3a1ca69fac3ed9ce9fdef461ef22503f7db9928049087985724d279eb8ccb45a",
+    "src/eva/application/free_will.py": "1605dd3781a09b3b3dfc272b2061b3a62c747cc83af80dbc73bb85eae845d0da",
+    "src/eva/adapters/model/pydantic_conversation.py": "b9d4fb227413ed4fdee1f609686bf7adc0a8bf07143d535d2841ec6aeafe54b9",
+    "src/eva/adapters/postgres/people_memory_overview.py": "37ea9a97877f54525eebf752b82921b912b7fadce65a5b997bedf14586fbd702"
+  },
+  "overlaySourceHashes": {
+    "src/eva/bootstrap/private_continuity.py": "5f07545af09a3802bb742775ceb2d3a540ace88853907c2b53a6cc7a2d78969a",
+    "src/eva/bootstrap/runtime.py": "3a1ca69fac3ed9ce9fdef461ef22503f7db9928049087985724d279eb8ccb45a",
+    "src/eva/application/free_will.py": "1605dd3781a09b3b3dfc272b2061b3a62c747cc83af80dbc73bb85eae845d0da",
+    "src/eva/adapters/model/pydantic_conversation.py": "b9d4fb227413ed4fdee1f609686bf7adc0a8bf07143d535d2841ec6aeafe54b9",
+    "src/eva/adapters/postgres/people_memory_overview.py": "37ea9a97877f54525eebf752b82921b912b7fadce65a5b997bedf14586fbd702"
+  },
+  "scope": "Existing private owner day sources feed the existing initiative decision before dream consolidation; no new memory/store/executor/voice platform.",
+  "independentReview": "Root independently reviewed e47 day reader; e47 independently reviewed four root wiring files and complete five-file overlay.",
+  "checks": {
+    "rootBatch": {
+      "passed": 49,
+      "realModelRequests": 0
+    },
+    "changedExactReferenceAndCancellationFinalNewRootCases": {
+      "passed": 11,
+      "seconds": 1.43
+    },
+    "postgres": {
+      "newCasesPassed": 23,
+      "existingChecksPassed": 2,
+      "realModelRequests": 0
+    },
+    "initialNewFixtureFailures": "19new PostgreSQL seedcases initially lacked the required dream document_id; fixture corrected and only failed cases repeated.",
+    "newExactLookupFailure": "One new check exposed emptytuple instead of None for missing exact reference; corrected and only that case repeated."
+  },
+  "criteria": [
+    "Up to3 exact currently authorized private direct_user day exchanges in last24h; no other person/group/project/model/legacy/work-output source.",
+    "Original ingress and source hashes, owner/bridge, retention/erase and source scope rechecked after decision. New arrivals do not hide prior exact selection.",
+    "Maximum4096UTF8 envelope, each fragment up to512UTF8bytes; preserved original full-content hashes.",
+    "Model receives historical context, not a new request/authority/current world truth. Stop and current claim/foreground checks stay enforced.",
+    "Only compact input receipt hashes/count stored with decision; no second transcript retention.",
+    "Unknown/unavailable is not reported as empty. No forced initiative or household example."
+  ],
+  "modelSelectionProof": false,
+  "originalE16EndConditionUnchanged": true,
+  "voiceChanged": false,
+  "personQueryFollowupReview": {
+    "checkedAt": "2026-10-21T09:26:38.499837+00:00",
+    "decision": "GO_SOURCE_AND_OPTIONAL_INSTALLATION",
+    "sourceHashes": {
+      "src/eva/application/free_will.py": "968d584461485cad0acda8a463a205d8111b682b55882a7baa22113afe6c95b0",
+      "src/eva/adapters/model/pydantic_conversation.py": "ac6f7ef1268742bfeb7ee93f2e764bd6ab44b9e380a3ff88ff0403e08cc1c260"
+    },
+    "overlaySourceHashes": {
+      "src/eva/application/free_will.py": "968d584461485cad0acda8a463a205d8111b682b55882a7baa22113afe6c95b0",
+      "src/eva/adapters/model/pydantic_conversation.py": "ac6f7ef1268742bfeb7ee93f2e764bd6ab44b9e380a3ff88ff0403e08cc1c260"
+    },
+    "scope": "Person-oriented default recall only for private initiative; all passive sensory queries unchanged.",
+    "checks": "38 existing interface cases pass;2new private/passive worker regressions pass after review bounded the change to private-only. No model calls in checks.",
+    "diagnostic": "Two memory-only queries admit different historical context: first8records (7legacy_unverified,1direct_user;17June–23September). More/different records do not prove current need, useful choice or superior quality.",
+    "experimentAmendment": "One additional ordinary observation after this measured new query cause. Earlier2negative decisions retained; criteria unchanged. Unknown creditcost stays unknown.",
+    "blockingFindings": []
+  }
+}

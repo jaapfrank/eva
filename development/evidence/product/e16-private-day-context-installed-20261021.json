@@ -1,0 +1,144 @@
+{
+  "contract": "EvaE16PrivateDayContextInstalled/v1",
+  "task": "E1.6",
+  "checkedAt": "2026-10-21T09:18:16.274902+00:00",
+  "status": "day_handoff_used_person_query_correction_installed_observing",
+  "cause": "Ordinary private initiative could search long-term memory but did not receive currently retained private day exchanges before dream consolidation. Current trusted alias/banks were correct.",
+  "changed": [
+    "Reuse existing owner memory-source reader for at most3 recent private ordinary exchanges; no second memory/retention/classification call.",
+    "Project bounded4096-byte day context, snippets512UTF8bytes, exact original full-content hashes and scope/time.",
+    "Revalidate original ingress+source/current owner/alias/erasure/retention before committing model decision; newer arrivals do not hide selected originals.",
+    "Record compact input hashes/count, not another transcript. Inaccessible data stays unavailable, not empty."
+  ],
+  "sourceHashes": {
+    "src/eva/bootstrap/private_continuity.py": "5f07545af09a3802bb742775ceb2d3a540ace88853907c2b53a6cc7a2d78969a",
+    "src/eva/bootstrap/runtime.py": "3a1ca69fac3ed9ce9fdef461ef22503f7db9928049087985724d279eb8ccb45a",
+    "src/eva/application/free_will.py": "1605dd3781a09b3b3dfc272b2061b3a62c747cc83af80dbc73bb85eae845d0da",
+    "src/eva/adapters/model/pydantic_conversation.py": "b9d4fb227413ed4fdee1f609686bf7adc0a8bf07143d535d2841ec6aeafe54b9",
+    "src/eva/adapters/postgres/people_memory_overview.py": "37ea9a97877f54525eebf752b82921b912b7fadce65a5b997bedf14586fbd702"
+  },
+  "review": "development/reviews/e16-private-day-context-review-20261021.json",
+  "priorActualObservation": "development/evidence/product/e16-open-orientation-installed-20261021.json",
+  "installation": {
+    "states": {
+      "core": {
+        "image": "sha256:e9ac6ca719a0c91c069f3704d90fb777c40993c8c753ecf72f6be0ecc8f27144",
+        "baseImage": "sha256:e83bec6a2fd0ac8c98f9fdd3fb44a422660f465578e8509797241208c7820d6a",
+        "status": "running",
+        "health": "healthy",
+        "startedAt": "2026-10-21T09:10:22.981152544Z",
+        "restartCount": 0
+      },
+      "worker": {
+        "image": "sha256:de12856f71f21deb2d2d5c41b11cfc166fde892f3b87c5890d89a3bfd25eccb2",
+        "baseImage": "sha256:17c3742cf4b1717add1fabd1373804115b97ccc30952d82cd59fd4cb252d3201",
+        "status": "running",
+        "health": "healthy",
+        "startedAt": "2026-10-21T09:10:34.5309214Z",
+        "restartCount": 0
+      }
+    },
+    "retainedMounts": true,
+    "policyBytesUnchanged": true,
+    "workerCoreExecutionPinsEqual": true,
+    "executionPinCount": 70,
+    "capabilityCount": 27,
+    "voiceContainerChanged": false,
+    "basis": "Actual current peer-updated image e83bec retained; private day handoff overlaid only on inspected five-file delta."
+  },
+  "actualSourceDiagnostic": {
+    "modelRequests": 0,
+    "available": true,
+    "selectedSourceCount": 2,
+    "allExactSourcesRevalidated": true,
+    "notUsefulnessProof": true
+  },
+  "checks": {
+    "rootBatchPassed": 49,
+    "finalChangedNewRootCasesPassed": 11,
+    "postgresNewPassed": 23,
+    "postgresExistingPassed": 2,
+    "modelRequests": 0,
+    "failuresAndSelectiveRerunsDocumentedInReview": true
+  },
+  "actualOrdinaryDecision": {
+    "decidedAt": "2026-10-21 09:15:47+00:00",
+    "decisionSha256": "1bfed66eff4e199a59d2077eea85a99f055b755ab3a261f882540a2eea88a108",
+    "ordinaryScheduler": true,
+    "operatorTriggered": false,
+    "disposition": "silence",
+    "initiative": null,
+    "nextAttention": null,
+    "privateDayContextReceipt": {
+      "as_of": "2026-10-21T09:15:41Z",
+      "source_count": 1,
+      "context_sha256": "922e4cac9dcc8a217578e57bc05dbe06d2c220af8f727628407d6726d7324d32",
+      "sources_sha256": "bb3764ad3384c5080795d5dbe66b50a0ab8b9769d342c595d09940bc8ffe8180",
+      "is_execution_permission": false
+    },
+    "usage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 14815,
+      "output_tokens": 137,
+      "model_attempts": 1
+    },
+    "registeredTokens": 14952,
+    "creditCost": null,
+    "result": "Actual ordinary private decision received and source-revalidated day context but still selected no useful source follow-up. E1.6 is not completed."
+  },
+  "completion": {
+    "taskCompleted": false,
+    "originalCriteriaUnchanged": true,
+    "modelChosenSourceFollowupProven": false,
+    "sourceChangeCausalUseProven": false,
+    "ownerAcceptance": false,
+    "currentPrivateDayHandoffActuallyUsed": true
+  },
+  "usage": {
+    "developmentCreditCost": null,
+    "runtimeCreditCost": null,
+    "extraOperatorModelRequests": 0,
+    "ordinaryRuntimeTokensAfterInstall": 14952,
+    "selectedPrivateDecisionsThisRepair": {
+      "modelAttempts": 3,
+      "toolCalls": 3,
+      "registeredTokens": 44937,
+      "includes": "Two observed ordinary private reviews v9 and v10 only; not all concurrent Eva runtime or development usage.",
+      "creditCost": null
+    }
+  },
+  "remaining": "The data handoff is now used. The model still chooses no useful source question, initiative or attention. Original actual source-choice/change/use criterion remains unfulfilled; do not replace this with waiting or a fabricated task.",
+  "personQueryFollowup": {
+    "checkedAt": "2026-10-21T09:26:38.499837+00:00",
+    "status": "installed_ordinary_decision_pending",
+    "change": "Ask about people and their interests/routines/goals rather than useful own contributions; old developer invitations were overselected. No fixed person, domain, source or task.",
+    "sourceHashes": {
+      "src/eva/application/free_will.py": "968d584461485cad0acda8a463a205d8111b682b55882a7baa22113afe6c95b0",
+      "src/eva/adapters/model/pydantic_conversation.py": "ac6f7ef1268742bfeb7ee93f2e764bd6ab44b9e380a3ff88ff0403e08cc1c260"
+    },
+    "installation": {
+      "core": {
+        "image": "sha256:afbaa8f0d06270fc1b3b3498b0ad20da97be3ecca27857557d4a79a30829ed9d",
+        "baseImage": "sha256:730a2924bd0ef2ea02041428ab0b7344f740c6bb853f07102fba1e6b5dbf70ce",
+        "startedAt": "2026-10-21T09:24:31.367504336Z",
+        "status": "running",
+        "health": "healthy",
+        "restartCount": 0
+      },
+      "worker": {
+        "image": "sha256:fff48c21dc1108747183c6695aa3e32ba646a845fbe250f30547a2b2d8df5f69",
+        "baseImage": "sha256:e5a590f5ba9cc0f44f82995bd43ebe8ede50bd385ae7d1c7d736a990ae3e52db",
+        "startedAt": "2026-10-21T09:24:42.95810539Z",
+        "status": "running",
+        "health": "healthy",
+        "restartCount": 0
+      }
+    },
+    "policyBytesUnchanged": true,
+    "retainedMounts": true,
+    "voiceContainerChanged": false,
+    "actualDecision": null,
+    "criterionUnchanged": true
+  }
+}

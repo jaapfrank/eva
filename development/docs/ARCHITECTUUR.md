@@ -101,7 +101,9 @@ volledige definitiehashes binnen dezelfde 8 KiB. Alleen optionele toelichtingen
 worden op werkelijk gecodeerde omvang verkort; parameters passen volledig of
 blijven expliciet weggelaten. Een lange toolnaam blokkeert zo niet de afweging
 wanneer de verplichte metadata wel past; ontbrekende verplichte ruimte blijft fout.
-Open privéoriëntatie gebruikt de volledige geheugenvraag; onvergelijkbare scores
+Open privéoriëntatie vraagt eerst naar de mensen, hun interesses, gewoonten en
+blijvende doelen; oude ontwikkeluitnodigingen zijn geen persoonsprofiel. Zij
+gebruikt de volledige geheugenvraag; onvergelijkbare scores
 van losse generieke woorden kiezen hier geen oude proef- of apparaatvoorkeur.
 Expliciet gekozen zoekconcepten en andere geheugendoelen behouden hun bestaande
 route. Dezelfde modelinvoer onderscheidt open oriëntatie van werkelijk gekozen,
@@ -111,6 +113,14 @@ De projectie is begrensde geschiedenis, geen bewijs dat alle doelen voltooid zij
 of dat er volledige gezinskennis is. Zij verleent geen nieuwe uitvoerbevoegdheid;
 zinvolle stilte blijft geldig. Deze gerichte correctie is op 21 oktober geïnstalleerd;
 werkelijke zelfstandige bronkeuze blijft afzonderlijk te bewijzen.
+Dezelfde privé-initiatiefafweging krijgt ook maximaal drie actuele, oorspronkelijke
+privé-uitwisselingen uit de bestaande dagbronregistratie vóór de droomfase. Die
+bronselectie vereist dezelfde actuele eigenaar-/kanaalbinding, bewaartermijn,
+wistoestand en originele ingress-/bronhashes; de exacte selectie wordt na de
+afweging opnieuw gecontroleerd. De modelinvoer bevat maximaal 4 KiB met korte
+fragmenten; de beslissing bewaart alleen een compacte hashontvangst. Gesprekstekst
+wordt geen nieuwe opdracht of wereldfeit. Er is geen tweede geheugenopslag,
+classificatieaanvraag of huishoudspecifieke beslisregel.
 Oude waarnemingen zijn geen actuele
 uitvoerbevoegdheid: de native uitvoerder controleert benodigde actuele bronnen opnieuw.
 De bestaande HA-stream dekt toestandwaarden; attribuutwijzigingen en willekeurige
