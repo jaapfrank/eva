@@ -8189,6 +8189,13 @@
                   "sourceResultDeliveryAndBoundedLaterUseVerified": true,
                   "fullHistoryTransferOrCrossDayProjectProven": false,
                   "familyAcceptance": false
+                },
+                "telegramSourceFollowthroughRepair": {
+                  "status": "in_progress",
+                  "checkedAt": "2026-10-21T09:00:56.370836+00:00",
+                  "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
+                  "endCondition": "De werkelijk gebruikte route onderscheidt MCP-registerdekking van aangeboden providers, onderzoekt relevante bestaande bronnen vóór ontbrekende gegevens te vragen en gebruikt technische documentatie voor het huidige gebruikersdoel. Live gewone vraag gebruikt actuele HA-informatie en maakt indirecte versus directe verbinding duidelijk; geen fictief nieuw credentialkanaal of onbewezen API-verbinding.",
+                  "originalCompletionPreserved": true
                 }
               },
               {
@@ -13687,6 +13694,13 @@
                 "sourceResultDeliveryAndBoundedLaterUseVerified": true,
                 "fullHistoryTransferOrCrossDayProjectProven": false,
                 "familyAcceptance": false
+              },
+              "telegramSourceFollowthroughRepair": {
+                "status": "in_progress",
+                "checkedAt": "2026-10-21T09:00:56.370836+00:00",
+                "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
+                "endCondition": "De werkelijk gebruikte route onderscheidt MCP-registerdekking van aangeboden providers, onderzoekt relevante bestaande bronnen vóór ontbrekende gegevens te vragen en gebruikt technische documentatie voor het huidige gebruikersdoel. Live gewone vraag gebruikt actuele HA-informatie en maakt indirecte versus directe verbinding duidelijk; geen fictief nieuw credentialkanaal of onbewezen API-verbinding.",
+                "originalCompletionPreserved": true
               }
             },
             {

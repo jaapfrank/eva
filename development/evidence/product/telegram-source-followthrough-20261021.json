@@ -1,0 +1,24 @@
+{
+  "contract": "EvaTelegramSourceFollowthroughRepair/v1",
+  "status": "in_progress",
+  "recordedAt": "2026-10-21T09:00:56.370836+00:00",
+  "request": "Eigenaar21oktober: herstel laatste Telegramgedrag waarbij Eva beschikbare Home Assistant-informatie niet gebruikte, opdrachten niet afmaakte en overbodige tekst terugstuurde.",
+  "existing": "UniFi Network en Protect zijn via de bestaande Home Assistant-module bereikbaar; digitale werkers bieden providerlezingen en duurzame uitvoering.",
+  "observedFailure": "Drie aangenomen onboardingstappen eindigden incomplete_work; één hervatting eindigde ambiguous/internal_error. MCP-registerstatus werd als totaaloverzicht behandeld, zonder HA-bronlezing; generieke externe onboardingtekst leverde een curl/keuzemenu op.",
+  "endCondition": "De werkelijk gebruikte route onderscheidt MCP-registerdekking van aangeboden providers, onderzoekt relevante bestaande bronnen vóór ontbrekende gegevens te vragen en gebruikt technische documentatie voor het huidige gebruikersdoel. Live gewone vraag gebruikt actuele HA-informatie en maakt indirecte versus directe verbinding duidelijk; geen fictief nieuw credentialkanaal of onbewezen API-verbinding.",
+  "scope": "Vier instructie-/toolpresentatiehunks in bestaande routes; oorspronkelijke E5.1-afronding en overige taken blijven behouden. Geen spraakwijziging of nieuwe tweede agent.",
+  "runtimeInstalled": false,
+  "sourceFiles": [
+    "src/eva/adapters/model/pydantic_conversation.py",
+    "src/eva/bootstrap/delegated_digital_runner.py",
+    "src/eva/providers/mcp_registration.py",
+    "src/eva/providers/home_assistant_policy.py"
+  ],
+  "usage": {
+    "newEvaModelRequests": 0,
+    "developmentCredits": null,
+    "existingFailedWorkInputTokens": 351814,
+    "existingFailedWorkOutputTokens": 3466,
+    "existingFailedWorkMeasurement": "partial: four historical attempts, not this repair evaluation; never claim exact billing"
+  }
+}
