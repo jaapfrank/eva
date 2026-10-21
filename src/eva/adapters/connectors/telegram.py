@@ -130,7 +130,7 @@ class TelegramProactiveDelivery:
         if type(reply_to_message_id) is not int or reply_to_message_id < 1:
             raise ValueError('Telegram reply message identity is invalid')
         filename = 'eva-volledig-resultaat.md'
-        caption = 'Eva2: het volledige opgeslagen resultaat, inclusief bronnen.'
+        caption = 'Het volledige opgeslagen resultaat, inclusief bronnen.'
         result = self._api._call('sendDocument', {
             'chat_id': chat_id, 'disable_notification': True, 'caption': caption,
             'reply_parameters': {'message_id': reply_to_message_id, 'allow_sending_without_reply': False},

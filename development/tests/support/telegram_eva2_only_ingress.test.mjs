@@ -115,12 +115,12 @@ test('actual handler keeps text/photo with Eva2, explicit eva1 separate and no l
       assert.deepEqual(requests.map(r => r.message_id), [1, 2, 4, 5, 6]);
       assert.equal(mediaRequests.length, 2);
       for (const id of [1, 2, 4, 6]) {
-        assert.equal(sends.filter(s => s.text === 'Eva2: Reply ' + id).length, 1);
+        assert.equal(sends.filter(s => s.text === 'Reply ' + id).length, 1);
         assert.equal(telegramMessage(7, id).meta.dialogueRoute, 'eva2');
       }
       assert.equal(sends.filter(s => s.text === 'Eva1: legacy fixture').length, 1);
       assert.equal(telegramMessage(7, 3).meta.dialogueRoute, 'eva1');
-      assert.match(sends.find(s => s.reply_parameters.message_id === 5).text, /^Eva2-fout:/);
+      assert.match(sends.find(s => s.reply_parameters.message_id === 5).text, /^Je bericht is niet afgehandeld:/);
       assert.match(sends.find(s => s.reply_parameters.message_id === 7).text, /^Eva2:/);
       assert.equal(requests.find(r => r.message_id === 2).text, 'Tuya screenshot');
       assert.equal(requests.find(r => r.message_id === 2).media_context.source_ref, 'telegram:7:2');

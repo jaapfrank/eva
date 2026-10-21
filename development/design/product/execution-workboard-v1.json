@@ -5811,6 +5811,17 @@
                   "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
                   "nextAction": "Beoordeel een klein lokaal initiatiefmodel binnen dezelfde bestaande aandacht/geheugen/uitvoering; eerst kwaliteit en echte taaklatency meten, daarna alleen bij aangetoond nut gericht bijtrainen. Muse Glimmer30B is relevant maar de officiële4bitvariant past niet comfortabel volledig op de gedeelde16GBGPU. Geen tweede agent of onbewezen vervanging.",
                   "originalCompletionPreserved": true
+                },
+                "householdResearchDeploymentHandoff20261021": {
+                  "status": "open_installed_release_mismatch",
+                  "evidence": "development/evidence/product/gpu-telegram-repair-20261021.json",
+                  "sourceFiles": [
+                    "src/eva/adapters/postgres/household_work_sessions.py",
+                    "src/eva/adapters/postgres/scoped_delegated_work_actions.py"
+                  ],
+                  "nextAction": "Voice/shared-household owner must align the intended installed source versions with fresh idle/source/config guards, then verify the actual household research route. No foreign voice changes overwritten.",
+                  "ownership": "Existing voice/shared-household executor; preserve their WIP and original task acceptance.",
+                  "privateTelegramRepairAlreadyUsed": true
                 }
               },
               {
@@ -8249,9 +8260,12 @@
                   "originalCompletionPreserved": true
                 },
                 "gpuAndTelegramRepair20261021": {
-                  "status": "in_progress",
+                  "status": "installed_and_used_bounded",
+                  "checkedAt": "2026-10-21T19:12:20.415153+00:00",
                   "evidence": "development/evidence/product/gpu-telegram-repair-20261021.json",
-                  "originalCompletionPreserved": true
+                  "originalCompletionPreserved": true,
+                  "result": "Lokale AI-GPU-services uit en autostart disabled; echte PHP-opdracht 26s, normale Telegramaflevering bevestigd zonder Eva2:-label.",
+                  "limitation": "Afzonderlijk householdresearch-versieverschil staat bij E1.6; geen algemene spraakclaim."
                 }
               },
               {
@@ -11360,6 +11374,17 @@
                 "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
                 "nextAction": "Beoordeel een klein lokaal initiatiefmodel binnen dezelfde bestaande aandacht/geheugen/uitvoering; eerst kwaliteit en echte taaklatency meten, daarna alleen bij aangetoond nut gericht bijtrainen. Muse Glimmer30B is relevant maar de officiële4bitvariant past niet comfortabel volledig op de gedeelde16GBGPU. Geen tweede agent of onbewezen vervanging.",
                 "originalCompletionPreserved": true
+              },
+              "householdResearchDeploymentHandoff20261021": {
+                "status": "open_installed_release_mismatch",
+                "evidence": "development/evidence/product/gpu-telegram-repair-20261021.json",
+                "sourceFiles": [
+                  "src/eva/adapters/postgres/household_work_sessions.py",
+                  "src/eva/adapters/postgres/scoped_delegated_work_actions.py"
+                ],
+                "nextAction": "Voice/shared-household owner must align the intended installed source versions with fresh idle/source/config guards, then verify the actual household research route. No foreign voice changes overwritten.",
+                "ownership": "Existing voice/shared-household executor; preserve their WIP and original task acceptance.",
+                "privateTelegramRepairAlreadyUsed": true
               }
             },
             {
@@ -13798,9 +13823,12 @@
                 "originalCompletionPreserved": true
               },
               "gpuAndTelegramRepair20261021": {
-                "status": "in_progress",
+                "status": "installed_and_used_bounded",
+                "checkedAt": "2026-10-21T19:12:20.415153+00:00",
                 "evidence": "development/evidence/product/gpu-telegram-repair-20261021.json",
-                "originalCompletionPreserved": true
+                "originalCompletionPreserved": true,
+                "result": "Lokale AI-GPU-services uit en autostart disabled; echte PHP-opdracht 26s, normale Telegramaflevering bevestigd zonder Eva2:-label.",
+                "limitation": "Afzonderlijk householdresearch-versieverschil staat bij E1.6; geen algemene spraakclaim."
               }
             },
             {

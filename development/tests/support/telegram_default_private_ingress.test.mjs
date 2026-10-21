@@ -135,11 +135,11 @@ test('actual default private ingress preserves overlapping replies, historical r
       };
       await until(() => bodies.length === 1 && drafts.some(d => d.draft_id === 1));
       laterUpdatesArrived = true; // A later polling batch arrives while the first core call remains blocked.
-      await until(() => sends.some((s) => s.text === 'Eva2: Fixture response 2')
-        && sends.some((s) => s.text === 'Eva2: Fixture response 3')
+      await until(() => sends.some((s) => s.text === 'Fixture response 2')
+        && sends.some((s) => s.text === 'Fixture response 3')
         && sends.some((s) => s.reply_parameters?.message_id === 5));
       assert.equal(firstReleased, false);
-      assert.equal(sends.some((s) => s.text === 'Eva2: Fixture response 1'), false);
+      assert.equal(sends.some((s) => s.text === 'Fixture response 1'), false);
       assert.deepEqual(bodies.map((b) => [b.chat_id, b.telegram_user_id, b.message_id]),
         [['7', 7, 1], ['7', 7, 2], ['8', 8, 3], ['7', 7, 5]]);
       assert.equal(telegramMessage(7, 1).processing_status, 'processing');
@@ -156,7 +156,7 @@ test('actual default private ingress preserves overlapping replies, historical r
       await bot.handleUpdate(updates[4]);
       assert.equal(bodies.length, 4, 'durable completed replay must not call core again');
       for (const id of [1, 2, 3]) {
-        const delivered = sends.filter((s) => s.text === `Eva2: Fixture response ${id}`);
+        const delivered = sends.filter((s) => s.text === `Fixture response ${id}`);
         assert.equal(delivered.length, 1);
         assert.equal(Number(delivered[0].chat_id), id === 3 ? 8 : 7);
         assert.equal(delivered[0].reply_parameters?.message_id, id);
@@ -166,13 +166,13 @@ test('actual default private ingress preserves overlapping replies, historical r
         const ownDrafts = drafts.filter(d => d.draft_id === id);
         assert.ok(ownDrafts.length > 0);
         assert.ok(ownDrafts.every(d => Number(d.chat_id) === (id === 3 ? 8 : 7)
-          && d.text === `Eva2: Fixture response ${id}`));
+          && d.text === `Fixture response ${id}`));
       }
       assert.ok(sends.findIndex(s => s.reply_parameters?.message_id === 2)
         < sends.findIndex(s => s.reply_parameters?.message_id === 1));
       const failures = sends.filter(s => s.reply_parameters?.message_id === 5);
       assert.equal(failures.length, 1);
-      assert.match(failures[0].text, /^Eva2-fout:/);
+      assert.match(failures[0].text, /^Je bericht is niet afgehandeld:/);
       assert.ok(sends.every(s => !s.text.includes('WRONG_FINAL_MUST_NOT_BE_DELIVERED')));
       assert.ok(drafts.every(d => !d.text.includes('WRONG_FINAL_MUST_NOT_BE_DELIVERED')));
       assert.equal(telegramMessage(7, 5).processing_status, 'completed');

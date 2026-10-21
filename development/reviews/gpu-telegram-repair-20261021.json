@@ -1,0 +1,53 @@
+{
+  "contract": "EvaBoundedRepairReview/v1",
+  "reviewer": "/root/review_cursor",
+  "verdict": "GO",
+  "scope": [
+    "Telegram presentation prefix and saved-document caption",
+    "Worker exact byte alignment with already-installed core provider",
+    "Private DelegatedResearchWork/v2 owner resume inherits only its existing atomic destination when no new destination supplied",
+    "Role-aware installed profile comparison"
+  ],
+  "candidateTests": {
+    "core": 172,
+    "worker": 172,
+    "postgresResumeDestination": 2,
+    "standaloneAndDraft": 9,
+    "legacyCompatibilityFixtures": 2
+  },
+  "installationConditions": [
+    "Fresh source/image/config guard",
+    "No actual active conversation, work, decision, model, retention, dream or delivery claims; no active Hindsight jobs",
+    "Only initial revision1/retry0 queued dream sources with no deadline are waiting day context, not dispatched retention"
+  ],
+  "requiredLiveEvidence": [
+    "Actual profiles compatible after installation",
+    "Original PHP task successor really runs and ordinary destination delivery is acknowledged"
+  ],
+  "exclusions": [
+    "Foreign household source hunks",
+    "Voice route changes",
+    "Complete Eva product acceptance"
+  ],
+  "recordedAt": "2026-10-21T19:06:57.939326+00:00",
+  "finalVerdict": "BOUNDED_GO",
+  "liveEvidenceReviewed": {
+    "originalSourceEventsPreserved": 40,
+    "oldJobsUnstartedPreserved": 2,
+    "successorClaims": 1,
+    "researchSeconds": 26,
+    "normalTelegramDeliveryAcknowledged": true,
+    "originalDestinationPreserved": true,
+    "prefixAbsent": true
+  },
+  "openLimitation": {
+    "scope": "Separate household/voice public-research deployment, outside this private Telegram repair.",
+    "files": [
+      "src/eva/adapters/postgres/household_work_sessions.py",
+      "src/eva/adapters/postgres/scoped_delegated_work_actions.py"
+    ],
+    "cause": "Two pre-existing installed core/worker source differences remain in the household release fingerprint.",
+    "nextAction": "Voice/shared-household owner must align the intended installed source versions with fresh idle/source/config guards, then verify the actual household research route. No foreign voice changes overwritten."
+  },
+  "reviewedAt": "2026-10-21T19:12:20.415153+00:00"
+}

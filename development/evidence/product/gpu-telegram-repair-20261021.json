@@ -1,6 +1,6 @@
 {
   "contract": "EvaGpuTelegramRepair/v1",
-  "status": "in_progress",
+  "status": "installed_and_used_bounded",
   "recordedAt": "2026-10-21T12:53:39.956964+00:00",
   "ownerRequest": "Stop onverwachte lokale GPU-processen en hun automatische start; herstel laatste PHP-onderzoekopdracht en verwijder Eva2:-voorvoegsel uit antwoorden.",
   "existing": "Gedeelde Eva-kern, digitale/onderzoekworker en Telegrambrug draaien. De laatste oorspronkelijke PHP-opdracht bleef aangenomen zonder bruikbaar resultaat. Twee optionele GPU-services zijn actief en enabled.",
@@ -14,6 +14,104 @@
     ],
     "bothEnabled": true
   },
-  "runtimeChanges": [],
-  "voiceCodeChanged": false
+  "runtimeChanges": [
+    {
+      "role": "core",
+      "parent": "sha256:6321823fc9f29d87365c949a8a88ee2b33293eda56d3d98d4dacd9b79e66ba41",
+      "image": "sha256:852d2b5c149d8cf07604a681740b56cdef8b62c07491f428184af5009e4aab0a",
+      "configurationPreserved": true,
+      "sourceVerified": true
+    },
+    {
+      "role": "worker",
+      "parent": "sha256:5d4762c81af3c206ba62ea335a6ba5072187a46d027add83cce03e5b0c7c6ed0",
+      "image": "sha256:14124b770a06e0a93c347cccf14ecbed4c9849d6c766ab7ec0c4bc9cbf5a33ab",
+      "configurationPreserved": true,
+      "sourceVerified": true
+    }
+  ],
+  "voiceCodeChanged": false,
+  "completedAt": "2026-10-21T19:12:20.415153+00:00",
+  "gpuAfter": {
+    "usedMiB": 1253,
+    "totalMiB": 16303,
+    "computeProcesses": 0,
+    "servicesStoppedAndDisabled": [
+      "eva-brein.service",
+      "eva2-local-vision.service"
+    ],
+    "autostart": "Both user default.target links removed; no triggering units or timers found. Rechecked disabled/inactive after several hours.",
+    "remainingUsage": "Windows desktop and open applications; no CUDA AI process remains.",
+    "functionalConsequence": "Optional local face/image encoders and local vision model remain off, as requested; no model files removed."
+  },
+  "rootCauses": [
+    "The actual public-research producer and worker had different shared-provider source releases. Exact release selection silently left both real research jobs unclaimed.",
+    "Research resumed through owner dashboard controls had no new Telegram envelope and lost the original task return address."
+  ],
+  "providerChange": "Worker copied exact bytes of the already-installed current core openai_codex_provider.py. Existing foreign provider WIP was neither edited nor committed. Model, endpoint, OAuth account, strategy and bounds unchanged.",
+  "telegramBridge": {
+    "restarted": true,
+    "inFlightTransport": 0,
+    "prefixInjectionRemoved": true,
+    "savedDocumentCaptionUpdated": true,
+    "uncertainSendNeverReplayed": true
+  },
+  "liveOutcome": {
+    "original_source_events_preserved": 40,
+    "original_research_attempts_preserved_unstarted": 2,
+    "successor_state": "succeeded",
+    "successor_claim_count": 1,
+    "admission_to_start_seconds": 0.0,
+    "research_seconds": 26.0,
+    "ordinary_delivery_acknowledged_at": "2026-10-21 19:09:30+00:00",
+    "original_destination_preserved": true,
+    "prefix_absent": true,
+    "delivered_characters": 2417,
+    "output_sha256": "b285348488e60f5c5070830c4e2810ff0f48eb2dfddf73ef640c7cc6cfa10d89"
+  },
+  "usage": {
+    "newResearchModelResponses": 1,
+    "toolCalls": 3,
+    "inputTokens": 30327,
+    "outputTokens": 680,
+    "developmentCredits": null,
+    "actualSubscriptionBilling": null,
+    "apiEquivalentRecordedMicrosUsd": 337270,
+    "meaning": "Recorded profile-price equivalent, not measured subscription charges. Foreground historical dialogue excluded; this recovery used ordinary owner controls without a new foreground model call."
+  },
+  "validation": {
+    "coreCandidatePassed": 172,
+    "workerCandidatePassed": 172,
+    "newIsolatedPostgresCasesPassed": 2,
+    "standaloneAndDraftCasesPassed": 9,
+    "legacyTransportCompatibilityCasesPassed": 2,
+    "initialFailuresRetained": "Stale draft import fixed; legacy fixture overlay corrected; new test missing request_key fixed. Initial PostgreSQL failure log retained. Installation was delayed by a real dream/Hindsight run and retried only after it finished."
+  },
+  "profiles": {
+    "shared_provider": "compatible",
+    "public_research": "compatible",
+    "household_research": "incompatible",
+    "checkerExitCode": 1,
+    "checkerNotWeakened": true
+  },
+  "openHandoff": {
+    "scope": "Separate household/voice public-research deployment, outside this private Telegram repair.",
+    "files": [
+      "src/eva/adapters/postgres/household_work_sessions.py",
+      "src/eva/adapters/postgres/scoped_delegated_work_actions.py"
+    ],
+    "cause": "Two pre-existing installed core/worker source differences remain in the household release fingerprint.",
+    "nextAction": "Voice/shared-household owner must align the intended installed source versions with fresh idle/source/config guards, then verify the actual household research route. No foreign voice changes overwritten."
+  },
+  "privacy": {
+    "rawEvidenceRootOnly": true,
+    "publicEvidenceContainsNoPrivateMessageBodies": true,
+    "originalFortySourceEventsAndTwoWorkSpecsPreserved": true
+  },
+  "phpSourcesChecked": [
+    "https://www.php.net/archive/2026.php",
+    "https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w",
+    "https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp"
+  ],
+  "scopeLimit": "Proves stopped local AI/autostart, actual private PHP research and normal original-destination Telegram delivery without injected label. Does not claim household research compatibility, complete autonomy or family acceptance."
 }

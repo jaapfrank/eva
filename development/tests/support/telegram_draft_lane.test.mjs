@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {askEva2Canary, createEva2DraftSink, labelEva2TelegramReply} from '../../deploy/telegram-bridge/src/integrations/eva2canary.js';
+import {askEva2Canary, createEva2DraftSink, labelEva2TelegramReply} from '../../../deploy/telegram-bridge/src/integrations/eva2canary.js';
 const encoder=new TextEncoder();
 const finalReply={contract:'EvaInternalGroundedReply/v1',conversation_id:'telegram:7',message_id:'telegram:7:9401',text:'a'.repeat(384)};
 function respond(rows, observed) {
@@ -29,7 +29,7 @@ test('slow Telegram drafts do not hold the model reader and obsolete previews ar
     assert.equal(observed.pulls,rows.length+1,'read through terminal record before draft finishes');
     assert.equal(completed,false,'finish waits only for the already in-flight draft');
     assert.equal(sent.length,1,'one in-flight request, no unbounded draft fanout');
-    assert.equal(sent[0].text,'Eva2: '+'a'.repeat(64),'native presentation wrapper retains the lane');
+    assert.equal(sent[0].text,'a'.repeat(64),'presentation retains the draft lane without a product label');
   } finally {release();}
   assert.deepEqual((await result).message_id,finalReply.message_id);
   assert.equal(sent.length,1,'saved result supersedes stale queued previews');

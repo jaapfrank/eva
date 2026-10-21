@@ -55,6 +55,9 @@ Eva-agent. Werk die afhankelijkheid gericht weg wanneer haar vervanging is bewez
   wijzigingen van anderen. Geen routine van terugzetten/installeren/opnieuw beginnen.
   Stem vervanging van de gedeelde kern af: controleer vlak vóór installatie ook
   actieve gespreks-, modelbeoordelings- en werkclaims, niet alleen containergezondheid.
+  Vergelijk bij gedeelde providerwijzigingen ook de daadwerkelijk geïnstalleerde
+  kern-/workerprofielen met `src/tools/check_delegated_runtime_profiles.py`;
+  een levende worker kan taken met een afwijkende release nooit aannemen.
   Onderbreek geen lopende beoordeling voor een parallelle installatie. Verlopen oude
   markers blijven bewaard en gelden niet als bewijs dat nu nog werk loopt.
 - Werk bord, dashboard en Git bij bij start, echte blokkade en oplevering. Onderscheid

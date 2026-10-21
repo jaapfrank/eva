@@ -55,12 +55,12 @@ export function createTransportHandler({ journal, bindings, baseUrl, photoProvid
     try {
       let text = message.text ?? message.caption ?? '';
       if (/^\/eva1(?:@\w+)?(?:\s|$)/iu.test(text)) {
-        await deliver('Eva1 is gestopt. Stuur je vraag gewoon aan Eva2.');
+        await deliver('Eva1 is gestopt. Stuur je vraag gewoon aan Eva.');
         return;
       }
       const file = message.photo?.at(-1) ?? (['image/jpeg', 'image/png', 'image/webp'].includes(message.document?.mime_type) ? message.document : null);
       if (typeof message.text !== 'string' && !file) {
-        await deliver('Eva2: Ik kan dit bestandstype via Telegram nog niet verwerken. Stuur de relevante tekst of een foto; ik schakel niet over naar Eva1.');
+        await deliver('Ik kan dit bestandstype via Telegram nog niet verwerken. Stuur de relevante tekst of een foto.');
         return;
       }
       const sayTyping = () => ctx.replyWithChatAction('typing').catch(() => {});

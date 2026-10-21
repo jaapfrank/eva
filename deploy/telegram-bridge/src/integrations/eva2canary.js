@@ -86,7 +86,7 @@ export function createEva2DraftSink({ chatId, draftId, sendDraft, clock = Date.n
 export function labelEva2TelegramReply(text) {
   const value = String(text || '').trim();
   if (!value) throw new Error('Eva2 gaf een leeg antwoord');
-  return /^Eva2:/iu.test(value) ? value : `Eva2: ${value}`;
+  return value;
 }
 
 export function labelEva1TelegramReply(text) {
@@ -97,7 +97,7 @@ export function labelEva1TelegramReply(text) {
 
 export function labelEva2TelegramFailure(reason) {
   const value = String(reason || '').trim() || 'onbekende fout';
-  return `Eva2-fout: ${value}. Eva1 heeft dit bericht niet verwerkt.`;
+  return `Je bericht is niet afgehandeld: ${value}.`;
 }
 
 function canonicalTelegramTimestamp(unixSeconds) {
@@ -130,7 +130,7 @@ function canaryDeadlines({ connectTimeoutMs, idleTimeoutMs, timeoutMs, signal })
   const controller = new AbortController();
   let connectTimer; let idleTimer;
   const abort = (phase) => controller.abort(Object.assign(
-    new Error(`Eva2: wachttijd voor ${phase} verstreken; de verwerking kan nog lopen. Er is geen tweede verzoek verstuurd.`),
+    new Error(`De wachttijd voor ${phase} is verstreken; de verwerking kan nog lopen. Er is geen tweede verzoek verstuurd.`),
     { code: 'EVA2_TRANSPORT_TIMEOUT', phase },
   ));
   const totalTimer = setTimeout(() => abort('totale verwerking'), timeoutMs);

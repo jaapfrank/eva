@@ -434,6 +434,14 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                         or getattr(spec, "source_ingress_sha256", None) != getattr(previous.spec, "source_ingress_sha256", None)
                         or getattr(spec, "execution_id", None) != getattr(previous.spec, "execution_id", None)):
                     raise DelegatedWorkConflict("resumed work differs from its bounded previous attempt")
+                if (delivery_destination is None
+                        and spec.contract == previous.spec.contract == "DelegatedResearchWork/v2"
+                        and spec.audience == "private"):
+                    # Owner dashboard controls have no Telegram envelope. Preserve
+                    # the atomically bound return address of this exact research;
+                    # delivery still revalidates its current recipient binding.
+                    from eva.adapters.postgres.delegated_work_delivery import _read
+                    delivery_destination = _read(connection, self.scope, previous.spec)
             connection.execute(
                 sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                 {
