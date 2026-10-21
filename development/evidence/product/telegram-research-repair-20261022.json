@@ -1,6 +1,6 @@
 {
   "contract": "EvaTelegramResearchRepair/v1",
-  "status": "in_progress",
+  "status": "installed_and_used",
   "recordedAt": "2026-10-21T23:20:54.540258+00:00",
   "ownerRequest": "Onderzoek en herstel bugs in de laatste echte Telegramberichten.",
   "existing": "Vorige private PHP-onderzoekopdracht is uitgevoerd en afgeleverd. Nieuwe vervolgvragen crashen lokaal vóór onderzoeksadmission; transport heeft daarop foutmeldingen afgeleverd.",
@@ -11,5 +11,142 @@
   ],
   "endCondition": "Legitimate public vulnerability follow-up can be admitted and completed using the installed private route; local rejected projections get one existing bounded input repair without effects or disclosure. Uncertain effects are never retried. Original failed source events remain preserved. Actual requested follow-up is recovered and useful result returned through its original route; no internal project label in failure text.",
   "scope": "Private public-research input validation/repair and Telegram failure presentation; no voice implementation, provider/model/bounds or independent acceptance changes.",
-  "voiceCodeChanged": false
+  "voiceCodeChanged": false,
+  "completedAt": "2026-10-21T23:34:15.512074+00:00",
+  "changes": {
+    "publicCveInputs": "Only complete official CVE tokens are ignored by the telephone heuristic after Unicode/URL normalization. Credentials, private context, addresses, times, private URLs and all other checks still inspect the full original input.",
+    "boundedRepair": "Only the local projection validator is wrapped. A rejection uses the existing single input-repair turn before delegated research preparation/admission or provider/effect I/O. Current authority/database checks precede this validator; post-admission failures remain hard failures.",
+    "failurePresentation": "Unexpected stream failure no longer includes the internal project name or claims that the cause is unknown."
+  },
+  "installed": [
+    {
+      "name": "eva2-managed-b-slot3-core",
+      "base": "sha256:852d2b5c149d8cf07604a681740b56cdef8b62c07491f428184af5009e4aab0a",
+      "candidate": "sha256:af5ea299447249f7c8dcb5d4e262f2b6f76909091e40ffe8127277a0b0937f78",
+      "source_verified": true,
+      "configuration_preserved": true,
+      "healthy": true
+    },
+    {
+      "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "base": "sha256:14124b770a06e0a93c347cccf14ecbed4c9849d6c766ab7ec0c4bc9cbf5a33ab",
+      "candidate": "sha256:773c9c24de2d8278e72eb24513f4253706fb6ec55aa831848e416289435b501e",
+      "source_verified": true,
+      "configuration_preserved": true,
+      "healthy": true
+    }
+  ],
+  "telegramBridge": {
+    "restarted": true,
+    "noInflightTransport": true,
+    "sourceVerified": true,
+    "unknownSendNeverReplayed": true
+  },
+  "tests": {
+    "coreCandidate": {
+      "passed": 81,
+      "deselected": 2
+    },
+    "workerCandidate": {
+      "passed": 81,
+      "deselected": 2
+    },
+    "isolatedPostgresPassed": 5,
+    "nodePassed": 10,
+    "redBeforeFix": {
+      "legitimateCveCasesFailed": 5,
+      "privateInputsStillRejectedPassed": 14
+    },
+    "inheritedFailures": {
+      "count": 2,
+      "kind": "Existing assertion expects Dutch instruction text while installed baseline uses English. Same two assertions fail on the unchanged parent.",
+      "criteriaChanged": false,
+      "logsPreserved": true,
+      "notCountedAsPassing": true
+    }
+  },
+  "live": {
+    "original_events_preserved": 36,
+    "original_replay_reply_committed": true,
+    "historical_new_admission_stopped_unstarted": true,
+    "historical_deadline_unchanged": true,
+    "no_timeout_message_from_historical_admission": true,
+    "successor_state": "succeeded",
+    "successor_claim_count": 1,
+    "admission_to_start_seconds": 6.0,
+    "research_seconds": 26.0,
+    "ordinary_delivery_acknowledged_at": "2026-10-21 23:31:29+00:00",
+    "original_destination_preserved": true,
+    "prefix_absent": true,
+    "delivered_characters": 2501,
+    "output_sha256": "49007ebc6013e853b877427b7fe45db5c296e14727b562f2a86afcfff1983c0c",
+    "recovery_foreground_requests": 2
+  },
+  "usage": {
+    "foregroundRecovery": {
+      "input_tokens": 21884,
+      "output_tokens": 415,
+      "tool_calls": 2,
+      "model_attempts": 2
+    },
+    "foregroundRecoveryRequests": 2,
+    "research": {
+      "contract": "DelegatedWorkUsage/v1",
+      "tool_calls": 3,
+      "measurement": "measured",
+      "input_tokens": 32173,
+      "total_tokens": 32983,
+      "output_tokens": 810,
+      "schema_version": 1,
+      "cost_usd_micros": 362230,
+      "completed_model_responses": 1
+    },
+    "researchApiEquivalentMicrosUsd": 362230,
+    "actualSubscriptionBill": null,
+    "developmentCredits": null,
+    "apiEquivalentMeaning": "Configured profile accounting only, not measured subscription billing.",
+    "priorFailedRequests": "Preserved in existing journal; excluded from new recovery subtotal."
+  },
+  "recovery": {
+    "originalIngressAndTimestampReplayedExactly": true,
+    "failedHistoricalAdmissionDeadlineNotChanged": true,
+    "historicalAdmissionStoppedThroughExistingOwnerApiBeforeDispatch": true,
+    "onlyOneFreshOwnerResume": true,
+    "workerTemporarilyStoppedWhileAdmittingHistoricalRequest": true,
+    "workerRestartedHealthy": true,
+    "supersededSelfRepairTurnStoppedThroughNormalExactTurnApi": true,
+    "noFakeTelegramUpdatesOrMessages": true
+  },
+  "installationGuard": {
+    "sourceAndConfigurationPinned": true,
+    "otherActiveClaimsBlockedInstallation": true,
+    "threeAuditedInactiveMarkers": "Two previously crashed turns and one prior completed research child journal. Exact execution advisory locks held through source/hash/model/pending-step checks until old core stopped; no journal markers or deadlines edited.",
+    "holderExit137": "Expected termination when old core was replaced; DB locks released with that container session.",
+    "activeVoiceChanged": false
+  },
+  "sourceVerification": {
+    "primarySources": [
+      "https://www.wiz.io/blog/php2shell-php-rce",
+      "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/109xxx/CVE-2026-109618.json",
+      "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/109xxx/CVE-2026-109619.json"
+    ],
+    "confirmedFinding": "Wiz records first discovery on 19 August and private report to PHP on 24 August 2026; this is a shared timeline, not separately proven discovery dates for both CVEs. CVE reservation/publication dates are separately identified.",
+    "automaticallySemanticallyVerified": false,
+    "manualPrimarySourceCheck": true
+  },
+  "remainingLimit": {
+    "profiles": {
+      "shared_provider": "compatible",
+      "public_research": "compatible",
+      "household_research": "preexisting_incompatible"
+    },
+    "checkerExitCode": 1,
+    "existingHouseholdHandoffPreserved": true,
+    "completeAutonomyOrVoiceAcceptance": false
+  },
+  "privacy": {
+    "rawMessagesAndExecutionEvidence": "Root-only private artifact directory; no raw conversation bodies or secrets in public evidence.",
+    "originalEventHashesVerified": 36,
+    "noModelProviderOrBudgetChanges": true
+  }
 }

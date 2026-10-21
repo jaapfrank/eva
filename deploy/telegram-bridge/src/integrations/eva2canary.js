@@ -189,7 +189,7 @@ async function readCanaryStream(response, onDraft, deadline) {
         if (item.code === 'provider_rate_limited') {
           throw new Error('De modelprovider weigert momenteel aanvragen wegens een gebruiks- of snelheidslimiet. Er is geen nieuw antwoord beschikbaar');
         }
-        throw new Error('Eva2 kon haar antwoord niet afronden; de oorzaak is nog onbekend');
+        throw new Error('Ik kon mijn antwoord niet afronden');
       } else throw new Error('Eva2 gaf een onbekend tekststreambericht');
     }
     if (done) break;

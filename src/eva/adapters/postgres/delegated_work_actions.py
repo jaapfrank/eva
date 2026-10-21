@@ -459,7 +459,17 @@ class PostgresDelegatedWorkActions:
                     for item in error.errors(include_input=False, include_url=False, include_context=False)
                 }))
                 raise ConversationActionInputRejected(fields) from None
-            validate_public_projection(public.arguments())
+            try:
+                validate_public_projection(public.arguments())
+            except ConversationConflict as error:
+                # This validator runs before preparation, admission or I/O.
+                # Use the existing one-shot argument repair; never send the
+                # rejected projection, or reclassify a later execution failure.
+                raise ConversationActionInputRejected(
+                    ("question", "title", "options", "public_review"),
+                    prompt="Het onderzoek is nog niet gestart. Herschrijf de openbare zoekvraag zonder privécontext, "
+                           "sleutels, interne adressen of tijdstippen; schrijf datums met de maandnaam.",
+                ) from error
         thread_id = self._thread_id(turn, step_index)
         request = {"call_id": call.call_id, "name": call.name, "arguments": call.arguments}
         events = timeline.events(thread_id)

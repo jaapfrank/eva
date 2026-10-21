@@ -1,0 +1,62 @@
+{
+  "contract": "EvaTelegramResearchRepairReview/v1",
+  "reviewer": "/root/review_cursor",
+  "verdict": "BOUNDED_GO",
+  "sourceScope": [
+    "CVE token ignored only by telephone heuristic; other privacy checks unchanged",
+    "Pre-admission projection conflict uses existing one-shot input repair",
+    "Telegram unexpected stream failure presentation"
+  ],
+  "validation": {
+    "corePassed": 81,
+    "workerPassed": 81,
+    "postgresPassed": 5,
+    "nodePassed": 10,
+    "baselineNewCveRegressionFailures": 5,
+    "inheritedWordingFailures": 2,
+    "inheritedWordingFailuresAlsoOnParent": true
+  },
+  "installationConditions": [
+    "Actual source/config/image unchanged from candidate parents",
+    "All live execution claims remain idle",
+    "Exact three orphan conversation markers may be parked only with their execution locks HELD until old core stops, source hashes unchanged, models closed, no pending effects, terminal child-call bound"
+  ],
+  "liveVerificationRequired": true,
+  "excluded": [
+    "Foreign WIP",
+    "Voice implementation and installation",
+    "General pending-marker exemptions",
+    "Changed timestamps/deadlines",
+    "Independent evaluation criteria"
+  ],
+  "recordedAt": "2026-10-21T23:27:30.448562+00:00",
+  "finalLiveEvidenceReviewed": true,
+  "liveEvidence": {
+    "original_events_preserved": 36,
+    "original_replay_reply_committed": true,
+    "historical_new_admission_stopped_unstarted": true,
+    "historical_deadline_unchanged": true,
+    "no_timeout_message_from_historical_admission": true,
+    "successor_state": "succeeded",
+    "successor_claim_count": 1,
+    "admission_to_start_seconds": 6.0,
+    "research_seconds": 26.0,
+    "ordinary_delivery_acknowledged_at": "2026-10-21 23:31:29+00:00",
+    "original_destination_preserved": true,
+    "prefix_absent": true,
+    "delivered_characters": 2501,
+    "output_sha256": "49007ebc6013e853b877427b7fe45db5c296e14727b562f2a86afcfff1983c0c",
+    "recovery_foreground_requests": 2
+  },
+  "scopeLimit": {
+    "profiles": {
+      "shared_provider": "compatible",
+      "public_research": "compatible",
+      "household_research": "preexisting_incompatible"
+    },
+    "checkerExitCode": 1,
+    "existingHouseholdHandoffPreserved": true,
+    "completeAutonomyOrVoiceAcceptance": false
+  },
+  "finalReviewAt": "2026-10-21T23:34:33.850988+00:00"
+}

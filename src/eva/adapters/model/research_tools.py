@@ -51,7 +51,7 @@ def validate_public_projection(arguments):
         r"-----BEGIN [A-Z ]*PRIVATE KEY-----|\beyJ[A-Za-z0-9_-]{12,}\.",
         r"\b(?:gh[pousr]_[A-Za-z0-9_]{12,}|xox[baprs]-[A-Za-z0-9-]{12,}|AIza[A-Za-z0-9_-]{20,})",
         r"\b[A-Fa-f0-9]{32,}\b|\bsk-[A-Za-z0-9_-]{12,}",
-        r"(?:\+?\d[ ()-]*){8,}|\b[1-9]\d{3}\s?[A-Z]{2}\b",
+        r"\b[1-9]\d{3}\s?[A-Z]{2}\b",
         r"(?i)(?:\b[A-Z]:[\\/]|\\\\|/(?:home|users|run|var|etc|mnt|private|tmp|proof-state)/)",
         r"(?i)\b(?:mijn|m'n|onze|ons|my|our)\b",
         r"(?i)\b[A-Za-zÀ-ÿ]+(?:straat|laan|weg|dreef|plein)\s+\d+",
@@ -60,7 +60,12 @@ def validate_public_projection(arguments):
         r"(?i)\b(?:adres|telefoonnummer|contactgegevens|woonadres)\s+van\b",
         r"\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}:\d{2})\b",
     )
-    if any(re.search(pattern, text) for pattern in blocked):
+    # CVE's public identifier schema permits a four-digit year and 4..19
+    # sequence digits. Only the telephone heuristic ignores those complete
+    # tokens; credentials, private context, URLs and other checks see all text.
+    telephone_text = re.sub(r"\bCVE-[0-9]{4}-[0-9]{4,19}\b", "CVE", text)
+    if (re.search(r"(?:\+?\d[ ()-]*){8,}", telephone_text)
+            or any(re.search(pattern, text) for pattern in blocked)):
         raise PublicProjectionRejected("public research input contains possible private details")
     for match in re.finditer(r"(?i)\b(?:https?|ftp|file)://[^\s<>()]+", text):
         raw = match.group().rstrip(".,;")

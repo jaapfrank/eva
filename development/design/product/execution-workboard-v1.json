@@ -8268,7 +8268,7 @@
                   "limitation": "Afzonderlijk householdresearch-versieverschil staat bij E1.6; geen algemene spraakclaim."
                 },
                 "telegramResearchRepair20261022": {
-                  "status": "in_progress",
+                  "status": "installed_and_used",
                   "evidence": "development/evidence/product/telegram-research-repair-20261022.json",
                   "originalCompletionPreserved": true
                 }
@@ -13836,7 +13836,7 @@
                 "limitation": "Afzonderlijk householdresearch-versieverschil staat bij E1.6; geen algemene spraakclaim."
               },
               "telegramResearchRepair20261022": {
-                "status": "in_progress",
+                "status": "installed_and_used",
                 "evidence": "development/evidence/product/telegram-research-repair-20261022.json",
                 "originalCompletionPreserved": true
               }

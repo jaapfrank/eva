@@ -77,3 +77,14 @@ test('incomplete EOF aborts a blocked preview and preserves the stream error',as
   await assert.rejects(ask(sink,response),/tekststream eindigde onvolledig/u);
   assert.equal(signalSeen.aborted,true);
 });
+
+test('unexpected core stream failure remains failed without an internal project label', async()=>{
+  const sink=createEva2DraftSink({chatId:7,draftId:9401,sendDraft:async()=>true});
+  const response=respond([{contract:'EvaTextStreamError/v1',code:'unexpected'}],{pulls:0});
+  await assert.rejects(ask(sink,response),error=>{
+    assert.equal(error.message,'Ik kon mijn antwoord niet afronden');
+    assert.doesNotMatch(error.message,/Eva2|oorzaak.*onbekend/u);
+    return true;
+  });
+  assert.equal(sink.enqueue('Een antwoord na de fout'),false);
+});
