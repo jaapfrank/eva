@@ -8266,6 +8266,11 @@
                   "originalCompletionPreserved": true,
                   "result": "Lokale AI-GPU-services uit en autostart disabled; echte PHP-opdracht 26s, normale Telegramaflevering bevestigd zonder Eva2:-label.",
                   "limitation": "Afzonderlijk householdresearch-versieverschil staat bij E1.6; geen algemene spraakclaim."
+                },
+                "telegramResearchRepair20261022": {
+                  "status": "in_progress",
+                  "evidence": "development/evidence/product/telegram-research-repair-20261022.json",
+                  "originalCompletionPreserved": true
                 }
               },
               {
@@ -13829,6 +13834,11 @@
                 "originalCompletionPreserved": true,
                 "result": "Lokale AI-GPU-services uit en autostart disabled; echte PHP-opdracht 26s, normale Telegramaflevering bevestigd zonder Eva2:-label.",
                 "limitation": "Afzonderlijk householdresearch-versieverschil staat bij E1.6; geen algemene spraakclaim."
+              },
+              "telegramResearchRepair20261022": {
+                "status": "in_progress",
+                "evidence": "development/evidence/product/telegram-research-repair-20261022.json",
+                "originalCompletionPreserved": true
               }
             },
             {

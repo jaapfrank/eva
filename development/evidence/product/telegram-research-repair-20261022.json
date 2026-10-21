@@ -1,0 +1,15 @@
+{
+  "contract": "EvaTelegramResearchRepair/v1",
+  "status": "in_progress",
+  "recordedAt": "2026-10-21T23:20:54.540258+00:00",
+  "ownerRequest": "Onderzoek en herstel bugs in de laatste echte Telegramberichten.",
+  "existing": "Vorige private PHP-onderzoekopdracht is uitgevoerd en afgeleverd. Nieuwe vervolgvragen crashen lokaal vóór onderzoeksadmission; transport heeft daarop foutmeldingen afgeleverd.",
+  "observedFailures": [
+    "Public-projection validation raises unhandled conflict before delegated research preparation/admission. CVE identifiers match the generic telephone digit detector.",
+    "No normal bounded input repair is offered for this validation failure; both latest turns terminate without a committed reply.",
+    "Transport fallback still contains the internal Eva2 name and unknown-cause boilerplate."
+  ],
+  "endCondition": "Legitimate public vulnerability follow-up can be admitted and completed using the installed private route; local rejected projections get one existing bounded input repair without effects or disclosure. Uncertain effects are never retried. Original failed source events remain preserved. Actual requested follow-up is recovered and useful result returned through its original route; no internal project label in failure text.",
+  "scope": "Private public-research input validation/repair and Telegram failure presentation; no voice implementation, provider/model/bounds or independent acceptance changes.",
+  "voiceCodeChanged": false
+}
