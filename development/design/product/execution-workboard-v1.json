@@ -8247,6 +8247,11 @@
                   "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
                   "endCondition": "De werkelijk gebruikte route onderscheidt MCP-registerdekking van aangeboden providers, onderzoekt relevante bestaande bronnen vóór ontbrekende gegevens te vragen en gebruikt technische documentatie voor het huidige gebruikersdoel. Live gewone vraag gebruikt actuele HA-informatie en maakt indirecte versus directe verbinding duidelijk; geen fictief nieuw credentialkanaal of onbewezen API-verbinding.",
                   "originalCompletionPreserved": true
+                },
+                "gpuAndTelegramRepair20261021": {
+                  "status": "in_progress",
+                  "evidence": "development/evidence/product/gpu-telegram-repair-20261021.json",
+                  "originalCompletionPreserved": true
                 }
               },
               {
@@ -13790,6 +13795,11 @@
                 "checkedAt": "2026-10-21T11:05:50.057184+00:00",
                 "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
                 "endCondition": "De werkelijk gebruikte route onderscheidt MCP-registerdekking van aangeboden providers, onderzoekt relevante bestaande bronnen vóór ontbrekende gegevens te vragen en gebruikt technische documentatie voor het huidige gebruikersdoel. Live gewone vraag gebruikt actuele HA-informatie en maakt indirecte versus directe verbinding duidelijk; geen fictief nieuw credentialkanaal of onbewezen API-verbinding.",
+                "originalCompletionPreserved": true
+              },
+              "gpuAndTelegramRepair20261021": {
+                "status": "in_progress",
+                "evidence": "development/evidence/product/gpu-telegram-repair-20261021.json",
                 "originalCompletionPreserved": true
               }
             },

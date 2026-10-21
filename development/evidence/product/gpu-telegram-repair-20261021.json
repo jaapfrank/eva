@@ -1,0 +1,19 @@
+{
+  "contract": "EvaGpuTelegramRepair/v1",
+  "status": "in_progress",
+  "recordedAt": "2026-10-21T12:53:39.956964+00:00",
+  "ownerRequest": "Stop onverwachte lokale GPU-processen en hun automatische start; herstel laatste PHP-onderzoekopdracht en verwijder Eva2:-voorvoegsel uit antwoorden.",
+  "existing": "Gedeelde Eva-kern, digitale/onderzoekworker en Telegrambrug draaien. De laatste oorspronkelijke PHP-opdracht bleef aangenomen zonder bruikbaar resultaat. Twee optionele GPU-services zijn actief en enabled.",
+  "endCondition": "Twee aangetroffen lokale AI-GPU-services gestopt en niet automatisch gestart; werkelijk GPU-gebruik gecontroleerd. Laatste echte taakoverdracht herleid en oorzaak gericht opgelost in geïnstalleerde route; bruikbaar onderzoekresultaat gecontroleerd met actuele primaire bronnen. Telegramtekst en resultaatbijlagen bevatten geen toegevoegd Eva2:-voorvoegsel. Geen valse taakafronding, nieuwe provider of geheimen in bewijs.",
+  "gpuBefore": {
+    "usedMiB": 5877,
+    "totalMiB": 16303,
+    "processes": [
+      "eva-brein.service: image/face encoders",
+      "eva2-local-vision.service: Qwen3.5-4B llama-server"
+    ],
+    "bothEnabled": true
+  },
+  "runtimeChanges": [],
+  "voiceCodeChanged": false
+}
