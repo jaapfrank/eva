@@ -1,0 +1,76 @@
+{
+  "contract": "EvaE16OpenOrientationInstalled/v1",
+  "task": "E1.6",
+  "checkedAt": "2026-10-21T08:52:18.838436+00:00",
+  "status": "installed_actual_model_selection_still_pending",
+  "existing": "Original source-bound attention, source validation/history and ordinary private review remain in use.",
+  "causes": [
+    "Private broad recall automatically split into generic word anchors; max fusion compared uncalibrated scores and promoted old technical restrictions.",
+    "Ordinary open orientation repeatedly evaluated the latest already completed research, without distinguishing an actual chosen follow-up."
+  ],
+  "changed": [
+    "Only implicit private_opportunity_review recalls keep the complete query; explicit planned concepts and other purposes retain prior behavior.",
+    "Host-derived current orientation mode and visible pending history projected into existing model input; full history, failures and feedback remain.",
+    "Private input contract v9 tells open orientation from real chosen/source/pending attention. No forced task, source, household example or message."
+  ],
+  "sourceHashes": {
+    "src/eva/application/free_will.py": "cabdfb94c1a474727ab104a53791c5b9b133f9e602b257358b3ac77bac70460c",
+    "src/eva/adapters/model/pydantic_conversation.py": "fdfabd8109a1258d4e67009054b4f64ca658876214da3c07365e2f924ca5e671",
+    "src/eva/adapters/projection/hindsight.py": "db3d612e54a56422a83d81afe17d4c3dd13566fed7163af84e7f26e811ee952d"
+  },
+  "installation": {
+    "states": {
+      "core": {
+        "image": "sha256:62f4c6b3c6ee274a83d623d3663cbe0a1fd18725ccd88c1292737331b9a09b29",
+        "status": "running",
+        "health": "healthy",
+        "startedAt": "2026-10-21T08:50:53.543896002Z",
+        "restartCount": 0
+      },
+      "worker": {
+        "image": "sha256:6205eb9dae08b8a16f652e207c29fc01e1d39a4f9675ec545e5e8e4b3512415e",
+        "status": "running",
+        "health": "healthy",
+        "startedAt": "2026-10-21T08:51:05.138537386Z",
+        "restartCount": 0
+      }
+    },
+    "servicesUpdated": 2,
+    "retainedMounts": true,
+    "mandatePolicyBytesUnchanged": true,
+    "voiceContainerChanged": false,
+    "workerCoreExecutionPinsEqual": true,
+    "executionPinCount": 70,
+    "capabilityCount": 27
+  },
+  "beforeAfterInputDiagnostic": {
+    "sameRetainedRealOccasion": true,
+    "modelCalls": 0,
+    "unrelatedOldWakewordAndProbeRulesRemovedFromRecall": true,
+    "oneHistoricalCodexInvitationRemains": true,
+    "historyItemsRetained": 19,
+    "noFabricatedFamilyKnowledge": true,
+    "mode": "open_orientation",
+    "notBehaviorProof": true
+  },
+  "review": "development/reviews/e16-open-orientation-review-20261021.json",
+  "checks": {
+    "distinctTargetedCases": 65,
+    "modelRequests": 0
+  },
+  "actualOrdinaryDecision": null,
+  "completion": {
+    "originalCriteriaUnchanged": true,
+    "taskCompleted": false,
+    "sourceChoiceProven": false,
+    "sourceChangeCausalUseProven": false,
+    "ownerAcceptance": false
+  },
+  "usage": {
+    "developmentCreditCost": null,
+    "runtimeCreditCost": null,
+    "extraOperatorModelRequests": 0,
+    "ordinaryRuntimeTokensAfterInstall": null
+  },
+  "remaining": "Actual autonomous useful source choice and real source-change causal follow-up still need observation. Installed correction alone does not complete E1.6."
+}

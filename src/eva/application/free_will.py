@@ -640,6 +640,35 @@ class SensoryDecisionWorker:
 
 
 
+def private_orientation_context(event: SensoryEvent, history: tuple[dict, ...]) -> dict | None:
+    """Distinguish an actual chosen follow-up from an open orientation.
+
+    This is a view of the supplied bounded history, not a new goal store or a
+    relevance decision. Keep original history, uncertainty and authority intact.
+    """
+    if event.source != "initiative-review" or event.event_type != "private_opportunity_review":
+        return None
+    mode = ("chosen_attention" if isinstance(event.payload.get("attention_origin"), dict)
+            else "source_followup" if isinstance(event.payload.get("native_completion_source"), dict)
+            else "pending_attention" if isinstance(event.payload.get("pending_attention"), dict)
+            else "open_orientation")
+    non_pending = {"completed", "initiative_completed", "personal_stopped", "release_ready", "initiative_blocked"}
+    counts, pending = {}, []
+    for item in history:
+        if not isinstance(item, dict) or not isinstance(item.get("intent_id"), str):
+            continue  # Earlier contact is not a selected project.
+        phase = item.get("phase")
+        if not isinstance(phase, str):
+            continue
+        counts[phase] = counts.get(phase, 0) + 1
+        if phase not in non_pending:
+            pending.append({key: item.get(key) for key in ("intent_id", "title", "phase")})
+    return {"mode": mode, "visible_project_phase_counts": counts,
+            "visible_pending_projects": pending, "phase_counts_do_not_prove_goal_completion": True,
+            "coverage": "supplied_bounded_history_not_all_goals_or_family_knowledge",
+            "history_selects_no_current_goal": True, "is_execution_permission": False}
+
+
 def _private_review_recall_context(event: SensoryEvent) -> str:
     """Search for personal opportunity, not recurring telemetry or closed test work.
 

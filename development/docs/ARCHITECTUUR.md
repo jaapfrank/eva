@@ -101,6 +101,16 @@ volledige definitiehashes binnen dezelfde 8 KiB. Alleen optionele toelichtingen
 worden op werkelijk gecodeerde omvang verkort; parameters passen volledig of
 blijven expliciet weggelaten. Een lange toolnaam blokkeert zo niet de afweging
 wanneer de verplichte metadata wel past; ontbrekende verplichte ruimte blijft fout.
+Open privéoriëntatie gebruikt de volledige geheugenvraag; onvergelijkbare scores
+van losse generieke woorden kiezen hier geen oude proef- of apparaatvoorkeur.
+Expliciet gekozen zoekconcepten en andere geheugendoelen behouden hun bestaande
+route. Dezelfde modelinvoer onderscheidt open oriëntatie van werkelijk gekozen,
+geplande of uit een bronuitkomst komende aandacht. Historische projecten, fouten
+en feedback blijven volledig zichtbaar, maar kiezen zelf geen actueel doel.
+De projectie is begrensde geschiedenis, geen bewijs dat alle doelen voltooid zijn
+of dat er volledige gezinskennis is. Zij verleent geen nieuwe uitvoerbevoegdheid;
+zinvolle stilte blijft geldig. Deze gerichte correctie is op 21 oktober geïnstalleerd;
+werkelijke zelfstandige bronkeuze blijft afzonderlijk te bewijzen.
 Oude waarnemingen zijn geen actuele
 uitvoerbevoegdheid: de native uitvoerder controleert benodigde actuele bronnen opnieuw.
 De bestaande HA-stream dekt toestandwaarden; attribuutwijzigingen en willekeurige

@@ -1,0 +1,36 @@
+{
+  "contract": "EvaE16OpenOrientationReview/v1",
+  "checkedAt": "2026-10-21T08:51:03.853804+00:00",
+  "decision": "GO_SOURCE_AND_OPTIONAL_INSTALLATION",
+  "blockingFindings": [],
+  "sourceHashes": {
+    "src/eva/application/free_will.py": "cabdfb94c1a474727ab104a53791c5b9b133f9e602b257358b3ac77bac70460c",
+    "src/eva/adapters/model/pydantic_conversation.py": "fdfabd8109a1258d4e67009054b4f64ca658876214da3c07365e2f924ca5e671",
+    "src/eva/adapters/projection/hindsight.py": "db3d612e54a56422a83d81afe17d4c3dd13566fed7163af84e7f26e811ee952d"
+  },
+  "overlaySourceHashes": {
+    "src/eva/application/free_will.py": "cabdfb94c1a474727ab104a53791c5b9b133f9e602b257358b3ac77bac70460c",
+    "src/eva/adapters/model/pydantic_conversation.py": "fdfabd8109a1258d4e67009054b4f64ca658876214da3c07365e2f924ca5e671",
+    "src/eva/adapters/projection/hindsight.py": "db3d612e54a56422a83d81afe17d4c3dd13566fed7163af84e7f26e811ee952d"
+  },
+  "reviewScope": "Independent root orientation/input delta review; root separately reviewed retrieval delta. Deployment conditional on unchanged actual images, grants and no active work/conversation/model claim.",
+  "checks": {
+    "rootDistinctCases": 45,
+    "retrievalDistinctCases": 9,
+    "privateProfileContractCases": 11,
+    "totalDistinctTargetedCases": 65,
+    "firstRootBatch": "44 passed; one new IdentityProfile fixture missing required principles, corrected before installation.",
+    "afterFixtureRepair": "All8new orientationcasespassed; later pending/phase wording correction all8passedagain. Existing37 rootchecksunchanged.",
+    "realModelRequestsDuringChecks": 0
+  },
+  "independentFindingsResolved": [
+    "Pending projects are no longer described as all unfinished projects. Blocked/release_ready does not mean complete.",
+    "Two version assertions updated for actual changed private input contract v9."
+  ],
+  "limits": [
+    "No proof of self-selected useful source follow-up from source review or tests.",
+    "Full-query recall removes unrelated lexical score boosts; cannot invent missing family knowledge.",
+    "Full failure/history/provenance retained. Silence, privacy, authority, stopping and original E1.6 criteria unchanged."
+  ],
+  "voiceChanged": false
+}

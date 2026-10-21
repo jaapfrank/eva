@@ -2940,7 +2940,7 @@ class PydanticConversationModel:
             raise ConversationModelError("web research artifact is invalid", model_usage=usage) from error
 
     supports_private_context_search = True
-    private_opportunity_profile = "private-orientation-failure-context-contract-v8"
+    private_opportunity_profile = "private-open-orientation-context-contract-v9"
 
     def _request_private_opportunity(self, body, search):
         """One optional read through the existing private memory port, then decide.
@@ -3166,6 +3166,8 @@ class PydanticConversationModel:
             if event.source == "initiative-review" and memory.style_mirror is not None
             else None
         )
+        from eva.application.free_will import private_orientation_context
+        orientation_context = private_orientation_context(event, initiative_history)
         body = {
             "include": ["reasoning.encrypted_content"],
             "input": [
@@ -3186,6 +3188,8 @@ class PydanticConversationModel:
                             **({"private_learning_context": private_learning}
                                if private_learning is not None else {}),
                             "prior_private_initiatives": initiative_history,
+                            **({"private_orientation_context": orientation_context}
+                               if orientation_context is not None else {}),
                             "available_native_actions": initiative_capabilities,
                             "native_source_outcomes": initiative_source_outcomes,
                             "resident_attention": (
@@ -3208,6 +3212,22 @@ class PydanticConversationModel:
                 }
             ],
             "instructions": (self._private_opportunity_instructions(identity, private_contact_allowed=private_contact_allowed)
+                + " private_orientation_context onderscheidt een werkelijk gekozen vervolgmoment "
+                  "of nieuwe bronuitkomst van open_orientation. Bij open_orientation is het "
+                  "verleden een geschiedenis om van te leren, geen opdracht om de laatste "
+                  "afgeronde vraag opnieuw te beoordelen. Zichtbare afgeronde of geblokkeerde "
+                  "projecten kiezen geen actueel doel voor jou. Alleen concluderen dat een "
+                  "afgerond onderzoek geen herhaling nodig heeft, beoordeelt nog niet welke "
+                  "andere informatie, mogelijkheid of ontwikkeling nu zinvol kan zijn. "
+                  "Oriënteer je dan breder vanuit jouw rol als huisgenoot en de beschikbare "
+                  "kennis, of onderzoek een concreet ontbrekend inzicht met de bestaande "
+                  "toegelaten middelen. Oude proefvoorwaarden en assistentinstellingen zijn "
+                  "geen volledig beeld van het gezinsleven. De selectie blijft onvolledig; "
+                  "verzin geen bewonerswens of behoefte. Een onderbouwde pauze blijft geldig, "
+                  "zonder verplichte taak, bronkeuze of bericht. Bij chosen_attention, "
+                  "pending_attention of source_followup behoud je juist de oorspronkelijke "
+                  "bronvraag en voortgang; een nog niet vervallen moment is geen reden voor "
+                  "tussentijds herhaalonderzoek. "
                 + " private_learning_context bevat de bestaande afgeleide persoonlijke "
                   "stijlspiegel uit dezelfde toegelaten privéherinnering. Pas relevante "
                   "geleerde bijsturing passend toe; bron, tijd en betrouwbaarheid van "

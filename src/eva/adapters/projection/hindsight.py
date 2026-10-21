@@ -657,7 +657,9 @@ class HindsightMemoryEngine:
         return f"eva-style-mirror-v1-{principal_sha256[:16]}"
 
     @staticmethod
-    def _recall_query_variants(query_text: str) -> tuple[str, ...]:
+    def _recall_query_variants(
+        query_text: str, *, query_purpose: str | None = None
+    ) -> tuple[str, ...]:
         """Extract candidate topic anchors from the full query in parallel.
 
         Each outgoing variant is bounded separately at the HTTP boundary.
@@ -698,6 +700,13 @@ class HindsightMemoryEngine:
                 if len(variants) >= 7:
                     break
             return tuple(variants)
+
+        # Broad private orientation asks for a relationship between needs,
+        # interests and context, not each longest word independently. Reranker
+        # scores from unrelated queries are not calibrated against one another.
+        # Explicit host-bound/model-planned concepts above remain intentional.
+        if query_purpose == "private_opportunity_review":
+            return (query_text,)
 
         unique: dict[str, str] = {}
         for match in _ANCHOR_TOKEN.finditer(query_text):
@@ -1816,7 +1825,9 @@ class HindsightMemoryEngine:
                     observation_binding_sha256,
                 )
             )
-        variants = self._recall_query_variants(query.query_text)
+        variants = self._recall_query_variants(
+            query.query_text, query_purpose=query.query_purpose
+        )
         requests = [
             (text, bank_id, project_id, binding_sha256)
             for text in variants

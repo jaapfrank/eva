@@ -75,7 +75,7 @@ def test_private_descriptor_extends_only_continuation_fields_and_cannot_mutate_h
 @pytest.mark.parametrize("search_first", [False, True])
 def test_private_initial_and_postsearch_submit_use_the_same_private_contract(monkeypatch, tmp_path, search_first):
     model = PydanticConversationModel(auth_file=tmp_path / "unused")
-    assert model.private_opportunity_profile == "private-orientation-failure-context-contract-v8"
+    assert model.private_opportunity_profile == "private-open-orientation-context-contract-v9"
     original = canonical_json_bytes(_FREE_WILL_TOOL)
     bodies, reads = [], []
     def request(body, *args, **kwargs):
@@ -185,7 +185,7 @@ def test_private_necessary_question_boundary_keeps_optional_social_curiosity_pri
     assert "Geen verplichte vraag of begroeting." in private
     assert "stop, privacy en persoonsgrenzen gelden" in private
     assert result.disposition == "silence" and result.initiative is None and result.next_attention is None
-    assert model.private_opportunity_profile == "private-orientation-failure-context-contract-v8"
+    assert model.private_opportunity_profile == "private-open-orientation-context-contract-v9"
     model.evaluate_sensory_event(event("household-initiative"), identity, _memory())
     assert clarification not in bodies[-1]["instructions"]
     assert "Stel alleen vragen als noodzakelijke informatie ontbreekt." in bodies[-1]["instructions"]
