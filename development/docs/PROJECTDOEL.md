@@ -115,6 +115,18 @@ waarnemen, welke aandacht met het gezin is afgesproken, wanneer een melding past
 wat zij zelf mag oplossen. Niet aangesloten bronnen en onvoldoende dekking blijven
 onbekend. Er komt geen aparte hardgecodeerde bewakingsfunctie per gezinsvoorbeeld.
 
+Het eigenaarverzoek van 21 oktober verdiept dit bestaande doel met zes concrete
+uitkomsten: voorwaardelijke routines leren en weerleggen (E1.7), gevolgen en
+voorbereiding over mensen en huisgegevens verbinden (E1.8), hulp en timing op echte
+ervaring bijstellen (E1.9), eigen creatieve ontwikkeling en gedeelde geschiedenis
+(E1.10), een terugkerende gezinsverantwoordelijkheid dragen (E1.11) en zelf een
+bruikbare voorziening uit een ontdekte behoefte realiseren en verbeteren (E4.15).
+De eerste bouwprioriteit is die laatste geïntegreerde uitkomst, met hergebruik van
+de reeds geleverde vaardigheden, toolketens en beoordeelde ontwikkelroute. Eigen
+werk levert echte resultaten en herinneringen; geen verzonnen leven of druk om
+aandacht. De [bestaande vijf fasen](AFRONDINGSPLAN.md#gericht-upstream-hergebruiken-voor-dagelijks-vervolg-en-ontwikkeling)
+en het canonieke werkbord bewaren scope, afhankelijkheden en werkelijk gebruik.
+
 ## Eén Eva-beheeromgeving en optionele verbindingen
 
 De productbediening toont gesprekken, bekende personen, geheugenbronnen en afgeleide

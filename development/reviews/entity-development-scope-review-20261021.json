@@ -1,0 +1,43 @@
+{
+  "contract": "EvaIndependentScopeReview/v1",
+  "recordedAt": "2026-10-21T08:41:41.075912+00:00",
+  "reviewer": "/root/review_cursor",
+  "verdict": "GO",
+  "scope": "Owner-requested task registration and research/docs only; no runtime acceptance or comparative superiority.",
+  "reviewedFileSha256": {
+    "development/design/product/entity-development-task-scope-20261021.json": "57ebe8e7f419df32304fa4e7e58f50a39288163c10fea9a4b91f0b4c5a7a3028",
+    "development/evidence/reassessment/entity-development-upstream-20261021.json": "ab2c64fb65f953fbf1509a53948d6f13f1b249cec18cb1d6dd5314b2dfede3dd",
+    "development/docs/PROJECTDOEL.md": "6cc5bfc0316e178126cd012225b1b1d979367b4def6b18438c72db7567600551",
+    "development/docs/AFRONDINGSPLAN.md": "93ac99732c943e0e7869c4cee97ee1e1c4648fae2d5ea065c5df7a4f7aea8819"
+  },
+  "reviewedTaskIds": [
+    "E1.7",
+    "E1.8",
+    "E1.9",
+    "E1.10",
+    "E1.11",
+    "E4.15"
+  ],
+  "reviewerDecision": "GO voor de taakregistratie, na twee tekstcorrecties. De zes uitkomsten zijn concreet onderscheiden van afgerond werk. Bestaande criteria en currentWork: E1.6 blijven behouden. Privacy, echte feedback, onafhankelijke beoordeling en hergebruik van één Eva-keten zijn voldoende begrensd. Geen implementatie- of superioriteitsclaim.",
+  "requiredCorrections": [
+    {
+      "change": "Research development web request count8 to5 and corresponding text",
+      "verified": true
+    },
+    {
+      "change": "Remove stray plus before vergelijkt in AFRONDINGSPLAN",
+      "verified": true
+    }
+  ],
+  "verification": {
+    "workboardScopeDependenciesAndMirrors": "passed",
+    "originalCriteriaAndCurrentWork": "preserved",
+    "dashboardHttpDeliveryPlan": "six new planned tasks visible",
+    "legacyProductCompletionCheck": "preexisting HUE6.1 unmapped assertion retained; same on pre-change HEAD"
+  },
+  "reviewUsage": {
+    "webToolRequests": 2,
+    "evaRuntimeRequests": 0,
+    "developmentCredits": null
+  }
+}

@@ -1,0 +1,297 @@
+{
+  "contract": "EvaWorkboardScopeExtension/v1",
+  "id": "entity-development-20261021",
+  "ownerAuthorized": true,
+  "authorization": "Eigenaar21oktober2026: vergelijk OpenClaw, Hermes en OpenCode, maak ook taken voor het voorafgaande voorstel over zelfstandig mens-/huisbegrip, routines, voorkeuren, humor, initiatief en eigen leven, en werk een ambitieuzere onderscheidende Eva uit. Deze registratie plant uitvoering; een onderzoeksdocument is geen gebouwde functie.",
+  "recordedAt": "2026-10-21T08:39:36.329339+00:00",
+  "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+  "researchEvidence": "development/evidence/reassessment/entity-development-upstream-20261021.json",
+  "tasks": [
+    {
+      "id": "E1.7",
+      "title": "Routines met betekenis, uitzonderingen en tegenbewijs leren",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "entity-development-20261021",
+      "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
+      "ownerActionRequired": false,
+      "ownerAuthorization": "Eigenaar21oktober2026: vergelijk OpenClaw, Hermes en OpenCode, maak ook taken voor het voorafgaande voorstel over zelfstandig mens-/huisbegrip, routines, voorkeuren, humor, initiatief en eigen leven, en werk een ambitieuzere onderscheidende Eva uit. Deze registratie plant uitvoering; een onderzoeksdocument is geen gebouwde functie.",
+      "requiredForCurrentDelivery": true,
+      "scopeDecision": "Nieuwe expliciete eigenaaruitkomst binnen bestaande E1/E4; eerdere gesloten criteria en acceptaties blijven exact behouden.",
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "researchEvidence": "development/evidence/reassessment/entity-development-upstream-20261021.json",
+      "existing": "Brongebonden person_hypothesis/expectation, Hindsight-synthese, correcties en geplande aandacht bestaan; E1.5 sluit actuele contextoverdracht.",
+      "gap": "De overdracht van een persoonsinzicht bewijst nog niet dat Eva uit herhaalde echte gebeurtenissen een voorwaardelijke routine leert en later bij een uitzondering correct bijstuurt.",
+      "doneWhen": "Eva leidt uit beschikbare echte gebeurtenissen over meerdere dagen een voorlopige routine met relevante omstandigheden af, legt toetsbare verwachting en tegenbewijs vast en gebruikt haar in een latere passende afweging. Een echte uitzondering of correctie verandert de volgende verwachting en het latere gedrag; zonder voldoende dekking blijft de uitkomst onbekend. Een gerichte natuurlijke vraag mag een belangrijk informatiegat sluiten. Geen vooraf gecodeerde gezinsroutine, gefingeerde waarschijnlijkheid, aparte patroonstore of verplichte classificatie per bericht.",
+      "implementation": [
+        "Inspecteer eerst gewone reeds toegelaten gebeurtenissen; bepaal welke betekenis en tijdsdekking werkelijk ontbreken.",
+        "Gebruik bestaande verwachtingen, bronverwijzingen en droomconsolidatie voor voorwaardelijke patronen, bevestiging en weerlegging; tel alleen waar dat een concrete verwachting ondersteunt.",
+        "Kies bij onzekerheid tussen gericht verder waarnemen, één passende vraag of niets doen. Geen stille toestemming afleiden uit herhaling.",
+        "Controleer later een echte voorspelling voordat de routine iets mag sturen; behoud urgente correctie direct in actuele context."
+      ],
+      "verification": [
+        "Een echte afleiding, latere waarneming en zichtbare bijstelling met oorspronkelijke tijd/bronnen; meerdere dagen zijn echte kalenderdagen.",
+        "Een uitzondering wordt niet automatisch de nieuwe norm; verwijderen/correctie werkt door en gedeelde gebeurtenissen identificeren niet vanzelf een persoon."
+      ],
+      "files": [
+        "src/eva/application/human_understanding.py",
+        "src/eva/application/resident_attention.py",
+        "src/eva/adapters/postgres/initiative_context.py",
+        "src/eva/adapters/projection/hindsight.py"
+      ],
+      "dependsOn": [
+        "E1.5"
+      ],
+      "upstreamSourceIds": [
+        "openclaw-intents",
+        "hermes-goals"
+      ],
+      "beyondExistingScope": "E1.5 levert actuele synthese; deze nieuwe uitkomst levert aantoonbaar leren en weerleggen van een voorwaardelijke routine.",
+      "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
+      "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
+      "nextAction": "Selecteer een reeds aanwezig terugkerend echt informatiegat; leg de voorspelling en benodigde waarneming vast vóór latere beoordeling."
+    },
+    {
+      "id": "E1.8",
+      "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "entity-development-20261021",
+      "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
+      "ownerActionRequired": false,
+      "ownerAuthorization": "Eigenaar21oktober2026: vergelijk OpenClaw, Hermes en OpenCode, maak ook taken voor het voorafgaande voorstel over zelfstandig mens-/huisbegrip, routines, voorkeuren, humor, initiatief en eigen leven, en werk een ambitieuzere onderscheidende Eva uit. Deze registratie plant uitvoering; een onderzoeksdocument is geen gebouwde functie.",
+      "requiredForCurrentDelivery": true,
+      "scopeDecision": "Nieuwe expliciete eigenaaruitkomst binnen bestaande E1/E4; eerdere gesloten criteria en acceptaties blijven exact behouden.",
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "researchEvidence": "development/evidence/reassessment/entity-development-upstream-20261021.json",
+      "existing": "Actuele persoonscontext, open werk, providerwaarnemingen en modelgekozen bronaanleidingen gebruiken dezelfde afweging.",
+      "gap": "Een apparaatstatus of agenda-item afzonderlijk bewijst nog geen begrip van samenhangende gevolgen, conflicterende voorkeuren en voorbereiding.",
+      "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.",
+      "implementation": [
+        "Projecteer verbanden en afhankelijkheden compact uit dezelfde bronnen en taken; begin zonder nieuwe graphdatabase of digitale-tweelingservice.",
+        "Laat dezelfde modelafweging vastleggen wat naar verwachting gebeurt bij doorgaan, veranderen of niets doen, met onderbouwing en ontbrekende dekking.",
+        "Vraag alleen toegang of verduidelijking als dit de concrete uitkomst kan veranderen; eerbiedig uiteenlopende personen en gedeelde/privécontext.",
+        "Voer gekozen voorbereiding via bestaande werkroute af en vergelijk verwachting met later werkelijk resultaat."
+      ],
+      "verification": [
+        "Werkelijk vooraf vastgelegd inzicht plus later brongebonden gevolg; achteraf uitleggen telt niet als vooruitzien.",
+        "Correctie en een ontbrekende bron leiden tot aangepast gedrag; correlatie en geslaagde uitvoering bewijzen niet dat de interventie hielp."
+      ],
+      "files": [
+        "src/eva/application/human_understanding.py",
+        "src/eva/adapters/postgres/initiative_context.py",
+        "src/eva/bootstrap/native_initiative_work.py",
+        "src/eva/providers"
+      ],
+      "dependsOn": [
+        "E1.5",
+        "E1.6",
+        "E1.7"
+      ],
+      "upstreamSourceIds": [
+        "openclaw-intents",
+        "openclaw-heartbeat",
+        "hermes-code"
+      ],
+      "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
+      "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
+      "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
+      "nextAction": "Kies vanuit echte lopende bedoelingen welke samenhang ontbreekt; houd een nog onbekende bron expliciet onbekend."
+    },
+    {
+      "id": "E1.9",
+      "title": "Leren welke hulp, timing en manier van contact echt werken",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "entity-development-20261021",
+      "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
+      "ownerActionRequired": false,
+      "ownerAuthorization": "Eigenaar21oktober2026: vergelijk OpenClaw, Hermes en OpenCode, maak ook taken voor het voorafgaande voorstel over zelfstandig mens-/huisbegrip, routines, voorkeuren, humor, initiatief en eigen leven, en werk een ambitieuzere onderscheidende Eva uit. Deze registratie plant uitvoering; een onderzoeksdocument is geen gebouwde functie.",
+      "requiredForCurrentDelivery": true,
+      "scopeDecision": "Nieuwe expliciete eigenaaruitkomst binnen bestaande E1/E4; eerdere gesloten criteria en acceptaties blijven exact behouden.",
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "researchEvidence": "development/evidence/reassessment/entity-development-upstream-20261021.json",
+      "existing": "Echte feedback over nut, hinder en timing en beperkte latere HUE5-toepassing bestaan; I1.2 bewaakt passende aflevering.",
+      "gap": "De beperkte gesloten feedbackproef bewijst geen doorlopend contextafhankelijk leren van spontane gezinsbijdragen of onduidelijke reacties.",
+      "doneWhen": "Een gewone echte bijdrage krijgt een brongebonden beoordeling van uitvoering, ervaren nut, timing en hinder die onzekerheid behoudt. Eva gebruikt dit bij een latere inhoudelijk passende maar niet identieke situatie, met aantoonbaar ander gedrag waar de feedback dat rechtvaardigt. Een mislukte of ongewenste bijdrage leidt tot bijstelling; geen reactie blijft onbekend en geen succesbewijs. Een betekenisvolle onzekerheid kan met een korte natuurlijke vraag worden verkleind. Persoonsverschillen blijven behouden en er is geen beloning voor gesprekstijd of hoeveelheid berichten.",
+      "implementation": [
+        "Gebruik de bestaande feedback-/leerroute en voorkom dubbel tellen van dezelfde waarneming, correctie of reactie.",
+        "Onderscheid inhoudelijke afwijzing, slechte timing, niet gehoord en onvoldoende gegevens; neem expliciete feedback zwaarder dan vermoedens.",
+        "Toets later in een andere relevante context of de les wordt toegepast; behoud gesprek/STOP/privégrenzen en voorkom dat stille dagen tot verplichte berichten leiden.",
+        "Maak echte besparing, minder noodzakelijke aansporing, plezier en hinder zichtbaar via bestaande bediening; schijnbesparingen en onbekende kosten apart."
+      ],
+      "verification": [
+        "Van echte reactie naar latere inhoudelijke toepassing, zonder voorgeschreven antwoordzin of nieuw opgevoerd HUE5-eindgeval.",
+        "Aflevering/actiegeslaagd is niet hetzelfde als menselijk nut; effecten blijven onzeker zonder voldoende feedback of waarneming."
+      ],
+      "files": [
+        "src/eva/application/human_understanding.py",
+        "src/eva/application/resident_attention.py",
+        "src/eva/adapters/postgres/initiative_context.py",
+        "src/eva/bootstrap/household_initiative_delivery.py"
+      ],
+      "dependsOn": [
+        "E1.5",
+        "I1.2"
+      ],
+      "upstreamSourceIds": [
+        "hermes-curator",
+        "hermes-skills",
+        "openclaw-heartbeat"
+      ],
+      "beyondExistingScope": "Nieuwe gewone-use-uitkomst boven op behouden HUE5/I1.2-deelbewijs; geen heropening of herhaling van die gesloten proef.",
+      "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
+      "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
+      "nextAction": "Verbind de eerstvolgende werkelijk ontvangen reactie aan haar oorspronkelijke bijdrage en benoem wat inhoud, timing of onzekerheid is."
+    },
+    {
+      "id": "E1.10",
+      "title": "Een herkenbare eigenheid uit echte ervaringen en creatieve projecten ontwikkelen",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "entity-development-20261021",
+      "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
+      "ownerActionRequired": false,
+      "ownerAuthorization": "Eigenaar21oktober2026: vergelijk OpenClaw, Hermes en OpenCode, maak ook taken voor het voorafgaande voorstel over zelfstandig mens-/huisbegrip, routines, voorkeuren, humor, initiatief en eigen leven, en werk een ambitieuzere onderscheidende Eva uit. Deze registratie plant uitvoering; een onderzoeksdocument is geen gebouwde functie.",
+      "requiredForCurrentDelivery": true,
+      "scopeDecision": "Nieuwe expliciete eigenaaruitkomst binnen bestaande E1/E4; eerdere gesloten criteria en acceptaties blijven exact behouden.",
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "researchEvidence": "development/evidence/reassessment/entity-development-upstream-20261021.json",
+      "existing": "Eén identiteit, gedeelde/privéherinneringen, persoonlijke interesses, eigen meerdaags vervolg en correcte eigen daggeschiedenis bestaan.",
+      "gap": "Correcte dagrecall of doelhervatting bewijst nog geen herkenbare ontwikkeling van eigen smaak, gedeelde humor en een creatief werk met echt vervolg.",
+      "doneWhen": "Eva kiest zelf een passende creatieve of onderzoekende lijn, maakt een concreet resultaat en ontwikkelt die op een latere echte dag verder vanuit wat zij leerde of werkelijk met het gezin meemaakte. In een later gesprek gebruikt zij passende gedeelde geschiedenis en een onderbouwd eigen oordeel zonder standaardgrappen, verzonnen belevenissen of druk om aandacht. Betrokken gezinsleden beoordelen herkenbaarheid, plezier en timing afzonderlijk; een humorvoorkeur wordt niet voor anderen veralgemeniseerd. Privéervaringen blijven afgeschermd en correctie/vergeten werkt door.",
+      "implementation": [
+        "Gebruik bestaande personal_interests, dezelfde taken/artefacten en actuele geheugencontext; houd de oorsprong en het verschil tussen plan, werk, resultaat en mening vast.",
+        "Laat Eva vanuit haar eigen werk en echte gedeelde ervaringen een lijn kiezen; fictie of een spel wordt herkenbaar als creatieve inhoud gepresenteerd.",
+        "Verwerk werkelijke reacties contextueel. Eén lach of uitblijvende reactie bepaalt niet permanent iemands smaak.",
+        "Volg echt later vervolg en eventueel gewijzigd eigen oordeel; geen persona-wisselaar, vaste verhaaltjesgenerator of tweede autobiografische opslag."
+      ],
+      "verification": [
+        "Hetzelfde echte project krijgt inhoudelijke ontwikkeling over dagen, met terugvindbaar resultaat en les.",
+        "Ervaren eigenheid en humor vereisen een werkelijk oordeel; een sympathiek modelantwoord of technische geheugentest vervangt dat niet."
+      ],
+      "files": [
+        "src/eva/application/personal_interests.py",
+        "src/eva/application/human_understanding.py",
+        "src/eva/bootstrap/recent_activity.py",
+        "src/eva/bootstrap/household_continuity.py"
+      ],
+      "dependsOn": [
+        "E1.4",
+        "E1.5",
+        "E2.7"
+      ],
+      "upstreamSourceIds": [
+        "hermes-goals",
+        "hermes-skills",
+        "openclaw-intents"
+      ],
+      "beyondExistingScope": "E1.4 bewijst vervolg; E2.7 correcte geschiedenis. Deze uitkomst vraagt een werkelijk ontwikkeld eigen werk en herkenbare sociale eigenheid.",
+      "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
+      "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
+      "nextAction": "Lees werkelijk bestaande interesses en resultaten; laat Eva zelf een passende creatieve lijn voortzetten in plaats van een demo-onderwerp op te leggen."
+    },
+    {
+      "id": "E1.11",
+      "title": "Een afgesproken gezinsverantwoordelijkheid zelfstandig blijven dragen",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "entity-development-20261021",
+      "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
+      "ownerActionRequired": false,
+      "ownerAuthorization": "Eigenaar21oktober2026: vergelijk OpenClaw, Hermes en OpenCode, maak ook taken voor het voorafgaande voorstel over zelfstandig mens-/huisbegrip, routines, voorkeuren, humor, initiatief en eigen leven, en werk een ambitieuzere onderscheidende Eva uit. Deze registratie plant uitvoering; een onderzoeksdocument is geen gebouwde functie.",
+      "requiredForCurrentDelivery": true,
+      "scopeDecision": "Nieuwe expliciete eigenaaruitkomst binnen bestaande E1/E4; eerdere gesloten criteria en acceptaties blijven exact behouden.",
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "researchEvidence": "development/evidence/reassessment/entity-development-upstream-20261021.json",
+      "existing": "Bestaande mandaten, duurzame taken, eigen vervolg, resultaatcontrole en korte terugmelding zijn aanwezig.",
+      "gap": "Een losse geslaagde meerdaagse taak bewijst niet dat een gezinslid een terugkerende zorg kan loslaten terwijl omstandigheden veranderen.",
+      "doneWhen": "Een gezinslid kan één echte terugkerende verantwoordelijkheid met gewenste uitkomst en grenzen bij Eva neerleggen. Eva bewaakt die over meerdere echte dagen, bereidt passend voor, voltooit toegestaan werk, verwerkt een werkelijke verandering en komt op relevante tijd terug zonder herhaalde eigenaaropdracht of ontwikkelaarsaanmoediging. Zij laat de actuele stand kort zien, accepteert overnemen/stoppen en bewaart geen verborgen onaf werk. Het gezinslid bevestigt afzonderlijk of minder begeleiding nodig was en de zorg werkelijk uit handen werd genomen; beperkte technische continuïteit alleen sluit deze kaart niet.",
+      "implementation": [
+        "Leg gewenste uitkomst, uitzonderingen, beschikbare bronnen en al verleende handelingsruimte vast via bestaande mandaat-/taakcontracten.",
+        "Hergebruik bestaande aandacht en open werk voor voorbereiding, actuele controle en vervolg; herhaal geen onzekere effecten en introduceer geen losse verantwoordelijkheiddaemon.",
+        "Pas de aanpak aan bij werkelijke wijzigingen en volg echte kwaliteit, benodigde aansporing, hinder en gemeten gebruik.",
+        "Maak expliciete overdracht aan gezin of andere toegelaten actor mogelijk via de bestaande taakstatus; communicatie naar derden alleen met passende bestaande toestemming."
+      ],
+      "verification": [
+        "Een oorspronkelijke afspraak, zelfstandig vervolg, echte gewijzigde omstandigheid en gecontroleerd resultaat met oorspronkelijk ontvanger.",
+        "Een gezinslid beoordeelt feitelijke ontzorging; geen gescripte gezinsreactie, berichtquota of geleende E1.4-acceptatie."
+      ],
+      "files": [
+        "src/eva/application/resident_attention.py",
+        "src/eva/adapters/postgres/initiative_context.py",
+        "src/eva/bootstrap/native_initiative_work.py",
+        "src/eva/bootstrap/household_work.py"
+      ],
+      "dependsOn": [
+        "E1.8",
+        "E1.9"
+      ],
+      "upstreamSourceIds": [
+        "openclaw-intents",
+        "openclaw-heartbeat",
+        "hermes-goals"
+      ],
+      "beyondExistingScope": "E1.4 technisch vervolg blijft gesloten; hier gaat het om een echte terugkerende gezinsverantwoordelijkheid, gewijzigde omstandigheden en minder menselijke aansturing.",
+      "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
+      "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
+      "nextAction": "Kies uit een reeds uitgesproken werkelijke gezinsbehoefte één overdraagbare verantwoordelijkheid; vraag alleen ontbrekende inhoudelijke grenzen."
+    },
+    {
+      "id": "E4.15",
+      "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "entity-development-20261021",
+      "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
+      "ownerActionRequired": false,
+      "ownerAuthorization": "Eigenaar21oktober2026: vergelijk OpenClaw, Hermes en OpenCode, maak ook taken voor het voorafgaande voorstel over zelfstandig mens-/huisbegrip, routines, voorkeuren, humor, initiatief en eigen leven, en werk een ambitieuzere onderscheidende Eva uit. Deze registratie plant uitvoering; een onderzoeksdocument is geen gebouwde functie.",
+      "requiredForCurrentDelivery": true,
+      "scopeDecision": "Nieuwe expliciete eigenaaruitkomst binnen bestaande E1/E4; eerdere gesloten criteria en acceptaties blijven exact behouden.",
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "researchEvidence": "development/evidence/reassessment/entity-development-upstream-20261021.json",
+      "existing": "E4.5 autonome beoordeelde verbetering, E4.12 vaardigheidspakketten, E4.13 codefeedback en E4.14 dienstoverstijgende toolprogramma’s zijn technisch afgerond.",
+      "gap": "De afzonderlijke bouwmogelijkheden bewijzen niet dat Eva zelf een echte behoefte ontdekt, een passende nieuwe voorziening ontwerpt en die na gewoon gebruik verbetert.",
+      "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
+      "implementation": [
+        "Laat Eva zelf de aanleiding en waarde formuleren vanuit aanwezige bronnen; controleer eerst de actuele catalogus en passende bestaande pakketten.",
+        "Gebruik E4.12 voor deskundigheid, E4.14 voor toolketens en E4.13 voor codefeedback binnen de bestaande E4.5-beoordeling/toepassing.",
+        "Onderzoek OpenCode SDK/headless API als afgebakende programmeeruitvoerder alleen bij een aangetoond resterend gat. Geef voorkeur aan bestaande uitvoerroute als die de uitkomst al goed levert; geïsoleerde codevoorstellen geven geen extra huisrechten of identiteit.",
+        "Bind aanleiding, gekozen ontwerp, artefact/configuratie, onafhankelijke controle, echte beschikbaarheid, feedback en opvolgversie aan dezelfde taak-/bronketen.",
+        "Meet resultaatkwaliteit, werkelijk gebruik, benodigde menselijke hulp, tijd en model/toolgebruik; pas alleen bewezen winst toe en behoud een goede versie bij regressie."
+      ],
+      "verification": [
+        "De aanleiding en inhoudelijke ontwerpkeuze komen van Eva; eindproduct wordt via de werkelijke toegelaten route gebruikt, niet alleen als bestand of sandboxpatch opgeleverd.",
+        "Een echte gebruikservaring werkt door naar beoordeelde latere versie of gemotiveerd behoud en hergebruik; werkende code is nog geen bewezen gezinswaarde.",
+        "Hergebruik, licenties/pinning, STOP, oorspronkelijke ontvanger, gegevensbehoud en huidige bevoegdheid blijven gelden. SDK-integratie is geen verplicht doel op zichzelf."
+      ],
+      "files": [
+        "src/eva/application/component_development.py",
+        "src/eva/application/component_improvements.py",
+        "src/eva/application/skill_packages.py",
+        "src/eva/application/tool_program.py",
+        "src/eva/operations/programming_workspace.py",
+        "src/eva/bootstrap/native_initiative_work.py"
+      ],
+      "dependsOn": [
+        "E1.5",
+        "E4.5",
+        "E4.12",
+        "E4.13",
+        "E4.14"
+      ],
+      "upstreamSourceIds": [
+        "hermes-skills",
+        "hermes-curator",
+        "hermes-code",
+        "opencode-sdk",
+        "opencode-server",
+        "opencode-lsp"
+      ],
+      "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
+      "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
+      "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
+      "nextAction": "Eerste nieuwe uitvoerprioriteit: laat Eva uit echte bestaande context één behoefte selecteren; inventariseer haar beschikbare uitvoer- en afleverroute vóór enige nieuwe adapterbouw."
+    }
+  ]
+}

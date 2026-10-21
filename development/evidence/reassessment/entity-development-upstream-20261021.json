@@ -1,0 +1,148 @@
+{
+  "contract": "EvaEntityDevelopmentResearch/v1",
+  "recordedAt": "2026-10-21T08:39:36.329339+00:00",
+  "status": "research_completed_tasks_planned_not_implemented",
+  "authorization": "Eigenaar21oktober2026: vergelijk OpenClaw, Hermes en OpenCode, maak ook taken voor het voorafgaande voorstel over zelfstandig mens-/huisbegrip, routines, voorkeuren, humor, initiatief en eigen leven, en werk een ambitieuzere onderscheidende Eva uit. Deze registratie plant uitvoering; een onderzoeksdocument is geen gebouwde functie.",
+  "method": "Current official documentation checked online; targeted inspection of existing Eva architecture, source and canonical task status. Prior pinned code research retained as historical evidence, not asserted to be latest upstream code.",
+  "sources": [
+    {
+      "id": "openclaw-intents",
+      "system": "OpenClaw",
+      "url": "https://docs.openclaw.ai/concepts/standing-intents",
+      "observed": "Event-conditioned prospective memory checked before eligible interactive replies; aspirations and clock schedules are distinct.",
+      "use": "Responsibility lifecycle, cancellation and event-conditioned followthrough scenarios in existing Eva attention/tasks.",
+      "limit": "An interactive intent check alone does not demonstrate unsolicited useful household activity."
+    },
+    {
+      "id": "openclaw-heartbeat",
+      "system": "OpenClaw",
+      "url": "https://docs.openclaw.ai/gateway/heartbeat",
+      "observed": "System-owned automation runs periodic main-session turns; recurring cadence and event wakes have distinct controls.",
+      "use": "Attention ownership, foreground priority and event coalescing scenarios; Eva already has its own attention lane.",
+      "limit": "Do not add another scheduler or equate repeated model calls with a living entity."
+    },
+    {
+      "id": "hermes-skills",
+      "system": "Hermes",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/skills",
+      "observed": "On-demand AgentSkills documents and agent-managed creation/patching retain reusable procedures from experience.",
+      "use": "Reuse already integrated E4.12 packages and capture a generalizable procedure from an actually used new household creation.",
+      "limit": "A saved skill is not proof of improved outcome, authority or later reuse."
+    },
+    {
+      "id": "hermes-curator",
+      "system": "Hermes",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/curator",
+      "observed": "Usage-aware idle maintenance proposes patches/consolidation and recoverable archival of agent-created skills.",
+      "use": "Usage and outcome evidence in the existing dream/AIDE route, preserving proven sources and independent review.",
+      "limit": "Do not copy archival thresholds as proof that a file or skill is unnecessary; no second curator process."
+    },
+    {
+      "id": "hermes-goals",
+      "system": "Hermes",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/goals",
+      "observed": "Persistent goal continuation uses a completion judge and feeds continuation into the same session within a turn budget.",
+      "use": "Existing E1.4 goals and responsibility progress; distinguish continuing work from achieving a meaningful result.",
+      "limit": "Do not add a mandatory judge per household interaction or copy a second goal database."
+    },
+    {
+      "id": "hermes-code",
+      "system": "Hermes",
+      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/code-execution",
+      "observed": "Programmatic tool calls through an RPC stub can retain intermediates outside model context.",
+      "use": "Use already delivered E4.14 task programs when a new household creation combines services.",
+      "limit": "Eva retains per-action authority, STOP and independent readback; no host credentials in generated code."
+    },
+    {
+      "id": "opencode-lsp",
+      "system": "OpenCode",
+      "url": "https://opencode.ai/docs/lsp/",
+      "observed": "Language-server diagnostics can feed the agent; current docs also warn that CLI diagnostics can be preferable in some projects.",
+      "use": "Reuse E4.13 source-version-bound diagnostics or existing CLI checks while Eva makes a useful extension.",
+      "limit": "No universal LSP speed/quality advantage and no reason to rebuild delivered E4.13."
+    },
+    {
+      "id": "opencode-sdk",
+      "system": "OpenCode",
+      "url": "https://opencode.ai/docs/sdk/",
+      "observed": "SDK exposes programmatic session control, including prompt, abort, messages, structured output and events.",
+      "use": "Candidate bounded coding executor behind the existing programming port only if its remaining integration gap and quality advantage are demonstrated.",
+      "limit": "Not selected or installed here; no second Eva identity, household memory or extra paid provider."
+    },
+    {
+      "id": "opencode-server",
+      "system": "OpenCode",
+      "url": "https://opencode.ai/docs/server/",
+      "observed": "Headless HTTP server publishes OpenAPI and events, supporting integration without terminal scraping.",
+      "use": "Inspect typed integration surface before writing a terminal-based coding-agent wrapper.",
+      "limit": "External coding proposals remain untrusted task output; SDK and server documentation do not establish compatibility with Eva."
+    }
+  ],
+  "priorResearch": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
+  "alreadyCovered": [
+    "E1.4",
+    "E1.5",
+    "E1.6",
+    "E4.5",
+    "E4.12",
+    "E4.13",
+    "E4.14"
+  ],
+  "newTaskIds": [
+    "E1.7",
+    "E1.8",
+    "E1.9",
+    "E1.10",
+    "E1.11",
+    "E4.15"
+  ],
+  "scopeFile": "development/design/product/entity-development-task-scope-20261021.json",
+  "ownProposal": {
+    "status": "design_hypothesis_no_uniqueness_or_superiority_claim",
+    "outcome": "Eva develops a household-specific repertoire of genuinely useful creations, responsibilities, shared experiences and evolving own projects.",
+    "cycle": "noticed unmet need -> investigate meaning and alternatives -> choose feasible creation or responsibility -> existing authorized execution and independent evaluation -> ordinary actual use -> feedback/counterevidence -> improved later behavior or artifact",
+    "firstPriority": "E4.15",
+    "illustrationsNotScriptedAcceptance": [
+      "A small household tool that Eva invents from observed recurring friction and subsequently maintains.",
+      "A developing game, story or other creative work tied to real shared interests and appropriate feedback.",
+      "A household preparation problem noticed before it happens, with relevant alternatives and checked later outcome."
+    ],
+    "differenceToProve": "Integrated self-selected value and sustained ordinary use, beyond having memory, a scheduler, a code executor or a saved skill."
+  },
+  "reuseDecision": "Use delivered Eva contracts and capabilities first; copy or adapt pinned, license-reviewed upstream units only for a demonstrated remaining gap. OpenCode SDK is a candidate, not a selected deployment. No second identity, household memory, scheduler or always-on agent stack.",
+  "acceptance": "Per-task original criteria plus actual family judgments in existing F2; no mechanical humor score, message quota, automatic causal inference or general better-than-all-agents claim.",
+  "sourceInspectionSha256BeforePlanning": {
+    "development/docs/PROJECTDOEL.md": "b5efde66b0782bd15ffe01196a4540c306323ba4f73e149e76a3d6e5f450151a",
+    "development/docs/AFRONDINGSPLAN.md": "2ae62c122b804f56ebe5f1a2fd384f0c77eb4cf0b237d97774f9dbaad7fe2f34",
+    "src/eva/application/human_understanding.py": "1776dc1247e4a50a8d9a57aaa9ed2af0c8da62e06a329bbffb7e81eba295c77b",
+    "src/eva/application/resident_attention.py": "fa58c5c6ad6a4a6fcc4c8dff260b39620184eb13820f3ef35db67289d051018d",
+    "src/eva/application/personal_interests.py": "b60f63c15d2cdf1a08db458cb5fd57753e269a693799bb4127af385e8ca7e875",
+    "src/eva/bootstrap/household_continuity.py": "10c3c5e513e444fd6a2ed9815c97f42f38ec3de13755f86bbc8697c8329a5c15",
+    "development/evidence/reassessment/eva-living-capability-options-20261020.json": "d0f5b5ac015c5b5701ebbab90f37454733fead2a00120575b556d3fa4c2dae68"
+  },
+  "usage": {
+    "evaRuntimeModelRequests": 0,
+    "evaRuntimeToolActions": 0,
+    "newBenchmarkRuns": 0,
+    "developmentCredits": null,
+    "developmentModelTokens": null,
+    "webToolRequestsAtResearchFreeze": 5,
+    "measurementScope": "Five web tool invocations in this user turn through the documentation checks; development agent token/credit accounting unavailable. No Eva instance, model or physical house action invoked. Independent reviewer reported two additional web tool invocations, accounted separately; total development elapsed time unavailable.",
+    "independentReviewWebToolRequests": 2,
+    "totalObservedDevelopmentWebToolRequests": 7,
+    "independentReviewCredits": null,
+    "developmentElapsedSeconds": null
+  },
+  "validation": {
+    "canonicalWorkboard": "passed: 95 cards, 78 previously completed; current E1.6 and every old task preserved",
+    "dashboardHttpProjection": "passed: all six new task IDs returned planned by actual project-state route",
+    "legacyProductCompletionCheck": {
+      "status": "preexisting_failure",
+      "unmappedTaskIds": [
+        "HUE6.1"
+      ],
+      "sameFailureOnHeadBeforeThisChange": true,
+      "scope": "Existing product capability aggregation check is separate from deliveryPlan task projection; no unrelated runtime/UI change made."
+    }
+  }
+}

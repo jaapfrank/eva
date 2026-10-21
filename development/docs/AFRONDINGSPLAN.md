@@ -398,6 +398,44 @@ kosten blijven afzonderlijk. Geen nieuwe concurrentenmatrix, berichtquota,
 modelaanroep per sensorprikkel of algemene optimalisatiebouw. De concrete kaarten
 staan bevroren in [de scope-uitbreiding](../design/product/upstream-reuse-task-scope-20261020.json).
 
+Op 21 oktober vraagt de eigenaar deze vergelijking te vertalen naar concrete taken
+en de ambitie verder te brengen dan een persoonlijke assistent met geheugen. De
+[vervolgstudie](../evidence/reassessment/entity-development-upstream-20261021.json)
+vergelijkt actuele officiële documentatie van OpenClaw, Hermes en OpenCode met de
+reeds geleverde Eva-keten. OpenClaw levert bruikbare patronen voor blijvende
+bedoelingen en aandacht; Hermes voor procedurekennis, onderhoud en toolprogramma's;
+OpenCode voor programmeerfeedback en een eventueel aanstuurbare bouwuitvoerder.
+Dat zijn verschillende uitvoeringsbouwstenen, geen bewijs van beter mensbegrip of
+een zelfstandig gezinsleven. Een extra volledig agentplatform is geen voorwaarde.
+
+De zes nieuwe eigenaaruitkomsten zijn verplicht gepland binnen dezelfde E1/E4-fasen:
+
+| Taak | Wat het gezin moet merken | Aanvulling op bestaand werk |
+| --- | --- | --- |
+| E1.7 | Eva leert de bedoeling en uitzonderingen van een routine en past haar verwachting aan bij tegenbewijs. | Van actuele persoonscontext naar werkelijk getoetst routinebegrip. |
+| E1.8 | Eva ziet een knelpunt of kans vooraf door mensen, bedoelingen en huisgegevens te verbinden. | Van bronaanleiding naar onderbouwd vooruitzien en een alternatief afwegen. |
+| E1.9 | Haar hulp en timing worden beter door echte ervaringen; geen reactie blijft onzeker. | Van behouden deelbewijs naar later gedrag in gewone andere situaties. |
+| E1.10 | Een eigen creatief project en echte gedeelde geschiedenis geven Eva herkenbare eigenheid en humor. | Van correct herinneren en hervatten naar inhoudelijke ontwikkeling en werkelijk ervaren eigenheid. |
+| E1.11 | Iemand kan een echte terugkerende zorg met afgesproken grenzen aan Eva overlaten. | Van een taak voortzetten naar duurzame verantwoordelijkheid en minder begeleiding. |
+| E4.15 | Eva ontdekt zelf een behoefte, maakt een bruikbare voorziening en verbetert die na echt gebruik. | Verbindt bestaande vaardigheden, toolprogramma's, codefeedback en beoordeelde toepassing tot eigen uitvinding. |
+
+De eerste nieuwe uitvoerprioriteit is E4.15: de bestaande bouwmogelijkheden kunnen
+al een werkelijk door Eva gekozen behoefte oppakken, ook als E1.6 wacht op een
+nieuwe bronaanleiding. Daarna E1.7, E1.8, E1.9, E1.10 en E1.11, rekening houdend met
+de vastgelegde afhankelijkheden en werkelijk beschikbare bronnen/feedback. De lopende
+uitvoerder en diens actuele kaart blijven behouden; er ontstaat geen tweede actieve
+hoofduitvoerder. Technische afronding, gewoon later gebruik en het werkelijke oordeel
+van betrokken gezinsleden blijven afzonderlijk zichtbaar. Bestaande F2.1/F2.2 blijven
+de gezamenlijke acceptatie; er komt geen extra testweek per nieuwe kaart.
+
+Deze voorbeelden leggen geen vaste gezinsregels of demo-onderwerpen vast. Eva kiest
+de inhoud vanuit echte behoeften en interesses. De nieuwe eindvoorwaarden staan
+eenmalig bevroren in de [scope-uitbreiding](../design/product/entity-development-task-scope-20261021.json).
+E1.4/E1.5 en E4.5/E4.12–E4.14 worden niet opnieuw gebouwd of heropend; hun beperkte
+bewijs blijft behouden. De bestaande PostgreSQL/Hindsight-keten, aandacht, duurzame
+uitvoering, privacy/STOP en AIDE²-route blijven leidend. Geen extra beoordelingsmodel
+per eenvoudige opdracht. De actuele uitvoerstatus staat uitsluitend op het werkbord.
+
 ## E5 — Eén gezamenlijke oplevering
 
 1. Stel één kandidaat samen uit de werkelijk actuele bron, dependencies, configuratie,
