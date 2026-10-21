@@ -5805,6 +5805,12 @@
                   "requirement": "Eva ontdekt en onderzoekt zelf nuttige mogelijkheden vanuit mensen, doelen en haar omgeving, ook zonder Home Assistant of andere aangesloten bron. Zij vergelijkt wat al kan met relevante alternatieven, onderbouwt concrete gezinsvoordelen en benodigde kennis/toegang en kiest zelf uitvoerbaar onderzoek, toegelaten werk, een gericht voorstel of stilte. Een toegangsverzoek volgt uit werkelijk ontbrekende dekking en vermeldt wat het oplevert; reeds gegeven toegang/sleutels worden niet opnieuw gevraagd. Geen merk-/apparaatregel, verplicht aansluitproduct of berichtquota.",
                   "acceptance": "Werkelijke keuze en onderbouwd vervolg vóór een specifieke eigenaaropdracht over die kans, via dezelfde afweging/geheugen/werkroute; ontbreken van Home Assistant verhindert initiatief niet. Een reactie op de huidige UniFi-vraag bewijst dit niet.",
                   "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json"
+                },
+                "localModelFeasibility20261021": {
+                  "status": "researched_not_installed_or_trained",
+                  "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
+                  "nextAction": "Beoordeel een klein lokaal initiatiefmodel binnen dezelfde bestaande aandacht/geheugen/uitvoering; eerst kwaliteit en echte taaklatency meten, daarna alleen bij aangetoond nut gericht bijtrainen. Muse Glimmer30B is relevant maar de officiële4bitvariant past niet comfortabel volledig op de gedeelde16GBGPU. Geen tweede agent of onbewezen vervanging.",
+                  "originalCompletionPreserved": true
                 }
               },
               {
@@ -6267,7 +6273,13 @@
                 "latestEvidence": "development/evidence/product/e25-optional-models-installed-20261016.json",
                 "independentReview": "development/reviews/e25-optional-models-review-20261016.json",
                 "result": "E2.5 geïnstalleerd: optioneel Claude/Anthropic of een OpenAI-compatibele API toevoegen, met eigen API-sleutel controleren, kiezen en uitschakelen. Privétekst op website/Telegram behoudt dezelfde Eva, geheugen en acties. De bestaande route blijft gekozen; externe accounts zijn nog niet verbonden.",
-                "remaining": "E2.5-adapter en bediening technisch afgerond. Werkelijke externe toegang vereist een eigen API-sleutel en expliciete controle; geen verplichte eigenaarhandeling of betaald gebruik gestart. Achtergrondwerk/initiatief en spraak behouden hun bestaande routes. E2.6 en eindacceptatie blijven open."
+                "remaining": "E2.5-adapter en bediening technisch afgerond. Werkelijke externe toegang vereist een eigen API-sleutel en expliciete controle; geen verplichte eigenaarhandeling of betaald gebruik gestart. Achtergrondwerk/initiatief en spraak behouden hun bestaande routes. E2.6 en eindacceptatie blijven open.",
+                "localModelFeasibility20261021": {
+                  "status": "researched_not_installed_or_trained",
+                  "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
+                  "nextAction": "Beoordeel een klein lokaal initiatiefmodel binnen dezelfde bestaande aandacht/geheugen/uitvoering; eerst kwaliteit en echte taaklatency meten, daarna alleen bij aangetoond nut gericht bijtrainen. Muse Glimmer30B is relevant maar de officiële4bitvariant past niet comfortabel volledig op de gedeelde16GBGPU. Geen tweede agent of onbewezen vervanging.",
+                  "originalCompletionPreserved": true
+                }
               },
               {
                 "id": "E2.6",
@@ -7239,7 +7251,13 @@
                 "completedAt": "2026-10-17T13:23:36.139042+00:00",
                 "completionEvidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
                 "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
-                "completionKind": "bounded_installed_autonomous_software_improvement"
+                "completionKind": "bounded_installed_autonomous_software_improvement",
+                "localModelFeasibility20261021": {
+                  "status": "researched_not_installed_or_trained",
+                  "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
+                  "nextAction": "Beoordeel een klein lokaal initiatiefmodel binnen dezelfde bestaande aandacht/geheugen/uitvoering; eerst kwaliteit en echte taaklatency meten, daarna alleen bij aangetoond nut gericht bijtrainen. Muse Glimmer30B is relevant maar de officiële4bitvariant past niet comfortabel volledig op de gedeelde16GBGPU. Geen tweede agent of onbewezen vervanging.",
+                  "originalCompletionPreserved": true
+                }
               },
               {
                 "id": "E4.6",
@@ -8225,7 +8243,7 @@
                 },
                 "telegramSourceFollowthroughRepair": {
                   "status": "in_progress",
-                  "checkedAt": "2026-10-21T10:03:37.071571+00:00",
+                  "checkedAt": "2026-10-21T10:49:25.120140+00:00",
                   "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
                   "endCondition": "De werkelijk gebruikte route onderscheidt MCP-registerdekking van aangeboden providers, onderzoekt relevante bestaande bronnen vóór ontbrekende gegevens te vragen en gebruikt technische documentatie voor het huidige gebruikersdoel. Live gewone vraag gebruikt actuele HA-informatie en maakt indirecte versus directe verbinding duidelijk; geen fictief nieuw credentialkanaal of onbewezen API-verbinding.",
                   "originalCompletionPreserved": true
@@ -11331,6 +11349,12 @@
                 "requirement": "Eva ontdekt en onderzoekt zelf nuttige mogelijkheden vanuit mensen, doelen en haar omgeving, ook zonder Home Assistant of andere aangesloten bron. Zij vergelijkt wat al kan met relevante alternatieven, onderbouwt concrete gezinsvoordelen en benodigde kennis/toegang en kiest zelf uitvoerbaar onderzoek, toegelaten werk, een gericht voorstel of stilte. Een toegangsverzoek volgt uit werkelijk ontbrekende dekking en vermeldt wat het oplevert; reeds gegeven toegang/sleutels worden niet opnieuw gevraagd. Geen merk-/apparaatregel, verplicht aansluitproduct of berichtquota.",
                 "acceptance": "Werkelijke keuze en onderbouwd vervolg vóór een specifieke eigenaaropdracht over die kans, via dezelfde afweging/geheugen/werkroute; ontbreken van Home Assistant verhindert initiatief niet. Een reactie op de huidige UniFi-vraag bewijst dit niet.",
                 "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json"
+              },
+              "localModelFeasibility20261021": {
+                "status": "researched_not_installed_or_trained",
+                "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
+                "nextAction": "Beoordeel een klein lokaal initiatiefmodel binnen dezelfde bestaande aandacht/geheugen/uitvoering; eerst kwaliteit en echte taaklatency meten, daarna alleen bij aangetoond nut gericht bijtrainen. Muse Glimmer30B is relevant maar de officiële4bitvariant past niet comfortabel volledig op de gedeelde16GBGPU. Geen tweede agent of onbewezen vervanging.",
+                "originalCompletionPreserved": true
               }
             },
             {
@@ -11793,7 +11817,13 @@
               "latestEvidence": "development/evidence/product/e25-optional-models-installed-20261016.json",
               "independentReview": "development/reviews/e25-optional-models-review-20261016.json",
               "result": "E2.5 geïnstalleerd: optioneel Claude/Anthropic of een OpenAI-compatibele API toevoegen, met eigen API-sleutel controleren, kiezen en uitschakelen. Privétekst op website/Telegram behoudt dezelfde Eva, geheugen en acties. De bestaande route blijft gekozen; externe accounts zijn nog niet verbonden.",
-              "remaining": "E2.5-adapter en bediening technisch afgerond. Werkelijke externe toegang vereist een eigen API-sleutel en expliciete controle; geen verplichte eigenaarhandeling of betaald gebruik gestart. Achtergrondwerk/initiatief en spraak behouden hun bestaande routes. E2.6 en eindacceptatie blijven open."
+              "remaining": "E2.5-adapter en bediening technisch afgerond. Werkelijke externe toegang vereist een eigen API-sleutel en expliciete controle; geen verplichte eigenaarhandeling of betaald gebruik gestart. Achtergrondwerk/initiatief en spraak behouden hun bestaande routes. E2.6 en eindacceptatie blijven open.",
+              "localModelFeasibility20261021": {
+                "status": "researched_not_installed_or_trained",
+                "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
+                "nextAction": "Beoordeel een klein lokaal initiatiefmodel binnen dezelfde bestaande aandacht/geheugen/uitvoering; eerst kwaliteit en echte taaklatency meten, daarna alleen bij aangetoond nut gericht bijtrainen. Muse Glimmer30B is relevant maar de officiële4bitvariant past niet comfortabel volledig op de gedeelde16GBGPU. Geen tweede agent of onbewezen vervanging.",
+                "originalCompletionPreserved": true
+              }
             },
             {
               "id": "E2.6",
@@ -12765,7 +12795,13 @@
               "completedAt": "2026-10-17T13:23:36.139042+00:00",
               "completionEvidence": "development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
               "independentReview": "development/reviews/e45-autonomous-software-improvement-review-20261017.json",
-              "completionKind": "bounded_installed_autonomous_software_improvement"
+              "completionKind": "bounded_installed_autonomous_software_improvement",
+              "localModelFeasibility20261021": {
+                "status": "researched_not_installed_or_trained",
+                "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
+                "nextAction": "Beoordeel een klein lokaal initiatiefmodel binnen dezelfde bestaande aandacht/geheugen/uitvoering; eerst kwaliteit en echte taaklatency meten, daarna alleen bij aangetoond nut gericht bijtrainen. Muse Glimmer30B is relevant maar de officiële4bitvariant past niet comfortabel volledig op de gedeelde16GBGPU. Geen tweede agent of onbewezen vervanging.",
+                "originalCompletionPreserved": true
+              }
             },
             {
               "id": "E4.6",
@@ -13751,7 +13787,7 @@
               },
               "telegramSourceFollowthroughRepair": {
                 "status": "in_progress",
-                "checkedAt": "2026-10-21T10:03:37.071571+00:00",
+                "checkedAt": "2026-10-21T10:49:25.120140+00:00",
                 "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
                 "endCondition": "De werkelijk gebruikte route onderscheidt MCP-registerdekking van aangeboden providers, onderzoekt relevante bestaande bronnen vóór ontbrekende gegevens te vragen en gebruikt technische documentatie voor het huidige gebruikersdoel. Live gewone vraag gebruikt actuele HA-informatie en maakt indirecte versus directe verbinding duidelijk; geen fictief nieuw credentialkanaal of onbewezen API-verbinding.",
                 "originalCompletionPreserved": true

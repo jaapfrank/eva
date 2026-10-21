@@ -69,7 +69,9 @@
       "answerAccurateAndBounded": true
     },
     "worker": {
-      "state": "pending_live_terminal_proof"
+      "state": "corrected_canonical_owner_shadow_probe_pending",
+      "firstProbeAuthorizationMismatchPreserved": true,
+      "productionAuthorityBroadened": false
     }
   },
   "priorAttempts": [
@@ -94,6 +96,22 @@
       "outcome": "Current HA read and factually correct answer, excessive repeated discovery. Retained; prompted bounded status stopping rule.",
       "modelAttempts": 7,
       "toolCalls": 6
+    },
+    {
+      "stage": "revision9 installed, first worker probe",
+      "outcome": "Known measured missing-source read continued to independent verified HA reads. Later tool-program subcall was rejected before dispatch because the probe paired a Telegram alias with a synthetic conversation. Exact failure fingerprint: background action was not admitted. This is a harness authorization mismatch, not a valid end-to-end failure/success for the real Telegram conversation.",
+      "retained": true,
+      "workMeasurement": "partial",
+      "modelResponses": 10,
+      "toolCalls": 9,
+      "inputTokens": 117667,
+      "outputTokens": 2665
+    },
+    {
+      "stage": "revision9 corrected canonical-owner probe, before task",
+      "outcome": "Credentials rejected with HTTP401 before worker admission. Existing owner access token had expired. Renewed the existing owner credential using its already configured OAuth refresh utility; same account and access-only core lease retained. No provider switch, new account, refresh token in core or Eva1 agent started. Own failed exchange erased.",
+      "retained": true,
+      "modelUsage": "partial: 1attempt,0confirmedtokens; not zero billed usage"
     }
   ],
   "privacy": {
@@ -109,5 +127,95 @@
     "telegramPresentation": "Geen gigantische technische berichten, taaknummers, bewijsformules of onnodige vraag-om-status. Kort herkenbaar Eva-antwoord met bruikbaar resultaat; uitgebreide rapportage alleen gericht opvragen.",
     "generalInitiative": "Zelf onderzoeken hoe zij het gezin helpt, inclusief ontbrekende kennis/mogelijkheden en onderbouwd voorstel voor toegang; ook zonder Home Assistant. Geen vaste UniFi-regel, geen uitvoering presenteren als spontaan initiatief.",
     "deliveryScope": "Deze reparatie herstelt brongebruik/terugkoppeling; algemene autonome nuttige-kansenontwikkeling blijft expliciet bewijs vereisen bij bestaande E1.6/E1.8."
+  },
+  "localModelFeasibility": {
+    "status": "researched_not_installed_or_trained",
+    "ownerDirection": "Klein snel lokaal model voor initiatief, onderzoek, kansen, netwerkbegrip, verbetering en modules; eigenaar verwijst expliciet naar Meta Muse Glimmer.",
+    "hardwareObserved": {
+      "at": "2026-10-21T10:36:55.405409+00:00",
+      "gpu": "NVIDIA GeForce RTX 5080 Laptop GPU",
+      "gpuTotalMiB": 16303,
+      "gpuFreeMiBAtObservation": 10105,
+      "systemRamKiB": 48168068,
+      "cpuThreads": 18,
+      "diskFreeGiB": 254,
+      "ollamaInstalled": false
+    },
+    "museGlimmer": {
+      "parametersB": 30,
+      "license": "Apache-2.0",
+      "officialQ4DownloadGB": 16.8,
+      "officialTextWeightsGiB": 15.6,
+      "officialTextVisionFullContextGiB": 19,
+      "assessment": "Relevant for local tool use, coding and failure recovery; official Q4 cannot comfortably reside fully in this shared16GBGPU. MixedCPU/GPU or stronger quantization possible research candidates; neither latency nor quality measured.",
+      "roles": [
+        "Possible local task executor if measured practical",
+        "Possible teacher for a smaller policy after validating demonstrations and training permissions"
+      ],
+      "draftModel": "DFlash is for speculative token proposals; it is not itself an initiative or opportunities model."
+    },
+    "smallCandidates": [
+      {
+        "model": "Qwen/Qwen3.5-2B",
+        "basis": "Official model card, tool-use integration and Apache2license; Dutch quality to measure"
+      },
+      {
+        "model": "LiquidAI/LFM2.5-1.2B-Instruct",
+        "basis": "Official edge model card; supported languages/license and Dutch task quality must be checked"
+      },
+      {
+        "model": "google/functiongemma-270m-it",
+        "basis": "Official fine-tuning-first function caller for narrowly defined APIs; no evidence for broad independent investigation/coding"
+      }
+    ],
+    "existingRoute": {
+      "reuse": [
+        "Same identity and PostgreSQL/Hindsight memory",
+        "Existing private opportunity tool and attention schedule",
+        "Same durable work admission, grants, STOP, verification and original-recipient delivery",
+        "Existing AIDE2 independent improvement/application route"
+      ],
+      "gap": "OptionalConversationModel currently selects private-text generation only; initiative/research/development explicitly retain baseline. Merely adding a local chat endpoint would not make initiative local. Need explicit scoped backend selection at private-opportunity request, same receipt schema/accounting and source profile; no second agent/scheduler/memory."
+    },
+    "sequence": [
+      "Finish and preserve the current source-followthrough repair first",
+      "Isolated local inference baseline on an existing small model and optionally Glimmer; no replacement of installed household model",
+      "Use anonymized scenarios and sanitized descriptors through the same opportunity output contract; compare against existing Astra decisions and actual later usefulness",
+      "Curate verified decisions and failed/corrected counterexamples; household facts remain retrievable memory, never secret/person data baked into weights",
+      "If baseline falls short and data supports it, use LoRA/QLoRA supervised tuning of an existing model; include no-action, request-specific-access, further-research and escalation outcomes",
+      "Keep training and independent evaluation split by situation/time/household; no self-generated completion counted as ground truth",
+      "Shadow comparison first, then reviewed scoped installation only on demonstrated gain; larger model retains difficult investigation/building when needed"
+    ],
+    "measurement": [
+      "Useful self-selected opportunity without HA or a specific owner assignment",
+      "Complete verified work and fewer owner corrections, including previously unseen situations",
+      "Unnecessary messages, wrong assumptions, missed opportunities, STOP/privacy and invalid tool actions",
+      "End-to-end p50/p95 decision and complete-task latency, model/tool usage, peak VRAM and foreground interference",
+      "Power/idle budget and cold-start behavior; local does not mean free or inherently faster"
+    ],
+    "sources": [
+      "https://dev.meta.ai/models/muse-glimmer",
+      "https://dev.meta.ai/docs/muse-glimmer/quantization",
+      "https://dev.meta.ai/docs/muse-glimmer/get-the-model",
+      "https://huggingface.co/meta-models/Muse-Glimmer-30B",
+      "https://huggingface.co/Qwen/Qwen3.5-2B",
+      "https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct",
+      "https://ai.google.dev/gemma/docs/functiongemma",
+      "https://huggingface.co/docs/peft/developer_guides/lora"
+    ],
+    "claims": {
+      "localLatencyMeasured": false,
+      "trainingDone": false,
+      "generalInitiativeProven": false,
+      "weightsDownloaded": false,
+      "newAutonomyGranted": false
+    }
+  },
+  "authIncident": {
+    "recovered": true,
+    "sameAccountPreserved": true,
+    "source": "Existing owner credential authority; core and worker still consume refresh-free leases",
+    "permanentRefreshAutomationChanged": false,
+    "scope": "Existing source token expired during live checks. One existing-authority renewal recovered access; no recurring refresh reliability claim."
   }
 }
