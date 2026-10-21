@@ -19,6 +19,16 @@ class ConversationModelError(RuntimeError):
         super().__init__(*args)
 
 
+class ResearchSourceCoverageError(ConversationModelError):
+    """A completed response lacks a required source; usage remains explicit."""
+
+    def __init__(self, required_source: str, *, model_usage=None):
+        self.required_source = required_source
+        super().__init__(f"web research lacks a primary source for {required_source}",
+                         model_usage=model_usage)
+
+
+
 class ResearchCitationError(ConversationModelError):
     """A completed research response has an unusable cited source URL."""
 

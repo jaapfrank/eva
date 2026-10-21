@@ -33,6 +33,12 @@ def undispatched_native_status_refusal(receipt):
 def recoverable_read_error(receipt):
     proof = receipt.output.get("proof")
     evidence = proof.get("evidence") if isinstance(proof, dict) else None
+    if isinstance(evidence, dict) and evidence.get("source") == "public_research_source_read_error":
+        return (receipt.call.name == "research_current_options"
+                and receipt.output.get("status") == "failed"
+                and receipt.output.get("recoverable_read_error") is True
+                and evidence.get("operation_kind") == "read"
+                and evidence.get("provider_completed") is True)
     if isinstance(evidence, dict) and evidence.get("source") == "native_research_explicit_owner_resume":
         return (receipt.call.name == "research_current_options"
                 and receipt.output.get("status") == "failed"

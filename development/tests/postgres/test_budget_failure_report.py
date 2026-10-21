@@ -59,7 +59,8 @@ def test_atomic_report_replay_retention_and_old_failure_path(database, monkeypat
     assert report not in summary["failure_description"]
     from eva.application.work_failure_notice import delivery_outcome
     notice = delivery_outcome(saved)
-    assert notice.state == "failed" and notice.output.endswith(report)
+    assert notice.state == "failed" and len(notice.output) < 500
+    assert report not in notice.output and saved.failure_report == report
     assert store.record_failure(call, **kwargs).failure_report == report
     with pytest.raises(DelegatedWorkConflict):
         store.record_failure(call, **{**kwargs, "failure_report": "Changed report"})

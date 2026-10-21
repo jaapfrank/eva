@@ -30,10 +30,9 @@ def result_messages(work_id: str, output: str, outcome: str = "completed") -> tu
         units += size
     if part:
         pieces.append(''.join(part))
-    return tuple(
-        f'{"Opdracht niet afgerond" if outcome in {"failed", "needs_help", "ambiguous"} else "Documentproject afgerond" if work_id.startswith("document-task:") else "Opdracht afgerond"} · {work_id}\nDeel {index}/{len(pieces)}\n\n{piece}'
-        for index, piece in enumerate(pieces, 1)
-    )
+    # Recipient, work identity, outcome and receipt remain bound internally.
+    # A chat message is Eva's saved answer, not an operations envelope.
+    return tuple(pieces)
 
 
 class DelegatedWorkDeliveryWorker:

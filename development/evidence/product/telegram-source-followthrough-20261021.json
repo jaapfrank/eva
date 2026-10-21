@@ -1,19 +1,26 @@
 {
   "contract": "EvaTelegramSourceFollowthroughRepair/v1",
-  "status": "in_progress",
+  "status": "installed_and_used_with_followthrough_limit",
   "recordedAt": "2026-10-21T09:35:47.917372+00:00",
   "request": "Eigenaar21oktober: herstel laatste Telegramgedrag waarbij Eva beschikbare Home Assistant-informatie niet gebruikte, opdrachten niet afmaakte en overbodige tekst terugstuurde.",
   "existing": "UniFi Network en Protect zijn via de bestaande Home Assistant-module bereikbaar; digitale werkers bieden providerlezingen en duurzame uitvoering.",
   "observedFailure": "Drie aangenomen onboardingstappen eindigden incomplete_work; één hervatting eindigde ambiguous/internal_error. MCP-registerstatus werd als totaaloverzicht behandeld, zonder HA-bronlezing; generieke externe onboardingtekst leverde een curl/keuzemenu op.",
   "endCondition": "De werkelijk gebruikte route onderscheidt MCP-registerdekking van aangeboden providers, onderzoekt relevante bestaande bronnen vóór ontbrekende gegevens te vragen en gebruikt technische documentatie voor het huidige gebruikersdoel. Live gewone vraag gebruikt actuele HA-informatie en maakt indirecte versus directe verbinding duidelijk; geen fictief nieuw credentialkanaal of onbewezen API-verbinding.",
-  "scope": "Five owned changes in existing model instructions, worker strategy, MCP presentation, HA policy and pre-admission inventory validation; two test fixtures/regressions. No new agent, voice route or credential store.",
+  "scope": "Twelve narrowly owned runtime file changes: source/registry guidance, pre-admission HA input correction, concise automatic delivery without internal envelopes, and hash-bound fully measured missing-source read context. Same runtime, grants, identity/memory and durable work. General initiative instructions clarified; no voice change, new agent, direct UniFi API integration or model training.",
   "runtimeInstalled": true,
   "sourceFiles": [
     "src/eva/adapters/model/pydantic_conversation.py",
     "src/eva/bootstrap/delegated_digital_runner.py",
     "src/eva/providers/mcp_registration.py",
     "src/eva/providers/home_assistant_policy.py",
-    "src/eva/adapters/connectors/home_assistant_admin.py"
+    "src/eva/adapters/connectors/home_assistant_admin.py",
+    "src/eva/application/work_failure_notice.py",
+    "src/eva/operations/delegated_work_delivery.py",
+    "src/eva/adapters/model/contracts.py",
+    "src/eva/adapters/model/research_tools.py",
+    "src/eva/adapters/postgres/external_conversation_tools.py",
+    "src/eva/adapters/connectors/delegated_completion.py",
+    "src/eva/bootstrap/delegated_digital_composition.py"
   ],
   "usage": {
     "newEvaModelRequests": null,
@@ -21,37 +28,305 @@
     "existingFailedWorkInputTokens": 351814,
     "existingFailedWorkOutputTokens": 3466,
     "existingFailedWorkMeasurement": "partial: four historical attempts, not this repair evaluation; never claim exact billing",
-    "scope": "Canonical model journals and terminal work usage; old failed onboarding usage kept separately. Final probe aggregate pending."
+    "scope": "Per-turn foreground journals plus distinct background-work usage; no double counting of child research inside job usage. Partial/unknown measurements remain partial, including rejected-auth attempt; recorded subtotals are not exact billing. Historical failed onboarding351814/3466 kept separate. Development usage/credits unmeasured.",
+    "foregroundAttempts": [
+      {
+        "stage": "question-revision-two",
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 9596,
+          "output_tokens": 58
+        }
+      },
+      {
+        "stage": "question-revision-one",
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 3,
+          "tool_calls": 2,
+          "input_tokens": 32335,
+          "output_tokens": 236
+        }
+      },
+      {
+        "stage": "question-revision-three",
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 7,
+          "tool_calls": 6,
+          "input_tokens": 83406,
+          "output_tokens": 632
+        }
+      },
+      {
+        "stage": "question-probe",
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 2,
+          "tool_calls": 1,
+          "input_tokens": 19968,
+          "output_tokens": 113
+        }
+      },
+      {
+        "stage": "execution-revision-four",
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 9674,
+          "output_tokens": 340
+        }
+      },
+      {
+        "stage": "execution-revision-seven",
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 9619,
+          "output_tokens": 320
+        }
+      },
+      {
+        "stage": "execution-revision-eight",
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 9620,
+          "output_tokens": 333
+        }
+      },
+      {
+        "stage": "execution-nine-alias-mismatch",
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 9621,
+          "output_tokens": 312
+        }
+      },
+      {
+        "stage": "execution-nine-expired-login",
+        "usage": {
+          "measurement": "partial",
+          "model_attempts": 1,
+          "tool_calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0
+        }
+      },
+      {
+        "stage": "execution-probe",
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 10738,
+          "output_tokens": 305
+        }
+      },
+      {
+        "stage": "continuation-probe",
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 3,
+          "tool_calls": 2,
+          "input_tokens": 33247,
+          "output_tokens": 385
+        }
+      },
+      {
+        "stage": "inventory-probe",
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 10619,
+          "output_tokens": 257
+        }
+      }
+    ],
+    "backgroundAttempts": [
+      {
+        "stage": "execution-revision-four",
+        "state": "failed",
+        "usage": {
+          "contract": "DelegatedWorkUsage/v1",
+          "tool_calls": 4,
+          "measurement": "partial",
+          "input_tokens": 65990,
+          "total_tokens": 67562,
+          "output_tokens": 1572,
+          "schema_version": 1,
+          "cost_usd_micros": null,
+          "completed_model_responses": 7
+        }
+      },
+      {
+        "stage": "execution-revision-seven",
+        "state": "failed",
+        "usage": {
+          "contract": "DelegatedWorkUsage/v1",
+          "tool_calls": 5,
+          "measurement": "partial",
+          "input_tokens": 91287,
+          "total_tokens": 93352,
+          "output_tokens": 2065,
+          "schema_version": 1,
+          "cost_usd_micros": null,
+          "completed_model_responses": 8
+        }
+      },
+      {
+        "stage": "execution-revision-eight",
+        "state": "failed",
+        "usage": {
+          "contract": "DelegatedWorkUsage/v1",
+          "tool_calls": 3,
+          "measurement": "partial",
+          "input_tokens": 65475,
+          "total_tokens": 67293,
+          "output_tokens": 1818,
+          "schema_version": 1,
+          "cost_usd_micros": null,
+          "completed_model_responses": 6
+        }
+      },
+      {
+        "stage": "execution-nine-alias-mismatch",
+        "state": "ambiguous",
+        "usage": {
+          "contract": "DelegatedWorkUsage/v1",
+          "tool_calls": 9,
+          "measurement": "partial",
+          "input_tokens": 117667,
+          "total_tokens": 120332,
+          "output_tokens": 2665,
+          "schema_version": 1,
+          "cost_usd_micros": null,
+          "completed_model_responses": 10
+        }
+      },
+      {
+        "stage": "execution-probe",
+        "state": "failed",
+        "usage": {
+          "contract": "DelegatedWorkUsage/v1",
+          "tool_calls": 14,
+          "measurement": "partial",
+          "input_tokens": 400875,
+          "total_tokens": 403310,
+          "output_tokens": 2435,
+          "schema_version": 1,
+          "cost_usd_micros": null,
+          "completed_model_responses": 16
+        }
+      },
+      {
+        "stage": "inventory-probe",
+        "state": "succeeded",
+        "usage": {
+          "contract": "DelegatedWorkUsage/v1",
+          "tool_calls": 5,
+          "measurement": "partial",
+          "input_tokens": 77409,
+          "total_tokens": 77986,
+          "output_tokens": 577,
+          "schema_version": 1,
+          "cost_usd_micros": null,
+          "completed_model_responses": 6
+        }
+      },
+      {
+        "stage": "ordinary-correction-resumed-worker",
+        "state": "failed",
+        "usage": {
+          "contract": "DelegatedWorkUsage/v1",
+          "tool_calls": 0,
+          "measurement": "partial",
+          "input_tokens": 61613,
+          "total_tokens": 62034,
+          "output_tokens": 421,
+          "schema_version": 1,
+          "cost_usd_micros": null,
+          "completed_model_responses": 2
+        }
+      }
+    ],
+    "recordedNewInputTokenSubtotal": 1118759,
+    "recordedNewOutputTokenSubtotal": 14844,
+    "runtimeCredits": null
   },
   "testFiles": [
     "development/tests/bootstrap/test_delegated_digital_composition.py",
-    "development/tests/connectors/test_home_assistant_domain_selection.py"
+    "development/tests/connectors/test_home_assistant_domain_selection.py",
+    "development/tests/operations/test_delegated_work_delivery.py",
+    "development/tests/application/test_budget_failure_report_presentation.py",
+    "development/tests/postgres/test_budget_failure_report.py",
+    "development/tests/model/test_research_source_read_error.py"
   ],
   "runtime": {
     "core": {
-      "base": "sha256:5ba7ec9f23cea653be69752a82d90775949c096efd17c24b757d6efc1b49bafe",
-      "candidate": "sha256:c8d8eceb515155cf296793d80d6b6de52f40076bf7c32b1129a130c1102fad15",
-      "installed_at": "2026-10-21T09:33:35.008377772Z",
+      "base": "sha256:f5c26472cdd68880f2fadbec8fff1cf95d9044b4f73ae9098c38fab278fc845f",
+      "candidate": "sha256:6321823fc9f29d87365c949a8a88ee2b33293eda56d3d98d4dacd9b79e66ba41",
+      "installed_at": "2026-10-21T10:36:06.896649842Z",
       "healthy": true,
       "source_verified": true,
-      "configuration_preserved": true
+      "configuration_preserved": true,
+      "allOwnedSourceHashes": {
+        "/opt/eva/src/eva/adapters/model/pydantic_conversation.py": "134feadd93bdd10ff2e1b999a0e27330bb7219a9670a85e41f9ae7f50227b83c",
+        "/opt/eva/src/eva/bootstrap/delegated_digital_runner.py": "bf93dff45917adf36dabb8315fe3ac166538493d432ca9bfffc8ae26305cd91a",
+        "/opt/eva/src/eva/providers/mcp_registration.py": "69b8be0d190434ff1bd18364a885e72eb1f4a7d9b52125f1fc0c9fc7301ad358",
+        "/opt/eva/src/eva/providers/home_assistant_policy.py": "a133187fe5ad5554591ba3f6357b01b23f57c6e4b4aaac183483f57235e2b8af",
+        "/opt/eva/src/eva/adapters/connectors/home_assistant_admin.py": "664ddd63929ccff02f80bb12ce34d98c5e03cee91a3b7186f86f9e6ae0ad1211",
+        "/opt/eva/src/eva/application/work_failure_notice.py": "68531ced746845ad82b756b5abedcbfcb79d1b2f998db1cec432070b344dc832",
+        "/opt/eva/src/eva/operations/delegated_work_delivery.py": "6a5397970f5f0ce1285cfba6d4d2da22428ede1897306c611109ea871b410b0f",
+        "/opt/eva/src/eva/adapters/model/contracts.py": "0c8c0c599d71cab73e2bbe222c8de1deed2c122155a11a5511f875f1f76c904b",
+        "/opt/eva/src/eva/adapters/model/research_tools.py": "653fbf2bbc3ce00455fb17cadc168940376d5caafc5957f3d20d94e46d8ffd43",
+        "/opt/eva/src/eva/adapters/postgres/external_conversation_tools.py": "40ee8619ba52fcd467561bb3617759c3f2a415625195ac790619d2f48b2c2759",
+        "/opt/eva/src/eva/adapters/connectors/delegated_completion.py": "02f99c646d95e30fc63395d8fcb081c4dbb803aa2c41269e53f245f684ddecde",
+        "/opt/eva/src/eva/bootstrap/delegated_digital_composition.py": "68e41148971132c36206cf27ba41ddb36be8d603df0481ee8b33c3bbbc2f2dc6"
+      }
     },
     "worker": {
-      "base": "sha256:fd9096bc7cf4bd7cfbf86694e69495bd584c2fd0e96d2ef85a40fa790d749980",
-      "candidate": "sha256:22977031234ed3ffe1e8747e867c1d8220cb30e4833b359fdbc148f0a3e20f45",
-      "installed_at": "2026-10-21T09:33:07.115740766Z",
+      "base": "sha256:b2ca4f7cdbfb0bf4e81baae83bf782db109d02f409c55b3074391956f5e1cc97",
+      "candidate": "sha256:5d4762c81af3c206ba62ea335a6ba5072187a46d027add83cce03e5b0c7c6ed0",
+      "installed_at": "2026-10-21T10:35:34.019982554Z",
       "healthy": true,
       "source_verified": true,
-      "configuration_preserved": true
+      "configuration_preserved": true,
+      "allOwnedSourceHashes": {
+        "/opt/eva/src/eva/adapters/model/pydantic_conversation.py": "134feadd93bdd10ff2e1b999a0e27330bb7219a9670a85e41f9ae7f50227b83c",
+        "/opt/eva/src/eva/bootstrap/delegated_digital_runner.py": "bf93dff45917adf36dabb8315fe3ac166538493d432ca9bfffc8ae26305cd91a",
+        "/opt/eva/src/eva/providers/mcp_registration.py": "69b8be0d190434ff1bd18364a885e72eb1f4a7d9b52125f1fc0c9fc7301ad358",
+        "/opt/eva/src/eva/providers/home_assistant_policy.py": "a133187fe5ad5554591ba3f6357b01b23f57c6e4b4aaac183483f57235e2b8af",
+        "/opt/eva/src/eva/adapters/connectors/home_assistant_admin.py": "664ddd63929ccff02f80bb12ce34d98c5e03cee91a3b7186f86f9e6ae0ad1211",
+        "/opt/eva/src/eva/application/work_failure_notice.py": "68531ced746845ad82b756b5abedcbfcb79d1b2f998db1cec432070b344dc832",
+        "/opt/eva/src/eva/operations/delegated_work_delivery.py": "6a5397970f5f0ce1285cfba6d4d2da22428ede1897306c611109ea871b410b0f",
+        "/opt/eva/src/eva/adapters/model/contracts.py": "0c8c0c599d71cab73e2bbe222c8de1deed2c122155a11a5511f875f1f76c904b",
+        "/opt/eva/src/eva/adapters/model/research_tools.py": "653fbf2bbc3ce00455fb17cadc168940376d5caafc5957f3d20d94e46d8ffd43",
+        "/opt/eva/src/eva/adapters/postgres/external_conversation_tools.py": "40ee8619ba52fcd467561bb3617759c3f2a415625195ac790619d2f48b2c2759",
+        "/opt/eva/src/eva/adapters/connectors/delegated_completion.py": "02f99c646d95e30fc63395d8fcb081c4dbb803aa2c41269e53f245f684ddecde",
+        "/opt/eva/src/eva/bootstrap/delegated_digital_composition.py": "68e41148971132c36206cf27ba41ddb36be8d603df0481ee8b33c3bbbc2f2dc6"
+      }
     }
   },
   "verification": {
     "offline": {
-      "passed": 309,
+      "passed": 311,
       "deselected": 2,
-      "seconds": 8.59,
-      "baselineLimitation": "Both deselected snapshot-continuation fixtures fail identically on unchanged parent and candidate because engine=None. Retained exact failure logs.",
-      "changedCriteria": false
+      "seconds": 8.96,
+      "newResearchCases": 6,
+      "separateResearchSuitePassed": 66,
+      "separateResearchSuiteSeconds": 2.69,
+      "isolatedPostgresPresentationCasesPassed": 8,
+      "isolatedPostgresPresentationSeconds": 5.28,
+      "baselineLimitation": "Two engine=None snapshot-continuation fixtures failed identically on the unchanged actual parent; retained unchanged and deselected. Initial existing3s start timing failure retained; unchanged-parent scoped5deadline cases and unchanged-candidate full retry passed. No independent completion or4096byte strategy bound changed."
     },
     "question": {
       "route": "Actual internal turns/respond route with original Telegram principal and exact original question; no Telegram outbound delivery.",
@@ -69,9 +344,57 @@
       "answerAccurateAndBounded": true
     },
     "worker": {
-      "state": "corrected_canonical_owner_shadow_probe_pending",
-      "firstProbeAuthorizationMismatchPreserved": true,
-      "productionAuthorityBroadened": false
+      "route": "Actual internal owner turn -> ordinary admitted digital worker, canonical existing owner in isolated private conversation. Real owner resolver, grants, source binding and durable completion remain active; no Telegram outbound.",
+      "state": "succeeded_for_separate_HA_inventory_only",
+      "elapsedSeconds": 58,
+      "foregroundAdmissionMs": 7646.203,
+      "modelResponses": 6,
+      "toolCalls": 5,
+      "outputCharacters": 445,
+      "outputSentences": 3,
+      "facts": {
+        "networkDeviceApplicationVersion": "10.6.106",
+        "protectIntegrationDeviceVersion": "7.2.105",
+        "networkLoaded": true,
+        "protectLoaded": true
+      },
+      "directApiVerified": false,
+      "noChangesMade": true,
+      "operatorAssignedTask": true,
+      "newNarrowScopeAfterFailedBroaderTask": true,
+      "broaderTaskOrResumeClosedByThisResult": false,
+      "meaning": "Bounded current-source use and concise saved worker return proven. This is neither spontaneous initiative nor independent onboarding."
+    },
+    "publicDocuments": {
+      "actualManagedBrowserUsed": true,
+      "networkOnboardingExactMatchToOfficialFetch": true,
+      "protectOnboardingExactMatchToOfficialFetch": true,
+      "bothServiceLlmsIndexesRead": true,
+      "menusOrCurlNotCopiedAsTaskExecution": true,
+      "broaderWorkerTaskSucceeded": false,
+      "reason": "After those reads the broader task attempted a local console browser navigation. The MCP tool rejected it with an untrusted connection-refused diagnostic and unknown effect outcome. That fence and later incomplete_work remain preserved."
+    },
+    "measuredSourceFailureContinuation": {
+      "actualSource": "public_research_source_read_error",
+      "nativeResearchRequestRepeated": false,
+      "continuedToIndependentVerifiedHAReads": true,
+      "modelChosenBrowserAfterThisExactFailureProven": false,
+      "taskOutcome": "Later failed due misbound probe identity; not a full successful worker episode. Controlled tests separately establish typed projection/loop/accounting invariants."
+    },
+    "presentation": {
+      "opaqueWorkIdEnvelopeRemoved": true,
+      "longDiagnosticFailureReportsStayStoredAndExplicitlyRetrievable": true,
+      "automaticFailureReplyShortened": true,
+      "oldLongSuccessfulReportsRetroactivelyShortened": false,
+      "bound": "Saved output remains lossless. Three-sentence worker guidance is not a universal hard length guarantee; no successful task result or unknown effect is invented."
+    },
+    "browserRecovery": {
+      "installed": true,
+      "firewallAndControllerStarted": true,
+      "cause": "After repository flattening, the service working directory and PYTHONPATH had moved. Exactly that already reviewed unit hash pin was stale; other recovery pins matched.",
+      "onlyThatRecoveryManifestHashChanged": true,
+      "firewallWeakened": false,
+      "actualCoreAndWorkerStatusReachable": true
     }
   },
   "priorAttempts": [
@@ -112,6 +435,33 @@
       "outcome": "Credentials rejected with HTTP401 before worker admission. Existing owner access token had expired. Renewed the existing owner credential using its already configured OAuth refresh utility; same account and access-only core lease retained. No provider switch, new account, refresh token in core or Eva1 agent started. Own failed exchange erased.",
       "retained": true,
       "modelUsage": "partial: 1attempt,0confirmedtokens; not zero billed usage"
+    },
+    {
+      "stage": "revisions4,7,8 real worker probes",
+      "outcome": "Each failed on missing required primary source; exact failure fingerprints retained. Prompt-only browser preference did not fix the terminal handling.",
+      "retained": true
+    },
+    {
+      "stage": "revision6 offline",
+      "outcome": "Worker strategy exceeded unchanged4096byte independent bound; shortened owned literals, kept bound.",
+      "retained": true
+    },
+    {
+      "stage": "revision9 actual canonical-owner broad task",
+      "elapsedSeconds": 228,
+      "outcome": "Official docs and HA readbacks actually read; local console invocation rejected, unknown effect preserved; final incomplete_work/no progress after continuation. Full report saved, no successful result.",
+      "modelResponses": 16,
+      "toolCalls": 14,
+      "inputTokens": 400875,
+      "outputTokens": 2435,
+      "retained": true
+    },
+    {
+      "stage": "revision9 ordinary correction/resume of broad task",
+      "outcome": "Additional operator instruction saved; resumed worker still incomplete_work,2modelresponses and0tools. Previous failed invocation remains a hard boundary. This is not independent followthrough.",
+      "inputTokens": 61613,
+      "outputTokens": 421,
+      "retained": true
     }
   ],
   "privacy": {
@@ -121,11 +471,11 @@
     "telegramMessagesSentByCodex": 0,
     "physicalDeviceChanges": 0,
     "directUniFiApiInstalled": false,
-    "testExchangeCleanup": "Pending final probes; prior three probes erased only through owner source/journal erasure with original hashes unchanged."
+    "testExchangeCleanup": "All owned probe exchange/semantic documents erased through existing source/journal/Hindsight erasure, including failed and final probes. Only exact own prefixes were erased; all15original Telegram event hashes unchanged. Raw evidence stays root-only, failed original real tasks stay intact."
   },
   "ownerClarifications": {
     "telegramPresentation": "Geen gigantische technische berichten, taaknummers, bewijsformules of onnodige vraag-om-status. Kort herkenbaar Eva-antwoord met bruikbaar resultaat; uitgebreide rapportage alleen gericht opvragen.",
-    "generalInitiative": "Zelf onderzoeken hoe zij het gezin helpt, inclusief ontbrekende kennis/mogelijkheden en onderbouwd voorstel voor toegang; ook zonder Home Assistant. Geen vaste UniFi-regel, geen uitvoering presenteren als spontaan initiatief.",
+    "generalInitiative": "Eva must independently investigate family value even without Home Assistant or any connected service, from people, goals, available context and permitted research. Compare existing coverage, concrete benefit, missing knowledge/access and effort. Ask only necessary missing access. Same memory/attention/work, no brand scripts or mandatory integrations. Reactive UniFi/HA probes do not establish this.",
     "deliveryScope": "Deze reparatie herstelt brongebruik/terugkoppeling; algemene autonome nuttige-kansenontwikkeling blijft expliciet bewijs vereisen bij bestaande E1.6/E1.8."
   },
   "localModelFeasibility": {
@@ -175,7 +525,7 @@
         "Same durable work admission, grants, STOP, verification and original-recipient delivery",
         "Existing AIDE2 independent improvement/application route"
       ],
-      "gap": "OptionalConversationModel currently selects private-text generation only; initiative/research/development explicitly retain baseline. Merely adding a local chat endpoint would not make initiative local. Need explicit scoped backend selection at private-opportunity request, same receipt schema/accounting and source profile; no second agent/scheduler/memory."
+      "gap": "OptionalConversationModel currently selects private-text generation only; initiative/research/development explicitly retain baseline. Merely adding a local chat endpoint would not make initiative local. Need explicit scoped backend selection at private-opportunity request, same receipt schema/accounting and source profile; no second agent/scheduler/memory. No mandatory extra local-model round before chat or simple household actions; initiative uses existing attention decisions. Local inference must yield to foreground work."
     },
     "sequence": [
       "Finish and preserve the current source-followthrough repair first",
@@ -217,5 +567,7 @@
     "source": "Existing owner credential authority; core and worker still consume refresh-free leases",
     "permanentRefreshAutomationChanged": false,
     "scope": "Existing source token expired during live checks. One existing-authority renewal recovered access; no recurring refresh reliability claim."
-  }
+  },
+  "checkedAt": "2026-10-21T11:03:32.708821+00:00",
+  "remainingOutcome": "Ordinary source use and research error handling are installed and exercised. The broad onboarding task and its ordinary resume still failed; direct API access and self-selected general initiative are not proven. Preserve these on existing work cards; the narrower inventory success does not close them."
 }

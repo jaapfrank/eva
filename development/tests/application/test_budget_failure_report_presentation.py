@@ -25,7 +25,26 @@ def test_failure_delivery_reuses_report_and_respects_stop(error_code):
     notice = delivery_outcome(work)
     assert isinstance(notice, WorkFailureNotice) and notice.state == "failed"
     assert notice.output.endswith("Saved draft.")
-    assert "niet als afgerond resultaat bevestigd" in notice.output
+    assert "niet om dit af te maken" in notice.output
     assert work.result is None
     work.stop_requested_at = work.updated_at
     assert delivery_outcome(work) is None
+
+
+@pytest.mark.parametrize("state,error_code", [("failed", "incomplete_work"), ("failed", "budget_exceeded"), ("ambiguous", "internal_error")])
+def test_automatic_failure_return_is_short_while_full_details_remain_saved(state, error_code):
+    report = "Technisch verslag met bron en uitvoerstappen. " * 500
+    work = SimpleNamespace(state=state, error_code=error_code, failure_report=report,
+        title="De aansluiting controleren", stop_requested_at=None, result=None,
+        updated_at=datetime(2026, 10, 21, tzinfo=UTC),
+        spec=SimpleNamespace(work_id="work:private-internal-id", sha256="a" * 64))
+    notice = delivery_outcome(work)
+    assert notice.state == state and work.result is None
+    assert len(notice.output) < 400
+    assert report not in notice.output and work.failure_report == report
+    assert "Vraag me" not in notice.output and "work:" not in notice.output
+    if state == "ambiguous":
+        assert "niet nog eens" in notice.output
+    else:
+        assert "niet afgemaakt" in notice.output or "niet af" in notice.output
+    assert work_failure_description("incomplete_work", report).endswith(report)

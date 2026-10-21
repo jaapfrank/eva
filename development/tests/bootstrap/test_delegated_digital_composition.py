@@ -278,7 +278,8 @@ def test_old_household_envelope_remains_readable_but_requires_current_release_fo
     descriptor = ConversationToolDescriptor("home_assistant_request", "Use HA", {
         "type": "object", "additionalProperties": False, "properties": {}, "required": []})
     bundle = replace(bundle, conversation_tools=(*bundle.conversation_tools, descriptor),
-        external_tools=(*bundle.external_tools, SimpleNamespace(action_names=(descriptor.name,))))
+        external_tools=(*bundle.external_tools, SimpleNamespace(action_names=(descriptor.name,))),
+        digital_action_names=(*bundle.digital_action_names, descriptor.name))
     current = build_digital_profile(settings, bundle)
     grant = [g for g in current.historical_grants if g.maximum_tool_calls == 6][variant]
     legacy = replace(current, maximum_model_runs=grant.maximum_model_runs,

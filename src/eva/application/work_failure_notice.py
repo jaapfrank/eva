@@ -2,7 +2,6 @@
 from dataclasses import dataclass
 from hashlib import sha256
 
-from eva.application.work_result_presentation import work_failure_description
 
 FAILURE_STATES = frozenset({"failed", "needs_help", "ambiguous"})
 DELIVERY_STATES = frozenset({"succeeded", "verified"}) | FAILURE_STATES
@@ -37,20 +36,26 @@ def delivery_outcome(work):
         return None
     report = getattr(work, "failure_report", None)
     error_code = getattr(work, "error_code", None)
-    if work.state == "failed" and error_code in {"budget_exceeded", "incomplete_work"}:
-        text = work_failure_description(error_code, report)
-    elif work.state == "ambiguous":
-        text = ("Ik kan niet bevestigen hoe je opdracht is afgelopen. Een begonnen "
-                "handeling kan al uitgevoerd zijn. Ik herhaal die niet automatisch. "
-                "Vraag me naar de taakstatus voordat we verdergaan.")
-    elif work.state == "needs_help":
-        text = ("Je opdracht is vastgelopen en heeft aandacht nodig. Er is geen "
-                "bevestigd eindresultaat. Vraag me waar de taak is gebleven; "
-                "daarna kunnen we gericht verdergaan.")
+    # Keep the full failure report in the work record and explicit status/result
+    # route. Automatic chat return must not spill that diagnostic report.
+    context = work.title[:160].strip()
+    if work.state == "ambiguous":
+        text = ("Ik weet niet of de laatste handeling is gelukt. "
+                "Ik voer die niet nog eens uit zolang dat onduidelijk is.")
+    elif (work.state == "failed" and error_code in {"budget_exceeded", "incomplete_work"}
+          and isinstance(report, str) and report.strip() and len(report.strip()) <= 600
+          and not report.startswith("input_budget_exceeded:")):
+        text = "Het lukte me niet om dit af te maken. " + report.strip()
+    elif error_code == "provider_unavailable":
+        text = "De dienst die ik nodig had was niet bereikbaar."
+    elif error_code == "timed_out":
+        text = ("Het duurde te lang en de uitvoering is gestopt. "
+                "Een begonnen handeling kan al uitgevoerd zijn.")
+    elif error_code == "budget_exceeded":
+        text = "Ik kreeg deze opdracht niet af binnen mijn limiet voor deze poging."
     else:
-        text = ("Het is me niet gelukt je opdracht af te ronden. Er is geen bevestigd "
-                "eindresultaat. De taakstatus is bewaard. Vraag me wat er misging "
-                "voordat we besluiten of hervatten zinvol is.")
-    text = "Over je opdracht " + work.title[:240] + ": " + text
+        text = "Ik liep vast bij het uitvoeren en heb dit niet afgemaakt."
+    if context:
+        text = "Over " + context + ": " + text
     return WorkFailureNotice(work.spec.work_id, work.spec.sha256, work.state,
                              work.updated_at.isoformat(), text)

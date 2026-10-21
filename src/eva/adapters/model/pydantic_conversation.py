@@ -2545,9 +2545,19 @@ class PydanticConversationModel:
             if compact_catalog:
                 instructions += (
                     "\nConnector discovery is optional, not a startup check. Only when "
-                    "the current request requires a connector that has not been identified, "
-                    "use manage_connected_services status and discover_connector_tools, "
-                    "then use_connector_tool. Their full schemas are available through discovery. "
+                    "the current request requires an unidentified MCP connector, use "
+                    "manage_connected_services status and discover_connector_tools, then "
+                    "use_connector_tool. This registry covers MCP connections, not every "
+                    "configured provider or the services reachable through it. Before declaring "
+                    "a connection, address or other information missing, investigate relevant "
+                    "already offered provider sources and their actual coverage. A missing MCP "
+                    "entry does not establish missing access. For a current connection/access "
+                    "question, inspect relevant offered current sources before answering; "
+                    "a remembered failed attempt is not current evidence of unavailable access. "
+                    "An existing indirect connection "
+                    "may already fulfil the user's goal; distinguish that from a direct API "
+                    "connection without demanding a new installation. Full MCP tool schemas "
+                    "are available through discovery. "
                     "For a greeting or ordinary social conversation, answer directly without "
                     "checking connections, tools, or work status. Do not resume earlier work "
                     "merely because the person greets you; wait for an actual continuation request."
@@ -2913,9 +2923,8 @@ class PydanticConversationModel:
                 if _source_matches_named_option(source.url, option)
             ]
             if not matches:
-                raise ConversationModelError(
-                    f"web research lacks a primary source for {option}", model_usage=usage
-                )
+                from eva.adapters.model.contracts import ResearchSourceCoverageError
+                raise ResearchSourceCoverageError(option, model_usage=usage)
             selected.append(matches[0])
         for source in cited:
             if source not in selected and len(selected) < 12:
@@ -3018,6 +3027,20 @@ class PydanticConversationModel:
             "Dit is je rustige private oriëntatie: denk zelfstandig na hoe je iets kunt "
             "bijdragen aan het gezin en je eigen bruikbaarheid als huisgenoot. Je bouwt "
             "zelf blijvende interesses en projecten op en leert het gezin beter kennen. "
+            "Onderzoek ook zonder aangesloten diensten zelf waar je dit gezin kunt helpen "
+            "en wat je daarvoor moet leren of kunnen. Vergelijk waar relevant de dekking "
+            "van aanwezige middelen met andere mogelijkheden; een koppeling is geen grens "
+            "aan je onderzoek. Onderbouw concrete voordelen, benodigde toegang en de moeite "
+            "voor de bewoners voordat je een uitbreiding voorstelt. Vraag alleen ontbrekende "
+            "toegang die daarvoor werkelijk nodig is; vraag geen al gegeven sleutel opnieuw. "
+            "Geen verplichte huisintegratie, merkregel of uitbreidingsquotum. Gebruik dezelfde "
+            "aandacht- en werkroute voor eigen onderzoek en toegestaan vervolg. "
+            "Bij terugkoppeling over onderzoek: een lege of onzekere controle is op zichzelf "
+            "geen nuttig bericht. Onderzoek uitvoerbare alternatieven of bewaar gericht "
+            "vervolg; meld een bruikbare bevinding of een concrete noodzakelijke hulpvraag "
+            "met het voordeel voor het gezin. Geef dan kort de kern in natuurlijke taal, "
+            "zonder technische bewijsformules of een verslag van wat je niet weet. "
+            "Passend sociaal contact blijft daarnaast een zelfstandige geldige keuze. "
             "life_context.own_orientation_history bevat je eigen eerdere historische afwegingen "
             "met hun oorspronkelijke bronnen en tijden; dit zijn geen bewonersuitspraken, "
             "feedback, actuele wereldfeiten of uitvoertoestemming. "

@@ -1,0 +1,78 @@
+{
+  "contract": "EvaIndependentRepairReview/v1",
+  "recordedAt": "2026-10-21T11:05:50.013981+00:00",
+  "reviewer": "/root/review_cursor",
+  "verdict": "GO",
+  "scope": "Independent GO for limited installed_and_used_with_followthrough_limit reporting; no GO for independent onboarding, direct API access, general initiative or project completion.",
+  "sourceHashes": {
+    "src/eva/adapters/model/pydantic_conversation.py": "134feadd93bdd10ff2e1b999a0e27330bb7219a9670a85e41f9ae7f50227b83c",
+    "src/eva/bootstrap/delegated_digital_runner.py": "bf93dff45917adf36dabb8315fe3ac166538493d432ca9bfffc8ae26305cd91a",
+    "src/eva/providers/mcp_registration.py": "69b8be0d190434ff1bd18364a885e72eb1f4a7d9b52125f1fc0c9fc7301ad358",
+    "src/eva/providers/home_assistant_policy.py": "a133187fe5ad5554591ba3f6357b01b23f57c6e4b4aaac183483f57235e2b8af",
+    "src/eva/adapters/connectors/home_assistant_admin.py": "664ddd63929ccff02f80bb12ce34d98c5e03cee91a3b7186f86f9e6ae0ad1211",
+    "src/eva/application/work_failure_notice.py": "68531ced746845ad82b756b5abedcbfcb79d1b2f998db1cec432070b344dc832",
+    "src/eva/operations/delegated_work_delivery.py": "6a5397970f5f0ce1285cfba6d4d2da22428ede1897306c611109ea871b410b0f",
+    "development/tests/bootstrap/test_delegated_digital_composition.py": "96453878f7b8a5aade76ca303532b6a363669e7db06dafa5a4ec450a44dcd001",
+    "development/tests/connectors/test_home_assistant_domain_selection.py": "a9ca9ec73881eea94515a288e7d800b29056d3e9a4407fbdbfb2081e52cd651a",
+    "development/tests/operations/test_delegated_work_delivery.py": "cf935020d3b04b23c1899d7f3ab758cb48197b6584bf4932c33723492c94beda",
+    "development/tests/application/test_budget_failure_report_presentation.py": "527c4ad976e46588b2db630e9e06f313204b787ce20ba330ba2a88b3847f1cae",
+    "development/tests/postgres/test_budget_failure_report.py": "0018a594efab6dc660290a59922ed41e7888b5b9bf45bcb96671ac60f18476ff",
+    "src/eva/adapters/model/contracts.py": "ad1364a65ab9a6f0f930f21ffa60777177cac9abb9e834a22bde5eab69421fb5",
+    "src/eva/adapters/model/research_tools.py": "653fbf2bbc3ce00455fb17cadc168940376d5caafc5957f3d20d94e46d8ffd43",
+    "src/eva/adapters/postgres/external_conversation_tools.py": "a8ab4acda8ecfba22d6006f513edd2c314736d2718e54159e19508b2dc73de4e",
+    "src/eva/adapters/connectors/delegated_completion.py": "02f99c646d95e30fc63395d8fcb081c4dbb803aa2c41269e53f245f684ddecde",
+    "src/eva/bootstrap/delegated_digital_composition.py": "68e41148971132c36206cf27ba41ddb36be8d603df0481ee8b33c3bbbc2f2dc6",
+    "development/tests/model/test_research_source_read_error.py": "d91cbd1c2dc2048aab69bd3b752f5e48582a1ffe4c088577178a5d7b7d086e35"
+  },
+  "decision": "Final independent limited GO from /root/review_cursor after verifying public E/V, private inventory terminal result, both installed12file sourcepins, usage subtotals and cleanup. Scope remains installed_and_used_with_followthrough_limit; broad onboarding and resume remain failed.",
+  "tests": {
+    "candidate": "311 passed, 2 inherited fixture cases deselected in8.96seconds, exact ninth candidate. Separate66research tests passed in2.69seconds. Isolated8PGpresentationtests unchanged from prior candidate.",
+    "initialFailures": "Missing test import mount plus three legacy admission fixtures; same three failed on unchanged parent. Fixture now admits HA capability as real provider does; no assertion/end condition changed.",
+    "baselineLimitation": "Two snapshot-continuation fixture cases instantiate Postgres journal with engine=None. Both failed identically on unchanged actual parent and candidate. Original failure logs preserved; those two are deselected in focused final run. No evaluator assertions changed.",
+    "ninthTimingFailure": "First focused suite:310passed,1existing timing fixture failed to start within3s. Unchanged parent five deadline cases passed; same candidate whole suite then311passed. Both original logs preserved; no timeout assertion changed."
+  },
+  "liveVerificationRequired": false,
+  "credentialBoundary": "No new general credential intake was claimed or implemented.",
+  "installGuard": "No active voice/work/models/decisions/conversation/native/memory claims and no Hindsight async jobs; four failed memory_retry statusfailed/deadlinenull records are preserved, not active leases.",
+  "sourceRevision": "Ninth installed: typed, hash-bound fully measured missing-source read remains failed and permits a different authorized reader; no replay, invented artifact or unknown-usage recovery. Final limited delivery GO; general initiative and independent onboarding not proven.",
+  "ownedPatchSha256": "0d7ccbf39a017a98f6fe4449ed34287e64a2d4e8064cb5ee4016f639776cd6af",
+  "liveEvidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
+  "actualInstalledSourceHashes": {
+    "core": {
+      "/opt/eva/src/eva/adapters/model/pydantic_conversation.py": "134feadd93bdd10ff2e1b999a0e27330bb7219a9670a85e41f9ae7f50227b83c",
+      "/opt/eva/src/eva/bootstrap/delegated_digital_runner.py": "bf93dff45917adf36dabb8315fe3ac166538493d432ca9bfffc8ae26305cd91a",
+      "/opt/eva/src/eva/providers/mcp_registration.py": "69b8be0d190434ff1bd18364a885e72eb1f4a7d9b52125f1fc0c9fc7301ad358",
+      "/opt/eva/src/eva/providers/home_assistant_policy.py": "a133187fe5ad5554591ba3f6357b01b23f57c6e4b4aaac183483f57235e2b8af",
+      "/opt/eva/src/eva/adapters/connectors/home_assistant_admin.py": "664ddd63929ccff02f80bb12ce34d98c5e03cee91a3b7186f86f9e6ae0ad1211",
+      "/opt/eva/src/eva/application/work_failure_notice.py": "68531ced746845ad82b756b5abedcbfcb79d1b2f998db1cec432070b344dc832",
+      "/opt/eva/src/eva/operations/delegated_work_delivery.py": "6a5397970f5f0ce1285cfba6d4d2da22428ede1897306c611109ea871b410b0f",
+      "/opt/eva/src/eva/adapters/model/contracts.py": "0c8c0c599d71cab73e2bbe222c8de1deed2c122155a11a5511f875f1f76c904b",
+      "/opt/eva/src/eva/adapters/model/research_tools.py": "653fbf2bbc3ce00455fb17cadc168940376d5caafc5957f3d20d94e46d8ffd43",
+      "/opt/eva/src/eva/adapters/postgres/external_conversation_tools.py": "40ee8619ba52fcd467561bb3617759c3f2a415625195ac790619d2f48b2c2759",
+      "/opt/eva/src/eva/adapters/connectors/delegated_completion.py": "02f99c646d95e30fc63395d8fcb081c4dbb803aa2c41269e53f245f684ddecde",
+      "/opt/eva/src/eva/bootstrap/delegated_digital_composition.py": "68e41148971132c36206cf27ba41ddb36be8d603df0481ee8b33c3bbbc2f2dc6"
+    },
+    "worker": {
+      "/opt/eva/src/eva/adapters/model/pydantic_conversation.py": "134feadd93bdd10ff2e1b999a0e27330bb7219a9670a85e41f9ae7f50227b83c",
+      "/opt/eva/src/eva/bootstrap/delegated_digital_runner.py": "bf93dff45917adf36dabb8315fe3ac166538493d432ca9bfffc8ae26305cd91a",
+      "/opt/eva/src/eva/providers/mcp_registration.py": "69b8be0d190434ff1bd18364a885e72eb1f4a7d9b52125f1fc0c9fc7301ad358",
+      "/opt/eva/src/eva/providers/home_assistant_policy.py": "a133187fe5ad5554591ba3f6357b01b23f57c6e4b4aaac183483f57235e2b8af",
+      "/opt/eva/src/eva/adapters/connectors/home_assistant_admin.py": "664ddd63929ccff02f80bb12ce34d98c5e03cee91a3b7186f86f9e6ae0ad1211",
+      "/opt/eva/src/eva/application/work_failure_notice.py": "68531ced746845ad82b756b5abedcbfcb79d1b2f998db1cec432070b344dc832",
+      "/opt/eva/src/eva/operations/delegated_work_delivery.py": "6a5397970f5f0ce1285cfba6d4d2da22428ede1897306c611109ea871b410b0f",
+      "/opt/eva/src/eva/adapters/model/contracts.py": "0c8c0c599d71cab73e2bbe222c8de1deed2c122155a11a5511f875f1f76c904b",
+      "/opt/eva/src/eva/adapters/model/research_tools.py": "653fbf2bbc3ce00455fb17cadc168940376d5caafc5957f3d20d94e46d8ffd43",
+      "/opt/eva/src/eva/adapters/postgres/external_conversation_tools.py": "40ee8619ba52fcd467561bb3617759c3f2a415625195ac790619d2f48b2c2759",
+      "/opt/eva/src/eva/adapters/connectors/delegated_completion.py": "02f99c646d95e30fc63395d8fcb081c4dbb803aa2c41269e53f245f684ddecde",
+      "/opt/eva/src/eva/bootstrap/delegated_digital_composition.py": "68e41148971132c36206cf27ba41ddb36be8d603df0481ee8b33c3bbbc2f2dc6"
+    }
+  },
+  "limitations": [
+    "Ordinary source use and research error handling are installed and exercised. The broad onboarding task and its ordinary resume still failed; direct API access and self-selected general initiative are not proven. Preserve these on existing work cards; the narrower inventory success does not close them.",
+    "The actual failed-read continuation and successful inventory are distinct probe episodes. No combined autonomous episode is implied.",
+    "No Telegram messages were sent; Telegram identity question and canonical-owner worker evidence are distinct.",
+    "Long stored successful reports are still lossless; instructions are not a hard universal3sentence enforcement.",
+    "Local model is researched only; no measured local latency, installed weights, training or autonomy gain."
+  ],
+  "sourceHashesMeaning": "sourceHashes describes the working checkout, which includes retained foreign WIP. actualInstalledSourceHashes describes the actual installed images. The scoped Git commit contains owned hunks only; no whole-checkout/image byte-equality claim."
+}

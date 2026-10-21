@@ -31,7 +31,7 @@ class Store:
 @pytest.mark.parametrize('output', ['Kort resultaat', '😀Bron\n'*6000])
 def test_complete_result_preserved_in_bounded_messages(output):
     messages = result_messages('work:example', output)
-    assert ''.join(message.split('\n\n', 1)[1] for message in messages) == output
+    assert ''.join(messages) == output
     assert all(len(message.encode('utf-16-le')) // 2 <= 4096 for message in messages)
 
 
@@ -100,3 +100,8 @@ def test_ack_failure_does_not_repeat_the_provider_effect():
     assert worker.run_once() == 'ambiguous'
     assert sent == [1]
     assert store.calls[-1] == ('ambiguous', 'ConnectionError')
+
+
+def test_short_saved_reply_reaches_chat_without_internal_work_envelope():
+    text = "UniFi is al aangesloten via Home Assistant. Ik kan de gegevens daar lezen."
+    assert result_messages("work:private-internal-id", text) == (text,)

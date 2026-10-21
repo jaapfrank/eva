@@ -56,6 +56,38 @@ def test_domain_cannot_silently_filter_unrelated_sections(section):
         HomeAssistantAdminAdapter._household_page(inventory(), section=section, domain="camera")
 
 
+@pytest.mark.parametrize("invalid", [dict(domain="camera"), dict(query="outside")])
+def test_bad_inventory_selection_can_be_corrected_before_one_real_read(invalid):
+    from eva.application.conversation import ConversationActionInputRejected
+
+    class Reader:
+        reads = 0
+
+        async def household_page(self, **selection):
+            self.reads += 1
+            return HomeAssistantAdminAdapter._household_page(inventory(), **selection)
+
+    reader = Reader()
+    tool = HomeAssistantHouseholdTool(reader)
+    bad = arguments(**invalid)
+    bad["section"] = "devices"
+    with pytest.raises(ConversationActionInputRejected):
+        asyncio.run(tool.prepare(None, SimpleNamespace(
+            name="read_home_assistant_inventory", arguments=bad)))
+    assert reader.reads == 0
+
+    corrected = arguments(domain="camera", query="indoor")
+    prepared = asyncio.run(tool.prepare(None, SimpleNamespace(
+        name="read_home_assistant_inventory", arguments=corrected)))
+    command = SimpleNamespace(tool_name=prepared.tool_name, arguments=prepared.arguments,
+                              expected_proof=prepared.expected_proof)
+    dispatch = asyncio.run(tool.execute(command))
+    observed = asyncio.run(tool.observe(command, dispatch))
+    assert reader.reads == 1
+    assert observed.disposition == "verified"
+    assert dispatch.details["observation"]["items"][0]["entity_id"] == "camera.indoor"
+
+
 @pytest.mark.parametrize("domain", [None, "", "camera"])
 def test_existing_durable_route_preserves_selection_and_legacy_replay(domain):
     class Reader:

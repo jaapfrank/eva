@@ -21,6 +21,7 @@ from websockets.sync.client import connect
 
 from eva.application.conversation import (
     ConversationConflict, ConversationToolDescriptor, ConversationToolPreparation,
+    ConversationActionInputRejected,
 )
 from eva.application.orchestration import ToolDispatchResult, ToolProofObservation
 from eva.contracts.canonical_json import canonical_sha256
@@ -688,7 +689,18 @@ class HomeAssistantHouseholdTool:
                 raise ConversationConflict("full automation configuration requires an authorized bound audience")
         if call.name not in self.action_names:
             raise ConversationConflict("household inventory tool is unavailable")
-        self._validate(call.arguments)
+        try:
+            self._validate(call.arguments)
+        except ConversationConflict as error:
+            # This is local model-input validation, before durable admission or
+            # any HA request. Let the existing conversation repair its input;
+            # execution/replay and audience errors remain hard conflicts.
+            raise ConversationActionInputRejected(
+                ("section", "domain", "query", "fields", "limit", "area_id",
+                 "offset", "snapshot_sha256", "automation_ids"),
+                prompt=("No Home Assistant request was sent. " + str(error)[:100]
+                        + ". Outside entities, leave domain/query empty. Follow the fields/limit schema."),
+            ) from error
         return ConversationToolPreparation(
             tool_name=self.action_names[0], arguments=call.arguments,
             expected_proof=call.arguments, receipt_output={"provider": "home_assistant"},

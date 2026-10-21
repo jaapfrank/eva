@@ -32,6 +32,7 @@ _EXECUTION_SOURCES = (
     "bootstrap/delegated_digital_composition.py",
     "bootstrap/background_research.py",
     "adapters/model/research_tools.py",
+    "adapters/model/contracts.py",
     "adapters/model/research_transport.py",
     "bootstrap/household_digital_work.py",
     "bootstrap/household_work.py",

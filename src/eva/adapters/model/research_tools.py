@@ -259,11 +259,25 @@ class NativeResearchTool:
     async def execute(self, request):
         self._check(request)
         self._validate_execution_input(request.arguments)
-        artifact = await run_cancellable(lambda: run_in_cancellation_thread(
-            lambda: self.research.research_current_options(
-                question=request.arguments["question"], title=request.arguments["title"],
-                options=tuple(request.arguments["options"]),
-                researched_at=datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"), **self._mode(request.arguments))))
+        from eva.adapters.model.contracts import ResearchSourceCoverageError
+        try:
+            artifact = await run_cancellable(lambda: run_in_cancellation_thread(
+                lambda: self.research.research_current_options(
+                    question=request.arguments["question"], title=request.arguments["title"],
+                    options=tuple(request.arguments["options"]),
+                    researched_at=datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"), **self._mode(request.arguments))))
+        except ResearchSourceCoverageError as error:
+            usage = error.model_usage
+            if (usage is None or usage.measurement != "measured" or usage.model_attempts != 1
+                    or error.required_source not in request.arguments["options"]):
+                raise
+            # The provider completed and its usage is known. No artifact was
+            # accepted; allow a different authorized reader, never replay here.
+            failure = {"code": "required_source_missing", "required_source": error.required_source,
+                       "model_usage": usage.to_wire(), "provider_completed": True}
+            digest = canonical_sha256(failure)
+            return ToolDispatchResult(True, digest, {"research_read_error": failure,
+                "request_sha256": self._request_hash(request), "read_error_sha256": digest})
         output = {"title": artifact.title, "question": artifact.question,
             "content": artifact.content, "content_sha256": artifact.content_sha256,
             "provider": artifact.provider, "researched_at": artifact.researched_at,
@@ -288,6 +302,24 @@ class NativeResearchTool:
                 "model_usage": {"measurement": "unknown"},
                 "reason": "Research may have started; automatic replay is disabled."})
         data = dispatch.details
+        failure = data.get("research_read_error")
+        if failure is not None:
+            from eva.application.conversation import ConversationModelUsage
+            if (not dispatch.accepted or not isinstance(failure, dict)
+                    or set(failure) != {"code", "required_source", "model_usage", "provider_completed"}
+                    or failure.get("code") != "required_source_missing"
+                    or failure.get("required_source") not in request.arguments["options"]
+                    or failure.get("provider_completed") is not True
+                    or data.get("request_sha256") != self._request_hash(request)
+                    or data.get("read_error_sha256") != canonical_sha256(failure)
+                    or dispatch.provider_ref != canonical_sha256(failure)):
+                raise ConversationConflict("durable research failure binding differs")
+            usage = ConversationModelUsage.from_wire(failure["model_usage"])
+            if usage.measurement != "measured" or usage.model_attempts != 1:
+                raise ConversationConflict("research failure usage is not one completed response")
+            return ToolProofObservation("conflict", {}, {
+                "source": "public_research_source_read_error", "operation_kind": "read",
+                "provider_completed": True, "external_state_verified": False, "error": failure})
         output = data.get("research_artifact")
         if (not dispatch.accepted or not isinstance(output, dict)
                 or data.get("request_sha256") != self._request_hash(request)

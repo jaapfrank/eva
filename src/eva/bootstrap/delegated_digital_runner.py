@@ -153,7 +153,18 @@ class _TaskModel:
             "zijn; behoud een oudere stap buiten de huidige opdracht als skipped met die "
             "reden. Gebruik blocked alleen voor een ontbrekend vereiste dat het huidige "
             "gevraagde resultaat echt verhindert. Beschikbare maar ongelezen informatie "
-            "blijft ontbrekend onderzoek. Een afgerond voorstel verleent geen toestemming "
+            "blijft ontbrekend onderzoek. Controleer vóór een vraag om gegevens de relevante "
+            "aangeboden bronnen: het MCP-register dekt niet alle providers. Actuele integratie-, "
+            "apparaat- en verbindingsgegevens kunnen het doel al dekken; een bronhash of link "
+            "bewijst geen nieuwe aansluiting. Open opgegeven openbare documentatie-URLs "
+            "rechtstreeks met de aangeboden beheerde browser wanneer die beschikbaar is; "
+            "vervang het lezen van een bekende handleiding niet door een algemene zoekopdracht. "
+            "Gebruik zoekonderzoek voor werkelijk ontbrekende feiten. Maak "
+            "onafhankelijke lokale controles af als documentlezen mislukt. Pas handleidingen "
+            "toe op de lopende opdracht; vervang uitvoerbaar werk niet door curl, een menu "
+            "of nieuwe toestemming. Verzin geen credentialkanaal en deel geen geheimen in "
+            "chat of notities. Noem bij een blokkade het ontbrekende vereiste en onderzochte "
+            "bronnen. Een afgerond voorstel verleent geen toestemming "
             "voor de latere handelingen. "
             "Bij een gevraagd document: gebruik het bestaande werkdocument en verwerk nieuwe "
             "bevestigde bevindingen met bronverwijzingen in dat document via de aangeboden "
@@ -172,7 +183,13 @@ class _TaskModel:
             "Besteed geen plan-call aan een eenvoudige opdracht. Reserveer ruimte voor het "
             "maken, opslaan, teruglezen en opleveren van het resultaat. Bij een echte blokkade "
             "bewaar je de stand en de concrete hervatactie. Bevoegdheden, vereiste controles "
-            "en bestaande budgetten blijven gelden; verzin geen ontbrekende feiten of succes. ")
+            "en bestaande budgetten blijven gelden; verzin geen ontbrekende feiten of succes. "
+            "Reageer als Eva: standaard hooguit drie korte zinnen met het bruikbare resultaat, "
+            "relevante beperking en alleen een noodzakelijke vervolgstap. Geef detail alleen "
+            "op verzoek of in het gevraagde document. Geen werkverslag, taaknummers, "
+            "bewijsjargon, keuzemenu of herhaalde geruststelling. Benoem bij vastlopen de "
+            "concrete oorzaak en het gedane werk; laat de bewoner geen taakstatus opzoeken "
+            "of opnieuw vragen wat er misging. ")
 
     def generate(self, *args, self_context=(), **kwargs):
         availability = () if self.browser_context is None else self.browser_context()
