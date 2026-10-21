@@ -5798,7 +5798,14 @@
                   "development/reviews/e16-private-day-context-review-20261021.json"
                 ],
                 "installedAt": "2026-10-20T16:11:46.841997+00:00",
-                "lastInstalledAt": "2026-10-21T09:26:38.499837+00:00"
+                "lastInstalledAt": "2026-10-21T09:26:38.499837+00:00",
+                "ownerInitiativeClarification20261021": {
+                  "status": "required_not_yet_proven",
+                  "source": "Directe eigenaarverduidelijking21oktober2026",
+                  "requirement": "Eva ontdekt en onderzoekt zelf nuttige mogelijkheden vanuit mensen, doelen en haar omgeving, ook zonder Home Assistant of andere aangesloten bron. Zij vergelijkt wat al kan met relevante alternatieven, onderbouwt concrete gezinsvoordelen en benodigde kennis/toegang en kiest zelf uitvoerbaar onderzoek, toegelaten werk, een gericht voorstel of stilte. Een toegangsverzoek volgt uit werkelijk ontbrekende dekking en vermeldt wat het oplevert; reeds gegeven toegang/sleutels worden niet opnieuw gevraagd. Geen merk-/apparaatregel, verplicht aansluitproduct of berichtquota.",
+                  "acceptance": "Werkelijke keuze en onderbouwd vervolg vóór een specifieke eigenaaropdracht over die kans, via dezelfde afweging/geheugen/werkroute; ontbreken van Home Assistant verhindert initiatief niet. Een reactie op de huidige UniFi-vraag bewijst dit niet.",
+                  "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json"
+                }
               },
               {
                 "id": "E1.7",
@@ -5889,7 +5896,14 @@
                 "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Kies vanuit echte lopende bedoelingen welke samenhang ontbreekt; houd een nog onbekende bron expliciet onbekend."
+                "nextAction": "Kies vanuit echte lopende bedoelingen welke samenhang ontbreekt; houd een nog onbekende bron expliciet onbekend.",
+                "ownerInitiativeClarification20261021": {
+                  "status": "required_not_yet_proven",
+                  "source": "Directe eigenaarverduidelijking21oktober2026",
+                  "requirement": "Eva ontdekt en onderzoekt zelf nuttige mogelijkheden vanuit mensen, doelen en haar omgeving, ook zonder Home Assistant of andere aangesloten bron. Zij vergelijkt wat al kan met relevante alternatieven, onderbouwt concrete gezinsvoordelen en benodigde kennis/toegang en kiest zelf uitvoerbaar onderzoek, toegelaten werk, een gericht voorstel of stilte. Een toegangsverzoek volgt uit werkelijk ontbrekende dekking en vermeldt wat het oplevert; reeds gegeven toegang/sleutels worden niet opnieuw gevraagd. Geen merk-/apparaatregel, verplicht aansluitproduct of berichtquota.",
+                  "acceptance": "Werkelijke keuze en onderbouwd vervolg vóór een specifieke eigenaaropdracht over die kans, via dezelfde afweging/geheugen/werkroute; ontbreken van Home Assistant verhindert initiatief niet. Een reactie op de huidige UniFi-vraag bewijst dit niet.",
+                  "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json"
+                }
               },
               {
                 "id": "E1.9",
@@ -8211,7 +8225,7 @@
                 },
                 "telegramSourceFollowthroughRepair": {
                   "status": "in_progress",
-                  "checkedAt": "2026-10-21T09:00:56.370836+00:00",
+                  "checkedAt": "2026-10-21T10:03:37.071571+00:00",
                   "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
                   "endCondition": "De werkelijk gebruikte route onderscheidt MCP-registerdekking van aangeboden providers, onderzoekt relevante bestaande bronnen vóór ontbrekende gegevens te vragen en gebruikt technische documentatie voor het huidige gebruikersdoel. Live gewone vraag gebruikt actuele HA-informatie en maakt indirecte versus directe verbinding duidelijk; geen fictief nieuw credentialkanaal of onbewezen API-verbinding.",
                   "originalCompletionPreserved": true
@@ -11310,7 +11324,14 @@
                 "development/reviews/e16-private-day-context-review-20261021.json"
               ],
               "installedAt": "2026-10-20T16:11:46.841997+00:00",
-              "lastInstalledAt": "2026-10-21T09:26:38.499837+00:00"
+              "lastInstalledAt": "2026-10-21T09:26:38.499837+00:00",
+              "ownerInitiativeClarification20261021": {
+                "status": "required_not_yet_proven",
+                "source": "Directe eigenaarverduidelijking21oktober2026",
+                "requirement": "Eva ontdekt en onderzoekt zelf nuttige mogelijkheden vanuit mensen, doelen en haar omgeving, ook zonder Home Assistant of andere aangesloten bron. Zij vergelijkt wat al kan met relevante alternatieven, onderbouwt concrete gezinsvoordelen en benodigde kennis/toegang en kiest zelf uitvoerbaar onderzoek, toegelaten werk, een gericht voorstel of stilte. Een toegangsverzoek volgt uit werkelijk ontbrekende dekking en vermeldt wat het oplevert; reeds gegeven toegang/sleutels worden niet opnieuw gevraagd. Geen merk-/apparaatregel, verplicht aansluitproduct of berichtquota.",
+                "acceptance": "Werkelijke keuze en onderbouwd vervolg vóór een specifieke eigenaaropdracht over die kans, via dezelfde afweging/geheugen/werkroute; ontbreken van Home Assistant verhindert initiatief niet. Een reactie op de huidige UniFi-vraag bewijst dit niet.",
+                "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json"
+              }
             },
             {
               "id": "E1.7",
@@ -11401,7 +11422,14 @@
               "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Kies vanuit echte lopende bedoelingen welke samenhang ontbreekt; houd een nog onbekende bron expliciet onbekend."
+              "nextAction": "Kies vanuit echte lopende bedoelingen welke samenhang ontbreekt; houd een nog onbekende bron expliciet onbekend.",
+              "ownerInitiativeClarification20261021": {
+                "status": "required_not_yet_proven",
+                "source": "Directe eigenaarverduidelijking21oktober2026",
+                "requirement": "Eva ontdekt en onderzoekt zelf nuttige mogelijkheden vanuit mensen, doelen en haar omgeving, ook zonder Home Assistant of andere aangesloten bron. Zij vergelijkt wat al kan met relevante alternatieven, onderbouwt concrete gezinsvoordelen en benodigde kennis/toegang en kiest zelf uitvoerbaar onderzoek, toegelaten werk, een gericht voorstel of stilte. Een toegangsverzoek volgt uit werkelijk ontbrekende dekking en vermeldt wat het oplevert; reeds gegeven toegang/sleutels worden niet opnieuw gevraagd. Geen merk-/apparaatregel, verplicht aansluitproduct of berichtquota.",
+                "acceptance": "Werkelijke keuze en onderbouwd vervolg vóór een specifieke eigenaaropdracht over die kans, via dezelfde afweging/geheugen/werkroute; ontbreken van Home Assistant verhindert initiatief niet. Een reactie op de huidige UniFi-vraag bewijst dit niet.",
+                "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json"
+              }
             },
             {
               "id": "E1.9",
@@ -13723,7 +13751,7 @@
               },
               "telegramSourceFollowthroughRepair": {
                 "status": "in_progress",
-                "checkedAt": "2026-10-21T09:00:56.370836+00:00",
+                "checkedAt": "2026-10-21T10:03:37.071571+00:00",
                 "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json",
                 "endCondition": "De werkelijk gebruikte route onderscheidt MCP-registerdekking van aangeboden providers, onderzoekt relevante bestaande bronnen vóór ontbrekende gegevens te vragen en gebruikt technische documentatie voor het huidige gebruikersdoel. Live gewone vraag gebruikt actuele HA-informatie en maakt indirecte versus directe verbinding duidelijk; geen fictief nieuw credentialkanaal of onbewezen API-verbinding.",
                 "originalCompletionPreserved": true

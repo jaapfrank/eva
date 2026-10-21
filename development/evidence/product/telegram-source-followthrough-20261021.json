@@ -1,24 +1,113 @@
 {
   "contract": "EvaTelegramSourceFollowthroughRepair/v1",
   "status": "in_progress",
-  "recordedAt": "2026-10-21T09:00:56.370836+00:00",
+  "recordedAt": "2026-10-21T09:35:47.917372+00:00",
   "request": "Eigenaar21oktober: herstel laatste Telegramgedrag waarbij Eva beschikbare Home Assistant-informatie niet gebruikte, opdrachten niet afmaakte en overbodige tekst terugstuurde.",
   "existing": "UniFi Network en Protect zijn via de bestaande Home Assistant-module bereikbaar; digitale werkers bieden providerlezingen en duurzame uitvoering.",
   "observedFailure": "Drie aangenomen onboardingstappen eindigden incomplete_work; één hervatting eindigde ambiguous/internal_error. MCP-registerstatus werd als totaaloverzicht behandeld, zonder HA-bronlezing; generieke externe onboardingtekst leverde een curl/keuzemenu op.",
   "endCondition": "De werkelijk gebruikte route onderscheidt MCP-registerdekking van aangeboden providers, onderzoekt relevante bestaande bronnen vóór ontbrekende gegevens te vragen en gebruikt technische documentatie voor het huidige gebruikersdoel. Live gewone vraag gebruikt actuele HA-informatie en maakt indirecte versus directe verbinding duidelijk; geen fictief nieuw credentialkanaal of onbewezen API-verbinding.",
-  "scope": "Vier instructie-/toolpresentatiehunks in bestaande routes; oorspronkelijke E5.1-afronding en overige taken blijven behouden. Geen spraakwijziging of nieuwe tweede agent.",
-  "runtimeInstalled": false,
+  "scope": "Five owned changes in existing model instructions, worker strategy, MCP presentation, HA policy and pre-admission inventory validation; two test fixtures/regressions. No new agent, voice route or credential store.",
+  "runtimeInstalled": true,
   "sourceFiles": [
     "src/eva/adapters/model/pydantic_conversation.py",
     "src/eva/bootstrap/delegated_digital_runner.py",
     "src/eva/providers/mcp_registration.py",
-    "src/eva/providers/home_assistant_policy.py"
+    "src/eva/providers/home_assistant_policy.py",
+    "src/eva/adapters/connectors/home_assistant_admin.py"
   ],
   "usage": {
-    "newEvaModelRequests": 0,
+    "newEvaModelRequests": null,
     "developmentCredits": null,
     "existingFailedWorkInputTokens": 351814,
     "existingFailedWorkOutputTokens": 3466,
-    "existingFailedWorkMeasurement": "partial: four historical attempts, not this repair evaluation; never claim exact billing"
+    "existingFailedWorkMeasurement": "partial: four historical attempts, not this repair evaluation; never claim exact billing",
+    "scope": "Canonical model journals and terminal work usage; old failed onboarding usage kept separately. Final probe aggregate pending."
+  },
+  "testFiles": [
+    "development/tests/bootstrap/test_delegated_digital_composition.py",
+    "development/tests/connectors/test_home_assistant_domain_selection.py"
+  ],
+  "runtime": {
+    "core": {
+      "base": "sha256:5ba7ec9f23cea653be69752a82d90775949c096efd17c24b757d6efc1b49bafe",
+      "candidate": "sha256:c8d8eceb515155cf296793d80d6b6de52f40076bf7c32b1129a130c1102fad15",
+      "installed_at": "2026-10-21T09:33:35.008377772Z",
+      "healthy": true,
+      "source_verified": true,
+      "configuration_preserved": true
+    },
+    "worker": {
+      "base": "sha256:fd9096bc7cf4bd7cfbf86694e69495bd584c2fd0e96d2ef85a40fa790d749980",
+      "candidate": "sha256:22977031234ed3ffe1e8747e867c1d8220cb30e4833b359fdbc148f0a3e20f45",
+      "installed_at": "2026-10-21T09:33:07.115740766Z",
+      "healthy": true,
+      "source_verified": true,
+      "configuration_preserved": true
+    }
+  },
+  "verification": {
+    "offline": {
+      "passed": 309,
+      "deselected": 2,
+      "seconds": 8.59,
+      "baselineLimitation": "Both deselected snapshot-continuation fixtures fail identically on unchanged parent and candidate because engine=None. Retained exact failure logs.",
+      "changedCriteria": false
+    },
+    "question": {
+      "route": "Actual internal turns/respond route with original Telegram principal and exact original question; no Telegram outbound delivery.",
+      "elapsedMs": 8707.238,
+      "modelAttempts": 2,
+      "toolCalls": 1,
+      "sourceAction": "home_assistant_request",
+      "sourceBody": {
+        "type": "config_entries/get",
+        "domain": "unifi"
+      },
+      "sourceSuccess": true,
+      "sourceTotal": 1,
+      "integrationState": "loaded",
+      "answerAccurateAndBounded": true
+    },
+    "worker": {
+      "state": "pending_live_terminal_proof"
+    }
+  },
+  "priorAttempts": [
+    {
+      "stage": "probe harness",
+      "outcome": "HTTP422 missing audience_id before any model admission",
+      "retained": true
+    },
+    {
+      "stage": "revision1 installed",
+      "elapsedMs": 15564.857,
+      "outcome": "No HA read; answered from historical failed attempt. Failed candidate retained."
+    },
+    {
+      "stage": "revision2 installed",
+      "elapsedMs": 4684,
+      "outcome": "Selected HA but invalid inventory filter caused terminal pre-admission error. Retained; prompted prepare-only correction fix."
+    },
+    {
+      "stage": "revision3 installed",
+      "elapsedMs": 45424.899,
+      "outcome": "Current HA read and factually correct answer, excessive repeated discovery. Retained; prompted bounded status stopping rule.",
+      "modelAttempts": 7,
+      "toolCalls": 6
+    }
+  ],
+  "privacy": {
+    "rawEvidence": "Root-only private run directory, not repository; no chats, keys, local URLs or principal IDs published.",
+    "originalTelegramEventHashes": 15,
+    "originalEventsPreserved": true,
+    "telegramMessagesSentByCodex": 0,
+    "physicalDeviceChanges": 0,
+    "directUniFiApiInstalled": false,
+    "testExchangeCleanup": "Pending final probes; prior three probes erased only through owner source/journal erasure with original hashes unchanged."
+  },
+  "ownerClarifications": {
+    "telegramPresentation": "Geen gigantische technische berichten, taaknummers, bewijsformules of onnodige vraag-om-status. Kort herkenbaar Eva-antwoord met bruikbaar resultaat; uitgebreide rapportage alleen gericht opvragen.",
+    "generalInitiative": "Zelf onderzoeken hoe zij het gezin helpt, inclusief ontbrekende kennis/mogelijkheden en onderbouwd voorstel voor toegang; ook zonder Home Assistant. Geen vaste UniFi-regel, geen uitvoering presenteren als spontaan initiatief.",
+    "deliveryScope": "Deze reparatie herstelt brongebruik/terugkoppeling; algemene autonome nuttige-kansenontwikkeling blijft expliciet bewijs vereisen bij bestaande E1.6/E1.8."
   }
 }
