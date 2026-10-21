@@ -847,8 +847,8 @@
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Volg de gewone v11-afweging en haar daadwerkelijk gekozen vervolg; geen ongegronde herhaalproef.",
-    "checkedAt": "2026-10-21T09:26:38.499837+00:00",
+    "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
+    "checkedAt": "2026-10-21T09:48:32.565185+00:00",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1632,13 +1632,13 @@
       "deliveryOverview": {
         "deliveries": [
           {
-            "title": "E1.6 · Dag- en persoonscontext aangesloten op eigen initiatief",
+            "title": "E1.6 · Eigen bronvervolg uitgevoerd en via Telegram teruggekoppeld",
             "state": "installed",
-            "summary": "Recente privé-dagcontext is werkelijk gebruikt. De te taakgerichte geheugenvraag is daarnaast persoonsgericht gemaakt; de nieuwe echte afweging volgt nog.",
-            "remaining": "De inhoudelijke bronkeuze ontbreekt nog. Werkelijke bronverandering→vervolg blijft onbewezen. Twee onderzochte privéafwegingen samen44.937 runtime-tokens; credits onbekend.",
+            "summary": "Eva koos zelf een relevante statuslezing vanuit een recente privévraag. De gewone uitvoerder rondde die om 09:42:02 UTC af; de gewone vervolgbeslissing gebruikte het resultaat en leverde om 09:42:19 via Telegram een juiste beperkte conclusie. Nog geen bronabonnement of werkelijke bronverandering→afweging bewezen.",
+            "remaining": "Werkelijke bronverandering→afweging blijft open. Geselecteerde afwegingen en uitvoering samen 107.568 geregistreerde runtime-tokens, onvolledige meting; credits onbekend. Geen claim van volledige E1.6-afronding of gebruikersacceptatie.",
             "source": "development/evidence/product/e16-private-day-context-installed-20261021.json",
             "review": "development/reviews/e16-private-day-context-review-20261021.json",
-            "checkedAt": "2026-10-21T09:12:36.445972+00:00",
+            "checkedAt": "2026-10-21T09:47:41.603560+00:00",
             "installedAt": "2026-10-21T09:12:36.445972+00:00",
             "completedTaskIds": [],
             "newProductFunctionCompleted": false
@@ -2996,10 +2996,10 @@
           "status": "in_progress",
           "state": "in_progress",
           "summary": "Bestaande relevante bronveranderingen verbinden met eigen aandacht en passend vervolg.",
-          "detail": "Dagcontext is in de echte afweging gebruikt, maar keuze bleef stilte. Nu ook persoonsgerichte bronvraag geïnstalleerd: zij haalt andere historische gezins-/interessecontext op in plaats van alleen een oude ontwikkeluitnodiging. Geen actuele wens of succes verondersteld; één nieuwe gewone afweging wordt gevolgd.",
+          "detail": "Eva koos zelf een relevante statuslezing vanuit een recente privévraag. De gewone uitvoerder rondde die om 09:42:02 UTC af; de gewone vervolgbeslissing gebruikte het resultaat en leverde om 09:42:19 via Telegram een juiste beperkte conclusie. Nog geen bronabonnement of werkelijke bronverandering→afweging bewezen.",
           "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-          "checkedAt": "2026-10-21T09:26:38.499837+00:00",
-          "nextAction": "Volg de gewone v11-afweging en haar daadwerkelijk gekozen vervolg; geen ongegronde herhaalproef."
+          "checkedAt": "2026-10-21T09:48:32.565185+00:00",
+          "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie."
         },
         "next": {
           "taskId": "F2.1",
@@ -3011,8 +3011,8 @@
           "detail": "Geen handeling nodig. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-21T09:26:38.499837+00:00",
-        "reviewedAt": "2026-10-21T08:34:18.091941+00:00",
+        "checkedAt": "2026-10-21T09:48:32.565185+00:00",
+        "reviewedAt": "2026-10-21T09:48:32.565185+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
@@ -5779,9 +5779,9 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Volg de gewone v11-afweging en haar daadwerkelijk gekozen vervolg; geen ongegronde herhaalproef.",
-                "checkedAt": "2026-10-21T09:26:38.499837+00:00",
-                "progress": "Dagcontext is in de echte afweging gebruikt, maar keuze bleef stilte. Nu ook persoonsgerichte bronvraag geïnstalleerd: zij haalt andere historische gezins-/interessecontext op in plaats van alleen een oude ontwikkeluitnodiging. Geen actuele wens of succes verondersteld; één nieuwe gewone afweging wordt gevolgd.",
+                "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
+                "checkedAt": "2026-10-21T09:48:32.565185+00:00",
+                "progress": "Eva koos zelf een relevante statuslezing vanuit een recente privévraag. De gewone uitvoerder rondde die om 09:42:02 UTC af; de gewone vervolgbeslissing gebruikte het resultaat en leverde om 09:42:19 via Telegram een juiste beperkte conclusie. Nog geen bronabonnement of werkelijke bronverandering→afweging bewezen.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
                   "development/reviews/e16-source-attention-review-20261020.json",
@@ -8330,7 +8330,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Volg de gewone v11-afweging en haar daadwerkelijk gekozen vervolg; geen ongegronde herhaalproef.",
+        "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
         "finishOrder": [
           "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
           "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -8339,7 +8339,7 @@
           "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-21T08:34:18.091941+00:00",
+        "updatedAt": "2026-10-21T09:48:32.565185+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -8607,7 +8607,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-21T09:26:38.499837+00:00",
+        "checkedAt": "2026-10-21T09:48:32.565185+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -11291,9 +11291,9 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Volg de gewone v11-afweging en haar daadwerkelijk gekozen vervolg; geen ongegronde herhaalproef.",
-              "checkedAt": "2026-10-21T09:26:38.499837+00:00",
-              "progress": "Dagcontext is in de echte afweging gebruikt, maar keuze bleef stilte. Nu ook persoonsgerichte bronvraag geïnstalleerd: zij haalt andere historische gezins-/interessecontext op in plaats van alleen een oude ontwikkeluitnodiging. Geen actuele wens of succes verondersteld; één nieuwe gewone afweging wordt gevolgd.",
+              "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
+              "checkedAt": "2026-10-21T09:48:32.565185+00:00",
+              "progress": "Eva koos zelf een relevante statuslezing vanuit een recente privévraag. De gewone uitvoerder rondde die om 09:42:02 UTC af; de gewone vervolgbeslissing gebruikte het resultaat en leverde om 09:42:19 via Telegram een juiste beperkte conclusie. Nog geen bronabonnement of werkelijke bronverandering→afweging bewezen.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
                 "development/reviews/e16-source-attention-review-20261020.json",
@@ -13842,7 +13842,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Volg de gewone v11-afweging en haar daadwerkelijk gekozen vervolg; geen ongegronde herhaalproef.",
+      "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
       "finishOrder": [
         "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
         "E2: één Eva-beheeromgeving en optionele verbindingen",
@@ -13851,7 +13851,7 @@
         "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-21T08:34:18.091941+00:00",
+      "updatedAt": "2026-10-21T09:48:32.565185+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -14119,7 +14119,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-21T09:26:38.499837+00:00",
+      "checkedAt": "2026-10-21T09:48:32.565185+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -15820,7 +15820,7 @@
     },
     "e16SourceAttention20261020": {
       "startedAt": "2026-10-20T15:55:04.713312+00:00",
-      "state": "private_day_context_used_but_actual_source_selection_still_absent",
+      "state": "self_selected_source_inquiry_completed_later_used_and_delivered_original_change_criterion_open",
       "previousGoalTurn": "progress",
       "previousProgress": "Bronverwijzingsherstel geïnstalleerd en één echte respons vóór/na met exact dezelfde bytes getoetst. Geen E1.6afronding.",
       "existing": "Native eventstroom, hostbroncontrole, duurzame NextAttention en bestaande afweging/uitvoering.",
@@ -15861,7 +15861,7 @@
       "isolatedModelChoice": "no_source",
       "isolatedExtraModelRequests": 1,
       "doesNotBlockIndependentTask": "E4.12",
-      "checkedAt": "2026-10-21T09:18:16.287411+00:00",
+      "checkedAt": "2026-10-21T09:48:32.565185+00:00",
       "latestEvidence": "development/evidence/product/e16-private-day-context-installed-20261021.json",
       "latestReview": "development/reviews/e16-private-day-context-review-20261021.json",
       "extraTargetedModelRequestsThisContinuation": 0,
@@ -15894,7 +15894,24 @@
         "daySourceCount": 1,
         "runtimeRegisteredTokens": 14952,
         "creditCost": null
-      }
+      },
+      "modelChosenSourceInquiry": true,
+      "sourceInquiryExecutedByOrdinaryWorker": true,
+      "v11SourceInquiry": {
+        "chosenAt": "2026-10-21T09:37:52Z",
+        "choiceOccasion": "operator_triggered_existing_private_review_callback_after_peer_core_replacements",
+        "topicAndTaskInjected": false,
+        "ordinaryWorkerClaimedAt": "2026-10-21T09:41:30Z",
+        "completedAt": "2026-10-21T09:42:02Z",
+        "workState": "succeeded",
+        "semanticVerification": false,
+        "sourceWatchChosen": false,
+        "sourceChangeCausalUseProven": false,
+        "laterResultUse": true,
+        "telegramDeliveredAt": "2026-10-21T09:42:19Z",
+        "ordinaryCompletionFollowup": true
+      },
+      "latestActualChainReview": "GO_BOUNDED_SOURCE_INQUIRY_AND_RESULT_USE_NOT_FULL_E16"
     },
     "e412OpenSkillReuse20261020": {
       "startedAt": "2026-10-20T16:42:18.078240+00:00",

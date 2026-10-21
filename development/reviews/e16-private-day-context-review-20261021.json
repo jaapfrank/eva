@@ -1,6 +1,6 @@
 {
   "contract": "EvaE16PrivateDayHandoffReview/v1",
-  "checkedAt": "2026-10-21T09:10:53.230996+00:00",
+  "checkedAt": "2026-10-21T09:48:05.888811+00:00",
   "decision": "GO_SOURCE_AND_OPTIONAL_INSTALLATION",
   "blockingFindings": [],
   "sourceHashes": {
@@ -44,7 +44,7 @@
     "Only compact input receipt hashes/count stored with decision; no second transcript retention.",
     "Unknown/unavailable is not reported as empty. No forced initiative or household example."
   ],
-  "modelSelectionProof": false,
+  "modelSelectionProof": true,
   "originalE16EndConditionUnchanged": true,
   "voiceChanged": false,
   "personQueryFollowupReview": {
@@ -63,5 +63,31 @@
     "diagnostic": "Two memory-only queries admit different historical context: first8records (7legacy_unverified,1direct_user;17June–23September). More/different records do not prove current need, useful choice or superior quality.",
     "experimentAmendment": "One additional ordinary observation after this measured new query cause. Earlier2negative decisions retained; criteria unchanged. Unknown creditcost stays unknown.",
     "blockingFindings": []
-  }
+  },
+  "actualSourceChainReview": {
+    "reviewer": "/root/e47_mcp_catalog",
+    "decision": "VERIFIED_BOUNDED_SELECTION_EXECUTION_RESULT_USE_AND_TELEGRAM_DELIVERY",
+    "reviewArtifactSha256": {
+      "independent-selected-source-review.private.json": "fcfa08f055fb0e11066732f7372021fb5550200118f44550d2aa3edcca3471ce",
+      "independent-selected-work-completion-review.private.json": "7cfaf1e38f4c7029f495d79f13097086e81465028f03ec36b414741ba03b2722",
+      "independent-result-use-delivery-supplement.private.json": "e083ef737d3bce02c042835341b3fceb9f3b7927b838f7a6813ce85cf266f9c8"
+    },
+    "verified": [
+      "Four native intent event hashes and original tool namespace/configuration/source binding; exact completed result/output hashes.",
+      "One manage_connected_services status receipt; registry limitation and reachability_unverified accurately reported, no repair/key/device operation.",
+      "Six follow-up event hashes; exact native work/spec/result binding; ordinary model uses limitation and rejects redundant read.",
+      "Actual private-owner Telegram transport receipt; not proof of human reading or usefulness."
+    ],
+    "choiceOccasion": "Operator invoked existing private-review callback after two peer core replacements interrupted observation. No topic, task or source injected. Subsequent execution, result review and delivery were ordinary live background work.",
+    "registeredTokensSelectedChain": 62631,
+    "measurement": "partial; 17807 selection+26645 delegated execution+18179 later review",
+    "priorTwoNegativeDecisionsRegisteredTokens": 44937,
+    "creditCost": null,
+    "noNewModelCallsByReviewer": true,
+    "criteriaUnchanged": true,
+    "sourceWatchChosen": false,
+    "sourceChangeCausalUseProven": false,
+    "taskCompleted": false
+  },
+  "modelSelectionProofScope": "One model-chosen source inquiry, not source-watch/change criterion."
 }

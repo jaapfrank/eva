@@ -1,8 +1,8 @@
 {
   "contract": "EvaE16PrivateDayContextInstalled/v1",
   "task": "E1.6",
-  "checkedAt": "2026-10-21T09:18:16.274902+00:00",
-  "status": "day_handoff_used_person_query_correction_installed_observing",
+  "checkedAt": "2026-10-21T09:47:41.603560+00:00",
+  "status": "self_selected_source_inquiry_executed_and_result_later_used_and_delivered",
   "cause": "Ordinary private initiative could search long-term memory but did not receive currently retained private day exchanges before dream consolidation. Current trusted alias/banks were correct.",
   "changed": [
     "Reuse existing owner memory-source reader for at most3 recent private ordinary exchanges; no second memory/retention/classification call.",
@@ -90,10 +90,13 @@
   "completion": {
     "taskCompleted": false,
     "originalCriteriaUnchanged": true,
-    "modelChosenSourceFollowupProven": false,
+    "modelChosenSourceFollowupProven": true,
     "sourceChangeCausalUseProven": false,
     "ownerAcceptance": false,
-    "currentPrivateDayHandoffActuallyUsed": true
+    "currentPrivateDayHandoffActuallyUsed": true,
+    "actualSourceInquiryCompleted": true,
+    "actualLaterResultUse": true,
+    "actualTelegramDelivery": true
   },
   "usage": {
     "developmentCreditCost": null,
@@ -101,17 +104,19 @@
     "extraOperatorModelRequests": 0,
     "ordinaryRuntimeTokensAfterInstall": 14952,
     "selectedPrivateDecisionsThisRepair": {
-      "modelAttempts": 3,
-      "toolCalls": 3,
-      "registeredTokens": 44937,
-      "includes": "Two observed ordinary private reviews v9 and v10 only; not all concurrent Eva runtime or development usage.",
+      "modelAttempts": 5,
+      "toolCalls": 5,
+      "registeredTokens": 80923,
+      "includes": "Four private decisions: v9,v10,v11 selection and actual completion follow-up. v11 occasion operator-triggered; content not injected. All other decisions ordinary scheduler. Not all concurrent runtime/development.",
       "creditCost": null
-    }
+    },
+    "observedDecisionAndDelegatedExecutionRegisteredTokens": 107568,
+    "observedDecisionAndDelegatedExecutionMeasurement": "partial: decision usage measured, delegated execution partial; no credit price inferred"
   },
-  "remaining": "The data handoff is now used. The model still chooses no useful source question, initiative or attention. Original actual source-choice/change/use criterion remains unfulfilled; do not replace this with waiting or a fabricated task.",
+  "remaining": "Relevant source inquiry, native execution, later use and Telegram delivery now actually observed. No chosen source-watch or actual source-change-to-decision chain; original E1.6 stays open. No forced new task or immediate resampling.",
   "personQueryFollowup": {
     "checkedAt": "2026-10-21T09:26:38.499837+00:00",
-    "status": "installed_ordinary_decision_pending",
+    "status": "model_chosen_source_inquiry_executed",
     "change": "Ask about people and their interests/routines/goals rather than useful own contributions; old developer invitations were overselected. No fixed person, domain, source or task.",
     "sourceHashes": {
       "src/eva/application/free_will.py": "968d584461485cad0acda8a463a205d8111b682b55882a7baa22113afe6c95b0",
@@ -138,7 +143,64 @@
     "policyBytesUnchanged": true,
     "retainedMounts": true,
     "voiceContainerChanged": false,
-    "actualDecision": null,
+    "actualDecision": {
+      "at": "2026-10-21T09:37:52Z",
+      "operatorTriggeredExistingCallback": true,
+      "reason": "Two peer core replacements interrupted scheduler observation; same existing callback and current guards, no injected topic/task/source.",
+      "modelChosenInquiry": true,
+      "registeredTokens": 17807,
+      "modelAttempts": 1,
+      "toolCalls": 1,
+      "creditCost": null
+    },
     "criterionUnchanged": true
+  },
+  "sourceInquiryExecution": {
+    "chosenAt": "2026-10-21T09:37:52Z",
+    "choiceOccasion": "operator_triggered_existing_private_review_callback_after_peer_core_replacements",
+    "topicAndTaskInjected": false,
+    "ordinaryWorkerClaimedAt": "2026-10-21T09:41:30Z",
+    "completedAt": "2026-10-21T09:42:02Z",
+    "workState": "succeeded",
+    "semanticVerification": false,
+    "sourceWatchChosen": false,
+    "sourceChangeCausalUseProven": false,
+    "intentId": "personal-interest:c843dba0efbbec5fbc828e2119a230421ac0dbe3a50c7540817cb4bff0c0e9b6",
+    "contentSha256": "6ea8320e306186a44af8bae142581958b7892775a17d4f49a3f7be40a1cd1432",
+    "outcome": "Targeted registry inspection could not establish the intended integration status; absence in this registry is not evidence of absence or failed live access. No reconnection or device action.",
+    "delegatedUsage": {
+      "measurement": "partial",
+      "completedModelResponses": 2,
+      "toolCalls": 1,
+      "registeredTokens": 26645,
+      "creditCost": null
+    }
+  },
+  "actualCompletionFollowup": {
+    "ordinaryScheduler": true,
+    "operatorTriggered": false,
+    "observedAt": "2026-10-21 09:42:04+00:00",
+    "sourceBinding": {
+      "work_id": "work:eva-initiative:c843dba0efbbec5fbc828e2119a230421ac0dbe3a50c7540817cb4bff0c0e9b6",
+      "spec_sha256": "3e6fd629a3a27b74e9562fb8dcd2cb9cd0755e895967580dec47b2ca4798ed94",
+      "result_sha256": "b6bcad110566d6f549540dc82a4dee7fc3cfae524200fbed54b5eb9da92df234"
+    },
+    "decisionAt": "2026-10-21 09:42:18+00:00",
+    "decisionPayloadSha256": "5c5e885cc7249db1e1ff4d71c0508dd0d66a02ec17e862914ac3803674c13869",
+    "disposition": "respond",
+    "result": "Correctly retained registry limitation, did not claim actual connection failure; did not repeat inspection or uncertain linking work.",
+    "telegramDeliveredAt": "2026-10-21 09:42:19+00:00",
+    "transportReceiptRetainedPrivately": true,
+    "transportDoesNotProveReadOrAcceptance": true,
+    "usage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 17973,
+      "output_tokens": 206,
+      "model_attempts": 1
+    },
+    "registeredTokens": 18179,
+    "creditCost": null,
+    "sourceWatchChosen": false
   }
 }
