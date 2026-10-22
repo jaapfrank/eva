@@ -838,16 +838,16 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-22T23:43:17.832549+00:00",
+  "lastUpdated": "2026-10-22T23:47:29.173509+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E1.13",
+  "activeTaskId": "E1.8",
   "currentWork": {
-    "id": "E1.13",
-    "title": "Denkvermogen gericht inzetten zonder initiatief te verliezen",
+    "id": "E1.8",
+    "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
     "status": "in_progress",
-    "doneWhen": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.",
-    "nextAction": "Meet een natuurlijke nieuwe initiatiefkeuze tot werkstart en resultaat; vergelijk daarna noodzakelijke modelrondes voor dezelfde toegestane controles en veranderde aanleidingen. Bewaak vertraging van nog niet toegelaten werk door de eerdere afweging.",
+    "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.",
+    "nextAction": "Verbind een echte open bedoeling met relevante actuele bronnen, leg vooraf een inhoudelijk alternatief vast en controleer later gevolg en correctie. De nieuwe contextselectie is geïnstalleerd; E1.8-gezinsuitkomst nog niet bewezen.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2990,10 +2990,10 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E1.13",
-          "title": "Denkvermogen gericht inzetten zonder initiatief te verliezen",
-          "summary": "E1.13: callbackvolgorde hersteld en geïnstalleerd. Nieuwe initiatiefkeuze komt vóór bestaande uitvoering binnen dezelfde toegelaten idlecyclus; de verplichte extra 300 seconden door de oude volgorde vervallen. Zes gerichte scenarios slagen op de exacte geïnstalleerde image; veertien bestaande idle/foreground/capacity/stop-controles slagen. Werkelijke nieuwe initiatiefdoorlooptijd en modelbesparing zijn nog niet gemeten. E1.7 behoudt open bewijs van meerdaags gezinsgebruik.",
-          "doneWhen": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache."
+          "taskId": "E1.8",
+          "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
+          "summary": "E1.8: selectieverlies van onopgeloste afspraken hersteld en geïnstalleerd. Binnen de bestaande vier plaatsen gaan onopgeloste afspraken op deadline vóór recent afgesloten geschiedenis. Baseline drie regressies; kandidaat 32 controles geslaagd en exacte geïnstalleerde image 12. Echte privécontext read-only gecontroleerd: geen nieuwe modelaanroep of uitvoering, momenteel geen naderende huishoudafspraak om anticipatie te bewijzen. E1.13 natuurlijke initiatiefmeting blijft open.",
+          "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel."
         },
         "next": {
           "taskId": "F2.1",
@@ -5888,7 +5888,7 @@
               {
                 "id": "E1.8",
                 "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "scopeOrigin": "entity-development-20261021",
                 "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
@@ -5930,7 +5930,7 @@
                 "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Tijdvenster, actuele bronnen, bedoelingen en onzekerheid combineren voor timely_help.",
+                "nextAction": "Verbind een echte open bedoeling met relevante actuele bronnen, leg vooraf een inhoudelijk alternatief vast en controleer later gevolg en correctie. De nieuwe contextselectie is geïnstalleerd; E1.8-gezinsuitkomst nog niet bewezen.",
                 "ownerInitiativeClarification20261021": {
                   "status": "required_not_yet_proven",
                   "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -5951,7 +5951,9 @@
                 "continuityImplementationSteps": [
                   "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
                 ],
-                "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection"
+                "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
+                "progress": "E1.8: selectieverlies van onopgeloste afspraken hersteld en geïnstalleerd. Binnen de bestaande vier plaatsen gaan onopgeloste afspraken op deadline vóór recent afgesloten geschiedenis. Baseline drie regressies; kandidaat 32 controles geslaagd en exacte geïnstalleerde image 12. Echte privécontext read-only gecontroleerd: geen nieuwe modelaanroep of uitvoering, momenteel geen naderende huishoudafspraak om anticipatie te bewijzen. E1.13 natuurlijke initiatiefmeting blijft open.",
+                "checkedAt": "2026-10-22T23:47:29.173492+00:00"
               },
               {
                 "id": "E1.9",
@@ -8687,7 +8689,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Meet een natuurlijke nieuwe initiatiefkeuze tot werkstart en resultaat; vergelijk daarna noodzakelijke modelrondes voor dezelfde toegestane controles en veranderde aanleidingen. Bewaak vertraging van nog niet toegelaten werk door de eerdere afweging.",
+        "nextAction": "Verbind een echte open bedoeling met relevante actuele bronnen, leg vooraf een inhoudelijk alternatief vast en controleer later gevolg en correctie. De nieuwe contextselectie is geïnstalleerd; E1.8-gezinsuitkomst nog niet bewezen.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -11823,7 +11825,7 @@
             {
               "id": "E1.8",
               "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "scopeOrigin": "entity-development-20261021",
               "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
@@ -11865,7 +11867,7 @@
               "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Tijdvenster, actuele bronnen, bedoelingen en onzekerheid combineren voor timely_help.",
+              "nextAction": "Verbind een echte open bedoeling met relevante actuele bronnen, leg vooraf een inhoudelijk alternatief vast en controleer later gevolg en correctie. De nieuwe contextselectie is geïnstalleerd; E1.8-gezinsuitkomst nog niet bewezen.",
               "ownerInitiativeClarification20261021": {
                 "status": "required_not_yet_proven",
                 "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -11886,7 +11888,9 @@
               "continuityImplementationSteps": [
                 "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
               ],
-              "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection"
+              "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
+              "progress": "E1.8: selectieverlies van onopgeloste afspraken hersteld en geïnstalleerd. Binnen de bestaande vier plaatsen gaan onopgeloste afspraken op deadline vóór recent afgesloten geschiedenis. Baseline drie regressies; kandidaat 32 controles geslaagd en exacte geïnstalleerde image 12. Echte privécontext read-only gecontroleerd: geen nieuwe modelaanroep of uitvoering, momenteel geen naderende huishoudafspraak om anticipatie te bewijzen. E1.13 natuurlijke initiatiefmeting blijft open.",
+              "checkedAt": "2026-10-22T23:47:29.173492+00:00"
             },
             {
               "id": "E1.9",
@@ -14622,7 +14626,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Meet een natuurlijke nieuwe initiatiefkeuze tot werkstart en resultaat; vergelijk daarna noodzakelijke modelrondes voor dezelfde toegestane controles en veranderde aanleidingen. Bewaak vertraging van nog niet toegelaten werk door de eerdere afweging.",
+      "nextAction": "Verbind een echte open bedoeling met relevante actuele bronnen, leg vooraf een inhoudelijk alternatief vast en controleer later gevolg en correctie. De nieuwe contextselectie is geïnstalleerd; E1.8-gezinsuitkomst nog niet bewezen.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",

@@ -1,0 +1,46 @@
+{
+  "task": "E1.8",
+  "recordedAt": "2026-10-22T23:47:29.049429+00:00",
+  "change": "Existing bounded private initiative context now selects unresolved commitments first, ordered by typed deadline, then recency and stable identity. Recent closed history no longer displaces them.",
+  "preserved": [
+    "Exact owner and source validation",
+    "Four commitments and 8192-byte envelope",
+    "Closed-history 24-hour window",
+    "No new execution permission, model call or scheduler"
+  ],
+  "tradeoff": "Overdue needs-help obligations can rank ahead of future deadlines; visibility does not resume work. Selection is not a semantic prediction of household benefit.",
+  "verification": {
+    "baselineRegressionsFailed": 3,
+    "candidateTargetedChecksPassed": 32,
+    "installedImageContextChecksPassed": 12,
+    "testDatabase": "Isolated PostgreSQL 16.13; no synthetic production records",
+    "liveReadOnly": {
+      "beforeSeconds": 0.062,
+      "afterSeconds": 0.0646,
+      "beforeContextBytes": 8025,
+      "afterContextBytes": 8052,
+      "selectedCommitmentCount": 1,
+      "actualUpcomingDeadlineScenario": false,
+      "modelCalls": 0,
+      "productionWrites": false,
+      "newSourceSha256": "11e6f98a0a7951cc8f57e5ea9a1b05a70986c93858055aaf940429550945dc24"
+    },
+    "independentReview": {
+      "reviewer": "/root/review_cursor",
+      "decision": "GO for guarded installation after green suite",
+      "boundary": "Selection correctness, not live household anticipation or E1.8 completion"
+    }
+  },
+  "installation": {
+    "image": "sha256:7059c78ce1d1fc4dc223e8d1e004d5dc053bb939194c161b3c017bb5b119d38d",
+    "base": "sha256:daa3521c9054e9635e87fc47202555849757f590883102a4f4a7772d4c548063",
+    "receiptStatus": "running_with_retained_mounts",
+    "profilesUnchanged": true,
+    "preexistingMismatchedProfiles": [
+      "household_research"
+    ],
+    "workerChanged": false
+  },
+  "fullTaskComplete": false,
+  "next": "Use the retained intention in one real advance assessment with relevant sources, compare an alternative, then check the outcome and response to correction. E1.13 natural initiative timing remains open."
+}

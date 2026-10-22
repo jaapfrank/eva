@@ -164,3 +164,54 @@ def test_old_needs_help_is_still_unfulfilled_not_silently_closed(postgres_engine
     assert result["own_work"][0]["goal_id"] == goal.goal_id
     assert result["own_work"][0]["status"] == "needs_help"
     assert result["own_work"][0]["is_execution_permission"] is False
+
+
+@pytest.mark.parametrize('blocked', [False, True])
+def test_recent_closed_history_cannot_displace_unresolved_commitment(postgres_engine, blocked):
+    label = f"context-open-priority-{blocked}"
+    store = _store(postgres_engine, label)
+    goals, active = _goal(postgres_engine, label, "open-before-closed")
+    if blocked:
+        goals.mark_needs_help(active, "Missing source, still unresolved", NOW - timedelta(minutes=30))
+    for i in range(5):
+        closed_store, closed = _goal(postgres_engine, label, f"recently-closed-{i}")
+        closed_store.cancel(closed.goal_id, closed.owner_id, "Stopped by owner", NOW)
+    before = goals._timeline.events(goals._thread_id(active.goal_id, active.owner_id))
+    result = _read(postgres_engine, store)
+    assert result['own_work'][0]['goal_id'] == active.goal_id
+    assert result['own_work'][0]['status'] != 'completed'
+    assert len(result['own_work']) == 4
+    assert result['coverage']['commitments_truncated'] is True
+    assert goals._timeline.events(goals._thread_id(active.goal_id, active.owner_id)) == before
+
+
+def test_approaching_deadline_survives_newer_distant_commitments(postgres_engine):
+    label = 'context-deadline-priority'
+    store = _store(postgres_engine, label)
+    goals = PostgresDurableGoalStore(postgres_engine, tenant_id=label, installation_id='home')
+    for i in range(6):
+        goal = DurableGoalSpec(f'goal-{i}', 'owner', 'An open time-sensitive intention',
+            'Existing instruction', None, None, None, 'configured-private-owner',
+            GoalWakeCondition('synthetic', 'resource', 'ready', 'yes',
+                              NOW + timedelta(minutes=10 + i * 60)),
+            NOW - timedelta(hours=6 - i))
+        goals.admit(goal)
+        goals.schedule_wake(goal)
+    result = _read(postgres_engine, store)
+    assert [w['goal_id'] for w in result['own_work']] == ['goal-0', 'goal-1', 'goal-2', 'goal-3']
+    assert result['coverage']['commitments_truncated'] is True
+    assert all(w['is_execution_permission'] is False for w in result['own_work'])
+    assert len(canonical_json_bytes(result)) <= 8192
+
+
+def test_equal_deadlines_have_stable_selection_independent_of_insertion_order(postgres_engine):
+    label = 'context-deadline-ties'
+    store = _store(postgres_engine, label)
+    for i in (5, 2, 4, 0, 3, 1):
+        _goal(postgres_engine, label, f'goal-{i}')
+    first = _read(postgres_engine, store)
+    goals = PostgresDurableGoalStore(postgres_engine, tenant_id=label, installation_id='home')
+    expected = sorted((f'goal-{i}' for i in range(6)),
+                      key=lambda goal_id: goals._thread_id(goal_id, 'owner'))[:4]
+    assert [w['goal_id'] for w in first['own_work']] == expected
+    assert _read(postgres_engine, store)['own_work'] == first['own_work']

@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Denkvermogen gericht inzetten zonder initiatief te verliezen
+Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen
 
-E1.13: callbackvolgorde hersteld en geïnstalleerd. Nieuwe initiatiefkeuze komt vóór bestaande uitvoering binnen dezelfde toegelaten idlecyclus; de verplichte extra 300 seconden door de oude volgorde vervallen. Zes gerichte scenarios slagen op de exacte geïnstalleerde image; veertien bestaande idle/foreground/capacity/stop-controles slagen. Werkelijke nieuwe initiatiefdoorlooptijd en modelbesparing zijn nog niet gemeten. E1.7 behoudt open bewijs van meerdaags gezinsgebruik.
+E1.8: selectieverlies van onopgeloste afspraken hersteld en geïnstalleerd. Binnen de bestaande vier plaatsen gaan onopgeloste afspraken op deadline vóór recent afgesloten geschiedenis. Baseline drie regressies; kandidaat 32 controles geslaagd en exacte geïnstalleerde image 12. Echte privécontext read-only gecontroleerd: geen nieuwe modelaanroep of uitvoering, momenteel geen naderende huishoudafspraak om anticipatie te bewijzen. E1.13 natuurlijke initiatiefmeting blijft open.
 
-Klaar wanneer: Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.
+Klaar wanneer: Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.
 
 ## Afmaakvolgorde
 

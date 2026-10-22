@@ -96,6 +96,14 @@ broncontrole; maximaal drie oorspronkelijke gebeurtenissen, actuele privacy-/wis
 en de bestaande modelcontextgrenzen blijven gelden. Kern en achtergrondwerker
 gebruiken dezelfde instelling, zonder extra zoek- of gespreksmodelronde.
 
+De initiatiefcontext geeft onopgeloste duurzame afspraken voorrang boven recent
+afgesloten geschiedenis. Binnen die afspraken gaat de vroegste deadline voor;
+laatste wijziging en stabiele identiteit bepalen gelijke gevallen. Zo kan recente
+afhandeling een naderende afspraak niet uit de vier beschikbare plaatsen drukken.
+Ook verlopen afspraken die hulp nodig hebben blijven onopgeloste context, zonder
+uitvoertoestemming. Deze E1.8-selectie vervangt geen inhoudelijke afweging van
+gevolgen of alternatieven; werkelijk vooruitzien blijft afzonderlijk te bewijzen.
+
 E1.13 plaatst sinds 23 oktober de bestaande privé-afweging vóór interesse-uitvoering
 in dezelfde toegelaten achtergrondcyclus. Nieuw gekozen werk hoeft daardoor niet
 uitsluitend vanwege de callbackvolgorde een volgende vijfminutenronde af te wachten.

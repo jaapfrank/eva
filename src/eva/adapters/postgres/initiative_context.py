@@ -249,7 +249,16 @@ def read_private_initiative_context(connection, scope: TimelineScope,
         # and recent transitions, not the latest few regardless of age.
         sa.or_(c.c.status != "completed",
                c.c.updated_at >= now - timedelta(hours=24)),
-    ).order_by(c.c.updated_at.desc(), c.c.thread_id).limit(_COMMITMENTS + 1)).mappings().all()
+    ).order_by(
+        # Recent closed history must not hide unresolved obligations. Within
+        # those obligations, retain the earliest deadline before newer updates.
+        # This is context selection only, including overdue needs-help states.
+        sa.case((c.c.status != "completed", 0), else_=1),
+        sa.case((c.c.status != "completed",
+                 original.c.payload["data"]["wake"]["deadline"].astext.cast(
+                     sa.DateTime(timezone=True))), else_=None).asc().nulls_last(),
+        c.c.updated_at.desc(), c.c.thread_id,
+    ).limit(_COMMITMENTS + 1)).mappings().all()
     own_work = []
     for row in goals[:_COMMITMENTS]:
         data = _verified_data(row["original"], row["original_sha"])
@@ -287,7 +296,7 @@ def read_private_initiative_context(connection, scope: TimelineScope,
             "observations_truncated": len(rows) > _OBSERVATIONS,
             "commitments_truncated": len(goals) > _COMMITMENTS,
             "own_work_source": "same-scope exact-owner admitted durable commitments only",
-            "commitment_selection": "unresolved or updated within 24h; older closed history retained",
+            "commitment_selection": "unresolved first by deadline, then recent closed within 24h; older closed history retained",
             "missing": ["live_connected_service_inventory", "live_calendar_events",
                         "ordinary_delegated_work_requires_separate_owner_binding",
                         "owner_alias_commitments_not_checked", "unretained_household_observations"],
