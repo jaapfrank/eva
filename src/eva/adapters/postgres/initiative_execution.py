@@ -108,7 +108,7 @@ class PostgresInitiativeAuthority:
         fields = {"contract", "mandate_id", "owner_principal_id", "enabled",
                   "authorization_source", "capabilities", "tenant_scope", "installation_scope"}
         if (not isinstance(data, dict) or not fields <= set(data)
-                or set(data) - fields - {"digital_work", "private_contact"}
+                or set(data) - fields - {"digital_work", "private_contact", "self_repair"}
                 or data["contract"] != "EvaCostlessInitiativeMandate/v1"
                 or data["owner_principal_id"] != str(self.owner._owner)
                 or data["tenant_scope"] != str(self.owner._scope.tenant_id)
@@ -118,6 +118,15 @@ class PostgresInitiativeAuthority:
                            for k in ("mandate_id", "authorization_source"))
                 or not isinstance(data["capabilities"], list)):
             raise InitiativeMandateDenied("initiative mandate is invalid")
+        if "self_repair" in data:
+            repair = data["self_repair"]
+            if (not isinstance(repair, dict)
+                    or set(repair) != {"enabled", "authorization_source"}
+                    or type(repair["enabled"]) is not bool
+                    or not isinstance(repair["authorization_source"], str)
+                    or not repair["authorization_source"].strip()
+                    or len(repair["authorization_source"]) > 1000):
+                raise InitiativeMandateDenied("automatic repair requires owner authorization")
         if "private_contact" in data:
             contact = data["private_contact"]
             if (not isinstance(contact, dict)
@@ -662,6 +671,7 @@ class NativeInitiativeGuard:
         self.mandate_sha, self.thread = mandate_sha, thread
         self.work_spec = work_spec
         self.resume_work = resume_work
+        self._repair_incident_id = None
 
     def check(self, turn):
         if turn != self.turn:
@@ -695,6 +705,15 @@ class NativeInitiativeGuard:
                 principal_id=str(owner._owner), now=datetime.now(UTC).replace(microsecond=0))
         row = conn.execute(owner._query().where(c.thread_id == self.claim.thread_id)
             .with_for_update(of=operational_checkpoints)).one_or_none()
+        repair = {} if row is None else row.adoption["data"]
+        self._repair_incident_id = repair.get("repair_incident_id")
+        if repair.get("repair_incident_id") is not None:
+            from eva.adapters.postgres.self_repair import repair_source_current
+            if (policy.get("self_repair", {}).get("enabled") is not True
+                    or repair.get("repair_mandate_sha256") != self.mandate_sha
+                    or not isinstance(repair.get("repair_source"), dict)
+                    or not repair_source_current(conn, owner._scope, repair["repair_source"])):
+                raise InitiativeMandateDenied("automatic repair source or authorization is no longer current")
         if self.resume_work is not None:
             previous = self.resume_work
             events = self.authority.timeline.events(self.claim.thread_id)
@@ -759,6 +778,8 @@ class NativeInitiativeGuard:
         if self.resume_work is not None:
             return False  # Recovery admission is never tool execution authority.
         self.check(self.turn)
+        if self._repair_incident_id is not None and name == "use_connector_tool":
+            return False
         policy, _ = self.authority.policy()
         # Local work requires the separately admitted host profile; never infer
         # internal privileges from an initiative's text or an owner-shaped ingress.
@@ -770,6 +791,8 @@ class NativeInitiativeGuard:
         if self.resume_work is not None:
             raise InitiativeMandateDenied("native recovery admission cannot dispatch tools")
         self.check(self.turn)
+        if self._repair_incident_id is not None:
+            raise InitiativeMandateDenied("repair work cannot repeat or dispatch connector effects")
         policy, _ = self.authority.policy()
         caps = [c for c in policy["capabilities"]
                 if c["configuration_sha256"] == request.tool_configuration_sha256

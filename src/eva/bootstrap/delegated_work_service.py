@@ -33,10 +33,10 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.operations.delegated_work_worker import ChildRunner, DelegatedWorkWorker
 
-# The new revision adds only a nonunique lookup index. Both revisions have
-# identical worker authority/data contracts during installation and recovery.
-_SCHEMA_HEAD = "4e_0011_timeline_type_time"
-_COMPATIBLE_SCHEMA_HEADS = frozenset({"4e_0010_memory_compaction", _SCHEMA_HEAD})
+# These revisions preserve existing work contracts. The newest revision adds
+# only a scoped ingress lock function, used by newly authorized repair work.
+_SCHEMA_HEAD = "4e_0012_conversation_source_lock"
+_COMPATIBLE_SCHEMA_HEADS = frozenset({"4e_0010_memory_compaction", "4e_0011_timeline_type_time", _SCHEMA_HEAD})
 
 
 def _provider_release() -> DelegatedWorkReleaseSelector:

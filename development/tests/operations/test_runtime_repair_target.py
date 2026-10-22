@@ -1,0 +1,90 @@
+"""Host-resolved new component scope cannot be chosen or rebased by a candidate."""
+from copy import deepcopy
+import hashlib
+
+import pytest
+
+from eva.contracts.canonical_json import canonical_sha256
+from eva.operations.reviewed_component_application import _save
+from eva.operations.runtime_repair_target import RuntimeRepairTargets, public_repair_target, repairable_source
+
+
+@pytest.fixture
+def target(tmp_path):
+    source = b'def product_behavior():\n    return 1\n'
+    digest = hashlib.sha256(source).hexdigest()
+    binding = {'contract': 'EvaCurrentRepairBinding/v1', 'incident_id': 'self-repair:'+'a'*64,
+        'incident_event_sha256': 'b'*64, 'scope_sha256': 'c'*64, 'mandate_sha256': 'd'*64,
+        'source_sha256': 'e'*64, 'intent_id': 'personal-interest:'+'f'*64,
+        'observation': {'error_type_sha256': 'a'*64, 'frames': [
+            {'path': 'application/new_component.py', 'function': 'product_behavior:2',
+             'source_sha256': digest}]}}
+    installation = {service: {'image': 'sha256:'+str(i)*64, 'configuration_sha256': str(i+2)*64}
+        for i,service in enumerate(('core','delegated-work-worker'),1)}
+    criteria = tmp_path/'sealed-criteria.json';_save(criteria, {'original_behavior': 'fixed before candidate'}, initial=True)
+    calls=[]
+    def prepare(scope):
+        assert 'candidate' not in str(scope)
+        calls.append(deepcopy(scope))
+        return {'path':str(criteria),'sha256':hashlib.sha256(criteria.read_bytes()).hexdigest()}
+    registry = RuntimeRepairTargets(tmp_path/'receipts',binding=lambda incident:deepcopy(binding),
+        installation=lambda:deepcopy(installation),source=lambda image,path:source,criteria=prepare)
+    return registry,binding,installation,source,calls,criteria
+
+
+def test_new_component_is_bound_once_to_actual_sources_and_independent_criteria(target):
+    registry,binding,_,_,calls,criteria=target
+    saved=registry.prepare(binding['incident_id'])
+    assert set(saved['sources'])=={'application/new_component.py'}
+    assert registry.prepare(binding['incident_id'])==saved and len(calls)==1
+    public=public_repair_target(saved)
+    assert str(criteria) not in str(public)
+    assert 'fixed before candidate' not in str(public)
+    assert public['installed'] is False
+    assert registry.current(saved['target_id'])==saved
+
+
+@pytest.mark.parametrize('change',['mandate','stop','image','configuration','criteria'])
+def test_changed_authority_runtime_or_sealed_criteria_invalidates_target(target,change):
+    registry,binding,installation,_,_,criteria=target
+    saved=registry.prepare(binding['incident_id'])
+    if change=='mandate':binding['mandate_sha256']='9'*64
+    elif change=='stop':registry.binding=lambda _:(_ for _ in ()).throw(ValueError('stopped'))
+    elif change=='image':installation['core']['image']='sha256:'+'9'*64
+    elif change=='configuration':installation['core']['configuration_sha256']='9'*64
+    else:criteria.write_text('{}')
+    with pytest.raises(ValueError):registry.current(saved['target_id'])
+
+
+def test_peer_source_mismatch_is_not_overwritten_or_silently_rebased(target):
+    registry,binding,installation,source,calls,_=target
+    registry.source=lambda image,path:source if image==installation['core']['image'] else source+b'# Foreign work\n'
+    with pytest.raises(ValueError,match='no currently repairable source'):
+        registry.prepare(binding['incident_id'])
+    assert calls==[]
+
+
+def test_permission_change_during_criteria_preparation_does_not_publish_target(target):
+    registry,binding,_,_,_,_=target
+    prepare=registry.criteria
+    def changed(scope):
+        value=prepare(scope);binding['mandate_sha256']='9'*64;return value
+    registry.criteria=changed
+    with pytest.raises(ValueError,match='changed during criteria'):
+        registry.prepare(binding['incident_id'])
+    assert list(registry.root.iterdir())==[]
+
+
+@pytest.mark.parametrize('path',['../private.py','/private.py','application//a.py',
+    'operations/new_evaluator.py','contracts/new_permission.py',
+    'adapters/credentials/key.py','adapters/postgres/initiative_execution.py',
+    'bootstrap/self_repair.py','adapters/postgres/self_repair.py'])
+def test_direct_authority_and_path_escape_cannot_become_repair_targets(path):
+    assert repairable_source(path) is False
+
+
+def test_request_cannot_substitute_another_incident(target):
+    registry,_,_,_,calls,_=target
+    with pytest.raises(ValueError,match='another repair incident'):
+        registry.prepare('self-repair:'+'9'*64)
+    assert calls==[]

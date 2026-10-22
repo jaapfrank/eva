@@ -44,6 +44,8 @@ _EXECUTION_SOURCES = (
     "contracts/tool_deadlines.py",
     "contracts/component_target.py",
     "adapters/postgres/initiative_execution.py", "application/initiative_execution.py",
+    "application/self_repair.py", "adapters/postgres/self_repair.py",
+    "bootstrap/self_repair.py",
     "bootstrap/background_browser_context.py",
     "adapters/connectors/browser_session.py",
     "adapters/connectors/browser_autostart.py",

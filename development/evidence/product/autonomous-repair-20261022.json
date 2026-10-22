@@ -10,9 +10,86 @@
   "scope": "Existing incident/initiative/development/evaluation/application chain; no second planner, memory, permanent daemon or new provider.",
   "preserved": "Completed E4.5/L3 evidence, original criteria, foreign WIP, existing voice ownership, source hashes and uncertain effects.",
   "stages": {
-    "automaticDurableIntake": "not_implemented",
-    "autonomousDiagnosisAndCandidate": "existing_executor_not_yet_integrated",
-    "independentGeneralRepairAssessment": "not_implemented",
-    "managedInstallAndOriginalBehaviorReadback": "existing_bounded_route_not_yet_generalized"
-  }
+    "automaticDurableIntake": "built_reviewed_disposable_postgres_verified_not_installed",
+    "autonomousDiagnosisAndCandidate": "native_work_admission_integrated_no_real_candidate_run",
+    "independentGeneralRepairAssessment": "host_target_and_isolated_comparison_built_not_automatically_integrated",
+    "managedInstallAndOriginalBehaviorReadback": "not_reached_no_automatic_acceptance_or_installation"
+  },
+  "checkedAt": "2026-10-22T09:23:02.946161+00:00",
+  "installed": false,
+  "activated": false,
+  "verification": {
+    "foundation": [
+      {
+        "name": "intake-postgres-queue-final.private.log",
+        "sha256": "5dec864783b884ddb5b57afb34360bb70060755a41a18143eba321e9f0f4f30a",
+        "passed": 18
+      },
+      {
+        "name": "intake-worker-profile-and-unit.private.log",
+        "sha256": "27e91e0816b09f98bd8b342e6710dd5cccd59eb87e4fb895a1fbd69ae719f2a2",
+        "passed": 52
+      },
+      {
+        "name": "intake-target-and-unit-final.private.log",
+        "sha256": "42f5a778bc7f7e0ad6adfea053399d2a7809801ae6eb43264dc70cc90fa98258",
+        "passed": 52
+      }
+    ],
+    "newComparison": {
+      "command": "PYTHONPATH=src:development PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 EVA_RUNTIME_REPAIR_TEST_IMAGE=<actual immutable core image> python3 -m pytest -q -p no:cacheprovider development/tests/operations/test_runtime_repair_target.py development/tests/operations/test_runtime_repair_evaluation.py",
+      "passed": 23,
+      "elapsedSeconds": 11.95,
+      "synthetic": true,
+      "actualDockerIsolation": true,
+      "originalFamilyFaultRepaired": false,
+      "oracleAuthoredByEva": false
+    },
+    "runtimeModelCalls": 0,
+    "runtimeToolCalls": 0,
+    "subscriptionCost": "unknown_not_estimated",
+    "productionDatabaseMigration": false,
+    "productionPolicyChanged": false
+  },
+  "builtCandidates": {
+    "core": {
+      "base": "sha256:cdc3ee4bb439f431e1684f31c702b9c69e9aab0a66df43cb71b0e340c8224964",
+      "candidate": "sha256:c534ed9a0017506f55babc6bab0e0ef99d4eab71fdbbe7efa4b58b6a8a2d7f84",
+      "after": {
+        "/opt/eva/src/eva/adapters/postgres/initiative_execution.py": "92bb8cb306fd6e487ec0155f694a40982b48d64238e378b71478ab040c80671a",
+        "/opt/eva/src/eva/bootstrap/runtime.py": "eeabe7ed93d42c60efe919047a8897f2354985186b51a94e1332e6b6ff941be3",
+        "/opt/eva/src/eva/operations/install_schema.py": "d1c4a55409cd950237080d98de37fea678e7985d2368e34fa2e7b9a49333a3dd",
+        "/opt/eva/src/eva/bootstrap/delegated_work_service.py": "c04e18522d51581912e02e9ea2fc6809a5b0fb7de75f97af0204c53255c20487",
+        "/opt/eva/src/eva/bootstrap/delegated_digital_composition.py": "e0da68c6a5172b14452deceb37191cdb76b4ab4df2421df4b312e60917afa98b",
+        "/opt/eva/src/eva/adapters/postgres/owner_initiatives.py": "636f4519259b25e54a054797e0481ea541a352b5a34e70abee72f7eb3fe016c0",
+        "/opt/eva/src/eva/application/self_repair.py": "ecfec56f11a4e29d9cf3d4dd65343b9469dd34763dea4b523a62cca9d26a9702",
+        "/opt/eva/src/eva/adapters/postgres/self_repair.py": "bb6dedbc5ef7d93bae34da1da9c841926350d468b717ce256853e833ee1ce932",
+        "/opt/eva/src/eva/bootstrap/self_repair.py": "cfd2b1959bc9fc7341d2180066ceff623aa80fcdb4d46c604e0bf436799ae4ba",
+        "/opt/eva/src/eva/operations/runtime_repair_target.py": "50f8a912fde04935b9a5764cde969916437040ba5e4b999b7b4cba55583d071d"
+      }
+    },
+    "worker": {
+      "base": "sha256:b65ce65c90c027e8520ee140ba4c7e6487e027088ecff406b96b2844989c1c81",
+      "candidate": "sha256:ba404daf280ab74230e38e0e49129a3aceac061040e10f27cfd575a2acd20db1",
+      "after": {
+        "/opt/eva/src/eva/adapters/postgres/initiative_execution.py": "92bb8cb306fd6e487ec0155f694a40982b48d64238e378b71478ab040c80671a",
+        "/opt/eva/src/eva/bootstrap/runtime.py": "eeabe7ed93d42c60efe919047a8897f2354985186b51a94e1332e6b6ff941be3",
+        "/opt/eva/src/eva/operations/install_schema.py": "d1c4a55409cd950237080d98de37fea678e7985d2368e34fa2e7b9a49333a3dd",
+        "/opt/eva/src/eva/bootstrap/delegated_work_service.py": "c04e18522d51581912e02e9ea2fc6809a5b0fb7de75f97af0204c53255c20487",
+        "/opt/eva/src/eva/bootstrap/delegated_digital_composition.py": "e0da68c6a5172b14452deceb37191cdb76b4ab4df2421df4b312e60917afa98b",
+        "/opt/eva/src/eva/adapters/postgres/owner_initiatives.py": "636f4519259b25e54a054797e0481ea541a352b5a34e70abee72f7eb3fe016c0",
+        "/opt/eva/src/eva/application/self_repair.py": "ecfec56f11a4e29d9cf3d4dd65343b9469dd34763dea4b523a62cca9d26a9702",
+        "/opt/eva/src/eva/adapters/postgres/self_repair.py": "bb6dedbc5ef7d93bae34da1da9c841926350d468b717ce256853e833ee1ce932",
+        "/opt/eva/src/eva/bootstrap/self_repair.py": "cfd2b1959bc9fc7341d2180066ceff623aa80fcdb4d46c604e0bf436799ae4ba",
+        "/opt/eva/src/eva/operations/runtime_repair_target.py": "50f8a912fde04935b9a5764cde969916437040ba5e4b999b7b4cba55583d071d"
+      }
+    },
+    "scope": "Ten source files per runtime; additional comparison executor verified from host checkout only. No candidate installed."
+  },
+  "remaining": [
+    "Automatic host handoff for newly affected components and separate native oracle/review production remain to integrate.",
+    "Current comparison runs frozen oracle and candidate in one Python process; it is not a tamper-resistant independent execution attestation.",
+    "Source file hash readback alone does not prove executed module bytes; import/bytecode execution binding needs strengthening.",
+    "No real Eva-authored candidate, general independent acceptance, managed installation, original live behavior readback or later autonomous use has been demonstrated in E4.16."
+  ]
 }

@@ -847,9 +847,9 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Verbind foutregistratie met bestaande duurzame initiatief/ontwikkelroute; bind algemeen hersteldoel aan onafhankelijke oorspronkelijke gedragscontrole en bestaande toepassing.",
+    "nextAction": "Verbind echte herstelkandidaten en afzonderlijk geproduceerd oorspronkelijk gedragsbewijs met de bestaande hostbeoordeling/toepassing; borg uitvoering van de bedoelde bronbytes en houd criteria buiten kandidaatprocessen. Installeer en activeer pas na volledige routecontrole.",
     "ownerActionRequired": false,
-    "checkedAt": "2026-10-22T08:16:48.682105+00:00"
+    "checkedAt": "2026-10-22T09:23:02.946161+00:00"
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -7859,7 +7859,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Verbind foutregistratie met bestaande duurzame initiatief/ontwikkelroute; bind algemeen hersteldoel aan onafhankelijke oorspronkelijke gedragscontrole en bestaande toepassing.",
+                "nextAction": "Verbind echte herstelkandidaten en afzonderlijk geproduceerd oorspronkelijk gedragsbewijs met de bestaande hostbeoordeling/toepassing; borg uitvoering van de bedoelde bronbytes en houd criteria buiten kandidaatprocessen. Installeer en activeer pas na volledige routecontrole.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -7871,7 +7871,8 @@
                   "coordinator": "/root",
                   "activeWorkers": []
                 },
-                "evidence": "development/evidence/product/autonomous-repair-20261022.json"
+                "evidence": "development/evidence/product/autonomous-repair-20261022.json",
+                "review": "development/reviews/autonomous-repair-foundation-20261022.json"
               }
             ],
             "previousBoundedCompletion": {
@@ -13463,7 +13464,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Verbind foutregistratie met bestaande duurzame initiatief/ontwikkelroute; bind algemeen hersteldoel aan onafhankelijke oorspronkelijke gedragscontrole en bestaande toepassing.",
+              "nextAction": "Verbind echte herstelkandidaten en afzonderlijk geproduceerd oorspronkelijk gedragsbewijs met de bestaande hostbeoordeling/toepassing; borg uitvoering van de bedoelde bronbytes en houd criteria buiten kandidaatprocessen. Installeer en activeer pas na volledige routecontrole.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -13475,7 +13476,8 @@
                 "coordinator": "/root",
                 "activeWorkers": []
               },
-              "evidence": "development/evidence/product/autonomous-repair-20261022.json"
+              "evidence": "development/evidence/product/autonomous-repair-20261022.json",
+              "review": "development/reviews/autonomous-repair-foundation-20261022.json"
             }
           ],
           "previousBoundedCompletion": {

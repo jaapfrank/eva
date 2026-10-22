@@ -1,0 +1,49 @@
+{
+  "contract": "EvaIndependentSourceReview/v1",
+  "taskId": "E4.16",
+  "checkedAt": "2026-10-22T09:23:02.946161+00:00",
+  "reviewer": "/root/review_cursor",
+  "verdict": "PARTIAL_SOURCE_GO_NOT_INSTALL_GO",
+  "scope": "Durable automatic runtime failure intake, source/STOP/permission fences, pending repair stop after builder completion, host-bound new component targets, isolated comparison foundation.",
+  "findings": [
+    "No remaining source blocker for the bounded durable-intake foundation.",
+    "Original source authority persists beyond completion of development work.",
+    "Target path filter gives candidate scope only; behavior modules also contain security logic.",
+    "Candidate and oracle share a process in the current comparison; independent test authorship is not a tamper-resistant execution attestation.",
+    "Source hashes do not alone prove executed module bytes."
+  ],
+  "tests": [
+    {
+      "name": "intake-postgres-queue-final.private.log",
+      "sha256": "5dec864783b884ddb5b57afb34360bb70060755a41a18143eba321e9f0f4f30a",
+      "passed": 18
+    },
+    {
+      "name": "intake-worker-profile-and-unit.private.log",
+      "sha256": "27e91e0816b09f98bd8b342e6710dd5cccd59eb87e4fb895a1fbd69ae719f2a2",
+      "passed": 52
+    },
+    {
+      "name": "intake-target-and-unit-final.private.log",
+      "sha256": "42f5a778bc7f7e0ad6adfea053399d2a7809801ae6eb43264dc70cc90fa98258",
+      "passed": 52
+    }
+  ],
+  "installed": false,
+  "activated": false,
+  "protectedCriteriaRead": false,
+  "sourceSha256": {
+    "src/eva/adapters/postgres/initiative_execution.py": "92bb8cb306fd6e487ec0155f694a40982b48d64238e378b71478ab040c80671a",
+    "src/eva/bootstrap/runtime.py": "5108902dad4742a9da2cb2b716baaaf4a0a5cb46185ca837f7a19dbc022816c1",
+    "src/eva/operations/install_schema.py": "d1c4a55409cd950237080d98de37fea678e7985d2368e34fa2e7b9a49333a3dd",
+    "src/eva/bootstrap/delegated_work_service.py": "c04e18522d51581912e02e9ea2fc6809a5b0fb7de75f97af0204c53255c20487",
+    "src/eva/bootstrap/delegated_digital_composition.py": "e0da68c6a5172b14452deceb37191cdb76b4ab4df2421df4b312e60917afa98b",
+    "src/eva/adapters/postgres/owner_initiatives.py": "636f4519259b25e54a054797e0481ea541a352b5a34e70abee72f7eb3fe016c0",
+    "src/eva/application/self_repair.py": "ecfec56f11a4e29d9cf3d4dd65343b9469dd34763dea4b523a62cca9d26a9702",
+    "src/eva/adapters/postgres/self_repair.py": "bb6dedbc5ef7d93bae34da1da9c841926350d468b717ce256853e833ee1ce932",
+    "src/eva/bootstrap/self_repair.py": "cfd2b1959bc9fc7341d2180066ceff623aa80fcdb4d46c604e0bf436799ae4ba",
+    "src/eva/operations/runtime_repair_target.py": "50f8a912fde04935b9a5764cde969916437040ba5e4b999b7b4cba55583d071d",
+    "src/eva/operations/runtime_repair_evaluation.py": "71db5b453290d889c5513cc2004a961e7ea145da426aa1902192ec285da028ce",
+    "deploy/migrations/versions/4e_0012_conversation_source_lock.py": "924759ba9d504b478c7a3a6216909ec0c8e52848880e2025e3c131a2c5412e8d"
+  }
+}

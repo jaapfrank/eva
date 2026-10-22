@@ -429,6 +429,28 @@ class PostgresOwnerInitiatives:
                 "execution_stopped": execution_stopped}
 
     def _has_deferred_native_application(self, conn, row, now):
+        # Development completion never completes a pending runtime repair.
+        # Preserve that completed work, but let the owner stop its later
+        # assessment/application through the same native source STOP marker.
+        repair_id = row.adoption["data"].get("repair_incident_id")
+        if repair_id is not None:
+            c, e = operational_checkpoints.c, operational_events.c
+            repair = conn.execute(sa.select(c.phase, c.status, e.payload, e.payload_sha256)
+                .select_from(operational_checkpoints.join(operational_events,
+                    sa.and_(e.tenant_id == c.tenant_id, e.installation_id == c.installation_id,
+                            e.thread_id == c.thread_id, e.event_type == "SELF_REPAIR_OBSERVED")))
+                .where(c.tenant_id == self._scope.tenant_id,
+                       c.installation_id == self._scope.installation_id,
+                       c.thread_id == repair_id)).one_or_none()
+            if (repair is not None and repair.phase == "repair_investigating"
+                    and repair.status == "waiting_for_proof"):
+                if canonical_sha256(repair.payload) != bytes(repair.payload_sha256).hex():
+                    raise RuntimeError("repair source hash differs")
+                data = repair.payload["data"]
+                if (row.thread_id == "intent:" + data["intent_id"]
+                        and row.adoption["data"].get("repair_source") == data["source"]
+                        and row.adoption["data"].get("repair_mandate_sha256") == data["mandate_sha256"]):
+                    return True
         from eva.adapters.postgres.current_catalog import delegated_work_runs as work
         from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
         from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec

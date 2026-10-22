@@ -708,7 +708,14 @@ class PostgresHindsightMemoryRuntime:
         if current_initiative() is not None:
             return self._respond_admitted(turn, recent_messages)
         with self._cold_path.foreground():
-            return self._respond_admitted(turn, recent_messages)
+            try:
+                return self._respond_admitted(turn, recent_messages)
+            except Exception as error:
+                from eva.bootstrap.self_repair import repair_failed_turn
+                reply = repair_failed_turn(self, turn, error)
+                if reply is not None:
+                    return reply
+                raise
 
     def _respond_admitted(
         self,
@@ -1916,6 +1923,11 @@ def create_runtime_app() -> FastAPI:
     if delegated_work_store is not None:
         delegated_work_store._initiative_authority_loader = runtime._initiative_authority
     runtime._work_memory = None if delegated_work_service is None else work_memory
+    from eva.bootstrap.self_repair import compose_self_repair
+    runtime._self_repair = compose_self_repair(runtime)
+    if runtime._self_repair is not None:
+        runtime._cold_path._service_tasks = (*runtime._cold_path._service_tasks,
+                                            runtime._self_repair.run_once)
     from eva.bootstrap.household_continuity import HouseholdConversationContext
     runtime._household_conversation_context = (None if household_work_server is None
         else HouseholdConversationContext(household_work_server))
