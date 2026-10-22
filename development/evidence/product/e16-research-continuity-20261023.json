@@ -1,7 +1,7 @@
 {
   "taskId": "E1.6",
   "recordedAt": "2026-10-22T22:54:24.820991+00:00",
-  "status": "installed_awaiting_live_decision",
+  "status": "installed_source_used_contact_scheduled",
   "technicalCompletion": false,
   "userOutcome": "Eva uses her completed research in a useful, naturally worded contribution and keeps its follow-up without another owner prompt.",
   "existingRoute": "Native initiative → original research tool receipt → private source outcomes → same decision scheduler → existing Telegram delivery.",
@@ -34,20 +34,52 @@
       "contentBytes": 2048,
       "scope": "research_artifact_only"
     },
-    "independentReview": "development/reviews/e16-research-continuity-20261023.json"
+    "independentReview": "development/reviews/e16-research-continuity-20261023.json",
+    "installedProfiles": {
+      "digital_work": "compatible_unchanged",
+      "shared_provider": "compatible_unchanged",
+      "private_research": "compatible_unchanged",
+      "household_research": "pre_existing_mismatch_voice_owner_scope"
+    }
   },
   "live": {
-    "decision": "pending",
-    "delivery": "not_claimed"
+    "decision": "completed_ordinary_cycle_with_restored_research_and_relayed_owner_feedback",
+    "delivery": "not_sent_due_to_nighttime",
+    "actualInstalledReceiptRead": {
+      "researchReceipts": 1,
+      "citationUrls": 4,
+      "contentBytes": 2048
+    },
+    "ownerFeedback": {
+      "source": "Owner instruction in Codex development conversation, explicitly attributed as relay",
+      "storedVia": "existing owner initiative feedback route",
+      "executionStopped": false,
+      "requestKey": "owner-codex-initiative-visibility-20261023",
+      "fabricatedHouseholdEvent": false
+    },
+    "decisionAt": "2026-10-22T22:59:01Z",
+    "nextAttentionAt": "2026-10-23T08:00:00Z",
+    "nextAttentionLocal": "2026-10-23 10:00 Europe/Amsterdam",
+    "provider": "chatgpt-codex:gpt-6-astra",
+    "researchRepeated": false,
+    "sourceEvidenceSha256": "3fff34e6548b8d869829ed178d0169ca04818cba3947bc7795f1a8e1c19423ba"
   },
   "usage": {
     "developmentTokens": null,
     "developmentCredits": null,
-    "runtimeTokens": null
+    "runtimeTokens": null,
+    "runtimeDecision": {
+      "model_attempts": 1,
+      "tool_calls": 1,
+      "input_tokens": 18779,
+      "output_tokens": 210,
+      "measurement": "measured"
+    }
   },
   "limits": [
     "This source repair does not itself prove useful family contact or full E1.6 source watching.",
     "Research citations are retained provider claims, not independent verification of their semantics.",
-    "Context is bounded to 8192 bytes; some older outcomes may be omitted."
+    "Context is bounded to 8192 bytes; some older outcomes may be omitted.",
+    "A persisted future contact choice is not proof of delivered or useful contact. Owner asked whether to allow current private Telegram live test during quiet hours."
   ]
 }
