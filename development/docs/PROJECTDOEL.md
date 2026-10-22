@@ -196,6 +196,14 @@ of eerdere capabilityproef bewijst deze hele keten niet. Binnen het bestaande ge
 ingestelde bereik volgt geen nieuwe eigenaarvraag per kleine stap. Ruimer automatisch
 wijzigingsbereik groeit later op bewijs en maakt deze eerste oplevering niet eindeloos.
 
+E4.16 breidt dit uit naar automatisch opgemerkte echte fouten en onderbouwde
+verschillen tussen bedoeling en resultaat. Eva houdt één blijvend hersteldoel vast,
+onderzoekt eerst de oorzaak en kiest herstel van uitvoering, configuratie of code.
+Zij meldt aangenomen herstel kort en sluit het pas na controle van het werkelijke
+gedrag. De herbeoordeling van 22 oktober vereist eerst één complete echte route,
+daarna hergebruik bij een tweede andere fout. De gedeeltelijke nieuwe code is nog
+niet geïnstalleerd; algemeen autonoom herstel is daarmee niet geleverd.
+
 Bij concrete tekorten gaat geschikt bestaand opensourcewerk vóór eigen bouw:
 een reeds gebruikte dependency, een standaard vaardigheidspakket of afgebakende
 upstreamcode wordt met versie, licentie en onderhoudsverantwoordelijkheid behouden.

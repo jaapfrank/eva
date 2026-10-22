@@ -35,5 +35,89 @@
         "activeWorkers": []
       }
     }
-  ]
+  ],
+  "designReassessment20261022": {
+    "status": "design_review_only_not_implemented_or_installed",
+    "trigger": "Owner requests a deliberate design before further implementation after repeated development failures.",
+    "findings": [
+      {
+        "finding": "Repair inputs do not yet establish reproducible user behavior. Error type hashes and source frames identify provenance, not expected behavior or failing inputs.",
+        "sources": [
+          "src/eva/application/self_repair.py",
+          "src/eva/application/repair_assessment.py",
+          "src/eva/bootstrap/delegated_digital_runner.py"
+        ]
+      },
+      {
+        "finding": "Exception intake alone misses incorrect successful replies, missing follow-up and unmet user intent; these require an observed outcome discrepancy, not treating every complaint as permission to patch.",
+        "sources": [
+          "src/eva/bootstrap/self_repair.py"
+        ]
+      },
+      {
+        "finding": "Timeouts, exhausted budgets, unavailable dependencies, configuration errors and software defects need distinct recovery decisions before choosing a code change.",
+        "sources": [
+          "src/eva/bootstrap/delegated_digital_runner.py"
+        ]
+      },
+      {
+        "finding": "Finite host orchestration is already extensive while its controller tests deliberately use synthetic work receipts. That proves transitions, not successful autonomous repair.",
+        "sources": [
+          "src/eva/operations/runtime_repair_development.py",
+          "development/tests/operations/test_runtime_repair_development.py"
+        ]
+      },
+      {
+        "finding": "Traceback-only source selection may exclude the actual causal dependency; any expansion must be explicit, bounded and tied to installed source evidence.",
+        "sources": [
+          "src/eva/operations/runtime_repair_target.py"
+        ]
+      }
+    ],
+    "designDecisions": [
+      "Retain existing incident, initiative, programming, evaluator and managed application ownership. Inventory each new module against those responsibilities before retaining it.",
+      "Define a single incident contract: scoped original request reference, actual result, expected behavior with provenance, exact release, relevant bounded execution facts, known external-effect status and reproducible sanitized inputs. No wholesale private transcripts or credentials in evaluation workspaces.",
+      "Use the same durable incident for observation, diagnosis, reproduction, candidate, independent comparison, managed application, verification and learning. Every transition has entry evidence, owner, idempotency key, timeout and restart behavior.",
+      "Keep conversation handling responsive. A brief acknowledgement follows durable admission; repeated failures attach evidence rather than create repeated notices or work.",
+      "Separate transient recovery and configuration repair from source repair. Never blindly replay an uncertain external action.",
+      "Establish independent expected behavior and reproduce the baseline failure before evaluating a candidate. A plausible generated test is not sufficient evidence.",
+      "Persist external-operation identity before dispatch and reconcile the existing operation after an unknown result. STOP and source changes invalidate future work.",
+      "Repair failure must not recursively create unlimited repair work. Bound attempts and resource use per incident; a new attempt needs a changed diagnosis or new evidence.",
+      "Completion requires the original behavior on the installed release plus preserved relevant behavior; a successful build, accepted review or installed file hash alone is insufficient."
+    ],
+    "executionOrder": [
+      {
+        "step": 1,
+        "action": "Select one retained real fault and map its complete current production route and available evidence. Classify missing evidence explicitly.",
+        "exit": "One concrete expected outcome and a reproducible baseline failure; no invented production defect."
+      },
+      {
+        "step": 2,
+        "action": "Freeze incident and handoff contracts, transition table and ownership map; identify which current changes are necessary, overlapping or premature.",
+        "exit": "Every boundary has a real producer and consumer; restart, STOP and unknown-effect behavior are specified."
+      },
+      {
+        "step": 3,
+        "action": "Complete the narrow end-to-end path using existing modules and let Eva author the repair. Preserve independent criteria.",
+        "exit": "Actual worker, source access, candidate, independent assessment and existing application handoff work together without Codex authoring the candidate."
+      },
+      {
+        "step": 4,
+        "action": "Test only affected boundaries, restart points and ordinary non-repair compatibility on one frozen candidate. Review concrete code and evidence.",
+        "exit": "Remaining test failures are explained and resolved; tested source matches the release candidate."
+      },
+      {
+        "step": 5,
+        "action": "Apply through the existing managed route when current work permits; verify original behavior and rollback behavior with retained data/configuration.",
+        "exit": "Installed actual route works; unproven external/user-level outcomes are explicitly distinct."
+      },
+      {
+        "step": 6,
+        "action": "Exercise a second distinct real incident through the same route without a custom host handoff, then extend detection to outcome discrepancies.",
+        "exit": "Demonstrated reuse and retained lessons, with runtime latency and resource use measured."
+      }
+    ],
+    "productionChangesDuringReassessment": false,
+    "completionClaim": false
+  }
 }

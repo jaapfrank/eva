@@ -228,6 +228,32 @@ bewezen autonome vaardigheidskeuze blijven zichtbaar. Alleen gemeten en onafhank
 beoordeelde winst mag worden toegepast.
 Die overdracht en echt later gebruik blijven op dezelfde E4.12-kaart open.
 
+### Automatisch herstel binnen bestaande uitvoering (E4.16)
+
+Ontwerpbesluit van 22 oktober; de algemene herstelroute is nog niet geïnstalleerd.
+Een incident verbindt de oorspronkelijke bedoeling en bron, feitelijke uitkomst,
+verwacht gedrag met herkomst, geïnstalleerde versie en relevante uitvoeringsgegevens.
+Een stacktrace bewijst herkomst maar is op zichzelf geen reproduceerbare diagnose.
+Privé-inhoud en geheimen worden niet integraal naar een beoordelingswerkruimte gekopieerd.
+
+De bestaande initiatiefregistratie bezit het hersteldoel; de bestaande worker doet
+onderzoek en programmeerwerk. De evaluator bezit onafhankelijke gedragscriteria;
+de bestaande beheerde updater bezit toepassing en terugval. Er komt geen tweede
+planner, geheugen of algemene agent naast Eva. Foutregistratie en een korte melding
+mogen het gewone gesprek niet op de lange hersteluitvoering laten wachten.
+
+Voor iedere overdracht liggen invoer, uitvoer, eigenaar, bronversie, idempotentie,
+timeout en hervatting vast. Een onbekende uitkomst vraagt inspectie van dezelfde
+actie, geen nieuwe dispatch. STOP en gewijzigde bronbevoegdheid blijven leidend.
+Tijdelijke uitval, configuratieproblemen en codefouten krijgen verschillende
+oplossingen. Ook een technisch geslaagd maar inhoudelijk verkeerd resultaat kan een
+incident opleveren, mits de afwijking van de bedoeling onderbouwd is.
+
+Afsluiten vereist gecontroleerd oorspronkelijk gedrag op de geïnstalleerde versie.
+Een build, review, bronhash of afgesloten programmeertaak alleen bewijst geen herstel.
+Mislukt herstel veroorzaakt geen onbegrensde recursieve herstelopdrachten; vervolg
+blijft bij hetzelfde doel met een begrensd budget en een aantoonbaar nieuwe hypothese.
+
 ## Moduleverantwoordelijkheden
 
 | Bestaande module / bron | Eigen verantwoordelijkheid | Interface en grens |

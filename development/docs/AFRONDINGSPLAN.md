@@ -248,6 +248,34 @@ Per cluster:
    bij een nieuwe aantoonbare fout of relevante oorzaakwijziging; geen nieuwe reeks
    gelijksoortige proeven om een groenere tabel te krijgen.
 
+### E4.16 — eerst één volledige echte herstelroute bewijzen
+
+De eigenaar vroeg op 22 oktober de aanpak eerst te herzien wegens opeenvolgende
+ontwikkelfouten. De ambitie blijft volledig behouden. De bestaande gedeeltelijke
+implementatie is niet geïnstalleerd of geactiveerd; eerdere deelproeven bewijzen
+geen algemeen zelfstandig herstel. De [herbeoordeling](../design/product/autonomous-repair-task-scope-20261022.json)
+legt bevindingen en ontwerpbesluiten vast zonder oorspronkelijke eindcriteria te wijzigen.
+
+1. Selecteer één bewaarde echte fout en volg de werkelijk gebruikte route. Leg
+   bedoeling, feitelijke uitkomst, relevante invoer en correct verwacht gedrag vast.
+   Toon de fout aan op de oorspronkelijke versie; maak geen productieprobleem voor een demonstratie.
+2. Leg de gegevenscontracten, moduleverantwoordelijkheden en statusovergangen vast,
+   inclusief herstart, STOP en onbekende effecten. Beoordeel bestaande nieuwe code
+   op noodzaak en overlap vóór verdere uitbreiding.
+3. Laat Eva via de bestaande uitvoerder een gerichte reparatie maken en afzonderlijk
+   beoordelen. Codex mag de ontbrekende infrastructuur afmaken, maar geen eigen
+   kandidaat presenteren als bewijs dat Eva zichzelf heeft gerepareerd.
+4. Bevries één kandidaat en controleer de geraakte interfaces, normale uitvoering en
+   relevante onderbrekingen. Herhaal alleen bij een nieuwe oorzaak of ontbrekend bewijs.
+5. Gebruik de bestaande beheerde installatie met behoud van gegevens, instellingen
+   en lopend werk. Controleer daarna het oorspronkelijke gedrag op die versie.
+6. Laat een tweede verschillende echte fout dezelfde route gebruiken zonder nieuwe
+   handmatige overdracht. Breid daarna de detectie van inhoudelijk verkeerde resultaten uit.
+
+Meet gesprekstijd, hersteltijd, model-/toolgebruik en menselijke tussenkomst apart.
+Documentatie, broncode, geïnstalleerde werking en daadwerkelijk autonoom gebruik
+blijven onderscheiden. Ontwikkelstatus staat uitsluitend in het canonieke werkbord.
+
 ### Efficiëntie zonder kwaliteitsverlies
 
 | Eva-runtime meten | Ontwikkelwerk afzonderlijk meten |
