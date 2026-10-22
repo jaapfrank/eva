@@ -2,7 +2,7 @@
   "contract": "EvaWorkboardScopeExtension/v1",
   "id": "living-housemate-20261022",
   "ownerAuthorized": true,
-  "authorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+  "authorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen. Eigenaar22oktober2026 accepteert gerichte continuïteit zonder uniforme beloftemachine en vraagt dit bouwklaar uit te werken, inclusief de drie voorgestelde aanvullende taken.",
   "sourceDocument": "development/docs/PROJECTDOEL.md",
   "tasks": [
     {
@@ -88,6 +88,68 @@
         "E4.17"
       ],
       "nextAction": "Gebruik de concrete E4.15/E4.17-overdracht als afbakening; leg te verwijderen duplicatie en compatibiliteit vast vóór wijzigingen, hergebruik de bestaande inventaris."
+    },
+    {
+      "id": "E1.13",
+      "title": "Denkvermogen gericht inzetten zonder initiatief te verliezen",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "living-housemate-20261022",
+      "owner": "Codex · kernuitvoerder",
+      "ownerAuthorized": true,
+      "ownerAuthorization": "Eigenaar22oktober2026 accepteert gerichte continuïteit zonder uniforme beloftemachine en vraagt dit bouwklaar uit te werken, inclusief de drie voorgestelde aanvullende taken.",
+      "ownerActionRequired": false,
+      "requiredForCurrentDelivery": true,
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "existing": "Bestaande aandacht-, taak-, budget- en onderhoudsroutes hergebruiken.",
+      "gap": "Denkvermogen gericht inzetten zonder initiatief te verliezen",
+      "doneWhen": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.",
+      "dependsOn": [
+        "E1.6"
+      ],
+      "nextAction": "Volg de kleine bouwstappen in AFRONDINGSPLAN; stel eerst de werkelijk geïnstalleerde route vast."
+    },
+    {
+      "id": "E1.14",
+      "title": "Afgesproken continuïteit bij modeluitval en herstart aantonen",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "living-housemate-20261022",
+      "owner": "Codex · kernuitvoerder",
+      "ownerAuthorized": true,
+      "ownerAuthorization": "Eigenaar22oktober2026 accepteert gerichte continuïteit zonder uniforme beloftemachine en vraagt dit bouwklaar uit te werken, inclusief de drie voorgestelde aanvullende taken.",
+      "ownerActionRequired": false,
+      "requiredForCurrentDelivery": true,
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "existing": "Bestaande aandacht-, taak-, budget- en onderhoudsroutes hergebruiken.",
+      "gap": "Afgesproken continuïteit bij modeluitval en herstart aantonen",
+      "doneWhen": "Eén werkelijk gebruikte verantwoordelijkheid behoudt haar ondersteunde lokale controles, stop en pauze tijdens modelprovideruitval en na herstart. Interpretatie-afhankelijk werk wacht herkenbaar. Bij herstel worden verouderde aanleidingen opnieuw op nut beoordeeld; geen verloren afspraak, dubbele externe actie of meldingenstorm. Test provideruitval, bronuitval en procesherstart afzonderlijk met gecontroleerde storingsinjectie buiten het actieve gezinsgesprek. Leg expliciet vast welke lokale functies wel en niet zonder provider werken; technisch bewijs en werkelijk meerdagengebruik blijven apart.",
+      "dependsOn": [
+        "E1.11",
+        "E1.13"
+      ],
+      "nextAction": "Volg de kleine bouwstappen in AFRONDINGSPLAN; stel eerst de werkelijk geïnstalleerde route vast."
+    },
+    {
+      "id": "E4.19",
+      "title": "Relevante updates zelfstandig ontdekken en beheerd toepassen",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "living-housemate-20261022",
+      "owner": "Codex · kernuitvoerder",
+      "ownerAuthorized": true,
+      "ownerAuthorization": "Eigenaar22oktober2026 accepteert gerichte continuïteit zonder uniforme beloftemachine en vraagt dit bouwklaar uit te werken, inclusief de drie voorgestelde aanvullende taken.",
+      "ownerActionRequired": false,
+      "requiredForCurrentDelivery": true,
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "existing": "Bestaande aandacht-, taak-, budget- en onderhoudsroutes hergebruiken.",
+      "gap": "Relevante updates zelfstandig ontdekken en beheerd toepassen",
+      "doneWhen": "Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap.",
+      "dependsOn": [
+        "E4.16",
+        "E4.17"
+      ],
+      "nextAction": "Volg de kleine bouwstappen in AFRONDINGSPLAN; stel eerst de werkelijk geïnstalleerde route vast."
     }
   ],
   "specification": {
@@ -161,6 +223,14 @@
       "personalityRelation": "Inner State beschrijft actuele bezigheid; Personality Delta is een blijvende les over omgang. State kan context leveren, maar is geen onafhankelijke positieve feedback en mag zichzelf niet als bewijs voor persoonsverandering gebruiken.",
       "ui": "Bestaande productbediening toont Waar Eva mee bezig is: curiosity, maximaal twee toegestane projectstatussen, optionele laatste trace en reageren/stoppen. Geen nieuwe app.",
       "acceptance": "Een bestaand of nieuw toegestaan project krijgt echte testactiviteit met gecontroleerde gesimuleerde klok; droomupdate, brongebonden trace, reactie, volgende state en UI werken samen. Ook geen bron, quiet hours, herhaling, stop, private bron en bronwissen testen. Simulatie bewijst geen wekenlang eigen leven."
+    },
+    "continuityDirection": {
+      "principle": "Continuïteit bestaat in werkelijk onderhouden afspraken, projecten en voorzieningen; Inner State beschrijft activiteit en veroorzaakt geen fictief leven.",
+      "minimalExtension": "Geen uniform Promise-object of algemeen taakframework. Herinnering krijgt alleen benodigde tijd; onderzoek budget/review; huisvoorziening werkelijke controle/pauze. Voeg alleen ontbrekende velden toe aan de bestaande eigenaar van dat gegeven.",
+      "reasoning": "Geen modelaanroep voor ongewijzigde reeds begrepen situaties; onzekerheid, nieuwe betekenis en conflicten vereisen afweging. Houd begrensd ruimte voor eigen nieuwsgierigheid.",
+      "authority": "Bekende uitvoering blijft gebonden aan actuele rechten, doelobject en geldigheid. Nieuwe natuurlijke taal moet eerst voldoende begrepen zijn; eerdere tekstmatch geeft geen bevoegdheid.",
+      "offline": "Modelprovideruitval is niet internet-, bron- of stroomuitval. Geen volledige offlinegespreksclaim; herstel mag achterstallige externe effecten niet blind herhalen.",
+      "status": "planned_not_implemented_or_installed"
     }
   },
   "existingTaskSteps": {
@@ -176,7 +246,8 @@
     ],
     "E1.6": [
       "Resterende actuele bron-/uitvoerprofieloverdracht afmaken.",
-      "Een echte bronverandering tot toegestane afweging en gecontroleerd vervolg volgen; reconnect/STOP/deduplicatie behouden."
+      "Een echte bronverandering tot toegestane afweging en gecontroleerd vervolg volgen; reconnect/STOP/deduplicatie behouden.",
+      "Verbind één bestaande relevante bronaanleiding met bestaande geplande aandacht en duurzaam vervolg; ongewijzigde callbacks bundelen zonder modelpolling."
     ],
     "E1.7": [
       "Routines als toetsbare hypotheses met uitzonderingen en bron opslaan in bestaand geheugen.",
@@ -185,7 +256,8 @@
     "E1.8": [
       "Tijdvenster, actuele bronnen, bedoelingen en onzekerheid combineren voor timely_help.",
       "Ondersteuningskans met bron, onzekerheid en benodigde inzet voorstellen; onderzoekstoestemming nooit als betaling/contract/accounttoestemming behandelen.",
-      "Containerproef met onbekende positie: korte vraag in plaats van verzonnen waarneming; feedback en geen herhaalde melding controleren."
+      "Containerproef met onbekende positie: korte vraag in plaats van verzonnen waarneming; feedback en geen herhaalde melding controleren.",
+      "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
     ],
     "E1.9": [
       "Bestaande feedback en stijlreflectie verbinden aan compacte brongebonden Personality Delta.",
@@ -196,26 +268,37 @@
       "Maximaal twee bestaande eigen projecten met korte status, budget, doel en reviewmoment; ook niet-functionele nieuwsgierigheid toelaten.",
       "Eén compacte Inner State uit echte activiteit/feedback bijwerken in bestaande droomroute.",
       "Shared Trace via bestaande aandacht/aflevering; zeldzaam, brongebonden, geen privélek, stil bij ontbrekende aanleiding.",
-      "Feedback, stop en bronwissen onmiddellijk laten doorwerken; minimale klokgestuurde proef plus echt later projectvervolg."
+      "Feedback, stop en bronwissen onmiddellijk laten doorwerken; minimale klokgestuurde proef plus echt later projectvervolg.",
+      "Laat onderzoek werkelijk doorlopen vóór een Inner State of Shared Trace te genereren; reserveer begrensde nieuwsgierigheid zonder huisprobleem als vereiste."
     ],
     "E1.11": [
       "Gebruik Household Artifact-lifecycle voor een expliciet afgesproken terugkerende verantwoordelijkheid.",
-      "Werkelijk opvolgen, evalueren, bijstellen of stoppen; minder menselijke begeleiding over tijd aantonen."
+      "Werkelijk opvolgen, evalueren, bijstellen of stoppen; minder menselijke begeleiding over tijd aantonen.",
+      "Voeg uitsluitend de ontbrekende opvolging aan deze bestaande verantwoordelijkheid toe; geen uniform afsprakenframework."
+    ],
+    "E1.12": [
+      "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
+    ],
+    "E4.18": [
+      "Consolideer alleen dubbel werk op deze gebruikte route; geen procespopulatie of metabolismeframework."
     ]
   },
   "execution": {
     "mainOrder": [
-      "E4.15",
-      "E4.17",
-      "E1.9",
-      "E1.12",
       "E1.6",
       "E1.7",
+      "E1.13",
       "E1.8",
+      "E1.9",
+      "E4.15",
+      "E4.17",
+      "E1.12",
       "E1.11",
+      "E1.14",
       "E1.10",
       "E2.9",
       "E4.16",
+      "E4.19",
       "E4.18",
       "P2.1",
       "F2.1",
@@ -232,14 +315,16 @@
       "E2.6",
       "C4.3"
     ],
-    "activeTask": "E4.15",
+    "activeTask": "E1.6",
     "rules": [
       "Eén primaire uitvoeruitkomst; de bestaande spraakuitvoerder behoudt zijn eigen route.",
       "E4.16 en E4.18 lossen eerder concrete blokkerende fouten/duplicatie op; hun volledige afronding volgt vóór de eindvergelijking.",
       "E2.9-bediening groeit mee met de features; beheer/stop wordt niet uitgesteld tot het einde.",
       "Alle oorspronkelijke doneWhen-criteria blijven ongewijzigd. Nieuwe scope is aanvullende eigenaaracceptatie, geen herroeping van oude beperkte afrondingen.",
       "Optioneel accountgebonden werk blokkeert de kern of gezinsweek niet.",
-      "P2.1 vergelijkt uitsluitend dezelfde werkelijk bruikbare eindkandidaat; geen algemene superioriteit uit losse architectuurclaims."
+      "P2.1 vergelijkt uitsluitend dezelfde werkelijk bruikbare eindkandidaat; geen algemene superioriteit uit losse architectuurclaims.",
+      "Afmaakvolgorde is geen waterval: minimale benodigde verbindingen en stopbediening samen in één praktijkroute bouwen; volledige kaartacceptatie volgt haar bestaande afhankelijkheden.",
+      "E1.9 levert eerst alleen benodigde brongebonden feedback; persoonlijkheidsverfijning volgt echte activiteit. Camera blijft bestaande E4.15-acceptatie, geen tweede parallelle hoofdopdracht."
     ]
   },
   "reuseDecisions": {

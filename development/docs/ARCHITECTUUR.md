@@ -593,3 +593,16 @@ ongevraagde licentiewijziging of nieuwe concurrentenserie.
 ### Private initiative planning and household notifications
 
 The existing sensory model uses a separate private orientation instruction for `initiative-review`. Notification silence does not imply absence of useful work: the model may choose one bounded native initiative to investigate a worthwhile information gap without an urgent household event. The same decision function and argument schema have phase-specific tool descriptions: private orientation weighs self-chosen work separately from notification timing, including after an optional personal-memory lookup. The shared/passive descriptor, durable adoption, current authority, native executor and private completion delivery remain unchanged. A deliberate null proposal remains valid. In private orientation, the existing only-necessary-questions boundary scopes unnecessary task clarification; optional fitting social curiosity does not require an active task and never changes privacy or execution authority. A genuinely changed installed private contract has a distinct immutable, deduplicated review source; it never overwrites an earlier hourly decision or bypasses unresolved work or model-selected future attention. Controller-stimulated reviews retain their actual provenance and do not demonstrate spontaneous initiation. Completed, measured private decisions also return as at most three owner-scoped historical summaries in the existing bounded life context, preserving original timestamps and source hashes. They are historical model choices, not owner feedback, present-world facts or renewed permission; older household observations are trimmed before this history, and history before real commitments.
+
+## Gerichte continuïteit binnen bestaande routes
+
+De leidende uitwerking staat in AFRONDINGSPLAN, sectie Kleine bouwstappen op de bestaande
+route. Gebruik de bestaande bron-, aandacht-, duurzame taak-, uitvoer- en leereigenaren.
+Er komt geen generiek Promise-object, tweede scheduler of metabolisme-subsystem.
+Een herinnering, onderzoek en huisvoorziening krijgen uitsluitend ontbrekende gegevens
+voor hun eigen werking; gedeelde helpers ontstaan alleen uit aantoonbare duplicatie.
+Bekende geldige uitvoering kan zonder model; nieuwe betekenis en onzekerheid vragen
+interpretatie. Geplande nieuwsgierigheid blijft mogelijk binnen bestaande budgetten.
+Inner State is een afgeleide beschrijving. Modeluitval, bronuitval en herstart zijn
+verschillende situaties; alleen daadwerkelijk beschikbare lokale mogelijkheden blijven
+werken. Nieuwe toepassingscode blijft buiten de kern en gebruikt bestaande herstelroutes.

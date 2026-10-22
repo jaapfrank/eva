@@ -8,29 +8,94 @@ echte blokkades, bewijs en eigenaarhandelingen. Dit document is het plan, geen t
 
 ## Werkvolgorde en praktische oplevering
 
-De volledige aangeleverde specificatie staat in één [samengevoegde scope](../design/product/living-housemate-task-scope-20261022.json).
-Die bevat Household Artifacts, tijdige hulp, ondersteuningskansen, sociale expressie,
-Personality Deltas en Inner Life. De vorige deeluitwerking blijft als historische
-besluitvorming bewaard. E4.15 is de enige primaire uitvoerprioriteit; spraak blijft bij
-de bestaande uitvoerder. Nieuwe functies zijn gepland, niet als geïnstalleerd aangemerkt.
+De [samengevoegde scope](../design/product/living-housemate-task-scope-20261022.json)
+behoudt Household Artifacts, tijdige hulp, ondersteuningskansen, Personality Deltas en
+Inner Life. De leidende richting is nu gerichte continuïteit: Eva onderhoudt echte
+verantwoordelijkheden en eigen projecten tussen gesprekken en gebruikt denkvermogen
+wanneer dat iets toevoegt. E1.6 is de primaire bouwstap; spraak blijft bij de bestaande
+uitvoerder. Dit is bouwvoorbereiding, geen geïnstalleerde nieuwe werking.
 
 | Volgorde | Taken | Concrete uitkomst |
 | --- | --- | --- |
-| 1 | E4.15 → E4.17 | Eva realiseert een losse bruikbare uitbreiding en herstelt die met haar gegevens op een schone pc. Camera/begroeting is de eerste opdracht; zelfontdekte behoefte wordt afzonderlijk bewezen. |
-| 2 | E1.9 → E1.12 | Echte feedback wordt een corrigeerbare persoonlijkheidsbijstelling; een blijvende huisvoorziening krijgt adoptie, evaluatie en werkelijke pauze/herstel. |
-| 3 | E1.6 → E1.7 → E1.8 → E1.11 | Bronveranderingen en routines leiden tot tijdige hulp, begrensde ondersteuningsvoorstellen en een afgesproken terugkerende verantwoordelijkheid. |
-| 4 | E1.10 → E2.9 | Maximaal twee eigen projecten, compacte Inner State, zeldzame Shared Traces en één lichte productweergave. Bedieningsdelen groeien tijdens de eerdere stappen mee. |
-| 5 | E4.16 → E4.18 | Algemeen zelfherstel en gerichte vereenvoudiging aantonen. Concrete blokkerende fouten/duplicatie worden eerder binnen dezelfde uitvoerroute opgelost. |
-| 6 | P2.1 → F2.1 → F2.2 | De werkelijk bruikbare eindkandidaat vergelijken, zeven dagen gezinsgebruik en afzonderlijk eigenaaroordeel. |
-| Parallel, bestaande eigenaar | C3.5 → C3.1 → C3.4 → C4.1 → C3.6 | Beurtgrenzen, doorpraten, ritme, onderbreken en herstel op de speakers. |
-| Optioneel | E2.6, C4.3 | WhatsApp/eigen nummer en telefoonspraak zodra de aansluiting beschikbaar is; geen blokkade voor de kern. |
+| 1 | E1.6 → E1.7 → E1.13 → E1.8 | Eén echte bron-/opvolgroute, routines en gerichte modelafweging. |
+| 2 | E1.9 → E4.15 → E4.17 → E1.12 → E1.11 | Benodigde brongebonden feedback, een losse herstelbare voorziening en één werkelijk gedragen verantwoordelijkheid. De cameraopdracht blijft E4.15-acceptatie. |
+| 3 | E1.14 | Dezelfde verantwoordelijkheid blijft binnen haar mogelijkheden werken bij modeluitval en herstart. |
+| 4 | E1.10 → E2.9 | Echt eigen projectvervolg, daarvan afgeleide Inner State en lichte gezamenlijke bediening. |
+| 5 | E4.16 → E4.19 → E4.18 | Zelfherstel, zelfstandig relevant onderhoud en gerichte vereenvoudiging. Blokkerende fouten worden eerder opgelost. |
+| 6 | P2.1 → F2.1 → F2.2 | Dezelfde eindkandidaat vergelijken, zeven dagen gezinsgebruik en afzonderlijk eigenaaroordeel. |
+| Parallel, bestaande eigenaar | C3.5 → C3.1 → C3.4 → C4.1 → C3.6 | Spraak afronden via de bestaande uitvoerder. |
+| Optioneel | E2.6, C4.3 | Accountgebonden WhatsApp en telefoonspraak blokkeren de kern niet. |
 
-Vier afzonderlijke gaten hebben nieuwe kaarten: E4.17 (herstelbare eigen uitbreidingen),
-E1.12 (Household Artifact-lifecycle), E2.9 (gezamenlijke zichtbaarheid/bediening) en E4.18
-(gerichte consolidatie van gebruikte uitvoering en onderhoud). De overige aanvullingen
-zijn concrete stappen en acceptatie bij bestaande E1/E4-kaarten. Oorspronkelijke
-criteria en beperkte eerdere afrondingen blijven intact. Alle 22 open taken staan
-exact eenmaal in de bovenstaande volgorde of in de parallelle/optionele route.
+Drie aanvullende kaarten: **E1.13** gericht denkvermogen, **E1.14** continuïteit bij
+uitval/herstart en **E4.19** zelfstandig updateonderhoud. De eerdere vier toevoegingen
+E4.17, E1.12, E2.9 en E4.18 blijven behouden. Bestaande kaarten krijgen gerichte
+bouwstappen; oorspronkelijke eindvoorwaarden en eerdere afrondingen blijven intact.
+Alle 25 open kaarten staan eenmaal in de hoofd-, parallelle of optionele volgorde.
+
+### Kleine bouwstappen op de bestaande route
+
+De tabel ordent kaartafrondingen, niet verplichte grote bouwblokken. Bouw één smalle
+praktijkroute compleet, met minimale benodigde verbindingen uit de betrokken kaarten.
+Een gedeeltelijke verbinding sluit de volledige kaart niet. E1.9 levert eerst de
+benodigde feedbackbinding; persoonlijkheidsverfijning volgt echte activiteit. Zien,
+stoppen en corrigeren groeien vanaf de eerste stap mee, niet pas bij E2.9.
+
+| Bouwstap | Bestaande eigenaar / eerste te lezen bestanden | Concrete wijziging en gerichte verificatie |
+| --- | --- | --- |
+| 1. Werkelijke overdracht volgen | `bootstrap/household_initiative.py`, `application/resident_attention.py`, `adapters/postgres/initiative_attention.py` | Volg één beschikbare toegestane bronverandering naar aandacht, afweging en resultaat. Stel geïnstalleerde bron/configuratie vast. Noteer alleen de ontbrekende overdracht en huidige modelaanroepen/doorlooptijd. |
+| 2. Onnodig nadenken wegnemen | Dezelfde aandacht-route, `application/free_will.py`, `adapters/postgres/initiative_execution.py` | Hergebruik bronversie, bestaande volgende aandacht en uitvoerstatus. Bundel identieke aanleidingen; geldige bekende uitvoerstappen mogen zonder nieuwe modelinterpretatie. Nieuwe betekenis, conflicten en verlopen context vragen wel heroverweging. Geen ruwe tekstcache die een nieuwe opdracht automatisch uitvoert. |
+| 3. Echt later vervolg | `application/personal_interests.py`, `bootstrap/native_initiative_work.py`, bestaande duurzame taken | Verbind de eerstvolgende noodzakelijke aanleiding aan de bestaande afspraak. Alleen ontbrekende gegevens toevoegen. Verifieer opvolging zonder nieuw gebruikersbericht, veranderde bron, stop en correcte ontvanger. |
+| 4. Voorziening en herstel | Bestaande module-/procedure-, artifact- en portable-restore-route, E4.15/E4.17/E1.12 | Laat Eva ontbrekende toepassingscode als losse uitbreiding maken. Verifieer werkelijke werking, pauze en schoon herstel met eigen gegevens. Neem bestaande cameraacceptatie mee zonder die oplossing vooraf door Codex te bouwen. |
+| 5. Uitval en herstart | Bestaande leases, durable work en aandachtopslag | Injecteer modeluitval en procesherstart in de kandidaat; controleer lokale werking, wachtrij, stop en één effect. Injecteer bronuitval apart: onbekend blijft onbekend. Verouderde meldingen worden bij herstel niet blind verstuurd. |
+| 6. Eigen activiteit en uiting | `application/memory_background.py`, personal interests en bestaande delivery | Eén project krijgt echt later vervolg. Pas daarna actuele state en zeldzame trace afleiden. Feedback wijzigt vervolg; geen modelgeneratie bij ontbrekende nieuwe activiteit. |
+| 7. Relevant updateonderhoud | Bestaande componentbeoordeling, `operations/runtime_image_update.py`, release/locks | Inventariseer werkelijk geïnstalleerde versies; maak één relevante updatekandidaat en gebruik de bestaande beoordeling/installatie. De huidige image-updater dekt kern/worker, niet automatisch alle modules: breid alleen het concreet benodigde adapterpad uit. |
+
+Bestandspaden hierboven zijn relatief aan `src/eva`. Het zijn aangetroffen
+integratiepunten, geen opdracht om al die bestanden te wijzigen. Geen algemene
+refactor vóór de eerste werkende route. Een structurele wijziging volgt alleen uit
+het concrete ontbrekende gedrag.
+
+### Minimale gegevens, expliciete beslissingen
+
+Geen uniform Promise-object, beloftedatabase of framework voor alle verantwoordelijkheden.
+Een herinnering kan volstaan met een tijdstip; onderzoek vraagt budget/review;
+een huisvoorziening vraagt echte controle en pauze. Bestaande gegevens blijven bij
+hun huidige eigenaar. Voeg pas een veld/migratie toe wanneer de geselecteerde route
+het nodig heeft en het gegeven niet betrouwbaar uit bestaande opslag volgt.
+
+- Ongewijzigde bekende aanleiding: bundelen of de bestaande toegestane controle uitvoeren.
+- Bekende uitvoerstap: actuele rechten, doelobject, geldigheid en resultaatbinding blijven gelden.
+- Afwijking, onbekende betekenis of botsende doelen: gerichte modelafweging met relevante context.
+- Eigen nieuwsgierigheid: een begrensd bestaand projectmoment, ook zonder huisprobleem.
+- Model niet beschikbaar: ondersteunde lokale werking blijft; interpretatiewerk wacht zichtbaar.
+- Bron niet beschikbaar: geen conclusie over de toestand van het huis uit ontbrekende gegevens.
+
+Budgetten voor bestaande projecten/aandacht hergebruiken; geen universele spanningsscore.
+Geplande aandacht wekt bestaand werk wanneer nodig. Er komt geen extra permanent proces,
+zelfonderhoudende procespopulatie of nieuw lokaal model als voorwaarde voor deze uitvoering.
+
+### Korte meet- en opleverroute
+
+Gebruik dezelfde geselecteerde gevallen vóór en na een wijziging: ongewijzigde bron,
+relevante wijziging, bekende actie, onduidelijke actie, later eigen vervolg, stop,
+modeluitval, bronuitval en herstart. Meet alleen geraakte route: aantal modelrondes,
+werkelijk geregistreerde tokens, ontvangst-tot-effect, eerste bruikbare reactie,
+correcte uitkomst en gemiste relevante aanleidingen. Providerwachttijd en Eva-overdracht
+apart registreren waar beschikbaar. Geen fictieve kosten uit onbekende credits.
+
+Streef voor eenvoudige chatbediening naar 1–2 seconden; meld gemeten spreiding en
+uitschieters. Geen besparing claimen wanneer Eva nuttige signalen mist. Een controle
+zonder model hoeft niet alsnog een model te bellen om stilte te beschrijven.
+Herbruik bestaande testfixtures en logs; bouw geen tweede meetplatform.
+
+Voer per wijziging alleen de geraakte controles uit, daarna één complete proef op de
+werkelijke geïnstalleerde route. Een gesimuleerde storing bewijst hersteltechniek;
+meerdere echte dagen bewijzen continuïteit. Begin dat gebruik zodra de route klaar is,
+zodat observatiedagen niet pas na alle overige bouw beginnen. F2 blijft de gezamenlijke
+eindacceptatie. Herhaal een proef alleen bij gewijzigde oorzaak of ontbrekend bewijs.
+
+De eerste uitvoeractie is E1.6: volg de bestaande bron-/aandachtoverdracht, meet de
+huidige route en sluit het concrete gat. Geen nieuwe algemene architectuurronde.
 
 ### Hergebruik en wat vervalt als bouwvoorstel
 

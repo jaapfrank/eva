@@ -42,6 +42,12 @@ controleren → leren en later toepassen. Bestaande gesprek-, geheugen-, initiat
 en werkmodules vormen samen deze kringloop. Geen tweede planner, geheugen of aparte
 Eva per kanaal, en geen extra permanent proces alleen om meer activiteit te tonen.
 
+Continuïteit zit in werkelijk onderhouden afspraken, eigen projecten en voorzieningen.
+Denkvermogen wordt gericht ingezet bij onzekerheid, verandering en begrensde
+nieuwsgierigheid; bekende uitvoering vraagt niet steeds een nieuwe modelronde.
+Bestaande afspraken worden alleen uitgebreid met wat hun concrete vervolg nodig heeft.
+Geen uniforme beloftemachine of procespopulatie. Inner State beschrijft echte activiteit.
+
 Het gewone gesprek blijft beschikbaar tijdens achtergrondwerk. De bestaande
 PostgreSQL/Hindsight-geheugenketen houdt herkomst, correctie en wissen bij. Overdag
 blijven recente gesprekken en lopende bedoelingen bruikbaar; de droomfase selecteert
@@ -83,7 +89,9 @@ Het gezin kan dit zien, erop reageren en het werk of de uitingen stoppen.
 
 ## Eerst bruikbaar gedrag, gericht eenvoudiger bouwen
 
-De eerstvolgende praktijktest is de cameraopdracht: Eva onderzoekt zelf aanwezige
+De eerste bouwstap verbindt één echte bronverandering aan bestaande aandacht en
+zelfstandig later vervolg (E1.6). De cameraopdracht blijft de concrete bouwacceptatie
+van E4.15: Eva onderzoekt zelf aanwezige
 camera's, herkenning en deurbelspraak, realiseert de ontbrekende verbinding en laat
 bekende personen passend begroeten. Onbekend blijft onbekend. Dezelfde uitbreiding
 moet daarna op een schone installatie herstelbaar zijn. Deze eigenaaropdracht toetst
