@@ -150,5 +150,91 @@
       "Benodigde menselijke tussenkomst"
     ],
     "proofBoundary": "Codex bouwt niet vooraf de gehele camerafunctie en presenteert die daarna als Eva-zelfbouw. Eerder technisch camerabewijs blijft intact. Geen nieuwe afzonderlijke productplanner of camera-specifieke kernroute."
+  },
+  "ownerProductRefocus20261022": {
+    "authorization": "Eigenaar vraagt na eigen beoordeling project bij te stellen: interactieve, autonome, grappige en aardige huisentiteit met eigen leven; pc-werk kunnen leren uitvoeren. Zelfgemaakte uitbreidingen buiten de kern en herstelbaar na pc-crash.",
+    "referenceCommit": "30b87c004669d807af0af813750e4bdf44f7c8d6",
+    "measurement": {
+      "scope": "Current working tree including unfinished and concurrent work; physical Python lines including comments/blanks; class and method lengths overlap. No runtime latency inferred from size.",
+      "counts": {
+        "tools": {
+          "files": 148,
+          "physicalLines": 63598
+        },
+        "eva": {
+          "files": 446,
+          "physicalLines": 138316
+        },
+        "eva/adapters/postgres": {
+          "files": 78,
+          "physicalLines": 37424
+        },
+        "eva/operations": {
+          "files": 73,
+          "physicalLines": 22776
+        },
+        "eva/application": {
+          "files": 70,
+          "physicalLines": 16714
+        },
+        "eva/adapters/connectors": {
+          "files": 42,
+          "physicalLines": 14305
+        },
+        "eva/bootstrap": {
+          "files": 56,
+          "physicalLines": 12643
+        },
+        "eva/domain": {
+          "files": 2,
+          "physicalLines": 185
+        }
+      },
+      "definitionsOver100": 343,
+      "definitionsOver200": 140,
+      "architectureViolations": 152,
+      "architecturePolicy": "Working-tree package-boundaries-v1.json; 110 was historical, not a current pass."
+    },
+    "verifiedCorrections": [
+      "installation_fresh_start, installation_runtime_start, installation_runtime_authorization, installation_source_snapshot and restore_runtime_guard still import eva2_quiescent_cutover. Do not archive it by filename.",
+      "portable_runtime_archive and portable_v2_restore are connected to existing installation/recovery tooling and are directly relevant to the requested clean-PC recovery.",
+      "No explicit Eva1 imports found in the two cited runtime/model files. Legacy event and receipt readers are not by themselves Eva1 runtime imports.",
+      "Historical action-chain review already distinguishes optional/reference execution from the everyday route and records shared dispatch helpers. Measure actual use before claiming 6000-8000 removable lines or latency savings.",
+      "Existing E4.1 completion covered a fixed deletion of one unreachable frontend component (28 lines), not wholesale repository cleanup."
+    ],
+    "decisions": [
+      "Prioritize E4.15 practical autonomous extension delivery. Camera greeting is the owner-requested first exercise, not proof of self-discovered need.",
+      "E4.16 remains required supporting work; resume its implementation only for a demonstrated blocker in the same practical route, not a separate expanding repair platform.",
+      "Generated application capabilities default to portable extensions. Core changes require an independently justified missing general interface.",
+      "Retain existing memory, recipient binding, stop/resume, independent comparison and managed recovery. Consolidate duplicate responsibilities rather than discarding these behaviors.",
+      "No new orchestrator until its design replaces existing control flow; no second control loop.",
+      "Archive tooling only after entrypoint, static/dynamic consumer, installed process, restore and release-input checks. Do not count archived text as runtime performance gain.",
+      "Split large classes by tested responsibility while changing that route. Do not mechanically split files or grow the domain directory to meet size targets.",
+      "Use existing procedure and module lifecycle for reusable skills. Verify package compatibility rather than claiming it from SKILL.md alone.",
+      "Keep current original criteria and past completions; use ownerAcceptance and the existing cards for additional work instead of reclassifying old partial proof as general autonomy."
+    ],
+    "extensionRestoreAcceptance": [
+      "Code en manifest/versionering buiten de kern",
+      "Afhankelijkheden en compatibiliteit met Eva",
+      "Configuratieschema en benodigde rechten",
+      "Eigen gegevens en laatst werkende versie",
+      "Versleutelde geheimen of expliciete herkoppeling van apparaatgebonden toegang",
+      "Herstel en gedragscontrole op een schone installatie zonder oude bronwerkmap"
+    ],
+    "productMeasures": {
+      "unassistedCompletion": "Successful ordinary tasks without human correction or recovery / all eligible ordinary tasks; retain failures and unknown outcomes.",
+      "initiativeUsefulness": "Accepted/useful, unwanted and unanswered initiatives reported separately; silence is not acceptance.",
+      "repairTime": "Observed problem to verified restored behavior; still-open incidents remain open in the measure.",
+      "repetition": "User repetitions and corrections per ordinary task; do not count repeated tool attempts as new successful tasks.",
+      "reuseAndRestore": "Later use of an Eva-created extension and demonstrated restore on a clean installation.",
+      "currentValues": "Not measured by this source/document review; no invented percentages."
+    },
+    "preservedGoal": {
+      "path": "development/archive/history/20261022-product-refocus/PROJECTDOEL.md",
+      "sha256": "cbc704ed45978c7d7962b789434eae0260db963b2afca79e5c5030ce6338a5c5"
+    },
+    "runtimeChanges": false,
+    "codeDeleted": false,
+    "wholeProjectComplete": false
   }
 }

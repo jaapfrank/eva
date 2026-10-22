@@ -254,6 +254,33 @@ Een build, review, bronhash of afgesloten programmeertaak alleen bewijst geen he
 Mislukt herstel veroorzaakt geen onbegrensde recursieve herstelopdrachten; vervolg
 blijft bij hetzelfde doel met een begrensd budget en een aantoonbaar nieuwe hypothese.
 
+### Zelfgemaakte uitbreidingen en herstel op een schone pc
+
+Nieuwe toepassingsmogelijkheden komen standaard in afzonderlijke versieerbare
+uitbreidingen via bestaande provider-, module- en procedureinterfaces. De kern bevat
+algemene uitvoering en persoon/geheugen, geen nieuwe camera- of gezinsregel per opdracht.
+Een ontbrekende algemene interface wordt afzonderlijk gemotiveerd en beoordeeld.
+
+Het uitbreidingspakket bevat identiteit/versie, broncode, afhankelijkheden,
+compatibiliteit, configuratieschema, gevraagde mogelijkheden en eigen gegevensschema.
+De bestaande modulelevenscyclus bezit activering en versiebeheer; de bestaande
+backup-/restoreketen moet ook deze pakketten en hun gegevens omvatten. Er komt geen
+parallelle pakketbeheerder of backupdaemon. Geheimen blijven buiten Git en worden
+versleuteld hersteld of opnieuw gekoppeld. Op een andere pc worden concrete apparaat-
+en verbindingsbindings opnieuw gecontroleerd zonder automatisch ruimere rechten te geven.
+
+Herstel importeert eerst de gecontroleerde pakketversie en gegevens, lost de vastgelegde
+afhankelijkheden op, controleert compatibiliteit/toegang en activeert pas daarna de
+uitbreiding. De laatst werkende versie blijft beschikbaar. De gedragstest op een schone
+installatie hoort bij oplevering. Deze volledige dekking is een eis, nog geen bewezen
+functie van de huidige portable-archive-route.
+
+De bestaande effectuitvoering wordt op de gebruikte route teruggebracht tot duidelijke
+verantwoordelijkheden voor toestemming, uitvoering, receipt en resultaatcontrole.
+Eén eigenaar per controle; niet noodzakelijk één databasetabel voor alle soorten werk.
+Historische opslagcontracten blijven leesbaar. Een nieuwe centrale kernloop is alleen
+zinvol wanneer zij aantoonbaar bestaande aansturing vervangt, geen extra laag toevoegt.
+
 ## Moduleverantwoordelijkheden
 
 | Bestaande module / bron | Eigen verantwoordelijkheid | Interface en grens |
@@ -279,8 +306,11 @@ blijft bij hetzelfde doel met een begrensd budget en een aantoonbaar nieuwe hypo
 
 [De importgrenzen](../design/architecture/package-boundaries-v1.json) zijn de
 machineleesbare grensdefinitie. Niet elke bestaande module voldoet daar al aan.
-De 13-oktobercontrole registreerde 110 bestaande bevindingen; dat is een historische
-nulmeting, geen opnieuw gemeten actuele telling of vrijstelling van opruiming.
+De 13-oktobercontrole registreerde 110 bevindingen. De werkmapcontrole van 22 oktober
+telt 152 (inclusief onvoltooid en gelijktijdig werk): 91 lokale importgrenzen, 49
+externe importgrenzen, 10 nieuwe bestanden met providerafhankelijke kerncode en 2
+onverwachte packages. Dit is geen geslaagde architectuurcontrole. De beleidsgrenzen
+zijn voor deze meting niet aangepast; prioriteit volgt de daadwerkelijk gebruikte route.
 
 ## Dagelijkse aandacht en bronbetekenis
 

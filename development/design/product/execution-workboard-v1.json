@@ -841,18 +841,15 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.16",
+  "activeTaskId": "E4.15",
   "currentWork": {
-    "id": "E4.16",
-    "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+    "id": "E4.15",
+    "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
-    "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Selecteer één bewaarde echte fout, leg bedoeling, werkelijk resultaat en ontbrekende diagnosecontext vast en reproduceer het oorspronkelijke gedrag. Leg daarna contracten en overdrachten vast vóór verdere bouw; bewijs één volledige Eva-herstelroute vóór verbreding.",
+    "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
+    "nextAction": "Laat Eva via haar gewone uitvoerroute de camera-/begroetingsopdracht onderzoeken en als losse uitbreiding realiseren. Hergebruik bestaande camerawaarneming en module-/procedurevoorzieningen; leg de eerste concrete blokkade vast. Vereenvoudig alleen de geraakte overdracht en herstel de uitbreiding daarna op een schone installatie.",
     "ownerActionRequired": false,
-    "checkedAt": "2026-10-22T09:23:02.946161+00:00",
-    "implementationStatus": "uninstalled_partial_implementation_under_design_review",
-    "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
-    "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022"
+    "ownerReprioritization": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerProductRefocus20261022"
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -2994,15 +2991,14 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.16",
-          "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+          "taskId": "E4.15",
+          "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
           "status": "in_progress",
           "state": "in_progress",
-          "summary": "E4.16 is in uitvoering: ontwerp herbeoordeeld; onvoltooide herstelcode is niet geïnstalleerd of geactiveerd. Eerst één echte fout reproduceerbaar maken, daarna Eva zelfstandig laten herstellen, onafhankelijk controleren en via de bestaande route toepassen. Geen bewezen algemeen autonoom herstel.",
-          "detail": "Eva koos zelf een relevante statuslezing vanuit een recente privévraag. De gewone uitvoerder rondde die om 09:42:02 UTC af; de gewone vervolgbeslissing gebruikte het resultaat en leverde om 09:42:19 via Telegram een juiste beperkte conclusie. Nog geen bronabonnement of werkelijke bronverandering→afweging bewezen.",
-          "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "checkedAt": "2026-10-21T09:48:32.565185+00:00",
-          "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie."
+          "summary": "Eerst één bruikbare, door Eva gemaakte en herstelbare uitbreiding. De cameraopdracht toetst de bestaande volledige route; zelfherstel en vereenvoudiging ondersteunen aangetroffen tekorten. Algemene autonomie en herstel op een nieuwe pc zijn nog niet bewezen.",
+          "detail": "Technische camerawaarneming bestaat; correcte namen, werkelijk hoorbare begroeting, eigen bouw en schoon herstel blijven te bewijzen. Bestaande zelfherstelcode is gedeeltelijk en niet geïnstalleerd.",
+          "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
+          "nextAction": "Laat Eva via haar gewone uitvoerroute de camera-/begroetingsopdracht onderzoeken en als losse uitbreiding realiseren. Hergebruik bestaande camerawaarneming en module-/procedurevoorzieningen; leg de eerste concrete blokkade vast. Vereenvoudig alleen de geraakte overdracht en herstel de uitbreiding daarna op een schone installatie."
         },
         "next": {
           "taskId": "F2.1",
@@ -7792,7 +7788,7 @@
               {
                 "id": "E4.15",
                 "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "scopeOrigin": "entity-development-20261021",
                 "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
@@ -7843,12 +7839,24 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Eerste nieuwe uitvoerprioriteit: laat Eva uit echte bestaande context één behoefte selecteren; inventariseer haar beschikbare uitvoer- en afleverroute vóór enige nieuwe adapterbouw."
+                "nextAction": "Laat Eva via haar gewone uitvoerroute de camera-/begroetingsopdracht onderzoeken en als losse uitbreiding realiseren. Hergebruik bestaande camerawaarneming en module-/procedurevoorzieningen; leg de eerste concrete blokkade vast. Vereenvoudig alleen de geraakte overdracht en herstel de uitbreiding daarna op een schone installatie.",
+                "ownerAcceptance": {
+                  "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
+                  "extensionRestore": [
+                    "Code en manifest/versionering buiten de kern",
+                    "Afhankelijkheden en compatibiliteit met Eva",
+                    "Configuratieschema en benodigde rechten",
+                    "Eigen gegevens en laatst werkende versie",
+                    "Versleutelde geheimen of expliciete herkoppeling van apparaatgebonden toegang",
+                    "Herstel en gedragscontrole op een schone installatie zonder oude bronwerkmap"
+                  ],
+                  "selfDiscoveredNeedRemainsSeparate": true
+                }
               },
               {
                 "id": "E4.16",
                 "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-                "status": "in_progress",
+                "status": "planned",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraakuitvoerder behoudt implementatie-eigendom",
                 "ownerActionRequired": false,
@@ -7862,7 +7870,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Selecteer één bewaarde echte fout, leg bedoeling, werkelijk resultaat en ontbrekende diagnosecontext vast en reproduceer het oorspronkelijke gedrag. Leg daarna contracten en overdrachten vast vóór verdere bouw; bewijs één volledige Eva-herstelroute vóór verbreding.",
+                "nextAction": "Gebruik het bestaande herstelwerk voor een daadwerkelijk vastgesteld tekort tijdens E4.15. Eerst voldoende diagnosecontext en reproduceerbare oorzaak; geen afzonderlijke uitbreiding van de herstelketen zonder productaanleiding.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -7876,7 +7884,7 @@
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/autonomous-repair-foundation-20261022.json",
-                "implementationStatus": "uninstalled_partial_implementation_under_design_review",
+                "implementationStatus": "partial_uninstalled_supporting_work",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022"
               }
@@ -8431,11 +8439,11 @@
         "status": "in_progress",
         "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
         "finishOrder": [
-          "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
-          "E2: één Eva-beheeromgeving en optionele verbindingen",
-          "E3: volledige bestandsregistratie en onderbouwde besluiten",
-          "E4: HA-/actielatentie bij bestaande uitvoerder; E4.11 maakt blijvend geheugen selectief en compact",
-          "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
+          "E4.15: één door Eva gemaakte bruikbare uitbreiding via de gewone opdracht; camera als eerste praktijktest, eigen behoefteontdekking afzonderlijk behouden",
+          "E4.16 en gerichte vereenvoudiging: alleen aantoonbare belemmeringen op die volledige route oplossen; bestaande werking behouden",
+          "E4.15/E5.2: versieerbare uitbreidingen buiten de kern, back-up en herstel op een schone installatie inclusief gedragstest",
+          "Bestaande overige E1/E2-uitkomsten en spraakafronding vervolgen; geen tweede planner of kanaal-Eva",
+          "E5.2 en bestaande gezinsacceptatie: later hergebruik, minder begeleiding, passend initiatief en prettig contact beoordelen"
         ],
         "comparisonExecution": "parked_no_new_series",
         "updatedAt": "2026-10-21T09:48:32.565185+00:00",
@@ -13400,7 +13408,7 @@
             {
               "id": "E4.15",
               "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "scopeOrigin": "entity-development-20261021",
               "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
@@ -13451,12 +13459,24 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Eerste nieuwe uitvoerprioriteit: laat Eva uit echte bestaande context één behoefte selecteren; inventariseer haar beschikbare uitvoer- en afleverroute vóór enige nieuwe adapterbouw."
+              "nextAction": "Laat Eva via haar gewone uitvoerroute de camera-/begroetingsopdracht onderzoeken en als losse uitbreiding realiseren. Hergebruik bestaande camerawaarneming en module-/procedurevoorzieningen; leg de eerste concrete blokkade vast. Vereenvoudig alleen de geraakte overdracht en herstel de uitbreiding daarna op een schone installatie.",
+              "ownerAcceptance": {
+                "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
+                "extensionRestore": [
+                  "Code en manifest/versionering buiten de kern",
+                  "Afhankelijkheden en compatibiliteit met Eva",
+                  "Configuratieschema en benodigde rechten",
+                  "Eigen gegevens en laatst werkende versie",
+                  "Versleutelde geheimen of expliciete herkoppeling van apparaatgebonden toegang",
+                  "Herstel en gedragscontrole op een schone installatie zonder oude bronwerkmap"
+                ],
+                "selfDiscoveredNeedRemainsSeparate": true
+              }
             },
             {
               "id": "E4.16",
               "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-              "status": "in_progress",
+              "status": "planned",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraakuitvoerder behoudt implementatie-eigendom",
               "ownerActionRequired": false,
@@ -13470,7 +13490,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Selecteer één bewaarde echte fout, leg bedoeling, werkelijk resultaat en ontbrekende diagnosecontext vast en reproduceer het oorspronkelijke gedrag. Leg daarna contracten en overdrachten vast vóór verdere bouw; bewijs één volledige Eva-herstelroute vóór verbreding.",
+              "nextAction": "Gebruik het bestaande herstelwerk voor een daadwerkelijk vastgesteld tekort tijdens E4.15. Eerst voldoende diagnosecontext en reproduceerbare oorzaak; geen afzonderlijke uitbreiding van de herstelketen zonder productaanleiding.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -13484,7 +13504,7 @@
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/autonomous-repair-foundation-20261022.json",
-              "implementationStatus": "uninstalled_partial_implementation_under_design_review",
+              "implementationStatus": "partial_uninstalled_supporting_work",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022"
             }
@@ -14039,11 +14059,11 @@
       "status": "in_progress",
       "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
       "finishOrder": [
-        "E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie",
-        "E2: één Eva-beheeromgeving en optionele verbindingen",
-        "E3: volledige bestandsregistratie en onderbouwde besluiten",
-        "E4: HA-/actielatentie bij bestaande uitvoerder; E4.11 maakt blijvend geheugen selectief en compact",
-        "E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open."
+        "E4.15: één door Eva gemaakte bruikbare uitbreiding via de gewone opdracht; camera als eerste praktijktest, eigen behoefteontdekking afzonderlijk behouden",
+        "E4.16 en gerichte vereenvoudiging: alleen aantoonbare belemmeringen op die volledige route oplossen; bestaande werking behouden",
+        "E4.15/E5.2: versieerbare uitbreidingen buiten de kern, back-up en herstel op een schone installatie inclusief gedragstest",
+        "Bestaande overige E1/E2-uitkomsten en spraakafronding vervolgen; geen tweede planner of kanaal-Eva",
+        "E5.2 en bestaande gezinsacceptatie: later hergebruik, minder begeleiding, passend initiatief en prettig contact beoordelen"
       ],
       "comparisonExecution": "parked_no_new_series",
       "updatedAt": "2026-10-21T09:48:32.565185+00:00",
@@ -16269,7 +16289,7 @@
     {
       "id": "autonomous-repair-20261022",
       "path": "development/design/product/autonomous-repair-task-scope-20261022.json",
-      "sha256": "00c47142cc35f9c8ee49fc2bda565307404e7d5d97af91e667035bc2c3cd5ccc"
+      "sha256": "1b3a953edd3b6d9d15ff2f51db24bbb058f76dd9ae31679c81ba2351c5d9db58"
     }
   ],
   "lastUpdatedAt": "2026-10-20T13:28:55.822181+00:00",

@@ -4,19 +4,19 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen
+Van zelfontdekte behoefte naar eigen uitvinding en later gebruik
 
-E4.16 is in uitvoering: ontwerp herbeoordeeld; onvoltooide herstelcode is niet geïnstalleerd of geactiveerd. Eerst één echte fout reproduceerbaar maken, daarna Eva zelfstandig laten herstellen, onafhankelijk controleren en via de bestaande route toepassen. Geen bewezen algemeen autonoom herstel.
+Eerst één bruikbare, door Eva gemaakte en herstelbare uitbreiding. De cameraopdracht toetst de bestaande volledige route; zelfherstel en vereenvoudiging ondersteunen aangetroffen tekorten. Algemene autonomie en herstel op een nieuwe pc zijn nog niet bewezen.
 
-Klaar wanneer: Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.
+Klaar wanneer: Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.
 
 ## Afmaakvolgorde
 
-1. E1 technisch afgerond: actuele bronnen, eigen vervolg-aandacht, uitgevoerde eigen bijdrage en aandacht/stilte; herhaald gezinsnut blijft bij finale acceptatie
-2. E2: één Eva-beheeromgeving en optionele verbindingen
-3. E3: volledige bestandsregistratie en onderbouwde besluiten
-4. E4: HA-/actielatentie bij bestaande uitvoerder; E4.11 maakt blijvend geheugen selectief en compact
-5. E5.1 oorspronkelijk technisch afgerond; E5.2 bundelt latere verbeteringen. Gezinsweek en eigenaaracceptatie blijven afzonderlijk open.
+1. E4.15: één door Eva gemaakte bruikbare uitbreiding via de gewone opdracht; camera als eerste praktijktest, eigen behoefteontdekking afzonderlijk behouden
+2. E4.16 en gerichte vereenvoudiging: alleen aantoonbare belemmeringen op die volledige route oplossen; bestaande werking behouden
+3. E4.15/E5.2: versieerbare uitbreidingen buiten de kern, back-up en herstel op een schone installatie inclusief gedragstest
+4. Bestaande overige E1/E2-uitkomsten en spraakafronding vervolgen; geen tweede planner of kanaal-Eva
+5. E5.2 en bestaande gezinsacceptatie: later hergebruik, minder begeleiding, passend initiatief en prettig contact beoordelen
 
 ## Vier productuitkomsten
 

@@ -1,10 +1,42 @@
 # Eva2 — begrensd afrondingsplan
 
-15 oktober 2026. Dit plan maakt [het volledige huisgenootgoal](PROJECTDOEL.md)
+Bijgesteld op 22 oktober 2026. Dit plan maakt [het volledige huisgenootgoal](PROJECTDOEL.md)
 uitvoerbaar zonder de ambitie te verkleinen of telkens een nieuwe bouwronde te openen.
 De [architectuur](ARCHITECTUUR.md) geeft de modulegrenzen. Het canonieke
 [werkbord](../design/product/execution-workboard-v1.json) bevat taakstatus, nu/hierna,
 echte blokkades, bewijs en eigenaarhandelingen. Dit document is het plan, geen tweede bord.
+
+## Werkvolgorde en praktische oplevering
+
+E4.15 is nu de actieve gebruikersuitkomst: Eva realiseert een bruikbare uitbreiding
+via haar bestaande uitvoerroute. De camera-/begroetingsopdracht is de eerste concrete
+praktijktest. De technische cameramodule bestaat; correcte herkenning, hoorbare reactie
+en zelfstandig bouwen zijn daarmee niet af. Een door de eigenaar aangedragen voorbeeld
+vervangt de afzonderlijke eis van zelfontdekte behoefte niet.
+
+E4.16 ondersteunt deze route bij een daadwerkelijk aangetroffen fout. De gedeeltelijke
+zelfherstelcode blijft bewaard, maar is niet geïnstalleerd. Eerst vaststellen waar Eva
+vastloopt, dan die oorzaak oplossen; geen parallel programma om steeds meer controles
+te bouwen. Bestaande afgesloten criteria en andere lopende spraakwerkzaamheden blijven intact.
+
+De uitbreiding wordt buiten de kern verpakt en met code, afhankelijkheden, instellingen,
+rechten en eigen gegevens geback-upt. Een schone Eva-installatie moet haar zonder de
+oude bronwerkmap herstellen en hetzelfde gedrag laten zien. Gebruik de bestaande
+module-/procedure- en herstelvoorzieningen; onderzoek hun ontbrekende dekking vóór bouw.
+Dit is aanvullende eigenaaracceptatie bij E4.15 en de gebundelde E5.2-oplevering.
+
+Vereenvoudiging wordt aan concreet gebruik gekoppeld. Controleer voor gereedschappen
+imports, dynamische aanroepen, entrypoints, geïnstalleerde processen, herstel en
+releasebindingen. Trek noodzakelijke gedeelde helpers eerst uit historische scripts
+voordat die scripts worden gearchiveerd. Begin action-chainwerk bij de werkelijk gebruikte
+uitvoering; samenvoegen mag toestemming, stoppen, resultaatbinding en readback niet verliezen.
+Splits grote klassen op een veranderde verantwoordelijkheid met behoud van hun interface.
+Er komt geen extra orchestrator zonder dat bestaande aansturing daardoor vervalt.
+
+Het hoofdresultaat is minder begeleiding: zelfstandig afgeronde gewone taken,
+herhaal-/correctieverzoeken, nuttig of hinderlijk initiatief, herstelduur en later
+hergebruik. Geen reactie blijft onbekend. Regels verplaatsen en tests tellen zijn
+ondersteunende ontwikkelgegevens, geen verbetering van Eva's gezinsnut.
 
 ## Waar we beginnen — gecontroleerde feiten en beperkingen
 
@@ -256,7 +288,7 @@ implementatie is niet geïnstalleerd of geactiveerd; eerdere deelproeven bewijze
 geen algemeen zelfstandig herstel. De [herbeoordeling](../design/product/autonomous-repair-task-scope-20261022.json)
 legt bevindingen en ontwerpbesluiten vast zonder oorspronkelijke eindcriteria te wijzigen.
 
-1. Selecteer één bewaarde echte fout en volg de werkelijk gebruikte route. Leg
+1. Neem een werkelijk aangetroffen fout uit de E4.15-uitvoering en volg de gebruikte route. Leg
    bedoeling, feitelijke uitkomst, relevante invoer en correct verwacht gedrag vast.
    Toon de fout aan op de oorspronkelijke versie; maak geen productieprobleem voor een demonstratie.
 2. Leg de gegevenscontracten, moduleverantwoordelijkheden en statusovergangen vast,
