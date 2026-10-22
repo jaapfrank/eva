@@ -1,0 +1,266 @@
+{
+  "contract": "EvaWorkboardScopeExtension/v1",
+  "id": "living-housemate-20261022",
+  "ownerAuthorized": true,
+  "authorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+  "sourceDocument": "development/docs/PROJECTDOEL.md",
+  "tasks": [
+    {
+      "id": "E4.17",
+      "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "living-housemate-20261022",
+      "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
+      "ownerAuthorized": true,
+      "ownerAuthorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+      "ownerActionRequired": false,
+      "requiredForCurrentDelivery": true,
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "existing": "Module-, procedure-, pakket- en portable-restorevoorzieningen bestaan.",
+      "gap": "Controleer waar zelfgemaakte code en eigen gegevens nu werkelijk worden opgeslagen en sluit precies de ontbrekende pakket-/hersteloverdracht.",
+      "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
+      "dependsOn": [
+        "E4.15"
+      ],
+      "nextAction": "Controleer waar zelfgemaakte code en eigen gegevens nu werkelijk worden opgeslagen en sluit precies de ontbrekende pakket-/hersteloverdracht."
+    },
+    {
+      "id": "E1.12",
+      "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "living-housemate-20261022",
+      "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
+      "ownerAuthorized": true,
+      "ownerAuthorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+      "ownerActionRequired": false,
+      "requiredForCurrentDelivery": true,
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "existing": "Duurzame taken, opgeslagen resultaten, bronbinding, feedback en stoppen bestaan.",
+      "gap": "Verbind één werkelijke blijvende voorziening aan bestaande realisatie-/resultaatregistratie met adoptie, evaluatie en daadwerkelijk gecontroleerde pauze/herstel.",
+      "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.",
+      "dependsOn": [
+        "E4.17",
+        "E1.9"
+      ],
+      "nextAction": "Verbind één werkelijke blijvende voorziening aan bestaande realisatie-/resultaatregistratie met adoptie, evaluatie en daadwerkelijk gecontroleerde pauze/herstel."
+    },
+    {
+      "id": "E2.9",
+      "title": "Huisvoorzieningen, eigen projecten en bijstellingen samen bedienen",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "living-housemate-20261022",
+      "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
+      "ownerAuthorized": true,
+      "ownerAuthorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+      "ownerActionRequired": false,
+      "requiredForCurrentDelivery": true,
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "existing": "Bestaande productschermen voor initiatief, werk, geheugen en leren bestaan.",
+      "gap": "Breid de bestaande weergaven incrementeel uit zodra de betreffende gegevensroute werkt; sluit samenhang en toegangs-/stop-/correctiebediening in deze kaart.",
+      "doneWhen": "De bestaande Eva-productbediening toont toegestane Household Artifacts en voorstellen, actuele curiosity, maximaal twee eigen projectstatussen, optionele laatste Shared Trace en recente actuele Personality Deltas. Betrokken gebruikers kunnen adopteren, feedback geven, pauzeren/stoppen en corrigeren; resultaten komen via dezelfde bestaande autoriteits- en uitvoerroute terug. Privégegevens blijven afgeschermd en bronwissen/correctie wordt zichtbaar. Geen aparte app, dashboardstore of tweede planner. De weergave werkt met echte geregistreerde toestand, niet alleen vaste demo-inhoud.",
+      "dependsOn": [
+        "E1.12",
+        "E1.10",
+        "E1.9"
+      ],
+      "nextAction": "Breid de bestaande weergaven incrementeel uit zodra de betreffende gegevensroute werkt; sluit samenhang en toegangs-/stop-/correctiebediening in deze kaart."
+    },
+    {
+      "id": "E4.18",
+      "title": "Gebruikte uitvoering en onderhoud gericht vereenvoudigen",
+      "status": "planned",
+      "kind": "owner_requested_followup",
+      "scopeOrigin": "living-housemate-20261022",
+      "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
+      "ownerAuthorized": true,
+      "ownerAuthorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+      "ownerActionRequired": false,
+      "requiredForCurrentDelivery": true,
+      "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+      "existing": "E3-inventaris en beperkte eerdere E4-opschoning bestaan; huidige broncontrole vond actuele herstelafhankelijkheden in historisch genoemde tools.",
+      "gap": "Gebruik de concrete E4.15/E4.17-overdracht als afbakening; leg te verwijderen duplicatie en compatibiliteit vast vóór wijzigingen, hergebruik de bestaande inventaris.",
+      "doneWhen": "Voor de daadwerkelijk gebruikte gesprek-/HA-/browser-/toolprogramma-/afleverroute zijn bron, toestemming, uitvoering, receipt, controle en resultaatbinding aan duidelijke bestaande eigenaren gekoppeld. Aangetoonde dubbele verantwoordelijkheden en actieve afhankelijkheden van historische operaties worden gericht vereenvoudigd met gedragsbehoud. Een begrensde lijst archief-/verwijderbesluiten controleert imports, dynamische aanroepen, entrypoints, geïnstalleerd gebruik, herstel en releasebindingen; noodzakelijke helpers blijven beschikbaar. Grote geraakte klassen worden alleen op concrete verantwoordelijkheden gesplitst. Geheugen, stoppen, geen dubbele externe effecten, huidige instellingen en schone-pc-herstel blijven werken. Voor/na-metingen tonen werkelijke vereenvoudiging; verplaatste regels tellen niet als bewezen runtimewinst.",
+      "dependsOn": [
+        "E4.15",
+        "E4.17"
+      ],
+      "nextAction": "Gebruik de concrete E4.15/E4.17-overdracht als afbakening; leg te verwijderen duplicatie en compatibiliteit vast vóór wijzigingen, hergebruik de bestaande inventaris."
+    }
+  ],
+  "specification": {
+    "status": "owner_specification_not_implemented",
+    "householdArtifact": {
+      "definition": "Kleine, blijvende, omkeerbare verandering in huis of routine, voorgesteld of gerealiseerd door Eva; na adoptie co-eigendom van het huishouden. Geen eenmalige taak en geen uitsluitend door Eva gebruikte skill.",
+      "states": [
+        "proposed",
+        "active",
+        "paused",
+        "rejected",
+        "retired"
+      ],
+      "minimumInformation": [
+        "Identiteit, versie en concrete bedoeling",
+        "Betrokken huishouden en toegestane audience/beheerders",
+        "Bronverwijzingen en resultaten met datum",
+        "Werkelijke realisatie: moduleversie, automation-ID of andere bestaande uitvoerbinding",
+        "Actuele status plus gecontroleerde werking",
+        "Adoptiestatus, grondslag en kennisgeving",
+        "Evaluatiemoment, proefgrenzen en pauze-/herstelhandeling"
+      ],
+      "adoption": "Expliciete acceptatie, of geëvalueerde bestendiging van een vooraf toegestane proef volgens bestaande rechten. Zeven dagen is een voorbeeld van een proefduur, geen automatische toestemming. Geen negatieve feedback is onbekend; positieve/neutrale evaluatie vereist concrete waarnemingen.",
+      "stateAndAdoptionAreSeparate": "active betekent gerealiseerd en gecontroleerd, niet automatisch geadopteerd. Een proef kan alleen binnen een bestaande expliciete bevoegdheid actief zijn. proposed impliceert nooit activatie.",
+      "reversibility": "Pauze of herstel moet de werkelijke voorziening stoppen/herstellen en worden gecontroleerd; een statuswijziging in de database alleen volstaat niet. Wijzigen maakt een nieuwe versie. retired bewaart alleen toegestane compacte historie.",
+      "restore": "Pakket, uitvoerbinding, gegevens en adoptie-/pauzestatus gaan mee in de bestaande back-upketen; herstel maakt geen dubbele automatisering en activeert een gepauzeerd artifact niet."
+    },
+    "personalityDelta": {
+      "design": "Compacte versieerbare bijstelling bovenop de basisidentiteit, gebaseerd op echte feedback/correcties/resultaten via de bestaande geheugen- en droomroute; geen tweede persona-opslag.",
+      "scope": "Per persoon of expliciet gedeeld huishouden; privéfeedback wordt geen algemene gezinsregel.",
+      "lifecycle": "Bronnen, context, onzekerheid, versie en voorganger vastleggen; zichtbaar, corrigeerbaar en terugdraaibaar. Nieuwe context gebruikt alleen de actuele passende bijstelling; geen steeds groeiende stapel prompts.",
+      "erasure": "Verwijderen of corrigeren van dragende bronnen maakt de afgeleide bijstelling ongeldig of vraagt herbeoordeling; een bewaarde hash alleen houdt haar niet geldig.",
+      "limits": "Geen wijziging van rechten, toestemming, waarheidsplicht of kernidentiteit via stijltekst. Stilte en ontbrekende feedback zijn geen positieve ervaring.",
+      "existing": "PresenceMemory.style_mirror, Hindsight style reflection and current typed person context exist. The current private contact route intentionally rejects unbound style fallback; do not bypass that source/revision protection."
+    },
+    "initiativeIntegration": {
+      "existing": "PersonalInitiativeProposal, FreeWillDecision.expression, NextAttention and resident attention policy already exist.",
+      "purposeLabels": [
+        "artifact_candidate",
+        "timely_help",
+        "support_opportunity",
+        "social_expression"
+      ],
+      "compatibility": "Add semantic purpose metadata where needed; do not blindly replace the persisted personal_interest kind or duplicate delivery/admission.",
+      "timelyHelp": "Recent reliable evidence and time window matter; a source hash proves integrity, not truth or freshness. If container position is unknown, ask whether it is out rather than assert it is still home.",
+      "social": "Existing claims, delivery, quiet hours, repetition boundaries and feedback apply. No activity quota or new permanent model loop.",
+      "support": "Allowed public research and proposals may be proactive. Payment, contract, personal-data disclosure or use of external accounts for a support action requires explicit per-action consent. Zoek verder authorizes investigation only; no inferred transaction approval."
+    },
+    "acceptance": [
+      "Gesimuleerde ophaalafspraak met onbekende containerpositie geeft tijdige vraag, geen verzonnen waarneming; feedback beïnvloedt vervolg zonder dubbele melding.",
+      "Artifact doorloopt proposed, toegestane realisatie, gecontroleerd active, adoptie en werkelijke pauze/herstel; geen adoptie of nieuwe rechten uitsluitend door tijdsverloop.",
+      "Gesimuleerde besparing geeft voorstel met bron, onzekerheid en benodigde inzet; geen transactie, accountgebruik of gegevensdeling zonder actiegebonden toestemming.",
+      "Gesimuleerde feedback geeft een compacte bijstelling in de volgende passende context; correctie, terugdraaien en bronwissen werken door.",
+      "Bestaande geheugen-, initiatief- en uitvoeringswerking blijft behouden; simulaties bewijzen techniek, echt dagelijks nut en groei over weken vragen werkelijk gebruik."
+    ],
+    "innerLife": {
+      "purpose": "Beperkte blijvende eigen interesses naast gezinstaken; geen verzonnen belevenissen, emoties of vrije innerlijke monoloog.",
+      "innerState": {
+        "current_curiosity": "maximaal 160 tekens",
+        "open_threads": "maximaal twee verwijzingen naar bestaande eigen projecten of vragen",
+        "recent_tone": "korte, onderbouwde werkhouding zoals puzzelend of gericht; geen vrij gegenereerde emotie",
+        "last_updated": "tijd van werkelijk verwerkte bronactiviteit",
+        "evidence_refs": "toegestane bron- en resultaatverwijzingen"
+      },
+      "storage": "Eén actuele state per Eva/huishouden in bestaande opslag; hoogstens een korte vorige toon, geen volledige nieuwe toestandhistorie. Bestaande originele gebeurtenissen volgen hun bestaande bewaartermijnen.",
+      "update": "Aan het einde van bestaande droomverwerking, alleen bij gewijzigde relevante eigen activiteit of feedback, binnen bestaande model-/tijdgrenzen. Ontbrekende input betekent geen verzonnen update. Stop, correctie en bronwissen werken meteen door, niet pas na de droomfase.",
+      "projects": "Maximaal twee lopende langlopende eigen projecten, met korte actuele status, einddoel, middelenbudget en reviewmoment. Projecten mogen uit nieuwsgierigheid ontstaan zonder huishoudelijk nut als vereiste. Het bestaande uitvoerslot blijft begrensd; twee projecten betekenen geen twee nieuwe workers.",
+      "sharedTraces": "Korte uiting met origin=inner_state of own_project via bestaande proactive-expression en delivery. Geen opdracht of verborgen artifactvoorstel. Standaard zeldzaam, bijvoorbeeld maximaal twee ongevraagde traces per voortschrijdende week binnen de bestaande strengere aandacht-policy; expliciet gevraagd vervolg is gewoon gesprek, geen verruiming van proactieve rechten.",
+      "privacy": "Gedeelde state, projectstatus en traces gebruiken alleen voor dat huishouden deelbare bronnen. Privéprojecten en feedback worden niet door hun titel of evidence-ID zichtbaar aan anderen. Eén gedeelde state is geen bevoegdheid om alle privécontext samen te voegen.",
+      "feedback": "Vertel meer, interessant, laat maar en stop krijgen de bestaande brongebonden feedback-/stoproute. Niet willen horen begrenst uitingen; expliciet stoppen van een project stopt het werk. Bij echte onduidelijkheid gericht verduidelijken.",
+      "personalityRelation": "Inner State beschrijft actuele bezigheid; Personality Delta is een blijvende les over omgang. State kan context leveren, maar is geen onafhankelijke positieve feedback en mag zichzelf niet als bewijs voor persoonsverandering gebruiken.",
+      "ui": "Bestaande productbediening toont Waar Eva mee bezig is: curiosity, maximaal twee toegestane projectstatussen, optionele laatste trace en reageren/stoppen. Geen nieuwe app.",
+      "acceptance": "Een bestaand of nieuw toegestaan project krijgt echte testactiviteit met gecontroleerde gesimuleerde klok; droomupdate, brongebonden trace, reactie, volgende state en UI werken samen. Ook geen bron, quiet hours, herhaling, stop, private bron en bronwissen testen. Simulatie bewijst geen wekenlang eigen leven."
+    }
+  },
+  "existingTaskSteps": {
+    "E4.15": [
+      "Gewone cameraopdracht via Eva laten onderzoeken; bestaande bronnen, herkenning en spreekuitgang daadwerkelijk vaststellen.",
+      "Ontbrekende mogelijkheid via de bestaande uitvoerder als losse uitbreiding laten maken en op de echte route controleren.",
+      "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
+    ],
+    "E4.16": [
+      "Echte fout verbinden aan blijvend hersteldoel met voldoende diagnosecontext.",
+      "Uitval, ontbrekende toegang/configuratie en codefout onderscheiden; geen blinde herhaling van onzekere effecten.",
+      "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
+    ],
+    "E1.6": [
+      "Resterende actuele bron-/uitvoerprofieloverdracht afmaken.",
+      "Een echte bronverandering tot toegestane afweging en gecontroleerd vervolg volgen; reconnect/STOP/deduplicatie behouden."
+    ],
+    "E1.7": [
+      "Routines als toetsbare hypotheses met uitzonderingen en bron opslaan in bestaand geheugen.",
+      "Tegenbewijs en correctie verwerken in later gedrag; ontbrekende observatie onbekend houden."
+    ],
+    "E1.8": [
+      "Tijdvenster, actuele bronnen, bedoelingen en onzekerheid combineren voor timely_help.",
+      "Ondersteuningskans met bron, onzekerheid en benodigde inzet voorstellen; onderzoekstoestemming nooit als betaling/contract/accounttoestemming behandelen.",
+      "Containerproef met onbekende positie: korte vraag in plaats van verzonnen waarneming; feedback en geen herhaalde melding controleren."
+    ],
+    "E1.9": [
+      "Bestaande feedback en stijlreflectie verbinden aan compacte brongebonden Personality Delta.",
+      "Droomupdate, actuele context, corrigeren/terugdraaien en bronwissen laten doorwerken zonder tweede geheugen of promptstapeling.",
+      "Technische feedbackproef en werkelijk later effect op contact apart aantonen."
+    ],
+    "E1.10": [
+      "Maximaal twee bestaande eigen projecten met korte status, budget, doel en reviewmoment; ook niet-functionele nieuwsgierigheid toelaten.",
+      "Eén compacte Inner State uit echte activiteit/feedback bijwerken in bestaande droomroute.",
+      "Shared Trace via bestaande aandacht/aflevering; zeldzaam, brongebonden, geen privélek, stil bij ontbrekende aanleiding.",
+      "Feedback, stop en bronwissen onmiddellijk laten doorwerken; minimale klokgestuurde proef plus echt later projectvervolg."
+    ],
+    "E1.11": [
+      "Gebruik Household Artifact-lifecycle voor een expliciet afgesproken terugkerende verantwoordelijkheid.",
+      "Werkelijk opvolgen, evalueren, bijstellen of stoppen; minder menselijke begeleiding over tijd aantonen."
+    ]
+  },
+  "execution": {
+    "mainOrder": [
+      "E4.15",
+      "E4.17",
+      "E1.9",
+      "E1.12",
+      "E1.6",
+      "E1.7",
+      "E1.8",
+      "E1.11",
+      "E1.10",
+      "E2.9",
+      "E4.16",
+      "E4.18",
+      "P2.1",
+      "F2.1",
+      "F2.2"
+    ],
+    "parallelVoiceOrder": [
+      "C3.5",
+      "C3.1",
+      "C3.4",
+      "C4.1",
+      "C3.6"
+    ],
+    "optionalOrder": [
+      "E2.6",
+      "C4.3"
+    ],
+    "activeTask": "E4.15",
+    "rules": [
+      "Eén primaire uitvoeruitkomst; de bestaande spraakuitvoerder behoudt zijn eigen route.",
+      "E4.16 en E4.18 lossen eerder concrete blokkerende fouten/duplicatie op; hun volledige afronding volgt vóór de eindvergelijking.",
+      "E2.9-bediening groeit mee met de features; beheer/stop wordt niet uitgesteld tot het einde.",
+      "Alle oorspronkelijke doneWhen-criteria blijven ongewijzigd. Nieuwe scope is aanvullende eigenaaracceptatie, geen herroeping van oude beperkte afrondingen.",
+      "Optioneel accountgebonden werk blokkeert de kern of gezinsweek niet.",
+      "P2.1 vergelijkt uitsluitend dezelfde werkelijk bruikbare eindkandidaat; geen algemene superioriteit uit losse architectuurclaims."
+    ]
+  },
+  "reuseDecisions": {
+    "retain": [
+      "Eén identiteit/geheugen, broncorrectie en wissen",
+      "Bestaande personal-interest-/free-will-/aandacht-/deliveryroute",
+      "Bestaande droom-, feedback- en stijlleerbouwstenen",
+      "Bestaande programmeer-, evaluator-, module- en herstelroute",
+      "Bestaande productbediening"
+    ],
+    "replaceOrDoNotBuild": [
+      "Geen aparte Inner-Life-agent, scheduler, geheugen of app",
+      "Geen nieuwe artifact-planner naast bestaande taken en realisaties",
+      "Geen vier nieuwe uitvoerders voor vier initiatief-labels",
+      "Geen tweede Personality Delta-store naast bestaande persoonscontext",
+      "Geen onbeperkte innerlijke monoloog, fictieve emoties of sociale uitingsquota",
+      "Geen automatische rechtenpromotie na aantallen successen",
+      "Geen massale verwijdering op bestandsnaam of import-scan alleen",
+      "Geen zelfstandige uitbreiding van herstel-infrastructuur zonder concrete gebruikersbelemmering"
+    ],
+    "codeDeletionDuringPlanning": false
+  },
+  "verificationStatus": "planned_not_implemented_or_installed"
+}

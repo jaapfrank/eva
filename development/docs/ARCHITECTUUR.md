@@ -312,6 +312,33 @@ Onderzoek naar besparingen mag binnen bestaande toegang, maar betalingen, contra
 persoonsgegevens delen en extern accountgebruik voor zo'n actie vragen expliciete
 actiegebonden toestemming. 'Zoek verder' geeft alleen onderzoeksruimte.
 
+### Begrensde Inner Life binnen bestaande interesses en dromen
+
+Eén actuele Inner State per Eva/huishouden beschrijft current_curiosity (maximaal 160
+tekens), maximaal twee open project-/vraagverwijzingen, recent_tone, last_updated en
+evidence_refs. Alleen werkelijke eigen activiteit, resultaten en feedback veranderen
+de state. Recent_tone beschrijft een onderbouwde werkhouding; geen vrije emotiegeneratie.
+Bewaar de huidige state en hoogstens een korte vorige toon, geen tweede volledige historie.
+
+Maximaal twee langlopende eigen projecten gebruiken bestaande personal interests, met
+korte status, doel, budget en reviewmoment. Ze hoeven geen huishoudelijk probleem op te
+lossen. Het aantal projecten vergroot de bestaande uitvoercapaciteit niet. De droomfase
+werkt de state licht bij als relevante input is veranderd; geen extra permanent proces
+of modelronde zonder aanleiding. Stop, bronwissen en correctie werken direct door.
+
+Shared Traces gebruiken bestaande aandacht, claims en delivery met origin=inner_state
+of own_project. Ze zijn zeldzaam en kort, zonder opdracht of verborgen voorstel, en
+vallen binnen quiet hours en bestaande strengere grenzen. Expliciet gevraagd vervolg
+is gewoon gesprek. Gedeelde state/traces tonen nooit afgeschermde projecten, feedback
+of bronverwijzingen. Feedback kan het project, de uitingen of de volgende state aanpassen.
+Inner State kan context voor een Personality Delta leveren, maar geldt niet als eigen
+bewijs dat het gezin die omgang prettig vindt. Directe feedback blijft leidend.
+
+De bestaande productbediening toont Waar Eva mee bezig is, met curiosity, maximaal twee
+toegestane projectstatussen en optioneel de laatste trace. Pauzeren/stoppen en reageren
+gebruiken dezelfde gegevens-/autoriteitsroute. Zie de [samengevoegde scope](../design/product/living-housemate-task-scope-20261022.json)
+voor de concrete proef en taakverdeling; dit ontwerp is nog niet geïnstalleerd.
+
 ## Moduleverantwoordelijkheden
 
 | Bestaande module / bron | Eigen verantwoordelijkheid | Interface en grens |

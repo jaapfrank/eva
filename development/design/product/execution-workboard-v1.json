@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
+  "lastUpdated": "2026-10-22T13:29:13.944689+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E4.15",
@@ -847,7 +847,7 @@
     "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
     "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "Laat Eva via haar gewone uitvoerroute de camera-/begroetingsopdracht onderzoeken en als losse uitbreiding realiseren. Hergebruik bestaande camerawaarneming en module-/procedurevoorzieningen; leg de eerste concrete blokkade vast. Vereenvoudig alleen de geraakte overdracht en herstel de uitbreiding daarna op een schone installatie.",
+    "nextAction": "Gewone cameraopdracht via Eva laten onderzoeken; bestaande bronnen, herkenning en spreekuitgang daadwerkelijk vaststellen.",
     "ownerActionRequired": false,
     "ownerReprioritization": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerProductRefocus20261022",
     "livingHousemateAcceptance": {
@@ -2999,10 +2999,10 @@
           "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
           "status": "in_progress",
           "state": "in_progress",
-          "summary": "Eerst één bruikbare, door Eva gemaakte en herstelbare uitbreiding. De cameraopdracht toetst de bestaande volledige route; zelfherstel en vereenvoudiging ondersteunen aangetroffen tekorten. Algemene autonomie en herstel op een nieuwe pc zijn nog niet bewezen.",
+          "summary": "Eerst een bruikbare door Eva gemaakte uitbreiding en schoon herstel. Daarna feedback/persoonlijkheid, gedeelde huisvoorzieningen, tijdige hulp en een begrensd eigen leven via bestaande routes. Volledige volgorde en ontbrekende taken zijn vastgesteld; nieuwe functies zijn nog niet geïnstalleerd.",
           "detail": "Technische camerawaarneming bestaat; correcte namen, werkelijk hoorbare begroeting, eigen bouw en schoon herstel blijven te bewijzen. Bestaande zelfherstelcode is gedeeltelijk en niet geïnstalleerd.",
           "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-          "nextAction": "Laat Eva via haar gewone uitvoerroute de camera-/begroetingsopdracht onderzoeken en als losse uitbreiding realiseren. Hergebruik bestaande camerawaarneming en module-/procedurevoorzieningen; leg de eerste concrete blokkade vast. Vereenvoudig alleen de geraakte overdracht en herstel de uitbreiding daarna op een schone installatie."
+          "nextAction": "Gewone cameraopdracht via Eva laten onderzoeken; bestaande bronnen, herkenning en spreekuitgang daadwerkelijk vaststellen."
         },
         "next": {
           "taskId": "F2.1",
@@ -3196,7 +3196,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E1.6",
+        "currentStep": "E4.15",
         "steps": [
           {
             "number": 1,
@@ -5782,7 +5782,7 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
+                "nextAction": "Resterende actuele bron-/uitvoerprofieloverdracht afmaken.",
                 "checkedAt": "2026-10-21T09:48:32.565185+00:00",
                 "progress": "Eva koos zelf een relevante statuslezing vanuit een recente privévraag. De gewone uitvoerder rondde die om 09:42:02 UTC af; de gewone vervolgbeslissing gebruikte het resultaat en leverde om 09:42:19 via Telegram een juiste beperkte conclusie. Nog geen bronabonnement of werkelijke bronverandering→afweging bewezen.",
                 "evidence": [
@@ -5825,7 +5825,12 @@
                   "nextAction": "Voice/shared-household owner must align the intended installed source versions with fresh idle/source/config guards, then verify the actual household research route. No foreign voice changes overwritten.",
                   "ownership": "Existing voice/shared-household executor; preserve their WIP and original task acceptance.",
                   "privateTelegramRepairAlreadyUsed": true
-                }
+                },
+                "implementationSteps": [
+                  "Resterende actuele bron-/uitvoerprofieloverdracht afmaken.",
+                  "Een echte bronverandering tot toegestane afweging en gecontroleerd vervolg volgen; reconnect/STOP/deduplicatie behouden."
+                ],
+                "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
               },
               {
                 "id": "E1.7",
@@ -5869,7 +5874,12 @@
                 "beyondExistingScope": "E1.5 levert actuele synthese; deze nieuwe uitkomst levert aantoonbaar leren en weerleggen van een voorwaardelijke routine.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Selecteer een reeds aanwezig terugkerend echt informatiegat; leg de voorspelling en benodigde waarneming vast vóór latere beoordeling."
+                "nextAction": "Routines als toetsbare hypotheses met uitzonderingen en bron opslaan in bestaand geheugen.",
+                "implementationSteps": [
+                  "Routines als toetsbare hypotheses met uitzonderingen en bron opslaan in bestaand geheugen.",
+                  "Tegenbewijs en correctie verwerken in later gedrag; ontbrekende observatie onbekend houden."
+                ],
+                "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
               },
               {
                 "id": "E1.8",
@@ -5916,7 +5926,7 @@
                 "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Kies vanuit echte lopende bedoelingen welke samenhang ontbreekt; houd een nog onbekende bron expliciet onbekend.",
+                "nextAction": "Tijdvenster, actuele bronnen, bedoelingen en onzekerheid combineren voor timely_help.",
                 "ownerInitiativeClarification20261021": {
                   "status": "required_not_yet_proven",
                   "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -5925,9 +5935,15 @@
                   "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json"
                 },
                 "livingHousemateAcceptance": {
-                  "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
-                  "scope": "Tijdige hulp en onderzoek naar ondersteuningskansen"
-                }
+                  "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+                  "scope": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen"
+                },
+                "implementationSteps": [
+                  "Tijdvenster, actuele bronnen, bedoelingen en onzekerheid combineren voor timely_help.",
+                  "Ondersteuningskans met bron, onzekerheid en benodigde inzet voorstellen; onderzoekstoestemming nooit als betaling/contract/accounttoestemming behandelen.",
+                  "Containerproef met onbekende positie: korte vraag in plaats van verzonnen waarneming; feedback en geen herhaalde melding controleren."
+                ],
+                "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
               },
               {
                 "id": "E1.9",
@@ -5973,11 +5989,17 @@
                 "beyondExistingScope": "Nieuwe gewone-use-uitkomst boven op behouden HUE5/I1.2-deelbewijs; geen heropening of herhaling van die gesloten proef.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Verbind de eerstvolgende werkelijk ontvangen reactie aan haar oorspronkelijke bijdrage en benoem wat inhoud, timing of onzekerheid is.",
+                "nextAction": "Bestaande feedback en stijlreflectie verbinden aan compacte brongebonden Personality Delta.",
                 "livingHousemateAcceptance": {
-                  "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
-                  "scope": "Feedback, timing en brongebonden corrigeerbare persoonlijkheidsbijstellingen"
-                }
+                  "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+                  "scope": "Leren welke hulp, timing en manier van contact echt werken"
+                },
+                "implementationSteps": [
+                  "Bestaande feedback en stijlreflectie verbinden aan compacte brongebonden Personality Delta.",
+                  "Droomupdate, actuele context, corrigeren/terugdraaien en bronwissen laten doorwerken zonder tweede geheugen of promptstapeling.",
+                  "Technische feedbackproef en werkelijk later effect op contact apart aantonen."
+                ],
+                "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
               },
               {
                 "id": "E1.10",
@@ -6024,11 +6046,18 @@
                 "beyondExistingScope": "E1.4 bewijst vervolg; E2.7 correcte geschiedenis. Deze uitkomst vraagt een werkelijk ontwikkeld eigen werk en herkenbare sociale eigenheid.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Lees werkelijk bestaande interesses en resultaten; laat Eva zelf een passende creatieve lijn voortzetten in plaats van een demo-onderwerp op te leggen.",
+                "nextAction": "Maximaal twee bestaande eigen projecten met korte status, budget, doel en reviewmoment; ook niet-functionele nieuwsgierigheid toelaten.",
                 "livingHousemateAcceptance": {
-                  "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
-                  "scope": "Sociale expressie, groeiende eigenheid en werkelijk eigen werk"
-                }
+                  "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+                  "scope": "Een herkenbare eigenheid uit echte ervaringen en creatieve projecten ontwikkelen"
+                },
+                "implementationSteps": [
+                  "Maximaal twee bestaande eigen projecten met korte status, budget, doel en reviewmoment; ook niet-functionele nieuwsgierigheid toelaten.",
+                  "Eén compacte Inner State uit echte activiteit/feedback bijwerken in bestaande droomroute.",
+                  "Shared Trace via bestaande aandacht/aflevering; zeldzaam, brongebonden, geen privélek, stil bij ontbrekende aanleiding.",
+                  "Feedback, stop en bronwissen onmiddellijk laten doorwerken; minimale klokgestuurde proef plus echt later projectvervolg."
+                ],
+                "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
               },
               {
                 "id": "E1.11",
@@ -6064,7 +6093,8 @@
                 ],
                 "dependsOn": [
                   "E1.8",
-                  "E1.9"
+                  "E1.9",
+                  "E1.12"
                 ],
                 "upstreamSourceIds": [
                   "openclaw-intents",
@@ -6074,11 +6104,37 @@
                 "beyondExistingScope": "E1.4 technisch vervolg blijft gesloten; hier gaat het om een echte terugkerende gezinsverantwoordelijkheid, gewijzigde omstandigheden en minder menselijke aansturing.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Kies uit een reeds uitgesproken werkelijke gezinsbehoefte één overdraagbare verantwoordelijkheid; vraag alleen ontbrekende inhoudelijke grenzen.",
+                "nextAction": "Gebruik Household Artifact-lifecycle voor een expliciet afgesproken terugkerende verantwoordelijkheid.",
                 "livingHousemateAcceptance": {
-                  "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
-                  "scope": "Blijvende gedeelde voorzieningen, adoptie en evaluatie"
-                }
+                  "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+                  "scope": "Een afgesproken gezinsverantwoordelijkheid zelfstandig blijven dragen"
+                },
+                "implementationSteps": [
+                  "Gebruik Household Artifact-lifecycle voor een expliciet afgesproken terugkerende verantwoordelijkheid.",
+                  "Werkelijk opvolgen, evalueren, bijstellen of stoppen; minder menselijke begeleiding over tijd aantonen."
+                ],
+                "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
+              },
+              {
+                "id": "E1.12",
+                "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "scopeOrigin": "living-housemate-20261022",
+                "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
+                "ownerAuthorized": true,
+                "ownerAuthorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+                "ownerActionRequired": false,
+                "requiredForCurrentDelivery": true,
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "existing": "Duurzame taken, opgeslagen resultaten, bronbinding, feedback en stoppen bestaan.",
+                "gap": "Verbind één werkelijke blijvende voorziening aan bestaande realisatie-/resultaatregistratie met adoptie, evaluatie en daadwerkelijk gecontroleerde pauze/herstel.",
+                "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.",
+                "dependsOn": [
+                  "E4.17",
+                  "E1.9"
+                ],
+                "nextAction": "Verbind één werkelijke blijvende voorziening aan bestaande realisatie-/resultaatregistratie met adoptie, evaluatie en daadwerkelijk gecontroleerde pauze/herstel."
               }
             ],
             "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -6469,6 +6525,28 @@
                 "assignment": {
                   "activeWorkers": []
                 }
+              },
+              {
+                "id": "E2.9",
+                "title": "Huisvoorzieningen, eigen projecten en bijstellingen samen bedienen",
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "scopeOrigin": "living-housemate-20261022",
+                "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
+                "ownerAuthorized": true,
+                "ownerAuthorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+                "ownerActionRequired": false,
+                "requiredForCurrentDelivery": true,
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "existing": "Bestaande productschermen voor initiatief, werk, geheugen en leren bestaan.",
+                "gap": "Breid de bestaande weergaven incrementeel uit zodra de betreffende gegevensroute werkt; sluit samenhang en toegangs-/stop-/correctiebediening in deze kaart.",
+                "doneWhen": "De bestaande Eva-productbediening toont toegestane Household Artifacts en voorstellen, actuele curiosity, maximaal twee eigen projectstatussen, optionele laatste Shared Trace en recente actuele Personality Deltas. Betrokken gebruikers kunnen adopteren, feedback geven, pauzeren/stoppen en corrigeren; resultaten komen via dezelfde bestaande autoriteits- en uitvoerroute terug. Privégegevens blijven afgeschermd en bronwissen/correctie wordt zichtbaar. Geen aparte app, dashboardstore of tweede planner. De weergave werkt met echte geregistreerde toestand, niet alleen vaste demo-inhoud.",
+                "dependsOn": [
+                  "E1.12",
+                  "E1.10",
+                  "E1.9"
+                ],
+                "nextAction": "Breid de bestaande weergaven incrementeel uit zodra de betreffende gegevensroute werkt; sluit samenhang en toegangs-/stop-/correctiebediening in deze kaart."
               }
             ],
             "gap": "Alle verplichte bedieningsuitkomsten geïnstalleerd; optioneel WhatsApp wacht op eigen Eva-nummer."
@@ -7859,7 +7937,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Laat Eva via haar gewone uitvoerroute de camera-/begroetingsopdracht onderzoeken en als losse uitbreiding realiseren. Hergebruik bestaande camerawaarneming en module-/procedurevoorzieningen; leg de eerste concrete blokkade vast. Vereenvoudig alleen de geraakte overdracht en herstel de uitbreiding daarna op een schone installatie.",
+                "nextAction": "Gewone cameraopdracht via Eva laten onderzoeken; bestaande bronnen, herkenning en spreekuitgang daadwerkelijk vaststellen.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -7873,9 +7951,15 @@
                   "selfDiscoveredNeedRemainsSeparate": true
                 },
                 "livingHousemateAcceptance": {
-                  "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
-                  "scope": "Voorziening realiseren als losse uitbreiding, later hergebruiken en schoon herstellen"
-                }
+                  "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+                  "scope": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik"
+                },
+                "implementationSteps": [
+                  "Gewone cameraopdracht via Eva laten onderzoeken; bestaande bronnen, herkenning en spreekuitgang daadwerkelijk vaststellen.",
+                  "Ontbrekende mogelijkheid via de bestaande uitvoerder als losse uitbreiding laten maken en op de echte route controleren.",
+                  "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
+                ],
+                "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
               },
               {
                 "id": "E4.16",
@@ -7894,7 +7978,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Gebruik het bestaande herstelwerk voor een daadwerkelijk vastgesteld tekort tijdens E4.15. Eerst voldoende diagnosecontext en reproduceerbare oorzaak; geen afzonderlijke uitbreiding van de herstelketen zonder productaanleiding.",
+                "nextAction": "Echte fout verbinden aan blijvend hersteldoel met voldoende diagnosecontext.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -7910,7 +7994,54 @@
                 "review": "development/reviews/autonomous-repair-foundation-20261022.json",
                 "implementationStatus": "partial_uninstalled_supporting_work",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
-                "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022"
+                "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
+                "implementationSteps": [
+                  "Echte fout verbinden aan blijvend hersteldoel met voldoende diagnosecontext.",
+                  "Uitval, ontbrekende toegang/configuratie en codefout onderscheiden; geen blinde herhaling van onzekere effecten.",
+                  "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
+                ],
+                "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
+              },
+              {
+                "id": "E4.17",
+                "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "scopeOrigin": "living-housemate-20261022",
+                "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
+                "ownerAuthorized": true,
+                "ownerAuthorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+                "ownerActionRequired": false,
+                "requiredForCurrentDelivery": true,
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "existing": "Module-, procedure-, pakket- en portable-restorevoorzieningen bestaan.",
+                "gap": "Controleer waar zelfgemaakte code en eigen gegevens nu werkelijk worden opgeslagen en sluit precies de ontbrekende pakket-/hersteloverdracht.",
+                "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
+                "dependsOn": [
+                  "E4.15"
+                ],
+                "nextAction": "Controleer waar zelfgemaakte code en eigen gegevens nu werkelijk worden opgeslagen en sluit precies de ontbrekende pakket-/hersteloverdracht."
+              },
+              {
+                "id": "E4.18",
+                "title": "Gebruikte uitvoering en onderhoud gericht vereenvoudigen",
+                "status": "planned",
+                "kind": "owner_requested_followup",
+                "scopeOrigin": "living-housemate-20261022",
+                "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
+                "ownerAuthorized": true,
+                "ownerAuthorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+                "ownerActionRequired": false,
+                "requiredForCurrentDelivery": true,
+                "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+                "existing": "E3-inventaris en beperkte eerdere E4-opschoning bestaan; huidige broncontrole vond actuele herstelafhankelijkheden in historisch genoemde tools.",
+                "gap": "Gebruik de concrete E4.15/E4.17-overdracht als afbakening; leg te verwijderen duplicatie en compatibiliteit vast vóór wijzigingen, hergebruik de bestaande inventaris.",
+                "doneWhen": "Voor de daadwerkelijk gebruikte gesprek-/HA-/browser-/toolprogramma-/afleverroute zijn bron, toestemming, uitvoering, receipt, controle en resultaatbinding aan duidelijke bestaande eigenaren gekoppeld. Aangetoonde dubbele verantwoordelijkheden en actieve afhankelijkheden van historische operaties worden gericht vereenvoudigd met gedragsbehoud. Een begrensde lijst archief-/verwijderbesluiten controleert imports, dynamische aanroepen, entrypoints, geïnstalleerd gebruik, herstel en releasebindingen; noodzakelijke helpers blijven beschikbaar. Grote geraakte klassen worden alleen op concrete verantwoordelijkheden gesplitst. Geheugen, stoppen, geen dubbele externe effecten, huidige instellingen en schone-pc-herstel blijven werken. Voor/na-metingen tonen werkelijke vereenvoudiging; verplaatste regels tellen niet als bewezen runtimewinst.",
+                "dependsOn": [
+                  "E4.15",
+                  "E4.17"
+                ],
+                "nextAction": "Gebruik de concrete E4.15/E4.17-overdracht als afbakening; leg te verwijderen duplicatie en compatibiliteit vast vóór wijzigingen, hergebruik de bestaande inventaris."
               }
             ],
             "previousBoundedCompletion": {
@@ -8461,16 +8592,19 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
+        "nextAction": "Gewone cameraopdracht via Eva laten onderzoeken; bestaande bronnen, herkenning en spreekuitgang daadwerkelijk vaststellen.",
         "finishOrder": [
-          "E4.15: één door Eva gemaakte bruikbare uitbreiding via de gewone opdracht; camera als eerste praktijktest, eigen behoefteontdekking afzonderlijk behouden",
-          "E4.16 en gerichte vereenvoudiging: alleen aantoonbare belemmeringen op die volledige route oplossen; bestaande werking behouden",
-          "E4.15/E5.2: versieerbare uitbreidingen buiten de kern, back-up en herstel op een schone installatie inclusief gedragstest",
-          "Bestaande overige E1/E2-uitkomsten en spraakafronding vervolgen; geen tweede planner of kanaal-Eva",
-          "E5.2 en bestaande gezinsacceptatie: later hergebruik, minder begeleiding, passend initiatief en prettig contact beoordelen"
+          "E4.15 → E4.17: Eva maakt een bruikbare losse uitbreiding; versieerbare opslag, back-up en werkend herstel op een schone pc",
+          "E1.9 → E1.12: feedback en corrigeerbare persoonlijkheidsbijstellingen; blijvende huisvoorzieningen adopteren, evalueren en werkelijk pauzeren",
+          "E1.6 → E1.7 → E1.8 → E1.11: bronveranderingen, routines, tijdige hulp/ondersteuningskansen en afgesproken gezinsverantwoordelijkheid",
+          "E1.10 → E2.9: maximaal twee eigen projecten, compacte Inner State, zeldzame Shared Traces en samenhangende bediening; UI groeit tijdens eerdere stappen mee",
+          "E4.16 → E4.18: zelfstandig herstel en gerichte vereenvoudiging volledig aantonen; concrete blokkades eerder binnen dezelfde route oplossen",
+          "Parallel bij bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6",
+          "P2.1 → F2.1 → F2.2: eindkandidaat vergelijken, zeven dagen werkelijk gezinsgebruik en afzonderlijk eigenaaroordeel",
+          "Optioneel E2.6 en C4.3 bij beschikbare aansluiting; geen blokkade voor de kern"
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-21T09:48:32.565185+00:00",
+        "updatedAt": "2026-10-22T13:29:13.944689+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -8493,7 +8627,8 @@
                 "E1.8",
                 "E1.9",
                 "E1.10",
-                "E1.11"
+                "E1.11",
+                "E1.12"
               ],
               "existingTaskIds": [
                 "I1.2",
@@ -8542,7 +8677,8 @@
                 "E2.5",
                 "E2.6",
                 "E2.7",
-                "E2.8"
+                "E2.8",
+                "E2.9"
               ],
               "existingTaskIds": [
                 "C3.1",
@@ -8590,7 +8726,10 @@
                 "E4.12",
                 "E4.13",
                 "E4.14",
-                "E4.15"
+                "E4.15",
+                "E4.17",
+                "E4.18",
+                "E4.16"
               ],
               "currentGap": "Nieuwe eigenaaropdracht E4.6–E4.10: modulegrens voltooien en eenvoudige acties versnellen. Oorspronkelijke E4.1–E4.5-afronding blijft geldig binnen haar scope.",
               "previousBoundedCompletion": {
@@ -8632,7 +8771,7 @@
                 "F2.1",
                 "F2.2"
               ],
-              "currentGap": "E5.1 heropend op nieuwe concrete autonomiebevinding. Technische bron/installbinding blijft behouden; dagelijkse activiteit en actuele gedeelde initiatiefroute zijn niet gereed.",
+              "currentGap": "Oorspronkelijke technische opleveringen blijven behouden. Nieuwe eigenaaruitkomsten worden daarna op de gezamenlijke eindkandidaat en in F2.1/F2.2 beoordeeld; geen nieuwe gezinsacceptatie uit documentatie.",
               "completionEvidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
               "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
               "latestEvidence": "development/evidence/reassessment/actual-autonomy-observation-20261018.json"
@@ -8816,27 +8955,72 @@
           ],
           "executionOrder": [
             "E4.15",
+            "E4.17",
+            "E1.9",
+            "E1.12",
+            "E1.6",
             "E1.7",
             "E1.8",
-            "E1.9",
+            "E1.11",
             "E1.10",
-            "E1.11"
+            "E4.16",
+            "E4.18"
           ],
           "firstNewExecutionPriority": "E4.15",
           "runtimeInstalled": false,
-          "currentImplementationPreserved": "E1.6",
+          "currentImplementationPreserved": "E4.15; E1.6 findings retained as unfinished work",
           "acceptance": "F2.1/F2.2 remain the shared family trial; individual task claims require their own actual evidence, without reopening closed trials.",
           "upstreamRoles": {
             "OpenClaw": "prospective intent and attention lifecycle",
             "Hermes": "experience-derived skills and programmatic tool chains",
             "OpenCode": "coding feedback and optional bounded SDK executor"
           }
+        },
+        "livingHousemateExecution": {
+          "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+          "mainOrder": [
+            "E4.15",
+            "E4.17",
+            "E1.9",
+            "E1.12",
+            "E1.6",
+            "E1.7",
+            "E1.8",
+            "E1.11",
+            "E1.10",
+            "E2.9",
+            "E4.16",
+            "E4.18",
+            "P2.1",
+            "F2.1",
+            "F2.2"
+          ],
+          "parallelVoiceOrder": [
+            "C3.5",
+            "C3.1",
+            "C3.4",
+            "C4.1",
+            "C3.6"
+          ],
+          "optionalOrder": [
+            "E2.6",
+            "C4.3"
+          ],
+          "activeTask": "E4.15",
+          "rules": [
+            "Eén primaire uitvoeruitkomst; de bestaande spraakuitvoerder behoudt zijn eigen route.",
+            "E4.16 en E4.18 lossen eerder concrete blokkerende fouten/duplicatie op; hun volledige afronding volgt vóór de eindvergelijking.",
+            "E2.9-bediening groeit mee met de features; beheer/stop wordt niet uitgesteld tot het einde.",
+            "Alle oorspronkelijke doneWhen-criteria blijven ongewijzigd. Nieuwe scope is aanvullende eigenaaracceptatie, geen herroeping van oude beperkte afrondingen.",
+            "Optioneel accountgebonden werk blokkeert de kern of gezinsweek niet.",
+            "P2.1 vergelijkt uitsluitend dezelfde werkelijk bruikbare eindkandidaat; geen algemene superioriteit uit losse architectuurclaims."
+          ]
         }
       }
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E1.6",
+      "currentStep": "E4.15",
       "steps": [
         {
           "number": 1,
@@ -11422,7 +11606,7 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
+              "nextAction": "Resterende actuele bron-/uitvoerprofieloverdracht afmaken.",
               "checkedAt": "2026-10-21T09:48:32.565185+00:00",
               "progress": "Eva koos zelf een relevante statuslezing vanuit een recente privévraag. De gewone uitvoerder rondde die om 09:42:02 UTC af; de gewone vervolgbeslissing gebruikte het resultaat en leverde om 09:42:19 via Telegram een juiste beperkte conclusie. Nog geen bronabonnement of werkelijke bronverandering→afweging bewezen.",
               "evidence": [
@@ -11465,7 +11649,12 @@
                 "nextAction": "Voice/shared-household owner must align the intended installed source versions with fresh idle/source/config guards, then verify the actual household research route. No foreign voice changes overwritten.",
                 "ownership": "Existing voice/shared-household executor; preserve their WIP and original task acceptance.",
                 "privateTelegramRepairAlreadyUsed": true
-              }
+              },
+              "implementationSteps": [
+                "Resterende actuele bron-/uitvoerprofieloverdracht afmaken.",
+                "Een echte bronverandering tot toegestane afweging en gecontroleerd vervolg volgen; reconnect/STOP/deduplicatie behouden."
+              ],
+              "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
             },
             {
               "id": "E1.7",
@@ -11509,7 +11698,12 @@
               "beyondExistingScope": "E1.5 levert actuele synthese; deze nieuwe uitkomst levert aantoonbaar leren en weerleggen van een voorwaardelijke routine.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Selecteer een reeds aanwezig terugkerend echt informatiegat; leg de voorspelling en benodigde waarneming vast vóór latere beoordeling."
+              "nextAction": "Routines als toetsbare hypotheses met uitzonderingen en bron opslaan in bestaand geheugen.",
+              "implementationSteps": [
+                "Routines als toetsbare hypotheses met uitzonderingen en bron opslaan in bestaand geheugen.",
+                "Tegenbewijs en correctie verwerken in later gedrag; ontbrekende observatie onbekend houden."
+              ],
+              "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
             },
             {
               "id": "E1.8",
@@ -11556,7 +11750,7 @@
               "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Kies vanuit echte lopende bedoelingen welke samenhang ontbreekt; houd een nog onbekende bron expliciet onbekend.",
+              "nextAction": "Tijdvenster, actuele bronnen, bedoelingen en onzekerheid combineren voor timely_help.",
               "ownerInitiativeClarification20261021": {
                 "status": "required_not_yet_proven",
                 "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -11565,9 +11759,15 @@
                 "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json"
               },
               "livingHousemateAcceptance": {
-                "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
-                "scope": "Tijdige hulp en onderzoek naar ondersteuningskansen"
-              }
+                "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+                "scope": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen"
+              },
+              "implementationSteps": [
+                "Tijdvenster, actuele bronnen, bedoelingen en onzekerheid combineren voor timely_help.",
+                "Ondersteuningskans met bron, onzekerheid en benodigde inzet voorstellen; onderzoekstoestemming nooit als betaling/contract/accounttoestemming behandelen.",
+                "Containerproef met onbekende positie: korte vraag in plaats van verzonnen waarneming; feedback en geen herhaalde melding controleren."
+              ],
+              "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
             },
             {
               "id": "E1.9",
@@ -11613,11 +11813,17 @@
               "beyondExistingScope": "Nieuwe gewone-use-uitkomst boven op behouden HUE5/I1.2-deelbewijs; geen heropening of herhaling van die gesloten proef.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Verbind de eerstvolgende werkelijk ontvangen reactie aan haar oorspronkelijke bijdrage en benoem wat inhoud, timing of onzekerheid is.",
+              "nextAction": "Bestaande feedback en stijlreflectie verbinden aan compacte brongebonden Personality Delta.",
               "livingHousemateAcceptance": {
-                "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
-                "scope": "Feedback, timing en brongebonden corrigeerbare persoonlijkheidsbijstellingen"
-              }
+                "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+                "scope": "Leren welke hulp, timing en manier van contact echt werken"
+              },
+              "implementationSteps": [
+                "Bestaande feedback en stijlreflectie verbinden aan compacte brongebonden Personality Delta.",
+                "Droomupdate, actuele context, corrigeren/terugdraaien en bronwissen laten doorwerken zonder tweede geheugen of promptstapeling.",
+                "Technische feedbackproef en werkelijk later effect op contact apart aantonen."
+              ],
+              "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
             },
             {
               "id": "E1.10",
@@ -11664,11 +11870,18 @@
               "beyondExistingScope": "E1.4 bewijst vervolg; E2.7 correcte geschiedenis. Deze uitkomst vraagt een werkelijk ontwikkeld eigen werk en herkenbare sociale eigenheid.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Lees werkelijk bestaande interesses en resultaten; laat Eva zelf een passende creatieve lijn voortzetten in plaats van een demo-onderwerp op te leggen.",
+              "nextAction": "Maximaal twee bestaande eigen projecten met korte status, budget, doel en reviewmoment; ook niet-functionele nieuwsgierigheid toelaten.",
               "livingHousemateAcceptance": {
-                "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
-                "scope": "Sociale expressie, groeiende eigenheid en werkelijk eigen werk"
-              }
+                "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+                "scope": "Een herkenbare eigenheid uit echte ervaringen en creatieve projecten ontwikkelen"
+              },
+              "implementationSteps": [
+                "Maximaal twee bestaande eigen projecten met korte status, budget, doel en reviewmoment; ook niet-functionele nieuwsgierigheid toelaten.",
+                "Eén compacte Inner State uit echte activiteit/feedback bijwerken in bestaande droomroute.",
+                "Shared Trace via bestaande aandacht/aflevering; zeldzaam, brongebonden, geen privélek, stil bij ontbrekende aanleiding.",
+                "Feedback, stop en bronwissen onmiddellijk laten doorwerken; minimale klokgestuurde proef plus echt later projectvervolg."
+              ],
+              "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
             },
             {
               "id": "E1.11",
@@ -11704,7 +11917,8 @@
               ],
               "dependsOn": [
                 "E1.8",
-                "E1.9"
+                "E1.9",
+                "E1.12"
               ],
               "upstreamSourceIds": [
                 "openclaw-intents",
@@ -11714,11 +11928,37 @@
               "beyondExistingScope": "E1.4 technisch vervolg blijft gesloten; hier gaat het om een echte terugkerende gezinsverantwoordelijkheid, gewijzigde omstandigheden en minder menselijke aansturing.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Kies uit een reeds uitgesproken werkelijke gezinsbehoefte één overdraagbare verantwoordelijkheid; vraag alleen ontbrekende inhoudelijke grenzen.",
+              "nextAction": "Gebruik Household Artifact-lifecycle voor een expliciet afgesproken terugkerende verantwoordelijkheid.",
               "livingHousemateAcceptance": {
-                "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
-                "scope": "Blijvende gedeelde voorzieningen, adoptie en evaluatie"
-              }
+                "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+                "scope": "Een afgesproken gezinsverantwoordelijkheid zelfstandig blijven dragen"
+              },
+              "implementationSteps": [
+                "Gebruik Household Artifact-lifecycle voor een expliciet afgesproken terugkerende verantwoordelijkheid.",
+                "Werkelijk opvolgen, evalueren, bijstellen of stoppen; minder menselijke begeleiding over tijd aantonen."
+              ],
+              "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
+            },
+            {
+              "id": "E1.12",
+              "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "scopeOrigin": "living-housemate-20261022",
+              "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
+              "ownerAuthorized": true,
+              "ownerAuthorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+              "ownerActionRequired": false,
+              "requiredForCurrentDelivery": true,
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "existing": "Duurzame taken, opgeslagen resultaten, bronbinding, feedback en stoppen bestaan.",
+              "gap": "Verbind één werkelijke blijvende voorziening aan bestaande realisatie-/resultaatregistratie met adoptie, evaluatie en daadwerkelijk gecontroleerde pauze/herstel.",
+              "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.",
+              "dependsOn": [
+                "E4.17",
+                "E1.9"
+              ],
+              "nextAction": "Verbind één werkelijke blijvende voorziening aan bestaande realisatie-/resultaatregistratie met adoptie, evaluatie en daadwerkelijk gecontroleerde pauze/herstel."
             }
           ],
           "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -12109,6 +12349,28 @@
               "assignment": {
                 "activeWorkers": []
               }
+            },
+            {
+              "id": "E2.9",
+              "title": "Huisvoorzieningen, eigen projecten en bijstellingen samen bedienen",
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "scopeOrigin": "living-housemate-20261022",
+              "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
+              "ownerAuthorized": true,
+              "ownerAuthorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+              "ownerActionRequired": false,
+              "requiredForCurrentDelivery": true,
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "existing": "Bestaande productschermen voor initiatief, werk, geheugen en leren bestaan.",
+              "gap": "Breid de bestaande weergaven incrementeel uit zodra de betreffende gegevensroute werkt; sluit samenhang en toegangs-/stop-/correctiebediening in deze kaart.",
+              "doneWhen": "De bestaande Eva-productbediening toont toegestane Household Artifacts en voorstellen, actuele curiosity, maximaal twee eigen projectstatussen, optionele laatste Shared Trace en recente actuele Personality Deltas. Betrokken gebruikers kunnen adopteren, feedback geven, pauzeren/stoppen en corrigeren; resultaten komen via dezelfde bestaande autoriteits- en uitvoerroute terug. Privégegevens blijven afgeschermd en bronwissen/correctie wordt zichtbaar. Geen aparte app, dashboardstore of tweede planner. De weergave werkt met echte geregistreerde toestand, niet alleen vaste demo-inhoud.",
+              "dependsOn": [
+                "E1.12",
+                "E1.10",
+                "E1.9"
+              ],
+              "nextAction": "Breid de bestaande weergaven incrementeel uit zodra de betreffende gegevensroute werkt; sluit samenhang en toegangs-/stop-/correctiebediening in deze kaart."
             }
           ],
           "gap": "Alle verplichte bedieningsuitkomsten geïnstalleerd; optioneel WhatsApp wacht op eigen Eva-nummer."
@@ -13499,7 +13761,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Laat Eva via haar gewone uitvoerroute de camera-/begroetingsopdracht onderzoeken en als losse uitbreiding realiseren. Hergebruik bestaande camerawaarneming en module-/procedurevoorzieningen; leg de eerste concrete blokkade vast. Vereenvoudig alleen de geraakte overdracht en herstel de uitbreiding daarna op een schone installatie.",
+              "nextAction": "Gewone cameraopdracht via Eva laten onderzoeken; bestaande bronnen, herkenning en spreekuitgang daadwerkelijk vaststellen.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -13513,9 +13775,15 @@
                 "selfDiscoveredNeedRemainsSeparate": true
               },
               "livingHousemateAcceptance": {
-                "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
-                "scope": "Voorziening realiseren als losse uitbreiding, later hergebruiken en schoon herstellen"
-              }
+                "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+                "scope": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik"
+              },
+              "implementationSteps": [
+                "Gewone cameraopdracht via Eva laten onderzoeken; bestaande bronnen, herkenning en spreekuitgang daadwerkelijk vaststellen.",
+                "Ontbrekende mogelijkheid via de bestaande uitvoerder als losse uitbreiding laten maken en op de echte route controleren.",
+                "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
+              ],
+              "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
             },
             {
               "id": "E4.16",
@@ -13534,7 +13802,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Gebruik het bestaande herstelwerk voor een daadwerkelijk vastgesteld tekort tijdens E4.15. Eerst voldoende diagnosecontext en reproduceerbare oorzaak; geen afzonderlijke uitbreiding van de herstelketen zonder productaanleiding.",
+              "nextAction": "Echte fout verbinden aan blijvend hersteldoel met voldoende diagnosecontext.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -13550,7 +13818,54 @@
               "review": "development/reviews/autonomous-repair-foundation-20261022.json",
               "implementationStatus": "partial_uninstalled_supporting_work",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
-              "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022"
+              "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
+              "implementationSteps": [
+                "Echte fout verbinden aan blijvend hersteldoel met voldoende diagnosecontext.",
+                "Uitval, ontbrekende toegang/configuratie en codefout onderscheiden; geen blinde herhaling van onzekere effecten.",
+                "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
+              ],
+              "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
+            },
+            {
+              "id": "E4.17",
+              "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "scopeOrigin": "living-housemate-20261022",
+              "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
+              "ownerAuthorized": true,
+              "ownerAuthorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+              "ownerActionRequired": false,
+              "requiredForCurrentDelivery": true,
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "existing": "Module-, procedure-, pakket- en portable-restorevoorzieningen bestaan.",
+              "gap": "Controleer waar zelfgemaakte code en eigen gegevens nu werkelijk worden opgeslagen en sluit precies de ontbrekende pakket-/hersteloverdracht.",
+              "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
+              "dependsOn": [
+                "E4.15"
+              ],
+              "nextAction": "Controleer waar zelfgemaakte code en eigen gegevens nu werkelijk worden opgeslagen en sluit precies de ontbrekende pakket-/hersteloverdracht."
+            },
+            {
+              "id": "E4.18",
+              "title": "Gebruikte uitvoering en onderhoud gericht vereenvoudigen",
+              "status": "planned",
+              "kind": "owner_requested_followup",
+              "scopeOrigin": "living-housemate-20261022",
+              "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
+              "ownerAuthorized": true,
+              "ownerAuthorization": "Eigenaar22oktober2026 vraagt alle aangeleverde delen over de levende huisgenoot en Inner Life samen te voegen, bestaande mogelijkheden/overlap te beoordelen, ontbrekende taken toe te voegen en alle taken logisch te ordenen.",
+              "ownerActionRequired": false,
+              "requiredForCurrentDelivery": true,
+              "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+              "existing": "E3-inventaris en beperkte eerdere E4-opschoning bestaan; huidige broncontrole vond actuele herstelafhankelijkheden in historisch genoemde tools.",
+              "gap": "Gebruik de concrete E4.15/E4.17-overdracht als afbakening; leg te verwijderen duplicatie en compatibiliteit vast vóór wijzigingen, hergebruik de bestaande inventaris.",
+              "doneWhen": "Voor de daadwerkelijk gebruikte gesprek-/HA-/browser-/toolprogramma-/afleverroute zijn bron, toestemming, uitvoering, receipt, controle en resultaatbinding aan duidelijke bestaande eigenaren gekoppeld. Aangetoonde dubbele verantwoordelijkheden en actieve afhankelijkheden van historische operaties worden gericht vereenvoudigd met gedragsbehoud. Een begrensde lijst archief-/verwijderbesluiten controleert imports, dynamische aanroepen, entrypoints, geïnstalleerd gebruik, herstel en releasebindingen; noodzakelijke helpers blijven beschikbaar. Grote geraakte klassen worden alleen op concrete verantwoordelijkheden gesplitst. Geheugen, stoppen, geen dubbele externe effecten, huidige instellingen en schone-pc-herstel blijven werken. Voor/na-metingen tonen werkelijke vereenvoudiging; verplaatste regels tellen niet als bewezen runtimewinst.",
+              "dependsOn": [
+                "E4.15",
+                "E4.17"
+              ],
+              "nextAction": "Gebruik de concrete E4.15/E4.17-overdracht als afbakening; leg te verwijderen duplicatie en compatibiliteit vast vóór wijzigingen, hergebruik de bestaande inventaris."
             }
           ],
           "previousBoundedCompletion": {
@@ -14101,16 +14416,19 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
+      "nextAction": "Gewone cameraopdracht via Eva laten onderzoeken; bestaande bronnen, herkenning en spreekuitgang daadwerkelijk vaststellen.",
       "finishOrder": [
-        "E4.15: één door Eva gemaakte bruikbare uitbreiding via de gewone opdracht; camera als eerste praktijktest, eigen behoefteontdekking afzonderlijk behouden",
-        "E4.16 en gerichte vereenvoudiging: alleen aantoonbare belemmeringen op die volledige route oplossen; bestaande werking behouden",
-        "E4.15/E5.2: versieerbare uitbreidingen buiten de kern, back-up en herstel op een schone installatie inclusief gedragstest",
-        "Bestaande overige E1/E2-uitkomsten en spraakafronding vervolgen; geen tweede planner of kanaal-Eva",
-        "E5.2 en bestaande gezinsacceptatie: later hergebruik, minder begeleiding, passend initiatief en prettig contact beoordelen"
+        "E4.15 → E4.17: Eva maakt een bruikbare losse uitbreiding; versieerbare opslag, back-up en werkend herstel op een schone pc",
+        "E1.9 → E1.12: feedback en corrigeerbare persoonlijkheidsbijstellingen; blijvende huisvoorzieningen adopteren, evalueren en werkelijk pauzeren",
+        "E1.6 → E1.7 → E1.8 → E1.11: bronveranderingen, routines, tijdige hulp/ondersteuningskansen en afgesproken gezinsverantwoordelijkheid",
+        "E1.10 → E2.9: maximaal twee eigen projecten, compacte Inner State, zeldzame Shared Traces en samenhangende bediening; UI groeit tijdens eerdere stappen mee",
+        "E4.16 → E4.18: zelfstandig herstel en gerichte vereenvoudiging volledig aantonen; concrete blokkades eerder binnen dezelfde route oplossen",
+        "Parallel bij bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6",
+        "P2.1 → F2.1 → F2.2: eindkandidaat vergelijken, zeven dagen werkelijk gezinsgebruik en afzonderlijk eigenaaroordeel",
+        "Optioneel E2.6 en C4.3 bij beschikbare aansluiting; geen blokkade voor de kern"
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-21T09:48:32.565185+00:00",
+      "updatedAt": "2026-10-22T13:29:13.944689+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -14133,7 +14451,8 @@
               "E1.8",
               "E1.9",
               "E1.10",
-              "E1.11"
+              "E1.11",
+              "E1.12"
             ],
             "existingTaskIds": [
               "I1.2",
@@ -14182,7 +14501,8 @@
               "E2.5",
               "E2.6",
               "E2.7",
-              "E2.8"
+              "E2.8",
+              "E2.9"
             ],
             "existingTaskIds": [
               "C3.1",
@@ -14230,7 +14550,10 @@
               "E4.12",
               "E4.13",
               "E4.14",
-              "E4.15"
+              "E4.15",
+              "E4.17",
+              "E4.18",
+              "E4.16"
             ],
             "currentGap": "Nieuwe eigenaaropdracht E4.6–E4.10: modulegrens voltooien en eenvoudige acties versnellen. Oorspronkelijke E4.1–E4.5-afronding blijft geldig binnen haar scope.",
             "previousBoundedCompletion": {
@@ -14272,7 +14595,7 @@
               "F2.1",
               "F2.2"
             ],
-            "currentGap": "E5.1 heropend op nieuwe concrete autonomiebevinding. Technische bron/installbinding blijft behouden; dagelijkse activiteit en actuele gedeelde initiatiefroute zijn niet gereed.",
+            "currentGap": "Oorspronkelijke technische opleveringen blijven behouden. Nieuwe eigenaaruitkomsten worden daarna op de gezamenlijke eindkandidaat en in F2.1/F2.2 beoordeeld; geen nieuwe gezinsacceptatie uit documentatie.",
             "completionEvidence": "development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
             "independentReview": "development/reviews/e51-joint-candidate-review-20261018.json",
             "latestEvidence": "development/evidence/reassessment/actual-autonomy-observation-20261018.json"
@@ -14456,21 +14779,66 @@
         ],
         "executionOrder": [
           "E4.15",
+          "E4.17",
+          "E1.9",
+          "E1.12",
+          "E1.6",
           "E1.7",
           "E1.8",
-          "E1.9",
+          "E1.11",
           "E1.10",
-          "E1.11"
+          "E4.16",
+          "E4.18"
         ],
         "firstNewExecutionPriority": "E4.15",
         "runtimeInstalled": false,
-        "currentImplementationPreserved": "E1.6",
+        "currentImplementationPreserved": "E4.15; E1.6 findings retained as unfinished work",
         "acceptance": "F2.1/F2.2 remain the shared family trial; individual task claims require their own actual evidence, without reopening closed trials.",
         "upstreamRoles": {
           "OpenClaw": "prospective intent and attention lifecycle",
           "Hermes": "experience-derived skills and programmatic tool chains",
           "OpenCode": "coding feedback and optional bounded SDK executor"
         }
+      },
+      "livingHousemateExecution": {
+        "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+        "mainOrder": [
+          "E4.15",
+          "E4.17",
+          "E1.9",
+          "E1.12",
+          "E1.6",
+          "E1.7",
+          "E1.8",
+          "E1.11",
+          "E1.10",
+          "E2.9",
+          "E4.16",
+          "E4.18",
+          "P2.1",
+          "F2.1",
+          "F2.2"
+        ],
+        "parallelVoiceOrder": [
+          "C3.5",
+          "C3.1",
+          "C3.4",
+          "C4.1",
+          "C3.6"
+        ],
+        "optionalOrder": [
+          "E2.6",
+          "C4.3"
+        ],
+        "activeTask": "E4.15",
+        "rules": [
+          "Eén primaire uitvoeruitkomst; de bestaande spraakuitvoerder behoudt zijn eigen route.",
+          "E4.16 en E4.18 lossen eerder concrete blokkerende fouten/duplicatie op; hun volledige afronding volgt vóór de eindvergelijking.",
+          "E2.9-bediening groeit mee met de features; beheer/stop wordt niet uitgesteld tot het einde.",
+          "Alle oorspronkelijke doneWhen-criteria blijven ongewijzigd. Nieuwe scope is aanvullende eigenaaracceptatie, geen herroeping van oude beperkte afrondingen.",
+          "Optioneel accountgebonden werk blokkeert de kern of gezinsweek niet.",
+          "P2.1 vergelijkt uitsluitend dezelfde werkelijk bruikbare eindkandidaat; geen algemene superioriteit uit losse architectuurclaims."
+        ]
       }
     },
     "goalRevision": {
@@ -16333,7 +16701,12 @@
     {
       "id": "autonomous-repair-20261022",
       "path": "development/design/product/autonomous-repair-task-scope-20261022.json",
-      "sha256": "e78342a70944c5c0a19511047468e08de5482d7c7d3172e235ae5fa763d1cc1d"
+      "sha256": "f4bb36407305a6e487b5d2668f0bc3487fc50f2ffb39589227cfab02c5300f98"
+    },
+    {
+      "id": "living-housemate-20261022",
+      "path": "development/design/product/living-housemate-task-scope-20261022.json",
+      "sha256": "3d8e8c2c0de91c22e1b83e01e51adff804923f43fa7c77832f3ca737f32e6630"
     }
   ],
   "lastUpdatedAt": "2026-10-20T13:28:55.822181+00:00",

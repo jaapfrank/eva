@@ -238,7 +238,7 @@
     "wholeProjectComplete": false
   },
   "livingHousemateSpecification20261022": {
-    "status": "owner_specification_integrated_not_implemented",
+    "status": "superseded_by_consolidated_owner_specification",
     "householdArtifact": {
       "definition": "Kleine, blijvende, omkeerbare verandering in huis of routine, voorgesteld of gerealiseerd door Eva; na adoptie co-eigendom van het huishouden. Geen eenmalige taak en geen uitsluitend door Eva gebruikte skill.",
       "states": [
@@ -297,6 +297,7 @@
       "Gesimuleerde feedback geeft een compacte bijstelling in de volgende passende context; correctie, terugdraaien en bronwissen werken door.",
       "Bestaande geheugen-, initiatief- en uitvoeringswerking blijft behouden; simulaties bewijzen techniek, echt dagelijks nut en groei over weken vragen werkelijk gebruik."
     ],
-    "executionOrder": "E4.15 camera-uitbreiding blijft de eerste volledige route. Verbind de toegestane blijvende begroetingsvoorziening aan artifactbeheer; de herkenningsskill zelf is geen Household Artifact. Daarna tijdige hulp en corrigeerbare groei via bestaande E1-kaarten. Geen vijf nieuwe parallelle subsystemen."
+    "executionOrder": "E4.15 camera-uitbreiding blijft de eerste volledige route. Verbind de toegestane blijvende begroetingsvoorziening aan artifactbeheer; de herkenningsskill zelf is geen Household Artifact. Daarna tijdige hulp en corrigeerbare groei via bestaande E1-kaarten. Geen vijf nieuwe parallelle subsystemen.",
+    "canonicalScope": "development/design/product/living-housemate-task-scope-20261022.json"
   }
 }

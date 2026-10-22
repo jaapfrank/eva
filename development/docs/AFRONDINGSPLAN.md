@@ -8,44 +8,64 @@ echte blokkades, bewijs en eigenaarhandelingen. Dit document is het plan, geen t
 
 ## Werkvolgorde en praktische oplevering
 
-E4.15 is nu de actieve gebruikersuitkomst: Eva realiseert een bruikbare uitbreiding
-via haar bestaande uitvoerroute. De camera-/begroetingsopdracht is de eerste concrete
-praktijktest. De technische cameramodule bestaat; correcte herkenning, hoorbare reactie
-en zelfstandig bouwen zijn daarmee niet af. Een door de eigenaar aangedragen voorbeeld
-vervangt de afzonderlijke eis van zelfontdekte behoefte niet.
+De volledige aangeleverde specificatie staat in één [samengevoegde scope](../design/product/living-housemate-task-scope-20261022.json).
+Die bevat Household Artifacts, tijdige hulp, ondersteuningskansen, sociale expressie,
+Personality Deltas en Inner Life. De vorige deeluitwerking blijft als historische
+besluitvorming bewaard. E4.15 is de enige primaire uitvoerprioriteit; spraak blijft bij
+de bestaande uitvoerder. Nieuwe functies zijn gepland, niet als geïnstalleerd aangemerkt.
 
-E4.16 ondersteunt deze route bij een daadwerkelijk aangetroffen fout. De gedeeltelijke
-zelfherstelcode blijft bewaard, maar is niet geïnstalleerd. Eerst vaststellen waar Eva
-vastloopt, dan die oorzaak oplossen; geen parallel programma om steeds meer controles
-te bouwen. Bestaande afgesloten criteria en andere lopende spraakwerkzaamheden blijven intact.
+| Volgorde | Taken | Concrete uitkomst |
+| --- | --- | --- |
+| 1 | E4.15 → E4.17 | Eva realiseert een losse bruikbare uitbreiding en herstelt die met haar gegevens op een schone pc. Camera/begroeting is de eerste opdracht; zelfontdekte behoefte wordt afzonderlijk bewezen. |
+| 2 | E1.9 → E1.12 | Echte feedback wordt een corrigeerbare persoonlijkheidsbijstelling; een blijvende huisvoorziening krijgt adoptie, evaluatie en werkelijke pauze/herstel. |
+| 3 | E1.6 → E1.7 → E1.8 → E1.11 | Bronveranderingen en routines leiden tot tijdige hulp, begrensde ondersteuningsvoorstellen en een afgesproken terugkerende verantwoordelijkheid. |
+| 4 | E1.10 → E2.9 | Maximaal twee eigen projecten, compacte Inner State, zeldzame Shared Traces en één lichte productweergave. Bedieningsdelen groeien tijdens de eerdere stappen mee. |
+| 5 | E4.16 → E4.18 | Algemeen zelfherstel en gerichte vereenvoudiging aantonen. Concrete blokkerende fouten/duplicatie worden eerder binnen dezelfde uitvoerroute opgelost. |
+| 6 | P2.1 → F2.1 → F2.2 | De werkelijk bruikbare eindkandidaat vergelijken, zeven dagen gezinsgebruik en afzonderlijk eigenaaroordeel. |
+| Parallel, bestaande eigenaar | C3.5 → C3.1 → C3.4 → C4.1 → C3.6 | Beurtgrenzen, doorpraten, ritme, onderbreken en herstel op de speakers. |
+| Optioneel | E2.6, C4.3 | WhatsApp/eigen nummer en telefoonspraak zodra de aansluiting beschikbaar is; geen blokkade voor de kern. |
 
-De uitbreiding wordt buiten de kern verpakt en met code, afhankelijkheden, instellingen,
-rechten en eigen gegevens geback-upt. Een schone Eva-installatie moet haar zonder de
-oude bronwerkmap herstellen en hetzelfde gedrag laten zien. Gebruik de bestaande
-module-/procedure- en herstelvoorzieningen; onderzoek hun ontbrekende dekking vóór bouw.
-Dit is aanvullende eigenaaracceptatie bij E4.15 en de gebundelde E5.2-oplevering.
+Vier afzonderlijke gaten hebben nieuwe kaarten: E4.17 (herstelbare eigen uitbreidingen),
+E1.12 (Household Artifact-lifecycle), E2.9 (gezamenlijke zichtbaarheid/bediening) en E4.18
+(gerichte consolidatie van gebruikte uitvoering en onderhoud). De overige aanvullingen
+zijn concrete stappen en acceptatie bij bestaande E1/E4-kaarten. Oorspronkelijke
+criteria en beperkte eerdere afrondingen blijven intact. Alle 22 open taken staan
+exact eenmaal in de bovenstaande volgorde of in de parallelle/optionele route.
 
-Vereenvoudiging wordt aan concreet gebruik gekoppeld. Controleer voor gereedschappen
-imports, dynamische aanroepen, entrypoints, geïnstalleerde processen, herstel en
-releasebindingen. Trek noodzakelijke gedeelde helpers eerst uit historische scripts
-voordat die scripts worden gearchiveerd. Begin action-chainwerk bij de werkelijk gebruikte
-uitvoering; samenvoegen mag toestemming, stoppen, resultaatbinding en readback niet verliezen.
-Splits grote klassen op een veranderde verantwoordelijkheid met behoud van hun interface.
-Er komt geen extra orchestrator zonder dat bestaande aansturing daardoor vervalt.
+### Hergebruik en wat vervalt als bouwvoorstel
 
-Het hoofdresultaat is minder begeleiding: zelfstandig afgeronde gewone taken,
-herhaal-/correctieverzoeken, nuttig of hinderlijk initiatief, herstelduur en later
-hergebruik. Geen reactie blijft onbekend. Regels verplaatsen en tests tellen zijn
-ondersteunende ontwikkelgegevens, geen verbetering van Eva's gezinsnut.
+Behoud de identiteit/geheugenketen, broncorrectie/wissen, personal interests, aandacht,
+proactive delivery, droom-/feedbackbouwstenen, programmeerroute, evaluator, modules en
+herstelvoorzieningen. De actieve cameramodule en bestaande productschermen worden hergebruikt.
 
-De aanvullende specificatie 'Levende Huisgenoot' wordt uitgevoerd binnen bestaande
-kaarten: E1.8 voor tijdige hulp/ondersteuningskansen, E1.9 voor feedback en corrigeerbare
-persoonlijkheidsbijstellingen, E1.10 voor sociale expressie/eigenheid, E1.11 voor
-blijvende gedeelde voorzieningen en E4.15 voor hun realisatie als herstelbare uitbreiding.
-De [uitwerking en vier gerichte proeven](../design/product/autonomous-repair-task-scope-20261022.json)
-bewaren de eigenaarseisen. De cameraopdracht blijft eerst; geen parallelle nieuwe stores
-of agentlus. Test ook onbekende informatie, ontbrekende toestemming, bronwissen en
-werkelijke pauze. Latere gewone ervaringen toetsen nuttigheid en groei over weken.
+Er komt geen aparte Inner-Life-agent, scheduler, geheugen of app; geen artifact-planner;
+geen uitvoerder per initiatief-label; geen tweede stijl-/persoonlijkheidsgeheugen;
+geen onbeperkte innerlijke monoloog of sociale activiteitsplicht. De vier initiatief-
+labels zijn betekenis binnen dezelfde route. Een kernorchestrator wordt alleen toegevoegd
+als hij aantoonbaar bestaande aansturing vervangt. Regelaantallen en bestandsnamen zijn
+geen verwijderbewijs. Dit plan schrapt deze dubbele bouwvoorstellen, geen onbeoordeelde code.
+
+### Uitvoeringsregels
+
+Elke uitbreiding blijft buiten de kern en omvat code, afhankelijkheden, instellingen,
+rechten, eigen gegevens en laatst werkende versie. Back-up en schone-pc-herstel bewaren
+ook adoptie en pauze en maken geen dubbele externe voorziening. Git alleen volstaat niet.
+Een algemeen ontbrekende kerninterface wordt afzonderlijk onderbouwd.
+
+Vereenvoudiging volgt concreet gebruik. Controleer imports, dynamische aanroepen,
+entrypoints, geïnstalleerde processen, herstel en releasebindingen. Trek noodzakelijke
+helpers eerst uit historische scripts voordat die scripts worden gearchiveerd. Splits
+grote klassen alleen op een concrete gewijzigde verantwoordelijkheid. Behoud geheugen,
+stoppen, resultaatbinding en controle van externe effecten.
+
+Inner State is actuele bezigheid; Personality Delta is een geleerde omgangsbijstelling;
+Household Artifact is een blijvende voorziening. Gedeelde informatie gebruikt alleen
+voor dat huishouden deelbare bronnen. Stop, correctie en bronwissen werken meteen door.
+Simulaties toetsen de techniek; eigenheid en nuttigheid over weken vragen echt gebruik.
+
+Meet zelfstandig afgeronde gewone taken, herhaal-/correctieverzoeken, nut/hinder van
+initiatief, herstelduur en later hergebruik. Geen reactie blijft onbekend. Verplaatste
+regels en geslaagde technische checks zijn geen bewezen gezinsnut of snelheidswinst.
 
 ## Waar we beginnen — gecontroleerde feiten en beperkingen
 
@@ -488,10 +508,9 @@ De zes nieuwe eigenaaruitkomsten zijn verplicht gepland binnen dezelfde E1/E4-fa
 | E1.11 | Iemand kan een echte terugkerende zorg met afgesproken grenzen aan Eva overlaten. | Van een taak voortzetten naar duurzame verantwoordelijkheid en minder begeleiding. |
 | E4.15 | Eva ontdekt zelf een behoefte, maakt een bruikbare voorziening en verbetert die na echt gebruik. | Verbindt bestaande vaardigheden, toolprogramma's, codefeedback en beoordeelde toepassing tot eigen uitvinding. |
 
-De eerste nieuwe uitvoerprioriteit is E4.15: de bestaande bouwmogelijkheden kunnen
-al een werkelijk door Eva gekozen behoefte oppakken, ook als E1.6 wacht op een
-nieuwe bronaanleiding. Daarna E1.7, E1.8, E1.9, E1.10 en E1.11, rekening houdend met
-de vastgelegde afhankelijkheden en werkelijk beschikbare bronnen/feedback. De lopende
+De eerste nieuwe uitvoerprioriteit blijft E4.15. De samengevoegde werkvolgorde bovenaan
+dit document vervangt de eerdere volgorde uit deze studie; afhankelijkheden, werkelijk
+beschikbare bronnen en de oorspronkelijke criteria blijven behouden. De lopende
 uitvoerder en diens actuele kaart blijven behouden; er ontstaat geen tweede actieve
 hoofduitvoerder. Technische afronding, gewoon later gebruik en het werkelijke oordeel
 van betrokken gezinsleden blijven afzonderlijk zichtbaar. Bestaande F2.1/F2.2 blijven

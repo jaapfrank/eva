@@ -74,6 +74,13 @@ controleren. Tijdelijke uitval, configuratiefouten en codefouten vragen verschil
 oplossingen. Een mislukte reparatie blijft één begrensde verantwoordelijkheid.
 Meer geslaagde wijzigingen geven niet automatisch ruimere toegangsrechten.
 
+Eigen interesses hoeven geen huisprobleem op te lossen. Maximaal twee eigen projecten
+krijgen werkelijk vervolg; één compacte actuele Inner State beschrijft waar Eva mee
+bezig is. Af en toe deelt ze daar kort iets over via haar bestaande initiatiefroute.
+Die state volgt echte activiteit en feedback, bevat geen verzonnen innerlijke monoloog
+en blijft onderscheiden van geleerde omgangsbijstellingen en blijvende huisvoorzieningen.
+Het gezin kan dit zien, erop reageren en het werk of de uitingen stoppen.
+
 ## Eerst bruikbaar gedrag, gericht eenvoudiger bouwen
 
 De eerstvolgende praktijktest is de cameraopdracht: Eva onderzoekt zelf aanwezige
