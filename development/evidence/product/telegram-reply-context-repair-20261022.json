@@ -1,0 +1,14 @@
+{
+  "contract": "EvaTelegramReplyContextRepair/v1",
+  "status": "in_progress",
+  "recordedAt": "2026-10-22T06:45:22.896443+00:00",
+  "ownerRequest": "Herstel begrip van replies op berichten en verduidelijkingen na het PHP-onderzoeksresultaat.",
+  "existing": "PHP-onderzoek is uitgevoerd en via oorspronkelijke Telegrambestemming afgeleverd. De huidige brug geeft alleen de nieuwe tekst door. Normale gesprekscontext bevat geen losse bevestigde achtergrondresultaten.",
+  "observedFailures": [
+    "A plain request to summarize the latest result selected unrelated old conversation after daily text compaction.",
+    "An explicit reply to the PHP output lost reply_to_message before reaching the model; a clarification was misread as a goodbye."
+  ],
+  "endCondition": "Existing Telegram route conveys bounded same-chat reply context as quoted reference data, not a new instruction or verified fact. Reply binding survives replay checks without storing quoted plaintext as user testimony. Current authorized acknowledged background results participate in the same recent conversation context, respecting chronology, retention, erasure and recipient changes. Installed live route understands the captured PHP reply/clarification without extra research or house effects. Original messages and receipts remain intact.",
+  "scope": "Telegram envelope, general quoted-message context and existing private delivered-work continuity. No new memory/planner/agent or voice implementation.",
+  "voiceCodeChanged": false
+}

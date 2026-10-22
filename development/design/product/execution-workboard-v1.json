@@ -8271,6 +8271,11 @@
                   "status": "installed_and_used",
                   "evidence": "development/evidence/product/telegram-research-repair-20261022.json",
                   "originalCompletionPreserved": true
+                },
+                "telegramReplyContextRepair20261022": {
+                  "status": "in_progress",
+                  "evidence": "development/evidence/product/telegram-reply-context-repair-20261022.json",
+                  "originalCompletionPreserved": true
                 }
               },
               {
@@ -13838,6 +13843,11 @@
               "telegramResearchRepair20261022": {
                 "status": "installed_and_used",
                 "evidence": "development/evidence/product/telegram-research-repair-20261022.json",
+                "originalCompletionPreserved": true
+              },
+              "telegramReplyContextRepair20261022": {
+                "status": "in_progress",
+                "evidence": "development/evidence/product/telegram-reply-context-repair-20261022.json",
                 "originalCompletionPreserved": true
               }
             },
