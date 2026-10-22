@@ -18,5 +18,14 @@
     "Existing uncertain review requires separate explicit recovery; it is not automatically retried.",
     "Reviewer checked source and tests; reported test executions were performed by the coordinator.",
     "Source approval does not prove spontaneous source selection or family utility."
-  ]
+  ],
+  "profileCheckerReview": {
+    "reviewer": "/root/review_cursor",
+    "decision": "GO_after_correction",
+    "file": "src/tools/check_delegated_runtime_profiles.py",
+    "sha256": "970aebf7c75bdbf7e0e8446722817c6e7d54d8856bc25cd55f0216f4895cbee5",
+    "correction": "Check worker digital_enabled and exact runtime/service scope, as in the real worker.",
+    "liveVerification": "Mismatch detected before worker update; digital profile matched afterward and original admitted task was claimed.",
+    "limits": "Actual task completion remains separate; existing household research mismatch is not cleared."
+  }
 }

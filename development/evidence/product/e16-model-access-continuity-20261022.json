@@ -1,7 +1,7 @@
 {
   "taskId": "E1.6",
   "recordedAt": "2026-10-22T17:30:57.274468+00:00",
-  "status": "installed_ordinary_initiative_resumed",
+  "status": "installed_live_initiative_and_native_work_completed",
   "technicalCompletion": false,
   "scope": "Restore the blocked existing private initiative route and prevent pre-provider credential expiry from poisoning new reviews.",
   "cause": {
@@ -36,7 +36,8 @@
     "voiceChanged": false,
     "schemaChanged": false,
     "activeWorkAndModelClaimsBeforeInstall": 0,
-    "componentEvaluationChildrenBeforeInstall": 0
+    "componentEvaluationChildrenBeforeInstall": 0,
+    "workerImage": "sha256:2fe4885c003ab35ddcff5ed7cbb1c432cb5411d7f8204cd8c4bb1b9a59d66858"
   },
   "verification": {
     "applicationChecksPassed": 21,
@@ -49,8 +50,10 @@
     "installedProfiles": {
       "shared_provider": "compatible",
       "private_research": "compatible",
-      "household_research": "existing_mismatch_not_changed_voice_owner_scope"
-    }
+      "household_research": "existing_mismatch_not_changed_voice_owner_scope",
+      "digital_work": "compatible_after_worker_alignment"
+    },
+    "profileCheckGap": "Initial checker covered research and shared provider only. Live admitted work exposed digital source-pin mismatch after the core-only overlay. Worker received the identical two source changes; checker now includes digital releases, enabled state and exact worker scope."
   },
   "live": {
     "ordinaryNewReview": "completed_without_developer_trigger",
@@ -60,8 +63,14 @@
     "newInitiativeAdopted": true,
     "unnecessaryUserMessageSent": false,
     "sourceSelection": "Model chose to investigate an existing saved project; source-change watch not yet chosen.",
-    "nativeExecution": "waiting_for_existing_next_background_stage",
-    "selectedSourceChangeChain": "not_yet_proven"
+    "nativeExecution": "succeeded_and_initiative_completed",
+    "selectedSourceChangeChain": "not_yet_proven",
+    "nativeAdmittedAt": "2026-10-22T17:38:27Z",
+    "nativeClaimedAt": "2026-10-22T17:43:33Z",
+    "existingIdleStageDelaySeconds": 303,
+    "nativeCompletedAt": "2026-10-22T17:46:06Z",
+    "nativeExecutionSeconds": 153,
+    "resultSummary": "Read the existing project, identified remaining evidence gaps and avoided duplicating research, creating a generic document or operating household devices. This is completed source investigation, not proof of the historical physical claims."
   },
   "usage": {
     "testProviderCalls": 0,
@@ -74,11 +83,21 @@
     },
     "runtimeCredits": null,
     "developmentTokens": null,
-    "developmentCredits": null
+    "developmentCredits": null,
+    "nativeWork": {
+      "measurement": "partial",
+      "completed_model_responses": 8,
+      "tool_calls": 7,
+      "input_tokens": 158591,
+      "output_tokens": 1079,
+      "total_tokens": 159670,
+      "cost_usd_micros": null
+    }
   },
   "limits": [
     "This fix alone does not prove the full E1.6 model-chosen source-change chain.",
     "Existing unknown provider outcomes remain blocked until explicit justified recovery.",
-    "Technical checks do not replace family acceptance."
+    "Technical checks do not replace family acceptance.",
+    "A five-minute background handoff interval and high context usage were observed; no latency/token reduction is claimed. E1.13 owns that optimization."
   ]
 }

@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Zelf relevante bronveranderingen aansluiten op eigen aandacht
 
-Verlopen modeltoegang hield sinds21oktober alle privé-initiatieven tegen. Lokale toegangscontrole en hercontrole vóór dispatch geïnstalleerd; oude poging via bestaande eigenaarherstelroute afgesloten zonder replay. Op22oktober17:33:24UTC voltooide Eva zonder proeftrigger een nieuwe afweging en adopteerde eigen onderzoek. Uitvoering/vervolg en gekozen bronverandering blijven te volgen.
+Privé-initiatief hersteld na verlopen modeltoegang. De gewone cyclus koos om17:33:24UTC eigen brononderzoek; de gewone worker voltooide dit om17:46:06UTC. Kern en worker delen de twee wijzigingen en digitale profielen zijn gelijk. Geen geforceerde afweging of herhaalde oude poging. Modelgekozen bronbewaking en werkelijk gewijzigde bron→afweging blijven de E1.6-eindvoorwaarde.
 
 Klaar wanneer: Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.
 
