@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Zelf relevante bronveranderingen aansluiten op eigen aandacht
+Routines met betekenis, uitzonderingen en tegenbewijs leren
 
-Herstel geïnstalleerd: eigen onderzoeksbronnen bereiken de volgende afweging. Eva gebruikte die en koos zelf later contact. Met expliciete toestemming is diezelfde aandacht vervroegd: persoonlijk Telegrambericht op23oktober01:06CEST daadwerkelijk afgeleverd. Daarna twee echte eigenaarberichten verwerkt en beide antwoorden afgeleverd. Oorspronkelijk ochtendmoment verbruikt, geen dubbele afspraak; speakers niet gebruikt. Dit bewijst de geautoriseerde contactroute, niet dagelijks spontaan gezinsnut of volledige E1.6-bronbewaking.
+E1.7 gestart: bestaande persoonscontext, verwachting en correctieketen onderzocht. De geïnstalleerde registratie bevat nog geen HUMAN_UNDERSTANDING-acties; eerst vaststellen welke echte meerdaagse bronnen en modeloverdracht bruikbaar zijn. Geen nieuwe patroonstore of verzonnen routine.
 
-Klaar wanneer: Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.
+Klaar wanneer: Eva leidt uit beschikbare echte gebeurtenissen over meerdere dagen een voorlopige routine met relevante omstandigheden af, legt toetsbare verwachting en tegenbewijs vast en gebruikt haar in een latere passende afweging. Een echte uitzondering of correctie verandert de volgende verwachting en het latere gedrag; zonder voldoende dekking blijft de uitkomst onbekend. Een gerichte natuurlijke vraag mag een belangrijk informatiegat sluiten. Geen vooraf gecodeerde gezinsroutine, gefingeerde waarschijnlijkheid, aparte patroonstore of verplichte classificatie per bericht.
 
 ## Afmaakvolgorde
 
