@@ -1,0 +1,13 @@
+{
+  "taskId": "E1.6",
+  "reviewer": "/root/review_cursor",
+  "decision": "GO_after_correction_and_targeted_checks",
+  "sourceHashes": {
+    "src/eva/adapters/postgres/initiative_source_outcomes.py": "2cd0c1e1bcbd130e0950ef1cb7eed844556f532059a4fe9872b6537512310060",
+    "src/eva/adapters/postgres/sensory_events.py": "9ed78a8f80af8ad1152c10e36d7aef1183b7907f0382b0cbd7fd951a55bd38c0",
+    "development/tests/postgres/test_initiative_research_continuity.py": "3d5cb3472b1e0e7951bd389b979a36a0ca5a976133509a7787d15cc3f2094b4c"
+  },
+  "correction": "Validate malformed proof evidence and research fields before accessing them.",
+  "reviewed": "Exact source/owner/namespace binding, stable original receipt digest, existing uncertain-dispatch gate, no replay or external read.",
+  "limits": "Receipt digest can exist even when inline context is truncated; live useful behavior remains a separate requirement."
+}

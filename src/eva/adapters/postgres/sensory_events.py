@@ -193,6 +193,11 @@ class PostgresSensoryEventStore:
                     outcome_key = ("result_sha256" if outcome.get("result_sha256") is not None
                                    else "outcome_sha256")
                     binding = {k: outcome.get(k) for k in ("work_id", "spec_sha256", outcome_key)}
+                    research_evidence = outcome.get("research_evidence_sha256")
+                    if research_evidence is not None:
+                        if re.fullmatch(r"[0-9a-f]{64}", str(research_evidence)) is None:
+                            continue
+                        binding["research_evidence_sha256"] = research_evidence
                     if (re.fullmatch(r"work:eva-(?:initiative:[0-9a-f]{64}|resume:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})", str(binding["work_id"]))
                             and all(re.fullmatch(r"[0-9a-f]{64}", str(binding[k]))
                                     for k in ("spec_sha256", outcome_key))):

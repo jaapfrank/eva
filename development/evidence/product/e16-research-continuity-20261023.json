@@ -1,0 +1,53 @@
+{
+  "taskId": "E1.6",
+  "recordedAt": "2026-10-22T22:54:24.820991+00:00",
+  "status": "installed_awaiting_live_decision",
+  "technicalCompletion": false,
+  "userOutcome": "Eva uses her completed research in a useful, naturally worded contribution and keeps its follow-up without another owner prompt.",
+  "existingRoute": "Native initiative → original research tool receipt → private source outcomes → same decision scheduler → existing Telegram delivery.",
+  "diagnosis": {
+    "lastInitiativeDelivery": "2026-10-21T09:42:19Z",
+    "observedFailure": "Research receipt held citations and conclusion, but source-outcome reader selected only HA/component receipts. Following private decision stated no verified source readings were supplied.",
+    "consequence": "Completed research lost useful grounding before contact/follow-up choice."
+  },
+  "changes": [
+    "Reuse exact owner/work-bound research receipts with citation URLs and bounded original content; preserve research-only and semantic uncertainty.",
+    "Use stable original research receipt hashes in the existing completion binding: newly available evidence gets one review, without rerunning work or an uncertain decision."
+  ],
+  "sourceHashes": {
+    "src/eva/adapters/postgres/initiative_source_outcomes.py": "2cd0c1e1bcbd130e0950ef1cb7eed844556f532059a4fe9872b6537512310060",
+    "src/eva/adapters/postgres/sensory_events.py": "9ed78a8f80af8ad1152c10e36d7aef1183b7907f0382b0cbd7fd951a55bd38c0",
+    "development/tests/postgres/test_initiative_research_continuity.py": "3d5cb3472b1e0e7951bd389b979a36a0ca5a976133509a7787d15cc3f2094b4c"
+  },
+  "installation": {
+    "coreImage": "sha256:ffffcc75d507acde6274fe9f505c48a18f1c1e4e0ba76b8795fd680294f001b4",
+    "voiceChanged": false,
+    "schemaChanged": false,
+    "retainedMounts": true
+  },
+  "verification": {
+    "targetedChecksPassed": 41,
+    "additionalStableReadChecksPassed": 12,
+    "candidateActualReceiptRead": {
+      "researchReceipts": 1,
+      "citationUrls": 4,
+      "contentBytes": 2048,
+      "scope": "research_artifact_only"
+    },
+    "independentReview": "development/reviews/e16-research-continuity-20261023.json"
+  },
+  "live": {
+    "decision": "pending",
+    "delivery": "not_claimed"
+  },
+  "usage": {
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "runtimeTokens": null
+  },
+  "limits": [
+    "This source repair does not itself prove useful family contact or full E1.6 source watching.",
+    "Research citations are retained provider claims, not independent verification of their semantics.",
+    "Context is bounded to 8192 bytes; some older outcomes may be omitted."
+  ]
+}

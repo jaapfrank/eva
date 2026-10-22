@@ -155,8 +155,52 @@ def _component_reads(authority, work, turn, now):
     return verified, unavailable, matched > _READS
 
 
+
+def _research_artifact(receipt, observed_at):
+    """Retain cited research as research, never as independently proven facts."""
+    from eva.application.research import ResearchArtifact, ResearchSource
+    from eva.contracts.timestamps import parse_utc_timestamp
+    output = receipt.output
+    value, proof = output.get("result"), output.get("proof")
+    evidence = proof.get("evidence") if isinstance(proof, dict) else None
+    if (output.get("status") != "verified" or not isinstance(value, dict)
+            or not isinstance(evidence, dict)
+            or evidence.get("observation") != value
+            or evidence.get("verification_scope") != "research_artifact_only"
+            or evidence.get("external_state_verified") is not False
+            or value.get("verification_scope") != "research_artifact_only"
+            or value.get("semantic_claims_independently_verified") is not False):
+        raise ConversationConflict("research receipt scope differs")
+    if (any(not isinstance(value.get(k), str) for k in
+            ("title", "question", "content", "researched_at", "provider"))
+            or not isinstance(value.get("sources"), list)
+            or any(not isinstance(s, dict) or set(s) != {"title", "url"}
+                   or any(not isinstance(v, str) for v in s.values()) for s in value["sources"])):
+        raise ConversationConflict("research artifact fields are malformed")
+    artifact = ResearchArtifact(title=value["title"], question=value["question"],
+        content=value["content"], sources=tuple(ResearchSource(**s) for s in value["sources"]),
+        researched_at=value["researched_at"], provider=value["provider"])
+    if (artifact.content_sha256 != value.get("content_sha256")
+            or artifact.question != receipt.call.arguments.get("question")
+            or artifact.title != receipt.call.arguments.get("title")
+            or parse_utc_timestamp(artifact.researched_at) > observed_at):
+        raise ConversationConflict("research artifact source differs")
+    # Preserve actual citation URLs and the conclusion, with explicit coverage.
+    # Original complete bytes remain behind the unchanged receipt hash.
+    content = artifact.content.encode()[:2048].decode("utf-8", errors="ignore")
+    sources = value["sources"][:4]
+    return {"title": artifact.title, "content": content,
+        "content_sha256": artifact.content_sha256,
+        "excerpt_sha256": hashlib.sha256(content.encode()).hexdigest(),
+        "content_truncated": content != artifact.content,
+        "sources": sources, "sources_truncated": len(sources) < len(artifact.sources),
+        "researched_at": artifact.researched_at, "provider": artifact.provider,
+        "verification_scope": "research_artifact_only",
+        "semantic_claims_independently_verified": False}
+
+
 def _retained_reads(authority, work, turn, now):
-    action_names = retained_source_action_names()
+    action_names = (*retained_source_action_names(), "research_current_options")
     port = object.__new__(PostgresExternalConversationTools)
     port._engine, port._action_names = authority.owner._engine, action_names
     timeline = port._timeline(turn)
@@ -189,7 +233,8 @@ def _retained_reads(authority, work, turn, now):
                 admission = row.payload["data"]
                 name, step = admission["action_name"], admission.get("step_index", 0)
                 arguments = admission.get("action_arguments", {})
-                key, decline_reason = retained_source_observation(name, arguments)
+                key, decline_reason = (("result", None) if name == "research_current_options"
+                    else retained_source_observation(name, arguments))
                 if key is None:
                     unavailable.append({"status": "not_a_read", "reason": decline_reason})
                     continue
@@ -211,13 +256,23 @@ def _retained_reads(authority, work, turn, now):
                     "receipt_sha256": canonical_sha256(receipt.output),
                     "proof_sha256": canonical_sha256(proof),
                     "source_ingress_sha256": canonical_sha256(PostgresConversationJournal._ingress_data(turn))}
-                raw = reader._retained_bytes(source)
-                observation = json.loads(raw)
+                if name == "research_current_options":
+                    if admission.get("execution_namespace") != BackgroundExecutionScope(turn, work.spec.execution_id).namespace:
+                        raise ConversationConflict("research source namespace differs")
+                    # The same original receipt, not another web/model request.
+                    observation = _research_artifact(receipt, events[-1].occurred_at)
+                    raw = canonical_json_bytes(receipt.output["result"])
+                else:
+                    raw = reader._retained_bytes(source)
+                    observation = json.loads(raw)
                 item = {"action": name, "observed_at": events[-1].occurred_at.isoformat(),
                     "source": source, "observation_sha256": hashlib.sha256(raw).hexdigest(),
                     "observation_bytes": len(raw), "historical": True,
                     "is_current_proof": False, "status": "verified_original_read"}
-                if len(raw) <= _MAX_BYTES // 2:
+                if name == "research_current_options":
+                    item["observation"] = observation
+                    item["observation_projection"] = "bounded_original_research_artifact"
+                elif len(raw) <= _MAX_BYTES // 2:
                     item["observation"] = observation
                 else:
                     item["omitted_reason"] = "original_observation_exceeds_inline_bound"
@@ -317,6 +372,13 @@ def read_recent_source_outcomes(authority, *, now, work_id=None) -> tuple[dict, 
             item = {"work_id": work_id, "status": "unavailable",
                 "reason": "completed_native_owner_source_or_retention_invalid",
                 "verified_reads": [], "reported_output": None}
+        # A formerly omitted research receipt is new evidence for a completed
+        # decision, not a reason to rerun its work. Bind stable original receipts,
+        # never changing excerpt lengths, list ordering, ages or context limits.
+        research_receipts = sorted(v["source"]["receipt_sha256"] for v in item["verified_reads"]
+            if v.get("action") == "research_current_options")
+        if research_receipts:
+            item["research_evidence_sha256"] = canonical_sha256(research_receipts)
         while len(canonical_json_bytes([*items, item])) > _MAX_BYTES and item["verified_reads"]:
             item["verified_reads"].pop()
             item["coverage"]["context_truncated"] = True
