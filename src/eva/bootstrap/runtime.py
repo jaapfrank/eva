@@ -1793,13 +1793,16 @@ def create_runtime_app() -> FastAPI:
                 source_outcomes=runtime._initiative_source_outcomes(now=now))
             return context_decision_worker.run_once(now=now)
 
+        # Adopt before executing so newly selected work does not wait another
+        # full idle interval. The cold path rechecks foreground/capacity before
+        # each step, including the handoff to interest execution.
         idle_tasks = (
+            consider_one_private_opportunity,
             explore_one_interest,
             build_one_prototype,
             prepare_one_release,
             evaluate_one_sensory_event,
             deliver_one_proactive_expression,
-            consider_one_private_opportunity,
         )
     if (settings.delegated_result_delivery_enabled
             and delegated_work_service is not None and proactive_delivery is not None

@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Routines met betekenis, uitzonderingen en tegenbewijs leren
+Denkvermogen gericht inzetten zonder initiatief te verliezen
 
-E1.7: correctiebehoud en volledige bronoverdracht geïnstalleerd. Kern en achtergrondwerker halen nu de benodigde bronfeiten op voor bestaande afgeleide inzichten. Dezelfde echte geheugenvraag levert één samenhangend inzicht met drie oorspronkelijke bronnen op; voorheen ontbrak het door afgekapt bronbewijs. Live zoekmeting 0,516s, één aanvraag; geen algemene snelheidsclaim. 36 gerichte controles slagen. Werkelijk meerdaags gezinsroutineleren en latere gedragsbijstelling blijven te bewijzen.
+E1.13: callbackvolgorde hersteld en geïnstalleerd. Nieuwe initiatiefkeuze komt vóór bestaande uitvoering binnen dezelfde toegelaten idlecyclus; de verplichte extra 300 seconden door de oude volgorde vervallen. Zes gerichte scenarios slagen op de exacte geïnstalleerde image; veertien bestaande idle/foreground/capacity/stop-controles slagen. Werkelijke nieuwe initiatiefdoorlooptijd en modelbesparing zijn nog niet gemeten. E1.7 behoudt open bewijs van meerdaags gezinsgebruik.
 
-Klaar wanneer: Eva leidt uit beschikbare echte gebeurtenissen over meerdere dagen een voorlopige routine met relevante omstandigheden af, legt toetsbare verwachting en tegenbewijs vast en gebruikt haar in een latere passende afweging. Een echte uitzondering of correctie verandert de volgende verwachting en het latere gedrag; zonder voldoende dekking blijft de uitkomst onbekend. Een gerichte natuurlijke vraag mag een belangrijk informatiegat sluiten. Geen vooraf gecodeerde gezinsroutine, gefingeerde waarschijnlijkheid, aparte patroonstore of verplichte classificatie per bericht.
+Klaar wanneer: Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.
 
 ## Afmaakvolgorde
 

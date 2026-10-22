@@ -1,0 +1,12 @@
+{
+  "task": "E1.13",
+  "reviewer": "/root/review_cursor",
+  "decision": "GO for narrow installation",
+  "scope": "Staged runtime reorder and six new scheduler scenarios.",
+  "findings": [
+    "Foreground, capacity, STOP and failure paths remain guarded.",
+    "Callback doubles prove scheduler behavior, not production model reasoning or task outcome.",
+    "Review before not-yet-admitted work can delay that work by review duration."
+  ],
+  "fullTaskComplete": false
+}

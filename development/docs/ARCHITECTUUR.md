@@ -96,6 +96,14 @@ broncontrole; maximaal drie oorspronkelijke gebeurtenissen, actuele privacy-/wis
 en de bestaande modelcontextgrenzen blijven gelden. Kern en achtergrondwerker
 gebruiken dezelfde instelling, zonder extra zoek- of gespreksmodelronde.
 
+E1.13 plaatst sinds 23 oktober de bestaande privé-afweging vóór interesse-uitvoering
+in dezelfde toegelaten achtergrondcyclus. Nieuw gekozen werk hoeft daardoor niet
+uitsluitend vanwege de callbackvolgorde een volgende vijfminutenronde af te wachten.
+Foreground en capaciteit worden nog vóór iedere stap gecontroleerd; afweging kan
+nog niet toegelaten werk wel met haar eigen looptijd vertragen. De installatie en
+schedulerwerking zijn gecontroleerd; natuurlijke doorlooptijd en modelbesparing
+blijven afzonderlijke metingen.
+
 E1.6 verbindt de optionele `source_event_id` op private `NextAttention` aan een exact
 in dezelfde afweging aangeboden bron en haar hash/configuratie. De bestaande provider
 beschrijft uitsluitend haar eigen werkelijke eventdekking. De bestaande aandachtlane

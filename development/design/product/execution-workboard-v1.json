@@ -838,16 +838,16 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-22T23:35:51.878964+00:00",
+  "lastUpdated": "2026-10-22T23:43:17.832549+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E1.7",
+  "activeTaskId": "E1.13",
   "currentWork": {
-    "id": "E1.7",
-    "title": "Routines met betekenis, uitzonderingen en tegenbewijs leren",
+    "id": "E1.13",
+    "title": "Denkvermogen gericht inzetten zonder initiatief te verliezen",
     "status": "in_progress",
-    "doneWhen": "Eva leidt uit beschikbare echte gebeurtenissen over meerdere dagen een voorlopige routine met relevante omstandigheden af, legt toetsbare verwachting en tegenbewijs vast en gebruikt haar in een latere passende afweging. Een echte uitzondering of correctie verandert de volgende verwachting en het latere gedrag; zonder voldoende dekking blijft de uitkomst onbekend. Een gerichte natuurlijke vraag mag een belangrijk informatiegat sluiten. Geen vooraf gecodeerde gezinsroutine, gefingeerde waarschijnlijkheid, aparte patroonstore of verplichte classificatie per bericht.",
-    "nextAction": "Toets een voorwaardelijke verwachting en latere echte uitzondering via gewone gesprekken, droomconsolidatie en initiatief. Gebruik de nu volledige bronoverdracht; ontbrekende gezinsdekking blijft onbekend, zonder gefabriceerde routine.",
+    "doneWhen": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.",
+    "nextAction": "Meet een natuurlijke nieuwe initiatiefkeuze tot werkstart en resultaat; vergelijk daarna noodzakelijke modelrondes voor dezelfde toegestane controles en veranderde aanleidingen. Bewaak vertraging van nog niet toegelaten werk door de eerdere afweging.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2990,10 +2990,10 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E1.7",
-          "title": "Routines met betekenis, uitzonderingen en tegenbewijs leren",
-          "summary": "E1.7: correctiebehoud en volledige bronoverdracht geïnstalleerd. Kern en achtergrondwerker halen nu de benodigde bronfeiten op voor bestaande afgeleide inzichten. Dezelfde echte geheugenvraag levert één samenhangend inzicht met drie oorspronkelijke bronnen op; voorheen ontbrak het door afgekapt bronbewijs. Live zoekmeting 0,516s, één aanvraag; geen algemene snelheidsclaim. 36 gerichte controles slagen. Werkelijk meerdaags gezinsroutineleren en latere gedragsbijstelling blijven te bewijzen.",
-          "doneWhen": "Eva leidt uit beschikbare echte gebeurtenissen over meerdere dagen een voorlopige routine met relevante omstandigheden af, legt toetsbare verwachting en tegenbewijs vast en gebruikt haar in een latere passende afweging. Een echte uitzondering of correctie verandert de volgende verwachting en het latere gedrag; zonder voldoende dekking blijft de uitkomst onbekend. Een gerichte natuurlijke vraag mag een belangrijk informatiegat sluiten. Geen vooraf gecodeerde gezinsroutine, gefingeerde waarschijnlijkheid, aparte patroonstore of verplichte classificatie per bericht."
+          "taskId": "E1.13",
+          "title": "Denkvermogen gericht inzetten zonder initiatief te verliezen",
+          "summary": "E1.13: callbackvolgorde hersteld en geïnstalleerd. Nieuwe initiatiefkeuze komt vóór bestaande uitvoering binnen dezelfde toegelaten idlecyclus; de verplichte extra 300 seconden door de oude volgorde vervallen. Zes gerichte scenarios slagen op de exacte geïnstalleerde image; veertien bestaande idle/foreground/capacity/stop-controles slagen. Werkelijke nieuwe initiatiefdoorlooptijd en modelbesparing zijn nog niet gemeten. E1.7 behoudt open bewijs van meerdaags gezinsgebruik.",
+          "doneWhen": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache."
         },
         "next": {
           "taskId": "F2.1",
@@ -6159,7 +6159,7 @@
               {
                 "id": "E1.13",
                 "title": "Denkvermogen gericht inzetten zonder initiatief te verliezen",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "scopeOrigin": "living-housemate-20261022",
                 "owner": "Codex · kernuitvoerder",
@@ -6174,14 +6174,16 @@
                 "dependsOn": [
                   "E1.6"
                 ],
-                "nextAction": "Volg de kleine bouwstappen in AFRONDINGSPLAN; stel eerst de werkelijk geïnstalleerde route vast.",
+                "nextAction": "Meet een natuurlijke nieuwe initiatiefkeuze tot werkstart en resultaat; vergelijk daarna noodzakelijke modelrondes voor dezelfde toegestane controles en veranderde aanleidingen. Bewaak vertraging van nog niet toegelaten werk door de eerdere afweging.",
                 "observedOptimizationInput": {
                   "evidence": "development/evidence/product/e16-model-access-continuity-20261022.json",
                   "backgroundHandoffSeconds": 303,
                   "nativeWorkInputTokens": 158591,
                   "usageMeasurement": "partial",
                   "nextAction": "Onderzoek gerichte contextselectie en overdracht tussen bestaande stappen; behoud taakresultaat en geen nieuwe scheduler."
-                }
+                },
+                "progress": "E1.13: callbackvolgorde hersteld en geïnstalleerd. Nieuwe initiatiefkeuze komt vóór bestaande uitvoering binnen dezelfde toegelaten idlecyclus; de verplichte extra 300 seconden door de oude volgorde vervallen. Zes gerichte scenarios slagen op de exacte geïnstalleerde image; veertien bestaande idle/foreground/capacity/stop-controles slagen. Werkelijke nieuwe initiatiefdoorlooptijd en modelbesparing zijn nog niet gemeten. E1.7 behoudt open bewijs van meerdaags gezinsgebruik.",
+                "checkedAt": "2026-10-22T23:43:17.832519+00:00"
               },
               {
                 "id": "E1.14",
@@ -8685,7 +8687,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Toets een voorwaardelijke verwachting en latere echte uitzondering via gewone gesprekken, droomconsolidatie en initiatief. Gebruik de nu volledige bronoverdracht; ontbrekende gezinsdekking blijft onbekend, zonder gefabriceerde routine.",
+        "nextAction": "Meet een natuurlijke nieuwe initiatiefkeuze tot werkstart en resultaat; vergelijk daarna noodzakelijke modelrondes voor dezelfde toegestane controles en veranderde aanleidingen. Bewaak vertraging van nog niet toegelaten werk door de eerdere afweging.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -12092,7 +12094,7 @@
             {
               "id": "E1.13",
               "title": "Denkvermogen gericht inzetten zonder initiatief te verliezen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "scopeOrigin": "living-housemate-20261022",
               "owner": "Codex · kernuitvoerder",
@@ -12107,14 +12109,16 @@
               "dependsOn": [
                 "E1.6"
               ],
-              "nextAction": "Volg de kleine bouwstappen in AFRONDINGSPLAN; stel eerst de werkelijk geïnstalleerde route vast.",
+              "nextAction": "Meet een natuurlijke nieuwe initiatiefkeuze tot werkstart en resultaat; vergelijk daarna noodzakelijke modelrondes voor dezelfde toegestane controles en veranderde aanleidingen. Bewaak vertraging van nog niet toegelaten werk door de eerdere afweging.",
               "observedOptimizationInput": {
                 "evidence": "development/evidence/product/e16-model-access-continuity-20261022.json",
                 "backgroundHandoffSeconds": 303,
                 "nativeWorkInputTokens": 158591,
                 "usageMeasurement": "partial",
                 "nextAction": "Onderzoek gerichte contextselectie en overdracht tussen bestaande stappen; behoud taakresultaat en geen nieuwe scheduler."
-              }
+              },
+              "progress": "E1.13: callbackvolgorde hersteld en geïnstalleerd. Nieuwe initiatiefkeuze komt vóór bestaande uitvoering binnen dezelfde toegelaten idlecyclus; de verplichte extra 300 seconden door de oude volgorde vervallen. Zes gerichte scenarios slagen op de exacte geïnstalleerde image; veertien bestaande idle/foreground/capacity/stop-controles slagen. Werkelijke nieuwe initiatiefdoorlooptijd en modelbesparing zijn nog niet gemeten. E1.7 behoudt open bewijs van meerdaags gezinsgebruik.",
+              "checkedAt": "2026-10-22T23:43:17.832519+00:00"
             },
             {
               "id": "E1.14",
@@ -14618,7 +14622,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Toets een voorwaardelijke verwachting en latere echte uitzondering via gewone gesprekken, droomconsolidatie en initiatief. Gebruik de nu volledige bronoverdracht; ontbrekende gezinsdekking blijft onbekend, zonder gefabriceerde routine.",
+      "nextAction": "Meet een natuurlijke nieuwe initiatiefkeuze tot werkstart en resultaat; vergelijk daarna noodzakelijke modelrondes voor dezelfde toegestane controles en veranderde aanleidingen. Bewaak vertraging van nog niet toegelaten werk door de eerdere afweging.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",

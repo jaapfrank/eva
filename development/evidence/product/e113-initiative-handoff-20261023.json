@@ -1,0 +1,61 @@
+{
+  "task": "E1.13",
+  "recordedAt": "2026-10-22T23:43:17.696805+00:00",
+  "outcome": "New initiative selection precedes existing execution within the same admitted idle cycle.",
+  "historicalObservation": {
+    "evidence": "development/evidence/product/e16-model-access-continuity-20261022.json",
+    "selectionToNativeAdmissionSeconds": 303,
+    "idleIntervalSeconds": 300
+  },
+  "change": {
+    "path": "src/eva/bootstrap/runtime.py",
+    "scope": "Reorder existing idle callbacks only; no extra callback, model call, service, scheduler or authority.",
+    "tradeoff": "Optional review now precedes not-yet-admitted interest/prototype/release work; a slow review can delay that work. Existing admitted/running work remains guarded by capacity checks."
+  },
+  "tests": {
+    "baselineInstalledImage": {
+      "newScenariosFailed": 6
+    },
+    "candidate": {
+      "newScenariosPassed": 6,
+      "existingIdleForegroundCapacityStopTestsPassed": 14
+    },
+    "installedExactImage": {
+      "newScenariosPassed": 6
+    },
+    "method": "Actual runtime composition parsed from installed source, real cold-path scheduler, controlled callback doubles; no real household action or model assessment in these scenarios."
+  },
+  "installation": {
+    "image": "sha256:daa3521c9054e9635e87fc47202555849757f590883102a4f4a7772d4c548063",
+    "base": "sha256:94327dd4393ec3a5e84cfc02fa1d3780d326738e5f0ef876a4f05b8308fe2624",
+    "health": "healthy",
+    "receiptStatus": "running_with_retained_mounts",
+    "workerChanged": false,
+    "installedReadOnlyProbe": {
+      "idleTaskOrder": [
+        "consider_one_private_opportunity",
+        "explore_one_interest",
+        "build_one_prototype",
+        "prepare_one_release",
+        "deliver_one_proactive_expression"
+      ],
+      "idleSeconds": 300.0,
+      "runtimeSha256": "3073903c092fa967033afe28a4a4fd9bc75a65b93c695d6e303ce0f7c984d7ae",
+      "backgroundStarted": false,
+      "productionWrites": false
+    },
+    "profileComparisonUnchanged": true,
+    "preexistingMismatchedProfiles": [
+      "household_research"
+    ]
+  },
+  "proofBoundary": {
+    "naturalPostInstallInitiativeObserved": false,
+    "fullTaskComplete": false,
+    "generalLatencyImprovementMeasured": false,
+    "runtimeTokenSavingsMeasured": false,
+    "productionSyntheticEventsInserted": false,
+    "messagesSent": false
+  },
+  "next": "Measure a naturally admitted initiative through execution and continue E1.13 model-use comparisons without claiming completed household acceptance."
+}
