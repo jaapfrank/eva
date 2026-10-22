@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-22T23:50:07.425626+00:00",
+  "lastUpdated": "2026-10-22T23:54:17.834555+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E1.8",
@@ -847,7 +847,7 @@
     "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
     "status": "in_progress",
     "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.",
-    "nextAction": "Laat een echte open bedoeling met bronvoorwaarde en actuele relevante bronnen leiden tot vooraf vastgelegde afweging van een alternatief en later gecontroleerde uitkomst; geen extra contextlaag of planner.",
+    "nextAction": "Voer een echte open bedoeling door de bestaande bron-/aandacht-/werkroute en controleer later resultaat plus duurzame feedback. Reële gezinscasus aan eigenaar gevraagd; synthetische modelproef sluit E1.8 niet.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2992,7 +2992,7 @@
         "now": {
           "taskId": "E1.8",
           "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
-          "summary": "E1.8: naast prioriteit voor onopgeloste afspraken is nu ook de oorspronkelijke bronvoorwaarde geïnstalleerd. De echte privécontext bevat provider/resource/veld/verwachte waarde, expliciet geen actuele waarneming; deadline is wachttijdgrens, geen agenda-afspraak. Baseline regressie bevestigd; 33 controles kandidaat en 13 op exacte geïnstalleerde image slagen. Live bronoverdracht gecontroleerd zonder berichten, modelaanroep of productie-mutatie. Inhoudelijk vooruitzien blijft nog te bewijzen.",
+          "summary": "E1.8: werkelijke geïnstalleerde Astra/medium-modelroute met drie representatieve synthetische gevallen beoordeeld. Eva kiest avondvoorbereiding vóór vroeg vertrek, vraagt naar onbekende positie en respecteert geen-herinnering-correctie ook tegenover oude open taakstatus. Geen modelpatch nodig. Dit is componentgedrag; geen echte bronverwerving, duurzame correctie, aflevering of later gezinsresultaat. Vijf ontwikkelmodelaanroepen inclusief twee expliciete-fictiecontroles gemeten; geen productie-initiatieven of berichten gemaakt.",
           "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel."
         },
         "next": {
@@ -5930,7 +5930,7 @@
                 "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Laat een echte open bedoeling met bronvoorwaarde en actuele relevante bronnen leiden tot vooraf vastgelegde afweging van een alternatief en later gecontroleerde uitkomst; geen extra contextlaag of planner.",
+                "nextAction": "Voer een echte open bedoeling door de bestaande bron-/aandacht-/werkroute en controleer later resultaat plus duurzame feedback. Reële gezinscasus aan eigenaar gevraagd; synthetische modelproef sluit E1.8 niet.",
                 "ownerInitiativeClarification20261021": {
                   "status": "required_not_yet_proven",
                   "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -5952,8 +5952,8 @@
                   "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "E1.8: naast prioriteit voor onopgeloste afspraken is nu ook de oorspronkelijke bronvoorwaarde geïnstalleerd. De echte privécontext bevat provider/resource/veld/verwachte waarde, expliciet geen actuele waarneming; deadline is wachttijdgrens, geen agenda-afspraak. Baseline regressie bevestigd; 33 controles kandidaat en 13 op exacte geïnstalleerde image slagen. Live bronoverdracht gecontroleerd zonder berichten, modelaanroep of productie-mutatie. Inhoudelijk vooruitzien blijft nog te bewijzen.",
-                "checkedAt": "2026-10-22T23:50:07.425580+00:00"
+                "progress": "E1.8: werkelijke geïnstalleerde Astra/medium-modelroute met drie representatieve synthetische gevallen beoordeeld. Eva kiest avondvoorbereiding vóór vroeg vertrek, vraagt naar onbekende positie en respecteert geen-herinnering-correctie ook tegenover oude open taakstatus. Geen modelpatch nodig. Dit is componentgedrag; geen echte bronverwerving, duurzame correctie, aflevering of later gezinsresultaat. Vijf ontwikkelmodelaanroepen inclusief twee expliciete-fictiecontroles gemeten; geen productie-initiatieven of berichten gemaakt.",
+                "checkedAt": "2026-10-22T23:54:17.834520+00:00"
               },
               {
                 "id": "E1.9",
@@ -8689,7 +8689,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Laat een echte open bedoeling met bronvoorwaarde en actuele relevante bronnen leiden tot vooraf vastgelegde afweging van een alternatief en later gecontroleerde uitkomst; geen extra contextlaag of planner.",
+        "nextAction": "Voer een echte open bedoeling door de bestaande bron-/aandacht-/werkroute en controleer later resultaat plus duurzame feedback. Reële gezinscasus aan eigenaar gevraagd; synthetische modelproef sluit E1.8 niet.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -11867,7 +11867,7 @@
               "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Laat een echte open bedoeling met bronvoorwaarde en actuele relevante bronnen leiden tot vooraf vastgelegde afweging van een alternatief en later gecontroleerde uitkomst; geen extra contextlaag of planner.",
+              "nextAction": "Voer een echte open bedoeling door de bestaande bron-/aandacht-/werkroute en controleer later resultaat plus duurzame feedback. Reële gezinscasus aan eigenaar gevraagd; synthetische modelproef sluit E1.8 niet.",
               "ownerInitiativeClarification20261021": {
                 "status": "required_not_yet_proven",
                 "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -11889,8 +11889,8 @@
                 "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "E1.8: naast prioriteit voor onopgeloste afspraken is nu ook de oorspronkelijke bronvoorwaarde geïnstalleerd. De echte privécontext bevat provider/resource/veld/verwachte waarde, expliciet geen actuele waarneming; deadline is wachttijdgrens, geen agenda-afspraak. Baseline regressie bevestigd; 33 controles kandidaat en 13 op exacte geïnstalleerde image slagen. Live bronoverdracht gecontroleerd zonder berichten, modelaanroep of productie-mutatie. Inhoudelijk vooruitzien blijft nog te bewijzen.",
-              "checkedAt": "2026-10-22T23:50:07.425580+00:00"
+              "progress": "E1.8: werkelijke geïnstalleerde Astra/medium-modelroute met drie representatieve synthetische gevallen beoordeeld. Eva kiest avondvoorbereiding vóór vroeg vertrek, vraagt naar onbekende positie en respecteert geen-herinnering-correctie ook tegenover oude open taakstatus. Geen modelpatch nodig. Dit is componentgedrag; geen echte bronverwerving, duurzame correctie, aflevering of later gezinsresultaat. Vijf ontwikkelmodelaanroepen inclusief twee expliciete-fictiecontroles gemeten; geen productie-initiatieven of berichten gemaakt.",
+              "checkedAt": "2026-10-22T23:54:17.834520+00:00"
             },
             {
               "id": "E1.9",
@@ -14626,7 +14626,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Laat een echte open bedoeling met bronvoorwaarde en actuele relevante bronnen leiden tot vooraf vastgelegde afweging van een alternatief en later gecontroleerde uitkomst; geen extra contextlaag of planner.",
+      "nextAction": "Voer een echte open bedoeling door de bestaande bron-/aandacht-/werkroute en controleer later resultaat plus duurzame feedback. Reële gezinscasus aan eigenaar gevraagd; synthetische modelproef sluit E1.8 niet.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",

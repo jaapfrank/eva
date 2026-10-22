@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen
 
-E1.8: naast prioriteit voor onopgeloste afspraken is nu ook de oorspronkelijke bronvoorwaarde geïnstalleerd. De echte privécontext bevat provider/resource/veld/verwachte waarde, expliciet geen actuele waarneming; deadline is wachttijdgrens, geen agenda-afspraak. Baseline regressie bevestigd; 33 controles kandidaat en 13 op exacte geïnstalleerde image slagen. Live bronoverdracht gecontroleerd zonder berichten, modelaanroep of productie-mutatie. Inhoudelijk vooruitzien blijft nog te bewijzen.
+E1.8: werkelijke geïnstalleerde Astra/medium-modelroute met drie representatieve synthetische gevallen beoordeeld. Eva kiest avondvoorbereiding vóór vroeg vertrek, vraagt naar onbekende positie en respecteert geen-herinnering-correctie ook tegenover oude open taakstatus. Geen modelpatch nodig. Dit is componentgedrag; geen echte bronverwerving, duurzame correctie, aflevering of later gezinsresultaat. Vijf ontwikkelmodelaanroepen inclusief twee expliciete-fictiecontroles gemeten; geen productie-initiatieven of berichten gemaakt.
 
 Klaar wanneer: Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.
 

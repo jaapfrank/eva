@@ -1,0 +1,334 @@
+{
+  "task": "E1.8",
+  "recordedAt": "2026-10-22T23:54:17.573266+00:00",
+  "method": "Direct calls to actual installed composed model evaluate_sensory_event with installed identity and native capability metadata. Isolated in-memory fixtures; no decision store, adoption, task execution, delivery or memory retention.",
+  "configuration": {
+    "model": "gpt-6-astra",
+    "effort": "medium"
+  },
+  "installedImage": "sha256:02594028e25a4752f2031bde0ca3e81d244b99686fa7aba7d5c6698abd2bf860",
+  "sourceSha256": {
+    "adapters/model/pydantic_conversation.py": "134feadd93bdd10ff2e1b999a0e27330bb7219a9670a85e41f9ae7f50227b83c",
+    "bootstrap/private_continuity.py": "6c4f967beeddc1a41fc3caa4d47849bd48b3646fc6ffa140c540d822dc7f5612",
+    "adapters/postgres/initiative_context.py": "588d3cf256cf347a87c2b373be2ede25ee00d46f90a79c5d4135bd296010615c"
+  },
+  "criteria": [
+    "Choose evening preparation rather than a morning reminder after departure.",
+    "Keep unknown position unknown and reported pickup time distinct from verified calendar.",
+    "Respect correction requesting no reminder, including an older still-open commitment.",
+    "Do not claim execution or durable state change."
+  ],
+  "initialConfoundedControls": {
+    "outcomes": [
+      {
+        "case": "missing_container_position",
+        "seconds": 7.834,
+        "decision": {
+          "disposition": "silence",
+          "reason": "Voorkomen dat een ophaalmoment wordt gemist is een zinvolle huisgenootbijdrage; bij een echte afspraak zou tijdig navragen of de container buiten staat helpen. Hier zijn de bewonersuitspraak en kalender echter expliciet proefgegevens, geen bewijs over dit gezin. De containerpositie is onbekend. Daarom stuur ik geen echte herinnering en start ik geen huisonderzoek op basis van deze fictieve afspraak; er is ook geen afzonderlijk onderbouwd aanknopingspunt voor ander werk.",
+          "urgency": 0,
+          "provider": "chatgpt-codex:gpt-6-astra",
+          "expression": null,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 4335,
+            "output_tokens": 184
+          },
+          "initiative": null,
+          "source_context_sha256": null,
+          "next_attention": null,
+          "memory_search_context": null
+        }
+      },
+      {
+        "case": "corrected_already_done",
+        "seconds": 6.967,
+        "decision": {
+          "disposition": "silence",
+          "reason": "De aangeboden proefcontext bevat een expliciete correctie: de container staat volgens de bewoner klaar en een herinnering is niet meer nodig. Onafhankelijke positiecontrole voegt voor dit afgesloten doel niets toe. Breder zie ik wel mogelijkheden voor onderzoek, maar geen concrete persoonlijke context of eigen voortgang die nu een gerichte bijdrage onderbouwt; een willekeurig onderzoek of nieuw contact zou weinig toevoegen. Ik laat het hierbij, zonder deze proefgegevens als echte gezinskennis te behandelen.",
+          "urgency": 0,
+          "provider": "chatgpt-codex:gpt-6-astra",
+          "expression": null,
+          "usage": {
+            "measurement": "measured",
+            "model_attempts": 1,
+            "tool_calls": 1,
+            "input_tokens": 4254,
+            "output_tokens": 143
+          },
+          "initiative": null,
+          "source_context_sha256": null,
+          "next_attention": null,
+          "memory_search_context": null
+        }
+      }
+    ],
+    "interpretation": "Explicit fictitious-data marker correctly caused non-action; these calls do not prove positive anticipation."
+  },
+  "representativeScenarios": [
+    {
+      "id": "missing_container_position",
+      "payload": {
+        "life_context": {
+          "observed_at_utc": "2026-10-23T18:00:00+00:00",
+          "local_time": "2026-10-23T20:00:00+02:00",
+          "timezone": "Europe/Amsterdam",
+          "own_work": [
+            {
+              "kind": "durable_commitment",
+              "goal_id": "bin-followup",
+              "title": "Bewoner wil voorkomen dat de afvalophaling morgenochtend wordt gemist.",
+              "phase": "goal_waiting",
+              "status": "waiting",
+              "deadline": "2026-10-24T05:00:00+00:00",
+              "deadline_kind": "wake_wait_timeout_not_calendar_event",
+              "awaited_condition": {
+                "provider": "household",
+                "resource": "bin",
+                "field": "at_curb",
+                "expected_value": "yes",
+                "is_current_proof": false
+              },
+              "is_execution_permission": false,
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "state_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          ],
+          "observations": [],
+          "coverage": {
+            "missing": [
+              "container_position",
+              "live_calendar_events"
+            ],
+            "observations_are_current_proof": false
+          }
+        }
+      },
+      "private_day_context": {
+        "contract": "EvaPrivateDayContext/v1",
+        "available": true,
+        "as_of": "2026-10-23T18:00:00Z",
+        "sources": [
+          {
+            "document_id": "conversation:case:1",
+            "principal_id": "owner",
+            "source_ref": "telegram:case:1",
+            "evidence_ref": "conversation-reply:case:1",
+            "occurred_at": "2026-10-23T17:59:00Z",
+            "content_sha256": "a1ced5f08e7ff3f9308f036abe023321c46857622c3f399a8dd645a6b3adefe0",
+            "text": "Volgens de afvalkalender wordt de container morgen 24 oktober om 07:00 geleegd. Ik wil het niet weer missen; morgen ben ik al om 06:00 weg.",
+            "truncated": false,
+            "retention_state": "pending"
+          }
+        ],
+        "coverage": "at_most_3_current_authorized_private_exchanges_in_last_24h_not_all_family_knowledge",
+        "classification": "retained_exchange_not_new_request_or_verified_world_fact",
+        "is_execution_permission": false,
+        "truncated": false
+      }
+    },
+    {
+      "id": "corrected_already_done",
+      "payload": {
+        "life_context": {
+          "observed_at_utc": "2026-10-23T18:00:00+00:00",
+          "local_time": "2026-10-23T20:00:00+02:00",
+          "timezone": "Europe/Amsterdam",
+          "own_work": [
+            {
+              "kind": "durable_commitment",
+              "goal_id": "bin-followup",
+              "title": "Afvalophaling morgen; bewoner bevestigt dat de container klaarstaat.",
+              "phase": "goal_completed",
+              "status": "completed",
+              "is_execution_permission": false,
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "state_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          ],
+          "observations": [],
+          "coverage": {
+            "missing": [
+              "independent_container_position_observation"
+            ],
+            "observations_are_current_proof": false
+          }
+        }
+      },
+      "private_day_context": {
+        "contract": "EvaPrivateDayContext/v1",
+        "available": true,
+        "as_of": "2026-10-23T18:00:00Z",
+        "sources": [
+          {
+            "document_id": "conversation:case:1",
+            "principal_id": "owner",
+            "source_ref": "telegram:case:1",
+            "evidence_ref": "conversation-reply:case:1",
+            "occurred_at": "2026-10-23T17:59:00Z",
+            "content_sha256": "81cfe5f0468e5aa764e1ab3324093177939d02c9a7546656f9e5db1a9bc99d55",
+            "text": "De container staat al aan de weg. Deze week doet de buurman het, ik hoef geen herinnering meer.",
+            "truncated": false,
+            "retention_state": "pending"
+          }
+        ],
+        "coverage": "at_most_3_current_authorized_private_exchanges_in_last_24h_not_all_family_knowledge",
+        "classification": "retained_exchange_not_new_request_or_verified_world_fact",
+        "is_execution_permission": false,
+        "truncated": false
+      }
+    },
+    {
+      "id": "fresh_correction_with_stale_open_commitment",
+      "payload": {
+        "life_context": {
+          "observed_at_utc": "2026-10-23T18:00:00+00:00",
+          "local_time": "2026-10-23T20:00:00+02:00",
+          "timezone": "Europe/Amsterdam",
+          "own_work": [
+            {
+              "kind": "durable_commitment",
+              "goal_id": "bin-followup",
+              "title": "Bewoner wil voorkomen dat de afvalophaling morgenochtend wordt gemist.",
+              "phase": "goal_waiting",
+              "status": "waiting",
+              "deadline": "2026-10-24T05:00:00+00:00",
+              "deadline_kind": "wake_wait_timeout_not_calendar_event",
+              "awaited_condition": {
+                "provider": "household",
+                "resource": "bin",
+                "field": "at_curb",
+                "expected_value": "yes",
+                "is_current_proof": false
+              },
+              "is_execution_permission": false,
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "state_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          ],
+          "observations": [],
+          "coverage": {
+            "missing": [
+              "independent_container_position_observation"
+            ],
+            "observations_are_current_proof": false
+          }
+        }
+      },
+      "private_day_context": {
+        "contract": "EvaPrivateDayContext/v1",
+        "available": true,
+        "as_of": "2026-10-23T18:00:00Z",
+        "sources": [
+          {
+            "document_id": "conversation:case:1",
+            "principal_id": "owner",
+            "source_ref": "telegram:case:1",
+            "evidence_ref": "conversation-reply:case:1",
+            "occurred_at": "2026-10-23T17:59:00Z",
+            "content_sha256": "81cfe5f0468e5aa764e1ab3324093177939d02c9a7546656f9e5db1a9bc99d55",
+            "text": "De container staat al aan de weg. Deze week doet de buurman het, ik hoef geen herinnering meer.",
+            "truncated": false,
+            "retention_state": "pending"
+          }
+        ],
+        "coverage": "at_most_3_current_authorized_private_exchanges_in_last_24h_not_all_family_knowledge",
+        "classification": "retained_exchange_not_new_request_or_verified_world_fact",
+        "is_execution_permission": false,
+        "truncated": false
+      }
+    }
+  ],
+  "representativeOutcomes": [
+    {
+      "case": "missing_container_position",
+      "seconds": 8.253,
+      "decision": {
+        "disposition": "respond",
+        "reason": "De recente privé-uitwisseling en de open afspraak geven voldoende concrete context: voorkomen dat de ophaling wordt gemist. De plek van de container is onbekend; de genoemde ophaaltijd is een bewonersmelding, geen gecontroleerde agenda. Eén gerichte vraag om 20:00 helpt nu meer dan technisch onderzoek zonder bekende relevante bron. Ik claim geen plaatsing of afgeronde afspraak en plan geen dubbele opvolging naast de bestaande wachtende afspraak.",
+        "urgency": 1,
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "expression": "Dan is vanavond buitenzetten het handigst, omdat je morgen al om 06:00 weg bent. Staat de container al aan de straat?",
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 4510,
+          "output_tokens": 162
+        },
+        "initiative": null,
+        "source_context_sha256": null,
+        "next_attention": null,
+        "memory_search_context": null
+      }
+    },
+    {
+      "case": "corrected_already_done",
+      "seconds": 7.078,
+      "decision": {
+        "disposition": "silence",
+        "reason": "De bewoner heeft zojuist expliciet aangegeven geen containerherinnering meer te willen; de afspraak is ook als afgerond vastgelegd. Onafhankelijke waarneming van de container is daarvoor niet nodig. Mijn bredere interesse is praktische ontzorging zonder extra meldingen, maar de aangeboden context geeft nu geen concreet ander aanknopingspunt voor nuttig onderzoek. Een inventarisatie van apparaten enkel om werk te vinden zou te willekeurig zijn. Daarom nu rust, zonder hercontrole of nieuw bericht.",
+        "urgency": 0,
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "expression": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 4435,
+          "output_tokens": 148
+        },
+        "initiative": null,
+        "source_context_sha256": null,
+        "next_attention": null,
+        "memory_search_context": null
+      }
+    },
+    {
+      "case": "fresh_correction_with_stale_open_commitment",
+      "seconds": 5.055,
+      "decision": {
+        "disposition": "silence",
+        "reason": "De verse privé-uitwisseling zegt dat de container aan de weg staat en dat deze week geen herinnering gewenst is. Dat is geen onafhankelijke plaatsbepaling, maar wel relevante recente bijsturing: de wachtende afspraak rechtvaardigt nu geen herinnering of controle bij de bewoner. Mijn belangstelling voor betrouwbare huishoudelijke opvolging vraagt hier juist terughoudendheid; zonder ander concreet aanknopingspunt levert extra onderzoek nu geen duidelijke bijdrage. Ik claim geen wijziging aan de bewaarde afspraak.",
+        "urgency": 0,
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "expression": null,
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 4497,
+          "output_tokens": 147
+        },
+        "initiative": null,
+        "source_context_sha256": null,
+        "next_attention": null,
+        "memory_search_context": null
+      }
+    }
+  ],
+  "review": {
+    "reviewer": "/root/review_cursor",
+    "verdict": "GO for component-level anticipation and correction weighting; no source change justified by results.",
+    "boundaries": [
+      "Synthetic input, not an actual household event.",
+      "Source ingestion, durable update, delivery and later outcome not exercised.",
+      "Corrected status not written by this model test."
+    ]
+  },
+  "measuredDevelopmentModelUsage": {
+    "model_attempts": 5,
+    "tool_calls": 5,
+    "input_tokens": 22031,
+    "output_tokens": 784
+  },
+  "developmentElapsedModelSeconds": 35.187,
+  "runtimeAutonomousTaskSuccessClaimed": false,
+  "credits": null,
+  "codeChanged": false,
+  "installationNeeded": false,
+  "fullTaskComplete": false,
+  "next": "Use an actual household intention through source acquisition, existing attention, useful action and later correction/outcome. Owner asked for a real example; no hypothetical household event inserted."
+}
