@@ -10,6 +10,7 @@ def with_private_continuity(runtime, turn, recent):
     if turn.audience.kind != "private_person" or turn.project_id is not None:
         return recent
     now = datetime.now(UTC).replace(microsecond=0)
+    recent = _with_delivered_work(runtime, turn, recent, now=now)
     # Longer-term topical recall stays with the existing memory implementation.
     cutoff = now - timedelta(hours=24)
     if recent:
@@ -33,6 +34,36 @@ def with_private_continuity(runtime, turn, recent):
         occurred_at=doc.occurred_at)
     return (*recent[-11:], context)
 
+
+
+
+def _with_delivered_work(runtime, turn, recent, *, now):
+    """Include acknowledged work in the same bounded conversation, without replay."""
+    service = getattr(runtime, '_delegated_work_owner_service', None)
+    bindings_loader = getattr(runtime, '_telegram_principal_bindings_loader', None)
+    if service is None or not callable(bindings_loader):
+        return recent
+    try:
+        service.validate_authority(turn)
+        from eva.adapters.postgres.delegated_work_delivery import PostgresDelegatedWorkDeliveryStore
+        delivery = PostgresDelegatedWorkDeliveryStore(service.store, bindings_loader=bindings_loader,
+                                                       clock=lambda: now)
+        found = delivery.recent_acknowledged_context(**service._owner,
+            conversation_id=turn.conversation_id,
+            before=datetime.strptime(turn.occurred_at, '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=UTC), now=now)
+        service.validate_authority(turn)
+        if found is None:
+            return recent
+        text = ('Afgeleverd resultaat van mijn opdracht ' + found['title']
+                + ' (bewaarde modeluitvoer, geen nieuwe opdracht of geverifieerd wereldfeit):\n'
+                + _fragment(found['text'], 8192))
+        item = RecentConversationMessage(role='Eva', text=text, occurred_at=found['occurred_at'])
+        if any(r.text == item.text and r.occurred_at == item.occurred_at for r in recent):
+            return recent
+        return tuple(sorted((*recent, item), key=lambda r: r.occurred_at)[-12:])
+    except Exception:
+        _LOG.debug('Delivered private work continuity unavailable')
+        return recent
 
 
 def search_private_history(runtime, turn, query_text):

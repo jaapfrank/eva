@@ -194,6 +194,86 @@ class PostgresDelegatedWorkDeliveryStore:
                     raise ValueError("private completion destination is unavailable") from error
             return work, destination
 
+    def _context_source_available(self, destination):
+        from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, external_timeline_scope
+        source = PostgresOperationalTimeline(self._work._engine, external_timeline_scope(
+            destination.origin_tenant_id, destination.origin_installation_id,
+            'delivered result requires its source scope')).events(
+                'conversation:' + destination.origin_message_id)
+        if not source or source[0].event_type != 'INGRESS_COMMITTED':
+            return False
+        data = source[0].payload.get('data', {})
+        return (isinstance(data, dict) and 'content_erasure' not in data
+                and canonical_sha256(source[0].payload) == source[0].payload_sha256
+                and all(data.get(key) == getattr(destination, 'origin_' + key)
+                        for key in ('principal_id', 'conversation_id', 'message_id')))
+
+    def recent_acknowledged_context(self, *, owner_principal_id: UUID,
+                                    principal_binding_id: UUID, conversation_id: str,
+                                    before: datetime, now: datetime):
+        """Read one still-authorized delivered result from this exact private chat.
+
+        Existing events and retained results remain authoritative. This adds no
+        transcript, delivery, memory copy, model call or execution permission.
+        """
+        before = min(before, now)
+        with self._work._engine.begin() as connection:
+            self._work._scope(connection)
+            self._work._validate_owner_binding(connection,
+                owner_principal_id=owner_principal_id, principal_binding_id=principal_binding_id)
+            a, claim, runs = (operational_events.alias('delivered_ack'),
+                              operational_events.alias('delivered_claim'), delegated_work_runs)
+            rows = connection.execute(sa.select(runs.c.work_id, a.c.occurred_at).select_from(
+                a.join(claim, sa.and_(a.c.tenant_id == claim.c.tenant_id,
+                    a.c.installation_id == claim.c.installation_id, a.c.thread_id == claim.c.thread_id))
+                 .join(runs, sa.and_(runs.c.tenant_id == a.c.tenant_id,
+                    runs.c.installation_id == a.c.installation_id,
+                    runs.c.work_id == claim.c.payload['data']['work_id'].astext))).where(
+                a.c.tenant_id == self._work.scope.tenant_id,
+                a.c.installation_id == self._work.scope.installation_id,
+                a.c.event_type == 'DELEGATED_DELIVERY_ACKNOWLEDGED',
+                claim.c.event_type == 'DELEGATED_DELIVERY_CLAIMED',
+                a.c.occurred_at <= before, a.c.occurred_at >= now - timedelta(hours=24),
+                runs.c.owner_principal_id == owner_principal_id,
+                runs.c.principal_binding_id == principal_binding_id,
+                runs.c.state.in_(('succeeded', 'verified')), runs.c.retention_until > now,
+                runs.c.stop_requested_at.is_(None),
+            ).order_by(a.c.occurred_at.desc(), runs.c.work_id).limit(16)).all()
+        for work_id, delivered_at in rows:
+            try:
+                work, destination = self._current(work_id, owner_principal_id=owner_principal_id,
+                    principal_binding_id=principal_binding_id)
+                if (destination is None or destination.origin_conversation_id != conversation_id
+                        or not self._context_source_available(destination)):
+                    continue
+                result = self.authorize_delivery(work_id, owner_principal_id=owner_principal_id,
+                    principal_binding_id=principal_binding_id)
+                with self._work._engine.begin() as connection:
+                    self._work._scope(connection)
+                    events = connection.execute(sa.select(operational_events).where(
+                        operational_events.c.tenant_id == self._work.scope.tenant_id,
+                        operational_events.c.installation_id == self._work.scope.installation_id,
+                        operational_events.c.thread_id == self._delivery_thread(work_id),
+                    ).order_by(operational_events.c.sequence)).mappings().all()
+                if (result is None or [e['event_type'] for e in events] != [
+                        'DELEGATED_DELIVERY_CLAIMED', 'DELEGATED_DELIVERY_ACKNOWLEDGED']
+                        or any(canonical_sha256(e['payload']) != bytes(e['payload_sha256']).hex() for e in events)
+                        or events[0]['payload']['data'].get('operation_id') != result.operation_id
+                        or not events[1]['payload']['data'].get('receipt', '').startswith(
+                            'telegram:' + destination.chat_id + ':')):
+                    continue
+                # Revalidate authority and retention after the source/proof reads.
+                if self.authorize_delivery(work_id, owner_principal_id=owner_principal_id,
+                        principal_binding_id=principal_binding_id) != result:
+                    continue
+                if not self._context_source_available(destination):
+                    continue
+                return {'work_id': work_id, 'title': work.title, 'text': result.output,
+                        'occurred_at': delivered_at.astimezone(UTC).strftime('%Y-%m-%dT%H:%M:%SZ')}
+            except (ValueError, RuntimeError, OSError):
+                continue
+        return None
+
     def load(self, work_id: str, *, owner_principal_id: UUID,
              principal_binding_id: UUID) -> PrivateWorkDestination | None:
         if self._documents is not None and work_id.startswith(("document-task:", "scheduled-work:")):

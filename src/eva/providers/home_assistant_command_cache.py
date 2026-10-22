@@ -144,6 +144,7 @@ class HomeAssistantCommandCache:
         from eva.application.initiative_execution import require_initiative_context
         return (turn.project_id is None and turn.observation_binding is None
                 and turn.media_context is None and turn.media_context_sha256 is None
+                and turn.reply_context is None and turn.reply_context_sha256 is None
                 and turn.audience.kind in {"private_person", "household"}
                 and require_initiative_context(turn) is None)
 

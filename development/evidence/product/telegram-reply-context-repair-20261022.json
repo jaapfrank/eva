@@ -1,6 +1,6 @@
 {
   "contract": "EvaTelegramReplyContextRepair/v1",
-  "status": "in_progress",
+  "status": "installed_and_used",
   "recordedAt": "2026-10-22T06:45:22.896443+00:00",
   "ownerRequest": "Herstel begrip van replies op berichten en verduidelijkingen na het PHP-onderzoeksresultaat.",
   "existing": "PHP-onderzoek is uitgevoerd en via oorspronkelijke Telegrambestemming afgeleverd. De huidige brug geeft alleen de nieuwe tekst door. Normale gesprekscontext bevat geen losse bevestigde achtergrondresultaten.",
@@ -10,5 +10,110 @@
   ],
   "endCondition": "Existing Telegram route conveys bounded same-chat reply context as quoted reference data, not a new instruction or verified fact. Reply binding survives replay checks without storing quoted plaintext as user testimony. Current authorized acknowledged background results participate in the same recent conversation context, respecting chronology, retention, erasure and recipient changes. Installed live route understands the captured PHP reply/clarification without extra research or house effects. Original messages and receipts remain intact.",
   "scope": "Telegram envelope, general quoted-message context and existing private delivered-work continuity. No new memory/planner/agent or voice implementation.",
-  "voiceCodeChanged": false
+  "voiceCodeChanged": false,
+  "completedAt": "2026-10-22T07:20:04.609684+00:00",
+  "changes": [
+    "Private same-chat Telegram reply target and selected quotation reach the existing core as bounded reference data, separate from the current request.",
+    "Replay identity includes only the quote digest; quoted plaintext is not copied into user testimony. Context-dependent HA cache reuse is excluded.",
+    "Current authorized acknowledged work output enters existing recent private conversation context, under exact original destination, source integrity, erasure and current recipient checks.",
+    "A clarification of the target of an earlier unresolved request directs Eva to complete that request instead of only acknowledging the misunderstanding."
+  ],
+  "installation": {
+    "roles": {
+      "core": {
+        "image": "sha256:cdc3ee4bb439f431e1684f31c702b9c69e9aab0a66df43cb71b0e340c8224964",
+        "healthy": true,
+        "source_files_verified": 9,
+        "configuration_preserved": true
+      },
+      "worker": {
+        "image": "sha256:b65ce65c90c027e8520ee140ba4c7e6487e027088ecff406b96b2844989c1c81",
+        "healthy": true,
+        "source_files_verified": 8,
+        "configuration_preserved": true
+      }
+    },
+    "bridge_active_and_source_verified": true,
+    "original_transport_rows_unchanged": 5,
+    "original_events_preserved": 36,
+    "probe_exchanges_erased": 7,
+    "no_actual_telegram_send_for_probes": true
+  },
+  "verification": {
+    "offline": {
+      "coreDomainAndApi": 32,
+      "postgresErasureReplayCompactionGrounding": 35,
+      "workerDomainAndAdmission": 11,
+      "nodeHandlerTransportPresentationDraft": 13,
+      "finalInstructionDeltaCore": 32,
+      "finalInstructionDeltaWorker": 11
+    },
+    "installedRoute": "Actual standalone handler, actual askEva2Canary streaming request, installed Telegram canary API and existing real model. Telegram outbound and draft receivers were local captures only.",
+    "successfulCurrentSequence": [
+      {
+        "case": "captured-reply",
+        "totalMilliseconds": 5107,
+        "firstTextMilliseconds": 2720,
+        "provider": "chatgpt-codex:gpt-6-sol",
+        "modelRequests": 1,
+        "tools": 0,
+        "newBackgroundJobs": 0
+      },
+      {
+        "case": "plain-summary",
+        "totalMilliseconds": 4117,
+        "firstTextMilliseconds": 2864,
+        "provider": "chatgpt-codex:gpt-6-sol",
+        "modelRequests": 1,
+        "tools": 0,
+        "newBackgroundJobs": 0
+      },
+      {
+        "case": "plain-date-followup",
+        "totalMilliseconds": 3529,
+        "firstTextMilliseconds": 2683,
+        "provider": "chatgpt-codex:gpt-6-sol",
+        "modelRequests": 1,
+        "tools": 0,
+        "newBackgroundJobs": 0
+      }
+    ],
+    "semanticReadback": [
+      "Quoted clarification produced a PHP summary instead of a goodbye or acknowledgment alone.",
+      "Following unquoted summary stayed on the PHP subject.",
+      "Following unquoted discovery-date question correctly retained 19 August 2026 and the distinction from per-CVE dates."
+    ],
+    "deliveryContextCompositionReadback": "Actual installed source/authority checks selected one retained PHP work output of 2501 characters, acknowledged before the original question. This proves context selection, not automatic semantic correctness.",
+    "previousFailedProbesRetained": [
+      "Initial plain ambiguous summary followed the earlier incorrect restart conversation.",
+      "Initial quoted clarification recognized PHP but did not complete the requested summary; the general completion instruction was then repaired and used.",
+      "A backdated plain-summary probe still chose restart. This did not isolate historical context: the existing journal recent reader selects current retained history without a before-timestamp filter. It is not successful historical reconstruction evidence."
+    ]
+  },
+  "usage": {
+    "scope": "Seven repair probes only, including initial failures and the unsuccessful historical-isolation attempt. Prior owner conversations and prior research costs excluded.",
+    "modelRequests": 7,
+    "tools": 0,
+    "inputTokens": 73681,
+    "outputTokens": 411,
+    "credits": null,
+    "developmentModelUsage": "Not available from runtime ledger; excluded.",
+    "providerOrBudgetChanged": false
+  },
+  "limits": [
+    "The completed repair is explicit textual Telegram reply interpretation and continuation. An ambiguous unquoted reference in the already incorrect prior conversation is not proven automatically repaired.",
+    "No new Telegram network delivery receipt was generated by these probes. Existing bridge process/source, unchanged delivery code and protected transport rows were verified.",
+    "At most 16 recent owner delivery candidates are examined before exact chat filtering; conservative missing context remains possible.",
+    "Transient quotation data is not a permanent, self-contained quotation history.",
+    "Shared-provider and public-research profiles remain compatible. The preexisting household-research mismatch remains tracked under E1.6; overall checker correctly exits 1.",
+    "Voice implementation, family acceptance and full autonomous project completion are outside this repair."
+  ],
+  "privacy": {
+    "rawEvidence": "Root-only private artifact directory; original quotes and private chat bodies are absent from committed evidence.",
+    "probeErasure": "All seven exact own exchanges erased using normal memory-source forget, including their outbox source.",
+    "sourceEventsPreserved": 36,
+    "originalTransportRowsPreserved": 5,
+    "noOldIngressOrReceiptRewritten": true,
+    "priorDiagnosticCaptureReuse": "A prior task diagnostic snapshot filename was inadvertently reused for a read-only fresh capture at task start. Its provenance is recorded privately; prior committed verification evidence and actual database source events were not rewritten."
+  }
 }

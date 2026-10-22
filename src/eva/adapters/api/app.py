@@ -118,7 +118,7 @@ _TELEGRAM_CANARY_KEYS = {
     "tenant_id",
     "text",
 }
-_TELEGRAM_CANARY_OPTIONAL_KEYS = {"media_context"}
+_TELEGRAM_CANARY_OPTIONAL_KEYS = {"media_context", "reply_context"}
 _RETAIN_OPTIONAL_KEYS = {"project_id"}
 
 _TURN_REQUIRED_KEYS = {
@@ -132,6 +132,7 @@ _TURN_REQUIRED_KEYS = {
     "text",
 }
 _TURN_OPTIONAL_KEYS = {
+    "reply_context",
     "observation_binding",
     "project_id",
     "recent_messages",
@@ -489,6 +490,9 @@ def _turn_from_wire(
             )
         )
         audience = memory_audience_from_wire(payload["audience"])
+        from eva.application.conversation_reply import ConversationReplyContext
+        raw_reply = payload.get("reply_context")
+        reply_context = None if raw_reply is None else ConversationReplyContext.from_wire(raw_reply)
         turn = ConversationTurn(
             tenant_id=payload["tenant_id"],
             installation_id=payload["installation_id"],
@@ -500,6 +504,7 @@ def _turn_from_wire(
             audience=audience,
             project_id=payload.get("project_id"),
             observation_binding=observation_binding,
+            reply_context=reply_context,
         )
         raw_recent = payload.get("recent_messages", [])
         if not isinstance(raw_recent, list) or len(raw_recent) > 12:
@@ -1274,6 +1279,8 @@ def create_app(
                     "recent_messages": recent_messages,
                     "tenant_id": payload["tenant_id"],
                     "text": text,
+                    **({"reply_context": payload["reply_context"]}
+                       if payload.get("reply_context") is not None else {}),
                 }
             )
             if payload.get("media_context") is not None:

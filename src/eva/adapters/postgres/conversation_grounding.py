@@ -22,7 +22,8 @@ def _retained_source(timeline, current, ingress, now):
                    for k in ("conversation_id", "principal_id", "project_id"))
             or ingress.get("content_erasure") or ingress.get("content_compaction")
             or not isinstance(ingress.get("text"), str)
-            or ingress.get("observation_binding") or ingress.get("media_context_sha256")):
+            or ingress.get("observation_binding") or ingress.get("media_context_sha256")
+            or ingress.get("reply_context_sha256")):
         return None
     journal_events = timeline.events("conversation:" + message)
     if (not journal_events or journal_events[0].event_type != "INGRESS_COMMITTED"

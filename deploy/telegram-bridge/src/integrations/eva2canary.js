@@ -219,6 +219,7 @@ export async function askEva2Canary({
   defaultPrivateIds = '',
   archivedMessage = null,
   mediaContext = null,
+  replyContext = null,
   telegramDate,
   fetchImpl = fetch,
   onDraft = null,
@@ -247,6 +248,7 @@ export async function askEva2Canary({
     tenant_id: 'live-test-tenant',
     text: prompt,
     ...(mediaContext === null ? {} : { media_context: mediaContext }),
+    ...(replyContext === null ? {} : { reply_context: replyContext }),
   });
   const deadline = canaryDeadlines({ connectTimeoutMs, idleTimeoutMs, timeoutMs, signal });
   let response;

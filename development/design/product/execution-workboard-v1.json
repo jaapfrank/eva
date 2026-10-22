@@ -8273,7 +8273,7 @@
                   "originalCompletionPreserved": true
                 },
                 "telegramReplyContextRepair20261022": {
-                  "status": "in_progress",
+                  "status": "installed_and_used",
                   "evidence": "development/evidence/product/telegram-reply-context-repair-20261022.json",
                   "originalCompletionPreserved": true
                 }
@@ -13846,7 +13846,7 @@
                 "originalCompletionPreserved": true
               },
               "telegramReplyContextRepair20261022": {
-                "status": "in_progress",
+                "status": "installed_and_used",
                 "evidence": "development/evidence/product/telegram-reply-context-repair-20261022.json",
                 "originalCompletionPreserved": true
               }

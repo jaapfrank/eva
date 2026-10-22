@@ -1,0 +1,54 @@
+{
+  "contract": "EvaTelegramReplyContextReview/v1",
+  "verdict": "BOUNDED_GO",
+  "recordedAt": "2026-10-22T07:06:11.263766+00:00",
+  "reviewer": "/root/review_cursor",
+  "scope": "Existing Telegram quoted reference transport, replay digest and scoped acknowledged work continuity.",
+  "checks": {
+    "coreBoundary": 32,
+    "postgres": 35,
+    "workerBoundary": 11,
+    "node": 13
+  },
+  "findingsResolved": [
+    "Recheck exact source erasure after last result authorization.",
+    "Deny any content_erasure presence, including malformed markers.",
+    "Deterministic source erasure during final authorization returns no context."
+  ],
+  "installationConditions": [
+    "Exact current image/configuration/source guards.",
+    "One audited terminal child journal locked through old core stop; no generic inactive marker exemption.",
+    "All other active conversation/model/voice/work/memory/delivery claims absent."
+  ],
+  "remainingEvidence": "Bounded installed streaming model outcome, source/configuration verification and exact probe erasure reviewed. Actual Telegram send receipt was not part of these local captures.",
+  "limits": [
+    "Only private same-chat textual reply snapshots; no quote promoted to instruction, user testimony or independent verified fact.",
+    "At most16 recent owner delivery candidates before exact chat filter can conservatively miss a result.",
+    "Quote digest is not reusable plaintext history.",
+    "Preexisting household research profile mismatch remains outside this delta."
+  ],
+  "completionInstructionReview": {
+    "verdict": "BOUNDED_GO",
+    "reviewer": "/root/review_cursor",
+    "source": "General conditional completion of an earlier unresolved request when user clarifies its quoted target; no topic-specific routing.",
+    "tests": {
+      "core": 32,
+      "worker": 11
+    },
+    "earlierLiveFailuresRetained": true,
+    "historicalProbeIsControlledReconstruction": true
+  },
+  "finalReview": {
+    "verdict": "BOUNDED_GO",
+    "reviewer": "/root/review_cursor",
+    "recordedAt": "2026-10-22T07:21:06.519055+00:00",
+    "scope": "Explicit textual Telegram replies, clarification completion and the ensuing unquoted PHP followups.",
+    "checkedLiveCases": 3,
+    "actualStreamingModel": true,
+    "telegramOutboundWasLocalCaptureOnly": true,
+    "originalEventsPreserved": 36,
+    "transportRowsPreserved": 5,
+    "exactOwnProbesErased": 7,
+    "remainingLimit": "The failed unquoted ambiguous summary before correction is retained and is not claimed as fixed. The backdated attempt did not isolate history because recent journal context uses current retained rows. No day-context, actual Telegram delivery, voice or general reliability acceptance."
+  }
+}

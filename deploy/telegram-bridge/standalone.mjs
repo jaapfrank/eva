@@ -38,6 +38,26 @@ export function permittedMessage(message, bindings) {
     binding.telegram_user_id === message.from.id && binding.allowed_chat_ids.includes(String(message.chat.id))));
 }
 
+export function telegramReplyContext(message) {
+  if (message.chat?.type !== 'private') return null;
+  const source = message.reply_to_message;
+  if (!source || String(source.chat?.id) !== String(message.chat?.id)
+      || !Number.isSafeInteger(source.message_id) || source.message_id < 1
+      || source.message_id >= message.message_id) return null;
+  const text = source.text ?? source.caption;
+  if (typeof text !== 'string' || !text.trim() || Buffer.byteLength(text, 'utf8') > 16384) return null;
+  if (!Number.isSafeInteger(source.date) || source.date < 0) return null;
+  const occurredAt = new Date(source.date * 1000).toISOString().replace(/\.000Z$/u, 'Z');
+  const result = {source_ref: `telegram:${message.chat.id}:${source.message_id}`,
+    text, occurred_at: occurredAt};
+  const quote = message.quote;
+  if (typeof quote?.text === 'string' && quote.text.trim()
+      && Number.isSafeInteger(quote.position) && quote.position >= 0
+      && text.slice(quote.position, quote.position + quote.text.length) === quote.text)
+    result.selection = quote.text;
+  return result;
+}
+
 export function createTransportHandler({ journal, bindings, baseUrl, photoProvider = null, downloadFile, makeDraft, coreRequest = askEva2Canary }) {
   return async ctx => {
     const message = ctx.message;
@@ -77,6 +97,7 @@ export function createTransportHandler({ journal, bindings, baseUrl, photoProvid
       const draft = makeDraft(ctx);
       const answer = await coreRequest({ baseUrl, chatId: message.chat.id, messageId: message.message_id,
         fromId: message.from.id, text, telegramDate: message.date, mediaContext: media,
+        replyContext: telegramReplyContext(message),
         onDraft: draft?.map(labelEva2TelegramReply), onReceipt: draft ? value => draft.receipt(value) : null });
       if (!answer) throw new Error('Message was not admitted to Eva2');
       await deliver(labelEva2TelegramReply(answer.text));

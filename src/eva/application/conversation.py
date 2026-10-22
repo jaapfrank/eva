@@ -17,6 +17,7 @@ from typing import Callable, Iterator, Literal, Protocol
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
 from eva.application.memory_audience import MemoryAudience
 from eva.application.conversation_media import ConversationMediaContext
+from eva.application.conversation_reply import ConversationReplyContext
 from eva.contracts.tool_deadlines import maximum_tool_execution_seconds
 from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.canonical_json import canonical_sha256
@@ -429,6 +430,8 @@ class ConversationTurn:
     observation_binding: ConversationObservationBinding | None = None
     media_context: ConversationMediaContext | None = None
     media_context_sha256: str | None = None
+    reply_context: ConversationReplyContext | None = None
+    reply_context_sha256: str | None = None
 
     def __post_init__(self) -> None:
         if not all(
@@ -458,6 +461,20 @@ class ConversationTurn:
                 and self.media_context.context_sha256 != self.media_context_sha256)
         ):
             raise ValueError("media context digest is invalid")
+        if self.reply_context is not None and (
+                not isinstance(self.reply_context, ConversationReplyContext)
+                or self.audience.kind != "private_person"
+                or not self.reply_context.source_ref.startswith(self.conversation_id + ":")
+                or self.reply_context.source_ref == self.message_id
+                or self.reply_context.occurred_at > self.occurred_at):
+            raise ValueError("reply context is not bound to this private conversation")
+        if self.reply_context_sha256 is not None and (
+                self.audience.kind != "private_person"
+                or not isinstance(self.reply_context_sha256, str)
+                or _SHA256.fullmatch(self.reply_context_sha256) is None
+                or (self.reply_context is not None
+                    and self.reply_context.context_sha256 != self.reply_context_sha256)):
+            raise ValueError("reply context digest is invalid")
         if self.audience.kind == "household":
             prefix = f"household:{self.audience.household_id}:conversation:"
             if (not self.conversation_id.startswith(prefix)
@@ -501,6 +518,8 @@ class ConversationTurn:
         observation_binding: ConversationObservationBinding | None = None,
         media_context: ConversationMediaContext | None = None,
         media_context_sha256: str | None = None,
+        reply_context: ConversationReplyContext | None = None,
+        reply_context_sha256: str | None = None,
     ) -> "ConversationTurn":
         """Construct an explicitly private turn for non-group src/connectors/tests."""
 
@@ -517,6 +536,7 @@ class ConversationTurn:
             observation_binding=observation_binding,
             media_context=media_context,
             media_context_sha256=media_context_sha256,
+            reply_context=reply_context, reply_context_sha256=reply_context_sha256,
         )
 
     @property
@@ -526,6 +546,8 @@ class ConversationTurn:
             context.append(self.observation_binding.model_context)
         if self.media_context is not None:
             context.append(self.media_context.model_context)
+        if self.reply_context is not None:
+            context.append(self.reply_context.model_context)
         return ("\n".join(context) + f"\nGebruikersbericht: {self.text}") if context else self.text
 
 
