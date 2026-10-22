@@ -1189,7 +1189,7 @@ class PostgresSensoryEventStore:
         self, claim: SensoryDecisionClaim, *, reason: str, now: datetime,
     ) -> None:
         """Record a host-proven pre-provider deferral, never recover unknown usage."""
-        if reason != "foreground_active":
+        if reason not in {"foreground_active", "model_access_unavailable"}:
             raise ValueError("pre-dispatch deferral reason is invalid")
         state = self._timeline.load(claim.thread_id)
         if (not claim.thread_id.startswith(self._decision_prefix)

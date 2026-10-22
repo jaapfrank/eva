@@ -339,8 +339,21 @@ class SensoryDecisionWorker:
             raise ValueError("sensory worker clock must be timezone-aware")
         return max(previous, current)
 
+    def _model_access_ready(self) -> bool:
+        # Inspect the existing lease locally; never probe the provider or refresh
+        # credentials here. Missing optional support preserves other adapters.
+        inspect_access = getattr(self._model, "credential_status", None)
+        if not callable(inspect_access):
+            return True
+        try:
+            return inspect_access().ready is True
+        except Exception:
+            return False
+
     def run_once(self, *, now: datetime) -> str:
         now = self._current_time(now)
+        if self._context_review_authorizer is not None and not self._model_access_ready():
+            return "waiting_for_model_access"
         blocker = None if self._admission_blocker is None else self._admission_blocker()
         if self._prefer_revalidation and blocker is None and self._revalidator is not None:
             self._prefer_revalidation = False
@@ -587,6 +600,12 @@ class SensoryDecisionWorker:
                     self._store.defer_before_dispatch(claim, reason="foreground_active",
                         now=self._current_time(now))
                     return "deferred"
+            # Recall may outlast the access lease. No model call has happened in
+            # this attempt, so use the existing durable pre-dispatch deferral.
+            if not self._model_access_ready():
+                self._store.defer_before_dispatch(claim, reason="model_access_unavailable",
+                    now=self._current_time(now))
+                return "waiting_for_model_access"
             model_entered = True  # All later failures remain potentially dispatched.
             decision = self._model.evaluate_sensory_event(
                 event,

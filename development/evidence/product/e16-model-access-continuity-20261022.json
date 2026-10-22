@@ -1,0 +1,84 @@
+{
+  "taskId": "E1.6",
+  "recordedAt": "2026-10-22T17:30:57.274468+00:00",
+  "status": "installed_ordinary_initiative_resumed",
+  "technicalCompletion": false,
+  "scope": "Restore the blocked existing private initiative route and prevent pre-provider credential expiry from poisoning new reviews.",
+  "cause": {
+    "observedFailureAt": "2026-10-21T10:44:24Z",
+    "classification": "will_usage_uncertain",
+    "actualLocalError": "conversation access token is expired",
+    "errorFingerprint": "4585831e2bd3a94ed84597fa23a8c65dad507ecb67258739eafe5dcdce6780b1",
+    "identifiedBy": "Exact SHA-256 match to the installed model adapter error text.",
+    "accessCurrentlyReady": true,
+    "sourceEventsStillArriving": true
+  },
+  "change": [
+    "Read existing local access lease before context-review claims.",
+    "Recheck after context preparation before model entry; use existing durable pre-dispatch deferral.",
+    "Preserve original unknown-dispatch fences and routine model-free silence."
+  ],
+  "recovery": {
+    "existingOwnerRecoveryUsed": true,
+    "originalAttemptReplayed": false,
+    "historicalUsage": "unknown",
+    "recoveredAt": "2026-10-22T17:28:03Z"
+  },
+  "installed": {
+    "baseImage": "sha256:cdc3ee4bb439f431e1684f31c702b9c69e9aab0a66df43cb71b0e340c8224964",
+    "image": "sha256:2b612cad249042cf52ebf38f3b7d67abcc5f918486f0eac5940b5408d11b8551",
+    "sourceHashes": {
+      "src/eva/application/free_will.py": "b295375416d1666b1b53ce77d40d4f6cebd3ae79fe7b76da688d92f25486e624",
+      "src/eva/adapters/postgres/sensory_events.py": "e453b209be6d01def27dea709892b6992e10e02621e98b4afe6cbd2c551dbcc9"
+    },
+    "healthy": true,
+    "retainedMountsVerified": true,
+    "voiceChanged": false,
+    "schemaChanged": false,
+    "activeWorkAndModelClaimsBeforeInstall": 0,
+    "componentEvaluationChildrenBeforeInstall": 0
+  },
+  "verification": {
+    "applicationChecksPassed": 21,
+    "postgresChecksPassed": 22,
+    "postgresVersion": "16.13 disposable",
+    "newAccessChecksFailOnBaseline": 6,
+    "preExistingSourceFeedbackChecksFailOnBoth": 3,
+    "sourceFeedbackBaselineNote": "Unmodified feedback suite mismatches current installed model/fixture contracts; these three failures also occur on the original image and are not counted as passing.",
+    "independentReview": "development/reviews/e16-model-access-continuity-20261022.json",
+    "installedProfiles": {
+      "shared_provider": "compatible",
+      "private_research": "compatible",
+      "household_research": "existing_mismatch_not_changed_voice_owner_scope"
+    }
+  },
+  "live": {
+    "ordinaryNewReview": "completed_without_developer_trigger",
+    "startedAt": "2026-10-22T17:32:49Z",
+    "completedAt": "2026-10-22T17:33:24Z",
+    "model": "chatgpt-codex:gpt-6-astra",
+    "newInitiativeAdopted": true,
+    "unnecessaryUserMessageSent": false,
+    "sourceSelection": "Model chose to investigate an existing saved project; source-change watch not yet chosen.",
+    "nativeExecution": "waiting_for_existing_next_background_stage",
+    "selectedSourceChangeChain": "not_yet_proven"
+  },
+  "usage": {
+    "testProviderCalls": 0,
+    "runtimeNewReviewTokens": {
+      "model_attempts": 2,
+      "tool_calls": 2,
+      "input_tokens": 33545,
+      "output_tokens": 428,
+      "measurement": "measured"
+    },
+    "runtimeCredits": null,
+    "developmentTokens": null,
+    "developmentCredits": null
+  },
+  "limits": [
+    "This fix alone does not prove the full E1.6 model-chosen source-change chain.",
+    "Existing unknown provider outcomes remain blocked until explicit justified recovery.",
+    "Technical checks do not replace family acceptance."
+  ]
+}

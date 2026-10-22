@@ -1,0 +1,22 @@
+{
+  "taskId": "E1.6",
+  "reviewedAt": "2026-10-22T17:29:22.270629+00:00",
+  "reviewer": "/root/review_cursor",
+  "decision": "GO",
+  "scope": "Local model-access preflight and durable pre-dispatch deferral only; no new initiative architecture.",
+  "sourceSha256": {
+    "src/eva/application/free_will.py": "b295375416d1666b1b53ce77d40d4f6cebd3ae79fe7b76da688d92f25486e624",
+    "src/eva/adapters/postgres/sensory_events.py": "e453b209be6d01def27dea709892b6992e10e02621e98b4afe6cbd2c551dbcc9"
+  },
+  "findings": [
+    "Credential inspection is local and does not refresh credentials or call the provider.",
+    "Known routine silence remains before model access in the ordinary sensory route.",
+    "Deferral precedes model entry and requires the current claim; unknown dispatch cannot be reclassified.",
+    "STOP and authority checks remain intact."
+  ],
+  "limits": [
+    "Existing uncertain review requires separate explicit recovery; it is not automatically retried.",
+    "Reviewer checked source and tests; reported test executions were performed by the coordinator.",
+    "Source approval does not prove spontaneous source selection or family utility."
+  ]
+}
