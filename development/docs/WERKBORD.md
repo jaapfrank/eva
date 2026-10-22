@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Routines met betekenis, uitzonderingen en tegenbewijs leren
 
-E1.7: correctiebehoud geïnstalleerd. Nieuwe leerbijstellingen moeten de actuele voorganger gebruiken; twee gesprekken kunnen geen recentere correctie meer overslaan. Vier regressies faalden op de oude versie; 23 gerichte controles en zes controles tegen de geïnstalleerde image slagen. De actie is beschikbaar voor het echte Telegramgesprek. Nog geen werkelijk meerdaags routineleren of latere gedragsbijstelling bewezen.
+E1.7: correctiebehoud en volledige bronoverdracht geïnstalleerd. Kern en achtergrondwerker halen nu de benodigde bronfeiten op voor bestaande afgeleide inzichten. Dezelfde echte geheugenvraag levert één samenhangend inzicht met drie oorspronkelijke bronnen op; voorheen ontbrak het door afgekapt bronbewijs. Live zoekmeting 0,516s, één aanvraag; geen algemene snelheidsclaim. 36 gerichte controles slagen. Werkelijk meerdaags gezinsroutineleren en latere gedragsbijstelling blijven te bewijzen.
 
 Klaar wanneer: Eva leidt uit beschikbare echte gebeurtenissen over meerdere dagen een voorlopige routine met relevante omstandigheden af, legt toetsbare verwachting en tegenbewijs vast en gebruikt haar in een latere passende afweging. Een echte uitzondering of correctie verandert de volgende verwachting en het latere gedrag; zonder voldoende dekking blijft de uitkomst onbekend. Een gerichte natuurlijke vraag mag een belangrijk informatiegat sluiten. Geen vooraf gecodeerde gezinsroutine, gefingeerde waarschijnlijkheid, aparte patroonstore of verplichte classificatie per bericht.
 

@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-22T23:25:08.039139+00:00",
+  "lastUpdated": "2026-10-22T23:35:51.878964+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E1.7",
@@ -847,7 +847,7 @@
     "title": "Routines met betekenis, uitzonderingen en tegenbewijs leren",
     "status": "in_progress",
     "doneWhen": "Eva leidt uit beschikbare echte gebeurtenissen over meerdere dagen een voorlopige routine met relevante omstandigheden af, legt toetsbare verwachting en tegenbewijs vast en gebruikt haar in een latere passende afweging. Een echte uitzondering of correctie verandert de volgende verwachting en het latere gedrag; zonder voldoende dekking blijft de uitkomst onbekend. Een gerichte natuurlijke vraag mag een belangrijk informatiegat sluiten. Geen vooraf gecodeerde gezinsroutine, gefingeerde waarschijnlijkheid, aparte patroonstore of verplichte classificatie per bericht.",
-    "nextAction": "Bewijs via gewone gesprekken en bestaande droom-/initiatiefroute een brongebonden voorwaardelijke verwachting en echte latere uitzondering; onderzoek waarom de expliciete leeractie nog niet gebruikt is. Geen gefabriceerde gezinsroutine of verplichte classificatie.",
+    "nextAction": "Toets een voorwaardelijke verwachting en latere echte uitzondering via gewone gesprekken, droomconsolidatie en initiatief. Gebruik de nu volledige bronoverdracht; ontbrekende gezinsdekking blijft onbekend, zonder gefabriceerde routine.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2992,7 +2992,7 @@
         "now": {
           "taskId": "E1.7",
           "title": "Routines met betekenis, uitzonderingen en tegenbewijs leren",
-          "summary": "E1.7: correctiebehoud geïnstalleerd. Nieuwe leerbijstellingen moeten de actuele voorganger gebruiken; twee gesprekken kunnen geen recentere correctie meer overslaan. Vier regressies faalden op de oude versie; 23 gerichte controles en zes controles tegen de geïnstalleerde image slagen. De actie is beschikbaar voor het echte Telegramgesprek. Nog geen werkelijk meerdaags routineleren of latere gedragsbijstelling bewezen.",
+          "summary": "E1.7: correctiebehoud en volledige bronoverdracht geïnstalleerd. Kern en achtergrondwerker halen nu de benodigde bronfeiten op voor bestaande afgeleide inzichten. Dezelfde echte geheugenvraag levert één samenhangend inzicht met drie oorspronkelijke bronnen op; voorheen ontbrak het door afgekapt bronbewijs. Live zoekmeting 0,516s, één aanvraag; geen algemene snelheidsclaim. 36 gerichte controles slagen. Werkelijk meerdaags gezinsroutineleren en latere gedragsbijstelling blijven te bewijzen.",
           "doneWhen": "Eva leidt uit beschikbare echte gebeurtenissen over meerdere dagen een voorlopige routine met relevante omstandigheden af, legt toetsbare verwachting en tegenbewijs vast en gebruikt haar in een latere passende afweging. Een echte uitzondering of correctie verandert de volgende verwachting en het latere gedrag; zonder voldoende dekking blijft de uitkomst onbekend. Een gerichte natuurlijke vraag mag een belangrijk informatiegat sluiten. Geen vooraf gecodeerde gezinsroutine, gefingeerde waarschijnlijkheid, aparte patroonstore of verplichte classificatie per bericht."
         },
         "next": {
@@ -5871,17 +5871,19 @@
                 "beyondExistingScope": "E1.5 levert actuele synthese; deze nieuwe uitkomst levert aantoonbaar leren en weerleggen van een voorwaardelijke routine.",
                 "assignment": "Actieve kernuitvoerder; correctiebehoud gebouwd, beoordeeld en geïnstalleerd; echte routine-uitkomst nog te bewijzen.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Bewijs via gewone gesprekken en bestaande droom-/initiatiefroute een brongebonden voorwaardelijke verwachting en echte latere uitzondering; onderzoek waarom de expliciete leeractie nog niet gebruikt is. Geen gefabriceerde gezinsroutine of verplichte classificatie.",
+                "nextAction": "Toets een voorwaardelijke verwachting en latere echte uitzondering via gewone gesprekken, droomconsolidatie en initiatief. Gebruik de nu volledige bronoverdracht; ontbrekende gezinsdekking blijft onbekend, zonder gefabriceerde routine.",
                 "implementationSteps": [
                   "Routines als toetsbare hypotheses met uitzonderingen en bron opslaan in bestaand geheugen.",
                   "Tegenbewijs en correctie verwerken in later gedrag; ontbrekende observatie onbekend houden."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "progress": "E1.7: correctiebehoud geïnstalleerd. Nieuwe leerbijstellingen moeten de actuele voorganger gebruiken; twee gesprekken kunnen geen recentere correctie meer overslaan. Vier regressies faalden op de oude versie; 23 gerichte controles en zes controles tegen de geïnstalleerde image slagen. De actie is beschikbaar voor het echte Telegramgesprek. Nog geen werkelijk meerdaags routineleren of latere gedragsbijstelling bewezen.",
-                "checkedAt": "2026-10-22T23:25:08.039112+00:00",
+                "progress": "E1.7: correctiebehoud en volledige bronoverdracht geïnstalleerd. Kern en achtergrondwerker halen nu de benodigde bronfeiten op voor bestaande afgeleide inzichten. Dezelfde echte geheugenvraag levert één samenhangend inzicht met drie oorspronkelijke bronnen op; voorheen ontbrak het door afgekapt bronbewijs. Live zoekmeting 0,516s, één aanvraag; geen algemene snelheidsclaim. 36 gerichte controles slagen. Werkelijk meerdaags gezinsroutineleren en latere gedragsbijstelling blijven te bewijzen.",
+                "checkedAt": "2026-10-22T23:35:51.878942+00:00",
                 "implementationEvidence": "development/evidence/product/e17-learning-revision-admission-20261023.json",
                 "independentReview": "development/reviews/e17-learning-revision-admission-20261023.json",
-                "lastInstalledAt": "2026-10-22T23:25:08.039136+00:00"
+                "lastInstalledAt": "2026-10-22T23:35:51.878961+00:00",
+                "sourceCoverageEvidence": "development/evidence/product/e17-pattern-source-coverage-20261023.json",
+                "sourceCoverageReview": "development/reviews/e17-pattern-source-coverage-20261023.json"
               },
               {
                 "id": "E1.8",
@@ -8683,7 +8685,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Bewijs via gewone gesprekken en bestaande droom-/initiatiefroute een brongebonden voorwaardelijke verwachting en echte latere uitzondering; onderzoek waarom de expliciete leeractie nog niet gebruikt is. Geen gefabriceerde gezinsroutine of verplichte classificatie.",
+        "nextAction": "Toets een voorwaardelijke verwachting en latere echte uitzondering via gewone gesprekken, droomconsolidatie en initiatief. Gebruik de nu volledige bronoverdracht; ontbrekende gezinsdekking blijft onbekend, zonder gefabriceerde routine.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -11802,17 +11804,19 @@
               "beyondExistingScope": "E1.5 levert actuele synthese; deze nieuwe uitkomst levert aantoonbaar leren en weerleggen van een voorwaardelijke routine.",
               "assignment": "Actieve kernuitvoerder; correctiebehoud gebouwd, beoordeeld en geïnstalleerd; echte routine-uitkomst nog te bewijzen.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Bewijs via gewone gesprekken en bestaande droom-/initiatiefroute een brongebonden voorwaardelijke verwachting en echte latere uitzondering; onderzoek waarom de expliciete leeractie nog niet gebruikt is. Geen gefabriceerde gezinsroutine of verplichte classificatie.",
+              "nextAction": "Toets een voorwaardelijke verwachting en latere echte uitzondering via gewone gesprekken, droomconsolidatie en initiatief. Gebruik de nu volledige bronoverdracht; ontbrekende gezinsdekking blijft onbekend, zonder gefabriceerde routine.",
               "implementationSteps": [
                 "Routines als toetsbare hypotheses met uitzonderingen en bron opslaan in bestaand geheugen.",
                 "Tegenbewijs en correctie verwerken in later gedrag; ontbrekende observatie onbekend houden."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "progress": "E1.7: correctiebehoud geïnstalleerd. Nieuwe leerbijstellingen moeten de actuele voorganger gebruiken; twee gesprekken kunnen geen recentere correctie meer overslaan. Vier regressies faalden op de oude versie; 23 gerichte controles en zes controles tegen de geïnstalleerde image slagen. De actie is beschikbaar voor het echte Telegramgesprek. Nog geen werkelijk meerdaags routineleren of latere gedragsbijstelling bewezen.",
-              "checkedAt": "2026-10-22T23:25:08.039112+00:00",
+              "progress": "E1.7: correctiebehoud en volledige bronoverdracht geïnstalleerd. Kern en achtergrondwerker halen nu de benodigde bronfeiten op voor bestaande afgeleide inzichten. Dezelfde echte geheugenvraag levert één samenhangend inzicht met drie oorspronkelijke bronnen op; voorheen ontbrak het door afgekapt bronbewijs. Live zoekmeting 0,516s, één aanvraag; geen algemene snelheidsclaim. 36 gerichte controles slagen. Werkelijk meerdaags gezinsroutineleren en latere gedragsbijstelling blijven te bewijzen.",
+              "checkedAt": "2026-10-22T23:35:51.878942+00:00",
               "implementationEvidence": "development/evidence/product/e17-learning-revision-admission-20261023.json",
               "independentReview": "development/reviews/e17-learning-revision-admission-20261023.json",
-              "lastInstalledAt": "2026-10-22T23:25:08.039136+00:00"
+              "lastInstalledAt": "2026-10-22T23:35:51.878961+00:00",
+              "sourceCoverageEvidence": "development/evidence/product/e17-pattern-source-coverage-20261023.json",
+              "sourceCoverageReview": "development/reviews/e17-pattern-source-coverage-20261023.json"
             },
             {
               "id": "E1.8",
@@ -14614,7 +14618,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Bewijs via gewone gesprekken en bestaande droom-/initiatiefroute een brongebonden voorwaardelijke verwachting en echte latere uitzondering; onderzoek waarom de expliciete leeractie nog niet gebruikt is. Geen gefabriceerde gezinsroutine of verplichte classificatie.",
+      "nextAction": "Toets een voorwaardelijke verwachting en latere echte uitzondering via gewone gesprekken, droomconsolidatie en initiatief. Gebruik de nu volledige bronoverdracht; ontbrekende gezinsdekking blijft onbekend, zonder gefabriceerde routine.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",

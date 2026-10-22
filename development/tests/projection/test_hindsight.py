@@ -1233,8 +1233,8 @@ def test_hot_path_recall_is_low_budget_and_never_calls_reflect(
     assert request["budget"] == "low"
     assert request["max_tokens"] == 2048
     assert request["include"]["source_facts"] == {
-        "max_tokens": 512,
-        "max_tokens_per_observation": 256,
+        "max_tokens": 8192,
+        "max_tokens_per_observation": 2048,
     }
     bank_budget = next(
         body

@@ -1,0 +1,121 @@
+{
+  "contract": "EvaPatternSourceCoverageEvidence/v1",
+  "taskId": "E1.7",
+  "checkedAt": "2026-10-22T23:35:32.421849+00:00",
+  "outcome": "An existing native synthesis with five fact references and three original messages now reaches current person context; previously its incomplete source envelope excluded it.",
+  "sourceFile": "src/eva/adapters/projection/hindsight.py",
+  "sourceSha256": "855c833e5bee67c148142b02df10b0d8c7e67c4c5cb05ad96fff6f882c7911ba",
+  "change": {
+    "internalSourceFactsMaxTokens": 8192,
+    "internalPerObservationMaxTokens": 2048,
+    "ordinaryRecallBudget": "low",
+    "ordinaryRecallMaxTokensUnchanged": true,
+    "maximumOriginalSourcesUnchanged": 3,
+    "currentAuthorityAndErasureChecksUnchanged": true,
+    "modelContextLimitsUnchanged": true
+  },
+  "checks": {
+    "projectionTestsPassed": 29,
+    "personContextTestsPassed": 7,
+    "independentReview": "development/reviews/e17-pattern-source-coverage-20261023.json"
+  },
+  "liveComparison": [
+    {
+      "expanded": false,
+      "elapsedSeconds": 0.567,
+      "calls": [
+        {
+          "sourceBudget": {
+            "max_tokens": 512,
+            "max_tokens_per_observation": 256
+          },
+          "responseBytes": 17571,
+          "sourceFactCount": 3,
+          "observations": [
+            {
+              "sources": 5,
+              "missingSources": 4,
+              "boundCandidates": 0
+            },
+            {
+              "sources": 9,
+              "missingSources": 7,
+              "boundCandidates": 0
+            }
+          ],
+          "sourceFactsTruncated": true
+        }
+      ],
+      "selected": 6,
+      "excluded": {},
+      "currentContextBytes": 206,
+      "entries": []
+    },
+    {
+      "expanded": true,
+      "elapsedSeconds": 0.516,
+      "calls": [
+        {
+          "sourceBudget": {
+            "max_tokens": 8192,
+            "max_tokens_per_observation": 2048
+          },
+          "responseBytes": 32716,
+          "sourceFactCount": 14,
+          "observations": [
+            {
+              "sources": 5,
+              "missingSources": 0,
+              "boundCandidates": 3
+            },
+            {
+              "sources": 9,
+              "missingSources": 0,
+              "boundCandidates": 0
+            }
+          ],
+          "sourceFactsTruncated": false
+        }
+      ],
+      "selected": 7,
+      "excluded": {},
+      "currentContextBytes": 2249,
+      "entries": [
+        {
+          "kind": "native_observation",
+          "sourceCount": 3
+        }
+      ]
+    }
+  ],
+  "liveScope": {
+    "sameQueryTimestampAndOwner": true,
+    "realRetainedSources": true,
+    "ordinaryConversationModelCalls": 0,
+    "hindsightRecallRequestsPerCase": 1,
+    "productionMemoryWrites": false,
+    "messagesSent": false,
+    "claim": "Actual installed memory read, not a new user conversation or routine-learning demonstration.",
+    "timingCaveat": "Single warm comparison; no general speedup or full-chat latency claim.",
+    "hindsightModelTokenUsage": "not measured"
+  },
+  "installation": {
+    "coreImage": "sha256:94327dd4393ec3a5e84cfc02fa1d3780d326738e5f0ef876a4f05b8308fe2624",
+    "workerImage": "sha256:3325c2526bc45c0f91efbd3495bb86e2450570f61e787ecf1b37f72cb813a566",
+    "bothHealthy": true,
+    "sameInstalledSourceHash": true,
+    "retainedMounts": true,
+    "activeClaimsChecked": true,
+    "workerFirstPreflight": "Rejected stale service configuration before dispatch. Reconstructed exact installed worker service from its own Compose configuration, preserving current core, then installed successfully.",
+    "preexistingProfileMismatch": [
+      "household_research"
+    ]
+  },
+  "limits": [
+    "Larger internal source response: measured 17571 to32716 bytes. Large or unprovable observations can still be excluded.",
+    "No increase to allowed original source count or authority. Source facts are not separately added to model context.",
+    "The live synthesis concerns an existing technical agreement. Genuine multi-day household routine and later exception behavior remain unproved.",
+    "The lack of explicit learning-action usage is not fully explained by this source-envelope repair."
+  ],
+  "fullTaskCompleted": false
+}

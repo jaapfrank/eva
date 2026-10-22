@@ -745,12 +745,14 @@ class HindsightMemoryEngine:
                     "entities": {"max_tokens": 256} if query.query_purpose == "owner_memory_view" else None,
                     "chunks": None,
                     # Hindsight observations intentionally omit document metadata.
-                    # A small bounded source-fact envelope lets Eva preserve the
-                    # original authority and timestamp without adding those facts
-                    # separately to the model context.
+                    # Source facts carry text as well as provenance. A 256-token
+                    # per-observation envelope can omit most contributors and
+                    # make a valid multi-source pattern unusable. These bounded
+                    # internal receipts are not added separately to model context;
+                    # the original-event, audience and context limits still apply.
                     "source_facts": {
-                        "max_tokens": 512,
-                        "max_tokens_per_observation": 256,
+                        "max_tokens": 8192,
+                        "max_tokens_per_observation": 2048,
                     },
                 },
             },

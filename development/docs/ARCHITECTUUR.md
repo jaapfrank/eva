@@ -89,6 +89,12 @@ twee gesprekken geen parallelle correcties op een verouderde versie toelaten.
 Een nog niet verwerkte of gewiste opvolger verhindert terugval; hervatten van de
 eigen toegelaten actie blijft mogelijk. Deze E1.7-correctie is op 23 oktober
 geïnstalleerd. Werkelijk meerdaags routineleren blijft afzonderlijk te bewijzen.
+Dezelfde geheugenzoekroute haalt sinds 23 oktober een ruimer begrensd intern
+bronfeitenantwoord op: 8192 tokens totaal, 2048 per afgeleid inzicht. Het oude
+256-tokenvenster liet aantoonbaar benodigde bronfeiten weg. Dit antwoord dient
+broncontrole; maximaal drie oorspronkelijke gebeurtenissen, actuele privacy-/wischecks
+en de bestaande modelcontextgrenzen blijven gelden. Kern en achtergrondwerker
+gebruiken dezelfde instelling, zonder extra zoek- of gespreksmodelronde.
 
 E1.6 verbindt de optionele `source_event_id` op private `NextAttention` aan een exact
 in dezelfde afweging aangeboden bron en haar hash/configuratie. De bestaande provider

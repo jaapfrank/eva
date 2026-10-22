@@ -1,0 +1,19 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "taskId": "E1.7",
+  "reviewer": "/root/review_cursor",
+  "decision": "GO for bounded source-envelope change",
+  "sourceSha256": "855c833e5bee67c148142b02df10b0d8c7e67c4c5cb05ad96fff6f882c7911ba",
+  "findings": [
+    "Every referenced source fact remains required; complete authority agreement and at most three original events still apply.",
+    "Private source resolution, current correction and erasure checks are unchanged.",
+    "Additional source-fact texts are internal verification input, not separate model context."
+  ],
+  "risk": "A larger response can increase payload and processing. The live A/B supports only this measured recall; it does not prove general routine learning.",
+  "verification": {
+    "projectionPassed": 29,
+    "currentContextPassed": 7,
+    "installedReadOnlyComparison": true
+  },
+  "fullTaskCompleted": false
+}
