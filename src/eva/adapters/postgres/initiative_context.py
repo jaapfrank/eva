@@ -277,6 +277,14 @@ def read_private_initiative_context(connection, scope: TimelineScope,
             "kind": "durable_commitment", "goal_id": goal.goal_id,
             "title": goal.description[:256], "phase": row["phase"], "status": row["status"],
             "updated_at": row["updated_at"].isoformat(), "deadline": goal.wake.deadline.isoformat(),
+            # The original condition explains what is still awaited. It is not
+            # a fresh reading, a calendar event, or permission to resume work.
+            "deadline_kind": "wake_wait_timeout_not_calendar_event",
+            "awaited_condition": {
+                "provider": goal.wake.provider, "resource": goal.wake.resource,
+                "field": goal.wake.field, "expected_value": goal.wake.expected_value,
+                "is_current_proof": False,
+            },
             "source_sha256": bytes(row["original_sha"]).hex(),
             "state_sha256": bytes(row["latest_sha"]).hex(),
             "is_execution_permission": False,

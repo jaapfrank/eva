@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen
 
-E1.8: selectieverlies van onopgeloste afspraken hersteld en geïnstalleerd. Binnen de bestaande vier plaatsen gaan onopgeloste afspraken op deadline vóór recent afgesloten geschiedenis. Baseline drie regressies; kandidaat 32 controles geslaagd en exacte geïnstalleerde image 12. Echte privécontext read-only gecontroleerd: geen nieuwe modelaanroep of uitvoering, momenteel geen naderende huishoudafspraak om anticipatie te bewijzen. E1.13 natuurlijke initiatiefmeting blijft open.
+E1.8: naast prioriteit voor onopgeloste afspraken is nu ook de oorspronkelijke bronvoorwaarde geïnstalleerd. De echte privécontext bevat provider/resource/veld/verwachte waarde, expliciet geen actuele waarneming; deadline is wachttijdgrens, geen agenda-afspraak. Baseline regressie bevestigd; 33 controles kandidaat en 13 op exacte geïnstalleerde image slagen. Live bronoverdracht gecontroleerd zonder berichten, modelaanroep of productie-mutatie. Inhoudelijk vooruitzien blijft nog te bewijzen.
 
 Klaar wanneer: Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.
 

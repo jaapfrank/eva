@@ -101,7 +101,10 @@ afgesloten geschiedenis. Binnen die afspraken gaat de vroegste deadline voor;
 laatste wijziging en stabiele identiteit bepalen gelijke gevallen. Zo kan recente
 afhandeling een naderende afspraak niet uit de vier beschikbare plaatsen drukken.
 Ook verlopen afspraken die hulp nodig hebben blijven onopgeloste context, zonder
-uitvoertoestemming. Deze E1.8-selectie vervangt geen inhoudelijke afweging van
+uitvoertoestemming. De oorspronkelijke wake-voorwaarde (provider, resource, veld en
+verwachte waarde) blijft zichtbaar als verwachting, niet als actuele waarneming.
+De deadline is expliciet een wachttijdgrens en geen kalendergebeurtenis; ruwe
+uitvoeringsinstructies worden niet gekopieerd. Deze E1.8-selectie vervangt geen inhoudelijke afweging van
 gevolgen of alternatieven; werkelijk vooruitzien blijft afzonderlijk te bewijzen.
 
 E1.13 plaatst sinds 23 oktober de bestaande privé-afweging vóór interesse-uitvoering

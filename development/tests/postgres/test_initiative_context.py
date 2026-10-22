@@ -215,3 +215,21 @@ def test_equal_deadlines_have_stable_selection_independent_of_insertion_order(po
                       key=lambda goal_id: goals._thread_id(goal_id, 'owner'))[:4]
     assert [w['goal_id'] for w in first['own_work']] == expected
     assert _read(postgres_engine, store)['own_work'] == first['own_work']
+
+
+def test_commitment_preserves_awaited_source_without_claiming_observation(postgres_engine):
+    label = 'context-awaiting-source'
+    store = _store(postgres_engine, label)
+    goals, goal = _goal(postgres_engine, label, 'awaiting')
+    before = goals._timeline.events(goals._thread_id(goal.goal_id, goal.owner_id))
+    work = _read(postgres_engine, store)['own_work'][0]
+    assert work['awaited_condition'] == {
+        'provider': goal.wake.provider, 'resource': goal.wake.resource,
+        'field': goal.wake.field, 'expected_value': goal.wake.expected_value,
+        'is_current_proof': False,
+    }
+    assert work['deadline_kind'] == 'wake_wait_timeout_not_calendar_event'
+    assert work['is_execution_permission'] is False
+    assert goal.primary_instruction not in json.dumps(work)
+    assert goals._timeline.events(goals._thread_id(goal.goal_id, goal.owner_id)) == before
+    assert _read(postgres_engine, store, owner='someone-else')['own_work'] == []

@@ -1,0 +1,57 @@
+{
+  "task": "E1.8",
+  "change": "Preserve original awaited source/condition and timeout semantics in existing private initiative context; no raw execution instructions.",
+  "verification": {
+    "baselineRegressionFailed": 1,
+    "candidateChecksPassed": 33,
+    "installedImageChecksPassed": 13,
+    "liveReadOnlyBefore": {
+      "measuredAt": "2026-10-22T23:49:08+00:00",
+      "elapsedSeconds": 0.0561,
+      "contextBytes": 8099,
+      "selectedCommitments": [
+        {
+          "state": "needs_help",
+          "conditionPresent": false,
+          "conditionIsCurrentProof": null,
+          "deadlineKind": null,
+          "isExecutionPermission": false
+        }
+      ],
+      "selectionPolicy": "unresolved first by deadline, then recent closed within 24h; older closed history retained",
+      "sourceSha256": "11e6f98a0a7951cc8f57e5ea9a1b05a70986c93858055aaf940429550945dc24",
+      "productionWrites": false,
+      "modelCalls": 0
+    },
+    "liveReadOnlyAfter": {
+      "measuredAt": "2026-10-22T23:49:47+00:00",
+      "elapsedSeconds": 0.0672,
+      "contextBytes": 7906,
+      "selectedCommitments": [
+        {
+          "state": "needs_help",
+          "conditionPresent": true,
+          "conditionIsCurrentProof": false,
+          "deadlineKind": "wake_wait_timeout_not_calendar_event",
+          "isExecutionPermission": false
+        }
+      ],
+      "selectionPolicy": "unresolved first by deadline, then recent closed within 24h; older closed history retained",
+      "sourceSha256": "588d3cf256cf347a87c2b373be2ede25ee00d46f90a79c5d4135bd296010615c",
+      "productionWrites": false,
+      "modelCalls": 0
+    },
+    "isolatedTests": "PostgreSQL 16.13, no synthetic household records in production",
+    "independentReview": "/root/review_cursor: GO; expected condition is not observation, retain owner/source validation and 8KiB bound."
+  },
+  "installation": {
+    "image": "sha256:02594028e25a4752f2031bde0ca3e81d244b99686fa7aba7d5c6698abd2bf860",
+    "base": "sha256:7059c78ce1d1fc4dc223e8d1e004d5dc053bb939194c161b3c017bb5b119d38d",
+    "status": "running_with_retained_mounts",
+    "profilesUnchanged": true,
+    "preexistingMismatchedProfiles": [
+      "household_research"
+    ]
+  },
+  "boundary": "Live context now contains the actual stored condition, but no new natural model assessment, household anticipation, or full E1.8 completion is claimed."
+}
