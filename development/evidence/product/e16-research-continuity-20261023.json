@@ -79,6 +79,14 @@
       "runtimeWorkerInvokedBy": "Owner-authorized operational test; existing decision/authority/usage/delivery route",
       "harnessSha256": "7555dbc1fc14aefc79079eaec7b65b2d5d5902fb312773f681dcb24c493f8b4f",
       "recipientReceiptPublished": false
+    },
+    "followupConversation": {
+      "realOwnerMessages": 2,
+      "ordinaryRepliesCommitted": 2,
+      "transportRepliesDelivered": 2,
+      "lastReplyDeliveredAt": "2026-10-22T23:08:53.318Z",
+      "telegramExplicitReplyFeatureUsed": false,
+      "contentPublished": false
     }
   },
   "usage": {
@@ -106,6 +114,6 @@
     "Context is bounded to 8192 bytes; some older outcomes may be omitted.",
     "Nighttime contact was explicitly requested and permitted by the owner; it is not proof of spontaneous daily presence or family acceptance.",
     "Telegram receipt proves delivery to the bound private chat, not that the owner read or liked the message.",
-    "Reply-context forwarding exists in the active Telegram bridge; an actual reply to this message has not yet been observed."
+    "Two real subsequent owner messages received delivered ordinary replies. Neither used Telegram explicit reply-to, so that UI feature is not claimed live-tested here."
   ]
 }
