@@ -236,5 +236,67 @@
     "runtimeChanges": false,
     "codeDeleted": false,
     "wholeProjectComplete": false
+  },
+  "livingHousemateSpecification20261022": {
+    "status": "owner_specification_integrated_not_implemented",
+    "householdArtifact": {
+      "definition": "Kleine, blijvende, omkeerbare verandering in huis of routine, voorgesteld of gerealiseerd door Eva; na adoptie co-eigendom van het huishouden. Geen eenmalige taak en geen uitsluitend door Eva gebruikte skill.",
+      "states": [
+        "proposed",
+        "active",
+        "paused",
+        "rejected",
+        "retired"
+      ],
+      "minimumInformation": [
+        "Identiteit, versie en concrete bedoeling",
+        "Betrokken huishouden en toegestane audience/beheerders",
+        "Bronverwijzingen en resultaten met datum",
+        "Werkelijke realisatie: moduleversie, automation-ID of andere bestaande uitvoerbinding",
+        "Actuele status plus gecontroleerde werking",
+        "Adoptiestatus, grondslag en kennisgeving",
+        "Evaluatiemoment, proefgrenzen en pauze-/herstelhandeling"
+      ],
+      "adoption": "Expliciete acceptatie, of geëvalueerde bestendiging van een vooraf toegestane proef volgens bestaande rechten. Zeven dagen is een voorbeeld van een proefduur, geen automatische toestemming. Geen negatieve feedback is onbekend; positieve/neutrale evaluatie vereist concrete waarnemingen.",
+      "stateAndAdoptionAreSeparate": "active betekent gerealiseerd en gecontroleerd, niet automatisch geadopteerd. Een proef kan alleen binnen een bestaande expliciete bevoegdheid actief zijn. proposed impliceert nooit activatie.",
+      "reversibility": "Pauze of herstel moet de werkelijke voorziening stoppen/herstellen en worden gecontroleerd; een statuswijziging in de database alleen volstaat niet. Wijzigen maakt een nieuwe versie. retired bewaart alleen toegestane compacte historie.",
+      "restore": "Pakket, uitvoerbinding, gegevens en adoptie-/pauzestatus gaan mee in de bestaande back-upketen; herstel maakt geen dubbele automatisering en activeert een gepauzeerd artifact niet."
+    },
+    "personalityDelta": {
+      "design": "Compacte versieerbare bijstelling bovenop de basisidentiteit, gebaseerd op echte feedback/correcties/resultaten via de bestaande geheugen- en droomroute; geen tweede persona-opslag.",
+      "scope": "Per persoon of expliciet gedeeld huishouden; privéfeedback wordt geen algemene gezinsregel.",
+      "lifecycle": "Bronnen, context, onzekerheid, versie en voorganger vastleggen; zichtbaar, corrigeerbaar en terugdraaibaar. Nieuwe context gebruikt alleen de actuele passende bijstelling; geen steeds groeiende stapel prompts.",
+      "erasure": "Verwijderen of corrigeren van dragende bronnen maakt de afgeleide bijstelling ongeldig of vraagt herbeoordeling; een bewaarde hash alleen houdt haar niet geldig.",
+      "limits": "Geen wijziging van rechten, toestemming, waarheidsplicht of kernidentiteit via stijltekst. Stilte en ontbrekende feedback zijn geen positieve ervaring.",
+      "existing": "PresenceMemory.style_mirror, Hindsight style reflection and current typed person context exist. The current private contact route intentionally rejects unbound style fallback; do not bypass that source/revision protection."
+    },
+    "initiativeIntegration": {
+      "existing": "PersonalInitiativeProposal, FreeWillDecision.expression, NextAttention and resident attention policy already exist.",
+      "purposeLabels": [
+        "artifact_candidate",
+        "timely_help",
+        "support_opportunity",
+        "social_expression"
+      ],
+      "compatibility": "Add semantic purpose metadata where needed; do not blindly replace the persisted personal_interest kind or duplicate delivery/admission.",
+      "timelyHelp": "Recent reliable evidence and time window matter; a source hash proves integrity, not truth or freshness. If container position is unknown, ask whether it is out rather than assert it is still home.",
+      "social": "Existing claims, delivery, quiet hours, repetition boundaries and feedback apply. No activity quota or new permanent model loop.",
+      "support": "Allowed public research and proposals may be proactive. Payment, contract, personal-data disclosure or use of external accounts for a support action requires explicit per-action consent. Zoek verder authorizes investigation only; no inferred transaction approval."
+    },
+    "existingTaskMapping": {
+      "E1.8": "Tijdige hulp en onderzoek naar ondersteuningskansen",
+      "E1.9": "Feedback, timing en brongebonden corrigeerbare persoonlijkheidsbijstellingen",
+      "E1.10": "Sociale expressie, groeiende eigenheid en werkelijk eigen werk",
+      "E1.11": "Blijvende gedeelde voorzieningen, adoptie en evaluatie",
+      "E4.15": "Voorziening realiseren als losse uitbreiding, later hergebruiken en schoon herstellen"
+    },
+    "acceptance": [
+      "Gesimuleerde ophaalafspraak met onbekende containerpositie geeft tijdige vraag, geen verzonnen waarneming; feedback beïnvloedt vervolg zonder dubbele melding.",
+      "Artifact doorloopt proposed, toegestane realisatie, gecontroleerd active, adoptie en werkelijke pauze/herstel; geen adoptie of nieuwe rechten uitsluitend door tijdsverloop.",
+      "Gesimuleerde besparing geeft voorstel met bron, onzekerheid en benodigde inzet; geen transactie, accountgebruik of gegevensdeling zonder actiegebonden toestemming.",
+      "Gesimuleerde feedback geeft een compacte bijstelling in de volgende passende context; correctie, terugdraaien en bronwissen werken door.",
+      "Bestaande geheugen-, initiatief- en uitvoeringswerking blijft behouden; simulaties bewijzen techniek, echt dagelijks nut en groei over weken vragen werkelijk gebruik."
+    ],
+    "executionOrder": "E4.15 camera-uitbreiding blijft de eerste volledige route. Verbind de toegestane blijvende begroetingsvoorziening aan artifactbeheer; de herkenningsskill zelf is geen Household Artifact. Daarna tijdige hulp en corrigeerbare groei via bestaande E1-kaarten. Geen vijf nieuwe parallelle subsystemen."
   }
 }

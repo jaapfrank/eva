@@ -281,6 +281,37 @@ Eén eigenaar per controle; niet noodzakelijk één databasetabel voor alle soor
 Historische opslagcontracten blijven leesbaar. Een nieuwe centrale kernloop is alleen
 zinvol wanneer zij aantoonbaar bestaande aansturing vervangt, geen extra laag toevoegt.
 
+### Blijvende huisvoorzieningen en groeiende persoonlijkheid
+
+Een Household Artifact is een kleine blijvende, omkeerbare verandering in huis of
+routine die na adoptie mede door het huishouden wordt beheerd. De herkenningsskill is
+Eva's vermogen; een afgesproken werkende begroetingsvoorziening is het artifact.
+De bestaande taak-/resultaatregistratie verbindt bedoeling, realisatie, versie,
+bronbewijs en beheer. Pakketcode blijft buiten de kern; er komt geen tweede geheugen.
+
+Status is proposed, active, paused, rejected of retired. Adoptie wordt afzonderlijk
+bijgehouden: active vereist gecontroleerde werking en bestaande uitvoerbevoegdheid.
+Stilzwijgende adoptie kan een vooraf toegestane proef bestendigen na concrete evaluatie
+met kennisgeving; tijdsverloop of geen klacht geeft geen nieuwe rechten. Mede-eigendom
+maakt privébronnen niet publiek. Pauze/herstel verandert en controleert de werkelijke
+voorziening. Back-up bewaart ook adoptie- en pauzestatus en voorkomt dubbele realisaties.
+
+PersonalityDelta is een compacte actuele afleiding van echte ervaringen binnen de
+bestaande geheugen-/droomroute, aanvullend op de basisidentiteit. Bestaande stijlreflectie
+is een bouwsteen, geen reden om bron- en revisiecontrole te omzeilen. Bijstellingen zijn
+persoons- of huishoudgebonden, zichtbaar, corrigeerbaar en terugdraaibaar. Bronwissen en
+tegenbewijs werken door; oude bijstellingen stapelen niet onbeperkt in de prompt.
+Stijltekst wijzigt geen bevoegdheid. Gesimuleerde feedback toetst techniek, geen ervaren
+persoonlijkheidsgroei over weken.
+
+De labels artifact_candidate, timely_help, support_opportunity en social_expression
+beschrijven de bedoeling binnen de bestaande initiatiefroute. Bestaande opgeslagen
+kinds, claims, quiet hours, herhalingsgrenzen en aflevering blijven compatibel.
+Ontbrekende waarneming is onbekend; bronhashes bewijzen integriteit, niet waarheid.
+Onderzoek naar besparingen mag binnen bestaande toegang, maar betalingen, contracten,
+persoonsgegevens delen en extern accountgebruik voor zo'n actie vragen expliciete
+actiegebonden toestemming. 'Zoek verder' geeft alleen onderzoeksruimte.
+
 ## Moduleverantwoordelijkheden
 
 | Bestaande module / bron | Eigen verantwoordelijkheid | Interface en grens |

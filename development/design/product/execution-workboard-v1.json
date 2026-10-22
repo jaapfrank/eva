@@ -849,7 +849,11 @@
     "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
     "nextAction": "Laat Eva via haar gewone uitvoerroute de camera-/begroetingsopdracht onderzoeken en als losse uitbreiding realiseren. Hergebruik bestaande camerawaarneming en module-/procedurevoorzieningen; leg de eerste concrete blokkade vast. Vereenvoudig alleen de geraakte overdracht en herstel de uitbreiding daarna op een schone installatie.",
     "ownerActionRequired": false,
-    "ownerReprioritization": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerProductRefocus20261022"
+    "ownerReprioritization": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerProductRefocus20261022",
+    "livingHousemateAcceptance": {
+      "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
+      "scope": "Voorziening realiseren als losse uitbreiding, later hergebruiken en schoon herstellen"
+    }
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -5919,6 +5923,10 @@
                   "requirement": "Eva ontdekt en onderzoekt zelf nuttige mogelijkheden vanuit mensen, doelen en haar omgeving, ook zonder Home Assistant of andere aangesloten bron. Zij vergelijkt wat al kan met relevante alternatieven, onderbouwt concrete gezinsvoordelen en benodigde kennis/toegang en kiest zelf uitvoerbaar onderzoek, toegelaten werk, een gericht voorstel of stilte. Een toegangsverzoek volgt uit werkelijk ontbrekende dekking en vermeldt wat het oplevert; reeds gegeven toegang/sleutels worden niet opnieuw gevraagd. Geen merk-/apparaatregel, verplicht aansluitproduct of berichtquota.",
                   "acceptance": "Werkelijke keuze en onderbouwd vervolg vóór een specifieke eigenaaropdracht over die kans, via dezelfde afweging/geheugen/werkroute; ontbreken van Home Assistant verhindert initiatief niet. Een reactie op de huidige UniFi-vraag bewijst dit niet.",
                   "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json"
+                },
+                "livingHousemateAcceptance": {
+                  "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
+                  "scope": "Tijdige hulp en onderzoek naar ondersteuningskansen"
                 }
               },
               {
@@ -5965,7 +5973,11 @@
                 "beyondExistingScope": "Nieuwe gewone-use-uitkomst boven op behouden HUE5/I1.2-deelbewijs; geen heropening of herhaling van die gesloten proef.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Verbind de eerstvolgende werkelijk ontvangen reactie aan haar oorspronkelijke bijdrage en benoem wat inhoud, timing of onzekerheid is."
+                "nextAction": "Verbind de eerstvolgende werkelijk ontvangen reactie aan haar oorspronkelijke bijdrage en benoem wat inhoud, timing of onzekerheid is.",
+                "livingHousemateAcceptance": {
+                  "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
+                  "scope": "Feedback, timing en brongebonden corrigeerbare persoonlijkheidsbijstellingen"
+                }
               },
               {
                 "id": "E1.10",
@@ -6012,7 +6024,11 @@
                 "beyondExistingScope": "E1.4 bewijst vervolg; E2.7 correcte geschiedenis. Deze uitkomst vraagt een werkelijk ontwikkeld eigen werk en herkenbare sociale eigenheid.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Lees werkelijk bestaande interesses en resultaten; laat Eva zelf een passende creatieve lijn voortzetten in plaats van een demo-onderwerp op te leggen."
+                "nextAction": "Lees werkelijk bestaande interesses en resultaten; laat Eva zelf een passende creatieve lijn voortzetten in plaats van een demo-onderwerp op te leggen.",
+                "livingHousemateAcceptance": {
+                  "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
+                  "scope": "Sociale expressie, groeiende eigenheid en werkelijk eigen werk"
+                }
               },
               {
                 "id": "E1.11",
@@ -6058,7 +6074,11 @@
                 "beyondExistingScope": "E1.4 technisch vervolg blijft gesloten; hier gaat het om een echte terugkerende gezinsverantwoordelijkheid, gewijzigde omstandigheden en minder menselijke aansturing.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Kies uit een reeds uitgesproken werkelijke gezinsbehoefte één overdraagbare verantwoordelijkheid; vraag alleen ontbrekende inhoudelijke grenzen."
+                "nextAction": "Kies uit een reeds uitgesproken werkelijke gezinsbehoefte één overdraagbare verantwoordelijkheid; vraag alleen ontbrekende inhoudelijke grenzen.",
+                "livingHousemateAcceptance": {
+                  "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
+                  "scope": "Blijvende gedeelde voorzieningen, adoptie en evaluatie"
+                }
               }
             ],
             "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -7851,6 +7871,10 @@
                     "Herstel en gedragscontrole op een schone installatie zonder oude bronwerkmap"
                   ],
                   "selfDiscoveredNeedRemainsSeparate": true
+                },
+                "livingHousemateAcceptance": {
+                  "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
+                  "scope": "Voorziening realiseren als losse uitbreiding, later hergebruiken en schoon herstellen"
                 }
               },
               {
@@ -11539,6 +11563,10 @@
                 "requirement": "Eva ontdekt en onderzoekt zelf nuttige mogelijkheden vanuit mensen, doelen en haar omgeving, ook zonder Home Assistant of andere aangesloten bron. Zij vergelijkt wat al kan met relevante alternatieven, onderbouwt concrete gezinsvoordelen en benodigde kennis/toegang en kiest zelf uitvoerbaar onderzoek, toegelaten werk, een gericht voorstel of stilte. Een toegangsverzoek volgt uit werkelijk ontbrekende dekking en vermeldt wat het oplevert; reeds gegeven toegang/sleutels worden niet opnieuw gevraagd. Geen merk-/apparaatregel, verplicht aansluitproduct of berichtquota.",
                 "acceptance": "Werkelijke keuze en onderbouwd vervolg vóór een specifieke eigenaaropdracht over die kans, via dezelfde afweging/geheugen/werkroute; ontbreken van Home Assistant verhindert initiatief niet. Een reactie op de huidige UniFi-vraag bewijst dit niet.",
                 "evidence": "development/evidence/product/telegram-source-followthrough-20261021.json"
+              },
+              "livingHousemateAcceptance": {
+                "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
+                "scope": "Tijdige hulp en onderzoek naar ondersteuningskansen"
               }
             },
             {
@@ -11585,7 +11613,11 @@
               "beyondExistingScope": "Nieuwe gewone-use-uitkomst boven op behouden HUE5/I1.2-deelbewijs; geen heropening of herhaling van die gesloten proef.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Verbind de eerstvolgende werkelijk ontvangen reactie aan haar oorspronkelijke bijdrage en benoem wat inhoud, timing of onzekerheid is."
+              "nextAction": "Verbind de eerstvolgende werkelijk ontvangen reactie aan haar oorspronkelijke bijdrage en benoem wat inhoud, timing of onzekerheid is.",
+              "livingHousemateAcceptance": {
+                "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
+                "scope": "Feedback, timing en brongebonden corrigeerbare persoonlijkheidsbijstellingen"
+              }
             },
             {
               "id": "E1.10",
@@ -11632,7 +11664,11 @@
               "beyondExistingScope": "E1.4 bewijst vervolg; E2.7 correcte geschiedenis. Deze uitkomst vraagt een werkelijk ontwikkeld eigen werk en herkenbare sociale eigenheid.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Lees werkelijk bestaande interesses en resultaten; laat Eva zelf een passende creatieve lijn voortzetten in plaats van een demo-onderwerp op te leggen."
+              "nextAction": "Lees werkelijk bestaande interesses en resultaten; laat Eva zelf een passende creatieve lijn voortzetten in plaats van een demo-onderwerp op te leggen.",
+              "livingHousemateAcceptance": {
+                "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
+                "scope": "Sociale expressie, groeiende eigenheid en werkelijk eigen werk"
+              }
             },
             {
               "id": "E1.11",
@@ -11678,7 +11714,11 @@
               "beyondExistingScope": "E1.4 technisch vervolg blijft gesloten; hier gaat het om een echte terugkerende gezinsverantwoordelijkheid, gewijzigde omstandigheden en minder menselijke aansturing.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Kies uit een reeds uitgesproken werkelijke gezinsbehoefte één overdraagbare verantwoordelijkheid; vraag alleen ontbrekende inhoudelijke grenzen."
+              "nextAction": "Kies uit een reeds uitgesproken werkelijke gezinsbehoefte één overdraagbare verantwoordelijkheid; vraag alleen ontbrekende inhoudelijke grenzen.",
+              "livingHousemateAcceptance": {
+                "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
+                "scope": "Blijvende gedeelde voorzieningen, adoptie en evaluatie"
+              }
             }
           ],
           "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -13471,6 +13511,10 @@
                   "Herstel en gedragscontrole op een schone installatie zonder oude bronwerkmap"
                 ],
                 "selfDiscoveredNeedRemainsSeparate": true
+              },
+              "livingHousemateAcceptance": {
+                "specification": "development/design/product/autonomous-repair-task-scope-20261022.json#livingHousemateSpecification20261022",
+                "scope": "Voorziening realiseren als losse uitbreiding, later hergebruiken en schoon herstellen"
               }
             },
             {
@@ -16289,7 +16333,7 @@
     {
       "id": "autonomous-repair-20261022",
       "path": "development/design/product/autonomous-repair-task-scope-20261022.json",
-      "sha256": "1b3a953edd3b6d9d15ff2f51db24bbb058f76dd9ae31679c81ba2351c5d9db58"
+      "sha256": "e78342a70944c5c0a19511047468e08de5482d7c7d3172e235ae5fa763d1cc1d"
     }
   ],
   "lastUpdatedAt": "2026-10-20T13:28:55.822181+00:00",

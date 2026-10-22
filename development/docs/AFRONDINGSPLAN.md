@@ -38,6 +38,15 @@ herhaal-/correctieverzoeken, nuttig of hinderlijk initiatief, herstelduur en lat
 hergebruik. Geen reactie blijft onbekend. Regels verplaatsen en tests tellen zijn
 ondersteunende ontwikkelgegevens, geen verbetering van Eva's gezinsnut.
 
+De aanvullende specificatie 'Levende Huisgenoot' wordt uitgevoerd binnen bestaande
+kaarten: E1.8 voor tijdige hulp/ondersteuningskansen, E1.9 voor feedback en corrigeerbare
+persoonlijkheidsbijstellingen, E1.10 voor sociale expressie/eigenheid, E1.11 voor
+blijvende gedeelde voorzieningen en E4.15 voor hun realisatie als herstelbare uitbreiding.
+De [uitwerking en vier gerichte proeven](../design/product/autonomous-repair-task-scope-20261022.json)
+bewaren de eigenaarseisen. De cameraopdracht blijft eerst; geen parallelle nieuwe stores
+of agentlus. Test ook onbekende informatie, ontbrekende toestemming, bronwissen en
+werkelijke pauze. Latere gewone ervaringen toetsen nuttigheid en groei over weken.
+
 ## Waar we beginnen — gecontroleerde feiten en beperkingen
 
 | Bevinding | Bron | Gevolg voor de afmaakroute |
