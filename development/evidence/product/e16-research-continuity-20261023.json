@@ -1,7 +1,7 @@
 {
   "taskId": "E1.6",
   "recordedAt": "2026-10-22T22:54:24.820991+00:00",
-  "status": "installed_source_used_contact_scheduled",
+  "status": "installed_owner_authorized_private_contact_delivered",
   "technicalCompletion": false,
   "userOutcome": "Eva uses her completed research in a useful, naturally worded contribution and keeps its follow-up without another owner prompt.",
   "existingRoute": "Native initiative → original research tool receipt → private source outcomes → same decision scheduler → existing Telegram delivery.",
@@ -44,7 +44,7 @@
   },
   "live": {
     "decision": "completed_ordinary_cycle_with_restored_research_and_relayed_owner_feedback",
-    "delivery": "not_sent_due_to_nighttime",
+    "delivery": "telegram_provider_receipt_confirmed",
     "actualInstalledReceiptRead": {
       "researchReceipts": 1,
       "citationUrls": 4,
@@ -62,7 +62,24 @@
     "nextAttentionLocal": "2026-10-23 10:00 Europe/Amsterdam",
     "provider": "chatgpt-codex:gpt-6-astra",
     "researchRepeated": false,
-    "sourceEvidenceSha256": "3fff34e6548b8d869829ed178d0169ca04818cba3947bc7795f1a8e1c19423ba"
+    "sourceEvidenceSha256": "3fff34e6548b8d869829ed178d0169ca04818cba3947bc7795f1a8e1c19423ba",
+    "deliveryAt": "2026-10-22T23:06:34Z",
+    "contactTrigger": "explicit_owner_permission_for_one_nighttime_private_live_test",
+    "contactDecisionAt": "2026-10-22T23:06:34Z",
+    "contactOutcome": "Natural personal greeting acknowledging owner feedback and asking about their evening; no technical report or new installation claim.",
+    "originalAttentionConsumed": true,
+    "pendingAttentionAfterDelivery": null,
+    "duplicateMorningContactScheduled": false,
+    "speakersUsed": false,
+    "authorizedTest": {
+      "receivedAt": "2026-10-22T23:06:12Z",
+      "originalAttentionAt": "2026-10-23T08:00:00Z",
+      "clockFaked": false,
+      "originalDecisionRewritten": false,
+      "runtimeWorkerInvokedBy": "Owner-authorized operational test; existing decision/authority/usage/delivery route",
+      "harnessSha256": "7555dbc1fc14aefc79079eaec7b65b2d5d5902fb312773f681dcb24c493f8b4f",
+      "recipientReceiptPublished": false
+    }
   },
   "usage": {
     "developmentTokens": null,
@@ -74,12 +91,21 @@
       "input_tokens": 18779,
       "output_tokens": 210,
       "measurement": "measured"
+    },
+    "authorizedContactDecision": {
+      "model_attempts": 1,
+      "tool_calls": 1,
+      "input_tokens": 17032,
+      "output_tokens": 305,
+      "measurement": "measured"
     }
   },
   "limits": [
     "This source repair does not itself prove useful family contact or full E1.6 source watching.",
     "Research citations are retained provider claims, not independent verification of their semantics.",
     "Context is bounded to 8192 bytes; some older outcomes may be omitted.",
-    "A persisted future contact choice is not proof of delivered or useful contact. Owner asked whether to allow current private Telegram live test during quiet hours."
+    "Nighttime contact was explicitly requested and permitted by the owner; it is not proof of spontaneous daily presence or family acceptance.",
+    "Telegram receipt proves delivery to the bound private chat, not that the owner read or liked the message.",
+    "Reply-context forwarding exists in the active Telegram bridge; an actual reply to this message has not yet been observed."
   ]
 }

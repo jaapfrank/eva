@@ -847,7 +847,7 @@
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Volg het opgeslagen contactmoment tot echte nuttige aflevering. Voor een onmiddellijke privé-Telegramproef tijdens rusturen staat één eigenaarsvraag open; zonder antwoord blijft het gekozen dagmoment behouden.",
+    "nextAction": "Gebruik echte reactie en volgende bronverandering voor passend vervolg; bewijs de modelgekozen bronbewaking zonder contactquotum of geforceerde huisgebeurtenis. E1.13 behoudt de gemeten context- en wachttijdverbetering.",
     "ownerActionRequired": false,
     "ownerReprioritization": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection"
   },
@@ -2993,7 +2993,7 @@
         "now": {
           "taskId": "E1.6",
           "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
-          "summary": "Onderzoeksbronnen kwamen niet mee naar eigen vervolgaandacht. Herstel geïnstalleerd; gewone live afweging gebruikte vier bronlinks en de expliciet doorgegeven eigenaarfeedback. Eva koos vanwege de nacht contact op23oktober10:00CEST en sloeg dat moment op. Nog geen bericht afgeleverd; merkbare gebruikersuitkomst en volledige E1.6-bronbewaking zijn niet afgerond.",
+          "summary": "Herstel geïnstalleerd: eigen onderzoeksbronnen bereiken de volgende afweging. Eva gebruikte die en koos zelf later contact. Met expliciete toestemming is diezelfde aandacht vervroegd: persoonlijk Telegrambericht op23oktober01:06CEST daadwerkelijk afgeleverd. Oorspronkelijk ochtendmoment verbruikt, geen dubbele afspraak; speakers niet gebruikt. Dit bewijst de geautoriseerde contactroute, niet dagelijks spontaan gezinsnut of volledige E1.6-bronbewaking.",
           "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account."
         },
         "next": {
@@ -5774,9 +5774,9 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Volg het opgeslagen contactmoment tot echte nuttige aflevering. Voor een onmiddellijke privé-Telegramproef tijdens rusturen staat één eigenaarsvraag open; zonder antwoord blijft het gekozen dagmoment behouden.",
-                "checkedAt": "2026-10-22T23:01:53.494471+00:00",
-                "progress": "Onderzoeksbronnen kwamen niet mee naar eigen vervolgaandacht. Herstel geïnstalleerd; gewone live afweging gebruikte vier bronlinks en de expliciet doorgegeven eigenaarfeedback. Eva koos vanwege de nacht contact op23oktober10:00CEST en sloeg dat moment op. Nog geen bericht afgeleverd; merkbare gebruikersuitkomst en volledige E1.6-bronbewaking zijn niet afgerond.",
+                "nextAction": "Gebruik echte reactie en volgende bronverandering voor passend vervolg; bewijs de modelgekozen bronbewaking zonder contactquotum of geforceerde huisgebeurtenis. E1.13 behoudt de gemeten context- en wachttijdverbetering.",
+                "checkedAt": "2026-10-22T23:08:45.126934+00:00",
+                "progress": "Herstel geïnstalleerd: eigen onderzoeksbronnen bereiken de volgende afweging. Eva gebruikte die en koos zelf later contact. Met expliciete toestemming is diezelfde aandacht vervroegd: persoonlijk Telegrambericht op23oktober01:06CEST daadwerkelijk afgeleverd. Oorspronkelijk ochtendmoment verbruikt, geen dubbele afspraak; speakers niet gebruikt. Dit bewijst de geautoriseerde contactroute, niet dagelijks spontaan gezinsnut of volledige E1.6-bronbewaking.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
                   "development/reviews/e16-source-attention-review-20261020.json",
@@ -8679,7 +8679,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Volg het opgeslagen contactmoment tot echte nuttige aflevering. Voor een onmiddellijke privé-Telegramproef tijdens rusturen staat één eigenaarsvraag open; zonder antwoord blijft het gekozen dagmoment behouden.",
+        "nextAction": "Gebruik echte reactie en volgende bronverandering voor passend vervolg; bewijs de modelgekozen bronbewaking zonder contactquotum of geforceerde huisgebeurtenis. E1.13 behoudt de gemeten context- en wachttijdverbetering.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -11700,9 +11700,9 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Volg het opgeslagen contactmoment tot echte nuttige aflevering. Voor een onmiddellijke privé-Telegramproef tijdens rusturen staat één eigenaarsvraag open; zonder antwoord blijft het gekozen dagmoment behouden.",
-              "checkedAt": "2026-10-22T23:01:53.494471+00:00",
-              "progress": "Onderzoeksbronnen kwamen niet mee naar eigen vervolgaandacht. Herstel geïnstalleerd; gewone live afweging gebruikte vier bronlinks en de expliciet doorgegeven eigenaarfeedback. Eva koos vanwege de nacht contact op23oktober10:00CEST en sloeg dat moment op. Nog geen bericht afgeleverd; merkbare gebruikersuitkomst en volledige E1.6-bronbewaking zijn niet afgerond.",
+              "nextAction": "Gebruik echte reactie en volgende bronverandering voor passend vervolg; bewijs de modelgekozen bronbewaking zonder contactquotum of geforceerde huisgebeurtenis. E1.13 behoudt de gemeten context- en wachttijdverbetering.",
+              "checkedAt": "2026-10-22T23:08:45.126934+00:00",
+              "progress": "Herstel geïnstalleerd: eigen onderzoeksbronnen bereiken de volgende afweging. Eva gebruikte die en koos zelf later contact. Met expliciete toestemming is diezelfde aandacht vervroegd: persoonlijk Telegrambericht op23oktober01:06CEST daadwerkelijk afgeleverd. Oorspronkelijk ochtendmoment verbruikt, geen dubbele afspraak; speakers niet gebruikt. Dit bewijst de geautoriseerde contactroute, niet dagelijks spontaan gezinsnut of volledige E1.6-bronbewaking.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
                 "development/reviews/e16-source-attention-review-20261020.json",
@@ -14605,7 +14605,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Volg het opgeslagen contactmoment tot echte nuttige aflevering. Voor een onmiddellijke privé-Telegramproef tijdens rusturen staat één eigenaarsvraag open; zonder antwoord blijft het gekozen dagmoment behouden.",
+      "nextAction": "Gebruik echte reactie en volgende bronverandering voor passend vervolg; bewijs de modelgekozen bronbewaking zonder contactquotum of geforceerde huisgebeurtenis. E1.13 behoudt de gemeten context- en wachttijdverbetering.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",

@@ -9,5 +9,12 @@
   },
   "correction": "Validate malformed proof evidence and research fields before accessing them.",
   "reviewed": "Exact source/owner/namespace binding, stable original receipt digest, existing uncertain-dispatch gate, no replay or external read.",
-  "limits": "Receipt digest can exist even when inline context is truncated; live useful behavior remains a separate requirement."
+  "limits": "Receipt digest can exist even when inline context is truncated; live useful behavior remains a separate requirement.",
+  "authorizedLiveTestReview": {
+    "reviewer": "/root/review_cursor",
+    "scope": "Operational test script and installed attention consumption identity inspected; delivery receipt reported by coordinator.",
+    "decision": "Evidence description accepted with explicit-trigger qualification",
+    "qualification": "Test retained the real owner-authorized early attention and explicitly invoked the installed decision routine. The running service delivered it. This is not spontaneous scheduler activation.",
+    "duplicatePrevention": "Same attention_suffix reference as normal scheduler consumes original planned occasion once."
+  }
 }
