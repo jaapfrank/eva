@@ -83,6 +83,13 @@ native communicatiestijlspiegel blijft in reflectie/beheer bestaan, maar wordt z
 actuele bron-/revisiecontrole niet als actuele voorkeur aan deze routes doorgegeven.
 Dit is een projectie van bestaand geheugen, geen nieuw profielarchief of oordeelmodel.
 
+Nieuwe bijstellingen via de bestaande leeractie moeten naar de actuele voorganger
+verwijzen. De provider serialiseert uitsluitend admission per persoon/project, zodat
+twee gesprekken geen parallelle correcties op een verouderde versie toelaten.
+Een nog niet verwerkte of gewiste opvolger verhindert terugval; hervatten van de
+eigen toegelaten actie blijft mogelijk. Deze E1.7-correctie is op 23 oktober
+geïnstalleerd. Werkelijk meerdaags routineleren blijft afzonderlijk te bewijzen.
+
 E1.6 verbindt de optionele `source_event_id` op private `NextAttention` aan een exact
 in dezelfde afweging aangeboden bron en haar hash/configuratie. De bestaande provider
 beschrijft uitsluitend haar eigen werkelijke eventdekking. De bestaande aandachtlane

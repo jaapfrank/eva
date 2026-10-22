@@ -1,0 +1,49 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "taskId": "E1.7",
+  "reviewer": "/root/review_cursor",
+  "decision": "GO for bounded revision admission fix",
+  "scope": [
+    "src/eva/providers/human_understanding_actions.py",
+    "development/tests/postgres/test_learning_revision_admission.py"
+  ],
+  "bindings": {
+    "src/eva/providers/human_understanding_actions.py": "defe670cacb4885ec80ee46ea213970a594939ca167904f65fea971b4d1fa4fd",
+    "development/tests/postgres/test_learning_revision_admission.py": "4eb55f6c9d2d381a66a43f6074fcd66b6d5a4a6018af8084680a640db59d5a94"
+  },
+  "findings": [
+    "Stale predecessor and parallel sibling revisions were reproducible on baseline.",
+    "Current-head check is only for new admission; own pending/replay remains usable.",
+    "Real provider admission is retained in erased-successor regression; bare synthetic outbox seeding would not exercise this path.",
+    "No independent criterion or original task end condition changed."
+  ],
+  "verification": {
+    "baseline": {
+      "passed": 2,
+      "failed": 4,
+      "failures": [
+        "retained stale parent",
+        "queued stale parent",
+        "erased stale parent",
+        "concurrent sibling admissions"
+      ]
+    },
+    "candidate": {
+      "passed": 23,
+      "deselected": 47
+    },
+    "installedImageWithoutSourceMount": {
+      "passed": 6,
+      "seconds": 7.53,
+      "database": "disposable PostgreSQL 16.13",
+      "scope": "Synthetic integration cases, not household experience."
+    }
+  },
+  "limits": [
+    "No real multi-day routine, subsequent observation or household behavior change proved.",
+    "The observed zero explicit learning actions is not explained by this race fix. Native Hindsight synthesis is separate.",
+    "Serialization covers this provider; direct historical seeding is not a second supported concurrent write route.",
+    "Historical revision chain bound and existing retention behavior are unchanged."
+  ],
+  "fullTaskCompleted": false
+}

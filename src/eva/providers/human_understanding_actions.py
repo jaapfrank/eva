@@ -1,6 +1,7 @@
 """Source-bound provisional learning through the ordinary memory outbox."""
 from datetime import UTC, datetime
 from dataclasses import replace
+import sqlalchemy as sa
 
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox, conversation_memory_document_from_outbox_data
 from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, external_timeline_scope, CheckpointConflict
@@ -122,12 +123,34 @@ class HumanUnderstandingActions:
             "step_index": step_index}
         events = timeline.events(slot)
         if not events:
-            try:
-                timeline.create_thread(thread_id=slot, checkpoint_id=slot + ":admitted", occurred_at=now,
-                    data=admission, event_type="HUMAN_UNDERSTANDING_ADMITTED", phase="learning_admitted")
-            except CheckpointConflict:
-                pass
-            events = timeline.events(slot)
+            # Serialize only admission, not retention or a model call. Otherwise
+            # two conversations can both revise A and silently bypass correction B.
+            lane = "learning-admission:" + canonical_sha256([
+                turn.tenant_id, turn.installation_id, turn.principal_id, turn.project_id])
+            with self.engine.begin() as connection:
+                connection.execute(sa.text(
+                    "SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"), {"key": lane})
+                events = timeline.events(slot)
+                if not events:
+                    reader, query, now, _ = self._host(turn)
+                    previous = call.arguments["previous_source_ref"]
+                    if previous is not None:
+                        evidence = call.arguments["previous_evidence_ref"]
+                        current = reader.learning_source(query, previous, evidence,
+                            now=now, follow_revisions=True)
+                        head = None if not current or not current.get("records") else current["records"][0]
+                        if head is None or (head["source_ref"], head["evidence_ref"]) != (previous, evidence):
+                            raise ConversationActionInputRejected(
+                                ("previous_source_ref", "previous_evidence_ref"),
+                                prompt="Deze interpretatie is inmiddels herzien of wordt herzien. Lees de actuele "
+                                    "persoonscontext en verbind tegeninformatie aan de nieuwste beschikbare versie; "
+                                    "maak geen nieuwe losse kopie om de correctie te omzeilen.")
+                    try:
+                        timeline.create_thread(thread_id=slot, checkpoint_id=slot + ":admitted", occurred_at=now,
+                            data=admission, event_type="HUMAN_UNDERSTANDING_ADMITTED", phase="learning_admitted")
+                    except CheckpointConflict:
+                        pass
+                    events = timeline.events(slot)
         state = timeline.load(slot)
         if not events or events[0].payload.get("data") != admission:
             raise ConversationConflict("learning step replay differs")

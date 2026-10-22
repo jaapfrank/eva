@@ -1,0 +1,77 @@
+{
+  "contract": "EvaLearningRevisionEvidence/v1",
+  "taskId": "E1.7",
+  "checkedAt": "2026-10-22T23:24:35.166163+00:00",
+  "outcome": "Installed current-predecessor admission prevents a later correction from bypassing an intervening revision.",
+  "built": true,
+  "installed": true,
+  "fullTaskCompleted": false,
+  "changes": [
+    "Serialize new learning admissions per tenant, installation, principal and project using the existing PostgreSQL advisory-lock pattern.",
+    "Require the exact current predecessor for a new revision; pending and erased successors block stale fallback.",
+    "Preserve exact admitted resumption and completed replay. No new store, scheduler or model call."
+  ],
+  "files": {
+    "src/eva/providers/human_understanding_actions.py": "defe670cacb4885ec80ee46ea213970a594939ca167904f65fea971b4d1fa4fd",
+    "development/tests/postgres/test_learning_revision_admission.py": "4eb55f6c9d2d381a66a43f6074fcd66b6d5a4a6018af8084680a640db59d5a94"
+  },
+  "tests": {
+    "baseline": {
+      "passed": 2,
+      "failed": 4,
+      "failures": [
+        "retained stale parent",
+        "queued stale parent",
+        "erased stale parent",
+        "concurrent sibling admissions"
+      ]
+    },
+    "candidate": {
+      "passed": 23,
+      "deselected": 47
+    },
+    "installedImageWithoutSourceMount": {
+      "passed": 6,
+      "seconds": 7.53,
+      "database": "disposable PostgreSQL 16.13",
+      "scope": "Synthetic integration cases, not household experience."
+    }
+  },
+  "installation": {
+    "base": "sha256:ffffcc75d507acde6274fe9f505c48a18f1c1e4e0ba76b8795fd680294f001b4",
+    "image": "sha256:0fd9fb575e32f553f75c667dd8efdc8e6669f2c182ebf855c4bc053c88c0be61",
+    "retainedMounts": true,
+    "activeClaimsChecked": true,
+    "workerChanged": false,
+    "profilesBeforeAfterUnchanged": true,
+    "existingMismatch": [
+      "household_research"
+    ],
+    "compatibleProfiles": [
+      "digital_work",
+      "shared_provider",
+      "public_research"
+    ]
+  },
+  "liveReadOnlyProbe": {
+    "realTelegramSourceAt": "2026-10-22T23:08:49Z",
+    "actionAvailable": true,
+    "contactCatalogContainsAction": true,
+    "workCatalogContainsAction": true,
+    "productionWrites": false,
+    "messagesSent": false,
+    "modelCalls": 0
+  },
+  "discovery": {
+    "humanUnderstandingActionEvents": 0,
+    "currentContactLearningEntries": 0,
+    "routineRecall": "Bounded reads returned historical or technical context, not enough current source-bound evidence to establish a household routine. This is not proof that all memory lacks useful information."
+  },
+  "limits": [
+    "No real multi-day routine, subsequent observation or household behavior change proved.",
+    "The observed zero explicit learning actions is not explained by this race fix. Native Hindsight synthesis is separate.",
+    "Serialization covers this provider; direct historical seeding is not a second supported concurrent write route.",
+    "Historical revision chain bound and existing retention behavior are unchanged."
+  ],
+  "nextAction": "Observe the existing ordinary contact/dream/initiative route using real sources; verify a conditional expectation and actual counterevidence without injecting a fabricated household routine."
+}

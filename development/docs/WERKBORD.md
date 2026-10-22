@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Routines met betekenis, uitzonderingen en tegenbewijs leren
 
-E1.7 gestart: bestaande persoonscontext, verwachting en correctieketen onderzocht. De geïnstalleerde registratie bevat nog geen HUMAN_UNDERSTANDING-acties; eerst vaststellen welke echte meerdaagse bronnen en modeloverdracht bruikbaar zijn. Geen nieuwe patroonstore of verzonnen routine.
+E1.7: correctiebehoud geïnstalleerd. Nieuwe leerbijstellingen moeten de actuele voorganger gebruiken; twee gesprekken kunnen geen recentere correctie meer overslaan. Vier regressies faalden op de oude versie; 23 gerichte controles en zes controles tegen de geïnstalleerde image slagen. De actie is beschikbaar voor het echte Telegramgesprek. Nog geen werkelijk meerdaags routineleren of latere gedragsbijstelling bewezen.
 
 Klaar wanneer: Eva leidt uit beschikbare echte gebeurtenissen over meerdere dagen een voorlopige routine met relevante omstandigheden af, legt toetsbare verwachting en tegenbewijs vast en gebruikt haar in een latere passende afweging. Een echte uitzondering of correctie verandert de volgende verwachting en het latere gedrag; zonder voldoende dekking blijft de uitkomst onbekend. Een gerichte natuurlijke vraag mag een belangrijk informatiegat sluiten. Geen vooraf gecodeerde gezinsroutine, gefingeerde waarschijnlijkheid, aparte patroonstore of verplichte classificatie per bericht.
 
