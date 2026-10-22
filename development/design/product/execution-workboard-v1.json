@@ -851,7 +851,8 @@
     "ownerActionRequired": false,
     "checkedAt": "2026-10-22T09:23:02.946161+00:00",
     "implementationStatus": "uninstalled_partial_implementation_under_design_review",
-    "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022"
+    "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
+    "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022"
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -7876,7 +7877,8 @@
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/autonomous-repair-foundation-20261022.json",
                 "implementationStatus": "uninstalled_partial_implementation_under_design_review",
-                "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022"
+                "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
+                "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022"
               }
             ],
             "previousBoundedCompletion": {
@@ -13483,7 +13485,8 @@
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/autonomous-repair-foundation-20261022.json",
               "implementationStatus": "uninstalled_partial_implementation_under_design_review",
-              "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022"
+              "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
+              "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022"
             }
           ],
           "previousBoundedCompletion": {
@@ -16266,7 +16269,7 @@
     {
       "id": "autonomous-repair-20261022",
       "path": "development/design/product/autonomous-repair-task-scope-20261022.json",
-      "sha256": "ea27b605e2bdd7feeed9772cbdd6d17467f61bd9ca9a3906660c711e6f4d7be2"
+      "sha256": "00c47142cc35f9c8ee49fc2bda565307404e7d5d97af91e667035bc2c3cd5ccc"
     }
   ],
   "lastUpdatedAt": "2026-10-20T13:28:55.822181+00:00",

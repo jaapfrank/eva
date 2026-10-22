@@ -119,5 +119,36 @@
     ],
     "productionChangesDuringReassessment": false,
     "completionClaim": false
+  },
+  "ownerPracticalAcceptance20261022": {
+    "scenario": "Eva krijgt de gewone opdracht om bekende personen via een camera te herkennen en passend te begroeten, of een bezoeker via de cameradeurbel te begroeten.",
+    "purpose": "Bewijs dat Eva zelf een ontbrekende mogelijkheid onderzoekt, realiseert en controleert; E4.15 zelfstandige ontwikkeling en E4.16 herstel bij een werkelijk aangetroffen fout.",
+    "status": "specified_not_executed",
+    "existingEvidence": "development/evidence/product/camera-observer-installed-20261019.json",
+    "existingCapability": "Technische camerawaarneming en koppeling naar initiatief zijn eerder geïnstalleerd. Herkenningsnauwkeurigheid en daadwerkelijke begroeting waren niet bewezen.",
+    "requiredEvaActions": [
+      "Onderzoek via bestaande toegangen de beschikbare camera, detectiegebeurtenissen, herkenningsprovider en bevestigde referenties; verifieer de actuele toestand.",
+      "Onderzoek of de deurbel werkelijk een ondersteunde spreekuitgang heeft. Een camera of speakerentiteit alleen bewijst geen intercomfunctie.",
+      "Hergebruik bestaande modules en bepaal de ontbrekende verbinding, configuratie of code. Vraag uitsluitend concreet ontbrekende toegang met uitleg van het nut.",
+      "Maak de benodigde voorziening via de bestaande duurzame uitvoerder, laat relevante wijzigingen beoordelen en pas ze beheerd toe.",
+      "Controleer de hele gebeurtenisketen: aankomst, actuele waarneming, herkenning of onbekend, passende afweging, juiste audio-uitgang en werkelijk hoorbaar resultaat.",
+      "Registreer en herstel een aangetroffen fout via dezelfde blijvende opdracht; geen succesclaim op basis van een toolbevestiging of geschreven code alleen."
+    ],
+    "acceptanceCases": [
+      "Een bekende persoon met bevestigde referentie wordt juist herkend en passend één keer begroet.",
+      "Een onbekende of onzekere herkenning krijgt geen verzonnen naam. Bezorgersrol wordt niet uitsluitend uit uiterlijk afgeleid.",
+      "De begroeting klinkt op de bedoelde deurbel of afgesproken uitgang; een bevestigde audioaanroep alleen bewijst geen hoorbaarheid.",
+      "Herhaalde detecties en reconnect veroorzaken geen reeks begroetingen; stoppen voorkomt verdere acties.",
+      "Ontbrekende toegang, een niet-beschikbare spreekfunctie of uitval leidt tot gericht vervolg met behouden voortgang.",
+      "Het gedrag wordt later opnieuw gebruikt zonder nieuwe handmatige Codex-verbinding."
+    ],
+    "measurements": [
+      "Tijd van detectie tot eerste hoorbare reactie",
+      "Correcte, onzekere en verkeerde herkenningen",
+      "Dubbele begroetingen",
+      "Model- en toolgebruik",
+      "Benodigde menselijke tussenkomst"
+    ],
+    "proofBoundary": "Codex bouwt niet vooraf de gehele camerafunctie en presenteert die daarna als Eva-zelfbouw. Eerder technisch camerabewijs blijft intact. Geen nieuwe afzonderlijke productplanner of camera-specifieke kernroute."
   }
 }
