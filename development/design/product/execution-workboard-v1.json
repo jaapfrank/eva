@@ -841,15 +841,15 @@
   "lastUpdated": "2026-10-18T02:55:51.973301+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E1.6",
+  "activeTaskId": "E4.16",
   "currentWork": {
-    "id": "E1.6",
-    "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+    "id": "E4.16",
+    "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
-    "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
-    "checkedAt": "2026-10-21T09:48:32.565185+00:00",
-    "ownerActionRequired": false
+    "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+    "nextAction": "Verbind foutregistratie met bestaande duurzame initiatief/ontwikkelroute; bind algemeen hersteldoel aan onafhankelijke oorspronkelijke gedragscontrole en bestaande toepassing.",
+    "ownerActionRequired": false,
+    "checkedAt": "2026-10-22T08:16:48.682105+00:00"
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -2991,8 +2991,8 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E1.6",
-          "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+          "taskId": "E4.16",
+          "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
           "status": "in_progress",
           "state": "in_progress",
           "summary": "Bestaande relevante bronveranderingen verbinden met eigen aandacht en passend vervolg.",
@@ -7841,6 +7841,37 @@
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
                 "nextAction": "Eerste nieuwe uitvoerprioriteit: laat Eva uit echte bestaande context één behoefte selecteren; inventariseer haar beschikbare uitvoer- en afleverroute vóór enige nieuwe adapterbouw."
+              },
+              {
+                "id": "E4.16",
+                "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+                "status": "in_progress",
+                "kind": "owner_requested_followup",
+                "owner": "Codex · kernuitvoerder; spraakuitvoerder behoudt implementatie-eigendom",
+                "ownerActionRequired": false,
+                "requiredForCurrentDelivery": true,
+                "ownerAuthorization": "Eigenaar22oktober2026: echte problemen moeten automatisch tot blijvend herstel leiden, kort melden dat Eva zichzelf gaat repareren; maak Eva autonoom voortdurend verbeterend en reparerend.",
+                "scopeOrigin": "autonomous-repair-20261022",
+                "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+                "dependsOn": [
+                  "E4.5",
+                  "E4.13"
+                ],
+                "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
+                "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
+                "nextAction": "Verbind foutregistratie met bestaande duurzame initiatief/ontwikkelroute; bind algemeen hersteldoel aan onafhankelijke oorspronkelijke gedragscontrole en bestaande toepassing.",
+                "files": [
+                  "src/eva/adapters/api/dashboard_conversation.py",
+                  "src/eva/bootstrap/runtime.py",
+                  "src/eva/adapters/postgres/initiative_execution.py",
+                  "src/eva/operations/component_final_assessment.py",
+                  "src/eva/operations/component_release_publisher.py"
+                ],
+                "assignment": {
+                  "coordinator": "/root",
+                  "activeWorkers": []
+                },
+                "evidence": "development/evidence/product/autonomous-repair-20261022.json"
               }
             ],
             "previousBoundedCompletion": {
@@ -13414,6 +13445,37 @@
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
               "nextAction": "Eerste nieuwe uitvoerprioriteit: laat Eva uit echte bestaande context één behoefte selecteren; inventariseer haar beschikbare uitvoer- en afleverroute vóór enige nieuwe adapterbouw."
+            },
+            {
+              "id": "E4.16",
+              "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+              "status": "in_progress",
+              "kind": "owner_requested_followup",
+              "owner": "Codex · kernuitvoerder; spraakuitvoerder behoudt implementatie-eigendom",
+              "ownerActionRequired": false,
+              "requiredForCurrentDelivery": true,
+              "ownerAuthorization": "Eigenaar22oktober2026: echte problemen moeten automatisch tot blijvend herstel leiden, kort melden dat Eva zichzelf gaat repareren; maak Eva autonoom voortdurend verbeterend en reparerend.",
+              "scopeOrigin": "autonomous-repair-20261022",
+              "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+              "dependsOn": [
+                "E4.5",
+                "E4.13"
+              ],
+              "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
+              "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
+              "nextAction": "Verbind foutregistratie met bestaande duurzame initiatief/ontwikkelroute; bind algemeen hersteldoel aan onafhankelijke oorspronkelijke gedragscontrole en bestaande toepassing.",
+              "files": [
+                "src/eva/adapters/api/dashboard_conversation.py",
+                "src/eva/bootstrap/runtime.py",
+                "src/eva/adapters/postgres/initiative_execution.py",
+                "src/eva/operations/component_final_assessment.py",
+                "src/eva/operations/component_release_publisher.py"
+              ],
+              "assignment": {
+                "coordinator": "/root",
+                "activeWorkers": []
+              },
+              "evidence": "development/evidence/product/autonomous-repair-20261022.json"
             }
           ],
           "previousBoundedCompletion": {
@@ -16192,8 +16254,22 @@
       "id": "entity-development-20261021",
       "path": "development/design/product/entity-development-task-scope-20261021.json",
       "sha256": "57ebe8e7f419df32304fa4e7e58f50a39288163c10fea9a4b91f0b4c5a7a3028"
+    },
+    {
+      "id": "autonomous-repair-20261022",
+      "path": "development/design/product/autonomous-repair-task-scope-20261022.json",
+      "sha256": "0d1a2186594cbc6a65757ff1f2733e38949dc3bd6908396b27da9677583b55e9"
     }
   ],
   "lastUpdatedAt": "2026-10-20T13:28:55.822181+00:00",
-  "checkedAt": "2026-10-20T13:28:55.822181+00:00"
+  "checkedAt": "2026-10-20T13:28:55.822181+00:00",
+  "previousCurrentWorkBeforeAutonomousRepair20261022": {
+    "id": "E1.6",
+    "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+    "status": "in_progress",
+    "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
+    "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
+    "checkedAt": "2026-10-21T09:48:32.565185+00:00",
+    "ownerActionRequired": false
+  }
 }

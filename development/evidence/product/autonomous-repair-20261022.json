@@ -1,0 +1,18 @@
+{
+  "contract": "EvaAutonomousRepairOutcome/v1",
+  "taskId": "E4.16",
+  "status": "in_progress",
+  "recordedAt": "2026-10-22T08:16:48.682105+00:00",
+  "ownerAuthorization": "Eigenaar22oktober2026: echte problemen moeten automatisch tot blijvend herstel leiden, kort melden dat Eva zichzelf gaat repareren; maak Eva autonoom voortdurend verbeterend en reparerend.",
+  "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
+  "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
+  "endCondition": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+  "scope": "Existing incident/initiative/development/evaluation/application chain; no second planner, memory, permanent daemon or new provider.",
+  "preserved": "Completed E4.5/L3 evidence, original criteria, foreign WIP, existing voice ownership, source hashes and uncertain effects.",
+  "stages": {
+    "automaticDurableIntake": "not_implemented",
+    "autonomousDiagnosisAndCandidate": "existing_executor_not_yet_integrated",
+    "independentGeneralRepairAssessment": "not_implemented",
+    "managedInstallAndOriginalBehaviorReadback": "existing_bounded_route_not_yet_generalized"
+  }
+}
