@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T13:46:28.447868+00:00",
+  "updatedAt": "2026-10-23T17:56:29.505254+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -280,12 +280,12 @@
       "statusProposal": {
         "taskId": "E2.9",
         "status": "in_progress",
-        "checkedAt": "2026-10-23T17:09:23.774714+00:00",
+        "checkedAt": "2026-10-23T17:55:42.287866+00:00",
         "ownerActionRequired": false,
-        "boundedOutcomeCompleted": false,
+        "boundedOutcomeCompleted": true,
         "fullTaskCompleted": false,
-        "progress": "Bestaande initiatiefweergave uitgebreid met maximaal twee werkelijk geregistreerde open projecten, volgende verkenning, wijzigingsdatum en bewaarde bijdrage. Afgerond/gestopt blijven in historie; open betekent niet actief bezig. Details, feedback en stoppen gebruiken dezelfde bestaande bediening. Drie selectiecontroles, geïsoleerde browsercontrole en onafhankelijke review GO; verzegelde assets laden in de huidige core-image. Nog niet gedeeld geïnstalleerd. Andere E2.9-gegevensroutes blijven open.",
-        "nextAction": "Coördinator: integreer de vier exact verzegelde UI-assets op de actuele corebasis, met bestaande werkclaimcontrole en zonder spraak-/workerwijziging; controleer dezelfde privéweergave daarna live. Geen volledige E2.9-acceptatie afleiden uit deze beperkte UI-uitkomst.",
+        "progress": "Nieuwe projectenweergave is door windows-root geïnstalleerd en op de echte Eva gecontroleerd. Maximaal twee werkelijk open projecten boven bestaande historie, met geregistreerde bijdrage en directe bestaande bediening. Live: 2 van 6 open projecten, drie geserveerde assethashes exact gelijk aan beoordeelde build, detailnavigatie en mobiel390px goed, nul mutaties/modelcalls/berichten/JS-fouten. Open status wordt niet als lopende uitvoering voorgesteld. Overige E2.9-lifecycles/gegevensroutes blijven open.",
+        "nextAction": "Behoud geïnstalleerde projectenweergave; werk resterende E2.9 Household Artifact/curiosity/trace/personality-gegevensroutes via bestaande bijbehorende kaarten af. Deze beperkte UI-uitkomst is klaar; geen herhaalde proef of volledige E2.9-acceptatieclaim.",
         "evidenceToAppend": [
           "development/evidence/product/e29-current-projects-20261023.json"
         ],
@@ -300,7 +300,7 @@
         "E4.15/E4.17 dependencies remain. Early bounded cleanup does not close E4.18.",
         "Use statusProposal for workboard/docs changes; WSL integrates shared files preserving foreign hunks."
       ],
-      "updatedAt": "2026-10-23T17:09:23.774714+00:00",
+      "updatedAt": "2026-10-23T17:56:14.071340+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -358,10 +358,10 @@
       },
       "dashboardIntegrationRequest": {
         "taskId": "E2.9",
-        "requestedAt": "2026-10-23T17:09:23.774714+00:00",
-        "status": "awaiting_coordinator_integration",
+        "requestedAt": "2026-10-23T17:55:42.287866+00:00",
+        "status": "live_verification_complete_awaiting_coordinator_board_git_merge",
         "to": "current coordinator",
-        "request": "Verwerk E2.9 statusProposal als gebouwd/beoordeeld, niet geïnstalleerd en niet geheel afgerond. E4.17 is reeds door wsl-e18 erkend. Bewaar de huidige primaire Telegram/E4.15-volgorde; deze kandidaat kan bij volgende passende veilige installatie worden meegenomen.",
+        "request": "Verwerk nieuwe statusProposal: E2.9-projectenweergave geïnstalleerd en werkelijk gelezen/gecontroleerd. Volledige E2.9 blijft in_progress. Eigen evidence JSON bijgewerkt; neem mee in jouw integratie/GitHub, samen met exacte verzegelde repoassets. Geen productie-stop/feedback/gezinsberichten door deze executor.",
         "sourceCommit": "0f5720869156e75759a5a1784bae7166df64445c",
         "evidence": "development/evidence/product/e29-current-projects-20261023.json"
       },
@@ -620,7 +620,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "E2.9 candidate built, reviewed and pushed; exact static-assets integration request ready. Shared deployment remains coordinator-owned.",
+      "status": "Completed exact requested E2.9 live UI/hash check; public own evidence and statusProposal ready. Coordinator integrates canonical board/Git; no executor mutation/Git/install.",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -687,7 +687,7 @@
         "endCondition": "Source-driven selection and browser UI verified; existing full history/stop/feedback retained. Candidate assets separately handed off for co-installation by coordinator. Not full E2.9 completion.",
         "budget": "One small UI candidate, focused selection tests and isolated browser check. No model calls or shared install/restart.",
         "integrationOwner": "wsl-e18: bundled asset registration/pins/deployment after reviewed exact candidate, preferably alongside current Telegram integration.",
-        "status": "candidate_built_verified_reviewed",
+        "status": "installed_live_verified",
         "sourceCommit": "0f5720869156e75759a5a1784bae7166df64445c",
         "gitPushed": true,
         "independentReview": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -697,12 +697,15 @@
           "mobileWidth": 390,
           "actualCurrentImageAssetLoaderPassed": true
         },
-        "installed": false
+        "installed": true,
+        "completedAt": "2026-10-23T17:55:42.287866+00:00",
+        "boundedOutcomeCompleted": true,
+        "fullTaskCompleted": false
       },
       "installationRequest": {
         "requestedAt": "2026-10-23T17:09:23.774714+00:00",
         "to": "current coordinator, wsl-e18/new Windows leader",
-        "status": "exact_candidate_ready_awaiting_coordinator_integration",
+        "status": "coordinator_deployed_exact_candidate_live_verified",
         "sourceCommit": "0f5720869156e75759a5a1784bae7166df64445c",
         "candidateManifest": "/home/administrator/project/.eva2-artifacts/e29-current-projects-20261023/candidate.private.json",
         "stagedStaticRoot": "/home/administrator/project/.eva2-artifacts/e29-current-projects-20261023/staged/src/eva/adapters/api/dashboard_static",
@@ -723,6 +726,41 @@
         "validation": "Reviewed exact source/build; real current image loader accepts the candidate; isolated browser verifies existing stop/details and stale clearing. Before deployment recheck actual base image, full configuration, active conversation/work/review claims. After install verify asset manifest and same owner screen read-only; never replay synthetic stop against production.",
         "recovery": "Retain actual previous core image/config and static manifest for targeted correction if needed; no automatic rollback/replay.",
         "restartPerformed": false
+      },
+      "installationFollowup": {
+        "status": "installed_by_coordinator_live_verified",
+        "requestedAt": "2026-10-23T17:49:54.362608+00:00",
+        "ownerInstruction": "Direct owner asks coordinate with newly appointed coordinator, install and verify projects view, update dashboard, preserve voice ownership.",
+        "coordinatorThreadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
+        "coordinatorTitle": "Los Telegram-vertraging op",
+        "coordinatorId": "windows-root",
+        "request": "Install exact already reviewed candidate or explicitly transfer concrete candidate window; coordinator owns shared integration. Executor prepares read-only actual UI/static-hash verification, no synthetic stop against production.",
+        "candidateSourceCommit": "0f5720869156e75759a5a1784bae7166df64445c",
+        "candidateHandoffCommit": "26a0e6b8f10e0ddac4695b8a4c0848fe2a724f7e",
+        "voiceChangesAllowed": false,
+        "coordinatorCandidate": {
+          "path": "/var/lib/eva2/telegram-latency-20261023",
+          "scope": "Telegram provider continuation in core/worker plus separately reviewed exact four E2.9 assets",
+          "status": "built_smoke_checked_pending_install_review",
+          "noQuestionResend": true
+        },
+        "actualRuntimeUidLoader": "/home/administrator/project/.eva2-artifacts/e29-current-projects-20261023/actual-runtime-user-loader.private.json",
+        "runtimeUser": "65532:65532",
+        "staticPermissions": "Directories0755/files0644 under private enclosing artifact root; file hashes unchanged. Ensure exact image asset directory is readable by actual runtime user.",
+        "liveAcceptancePrepared": "/home/administrator/project/.eva2-artifacts/e29-current-projects-20261023/verify-installed-readonly.private.cjs",
+        "liveAcceptanceGuard": "Allows GET/HEAD only, blocks all mutations and external origins; verifies exact published static hashes and max2 actual owner project records, detail focus, mobile layout. No stop/feedback sends on production.",
+        "liveCheckedAt": "2026-10-23T17:54:24.697Z",
+        "installedCoreImage": "sha256:4a9757c78aa5304b685bea16d1451b045d05ef7071ed018049d70406a92db021",
+        "readOnlyAcceptance": "passed: exact three HTTP asset hashes, two of six actual retained open projects, correct detail focus, 390px layout, zero mutations/models/messages/JS errors.",
+        "coordinatorConfirmation": {
+          "sourceThreadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
+          "receivedAt": "2026-10-23T17:56:14.071340+00:00",
+          "privateInstallationProof": "/var/lib/eva2/telegram-latency-20261023/installation.private.json",
+          "coreImage": "sha256:4a9757c78aa5304b685bea16d1451b045d05ef7071ed018049d70406a92db021",
+          "workerImage": "sha256:35ab213c37486b3a904c19935c7254ee230bc440297658c0bf54ec4dc5f0e658",
+          "instructions": "Read-only live UI/hash verification and own E2.9 evidence only; no stops/mutations/Git/shared installation. Coordinator handles canonical board/Git."
+        },
+        "resultReadyForCoordinator": true
       }
     }
   },
@@ -895,5 +933,48 @@
   },
   "communication": {
     "rule": "Each executor edits its own section, rereading and preserving other sections. WSL checks requests at work boundaries and before shared edits/install; file changes are not automatic notifications. Relay urgent requests in chat."
+  },
+  "coordinator": {
+    "id": "windows-root",
+    "takenOverAt": "2026-10-23T17:48:54.793238+00:00",
+    "authority": "Direct owner instruction 2026-10-23: sole main coordinator; integration, GitHub and shared installation exclusively here.",
+    "previousCoordinator": "wsl-e18",
+    "preserveExistingReservations": true,
+    "activeOutcome": "Telegram latency and ordinary follow-up before retained E4.15 candidate",
+    "doNotRepeatSentLolaQuestion": true,
+    "agents": {
+      "telegram_diagnosis": {
+        "mode": "read_only_preparation_latency_diagnosis",
+        "scope": [
+          "deploy/telegram-bridge/standalone.mjs",
+          "src/eva/application/conversation.py",
+          "src/eva/adapters/model/pydantic_conversation.py",
+          "src/eva/providers/telegram_contacts.py"
+        ],
+        "doneWhen": "Measured cause and minimal exact patch proposal without new messages",
+        "writeScope": [
+          "src/eva/providers/telegram_contacts.py",
+          "development/tests/providers/test_telegram_contacts.py"
+        ],
+        "result": "81 targeted checks passed; provider patch ready"
+      },
+      "telegram_review": {
+        "mode": "completed_GO_bounded_live",
+        "scope": [
+          "src/eva/providers/telegram_contacts.py",
+          "development/tests/providers/test_telegram_contacts.py",
+          "existing conversation routing tests"
+        ],
+        "doneWhen": "Independent acceptance boundaries and review of concrete repair",
+        "result": "Source GO; follow-up/transport checks passed; local API tests blocked by preexisting missing httpx2"
+      }
+    },
+    "maxConcurrentExecutorsReviewers": 2,
+    "installationCandidate": {
+      "path": "/var/lib/eva2/telegram-latency-20261023",
+      "scope": "Telegram provider continuation in core/worker plus separately reviewed exact four E2.9 assets",
+      "status": "installed_live_contact_and_projects_verified_preparation_latency_open",
+      "noQuestionResend": true
+    }
   }
 }

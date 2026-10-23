@@ -173,6 +173,55 @@ def test_factory_disabled_by_default(monkeypatch):
         TelegramContactsProviderFactory.load_settings()
 
 
+@pytest.mark.parametrize("name,status,allowed", [
+    (LIST, "verified", True),
+    (SEND, "verified", True),
+    (LIST, "failed", False),
+    (LIST, "unknown", False),
+    (LIST, None, False),
+    (SEND, "failed", False),
+    ("inspect_item", "verified", False),
+])
+def test_contact_continuation_requires_verified_provider_receipt(name, status, allowed):
+    from eva.application.conversation import ConversationActionReceipt
+
+    receipt = ConversationActionReceipt(ConversationActionCall("call", name, {}),
+        {} if status is None else {"status": status})
+    assert TelegramContacts.contact_reply_allowed(None, receipt) is allowed
+
+
+def test_verified_contact_discovery_and_send_avoid_work_model_and_full_recall():
+    from eva.application.conversation import LivingConversation
+    from tests.application.test_contact_model import Actions, Model, IDENTITY, turn
+    from tests.application.test_conversation import _Memory
+
+    class ContactActions(Actions):
+        action_names = (LIST, SEND)
+        contact_reply_allowed = staticmethod(TelegramContacts.contact_reply_allowed)
+
+        def execute_step(self, source, call, *, step_index):
+            return self.execute(source, call)
+
+    def choose(source, context):
+        receipt = context["completed_action"]
+        if receipt is None:
+            return ConversationActionCall("list", LIST, {})
+        if receipt.call.name == LIST:
+            return ConversationActionCall("send", SEND, {})
+        assert context["prior_actions"][0].call.name == LIST
+        return "Telegram heeft het bericht aangenomen."
+
+    memory = _Memory()
+    contact = Model(choose)
+    work = Model(lambda *_: pytest.fail("verified contact discovery escalated to work model"))
+    result = LivingConversation(memory, work, IDENTITY, ContactActions(),
+        contact_model=contact).respond(turn())
+    assert result.text == "Telegram heeft het bericht aangenomen."
+    assert len(contact.calls) == 3
+    assert not work.calls
+    assert memory.query is None
+
+
 @pytest.mark.parametrize("uncertain", [False, True])
 def test_existing_durable_orchestrator_replay_does_not_send_twice(monkeypatch, uncertain):
     from eva.application.orchestration import VerifiedToolOrchestrator

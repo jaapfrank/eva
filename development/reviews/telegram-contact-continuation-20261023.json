@@ -1,0 +1,15 @@
+{
+  "scope": "One-line Telegram verified contact-list continuation; exact source and overlay install review",
+  "reviewer": "/root/telegram_review",
+  "verdict": "GO_BOUNDED_REPAIR_LATENCY_OPEN",
+  "sourceSha256": "7c045c0d673a64d3fecb761b3ddee6cd60defdb54d2e2b0d174fee8f4afe147a",
+  "installScriptSha256": "bf1a2c2b8ef513200d1cace0d4374ab94c1ed2c75922b202fe92da3be1a02c71",
+  "checks": [
+    "LIST/SEND verified only; existing owner/STOP/receipt/uncertain-replay guards unchanged",
+    "Only core/worker image fields change; real current bases and exact four separately reviewed UI assets",
+    "No active conversation/work/component review claims before dispatch",
+    "Installed shared/digital profiles match; old household_research mismatch retained",
+    "Read-only contact list and plain followup semantically correct, no SEND or job"
+  ],
+  "limitation": "Contact preparation latency remains open; no genuine Telegram network exchange or family acceptance."
+}

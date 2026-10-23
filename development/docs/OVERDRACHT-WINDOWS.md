@@ -36,8 +36,7 @@ De nieuwe route is geïnstalleerd in kern en worker. Eva koos live zelf de conta
 en verzendtool en verstuurde de openstaande vraag eenmaal met exact ontvangstbewijs.
 De expliciete operatoroverdracht liep via de bestaande dashboard-conversatieroute;
 dit vervangt geen acceptatie van een gewone nieuwe Telegram-opdracht. Het volledige
-gesprek duurde 40,137 seconden. Pak die vertraging en gewone vervolgvragen als eerste
-aan; stuur de reeds verstuurde vraag niet opnieuw. Een verzendbewijs betekent
+gesprek duurde 40,137 seconden. Windows-root heeft de hoofdcoördinatie overgenomen. De onnodige werkmodel-/geheugenovergang na contactontdekking is hersteld en in kern en worker geïnstalleerd; onafhankelijk beoordeelde proeven via de echte handler en kern tonen contactenlijst en gewone vervolgsemantiek zonder nieuwe verzending. De antwoorden zijn lokaal afgevangen. Gemeten 13,890 en 10,913 seconden; 6–7,6 seconden contactvoorbereiding blijft eerst te herstellen. De reeds beoordeelde E2.9-projectenweergave is mee geïnstalleerd en live alleen-lezen gecontroleerd. Stuur de reeds verstuurde vraag niet opnieuw. Een verzendbewijs betekent
 Telegram-acceptatie, niet dat iemand las of antwoordde.
 
 Daarna blijft E4.15 de hoofdtaak: een werkelijk door Eva gemaakte uitbreiding

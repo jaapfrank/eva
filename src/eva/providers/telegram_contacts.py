@@ -84,7 +84,7 @@ class TelegramContacts:
 
     @staticmethod
     def contact_reply_allowed(turn, receipt):
-        return receipt.call.name == SEND and receipt.output.get("status") == "verified"
+        return receipt.call.name in {LIST, SEND} and receipt.output.get("status") == "verified"
 
     def _contacts(self):
         # The existing loader validates this trusted host file. Names never grant access.

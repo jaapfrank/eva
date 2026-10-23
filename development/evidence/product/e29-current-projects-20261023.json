@@ -1,8 +1,8 @@
 {
   "contract": "EvaCurrentProjectsOutcome/v1",
   "task": "E2.9",
-  "checkedAt": "2026-10-23T17:08:26.750497+00:00",
-  "status": "built_verified_not_installed",
+  "checkedAt": "2026-10-23T17:55:42.286634+00:00",
+  "status": "installed_read_only_live_verified",
   "outcome": "Existing initiative screen starts with at most two source-bound open projects, next exploration, last modification and optional stored contribution; direct navigation to unchanged stop/feedback/history.",
   "scope": "Only existing owner initiative projection; no curiosity, shared trace, household artifacts or personality-delta implementation claim.",
   "verification": {
@@ -53,7 +53,25 @@
     "reviewer": "/root/e47_mcp_catalog",
     "scope": "Exact five source/test files and sealed staged assets; no shared install or full E2.9 acceptance."
   },
-  "installation": "Coordinator owns shared static asset integration and exact current-image guarded deployment; no shared restart performed.",
+  "installation": {
+    "performedBy": "windows-root, coordinator in Los Telegram-vertraging op",
+    "coordinatorThreadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
+    "combinedCandidate": "/var/lib/eva2/telegram-latency-20261023",
+    "scope": "Coordinator installed core/worker Telegram repair plus exact separately reviewed UI assets. This executor did not restart shared services or touch voice.",
+    "observedServices": {
+      "eva2-managed-b-slot3-core": {
+        "imageId": "sha256:4a9757c78aa5304b685bea16d1451b045d05ef7071ed018049d70406a92db021",
+        "running": true,
+        "created": "2026-10-23T17:53:17.583254009Z"
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "imageId": "sha256:35ab213c37486b3a904c19935c7254ee230bc440297658c0bf54ec4dc5f0e658",
+        "running": true,
+        "created": "2026-10-23T17:53:26.355734414Z"
+      }
+    },
+    "liveOwnerUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative"
+  },
   "fullTaskCompleted": false,
   "limits": [
     "Private owner screen only; no family access expansion.",
@@ -100,5 +118,46 @@
     },
     "sharedInstallationChanged": false,
     "newRequestsToEva": 0
-  }
+  },
+  "actualRuntimeUserLoader": {
+    "status": "passed_actual_runtime_uid_loader",
+    "imageId": "sha256:d141fca07e9c5442be3fc226dae83a12165e11536eaeea266730ce37752d65a8",
+    "runtimeUser": "65532:65532",
+    "stagedDirectoriesMode": "0755",
+    "stagedFilesMode": "0644",
+    "assetSha256": {
+      "assets/index-CcepJUrD.js": "391f2adf94ce6bc91a5c94cca716872f901545eb9239fc9e7391be697531752e",
+      "assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e",
+      "index.html": "4d77a6dc6ef5b33aa324e584e24ebc33dc975d04ae221b1eea9292eea4e1ae6b"
+    },
+    "seconds": 3.401363010983914,
+    "network": "none",
+    "sharedInstallationChanged": false
+  },
+  "liveVerification": {
+    "contract": "EvaCurrentProjectsInstalledReadOnlyProof/v1",
+    "status": "passed",
+    "checkedAt": "2026-10-23T17:54:24.697Z",
+    "actualAssetSha256": {
+      "assets/index-CcepJUrD.js": "391f2adf94ce6bc91a5c94cca716872f901545eb9239fc9e7391be697531752e",
+      "assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e",
+      "index.html": "4d77a6dc6ef5b33aa324e584e24ebc33dc975d04ae221b1eea9292eea4e1ae6b"
+    },
+    "mode": "installed_read_only",
+    "selectedProjects": 2,
+    "openInRetainedPage": 6,
+    "unreadableRecords": 0,
+    "retainedPageTruncated": false,
+    "existingDetailNavigation": true,
+    "mobileWidth": 390,
+    "mutatingRequests": 0,
+    "externalRequests": 0,
+    "javascriptErrors": 0,
+    "modelCalls": 0,
+    "messagesSent": 0,
+    "scope": "Owner UI and actual retained records only; no project/lifecycle execution or full E2.9 acceptance.",
+    "privateVerifierSha256": "c35a27d86f568351b5f68375b62c25bfc7b48f27861905206d2f289f2596b17f",
+    "screenshots": "Real owner screenshots retained privately only, never committed or published."
+  },
+  "boundedOutcomeCompleted": true
 }

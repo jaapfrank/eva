@@ -65,5 +65,68 @@
       "Separate private chat access is owner-confirmed; current proof does not establish general household understanding."
     ]
   },
-  "nextAction": "Reduce measured direct contact round-trip and inspect actual failing owner replies; reuse existing Telegram receipt and do not send the food question again. Then complete retained E4.15 binding candidate."
+  "nextAction": "Resolve measured 6-7.6 second contact preparation on current installed route, preserve ordinary follow-up and no-repeat delivery; then finish retained E4.15 candidate.",
+  "latencyRepair": {
+    "checkedAt": "2026-10-23T17:55:36.593259+00:00",
+    "status": "installed_contact_continuation_proven_preparation_latency_open",
+    "cause": "Verified contact-list receipt incorrectly forced work-model escalation and historical recall (16716 ms in retained original trace).",
+    "changedSource": "src/eva/providers/telegram_contacts.py",
+    "sourceSha256": "7c045c0d673a64d3fecb761b3ddee6cd60defdb54d2e2b0d174fee8f4afe147a",
+    "independentReview": "GO source, exact installation and bounded live continuation; /root/telegram_review",
+    "targetedTests": {
+      "providerAndContact": 81,
+      "additionalPythonChecks": 28,
+      "standaloneTransport": 7,
+      "additionalPythonIncludesTemporaryDuplicateRemoved": true,
+      "apiReplyContext": "4 blocked before endpoint by preexisting missing local httpx2"
+    },
+    "installed": true,
+    "installation": {
+      "core": "sha256:4a9757c78aa5304b685bea16d1451b045d05ef7071ed018049d70406a92db021",
+      "worker": "sha256:35ab213c37486b3a904c19935c7254ee230bc440297658c0bf54ec4dc5f0e658",
+      "configurationPreserved": true,
+      "coinstalledReviewedCurrentProjectsAssets": true
+    },
+    "live": {
+      "mode": "Actual standalone handler, real canary API, installed model/provider; synthetic owner probes with local outbound/draft capture. No Telegram network send.",
+      "contactList": {
+        "elapsedMilliseconds": 13890,
+        "preparationMilliseconds": 6536,
+        "modelCalls": 2,
+        "tools": 1,
+        "onlyTool": "list_telegram_contacts"
+      },
+      "ordinaryUnquotedFollowup": {
+        "elapsedMilliseconds": 10913,
+        "preparationMilliseconds": 7568,
+        "modelCalls": 1,
+        "tools": 0,
+        "correctlyDeniedReadOrReplyKnowledge": true
+      },
+      "newSends": 0,
+      "newDelegatedJobs": 0,
+      "questionResent": false,
+      "fullHistoricalRecallAfterList": false,
+      "usage": {
+        "measurement": "measured",
+        "modelCalls": 3,
+        "toolCalls": 1,
+        "inputTokens": 36166,
+        "outputTokens": 97,
+        "credits": null
+      }
+    },
+    "profiles": {
+      "sharedProviderDigitalAndPrivateResearchMatch": true,
+      "preexistingMismatch": [
+        "household_research"
+      ]
+    },
+    "limits": [
+      "Speed target remains unmet; ordinary contact preparation now accounts for 6-7.6 seconds and is under investigation.",
+      "Prior 40.137 s sending task is not a matched before/after sample for these read-only probes.",
+      "No genuine incoming Telegram update or external reply delivery acceptance inferred from captured operator probes.",
+      "Development model tokens/credits unavailable; runtime usage above covers only two probes."
+    ]
+  }
 }
