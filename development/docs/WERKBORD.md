@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen
 
-E1.8: werkelijke geïnstalleerde Astra/medium-modelroute met drie representatieve synthetische gevallen beoordeeld. Eva kiest avondvoorbereiding vóór vroeg vertrek, vraagt naar onbekende positie en respecteert geen-herinnering-correctie ook tegenover oude open taakstatus. Geen modelpatch nodig. Dit is componentgedrag; geen echte bronverwerving, duurzame correctie, aflevering of later gezinsresultaat. Vijf ontwikkelmodelaanroepen inclusief twee expliciete-fictiecontroles gemeten; geen productie-initiatieven of berichten gemaakt.
+E1.8: bestaande actieve-initiatief-feedback op exacte geïnstalleerde image gecontroleerd in geïsoleerde PostgreSQL. Correctie stopt uitvoering, blijft na herladen zichtbaar, replay maakt één event en geplande vervolgaandacht krijgt geen claim. Losse echte modelproef kiest give_initiative_feedback met juiste ID en bedoeling (7,824s;2533 input/88 outputtokens). Gesprekscatalogus live beschikbaar. Dit zijn afzonderlijke componentproeven, geen volledige productieconversatie. Geen runtimepatch nodig.
 
 Klaar wanneer: Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.
 

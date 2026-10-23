@@ -1,0 +1,88 @@
+{
+  "task": "E1.8",
+  "recordedAt": "2026-10-23T07:49:03.886165+00:00",
+  "outcome": "Existing active-initiative feedback survives reload/replay and suppresses its chosen attention.",
+  "installedImage": "sha256:02594028e25a4752f2031bde0ca3e81d244b99686fa7aba7d5c6698abd2bf860",
+  "liveReadOnly": {
+    "legacyDurableProviderConfigured": false,
+    "feedbackActionAvailable": true,
+    "retainedHistoryItems": 16,
+    "itemsWithFeedback": 2,
+    "stoppedItemsWithFeedback": 0,
+    "sourceSha256": {
+      "adapters/postgres/owner_initiatives.py": "b261dd2c8b91c12885b2ec21694c2047b0d3d21593f8284be51452c257c101d1",
+      "adapters/postgres/sensory_events.py": "9ed78a8f80af8ad1152c10e36d7aef1183b7907f0382b0cbd7fd951a55bd38c0",
+      "adapters/postgres/initiative_attention.py": "93abb13aa90f91049f90e3ea9c5aabf23f198862be2e4ec4e7f627360f67c02f"
+    },
+    "productionWrites": false,
+    "modelCalls": 0
+  },
+  "storageVerification": {
+    "file": "development/tests/postgres/test_initiative_feedback_continuity.py",
+    "passed": 1,
+    "seconds": 5.5,
+    "environment": "Exact installed image, no source overlay; isolated PostgreSQL16.13.",
+    "assertions": [
+      "Feedback stops active initiative",
+      "New adapters read same correction",
+      "Same request key writes one event",
+      "Changed replay rejected",
+      "History retains correction after reload",
+      "Due attention is idle and has no claim"
+    ]
+  },
+  "separateModelSelection": {
+    "input": "Dat containeronderzoek is niet meer nodig. De buurman regelt het, dus geen herinnering of vervolgonderzoek meer.",
+    "context": "Synthetic active initiative with exact ID; installed identity and tool descriptors, selected feedback/stop/list catalog.",
+    "output": {
+      "seconds": 7.824,
+      "result": {
+        "text": null,
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "action_call": {
+          "call_id": "call_07bdc2584660420da32af96b896965b4",
+          "name": "give_initiative_feedback",
+          "arguments": {
+            "feedback": "De eigenaar geeft aan dat het containeronderzoek niet meer nodig is: de buurman regelt het. Geen herinnering of vervolgonderzoek meer.",
+            "intent_id": "personal-interest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "usage": {
+          "measurement": "measured",
+          "model_attempts": 1,
+          "tool_calls": 1,
+          "input_tokens": 2533,
+          "output_tokens": 88
+        },
+        "timing": {
+          "first_content_ms": null,
+          "completed_ms": 7802
+        },
+        "text_phase": null
+      },
+      "mode": "synthetic shadow; proposed action not executed"
+    },
+    "productionActionExecuted": false
+  },
+  "review": {
+    "reviewer": "/root/review_cursor",
+    "storageVerdict": "GO for active-initiative feedback regression, no production or full-conversation claim"
+  },
+  "limitations": [
+    "Model selection and storage are separate component probes, not one end-to-end conversation.",
+    "No completed-initiative feedback or scheduled ordinary-work cancellation claim.",
+    "No automatic household result or E1.8 completion claim."
+  ],
+  "productionWrites": false,
+  "messagesSent": false,
+  "runtimeCodeChanged": false,
+  "installationNeeded": false,
+  "measuredDevelopmentModelUsage": {
+    "measurement": "measured",
+    "model_attempts": 1,
+    "tool_calls": 1,
+    "input_tokens": 2533,
+    "output_tokens": 88
+  },
+  "credits": null
+}
