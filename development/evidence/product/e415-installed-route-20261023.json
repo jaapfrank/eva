@@ -1,6 +1,6 @@
 {
   "task": "E4.15",
-  "checkedAt": "2026-10-23T14:40:19.700000+00:00",
+  "checkedAt": "2026-10-23T14:55:53.559668+00:00",
   "status": "in_progress",
   "route": "ordinary installed dashboard conversation -> start_digital_work -> existing delegated worker",
   "ownerRequest": "Previously authorized camera/recognition/greeting acceptance, explicitly relayed by Codex; not spontaneous discovery.",
@@ -65,7 +65,7 @@
     "profileComparison": "Shared provider, digital work and private research match; pre-existing household_research mismatch remains.",
     "limit": "Actual installed adapter read; does not prove complete worker recovery or recognition/greeting."
   },
-  "nextAction": "Explicitly continue existing work using observed distinction and existing CPU face/camera modules; operator assistance remains recorded, no spontaneous invention claim.",
+  "nextAction": "Follow current preserved work with origin diagnostics; provide bounded access to existing local analysis rather than rebuild recognition or greeting logic in core.",
   "sourceReadRepair": {
     "previousOutcome": "ambiguous/internal_error after one model response and one tool dispatch",
     "exactFingerprintMatched": "ConversationConflict:resource selection requires a saved skill package",
@@ -97,6 +97,25 @@
       "adapters/connectors/local_face_identity.py": "acdf5f96cb398296f2ac7c89533190666486d1e3cfb8b8ef7509b8141179d4c4",
       "contracts/camera_observation.py": "6d33560f1f143928a0e9d09d4eb16a12b26af5ad5fda7552d510c4e7ba3cd958"
     },
-    "sourceRestore": "Only four absent modules copied byte-exact from actual core, existing sources/config unchanged. Imports validated in isolated candidate. No service activation or recognition proof."
+    "sourceRestore": "Only four absent modules copied byte-exact from actual core, existing sources/config unchanged. Imports validated in isolated candidate. No service activation or recognition proof.",
+    "live": "Five verified source reads including empty optional resource_path, plus programming-tool use. Same original work retained. This source-input repair is exercised on the actual worker.",
+    "laterFailure": {
+      "status": "ambiguous/internal_error",
+      "completedModelResponses": 10,
+      "toolCalls": 9,
+      "inputTokens": 238333,
+      "outputTokens": 854,
+      "measurement": "partial",
+      "cause": "Repeated model protocol failure; independent from repaired source selection."
+    }
+  },
+  "failureOriginRepair": {
+    "cause": "Pinned graph helper rethrows exception-group child, replacing original context with a cycle. Reproduced with actual Python exception semantics.",
+    "change": "Bounded safe origin logging before provider sanitization and SDK group unwrapping. No messages, payloads, locals, retry or category changes.",
+    "testsPassed": 73,
+    "review": "review_cursor GO",
+    "coreImage": "sha256:149a454b08e9ebe36f234434c4817be1498ecbf594d6832e8b603c2d9cff42be",
+    "workerImage": "sha256:42a71a4ac55120eda08d4e060b782145441433d34d9370f4499a4f6663590126",
+    "limit": "Diagnosis preservation, not yet a fix for the terminal provider error. No request ID in origin record; time proximity alone is insufficient correlation."
   }
 }

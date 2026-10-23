@@ -890,7 +890,40 @@ def _load_credentials(loader: CredentialLoader) -> tuple[str, str]:
     return access_token, account_id
 
 
+def _log_provider_failure_origin(error: BaseException) -> None:
+    """Record safe origins before SDK group unwrapping replaces exception context."""
+    import logging
+    import re
+
+    records, seen, pending = [], set(), [(error, 0)]
+    while pending and len(records) < 16:
+        current, depth = pending.pop(0)
+        if id(current) in seen or depth > 8:
+            continue
+        seen.add(id(current))
+        name = type(current).__name__
+        frames, trace, count = [], current.__traceback__, 0
+        while trace is not None and count < 128:
+            count += 1
+            module = trace.tb_frame.f_globals.get("__name__", "")
+            function = trace.tb_frame.f_code.co_name
+            if (isinstance(module, str) and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_.]{0,119}", module)
+                    and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,79}", function)):
+                frames.append({"module": module, "function": function, "line": trace.tb_lineno})
+                frames = frames[-4:]
+            trace = trace.tb_next
+        records.append({"type": name if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,79}", name) else "UnknownError",
+                        "depth": depth, "locations": frames})
+        if isinstance(current, BaseExceptionGroup):
+            pending.extend((child, depth + 1) for child in current.exceptions[:16])
+        cause = current.__cause__ or current.__context__
+        if cause is not None:
+            pending.append((cause, depth + 1))
+    logging.getLogger(__name__).warning("codex_failure_origin %s", json.dumps(records, separators=(",", ":")))
+
+
 def _sanitized(error: BaseException) -> CodexProviderError:
+    _log_provider_failure_origin(error)
     current: BaseException | None = error
     seen: set[int] = set()
     while current is not None and id(current) not in seen:
