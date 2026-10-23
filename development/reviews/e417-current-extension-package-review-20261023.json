@@ -539,6 +539,110 @@
         "liveDatabaseAccess": false,
         "limits": "Native snapshot input only; isolated native restore, portable conversion and full package remain pending."
       }
+    },
+    "fitReview": {
+      "checkedAt": "2026-10-23T21:34:15.639407+00:00",
+      "verdict": "NO_GO_CURRENT_1GIB_PACKAGE_FIT",
+      "fitReceiptSha256": "62fcc95ed69baffe09f97ca8d00b116b003591a163e8ea93cf5195c93a05c7c0",
+      "selectedMapSha256": "e93de3bf9cf31ecf2e382cc9294edc4c4d74e26d4e0f74da5d7c30bb030d1775",
+      "independentTargetMetadata": {
+        "coreFiles": 160,
+        "coreBytes": 711922736,
+        "selectedFiles": 139,
+        "selectedBytes": 923285794,
+        "memoryBytes": 7801789,
+        "gatewayBytes": 2289664,
+        "totalBeforeManifest": 1645299983,
+        "limit": 1073741824,
+        "overBy": 571558159,
+        "fileContentsRehashed": false,
+        "coreReaderValidationPending": true
+      },
+      "recommendation": "A: retain all files; add a fixed trusted installation-only2GiB total policy with unchanged1GiB per-file and100000-file bounds. Ordinary portable defaults remain1GiB. This is an implementation direction, not candidate acceptance.",
+      "doneWhenBasis": "E4.17 requires source/dependencies/data and equivalent behavior on a clean installation without old source workspace. No1GiB product acceptance criterion appears in that card; current1GiB is the resource guard.",
+      "optionBBoundary": "Existing prepared-components uses trusted pre-provisioned image pins, but the requested complete offline external CPU-dependency/file coverage is not demonstrated; merely omitting files or referencing the old workspace would not satisfy doneWhen.",
+      "requiredPolicyBoundary": "Trusted caller/local configuration must choose policy before upload/decrypt/KDF; never derive resource authority from archive/header/manifest. Propagate through package, transport, materializer and every nested installer callback; preserve authentication and closed activation.",
+      "httpIntake": {
+        "observedCurrentLimit": 67108864,
+        "source": "src/eva/adapters/api/installer_restore_api.py:14,30,64-65,78-80",
+        "syntheticIntakeHelperProbe": {
+          "declaredBytes": 2193741502,
+          "statusCode": 413,
+          "bodyBuffered": false,
+          "largeAllocation": false,
+          "toolWallSeconds": 1.5703083
+        },
+        "limit": "The actual bounded intake helper was exercised; this is not an end-to-end wizard restore. Actual large installation intake remains to implement/test.",
+        "required": "Keep ordinary64MiB upload guard; a real bounded trusted installation intake must reach prepare without several unbounded whole base64/JSON/body copies."
+      },
+      "resourceObservation": {
+        "diskAvailableBytes": 265460662272,
+        "memTotalBytes": 49324101632,
+        "memAvailableBytes": 33012801536,
+        "pointInTimeOnly": true,
+        "copyBoundaries": "Seal can retain source+plaintext tar+ciphertext+transport simultaneously; open/materializer retain additional complete forms. Verify bounded actual large-file path and private atomic failure handling."
+      },
+      "candidateDirection": {
+        "checkedAt": "2026-10-23T21:36:06.626652+00:00",
+        "status": "approach_reviewed_awaiting_concrete_code",
+        "packagePolicy": "Fixed installation-domain2GiB total,1GiB per-file,100000 files in typed installation read/write APIs; existing nested callback signatures need not change.",
+        "transportPolicy": "Explicit closed INSTALLATION_RECOVERY choice from trusted caller before decrypt; default ordinary transport remains1GiB. Authenticated non-installation payload must be refused by opted-in installer before target changes.",
+        "intake": "Same InstallerPortableRestore gains bounded operator-only prepare_file and local wizard/configured-workflow intake; preserve shared preview/authority/one-useexecute, private stable single-link no-follow file copy, pre-copy/KDF encrypted-size and disk checks. HTTP/browser remains64MiB.",
+        "scope": "Operator-file restore can satisfy the recovery control aspect of doneWhen; inactive materialization alone does not prove clean-PC equivalent extension behavior.",
+        "writerObservation": "Current writer calls _core at224 and then _validate at241, which can call _core again at185. Same-invocation reuse is acceptable only for already semantically verified identical core bytes+trust+manifest; retain both inventory/hash passes, provenance checks, independent result copies and context reset.",
+        "acceptance": "Exact candidate boundaries and actual loaded policy/large operator-file route/roundtrip remain to verify; this advice is not code acceptance."
+      }
+    },
+    "transportFixtureBaseline": {
+      "checkedAt": "2026-10-23T21:37:35.330783+00:00",
+      "headCommit": "8ad5bc4db3ac4f4cd059cd2322fed0f2b5a5aefe",
+      "headTransportSha256": "46803240fd1a3a43c98ebd227e41bca0001b4a42a5aebdef4e08e9e3f4549162",
+      "headTestSha256": "32b040841941811b89e27248d81887603a1815b6bb11ff1f41eed21e5662b5c7",
+      "case": "Existing positive authenticated transport roundtrip function invoked using exact HEAD modules in isolated temporary import.",
+      "result": "Existing baseline fails before transport: PortableArchiveError portable record set authority differs at portable_export._records_by_table:339.",
+      "transportFunctionEntries": 0,
+      "archivePublished": false,
+      "temporaryProbeRemoved": true,
+      "worktreeRevertedOrEdited": false,
+      "toolSeconds": 1.2670868,
+      "cause": "All39 snapshot record schema paths come from current CATALOG_SPEC while sealed export expects frozen paths; snapshot ordinals and expected schema hashes already match frozen CANONICAL_EXPORT_SPECS.",
+      "allowedFixtureCorrection": "Use sealed record_contract/record_jsonl_relative_path/record_schema_relative_path only; retain facts, expected hashes and all case assertions. Candidate correction not yet independently tested."
+    },
+    "publishedCoreReview": {
+      "checkedAt": "2026-10-23T21:49:33.455276+00:00",
+      "verdict": "GO_SCOPED_CORE_FIRST_VALIDATION_PUBLICATION",
+      "manifestSha256": "ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e",
+      "filesIncludingManifest": 160,
+      "listedFilesIndependentlyHashed": 159,
+      "bytes": 711922736,
+      "closedStablePrivateInventory": true,
+      "canonicalScopeAndLogicalIdentityMatchCapture": true,
+      "capturedIdentityTrustAndSignatureMatch": true,
+      "reviewed0011ProfilePinMatches": true,
+      "sourcePins": {
+        "runtimeArchive": "1a67aec29776eeafa4b0bf40630e484ba07e0389596cff8f7d17d3262bf5ecc2",
+        "atomicPublisher": "34e261c44434b2b9a16eb70a72359be60312d7811c3944a3e3d37c4a28035c61",
+        "helper": "78af669818adda6480a0aa77a298d54f7e4783c779e2d316ebc799e28ea1dac9",
+        "correctedCaller": "f181fd3759a2ff63ce633616fb4368b8d54a1f44fce2e6c22dac24dc4ef7fc22"
+      },
+      "firstSemanticValidationEvidence": "Reviewed exporter supplies full read_runtime_archive to publisher; publisher calls validator(staging) before atomic os.replace. Published exact archive plus complete159hash binding observed.",
+      "revalidationReceiptSha256": "0e262507b3276ece346e2ec0bf028a784fe6d4781bfa1abc3b7200b39fb1bcc7",
+      "helperDidNotReturn": true,
+      "duplicateReadCancelled": true,
+      "cancellationExecutionEvidence": {
+        "thread": "01a0c537-54d0-7080-9e4c-74db537877af",
+        "commandId": "exec-1b292281-9a23-408b-a514-4a9199d875d5",
+        "exitCode": 0,
+        "durationMs": 4269,
+        "cancelledPid": 2785144,
+        "binding": "Unique exact corrected-export script+venv/-B command; cmdline and process start ticks rechecked after pidfd_open; SIGTERM sent via pidfd; process disappearance asserted.",
+        "outputReceiptMatchesSavedMetadata": true
+      },
+      "copyGuardExecutionEvidence": "Same successful execution verifies original native dump hash cc532a00e80fa4ff82f6c7a797fabcabf39aeae10c72be2d12f2cdca5194aae4, captured current/trust hashes, readonly copy,0 other client backends, actual0011 head/index.",
+      "reviewerHashBindingSeconds": 2.3977984,
+      "semanticReaderRepeatedByReviewer": false,
+      "reviewerDatabaseAccess": false,
+      "limits": "Accepted only existing first-validation/atomic-publication proof and exact target binding. No fabricated helper return, full package validation, restored component behavior or fullE417 completion."
     }
   },
   "contractRequirements": {
@@ -729,7 +833,7 @@
       "id": "E417-CAPTURE-005",
       "severity": "P1",
       "scope": "current operator snapshot duration and live writer-fence composition",
-      "status": "native_capture_accepted_under15s_fence_offline_conversion_still_pending",
+      "status": "native_short_fence_and_offline_first_validated_core_publication_confirmed",
       "cause": "Full portable record conversion/validation runs while the live writer fence is still held; actual current data conversion exceeds the bounded capture duration.",
       "observed": "TimeoutError: Bounded source capture timed out at90.21634091599844s; stack includes _encode_column and _validate_json_value.",
       "evidence": {
@@ -744,6 +848,46 @@
       },
       "impact": "No accepted current archive/package; schema and corrected UUID scope passed far enough to read and convert actual source rows.",
       "repairBoundary": "Keep the bounded live fence. Coordinator proposes short actual native snapshots under the fence, then existing portable conversion/validation on an isolated restored snapshot. The new composition is not yet reviewed or accepted."
+    },
+    {
+      "id": "E417-PACKAGE-001",
+      "severity": "P1",
+      "status": "open_candidate_implementation_pending",
+      "cause": "Actual selected payload exceeds the existing1GiB package/transport resource guard.",
+      "reproduction": "Stat all160 unvalidated core files and139 selected map sources, add actual memory/gateway target sizes:1645299983B before manifest.",
+      "impact": "571558159B over cap; no valid complete package fits under current guard.",
+      "evidence": "fitReview; receipt62fcc95... and map e93de3b...; no deletion/limit change by reviewer."
+    },
+    {
+      "id": "E417-WIZARD-001",
+      "severity": "P1",
+      "status": "open_candidate_implementation_pending",
+      "cause": "Existing browser and API restore intake are limited to64MiB, below the actual installation archive size.",
+      "reproduction": "Current intake helper with declared2193741502-byte request returns413 before body buffering; route separately checks decoded length64MiB.",
+      "impact": "Transport-only2GiB policy cannot make the real wizard large-package prepare route usable.",
+      "repairBoundary": "Use a bounded trusted installation intake and preserve ordinary default; verify actual prepareroute and memory/disk behavior."
+    },
+    {
+      "id": "E417-INPUT-001",
+      "severity": "P2",
+      "status": "corrected_input_first_validated_core_atomically_published",
+      "cause": "Initial isolated export used a created_at string outside existing exact UTC whole-second format.",
+      "evidence": {
+        "errorReceiptSha256": "3c74fb5c877e90c66063dc569f34988aed56f8dc390ba0cb545bb7bd1d4c55b3",
+        "errorType": "ValueError",
+        "strptimeMismatchIndependentlyVerified": true,
+        "elapsedSeconds": 539.6898553170031
+      },
+      "impact": "Initial isolated conversion rejected; no new production capture needed. Builder corrected only input and added preflight; no full conversion replay by reviewer."
+    },
+    {
+      "id": "E417-TEST-002",
+      "severity": "P2",
+      "status": "builder_fixture_correction_pending",
+      "cause": "Existing39-record transport fixture mixes frozen snapshot facts with current schema paths.",
+      "reproduction": "ExactHEAD transport+test positive case, isolated import: same authority mismatch before any seal/open call.",
+      "impact": "Five existing transport cases cannot reach transport under the current fixture; this baseline does not establish a transport-policy regression.",
+      "evidence": "transportFixtureBaseline"
     }
   ]
 }

@@ -17044,7 +17044,10 @@
       "copyReadOnly": true,
       "unexpectedCopyClients": 0,
       "sourceDataWrites": 0,
-      "converterObservedHighWaterKiBBeforeCancellation": 8753624
+      "converterObservedHighWaterKiBBeforeCancellation": 8753624,
+      "independentCorePublicationVerdict": "GO_SCOPED_CORE_FIRST_VALIDATION_PUBLICATION",
+      "independentCorePublicationReview": "development/reviews/e417-current-extension-package-review-20261023.json",
+      "independentCorePublicationReviewSha256": "1dd9567700e8701f8f5eb52397362a486702523dc8d6c30d45f4f0e9c22691b8"
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",
