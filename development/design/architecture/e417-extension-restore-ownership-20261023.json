@@ -65,5 +65,16 @@
       "src/tools/portable_runtime_archive.py",
       "src/tools/postgres_portable_export.py"
     ]
+  },
+  "actualEvaSourceAddendum": {
+    "checkedAt": "2026-10-23T15:59:35.558696+00:00",
+    "format": "Existing plain Python workspace document, not converted to a skill package or a second extension format.",
+    "sha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+    "bytes": 4686,
+    "transferOwner": "Existing document_artifact role -> installation archive -> encrypted transport -> inactive materializer.",
+    "companionOwners": "Not supplied for this inactive candidate; no fabricated last-good/adoption/dependency/config/data records. Coordinator retains E4.15 binding ownership.",
+    "result": "One real-source byte-preservation case passed without executing extension or touching production source.",
+    "fullTaskCompleted": false,
+    "independentReview": "GO_SCOPED_ACTUAL_SOURCE_PRESERVATION"
   }
 }

@@ -1,7 +1,7 @@
 {
   "contract": "EvaE417ExtensionRestoreOutcome/v1",
   "task": "E4.17",
-  "checkedAt": "2026-10-23T15:51:04.488341+00:00",
+  "checkedAt": "2026-10-23T16:03:18.537098+00:00",
   "status": "source_corrected_and_verified_host_tooling_shared_installation_unchanged",
   "baselineCommit": "581c33f6f2a8570017a7bc69f4c197a456b1558d",
   "candidateSha256": {
@@ -92,5 +92,73 @@
       "development/tests/portable/test_e417_extension_restore.py": "8434403afbc11086f94313b913f08e851570b0f2e87078bb6b0b86c09ec70a90"
     },
     "sameBytesAsIndependentlyReviewedCandidate": true
+  },
+  "actualEvaSourcePreservation": {
+    "status": "passed_inactive_actual_source_preservation",
+    "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+    "sourceBytes": 4686,
+    "restoredSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+    "stagedSourceRemovedBeforeRestore": true,
+    "materializerStatus": "materialized_inactive",
+    "fileMode": "0600",
+    "importsObservedOnly": [
+      "import hashlib",
+      "import json",
+      "import re",
+      "from datetime import datetime"
+    ],
+    "processSeconds": 1.1170477589475922,
+    "sourceExecuted": false,
+    "runtimeActivated": false,
+    "productionSourceRemoved": false,
+    "databaseImported": false,
+    "companionConfigDataAdoptionOrDependenciesFabricated": false,
+    "limits": [
+      "Actual source only; no declared companion config/data/last-working version supplied.",
+      "Core rows and opaque dumps are synthetic fixtures, not a full installation snapshot.",
+      "No behavior, managed source validation, STOP, delivery, runtime adoption or native restore proof.",
+      "Observed imports use standard library; no declared dependency environment or third-party restore proven."
+    ],
+    "checkedAt": "2026-10-23T15:59:35.558696+00:00",
+    "caseCount": 1,
+    "casePassed": 1,
+    "privateProofSha256": {
+      "test_actual_v2_roundtrip_private.py": "6d5df872d199c5f83fe08c770c9e9cf9d9de4dd443440f88d401cbb995cf0fe7",
+      "actual-v2-roundtrip-result.private.json": "243204c121c1ecd2352203964a937e3cba3cbefa51b74b18f0dce3a5152badfa",
+      "actual-v2-roundtrip.private.xml": "9b633fdc6b0d1ce86c7166c055001ac645f5c5bc49ea04bee97f742ff67bfc48"
+    },
+    "pytestCacheWarning": "Unrelated optional pytest cache not writable; actual case and XML/result writes succeeded. No rerun.",
+    "independentReview": {
+      "decision": "GO_SCOPED_ACTUAL_SOURCE_PRESERVATION",
+      "privateReviewSha256": "4a36bae34067feb92a49a7ef06ffbfd19cc1fe2f619ee45904597cc55cb98934",
+      "blockingFindings": [],
+      "reviewer": "/root/e47_mcp_catalog",
+      "verified": {
+        "sourceAndRestoredSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+        "sourceAndRestoredBytes": 4686,
+        "restoredFileMode": "0600",
+        "targetStatus": "materialized_inactive",
+        "savedTestReport": {
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "suiteSeconds": 3.404
+        },
+        "stagedAndCoreSourceRemovedBeforeRestore": true,
+        "restoredSourceIndependentlyReadAndHashed": true,
+        "sourceExecuted": false,
+        "testsRerunByReviewer": false,
+        "providerOrModelCallsByReviewer": 0
+      },
+      "limits": [
+        "Core database rows and opaque database payloads are synthetic fixtures, not an actual full installation snapshot or database restore.",
+        "Only staged/core source directories were removed; the original production source and private oracle copy were not removed.",
+        "No actual source execution, behavior, managed-source validation, STOP enforcement, delivery, runtime activation, adoption or native restore was proved.",
+        "No actual companion configuration, data, last-working-version markers or dependency environment was supplied or fabricated.",
+        "AST-observed standard-library imports do not prove dependency closure or third-party dependency restoration.",
+        "This addendum does not close E4.17 or E4.15 and does not change the earlier candidate review or its compatibility limits."
+      ]
+    }
   }
 }

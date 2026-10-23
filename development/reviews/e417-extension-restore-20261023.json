@@ -42,5 +42,47 @@
       "failed": 0,
       "skipped": 0
     }
+  },
+  "actualEvaSourcePreservationAddendum": {
+    "checkedAt": "2026-10-23T16:03:18.537098+00:00",
+    "decision": "GO_SCOPED_ACTUAL_SOURCE_PRESERVATION",
+    "privateReviewSha256": "4a36bae34067feb92a49a7ef06ffbfd19cc1fe2f619ee45904597cc55cb98934",
+    "blockingFindings": [],
+    "reviewer": "/root/e47_mcp_catalog",
+    "verified": {
+      "sourceAndRestoredSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+      "sourceAndRestoredBytes": 4686,
+      "restoredFileMode": "0600",
+      "targetStatus": "materialized_inactive",
+      "savedTestReport": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "suiteSeconds": 3.404
+      },
+      "stagedAndCoreSourceRemovedBeforeRestore": true,
+      "restoredSourceIndependentlyReadAndHashed": true,
+      "sourceExecuted": false,
+      "testsRerunByReviewer": false,
+      "providerOrModelCallsByReviewer": 0
+    },
+    "limits": [
+      "Core database rows and opaque database payloads are synthetic fixtures, not an actual full installation snapshot or database restore.",
+      "Only staged/core source directories were removed; the original production source and private oracle copy were not removed.",
+      "No actual source execution, behavior, managed-source validation, STOP enforcement, delivery, runtime activation, adoption or native restore was proved.",
+      "No actual companion configuration, data, last-working-version markers or dependency environment was supplied or fabricated.",
+      "AST-observed standard-library imports do not prove dependency closure or third-party dependency restoration.",
+      "This addendum does not close E4.17 or E4.15 and does not change the earlier candidate review or its compatibility limits."
+    ],
+    "scope": "One saved actual V2 document-byte round-trip case; prior candidate review preserved unchanged.",
+    "reason": "The saved focused case exercises the existing authenticated/encrypted installation package and inactive materializer with exact actual V2 document bytes. The retained restored file independently matches the copied actual source hash, length and mode. This supports document preservation only.",
+    "proofSha256": {
+      "test_actual_v2_roundtrip_private.py": "6d5df872d199c5f83fe08c770c9e9cf9d9de4dd443440f88d401cbb995cf0fe7",
+      "actual-v2-roundtrip-result.private.json": "243204c121c1ecd2352203964a937e3cba3cbefa51b74b18f0dce3a5152badfa",
+      "actual-v2-roundtrip.private.xml": "9b633fdc6b0d1ce86c7166c055001ac645f5c5bc49ea04bee97f742ff67bfc48",
+      "actual-v2-source.private.py": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+      "independent-review.private.json": "f309f7c331f3de2ead072bc3df39f7f22533ece7fedc8d529afc4910ac9b8cc0"
+    }
   }
 }
