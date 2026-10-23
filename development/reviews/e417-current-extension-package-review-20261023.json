@@ -825,6 +825,59 @@
       "sourceAuthoritySha256": "e256881a839eb1c706dc48bc68e4e72e15a8a4bb2bbaca9785b89bbfaf4ec6e0",
       "reviewerDatabaseAccess": false,
       "limit": "Actual guard execution during the operator restore remains to bind."
+    },
+    "operatorRouteInputReview": {
+      "checkedAt": "2026-10-23T22:23:19.102759+00:00",
+      "status": "INPUT_AND_DRIVER_REVIEWED_ACTUAL_RESULT_PENDING",
+      "driverSha256": "10c318549b12b13f4e0a812a3cb26a723c564f9fcf7a0dde765abe71bbd8e24f",
+      "privateTrialAuthoritySha256": "14f33bf3c80fa77696b2674a5e6db2a00f4c8c5ea4bfb2f42babcc7e4ece4b2a",
+      "onlyAuthorityChange": "authorized_archives adds exactly accepted core ce48ff... and outer e99a968...; all source generation/head/issued/scope fields remain identical.",
+      "configBinding": "Actual private authority path, explicit installation policy,traffic_closed and exact prepared runtimeGuard match.",
+      "driverDelegation": "Real launcher.main/configured workflow/original_execute and original authority/runtime guards retained; extra live authority hash checks before every SQL and commit plus reader/guard boundaries. Token remains in memory and one-use replay test is planned after actual completion.",
+      "reviewerSourceAuthorityOrDatabaseAccess": false,
+      "scope": "Private isolated test admission only; no actual CLI/commit/hold/replay success inferred from input checks."
+    },
+    "originalSdkSupplementReview": {
+      "reviewedAt": "2026-10-23T22:31:57.323250+00:00",
+      "verdict": "GO_SCOPED_ORIGINAL_SDK_RECORD_BYTE_COVERAGE",
+      "outcomePath": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/original-sdk-supplement-outcome.private.json",
+      "outcomeSha256": "afb7a11eed895f3c9b5f86b9d4038c5ceb0afbdb9020494c039301e21815cfb3",
+      "inputSha256": "d9ed89bfc98eb2495a0a5cd4631c0fdcf369bd2e1d7f2b8460e9fac7fb58428d",
+      "manifestSha256": "4782463d031164cebc04b4be500eade99a0c9806565b969af6df4156a2c9bb8d",
+      "archiveSha256": "7588e60e0e60a039d398c599e245437eaa414679a5a46763df35165b6a57cf",
+      "archiveBytes": 14980753,
+      "capturedFileCount": 1825,
+      "capturedPayloadBytes": 53494678,
+      "retainedOriginalMetadataPinsChecked": 99,
+      "originalDescriptorPath": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/capture-plan.private.json",
+      "originalDescriptorSha256": "00cdd0be79befea07d77c7124a4300968587f6f81e7896bdf34a3899a58a866e",
+      "originalDescriptorSelectedMetadataChecked": 8,
+      "recordDistributionsChecked": 33,
+      "nonCacheRecordFilesCovered": 1879,
+      "retainedBridgeFilesIndependentlyMatched": 54,
+      "cacheRecordsExcluded": 1483,
+      "unhashedNonCacheRows": 0,
+      "metadataMatchesOriginalHostRoot": true,
+      "missingOrConflictingRecordPaths": 0,
+      "extraSupplementMembers": 0,
+      "privateTargetModeVerified": true,
+      "reviewSeconds": 0.524651,
+      "method": "Stable private target reads; independently hash every supplement tar regular member; reconstruct all 33 original RECORDs from the 99 retained metadata target copies, compare original source pins and eight descriptor metadata pins; independently hash 54 reused members in retained bridge archive. No extraction or source/runtime import.",
+      "wrongInitialSourceSelectorEvidencePreserved": {
+        "path": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/sdk-original-supplement-20261024/initial-wrong-source-selector.private.json",
+        "sha256": "734663d54e220772ce3433bf0247c9cf7495c9331ee5afd83581bc842873d2e3",
+        "notAcceptedAsCorrectCapture": true
+      },
+      "newSourceImports": 0,
+      "newSdkExecutions": 0,
+      "newCaptures": 0,
+      "newServiceActions": 0,
+      "limits": [
+        "Byte coverage only. Original interpreter/system ABI, complete Eva2 source library, dynamic imports, entrypoint and restored behavior remain separate.",
+        "No SDK-ready, clean-PC or full E417 acceptance.",
+        "Existing large package and ciphertext remain the prior frozen version; supplement integration and fresh outer manifest are not proven by this byte review."
+      ],
+      "pendingPhysicalSdkResolutionCriterion": "All 54 exact reused bridge payloads must be physically present in the resolved complete SDK at the restored inactive destination, not only retained archive references. The 1879 count above proves RECORD byte coverage across original retained archives, not restored SDK resolution."
     }
   },
   "contractRequirements": {
@@ -880,7 +933,7 @@
       "id": "E417-CAPTURE-001",
       "severity": "P1",
       "scope": "operator current-source capture; not an installed product regression",
-      "status": "corrected_in_operator_source_awaiting_actual_capture",
+      "status": "actual_short_native_capture_and_first_validated_core_publication_confirmed_operator_restore_completion_pending",
       "file": "/home/administrator/project/.eva2-artifacts/e417-coordinator-capture-20261023/capture_driver.py",
       "line": 18,
       "title": "Root capture with all capabilities dropped cannot open the actual private sources",
@@ -907,13 +960,21 @@
         "launcherSha256": "cbdd5c23fdddb3fbdd63d71733c7a0d841e69b06dbe906c6a7828a52f7c3750b",
         "change": "Keep cap-drop ALL and add only DAC_OVERRIDE; preserve read-only identity/DSN/source/helper mounts and existing source ownership/modes.",
         "reviewMethod": "Exact corrected source and actual source metadata; original denial retained; no current capture success inferred."
+      },
+      "historicalStatusBeforeActualPublication": "corrected_in_operator_source_awaiting_actual_capture",
+      "actualPublicationResolution": {
+        "nativeCaptureReceiptSha256": "249cbddd7ff40bd2a17a0c911e9e9569ccd14ab6ccf4235b901bd7045f85978b",
+        "coreManifestSha256": "ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e",
+        "publicationBindingReceiptSha256": "0e262507b3276ece346e2ec0bf028a784fe6d4781bfa1abc3b7200b39fb1bcc7",
+        "reviewEvidenceReused": "packageReview.nativeCaptureDeltaReview and packageReview.publishedCoreReview; no repeated capture or source checks",
+        "limit": "Original failure evidence preserved. Does not prove end-to-end current large operator restore or functional host behavior."
       }
     },
     {
       "id": "E417-CAPTURE-002",
       "severity": "P1",
       "scope": "operator current-source capture; not an installed Eva product regression",
-      "status": "corrected_operator_environment_independently_import_verified_awaiting_actual_capture",
+      "status": "actual_short_native_capture_and_first_validated_core_publication_confirmed_operator_restore_completion_pending",
       "title": "Selected capture image cannot import sqlite3 because libsqlite3.so.0 is absent",
       "trigger": "Coordinator executed the exact scoped approved operator capture once using current core image sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85.",
       "observed": "ImportError: libsqlite3.so.0: cannot open shared object file: No such file or directory",
@@ -943,13 +1004,21 @@
         "databaseConnects": 0,
         "toolWallSeconds": 2.31345,
         "originalFailureLogRetained": true
+      },
+      "historicalStatusBeforeActualPublication": "corrected_operator_environment_independently_import_verified_awaiting_actual_capture",
+      "actualPublicationResolution": {
+        "nativeCaptureReceiptSha256": "249cbddd7ff40bd2a17a0c911e9e9569ccd14ab6ccf4235b901bd7045f85978b",
+        "coreManifestSha256": "ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e",
+        "publicationBindingReceiptSha256": "0e262507b3276ece346e2ec0bf028a784fe6d4781bfa1abc3b7200b39fb1bcc7",
+        "reviewEvidenceReused": "packageReview.nativeCaptureDeltaReview and packageReview.publishedCoreReview; no repeated capture or source checks",
+        "limit": "Original failure evidence preserved. Does not prove end-to-end current large operator restore or functional host behavior."
       }
     },
     {
       "id": "E417-CAPTURE-003",
       "severity": "P1",
       "scope": "current core export and restore schema compatibility",
-      "status": "corrected_candidate_passed_focused_and_actual_pg_interfaces_awaiting_current_capture",
+      "status": "actual_short_native_capture_and_first_validated_core_publication_confirmed_operator_restore_completion_pending",
       "title": "Current installed schema0011 is rejected by runtime archive bound to historical0010",
       "trigger": "Coordinator executed the revised host capture once; existing runtime exporter checked the actual source revision.",
       "reportedActualSourceHead": "4e_0011_timeline_type_time",
@@ -970,7 +1039,15 @@
       "impact": "A valid current core archive cannot be produced, so the concrete current recovery package is not ready. Existing rejection prevents a false successful capture.",
       "relatedRestoreInterface": "portable_runtime_restore delegates to portable_v2_restore._restore_archive; verify_current_target also pins0010. Export-only relaxation would leave target restore incoherent.",
       "repairBoundary": "Current v3 source/archive/restore compatibility must explicitly preserve the real0011 schema and exact expected index, without changing frozen historical v2 profile/hash or spoofing source/target revisions. No production schema downgrade or unknown-head admission.",
-      "acceptance": "Review and test only the changed v3 export/reader/restore interfaces with real0011/index acceptance, wrong index/unknown-head refusal and unchanged frozen v2 authority before another current export."
+      "acceptance": "Review and test only the changed v3 export/reader/restore interfaces with real0011/index acceptance, wrong index/unknown-head refusal and unchanged frozen v2 authority before another current export.",
+      "historicalStatusBeforeActualPublication": "corrected_candidate_passed_focused_and_actual_pg_interfaces_awaiting_current_capture",
+      "actualPublicationResolution": {
+        "nativeCaptureReceiptSha256": "249cbddd7ff40bd2a17a0c911e9e9569ccd14ab6ccf4235b901bd7045f85978b",
+        "coreManifestSha256": "ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e",
+        "publicationBindingReceiptSha256": "0e262507b3276ece346e2ec0bf028a784fe6d4781bfa1abc3b7200b39fb1bcc7",
+        "reviewEvidenceReused": "packageReview.nativeCaptureDeltaReview and packageReview.publishedCoreReview; no repeated capture or source checks",
+        "limit": "Original failure evidence preserved. Does not prove end-to-end current large operator restore or functional host behavior."
+      }
     },
     {
       "id": "E417-TEST-001",
@@ -996,7 +1073,7 @@
       "id": "E417-CAPTURE-004",
       "severity": "P1",
       "scope": "operator export input bindings; not a schemafix product regression",
-      "status": "operator_scope_corrected_next_actual_attempt_reached_record_conversion",
+      "status": "actual_short_native_capture_and_first_validated_core_publication_confirmed_operator_restore_completion_pending",
       "cause": "Coordinator supplied logical runtime IDs as canonical tenant/installation UUID scope; exporter requires those identities separately.",
       "observed": "PortableArchiveError: snapshot scope is not a UUID",
       "evidence": {
@@ -1009,7 +1086,15 @@
         "verification": "Private failure receipt independently read; operator cause acknowledged by coordinator."
       },
       "impact": "Current capture rejected before row export; no accepted archive.",
-      "repairBoundary": "Bind canonical UUID scope separately from logical runtime identity using actual configuration; validate before connecting. Preserve schema/identity/source checks."
+      "repairBoundary": "Bind canonical UUID scope separately from logical runtime identity using actual configuration; validate before connecting. Preserve schema/identity/source checks.",
+      "historicalStatusBeforeActualPublication": "operator_scope_corrected_next_actual_attempt_reached_record_conversion",
+      "actualPublicationResolution": {
+        "nativeCaptureReceiptSha256": "249cbddd7ff40bd2a17a0c911e9e9569ccd14ab6ccf4235b901bd7045f85978b",
+        "coreManifestSha256": "ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e",
+        "publicationBindingReceiptSha256": "0e262507b3276ece346e2ec0bf028a784fe6d4781bfa1abc3b7200b39fb1bcc7",
+        "reviewEvidenceReused": "packageReview.nativeCaptureDeltaReview and packageReview.publishedCoreReview; no repeated capture or source checks",
+        "limit": "Original failure evidence preserved. Does not prove end-to-end current large operator restore or functional host behavior."
+      }
     },
     {
       "id": "E417-CAPTURE-005",
