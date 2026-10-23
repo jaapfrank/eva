@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen
 
-E1.8 verbetering geïnstalleerd op kern én achtergrondwerker: inhoudelijke stopcorrectie kiest bestaande feedbackactie en bewaart reden; kale stop behoudt STOP zonder verzonnen uitleg. Beide verbonden proeven geslaagd vóór en na installatie, inclusief exact initiatief, één registratie na replay en idle-vervolgaandacht na herladen. Twee beschrijvingen gewijzigd, geen nieuwe opslagroute/modelronde. Digitale/publieke/gedeelde profielen overeenkomend; bestaande household_research-afwijking ongewijzigd. Echte gezinsuitkomst blijft afzonderlijk.
+E1.8 blijft open: expliciet stoppen trekt nu ook al gekozen vervolgaandacht van afgerond werk in, met behoud van het resultaat. Kern en werker geïnstalleerd; 11 gerichte proeven op het geïnstalleerde image geslaagd. Dit sluit de gebruikersuitkomst nog niet: echte open bedoeling, tijdig nuttig initiatief, latere uitkomst en doorwerking van correctie blijven de eindvoorwaarden.
 
 Klaar wanneer: Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.
 

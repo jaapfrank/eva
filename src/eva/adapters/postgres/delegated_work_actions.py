@@ -164,6 +164,8 @@ class PostgresDelegatedWorkActions:
                  "Gebruik de echte intent_id en opgeslagen inhoud. De lijst staat in operation_result.cards; "
                  "het resultaat staat in operation_result.artifact.content. Onbekend is niet voltooid. "
                  "Bij stoppen/feedback staat de uitkomst in operation_result.status en execution_stopped. "
+                 "followup_stopped=true bevestigt dat gekozen vervolgaandacht gestopt is; "
+                 "already_completed betekent daarbij dat het eerdere werkresultaat bewaard blijft. "
                  "Status verified bevestigt alleen de databasehandeling, niet eigenaaracceptatie of directe beëindiging van alle effecten."
                  if operation.startswith("initiative_") else
                 "Rapporteer de opgeslagen status eerlijk. Bewaar work_id voor een vervolg. "

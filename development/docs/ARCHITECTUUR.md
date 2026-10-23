@@ -479,6 +479,11 @@ schedulerlock maakt ook gelijktijdige keuzes eenduidig. Het due-event consumeert
 keuze één keer en draagt haar oorspronkelijke bron/revisie/hash en tijd mee; de
 nieuwe context blijft daarvan onderscheiden. Een nieuw gekozen moment vervangt
 oude nog niet uitgevoerde aandacht, ook na langzame geheugenraadpleging.
+Een expliciet stopverzoek trekt ook reeds gekozen vervolgaandacht van afgerond
+werk in. Een brongebonden stopmarker bewaart de afgeronde fase en het resultaat;
+de bestaande aandacht-route controleert hem ook na geheugenraadpleging, vóór
+modeldispatch. Zonder gekozen vervolgaandacht blijft stoppen van afgerond werk
+een ongewijzigde no-op. Dit betreft expliciet stoppen, niet alle soorten feedback.
 
 De bestaande bundeling houdt minimaal 300 seconden aan; gevraagde en effectieve
 tijd blijven apart bewaard. Gesprek krijgt voorrang; uitstel houdt dezelfde

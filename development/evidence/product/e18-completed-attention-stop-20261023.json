@@ -1,0 +1,44 @@
+{
+  "task": "E1.8",
+  "recordedAt": "2026-10-23T08:31:03.903937+00:00",
+  "problem": "Explicit stop of completed initiative left already chosen followup attention eligible.",
+  "change": "Scoped idempotent followup stop marker; preserve completed result and phase; existing attention gates suppress queued and preparing followup. No chosen attention retains previous no-op.",
+  "tests": {
+    "baseline": {
+      "failed": 4,
+      "passed": 1
+    },
+    "candidate": {
+      "passed": 11,
+      "deselected": 44,
+      "seconds": 11.44
+    },
+    "installedImage": {
+      "passed": 11,
+      "deselected": 44,
+      "seconds": 11.23,
+      "method": "Installed source, isolated PostgreSQL and model doubles; no production household scenario."
+    }
+  },
+  "installation": {
+    "coreImage": "sha256:de551e0465a859a5fec6b942cf8d7b41dfbcd57a2e296e038fbdfed84f3016c1",
+    "workerImage": "sha256:c2e2620f996ad44662cbe91c2ac349633a94f000639049d1951aed00628a8ae4",
+    "bothHealthy": true,
+    "mismatchedProfiles": [
+      "household_research"
+    ],
+    "mismatchPreexisting": true
+  },
+  "independentReview": {
+    "reviewer": "/root/review_cursor",
+    "verdict": "GO for guarded installation; explicit stop and already chosen followup only."
+  },
+  "developmentModelCalls": 0,
+  "productionModelUsageMeasured": false,
+  "boundaries": [
+    "No claim of real household anticipation or natural followup.",
+    "Already started effects may finish.",
+    "Completed feedback semantics unchanged."
+  ],
+  "fullE18Complete": false
+}

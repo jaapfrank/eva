@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-23T08:08:55.403833+00:00",
+  "lastUpdated": "2026-10-23T08:31:04.045614+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E1.8",
@@ -847,7 +847,7 @@
     "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
     "status": "in_progress",
     "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.",
-    "nextAction": "Volg bij normaal gebruik of relevante eigenaarsbijsturing bij het juiste initiatief behouden blijft en later wordt toegepast. E1.8 vereist daarnaast een echte voorafgaande afweging en later gecontroleerde gezinsuitkomst.",
+    "nextAction": "Rond de oorspronkelijke E1.8-gebruikersuitkomst af via de bestaande geïnstalleerde route; beoordeel echte open bedoelingen en beschikbare bronnen, volg de gekozen aanleiding en uitkomst, zonder nieuwe zijpaden of deelproeven als taakafronding.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2992,7 +2992,7 @@
         "now": {
           "taskId": "E1.8",
           "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
-          "summary": "E1.8 verbetering geïnstalleerd op kern én achtergrondwerker: inhoudelijke stopcorrectie kiest bestaande feedbackactie en bewaart reden; kale stop behoudt STOP zonder verzonnen uitleg. Beide verbonden proeven geslaagd vóór en na installatie, inclusief exact initiatief, één registratie na replay en idle-vervolgaandacht na herladen. Twee beschrijvingen gewijzigd, geen nieuwe opslagroute/modelronde. Digitale/publieke/gedeelde profielen overeenkomend; bestaande household_research-afwijking ongewijzigd. Echte gezinsuitkomst blijft afzonderlijk.",
+          "summary": "E1.8 blijft open: expliciet stoppen trekt nu ook al gekozen vervolgaandacht van afgerond werk in, met behoud van het resultaat. Kern en werker geïnstalleerd; 11 gerichte proeven op het geïnstalleerde image geslaagd. Dit sluit de gebruikersuitkomst nog niet: echte open bedoeling, tijdig nuttig initiatief, latere uitkomst en doorwerking van correctie blijven de eindvoorwaarden.",
           "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel."
         },
         "next": {
@@ -5930,7 +5930,7 @@
                 "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Volg bij normaal gebruik of relevante eigenaarsbijsturing bij het juiste initiatief behouden blijft en later wordt toegepast. E1.8 vereist daarnaast een echte voorafgaande afweging en later gecontroleerde gezinsuitkomst.",
+                "nextAction": "Rond de oorspronkelijke E1.8-gebruikersuitkomst af via de bestaande geïnstalleerde route; beoordeel echte open bedoelingen en beschikbare bronnen, volg de gekozen aanleiding en uitkomst, zonder nieuwe zijpaden of deelproeven als taakafronding.",
                 "ownerInitiativeClarification20261021": {
                   "status": "required_not_yet_proven",
                   "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -5952,8 +5952,8 @@
                   "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "E1.8 verbetering geïnstalleerd op kern én achtergrondwerker: inhoudelijke stopcorrectie kiest bestaande feedbackactie en bewaart reden; kale stop behoudt STOP zonder verzonnen uitleg. Beide verbonden proeven geslaagd vóór en na installatie, inclusief exact initiatief, één registratie na replay en idle-vervolgaandacht na herladen. Twee beschrijvingen gewijzigd, geen nieuwe opslagroute/modelronde. Digitale/publieke/gedeelde profielen overeenkomend; bestaande household_research-afwijking ongewijzigd. Echte gezinsuitkomst blijft afzonderlijk.",
-                "checkedAt": "2026-10-23T08:08:55.403814+00:00"
+                "progress": "E1.8 blijft open: expliciet stoppen trekt nu ook al gekozen vervolgaandacht van afgerond werk in, met behoud van het resultaat. Kern en werker geïnstalleerd; 11 gerichte proeven op het geïnstalleerde image geslaagd. Dit sluit de gebruikersuitkomst nog niet: echte open bedoeling, tijdig nuttig initiatief, latere uitkomst en doorwerking van correctie blijven de eindvoorwaarden.",
+                "checkedAt": "2026-10-23T08:31:04.045593+00:00"
               },
               {
                 "id": "E1.9",
@@ -8689,7 +8689,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Volg bij normaal gebruik of relevante eigenaarsbijsturing bij het juiste initiatief behouden blijft en later wordt toegepast. E1.8 vereist daarnaast een echte voorafgaande afweging en later gecontroleerde gezinsuitkomst.",
+        "nextAction": "Rond de oorspronkelijke E1.8-gebruikersuitkomst af via de bestaande geïnstalleerde route; beoordeel echte open bedoelingen en beschikbare bronnen, volg de gekozen aanleiding en uitkomst, zonder nieuwe zijpaden of deelproeven als taakafronding.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -11867,7 +11867,7 @@
               "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Volg bij normaal gebruik of relevante eigenaarsbijsturing bij het juiste initiatief behouden blijft en later wordt toegepast. E1.8 vereist daarnaast een echte voorafgaande afweging en later gecontroleerde gezinsuitkomst.",
+              "nextAction": "Rond de oorspronkelijke E1.8-gebruikersuitkomst af via de bestaande geïnstalleerde route; beoordeel echte open bedoelingen en beschikbare bronnen, volg de gekozen aanleiding en uitkomst, zonder nieuwe zijpaden of deelproeven als taakafronding.",
               "ownerInitiativeClarification20261021": {
                 "status": "required_not_yet_proven",
                 "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -11889,8 +11889,8 @@
                 "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "E1.8 verbetering geïnstalleerd op kern én achtergrondwerker: inhoudelijke stopcorrectie kiest bestaande feedbackactie en bewaart reden; kale stop behoudt STOP zonder verzonnen uitleg. Beide verbonden proeven geslaagd vóór en na installatie, inclusief exact initiatief, één registratie na replay en idle-vervolgaandacht na herladen. Twee beschrijvingen gewijzigd, geen nieuwe opslagroute/modelronde. Digitale/publieke/gedeelde profielen overeenkomend; bestaande household_research-afwijking ongewijzigd. Echte gezinsuitkomst blijft afzonderlijk.",
-              "checkedAt": "2026-10-23T08:08:55.403814+00:00"
+              "progress": "E1.8 blijft open: expliciet stoppen trekt nu ook al gekozen vervolgaandacht van afgerond werk in, met behoud van het resultaat. Kern en werker geïnstalleerd; 11 gerichte proeven op het geïnstalleerde image geslaagd. Dit sluit de gebruikersuitkomst nog niet: echte open bedoeling, tijdig nuttig initiatief, latere uitkomst en doorwerking van correctie blijven de eindvoorwaarden.",
+              "checkedAt": "2026-10-23T08:31:04.045593+00:00"
             },
             {
               "id": "E1.9",
@@ -14626,7 +14626,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Volg bij normaal gebruik of relevante eigenaarsbijsturing bij het juiste initiatief behouden blijft en later wordt toegepast. E1.8 vereist daarnaast een echte voorafgaande afweging en later gecontroleerde gezinsuitkomst.",
+      "nextAction": "Rond de oorspronkelijke E1.8-gebruikersuitkomst af via de bestaande geïnstalleerde route; beoordeel echte open bedoelingen en beschikbare bronnen, volg de gekozen aanleiding en uitkomst, zonder nieuwe zijpaden of deelproeven als taakafronding.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",

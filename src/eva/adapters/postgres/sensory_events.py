@@ -1408,6 +1408,8 @@ class PostgresSensoryEventStore:
                    if "followup_source" in row.payload["data"] else {}),
                 "question": row.payload["data"]["next_exploration"], "phase": row.phase,
                 **({"owner_feedback": feedback} if feedback else {})}
+            if any(event.event_type == "PERSONAL_INITIATIVE_FOLLOWUP_STOPPED" for event in events):
+                item["followup_stopped"] = True
             failure_reader = getattr(self, "_initiative_failure_context_reader", None)
             if row.phase == "initiative_blocked" and not failure_seen and failure_reader is not None:
                 from eva.adapters.postgres.initiative_failure_context import unavailable_failure

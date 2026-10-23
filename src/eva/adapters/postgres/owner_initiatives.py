@@ -343,6 +343,7 @@ class PostgresOwnerInitiatives:
 
     def stop(self, intent_id: str, *, now: datetime) -> dict:
         intent_id = self._intent_id(intent_id)
+        followup_stopped = True
         with self._engine.begin() as conn:
             self._authorize(conn, now)
             row = conn.execute(self._query().where(
@@ -356,6 +357,31 @@ class PostgresOwnerInitiatives:
                 status = ("stopped" if row.phase == "initiative_completed"
                           and self._has_deferred_native_application(conn, row, now)
                           else "already_completed")
+                from eva.adapters.postgres.initiative_attention import initiative_followup_stopped
+                e = operational_events.c
+                choice = conn.execute(sa.select(e.payload, e.payload_sha256).where(
+                    e.tenant_id == self._scope.tenant_id, e.installation_id == self._scope.installation_id,
+                    e.thread_id.startswith("sensory:initiative-review:" + hashlib.sha256(str(self._owner).encode()).hexdigest()[:24] + ":"),
+                    e.event_type.in_(("WILL_DECIDED", "PROACTIVE_EXPRESSION_PREPARED")),
+                    e.payload["data"]["initiative"]["thread_id"].astext == row.thread_id,
+                    e.payload["data"]["next_attention"].astext.is_not(None),
+                ).order_by(e.occurred_at.desc()).limit(1)).first()
+                followup_stopped = initiative_followup_stopped(conn, self._scope, row.thread_id, str(self._owner))
+                if choice is not None and not followup_stopped:
+                    if canonical_sha256(choice.payload) != bytes(choice.payload_sha256).hex():
+                        raise RuntimeError("initiative attention choice hash differs")
+                    from eva.application.resident_attention import NextAttention
+                    selected = choice.payload["data"]["next_attention"]
+                    NextAttention.from_payload({"at": selected["requested_at"], "reason": selected["reason"]})
+                    transition_timeline_thread(conn, self._scope, thread_id=row.thread_id,
+                        expected_revision=row.revision,
+                        checkpoint_id=f"{row.thread_id}:followup-stop:{row.revision + 1}",
+                        phase=row.phase, status=row.status,
+                        event_type="PERSONAL_INITIATIVE_FOLLOWUP_STOPPED", occurred_at=now,
+                        operation_id=intent_id,
+                        data={"intent_id": intent_id, "owner_principal_id": str(self._owner),
+                              "principal_binding_id": str(self._binding), "reason": "owner_stop"})
+                    followup_stopped = True
             elif row.phase == "personal_stopped":
                 status = "stopped"
             else:
@@ -371,7 +397,8 @@ class PostgresOwnerInitiatives:
         if status == "stopped":
             self._stop_execution(intent_id)
         return {"contract": "EvaOwnerInitiativeStop/v1", "intent_id": intent_id,
-                "status": status, "in_flight_effects_may_complete": status == "stopped"}
+                "status": status, "followup_stopped": followup_stopped,
+                "in_flight_effects_may_complete": status == "stopped"}
 
     def _feedback(self, conn, thread_id):
         e = operational_events.c

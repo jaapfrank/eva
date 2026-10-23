@@ -32,6 +32,23 @@ def _original(connection, store, thread):
     return row
 
 
+def initiative_followup_stopped(connection, scope, thread_id, principal_id):
+    """An explicit owner stop also binds future attention after completion."""
+    e = events.c
+    row = connection.execute(sa.select(e.payload, e.payload_sha256).where(
+        e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+        e.thread_id == thread_id, e.event_type == "PERSONAL_INITIATIVE_FOLLOWUP_STOPPED"
+    ).order_by(e.sequence.desc()).limit(1)).first()
+    if row is None:
+        return False
+    data = row.payload.get("data", {})
+    if (canonical_sha256(row.payload) != bytes(row.payload_sha256).hex()
+            or data.get("owner_principal_id") != principal_id
+            or "intent:" + str(data.get("intent_id")) != thread_id):
+        raise RuntimeError("initiative follow-up stop source differs")
+    return True
+
+
 def pending_attention(connection, store, *, now, include_consumed=False):
     """One latest nonnull choice per exact audience; unrelated silence keeps it."""
     e, c, scope = events.c, checkpoints.c, store._timeline._scope_value
@@ -70,7 +87,8 @@ def pending_attention(connection, store, *, now, include_consumed=False):
     if intent is not None:
         phase = connection.execute(sa.select(c.phase).where(c.tenant_id == scope.tenant_id,
             c.installation_id == scope.installation_id, c.thread_id == intent)).scalar_one_or_none()
-        if phase is None or phase in {"personal_stopped", "will_abandoned"}:
+        if (phase is None or phase in {"personal_stopped", "will_abandoned"}
+                or initiative_followup_stopped(connection, scope, intent, store._initiative_principal_id)):
             return None
     reference = {"source_thread_id": row.thread_id,
         "source_event_id": source["source_event_id"], "source_decision_sequence": row.sequence,
