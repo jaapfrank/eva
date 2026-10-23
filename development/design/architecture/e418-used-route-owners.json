@@ -1,0 +1,157 @@
+{
+  "contract": "EvaE418UsedRouteOwners/v1",
+  "task": "E4.18",
+  "checkedAt": "2026-10-23T12:50:22.445377+00:00",
+  "scope": "Read-only handoff map, not a new implementation, execution proof or complete E4.18 acceptance.",
+  "routes": [
+    {
+      "route": "conversation_tool_action",
+      "entry": {
+        "path": "src/eva/application/conversation.py",
+        "symbol": "LivingConversation.respond"
+      },
+      "owners": {
+        "admission": {
+          "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+          "symbol": "PostgresExternalConversationTools.execute"
+        },
+        "timelineAndClaim": {
+          "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+          "symbol": "PostgresExternalConversationTools._execute"
+        },
+        "dispatch": {
+          "path": "src/eva/application/orchestration.py",
+          "symbol": "VerifiedToolOrchestrator._dispatch"
+        },
+        "verification": {
+          "path": "src/eva/application/orchestration.py",
+          "symbol": "VerifiedToolOrchestrator._verify_or_resume"
+        },
+        "receipt": {
+          "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+          "symbol": "PostgresExternalConversationTools._receipt"
+        },
+        "resultStorage": {
+          "path": "src/eva/adapters/postgres/connector_results.py",
+          "symbol": "ConnectorResults"
+        }
+      },
+      "boundary": "The conversation selects a prepared external action. Existing journal/authorization/execution lock/orchestrator/result receipt remain distinct responsibilities, not duplicate dispatchers."
+    },
+    {
+      "route": "home_assistant",
+      "entry": {
+        "path": "src/eva/providers/home_assistant.py",
+        "symbol": "HomeAssistantProviderFactory.build"
+      },
+      "provider": {
+        "path": "src/eva/adapters/connectors/home_assistant.py",
+        "symbol": "HomeAssistantToolAdapter"
+      },
+      "ownersRef": "conversation_tool_action",
+      "boundary": "HA-specific target preparation, provider execution/observation and optional API/management adapters feed the existing external tool owner; not a second general execution lifecycle."
+    },
+    {
+      "route": "browser_mcp",
+      "entry": {
+        "path": "src/eva/providers/mcp_gateway.py",
+        "symbol": "McpGatewayProviderFactory.build"
+      },
+      "provider": {
+        "path": "src/eva/adapters/connectors/mcp_gateway.py",
+        "symbol": "McpGatewayToolAdapter"
+      },
+      "browserLifecycle": {
+        "path": "src/eva/providers/mcp_gateway.py",
+        "symbol": "_ManagedDirectBrowserAdapter.execute"
+      },
+      "ownersRef": "conversation_tool_action",
+      "boundary": "Catalog verification and optional managed browser availability belong to the adapter/factory; authorization, journal, proof and receipt remain on the shared external-tool route."
+    },
+    {
+      "route": "tool_program",
+      "entry": {
+        "path": "src/eva/adapters/postgres/tool_program_actions.py",
+        "symbol": "ToolProgramActions.execute"
+      },
+      "codeAndFrameContract": {
+        "path": "src/eva/application/tool_program.py",
+        "symbol": "build_program_source"
+      },
+      "ownersRef": "conversation_tool_action",
+      "boundary": "The program bridge prepares input and frame/subcall identity, then dispatches through the provided actions port with per-subcall authorization. It is not evidence that the parent program can bypass underlying tool dispatch.",
+      "remainingBinding": "Current workspace wiring in src/eva/bootstrap/delegated_digital_runner.py:535-538 passes actions=lambda: actions and allowed capability names. This foreign WIP composition is not edited or certified as the final E4.15/E4.17 candidate."
+    },
+    {
+      "route": "saved_result_telegram",
+      "entry": {
+        "path": "src/eva/operations/delegated_work_delivery.py",
+        "symbol": "DelegatedWorkDeliveryWorker.run_once"
+      },
+      "destination": {
+        "path": "src/eva/application/delegated_work_delivery.py",
+        "symbol": "PrivateWorkDestination"
+      },
+      "claimAuthorizationReceipt": {
+        "path": "src/eva/adapters/postgres/delegated_work_delivery.py",
+        "symbol": "PostgresDelegatedWorkDeliveryStore"
+      },
+      "provider": {
+        "path": "src/eva/adapters/connectors/telegram.py",
+        "symbol": "TelegramProactiveDelivery"
+      },
+      "boundary": "Store claims and reauthorizes the original destination; delivery worker sends and acknowledges verified provider receipts. Ambiguous external completion is retained, not automatically replayed. This is separate from synchronous ingress replies and from optional channel polling."
+    }
+  ],
+  "fileDecisions": [
+    {
+      "path": "src/tools/container_inspection.py",
+      "decision": "retain_shared_read_only_owner",
+      "evidence": "development/evidence/reassessment/e418-container-inspection-20261023.json"
+    },
+    {
+      "path": "src/tools/file_inspection.py",
+      "decision": "retain_shared_read_only_owner",
+      "evidence": "development/evidence/reassessment/e418-file-inspection-20261023.json"
+    },
+    {
+      "path": "src/tools/eva2_quiescent_cutover.py",
+      "decision": "retain_legacy_facades_and_remaining_operator_use_until_handoff",
+      "reason": "Earlier bounded review preserved non-inspection functions and consumer contracts. Extracting two helpers is not proof that the rest of the tool is unused."
+    },
+    {
+      "path": "src/tools/living_core_source_provenance.py",
+      "decision": "retain_container_provenance_and_legacy_hash_symbol",
+      "reason": "Container snapshot/receipt responsibilities still exist. Repository registration now imports the neutral hasher. Existing original test suite passes."
+    }
+  ],
+  "deletions": [],
+  "findings": [
+    {
+      "kind": "preserve_existing_shared_owners",
+      "meaning": "Preparation, provider transport, proof, durable receipt and delivery claim serve different responsibilities. Source overlap alone is not sufficient evidence to delete a layer."
+    },
+    {
+      "kind": "snapshot_differences_require_coordinator_handoff",
+      "paths": [
+        "src/eva/adapters/postgres/external_conversation_tools.py",
+        "src/eva/adapters/postgres/private_work_return.py"
+      ],
+      "meaning": "Selected workspace/core/worker sources differ. This may be deliberate active work; no malfunction or deployment recommendation inferred. Coordinator must bind final E4.15/E4.17 candidate before further cleanup."
+    }
+  ],
+  "protectedScopesUnchanged": [
+    "E1.8",
+    "memory continuity",
+    "initiative",
+    "voice",
+    "foreign product WIP",
+    "shared installation"
+  ],
+  "fullE418Complete": false,
+  "remaining": [
+    "Concrete E4.15 extension route and E4.17 restoration/adoption handoff.",
+    "Final used-route verification against that same candidate; preserve current source differences until coordinated.",
+    "Coordinator publication of final current E4.18 status."
+  ]
+}

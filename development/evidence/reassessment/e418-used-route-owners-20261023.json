@@ -1,0 +1,369 @@
+{
+  "contract": "EvaE418UsedRouteOwnerBindings/v1",
+  "task": "E4.18",
+  "checkedAt": "2026-10-23T12:50:22.445377+00:00",
+  "headAtCapture": "2daf9b8d717ff193120d28e19f006386c3062d6f",
+  "kind": "read_only_source_binding_handoff",
+  "routeMap": "development/design/architecture/e418-used-route-owners.json",
+  "selectedSourceFiles": 18,
+  "bindings": [
+    {
+      "path": "src/eva/application/conversation.py",
+      "workspaceSha256AtCapture": "7471cdc3cd57e368ca65d775066e7bf45a8a1c4178a1508d7d0398800e8e9649",
+      "workspaceDirtyAtCapture": true,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "7471cdc3cd57e368ca65d775066e7bf45a8a1c4178a1508d7d0398800e8e9649",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "7471cdc3cd57e368ca65d775066e7bf45a8a1c4178a1508d7d0398800e8e9649",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/application/orchestration.py",
+      "workspaceSha256AtCapture": "1f01b62c25f96425a8255b57f74efc618cec724637373823ea69c9f022c42870",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "1f01b62c25f96425a8255b57f74efc618cec724637373823ea69c9f022c42870",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "1f01b62c25f96425a8255b57f74efc618cec724637373823ea69c9f022c42870",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+      "workspaceSha256AtCapture": "a8ab4acda8ecfba22d6006f513edd2c314736d2718e54159e19508b2dc73de4e",
+      "workspaceDirtyAtCapture": true,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "40ee8619ba52fcd467561bb3617759c3f2a415625195ac790619d2f48b2c2759",
+          "equalsWorkspaceAtCapture": false
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "40ee8619ba52fcd467561bb3617759c3f2a415625195ac790619d2f48b2c2759",
+          "equalsWorkspaceAtCapture": false
+        }
+      }
+    },
+    {
+      "path": "src/eva/adapters/postgres/connector_results.py",
+      "workspaceSha256AtCapture": "90a488952f6f3c185fe6368fab3e956c75ff1ab66d6b036ae0a8120c5065705a",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "90a488952f6f3c185fe6368fab3e956c75ff1ab66d6b036ae0a8120c5065705a",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "90a488952f6f3c185fe6368fab3e956c75ff1ab66d6b036ae0a8120c5065705a",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/providers/home_assistant.py",
+      "workspaceSha256AtCapture": "f6fa326b7be599260233abdec15854f7057b8c54661005b786e53ac27ca3e567",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "f6fa326b7be599260233abdec15854f7057b8c54661005b786e53ac27ca3e567",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "f6fa326b7be599260233abdec15854f7057b8c54661005b786e53ac27ca3e567",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant.py",
+      "workspaceSha256AtCapture": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/providers/mcp_gateway.py",
+      "workspaceSha256AtCapture": "a3323a96b6c5305b36a4856f9a8cb2dba8f6c23be023dc0ea9a345a26fd4802b",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "a3323a96b6c5305b36a4856f9a8cb2dba8f6c23be023dc0ea9a345a26fd4802b",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "a3323a96b6c5305b36a4856f9a8cb2dba8f6c23be023dc0ea9a345a26fd4802b",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/adapters/connectors/mcp_gateway.py",
+      "workspaceSha256AtCapture": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/adapters/postgres/tool_program_actions.py",
+      "workspaceSha256AtCapture": "8c7c3d06784573ca9df1f3e1c799a1b4cd67a365e42aa8d77857b3327ce3b572",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "8c7c3d06784573ca9df1f3e1c799a1b4cd67a365e42aa8d77857b3327ce3b572",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "8c7c3d06784573ca9df1f3e1c799a1b4cd67a365e42aa8d77857b3327ce3b572",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/application/tool_program.py",
+      "workspaceSha256AtCapture": "080f6c3bfdbdaa9189d2fccc64fe2633a62f382aedac6f58686689da2591731b",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "080f6c3bfdbdaa9189d2fccc64fe2633a62f382aedac6f58686689da2591731b",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "080f6c3bfdbdaa9189d2fccc64fe2633a62f382aedac6f58686689da2591731b",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/bootstrap/household_work.py",
+      "workspaceSha256AtCapture": "48e566719bca0a4a66b891e0e03f975bf88267be194dc5bf0cb3dcec059f14bd",
+      "workspaceDirtyAtCapture": true,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "48e566719bca0a4a66b891e0e03f975bf88267be194dc5bf0cb3dcec059f14bd",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "48e566719bca0a4a66b891e0e03f975bf88267be194dc5bf0cb3dcec059f14bd",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/adapters/postgres/private_work_return.py",
+      "workspaceSha256AtCapture": "399823f0a32498ea5e3d42ac7f580e10e582d52b0e94f005604d861f82599a61",
+      "workspaceDirtyAtCapture": true,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "399823f0a32498ea5e3d42ac7f580e10e582d52b0e94f005604d861f82599a61",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "f97948e4caf09aa0cca3e0ae617efded58966d568c8c1cf2957b6ae8c1137428",
+          "equalsWorkspaceAtCapture": false
+        }
+      }
+    },
+    {
+      "path": "src/eva/bootstrap/native_work_delivery.py",
+      "workspaceSha256AtCapture": "fd814928c357a4a51de128043543ef2deb7b6dd7af0a2123d7606ec7e7a89519",
+      "workspaceDirtyAtCapture": true,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "fd814928c357a4a51de128043543ef2deb7b6dd7af0a2123d7606ec7e7a89519",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "fd814928c357a4a51de128043543ef2deb7b6dd7af0a2123d7606ec7e7a89519",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/application/delegated_work_delivery.py",
+      "workspaceSha256AtCapture": "4eb8078377cc96c76a94dba4afa3ebca50f6d5593771f303bdc5f4ed3367ae52",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "4eb8078377cc96c76a94dba4afa3ebca50f6d5593771f303bdc5f4ed3367ae52",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "4eb8078377cc96c76a94dba4afa3ebca50f6d5593771f303bdc5f4ed3367ae52",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/operations/delegated_work_delivery.py",
+      "workspaceSha256AtCapture": "6a5397970f5f0ce1285cfba6d4d2da22428ede1897306c611109ea871b410b0f",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "6a5397970f5f0ce1285cfba6d4d2da22428ede1897306c611109ea871b410b0f",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "6a5397970f5f0ce1285cfba6d4d2da22428ede1897306c611109ea871b410b0f",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/adapters/postgres/delegated_work_delivery.py",
+      "workspaceSha256AtCapture": "d69a170b254664ecc9eb72c75a141e6172e22d57f41bbd7f67f018181a738f86",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "d69a170b254664ecc9eb72c75a141e6172e22d57f41bbd7f67f018181a738f86",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "d69a170b254664ecc9eb72c75a141e6172e22d57f41bbd7f67f018181a738f86",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/adapters/connectors/telegram.py",
+      "workspaceSha256AtCapture": "06604689e00e24243b63af31cc4c4e300126262d09fad986c673632edddefecd",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "06604689e00e24243b63af31cc4c4e300126262d09fad986c673632edddefecd",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "06604689e00e24243b63af31cc4c4e300126262d09fad986c673632edddefecd",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_work_delivery.py",
+      "workspaceSha256AtCapture": "d266064296d80656b5aca71a439de717b472a39383511ae10fe4216267b6f3d8",
+      "workspaceDirtyAtCapture": false,
+      "workspaceChangedSinceCapture": false,
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "present": true,
+          "sha256": "d266064296d80656b5aca71a439de717b472a39383511ae10fe4216267b6f3d8",
+          "equalsWorkspaceAtCapture": true
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "present": true,
+          "sha256": "d266064296d80656b5aca71a439de717b472a39383511ae10fe4216267b6f3d8",
+          "equalsWorkspaceAtCapture": true
+        }
+      }
+    }
+  ],
+  "serviceSnapshots": [
+    {
+      "service": "eva2-managed-b-slot3-core",
+      "containerId": "7caabcc907f44072c01c866495d27db693cf71b823ccdb6687692ab77bae023f",
+      "imageId": "sha256:ebe4ab1f43cbd1770cd0fa7b2eb0c3c6330ca0722e872108183a5f420f0bf3f7",
+      "stableDuringReads": true
+    },
+    {
+      "service": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "containerId": "c3b0f04822c6e7d6b66248d2b81367feb74ceb455cb6a90eb1214e2fe0d38b2e",
+      "imageId": "sha256:51074546eb3807ff78950f49a389d235e4828555ca0415b425fb0357c0ef56ac",
+      "stableDuringReads": true
+    }
+  ],
+  "allDeclaredOwnerSymbolsPresentInSelectedCoreAndWorkerSources": true,
+  "workspaceInstalledDifferences": [
+    "src/eva/adapters/postgres/external_conversation_tools.py",
+    "src/eva/adapters/postgres/private_work_return.py"
+  ],
+  "sourceProofLimit": "SHA equality and AST symbols prove only the selected source state. They do not prove provider enablement, live route execution, absence of double effects, family usefulness or extension restoration.",
+  "noRuntimeBugClaimFromDifferences": true,
+  "measurements": {
+    "providerCalls": 0,
+    "evaModelCalls": 0,
+    "messagesSent": 0,
+    "databaseReads": 0,
+    "serviceRestarts": 0,
+    "installations": 0,
+    "testsRepeated": 0,
+    "sourceMetadataContainerReads": 4,
+    "developmentCreditCost": null,
+    "developmentCreditCostState": "unknown"
+  },
+  "reviewStatus": "Read-only handoff; final used-route independent review belongs to E4.15/E4.17 candidate, not rerunning earlier completed proofs."
+}
