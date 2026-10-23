@@ -643,6 +643,49 @@
       "semanticReaderRepeatedByReviewer": false,
       "reviewerDatabaseAccess": false,
       "limits": "Accepted only existing first-validation/atomic-publication proof and exact target binding. No fabricated helper return, full package validation, restored component behavior or fullE417 completion."
+    },
+    "installationPolicyCandidateV1": {
+      "checkedAt": "2026-10-23T21:55:10.454393+00:00",
+      "freezeSha256": "ced66ae843e1b4e264a76eae7afa04026dd6bd7122f7a0e83b46dad0832de3cd",
+      "transportSha256": "930c732f3060f0c5d132664b36a78fb72f23ef50268f72d4a990deae8edd966f",
+      "allNineHashesMatchedBeforeTests": true,
+      "verdict": "NO_GO_UNBOUNDED_TAR_METADATA_READ",
+      "independentTests": {
+        "policyFileIntakeV3AndLegacy": {
+          "passed": 49,
+          "deselectedPgCasesRunSeparately": 2,
+          "skipped": 0,
+          "seconds": 21.32
+        },
+        "actualPgPackageCacheAndOuterManifest": {
+          "passed": 21,
+          "skipped": 0,
+          "seconds": 24.94
+        },
+        "additionalPublicFlowProbes": {
+          "passed": 3,
+          "seconds": 1.9492444,
+          "cases": [
+            "Ordinary default refuses1.5GB installation header before KDF",
+            "Installation policy refuses above fixed budget before KDF",
+            "Physical oversized private file refused before staging/copy"
+          ],
+          "kdfCalls": 0,
+          "publishedOutput": false,
+          "largeContentAllocated": false
+        }
+      },
+      "legacyFiveCaseAstsUnchanged": true,
+      "testTarget": {
+        "container": "eva2-review-e417-policy-acb61e976e",
+        "id": "da03771584fb0219abda116602cb5fbbcc84ac6d7ffeda866b0f0740df9d5123",
+        "cachedImage": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+        "server": "PostgreSQL18.6",
+        "ownTestDatabasesRemainingBeforeRemoval": 0,
+        "ownedContainerRemoved": true,
+        "foreignTargetTouched": false
+      },
+      "limit": "These passing checks apply to frozenV1, not the subsequent metadata fix or actual large package/operator-file trial."
     }
   },
   "contractRequirements": {
@@ -888,6 +931,29 @@
       "reproduction": "ExactHEAD transport+test positive case, isolated import: same authority mismatch before any seal/open call.",
       "impact": "Five existing transport cases cannot reach transport under the current fixture; this baseline does not establish a transport-policy regression.",
       "evidence": "transportFixtureBaseline"
+    },
+    {
+      "id": "E417-TRANSPORT-001",
+      "severity": "P1",
+      "status": "coordinator_authorized_bounded_metadata_fix_candidate_v2_pending",
+      "cause": "tarfile parses PAX metadata before yielding a member, so the new per-file/total/count checks execute after an attacker-declared allocation.",
+      "reproduction": {
+        "bytes": 1536,
+        "sha256": "039c242d0a970f7a13e5822ad29e50b47cad540474736101c5f17952cbcb9cd7",
+        "construction": "TarInfo(pax-metadata),type=XHDTYPE,size=1073741825; tobuf(USTAR_FORMAT)+1024 zero bytes.",
+        "memoryCapBytes": 536870912,
+        "candidatePolicy": "INSTALLATION_RECOVERY",
+        "candidateException": "MemoryError",
+        "lastFrame": "stdlib tarfile._proc_pax",
+        "candidateToolSeconds": 0.5962802,
+        "publishedFiles": 0,
+        "exactOldBaselineTransportSha256": "46803240fd1a3a43c98ebd227e41bca0001b4a42a5aebdef4e08e9e3f4549162",
+        "baselineException": "MemoryError",
+        "baselineToolSeconds": 0.6743156,
+        "baselineAlsoAffected": true
+      },
+      "impact": "A tiny malformed tar reaches metadata allocation before the declared resource gates; existing defect, not introduced by the2GiB policy.",
+      "repairBoundary": "Coordinator authorized fixed small PAX/GNU-longname/longlink metadata and chain/depth bounds before stdlib reads; preserve ordinary writer long-path behavior and all archive/schema criteria. No product edits or new core export by reviewer."
     }
   ]
 }
