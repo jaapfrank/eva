@@ -17215,7 +17215,15 @@
         "originalRequestByteIdentityRequiresActualRequest": true,
         "reconstructedInputMustUseOriginalStoredFactsAndExistingContextShape": true,
         "exactInputProvenanceReviewBeforeStart": true
-      }
+      },
+      "constructorLedgerIndependentReview": "GO_SCOPED_ORIGINAL_LEDGER_OPAQUE_BYTES_SOURCE_EVIDENCE_ONLY",
+      "cpuContextualStaticIndependentReview": "GO_SCOPED_CONTEXTUAL_CPYTHON_STATIC_METADATA_NOT_IMPORT",
+      "cpuContextualEntryPoints": 214,
+      "cpuContextualDependencyEdges": 1867,
+      "sourceLedgerCpuSchemaIndependentReportSha256": "96e10edd9bbcb8194f0880c7324e03e03077379a2346b06ce004a6f6ce5868c4",
+      "functionalStartConfigurationReviewPending": true,
+      "functionalInputProvenanceReviewPending": true,
+      "procedureOptionalSchemaIndependentReview": "GO_SCOPED_EXISTING_OPTIONAL_CONFIG_VIEW_FEASIBILITY_NOT_START"
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",

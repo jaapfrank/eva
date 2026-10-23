@@ -1560,7 +1560,8 @@
         "Keep behavior verifiers, scorers and criteria unexecuted/unmodified until their separately bounded original-service functional scope is admitted. Source physical attestation never establishes new target physical usage."
       ],
       "functionalStartAdmitted": false,
-      "productionModuleAdoptionAdmitted": false
+      "productionModuleAdoptionAdmitted": false,
+      "focusedViewScopeUpdate": "Later owner scope selects the existing optional procedure-focused configuration rather than full assessment/application constructors. Exact original ledger bytes are now separately captured as source evidence; source attestation is not target proof. No uncommitted reference layer adoption or unrelated protected-final state restoration is required for that conditional view. Exact view/launch/input/state must be reviewed before start."
     },
     "canonicalHostIntegrationTestPromotionReview": {
       "reviewedAt": "2026-10-23T23:32:33.927730+00:00",
@@ -1778,6 +1779,96 @@
         "No need to repeat old host packet/fullprepare/cipher/core/PG suites. Next review remains the concrete ledger/state/dispatcher boundary and exact original-procedure functional plan."
       ],
       "functionalStartAdmitted": false
+    },
+    "contextualCpuStaticLoaderReview": {
+      "verdict": "GO_SCOPED_CONTEXTUAL_CPYTHON_STATIC_METADATA_NOT_IMPORT",
+      "receiptSha256": "764f4cfdfa9c7748f806bb88ad0c9e47f05ea73db7c775a08f26347e1877e296",
+      "preservedRawReportSha256": "0f451d846db9611196f6102c0f3e1387a076e9959c6e63958b20a83201c236ba",
+      "publishedHostReceiptSha256": "d8710121f4117aff9928b64bbad3c8d8274627d9d7010f2b107929ada1ae04c3",
+      "entrypointCountIncludingInterpreter": 214,
+      "cpuEntrypointCount": 198,
+      "otherEntrypointCount": 15,
+      "classifiedAncillaryObjects": 69,
+      "retainedUnselectedGpuObjects": 2,
+      "retainedUnselectedGpuIssues": 10,
+      "allPublishedCpuObjectPinsBoundToAlreadyHashedFullPrepare": true,
+      "entrypointDependencyEdgesMetadataChecked": 1867,
+      "directOriginalFaceRouteElfSectionChecks": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/host-prepared/expanded/cpu/lib/python3.12/site-packages/cv2/cv2.abi3.so",
+          "sha256": "d408dfb5dd0c73570c8e02244dc3d5c8d77fffc774a9d3973713f986b24d56d3",
+          "gnuSectionsMatchRecordedRawMetadata": true
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/host-prepared/expanded/cpu/lib/python3.12/site-packages/numpy/_core/_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+          "sha256": "03b9aad465908f453b66b687a341067c9507214b85d713aa1dbb8511db42eb63",
+          "gnuSectionsMatchRecordedRawMetadata": true
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/host-prepared/expanded/cpu/lib/python3.12/site-packages/onnxruntime/capi/onnxruntime_pybind11_state.cpython-312-x86_64-linux-gnu.so",
+          "sha256": "26f7f92dd892d7a41c251332e06486eed632d0a71cdf6183093f27948c55aef5",
+          "gnuSectionsMatchRecordedRawMetadata": true
+        }
+      ],
+      "newCpuWheelMetadataRecordsChecked": 25,
+      "totalWheelGroupsIncludingEarlierHostBridge": 70,
+      "rawStandaloneIssuesPreserved": 62,
+      "singleSelectedRootIssueFiltered": "Qt5Core blank PT_INTERP when reached as a shared object from cv2; not the executable Python interpreter",
+      "allOtherSelectedRootIssuesRetained": true,
+      "contextualSelectedLoaderIssues": 0,
+      "lateDlopenPythonSymbolsActualImportsAndInferenceProven": false,
+      "actualTargetRuntimeCleanLaunchEnvironmentProven": false,
+      "readelfMetadataOnlyNoTargetInterpreterLddLoaderOrSdkExecution": true,
+      "oldStrictCpuHarnessUnchangedAndNotRun": true,
+      "reviewSeconds": 0.18498,
+      "reviewedAt": "2026-10-23T23:49:14.148048+00:00",
+      "contextDerivationExecutionId": "exec-bd46ffe0-a4f5-4099-ac65-a0e3080f4da3",
+      "method": "Reuse independently hashed actual full-prepared file pin map; reconstruct every context issue/edge from preserved raw report. Check actual GNU sections for original CPU face-route cv2/NumPy/onnxruntime modules and read25 CPU WHEEL metadata records. No blanket213/269-object ELF execution/readelf rerun or supplied module import.",
+      "limits": [
+        "Static CPython-entrypoint context only. All213 .so roots are identified by CPython/abi3 suffix, not a claim all their PyInit exports or Python symbols were dynamically resolved.",
+        "The single selected raw issue is a blank PT_INTERP in Qt5Core reached through cv2 as a shared object; the actual copied executable interpreter is still independently checked. All other selected issues remain;62 raw standalone observations and10 unselected GPU dependency issues are preserved.",
+        "Actual imports, late dlopen/GUI plugins, deferred CPU provider selection, inference and clean runtime launch envelope remain unproven. Earlier strict CPU failure remains unchanged."
+      ]
+    },
+    "originalOpaqueUsageLedgerCaptureReview": {
+      "reviewedAt": "2026-10-23T23:49:14.148048+00:00",
+      "verdict": "GO_SCOPED_ORIGINAL_LEDGER_OPAQUE_BYTES_SOURCE_EVIDENCE_ONLY",
+      "receiptSha256": "1bf12ed5f7e34041403fdf439fb19ed0c29499f5fd04a9de22a3479c522c0702",
+      "ledgerSha256": "9f7b0adbb2c80b876da5818504caf7bc774f5b195ee55df5ce41ad9562280c0f",
+      "bytes": 144268,
+      "opaqueTargetHashIndependentlyVerified": true,
+      "sourceStatBeforeAfterAndReviewTimeStillMatches": true,
+      "privateRootOwned0400SingleLinkUnder0700": true,
+      "independentInodeCopy": true,
+      "ledgerBodyParsedPublishedOrExecuted": false,
+      "originalSourceAttestationChanged": false,
+      "includedIn576Version": false,
+      "newTargetPhysicalGrantInferred": false,
+      "reviewSeconds": 0.00108,
+      "requiredForFocusedViewWhenReviewedApplicationsKeyAbsent": false,
+      "scope": "Keep original source evidence distinct. Do not relocate/provision protected-final resources or invoke original full assessment constructors for a procedure-focused probe."
+    },
+    "procedureFocusedOptionalViewSchemaReview": {
+      "reviewedAt": "2026-10-23T23:49:14.148048+00:00",
+      "verdict": "GO_SCOPED_EXISTING_OPTIONAL_CONFIG_VIEW_FEASIBILITY_NOT_START",
+      "preparedServiceSourceSha256": "44230e1349b5beb334d21bbef85ac5afa24d56bc36cadd7e77d016c314b4d86b",
+      "preparedProcedureExecutorSha256": "cf8a56271fa4a1e9c05d90d3492c3c675becda4f28f816cb7178be085dd1493e",
+      "exactNewViewLaunchAndStateReceiptDelivered": false,
+      "optionalConstructorConditions": "procedure_execution_enabled=true. Omit programming_workspace, reviewed_component_applications, final_component_assessments, saved_artifact_suite and runtime_repairs; component_suites/work_execution_producers absent or empty. Required image/command/token_file/IPv4/port/nonempty allowed_paths and original budgets remain valid and not broadened.",
+      "schemaCompatibility": "Actual load_config/main accept those optional omissions. DevelopmentAssessment class is imported, but no assessment/scorer constructed for empty suites. ComponentEvaluator(settings) only assigns config/assessment/source_target; source_target=None performs no target read. EvaluationServer defaults optional actors to None/empty and adds only its HTTP server and request lock. No reviewed-app dispatcher or ledger constructor is selected.",
+      "apiBoundary": "The existing /evaluate endpoint remains available behind the same auth for allowed_paths; this is a procedure-focused controlled probe configuration, not endpoint-exclusive service. No product endpoint or guard changes are required or approved.",
+      "authenticationAndNativeSandbox": "One existing Bearer header with constant-time comparison; fixed JSON/body limits and lock. Original ProcedureExecutor requires pinned local image, pull-never, network-none, read-only/capdrop/no-new-privileges/user65534, fixed native Python -I -B, original resource/deadline caps and finally Docker cleanup.",
+      "stopBoundary": "HTTP payload has only source/input_data and does not expose cancel_event. Original SIGTERM shuts down acceptance; an existing handler may finish up to its original deadline and cleanup. No instantaneous HTTP-cancel claim.",
+      "heldAndDuplicateBoundary": "Standalone endpoint does not read restore_activation and has no request-id idempotency store. Actual isolated stopped core/worker pins, absence of producers, loopback/private token and exactly one authorized manual request bound the probe. No /evaluate, retries, duplicate-action or autonomous work claim.",
+      "unusedFullFrameworkState": "Preserved full source config/attestation/ledger and reference modules remain separate. Their old full-constructor queue/dispatcher conditions do not block a view that does not instantiate them; no empty replacement queue or loss of original saved state is inferred.",
+      "requiredBeforeStart": [
+        "Concrete hash-bound view, clean pre-exec environment/CPU lookup provenance, target-only token references, stopped-core/worker and request/cleanup state receipt matching the approved actual prepared sources.",
+        "Genuine saved ProcedureExecutionClient.input_data or a source-hash-bound reconstruction from narrowly authorized original camera/perception facts in the isolated restored target. Distinguish reconstruction from recovered exact request bytes.",
+        "One original saved procedure call only, no /evaluate/producers/retries; preserve exact native image and resource/auth/sandbox/explicit CPU route.",
+        "No fabricated faces=0 payload or replay/byte-identity approval from aggregate E415 evidence alone."
+      ],
+      "functionalStartAdmitted": false,
+      "productCodeChangedOrNewEndpointAdded": false
     }
   },
   "contractRequirements": {
@@ -1907,6 +1998,16 @@
       ],
       "targetInterpreterImportsOrLddLoaderExecutions": 0,
       "sdkScorerServicesOrModelCalls": 0,
+      "developmentTokens": null,
+      "developmentCredits": null
+    },
+    "latestContextualCpuAndOpaqueLedgerReview": {
+      "cpuStaticSeconds": 0.18498,
+      "opaqueLedgerSeconds": 0.00108,
+      "routeSpecificElfSectionReads": 3,
+      "cpuWheelRecordsRead": 25,
+      "ledgerBytesHashedOpaque": 144268,
+      "targetImportsScorersModelsOrServices": 0,
       "developmentTokens": null,
       "developmentCredits": null
     }
