@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.adapters.postgres.catalog_generated import CATALOG_SPEC
+from tools.postgres_portable_export import CANONICAL_EXPORT_SPECS
 from eva.application.portable_archive import RecordSetBytes, canonical_json_bytes
 from tools.portable_export import publish_portable_archive
 from tools.portable_transport import (
@@ -37,10 +37,10 @@ def _empty_record_sets() -> tuple[tuple[RecordSetBytes, ...], str]:
         item["fact_id"]: item["portable_record"]
         for item in authority["fixtureFactCatalog"]["facts"]
     }
-    table_specs = {item["table"]: item for item in CATALOG_SPEC["canonical_tables"]}
+    table_specs = {item["table"]: item for item in CANONICAL_EXPORT_SPECS}
     result: list[RecordSetBytes] = []
     for expected in snapshot["record_sets"]:
-        portable = table_specs[expected["table"]]["portableExport"]
+        portable = table_specs[expected["table"]]
         records = tuple(facts[fact_id] for fact_id in expected["record_fact_ids"])
         content = b"".join(canonical_json_bytes(record) + b"\n" for record in records)
         assert hashlib.sha256(content).hexdigest() == expected["jsonl_sha256"]
@@ -48,9 +48,9 @@ def _empty_record_sets() -> tuple[tuple[RecordSetBytes, ...], str]:
             RecordSetBytes(
                 export_ordinal=expected["exportOrdinal"],
                 table=expected["table"],
-                contract=portable["recordContract"],
-                relative_path=portable["recordJsonlRelativePath"],
-                record_schema_relative_path=portable["recordSchemaRelativePath"],
+                contract=portable["record_contract"],
+                relative_path=portable["record_jsonl_relative_path"],
+                record_schema_relative_path=portable["record_schema_relative_path"],
                 record_schema_sha256=expected["record_schema_sha256"],
                 records=records,
                 content=content,

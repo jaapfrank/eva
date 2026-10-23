@@ -23,7 +23,7 @@ from tools.read_eva_portable_archive import (
     _root_descriptor, _scan_regular_files, _read_regular, _load_canonical_object,
 )
 from tools.portable_v2_reader import read_current_archive
-from tools.portable_transport import MAX_ARCHIVE_BYTES, MAX_ARCHIVE_FILES
+from tools.portable_transport import MAX_ARCHIVE_BYTES, MAX_ARCHIVE_FILES, MAX_INSTALLATION_ARCHIVE_BYTES
 
 # Scoped by the synchronous operator workflow; never loaded from package content.
 _identity_trust = ContextVar("installation_recovery_identity_trust", default=None)
@@ -133,7 +133,7 @@ def _entries(fd, names, roles):
         role, mode = _role(name, roles.get(name))
         raw = _read_regular(fd, name, maximum=MAX_ARCHIVE_BYTES)
         total += len(raw)
-        if total > MAX_ARCHIVE_BYTES:
+        if total > MAX_INSTALLATION_ARCHIVE_BYTES:
             raise ValueError("installation package exceeds transport byte limit")
         result[name] = {"sha256": _sha(raw), "size": len(raw), "role": role, "mode": mode}
     return result
@@ -174,6 +174,8 @@ def _validate(fd, raw, identity_trust=None):
         roles[name] = role
     if _entries(fd, set(entries), roles) != entries:
         raise ValueError("installation component bytes differ")
+    if sum(entry["size"] for entry in entries.values()) + len(raw) > MAX_INSTALLATION_ARCHIVE_BYTES:
+        raise ValueError("installation package exceeds total byte limit including manifest")
     trust = identity_trust if identity_trust is not None else _identity_trust.get()
     cache = _validated_core.get()
     key = (_sha(raw), trust)
@@ -230,6 +232,9 @@ def write_installation_package(root: Path, *, file_roles, source_components, key
                     "source_components": source_components, "key_references": key_references,
                     "files": entries}
         raw = canonical_json_bytes(manifest)
+        if (sum(entry["size"] for entry in entries.values()) + len(raw) > MAX_INSTALLATION_ARCHIVE_BYTES
+                or len(names) + 1 > MAX_ARCHIVE_FILES):
+            raise ValueError("installation package exceeds complete transport limits")
         if len(raw) > 16777216:
             raise ValueError("installation manifest exceeds byte limit")
         out = os.open("archive.json", os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600, dir_fd=fd)
@@ -238,4 +243,10 @@ def write_installation_package(root: Path, *, file_roles, source_components, key
             stream.flush()
             os.fsync(stream.fileno())
         os.fsync(fd)
+        cache = _validated_core.get()
+        if cache is not None:
+            trust = identity_trust if identity_trust is not None else _identity_trust.get()
+            # The writer has just performed the semantic check. _validate still
+            # hashes the exact complete inventory twice before trusting this key.
+            cache[:] = [((_sha(raw), trust), core)]
         return _validate(fd, raw, identity_trust)

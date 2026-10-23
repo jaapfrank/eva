@@ -7,6 +7,9 @@ never by HTTP. A preview token refers to authenticated local staged bytes only.
 from __future__ import annotations
 
 import json
+import os
+import stat
+import shutil
 from copy import deepcopy
 import sqlalchemy as sa
 from graphlib import TopologicalSorter
@@ -22,8 +25,10 @@ from typing import Any
 from eva.operations.portable_restore_authority import authorize_portable_restore, authorize_installation_recovery
 from eva.application.installer_restore import InactiveRecoveryMaterialRetained
 from eva.application.identity_verifier import IdentityPackTrustBinding
-from tools.portable_transport import open_portable_transport
+from tools.portable_transport import (open_portable_transport, TransportPolicy,
+    transport_archive_byte_limit, transport_encrypted_byte_limit)
 from tools.read_eva_portable_archive import validate_and_derive
+from tools.installation_recovery_package import installation_identity_trust
 from tools.postgres_portable_export import CANONICAL_EXPORT_SPECS
 from tools.portable_restore import (
     restore_column_preserving_records,
@@ -74,7 +79,10 @@ class InstallerPortableRestore:
         identity_trust: IdentityPackTrustBinding | None = None,
         identity_destination: Path | None = None,
         identity_runtime_owner: dict | None = None,
+        transport_policy: TransportPolicy = TransportPolicy.PORTABLE,
     ):
+        transport_archive_byte_limit(transport_policy)
+        self.transport_policy = transport_policy
         # The composition root must provide an isolated, traffic-closed target.
         if (
             not workspace.is_dir()
@@ -136,6 +144,9 @@ class InstallerPortableRestore:
             raise ValueError("restore activation requires complete trusted component and runtime composition")
         self.verify_components, self.start_runtime = verify_components, start_runtime
         self.external_restore = external_restore
+        if (transport_policy is TransportPolicy.INSTALLATION_RECOVERY
+                and recovery_materialization is None):
+            raise ValueError("installation transport requires trusted materialization settings")
         self.recovery_materialization = deepcopy(recovery_materialization)
         self._lock = Lock()
         self._pending: tuple[TemporaryDirectory, str, float, str] | None = None
@@ -153,6 +164,9 @@ class InstallerPortableRestore:
         from tools.read_eva_portable_archive import _root_descriptor, _read_regular, _load_canonical_object
         with _root_descriptor(directory) as descriptor:
             header = _load_canonical_object(_read_regular(descriptor, "archive.json"), label="archive manifest")
+        if (self.transport_policy is TransportPolicy.INSTALLATION_RECOVERY
+                and header.get("contract") != "EvaInstallationRecovery/v1"):
+            raise ValueError("installation transport requires an installation package")
         if header.get("contract") == "EvaInstallationRecovery/v1":
             from tools.installation_recovery_package import read_installation_package
             return read_installation_package(directory, identity_trust=self.identity_trust)
@@ -291,60 +305,131 @@ class InstallerPortableRestore:
             )
         return records, manifest, summary
 
+    def _check_restore_capacity(self, encrypted_bytes: int) -> None:
+        # Copy, decrypted tar, extracted tree and inactive materialization can
+        # coexist. Six input lengths plus metadata is a conservative peak budget.
+        required = 6 * encrypted_bytes + 16_777_216
+        roots = [self.workspace, self.object_store_root]
+        if self.recovery_materialization is not None:
+            roots.append(Path(self.recovery_materialization["destination"]).parent)
+        seen = set()
+        for root in roots:
+            while not root.exists():
+                root = root.parent
+            device = root.stat().st_dev
+            if device not in seen:
+                if shutil.disk_usage(root).free < required:
+                    raise ValueError("restore target lacks bounded peak disk capacity")
+                seen.add(device)
+
+    @staticmethod
+    def _input_signature(info):
+        return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns,
+                info.st_ctime_ns, info.st_mode, info.st_uid, info.st_gid, info.st_nlink)
+
     def prepare(self, archive: bytes, passphrase: str) -> dict[str, object]:
-        with self._lock:
+        with self._lock, installation_identity_trust(self.identity_trust):
             self._discard()
-            staging = TemporaryDirectory(prefix="restore-", dir=self.workspace)
+            if not isinstance(archive, bytes) or not 0 < len(archive) <= 64 * 1024 * 1024:
+                raise ValueError("restore byte intake exceeds its 64 MiB boundary")
+            self._check_restore_capacity(len(archive))
+            def copy_source(destination):
+                fd = os.open(destination, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+                with os.fdopen(fd, "wb") as output:
+                    output.write(archive)
+            return self._prepare_staged_source(copy_source, passphrase)
+
+    def prepare_file(self, archive: Path, passphrase: str) -> dict[str, object]:
+        """Read one operator-owned local file through the ordinary preview gate."""
+        with self._lock, installation_identity_trust(self.identity_trust):
+            self._discard()
+            if (not isinstance(archive, Path) or not archive.is_absolute()
+                    or archive.resolve() != archive):
+                raise ValueError("restore file must be an absolute non-symlink operator path")
+            fd = os.open(archive, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC | os.O_NONBLOCK)
             try:
-                root = Path(staging.name)
-                source = root / "backup.eva"
-                source.write_bytes(archive)
-                source.chmod(0o600)
-                directory = root / "archive"
-                open_portable_transport(
-                    source,
-                    directory,
-                    passphrase=passphrase,
-                    validator=self._validate_archive,
+                before = os.fstat(fd)
+                if (not stat.S_ISREG(before.st_mode) or before.st_nlink != 1
+                        or before.st_uid != os.geteuid() or before.st_mode & 0o077
+                        or not 0 < before.st_size <= transport_encrypted_byte_limit(self.transport_policy)):
+                    raise ValueError("restore file must be bounded, owner-private and single-link")
+                signature = self._input_signature(before)
+                if self._input_signature(archive.lstat()) != signature:
+                    raise ValueError("restore file changed while being opened")
+                self._check_restore_capacity(before.st_size)
+                def copy_source(destination):
+                    out = os.open(destination, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+                    with os.fdopen(out, "wb") as output:
+                        remaining = before.st_size
+                        while remaining:
+                            chunk = os.read(fd, min(1_048_576, remaining))
+                            if not chunk:
+                                raise ValueError("restore file changed while copying")
+                            output.write(chunk)
+                            remaining -= len(chunk)
+                        if os.read(fd, 1):
+                            raise ValueError("restore file grew while copying")
+                        output.flush()
+                        os.fsync(output.fileno())
+                    if (self._input_signature(os.fstat(fd)) != signature
+                            or self._input_signature(archive.lstat()) != signature):
+                        raise ValueError("restore file changed while copying")
+                return self._prepare_staged_source(copy_source, passphrase)
+            finally:
+                os.close(fd)
+
+    def _prepare_staged_source(self, copy_source, passphrase: str) -> dict[str, object]:
+        staging = TemporaryDirectory(prefix="restore-", dir=self.workspace)
+        try:
+            root = Path(staging.name)
+            source = root / "backup.eva"
+            copy_source(source)
+            directory = root / "archive"
+            open_portable_transport(
+                source,
+                directory,
+                passphrase=passphrase,
+                validator=self._validate_archive,
+                transport_policy=self.transport_policy,
+            )
+            records, manifest, summary = self._read(directory)
+            current = json.loads(manifest).get("contract") in {"EvaPortableArchive/v2", "EvaPortableArchive/v3", "EvaInstallationRecovery/v1"}
+            if current:
+                from tools.portable_v2_profile import ALL_SPECS
+                from tools.portable_v2_restore import verify_current_target
+            specs = ALL_SPECS if current else CANONICAL_EXPORT_SPECS
+            checked_objects = ()
+            preview_objects = root / "preview-objects"
+            if records.get("eva_evidence.object_refs"):
+                checked_objects = materialize_verified_portable_objects(
+                    source_object_root=self._object_source(directory, manifest),
+                    target_object_root=preview_objects,
+                    records_by_table=records,
+                    key_resolver=self.key_resolver,
                 )
-                records, manifest, summary = self._read(directory)
-                current = json.loads(manifest).get("contract") in {"EvaPortableArchive/v2", "EvaPortableArchive/v3", "EvaInstallationRecovery/v1"}
-                if current:
-                    from tools.portable_v2_profile import ALL_SPECS
-                    from tools.portable_v2_restore import verify_current_target
-                specs = ALL_SPECS if current else CANONICAL_EXPORT_SPECS
-                checked_objects = ()
-                preview_objects = root / "preview-objects"
-                if records.get("eva_evidence.object_refs"):
-                    checked_objects = materialize_verified_portable_objects(
-                        source_object_root=self._object_source(directory, manifest),
-                        target_object_root=preview_objects,
-                        records_by_table=records,
-                        key_resolver=self.key_resolver,
-                    )
-                validate_portable_restore_records(
-                    records,
-                    table_specs=specs,
-                    materialized_objects=checked_objects,
-                    object_store_root=preview_objects,
-                )
-                with self.engine.connect().execution_options(
-                    isolation_level="SERIALIZABLE"
-                ) as connection:
-                    with connection.begin():
-                        if self.runtime_guard is not None:
-                            self.runtime_guard(connection)
-                        if current:
-                            self._verify_archive_target(connection, directory, manifest)
-                        else:
-                            verify_empty_restore_target(connection, table_specs=CANONICAL_EXPORT_SPECS)
-                token = secrets.token_urlsafe(32)
-                digest = str(summary["archive_sha256"])
-                self._pending = (staging, token, monotonic() + 600, digest)
-                return {"confirmation": token, "summary": summary}
-            except BaseException:
-                staging.cleanup()
-                raise
+            validate_portable_restore_records(
+                records,
+                table_specs=specs,
+                materialized_objects=checked_objects,
+                object_store_root=preview_objects,
+            )
+            with self.engine.connect().execution_options(
+                isolation_level="SERIALIZABLE"
+            ) as connection:
+                with connection.begin():
+                    if self.runtime_guard is not None:
+                        self.runtime_guard(connection)
+                    if current:
+                        self._verify_archive_target(connection, directory, manifest)
+                    else:
+                        verify_empty_restore_target(connection, table_specs=CANONICAL_EXPORT_SPECS)
+            token = secrets.token_urlsafe(32)
+            digest = str(summary["archive_sha256"])
+            self._pending = (staging, token, monotonic() + 600, digest)
+            return {"confirmation": token, "summary": summary}
+        except BaseException:
+            staging.cleanup()
+            raise
 
     def _execute_installation(self, connection, directory, manifest, summary, materialization_state):
         from tools.installation_recovery_materializer import materialize_installation_package
@@ -542,6 +627,7 @@ class InstallerPortableRestore:
             try:
                 if monotonic() > pending[2]:
                     raise ValueError("restore preview expired")
+                self._check_restore_capacity((Path(pending[0].name) / "backup.eva").stat().st_size)
                 directory = Path(pending[0].name) / "archive"
                 records, manifest, summary = self._read(directory)
                 if summary["archive_sha256"] != pending[3]:

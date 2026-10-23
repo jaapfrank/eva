@@ -50,8 +50,35 @@ _SCRYPT_P = 1
 _SHA256_RE = frozenset("0123456789abcdef")
 
 
+from enum import Enum
+
+
+MAX_INSTALLATION_ARCHIVE_BYTES = 2_147_483_648
+
+
+class TransportPolicy(Enum):
+    """Only trusted composition may choose the installation transport budget."""
+
+    PORTABLE = "portable"
+    INSTALLATION_RECOVERY = "installation_recovery"
+
+
 class PortableTransportError(PortableArchiveError):
     """An encrypted transport is malformed, unauthenticated or unsafe."""
+
+
+def transport_archive_byte_limit(policy: TransportPolicy) -> int:
+    """Return one of two fixed budgets; archive data cannot select this value."""
+    if type(policy) is not TransportPolicy:
+        raise PortableTransportError("transport policy must be a trusted fixed selection")
+    return (MAX_INSTALLATION_ARCHIVE_BYTES
+            if policy is TransportPolicy.INSTALLATION_RECOVERY else MAX_ARCHIVE_BYTES)
+
+
+def transport_encrypted_byte_limit(policy: TransportPolicy) -> int:
+    """Bound the complete encrypted input before copying or deriving a key."""
+    return (transport_archive_byte_limit(policy) + MAX_ARCHIVE_FILES * 1024
+            + 10_240 + len(MAGIC) + HEADER_LENGTH_BYTES + MAX_HEADER_BYTES + TAG_BYTES)
 
 
 def _require_regular(path: Path, *, label: str) -> os.stat_result:
@@ -78,7 +105,7 @@ def _safe_relative_path(path: str) -> tuple[str, ...]:
     return parts
 
 
-def _source_files(root: Path) -> Iterator[tuple[str, Path, os.stat_result]]:
+def _source_files(root: Path, *, transport_policy: TransportPolicy = TransportPolicy.PORTABLE) -> Iterator[tuple[str, Path, os.stat_result]]:
     try:
         root_metadata = root.lstat()
     except OSError as exc:
@@ -117,18 +144,19 @@ def _source_files(root: Path) -> Iterator[tuple[str, Path, os.stat_result]]:
                 )
             seen_files += 1
             total_bytes += metadata.st_size
-            if seen_files > MAX_ARCHIVE_FILES or total_bytes > MAX_ARCHIVE_BYTES:
+            if (metadata.st_size > MAX_ARCHIVE_BYTES or seen_files > MAX_ARCHIVE_FILES
+                    or total_bytes > transport_archive_byte_limit(transport_policy)):
                 raise PortableTransportError("portable archive exceeds transport limits")
             yield relative, candidate, metadata
 
     yield from visit(root, ())
 
 
-def _write_plaintext_tar(source: Path, destination: Path) -> tuple[int, str]:
+def _write_plaintext_tar(source: Path, destination: Path, *, transport_policy: TransportPolicy = TransportPolicy.PORTABLE) -> tuple[int, str]:
     try:
         with destination.open("xb") as raw:
             with tarfile.open(fileobj=raw, mode="w", format=tarfile.PAX_FORMAT) as tar:
-                for relative, path, metadata in _source_files(source):
+                for relative, path, metadata in _source_files(source, transport_policy=transport_policy):
                     member = tarfile.TarInfo(name=relative)
                     member.size = metadata.st_size
                     member.mode = 0o600
@@ -179,7 +207,7 @@ def _write_plaintext_tar(source: Path, destination: Path) -> tuple[int, str]:
     except (OSError, tarfile.TarError) as exc:
         raise PortableTransportError("portable archive could not be packed") from exc
     metadata = _require_regular(destination, label="packed portable archive")
-    if metadata.st_size > MAX_ARCHIVE_BYTES + (MAX_ARCHIVE_FILES * 1024) + 10_240:
+    if metadata.st_size > transport_archive_byte_limit(transport_policy) + (MAX_ARCHIVE_FILES * 1024) + 10_240:
         raise PortableTransportError("packed portable archive exceeds transport limits")
     digest = hashlib.sha256()
     with destination.open("rb") as packed:
@@ -245,8 +273,8 @@ def _b64_exact(value: object, *, size: int, label: str) -> bytes:
     return raw
 
 
-def _header(*, salt: bytes, nonce: bytes, plaintext_bytes: int, plaintext_sha256: str) -> bytes:
-    if plaintext_bytes < 1024 or plaintext_bytes > MAX_ARCHIVE_BYTES + (MAX_ARCHIVE_FILES * 1024) + 10_240:
+def _header(*, salt: bytes, nonce: bytes, plaintext_bytes: int, plaintext_sha256: str, transport_policy: TransportPolicy = TransportPolicy.PORTABLE) -> bytes:
+    if plaintext_bytes < 1024 or plaintext_bytes > transport_archive_byte_limit(transport_policy) + (MAX_ARCHIVE_FILES * 1024) + 10_240:
         raise PortableTransportError("packed portable archive length is invalid")
     if len(plaintext_sha256) != 64 or any(character not in _SHA256_RE for character in plaintext_sha256):
         raise PortableTransportError("packed portable archive digest is invalid")
@@ -271,7 +299,7 @@ def _header(*, salt: bytes, nonce: bytes, plaintext_bytes: int, plaintext_sha256
     )
 
 
-def _parse_header(raw: bytes) -> tuple[bytes, bytes, int, str]:
+def _parse_header(raw: bytes, *, transport_policy: TransportPolicy = TransportPolicy.PORTABLE) -> tuple[bytes, bytes, int, str]:
     if not 1 <= len(raw) <= MAX_HEADER_BYTES:
         raise PortableTransportError("transport header length is invalid")
     try:
@@ -306,7 +334,7 @@ def _parse_header(raw: bytes) -> tuple[bytes, bytes, int, str]:
     if (
         isinstance(byte_length, bool)
         or not isinstance(byte_length, int)
-        or not 1024 <= byte_length <= MAX_ARCHIVE_BYTES + (MAX_ARCHIVE_FILES * 1024) + 10_240
+        or not 1024 <= byte_length <= transport_archive_byte_limit(transport_policy) + (MAX_ARCHIVE_FILES * 1024) + 10_240
         or not isinstance(digest, str)
         or len(digest) != 64
         or any(character not in _SHA256_RE for character in digest)
@@ -413,9 +441,11 @@ def seal_portable_archive(
     *,
     passphrase: str,
     validator: Callable[[Path], None],
+    transport_policy: TransportPolicy = TransportPolicy.PORTABLE,
 ) -> dict[str, str | int]:
     """Validate and encrypt one portable archive directory as one transport file."""
 
+    transport_archive_byte_limit(transport_policy)
     source = source.absolute()
     destination = destination.absolute()
     if destination.exists() or destination.is_symlink():
@@ -423,7 +453,7 @@ def seal_portable_archive(
     validator(source)
     with _private_staging(destination) as staging:
         packed = staging / "portable.tar"
-        plaintext_bytes, plaintext_sha256 = _write_plaintext_tar(source, packed)
+        plaintext_bytes, plaintext_sha256 = _write_plaintext_tar(source, packed, transport_policy=transport_policy)
         salt = os.urandom(SALT_BYTES)
         nonce = os.urandom(NONCE_BYTES)
         header = _header(
@@ -431,11 +461,12 @@ def seal_portable_archive(
             nonce=nonce,
             plaintext_bytes=plaintext_bytes,
             plaintext_sha256=plaintext_sha256,
+            transport_policy=transport_policy,
         )
         if len(header) > MAX_HEADER_BYTES:
             raise PortableTransportError("transport header exceeds limit")
         staged_transport = staging / "transport.eva2pt"
-        with staged_transport.open("xb") as output:
+        with os.fdopen(os.open(staged_transport, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "wb") as output:
             output.write(MAGIC)
             output.write(struct.pack(">I", len(header)))
             output.write(header)
@@ -471,6 +502,7 @@ def _decrypt_to_file(
     destination: Path,
     *,
     passphrase: str,
+    transport_policy: TransportPolicy = TransportPolicy.PORTABLE,
 ) -> tuple[bytes, int, str]:
     metadata = _require_regular(source, label="transport source")
     try:
@@ -484,7 +516,7 @@ def _decrypt_to_file(
             if not 1 <= header_length <= MAX_HEADER_BYTES:
                 raise PortableTransportError("transport header length is invalid")
             header = input_handle.read(header_length)
-            salt, nonce, plaintext_bytes, plaintext_sha256 = _parse_header(header)
+            salt, nonce, plaintext_bytes, plaintext_sha256 = _parse_header(header, transport_policy=transport_policy)
             ciphertext_start = len(MAGIC) + HEADER_LENGTH_BYTES + header_length
             ciphertext_bytes = metadata.st_size - ciphertext_start - TAG_BYTES
             if ciphertext_bytes != plaintext_bytes:
@@ -530,22 +562,79 @@ def _decrypt_to_file(
     return header, plaintext_bytes, plaintext_sha256
 
 
-def _unpack_plaintext_tar(source: Path, destination: Path) -> None:
+# These are parser resource guards, not values carried by transport headers.
+_MAX_TAR_METADATA_BYTES = 65_536
+_MAX_TAR_METADATA_DEPTH = 16
+_MAX_TAR_GLOBAL_FIELDS = 1_024
+
+
+class _BoundedTransportTarInfo(tarfile.TarInfo):
+    """Reject oversized metadata before stdlib tarfile reads or recurses."""
+
+    @staticmethod
+    def _check_global_headers(archive):
+        values = archive.pax_headers
+        if len(values) > _MAX_TAR_GLOBAL_FIELDS:
+            raise PortableTransportError("transport tar global metadata exceeds limit")
+        total = 0
+        for key, value in values.items():
+            try:
+                total += len(key.encode("utf-8")) + len(value.encode("utf-8"))
+            except UnicodeError as error:
+                raise PortableTransportError("transport tar global metadata must be UTF-8") from error
+            if total > _MAX_TAR_METADATA_BYTES:
+                raise PortableTransportError("transport tar global metadata exceeds limit")
+
+    def _metadata(self, archive, process):
+        self._check_global_headers(archive)
+        depth = getattr(archive, "_eva_metadata_depth", 0)
+        count = getattr(archive, "_eva_metadata_count", 0)
+        if (self.size < 0 or self.size > _MAX_TAR_METADATA_BYTES
+                or depth >= _MAX_TAR_METADATA_DEPTH or count >= MAX_ARCHIVE_FILES * 2):
+            raise PortableTransportError("transport tar metadata exceeds limit")
+        archive._eva_metadata_depth = depth + 1
+        archive._eva_metadata_count = count + 1
+        try:
+            result = process(archive)
+            self._check_global_headers(archive)
+            return result
+        finally:
+            archive._eva_metadata_depth = depth
+
+    def _proc_pax(self, archive):
+        return self._metadata(archive, super()._proc_pax)
+
+    def _proc_gnulong(self, archive):
+        return self._metadata(archive, super()._proc_gnulong)
+
+    def _proc_sparse(self, *args, **kwargs):
+        raise PortableTransportError("transport tar sparse members are forbidden")
+
+    _proc_gnusparse_00 = _proc_sparse
+    _proc_gnusparse_01 = _proc_sparse
+    _proc_gnusparse_10 = _proc_sparse
+
+
+def _unpack_plaintext_tar(source: Path, destination: Path, *, transport_policy: TransportPolicy = TransportPolicy.PORTABLE) -> None:
     seen: set[str] = set()
     total_bytes = 0
     try:
-        with tarfile.open(source, mode="r:") as archive:
-            members = archive.getmembers()
-            if not members or len(members) > MAX_ARCHIVE_FILES:
-                raise PortableTransportError("transport tar member count is invalid")
-            for member in members:
+        with tarfile.open(source, mode="r:", tarinfo=_BoundedTransportTarInfo) as archive:
+            count = 0
+            while True:
+                member = archive.next()
+                if member is None:
+                    break
+                count += 1
+                if count > MAX_ARCHIVE_FILES:
+                    raise PortableTransportError("transport tar member count is invalid")
                 parts = _safe_relative_path(member.name)
                 relative = "/".join(parts)
                 if relative in seen or not member.isreg() or member.size < 0:
                     raise PortableTransportError("transport tar member is invalid")
                 seen.add(relative)
                 total_bytes += member.size
-                if total_bytes > MAX_ARCHIVE_BYTES:
+                if member.size < 0 or member.size > MAX_ARCHIVE_BYTES or total_bytes > transport_archive_byte_limit(transport_policy):
                     raise PortableTransportError("transport tar exceeds byte limit")
                 source_handle = archive.extractfile(member)
                 if source_handle is None:
@@ -556,6 +645,11 @@ def _unpack_plaintext_tar(source: Path, destination: Path) -> None:
                     while chunk := source_handle.read(CHUNK_BYTES):
                         output.write(chunk)
                 os.chmod(target, 0o600)
+                # No links are accepted, so completed member objects are never
+                # needed for name lookup. Avoid retaining attacker-sized maps.
+                archive.members.clear()
+            if not count:
+                raise PortableTransportError("transport tar member count is invalid")
     except (OSError, tarfile.TarError) as exc:
         raise PortableTransportError("transport tar cannot be unpacked") from exc
 
@@ -566,9 +660,11 @@ def open_portable_transport(
     *,
     passphrase: str,
     validator: Callable[[Path], None],
+    transport_policy: TransportPolicy = TransportPolicy.PORTABLE,
 ) -> dict[str, str | int]:
     """Authenticate, reconstruct and validate a portable archive directory atomically."""
 
+    transport_archive_byte_limit(transport_policy)
     source = source.absolute()
     destination = destination.absolute()
     if destination.exists() or destination.is_symlink():
@@ -577,11 +673,11 @@ def open_portable_transport(
         with _private_staging(destination) as staging:
             packed = staging / "portable.tar"
             _, plaintext_bytes, plaintext_sha256 = _decrypt_to_file(
-                source, packed, passphrase=passphrase
+                source, packed, passphrase=passphrase, transport_policy=transport_policy
             )
             restored = staging / "restored"
             restored.mkdir(mode=0o700)
-            _unpack_plaintext_tar(packed, restored)
+            _unpack_plaintext_tar(packed, restored, transport_policy=transport_policy)
             validator(restored)
             try:
                 if any(destination.iterdir()) or destination.is_symlink():

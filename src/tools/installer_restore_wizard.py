@@ -12,6 +12,7 @@ from eva.adapters.credentials.runtime_files import read_private_runtime_file_byt
 from eva.bootstrap.installer_wizard_cli import run_installer_wizard
 from eva.operations.portable_restore_authority import read_private_restore_authority
 from tools.installer_portable_restore import InstallerPortableRestore
+from tools.portable_transport import TransportPolicy
 from tools.object_keyring import FileObjectKeyResolver
 from tools.restore_runtime_guard import verify_restore_runtime
 
@@ -25,9 +26,15 @@ def configured_restore_workflow(config):
     """
     required = {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_guard"}
     if (not isinstance(config, dict) or not required <= set(config)
-            or not set(config) <= required | {"runtime_identity", "runtime_identity_restore", "recovery_materialization", "external_recovery", "document_recovery", "document_connection", "document_gateway_binding", "gateway_start", "document_write_access", "activation"}
+            or not set(config) <= required | {"runtime_identity", "runtime_identity_restore", "recovery_materialization", "external_recovery", "document_recovery", "document_connection", "document_gateway_binding", "gateway_start", "document_write_access", "activation", "installation_transport_policy"}
             or config["traffic_closed"] is not True):
         raise ValueError("restore configuration requires pinned runtime_guard identities and closed traffic")
+    selected_policy = config.get("installation_transport_policy", "portable")
+    if type(selected_policy) is not str or selected_policy not in {"portable", "installation_recovery"}:
+        raise ValueError("installer transport policy must be a fixed trusted selection")
+    transport_policy = TransportPolicy(selected_policy)
+    if transport_policy is TransportPolicy.INSTALLATION_RECOVERY and "recovery_materialization" not in config:
+        raise ValueError("installation transport requires trusted materialization settings")
     if "document_recovery" in config and not {"external_recovery", "recovery_materialization"} <= set(config):
         raise ValueError("document recovery requires external recovery and materialization")
     if "document_connection" in config and "document_recovery" not in config:
@@ -161,6 +168,7 @@ def configured_restore_workflow(config):
             identity_trust=identity_trust,
             identity_destination=identity_destination,
             identity_runtime_owner=identity_runtime_owner,
+            transport_policy=transport_policy,
         )
         yield workflow
     finally:
@@ -171,12 +179,31 @@ def configured_restore_workflow(config):
             engine.dispose()
 
 
+def restore_operator_file(workflow, archive: Path, passphrase_file: Path, *, execute=False):
+    """Keep confirmation inside one operator session; never print or save it."""
+    if type(execute) is not bool:
+        raise ValueError("operator execute selection must be explicit")
+    from tools.portable_transport_cli import _private_passphrase
+    preview = workflow.prepare_file(archive, _private_passphrase(passphrase_file))
+    if execute:
+        return {"status": "executed", "result": workflow.execute(preview["confirmation"])}
+    return {"status": "preview", "summary": preview["summary"]}
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--restore-config", type=Path)
     parser.add_argument("--update-config", type=Path)
     parser.add_argument("--workspace", type=Path)
+    parser.add_argument("--restore-archive", type=Path)
+    parser.add_argument("--passphrase-file", type=Path)
+    parser.add_argument("--execute", action="store_true")
     args, remaining = parser.parse_known_args(argv)
+    if (args.restore_archive is not None or args.passphrase_file is not None or args.execute):
+        if args.restore_config is None or args.restore_archive is None or args.passphrase_file is None:
+            parser.error("operator file restore requires restore-config, restore-archive and passphrase-file")
+        if args.update_config is not None or remaining or args.workspace is not None:
+            parser.error("operator file restore cannot start a browser or update session")
     update_workflow = None
     if args.update_config is not None:
         from tools.installation_runtime_update import InstallerRuntimeUpdate
@@ -201,6 +228,10 @@ def main(argv=None):
         )
     )
     with configured_restore_workflow(config) as workflow:
+        if args.restore_archive is not None:
+            result = restore_operator_file(workflow, args.restore_archive, args.passphrase_file, execute=args.execute)
+            print(json.dumps(result, sort_keys=True))
+            return 0
         return run_installer_wizard(remaining, restore_workflow=workflow, update_workflow=update_workflow)
 
 

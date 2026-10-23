@@ -543,13 +543,40 @@
           "development/tests/portable/test_installation_recovery_materializer.py",
           "development/tests/portable/test_installation_transport_policy.py",
           "development/tests/portable/test_installer_portable_restore.py",
-          "development/tests/portable/test_installer_restore_composition.py"
+          "development/tests/portable/test_installer_restore_composition.py",
+          "src/tools/installation_host_extension_restore.py",
+          "src/tools/installer_document_components.py",
+          "development/tests/portable/test_installation_host_extension_restore.py"
         ],
         "privateOutput": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/",
         "testWritePathsRequireExactConfirmation": true,
         "noCpuRunOrSharedInstallOrVoiceChange": true,
         "resultNow": "Preserve validated real core export; add trusted installation-only fixed 2 GiB total policy across existing package, transport, materializer and wizard, keeping default 1 GiB/per-file 1 GiB/100k files. Then finish actual encrypted offline recovery roundtrip. Independent review required before integration.",
-        "operatorFileIntake": "Use same InstallerPortableRestore via bounded private-owner single-link no-follow streamed prepare_file; same trusted configured workflow, preview/authority/one-use execute. Existing HTTP/base64/browser intake stays 64 MiB. No claim that large browser upload works."
+        "operatorFileIntake": "Use same InstallerPortableRestore via bounded private-owner single-link no-follow streamed prepare_file; same trusted configured workflow, preview/authority/one-use execute. Existing HTTP/base64/browser intake stays 64 MiB. No claim that large browser upload works.",
+        "isolatedOperatorProvisioning": {
+          "status": "authorized",
+          "neverStartCoreOrWorker": true,
+          "newPrivateSourceAndTargetPinsOnly": true,
+          "existingOwnPgClusterOnly": true,
+          "newTargetDatabaseOfficial0012To0011Downgrade": true,
+          "preserveActualErasureGeneration": 272,
+          "liveAuthorityMustRemainUnchanged": true,
+          "authoritySourceSha256": "e256881a839eb1c706dc48bc68e4e72e15a8a4bb2bbaca9785b89bbfaf4ec6e0",
+          "admitOnlyExactInnerAndOuterForIsolatedInactiveTrial": true,
+          "recheckLiveAuthorityBeforeEveryMutationBoundary": true,
+          "noProductionCredentialOrServiceChanges": true
+        },
+        "hostAdapterImplementation": {
+          "status": "authorized_inactive_preparation_only",
+          "proposalSha256": "edf473c08de78cbdbf910aa09e265528f4ebf8868da693a6c74da4e0a691a898",
+          "fullDisjointDocumentRoleCoverageRequired": 135,
+          "originalBindingsImmutable": 4,
+          "boundedGzipAndExactFileInventoryRequired": true,
+          "v3WizardAndWorkflowRemainFrozen": true,
+          "pinnedLibraryAndFullSdkClosureRequiredBeforeStart": true,
+          "cpuOrImportOrInferenceOrServiceStartAuthorized": false,
+          "sharedInstallationAuthorized": false
+        }
       },
       "extensionArtifactRequest": {
         "to": "wsl-e18",
@@ -1659,7 +1686,7 @@
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
     "parallelBoundedWork": "One builder repairs the existing installation transport policy and finishes the real recovery package. One independent tester/reviewer checks exact code, security boundaries and real roundtrip; tester writes reviews only.",
-    "currentBlocker": "Independent V1 review: 49 non-PG and 21 actual PG cases pass, plus 3 pre-KDF/file-limit probes. Same pre-existing PAX metadata allocation defect reproduced on old and V1 transport; V1 cannot receive final GO until bounded metadata read fix and changed-cause V2 review. Real old-version package trial preserves evidence only; working host component restore remains the next concrete gap.",
+    "currentBlocker": "V3 transport/file-intake code received independent scoped GO. Real V1 whole package/AES/open/inactive roundtrip succeeded with all 301 payload files retained. Actual V3 reopen and large configured operator restore still pending. Two own never-started core pins and empty official 0011 target are prepared; actual current erasure floor272 preserved. Inactive hostadapter preparation authorized, complete original library/SDK closure and restored behavior remain required.",
     "latestVerifiedOutcome": {
       "status": "installed_current_source_and_silence_proven_positive_greeting_pending",
       "evidence": "development/evidence/product/e415-household-batch-binding-20261023.json",

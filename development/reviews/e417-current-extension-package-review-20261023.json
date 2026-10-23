@@ -685,7 +685,82 @@
         "ownedContainerRemoved": true,
         "foreignTargetTouched": false
       },
-      "limit": "These passing checks apply to frozenV1, not the subsequent metadata fix or actual large package/operator-file trial."
+      "limit": "These passing checks apply to frozenV1, not the subsequent metadata fix or actual large package/operator-file trial.",
+      "fixtureDiffReview": "Legacy transport setup only uses sealed spec fields/import; all5 original test ASTs unchanged. Package mutation spy adds only optional trust forwarding; mutation and raises criterion unchanged and passes on real PG."
+    },
+    "installationPolicyCandidateV2": {
+      "checkedAt": "2026-10-23T22:00:20.208924+00:00",
+      "freezeSha256": "db5ca13c2a7f0672342635fe420f871cb1d62e3a1b828d3eb85dbc9fa31485e4",
+      "transportSha256": "ea9b8a0ce11348ddfea17ae3faa5e58efca92bea5de70a509e4ed90fa0725706",
+      "onlyChangedFiles": [
+        "src/tools/portable_transport.py",
+        "development/tests/portable/test_installation_transport_policy.py"
+      ],
+      "otherSevenFreezeFilesMatchV1": true,
+      "independentChangedCauseTests": {
+        "passed": 15,
+        "skipped": 0,
+        "seconds": 6.48,
+        "scope": "Oversize PAX/global/Solaris/GNU metadata, chains,sparse,own-writer Unicode/longpaths both policies,perfile and one legacy positive transport."
+      },
+      "exactPreviousReproducer": {
+        "sha256": "039c242d0a970f7a13e5822ad29e50b47cad540474736101c5f17952cbcb9cd7",
+        "bytes": 1536,
+        "memoryCapBytes": 536870912,
+        "nowRaises": "PortableTransportError",
+        "message": "transport tar metadata exceeds limit",
+        "memoryError": false,
+        "extractedFiles": 0,
+        "toolSeconds": 0.8668993
+      },
+      "verdict": "P1_ALLOCATION_FIXED_GLOBAL_UTF8_BYTE_BOUNDARY_PENDING",
+      "reuse": "V1 unchanged package/cache/intake/default/authority gates retained; no full old70 replay or new core semantic reader."
+    },
+    "installationPolicyCandidateV3": {
+      "checkedAt": "2026-10-23T22:07:17.831283+00:00",
+      "freezeSha256": "9ea234d6a2642f8d80b865a93b4c4508555bd4c250a89f255967196ca64ca89a",
+      "transportSha256": "83107807f8d0775572ba0471fdfd9f2ce84748059f9bd92d45f4f1a655a6c65d",
+      "testSha256": "652551a3e684e02949187f4ac28a3956e201eed366cc0f4daabefde2d6cdb113",
+      "verdict": "GO_SCOPED_INSTALLATION_TRANSPORT_CODE",
+      "review": "Changed character counting to strict UTF8 encoded-byte counting; malformed encodings become typed transport errors; the existing field/count/metadata bounds remain.",
+      "ordinarySmallStringCheck": {
+        "accepted": true,
+        "utf8Bytes": 18
+      },
+      "existingUnicodeUnitCase": {
+        "name": "test_global_metadata_budget_counts_utf8_bytes_across_headers",
+        "passed": 1,
+        "seconds": 2.75,
+        "skipped": 0
+      },
+      "reusedEvidence": "Unchanged V2 fifteen changed-cause checks and V1 seventy package/intake/cache/default/authority checks remain separately versioned; no broad repeat.",
+      "separateOpenEvidence": [
+        "Actual large ciphertext reopened under exact V3 code",
+        "Actual large configured operatorfile preview/one-use execute with current authority guards",
+        "Restored host extension behavior and clean-host SDK/dependency closure"
+      ],
+      "limits": "Codeguard acceptance only; no full package, browser large-upload, host behavior or fullE417 acceptance."
+    },
+    "hostRestorePlanReview": {
+      "proposalSha256": "edf473c08de78cbdbf910aa09e265528f4ebf8868da693a6c74da4e0a691a898",
+      "verdict": "GO_BOUNDED_INACTIVE_ADAPTER_DESIGN_ONLY",
+      "coverage": "139 total;135 document roles partitioned21face/110host/2household/2images,4 immutable bindings. Host/native ownership must be disjoint and exhaustive before allowing empty native layouts.",
+      "remainingProof": "Pinned complete baseSDK/transitive and dynamic imports/ABI without old workspace; bounded gzip decode and closed dependency inventory; trusted image load/pins and per-service credential rebinding; same actual procedure behavior and lifecycle on restored paths.",
+      "existingExecutorBoundary": "Pinned image, forced /usr/local/bin/python -I, network none, UID65534 and existing cancellation; no default Eva runtime command.",
+      "notAuthorizedByPlan": "No host service/import/CPU/inference/core start, activation or full behavior claim; old CPUv2 failure preserved."
+    },
+    "operatorAuthoritySourceReview": {
+      "receiptSha256": "e44f69938e6f9b7c2ef33701ab8e457f591deed5febc078e81e00651b9cebd52",
+      "privateSourceCopySha256": "e256881a839eb1c706dc48bc68e4e72e15a8a4bb2bbaca9785b89bbfaf4ec6e0",
+      "bytes": 314,
+      "rootRoot0600SingleLinkPrivateParent": true,
+      "erasureGeneration": 272,
+      "headMatchesReceipt": true,
+      "canonicalInstallationMatchesActualCore": true,
+      "sourceCtimeBeforeNativeCapture": true,
+      "authorizedArchiveCountInSource": 0,
+      "scope": "Only separate private isolated admission of exact core+outer manifests on unchanged generation/head; source allows0 and is never modified. Real live authority/hash checks before mutation still require actual operator trial evidence.",
+      "reviewerLiveAuthorityOrDatabaseAccess": false
     }
   },
   "contractRequirements": {
@@ -926,7 +1001,7 @@
     {
       "id": "E417-TEST-002",
       "severity": "P2",
-      "status": "builder_fixture_correction_pending",
+      "status": "fixture_fixed_all_five_original_case_asts_preserved_and_passed_v1",
       "cause": "Existing39-record transport fixture mixes frozen snapshot facts with current schema paths.",
       "reproduction": "ExactHEAD transport+test positive case, isolated import: same authority mismatch before any seal/open call.",
       "impact": "Five existing transport cases cannot reach transport under the current fixture; this baseline does not establish a transport-policy regression.",
@@ -935,7 +1010,7 @@
     {
       "id": "E417-TRANSPORT-001",
       "severity": "P1",
-      "status": "coordinator_authorized_bounded_metadata_fix_candidate_v2_pending",
+      "status": "fixed_v2_exact_reproducer_and15_changed_cause_checks_passed",
       "cause": "tarfile parses PAX metadata before yielding a member, so the new per-file/total/count checks execute after an attacker-declared allocation.",
       "reproduction": {
         "bytes": 1536,
@@ -954,6 +1029,18 @@
       },
       "impact": "A tiny malformed tar reaches metadata allocation before the declared resource gates; existing defect, not introduced by the2GiB policy.",
       "repairBoundary": "Coordinator authorized fixed small PAX/GNU-longname/longlink metadata and chain/depth bounds before stdlib reads; preserve ordinary writer long-path behavior and all archive/schema criteria. No product edits or new core export by reviewer."
+    },
+    {
+      "id": "E417-TRANSPORT-002",
+      "severity": "P2",
+      "status": "fixed_v3_utf8_code_review_small_normal_strings_and_existing_unit_case_passed",
+      "scope": "new fixed global-PAX metadata budget",
+      "cause": "_check_global_headers counts Python Unicode codepoints rather than the declared64KiB UTF8-byte budget.",
+      "reproduction": "Two small globalPAX headers, each <64KiB, fields field0/field1 each10000 emoji; combined80012 UTF8bytes but20012 codepoints. V2 extracts one private zero-byte fixture file without metadata rejection.",
+      "impact": "The stated64KiB global byte boundary is exceeded; the implementation still has a small fixed upper bound, unlike the resolved unbounded PAX read.",
+      "transportSha256": "ea9b8a0ce11348ddfea17ae3faa5e58efca92bea5de70a509e4ed90fa0725706",
+      "toolSeconds": 4.5080515,
+      "repairBoundary": "Count decoded metadata using a consistent byte encoding and retest this single boundary; preserve legitimate writer Unicode compatibility. No product edits by reviewer."
     }
   ]
 }

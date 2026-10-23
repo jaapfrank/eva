@@ -847,7 +847,7 @@
     "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
     "status": "in_progress",
     "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
-    "nextAction": "E4.17: onafhankelijke review vond een geheugenbegrenzingsfout vóór tar-extractie: een klein PAX-archief kan via een grote metadata-lengte te veel geheugen aanvragen. Bouwer repareert uitsluitend die grens in de bestaande transportcode; tester controleert baseline, metadata- en normale langepadgevallen. De echte kernexport blijft goedgekeurd. De lopende grote pakketproef is gebonden aan de oude kandidaatversie en geeft geen definitieve codegoedkeuring. Daarna blijven de actuele grote herstelproef en werkende hostcomponentoverdracht nodig; fysieke eigenaarproef blokkeert dit werk niet.",
+    "nextAction": "E4.17: versie 3 van de begrensde installatie- en bestandsroute is onafhankelijk als code goedgekeurd. De echte pakketproef met 301 bestanden/1.645.299.983 bytes is onder de expliciet eerdere versie geslaagd: schrijven, versleutelen, openen en gelijk inactief materialiseren. Bouwer heropent dezelfde ciphertext met V3 en voert daarna de echte operatorroute uit op de eigen lege 0011-doelinstallatie, met nooitgestarte kernreferenties en actuele wisgeneratie 272. Tegelijk volgt de inactieve hostadapter met volledige oorspronkelijke bibliotheek-/SDK-dekking. Werkend clean-hostgedrag en taakafronding blijven open.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -8113,9 +8113,9 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "E4.17: onafhankelijke review vond een geheugenbegrenzingsfout vóór tar-extractie: een klein PAX-archief kan via een grote metadata-lengte te veel geheugen aanvragen. Bouwer repareert uitsluitend die grens in de bestaande transportcode; tester controleert baseline, metadata- en normale langepadgevallen. De echte kernexport blijft goedgekeurd. De lopende grote pakketproef is gebonden aan de oude kandidaatversie en geeft geen definitieve codegoedkeuring. Daarna blijven de actuele grote herstelproef en werkende hostcomponentoverdracht nodig; fysieke eigenaarproef blokkeert dit werk niet.",
-                "progress": "Werkelijke kernexport na interne readercontrole atomair gepubliceerd; native kern-, geheugen-, gateway- en identiteitsbronnen onder circa 15 seconden schrijfhek bewaard. Transport- en bestandsinnamekandidaat gebouwd; 46 gerichte controles en vijf bestaande transportgevallen volgens bouwer geslaagd. Onafhankelijke kandidaatcontrole en grote herstelproef volgen. Werkende hostcomponentoverdracht op een schone installatie ontbreekt nog; geen taakafronding.",
-                "checkedAt": "2026-10-23T21:47:09.980964+00:00",
+                "nextAction": "E4.17: versie 3 van de begrensde installatie- en bestandsroute is onafhankelijk als code goedgekeurd. De echte pakketproef met 301 bestanden/1.645.299.983 bytes is onder de expliciet eerdere versie geslaagd: schrijven, versleutelen, openen en gelijk inactief materialiseren. Bouwer heropent dezelfde ciphertext met V3 en voert daarna de echte operatorroute uit op de eigen lege 0011-doelinstallatie, met nooitgestarte kernreferenties en actuele wisgeneratie 272. Tegelijk volgt de inactieve hostadapter met volledige oorspronkelijke bibliotheek-/SDK-dekking. Werkend clean-hostgedrag en taakafronding blijven open.",
+                "progress": "Codeguard V3 onafhankelijk goedgekeurd; werkelijke volledige V1-pakket/AES/open/materialisatieproef geslaagd, exact bronversie en hashes vastgelegd. V3-grote heropening, daadwerkelijke operatorimport met hold en werkend hostherstel moeten nog worden gecontroleerd.",
+                "checkedAt": "2026-10-23T22:09:08.394308+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
                 "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -8740,7 +8740,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.17: onafhankelijke review vond een geheugenbegrenzingsfout vóór tar-extractie: een klein PAX-archief kan via een grote metadata-lengte te veel geheugen aanvragen. Bouwer repareert uitsluitend die grens in de bestaande transportcode; tester controleert baseline, metadata- en normale langepadgevallen. De echte kernexport blijft goedgekeurd. De lopende grote pakketproef is gebonden aan de oude kandidaatversie en geeft geen definitieve codegoedkeuring. Daarna blijven de actuele grote herstelproef en werkende hostcomponentoverdracht nodig; fysieke eigenaarproef blokkeert dit werk niet.",
+        "nextAction": "E4.17: versie 3 van de begrensde installatie- en bestandsroute is onafhankelijk als code goedgekeurd. De echte pakketproef met 301 bestanden/1.645.299.983 bytes is onder de expliciet eerdere versie geslaagd: schrijven, versleutelen, openen en gelijk inactief materialiseren. Bouwer heropent dezelfde ciphertext met V3 en voert daarna de echte operatorroute uit op de eigen lege 0011-doelinstallatie, met nooitgestarte kernreferenties en actuele wisgeneratie 272. Tegelijk volgt de inactieve hostadapter met volledige oorspronkelijke bibliotheek-/SDK-dekking. Werkend clean-hostgedrag en taakafronding blijven open.",
         "finishOrder": [
           "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14097,9 +14097,9 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "E4.17: onafhankelijke review vond een geheugenbegrenzingsfout vóór tar-extractie: een klein PAX-archief kan via een grote metadata-lengte te veel geheugen aanvragen. Bouwer repareert uitsluitend die grens in de bestaande transportcode; tester controleert baseline, metadata- en normale langepadgevallen. De echte kernexport blijft goedgekeurd. De lopende grote pakketproef is gebonden aan de oude kandidaatversie en geeft geen definitieve codegoedkeuring. Daarna blijven de actuele grote herstelproef en werkende hostcomponentoverdracht nodig; fysieke eigenaarproef blokkeert dit werk niet.",
-              "progress": "Werkelijke kernexport na interne readercontrole atomair gepubliceerd; native kern-, geheugen-, gateway- en identiteitsbronnen onder circa 15 seconden schrijfhek bewaard. Transport- en bestandsinnamekandidaat gebouwd; 46 gerichte controles en vijf bestaande transportgevallen volgens bouwer geslaagd. Onafhankelijke kandidaatcontrole en grote herstelproef volgen. Werkende hostcomponentoverdracht op een schone installatie ontbreekt nog; geen taakafronding.",
-              "checkedAt": "2026-10-23T21:47:09.980964+00:00",
+              "nextAction": "E4.17: versie 3 van de begrensde installatie- en bestandsroute is onafhankelijk als code goedgekeurd. De echte pakketproef met 301 bestanden/1.645.299.983 bytes is onder de expliciet eerdere versie geslaagd: schrijven, versleutelen, openen en gelijk inactief materialiseren. Bouwer heropent dezelfde ciphertext met V3 en voert daarna de echte operatorroute uit op de eigen lege 0011-doelinstallatie, met nooitgestarte kernreferenties en actuele wisgeneratie 272. Tegelijk volgt de inactieve hostadapter met volledige oorspronkelijke bibliotheek-/SDK-dekking. Werkend clean-hostgedrag en taakafronding blijven open.",
+              "progress": "Codeguard V3 onafhankelijk goedgekeurd; werkelijke volledige V1-pakket/AES/open/materialisatieproef geslaagd, exact bronversie en hashes vastgelegd. V3-grote heropening, daadwerkelijke operatorimport met hold en werkend hostherstel moeten nog worden gecontroleerd.",
+              "checkedAt": "2026-10-23T22:09:08.394308+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
               "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
               "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -14724,7 +14724,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.17: onafhankelijke review vond een geheugenbegrenzingsfout vóór tar-extractie: een klein PAX-archief kan via een grote metadata-lengte te veel geheugen aanvragen. Bouwer repareert uitsluitend die grens in de bestaande transportcode; tester controleert baseline, metadata- en normale langepadgevallen. De echte kernexport blijft goedgekeurd. De lopende grote pakketproef is gebonden aan de oude kandidaatversie en geeft geen definitieve codegoedkeuring. Daarna blijven de actuele grote herstelproef en werkende hostcomponentoverdracht nodig; fysieke eigenaarproef blokkeert dit werk niet.",
+      "nextAction": "E4.17: versie 3 van de begrensde installatie- en bestandsroute is onafhankelijk als code goedgekeurd. De echte pakketproef met 301 bestanden/1.645.299.983 bytes is onder de expliciet eerdere versie geslaagd: schrijven, versleutelen, openen en gelijk inactief materialiseren. Bouwer heropent dezelfde ciphertext met V3 en voert daarna de echte operatorroute uit op de eigen lege 0011-doelinstallatie, met nooitgestarte kernreferenties en actuele wisgeneratie 272. Tegelijk volgt de inactieve hostadapter met volledige oorspronkelijke bibliotheek-/SDK-dekking. Werkend clean-hostgedrag en taakafronding blijven open.",
       "finishOrder": [
         "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -16980,7 +16980,7 @@
       "ownerReviewerCorrection": "Latest direct owner instruction: original chat01a169f2 is sole tester/reviewer; replacement01a16a55-1607 is standby with claims released."
     },
     "e417CurrentDelivery20261023": {
-      "stage": "independent_review_found_pre_extract_metadata_allocation_guard_gap",
+      "stage": "v3_code_independently_reviewed_real_v1_package_roundtrip_complete_v3_reopen_and_operator_pending",
       "profileAdapter": "src/tools/installation_face_profile_snapshot.py",
       "profileTestsPassed": 10,
       "actualProfileRows": 24,
@@ -17013,7 +17013,7 @@
       "coreValidationStillRunning": false,
       "selectedBytesRemoved": 0,
       "transportLimitChanged": false,
-      "nextAction": "E4.17: onafhankelijke review vond een geheugenbegrenzingsfout vóór tar-extractie: een klein PAX-archief kan via een grote metadata-lengte te veel geheugen aanvragen. Bouwer repareert uitsluitend die grens in de bestaande transportcode; tester controleert baseline, metadata- en normale langepadgevallen. De echte kernexport blijft goedgekeurd. De lopende grote pakketproef is gebonden aan de oude kandidaatversie en geeft geen definitieve codegoedkeuring. Daarna blijven de actuele grote herstelproef en werkende hostcomponentoverdracht nodig; fysieke eigenaarproef blokkeert dit werk niet.",
+      "nextAction": "E4.17: versie 3 van de begrensde installatie- en bestandsroute is onafhankelijk als code goedgekeurd. De echte pakketproef met 301 bestanden/1.645.299.983 bytes is onder de expliciet eerdere versie geslaagd: schrijven, versleutelen, openen en gelijk inactief materialiseren. Bouwer heropent dezelfde ciphertext met V3 en voert daarna de echte operatorroute uit op de eigen lege 0011-doelinstallatie, met nooitgestarte kernreferenties en actuele wisgeneratie 272. Tegelijk volgt de inactieve hostadapter met volledige oorspronkelijke bibliotheek-/SDK-dekking. Werkend clean-hostgedrag en taakafronding blijven open.",
       "independentDesignRecommendation": "explicit_trusted_installation_policy_2GiB_default_and_per_file_1GiB",
       "implementationAuthorized": true,
       "existingBrowserUploadLimitBytes": 67108864,
@@ -17068,7 +17068,42 @@
       "independentPgPackageCacheManifestSeconds": 24.94,
       "independentPgCasesSkipped": 0,
       "independentV1ReviewVerdict": "NO_GO_METADATA_READ_RESOURCE_GUARD",
-      "independentV1OtherBoundaryCasesPassed": true
+      "independentV1OtherBoundaryCasesPassed": true,
+      "installationCandidateV2FreezeSha256": "db5ca13c2a7f0672342635fe420f871cb1d62e3a1b828d3eb85dbc9fa31485e4",
+      "independentV2ChangedCauseCasesPassed": 15,
+      "independentV2ChangedCauseSeconds": 6.48,
+      "exactPaxMemoryReproducerNowRejectedBeforeRead": true,
+      "globalMetadataUtf8ByteCountingCorrectionPending": false,
+      "actualCurrentRestoreAuthoritySourceSha256": "e256881a839eb1c706dc48bc68e4e72e15a8a4bb2bbaca9785b89bbfaf4ec6e0",
+      "actualCurrentErasureGeneration": 272,
+      "actualCurrentRestoreAuthorityIssuedAt": "2026-10-23T18:09:22Z",
+      "actualAuthoritySourceWrittenBeforeNativeCapture": true,
+      "authorityCaptureReceiptSha256": "e44f69938e6f9b7c2ef33701ab8e457f591deed5febc078e81e00651b9cebd52",
+      "liveRestoreAuthorityChanged": false,
+      "isolatedOperatorProvisioningAuthorized": true,
+      "targetCoresMayStart": false,
+      "installationCandidateV3FreezeSha256": "9ea234d6a2642f8d80b865a93b4c4508555bd4c250a89f255967196ca64ca89a",
+      "v3TransportSourceSha256": "83107807f8d0775572ba0471fdfd9f2ce84748059f9bd92d45f4f1a655a6c65d",
+      "independentV3CodeVerdict": "GO_SCOPED_INSTALLATION_TRANSPORT_CODE",
+      "independentV3Utf8CasePassed": 1,
+      "independentV3Utf8CaseSeconds": 2.75,
+      "actualV1PackageRoundtripReportedComplete": true,
+      "actualPackagePayloadFiles": 301,
+      "actualPackageFilesIncludingManifest": 302,
+      "actualPackagePayloadBytes": 1645299983,
+      "actualV1PackageManifestSha256": "e99a968a2f7b4cd7876b70ee984ea4038f110c068cd4a192ff59144fbd23db41",
+      "actualV1CiphertextSha256": "cc125bf15cfa714b47b0efdd7131a27075ef4ee2fc1c59c612446e7d4130f9ef",
+      "actualV1RoundtripReceiptSha256": "fb3727af66fa476e9e96180992507c165e63542e2ce89b10267795d485adbe38",
+      "actualV1RoundtripSeconds": 947.56,
+      "actualV1RoundtripObservedPeakRssKiB": 5200280,
+      "actualV1LoadedCodeVersionExplicit": true,
+      "actualV3LargeReopenPending": true,
+      "operatorTargetPreparedReported": true,
+      "operatorTargetPreparationReceiptSha256": "952506e7d217f3c447a927a3061512c0a7bdc8eb3eab034f5d37622e13c00fb4",
+      "operatorTargetNeverStartedCores": 2,
+      "actualTargetOfficialDowngradeSeconds": 7.6,
+      "actualLargeOperatorRestoreCompleted": false,
+      "reviewerNormalFunctionReviewResumedAfterAutomaticInterruption": true
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",

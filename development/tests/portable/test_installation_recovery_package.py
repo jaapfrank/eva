@@ -146,8 +146,8 @@ def test_second_read_rejects_mutation_during_nested_validation(staged, monkeypat
     write_installation_package(root, **inputs)
     import tools.installation_recovery_package as package
     original = package._core
-    def change_after_validation(fd):
-        result = original(fd)
+    def change_after_validation(fd, identity_trust=None):
+        result = original(fd, identity_trust)
         (root / "memory/hindsight.dump").write_bytes(b"changed during validation")
         return result
     monkeypatch.setattr(package, "_core", change_after_validation)

@@ -52,7 +52,8 @@ def test_v3_requires_explicit_operator_identity_restore(runtime_archive, tmp_pat
         workflow._read(args["destination"])
 
 
-def test_existing_preview_and_execute_dispatch_v3_without_activation(runtime_archive, tmp_path, monkeypatch):
+@pytest.mark.parametrize("intake", ["bytes", "file"])
+def test_existing_preview_and_execute_dispatch_v3_without_activation(runtime_archive, tmp_path, monkeypatch, intake):
     args, _ = runtime_archive
     workflow = _workflow(args, tmp_path)
     import tools.portable_v2_restore as current_restore
@@ -73,7 +74,8 @@ def test_existing_preview_and_execute_dispatch_v3_without_activation(runtime_arc
     seal_portable_archive(args["destination"], blob, passphrase="synthetic-runtime-restore-password",
         validator=lambda path: read_runtime_archive(path, identity_trust=args["identity_trust"]))
     try:
-        preview = workflow.prepare(blob.read_bytes(), "synthetic-runtime-restore-password")
+        preview = (workflow.prepare_file(blob, "synthetic-runtime-restore-password") if intake == "file"
+                   else workflow.prepare(blob.read_bytes(), "synthetic-runtime-restore-password"))
         assert preview["summary"]["target_activation"] == "closed"
         assert preview["summary"]["runtime_identity_disposition"] == "preservation_inactive_planned"
         result = workflow.execute(str(preview["confirmation"]))
