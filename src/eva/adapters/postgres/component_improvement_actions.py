@@ -168,7 +168,10 @@ class ComponentImprovementActions:
                        path if path.startswith("procedure-reference:") else None)
         if document_id is None:
             if resource_path is not None:
-                raise ConversationConflict("resource selection requires a saved skill package")
+                raise ConversationActionInputRejected(("resource_path",), prompt=
+                    "For installed source, use a package-relative path and omit resource_path "
+                    "or set it to null. resource_path is only for saved skill packages. "
+                    "No source was read or changed; correct this tool call.")
             return read_component(self.root, path, start_line), None
         if self.source_resolver is None:
             raise ConversationConflict("saved improvement source route unavailable")

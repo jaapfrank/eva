@@ -1,6 +1,6 @@
 {
   "task": "E4.15",
-  "checkedAt": "2026-10-23T14:23:44.922343+00:00",
+  "checkedAt": "2026-10-23T14:32:42.169478+00:00",
   "status": "in_progress",
   "route": "ordinary installed dashboard conversation -> start_digital_work -> existing delegated worker",
   "ownerRequest": "Previously authorized camera/recognition/greeting acceptance, explicitly relayed by Codex; not spontaneous discovery.",
@@ -65,5 +65,23 @@
     "profileComparison": "Shared provider, digital work and private research match; pre-existing household_research mismatch remains.",
     "limit": "Actual installed adapter read; does not prove complete worker recovery or recognition/greeting."
   },
-  "nextAction": "Explicitly continue existing work using observed distinction and existing CPU face/camera modules; operator assistance remains recorded, no spontaneous invention claim."
+  "nextAction": "Explicitly continue existing work using observed distinction and existing CPU face/camera modules; operator assistance remains recorded, no spontaneous invention claim.",
+  "sourceReadRepair": {
+    "previousOutcome": "ambiguous/internal_error after one model response and one tool dispatch",
+    "exactFingerprintMatched": "ConversationConflict:resource selection requires a saved skill package",
+    "cause": "Installed source read used resource_path reserved for a saved skill package.",
+    "change": "Existing once-only invalid-input correction, with no broadened source access.",
+    "testsPassed": 34,
+    "independentReview": "review_cursor GO",
+    "installedCore": "sha256:1336692a61655316cc58f57493f2906c0f4e51b7ee46dc9871358cd5128e6dac",
+    "installedWorker": "sha256:ee89daaa2d8ed8a6bf7c015100f29d6d64945d78f988e02891f5a389f97f26e4",
+    "live": "Ordinary original-work resume passed the previous failure and requested a corrected tool call in the same model loop. Full work outcome pending."
+  },
+  "faceAdapterCheck": {
+    "health": "CPUExecutionProvider ready; enrolled profiles present; no automatic enrollment",
+    "liveSnapshotSeconds": 3.076,
+    "facesFound": 0,
+    "pixelsPersisted": false,
+    "limit": "Actual inference completed; no identified person or greeting demonstrated."
+  }
 }
