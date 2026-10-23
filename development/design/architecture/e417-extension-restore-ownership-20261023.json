@@ -75,6 +75,13 @@
     "companionOwners": "Not supplied for this inactive candidate; no fabricated last-good/adoption/dependency/config/data records. Coordinator retains E4.15 binding ownership.",
     "result": "One real-source byte-preservation case passed without executing extension or touching production source.",
     "fullTaskCompleted": false,
-    "independentReview": "GO_SCOPED_ACTUAL_SOURCE_PRESERVATION"
+    "independentReview": "GO_SCOPED_ACTUAL_SOURCE_PRESERVATION",
+    "offlineBehavior": {
+      "sameCases": 3,
+      "totalCases": 3,
+      "isolation": "Two separate network-none read-only disposable containers; current pinned core image, only one source file and generic harness mounted per run. No host worktree/secrets mounted.",
+      "scope": "Synthetic inputs exercise the exact pure function after restoration; not trusted production observation, authorization, admission, STOP, delivery, adoption or full native restore.",
+      "modelCalls": 0
+    }
   }
 }

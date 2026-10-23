@@ -84,5 +84,48 @@
       "actual-v2-source.private.py": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
       "independent-review.private.json": "f309f7c331f3de2ead072bc3df39f7f22533ece7fedc8d529afc4910ac9b8cc0"
     }
+  },
+  "actualEvaBehaviorPreservationAddendum": {
+    "checkedAt": "2026-10-23T16:09:13.785800+00:00",
+    "privateReviewSha256": "46135d05f5bec48c9df9bc29d01e411075a5ff2041ff08e77dea42db9b88066c",
+    "reviewer": "/root/e47_mcp_catalog",
+    "report": {
+      "decision": "GO_SCOPED_SAME_OFFLINE_BEHAVIOR_PRESERVATION",
+      "blockingFindings": [],
+      "scope": "Review of saved builder evidence for three synthetic pure-function inputs before and after inactive source preservation; no rerun.",
+      "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+      "sourceBytes": 4686,
+      "imageId": "sha256:89d1f772f877681da8d6abf342293becd79e6f891c306f97ffa2d9782680e01c",
+      "artifactSha256": {
+        "actual-v2-behavior-before.private.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "actual-v2-behavior-before.private.stdout": "124029e14ede83935bcc392dea93c2a1c7982a6d10206b16d51167c070a0c756",
+        "actual-v2-behavior-harness.private.py": "4f0e7b2161dd174508a1d75944f4ae547dfc836eb8e376a41c27dce37511fe4d",
+        "actual-v2-behavior-input.private.json": "2e7757f2ac50a0692361e5939bb4a114b51aa02df5a0a27670c81604498555ea",
+        "actual-v2-behavior-invocations.private.json": "b988c3011d9f2bc8751b51db2d9e8600ac5829ae13ada1f5aafbdab90788dfd0",
+        "actual-v2-behavior-restored.private.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "actual-v2-behavior-restored.private.stdout": "124029e14ede83935bcc392dea93c2a1c7982a6d10206b16d51167c070a0c756",
+        "actual-v2-behavior-result.private.json": "3f7bf1c2e13cfe426c1521c9f14d7031da7ce971f5eed1e5a4f9eca9d9e3961c"
+      },
+      "previousActualSourceReviewSha256": "4a36bae34067feb92a49a7ef06ffbfd19cc1fe2f619ee45904597cc55cb98934",
+      "verifiedFromRetainedArtifacts": {
+        "identicalStdoutBytes": true,
+        "stdoutSha256": "124029e14ede83935bcc392dea93c2a1c7982a6d10206b16d51167c070a0c756",
+        "cases": 3,
+        "recordedSuccessfulSandboxRuns": 2,
+        "emptyRetainedStderr": true,
+        "existingHouseholdAssessmentStopDeliveryRequiredFlagPreserved": true,
+        "reviewerExecutions": 0,
+        "reviewerModelOrProviderCalls": 0
+      },
+      "reason": "Exact copied and retained-restored source hashes match. Retained stdout is byte-identical on three synthetic inputs and agrees with the saved result: proposal with capture unverified, no-faces refusal, and event-binding refusal. The generic harness invokes the same propose function with explicit synthetic time in both runs.",
+      "executionEvidenceLimit": "Invocation records were reconstructed after builder execution and are not an independent container-execution attestation. Recorded commands specify pinned existing image, network none, readonly filesystem and only module/harness readonly bind mounts; this review verifies retained evidence consistency, not independently witnessed isolation.",
+      "limits": [
+        "Preservation of these three offline results only; not validation of source correctness, completeness or all possible input behavior.",
+        "Synthetic dictionaries do not prove trusted household observations, recognition or live source admission.",
+        "No runtime adoption, message delivery, durable deduplication, STOP enforcement, native database restore, companion state or dependency restoration proved.",
+        "No shared installation change or model/provider call performed by reviewer; original reviews remain unchanged.",
+        "E4.17 and E4.15 remain open."
+      ]
+    }
   }
 }

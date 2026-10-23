@@ -1,7 +1,7 @@
 {
   "contract": "EvaE417ExtensionRestoreOutcome/v1",
   "task": "E4.17",
-  "checkedAt": "2026-10-23T16:03:18.537098+00:00",
+  "checkedAt": "2026-10-23T16:09:13.785800+00:00",
   "status": "source_corrected_and_verified_host_tooling_shared_installation_unchanged",
   "baselineCommit": "581c33f6f2a8570017a7bc69f4c197a456b1558d",
   "candidateSha256": {
@@ -51,7 +51,8 @@
     "externalEffects": 0,
     "databaseRestoreCalls": 0,
     "developmentCreditCost": null,
-    "developmentCreditCostState": "unknown; not estimated"
+    "developmentCreditCostState": "unknown; not estimated",
+    "additionalLocalSandboxRuns": 2
   },
   "independentReview": {
     "decision": "GO_CANDIDATE",
@@ -160,5 +161,68 @@
         "This addendum does not close E4.17 or E4.15 and does not change the earlier candidate review or its compatibility limits."
       ]
     }
+  },
+  "actualEvaBehaviorPreservation": {
+    "status": "passed_same_offline_behavior_after_inactive_restore",
+    "checkedAt": "2026-10-23T16:07:28.138672+00:00",
+    "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+    "sourceBytes": 4686,
+    "imageId": "sha256:89d1f772f877681da8d6abf342293becd79e6f891c306f97ffa2d9782680e01c",
+    "sandbox": {
+      "network": "none",
+      "filesystem": "read-only",
+      "capabilitiesDropped": "ALL",
+      "noNewPrivileges": true,
+      "memoryMiB": 128,
+      "pids": 32,
+      "user": "1000:1000",
+      "mountsPerRun": [
+        "one source module, readonly",
+        "generic synthetic harness, readonly"
+      ],
+      "input": "synthetic stdin, no household data",
+      "hostSecretsOrOldWorktreeMounted": false
+    },
+    "runs": [
+      {
+        "label": "before",
+        "exitCode": 0,
+        "processSeconds": 1.4321410849806853,
+        "stdoutSha256": "124029e14ede83935bcc392dea93c2a1c7982a6d10206b16d51167c070a0c756",
+        "stderrBytes": 0
+      },
+      {
+        "label": "restored",
+        "exitCode": 0,
+        "processSeconds": 1.4739117290009744,
+        "stdoutSha256": "124029e14ede83935bcc392dea93c2a1c7982a6d10206b16d51167c070a0c756",
+        "stderrBytes": 0
+      }
+    ],
+    "cases": 3,
+    "equalCases": 3,
+    "limitations": [
+      "Pure function preservation only; synthetic matching dictionaries do not establish trusted household observation.",
+      "No runtime adoption, actual person recognition, delivery, durable deduplication, STOP enforcement, native database restore or last-working state tested.",
+      "Only module path differs between executions; target uses current already installed core image, no image download/build/shared service restart."
+    ],
+    "usage": {
+      "localSandboxRuns": 2,
+      "evaModelCalls": 0,
+      "providerCalls": 0,
+      "messagesSent": 0,
+      "creditCost": null
+    },
+    "independentReviewState": "completed_scoped_go",
+    "outputsInterpretation": "Proposal remains a non-authorizing candidate with requires_existing_household_assessment_stop_and_durable_delivery true and capture_time_verified false; no_faces and event_binding reject outputs also match exactly.",
+    "proofSha256": {
+      "actual-v2-behavior-harness.private.py": "4f0e7b2161dd174508a1d75944f4ae547dfc836eb8e376a41c27dce37511fe4d",
+      "actual-v2-behavior-input.private.json": "2e7757f2ac50a0692361e5939bb4a114b51aa02df5a0a27670c81604498555ea",
+      "actual-v2-behavior-result.private.json": "3f7bf1c2e13cfe426c1521c9f14d7031da7ce971f5eed1e5a4f9eca9d9e3961c",
+      "actual-v2-behavior-invocations.private.json": "b988c3011d9f2bc8751b51db2d9e8600ac5829ae13ada1f5aafbdab90788dfd0",
+      "actual-v2-behavior-before.private.stdout": "124029e14ede83935bcc392dea93c2a1c7982a6d10206b16d51167c070a0c756",
+      "actual-v2-behavior-restored.private.stdout": "124029e14ede83935bcc392dea93c2a1c7982a6d10206b16d51167c070a0c756"
+    },
+    "independentReviewSha256": "46135d05f5bec48c9df9bc29d01e411075a5ff2041ff08e77dea42db9b88066c"
   }
 }
