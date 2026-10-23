@@ -105,5 +105,53 @@
     "stagingProposalSha256": "5ad283caf3bfe583ad6a59d2757fb1450defcd2f735eb901c93505fbe392aac6",
     "retainedCoreFixtureManifestSha256": "071df67dea58c0bd2c32404448361553c0eceebb6c39fc1559a6cf185f84d158"
   },
-  "integration": "Coordinator owns workboard/dashboard, independent review and Git. No product sources/schema/criteria changed."
+  "integration": "Coordinator owns workboard/dashboard, independent review and Git. No product sources/schema/criteria changed.",
+  "currentInstallationProof": {
+    "checkedAt": "2026-10-23T23:13:25.057625+00:00",
+    "status": "actual_cli_file_preview_one_use_execute_completed_inactive",
+    "scope": "Actual captured current installation, existing trusted V3 file CLI preview/one-use execute into own empty PostgreSQL0011 and separate inactive package target. Earlier synthetic compatibility case above remains preserved as earlier limited evidence.",
+    "proofReceiptSha256": "6680db8f31190abe9b3b0055fff358c3681c2bbca972e03529549f40eea8988b",
+    "entrypoint": "tools.installer_restore_wizard.main --restore-config --restore-archive --passphrase-file --execute",
+    "packageArchiveSha256": "e99a968a2f7b4cd7876b70ee984ea4038f110c068cd4a192ff59144fbd23db41",
+    "coreArchiveSha256": "ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e",
+    "transportSha256": "cc125bf15cfa714b47b0efdd7131a27075ef4ee2fc1c59c612446e7d4130f9ef",
+    "sourceFreezeV3Sha256": "9ea234d6a2642f8d80b865a93b4c4508555bd4c250a89f255967196ca64ca89a",
+    "schemaHead": "4e_0011_timeline_type_time",
+    "insertedRecords": 345664,
+    "rebuiltCheckpoints": 150577,
+    "operationalEventsRestored": 345379,
+    "nativeCoreImported": true,
+    "fullPackageMaterializedInactive": true,
+    "allRestoredHoldsRemainClosed": true,
+    "oneUseReplayRejected": true,
+    "originalFloorAndErasureHeadPreserved": true,
+    "realRuntimeGuards": 3,
+    "authorityAndSqlInstrumentation": {
+      "liveAuthorityChecks": 496633,
+      "sqlChecks": 496604,
+      "comment": "Additional per-SQL live authority instrumentation is measured separately; no overhead-free production-speed claim."
+    },
+    "measurements": {
+      "wallSeconds": 3375.1705982770072,
+      "peakRssKiB": 8242568,
+      "evaRuntimeModelCalls": 0,
+      "developerTokenUsage": null,
+      "creditCosts": null
+    },
+    "independentReview": {
+      "verdict": "GO_SCOPED_REAL_OPERATOR_NATIVE_CORE_RESTORE_HELD",
+      "path": "development/reviews/e417-current-extension-package-review-20261023.json",
+      "priorStatus": "requested_via_coordinator_not_yet_recorded_here"
+    },
+    "externalDatabaseImportClaim": false,
+    "hostFunctionalRestoreClaim": false,
+    "runtimeActivated": false,
+    "familyAcceptance": false,
+    "fullE417Completed": false,
+    "remaining": [
+      "Authenticated final host-input version and complete host preparation, with exact library/configuration compatibility and prospective target/client admission.",
+      "Actual original service/backend/procedure functional evidence after independent admission; no third strict CPU harness or unverified backend substitution.",
+      "External database/provider activation and full E4.17 acceptance remain separate."
+    ]
+  }
 }

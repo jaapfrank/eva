@@ -2,8 +2,8 @@
   "contract": "EvaIndependentReview/v1",
   "task": "E4.17 same E4.15 extension recovery package",
   "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-  "status": "asset_input_verified_awaiting_concrete_package",
-  "verdict": "PENDING_PACKAGE_REVIEW",
+  "status": "large_package_and_native_core_operator_restore_verified_host_function_open",
+  "verdict": "GO_SCOPED_OPERATOR_NATIVE_CORE_RESTORE_HOST_FUNCTION_PENDING",
   "startedAt": "2026-10-23T20:27:36Z",
   "assetInput": {
     "verdict": "GO_TARGET_ONLY_ASSET_INPUT",
@@ -134,8 +134,8 @@
     "proposalReview": "development/reviews/e417-face-assets-proposal-review-20261023.json"
   },
   "packageReview": {
-    "status": "awaiting_real_current_package_coordinator_ready_notice",
-    "verdict": null,
+    "status": "native_core_operator_verified_inactive_host_target_and_input_reviews_scoped",
+    "verdict": "HOST_FUNCTION_AND_FINAL_INSTALLED_OUTCOME_PENDING",
     "preparation": {
       "currentComponentStage": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/package-staging",
       "stagingReceiptSha256": "6f62431e5d555e846a92ceeadeb8d88dfa82df1f9d659a3ad07ac4e271823cfb",
@@ -1029,6 +1029,426 @@
         "Base image+five overlay+three supplement effective library relocation/resolution is not yet proven by a real full inactive host target.",
         "Static host CPython3.12/SOABI descriptors do not prove shared-library ABI or module loading; no native import/inference was run."
       ]
+    },
+    "privateHostWorkflowIntegrationCandidateReview": {
+      "reviewedAt": "2026-10-23T22:56:58.810100+00:00",
+      "status": "private_v2_canonical_path_fix_independently_passed_prior_nine_pg_results_retained",
+      "verdict": "GO_SCOPED_PRIVATE_HOST_WORKFLOW_INTEGRATION_CODE",
+      "candidateFreezeSha256": "3c62b3eda8734db1e71f4c454f7b2091be0824ac411459449d5ae23de1a7cc04",
+      "patchSha256": "931b7a09c169a3201114ed8e2014d0481426bd5c126d6013984df57b6a1ded2e",
+      "probePlanSha256": "2383255dc0f452eb48ce7d22dc9ad10867128f84a286cc3a0ddb8c69891238cc",
+      "newDefectIds": [
+        "E417-INTEGRATION-001"
+      ],
+      "productionV3Changed": false,
+      "functionalStartAdmitted": false,
+      "concreteFunctionalProbePreconditions": [
+        "Resolve the physical path-separation defect and freeze the final integrated candidate.",
+        "Regenerate authenticated complete package containing both SDK and library supplements, with original core/identity/source/key references retained; call full prepare_host_extension through the admitted configured workflow into new private disjoint targets and prove final closed inventories/held DB commit/replay.",
+        "Physically resolve pinned full Eva2 base outside old checkout together with five unchanged source overlays and three exact Git supplements. Byte capture/module-presence descriptors alone do not establish effective library origins.",
+        "Pin separately provisioned CPython3.12 interpreter and required OS/shared-library ABI to restored host/bridge/CPU directories; original absolute launchers and .pth stay inactive until an explicit controlled loading route is reviewed. No pip or substitutions.",
+        "Provide hash-bound private target-only service configs and separate target tokens; map all original absolute work/queue/suite/attestation/native runtime references, preserve registered image/resource limits, and exclude source services/shared runtime dispatch.",
+        "Prove original held/paused/STOP and saved mutable state controls prevent unintended work by all actually enabled components before an isolated original service starts; use explicit native ProcedureExecutor override/network-none, never image default runtime command.",
+        "Bind exact saved procedure and original source-hash observation/expected silence output for procedure replay. A real image plus explicit separate inference admission is necessary for any new native inference claim. Preserve strict CPU FAIL and keep no-proposal replay distinct from family/owner acceptance."
+      ],
+      "completedAt": "2026-10-23T22:57:44.669121+00:00",
+      "patchReconstructedExactlyFromTwoPinnedPrivateBeforeAndAfterFiles": true,
+      "currentProductionV3AndHostFreezeStillUnchanged": true,
+      "independentTests": {
+        "passed": 9,
+        "skipped": 0,
+        "pytestSeconds": 54.39,
+        "testCommandSeconds": 56.240844,
+        "totalWithOwnTestDatabaseSeconds": 61.069086,
+        "exitCode": 0,
+        "ownTestContainerId": "e00d80e00d74c0a3b0e2afe854c7274ee7570965f072cf372f594c16e2462807",
+        "ownTestContainerRemoved": true,
+        "ownTestDatabasesRemaining": 0,
+        "runtimeGuardInstrumentedFixtureNotNewDockerLineageProof": true,
+        "nativeSdkImports": 0,
+        "evaServicesStarted": 0,
+        "scope": [
+          "real existing core fixture and separate PostgreSQL, AES/package/materialization/physical SDK, held row and one-use replay",
+          "authority revoked after actual host copy -> database rollback, main and host inactive targets retained, preview token consumed",
+          "missing native coverage before writes, host/native authority overlap, trusted opt-in fields/start/target nesting rejected",
+          "default route without host opt-in preserves prior three guard calls"
+        ]
+      },
+      "limits": [
+        "Nine targeted cases passing does not discharge independent E417-INTEGRATION-001; that absolute-dotdot path case is outside the supplied nine cases.",
+        "This remains a private patch only. Actual large V3 operator execution, final complete package/full host prepare, effective base-library/ABI/tokens and original service function remain separate."
+      ],
+      "historicalV1Verdict": "CHANGES_REQUIRED_PRIVATE_INTEGRATION_CANDIDATE",
+      "originalCandidateFreezeSha256": "f9f5d2c256bb53e2ba10b884997503855f72962e33cbc2a2864a85771c9ada3e",
+      "canonicalRootFixV2": {
+        "reviewedAt": "2026-10-23T23:01:54.841916+00:00",
+        "verdict": "GO_SCOPED_PRIVATE_HOST_WORKFLOW_INTEGRATION_CODE",
+        "sourceFreezeSha256": "3c62b3eda8734db1e71f4c454f7b2091be0824ac411459449d5ae23de1a7cc04",
+        "patchSha256": "a22fa9ec0be7c2ca9b4f36cc8533799869c7a6729b0900a063d547f5c07fe5ae",
+        "sourceFiles": {
+          "src/tools/installer_portable_restore.py": {
+            "candidateSha256": "d54ab386af275a15c22c52df757e2225f241299fc4638f950e7b8883a478a211",
+            "originalSha256": "a4de2318d62bcdbf3e3115da07eeea89aa1add98f80463589fd1c12631842cc8"
+          },
+          "src/tools/installer_restore_wizard.py": {
+            "candidateSha256": "37e08816f716cf9eb73f6fe9ca5e05f6404bf48a4ef94e0bb49aa2473baa3af0",
+            "originalSha256": "403a6edb3b15b0a44c60b5a4006ee1251b85fad5f3006369f4d0934090b14a93"
+          }
+        },
+        "changedSourceFromV1": "Only four lines added inside host opt-in before the existing destination admission: reject any protected root that is not absolute or differs from resolve(). Wizard unchanged from V1.",
+        "priorNineTestSourceBytesExactlyPreserved": true,
+        "independentTests": {
+          "targetedCasesPassed": 4,
+          "skipped": 0,
+          "pytestSeconds": 3.46,
+          "commandSeconds": 4.906925,
+          "ordinaryConstructorCasesPassed": 9,
+          "constructorSeconds": 0.004761,
+          "cases": [
+            "canonical disjoint accepted",
+            "canonical nested control rejected",
+            "original objects-dotdot reproduction rejected",
+            "objects parent symlink rejected",
+            "host dotdot rejected",
+            "host parent symlink rejected",
+            "workspace dotdot rejected",
+            "materialized package dotdot rejected",
+            "default without host still accepts prior object-dotdot setting"
+          ],
+          "databaseCalls": 0,
+          "sdkImportsOrInference": 0,
+          "servicesStarted": 0,
+          "targetDirectoriesPublished": 0,
+          "ninePriorPostgresTestsNotRepeated": true
+        },
+        "originalFindingNowRejected": true,
+        "exactV2PatchReconstructedFromPrivateBeforeAndAfter": true,
+        "currentV3AndHostFreezeStillUnchanged": true,
+        "functionalStartAdmitted": false,
+        "limits": [
+          "GO only for reviewed private integration code; production integration is coordinator-owned.",
+          "Existing nine independent PG routing/rollback/replay/default results are reused; no new actual Docker-lineage proof.",
+          "Full complete authenticated final package and full host adapter invocation, physically resolved base+overlays+supplements, ABI/tokens/target configs and actual original host function remain open."
+        ]
+      }
+    },
+    "inactiveFunctionalTargetHandoffReview": {
+      "reviewedAt": "2026-10-23T23:10:32.937137+00:00",
+      "verdict": "GO_SCOPED_INACTIVE_TARGET_BYTES_NOT_START",
+      "handoffSha256": "7eaa5dc858a8d9cee431ad07b01066ed6ad440bd47c28dd7272a5e92c9c9e5fa",
+      "baseCaptureReceiptSha256": "605c9dc8a22a733bb698cba1e05afee91afc61920d771c049b0ff9157cdf6814",
+      "effectiveLibraryInventorySha256": "778bc58cc42a92b9c86e32c5726f630c063678a3aa1e1c3d4d8af8e47d473ddd",
+      "runtimeDependencyInventorySha256": "47614b14fad9d0a67cbf0e92ad6d196f63cda138850497302becf8d2bc052cbc",
+      "metadataReceiptsIndependentlyMatched": 13,
+      "physicalTargetCounts": {
+        "base": 420,
+        "host": 424,
+        "bridge": 420,
+        "dependencies_host": 1868,
+        "dependencies_bridge": 323
+      },
+      "physicalTargetPayloadBytes": {
+        "base": 13573088,
+        "host": 13635503,
+        "bridge": 13573088,
+        "dependencies_host": 54081043,
+        "dependencies_bridge": 4111033
+      },
+      "totalNewPhysicalFilesIndependentlyHashed": 3455,
+      "allDataFilesRegularSingleLinkRootOwned0600AndDirectories0700": true,
+      "effectiveCopiesHaveDifferentInodesFromSelectedRetainedSources": true,
+      "hostResolvedFromBasePlusFiveOriginalOverlaysAndThreeGitSupplements": true,
+      "bridgeResolvedFromBasePlusOriginalFaceSourceLayer": true,
+      "runtimeDependencyInventoriesMatchOriginalSdkAndBridgeSiteSubsets": true,
+      "baseSourceNeverStartedImage52309AndActualCreatedContainerConfirmed": true,
+      "interpreterBinarySha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "interpreterFlags": [
+        "-I",
+        "-S",
+        "-B"
+      ],
+      "bootstrapSha256": "c52369a8d55becee51648b67913578a2cf82361d8583e3a67a015bd0d80dd366",
+      "launcherSourceReview": "Original runtime module/script routes only. Isolated/no-site flags checked, readyToLaunch=false blocks entry, explicit canonical stdlib/dependency/library sys.path replaces search path; no site/addsitedir or original pth. CPU script route validates the original bridge invocation. All three wrappers remain0600 data.",
+      "credentialChecks": {
+        "count": 2,
+        "metadataOnly": true,
+        "rootOwned0600Under0700TargetDirectory": true,
+        "contentsOrDigestsRead": false
+      },
+      "inputMapSha256": "8ba48940c34811dd9e04181c8476010cd613b03365b8393b7eac7e5fe2d673a0",
+      "original139RoleModeSizeShaPinsPreserved": true,
+      "selectedInputs": 566,
+      "selectedPayloadBytes": 952620187,
+      "wholePackageBytesBeforeNewOuterManifest": 1674694872,
+      "headroomBeforeNewOuterManifest": 472788776,
+      "mandatoryStartupInputsStillMissing": 10,
+      "cpuTreePrepared": false,
+      "fullPrepareHostExtensionCalled": false,
+      "readyToLaunch": false,
+      "reviewSecondsForPhysicalTargets": 0.652264,
+      "sdkOrScorerImportsOrExecution": 0,
+      "evaServiceStarts": 0,
+      "limits": [
+        "New target files and inactive launch descriptions are verified; no module loading, interpreter invocation, native shared-library ABI, CPU health/inference, credential function or host behavior is proven.",
+        "CPU runtime tree, ten startup case/scorer inputs, remaining state/repository resources, authenticated final package and actual full adapter invocation remain open.",
+        "Target suite/runtime admission must account for path-sensitive work-evidence hash changes before any original host startup; its constructor executes the configured scorer, so opaque byte capture is not import/start admission."
+      ],
+      "metadataFilePins": {
+        "base-capture-complete.private.json": {
+          "bytes": 116010,
+          "sha256": "605c9dc8a22a733bb698cba1e05afee91afc61920d771c049b0ff9157cdf6814"
+        },
+        "base-capture-plan.private.json": {
+          "bytes": 603,
+          "sha256": "5b0f8215adf82d67178e2eae50135136a06c6a2409755f7baec714f8124a359b"
+        },
+        "effective-library-inventory.private.json": {
+          "bytes": 338472,
+          "sha256": "778bc58cc42a92b9c86e32c5726f630c063678a3aa1e1c3d4d8af8e47d473ddd"
+        },
+        "final-package-inputmap.private.json": {
+          "bytes": 328298,
+          "sha256": "8ba48940c34811dd9e04181c8476010cd613b03365b8393b7eac7e5fe2d673a0"
+        },
+        "full-host-preparation-configuration.private.json": {
+          "bytes": 49167,
+          "sha256": "9c82cca0543f23766c6652c43b1955e0ebd37a7f6db490e977428faffd75c969"
+        },
+        "interpreter-profiles.private.json": {
+          "bytes": 2822,
+          "sha256": "d2c8168c1e91410e547ac5b1441126c39b03d701cd714324906f624f8cd64aaf"
+        },
+        "operator-config/host-service.private.json": {
+          "bytes": 238599,
+          "sha256": "0375f7814c4e110200e77a039a355cd4cc01785c9fa5a047450c6de10663050e"
+        },
+        "operator-config/procedure-client.private.json": {
+          "bytes": 346,
+          "sha256": "e4f1b4f8b8164a442ed55aea06d94542737122e5243ae0becca1a905f3d0c5c1"
+        },
+        "remaining-host-inputs.private.json": {
+          "bytes": 20623,
+          "sha256": "f97b546094b8f99f7b89b3317070cc92b3dc1945a6186bc75593477e05dcd7c6"
+        },
+        "runtime-dependency-inventory.private.json": {
+          "bytes": 351208,
+          "sha256": "47614b14fad9d0a67cbf0e92ad6d196f63cda138850497302becf8d2bc052cbc"
+        },
+        "static-host-abi.private.json": {
+          "bytes": 6192,
+          "sha256": "47bad8bac8ce71d8bf1644511f3e53aeb8169a8087333bad00ad89cdaaa37653"
+        },
+        "target-binding-inventory.private.json": {
+          "bytes": 272454,
+          "sha256": "bbf652f43b0853f0b7aa3795111597e89f2efbfb9586368e46d90e13c5c90464"
+        },
+        "target-commands.private.json": {
+          "bytes": 1974,
+          "sha256": "c9023f8039c8b8780e86af0c7ebdb28aac8576a54e49f2aea3a9543a5431e73b"
+        }
+      }
+    },
+    "privateDevelopmentStartupInputRoleReview": {
+      "reviewedAt": "2026-10-23T23:10:32.937137+00:00",
+      "verdict": "GO_SCOPED_OPAQUE_UNCHANGED_DEVELOPMENT_INPUT_BYTE_CAPTURE_ONLY",
+      "remainingInputDescriptorSha256": "f97b546094b8f99f7b89b3317070cc92b3dc1945a6186bc75593477e05dcd7c6",
+      "requestedStartupInputs": 10,
+      "historicalOrPublicStartupInputs": 8,
+      "privateDevelopmentInputsReviewed": 2,
+      "registrationSha256": "915cdfd12521d1b97f094c0426fb19dfc081392d010d597b35a2ea7a5dd82da8",
+      "registrationContract": "EvaWorkerStrategyProductionRegistration/v1",
+      "registeredComponent": "bootstrap/delegated_digital_runner.py",
+      "cases": {
+        "sha256": "4c6daa202173dbd437ff7bef192197d2f3afecbb69eed434fb25a22fcefcb3ee",
+        "bytes": 3182,
+        "mode": "0400"
+      },
+      "scorer": {
+        "sha256": "1eafe321440750d115e43eb7dec820db470abb2a181cd13288fe2f17a484b6b3",
+        "bytes": 7239,
+        "mode": "0400"
+      },
+      "roleProof": "Exact original service configuration selects these two as existing DevelopmentAssessment cases_file/scorer_file. Registration development_cases/quality_scorer and work_evidence registration/scope/baseline/case_set hashes match. They are distinct from protected_final_cases/input_refs/scorer.",
+      "developmentAssessmentCodeSha256": "95f9f998c1ddd72edc6685a95915daaf8c0abe150ebda91850600c4e4e5f0e35",
+      "sourceAccessBoundary": "Root-owned0400 regular single-link files under root-owned0700 independent-review directory. Read only as opaque stable bytes for digest/size; no source permission or contents changed.",
+      "noFinalFeedbackToDeveloperPreserved": true,
+      "oldClosedTrialUnchanged": true,
+      "inputBodiesParsedOrPublished": false,
+      "scorerImportedOrExecuted": false,
+      "protectedFinalOrAnswerEvidenceOpened": false,
+      "scopeLimit": "Only unchanged opaque capture of the ten explicitly selected startup inputs, maintaining evaluator access boundaries. No expanded developer access, criteria changes, old benchmark run, scoring or original service start. Actual ten-capture receipt remains to be reviewed."
+    },
+    "targetPathSensitiveAssessmentPreStartCondition": {
+      "reviewedAt": "2026-10-23T23:10:32.937137+00:00",
+      "status": "explicit_target_admission_mapping_required_before_start_or_use",
+      "originalAssessmentSha256": "5863aae8e0f6faeabda6aa1a9730d4d9e11d51987763585de5a6030e9c90758e",
+      "relocatedAssessmentSha256WithOnlyOriginalInputBytes": "62af28dda8b3bd36ffa55e5ca1ac5ac14101282f3e00d4d852fa52700144ece4",
+      "changedWorkEvidenceFields": [
+        "evidence_root",
+        "run_bindings_root"
+      ],
+      "criteriaUnchanged": true,
+      "originalCaseScorerBaselineRegistrationScopePinsUnchanged": true,
+      "method": "Pure canonical SHA256 from the existing DevelopmentAssessment formula. _WorkEvidence stores deepcopy(config) and the suite hash includes every work_evidence field except runtime_bindings. No DevelopmentAssessment constructed, case parsed, scorer imported or score produced.",
+      "requiredHandoff": "Separate prospective target admission/client-suite mapping using existing contracts, preserving original registration and exact source-to-target provenance. Actual mapping must be reviewed before start; no source hash falsification or permission broadening.",
+      "privateMetadataHashesOnly": true
+    },
+    "actualLargeOperatorNativeCoreRestoreReview": {
+      "reviewedAt": "2026-10-23T23:21:30.966346+00:00",
+      "verdict": "GO_SCOPED_REAL_OPERATOR_NATIVE_CORE_RESTORE_HELD",
+      "executionBinding": {
+        "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
+        "turnId": "01a16a93-f349-7823-9ad1-fce7d390b760",
+        "executionId": "exec-f0de3082-2ae3-427f-b6e8-70e653cb9c70",
+        "status": "completed",
+        "exitCode": 0,
+        "commandWallMilliseconds": 3377627,
+        "driverSha256": "10c318549b12b13f4e0a812a3cb26a723c564f9fcf7a0dde765abe71bbd8e24f",
+        "driverAndExistingGateInterpreterMentioned": true,
+        "noInlineDsnInExecutionCommand": true,
+        "completionOutputMatchesReceiptAndReadback": true
+      },
+      "independentReadback": {
+        "applicationPins": [
+          {
+            "id": "a9345707855631babb77a335c68457fba7d5e081392ee44642e099d6317681b8",
+            "image": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+            "pid": 0,
+            "status": "created"
+          },
+          {
+            "id": "4924f9878593c720bc08b329e3a0ff13f6310febc2cb0f49f9ce6a8e37c572f9",
+            "image": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+            "pid": 0,
+            "status": "created"
+          }
+        ],
+        "canonicalTablesCounted": 41,
+        "databaseIdentityCheckedBeforeAnyContentQuery": true,
+        "databaseOrServiceWrites": 0,
+        "heldRestoreRows": 1,
+        "identityOwnerAndPrivateModeMatchConfiguredOwner": true,
+        "modelOrRuntimeActivationCalls": 0,
+        "operationalEvents": 345379,
+        "operatorReceiptSha256": "6680db8f31190abe9b3b0055fff358c3681c2bbca972e03529549f40eea8988b",
+        "outerArchiveSha256": "e99a968a2f7b4cd7876b70ee984ea4038f110c068cd4a192ff59144fbd23db41",
+        "ownClusterContainerId": "b2b3696daadd3d992beaea54b03a24c8e4345a2ff0c8ef67780765c80b2df49b",
+        "ownClusterImage": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+        "ownClusterName": "eva-e417-copy-dbffeb861f9e",
+        "preparationReceiptSha256": "952506e7d217f3c447a927a3061512c0a7bdc8eb3eab034f5d37622e13c00fb4",
+        "privateConversationOrEventContentRead": false,
+        "readOnlyRepeatableRead": true,
+        "readbackSeconds": 0.633337,
+        "rebuiltCheckpoints": 150577,
+        "recordsAcrossCanonicalTables": 345664,
+        "requiredTypeTimeIndexValidReadyExact": true,
+        "restoreIdMatchesRealCli": true,
+        "restoreMarkerSha256": "9b2f1d09808f3faf8c013b91607a29af09d226b5c841766ff2fd802fead78b0b",
+        "restoredIdentitySha256": "96bec21f0eb19378e1e1c5b02fe2b875149bca402b1b72c1a08980d7ee4567fd",
+        "schemaHead": "4e_0011_timeline_type_time",
+        "sourceAndRuntimeScopeMatches": true,
+        "sourceAndTrialAuthorityReceiptHashesMatch": true,
+        "targetDatabase": {
+          "name": "eva_e417_operator_69904d70539e",
+          "oid": 41816,
+          "system_identifier": "7699973514441449507"
+        },
+        "transactionRolledBackAfterRead": true,
+        "verdict": "GO_SCOPED_REAL_OPERATOR_NATIVE_CORE_RESTORE_HELD"
+      },
+      "realCliEntryPoint": "tools.installer_restore_wizard.main --restore-config --restore-archive --passphrase-file --execute",
+      "sourceFreezeV3Sha256": "9ea234d6a2642f8d80b865a93b4c4508555bd4c250a89f255967196ca64ca89a",
+      "transportSha256": "cc125bf15cfa714b47b0efdd7131a27075ef4ee2fc1c59c612446e7d4130f9ef",
+      "innerCoreManifestSha256": "ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e",
+      "sourceAndTrialAuthorityPreserved": {
+        "sourceSha256": "e256881a839eb1c706dc48bc68e4e72e15a8a4bb2bbaca9785b89bbfaf4ec6e0",
+        "trialSha256": "14f33bf3c80fa77696b2674a5e6db2a00f4c8c5ea4bfb2f42babcc7e4ece4b2a",
+        "erasureGeneration": 272,
+        "authorizedArchiveCount": 2,
+        "sourceAuthorityOriginalArchiveCount": 0,
+        "isolatedTrialOnlyArchiveAdmission": true
+      },
+      "reportedExecutionInstrumentation": {
+        "commitChecks": 2,
+        "executeCalls": 1,
+        "liveAuthorityChecks": 496633,
+        "realRuntimeGuards": 3,
+        "sqlChecks": 496604
+      },
+      "oneUsePreviewConsumedAndOriginalExecuteReplayRejected": true,
+      "commitProof": "A new independent read-only connection on the exact pinned target sees all345664 imported rows,150577 checkpoints and one held outer-archive restore marker; no data transaction from the CLI remains necessary for visibility. Two recorded commitChecks are instrumentation callbacks, not two restore claims.",
+      "materializationMetadataReadback": {
+        "outerManifestSha256": "e99a968a2f7b4cd7876b70ee984ea4038f110c068cd4a192ff59144fbd23db41",
+        "payloadFiles": 301,
+        "closedFilesIncludingManifest": 302,
+        "payloadBytesFromActualSizes": 1645299983,
+        "allRoleModesAndConfiguredOwnersMatch": true,
+        "allDirectories0700": true,
+        "outerManifest0600MatchesExistingMaterializerContract": true,
+        "innerCoreManifestExact": true,
+        "heavyPayloadHashesOrCoreSemanticReaderRepeated": false,
+        "reusedCopyHashValidationSourceSha256": "ce5b640c9d0aea547b62c1efd88f2b3d496c36fad4c171c2cf85b4d14fadaaeb"
+      },
+      "measuredOperatorSeconds": 3375.1705982770072,
+      "reportedPeakRssKiB": 8242568,
+      "modelCalls": 0,
+      "reviewerWritesOrServiceStarts": 0,
+      "limits": [
+        "GO covers only original large operator CLI and durable inactive native core restore in the explicitly isolated target DB; source-copy and production databases were not queried.",
+        "Source authority originally authorizes zero archives; isolated trial adds exactly two archive admissions without changing floor/head/scope. No production restore authorization or owner acceptance is inferred.",
+        "Memory/gateway native imports, host functional restore, CPU/ABI/library compatibility, installed family behavior, full E4.17 and project completion remain open."
+      ]
+    },
+    "exactTenStartupCaptureReview": {
+      "reviewedAt": "2026-10-23T23:21:30.966346+00:00",
+      "verdict": "GO_SCOPED_EXACT_TEN_OPAQUE_STARTUP_CAPTURE_AND_ORIGINAL_SUITE_BINDING",
+      "captureReceiptSha256": "ccefe4622514703e2646210df70ab4f271d8d3133efda29cc816e99fe589068e",
+      "handoffSha256": "051cc2ee35f36edc936c20ede27f8b24306a7432173ce294f2361f72134417de",
+      "inputmapSha256": "d74468a23db538dd7917ab17a75c1afa3117151ff8cccff69524d44bb037d4f1",
+      "capturePlanSha256": "4d0f3c1fb6da4f4dbf4e1403f6f2398f249eba3ad441f4d083c73b10a30d3f0a",
+      "preservedPartialComparisonReceiptSha256": "ea29f42181ed582844e1f3576877bc6f7892faf0ead90184b3716bebab13495f",
+      "actualTargetBytesIndependentlyVerifiedEarlierInThisReview": true,
+      "bytesNotRereadAfterVersionSelectionCorrection": true,
+      "fileCount": 10,
+      "payloadBytes": 54199,
+      "closedInventoryExactlyAssignedTenSourceFields": true,
+      "allSourceStatBeforeAfterAndReviewTimeMetadataMatched": true,
+      "allTargetsPrivateRootOwned0600SingleLinkIndependentCopiesUnder0700": true,
+      "roles": "Existing document_artifact/0600; original private source0400 unchanged, read access remains root-only. No immutable-target0400 claim.",
+      "originalDevelopmentRoleAndPrivateRegistrationEvidenceReused": true,
+      "caseOrScorerContentParsedPublishedImportedOrScored": false,
+      "protectedFinalBaselineOrAnswerDataCaptured": false,
+      "originalAssessmentSha256": "5863aae8e0f6faeabda6aa1a9730d4d9e11d51987763585de5a6030e9c90758e",
+      "originalEvaluationCommandSha256": "69d249f12a4380cf4c6565c7ab205a2faa29adfd12f6664935f6cd143cbeca86",
+      "originalEvaluationImage": "sha256:a0dc4b8aea7c953409bfcb0fd337d9d43f35eef183ff9722d0a5989b7771f685",
+      "originalFullRegisteredSuiteSha256": "d6589286751e55f0bbf584b6d54868fa8c309ddf9229fc6ad0d43c0749893bc5",
+      "actualFullSuiteFormulaSourceSha256": "7fc6bb95fc0de544a3891a44ac815c32421c639942606d6a495c7b35fa9bfdcf",
+      "original566OperationRecordsExactlyPreserved": true,
+      "original139PinsTransitivelyPreserved": true,
+      "selectedInputs": 576,
+      "selectedPayloadBytes": 952674386,
+      "wholePackageBeforeNewOuterManifestBytes": 1674749071,
+      "headroomBeforeNewOuterManifest": 472734577,
+      "actualV2FullPreparationConfig": {
+        "path": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/full-host-preparation-configuration-v2.private.json",
+        "sha256": "98e4f8d0366942fc624bbfa9e2a8a2a0947ec5c7ac7f1ff331baa9cd860ec311",
+        "retainedPathsExactly576": true
+      },
+      "actualV2TargetServiceConfig": {
+        "path": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/operator-config/host-service-v2.private.json",
+        "sha256": "ebdce6295980a53464b7e0c50e21ae87b00f250337126296c94b2999b0112a18"
+      },
+      "reviewerVersionSelectionCorrection": {
+        "observedUnsuffixedServiceSha256": "0375f7814c4e110200e77a039a355cd4cc01785c9fa5a047450c6de10663050e",
+        "observedUnsuffixedPreparationSha256": "9c82cca0543f23766c6652c43b1955e0ebd37a7f6db490e977428faffd75c969",
+        "classification": "Reviewer initially checked unsuffixed preserved old files; exact v2 suffixed files match051cc handoff. This is not corruption or an invalid v2 input snapshot. Prior observations retained; source bytes/pins unchanged.",
+        "driverSpecificPreflight": "Coordinator states running driver loaded exact V2 configuration before work and guards its file hash; execution/readback receipt remains a separate review object."
+      },
+      "limits": [
+        "GO only for exact ten opaque copies, original registered source suite and correct V2 configuration/input-map snapshots.",
+        "Prospective target admission/client-suite mapping, actual complete authenticated version/full host adapter invocation, runtime API compatibility/ABI/UID/credentials and host behavior remain open.",
+        "Reported52309 component_application_runtime/current config mismatch awaits exact original-reference provenance. No compatible WIP substitution or broader client authority is admitted."
+      ]
     }
   },
   "contractRequirements": {
@@ -1061,7 +1481,7 @@
     "newImports": 0,
     "newLiveQueries": 0,
     "newServicesActions": 0,
-    "newDatabaseReads": 0,
+    "newDatabaseReads": 47,
     "newCaptures": 0,
     "newFamilyMessages": 0,
     "latestIndependentHostAdapterTests": {
@@ -1072,6 +1492,55 @@
       "ownTemporaryTestDatabaseContainerRemoved": 1,
       "evaRuntimeModelCalls": 0,
       "sdkImportsOrInference": 0,
+      "developmentTokens": null,
+      "developmentCredits": null
+    },
+    "latestIndependentPrivateIntegrationTests": {
+      "passed": 9,
+      "pytestSeconds": 54.39,
+      "testCommandSeconds": 56.240844,
+      "ownTemporaryTestDatabaseContainerStarted": 1,
+      "ownTemporaryTestDatabaseContainerRemoved": 1,
+      "evaRuntimeModelCalls": 0,
+      "nativeSdkImportsOrInference": 0,
+      "developmentTokens": null,
+      "developmentCredits": null
+    },
+    "latestIndependentCanonicalPathRetest": {
+      "pytestPassed": 4,
+      "pytestSeconds": 3.46,
+      "commandSeconds": 4.906925,
+      "ordinaryConstructorCasesPassed": 9,
+      "databaseCalls": 0,
+      "sdkOrEvaRuntimeModelCalls": 0,
+      "servicesStarted": 0,
+      "developmentTokens": null,
+      "developmentCredits": null
+    },
+    "latestInactiveTargetByteReview": {
+      "newPhysicalFilesHashed": 3455,
+      "measuredPhysicalReviewSeconds": 0.652264,
+      "privateInputsOpaqueHashOnly": 2,
+      "runtimeSdkScorerImportsOrInference": 0,
+      "evaServicesStarted": 0,
+      "tokenContentOrDigestReads": 0,
+      "developmentTokens": null,
+      "developmentCredits": null
+    },
+    "isolatedOperatorTargetReadback": {
+      "connections": 1,
+      "readOnlyAggregateAndMetadataQueries": 47,
+      "identityCheckedBeforeData": true,
+      "measuredSeconds": 0.633337,
+      "databaseOrServiceWrites": 0,
+      "productionOrSourceCopyDatabaseQueries": 0,
+      "privatePayloadRead": false
+    },
+    "latestOperatorExecution": {
+      "reportedSeconds": 3375.1705982770072,
+      "executionWallMilliseconds": 3377627,
+      "reportedPeakRssKiB": 8242568,
+      "runtimeModelCalls": 0,
       "developmentTokens": null,
       "developmentCredits": null
     }
@@ -1130,7 +1599,8 @@
         "publicationBindingReceiptSha256": "0e262507b3276ece346e2ec0bf028a784fe6d4781bfa1abc3b7200b39fb1bcc7",
         "reviewEvidenceReused": "packageReview.nativeCaptureDeltaReview and packageReview.publishedCoreReview; no repeated capture or source checks",
         "limit": "Original failure evidence preserved. Does not prove end-to-end current large operator restore or functional host behavior."
-      }
+      },
+      "scopedLargeOperatorNativeCoreRestoreAlsoVerified": true
     },
     {
       "id": "E417-CAPTURE-002",
@@ -1174,7 +1644,8 @@
         "publicationBindingReceiptSha256": "0e262507b3276ece346e2ec0bf028a784fe6d4781bfa1abc3b7200b39fb1bcc7",
         "reviewEvidenceReused": "packageReview.nativeCaptureDeltaReview and packageReview.publishedCoreReview; no repeated capture or source checks",
         "limit": "Original failure evidence preserved. Does not prove end-to-end current large operator restore or functional host behavior."
-      }
+      },
+      "scopedLargeOperatorNativeCoreRestoreAlsoVerified": true
     },
     {
       "id": "E417-CAPTURE-003",
@@ -1209,7 +1680,8 @@
         "publicationBindingReceiptSha256": "0e262507b3276ece346e2ec0bf028a784fe6d4781bfa1abc3b7200b39fb1bcc7",
         "reviewEvidenceReused": "packageReview.nativeCaptureDeltaReview and packageReview.publishedCoreReview; no repeated capture or source checks",
         "limit": "Original failure evidence preserved. Does not prove end-to-end current large operator restore or functional host behavior."
-      }
+      },
+      "scopedLargeOperatorNativeCoreRestoreAlsoVerified": true
     },
     {
       "id": "E417-TEST-001",
@@ -1256,7 +1728,8 @@
         "publicationBindingReceiptSha256": "0e262507b3276ece346e2ec0bf028a784fe6d4781bfa1abc3b7200b39fb1bcc7",
         "reviewEvidenceReused": "packageReview.nativeCaptureDeltaReview and packageReview.publishedCoreReview; no repeated capture or source checks",
         "limit": "Original failure evidence preserved. Does not prove end-to-end current large operator restore or functional host behavior."
-      }
+      },
+      "scopedLargeOperatorNativeCoreRestoreAlsoVerified": true
     },
     {
       "id": "E417-CAPTURE-005",
@@ -1276,7 +1749,8 @@
         "verification": "Private failure receipt and exact conversion/timeout frame presence independently checked; source data not inspected."
       },
       "impact": "No accepted current archive/package; schema and corrected UUID scope passed far enough to read and convert actual source rows.",
-      "repairBoundary": "Keep the bounded live fence. Coordinator proposes short actual native snapshots under the fence, then existing portable conversion/validation on an isolated restored snapshot. The new composition is not yet reviewed or accepted."
+      "repairBoundary": "Keep the bounded live fence. Coordinator proposes short actual native snapshots under the fence, then existing portable conversion/validation on an isolated restored snapshot. The new composition is not yet reviewed or accepted.",
+      "scopedLargeOperatorNativeCoreRestoreAlsoVerified": true
     },
     {
       "id": "E417-PACKAGE-001",
@@ -1290,11 +1764,17 @@
     {
       "id": "E417-WIZARD-001",
       "severity": "P1",
-      "status": "operator_file_intake_code_tested_actual_large_operator_route_pending",
+      "status": "fixed_operator_file_intake_and_real_large_cli_native_core_restore_held_independently_verified",
       "cause": "Existing browser and API restore intake are limited to64MiB, below the actual installation archive size.",
       "reproduction": "Current intake helper with declared2193741502-byte request returns413 before body buffering; route separately checks decoded length64MiB.",
       "impact": "Transport-only2GiB policy cannot make the real wizard large-package prepare route usable.",
-      "repairBoundary": "Use a bounded trusted installation intake and preserve ordinary default; verify actual prepareroute and memory/disk behavior."
+      "repairBoundary": "Use a bounded trusted installation intake and preserve ordinary default; verify actual prepareroute and memory/disk behavior.",
+      "actualOperatorResolution": {
+        "operatorReceiptSha256": "6680db8f31190abe9b3b0055fff358c3681c2bbca972e03529549f40eea8988b",
+        "executionId": "exec-f0de3082-2ae3-427f-b6e8-70e653cb9c70",
+        "independentReadbackMarkerSha256": "9b2f1d09808f3faf8c013b91607a29af09d226b5c841766ff2fd802fead78b0b",
+        "scope": "Original configured file route, exact isolated target, no host/full E417 closure."
+      }
     },
     {
       "id": "E417-INPUT-001",
@@ -1352,6 +1832,84 @@
       "transportSha256": "ea9b8a0ce11348ddfea17ae3faa5e58efca92bea5de70a509e4ed90fa0725706",
       "toolSeconds": 4.5080515,
       "repairBoundary": "Count decoded metadata using a consistent byte encoding and retest this single boundary; preserve legitimate writer Unicode compatibility. No product edits by reviewer."
+    },
+    {
+      "id": "E417-INTEGRATION-001",
+      "severity": "P2",
+      "status": "fixed_in_private_v2_candidate_original_reproducer_and_changed_boundary_cases_passed",
+      "title": "Host destination disjointness compares protected paths lexically and admits a physically nested target through an absolute dotdot object path",
+      "scope": "private workflow integration candidate, not actual unchanged V3 or a production regression",
+      "candidateFreezeSha256": "f9f5d2c256bb53e2ba10b884997503855f72962e33cbc2a2864a85771c9ada3e",
+      "candidateSourceSha256": "1b1667712c4c91f201f2dc10ee3658e564adb42d87c3b3eba26eeb280490cd28",
+      "sourcePath": "candidate/src/tools/installer_portable_restore.py",
+      "sourceLine": 165,
+      "cause": "Host target is canonicalized but recovery materialization/workspace/object-store/identity protected paths are compared without canonicalization. The configured wizard only requires absolute workspace/object paths, which admits dotdot.",
+      "reproduction": {
+        "syntheticOnly": true,
+        "setup": "Private temporary root with work/, objects/ and placeholder/ directories; host destination ROOT/objects/host; other targets disjoint; constructor only with engine=None and ordinary no-op trusted guard.",
+        "control": "object_store_root=ROOT/objects -> ValueError disjoint absent private destination",
+        "failingCase": "object_store_root=ROOT/placeholder/../objects -> accepted; protected.resolve() is a parent of the absolute host target",
+        "targetCreated": false,
+        "databaseCalls": 0,
+        "runtimeServicesStarted": 0,
+        "toolWallSeconds": 2.3655265
+      },
+      "impact": "The new opt-in configuration boundary does not enforce its promised physical separation from the object store. This reproduction proves configuration admission only; downstream data mutation or corruption is not claimed.",
+      "expected": "Reject noncanonical protected target roots or compare resolved physical protected roots before admitting the host target; preserve existing private/no-follow/nooverwrite rules.",
+      "repairOwner": "coordinator to assign; reviewer makes no product changes",
+      "recordedAt": "2026-10-23T22:56:58.810100+00:00",
+      "resolution": {
+        "reviewedAt": "2026-10-23T23:01:54.841916+00:00",
+        "verdict": "GO_SCOPED_PRIVATE_HOST_WORKFLOW_INTEGRATION_CODE",
+        "sourceFreezeSha256": "3c62b3eda8734db1e71f4c454f7b2091be0824ac411459449d5ae23de1a7cc04",
+        "patchSha256": "a22fa9ec0be7c2ca9b4f36cc8533799869c7a6729b0900a063d547f5c07fe5ae",
+        "sourceFiles": {
+          "src/tools/installer_portable_restore.py": {
+            "candidateSha256": "d54ab386af275a15c22c52df757e2225f241299fc4638f950e7b8883a478a211",
+            "originalSha256": "a4de2318d62bcdbf3e3115da07eeea89aa1add98f80463589fd1c12631842cc8"
+          },
+          "src/tools/installer_restore_wizard.py": {
+            "candidateSha256": "37e08816f716cf9eb73f6fe9ca5e05f6404bf48a4ef94e0bb49aa2473baa3af0",
+            "originalSha256": "403a6edb3b15b0a44c60b5a4006ee1251b85fad5f3006369f4d0934090b14a93"
+          }
+        },
+        "changedSourceFromV1": "Only four lines added inside host opt-in before the existing destination admission: reject any protected root that is not absolute or differs from resolve(). Wizard unchanged from V1.",
+        "priorNineTestSourceBytesExactlyPreserved": true,
+        "independentTests": {
+          "targetedCasesPassed": 4,
+          "skipped": 0,
+          "pytestSeconds": 3.46,
+          "commandSeconds": 4.906925,
+          "ordinaryConstructorCasesPassed": 9,
+          "constructorSeconds": 0.004761,
+          "cases": [
+            "canonical disjoint accepted",
+            "canonical nested control rejected",
+            "original objects-dotdot reproduction rejected",
+            "objects parent symlink rejected",
+            "host dotdot rejected",
+            "host parent symlink rejected",
+            "workspace dotdot rejected",
+            "materialized package dotdot rejected",
+            "default without host still accepts prior object-dotdot setting"
+          ],
+          "databaseCalls": 0,
+          "sdkImportsOrInference": 0,
+          "servicesStarted": 0,
+          "targetDirectoriesPublished": 0,
+          "ninePriorPostgresTestsNotRepeated": true
+        },
+        "originalFindingNowRejected": true,
+        "exactV2PatchReconstructedFromPrivateBeforeAndAfter": true,
+        "currentV3AndHostFreezeStillUnchanged": true,
+        "functionalStartAdmitted": false,
+        "limits": [
+          "GO only for reviewed private integration code; production integration is coordinator-owned.",
+          "Existing nine independent PG routing/rollback/replay/default results are reused; no new actual Docker-lineage proof.",
+          "Full complete authenticated final package and full host adapter invocation, physically resolved base+overlays+supplements, ABI/tokens/target configs and actual original host function remain open."
+        ]
+      }
     }
-  ]
+  ],
+  "fullE417Accepted": false
 }
