@@ -70,6 +70,9 @@ class HomeAssistantProviderSettings:
     vision_endpoint: str = ""
     vision_model: str = ""
     vision_revision: str = ""
+    face_endpoint: str = ""
+    face_revision: str = ""
+    face_credential: str = field(default="", repr=False)
 
 
 def home_assistant_read_configuration_sha256(endpoint_url: str) -> str:
@@ -192,6 +195,14 @@ class HomeAssistantProviderFactory:
             if effects_enabled or effect_allowlist or principals:
                 raise RuntimeError("Eva external tool provider configuration is incomplete")
             return None
+        face_endpoint, face_revision = _value("EVA_LOCAL_FACE_URL"), _value("EVA_LOCAL_FACE_REVISION")
+        face_credential = ""
+        if face_endpoint:
+            if "EVA_LOCAL_FACE_TOKEN" in os.environ:
+                raise RuntimeError("Use EVA_LOCAL_FACE_TOKEN_FILE for the local face credential")
+            face_credential = environment_secret("EVA_LOCAL_FACE_TOKEN", "EVA_LOCAL_FACE_TOKEN_FILE").strip()
+            from eva.adapters.connectors.local_face_identity import LocalFaceIdentityHttpAnalyzer
+            LocalFaceIdentityHttpAnalyzer(endpoint=face_endpoint, token=face_credential, revision=face_revision)
         return HomeAssistantProviderSettings(
             endpoint_url=endpoint,
             credential=credential,
@@ -203,6 +214,7 @@ class HomeAssistantProviderFactory:
             vision_endpoint=vision_values[0],
             vision_model=vision_values[1],
             vision_revision=vision_values[2],
+            face_endpoint=face_endpoint, face_revision=face_revision, face_credential=face_credential,
         )
 
     @staticmethod
@@ -344,12 +356,23 @@ class HomeAssistantProviderFactory:
             vision = (LocalVisionHttpAnalyzer(endpoint=settings.vision_endpoint,
                       model=settings.vision_model, revision=settings.vision_revision)
                       if settings.vision_endpoint else None)
-            api = HomeAssistantApiTool(base_url=settings.endpoint_url, token=settings.credential, vision=vision, capability_profile=capability_profile)
+            faces = None
+            if settings.face_endpoint:
+                from eva.adapters.connectors.local_face_identity import LocalFaceIdentityHttpAnalyzer
+                faces = LocalFaceIdentityHttpAnalyzer(endpoint=settings.face_endpoint,
+                    token=settings.face_credential, revision=settings.face_revision)
+            api = HomeAssistantApiTool(base_url=settings.endpoint_url, token=settings.credential,
+                vision=vision, faces=faces, capability_profile=capability_profile)
             api_configuration = home_assistant_read_configuration_sha256(settings.endpoint_url)
             if vision is not None:
                 api_configuration = canonical_sha256({"home_assistant": api_configuration,
                     "vision_endpoint": settings.vision_endpoint, "vision_model": settings.vision_model,
                     "vision_revision": settings.vision_revision})
+
+            if faces is not None:
+                api_configuration = canonical_sha256({"camera_api": api_configuration,
+                    "face_endpoint": settings.face_endpoint, "face_revision": settings.face_revision,
+                    "face_credential_sha256": hashlib.sha256(settings.face_credential.encode()).hexdigest()})
 
             def authorize_api(turn):
                 from eva.application.initiative_execution import require_initiative_context

@@ -38,6 +38,22 @@ read-only; the matcher and recognition backend are separate from its data format
 An installation without confirmed reference profiles cannot recognize names.
 This module never enrolls a person from an unverified guess.
 
+## On-demand use through the existing HA module
+
+The authorized `home_assistant_request` camera GET can use the same configured local
+face analyzer. It retrieves one image and returns separate scene and recognition
+availability. A missing scene service does not hide a successful CPU face result;
+recognition candidates never grant identity or memory access. No enrollment or GPU
+startup is performed. Cancellation is checked before and after local face analysis.
+
+For a delegated worker to use this module, explicitly provide the same local face
+URL, backend revision and token-file setting to that role. Mount only the existing
+runtime token file, read-only, with the role's existing private-file ownership rules.
+Do not mount the profile database or expose credentials in tool arguments. The
+provider configuration binds endpoint, revision and credential hash; existing
+requests keep their original bindings and cannot be silently upgraded or replayed.
+Observer enablement and ordinary camera access remain separate choices.
+
 ## Evidence and limits
 
 Only bounded image provenance, analysis time, optional scene interpretation and

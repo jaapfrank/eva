@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-23T14:55:53.629056+00:00",
+  "lastUpdated": "2026-10-23T15:08:10.714687+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E4.15",
@@ -847,7 +847,7 @@
     "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
     "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "Volg dezelfde hervatte cameraopdracht tot bruikbaar resultaat; verklaar model-/toolfouten uit echte diagnose, hergebruik bestaande voorzieningen en maak alleen ontbrekende uitvoering mogelijk. Geef de echte externe uitbreiding aan E4.17 voor geïsoleerd herstel door.",
+    "nextAction": "Volg dezelfde cameraopdracht via de nieuwe moduletoegang naar geverifieerde herkenningsobservatie en een werkelijk bruikbare losse begroetingsvoorziening; behoud oude receipts en geef de echte uitbreiding aan E4.17 voor herstel door.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2992,7 +2992,7 @@
         "now": {
           "taskId": "E4.15",
           "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-          "summary": "Broninzage nu werkelijk gebruikt: vijf geverifieerde lezingen van bestaande modules, plus programmeertoolgebruik. Optionele velden en ontbrekende bronpaden hersteld; vier afwezige werkerbronnen exact uit huidige kern overgenomen. 37 controles en review groen. Latere modelafbreking blijft behouden; bewezen SDK-contextverlies gericht afgevangen met vroege inhoudsvrije foutdiagnose, 73 controles en review groen, geïnstalleerd. CPU-analyse werkt lokaal; gewone werkopdracht mist nog de toegang tot die bestaande analyzer. Geen werkende uitbreiding of E4.15-afronding geclaimd.",
+          "summary": "Eva heeft bestaande cameramodules zelf gelezen en de ontbrekende beheerde uitvoerinterface concreet vastgelegd. Die algemene modulekoppeling is gebouwd, onafhankelijk beoordeeld en geïnstalleerd: dezelfde HA-camera-aanvraag kan nu de bestaande CPU-facebridge gebruiken. 74 gerichte controles groen; worker krijgt uitsluitend bestaand tokenbestand read-only en drie instellingen. Echte geïnstalleerde workerprovider verwerkt een beeld in 2,647 seconden, nul gezichten; GPU blijft uit. Zelfde opdracht hervat voor eigen controle en ontbrekende losse begroetingsvoorziening. Nog geen positieve herkenning, begroeting of E4.15-afronding.",
           "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform."
         },
         "next": {
@@ -8016,7 +8016,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Volg dezelfde hervatte cameraopdracht tot bruikbaar resultaat; verklaar model-/toolfouten uit echte diagnose, hergebruik bestaande voorzieningen en maak alleen ontbrekende uitvoering mogelijk. Geef de echte externe uitbreiding aan E4.17 voor geïsoleerd herstel door.",
+                "nextAction": "Volg dezelfde cameraopdracht via de nieuwe moduletoegang naar geverifieerde herkenningsobservatie en een werkelijk bruikbare losse begroetingsvoorziening; behoud oude receipts en geef de echte uitbreiding aan E4.17 voor herstel door.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -8039,8 +8039,8 @@
                   "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-23T14:55:53.629056+00:00",
-                "progress": "Broninzage nu werkelijk gebruikt: vijf geverifieerde lezingen van bestaande modules, plus programmeertoolgebruik. Optionele velden en ontbrekende bronpaden hersteld; vier afwezige werkerbronnen exact uit huidige kern overgenomen. 37 controles en review groen. Latere modelafbreking blijft behouden; bewezen SDK-contextverlies gericht afgevangen met vroege inhoudsvrije foutdiagnose, 73 controles en review groen, geïnstalleerd. CPU-analyse werkt lokaal; gewone werkopdracht mist nog de toegang tot die bestaande analyzer. Geen werkende uitbreiding of E4.15-afronding geclaimd.",
+                "checkedAt": "2026-10-23T15:08:10.714687+00:00",
+                "progress": "Eva heeft bestaande cameramodules zelf gelezen en de ontbrekende beheerde uitvoerinterface concreet vastgelegd. Die algemene modulekoppeling is gebouwd, onafhankelijk beoordeeld en geïnstalleerd: dezelfde HA-camera-aanvraag kan nu de bestaande CPU-facebridge gebruiken. 74 gerichte controles groen; worker krijgt uitsluitend bestaand tokenbestand read-only en drie instellingen. Echte geïnstalleerde workerprovider verwerkt een beeld in 2,647 seconden, nul gezichten; GPU blijft uit. Zelfde opdracht hervat voor eigen controle en ontbrekende losse begroetingsvoorziening. Nog geen positieve herkenning, begroeting of E4.15-afronding.",
                 "evidence": "development/evidence/product/e415-installed-route-20261023.json"
               },
               {
@@ -8703,7 +8703,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Volg dezelfde hervatte cameraopdracht tot bruikbaar resultaat; verklaar model-/toolfouten uit echte diagnose, hergebruik bestaande voorzieningen en maak alleen ontbrekende uitvoering mogelijk. Geef de echte externe uitbreiding aan E4.17 voor geïsoleerd herstel door.",
+        "nextAction": "Volg dezelfde cameraopdracht via de nieuwe moduletoegang naar geverifieerde herkenningsobservatie en een werkelijk bruikbare losse begroetingsvoorziening; behoud oude receipts en geef de echte uitbreiding aan E4.17 voor herstel door.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -8714,7 +8714,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-23T14:55:53.629056+00:00",
+        "updatedAt": "2026-10-23T15:08:10.714687+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -13967,7 +13967,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Volg dezelfde hervatte cameraopdracht tot bruikbaar resultaat; verklaar model-/toolfouten uit echte diagnose, hergebruik bestaande voorzieningen en maak alleen ontbrekende uitvoering mogelijk. Geef de echte externe uitbreiding aan E4.17 voor geïsoleerd herstel door.",
+              "nextAction": "Volg dezelfde cameraopdracht via de nieuwe moduletoegang naar geverifieerde herkenningsobservatie en een werkelijk bruikbare losse begroetingsvoorziening; behoud oude receipts en geef de echte uitbreiding aan E4.17 voor herstel door.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -13990,8 +13990,8 @@
                 "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-23T14:55:53.629056+00:00",
-              "progress": "Broninzage nu werkelijk gebruikt: vijf geverifieerde lezingen van bestaande modules, plus programmeertoolgebruik. Optionele velden en ontbrekende bronpaden hersteld; vier afwezige werkerbronnen exact uit huidige kern overgenomen. 37 controles en review groen. Latere modelafbreking blijft behouden; bewezen SDK-contextverlies gericht afgevangen met vroege inhoudsvrije foutdiagnose, 73 controles en review groen, geïnstalleerd. CPU-analyse werkt lokaal; gewone werkopdracht mist nog de toegang tot die bestaande analyzer. Geen werkende uitbreiding of E4.15-afronding geclaimd.",
+              "checkedAt": "2026-10-23T15:08:10.714687+00:00",
+              "progress": "Eva heeft bestaande cameramodules zelf gelezen en de ontbrekende beheerde uitvoerinterface concreet vastgelegd. Die algemene modulekoppeling is gebouwd, onafhankelijk beoordeeld en geïnstalleerd: dezelfde HA-camera-aanvraag kan nu de bestaande CPU-facebridge gebruiken. 74 gerichte controles groen; worker krijgt uitsluitend bestaand tokenbestand read-only en drie instellingen. Echte geïnstalleerde workerprovider verwerkt een beeld in 2,647 seconden, nul gezichten; GPU blijft uit. Zelfde opdracht hervat voor eigen controle en ontbrekende losse begroetingsvoorziening. Nog geen positieve herkenning, begroeting of E4.15-afronding.",
               "evidence": "development/evidence/product/e415-installed-route-20261023.json"
             },
             {
@@ -14654,7 +14654,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Volg dezelfde hervatte cameraopdracht tot bruikbaar resultaat; verklaar model-/toolfouten uit echte diagnose, hergebruik bestaande voorzieningen en maak alleen ontbrekende uitvoering mogelijk. Geef de echte externe uitbreiding aan E4.17 voor geïsoleerd herstel door.",
+      "nextAction": "Volg dezelfde cameraopdracht via de nieuwe moduletoegang naar geverifieerde herkenningsobservatie en een werkelijk bruikbare losse begroetingsvoorziening; behoud oude receipts en geef de echte uitbreiding aan E4.17 voor herstel door.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14665,7 +14665,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-23T14:55:53.629056+00:00",
+      "updatedAt": "2026-10-23T15:08:10.714687+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",

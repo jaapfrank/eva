@@ -62,11 +62,12 @@ class HomeAssistantApiTool:
             "be discovered through the ordinary API. This metadata grants no authority.",)
 
 
-    def __init__(self, *, base_url, token, vision=None, capability_profile=None):
+    def __init__(self, *, base_url, token, vision=None, faces=None, capability_profile=None):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self.admin = HomeAssistantAdminAdapter(base_url=base_url, token=token)
         self.vision = vision
+        self.faces = faces
         self.capability_profile = capability_profile
 
     @staticmethod
@@ -74,7 +75,7 @@ class HomeAssistantApiTool:
         return (ConversationToolDescriptor(
             name=_ACTION,
             description=(
-                'Voor verplichte response-services: kies direct de service-POST met target_query=\'*\' en bekende velden; de module vindt het unieke doel en controleert het schema. Voorbeeld: weather/get_forecasts, body_json={"type":"daily"}. Gebruik voor gewoon aan/uit-bedienen bij voorkeur de aangeboden set_home_assistant_light of set_home_assistant_switch: die combineren doelresolutie, toegestane uitvoering en onafhankelijke eindcontrole. Daarvoor zijn geen losse inventaris-, service- en statusrondes nodig. Deze algemene API blijft beschikbaar voor andere bedieningen en bronvragen. Gebruik de echte Home Assistant REST- of WebSocket-API. Ontdek alleen ontbrekende doelentiteiten of onbekende servicevelden. Gebruik voldoende actuele, brongebonden informatie uit deze beurt opnieuw; een bekende service met bekende velden vereist geen volledige servicecatalogus. Kies de passende API en parameters voor de gebruikersvraag. Geen vaste lijst apparaattypen of automatiseringssjablonen. REST: GET /api/services, GET /api/states, GET /api/states/<entity_id>, POST /api/services/<domain>/<service>. Automatiseringsconfiguratie: GET/POST /api/config/automation/config/<id>; lees bestaande inhoud voor wijzigingen, behoud niet-gevraagde instellingen en lees daarna terug. WebSocket: body_json bevat een command met type, bijvoorbeeld get_services, config/area_registry/list of config/entity_registry/list. Gebruik levende API-resultaten/documentatie; verzin geen apparaatnamen of schema\'s. Gebruik read_home_assistant_inventory als die beschikbaar is voor compacte ontdekking per sectie; haal niet eerst alle /api/states op voor één onderwerp. Voor meerdere volledige automatiseringsconfiguraties gebruik je de sectie automation_configurations van die inventaris; deze API blijft voor andere gerichte leesaanvragen en wijzigingen beschikbaar. For REST service calls that return data, include ?return_response and read service_response; omit that parameter for services without response data. The REST body contains service fields and entity_id directly, not a WebSocket command envelope. Use known service fields; if unknown, inspect the relevant service definition rather than guessing fields or template functions. For one unknown service schema, use transport=websocket, method=GET, path empty, body_json={"type":"get_services"}, and response_pointer /<domain>/<service> to receive only that definition, rather than GET /api/services with its full catalog. When current source evidence proves a group already includes the requested members, target the group or those members once, not both; never infer group membership from names alone. Een API-antwoord bewijst geen fysiek resultaat. Controleer veranderingen met een aparte leesaanvraag. Lang werk kan via start_digital_work doorgaan. response_pointer is een JSON Pointer om in een groot antwoord te kijken; offset/limit pagineren arrays of objectvelden. Leeg pointer toont de root. GET /api/camera_proxy/<camera.entity> kan bij geïnstalleerde lokale beeldanalyse een beschrijving geven. Ontdek de camera in de inventaris; een beeldinterpretatie is geen geverifieerd feit. Zonder beeldmodule meldt de API dat beeldanalyse niet beschikbaar is.'
+                'Voor verplichte response-services: kies direct de service-POST met target_query=\'*\' en bekende velden; de module vindt het unieke doel en controleert het schema. Voorbeeld: weather/get_forecasts, body_json={"type":"daily"}. Gebruik voor gewoon aan/uit-bedienen bij voorkeur de aangeboden set_home_assistant_light of set_home_assistant_switch: die combineren doelresolutie, toegestane uitvoering en onafhankelijke eindcontrole. Daarvoor zijn geen losse inventaris-, service- en statusrondes nodig. Deze algemene API blijft beschikbaar voor andere bedieningen en bronvragen. Gebruik de echte Home Assistant REST- of WebSocket-API. Ontdek alleen ontbrekende doelentiteiten of onbekende servicevelden. Gebruik voldoende actuele, brongebonden informatie uit deze beurt opnieuw; een bekende service met bekende velden vereist geen volledige servicecatalogus. Kies de passende API en parameters voor de gebruikersvraag. Geen vaste lijst apparaattypen of automatiseringssjablonen. REST: GET /api/services, GET /api/states, GET /api/states/<entity_id>, POST /api/services/<domain>/<service>. Automatiseringsconfiguratie: GET/POST /api/config/automation/config/<id>; lees bestaande inhoud voor wijzigingen, behoud niet-gevraagde instellingen en lees daarna terug. WebSocket: body_json bevat een command met type, bijvoorbeeld get_services, config/area_registry/list of config/entity_registry/list. Gebruik levende API-resultaten/documentatie; verzin geen apparaatnamen of schema\'s. Gebruik read_home_assistant_inventory als die beschikbaar is voor compacte ontdekking per sectie; haal niet eerst alle /api/states op voor één onderwerp. Voor meerdere volledige automatiseringsconfiguraties gebruik je de sectie automation_configurations van die inventaris; deze API blijft voor andere gerichte leesaanvragen en wijzigingen beschikbaar. For REST service calls that return data, include ?return_response and read service_response; omit that parameter for services without response data. The REST body contains service fields and entity_id directly, not a WebSocket command envelope. Use known service fields; if unknown, inspect the relevant service definition rather than guessing fields or template functions. For one unknown service schema, use transport=websocket, method=GET, path empty, body_json={"type":"get_services"}, and response_pointer /<domain>/<service> to receive only that definition, rather than GET /api/services with its full catalog. When current source evidence proves a group already includes the requested members, target the group or those members once, not both; never infer group membership from names alone. Een API-antwoord bewijst geen fysiek resultaat. Controleer veranderingen met een aparte leesaanvraag. Lang werk kan via start_digital_work doorgaan. response_pointer is een JSON Pointer om in een groot antwoord te kijken; offset/limit pagineren arrays of objectvelden. Leeg pointer toont de root. GET /api/camera_proxy/<camera.entity> kan bestaande lokale beeldanalyse en ingeschreven gezichtsprofielen gebruiken. recognition bevat uitsluitend herkenningskandidaten, geen authenticatie; onbekend blijft onbekend. scene_error en recognition_error maken ontbrekende analyse afzonderlijk zichtbaar. Geen nieuwe inschrijving of GPU-start. Ontdek de camera in de inventaris; een beeldinterpretatie is geen geverifieerd feit. Zonder beeldmodule meldt de API dat beeldanalyse niet beschikbaar is.'
             ),
             input_schema={"type": "object", "additionalProperties": False,
                 "properties": {
@@ -171,7 +172,7 @@ class HomeAssistantApiTool:
         return ConversationToolPreparation(
             tool_name="home_assistant.api.request", arguments=args, expected_proof={},
             receipt_output={"operation_kind": "invoke", "external_state_verified": False},
-            observation_output_key="result", execution_timeout_seconds=45 if self.vision and camera_get else 25,
+            observation_output_key="result", execution_timeout_seconds=45 if (self.vision or self.faces) and camera_get else 25,
             verification_timeout_seconds=10,
         )
 
@@ -237,6 +238,27 @@ class HomeAssistantApiTool:
                                     "analysis_available": False,
                                     "guidance": "The camera returned an image, but its configured local analyzer is unavailable. Repeating the same camera read does not restore that analyzer. Check the existing analyzer configuration/service; no scene or identity was established."}
                                 status["success"] = False
+                        if (self.faces is not None and 200 <= response.status_code < 300
+                                and a["method"] == "GET" and match
+                                and media_type in {"image/jpeg", "image/png", "image/webp"}):
+                            snapshot = CameraSnapshot(match[1], media_type, raw, datetime.now(UTC))
+                            scene_ok = status["success"]
+                            combined = {"image_sha256": snapshot.sha256,
+                                "image_received": True, "identity_is_not_authentication": True,
+                                "scene_available": scene_ok, "recognition_available": False}
+                            combined["scene" if scene_ok else "scene_error"] = value if scene_ok else value.get("error")
+                            check_capture_authority()
+                            if deadline is not None: check_deadline(deadline)
+                            try:
+                                combined["recognition"] = self.faces.analyze(snapshot)
+                                combined["recognition_available"] = True
+                                status["success"] = True
+                            except (httpx.TimeoutException, httpx.ConnectError) as error:
+                                combined["recognition_error"] = ("local_face_timeout" if isinstance(error, httpx.TimeoutException)
+                                                                 else "local_face_unreachable")
+                            check_capture_authority()
+                            if deadline is not None: check_deadline(deadline)
+                            value = combined
                     else:
                         try:
                             value = json.loads(raw) if raw else None

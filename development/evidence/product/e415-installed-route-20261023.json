@@ -1,6 +1,6 @@
 {
   "task": "E4.15",
-  "checkedAt": "2026-10-23T14:55:53.559668+00:00",
+  "checkedAt": "2026-10-23T15:08:10.676511+00:00",
   "status": "in_progress",
   "route": "ordinary installed dashboard conversation -> start_digital_work -> existing delegated worker",
   "ownerRequest": "Previously authorized camera/recognition/greeting acceptance, explicitly relayed by Codex; not spontaneous discovery.",
@@ -65,7 +65,7 @@
     "profileComparison": "Shared provider, digital work and private research match; pre-existing household_research mismatch remains.",
     "limit": "Actual installed adapter read; does not prove complete worker recovery or recognition/greeting."
   },
-  "nextAction": "Follow current preserved work with origin diagnostics; provide bounded access to existing local analysis rather than rebuild recognition or greeting logic in core.",
+  "nextAction": "Follow same camera work through fresh authorized API observation and actual separate greeting provision; no positive person recognition or completed artifact yet.",
   "sourceReadRepair": {
     "previousOutcome": "ambiguous/internal_error after one model response and one tool dispatch",
     "exactFingerprintMatched": "ConversationConflict:resource selection requires a saved skill package",
@@ -117,5 +117,36 @@
     "coreImage": "sha256:149a454b08e9ebe36f234434c4817be1498ecbf594d6832e8b603c2d9cff42be",
     "workerImage": "sha256:42a71a4ac55120eda08d4e060b782145441433d34d9370f4499a4f6663590126",
     "limit": "Diagnosis preservation, not yet a fix for the terminal provider error. No request ID in origin record; time proximity alone is insufficient correlation."
+  },
+  "runtimeInterfaceGap": {
+    "discoveredBy": "Eva recorded the missing runtime invocation with managed authentication in its preserved progress revision 3; independently confirmed by source review.",
+    "implemented": "Existing HA camera request reaches configured local face analyzer; same image, candidate-only identity, independent scene availability, cancellation before and after.",
+    "scope": "General optional module transfer, not Codex-written greeting application.",
+    "testsPassed": 74,
+    "testEnvironment": "23 provider tests require SQLite test dependency; mounted only in disposable test container, not production.",
+    "independentReview": "review_cursor conditional GO; conditions verified at installation",
+    "coreImage": "sha256:cf7652627bcb239669ac597c2e9b4db10f987c5a9cad438dde2a387ca62dbe64",
+    "workerImage": "sha256:ce07df4e48d8c81247865460dd80f4493793589c2c03e6c2acd8840813e4dda6",
+    "workerModuleBinding": {
+      "newReadOnlyTokenFiles": 1,
+      "environmentKeys": [
+        "EVA_LOCAL_FACE_URL",
+        "EVA_LOCAL_FACE_REVISION",
+        "EVA_LOCAL_FACE_TOKEN_FILE"
+      ],
+      "existingMountsAndEnvironmentPreserved": true,
+      "credentialsInToolArguments": false
+    },
+    "liveRegisteredWorkerProvider": {
+      "seconds": 2.647,
+      "success": true,
+      "recognitionAvailable": true,
+      "facesFound": 0,
+      "sceneAvailable": false,
+      "sceneError": "local_vision_unreachable",
+      "pixelsPersisted": false
+    },
+    "profiles": "Shared provider, private research and digital work match; pre-existing household_research mismatch unchanged.",
+    "oldRequests": "Original receipts/configuration fences retained, no hash backfill or replay."
   }
 }
