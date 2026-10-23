@@ -168,9 +168,50 @@
       "firstWorkerPhaseInputTokens": 47646,
       "firstWorkerPhaseMilliseconds": 17495,
       "preservedReceiptCount": 55,
-      "scope": "New installed route admitted and used; not completed task or proven overall speedup"
+      "scope": "New installed route admitted and used; not completed task or proven overall speedup",
+      "finalStatus": "ambiguous/internal_error",
+      "usage": {
+        "measurement": "partial",
+        "modelResponses": 7,
+        "toolCalls": 6,
+        "inputTokens": 353631,
+        "outputTokens": 2198
+      }
     },
     "profiles": "Digital work, shared provider and private research match. Existing household_research mismatch unchanged.",
     "remaining": "V2 authored by Eva has 12 own passing synthetic tests; independently unapproved and not runtime-bound. No real positive recognition or delivered greeting."
+  },
+  "procedureReadbackRepair": {
+    "cause": "Exact live fingerprint matches ConversationConflict:procedure_arguments.resource_path text length is invalid. Verified save and designation preceded failed resolve with empty optional resource_path and default offset.",
+    "change": "Resolve local view omits empty/null unused selector and default offset. Original admission and call are unchanged; nondefault offsets without resource remain invalid. No change to saves, designation, execution, authority or source validation.",
+    "testsPassed": 63,
+    "independentReview": "review_cursor GO",
+    "coreImage": "sha256:89d1f772f877681da8d6abf342293becd79e6f891c306f97ffa2d9782680e01c",
+    "workerImage": "sha256:2dcd30e27cd91dfbd1be6b03e8d9057219f65a95bb1433279713da193b39475e",
+    "profiles": "Shared provider, digital work and private research match; pre-existing household_research mismatch remains.",
+    "liveVerification": {
+      "status": "resolved",
+      "originalAdmissionRetained": true,
+      "originalEmptySelectorAndDefaultOffsetRetained": true,
+      "completionResultHashMatchesExactSourceAndReference": true,
+      "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+      "sourceBytes": 4686,
+      "progressRevision": 5,
+      "laterModelFailure": "HTTP 503; not repaired by selector normalization",
+      "operatorProbe": "Separate readback without active job guard correctly denied; actual worker then performed original pending read under its normal guard."
+    }
+  },
+  "nextIntegrationBoundary": {
+    "status": "not_built",
+    "candidateReview": "review_cursor GO to retain inactive candidate only",
+    "required": "Connect exact independently reviewed standalone source to current validated household observation and existing attention/STOP/durable delivery. No second scheduler or direct audio capability.",
+    "candidateConstraints": [
+      "Current propose(event,binding,now) module is not a JSON-stdin procedure.",
+      "Host must validate actual observation and construct authorized binding, not trust matching untrusted dicts.",
+      "captured_at=None remains unknown capture freshness.",
+      "Float expires_at_epoch needs an explicit compatible receipt boundary.",
+      "delivery_key alone provides no durable deduplication or delivery proof."
+    ],
+    "executionCorrection": "Do not repeatedly resume full model-driven development to discover missing host interfaces. Establish and test the concrete transfer before another full live acceptance."
   }
 }

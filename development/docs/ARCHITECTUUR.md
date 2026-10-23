@@ -318,6 +318,21 @@ uitbreidingen via bestaande provider-, module- en procedureinterfaces. De kern b
 algemene uitvoering en persoon/geheugen, geen nieuwe camera- of gezinsregel per opdracht.
 Een ontbrekende algemene interface wordt afzonderlijk gemotiveerd en beoordeeld.
 
+De huidige procedure-route kan een opgeslagen Python-bestand of skill-pakket
+registreren, teruglezen en met expliciete JSON-invoer geïsoleerd uitvoeren.
+`ProcedureReferenceActions` en de bestaande procedure-uitvoerder verzorgen dit;
+een geregistreerd pakket is daardoor nog geen actieve eventhandler. De automatische
+binding van zo'n pakket aan de huishoudelijke observatieroute ontbreekt nog.
+E4.15 moet die overdracht verbinden met bestaande bronvalidatie, actuele toestemming,
+STOP, aandacht en duurzame aflevering. Pakketuitvoer blijft voorsteldata en krijgt
+geen eigen spreekbevoegdheid, scheduler of directe toegang tot geheimen.
+
+Bij langlopend digitaal werk mogen exacte historische broncodelezingen vóór een
+bewaarde voortgang via het bestaande geautoriseerde contextarchief worden teruggelezen.
+Dat verkleint de herhaalde modelinvoer zonder oorspronkelijke receipts te herschrijven.
+Actuele artefacten, nieuwe lezingen en fouten blijven in de lopende context; een oude
+bronpagina is geen bewijs van de huidige installatie.
+
 Het uitbreidingspakket bevat identiteit/versie, broncode, afhankelijkheden,
 compatibiliteit, configuratieschema, gevraagde mogelijkheden en eigen gegevensschema.
 De bestaande modulelevenscyclus bezit activering en versiebeheer; de bestaande
@@ -582,6 +597,10 @@ staan in E4.6–E4.10 en E5.2 op het bestaande werkbord.
 De bestaande HA-camera-adapter haalt een beeld op; lokale beeldbeschrijving en
 gezichtsherkenning zijn afzonderlijke optionele analysemogelijkheden. De bestaande
 camera-observer kan CPU-gezichtsherkenning gebruiken zonder werkende beeldbeschrijver.
+De gewone HA-camera-aanvraag kan nu dezelfde bestaande CPU-facebridge gebruiken;
+de module krijgt daarvoor haar eigen endpoint, revisie en read-only tokenbestand.
+Beeldontvangst, scène-analyse en herkenningsanalyse rapporteren afzonderlijk hun
+beschikbaarheid. De token komt niet in modelargumenten of de programmeerwerkruimte.
 Een draaiende bridge bewijst nog geen correcte herkenning of werkende begroeting.
 Identiteitskandidaten vereisen bestaande bevestigde profielen; onbekend blijft onbekend.
 De bestaande aandacht- en afleverroutes bepalen of een uiting past en toegestaan is.

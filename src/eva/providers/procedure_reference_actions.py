@@ -474,12 +474,23 @@ class ProcedureReferenceActions:
         descriptor = next((item for item in self.conversation_tools(self.executor) if item.name == call.name), None)
         if descriptor is None:
             raise ConversationConflict("procedure action is unknown")
-        validate_schema_value(call.arguments, descriptor.input_schema, "procedure_arguments")
+        # Strict model schemas can materialize unused optional selectors. Keep
+        # the admitted call intact; only the read's local view treats empty/null
+        # resource selection with its default offset as an omitted selector.
+        args = dict(call.arguments)
+        if call.name == _NAMES[2]:
+            if args.get("resource_path") in (None, ""):
+                args.pop("resource_path", None)
+                if args.get("resource_offset") is None or type(args.get("resource_offset")) is int and args["resource_offset"] == 0:
+                    args.pop("resource_offset", None)
+            elif args.get("resource_offset", 0) is None:
+                args.pop("resource_offset")
+        validate_schema_value(args, descriptor.input_schema, "procedure_arguments")
         host = self._host(turn)
         store = PostgresMemoryOutbox(self.engine, tenant_id=turn.tenant_id, installation_id=turn.installation_id)
         service = ProcedureReferences(_AuthorizedProcedureSources(store, host, turn), host)
         scope = ProcedureScope(turn.tenant_id, turn.installation_id, turn.principal_id, turn.project_id)
-        args, now = call.arguments, self.clock()
+        now = self.clock()
         if call.name == _NAMES[0] and set(args) == {"document_path", "use_when", "retention_until"}:
             source_call_id = host.current_save_call_id(scope, args["document_path"])
             source = host.load_save(scope, source_call_id)
