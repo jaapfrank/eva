@@ -1,10 +1,17 @@
 # Eva2 — gedeelde kern en vervangbare mogelijkheden
 
-Architectuurafspraak, 15 oktober 2026. De huidige Pythonbasis is het vertrekpunt;
+Architectuurafspraak, bijgewerkt op 23 oktober 2026. De huidige Pythonbasis is het vertrekpunt;
 het [projectdoel](PROJECTDOEL.md) en [afrondingsplan](AFRONDINGSPLAN.md) bepalen wat nog
 moet worden geleverd. Bestaand bewijs rechtvaardigt geen nieuwe algemene platformwissel
 of claim dat Eva alle concurrenten verslaat. Werkende onderdelen worden hergebruikt;
 eerdere investering is op zichzelf geen behoudsreden.
+
+Deze tekst beschrijft zowel bestaande verantwoordelijkheden als afgesproken uitbreiding.
+Het [werkbord](../design/product/execution-workboard-v1.json) bepaalt de actuele
+opleverstatus; een ontwerp hieronder betekent niet dat die werking al geïnstalleerd is.
+E4.15 verbindt nu de bestaande uitvoering aan een daadwerkelijk bruikbare eigen
+voorziening. E4.17 verzorgt de ontbrekende hersteloverdracht; E4.18 vereenvoudigt
+bewezen gebruikte routes. Deze drie volledige uitkomsten zijn nog niet afgerond.
 
 ## Eén kringloop voor vier uitkomsten
 
@@ -567,8 +574,24 @@ uitval van deze module blokkeert de rest van Eva niet. Dit voltooit de bestaande
 providergrens en vereist geen nieuw pluginplatform of afzonderlijke huisagent.
 Officiële MCP-, REST- en WebSocket-verbindingen zijn transportkeuzes binnen dezelfde
 module. Eén samengestelde bediening mag doelvalidatie, uitvoering en verse
-verificatie afhandelen zonder een modelronde per substep. De concrete open scope
-staat in E4.6–E4.10 en E5.2 op het bestaande werkbord.
+verificatie afhandelen zonder een modelronde per substep. De scope en actuele afronding
+staan in E4.6–E4.10 en E5.2 op het bestaande werkbord.
+
+### Camera, lokale analyse en herkenning
+
+De bestaande HA-camera-adapter haalt een beeld op; lokale beeldbeschrijving en
+gezichtsherkenning zijn afzonderlijke optionele analysemogelijkheden. De bestaande
+camera-observer kan CPU-gezichtsherkenning gebruiken zonder werkende beeldbeschrijver.
+Een draaiende bridge bewijst nog geen correcte herkenning of werkende begroeting.
+Identiteitskandidaten vereisen bestaande bevestigde profielen; onbekend blijft onbekend.
+De bestaande aandacht- en afleverroutes bepalen of een uiting past en toegestaan is.
+
+Een ontvangen camerabeeld, een geslaagde analyse en een uitgesproken begroeting zijn
+verschillende resultaten. Onbereikbare lokale analyse mag niet als camerafout worden
+verstopt of leiden tot dezelfde beeldlezing zonder nieuwe hypothese. Een uitgeschakelde
+GPU-analyzer wordt niet automatisch aangezet omdat de endpoint nog geconfigureerd is.
+De cameraopdracht toetst E4.15-uitvoering; deze eigenaaropdracht bewijst op zichzelf
+geen spontane behoefteontdekking. Ontbrekende toepassingscode blijft buiten de kern.
 
 ## Actieve module- en onderhoudscontracten
 
@@ -620,6 +643,15 @@ historische proefhelpers en sterk verweven grote modules. Bestandsgrootte en wei
 statische imports zijn signalen voor onderzoek, geen verwijderbewijs. Dynamische
 registratie, deploy-/installerpaden, tests, migraties en externe aanroepen tellen mee.
 
+Binnen E4.18 zijn de gebruikte alleen-lezen containerinspectie en bestandshashing
+ondergebracht bij `src/tools/container_inspection.py` en `src/tools/file_inspection.py`.
+Actieve herstel-/installatieconsumenten hoeven voor die inspectie geen historische
+cutover-uitvoering te importeren. De bestaande ontwikkeltests voor projectupdates
+staan onder `development/tests/tools`; bronherkomst controleert de huidige deploymappen.
+Dit zijn afgeronde onderhoudsuitkomsten, geen volledige verwijdering van historische
+hulpmiddelen of consolidatie van alle effectuitvoering. De resterende routebeoordeling
+volgt de concrete E4.15-/E4.17-overdracht.
+
 De zelfstandige Telegramdienst start geen Eva1-agent. Fotoanalyse houdt tijdelijk
 nog de oorspronkelijke providerbibliotheek en haar verbruiksregistratie aan.
 Dit wordt als onderhoudsafhankelijkheid geregistreerd en gericht vervangen door
@@ -649,7 +681,7 @@ ongevraagde licentiewijziging of nieuwe concurrentenserie.
 
 The existing sensory model uses a separate private orientation instruction for `initiative-review`. Notification silence does not imply absence of useful work: the model may choose one bounded native initiative to investigate a worthwhile information gap without an urgent household event. The same decision function and argument schema have phase-specific tool descriptions: private orientation weighs self-chosen work separately from notification timing, including after an optional personal-memory lookup. The shared/passive descriptor, durable adoption, current authority, native executor and private completion delivery remain unchanged. A deliberate null proposal remains valid. In private orientation, the existing only-necessary-questions boundary scopes unnecessary task clarification; optional fitting social curiosity does not require an active task and never changes privacy or execution authority. A genuinely changed installed private contract has a distinct immutable, deduplicated review source; it never overwrites an earlier hourly decision or bypasses unresolved work or model-selected future attention. Controller-stimulated reviews retain their actual provenance and do not demonstrate spontaneous initiation. Completed, measured private decisions also return as at most three owner-scoped historical summaries in the existing bounded life context, preserving original timestamps and source hashes. They are historical model choices, not owner feedback, present-world facts or renewed permission; older household observations are trimmed before this history, and history before real commitments.
 
-Private owner feedback also supplies one immutable review occasion within the existing scheduler. Only the latest real feedback from the last 24 hours is eligible; this is not a historical replay queue. Existing active work, authority and ambiguity gates still apply, and future attention remains retained. An optional `feedback_application` binds a provisional usefulness/timing/nuisance interpretation to the exact feedback digest and literal evidence. Unknown dimensions stay unknown. The original trigger is rechecked under the feedback writer lock before committing any decision or adoption, even when no annotation is returned. A correction before dispatch cancels the old review; after dispatch it rejects stale effects while retaining measured usage. The existing dashboard exposes the later consideration, not a claim that family benefit has already improved.
+Private owner feedback also supplies one immutable review occasion within the existing scheduler. Only the latest real feedback from the last 24 hours is eligible; this is not a historical replay queue. Existing active work, authority and ambiguity gates still apply, and future attention remains retained. An optional `feedback_application` binds a provisional usefulness/timing/nuisance interpretation to the exact feedback digest and literal evidence. Unknown dimensions stay unknown. The original trigger is rechecked under the feedback writer lock before committing any decision or adoption, even when no annotation is returned. A correction before dispatch cancels the old review; after dispatch it rejects stale effects while retaining measured usage. The existing dashboard exposes the later consideration, not a claim that family benefit has already improved. Completion of work originating from that private review returns to the same initiative decision: it does not also trigger unconditional completion delivery. An explicit requested task retains its normal result delivery.
 
 ## Gerichte continuïteit binnen bestaande routes
 
