@@ -24,6 +24,8 @@ import subprocess
 import sys
 from typing import Any
 
+from tools.file_inspection import hash_regular_file as _hash_regular_file
+
 
 TOOL_VERSION = "1.0.0"
 DOCKER_BINARY = "/usr/bin/docker"
@@ -220,16 +222,25 @@ def _inventory_command(container_name: str) -> tuple[str, ...]:
     )
 
 
+def _configured_root(path: str, allowed_roots: set[str]) -> str | None:
+    return max(
+        (root for root in allowed_roots if path == root or path.startswith(root + "/")),
+        key=len,
+        default=None,
+    )
+
+
 def _validated_relative_path(value: object, allowed_roots: set[str]) -> str:
     if not isinstance(value, str) or not value or "\x00" in value:
         raise RuntimeError("Inventory record has an invalid path")
     path = PurePosixPath(value)
     if path.is_absolute() or any(part in {"", ".", ".."} for part in path.parts):
         raise RuntimeError("Inventory record path traversal is forbidden")
-    root = path.parts[0]
-    if root not in allowed_roots:
+    normalized = path.as_posix()
+    root = _configured_root(normalized, allowed_roots)
+    if root is None:
         raise RuntimeError("Inventory record is outside the approved roots")
-    if root in SINGLE_FILE_ROOTS and len(path.parts) != 1:
+    if root in SINGLE_FILE_ROOTS and normalized != root:
         raise RuntimeError("Inventory record descends below an approved single-file root")
     return path.as_posix()
 
@@ -276,51 +287,12 @@ def validate_inventory(
         raise RuntimeError("Container inventory is unexpectedly empty")
     if [record["path"] for record in records] != sorted(seen):
         raise RuntimeError("Container inventory is not in deterministic path order")
-    represented_roots = {PurePosixPath(str(record["path"])).parts[0] for record in records}
+    represented_roots = {_configured_root(str(record["path"]), allowed_roots) for record in records}
     if represented_roots != allowed_roots:
         raise RuntimeError("Container inventory does not represent every approved root")
     return tuple(records)
 
 
-def _hash_regular_file(path: Path, relative_path: str) -> tuple[int, str]:
-    before = path.lstat()
-    if stat.S_ISLNK(before.st_mode) or not stat.S_ISREG(before.st_mode):
-        raise RuntimeError(f"Worktree application path is not a regular file: {relative_path}")
-    digest = hashlib.sha256()
-    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
-    descriptor = os.open(path, flags)
-    try:
-        opened = os.fstat(descriptor)
-        if (opened.st_dev, opened.st_ino, opened.st_mode, opened.st_size) != (
-            before.st_dev,
-            before.st_ino,
-            before.st_mode,
-            before.st_size,
-        ):
-            raise RuntimeError(f"Worktree application file changed before read: {relative_path}")
-        while True:
-            chunk = os.read(descriptor, 1024 * 1024)
-            if not chunk:
-                break
-            digest.update(chunk)
-        after = os.fstat(descriptor)
-    finally:
-        os.close(descriptor)
-    if (
-        before.st_dev,
-        before.st_ino,
-        before.st_mode,
-        before.st_size,
-        before.st_ctime_ns,
-    ) != (
-        after.st_dev,
-        after.st_ino,
-        after.st_mode,
-        after.st_size,
-        after.st_ctime_ns,
-    ):
-        raise RuntimeError(f"Worktree application file changed while hashing: {relative_path}")
-    return before.st_size, digest.hexdigest()
 
 
 def inventory_worktree(

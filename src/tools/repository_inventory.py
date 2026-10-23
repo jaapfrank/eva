@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 import stat
 import subprocess
-from tools.living_core_source_provenance import _hash_regular_file
+from tools.file_inspection import hash_regular_file as _hash_regular_file
 MANIFEST = 'development/docs/eva-repository-inventory.generated.json'
 OUTPUTS = {MANIFEST, 'development/docs/repository-registration-20261017.md', 'development/evidence/reassessment/e31-file-register-20261017.json', 'development/evidence/reassessment/e31-installed-source-20261017.json', 'development/reviews/e31-file-register-20261017.json'}
 SKIP_DIRS = {'.git', 'node_modules', '.venv', 'venv', '__pycache__', '.pytest_cache', '.ruff_cache', 'dist', 'project-dist', 'coverage', '.nyc_output', '.playwright-mcp', 'secrets', 'data', '.state', '.codex', 'wheelhouse', 'offline-artifacts'}

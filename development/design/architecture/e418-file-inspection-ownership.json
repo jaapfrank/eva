@@ -1,0 +1,64 @@
+{
+  "contract": "EvaE418FileInspectionOwnership/v1",
+  "task": "E4.18",
+  "checkedAt": "2026-10-23T12:39:28.924282+00:00",
+  "baselineCommit": "01b248b941a0ca7827f1d1dd804281a94ecee0dc",
+  "scope": "Existing host-side file registration and source-provenance tools only. No shared runtime installation.",
+  "owners": {
+    "regularFileHash": "tools.file_inspection.hash_regular_file",
+    "repositoryRegistration": "tools.repository_inventory; imports only neutral file inspection",
+    "containerSourceProvenance": "tools.living_core_source_provenance; preserves its original _hash_regular_file import symbol",
+    "configuredRootMembership": "tools.living_core_source_provenance._configured_root; same owner for path admission and required-root coverage"
+  },
+  "beforeChangeDecision": {
+    "gap": "Repository registration imported the complete container-provenance CLI for one 39-line private hash helper. Current deploy/* root mappings were rejected by legacy first-component membership and coverage checks.",
+    "evidence": "Original existing suites: 14 passed, 3 failed before changes. Targeted source/AST inspection binds both causes to the current files.",
+    "selected": "Move the exact read-only hash primitive to one neutral module; preserve old symbol and test seam. Use exact configured-root/component matching for the current source layout.",
+    "notSelected": "Do not rebuild registration, change root mappings, repair runtime, alter independent test inputs or start a broad cleanup."
+  },
+  "compatibility": {
+    "hashAlgorithmAndErrorsUnchanged": true,
+    "hashFunctionAstIdenticalExceptName": true,
+    "legacyHelperSymbolPreserved": true,
+    "existingMonkeypatchSeamPreserved": true,
+    "originalTestsUnchanged": true,
+    "allowedRootSetUnchanged": true,
+    "singleFileRootsRemainExact": true,
+    "intentionalBehaviorChange": "Valid current deploy/migrations, deploy/schemas and two deploy lock/config roots now pass membership and complete-root coverage. Unconfigured siblings and single-file descendants stay rejected."
+  },
+  "fileDecisions": [
+    {
+      "path": "src/tools/file_inspection.py",
+      "decision": "add_neutral_owner",
+      "sha256": "e9fdf64e37f1ee800117d8b41a511eec3b71337dac4ae43a7de26bd45d29fbce"
+    },
+    {
+      "path": "src/tools/living_core_source_provenance.py",
+      "decision": "retain_with_bounded_change",
+      "sha256": "c68f66fb124f2cdd0df3952189941bc204c7fe496f9ef82a2e031f6d8681fca8"
+    },
+    {
+      "path": "src/tools/repository_inventory.py",
+      "decision": "retain_with_bounded_change",
+      "sha256": "12166b5b6193a1b89a7030c1a774bc6600de767962d3d191654cd29a4e92514e"
+    },
+    {
+      "path": "development/tests/tools/test_e418_file_inspection.py",
+      "decision": "retain_with_bounded_change",
+      "sha256": "e8a52ff860caa17272fc1145ea4ef31927c724be6bcdb88487f4aaeed1fb9257"
+    }
+  ],
+  "historicalRecords": "E3 inventories and earlier evidence unchanged; original source hashes retained in private baseline.",
+  "deletions": [],
+  "installation": "Host Python tools use the checked-out modules on next invocation. No image rebuild, source sweep, restart or shared deployment.",
+  "protectedScopes": [
+    "E1.8",
+    "memory continuity",
+    "initiative",
+    "voice",
+    "foreign WIP",
+    "canonical workboard and project projection (coordinator-owned)"
+  ],
+  "fullE418Complete": false,
+  "reasonFullTaskRemainsOpen": "Used product-route handoff and extension/restore review still depend on E4.15 and E4.17."
+}

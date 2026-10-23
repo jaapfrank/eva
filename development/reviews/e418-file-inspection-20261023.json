@@ -1,0 +1,22 @@
+{
+  "contract": "EvaE418FileInspectionReview/v1",
+  "task": "E4.18",
+  "checkedAt": "2026-10-23T12:43:43.922493+00:00",
+  "decision": "GO_SCOPED_FILE_INSPECTION_AND_ROOT_MATCHING_CHANGE",
+  "independentGo": true,
+  "blockers": [],
+  "reviewer": "independent E4.18 reviewer /root/e47_mcp_catalog",
+  "privateReviewSha256": "878889fe1212ca618a20bb08a67bb4d21ef941fa4ac0d7011084a8828ff8dffc",
+  "scope": [
+    "Exact hashing-body extraction and retained legacy helper/test seam.",
+    "Current configured-root membership and complete-root coverage; no broader allowed roots.",
+    "Unchanged original test hashes and all 46 final passing XML cases.",
+    "Final five-file sample hash-equivalence and bounded source/AST changes."
+  ],
+  "evidence": "development/evidence/reassessment/e418-file-inspection-20261023.json",
+  "noExtraTestsModelProviderOrRuntimeExecution": true,
+  "limitations": [
+    "Not a whole-tree/image provenance comparison or measured runtime speed gain.",
+    "Full E4.18 remains open for E4.15/E4.17-dependent route review."
+  ]
+}

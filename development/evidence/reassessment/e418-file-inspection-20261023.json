@@ -1,0 +1,78 @@
+{
+  "contract": "EvaE418FileInspectionOutcome/v1",
+  "task": "E4.18",
+  "checkedAt": "2026-10-23T12:43:43.922493+00:00",
+  "status": "verified_and_independently_reviewed_host_tooling",
+  "baselineCommit": "01b248b941a0ca7827f1d1dd804281a94ecee0dc",
+  "sourceSha256": {
+    "src/tools/file_inspection.py": "e9fdf64e37f1ee800117d8b41a511eec3b71337dac4ae43a7de26bd45d29fbce",
+    "src/tools/living_core_source_provenance.py": "c68f66fb124f2cdd0df3952189941bc204c7fe496f9ef82a2e031f6d8681fca8",
+    "src/tools/repository_inventory.py": "12166b5b6193a1b89a7030c1a774bc6600de767962d3d191654cd29a4e92514e",
+    "development/tests/tools/test_e418_file_inspection.py": "e8a52ff860caa17272fc1145ea4ef31927c724be6bcdb88487f4aaeed1fb9257"
+  },
+  "whatChanged": [
+    "Repository registration no longer imports container-source provenance for hashing.",
+    "One exact no-follow descriptor-checked hashing owner; original hash body preserved.",
+    "Fixed current configured deploy/* path membership and complete-root coverage, with unchanged root set and test sources."
+  ],
+  "measurements": {
+    "existingBefore": {
+      "passed": 14,
+      "failed": 3,
+      "seconds": 1.0971952119725756
+    },
+    "finalAffectedSuites": {
+      "rc": 0,
+      "seconds": 0.805476225039456,
+      "cases": 46,
+      "failures": [],
+      "passed": 46
+    },
+    "actualFileHashComparison": {
+      "files": 5,
+      "sameSizeAndHash": true,
+      "scope": "Original and extracted hash functions agree on the same five final current source files; not a whole-tree or installed-image provenance comparison."
+    },
+    "importBoundary": {
+      "before": "tools.repository_inventory -> tools.living_core_source_provenance -> file hasher",
+      "after": "tools.repository_inventory -> tools.file_inspection",
+      "containerProvenanceLoadedByRegistrationAfter": false
+    },
+    "rootValidation": "All 5 configured roots accepted; unconfigured siblings, traversal and single-file descendants rejected; each required root must be represented.",
+    "intermediateFailureEvidenceRetained": true,
+    "runtimeLatencyOrTokenImprovement": "not measured; no claim"
+  },
+  "preserved": {
+    "originalTests": true,
+    "otherProvenanceAstExceptNamedExtractionAndRootFix": true,
+    "sourceMappings": true,
+    "historicalHelperSymbol": true,
+    "privacyExclusionRules": true,
+    "secretsRead": false,
+    "externalEffects": false
+  },
+  "independentReview": {
+    "decision": "GO_SCOPED_FILE_INSPECTION_AND_ROOT_MATCHING_CHANGE",
+    "go": true,
+    "blockers": [],
+    "privateReviewSha256": "878889fe1212ca618a20bb08a67bb4d21ef941fa4ac0d7011084a8828ff8dffc"
+  },
+  "review": "development/reviews/e418-file-inspection-20261023.json",
+  "usage": {
+    "evaRuntimeModelCalls": 0,
+    "providerCalls": 0,
+    "messagesSent": 0,
+    "serviceRestarts": 0,
+    "sharedInstallations": 0,
+    "developmentCreditCost": null,
+    "developmentCreditCostState": "unknown; not estimated",
+    "pytestProcessSeconds": 4.012238288996741,
+    "pytestAttempts": 4,
+    "repeatReason": "Original baseline; extraction candidate; confirmed root-layout fix; corrected same root-coverage cause. Original/intermediate failures preserved."
+  },
+  "limitations": [
+    "This is maintenance of host tooling, not a new family function or proven runtime speed gain.",
+    "No claim about physical module removal from installed images or all processes using this source.",
+    "Full E4.18 remains open for the E4.15/E4.17 handoff."
+  ]
+}
