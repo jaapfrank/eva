@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Van zelfontdekte behoefte naar eigen uitvinding en later gebruik
 
-Gewone cameraopdracht via Eva laten onderzoeken; bestaande bronnen, herkenning en spreekuitgang daadwerkelijk vaststellen.
+Echte opdracht via Codex doorgegeven en aangenomen. Eva las camera-/huisinventaris en bewaarde haar uitvoerplan. Eerste poging brak na vijf tooluitkomsten af met verborgen geneste modelfout; diagnostiek gericht hersteld en in kern/worker geïnstalleerd, 15 controles groen. Eén expliciete hervatting bewaart de oorspronkelijke uitvoering en vijf receipts; de werker onderzoekt de bestaande mogelijkheden verder. Geen werkende camera-uitbreiding, spontane behoefteontdekking of E4.15-afronding geclaimd.
 
 Klaar wanneer: Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.
 

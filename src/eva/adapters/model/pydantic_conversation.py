@@ -116,13 +116,37 @@ def _log_model_failure(error: BaseException, request_id: str | None,
                        transport: dict[str, Any] | None = None) -> None:
     """Retain causal categories without prompts, response bodies or exception text."""
     chain = []
+    details = []
     seen = set()
-    current = error
+    pending = [(error, 0)]
     provider_category = None
     provider_failure = None
     limit = None
-    while current is not None and id(current) not in seen and len(chain) < 8:
+    grouped = False
+    while pending and len(chain) < 16:
+        current, depth = pending.pop(0)
+        if id(current) in seen or depth > 8:
+            continue
         seen.add(id(current))
+        children = current.exceptions if isinstance(current, BaseExceptionGroup) else ()
+        grouped = grouped or bool(children)
+        pending.extend((child, depth + 1) for child in children[:16])
+        cause = current.__cause__ or current.__context__
+        if cause is not None:
+            pending.append((cause, depth + 1))
+        locations = []
+        trace = current.__traceback__
+        frames_seen = 0
+        while trace is not None and frames_seen < 128:
+            frames_seen += 1
+            module = trace.tb_frame.f_globals.get("__name__", "")
+            function = trace.tb_frame.f_code.co_name
+            if (isinstance(module, str) and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_.]{0,119}", module)
+                    and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,79}", function)):
+                locations.append({"module": module, "function": function, "line": trace.tb_lineno})
+                locations = locations[-4:]
+            trace = trace.tb_next
+        details.append({"depth": depth, "locations": locations})
         name = type(current).__name__
         chain.append(name if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,79}", name) else "UnknownError")
         if isinstance(current, CodexProviderError):
@@ -139,10 +163,10 @@ def _log_model_failure(error: BaseException, request_id: str | None,
             limit = next((field for field in (
                 "input_tokens", "output_tokens", "total_tokens", "tool_calls", "request",
             ) if field in text), "unknown")
-        current = current.__cause__ or current.__context__
     logging.getLogger(__name__).warning("conversation_model_failure %s", json.dumps({
         "request_id_sha256": hashlib.sha256(request_id.encode()).hexdigest() if request_id else None,
         "exception_chain": chain,
+        **({"exception_locations": details} if grouped else {}),
         "provider_category": provider_category,
         "usage_limit": limit,
         **({"provider_failure": provider_failure} if provider_failure is not None else {}),

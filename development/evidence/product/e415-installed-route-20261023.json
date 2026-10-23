@@ -1,0 +1,44 @@
+{
+  "task": "E4.15",
+  "checkedAt": "2026-10-23T13:58:10.380427+00:00",
+  "status": "in_progress",
+  "route": "ordinary installed dashboard conversation -> start_digital_work -> existing delegated worker",
+  "ownerRequest": "Previously authorized camera/recognition/greeting acceptance, explicitly relayed by Codex; not spontaneous discovery.",
+  "observed": {
+    "initialAcknowledgementSeconds": 14.4,
+    "verifiedToolCallsBeforeFailure": 5,
+    "savedProgress": true,
+    "initialOutcome": "ambiguous/internal_error",
+    "completedModelResponses": 6,
+    "recordedInputTokens": 65260,
+    "recordedOutputTokens": 532,
+    "usageMeasurement": "partial",
+    "lastPhaseCompletedEvents": 0,
+    "lastPhaseToolArgumentDeltas": 167
+  },
+  "diagnosis": {
+    "confirmedDefect": "Nested ExceptionGroup causes omitted from existing safe model-failure logger. Historical exact cause not recoverable from counters alone.",
+    "change": "Bounded cause/context/group traversal; safe exception types and last four accepted module/function/line locations per node. No messages, locals, filenames, credentials or tool arguments.",
+    "retryOrClassificationChanged": false,
+    "testsPassed": 15,
+    "reviewer": "/root/review_cursor",
+    "reviewDecision": "GO diagnostic-only"
+  },
+  "installation": {
+    "core": "sha256:798d7d67ecaf8fd471d795600b3ce31f159ee8bfce200eff0e123a32ab3641aa",
+    "worker": "sha256:c2a8087a3abcb9f6435735717823a879f0646480865ea9627596bb50f6572e5a",
+    "guarded": true
+  },
+  "continuation": {
+    "kind": "Explicit Codex operator request under ongoing owner instruction; normal resume route, not automatic retry",
+    "acknowledgementSeconds": 14.782,
+    "priorResultsRetained": 5,
+    "firstNewModelPhase": "completed with five original receipts already in context"
+  },
+  "limits": [
+    "No working camera extension or completed E4.15 claim.",
+    "No root-cause claim from diagnostic patch.",
+    "Earlier ambiguous attempt and partial usage retained.",
+    "Household-research profile mismatch predates this change; provider/private-research/digital-work profiles remain matched."
+  ]
+}
