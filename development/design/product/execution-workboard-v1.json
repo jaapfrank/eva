@@ -17202,7 +17202,12 @@
         "unusedReferenceCandidatesNotRequiredForAdoption": true,
         "exactConfigurationAndStateThreadPlanReviewRequiredBeforeStart": true,
         "sameOriginalProcedureBehaviorStillRequired": true,
-        "wholeHostPlatformRestoredClaimed": false
+        "wholeHostPlatformRestoredClaimed": false,
+        "phases": [
+          "exact_reviewed_private_coldstart_health_auth_stop_cleanup_without_procedure_or_evaluate",
+          "separately_admitted_original_procedure_call_only_after_input_provenance_review"
+        ],
+        "launchPlanSha256": "fba2d9a6863ec44e965bdc5d0e28a8b5a82d0632171e27db9c3a375435dbc892"
       },
       "constructorLedgerCaptureReceiptSha256": "1bf12ed5f7e34041403fdf439fb19ed0c29499f5fd04a9de22a3479c522c0702",
       "cpuContextualStaticReceiptSha256": "764f4cfdfa9c7748f806bb88ad0c9e47f05ea73db7c775a08f26347e1877e296",
@@ -17214,7 +17219,13 @@
         "fabricatedFacesZeroInputAllowed": false,
         "originalRequestByteIdentityRequiresActualRequest": true,
         "reconstructedInputMustUseOriginalStoredFactsAndExistingContextShape": true,
-        "exactInputProvenanceReviewBeforeStart": true
+        "exactInputProvenanceReviewBeforeStart": true,
+        "originalRunnerSha256": "b3b414a1281cec8c3978d389f8f8cc70102711fbbd97138be94b3ffc4e70c9db",
+        "aggregateNoFaceBatchNotEvidenceOfExecutorRequest": true,
+        "adapterModuleNotStandaloneStdinProgram": true,
+        "historicalClockSubstitutionForDesiredFreshnessAllowed": false,
+        "reconstructionWithCurrentTrustedClockMayProveOnlyActualNegativeGuard": true,
+        "fullHistoricalEndToEndReplayClaimed": false
       },
       "constructorLedgerIndependentReview": "GO_SCOPED_ORIGINAL_LEDGER_OPAQUE_BYTES_SOURCE_EVIDENCE_ONLY",
       "cpuContextualStaticIndependentReview": "GO_SCOPED_CONTEXTUAL_CPYTHON_STATIC_METADATA_NOT_IMPORT",
