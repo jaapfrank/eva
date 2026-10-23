@@ -761,6 +761,70 @@
       "authorizedArchiveCountInSource": 0,
       "scope": "Only separate private isolated admission of exact core+outer manifests on unchanged generation/head; source allows0 and is never modified. Real live authority/hash checks before mutation still require actual operator trial evidence.",
       "reviewerLiveAuthorityOrDatabaseAccess": false
+    },
+    "actualLargeV1DataTrial": {
+      "checkedAt": "2026-10-23T22:12:37.522447+00:00",
+      "verdict": "GO_SCOPED_V1_LARGE_DATA_ROUNDTRIP_ONLY",
+      "receiptSha256": "fb3727af66fa476e9e96180992507c165e63542e2ce89b10267795d485adbe38",
+      "loadedVersion": "V1 source freeze ced66ae843e1b4e264a76eae7afa04026dd6bd7122f7a0e83b46dad0832de3cd; not current-code acceptance.",
+      "helperSha256": "ff851ff67ae8a5e118af65d4442e3a78d0d1215a2f5ff62a3afcaf70126c1631",
+      "packageManifestSha256": "e99a968a2f7b4cd7876b70ee984ea4038f110c068cd4a192ff59144fbd23db41",
+      "ciphertextSha256": "cc125bf15cfa714b47b0efdd7131a27075ef4ee2fc1c59c612446e7d4130f9ef",
+      "cipherBytes": 1645599140,
+      "payloadFiles": 301,
+      "payloadBytes": 1645299983,
+      "closedInventoryFiles": 302,
+      "elapsedSeconds": 947.5595499409828,
+      "observedPeakRssKiB": 5200280,
+      "actualExecution": {
+        "id": "exec-bfc22927-ac4d-4682-9c8a-ed5b572c8a2e",
+        "exitCode": 0,
+        "durationMs": 948453,
+        "outputReceiptMatches": true
+      },
+      "verifiedArtifactBindings": "Independent streaming ciphertext hash/header length plus equal exact manifests and closed302file inventories/sizes/private dirs/owners in final-stage,openedV1,inactive and openedV3. Inactive role modes match; accepted core ce48ff... and139selected component hashes bind to manifest.",
+      "reviewerBindingSeconds": 1.8176328,
+      "nativeDatabaseImported": false,
+      "runtimeActivated": false,
+      "cleanHostRestoreProven": false
+    },
+    "actualLargeV3Reopen": {
+      "checkedAt": "2026-10-23T22:12:37.522481+00:00",
+      "verdict": "GO_SCOPED_V3_ACTUAL_CIPHERTEXT_REOPEN",
+      "receiptSha256": "13acc0ecf3a0f037bec6f29530fb09d46fcf51a254357311be18523cd3bfc370",
+      "driverSha256": "242546909c644e932a8f1ee7077cf1f3f1d67205502c62c5e535c6ead910f28b",
+      "sourceFreezeSha256": "9ea234d6a2642f8d80b865a93b4c4508555bd4c250a89f255967196ca64ca89a",
+      "samePackageAndCiphertextAsV1": true,
+      "plaintextTarSha256": "930f8e86d47b2f67c13bdc2ee3ff8242e3ceb4ba348bf244de1666e9507d63f4",
+      "plaintextTarBytes": 1645598720,
+      "actualExecution": {
+        "id": "exec-3d36de07-769d-483e-9812-6627517927fc",
+        "exitCode": 0,
+        "durationMs": 19142,
+        "outputReceiptMatches": true
+      },
+      "payloadHashesCheckedByActualV3Validator": 301,
+      "closedInventoryFiles": 302,
+      "elapsedSeconds": 18.489415304968134,
+      "observedPeakRssKiB": 1418508,
+      "diskFreeBefore": 258918244352,
+      "requiredPeakDiskBefore": 4953574636,
+      "driverReview": "Fresh V3 source hashes checked; explicit trusted installation policy; live authority hash checks around open/accepted-inventory callback; same authenticated plaintext digest; exact manifest and all payload hashes rechecked before publication.",
+      "reviewerExtraSemanticCoreReader": false,
+      "limits": "Data compatibility under V3 code only. Actual operator prepare_file/authority/DB restore and clean-host extension behavior remain open."
+    },
+    "operatorTargetPreparationReview": {
+      "receiptSha256": "952506e7d217f3c447a927a3061512c0a7bdc8eb3eab034f5d37622e13c00fb4",
+      "verdict": "GO_SCOPED_ISOLATED_TARGET_METADATA_ONLY",
+      "actualPreparationExecution": {
+        "id": "exec-3108da81-d062-4de8-904d-946b506c7d0c",
+        "exitCode": 0
+      },
+      "independentInspect": "Both exact name/id/image pins are created,PID0,never started and force python -c pass; reviewer started/stopped none. These are isolated trial pins, not evidence that production source was stopped.",
+      "schemaPreparationReported": "Official0012 install and actual downgrade0011;7.59799653000664s; target database lineage pinned in receipt.",
+      "sourceAuthoritySha256": "e256881a839eb1c706dc48bc68e4e72e15a8a4bb2bbaca9785b89bbfaf4ec6e0",
+      "reviewerDatabaseAccess": false,
+      "limit": "Actual guard execution during the operator restore remains to bind."
     }
   },
   "contractRequirements": {
@@ -970,7 +1034,7 @@
     {
       "id": "E417-PACKAGE-001",
       "severity": "P1",
-      "status": "open_candidate_implementation_pending",
+      "status": "fixed_bounded_installation_policy_and_actual_large_data_roundtrip_proven",
       "cause": "Actual selected payload exceeds the existing1GiB package/transport resource guard.",
       "reproduction": "Stat all160 unvalidated core files and139 selected map sources, add actual memory/gateway target sizes:1645299983B before manifest.",
       "impact": "571558159B over cap; no valid complete package fits under current guard.",
@@ -979,7 +1043,7 @@
     {
       "id": "E417-WIZARD-001",
       "severity": "P1",
-      "status": "open_candidate_implementation_pending",
+      "status": "operator_file_intake_code_tested_actual_large_operator_route_pending",
       "cause": "Existing browser and API restore intake are limited to64MiB, below the actual installation archive size.",
       "reproduction": "Current intake helper with declared2193741502-byte request returns413 before body buffering; route separately checks decoded length64MiB.",
       "impact": "Transport-only2GiB policy cannot make the real wizard large-package prepare route usable.",

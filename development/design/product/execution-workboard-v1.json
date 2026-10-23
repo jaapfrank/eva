@@ -847,7 +847,7 @@
     "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
     "status": "in_progress",
     "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
-    "nextAction": "E4.17: versie 3 van de begrensde installatie- en bestandsroute is onafhankelijk als code goedgekeurd. De echte pakketproef met 301 bestanden/1.645.299.983 bytes is onder de expliciet eerdere versie geslaagd: schrijven, versleutelen, openen en gelijk inactief materialiseren. Bouwer heropent dezelfde ciphertext met V3 en voert daarna de echte operatorroute uit op de eigen lege 0011-doelinstallatie, met nooitgestarte kernreferenties en actuele wisgeneratie 272. Tegelijk volgt de inactieve hostadapter met volledige oorspronkelijke bibliotheek-/SDK-dekking. Werkend clean-hostgedrag en taakafronding blijven open.",
+    "nextAction": "E4.17: de volledige V1-data-pakketproef en het heropenen van dezelfde echte ciphertext met V3 zijn onafhankelijk goedgekeurd; alle 301 payloadbestanden en 302 inventarisbestanden blijven behouden. De echte operatorimport via configured CLI, bestandscontrole, preview en eenmalige uitvoering op de eigen lege 0011-doelinstallatie volgt met actuele wisgeneratie 272 en levende bevoegdheidscontrole. Bouwer werkt tegelijk de inactieve hostadapter en volledige oorspronkelijke bibliotheek-/SDK-dekking af. Hersteld werkend hostgedrag en taakafronding blijven open.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -8113,8 +8113,8 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "E4.17: versie 3 van de begrensde installatie- en bestandsroute is onafhankelijk als code goedgekeurd. De echte pakketproef met 301 bestanden/1.645.299.983 bytes is onder de expliciet eerdere versie geslaagd: schrijven, versleutelen, openen en gelijk inactief materialiseren. Bouwer heropent dezelfde ciphertext met V3 en voert daarna de echte operatorroute uit op de eigen lege 0011-doelinstallatie, met nooitgestarte kernreferenties en actuele wisgeneratie 272. Tegelijk volgt de inactieve hostadapter met volledige oorspronkelijke bibliotheek-/SDK-dekking. Werkend clean-hostgedrag en taakafronding blijven open.",
-                "progress": "Codeguard V3 onafhankelijk goedgekeurd; werkelijke volledige V1-pakket/AES/open/materialisatieproef geslaagd, exact bronversie en hashes vastgelegd. V3-grote heropening, daadwerkelijke operatorimport met hold en werkend hostherstel moeten nog worden gecontroleerd.",
+                "nextAction": "E4.17: de volledige V1-data-pakketproef en het heropenen van dezelfde echte ciphertext met V3 zijn onafhankelijk goedgekeurd; alle 301 payloadbestanden en 302 inventarisbestanden blijven behouden. De echte operatorimport via configured CLI, bestandscontrole, preview en eenmalige uitvoering op de eigen lege 0011-doelinstallatie volgt met actuele wisgeneratie 272 en levende bevoegdheidscontrole. Bouwer werkt tegelijk de inactieve hostadapter en volledige oorspronkelijke bibliotheek-/SDK-dekking af. Hersteld werkend hostgedrag en taakafronding blijven open.",
+                "progress": "V3-code, echte V1 volledige data-roundtrip, echte V3-ciphertext-heropening en geïsoleerde nooitgestarte doelreferenties onafhankelijk goedgekeurd binnen hun beperkte scope. De daadwerkelijke operatorimport en werkende herstelde hostuitbreiding zijn nog niet bewezen.",
                 "checkedAt": "2026-10-23T22:09:08.394308+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
@@ -8740,7 +8740,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.17: versie 3 van de begrensde installatie- en bestandsroute is onafhankelijk als code goedgekeurd. De echte pakketproef met 301 bestanden/1.645.299.983 bytes is onder de expliciet eerdere versie geslaagd: schrijven, versleutelen, openen en gelijk inactief materialiseren. Bouwer heropent dezelfde ciphertext met V3 en voert daarna de echte operatorroute uit op de eigen lege 0011-doelinstallatie, met nooitgestarte kernreferenties en actuele wisgeneratie 272. Tegelijk volgt de inactieve hostadapter met volledige oorspronkelijke bibliotheek-/SDK-dekking. Werkend clean-hostgedrag en taakafronding blijven open.",
+        "nextAction": "E4.17: de volledige V1-data-pakketproef en het heropenen van dezelfde echte ciphertext met V3 zijn onafhankelijk goedgekeurd; alle 301 payloadbestanden en 302 inventarisbestanden blijven behouden. De echte operatorimport via configured CLI, bestandscontrole, preview en eenmalige uitvoering op de eigen lege 0011-doelinstallatie volgt met actuele wisgeneratie 272 en levende bevoegdheidscontrole. Bouwer werkt tegelijk de inactieve hostadapter en volledige oorspronkelijke bibliotheek-/SDK-dekking af. Hersteld werkend hostgedrag en taakafronding blijven open.",
         "finishOrder": [
           "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14097,8 +14097,8 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "E4.17: versie 3 van de begrensde installatie- en bestandsroute is onafhankelijk als code goedgekeurd. De echte pakketproef met 301 bestanden/1.645.299.983 bytes is onder de expliciet eerdere versie geslaagd: schrijven, versleutelen, openen en gelijk inactief materialiseren. Bouwer heropent dezelfde ciphertext met V3 en voert daarna de echte operatorroute uit op de eigen lege 0011-doelinstallatie, met nooitgestarte kernreferenties en actuele wisgeneratie 272. Tegelijk volgt de inactieve hostadapter met volledige oorspronkelijke bibliotheek-/SDK-dekking. Werkend clean-hostgedrag en taakafronding blijven open.",
-              "progress": "Codeguard V3 onafhankelijk goedgekeurd; werkelijke volledige V1-pakket/AES/open/materialisatieproef geslaagd, exact bronversie en hashes vastgelegd. V3-grote heropening, daadwerkelijke operatorimport met hold en werkend hostherstel moeten nog worden gecontroleerd.",
+              "nextAction": "E4.17: de volledige V1-data-pakketproef en het heropenen van dezelfde echte ciphertext met V3 zijn onafhankelijk goedgekeurd; alle 301 payloadbestanden en 302 inventarisbestanden blijven behouden. De echte operatorimport via configured CLI, bestandscontrole, preview en eenmalige uitvoering op de eigen lege 0011-doelinstallatie volgt met actuele wisgeneratie 272 en levende bevoegdheidscontrole. Bouwer werkt tegelijk de inactieve hostadapter en volledige oorspronkelijke bibliotheek-/SDK-dekking af. Hersteld werkend hostgedrag en taakafronding blijven open.",
+              "progress": "V3-code, echte V1 volledige data-roundtrip, echte V3-ciphertext-heropening en geïsoleerde nooitgestarte doelreferenties onafhankelijk goedgekeurd binnen hun beperkte scope. De daadwerkelijke operatorimport en werkende herstelde hostuitbreiding zijn nog niet bewezen.",
               "checkedAt": "2026-10-23T22:09:08.394308+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
               "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
@@ -14724,7 +14724,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.17: versie 3 van de begrensde installatie- en bestandsroute is onafhankelijk als code goedgekeurd. De echte pakketproef met 301 bestanden/1.645.299.983 bytes is onder de expliciet eerdere versie geslaagd: schrijven, versleutelen, openen en gelijk inactief materialiseren. Bouwer heropent dezelfde ciphertext met V3 en voert daarna de echte operatorroute uit op de eigen lege 0011-doelinstallatie, met nooitgestarte kernreferenties en actuele wisgeneratie 272. Tegelijk volgt de inactieve hostadapter met volledige oorspronkelijke bibliotheek-/SDK-dekking. Werkend clean-hostgedrag en taakafronding blijven open.",
+      "nextAction": "E4.17: de volledige V1-data-pakketproef en het heropenen van dezelfde echte ciphertext met V3 zijn onafhankelijk goedgekeurd; alle 301 payloadbestanden en 302 inventarisbestanden blijven behouden. De echte operatorimport via configured CLI, bestandscontrole, preview en eenmalige uitvoering op de eigen lege 0011-doelinstallatie volgt met actuele wisgeneratie 272 en levende bevoegdheidscontrole. Bouwer werkt tegelijk de inactieve hostadapter en volledige oorspronkelijke bibliotheek-/SDK-dekking af. Hersteld werkend hostgedrag en taakafronding blijven open.",
       "finishOrder": [
         "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -16980,7 +16980,7 @@
       "ownerReviewerCorrection": "Latest direct owner instruction: original chat01a169f2 is sole tester/reviewer; replacement01a16a55-1607 is standby with claims released."
     },
     "e417CurrentDelivery20261023": {
-      "stage": "v3_code_independently_reviewed_real_v1_package_roundtrip_complete_v3_reopen_and_operator_pending",
+      "stage": "actual_large_v1_data_and_v3_reopen_independently_reviewed_operator_restore_next",
       "profileAdapter": "src/tools/installation_face_profile_snapshot.py",
       "profileTestsPassed": 10,
       "actualProfileRows": 24,
@@ -17013,7 +17013,7 @@
       "coreValidationStillRunning": false,
       "selectedBytesRemoved": 0,
       "transportLimitChanged": false,
-      "nextAction": "E4.17: versie 3 van de begrensde installatie- en bestandsroute is onafhankelijk als code goedgekeurd. De echte pakketproef met 301 bestanden/1.645.299.983 bytes is onder de expliciet eerdere versie geslaagd: schrijven, versleutelen, openen en gelijk inactief materialiseren. Bouwer heropent dezelfde ciphertext met V3 en voert daarna de echte operatorroute uit op de eigen lege 0011-doelinstallatie, met nooitgestarte kernreferenties en actuele wisgeneratie 272. Tegelijk volgt de inactieve hostadapter met volledige oorspronkelijke bibliotheek-/SDK-dekking. Werkend clean-hostgedrag en taakafronding blijven open.",
+      "nextAction": "E4.17: de volledige V1-data-pakketproef en het heropenen van dezelfde echte ciphertext met V3 zijn onafhankelijk goedgekeurd; alle 301 payloadbestanden en 302 inventarisbestanden blijven behouden. De echte operatorimport via configured CLI, bestandscontrole, preview en eenmalige uitvoering op de eigen lege 0011-doelinstallatie volgt met actuele wisgeneratie 272 en levende bevoegdheidscontrole. Bouwer werkt tegelijk de inactieve hostadapter en volledige oorspronkelijke bibliotheek-/SDK-dekking af. Hersteld werkend hostgedrag en taakafronding blijven open.",
       "independentDesignRecommendation": "explicit_trusted_installation_policy_2GiB_default_and_per_file_1GiB",
       "implementationAuthorized": true,
       "existingBrowserUploadLimitBytes": 67108864,
@@ -17097,13 +17097,20 @@
       "actualV1RoundtripSeconds": 947.56,
       "actualV1RoundtripObservedPeakRssKiB": 5200280,
       "actualV1LoadedCodeVersionExplicit": true,
-      "actualV3LargeReopenPending": true,
+      "actualV3LargeReopenPending": false,
       "operatorTargetPreparedReported": true,
       "operatorTargetPreparationReceiptSha256": "952506e7d217f3c447a927a3061512c0a7bdc8eb3eab034f5d37622e13c00fb4",
       "operatorTargetNeverStartedCores": 2,
       "actualTargetOfficialDowngradeSeconds": 7.6,
       "actualLargeOperatorRestoreCompleted": false,
-      "reviewerNormalFunctionReviewResumedAfterAutomaticInterruption": true
+      "reviewerNormalFunctionReviewResumedAfterAutomaticInterruption": true,
+      "actualV1DataRoundtripIndependentVerdict": "GO_SCOPED_V1_LARGE_DATA_ROUNDTRIP_ONLY",
+      "actualV3LargeReopenIndependentVerdict": "GO_SCOPED_V3_ACTUAL_CIPHERTEXT_REOPEN",
+      "actualV3ReopenReceiptSha256": "13acc0ecf3a0f037bec6f29530fb09d46fcf51a254357311be18523cd3bfc370",
+      "actualV3ReopenSeconds": 18.489415304968134,
+      "actualV3ReopenObservedPeakRssKiB": 1418508,
+      "actualCiphertextBytes": 1645599140,
+      "actualOperatorTargetMetadataIndependentVerdict": "GO_SCOPED_ISOLATED_TARGET_METADATA_ONLY"
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",
