@@ -51,7 +51,7 @@ _FIELDS = {"contract", "schema_version", "archive_id", "source_tenant_id",
 
 
 def _schemas():
-    return _schema_payloads(Path(__file__).resolve().parents[2] / "deploy/schemas")
+    return _schema_payloads()
 
 
 def _closure(records, canonical, tenant_id):

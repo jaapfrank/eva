@@ -6,7 +6,7 @@
   "independentGo": true,
   "blockingFindings": [],
   "privateReviewSha256": "f309f7c331f3de2ead072bc3df39f7f22533ece7fedc8d529afc4910ac9b8cc0",
-  "scope": "Only isolated two-boundary candidate and existing-format preservation proof; actual source paths still require coordinator confirmation and workspace verification.",
+  "scope": "Independent GO for exact two-boundary candidate and preservation proof. The subsequently approved applied source matches those exact reviewed hashes; builder workspace verification is recorded separately.",
   "verified": [
     "Two exact candidate line changes; original product files not edited.",
     "Original pinned schema/resource authority and generated catalog bytes remain intact.",
@@ -27,5 +27,20 @@
     "runtimeChanges": 0,
     "repositoryEdits": 0
   },
-  "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json"
+  "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
+  "appliedSourceBinding": {
+    "verifiedBy": "builder",
+    "checkedAt": "2026-10-23T15:51:04.488341+00:00",
+    "sameBytesAsIndependentlyReviewedCandidate": true,
+    "sourceSha256": {
+      "src/tools/portable_runtime_archive.py": "93a125892bd21bda246f9677519cca1f50e7cc2014bbcb6de5b0c39223b45e47",
+      "src/tools/postgres_portable_export.py": "2250c374d29d8d9c339e1d1381fcd1827a1ae2cfd3b3e8c33786eb997db66d4c",
+      "development/tests/portable/test_e417_extension_restore.py": "8434403afbc11086f94313b913f08e851570b0f2e87078bb6b0b86c09ec70a90"
+    },
+    "workspaceTestsWithoutOverrides": {
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0
+    }
+  }
 }

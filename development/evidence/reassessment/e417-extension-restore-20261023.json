@@ -1,8 +1,8 @@
 {
   "contract": "EvaE417ExtensionRestoreOutcome/v1",
   "task": "E4.17",
-  "checkedAt": "2026-10-23T15:09:00.302141+00:00",
-  "status": "isolated_candidate_independently_reviewed_awaiting_source_path_confirmation",
+  "checkedAt": "2026-10-23T15:51:04.488341+00:00",
+  "status": "source_corrected_and_verified_host_tooling_shared_installation_unchanged",
   "baselineCommit": "581c33f6f2a8570017a7bc69f4c197a456b1558d",
   "candidateSha256": {
     "src/tools/portable_runtime_archive.py": "93a125892bd21bda246f9677519cca1f50e7cc2014bbcb6de5b0c39223b45e47",
@@ -37,11 +37,12 @@
     "testEnvironment": "Existing host gate Python, fresh -I -S subprocess; no target-image execution claim."
   },
   "sourceState": {
-    "productionSourceModified": false,
+    "productionSourceModified": true,
     "originalResourceHashesChanged": false,
     "coreLogicChanged": false,
     "sharedInstallationChanged": false,
-    "serviceRestarted": false
+    "serviceRestarted": false,
+    "scope": "Only two approved tool-source lines plus new focused tests; Eva application/voice/memory/initiative code unchanged."
   },
   "usage": {
     "evaRuntimeModelCalls": 0,
@@ -60,14 +61,36 @@
   "review": "development/reviews/e417-extension-restore-20261023.json",
   "fullTaskCompleted": false,
   "candidatePatch": {
-    "scope": "Two exact line changes; not yet applied to production source files.",
+    "scope": "Two exact source line changes now applied after explicit direct confirmation.",
     "privatePath": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate.patch.private.diff",
     "sha256": "e5bcd0d410ec9902d264a4ff5828ad80f2e63a4345cab121809462bf0d0ae72e"
   },
   "preparedCandidate": {
     "manifest": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate-handoff.private.json",
-    "testSourceState": "Prepared in explicitly authorized worktree and copied into private candidate packet; not added to default Git test suite before the two source corrections are integrated.",
-    "workspaceIntegrationPending": true,
-    "actualWorkspaceTestsWithoutOverrides": "not run: exact two-source-path confirmation pending"
+    "testSourceState": "Prepared test source promoted to normal development tests together with the two exact source corrections.",
+    "workspaceIntegrationPending": false,
+    "actualWorkspaceTestsWithoutOverrides": "15/15 pass, no skipped cases; exact reviewed source hashes bound in workspaceVerification."
+  },
+  "sourceCorrectionApproval": {
+    "source": "Direct answer call_d185ea7a833e4fe4877745bcd4fa1dde",
+    "text": "Ja, alleen deze twee broncorrecties",
+    "paths": [
+      "src/tools/portable_runtime_archive.py",
+      "src/tools/postgres_portable_export.py"
+    ]
+  },
+  "workspaceVerification": {
+    "cases": 15,
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "overrides": false,
+    "processSeconds": 11.606054903008044,
+    "sourceSha256": {
+      "src/tools/portable_runtime_archive.py": "93a125892bd21bda246f9677519cca1f50e7cc2014bbcb6de5b0c39223b45e47",
+      "src/tools/postgres_portable_export.py": "2250c374d29d8d9c339e1d1381fcd1827a1ae2cfd3b3e8c33786eb997db66d4c",
+      "development/tests/portable/test_e417_extension_restore.py": "8434403afbc11086f94313b913f08e851570b0f2e87078bb6b0b86c09ec70a90"
+    },
+    "sameBytesAsIndependentlyReviewedCandidate": true
   }
 }

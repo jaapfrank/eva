@@ -71,7 +71,7 @@ def _default_table_specs() -> tuple[dict[str, Any], ...]:
                 "primary_key": tuple(table["primaryKey"]),
                 "record_contract": portable["recordContract"],
                 "record_jsonl_relative_path": portable["recordJsonlRelativePath"],
-                "record_schema_relative_path": portable["recordSchemaRelativePath"],
+                "record_schema_relative_path": portable["recordSchemaRelativePath"].removeprefix("deploy/"),
                 "record_schema_sha256": portable["record_schema_sha256"],
                 "transform_spec": portable["transformSpec"],
                 "foreign_keys": tuple(table["foreignKeys"]),
