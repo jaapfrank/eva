@@ -1,8 +1,8 @@
 {
   "contract": "EvaE417InstalledExtensionRecoveryGap/v1",
   "task": "E4.17 dependencies of installed E4.15 optional extension",
-  "checkedAt": "2026-10-23T19:42:52.025507+00:00",
-  "status": "selected_host_capture_binding_review_and_isolated_cpu_dependency_candidate_in_progress",
+  "checkedAt": "2026-10-23T19:49:14.921610+00:00",
+  "status": "selected_host_bytes_preserved_cpu_dependency_candidate_under_test",
   "scope": [
     "Existing isolated procedure executor",
     "Existing optional local face backend, model assets, Python environment and profile store",
@@ -80,11 +80,15 @@
     "selectedPayloadBytes": 885956,
     "addendumSha256": "f7560d316dc28b191350d689c574cd2cd061188a7091d75dc7fac5206e1df822",
     "addendumReview": "development/reviews/e417-executor-host-capture-addendum-review-20261023.json",
-    "localCapturePerformed": false,
+    "localCapturePerformed": true,
     "packageIntegrationReady": false,
     "transferAllowedBeforeExistingEncryptedTransport": false,
     "sourceClosureComplete": false,
-    "loadedProcessAttestation": false
+    "loadedProcessAttestation": false,
+    "evidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
+    "independentReadback": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
+    "plaintextOperatorLocalOnly": true,
+    "encryptedTransferPerformed": false
   },
   "faceAssetPreparation": {
     "proposalSha256": "50834d99f282f5ede89bae46e935ca704ecdce113e19cb9d73228a1f933eb8a5",
@@ -95,11 +99,24 @@
     "recordOwnedRegularFiles": 29626,
     "statPayloadBytes": 8146513623,
     "existingPackageByteLimit": 1073741824,
-    "fullEnvironmentFitsUnproven": true,
     "compressionMeasured": false,
     "modelRecopyOrHashPerformed": false,
     "faceOrLegacyDbValuesRead": false,
-    "isolatedCpuCandidate": "assigned_existing_pinned_bytes_only_no_live_replacement"
+    "isolatedCpuCandidate": "assigned_existing_pinned_bytes_only_no_live_replacement",
+    "rawFullEnvironmentExceedsPackageLimit": true,
+    "compressedOrPrunedFitNotProven": true
   },
-  "nextTransfer": "Finish exact 112-file operator-private host capture binding and independently verify local bytes. Build only an isolated minimal CPU dependency candidate from existing versions to resolve the measured8.15GB/1GiB gap; preserve current environment. Actual current full package/trust/key/DB/biometric capture and clean-PC activation remain unproven."
+  "nextTransfer": "Finish exact 112-file operator-private host capture binding and independently verify local bytes. Build only an isolated minimal CPU dependency candidate from existing versions to resolve the measured8.15GB/1GiB gap; preserve current environment. Actual current full package/trust/key/DB/biometric capture and clean-PC activation remain unproven.",
+  "cpuDependencyCandidate": {
+    "installedDistributions": 28,
+    "candidateFiles": 13527,
+    "observedCopiedBytes": 549600671,
+    "modelAssetBytesNotYetCopied": 191307687,
+    "candidateAndModelsBytes": 740908358,
+    "inertImportPass": false,
+    "firstFailure": "Harness replaced an inherited InferenceSession class with a function; constructor-deny semantics retained in targeted correction. Caught socket allocation also remains fail pending exact caller trace.",
+    "installedInEva": false,
+    "originalRuntimePreserved": true,
+    "newPaidRouteOrDependencyDownloads": false
+  }
 }

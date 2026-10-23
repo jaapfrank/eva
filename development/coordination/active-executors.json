@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T19:42:52.025507+00:00",
+  "updatedAt": "2026-10-23T19:49:14.921610+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1328,10 +1328,10 @@
     "e415-independent-review-newchat": {
       "task": "E4.15 exact household batch binding review",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "completed_executor_host_capture_addendum_review_go",
+      "status": "completed_face_backend_asset_proposal_review",
       "coordinator": "windows-root",
       "allowedWritePaths": [
-        "development/reviews/e417-executor-host-capture-addendum-review-20261023.json",
+        "development/reviews/e417-face-assets-proposal-review-20261023.json",
         "development/coordination/active-executors.json:own section only"
       ],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
@@ -1346,10 +1346,10 @@
         "doneWhen": "Exact hashes and bounded GO/NO_GO with necessary companion hunks; no installation.",
         "userUse": "Coordinator may integrate reviewed candidate after baseline recheck."
       },
-      "completedAt": "2026-10-23T19:42:23.037186+00:00",
+      "completedAt": "2026-10-23T19:48:37.263117+00:00",
       "review": "development/reviews/e415-household-batch-binding-review-20261023.json",
       "verdict": "GO",
-      "nextAction": "Root externally binds exact final scriptb1f129/addendumf756/finalreview before one local112-file capture. Preserve original NO_GO evidence and all no-package/no-transfer/no-host-readiness limits. No reviewer capture or extra test.",
+      "nextAction": "Root receives bounded15-asset capture conditions; later choose a new private absent target and exact script/operation binding. No reviewer ONNX hash, inference, DB/profile, capture or runtime/restore claim.",
       "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
       "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
       "previousInstallationReview": "development/reviews/e415-coordinated-installation-review-20261023.json",
@@ -1424,7 +1424,25 @@
       "executorHostCaptureAddendumSha256": "f7560d316dc28b191350d689c574cd2cd061188a7091d75dc7fac5206e1df822",
       "executorHostCaptureScriptSha256": "b1f1293137455f9b65f5b053db53c6faddef235c60b9c83c7a4fdd20d9fc9e3a",
       "executorCaptureSingleReadFixStartedAt": "2026-10-23T19:41:56.365655+00:00",
-      "executorCaptureOriginalScriptNoGoSha256": "330165b032a2d1fc5ab97d6a9e1f616cf678c8361398bb252c39c86f591de020"
+      "executorCaptureOriginalScriptNoGoSha256": "330165b032a2d1fc5ab97d6a9e1f616cf678c8361398bb252c39c86f591de020",
+      "selectedExecutorCaptureResultReviewStartedAt": "2026-10-23T19:44:03.966315+00:00",
+      "selectedExecutorCaptureResultReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
+      "selectedExecutorCaptureResultReviewSha256": "63f3cb3e9c3ecf587d6e00265778f9b81280839d620becaaf6b17cbc3b08805b",
+      "selectedExecutorCaptureResultVerdict": "GO",
+      "selectedExecutorCaptureResult": {
+        "files": 112,
+        "bytes": 885956,
+        "inventorySha256": "1b161aca437444ef660a34526606fb1d9ea4d963c2aa9967839c5271e2badca0",
+        "receiptSha256": "1013a40ba467e037c0fd63f88e0d46b9e7f5a903b9c7f4281fb8494fcab9b677",
+        "localPrivateOnly": true,
+        "packageIntegrationReady": false,
+        "transferAllowedNow": false
+      },
+      "faceBackendAssetProposalReviewStartedAt": "2026-10-23T19:46:59.552176+00:00",
+      "faceBackendAssetProposalReview": "development/reviews/e417-face-assets-proposal-review-20261023.json",
+      "faceBackendAssetProposalReviewSha256": "11def2fe291230ccdde4eea4db278763f0868d9293c6396d37297d238f5e638c",
+      "faceBackendAssetProposalVerdict": "GO",
+      "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work."
     }
   },
   "protectedExistingWork": {
@@ -1665,7 +1683,7 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
-    "parallelBoundedWork": "Exact112-file885956-byte host local capture awaiting corrected instruction GO; original encryption/mapping NO_GO retained. Isolated CPU dependency candidate assigned on proven8.15GB vs1GiB gap, no active runtime/env/data mutation.",
+    "parallelBoundedWork": "112hostfiles preserved and independently verified. Faceasset15file inventory review underway. CPUcandidate740908358bytes incl not-yet-copied models; initial harness class substitution and caught socket allocation prevent import pass, one targeted harness correction assigned, no live change.",
     "currentBlocker": "No remaining code/install blocker in selected camera/batch route. Actual new camera ingress and normal silence observed; positive face/greeting/hearing/later reuse not proven. Owner physical trial deferred; no repeat question.",
     "latestVerifiedOutcome": {
       "status": "installed_current_source_and_silence_proven_positive_greeting_pending",
@@ -1681,8 +1699,8 @@
       "reviewer": {
         "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
         "inputSha256": "cc0c4d182e5fdc36fca85332653f94f1e58c4440e49cb1e18e2773cd12c43176",
-        "writePath": "development/reviews/e417-executor-host-capture-addendum-review-20261023.json",
-        "endCondition": "Exact corrected112-file private stage-only instruction/script; original findings preserved, encryption mandatory before transfer, no full-package claim"
+        "writePath": "development/reviews/e417-face-assets-proposal-review-20261023.json",
+        "endCondition": "Exact13disk+2pinnedONNX asset inventory/roles/privacy only; no recapture/model/DB/closureaudit"
       },
       "executor": {
         "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",

@@ -1,0 +1,159 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.17 selected E4.15 executor-host local byte capture result",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T19:45:29.333489+00:00",
+  "verdict": "GO",
+  "status": "exact_selected_local_private_bytes_independently_verified",
+  "scope": "One independent result readback of the exact selected local target inventory, payload SHA256, byte counts, role/mode/root ownership and private directories, plus receipt/plan/script/review execution bindings. No original source/venv reread, configuration-value parse, extra capture or action.",
+  "boundedOutcome": {
+    "existing": "Root performed the externally bound corrected112-file local capture once.",
+    "gap": "Independent evidence that the actual target bytes and private permissions equal the exact approved inventory, rather than only trusting a success receipt.",
+    "route": "Existing absent-target local selected-host stage; no installation-package or transport workflow invoked.",
+    "doneWhen": "Every target file and required directory matches the pinned plan/receipt and all larger recovery/runtime boundaries remain explicit.",
+    "userUse": "The selected private host bytes and distribution metadata are now retained locally for later separately bound recovery-package work. This closes only this selected-byte handoff."
+  },
+  "bindings": {
+    "captureReceiptPath": "/var/lib/eva2/e415-executor-host-stage-20261023/capture.private.json",
+    "captureReceiptSha256": "1013a40ba467e037c0fd63f88e0d46b9e7f5a903b9c7f4281fb8494fcab9b677",
+    "executionBindingPath": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/executor-host-capture-execution-binding.private.json",
+    "executionBindingSha256": "54c67e1033ee6f3ad29bad3628b5c2e272ace31f2813656883e2ad3c53c6683f",
+    "pins": {
+      "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/capture_executor_host_selected.py": "b1f1293137455f9b65f5b053db53c6faddef235c60b9c83c7a4fdd20d9fc9e3a",
+      "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/executor-host-capture-addendum.private.json": "f7560d316dc28b191350d689c574cd2cd061188a7091d75dc7fac5206e1df822",
+      "/home/administrator/project/Eva2/development/reviews/e417-executor-host-capture-addendum-review-20261023.json": "cd8a72232444d8b8a6f07738bb2950cca9b629a11362501ca588e89d7c85862a"
+    },
+    "allBindingsVerifiedAndUnchangedDuringReadback": true,
+    "allOperationListSha256": "b8bbf6db3cb6b35b9ea3cab9ec649bdae5852555448855bceba94cb4aa9e055c",
+    "metadataOperationListSha256": "27df5f1f2375f3879e291247e03006044422f269408d5b8c7a217c9f13807a6f"
+  },
+  "independentResult": {
+    "startedAt": "2026-10-23T19:44:40.748003+00:00",
+    "finishedAt": "2026-10-23T19:44:40.753461+00:00",
+    "target": "/var/lib/eva2/e415-executor-host-stage-20261023/selected-host",
+    "receiptSha256": "1013a40ba467e037c0fd63f88e0d46b9e7f5a903b9c7f4281fb8494fcab9b677",
+    "executionBindingSha256": "54c67e1033ee6f3ad29bad3628b5c2e272ace31f2813656883e2ad3c53c6683f",
+    "pins": {
+      "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/capture_executor_host_selected.py": "b1f1293137455f9b65f5b053db53c6faddef235c60b9c83c7a4fdd20d9fc9e3a",
+      "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/executor-host-capture-addendum.private.json": "f7560d316dc28b191350d689c574cd2cd061188a7091d75dc7fac5206e1df822",
+      "/home/administrator/project/Eva2/development/reviews/e417-executor-host-capture-addendum-review-20261023.json": "cd8a72232444d8b8a6f07738bb2950cca9b629a11362501ca588e89d7c85862a"
+    },
+    "fileCount": 112,
+    "bytes": 885956,
+    "exact112Inventory": true,
+    "allContentHashesMatchPlan": true,
+    "allReceiptEntriesEqualActualTarget": true,
+    "targetInventorySha256": "1b161aca437444ef660a34526606fb1d9ea4d963c2aa9967839c5271e2badca0",
+    "receiptCopiedInventorySha256": "1b161aca437444ef660a34526606fb1d9ea4d963c2aa9967839c5271e2badca0",
+    "roleCounts": {
+      "document_marker": 105,
+      "provider_binding": 2,
+      "document_artifact": 5
+    },
+    "modeCounts": {
+      "0400": 107,
+      "0600": 5
+    },
+    "allFilesRootRoot": true,
+    "allDirectoriesRootRoot0700": true,
+    "verifiedSelectedHostDirectoryCount": 47,
+    "stageRootRoot0700": true,
+    "receiptRootRoot0600": true,
+    "allFilesRegularSingleLink": true,
+    "noSymlinksOrSpecialTargetEntries": true,
+    "opaqueConfigsExactlyPlan0400AndNeverParsed": true,
+    "allTargetReadsStable": true,
+    "receiptUnchangedAcrossReadback": true,
+    "executionPinsUnchangedAcrossReadback": true,
+    "sourceMetadataStabilityReportedByReceiptOnly": true,
+    "captureStartedAt": "2026-10-23T19:43:23.870172+00:00",
+    "captureFinishedAt": "2026-10-23T19:43:24.137309+00:00",
+    "packageCreated": false,
+    "encryptedTransportCreated": false,
+    "transferPerformed": false,
+    "fullRecovery": false,
+    "lastWorking": false,
+    "loadedProcessAttestation": false,
+    "originalSourcesOrVenvReRead": false,
+    "payloadContentsPrinted": false,
+    "configValuesParsed": false
+  },
+  "inventory": {
+    "selectedDiskFiles": 13,
+    "distributionMetadataSets": 33,
+    "distributionMetadataFiles": 99,
+    "selectedTargetFiles": 112,
+    "selectedTargetBytes": 885956,
+    "requiredSelectedHostDirectories": 47,
+    "allRequiredDirectoriesPresentAndNoExtraDirectories": true,
+    "roleCounts": {
+      "document_marker": 105,
+      "provider_binding": 2,
+      "document_artifact": 5
+    },
+    "fileModeCounts": {
+      "0400": 107,
+      "0600": 5
+    },
+    "allFileOwners": "root:root",
+    "stageAndSelectedDirectoryOwnersModes": "root:root0700",
+    "receiptOwnerMode": "root:root0600",
+    "opaqueConfigurationFiles": "Exact two pinned config/host-executor entries, root:root0400; contents only hashed, never parsed or printed.",
+    "inventoryBinding": "The112 observed records in exact plan operation order equal receipt.copied field-for-field: destination/sha256/bytes/role/mode/uid/gid. Canonical UTF-8 json.dumps(sort_keys=True,separators=(comma,colon)) SHA2561b161aca437444ef660a34526606fb1d9ea4d963c2aa9967839c5271e2badca0."
+  },
+  "method": {
+    "inventory": "Open stage and target through directory descriptors with O_DIRECTORY/O_NOFOLLOW; inspect every entry without following links, reject links/special files and require exact112 file paths before reading any payload. Verify root ownership and0700 on every directory. The47 observed directories equal the required parent-directory count for the exact file set.",
+    "content": "One bounded target-only read per expected file through O_NOFOLLOW descriptors, verify stable fstat identity before/after, expected byte count and SHA256, role-bound0400/0600 permissions and root ownership. No eva imports, source execution, JSON decoding of captured configurations or payload stdout.",
+    "receipt": "Compare actual verified target records to all112 receipt.copied entries; verify unchanged receipt and execution-binding pins. No target payload hashes were repeated.",
+    "sourceStabilityLimit": "sourceMetadataStableAcrossEntireCapture=true is explicitly a root-script receipt claim. Reviewer did not reread original source files, original venv/metadata or loaded process state and does not independently attest those source observations."
+  },
+  "findings": [],
+  "preservedLimits": [
+    "Selected local disk bytes and33 distribution metadata sets are preserved and independently verified. Five selected source modules are not a full source closure; metadata/RECORD/WHEEL files are not distribution runtime payload, interpreter, stdlib, native-library or OS closure.",
+    "No running/runnable host, loaded-Python/process-state attestation, service configuration activation, restart/reload, executor/procedure invocation, image execution, model/camera/biometric or physical greeting/hearing proof.",
+    "This selected-host tree is not an EvaInstallationRecovery package, current coherent installation backup, actual native DB/authority snapshot or clean-PC recovery. Exact real base-package path/hash/identity trust, source_components and key_references remain prerequisites before package integration; no synthetic fixture may be relabeled as current.",
+    "No encrypted transport was created and no payload transfer/export occurred in this capture. Opaque configuration stays local private; transferAllowedNow=false/packageIntegrationReady=false remain. Existing seal_portable_archive with real-package validator/exact identity trust and separate key binding is mandatory before any future transfer.",
+    "Face/profile database consistency, biometric data/models/embeddings, current authorization/STOP state, separate credential/key provisioning and remote relink remain unresolved. No faceDB or original private dataset was read or copied by this review.",
+    "Original proposal and original script NO_GO evidence remain preserved under their existing exact bindings. No additional capture, sourceclosure audit, restore, DB action, runtime action or Git action by reviewer.",
+    "This closes only the selected local-byte handoff. No LastWorking/fullRecovery/cleanPcRestore, full E4.15/E4.17 card, family acceptance or whole-project completion claim."
+  ],
+  "capturePerformedByReviewer": false,
+  "additionalCapturePerformed": false,
+  "packageCreated": false,
+  "encryptedTransportCreated": false,
+  "transferAllowedNow": false,
+  "transferPerformed": false,
+  "packageIntegrationReady": false,
+  "runnableHost": false,
+  "loadedProcessAttestation": false,
+  "lastWorking": false,
+  "fullRecovery": false,
+  "cleanPcRestore": false,
+  "usage": {
+    "development": {
+      "elapsedSeconds": 85.367,
+      "startedAt": "2026-10-23T19:44:03.966315+00:00",
+      "independentTargetReadbackIntervalSeconds": 0.005458,
+      "targetPayloadFilesHashedOnce": 112,
+      "targetPayloadBytesHashed": 885956,
+      "originalSourcePayloadReads": 0,
+      "capturedConfigurationParses": 0,
+      "modelTokens": null,
+      "modelCost": null,
+      "credits": null,
+      "unknownMeasurementsRemainUnknown": true
+    },
+    "evaRuntime": {
+      "modelCalls": 0,
+      "executorCalls": 0,
+      "cameraCalls": 0,
+      "databaseQueries": 0,
+      "databaseWrites": 0,
+      "additionalCaptures": 0,
+      "serviceActions": 0,
+      "restoreActions": 0,
+      "environmentValueReads": 0
+    }
+  }
+}

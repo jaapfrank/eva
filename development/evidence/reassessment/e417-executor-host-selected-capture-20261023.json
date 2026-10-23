@@ -1,0 +1,61 @@
+{
+  "contract": "EvaSelectedDependencyPreservationOutcome/v1",
+  "task": "E4.17 supporting installed E4.15 extension",
+  "checkedAt": "2026-10-23T19:49:14.921610+00:00",
+  "status": "exact_selected_local_private_bytes_captured_independently_verified",
+  "existing": "Current preserved executor image, fixed host files and installed dependency metadata",
+  "gap": "Actual selected host file bytes were missing; full source/runtime closure remains separate",
+  "capture": {
+    "fileCount": 112,
+    "payloadBytes": 885956,
+    "fixedFiles": 13,
+    "distributionMetadataFiles": 99,
+    "documentMarkers0400": 105,
+    "providerBindings0400": 2,
+    "documentArtifacts0600": 5,
+    "operatorUid": 0,
+    "operatorGid": 0,
+    "privateDirectories0700": true,
+    "opaqueConfigsNotParsed": true,
+    "allPayloadHashesVerified": true,
+    "sourceMetadataStableBeforeAfter": "Recorded by capture; independent review checked target only",
+    "receiptSha256": "1013a40ba467e037c0fd63f88e0d46b9e7f5a903b9c7f4281fb8494fcab9b677",
+    "targetInventorySha256": "1b161aca437444ef660a34526606fb1d9ea4d963c2aa9967839c5271e2badca0"
+  },
+  "bindings": {
+    "originalProposalSha256": "cc0c4d182e5fdc36fca85332653f94f1e58c4440e49cb1e18e2773cd12c43176",
+    "addendumSha256": "f7560d316dc28b191350d689c574cd2cd061188a7091d75dc7fac5206e1df822",
+    "scriptSha256": "b1f1293137455f9b65f5b053db53c6faddef235c60b9c83c7a4fdd20d9fc9e3a"
+  },
+  "reviews": [
+    "development/reviews/e417-executor-host-capture-proposal-review-20261023.json",
+    "development/reviews/e417-executor-host-capture-addendum-review-20261023.json",
+    "development/reviews/e417-executor-host-selected-capture-review-20261023.json"
+  ],
+  "privacyAndBoundaries": {
+    "originalFaultEvidencePreserved": true,
+    "sourceUnitConfigAndVenvUnchanged": true,
+    "plaintextLocalOperatorPrivateOnly": true,
+    "encryptedTransportCreated": false,
+    "transferPerformed": false,
+    "existingEncryptionRequiredBeforeAnyTransfer": true,
+    "actualPackageIdentityTrustKeyBindingReady": false,
+    "sourceOrVenvPayloadClosureComplete": false,
+    "runnableHost": false,
+    "loadedProcessAttestation": false,
+    "faceOrBiometricDataRead": false
+  },
+  "usage": {
+    "localCaptureCommands": 1,
+    "payloadCaptureSeconds": 1.877,
+    "independentReviewSeconds": 85.367,
+    "independentTargetHashSeconds": 0.005458,
+    "developmentTokens": null,
+    "developmentCreditCost": null,
+    "evaRuntimeModelExecutorCameraMessageDbOrServiceActions": 0
+  },
+  "lastWorking": false,
+  "fullRecovery": false,
+  "cleanPcRestore": false,
+  "fullTaskCompleted": false
+}
