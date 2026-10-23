@@ -1,7 +1,7 @@
 {
   "contract": "EvaHouseholdProcedureBindingOutcome/v1",
   "task": "E4.15",
-  "checkedAt": "2026-10-23T18:36:54.725250+00:00",
+  "checkedAt": "2026-10-23T18:39:18.764031+00:00",
   "status": "installed_current_authority_verified_first_real_greeting_pending",
   "existing": "Eva-authored independently preserved pure procedure plus ordinary household observation/assessment/STOP/durable delivery/executor",
   "gap": "Exact authored source bound to current authorized source, opt-in and reviewed per-role composition",
@@ -93,7 +93,23 @@
     "positiveGreeting": false,
     "offeredReceipt": false,
     "physicalHearing": null,
-    "ordinaryLaterReuse": false
+    "ordinaryLaterReuse": false,
+    "installedExecutorContract": {
+      "mode": "One explicitly synthetic negative input through actual installed current-authorized procedure/executor; no source event admitted or refreshed",
+      "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+      "wrapperSha256": "b3b414a1281cec8c3978d389f8f8cc70102711fbbd97138be94b3ffc4e70c9db",
+      "executorImage": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+      "sandboxRuns": 1,
+      "exitCode": 0,
+      "action": "none",
+      "reason": "event_binding",
+      "modelCalls": 0,
+      "messages": 0,
+      "cameraCaptures": 0,
+      "databaseWrites": 0,
+      "ordinaryCameraUse": false,
+      "greetingProof": false
+    }
   },
   "ownerActionPending": "A natural camera observation containing a face is required; user was asked once to walk into the doorbell camera view and report hearing. Independent recovery preparation continues.",
   "usage": {
@@ -103,7 +119,8 @@
     "operatorCameraCaptures": 0,
     "developmentModelTokens": null,
     "developmentCreditCost": null,
-    "runtimeCreditCost": null
+    "runtimeCreditCost": null,
+    "runtimeSandboxRuns": 1
   },
   "recoveryCompatibility": {
     "evidence": "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json",
