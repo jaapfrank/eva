@@ -164,7 +164,7 @@ def private_initiative_day_context_current(runtime, context, *, now):
             _identifier, doc, state = found
             if (doc.document_id != item["document_id"] or doc.occurred_at != item["occurred_at"]
                     or doc.retention_mode != "dream" or doc.trust != "direct_user"
-                    or doc.project_id is not None or state == "not_selected"
+                    or doc.project_id is not None
                     or sha256(doc.content.encode("utf-8")).hexdigest() != item["content_sha256"]):
                 return False
         return True

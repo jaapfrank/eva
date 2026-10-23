@@ -1,0 +1,66 @@
+{
+  "task": "E1.8",
+  "recordedAt": "2026-10-23T08:43:52.450393+00:00",
+  "productionFinding": {
+    "naturalReviewAt": "2026-10-23T08:01:59Z",
+    "chosenAttentionAt": "2026-10-23T08:00:00Z",
+    "outcome": "silence; decision reported no resident answer in offered context",
+    "twoRepliesReceivedAround": "2026-10-22T23:08:00Z",
+    "bothCompactedAt": "2026-10-23T00:04:37Z",
+    "dispositions": [
+      "retained",
+      "not_selected"
+    ],
+    "daySourceCountBeforeFix": 0,
+    "privateContentPublished": false
+  },
+  "cause": "UTC calendar-day compaction removed both raw exchanges less than one hour after receipt. Day context separately excluded sources with no durable extracted facts.",
+  "change": "Normal compaction route waits until all cohort members are strictly older than 24 hours. Scoped day-context selection and revalidation admit not_selected without promoting it to retained memory. Erasure and expiration controls unchanged.",
+  "verification": {
+    "baselineMidnightFailures": 2,
+    "baselineZeroFactsFailure": 1,
+    "baselineCombinedFixtureError": "Lifecycle and day-source module fixtures conflict when sharing one reused database; rerun separately, no product claim from setup error.",
+    "installedDayAndApplication": {
+      "passed": 38,
+      "seconds": 8.2
+    },
+    "installedOvernightTransfer": {
+      "passed": 2,
+      "seconds": 4.16,
+      "sequence": "evening reply -> completed dream with retained or not_selected -> morning compaction -> private initiative day context -> source revalidation -> explicit erasure"
+    },
+    "installedLifecycle": {
+      "passed": 15,
+      "seconds": 5.8
+    },
+    "scope": "Exact installed image without source overlay, isolated PostgreSQL and synthetic exchanges; no model calls or production messages."
+  },
+  "installation": {
+    "coreImage": "sha256:2b5266a505113b9f77bbe40eed07d2e5e50dd7e83a1ae1a01539afb44d3e726b",
+    "workerImage": "sha256:b2b03f536496139af0f8f753ddba24e6cf9cc854c50dd6a456e4c6caf3ef9503",
+    "bothHealthy": true,
+    "preexistingProfileMismatch": [
+      "household_research"
+    ],
+    "otherExecutorWorkPreserved": true
+  },
+  "review": {
+    "reviewer": "/root/review_cursor",
+    "verdict": "Final bounded GO after strict cutoff correction and green regressions."
+  },
+  "developmentModelCalls": 0,
+  "runtimeUsageForObservedNaturalReview": {
+    "model_attempts": 1,
+    "tool_calls": 1,
+    "input_tokens": 14840,
+    "output_tokens": 150
+  },
+  "credits": null,
+  "boundaries": [
+    "Already compacted production text cannot be recovered by this fix.",
+    "No new household instruction, message or synthetic conversation inserted into production.",
+    "Database compaction function keeps its older calendar-day lower bound; stricter 24-hour rule is applied by the normal application route.",
+    "Real useful household anticipation and later corrected outcome remain unproven."
+  ],
+  "fullE18Complete": false
+}

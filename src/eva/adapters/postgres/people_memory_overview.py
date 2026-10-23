@@ -487,7 +487,6 @@ class PostgresOwnerMemorySources:
                         data["retention_mode"].astext == "dream",
                         data["evidence_ref"].astext == sa.literal("conversation-reply:") + data["source_ref"].astext,
                         sa.not_(data.has_key("content_compaction")),
-                        c.phase != "memory_not_selected",
                     )
                 if context_conversations is not None:
                     query = query.where(c.phase != "memory_not_selected",

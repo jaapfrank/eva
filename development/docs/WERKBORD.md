@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen
 
-E1.8 blijft open: expliciet stoppen trekt nu ook al gekozen vervolgaandacht van afgerond werk in, met behoud van het resultaat. Kern en werker geïnstalleerd; 11 gerichte proeven op het geïnstalleerde image geslaagd. Dit sluit de gebruikersuitkomst nog niet: echte open bedoeling, tijdig nuttig initiatief, latere uitkomst en doorwerking van correctie blijven de eindvoorwaarden.
+E1.8: echte ochtendopvolging gecontroleerd: Eva gebruikte het zelfgekozen moment om 08:01 UTC, maar miste twee ontvangen antwoorden. Oorzaak: compactie verwijderde gesprekstekst binnen één uur bij UTC-middernacht; nul duurzame feiten sloten recent gesprek eveneens uit. Herstel geïnstalleerd op kern en werker: volledige 24-uurscontext, ook na nul duurzame feiten. Dezelfde geïnstalleerde code doorstaat avond→droom→ochtend→wissen, naast regressies. Oude gecompacteerde tekst niet hersteld. Geen nieuwe planner of synthetische gezinsafspraak.
 
 Klaar wanneer: Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.
 

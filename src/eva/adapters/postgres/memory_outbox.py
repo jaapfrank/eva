@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from dataclasses import dataclass, replace, asdict
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 import hashlib
 import json
 import re
@@ -700,7 +700,7 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             status="completed" if current.state.status == "completed" else "active", data=data)
 
     def compact_day_sources(self, *, now, limit=32):
-        """Compact completed previous-day cohorts under one existing retention fence."""
+        """Compact completed cohorts only after their full 24-hour day context."""
         if (not isinstance(now, datetime) or now.tzinfo is None or now.utcoffset() != UTC.utcoffset(now)
                 or now.microsecond or type(limit) is not int or not 1 <= limit <= 128):
             raise ValueError("private day compaction bounds are invalid")
@@ -728,7 +728,7 @@ class PostgresMemoryOutbox(PostgresScopedRole):
                     raw_event.c.payload["data"].has_key("content"),
                     ~raw_event.c.payload["data"].has_key("content_erasure"),
                     ~raw_event.c.payload["data"].has_key("content_compaction"),
-                    raw_event.c.payload["data"]["occurred_at"].astext < now.strftime("%Y-%m-%dT00:00:00Z"),
+                    raw_event.c.payload["data"]["occurred_at"].astext < (now - timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ"),
                     manifest_event.c.payload["data"]["members"].contains(sa.func.jsonb_build_array(
                         sa.func.jsonb_build_object("document_id", raw_event.c.payload["data"]["document_id"].astext)))))
                 has_erased_member = sa.exists(sa.select(1).select_from(manifest_event.join(raw_event,
@@ -749,7 +749,7 @@ class PostgresMemoryOutbox(PostgresScopedRole):
                 ).order_by(c.updated_at, c.thread_id).limit(limit)))
                 for thread_id in cohorts:
                     batch = self.read_dream_batch(thread_id)
-                    if any(job.document.occurred_at[:10] >= now.strftime("%Y-%m-%d") for job in batch.jobs):
+                    if any(job.document.occurred_at >= (now - timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ") for job in batch.jobs):
                         continue
                     ledger = self._timeline.events(thread_id)
                     ack = [event.payload.get("data") for event in ledger

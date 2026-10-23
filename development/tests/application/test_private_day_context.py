@@ -43,7 +43,7 @@ def test_utf8_day_view_is_bounded_and_keeps_original_source_hashes():
 
 
 @pytest.mark.parametrize("change", ["erased", "changed", "compacted", "not_selected"])
-def test_current_source_change_never_reconstructs_or_accepts_old_text(change):
+def test_source_change_blocks_reuse_but_zero_durable_facts_does_not(change):
     runtime, reader, docs = fixture()
     view = private_initiative_day_context(runtime, now=NOW)
     if change == "erased": docs.clear()
@@ -52,7 +52,7 @@ def test_current_source_change_never_reconstructs_or_accepts_old_text(change):
     else:
         original = reader.document_reference
         reader.document_reference = lambda *a, **k: (*original(*a, **k)[:2], "not_selected")
-    assert private_initiative_day_context_current(runtime, view, now=NOW) is False
+    assert private_initiative_day_context_current(runtime, view, now=NOW) is (change == "not_selected")
 
 
 def test_reader_failure_is_visible_unavailable_not_empty_context():

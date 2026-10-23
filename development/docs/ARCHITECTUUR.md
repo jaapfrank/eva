@@ -34,7 +34,9 @@ is een algemene aanleiding om opnieuw te kijken; het model bepaalt inhoudelijke
 relevantie met de toegelaten bronnen. Technologie verzorgt betrouwbaarheid en grenzen.
 
 Het geheugen heeft één overdracht met twee tijdschalen. De bestaande PostgreSQL-
-gespreksregistratie en duurzame outbox houden de actuele dagcontext beschikbaar.
+gespreksregistratie en duurzame outbox houden de laatste 24 uur gesprekscontext
+beschikbaar. Nul geselecteerde duurzame feiten (`not_selected`) wissen die tijdelijke
+context niet; eigenaar-, bron-, bewaartermijn- en wiscontroles blijven gelden.
 De bestaande koude droom-/reflectieroute bundelt die informatie en gebruikt Hindsight
 voor selectie, vergelijking met bestaande kennis, bijwerken en consolidatie. Herhaling
 zonder nieuwe betekenis levert geen nieuwe actuele herinnering op. Nieuwe informatie,
@@ -55,8 +57,10 @@ geautoriseerde inhoudsvrije wisbewijzen. Ongeldige oude stapvolgordes/tijden bli
 een afzonderlijke diagnose; hash-, bron- of checkpointcorruptie wordt niet vrijgesteld.
 Geheugenzoeken en het bronarchief blijven onafhankelijk bereikbaar.
 De geïnstalleerde bronlevenscyclus bewaart volledige bronontvangsten op het cohort.
-Een scopegebonden PostgreSQL-functie laat vorige-dagtekst van bron/bericht/antwoord
-atomair vervallen. `CompactedPrivateMemorySource` bevat uitsluitend identiteit en
+De bestaande compactieroute wacht totdat alle leden van een voltooid cohort ouder
+zijn dan 24 uur. Daarna laat de scopegebonden PostgreSQL-functie de tekst van
+bron/bericht/antwoord atomair vervallen; UTC-middernacht alleen is geen aanleiding
+meer. De SQL-functie behoudt daarnaast haar eerdere kalenderdagondergrens. `CompactedPrivateMemorySource` bevat uitsluitend identiteit en
 bewijs, geen `.content` of modeltekst. Actuele eigenaarcontrole laat geselecteerde
 native kennis daarmee terugkomen; bewust vergeten verwijdert die kennis afzonderlijk.
 Lezers geven compactmetadata nooit als oorspronkelijk gesprek aan het model.

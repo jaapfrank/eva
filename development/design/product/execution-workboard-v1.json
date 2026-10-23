@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-23T08:31:04.045614+00:00",
+  "lastUpdated": "2026-10-23T08:43:20.482429+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E1.8",
@@ -847,7 +847,7 @@
     "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
     "status": "in_progress",
     "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.",
-    "nextAction": "Rond de oorspronkelijke E1.8-gebruikersuitkomst af via de bestaande geïnstalleerde route; beoordeel echte open bedoelingen en beschikbare bronnen, volg de gekozen aanleiding en uitkomst, zonder nieuwe zijpaden of deelproeven als taakafronding.",
+    "nextAction": "Volg eerstvolgende echte beschikbare gezinsbedoeling en correctie via de herstelde geïnstalleerde dagcontext naar nuttig initiatief en latere uitkomst; huidige oude gesprekstekst is reeds gecompacteerd en mag niet worden verzonnen. E1.8 blijft open tot de oorspronkelijke gebruikersuitkomst is aangetoond.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2992,7 +2992,7 @@
         "now": {
           "taskId": "E1.8",
           "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
-          "summary": "E1.8 blijft open: expliciet stoppen trekt nu ook al gekozen vervolgaandacht van afgerond werk in, met behoud van het resultaat. Kern en werker geïnstalleerd; 11 gerichte proeven op het geïnstalleerde image geslaagd. Dit sluit de gebruikersuitkomst nog niet: echte open bedoeling, tijdig nuttig initiatief, latere uitkomst en doorwerking van correctie blijven de eindvoorwaarden.",
+          "summary": "E1.8: echte ochtendopvolging gecontroleerd: Eva gebruikte het zelfgekozen moment om 08:01 UTC, maar miste twee ontvangen antwoorden. Oorzaak: compactie verwijderde gesprekstekst binnen één uur bij UTC-middernacht; nul duurzame feiten sloten recent gesprek eveneens uit. Herstel geïnstalleerd op kern en werker: volledige 24-uurscontext, ook na nul duurzame feiten. Dezelfde geïnstalleerde code doorstaat avond→droom→ochtend→wissen, naast regressies. Oude gecompacteerde tekst niet hersteld. Geen nieuwe planner of synthetische gezinsafspraak.",
           "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel."
         },
         "next": {
@@ -5930,7 +5930,7 @@
                 "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Rond de oorspronkelijke E1.8-gebruikersuitkomst af via de bestaande geïnstalleerde route; beoordeel echte open bedoelingen en beschikbare bronnen, volg de gekozen aanleiding en uitkomst, zonder nieuwe zijpaden of deelproeven als taakafronding.",
+                "nextAction": "Volg eerstvolgende echte beschikbare gezinsbedoeling en correctie via de herstelde geïnstalleerde dagcontext naar nuttig initiatief en latere uitkomst; huidige oude gesprekstekst is reeds gecompacteerd en mag niet worden verzonnen. E1.8 blijft open tot de oorspronkelijke gebruikersuitkomst is aangetoond.",
                 "ownerInitiativeClarification20261021": {
                   "status": "required_not_yet_proven",
                   "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -5952,8 +5952,8 @@
                   "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "E1.8 blijft open: expliciet stoppen trekt nu ook al gekozen vervolgaandacht van afgerond werk in, met behoud van het resultaat. Kern en werker geïnstalleerd; 11 gerichte proeven op het geïnstalleerde image geslaagd. Dit sluit de gebruikersuitkomst nog niet: echte open bedoeling, tijdig nuttig initiatief, latere uitkomst en doorwerking van correctie blijven de eindvoorwaarden.",
-                "checkedAt": "2026-10-23T08:31:04.045593+00:00"
+                "progress": "E1.8: echte ochtendopvolging gecontroleerd: Eva gebruikte het zelfgekozen moment om 08:01 UTC, maar miste twee ontvangen antwoorden. Oorzaak: compactie verwijderde gesprekstekst binnen één uur bij UTC-middernacht; nul duurzame feiten sloten recent gesprek eveneens uit. Herstel geïnstalleerd op kern en werker: volledige 24-uurscontext, ook na nul duurzame feiten. Dezelfde geïnstalleerde code doorstaat avond→droom→ochtend→wissen, naast regressies. Oude gecompacteerde tekst niet hersteld. Geen nieuwe planner of synthetische gezinsafspraak.",
+                "checkedAt": "2026-10-23T08:43:20.482408+00:00"
               },
               {
                 "id": "E1.9",
@@ -8689,7 +8689,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Rond de oorspronkelijke E1.8-gebruikersuitkomst af via de bestaande geïnstalleerde route; beoordeel echte open bedoelingen en beschikbare bronnen, volg de gekozen aanleiding en uitkomst, zonder nieuwe zijpaden of deelproeven als taakafronding.",
+        "nextAction": "Volg eerstvolgende echte beschikbare gezinsbedoeling en correctie via de herstelde geïnstalleerde dagcontext naar nuttig initiatief en latere uitkomst; huidige oude gesprekstekst is reeds gecompacteerd en mag niet worden verzonnen. E1.8 blijft open tot de oorspronkelijke gebruikersuitkomst is aangetoond.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -11867,7 +11867,7 @@
               "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Rond de oorspronkelijke E1.8-gebruikersuitkomst af via de bestaande geïnstalleerde route; beoordeel echte open bedoelingen en beschikbare bronnen, volg de gekozen aanleiding en uitkomst, zonder nieuwe zijpaden of deelproeven als taakafronding.",
+              "nextAction": "Volg eerstvolgende echte beschikbare gezinsbedoeling en correctie via de herstelde geïnstalleerde dagcontext naar nuttig initiatief en latere uitkomst; huidige oude gesprekstekst is reeds gecompacteerd en mag niet worden verzonnen. E1.8 blijft open tot de oorspronkelijke gebruikersuitkomst is aangetoond.",
               "ownerInitiativeClarification20261021": {
                 "status": "required_not_yet_proven",
                 "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -11889,8 +11889,8 @@
                 "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "E1.8 blijft open: expliciet stoppen trekt nu ook al gekozen vervolgaandacht van afgerond werk in, met behoud van het resultaat. Kern en werker geïnstalleerd; 11 gerichte proeven op het geïnstalleerde image geslaagd. Dit sluit de gebruikersuitkomst nog niet: echte open bedoeling, tijdig nuttig initiatief, latere uitkomst en doorwerking van correctie blijven de eindvoorwaarden.",
-              "checkedAt": "2026-10-23T08:31:04.045593+00:00"
+              "progress": "E1.8: echte ochtendopvolging gecontroleerd: Eva gebruikte het zelfgekozen moment om 08:01 UTC, maar miste twee ontvangen antwoorden. Oorzaak: compactie verwijderde gesprekstekst binnen één uur bij UTC-middernacht; nul duurzame feiten sloten recent gesprek eveneens uit. Herstel geïnstalleerd op kern en werker: volledige 24-uurscontext, ook na nul duurzame feiten. Dezelfde geïnstalleerde code doorstaat avond→droom→ochtend→wissen, naast regressies. Oude gecompacteerde tekst niet hersteld. Geen nieuwe planner of synthetische gezinsafspraak.",
+              "checkedAt": "2026-10-23T08:43:20.482408+00:00"
             },
             {
               "id": "E1.9",
@@ -14626,7 +14626,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Rond de oorspronkelijke E1.8-gebruikersuitkomst af via de bestaande geïnstalleerde route; beoordeel echte open bedoelingen en beschikbare bronnen, volg de gekozen aanleiding en uitkomst, zonder nieuwe zijpaden of deelproeven als taakafronding.",
+      "nextAction": "Volg eerstvolgende echte beschikbare gezinsbedoeling en correctie via de herstelde geïnstalleerde dagcontext naar nuttig initiatief en latere uitkomst; huidige oude gesprekstekst is reeds gecompacteerd en mag niet worden verzonnen. E1.8 blijft open tot de oorspronkelijke gebruikersuitkomst is aangetoond.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",

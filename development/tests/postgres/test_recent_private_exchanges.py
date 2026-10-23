@@ -61,7 +61,7 @@ def test_latest_three_private_day_exchanges_are_available_before_dream(selected_
 
 @pytest.mark.parametrize("reason", ["old", "future", "future_ingress", "old_ingress", "project", "model",
     "legacy", "immediate", "other_person", "wrong_alias_chat", "nonordinary_channel", "work_outcome",
-    "erased", "expired", "ingress_erased", "not_selected", "missing_ingress"])
+    "erased", "expired", "ingress_erased", "missing_ingress"])
 def test_day_projection_filters_unavailable_and_nonordinary_sources_before_limit(selected_private_case, reason):
     case = selected_private_case
     expected = seed(case, "admitted", seconds=20)
@@ -85,13 +85,6 @@ def test_day_projection_filters_unavailable_and_nonordinary_sources_before_limit
     if reason == "erased":
         case.outbox.erase_content(principal_sha256=hashlib.sha256(str(case.owner).encode()).hexdigest(),
             document_id=rejected.document_id, operation_sha256="ad"*32, erased_at=NOW)
-    if reason == "not_selected":
-        timeline = case.outbox._timeline
-        state = timeline.load(case.outbox._thread_id(rejected.document_id))
-        timeline.transition(thread_id=state.thread_id, expected_revision=state.revision,
-            checkpoint_id=state.thread_id+":test-not-selected", operation_id=state.operation_id,
-            occurred_at=NOW, data={"reason":"synthetic ordinary no durable value"},
-            event_type="MEMORY_RETAIN_NOT_SELECTED", phase="memory_not_selected", status="completed")
     assert [doc.document_id for doc,state in case.reader.recent_private_exchanges(now=NOW,limit=1)] == [expected.document_id]
 
 
@@ -144,3 +137,53 @@ def test_exact_day_reference_rechecks_ingress_after_source_selection(selected_pr
     # accept it once its original ingress was erased independently.
     assert case.reader.document_reference(*reference, now=NOW) is not None
     assert case.reader.document_reference(*reference, now=NOW, recent_private_exchange=True) is None
+
+
+def test_zero_durable_facts_still_preserves_recent_conversation(selected_private_case):
+    from types import SimpleNamespace
+    from eva.bootstrap.private_continuity import private_initiative_day_context, private_initiative_day_context_current
+    case = selected_private_case
+    doc = seed(case, "ordinary_reply_without_durable_facts")
+    timeline = case.outbox._timeline
+    state = timeline.load(case.outbox._thread_id(doc.document_id))
+    timeline.transition(thread_id=state.thread_id, expected_revision=state.revision,
+        checkpoint_id=state.thread_id+":not-selected", operation_id=state.operation_id,
+        occurred_at=NOW, data={"reason":"no durable facts"},
+        event_type="MEMORY_RETAIN_NOT_SELECTED", phase="memory_not_selected", status="completed")
+    assert [(d.document_id, s) for d,s in case.reader.recent_private_exchanges(now=NOW)] == [(doc.document_id, "not_selected")]
+    runtime = SimpleNamespace(_owner_memory_sources=lambda: case.reader)
+    context = private_initiative_day_context(runtime, now=NOW)
+    assert context["sources"][0]["retention_state"] == "not_selected"
+    assert private_initiative_day_context_current(runtime, context, now=NOW)
+    assert case.outbox._timeline.load(state.thread_id).phase == "memory_not_selected"
+
+
+@pytest.mark.parametrize("selected", [0, 1])
+def test_evening_reply_reaches_morning_initiative_after_dream(selected_private_case, selected):
+    from types import SimpleNamespace
+    from tests.postgres.test_people_memory_overview import _document
+    from tests.postgres.test_memory_source_lifecycle import complete_dream_exchange
+    from eva.application.memory_audience import MemoryAudience
+    from eva.bootstrap.private_continuity import private_initiative_day_context, private_initiative_day_context_current
+    case = selected_private_case
+    at = NOW - timedelta(hours=12)
+    principal = str(case.owner)
+    conversation = f"dashboard:{case.binding}"
+    message = "evening-reply:" + principal
+    doc = replace(_document(message), tenant_id=case.query.tenant_id,
+        installation_id=case.query.installation_id, principal_id=principal,
+        audience=MemoryAudience.private_person(principal_id=principal), project_id=None,
+        conversation_id=conversation, source_ref=message, evidence_ref="conversation-reply:"+message,
+        document_id=conversation+":exchange:"+message, retention_mode="dream",
+        content="User: The neighbour will handle it tomorrow; no reminder needed.",
+        occurred_at=at.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    f = complete_dream_exchange(case.engine, doc, now=at, selected=selected)
+    assert f.outbox.compact_day_sources(now=NOW) == ()
+    runtime = SimpleNamespace(_owner_memory_sources=lambda: case.reader)
+    view = private_initiative_day_context(runtime, now=NOW)
+    assert [item["text"] for item in view["sources"]] == [doc.content]
+    assert view["sources"][0]["retention_state"] == ("retained" if selected else "not_selected")
+    assert private_initiative_day_context_current(runtime, view, now=NOW)
+    f.outbox.erase_content(principal_sha256=hashlib.sha256(principal.encode()).hexdigest(),
+        document_id=doc.document_id, operation_sha256="cd"*32, erased_at=NOW)
+    assert not private_initiative_day_context_current(runtime, view, now=NOW)

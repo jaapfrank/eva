@@ -22,7 +22,7 @@ def _ready(c):
     doc = replace(_document(message), tenant_id=c.reader._tenant, installation_id=c.reader._installation,
         principal_id=str(c.owner), conversation_id=conv, source_ref=message,
         evidence_ref="conversation-reply:" + message, document_id=f"{conv}:exchange:{message}",
-        content="Selected relevant personal knowledge", occurred_at=(NOW-timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        content="Selected relevant personal knowledge", occurred_at=(NOW-timedelta(days=1, seconds=1)).strftime("%Y-%m-%dT%H:%M:%SZ"),
         audience=MemoryAudience.private_person(principal_id=str(c.owner)), project_id=None, retention_mode="dream")
     case = complete_dream_exchange(c.engine, doc, now=NOW)
     assert len(case.outbox.compact_day_sources(now=NOW)) == 1

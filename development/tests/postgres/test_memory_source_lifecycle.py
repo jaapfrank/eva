@@ -65,7 +65,7 @@ def test_exact_ack_compacts_three_sources_and_replays_without_dispatch(postgres_
     f = _fixture(postgres_engine,tmp_path,selected=selected)
     before = _payloads(f)
     assert f.outbox.compact_day_sources(now=NOW) == ()  # never same UTC day
-    result = f.outbox.compact_day_sources(now=NOW+timedelta(days=1))
+    result = f.outbox.compact_day_sources(now=NOW+timedelta(days=1, seconds=1))
     assert len(result) == 1
     after = _payloads(f)
     proof = after[0].payload["data"]["content_compaction"]
@@ -94,7 +94,7 @@ def test_exact_ack_compacts_three_sources_and_replays_without_dispatch(postgres_
 @pytest.mark.parametrize("bind,finish", [(False,True),(True,False)])
 def test_unknown_or_incomplete_cohort_keeps_raw_source(postgres_engine,tmp_path,bind,finish):
     f = _fixture(postgres_engine,tmp_path,bind=bind,finish=finish)
-    assert f.outbox.compact_day_sources(now=NOW+timedelta(days=1)) == ()
+    assert f.outbox.compact_day_sources(now=NOW+timedelta(days=1, seconds=1)) == ()
     assert all("content_compaction" not in p.payload["data"] for p in _payloads(f))
 
 
@@ -104,12 +104,12 @@ def test_receipt_binding_requires_exact_native_selection(postgres_engine,tmp_pat
     f = _fixture(postgres_engine,tmp_path,bind=False)
     with pytest.raises(RuntimeError):
         f.outbox.bind_dream_receipts(f.batch,(replace(f.receipt,**{field:value}),),now=NOW)
-    assert f.outbox.compact_day_sources(now=NOW+timedelta(days=1)) == ()
+    assert f.outbox.compact_day_sources(now=NOW+timedelta(days=1, seconds=1)) == ()
 
 
 def test_compacted_source_can_be_explicitly_erased_with_proof_preserved(postgres_engine,tmp_path):
     f = _fixture(postgres_engine,tmp_path)
-    when=NOW+timedelta(days=1)
+    when=NOW+timedelta(days=1, seconds=1)
     f.outbox.compact_day_sources(now=when)
     proof=_payloads(f)[0].payload["data"]["content_compaction"]
     result=f.outbox.erase_content(principal_sha256=hashlib.sha256(f.document.principal_id.encode()).hexdigest(),
@@ -127,7 +127,7 @@ def test_compacted_source_can_be_explicitly_erased_with_proof_preserved(postgres
 
 def test_sql_bad_reply_replacement_is_atomic_and_cannot_remove_other_fields(postgres_engine,tmp_path):
     f=_fixture(postgres_engine,tmp_path)
-    f.outbox.compact_day_sources(now=NOW+timedelta(days=1))
+    f.outbox.compact_day_sources(now=NOW+timedelta(days=1, seconds=1))
     events=_payloads(f)
     proof=events[0].payload["data"]["content_compaction"]
     changed={**events[2].payload,"data":{**events[2].payload["data"],"provider":"forged"}}
@@ -145,9 +145,9 @@ def test_legacy_and_already_compacted_cohorts_do_not_starve_later_day(postgres_e
     _,installation=_case(postgres_engine,tmp_path)
     legacy=complete_dream_exchange(postgres_engine,_dream(installation,"legacy"),bind=False)
     first=complete_dream_exchange(postgres_engine,_dream(installation,"first"))
-    assert len(first.outbox.compact_day_sources(now=NOW+timedelta(days=1),limit=1)) == 1
+    assert len(first.outbox.compact_day_sources(now=NOW+timedelta(days=1, seconds=1),limit=1)) == 1
     later=complete_dream_exchange(postgres_engine,_dream(installation,"later"))
-    changed=later.outbox.compact_day_sources(now=NOW+timedelta(days=1),limit=1)
+    changed=later.outbox.compact_day_sources(now=NOW+timedelta(days=1, seconds=1),limit=1)
     assert [r["document_id"] for r in changed] == [later.document.document_id]
     assert "content" in _payloads(legacy)[0].payload["data"]
 
@@ -163,7 +163,7 @@ def test_journal_memory_queue_binding_cannot_point_to_another_source(postgres_en
               "document_id":"other","message_id":f.turn.message_id,"principal_id":f.turn.principal_id})
     before=_payloads(f)
     with pytest.raises(sa.exc.DBAPIError):
-        f.outbox.compact_day_sources(now=NOW+timedelta(days=1))
+        f.outbox.compact_day_sources(now=NOW+timedelta(days=1, seconds=1))
     assert _payloads(f) == before
 
 
@@ -195,10 +195,24 @@ def test_erased_member_keeps_cohort_raw_rest_without_starving_next_cohort(postgr
     outbox.erase_content(principal_sha256=hashlib.sha256(docs[0].principal_id.encode()).hexdigest(),
         document_id=docs[0].document_id,operation_sha256="d"*64,erased_at=NOW)
     # Drain the earlier independent cohort, then prove the mixed erased cohort consumes no slot.
-    assert len(outbox.compact_day_sources(now=NOW+timedelta(days=1),limit=1)) == 1
+    assert len(outbox.compact_day_sources(now=NOW+timedelta(days=1, seconds=1),limit=1)) == 1
     later=complete_dream_exchange(postgres_engine,_dream(installation,"later-after-forget"))
-    changed=outbox.compact_day_sources(now=NOW+timedelta(days=1),limit=1)
+    changed=outbox.compact_day_sources(now=NOW+timedelta(days=1, seconds=1),limit=1)
     assert [r["document_id"] for r in changed] == [later.document.document_id]
     raw=outbox._timeline.events(outbox._thread_id(docs[1].document_id))[0].payload["data"]
     assert raw["content"] == docs[1].content
     assert "content_compaction" not in raw
+
+
+@pytest.mark.parametrize("selected", [0, 1])
+def test_midnight_does_not_remove_previous_evenings_conversation(postgres_engine, tmp_path, selected):
+    _, installation = _case(postgres_engine, tmp_path)
+    at = NOW.replace(hour=23, minute=8)
+    document = replace(_dream(installation, "late-evening"), occurred_at=at.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    f = complete_dream_exchange(postgres_engine, document, now=at, selected=selected)
+    before = _payloads(f)
+    assert f.outbox.compact_day_sources(now=at+timedelta(hours=1)) == ()
+    assert f.outbox.compact_day_sources(now=at+timedelta(hours=23, minutes=59)) == ()
+    assert _payloads(f) == before
+    assert f.outbox.compact_day_sources(now=at+timedelta(hours=24)) == ()
+    assert len(f.outbox.compact_day_sources(now=at+timedelta(hours=24, seconds=1))) == 1
