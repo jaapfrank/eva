@@ -2,7 +2,7 @@
   "contract": "EvaIndependentReview/v1",
   "task": "E4.17 same E4.15 extension recovery package",
   "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-  "status": "large_package_and_native_core_operator_restore_verified_host_function_open",
+  "status": "operator_core_and_complete_inactive_host_data_verified_functional_acceptance_open",
   "verdict": "GO_SCOPED_OPERATOR_NATIVE_CORE_RESTORE_HOST_FUNCTION_PENDING",
   "startedAt": "2026-10-23T20:27:36Z",
   "assetInput": {
@@ -134,8 +134,8 @@
     "proposalReview": "development/reviews/e417-face-assets-proposal-review-20261023.json"
   },
   "packageReview": {
-    "status": "native_core_operator_verified_inactive_host_target_and_input_reviews_scoped",
-    "verdict": "HOST_FUNCTION_AND_FINAL_INSTALLED_OUTCOME_PENDING",
+    "status": "authenticated576_package_and_full_inactive_host_data_verified_runtime_function_open",
+    "verdict": "GO_SCOPED_COMPLETE_INACTIVE_DATA_PREPARATION_HOST_FUNCTION_PENDING",
     "preparation": {
       "currentComponentStage": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/package-staging",
       "stagingReceiptSha256": "6f62431e5d555e846a92ceeadeb8d88dfa82df1f9d659a3ad07ac4e271823cfb",
@@ -1448,7 +1448,8 @@
         "GO only for exact ten opaque copies, original registered source suite and correct V2 configuration/input-map snapshots.",
         "Prospective target admission/client-suite mapping, actual complete authenticated version/full host adapter invocation, runtime API compatibility/ABI/UID/credentials and host behavior remain open.",
         "Reported52309 component_application_runtime/current config mismatch awaits exact original-reference provenance. No compatible WIP substitution or broader client authority is admitted."
-      ]
+      ],
+      "subsequentFullPreparationReview": "authenticated576PackageAndFullHostPreparationReview"
     },
     "actualReferenceConstructorChainReview": {
       "verdict": "GO_SCOPED_ACTUAL_REFERENCE_CAPTURE_AND_STATIC_CONSTRUCTOR_CHAIN_NOT_START",
@@ -1608,6 +1609,128 @@
       "reviewerSdkImportsOrServiceStarts": 0,
       "oldOperatorProofStillV3": true,
       "scope": "Only canonical code/test binding bundle. No new production Docker-lineage, deployed runtime, full host constructor, ABI, service/function or full E417 proof."
+    },
+    "authenticated576PackageAndFullHostPreparationReview": {
+      "reviewedAt": "2026-10-23T23:40:42.040210+00:00",
+      "verdict": "GO_SCOPED_AUTHENTICATED576_PACKAGE_AND_FULL_INACTIVE_HOST_PREPARATION",
+      "completeReceiptSha256": "37dfcc4c1838a566de2dab464edc3d9816a9454002daff1174bd718cc3e4b739",
+      "independentFullHostPayloadReadback": {
+        "completeReceiptSha256": "37dfcc4c1838a566de2dab464edc3d9816a9454002daff1174bd718cc3e4b739",
+        "hostReceiptSha256": "d8710121f4117aff9928b64bbad3c8d8274627d9d7010f2b107929ada1ae04c3",
+        "preparedPayloadFiles": 18067,
+        "closedFilesIncludingReceipt": 18068,
+        "preparedPayloadBytesActuallyStreamHashed": 2014796251,
+        "allExpectedFilesIndependentlyDerivedFromFrozenInputmapAndThreeCaptureInventories": true,
+        "allActualPayloadHashesMatched": true,
+        "privateModesOwnersSingleLinksAndDirectoriesVerified": true,
+        "physicalSdkFiles": 1879,
+        "sdkSourceCounts": {
+          "sdk-supplement": 1825,
+          "bridge": 54
+        },
+        "sdkCopiesAreIndependentInodes": true,
+        "retained576Exact": true,
+        "old566OperationRecordsExact": true,
+        "old139HashSizeRoleModePinsPreserved": true,
+        "frozenV2ConfigurationRawSha256": "98e4f8d0366942fc624bbfa9e2a8a2a0947ec5c7ac7f1ff331baa9cd860ec311",
+        "hostConfigurationEqualsFrozenV2": true,
+        "laterFourReferencesOrTargetCredentialsNotAdopted": true,
+        "activationFlagsFalse": true,
+        "receiptBytes": 4342638,
+        "reviewSeconds": 6.841563,
+        "semanticCoreReadOrEncryptionOrExpansionOrDatabaseOrImportOrStart": false
+      },
+      "independentPackageAndVersionReadback": {
+        "outerManifestSha256": "9be385be65bd7c55c4fed0945bdf072deea9f760a039e0a7f97ed279b46f15fa",
+        "outerManifestBytes": 152894,
+        "allThreeClosedInventoriesAndManifestBytesMatch": true,
+        "threeCopies": [
+          {
+            "root": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/final-authenticated-host-package-20261024/stage",
+            "closedFiles": 739,
+            "payloadBytesFromActualSizes": 1674688575
+          },
+          {
+            "root": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/final-authenticated-host-package-20261024/opened",
+            "closedFiles": 739,
+            "payloadBytesFromActualSizes": 1674688575
+          },
+          {
+            "root": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/final-authenticated-host-package-20261024/materialized-inactive",
+            "closedFiles": 739,
+            "payloadBytesFromActualSizes": 1674688575
+          }
+        ],
+        "allOriginal301OuterPayloadRecordsRetainedExactly": true,
+        "allOriginalCore159ManifestHashBindingsUnchanged": true,
+        "originalInnerArchiveSha256": "ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e",
+        "all576SelectedHashSizeModeRoleTuplesInOuterMatchFrozenMap": true,
+        "originalSourceBindingsAndKeyReferencesMatch": true,
+        "ciphertextBytesActuallyStreamHashed": 1675418020,
+        "ciphertextSha256": "14ff246e058799a11f7216acdd58c63f6fe7f8d1a22cf27b4f55e5b3787c3c32",
+        "ciphertextRegularPrivateSingleLinkAndStable": true,
+        "reportedSealedAndOpenedAuthPlaintextHashesMatch": true,
+        "frozenSnapshotPins": {
+          "inputmap.private.json": "d74468a23db538dd7917ab17a75c1afa3117151ff8cccff69524d44bb037d4f1",
+          "host-preparation.private.json": "98e4f8d0366942fc624bbfa9e2a8a2a0947ec5c7ac7f1ff331baa9cd860ec311",
+          "operator-host-service.private.json": "ebdce6295980a53464b7e0c50e21ae87b00f250337126296c94b2999b0112a18"
+        },
+        "frozenHostConfigurationCanonicalSha256": "f16c39150b838d3607d263f12a95b41deafb9abe4e62ead1dcff5d428f337bd7",
+        "readonly0400V2SnapshotBindingVerified": true,
+        "actualDriverSha256": "ec74d72938c36b592e8964b0cab18a0295dcc90f9ec29ea9e04db01fac9882b5",
+        "actualHelperSha256": "e7e142d1b48417796bc1cd1abe54c8d79d2651b55beac8b08bc1ed20ef45c7bd",
+        "snapshotHandoffSha256": "a2e25c9c4ce39670da0cc266d4659a1270dc2ac7d1b7fc480d75658a283ccde2",
+        "sourceFreezeSha256": "1eded4e5322acccf2792e47b7e539a5e56dade28ce70a3e43030a9ea2907fe3b",
+        "preservedPreflightFailureSha256": "9eb4c2ae21a3f571f3152e1a869260401347f68c99a618d1168eae1b0d1d3c64",
+        "reviewSeconds": 1.423546,
+        "newDecryptionEncryptionExpansionCoreSemanticsOrImportStart": false
+      },
+      "actualExecutionBinding": {
+        "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
+        "turnId": "01a16b03-928f-7260-ad13-995b1297552a",
+        "executionId": "exec-f623e23f-49ae-4afe-aff6-549294a63603",
+        "exitCode": 0,
+        "status": "completed",
+        "commandWallMilliseconds": 1062599,
+        "actualDriverSha256": "ec74d72938c36b592e8964b0cab18a0295dcc90f9ec29ea9e04db01fac9882b5",
+        "completionOutputMatchesCompleteReceipt": true
+      },
+      "actualExistingApiSequence": "write_installation_package/read_installation_package -> AES seal/open -> materialize_installation_package/readback -> prepare_host_extension -> read_host_preparation; source/floor guards retained throughout. Reviewer invoked none of these mutating/heavy semantic operations.",
+      "dependencyBoundaryReceiptSha256": "f1fc1fe1aff483c415125bdaeec228215d03cfef210071236b89a0cae6dd446e",
+      "sourceFreezeSha256": "1eded4e5322acccf2792e47b7e539a5e56dade28ce70a3e43030a9ea2907fe3b",
+      "originalSourceFloorSha256": "e256881a839eb1c706dc48bc68e4e72e15a8a4bb2bbaca9785b89bbfaf4ec6e0",
+      "readonly576Snapshots": {
+        "rawInputmapSha256": "d74468a23db538dd7917ab17a75c1afa3117151ff8cccff69524d44bb037d4f1",
+        "rawHostPreparationSha256": "98e4f8d0366942fc624bbfa9e2a8a2a0947ec5c7ac7f1ff331baa9cd860ec311",
+        "canonicalHostPreparationSha256": "f16c39150b838d3607d263f12a95b41deafb9abe4e62ead1dcff5d428f337bd7",
+        "rawOperatorServiceSha256": "ebdce6295980a53464b7e0c50e21ae87b00f250337126296c94b2999b0112a18",
+        "mode": "0400",
+        "actualV2ArgumentLoadedBeforeWriter": true,
+        "hostReceiptConfigurationEqualsFrozenSnapshot": true,
+        "olderUnsuffixedFilesNotUsed": true
+      },
+      "earlierPrivatePreflightFailure": {
+        "sha256": "9eb4c2ae21a3f571f3152e1a869260401347f68c99a618d1168eae1b0d1d3c64",
+        "cause": "Initial private freeze named portable_runtime_profile instead of actual imported portable_v2_profile. Corrected only the private freeze module path before any archive call; old error retained.",
+        "actualCorrectionExecutionId": "exec-55a1c2a7-27d5-47d5-87de-7c388edf91bd",
+        "sourceOrAcceptanceCriteriaChanged": false
+      },
+      "reportedBuilderWallSeconds": 1057.8111190519994,
+      "reportedBuilderPeakRssKiB": 5205296,
+      "reviewHostHashSeconds": 6.841563,
+      "reviewPackageCipherAndMetadataSeconds": 1.423546,
+      "newModelOrServiceCalls": 0,
+      "prospectiveTargetAdmissionApplied": false,
+      "laterFourConstructorReferencesIncluded": false,
+      "targetCredentialsIncluded": false,
+      "nativeDatabaseImportForThisNewOuterPerformed": false,
+      "fullE417Accepted": false,
+      "limits": [
+        "Actual full inactive data preparation only. The new outer9be385... is distinct from old outere99a...; earlier native-core operator proof belongs to e99a and is not relabelled as a new native database restore. Innerce48 is unchanged.",
+        "No supplied runtime/SDK/scorer/criteria/CPU import or inference, service/thread startup, compatible dynamic ABI, runtime UID/credential function or real household behavior is proven.",
+        "Four later actual-reference constructor files remain separate and not automatically adopted; original base/config constructor mismatch is not claimed functionally repaired by this576 package.",
+        "Prospective target admission/client mapping, source-ledger dependency, saved state/STOP/held/dispatcher boundaries and original-service functional behavior remain open."
+      ]
     }
   },
   "contractRequirements": {
@@ -1711,6 +1834,18 @@
       "verifierOrScorerExecutions": 0,
       "sdkImportsOrModelCalls": 0,
       "serviceStarts": 0,
+      "developmentTokens": null,
+      "developmentCredits": null
+    },
+    "latestCompleteInactiveHostReview": {
+      "newPreparedFilesHashed": 18067,
+      "newPreparedPayloadBytesHashed": 2014796251,
+      "newCiphertextBytesHashed": 1675418020,
+      "hostHashSeconds": 6.841563,
+      "packageCipherAndMetadataSeconds": 1.423546,
+      "newDecryptEncryptExpandOrSemanticCoreRuns": 0,
+      "databaseQueriesOrImports": 0,
+      "targetSdkScorerImportsOrServiceStarts": 0,
       "developmentTokens": null,
       "developmentCredits": null
     }

@@ -847,7 +847,7 @@
     "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
     "status": "in_progress",
     "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
-    "nextAction": "E4.17: de volledige echte pakketpass is geslaagd via writer, AES, open, materialisatie en volledige inactieve hostprepare: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes en 1.879 oorspronkelijke SDK-bestanden. Tester doet onafhankelijke inhoudsreadback; bouwer sluit CPU/loaderstatics en de exacte ledger-/lege-state-/STOP-/dispatchervoorwaarden voor één oorspronkelijke functionele hostproef. Canonical workflow en 13 integratiegevallen zijn gereviewd en gepusht. Kernherstel blijft gecommit onder hold. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
+    "nextAction": "E4.17: het volledige versleutelde pakket en de volledige inactieve hostprepare zijn onafhankelijk goedgekeurd: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes werkelijk gehasht en 1.879 oorspronkelijke SDK-bestanden bewezen. Bouwer sluit de exacte CPU/loader-, ledger-, lege-state-, STOP- en dispatchervoorwaarden en levert één uitvoerbaar plan voor dezelfde oorspronkelijke hostprocedure. Tester beoordeelt die grenzen en daarna het werkelijke functionele resultaat. Canonical workflow met 13 integratiegevallen is gepusht. Kernherstel onder hold blijft afzonderlijk bewezen op de eerdere outer. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -8113,9 +8113,9 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "E4.17: de volledige echte pakketpass is geslaagd via writer, AES, open, materialisatie en volledige inactieve hostprepare: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes en 1.879 oorspronkelijke SDK-bestanden. Tester doet onafhankelijke inhoudsreadback; bouwer sluit CPU/loaderstatics en de exacte ledger-/lege-state-/STOP-/dispatchervoorwaarden voor één oorspronkelijke functionele hostproef. Canonical workflow en 13 integratiegevallen zijn gereviewd en gepusht. Kernherstel blijft gecommit onder hold. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
-                "progress": "Volledige hostprepare werkelijk uitgevoerd na versleuteld herstel; onafhankelijke inhoudsreadback loopt. Echte hostconstructie en hetzelfde proceduregedrag blijven de volgende eindvoorwaarde.",
-                "checkedAt": "2026-10-23T23:35:54.921225+00:00",
+                "nextAction": "E4.17: het volledige versleutelde pakket en de volledige inactieve hostprepare zijn onafhankelijk goedgekeurd: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes werkelijk gehasht en 1.879 oorspronkelijke SDK-bestanden bewezen. Bouwer sluit de exacte CPU/loader-, ledger-, lege-state-, STOP- en dispatchervoorwaarden en levert één uitvoerbaar plan voor dezelfde oorspronkelijke hostprocedure. Tester beoordeelt die grenzen en daarna het werkelijke functionele resultaat. Canonical workflow met 13 integratiegevallen is gepusht. Kernherstel onder hold blijft afzonderlijk bewezen op de eerdere outer. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
+                "progress": "Volledig versleuteld herstel en volledige inactieve hostprepare onafhankelijk op daadwerkelijke bestanden bewezen. Volgende eindvoorwaarde: dezelfde oorspronkelijke procedure werkt op het geïsoleerde hersteldoel met behouden stop/hold-grenzen.",
+                "checkedAt": "2026-10-23T23:40:57.404970+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
                 "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -8740,7 +8740,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.17: de volledige echte pakketpass is geslaagd via writer, AES, open, materialisatie en volledige inactieve hostprepare: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes en 1.879 oorspronkelijke SDK-bestanden. Tester doet onafhankelijke inhoudsreadback; bouwer sluit CPU/loaderstatics en de exacte ledger-/lege-state-/STOP-/dispatchervoorwaarden voor één oorspronkelijke functionele hostproef. Canonical workflow en 13 integratiegevallen zijn gereviewd en gepusht. Kernherstel blijft gecommit onder hold. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
+        "nextAction": "E4.17: het volledige versleutelde pakket en de volledige inactieve hostprepare zijn onafhankelijk goedgekeurd: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes werkelijk gehasht en 1.879 oorspronkelijke SDK-bestanden bewezen. Bouwer sluit de exacte CPU/loader-, ledger-, lege-state-, STOP- en dispatchervoorwaarden en levert één uitvoerbaar plan voor dezelfde oorspronkelijke hostprocedure. Tester beoordeelt die grenzen en daarna het werkelijke functionele resultaat. Canonical workflow met 13 integratiegevallen is gepusht. Kernherstel onder hold blijft afzonderlijk bewezen op de eerdere outer. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
         "finishOrder": [
           "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14097,9 +14097,9 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "E4.17: de volledige echte pakketpass is geslaagd via writer, AES, open, materialisatie en volledige inactieve hostprepare: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes en 1.879 oorspronkelijke SDK-bestanden. Tester doet onafhankelijke inhoudsreadback; bouwer sluit CPU/loaderstatics en de exacte ledger-/lege-state-/STOP-/dispatchervoorwaarden voor één oorspronkelijke functionele hostproef. Canonical workflow en 13 integratiegevallen zijn gereviewd en gepusht. Kernherstel blijft gecommit onder hold. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
-              "progress": "Volledige hostprepare werkelijk uitgevoerd na versleuteld herstel; onafhankelijke inhoudsreadback loopt. Echte hostconstructie en hetzelfde proceduregedrag blijven de volgende eindvoorwaarde.",
-              "checkedAt": "2026-10-23T23:35:54.921225+00:00",
+              "nextAction": "E4.17: het volledige versleutelde pakket en de volledige inactieve hostprepare zijn onafhankelijk goedgekeurd: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes werkelijk gehasht en 1.879 oorspronkelijke SDK-bestanden bewezen. Bouwer sluit de exacte CPU/loader-, ledger-, lege-state-, STOP- en dispatchervoorwaarden en levert één uitvoerbaar plan voor dezelfde oorspronkelijke hostprocedure. Tester beoordeelt die grenzen en daarna het werkelijke functionele resultaat. Canonical workflow met 13 integratiegevallen is gepusht. Kernherstel onder hold blijft afzonderlijk bewezen op de eerdere outer. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
+              "progress": "Volledig versleuteld herstel en volledige inactieve hostprepare onafhankelijk op daadwerkelijke bestanden bewezen. Volgende eindvoorwaarde: dezelfde oorspronkelijke procedure werkt op het geïsoleerde hersteldoel met behouden stop/hold-grenzen.",
+              "checkedAt": "2026-10-23T23:40:57.404970+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
               "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
               "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -14724,7 +14724,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.17: de volledige echte pakketpass is geslaagd via writer, AES, open, materialisatie en volledige inactieve hostprepare: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes en 1.879 oorspronkelijke SDK-bestanden. Tester doet onafhankelijke inhoudsreadback; bouwer sluit CPU/loaderstatics en de exacte ledger-/lege-state-/STOP-/dispatchervoorwaarden voor één oorspronkelijke functionele hostproef. Canonical workflow en 13 integratiegevallen zijn gereviewd en gepusht. Kernherstel blijft gecommit onder hold. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
+      "nextAction": "E4.17: het volledige versleutelde pakket en de volledige inactieve hostprepare zijn onafhankelijk goedgekeurd: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes werkelijk gehasht en 1.879 oorspronkelijke SDK-bestanden bewezen. Bouwer sluit de exacte CPU/loader-, ledger-, lege-state-, STOP- en dispatchervoorwaarden en levert één uitvoerbaar plan voor dezelfde oorspronkelijke hostprocedure. Tester beoordeelt die grenzen en daarna het werkelijke functionele resultaat. Canonical workflow met 13 integratiegevallen is gepusht. Kernherstel onder hold blijft afzonderlijk bewezen op de eerdere outer. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
       "finishOrder": [
         "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -16980,7 +16980,7 @@
       "ownerReviewerCorrection": "Latest direct owner instruction: original chat01a169f2 is sole tester/reviewer; replacement01a16a55-1607 is standby with claims released."
     },
     "e417CurrentDelivery20261023": {
-      "stage": "full_inactive_host_preparation_completed_independent_readback_pending_functional_start_boundaries_open",
+      "stage": "full_inactive_host_preparation_independently_verified_functional_start_boundaries_open",
       "profileAdapter": "src/tools/installation_face_profile_snapshot.py",
       "profileTestsPassed": 10,
       "actualProfileRows": 24,
@@ -17013,7 +17013,7 @@
       "coreValidationStillRunning": false,
       "selectedBytesRemoved": 0,
       "transportLimitChanged": false,
-      "nextAction": "E4.17: de volledige echte pakketpass is geslaagd via writer, AES, open, materialisatie en volledige inactieve hostprepare: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes en 1.879 oorspronkelijke SDK-bestanden. Tester doet onafhankelijke inhoudsreadback; bouwer sluit CPU/loaderstatics en de exacte ledger-/lege-state-/STOP-/dispatchervoorwaarden voor één oorspronkelijke functionele hostproef. Canonical workflow en 13 integratiegevallen zijn gereviewd en gepusht. Kernherstel blijft gecommit onder hold. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
+      "nextAction": "E4.17: het volledige versleutelde pakket en de volledige inactieve hostprepare zijn onafhankelijk goedgekeurd: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes werkelijk gehasht en 1.879 oorspronkelijke SDK-bestanden bewezen. Bouwer sluit de exacte CPU/loader-, ledger-, lege-state-, STOP- en dispatchervoorwaarden en levert één uitvoerbaar plan voor dezelfde oorspronkelijke hostprocedure. Tester beoordeelt die grenzen en daarna het werkelijke functionele resultaat. Canonical workflow met 13 integratiegevallen is gepusht. Kernherstel onder hold blijft afzonderlijk bewezen op de eerdere outer. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
       "independentDesignRecommendation": "explicit_trusted_installation_policy_2GiB_default_and_per_file_1GiB",
       "implementationAuthorized": true,
       "existingBrowserUploadLimitBytes": 67108864,
@@ -17183,12 +17183,16 @@
       "actual576RoundtripReceiptSha256": "37dfcc4c1838a566de2dab464edc3d9816a9454002daff1174bd718cc3e4b739",
       "actual576RoundtripSeconds": 1057.8111190519994,
       "actual576RoundtripPeakRssKiB": 5205296,
-      "actual576RoundtripIndependentReview": "pending",
+      "actual576RoundtripIndependentReview": "GO_SCOPED_AUTHENTICATED576_PACKAGE_AND_FULL_INACTIVE_HOST_PREPARATION",
       "actual576PackageManifestSha256": "9be385be65bd7c55c4fed0945bdf072deea9f760a039e0a7f97ed279b46f15fa",
       "actual576PackagePayloadFiles": 738,
       "actual576PackagePayloadBytes": 1674688575,
       "actual576CiphertextBytes": 1675418020,
-      "actual576CiphertextSha256": "14ff246e058799a11f7216acdd58c63f6fe7f8d1a22cf27b4f55e5b3787c3c32"
+      "actual576CiphertextSha256": "14ff246e058799a11f7216acdd58c63f6fe7f8d1a22cf27b4f55e5b3787c3c32",
+      "actual576IndependentPreparedFilesHashed": 18067,
+      "actual576IndependentPreparedHashSeconds": 6.841563,
+      "actual576IndependentCipherAndMetadataSeconds": 1.423546,
+      "actual576IndependentReportSha256": "3ee611244afe28c075ce063804f4e347b0018180f6e62d307cb657e880004f4d"
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",
