@@ -532,7 +532,7 @@ class HindsightMemoryEngine:
                         ordinary_sources += 1
                     compacted = item.get("raw_state") == "compacted"
                     if compacted:
-                        if (learning or item.get("text") is not None or item.get("truncated") is not False
+                        if (item.get("text") is not None or item.get("truncated") is not False
                                 or not isinstance(item.get("content_sha256"), str)
                                 or not re.fullmatch(r"[0-9a-f]{64}", item["content_sha256"])):
                             raise HindsightProjectionProtocolError("compacted source provenance differs")
@@ -563,6 +563,9 @@ class HindsightMemoryEngine:
                 if (item["source_ref"], item["evidence_ref"]) == reference[1:])
             if selected_record["recorded_at"] != source["occurred_at"]:
                 raise ValueError("learning source time differs")
+            if (source.get("raw_state") == "compacted"
+                    and selected_record["source_text_sha256"] != source["content_sha256"]):
+                raise ValueError("learning compacted source hash differs")
             head = context["records"][0]
             key = (reference[0], head["source_ref"], head["evidence_ref"])
             records = {(reference[0], item["source_ref"], item["evidence_ref"]) for item in context["records"]}

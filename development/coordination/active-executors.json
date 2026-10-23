@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-10-23T10:34:55.687299+00:00",
+  "updatedAt": "2026-10-23T12:18:15.431685+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
   "purpose": "Coordination only; execution-workboard-v1.json remains canonical task status.",
   "executors": {
     "wsl-e18": {
-      "task": "E1.8",
+      "task": "E1.9",
       "reservedPaths": [
         "src/eva/application/free_will.py",
         "src/eva/application/resident_attention.py",
@@ -30,7 +30,15 @@
         "development/tests/postgres/test_compacted_memory_sources.py",
         "development/docs/ARCHITECTUUR.md",
         "development/design/product/execution-workboard-v1.json",
-        "development/docs/WERKBORD.md"
+        "development/docs/WERKBORD.md",
+        "src/eva/application/human_understanding.py",
+        "src/eva/providers/human_understanding_actions.py",
+        "src/eva/adapters/projection/hindsight.py",
+        "src/eva/bootstrap/dashboard_learning.py",
+        "src/eva/bootstrap/private_conversation_resources.py",
+        "development/tests/postgres/test_compacted_learning.py",
+        "development/tests/application/test_learning_contact.py",
+        "development/tests/bootstrap/test_private_conversation_resources.py"
       ],
       "note": "Reservations do not transfer ownership of foreign WIP in these files.",
       "e418AdditionalPathConfirmation": {
@@ -44,6 +52,13 @@
         ],
         "status": "approved_for_import_replacement_only",
         "scope": "Replace historical cutover imports with the shared read-only inspection helper. Preserve signatures, errors, DSN matching, ordering, authority and startup/restore semantics. No deployment or restart approval. Recheck concurrent changes before edits. Existing test may redirect its monkeypatch to the new inspection seam only; inputs and assertions unchanged."
+      },
+      "pendingPreviousTask": "E1.8: one stored sensor read on 2026-10-24T08:00:00Z; not yet executed",
+      "boundedOutcome": "Durable source-bound communication feedback installed in core and worker; live retained and present in later contact. Full E1.9 remains open.",
+      "evidence": "development/evidence/product/e19-durable-feedback-20261023.json",
+      "installation": {
+        "core": "sha256:ebe4ab1f43cbd1770cd0fa7b2eb0c3c6330ca0722e872108183a5f420f0bf3f7",
+        "worker": "sha256:51074546eb3807ff78950f49a389d235e4828555ca0415b425fb0357c0ef56ac"
       }
     },
     "codex-e418": {

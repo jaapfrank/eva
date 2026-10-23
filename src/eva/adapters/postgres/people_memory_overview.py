@@ -291,7 +291,7 @@ class PostgresOwnerMemorySources:
                                _learning_document=True)
             if found is None:
                 return None
-            document, original_text, original_time = found
+            document, original_digest, original_time = found
             try:
                 record = parse_human_understanding_record(
                     document.content, evidence_ref=document.evidence_ref)
@@ -305,8 +305,7 @@ class PostgresOwnerMemorySources:
                     or document.document_id != expected_id
                     or record["recorded_at"] != document.occurred_at
                     or record["recorded_at"] != original_time
-                    or record["source_text_sha256"] != hashlib.sha256(
-                        original_text.encode("utf-8")).hexdigest()
+                    or record["source_text_sha256"] != original_digest
                     or (child is not None and (record["kind"] != child["kind"]
                         or record["recorded_at"] >= child["recorded_at"]))):
                 return None
@@ -557,6 +556,8 @@ class PostgresOwnerMemorySources:
                         original["project_id"].astext.is_not_distinct_from(selected_query.project_id),
                         sa.not_(original.has_key("content_erasure")),
                         sa.or_(original["text"].astext.is_not(None),
+                            sa.and_(data["evidence_ref"].astext.startswith("human-understanding:"),
+                                original.has_key("content_compaction")),
                             sa.and_(data.has_key("content_compaction"),
                                 original["content_compaction"] == data["content_compaction"])),
                     )).add_columns(
@@ -645,13 +646,35 @@ class PostgresOwnerMemorySources:
                         if canonical_sha256(row.ingress_payload) != bytes(row.ingress_payload_sha256).hex():
                             raise PeopleMemoryOverviewError("selected private ingress hash differs")
                         original = row.ingress_payload.get("data")
+                        learning_proof = None
+                        if (is_human_understanding_reference(doc.evidence_ref)
+                                and isinstance(original, dict) and "content_compaction" in original):
+                            # The ordinary exchange and learning record share an ingress.
+                            # Revalidate its still-authorized compacted source, not a
+                            # model-supplied hash or a copy of expired day text.
+                            found = self._read(now=now, limit=1, _connection=conn,
+                                _reference_lookup=(doc.principal_id, doc.source_ref,
+                                    "conversation-reply:" + doc.source_ref))
+                            if found is None or not isinstance(found[1], CompactedPrivateMemorySource):
+                                if _learning_document:
+                                    return None
+                                continue
+                            ordinary = found[1]
+                            proof = ordinary.content_compaction
+                            if (ordinary.conversation_id != doc.conversation_id
+                                    or ordinary.project_id != doc.project_id
+                                    or ordinary.occurred_at != doc.occurred_at
+                                    or original.get("content_compaction") != proof.to_wire()
+                                    or "text" in original or "text_sha256" in original):
+                                raise PeopleMemoryOverviewError("learning compacted source differs")
+                            learning_proof = proof
                         if (not isinstance(original, dict) or original.get("kind") != "conversation_ingress"
                                 or original.get("principal_id") != doc.principal_id
                                 or original.get("conversation_id") != doc.conversation_id
                                 or original.get("message_id") != doc.source_ref
                                 or original.get("project_id") != doc.project_id
                                 or "content_erasure" in original
-                                or (not isinstance(doc, CompactedPrivateMemorySource) and
+                                or (not isinstance(doc, CompactedPrivateMemorySource) and learning_proof is None and
                                     (not isinstance(original.get("text"), str) or not original["text"].strip()))
                                 or (isinstance(doc, CompactedPrivateMemorySource) and
                                     ("text" in original or original.get("content_compaction") != doc.content_compaction.to_wire()
@@ -675,16 +698,21 @@ class PostgresOwnerMemorySources:
                                 "raw_state": "compacted", "compacted_at": doc.content_compaction.compacted_at,
                                 "content_sha256": doc.content_compaction.content_sha256})
                             continue
-                        text = original["text"]
+                        text = original.get("text")
                         if _learning_document:
-                            return doc, text, source_time
-                        truncated = len(text) > 4096
+                            digest = (learning_proof.ingress_text_sha256 if learning_proof else
+                                      hashlib.sha256(text.encode("utf-8")).hexdigest())
+                            return doc, digest, source_time
+                        truncated = text is not None and len(text) > 4096
                         if truncated:
                             suffix = "\n[Fragment; overige oorspronkelijke tekst niet opgenomen.]"
                             text = text[:4096 - len(suffix)] + suffix
                         source = {"source_ref": doc.source_ref, "evidence_ref": doc.evidence_ref,
                             "principal_id": doc.principal_id, "project_id": doc.project_id,
                             "occurred_at": source_time, "text": text, "truncated": truncated}
+                        if learning_proof is not None:
+                            source.update(raw_state="compacted", compacted_at=learning_proof.compacted_at,
+                                content_sha256=learning_proof.ingress_text_sha256)
                         if is_human_understanding_reference(doc.evidence_ref):
                             context = self._learning_context(conn, selected_query,
                                 principal_id=doc.principal_id, source_ref=doc.source_ref,

@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen
+Leren welke hulp, timing en manier van contact echt werken
 
-E1.8: echte privéchat/werker onderzocht zelf beschikbare huisbronnen en vond een ontbrekende sensorbatterijwaarde; actuele GET-bron onafhankelijk gecontroleerd. Na expliciet Codex-vervolgverzoek koos Eva zelf 24 oktober 10:00 Amsterdam voor één opgeslagen leescontrole; planning onafhankelijk teruggelezen. Geen bron-ID/uitkomst voorgezegd, geen apparaatwijziging of extern bericht. Bestaande geïnstalleerde route, geen nieuwe patch. Dit is begeleide praktijkuitvoering, geen spontaan initiatief of reeds uitgevoerde vervolgcontrole.
+Concrete feedbackoverdracht gebouwd en geïnstalleerd in kern en worker. Echte door Codex doorgegeven eigenaarsfeedback wordt nu via de bestaande leeractie opgeslagen en bereikt een latere gewone vraag. Bijstellingen overleven dagtekstcompactie, blijven corrigeerbaar en verdwijnen bij bronwissen. Opslagbevestiging blijft op het contactmodel. Live gemeten: feedback 12,414 s; latere vraag 7,745 s, dus geen claim dat het doel van 1–2 seconden is gehaald. Deze concrete uitkomst is af; volledige E1.9-eindvoorwaarden over nut/timing/hinder blijven open.
 
-Klaar wanneer: Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.
+Klaar wanneer: Een gewone echte bijdrage krijgt een brongebonden beoordeling van uitvoering, ervaren nut, timing en hinder die onzekerheid behoudt. Eva gebruikt dit bij een latere inhoudelijk passende maar niet identieke situatie, met aantoonbaar ander gedrag waar de feedback dat rechtvaardigt. Een mislukte of ongewenste bijdrage leidt tot bijstelling; geen reactie blijft onbekend en geen succesbewijs. Een betekenisvolle onzekerheid kan met een korte natuurlijke vraag worden verkleind. Persoonsverschillen blijven behouden en er is geen beloning voor gesprekstijd of hoeveelheid berichten.
 
 ## Afmaakvolgorde
 

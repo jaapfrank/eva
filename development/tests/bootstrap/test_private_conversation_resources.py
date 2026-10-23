@@ -61,7 +61,7 @@ def test_shared_resources_preserve_consent_and_reread_private_binding(monkeypatc
     current[0] = object()
     assert load() is current[0]
     assert identity.name == "Eva" and identity.maximum_reply_words == 110
-    assert identity.principles == (
+    assert identity.principles[:4] == (
         "Zeg eerlijk wat je wel en niet weet.",
         "Reageer als één persoon, niet als een verzameling scripts.",
         "Beweer een handeling pas na onafhankelijk bewijs.",

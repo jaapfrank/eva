@@ -1,0 +1,127 @@
+{
+  "task": "E1.9",
+  "recordedAt": "2026-10-23T12:16:38.920983+00:00",
+  "boundedOutcome": "Real owner communication feedback is written through the existing source-bound learning action and reaches later private contact context; preserved after day compaction, revised and erased through existing memory boundaries.",
+  "fullTaskCompleted": false,
+  "trigger": "Authorized developer-relayed genuine historical owner feedback via installed private dashboard. No fabricated preference, direct Telegram origin or spontaneous discovery claimed.",
+  "changes": [
+    "Explicit first-write guidance for concrete communication feedback; retain uncertainty, source and scope.",
+    "Typed learning survives ordinary source compaction only with the current exact ordinary compaction proof and original ingress text digest.",
+    "Contact acknowledgement of the learning provider own storage receipt avoids automatic historical recall and work-model handoff.",
+    "Worker learning provider aligned with existing core revision-admission/current-predecessor protections."
+  ],
+  "tests": {
+    "baseline": "New real PostgreSQL lifecycle regression failed at after-compaction learning availability.",
+    "peopleMemoryBatch": "64 passed",
+    "projectionAndComposition": "117 passed",
+    "finalLifecycleAndRevisions": "7 passed, including contact projection, newer correction over compacted ancestor, and erasure of both.",
+    "contactRoute": "6 passed, including foreign action/contract/source/status refusal.",
+    "exactWorkerCandidate": "13 passed (lifecycle, revision/pending/replay, contact).",
+    "overlap": "Counts overlap; not a unique combined total."
+  },
+  "live": {
+    "baseline": {
+      "seconds": 3.753,
+      "provider": "chatgpt-codex:gpt-6-sol",
+      "responseSha256": "ec0e4dec14a55d4671cabe23b7b6e68c9d9c73310dd0fcd534b514372583498a",
+      "sourceCountInReply": 0
+    },
+    "firstInstalled": {
+      "seconds": 24.188,
+      "provider": "chatgpt-codex:gpt-6-astra",
+      "responseSha256": "46929b7538d2e0b19fd8b1e4bd5a30485c189900e1b2be8d81804e57be5e98fd",
+      "sourceCountInReply": 9
+    },
+    "finalFeedback": {
+      "seconds": 12.414,
+      "provider": "chatgpt-codex:gpt-6-sol",
+      "responseSha256": "dfb10b88fbc59863bd155183a21a87a0bb673a98888db0100d5831d70907f8e2",
+      "sourceCountInReply": 1
+    },
+    "laterQuestion": {
+      "seconds": 7.745,
+      "provider": "chatgpt-codex:gpt-6-sol",
+      "responseSha256": "d181a786fabcc89bf539c54bebbb87fd045661189af88f38c6a23190ccc3bada",
+      "sourceCountInReply": 2
+    }
+  },
+  "currentContextReadback": {
+    "retainedSourceBoundEntries": 2,
+    "unboundStyleMirrorUsed": false,
+    "sameOwnerScope": true
+  },
+  "timingInterpretation": "Different real messages, not controlled A/B. Intermediate installed attempt included a provider503 retry. Final feedback used two contact calls; later question one contact call. Current ordinary response exceeds owner1–2second target.",
+  "finalRuntimeTiming": [
+    {
+      "kind": "conversation_preparation_timing",
+      "message_id_sha256": "bed82d825b81e3132f6202d48ecbbba0359694e46385eab89dc0d7ebbd5bc716",
+      "elapsed_ms": 2857,
+      "historical_recall_deferred": true
+    },
+    {
+      "kind": "conversation_model_phase_timing",
+      "message_id_sha256": "bed82d825b81e3132f6202d48ecbbba0359694e46385eab89dc0d7ebbd5bc716",
+      "phase_index": 0,
+      "receipt_count": 0,
+      "elapsed_ms": 5513,
+      "first_content_ms": null,
+      "input_tokens": 12931,
+      "output_tokens": 173,
+      "requested_action": true
+    },
+    {
+      "kind": "conversation_model_phase_timing",
+      "message_id_sha256": "bed82d825b81e3132f6202d48ecbbba0359694e46385eab89dc0d7ebbd5bc716",
+      "phase_index": 1,
+      "receipt_count": 1,
+      "elapsed_ms": 3139,
+      "first_content_ms": 1562,
+      "input_tokens": 12650,
+      "output_tokens": 62,
+      "requested_action": false
+    },
+    {
+      "kind": "conversation_preparation_timing",
+      "message_id_sha256": "c297aa99a5aa5bdc8bf0b10b55f6341db91b1951e1ca7420fb89792d60a10d1e",
+      "elapsed_ms": 2903,
+      "historical_recall_deferred": true
+    },
+    {
+      "kind": "conversation_model_phase_timing",
+      "message_id_sha256": "c297aa99a5aa5bdc8bf0b10b55f6341db91b1951e1ca7420fb89792d60a10d1e",
+      "phase_index": 0,
+      "receipt_count": 0,
+      "elapsed_ms": 4444,
+      "first_content_ms": 3103,
+      "input_tokens": 11475,
+      "output_tokens": 32,
+      "requested_action": false
+    }
+  ],
+  "measuredModelUsage": {
+    "scope": "Final feedback and later question only; development and intermediate runtime calls excluded",
+    "inputTokens": 37056,
+    "outputTokens": 267,
+    "completedModelCalls": 3,
+    "toolCalls": 1,
+    "cost": null
+  },
+  "installation": {
+    "core": {
+      "image": "sha256:ebe4ab1f43cbd1770cd0fa7b2eb0c3c6330ca0722e872108183a5f420f0bf3f7",
+      "health": "healthy"
+    },
+    "worker": {
+      "image": "sha256:51074546eb3807ff78950f49a389d235e4828555ca0415b425fb0357c0ef56ac",
+      "health": "healthy"
+    }
+  },
+  "remaining": [
+    "Full E1.9 still requires source-bound assessment and later useful adaptation for genuine contributions, timing and nuisance. No family acceptance or multiweek personality growth claimed.",
+    "A relevant later reply plus bound context is not isolated causal proof of better style.",
+    "Existing household_research core/worker profile mismatch remains; other compared profiles match.",
+    "One scheduled E1.8 sensor read remains due2026-10-24T08:00:00Z; not executed early."
+  ],
+  "externalMessagesSent": false,
+  "deviceChangesPerformed": false
+}

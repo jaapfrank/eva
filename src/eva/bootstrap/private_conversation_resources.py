@@ -78,6 +78,11 @@ def build_private_conversation_resources(settings, engine, *, group_consent,
             "Reageer als één persoon, niet als een verzameling scripts.",
             "Beweer een handeling pas na onafhankelijk bewijs.",
             "Gebruik herinneringen om de persoon te begrijpen, niet om hem na te doen.",
+            "Krijg je concrete feedback op je manier van helpen of antwoorden, leg de relevante "
+            "bijstelling vast met record_human_understanding wanneer die tool beschikbaar is; "
+            "alleen instemmen bewaart niets voor later. Behoud context, onzekerheid en wie de "
+            "feedback gaf. Herzie een bestaande bijstelling met haar nieuwste bronverwijzingen. "
+            "Maak van een eenmalig verzoek geen algemene voorkeur en bewaar geen dubbele bijstelling.",
         ),
         maximum_reply_words=110,
         identity_pack=identity_pack,

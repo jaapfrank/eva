@@ -838,16 +838,16 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-23T10:40:58.321748+00:00",
+  "lastUpdated": "2026-10-23T12:18:41.393822+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E1.8",
+  "activeTaskId": "E1.9",
   "currentWork": {
-    "id": "E1.8",
-    "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
+    "id": "E1.9",
+    "title": "Leren welke hulp, timing en manier van contact echt werken",
     "status": "in_progress",
-    "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.",
-    "nextAction": "Controleer vanaf 24 oktober 10:00 Amsterdam de werkelijke uitvoering en terugmelding van de opgeslagen eenmalige sensorcontrole. Behoud oude bron als historie en verwerk echte correctie wanneer beschikbaar. Originele E1.8-eindvoorwaarden blijven open; geen extra planning, automatische herhaling of fictieve eigenaarafspraak toevoegen.",
+    "doneWhen": "Een gewone echte bijdrage krijgt een brongebonden beoordeling van uitvoering, ervaren nut, timing en hinder die onzekerheid behoudt. Eva gebruikt dit bij een latere inhoudelijk passende maar niet identieke situatie, met aantoonbaar ander gedrag waar de feedback dat rechtvaardigt. Een mislukte of ongewenste bijdrage leidt tot bijstelling; geen reactie blijft onbekend en geen succesbewijs. Een betekenisvolle onzekerheid kan met een korte natuurlijke vraag worden verkleind. Persoonsverschillen blijven behouden en er is geen beloning voor gesprekstijd of hoeveelheid berichten.",
+    "nextAction": "Gebruik echte feedback op een gewone bijdrage voor de resterende E1.9-beoordeling van nut, timing en hinder; geen reactie blijft onbekend. E1.8-sensorcontrole blijft voor 24 oktober 10:00 Amsterdam ingepland. Vervolg intussen de volgende uitvoerbare overdracht E4.15 volgens afrondingsplan.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2990,10 +2990,10 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E1.8",
-          "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
-          "summary": "E1.8: echte privéchat/werker onderzocht zelf beschikbare huisbronnen en vond een ontbrekende sensorbatterijwaarde; actuele GET-bron onafhankelijk gecontroleerd. Na expliciet Codex-vervolgverzoek koos Eva zelf 24 oktober 10:00 Amsterdam voor één opgeslagen leescontrole; planning onafhankelijk teruggelezen. Geen bron-ID/uitkomst voorgezegd, geen apparaatwijziging of extern bericht. Bestaande geïnstalleerde route, geen nieuwe patch. Dit is begeleide praktijkuitvoering, geen spontaan initiatief of reeds uitgevoerde vervolgcontrole.",
-          "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel."
+          "taskId": "E1.9",
+          "title": "Leren welke hulp, timing en manier van contact echt werken",
+          "summary": "Concrete feedbackoverdracht gebouwd en geïnstalleerd in kern en worker. Echte door Codex doorgegeven eigenaarsfeedback wordt nu via de bestaande leeractie opgeslagen en bereikt een latere gewone vraag. Bijstellingen overleven dagtekstcompactie, blijven corrigeerbaar en verdwijnen bij bronwissen. Opslagbevestiging blijft op het contactmodel. Live gemeten: feedback 12,414 s; latere vraag 7,745 s, dus geen claim dat het doel van 1–2 seconden is gehaald. Deze concrete uitkomst is af; volledige E1.9-eindvoorwaarden over nut/timing/hinder blijven open.",
+          "doneWhen": "Een gewone echte bijdrage krijgt een brongebonden beoordeling van uitvoering, ervaren nut, timing en hinder die onzekerheid behoudt. Eva gebruikt dit bij een latere inhoudelijk passende maar niet identieke situatie, met aantoonbaar ander gedrag waar de feedback dat rechtvaardigt. Een mislukte of ongewenste bijdrage leidt tot bijstelling; geen reactie blijft onbekend en geen succesbewijs. Een betekenisvolle onzekerheid kan met een korte natuurlijke vraag worden verkleind. Persoonsverschillen blijven behouden en er is geen beloning voor gesprekstijd of hoeveelheid berichten."
         },
         "next": {
           "taskId": "F2.1",
@@ -5958,7 +5958,7 @@
               {
                 "id": "E1.9",
                 "title": "Leren welke hulp, timing en manier van contact echt werken",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "scopeOrigin": "entity-development-20261021",
                 "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
@@ -5997,9 +5997,9 @@
                   "openclaw-heartbeat"
                 ],
                 "beyondExistingScope": "Nieuwe gewone-use-uitkomst boven op behouden HUE5/I1.2-deelbewijs; geen heropening of herhaling van die gesloten proef.",
-                "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
+                "assignment": "Begrensde feedbackoverdracht gebouwd, geïnstalleerd en live gebruikt; volledige E1.9 en gezinsacceptatie blijven open.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Bestaande feedback en stijlreflectie verbinden aan compacte brongebonden Personality Delta.",
+                "nextAction": "Gebruik echte feedback op een gewone bijdrage voor de resterende E1.9-beoordeling van nut, timing en hinder; geen reactie blijft onbekend. E1.8-sensorcontrole blijft voor 24 oktober 10:00 Amsterdam ingepland. Vervolg intussen de volgende uitvoerbare overdracht E4.15 volgens afrondingsplan.",
                 "livingHousemateAcceptance": {
                   "specification": "development/design/product/living-housemate-task-scope-20261022.json",
                   "scope": "Leren welke hulp, timing en manier van contact echt werken"
@@ -6009,7 +6009,11 @@
                   "Droomupdate, actuele context, corrigeren/terugdraaien en bronwissen laten doorwerken zonder tweede geheugen of promptstapeling.",
                   "Technische feedbackproef en werkelijk later effect op contact apart aantonen."
                 ],
-                "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
+                "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
+                "progress": "Concrete feedbackoverdracht gebouwd en geïnstalleerd in kern en worker. Echte door Codex doorgegeven eigenaarsfeedback wordt nu via de bestaande leeractie opgeslagen en bereikt een latere gewone vraag. Bijstellingen overleven dagtekstcompactie, blijven corrigeerbaar en verdwijnen bij bronwissen. Opslagbevestiging blijft op het contactmodel. Live gemeten: feedback 12,414 s; latere vraag 7,745 s, dus geen claim dat het doel van 1–2 seconden is gehaald. Deze concrete uitkomst is af; volledige E1.9-eindvoorwaarden over nut/timing/hinder blijven open.",
+                "checkedAt": "2026-10-23T12:18:41.393816+00:00",
+                "evidence": "development/evidence/product/e19-durable-feedback-20261023.json",
+                "independentReview": "development/reviews/e19-durable-feedback-20261023.json"
               },
               {
                 "id": "E1.10",
@@ -8113,13 +8117,13 @@
                   "E4.15",
                   "E4.17"
                 ],
-                "nextAction": "Onafhankelijke review van de concrete bronkandidaat; gedeelde Git-index van andere uitvoerder niet wijzigen. Integreer deze onderhoudsuitkomst in E4.18 zonder de volledige kaart te sluiten.",
+                "nextAction": "Beide begrensde E4.18-onderhoudspunten zijn afgerond en beoordeeld. Vervolg de resterende gebruikte-routecontrole wanneer de concrete E4.15/E4.17-overdracht beschikbaar is; geen nieuwe brede opschoonronde.",
                 "continuityImplementationSteps": [
                   "Consolideer alleen dubbel werk op deze gebruikte route; geen procespopulatie of metabolismeframework."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "Afgesproken containerinspectie-extractie is in de actuele hosttooling toegepast.16gerichte bron-/legacychecks en109unieke kandidaatgevalcontroles geslaagd,1skip. Echte hostinspectie gebruikt de neutrale eigenaar zonder historische overzetmodule; geen daemonherstart of runtimewinst geclaimd.",
-                "checkedAt": "2026-10-23T10:37:37.537828+00:00"
+                "progress": "Containerinspectie blijft afgerond. Ook de negen bestaande offline projectupdatetests staan nu bij de ontwikkeltests: alle negen slagen en worden daar automatisch ontdekt; de pakketselectie bevat de testmodule niet meer. Verzendcode en pakketinstellingen zijn exact behouden. Onafhankelijke review GO; geen Eva-runtime- of installatiewijziging. E4.18 blijft als geheel open.",
+                "checkedAt": "2026-10-23T12:04:37.267938+00:00"
               },
               {
                 "id": "E4.19",
@@ -8691,7 +8695,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Controleer vanaf 24 oktober 10:00 Amsterdam de werkelijke uitvoering en terugmelding van de opgeslagen eenmalige sensorcontrole. Behoud oude bron als historie en verwerk echte correctie wanneer beschikbaar. Originele E1.8-eindvoorwaarden blijven open; geen extra planning, automatische herhaling of fictieve eigenaarafspraak toevoegen.",
+        "nextAction": "Gebruik echte feedback op een gewone bijdrage voor de resterende E1.9-beoordeling van nut, timing en hinder; geen reactie blijft onbekend. E1.8-sensorcontrole blijft voor 24 oktober 10:00 Amsterdam ingepland. Vervolg intussen de volgende uitvoerbare overdracht E4.15 volgens afrondingsplan.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -11897,7 +11901,7 @@
             {
               "id": "E1.9",
               "title": "Leren welke hulp, timing en manier van contact echt werken",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "scopeOrigin": "entity-development-20261021",
               "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
@@ -11936,9 +11940,9 @@
                 "openclaw-heartbeat"
               ],
               "beyondExistingScope": "Nieuwe gewone-use-uitkomst boven op behouden HUE5/I1.2-deelbewijs; geen heropening of herhaling van die gesloten proef.",
-              "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
+              "assignment": "Begrensde feedbackoverdracht gebouwd, geïnstalleerd en live gebruikt; volledige E1.9 en gezinsacceptatie blijven open.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Bestaande feedback en stijlreflectie verbinden aan compacte brongebonden Personality Delta.",
+              "nextAction": "Gebruik echte feedback op een gewone bijdrage voor de resterende E1.9-beoordeling van nut, timing en hinder; geen reactie blijft onbekend. E1.8-sensorcontrole blijft voor 24 oktober 10:00 Amsterdam ingepland. Vervolg intussen de volgende uitvoerbare overdracht E4.15 volgens afrondingsplan.",
               "livingHousemateAcceptance": {
                 "specification": "development/design/product/living-housemate-task-scope-20261022.json",
                 "scope": "Leren welke hulp, timing en manier van contact echt werken"
@@ -11948,7 +11952,11 @@
                 "Droomupdate, actuele context, corrigeren/terugdraaien en bronwissen laten doorwerken zonder tweede geheugen of promptstapeling.",
                 "Technische feedbackproef en werkelijk later effect op contact apart aantonen."
               ],
-              "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
+              "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
+              "progress": "Concrete feedbackoverdracht gebouwd en geïnstalleerd in kern en worker. Echte door Codex doorgegeven eigenaarsfeedback wordt nu via de bestaande leeractie opgeslagen en bereikt een latere gewone vraag. Bijstellingen overleven dagtekstcompactie, blijven corrigeerbaar en verdwijnen bij bronwissen. Opslagbevestiging blijft op het contactmodel. Live gemeten: feedback 12,414 s; latere vraag 7,745 s, dus geen claim dat het doel van 1–2 seconden is gehaald. Deze concrete uitkomst is af; volledige E1.9-eindvoorwaarden over nut/timing/hinder blijven open.",
+              "checkedAt": "2026-10-23T12:18:41.393816+00:00",
+              "evidence": "development/evidence/product/e19-durable-feedback-20261023.json",
+              "independentReview": "development/reviews/e19-durable-feedback-20261023.json"
             },
             {
               "id": "E1.10",
@@ -14052,13 +14060,13 @@
                 "E4.15",
                 "E4.17"
               ],
-              "nextAction": "Onafhankelijke review van de concrete bronkandidaat; gedeelde Git-index van andere uitvoerder niet wijzigen. Integreer deze onderhoudsuitkomst in E4.18 zonder de volledige kaart te sluiten.",
+              "nextAction": "Beide begrensde E4.18-onderhoudspunten zijn afgerond en beoordeeld. Vervolg de resterende gebruikte-routecontrole wanneer de concrete E4.15/E4.17-overdracht beschikbaar is; geen nieuwe brede opschoonronde.",
               "continuityImplementationSteps": [
                 "Consolideer alleen dubbel werk op deze gebruikte route; geen procespopulatie of metabolismeframework."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "Afgesproken containerinspectie-extractie is in de actuele hosttooling toegepast.16gerichte bron-/legacychecks en109unieke kandidaatgevalcontroles geslaagd,1skip. Echte hostinspectie gebruikt de neutrale eigenaar zonder historische overzetmodule; geen daemonherstart of runtimewinst geclaimd.",
-              "checkedAt": "2026-10-23T10:37:37.537828+00:00"
+              "progress": "Containerinspectie blijft afgerond. Ook de negen bestaande offline projectupdatetests staan nu bij de ontwikkeltests: alle negen slagen en worden daar automatisch ontdekt; de pakketselectie bevat de testmodule niet meer. Verzendcode en pakketinstellingen zijn exact behouden. Onafhankelijke review GO; geen Eva-runtime- of installatiewijziging. E4.18 blijft als geheel open.",
+              "checkedAt": "2026-10-23T12:04:37.267938+00:00"
             },
             {
               "id": "E4.19",
@@ -14630,7 +14638,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Controleer vanaf 24 oktober 10:00 Amsterdam de werkelijke uitvoering en terugmelding van de opgeslagen eenmalige sensorcontrole. Behoud oude bron als historie en verwerk echte correctie wanneer beschikbaar. Originele E1.8-eindvoorwaarden blijven open; geen extra planning, automatische herhaling of fictieve eigenaarafspraak toevoegen.",
+      "nextAction": "Gebruik echte feedback op een gewone bijdrage voor de resterende E1.9-beoordeling van nut, timing en hinder; geen reactie blijft onbekend. E1.8-sensorcontrole blijft voor 24 oktober 10:00 Amsterdam ingepland. Vervolg intussen de volgende uitvoerbare overdracht E4.15 volgens afrondingsplan.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",

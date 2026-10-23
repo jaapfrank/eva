@@ -93,6 +93,14 @@ twee gesprekken geen parallelle correcties op een verouderde versie toelaten.
 Een nog niet verwerkte of gewiste opvolger verhindert terugval; hervatten van de
 eigen toegelaten actie blijft mogelijk. Deze E1.7-correctie is op 23 oktober
 geïnstalleerd. Werkelijk meerdaags routineleren blijft afzonderlijk te bewijzen.
+E1.9 koppelt concrete omgangsfeedback aan diezelfde leeractie: instemmen alleen
+is geen opslag. Een opgeslagen bijstelling mag de oorspronkelijke dagtekst overleven;
+de reader controleert dan de nog toegankelijke gewone bron, haar exacte compactiebewijs
+en de oorspronkelijke ingress-teksthash. Hij herstelt geen verlopen tekst. Correctie,
+bronwissen en persoons-/projectgrenzen blijven ook voor deze bijstellingen gelden.
+De eigen opslagreceipt kan op het contactmodel worden bevestigd zonder automatische
+historische zoeking of werkmodeloverdracht; `queued` blijft aangeboden opslag,
+geen voltooide retentie. Kern en achtergrondwerker gebruiken dezelfde leerprovider.
 Dezelfde geheugenzoekroute haalt sinds 23 oktober een ruimer begrensd intern
 bronfeitenantwoord op: 8192 tokens totaal, 2048 per afgeleid inzicht. Het oude
 256-tokenvenster liet aantoonbaar benodigde bronfeiten weg. Dit antwoord dient

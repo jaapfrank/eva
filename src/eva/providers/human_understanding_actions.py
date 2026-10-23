@@ -24,6 +24,14 @@ class HumanUnderstandingActions:
         self.clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
 
     @staticmethod
+    def contact_reply_allowed(turn, receipt):
+        """Acknowledge an existing storage receipt without a work-model handoff."""
+        return (receipt.call.name == ACTION
+            and receipt.output.get("contract") == "EvaHumanUnderstandingAction/v1"
+            and receipt.output.get("source_ref") == turn.message_id
+            and receipt.output.get("status") in {"queued", "storage_refused"})
+
+    @staticmethod
     def conversation_tools():
         return (ConversationToolDescriptor(name=ACTION,
             description="Bewaar een voorlopige persoonsinterpretatie of verwachting op basis van dit echte privébericht. "
