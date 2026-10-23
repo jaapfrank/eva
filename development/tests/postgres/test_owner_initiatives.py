@@ -684,7 +684,7 @@ def test_periodic_private_review_reuses_native_claim_budget_and_owner_context(co
         for _ in range(4):
             assert budget.admit_background_reflection(tenant_id=old_claim.tenant_id,
                 installation_id=old_claim.installation_id, principal_id=old_claim.principal_id, now=NOW).admitted
-    recalled, calls = [], []
+    recalled, calls, preparation_reached = [], [], []
     clock = [NOW + timedelta(minutes=20)]
     class Memory:
         def recall_for_presence(self, query):
@@ -695,7 +695,8 @@ def test_periodic_private_review_reuses_native_claim_budget_and_owner_context(co
             # Ordinary recall searches personal context. The original sensor is
             # still checked below in the stamped model event, not in the search hint.
             assert "Relevant context fixture" not in query.query_text
-            assert "Persoonlijke plannen" in query.query_text
+            assert query.query_purpose == "private_opportunity_review"
+            preparation_reached.append(outcome)
             if outcome == "revoked_during_recall": auth.revoke()
             if outcome == "expired_during_recall": clock[0] += timedelta(minutes=2)
             return object()
@@ -735,6 +736,7 @@ def test_periodic_private_review_reuses_native_claim_budget_and_owner_context(co
         assert failures == ["RuntimeError('lost model response')"]
     assert len(calls) == (0 if outcome in {"budget_denied", "revoked_during_recall", "expired_during_recall"} else 1)
     assert len(recalled) == (0 if outcome == "budget_denied" else 1)
+    assert preparation_reached == ([] if outcome == "budget_denied" else [outcome])
     if outcome in {"revoked_during_recall", "expired_during_recall"}:
         # Existing pre-dispatch recovery bounds preparation, with no model call.
         for _ in range(2):

@@ -105,6 +105,18 @@ def initiative_history(runtime):
                 identifier=outcome.payload["data"].get("work_id")
                 if identifier and any(w.spec.work_id==identifier for w in works):card["work_id"]=identifier
             card["feedback_later_use"]="Geen afzonderlijke latere gedragstoepassing bij deze bijdrage geregistreerd."
+            feedback = next((item for item in reversed(history)
+                if item.event_type == "PERSONAL_INITIATIVE_FEEDBACK"), None)
+            card["feedback_application"] = _feedback_application(conn, owner, timeline, card, feedback, now)
+            if card["feedback_application"] is not None:
+                application = card["feedback_application"]
+                labels = {"unknown": "onbekend", "positive": "positief", "negative": "negatief", "mixed": "gemengd"}
+                card["feedback_later_use"] = (
+                    "Feedback meegewogen in latere afweging: " + application["adjustment"] + " "
+                    + " · ".join(label + ": " + labels[application[key]] for key, label in
+                        (("usefulness", "Nut"), ("timing", "Timing"), ("nuisance", "Hinder")))
+                    + ". Dit is Eva’s afweging; het bewijst nog geen verbetering.")
+
         reflections,reflection_truncated=_reflections(conn,owner,hashes,principals)
         components,component_truncated=_component_records(conn,owner,works,principals)
     mirrors=[];memory=runtime._memory;bank=memory._bank_id(owner._tenant_id,owner._installation_id)
@@ -118,3 +130,33 @@ def initiative_history(runtime):
     return {**page,"contract":"EvaOwnerInitiativeHistory/v1","learning":{"reflections":reflections,
         "reflections_truncated":reflection_truncated,"current_styles":mirrors,"components":components,
         "components_truncated":component_truncated,"meaning":"Echte opgeslagen registraties; een reflectie of voorstel is geen bewezen verbetering. Geen modelproef gestart door deze pagina."}}
+
+
+def _feedback_application(conn, owner, timeline, card, feedback, now):
+    """Read an actual later private decision bound to the current feedback event."""
+    if feedback is None:
+        return None
+    from eva.application.human_understanding import validate_feedback_application
+    if canonical_sha256(feedback.payload) != feedback.payload_sha256:
+        raise RuntimeError("initiative feedback integrity differs")
+    source = {"intent_id": card["intent_id"], "owner_feedback": feedback.payload["data"]["feedback"],
+        "owner_feedback_sha256": feedback.payload_sha256}
+    e = events.c
+    prefix = "sensory:initiative-review:" + hashlib.sha256(str(owner._owner).encode()).hexdigest()[:24] + ":"
+    rows = conn.execute(sa.select(events).where(e.tenant_id == owner._scope.tenant_id,
+        e.installation_id == owner._scope.installation_id, e.thread_id.startswith(prefix),
+        e.event_type.in_(("WILL_DECIDED", "PROACTIVE_EXPRESSION_PREPARED")),
+        e.occurred_at >= feedback.occurred_at, e.occurred_at <= now,
+        e.payload["data"]["feedback_application"]["intent_id"].astext == card["intent_id"],
+        e.payload["data"]["feedback_application"]["feedback_sha256"].astext == feedback.payload_sha256,
+    ).order_by(e.occurred_at.desc()).limit(1)).all()
+    if not rows:
+        return None
+    row = rows[0]
+    data = _data(row)
+    history = timeline.events(row.thread_id)
+    owner._validate_review_source(row.thread_id, history[0], household=False)
+    application = validate_feedback_application(data["feedback_application"], source=source)
+    return {**application, "decided_at": row.occurred_at.isoformat(),
+        "decision_sha256": bytes(row.payload_sha256).hex(),
+        "disposition": data["disposition"], "meaning": "provisional_decision_link_not_proven_improvement"}

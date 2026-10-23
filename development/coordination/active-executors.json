@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-10-23T12:18:15.431685+00:00",
+  "updatedAt": "2026-10-23T13:38:37.899875+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
   "purpose": "Coordination only; execution-workboard-v1.json remains canonical task status.",
   "executors": {
     "wsl-e18": {
-      "task": "E1.9",
+      "task": "E4.15",
       "reservedPaths": [
         "src/eva/application/free_will.py",
         "src/eva/application/resident_attention.py",
@@ -59,6 +59,23 @@
       "installation": {
         "core": "sha256:ebe4ab1f43cbd1770cd0fa7b2eb0c3c6330ca0722e872108183a5f420f0bf3f7",
         "worker": "sha256:51074546eb3807ff78950f49a389d235e4828555ca0415b425fb0357c0ef56ac"
+      },
+      "status": "E1.9 completed and installed; E4.15 current",
+      "updatedAt": "2026-10-23T13:38:37.899875+00:00",
+      "e418StatusIntegrated": {
+        "at": "2026-10-23T13:38:37.899875+00:00",
+        "sourceCommit": "2daf9b8d717ff193120d28e19f006386c3062d6f",
+        "handoffCommit": "b7d6dfefb920666db820d609aaab1c98582a0a66",
+        "applied": "statusProposal fields merged into canonical board and dashboard; E4.18 full task remains open"
+      },
+      "nextParallelScope": {
+        "executor": "codex-e418",
+        "task": "E4.17 preparation",
+        "scope": "Read-only map of current extension/module backup, restore, dependencies and permission handling. Identify existing consumers and one concrete missing handoff for Eva-created code outside core. No implementation, shared source edits, install or restart.",
+        "allowedWritePaths": [
+          "development/design/architecture/e417-extension-restore-ownership-20261023.json"
+        ],
+        "delivery": "Give coordinator current implemented route and narrow missing capability; do not add new framework or alter E4.17 criteria."
       }
     },
     "codex-e418": {

@@ -47,7 +47,25 @@ class InitiativeCompletionDelivery:
                 return "enabled"
             completion = operational_events.alias("completion")
             notice = operational_checkpoints.alias("notice")
-            query = store._query().join(completion, sa.and_(
+            # Private self-chosen work already returns to the existing source-
+            # aware review. That review decides silence/contact; an unconditional
+            # completion notice would bypass its timing and feedback decision.
+            base = store._query()
+            adoption = base.selected_columns.adoption["data"]
+            review = operational_events.alias("private_review_source")
+            private_prefix = "sensory:initiative-review:" + hashlib.sha256(
+                str(store._owner).encode()).hexdigest()[:24] + ":"
+            reviewed_autonomous = sa.exists(sa.select(1).where(
+                review.c.tenant_id == scope.tenant_id,
+                review.c.installation_id == scope.installation_id,
+                review.c.thread_id == adoption["source_thread_id"].astext,
+                review.c.thread_id.startswith(private_prefix),
+                review.c.sequence == 1,
+                review.c.event_type == "SENSORY_EVENT_OBSERVED",
+                review.c.payload["data"]["source"].astext == "initiative-review",
+                review.c.payload["data"]["event_type"].astext == "private_opportunity_review",
+                review.c.payload["data"]["source_event_id"].astext == adoption["source_event_id"].astext))
+            query = base.where(~reviewed_autonomous).join(completion, sa.and_(
                 completion.c.tenant_id == c.tenant_id,
                 completion.c.installation_id == c.installation_id,
                 completion.c.thread_id == c.thread_id,

@@ -92,7 +92,8 @@ def test_only_three_newest_successes_include_results_blocked_stopped_history_rem
         "Synthetic contribution 1", "Synthetic contribution 0", "Synthetic contribution 3"]
     for index in (2, 4, 5):
         item = next(row for row in history if row["title"] == f"Synthetic contribution {index}")
-        assert set(item) == {"title", "question", "phase"}
+        assert item["intent_id"] == values[index][0]
+        assert set(item) == {"intent_id", "title", "question", "phase"}
 
 
 @pytest.mark.parametrize("event_type", ["PERSONAL_PROTOTYPE_COMPLETED", "PERSONAL_INITIATIVE_COMPLETED"])
@@ -106,7 +107,7 @@ def test_latest_completed_artifact_is_used_and_missing_artifact_stays_unchanged(
     assert item["recorded_result"]["content"] == content
     # The original fixture has no artifact; only its old anti-repeat metadata is returned.
     old = next(row for row in sensory.recent_initiatives() if row["phase"] == "personal_stopped")
-    assert set(old) == {"title", "question", "phase"}
+    assert set(old) == {"intent_id", "title", "question", "phase"}
 
 
 @pytest.mark.parametrize("corruption", ["content_hash", "intent"])
@@ -129,4 +130,5 @@ def test_completed_record_without_artifact_keeps_title_question_phase_only(contr
     _phase(timeline, "intent:" + old.intent_id, "completed", "SYNTHETIC_LEGACY_COMPLETED",
         NOW + timedelta(seconds=1))
     assert len(sensory.recent_initiatives()) == 1
-    assert set(sensory.recent_initiatives()[0]) == {"title", "question", "phase"}
+    assert sensory.recent_initiatives()[0]["intent_id"] == old.intent_id
+    assert set(sensory.recent_initiatives()[0]) == {"intent_id", "title", "question", "phase"}

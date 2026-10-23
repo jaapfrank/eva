@@ -161,6 +161,14 @@ class PostgresSensoryEventStore:
             if self._household_binding is not None and self._household_window_active(connection, now=now):
                 return "idle"
             c, e = operational_checkpoints.c, operational_events.c
+            feedback_source = (self._latest_owner_feedback(connection, now=now)
+                               if self._household_binding is None else None)
+            feedback_id = None if feedback_source is None else str(int(canonical_sha256(
+                {"owner_feedback": feedback_source}), 16))
+            if feedback_id is not None and connection.execute(sa.select(c.thread_id).where(
+                    c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
+                    c.thread_id == self._decision_prefix + feedback_id)).first() is not None:
+                feedback_source = None
             from eva.adapters.postgres.initiative_attention import pending_attention, attention_suffix
             from eva.contracts.timestamps import parse_utc_timestamp
             attention = pending_attention(connection, self, now=now)
@@ -254,7 +262,7 @@ class PostgresSensoryEventStore:
                 if pending is not None:
                     return "idle"
             if (latest is not None and completion_source is None and not attention_due
-                    and attention is not None):
+                    and attention is not None and feedback_source is None):
                 return "idle"
             private_capability_context = None
             review_profile = self._private_review_profile
@@ -267,7 +275,7 @@ class PostgresSensoryEventStore:
                     "base_profile": self._private_review_profile,
                     "capability_configuration_sha256": private_capability_context["configuration_sha256"],
                 })
-            if latest is not None and completion_source is None and not attention_due:
+            if latest is not None and completion_source is None and not attention_due and feedback_source is None:
                 profile_changed = (review_profile is not None
                     and self._event_from_thread(latest.thread_id).payload.get("review_profile") != review_profile)
                 if not profile_changed and now - reviewed_at < timedelta(hours=1):
@@ -283,9 +291,13 @@ class PostgresSensoryEventStore:
             source_id = self._decision_prefix.removeprefix("sensory:") + (
                 attention_suffix(attention) if attention_due else
                 completion_id if completion_source is not None else
+                feedback_id if feedback_source is not None else
                 profile_source if profile_source is not None else str(window))
             thread_id = "sensory:" + source_id
             payload = {"review_window": window}
+            if feedback_source is not None and not attention_due and completion_source is None:
+                payload["feedback_source"] = feedback_source
+                payload["review_cause"] = "owner_feedback"
             if review_profile is not None:
                 payload["review_profile"] = review_profile
             if private_capability_context is not None:
@@ -604,7 +616,8 @@ class PostgresSensoryEventStore:
     def cancel_superseded_attention(self, claim, *, now: datetime) -> bool:
         """Cancel only an undispatched due event whose original choice was replaced/stopped."""
         reference = claim.event.payload.get("attention_origin")
-        if reference is None:
+        feedback_source = claim.event.payload.get("feedback_source")
+        if reference is None and feedback_source is None:
             return False
         if not self._context_reviews_only or not claim.thread_id.startswith(self._decision_prefix):
             raise ValueError("attention claim audience differs")
@@ -617,16 +630,21 @@ class PostgresSensoryEventStore:
                                else self._decision_prefix)
             connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                 {"key": schedule_prefix})
-            current = pending_attention(connection, self, now=now, include_consumed=True)
-            cancellation_reason = "attention_replaced_or_origin_stopped"
-            if current == reference and claim.thread_id == self._decision_prefix + attention_suffix(reference):
-                from eva.adapters.postgres.initiative_attention import source_attention_trigger
-                selected_source = claim.event.payload.get("attention_source")
-                fresh = source_attention_trigger(connection, self, reference, now=now)
-                if (not isinstance(selected_source, dict) or selected_source.get("available") is not True
-                        or fresh is not None and fresh["source"]["available"] is True):
+            if feedback_source is not None:
+                if self._latest_owner_feedback(connection, now=now) == feedback_source:
                     return False
-                cancellation_reason = "attention_source_configuration_changed"
+                cancellation_reason = "owner_feedback_replaced_or_expired"
+            else:
+                current = pending_attention(connection, self, now=now, include_consumed=True)
+                cancellation_reason = "attention_replaced_or_origin_stopped"
+                if current == reference and claim.thread_id == self._decision_prefix + attention_suffix(reference):
+                    from eva.adapters.postgres.initiative_attention import source_attention_trigger
+                    selected_source = claim.event.payload.get("attention_source")
+                    fresh = source_attention_trigger(connection, self, reference, now=now)
+                    if (not isinstance(selected_source, dict) or selected_source.get("available") is not True
+                            or fresh is not None and fresh["source"]["available"] is True):
+                        return False
+                    cancellation_reason = "attention_source_configuration_changed"
             transition_timeline_thread(connection, scope, thread_id=claim.thread_id,
                 expected_revision=claim.revision, operation_id=claim.operation_id,
                 checkpoint_id=f"{claim.thread_id}:attention-cancelled:{claim.revision + 1}",
@@ -639,6 +657,12 @@ class PostgresSensoryEventStore:
         if not self._context_reviews_only or not claim.thread_id.startswith(self._decision_prefix):
             return False
         state = self._timeline.load(claim.thread_id)
+        source = claim.event.payload.get("feedback_source")
+        if source is not None:
+            with self._timeline._engine.connect() as connection:
+                self._timeline._scope(connection)
+                if self._latest_owner_feedback(connection, now=now) != source:
+                    return False
         return (state.phase == "will_model_started" and state.status == "active"
                 and state.revision == claim.revision and state.deadline is not None
                 and state.deadline > now)
@@ -1221,6 +1245,10 @@ class PostgresSensoryEventStore:
         *,
         now: datetime,
     ) -> None:
+        if decision.feedback_application is not None or claim.event.payload.get("feedback_source") is not None:
+            if not self._context_reviews_only or self._household_binding is not None:
+                raise ValueError("private feedback cannot enter a shared decision")
+            self._initiative_authorizer()
         if decision.memory_search_context is not None and (not self._context_reviews_only
                 or self._household_binding is not None or claim.event.source != "initiative-review"):
             raise ValueError("private memory search context cannot enter a shared decision")
@@ -1246,7 +1274,8 @@ class PostgresSensoryEventStore:
                 usage=decision.usage, initiative=decision.initiative,
                 source_context_sha256=decision.source_context_sha256,
                 next_attention=decision.next_attention,
-                memory_search_context=decision.memory_search_context)
+                memory_search_context=decision.memory_search_context,
+                feedback_application=decision.feedback_application)
         if decision.disposition == "respond" and self._cooldown_applies(
             claim, decision, now=now
         ):
@@ -1260,6 +1289,7 @@ class PostgresSensoryEventStore:
                 source_context_sha256=decision.source_context_sha256,
                 next_attention=decision.next_attention,
                 memory_search_context=decision.memory_search_context,
+                feedback_application=decision.feedback_application,
             )
         from eva.adapters.postgres.initiative_attention import attention_fields
         attention = (attention_fields(decision.next_attention, now=now) if self._context_reviews_only
@@ -1286,6 +1316,8 @@ class PostgresSensoryEventStore:
                 "provider": decision.provider,
                 "reason": decision.reason,
                 "shadow_mode": True,
+                **({"feedback_application": decision.feedback_application}
+                   if decision.feedback_application is not None else {}),
                 **({"private_contact": private_contact} if private_contact is not None else {}),
                 **attention,
                 **({"source_context_sha256": decision.source_context_sha256}
@@ -1303,7 +1335,8 @@ class PostgresSensoryEventStore:
             transition["data"]["household_binding"] = self._household_binding.to_payload()
         original = self._event_from_thread(claim.thread_id)
         if (original.event_type != "historical_observation_batch" and decision.initiative is None
-                and "next_attention" not in attention):
+                and "next_attention" not in attention and decision.feedback_application is None
+                and original.payload.get("feedback_source") is None):
             self._timeline.transition(**transition)
             return
         # Decision and member coverage commit together. Only the group can
@@ -1311,6 +1344,18 @@ class PostgresSensoryEventStore:
         scope = self._timeline._scope_value
         with self._timeline._engine.begin() as connection:
             self._timeline._scope(connection)
+            try:
+                if original.payload.get("feedback_source") is not None:
+                    self._bind_feedback_application(connection, original.payload["feedback_source"], source_only=True)
+                if decision.feedback_application is not None:
+                    self._bind_feedback_application(connection, decision.feedback_application)
+            except ValueError as error:
+                from eva.application.conversation import ConversationModelUsage
+                if isinstance(decision.usage, ConversationModelUsage):
+                    error.model_usage = decision.usage
+                    error.validation_failure_stage = "sensory_decision"
+                    error.validation_failure_code = "owner_feedback_changed_before_commit"
+                raise
             if "next_attention" in attention:
                 from eva.adapters.postgres.initiative_attention import assign_attention_sequence
                 from eva.adapters.postgres.initiative_attention import bind_attention_source
@@ -1375,6 +1420,65 @@ class PostgresSensoryEventStore:
                 break
         return tuple(result)
 
+    def _latest_owner_feedback(self, connection, *, now):
+        """Latest recent owner response, not a backlog or an inferred satisfaction signal."""
+        scope = self._timeline._scope_value
+        e = operational_events.c
+        adoption = operational_events.alias("feedback_adoption")
+        row = connection.execute(sa.select(e.payload, e.payload_sha256,
+            adoption.c.payload.label("adoption"), adoption.c.payload_sha256.label("adoption_sha"))
+            .join(adoption, sa.and_(adoption.c.tenant_id == e.tenant_id,
+                adoption.c.installation_id == e.installation_id, adoption.c.thread_id == e.thread_id,
+                adoption.c.sequence == 1, adoption.c.event_type == "PERSONAL_INTENT_ADOPTED"))
+            .where(e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+                e.event_type == "PERSONAL_INITIATIVE_FEEDBACK", e.occurred_at <= now,
+                e.occurred_at >= now-timedelta(hours=24),
+                e.payload["data"]["owner_principal_id"].astext == self._initiative_principal_id,
+                adoption.c.payload["data"]["principal_id"].astext == self._initiative_principal_id,
+                adoption.c.payload["data"]["origin"].astext == "eva_initiative")
+            .order_by(e.occurred_at.desc(), e.sequence.desc(), e.event_id.desc()).limit(1)).first()
+        if row is None:
+            return None
+        if (canonical_sha256(row.payload) != bytes(row.payload_sha256).hex()
+                or canonical_sha256(row.adoption) != bytes(row.adoption_sha).hex()
+                or row.payload["data"].get("intent_id") != row.adoption["data"].get("intent_id")):
+            raise ValueError("owner feedback trigger source differs")
+        return {"intent_id": row.payload["data"]["intent_id"],
+                "feedback_sha256": bytes(row.payload_sha256).hex()}
+
+    def _bind_feedback_application(self, connection, application, *, source_only=False):
+        """Serialize current feedback binding with the existing owner feedback writer."""
+        from eva.application.human_understanding import validate_feedback_application
+        scope = self._timeline._scope_value
+        c, e = operational_checkpoints.c, operational_events.c
+        thread = "intent:" + application["intent_id"]
+        owner = connection.execute(sa.select(c.thread_id, e.payload, e.payload_sha256).join(operational_events,
+            sa.and_(e.tenant_id == c.tenant_id, e.installation_id == c.installation_id,
+                e.thread_id == c.thread_id, e.event_type == "PERSONAL_INTENT_ADOPTED"))
+            .where(c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
+                c.thread_id == thread, e.sequence == 1,
+                e.payload["data"]["origin"].astext == "eva_initiative",
+                e.payload["data"]["principal_id"].astext == self._initiative_principal_id)
+            .with_for_update(of=operational_checkpoints)).one_or_none()
+        if (owner is None or canonical_sha256(owner.payload) != bytes(owner.payload_sha256).hex()
+                or owner.payload["data"].get("intent_id") != application["intent_id"]):
+            raise ValueError("feedback source is no longer available")
+        row = connection.execute(sa.select(e.payload, e.payload_sha256).where(
+            e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+            e.thread_id == thread, e.event_type == "PERSONAL_INITIATIVE_FEEDBACK")
+            .order_by(e.sequence.desc()).limit(1)).one_or_none()
+        if (row is None or canonical_sha256(row.payload) != bytes(row.payload_sha256).hex()
+                or row.payload["data"].get("intent_id") != application["intent_id"]
+                or row.payload["data"].get("owner_principal_id") != self._initiative_principal_id):
+            raise ValueError("feedback source differs")
+        if application["feedback_sha256"] != bytes(row.payload_sha256).hex():
+            raise ValueError("feedback source differs")
+        if source_only:
+            return
+        validate_feedback_application(application, source={"intent_id": application["intent_id"],
+            "owner_feedback_sha256": bytes(row.payload_sha256).hex(),
+            "owner_feedback": row.payload["data"].get("feedback")})
+
     def recent_initiatives(self) -> tuple[dict[str, JsonValue], ...]:
         """Bounded owner history and recorded results, never new execution authority."""
         if self._initiative_principal_id is None:
@@ -1398,16 +1502,20 @@ class PostgresSensoryEventStore:
         failure_seen = False
         for row in rows:
             events = self._timeline.events(row.thread_id)
-            feedback = next((event.payload["data"].get("feedback")
+            feedback_event = next((event
                 for event in reversed(events)
                 if event.event_type == "PERSONAL_INITIATIVE_FEEDBACK"), None)
+            feedback = None if feedback_event is None else feedback_event.payload["data"].get("feedback")
+            if feedback_event is not None and canonical_sha256(feedback_event.payload) != feedback_event.payload_sha256:
+                raise RuntimeError("initiative feedback hash differs")
             item = {"intent_id": row.payload["data"]["intent_id"],
                 "title": row.payload["data"]["title"],
                 **({"followup_source": {k: row.payload["data"]["followup_source"][k]
                     for k in ("intent_id", "content_sha256", "event_sha256")}}
                    if "followup_source" in row.payload["data"] else {}),
                 "question": row.payload["data"]["next_exploration"], "phase": row.phase,
-                **({"owner_feedback": feedback} if feedback else {})}
+                **({"owner_feedback": feedback, "owner_feedback_sha256": feedback_event.payload_sha256,
+                    "owner_feedback_at": feedback_event.occurred_at.isoformat()} if feedback else {})}
             if any(event.event_type == "PERSONAL_INITIATIVE_FOLLOWUP_STOPPED" for event in events):
                 item["followup_stopped"] = True
             failure_reader = getattr(self, "_initiative_failure_context_reader", None)

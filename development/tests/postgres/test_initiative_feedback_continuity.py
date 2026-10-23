@@ -38,6 +38,8 @@ def test_feedback_replay_and_reloaded_attention_do_not_restart_stopped_work(revi
     current = next(x for x in factory().recent_initiatives() if x['intent_id'] == intent)
     assert current['owner_feedback'] == feedback
     assert current['phase'] == 'personal_stopped'
-    assert factory().schedule_context_review(now=NOW + timedelta(minutes=5)) == 'idle'
-    assert factory().claim_next(now=NOW + timedelta(minutes=5)) is None
+    assert factory().schedule_context_review(now=NOW + timedelta(minutes=5)) == 'scheduled'
+    claim = factory().claim_next(now=NOW + timedelta(minutes=5))
+    assert claim.event.payload['feedback_source']['intent_id'] == intent
+    assert 'attention_origin' not in claim.event.payload
     assert store._timeline.events('intent:' + intent) == events

@@ -96,8 +96,12 @@ class FreeWillDecision:
     source_context_sha256: str | None = None
     next_attention: NextAttention | None = None
     memory_search_context: dict | None = None
+    feedback_application: dict | None = None
 
     def __post_init__(self) -> None:
+        if self.feedback_application is not None:
+            from eva.application.human_understanding import validate_feedback_application
+            validate_feedback_application(self.feedback_application)
         if self.memory_search_context is not None:
             from eva.contracts.canonical_json import canonical_json_bytes
             if (not isinstance(self.memory_search_context, dict)
@@ -563,7 +567,8 @@ class SensoryDecisionWorker:
                                  else self._memory_principal_resolver())
                     if principal != private_query.principal_id:
                         raise RuntimeError("private memory search owner binding changed")
-                    if callable(cancel_attention) and cancel_attention(claim, now=at):
+                    if (not (model_entered and event.payload.get("feedback_source") is not None)
+                            and callable(cancel_attention) and cancel_attention(claim, now=at)):
                         raise RuntimeError("private memory search attention was cancelled")
                     if not self._store.context_review_claim_is_current(claim, now=at):
                         raise RuntimeError("private memory search claim is no longer current")
@@ -619,6 +624,16 @@ class SensoryDecisionWorker:
                 **({"private_context_search": private_context_search} if private_context_search is not None else {}),
                 **({"private_day_context": deepcopy(day_context)} if day_context is not None else {}),
             )
+            # A changed feedback source after dispatch is a measured rejection,
+            # never a pre-dispatch cancellation or permission to replay the call.
+            if event.payload.get("feedback_source") is not None:
+                if not self._store.context_review_claim_is_current(claim, now=self._current_time(now)):
+                    error = RuntimeError("owner feedback changed before commit")
+                    if isinstance(decision.usage, ConversationModelUsage):
+                        error.model_usage = decision.usage
+                        error.validation_failure_stage = "sensory_decision"
+                        error.validation_failure_code = "owner_feedback_changed_before_commit"
+                    raise error
             # Only actual host lookup output can be committed, never model-supplied metadata.
             if search_context is not None:
                 try:
@@ -635,7 +650,7 @@ class SensoryDecisionWorker:
                 from eva.contracts.canonical_json import canonical_sha256
                 try:
                     self._context_review_authorizer()
-                    if ((callable(cancel_attention) and cancel_attention(claim, now=self._current_time(now)))
+                    if ((event.payload.get("feedback_source") is None and callable(cancel_attention) and cancel_attention(claim, now=self._current_time(now)))
                             or not self._store.context_review_claim_is_current(claim, now=self._current_time(now))
                             or not self._private_day_context_revalidator(deepcopy(day_context), now=self._current_time(now))):
                         raise RuntimeError("private day source changed before commit")

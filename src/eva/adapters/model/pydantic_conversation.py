@@ -634,6 +634,20 @@ def _private_opportunity_tool() -> dict[str, Any]:
         "Beoordeel afzonderlijk of een bericht nu past; geen verplicht initiatief."
     )
     fields = tool["parameters"]["properties"]
+    dimensions = ("usefulness", "timing", "nuisance")
+    assessment = {
+        "intent_id": _schema("Exacte eerdere bijdrage uit prior_private_initiatives.", minLength=1, maxLength=200),
+        "feedback_sha256": _schema("Exacte owner_feedback_sha256 van die bijdrage.", minLength=64, maxLength=64),
+        "adjustment": _schema("Welke concrete verandering brengt deze feedback in je huidige keuze?", minLength=1, maxLength=400),
+    }
+    for dimension in dimensions:
+        assessment[dimension] = _schema(enum=("unknown", "positive", "negative", "mixed"))
+        assessment[dimension + "_quote"] = _schema(
+            "Letterlijk fragment uit owner_feedback dat deze beoordeling draagt; leeg bij unknown.", maxLength=240)
+    fields["feedback_application"] = _schema(
+        "Alleen als echte feedback je huidige keuze verandert; anders null. Voorlopige beoordeling, geen bewezen verbetering.",
+        type_=["object", "null"], additionalProperties=False, required=list(assessment), properties=assessment)
+    tool["parameters"]["required"].append("feedback_application")
     fields["disposition"]["description"] = (
         "Alleen de berichtkeuze: silence of respond. Silence sluit eigen onderzoek "
         "of voorbereiding niet uit."
@@ -2949,7 +2963,7 @@ class PydanticConversationModel:
             raise ConversationModelError("web research artifact is invalid", model_usage=usage) from error
 
     supports_private_context_search = True
-    private_opportunity_profile = "private-person-context-orientation-contract-v11"
+    private_opportunity_profile = "private-person-context-orientation-contract-v12"
 
     def _request_private_opportunity(self, body, search):
         """One optional read through the existing private memory port, then decide.
@@ -3127,6 +3141,19 @@ class PydanticConversationModel:
             "herinnerd verzoek bewijst niet dat er nog een opdracht openstaat. Negatieve "
             "feedback op één bijdrage is geen afwijzing van alle initiatief; gebruik de "
             "concrete reden binnen haar scope. Verzin geen feedback, behoeften of feiten. "
+            "Als echte owner_feedback deze keuze verandert, leg precies die bron en concrete "
+            "bijstelling vast in feedback_application. Beoordeel ervaren nut, timing en hinder "
+            "afzonderlijk: positive betekent nuttig, passend getimed of niet hinderlijk; negative "
+            "het omgekeerde. Onderbouw elke bekende beoordeling met een letterlijk feedbackfragment. "
+            "Geen reactie, uitvoering geslaagd of aflevering bewijst geen ervaren nut: kies unknown "
+            "waar de feedback niets over zegt. Een betekenisvolle onzekerheid mag aanleiding zijn "
+            "voor één korte natuurlijke vraag, nooit een verplicht tevredenheidsrondje. Beloon geen "
+            "gesprekstijd of berichtenaantal. Een beslisverband is nog geen bewezen gedragsverbetering. "
+            "Bij event.payload.feedback_source beoordeel je eerst precies die bijdrage en "
+            "eigenaarsreactie uit prior_private_initiatives, inclusief de echte uitvoerstatus. "
+            "Kies een passende bijstelling, een gerichte vraag of gemotiveerd behoud; geen "
+            "verplicht nieuw project of bericht. Geef een toepasselijke bijstelling mee in "
+            "feedback_application. Een ontbrekende bron blijft onbekend; herhaal geen gestopt werk. "
             "Lees herinneringen binnen hun oorspronkelijke bron en taak: een oude technische "
             "proefbeperking is geen huidige algemene bewonersvoorkeur. Onbevestigde historische "
             "plannen of voorkeuren zijn aanknopingspunten, geen actuele feiten of toestemming. "
@@ -3453,7 +3480,7 @@ class PydanticConversationModel:
             raise rejected("sensory decision response is invalid", "invalid_response")
         arguments = action_call.arguments
         required = {"disposition", "expression", "reason", "urgency"}
-        if not isinstance(arguments, dict) or not required <= set(arguments) <= required | {"initiative", "next_attention"}:
+        if not isinstance(arguments, dict) or not required <= set(arguments) <= required | {"initiative", "next_attention", "feedback_application"}:
             raise rejected("sensory decision fields are invalid", "invalid_fields")
         disposition = arguments["disposition"]
         expression = arguments["expression"]
@@ -3478,6 +3505,17 @@ class PydanticConversationModel:
             raise rejected("personal initiative fields are invalid", "invalid_initiative_fields")
         try:
             from eva.application.resident_attention import NextAttention
+            feedback_application = arguments.get("feedback_application")
+            if feedback_application is not None:
+                from eva.application.human_understanding import validate_feedback_application
+                validate_feedback_application(feedback_application)
+                if event.source != "initiative-review":
+                    raise ValueError("private feedback cannot enter a shared decision")
+                source = next((item for item in initiative_history
+                    if item.get("intent_id") == feedback_application.get("intent_id")), None)
+                if source is None:
+                    raise ValueError("feedback source is unavailable")
+                validate_feedback_application(feedback_application, source=source)
             raw_attention = arguments.get("next_attention")
             next_attention = None if raw_attention is None else NextAttention.from_payload(raw_attention)
             initiative = None if raw_initiative is None else PersonalInitiativeProposal(**raw_initiative)
@@ -3490,6 +3528,7 @@ class PydanticConversationModel:
                 usage=usage,
                 initiative=initiative,
                 next_attention=next_attention,
+                feedback_application=feedback_application,
             )
         except ValueError as error:
             codes = {

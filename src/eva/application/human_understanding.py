@@ -21,6 +21,35 @@ _RECORD_FIELDS = _ARGUMENT_FIELDS | {"version", "source_text_sha256", "recorded_
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
+def validate_feedback_application(value, *, source=None):
+    """One provisional, source-bound explanation of a changed initiative choice."""
+    dimensions = ("usefulness", "timing", "nuisance")
+    fields = {"intent_id", "feedback_sha256", "adjustment"} | set(dimensions) | {
+        key + "_quote" for key in dimensions}
+    if not isinstance(value, dict) or set(value) != fields:
+        raise ValueError("feedback application fields differ")
+    if (not isinstance(value["intent_id"], str) or not 1 <= len(value["intent_id"]) <= 200
+            or not isinstance(value["feedback_sha256"], str)
+            or not _SHA256.fullmatch(value["feedback_sha256"])
+            or not isinstance(value["adjustment"], str)
+            or not 1 <= len(value["adjustment"].strip()) <= 400):
+        raise ValueError("feedback application reference differs")
+    for key in dimensions:
+        rating, quote = value[key], value[key + "_quote"]
+        if (not isinstance(rating, str) or rating not in {"unknown", "positive", "negative", "mixed"}
+                or not isinstance(quote, str) or len(quote) > 240
+                or (rating == "unknown") != (not quote.strip())):
+            raise ValueError("feedback assessment requires actual evidence or unknown")
+    if source is not None:
+        if (source.get("intent_id") != value["intent_id"]
+                or source.get("owner_feedback_sha256") != value["feedback_sha256"]
+                or not isinstance(source.get("owner_feedback"), str)
+                or any(value[key + "_quote"] and value[key + "_quote"] not in source["owner_feedback"]
+                       for key in dimensions)):
+            raise ValueError("feedback assessment source differs")
+    return dict(value)
+
+
 def is_human_understanding_reference(value: object) -> bool:
     return (isinstance(value, str) and value.startswith(EVIDENCE_PREFIX)
             and _SHA256.fullmatch(value[len(EVIDENCE_PREFIX):]) is not None)

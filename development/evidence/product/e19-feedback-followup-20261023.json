@@ -1,0 +1,93 @@
+{
+  "task": "E1.9",
+  "checkedAt": "2026-10-23T13:25:59.223063+00:00",
+  "result": "installed_feedback_followup_used_live",
+  "previousEvidence": "development/evidence/product/e19-durable-feedback-20261023.json",
+  "changes": [
+    "Existing private review consumes each latest real owner-feedback source once; no new queue or memory.",
+    "Exact current source and literal evidence bind provisional usefulness, timing and nuisance assessments. Unknown stays unknown.",
+    "Corrections before dispatch cancel stale review; corrections after dispatch preserve measured usage and reject stale effects; transaction rechecks source even without annotation.",
+    "Existing household dashboard shows source-bound later consideration without claiming proven improvement.",
+    "Only source-bound private self-chosen completions bypass unconditional result delivery and return through existing source-aware review. Ordinary/manual results retain original notifications."
+  ],
+  "validation": {
+    "finalFocusedTests": 33,
+    "additionalAttentionStopAndResultTestsEarlier": 38,
+    "independentReviewer": "/root/review_cursor",
+    "installReview": "GO after final 33 passing tests",
+    "deliveryAndExistingInitiativeTests": 84,
+    "oldFixtureRepair": "Three pre-existing failures came from obsolete exact recall wording; replaced with scope/purpose check and verified preparation branches actually reached. All six variants now pass."
+  },
+  "installation": {
+    "core": "sha256:b8326fc411a35c4897123a1bcac8d61eace4b4717208298878999f0b549e073a",
+    "worker": "sha256:af53bafba71f434f0a9ffde67980cf167b1e43189391a9e40360217a7ff165d9",
+    "status": "running_with_retained_mounts",
+    "activeClaimsChecked": true,
+    "profileComparison": {
+      "matching": [
+        "shared_provider",
+        "public_research",
+        "digital_work"
+      ],
+      "preExistingMismatch": [
+        "household_research"
+      ]
+    }
+  },
+  "live": {
+    "route": "installed private opportunity review with real clock and existing owner feedback; operator invoked normal idle callback",
+    "sourceFabricated": false,
+    "reviewSeconds": 44.633,
+    "modelAttempts": 2,
+    "toolCalls": 2,
+    "inputTokens": 38112,
+    "outputTokens": 584,
+    "credits": null,
+    "assessment": {
+      "usefulness": "negative; model interpretation of lack of visible initiative, not independent content-quality finding",
+      "timing": "unknown",
+      "nuisance": "unknown"
+    },
+    "observedChoice": "Does not request another example task or repeat completed research; discovers available planning capabilities through a new bounded native initiative.",
+    "executionHandoff": "Existing explore_one_interest admitted native work in 0.235 seconds; real worker completed capability discovery at 2026-10-23T13:26:09Z.",
+    "dashboardHttpSeconds": 0.802,
+    "dashboardBindingVerified": true,
+    "execution": {
+      "state": "succeeded",
+      "observedActions": [
+        "manage_connected_services",
+        "discover_connector_tools"
+      ],
+      "toolCalls": 2,
+      "completedModelResponses": 3,
+      "recordedInputTokens": 49593,
+      "recordedOutputTokens": 212,
+      "usageMeasurement": "partial",
+      "credits": null,
+      "result": "No verified calendar reader found in examined registry; no calendar contents read and no new connection requested. Retained conclusion distinguishes missing evidence from absent connection."
+    },
+    "completionReview": {
+      "at": "2026-10-23T13:31:37Z",
+      "operatorInvoked": false,
+      "sameWorkSpecAndResultBindingVerified": true,
+      "disposition": "silence",
+      "furtherInitiative": false,
+      "modelAttempts": 1,
+      "toolCalls": 1,
+      "inputTokens": 19710,
+      "outputTokens": 172,
+      "reasonSummary": "No practical basis for another question, repeated discovery or extra document; missing capability evidence does not prove absent integration."
+    },
+    "deliveryCorrection": {
+      "beforeFix": "Old unconditional completion route had already delivered the empty result despite chosen restraint. Original delivery events retained.",
+      "afterFix": "New installed route excludes private source-bound completions before selection; direct callback idle. Existing receipt means this live idle alone is not causal proof; isolated regressions verify new result suppression and retained ordinary/manual delivery."
+    }
+  },
+  "limits": [
+    "Negative usefulness is Eva’s interpretation of owner feedback about missing visible initiative, not an independent assessment of research quality. Timing and nuisance remain unknown.",
+    "Feedback review and execution handoff were operator-invoked normal callbacks; exact later completion review occurred in the background. No claim that all initiation timing was spontaneous.",
+    "Prior automatic empty-result notification is retained as failure evidence; correction is installed and tested.",
+    "Family benefit over time, voice latency, and full project acceptance are not established by this task.",
+    "Earlier winter-time research failure and pre-existing household-research profile mismatch remain separate investigated limitations; no automatic replay."
+  ]
+}
