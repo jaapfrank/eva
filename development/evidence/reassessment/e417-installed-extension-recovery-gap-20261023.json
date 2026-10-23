@@ -1,8 +1,8 @@
 {
   "contract": "EvaE417InstalledExtensionRecoveryGap/v1",
   "task": "E4.17 dependencies of installed E4.15 optional extension",
-  "checkedAt": "2026-10-23T18:38:55.368878+00:00",
-  "status": "scoped_readonly_capture_plan_completed_transfers_pending",
+  "checkedAt": "2026-10-23T19:42:52.025507+00:00",
+  "status": "selected_host_capture_binding_review_and_isolated_cpu_dependency_candidate_in_progress",
   "scope": [
     "Existing isolated procedure executor",
     "Existing optional local face backend, model assets, Python environment and profile store",
@@ -69,5 +69,37 @@
     "runtimeChanges": 0,
     "creditCosts": null
   },
-  "integration": "Coordinator integrates workboard/dashboard/Git and selects one missing actual transfer. Optional voice code and old household research profile mismatch remain unchanged."
+  "integration": "Coordinator integrates workboard/dashboard/Git and selects one missing actual transfer. Optional voice code and old household research profile mismatch remain unchanged.",
+  "currentInstalledImageEvidence": "development/evidence/reassessment/e415-batch-installed-image-preservation-20261023.json",
+  "selectedHostCapture": {
+    "originalProposalSha256": "cc0c4d182e5fdc36fca85332653f94f1e58c4440e49cb1e18e2773cd12c43176",
+    "originalProposalReview": "development/reviews/e417-executor-host-capture-proposal-review-20261023.json",
+    "originalExecutionVerdict": "NO_GO",
+    "selectedFixedFiles": 13,
+    "distributionMetadataFiles": 99,
+    "selectedPayloadBytes": 885956,
+    "addendumSha256": "f7560d316dc28b191350d689c574cd2cd061188a7091d75dc7fac5206e1df822",
+    "addendumReview": "development/reviews/e417-executor-host-capture-addendum-review-20261023.json",
+    "localCapturePerformed": false,
+    "packageIntegrationReady": false,
+    "transferAllowedBeforeExistingEncryptedTransport": false,
+    "sourceClosureComplete": false,
+    "loadedProcessAttestation": false
+  },
+  "faceAssetPreparation": {
+    "proposalSha256": "50834d99f282f5ede89bae46e935ca704ecdce113e19cb9d73228a1f933eb8a5",
+    "selectedDiskFiles": 13,
+    "pinnedOnnxModels": 2,
+    "modelBytes": 191307687,
+    "installedDistributions": 72,
+    "recordOwnedRegularFiles": 29626,
+    "statPayloadBytes": 8146513623,
+    "existingPackageByteLimit": 1073741824,
+    "fullEnvironmentFitsUnproven": true,
+    "compressionMeasured": false,
+    "modelRecopyOrHashPerformed": false,
+    "faceOrLegacyDbValuesRead": false,
+    "isolatedCpuCandidate": "assigned_existing_pinned_bytes_only_no_live_replacement"
+  },
+  "nextTransfer": "Finish exact 112-file operator-private host capture binding and independently verify local bytes. Build only an isolated minimal CPU dependency candidate from existing versions to resolve the measured8.15GB/1GiB gap; preserve current environment. Actual current full package/trust/key/DB/biometric capture and clean-PC activation remain unproven."
 }

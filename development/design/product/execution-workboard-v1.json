@@ -8109,13 +8109,13 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "Coördinator: verbind de bestaande echte E4.15-uitbreiding en lever de daadwerkelijke configuratie-, data-, dependency-, rechten-/pauze- en laatste-werkende-versie-eigenaren over. Hergebruik de nu bewezen bestaande herstelroute; geen nieuwe synthetische proef of tweede pakketformaat.",
+                "nextAction": "Root rondt geselecteerde private hostbytecapture en onafhankelijke controle af. Uitvoerder bouwt geïsoleerde passende CPU-dependencykandidaat uit bestaande gepinde bytes; huidige omgeving behouden. Daarna pas concrete actuele pakket-/trust-/data-/rechtenoverdracht, geen nieuw formaat of fictieve schoon-pc-claim.",
                 "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
-                "checkedAt": "2026-10-23T16:37:20.668392+00:00",
+                "checkedAt": "2026-10-23T19:42:52.025507+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json",
                 "latestIndependentReview": "development/reviews/e417-e415-binding-materialization-review-20261023.json",
-                "latestBoundedOutcome": "Exacte nieuwe bron/configuratie/review/uitvoerderverwijzing via bestaande rollen inactief hersteld op expliciet oude/synthetische corefixture. Vier nieuwe inputhashes/modi/owners geverifieerd; geen actuele volledige backup, schoon-pc-herstel, activering of E4.17-afronding.",
+                "latestBoundedOutcome": "Actuele batchkern/worker en afzonderlijke executorimage native bewaard en beoordeeld; volledige opname/herstel blijft open. Exact geselecteerde hostcapture112files/885956bytes wacht op finale instructiebinding. Face-omgeving meet8.15GB aan geïnstalleerde pakketbestanden tegenover bestaande1GiB-pakketgrens; geïsoleerde CPU-dependencykandidaat uit bestaande bytes toegewezen, geen livevervanging of data-/secrettransport.",
                 "installedImagePreservationEvidence": "development/evidence/reassessment/e415-installed-image-preservation-20261023.json",
                 "installedImagePreservationReview": "development/reviews/e415-installed-image-preservation-review-20261023.json",
                 "executorImagePreservationEvidence": "development/evidence/reassessment/e415-executor-image-preservation-20261023.json",
@@ -14086,13 +14086,13 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "Coördinator: verbind de bestaande echte E4.15-uitbreiding en lever de daadwerkelijke configuratie-, data-, dependency-, rechten-/pauze- en laatste-werkende-versie-eigenaren over. Hergebruik de nu bewezen bestaande herstelroute; geen nieuwe synthetische proef of tweede pakketformaat.",
+              "nextAction": "Root rondt geselecteerde private hostbytecapture en onafhankelijke controle af. Uitvoerder bouwt geïsoleerde passende CPU-dependencykandidaat uit bestaande gepinde bytes; huidige omgeving behouden. Daarna pas concrete actuele pakket-/trust-/data-/rechtenoverdracht, geen nieuw formaat of fictieve schoon-pc-claim.",
               "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
-              "checkedAt": "2026-10-23T16:37:20.668392+00:00",
+              "checkedAt": "2026-10-23T19:42:52.025507+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
               "latestEvidence": "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json",
               "latestIndependentReview": "development/reviews/e417-e415-binding-materialization-review-20261023.json",
-              "latestBoundedOutcome": "Exacte nieuwe bron/configuratie/review/uitvoerderverwijzing via bestaande rollen inactief hersteld op expliciet oude/synthetische corefixture. Vier nieuwe inputhashes/modi/owners geverifieerd; geen actuele volledige backup, schoon-pc-herstel, activering of E4.17-afronding.",
+              "latestBoundedOutcome": "Actuele batchkern/worker en afzonderlijke executorimage native bewaard en beoordeeld; volledige opname/herstel blijft open. Exact geselecteerde hostcapture112files/885956bytes wacht op finale instructiebinding. Face-omgeving meet8.15GB aan geïnstalleerde pakketbestanden tegenover bestaande1GiB-pakketgrens; geïsoleerde CPU-dependencykandidaat uit bestaande bytes toegewezen, geen livevervanging of data-/secrettransport.",
               "installedImagePreservationEvidence": "development/evidence/reassessment/e415-installed-image-preservation-20261023.json",
               "installedImagePreservationReview": "development/reviews/e415-installed-image-preservation-review-20261023.json",
               "executorImagePreservationEvidence": "development/evidence/reassessment/e415-executor-image-preservation-20261023.json",

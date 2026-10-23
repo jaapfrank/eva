@@ -1,0 +1,114 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.17 selected executor-host capture addendum and exact script review",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T19:42:23.037186+00:00",
+  "verdict": "GO",
+  "addendumContractVerdict": "GO",
+  "scriptVerdict": "GO",
+  "scope": "Only the original two addendum conditions and exact single-read correction of the reviewed local112-file capture script. Both original proposal findings and the single script plan-byte binding finding are resolved. GO permits only the bounded root-coordinated local selected-byte stage; no capture performed by reviewer and no package, encryption, transfer, service, restore or full-host readiness.",
+  "bindings": {
+    "addendumPath": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/executor-host-capture-addendum.private.json",
+    "addendumSha256": "f7560d316dc28b191350d689c574cd2cd061188a7091d75dc7fac5206e1df822",
+    "scriptPath": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/capture_executor_host_selected.py",
+    "scriptSha256": "b1f1293137455f9b65f5b053db53c6faddef235c60b9c83c7a4fdd20d9fc9e3a",
+    "originalProposalSha256": "cc0c4d182e5fdc36fca85332653f94f1e58c4440e49cb1e18e2773cd12c43176",
+    "originalNoGoReviewSha256": "09aabc806ba942d6f3483b2267a5d1b7ba129fa140159f94fee1549cd864deab",
+    "allOperationListSha256": "b8bbf6db3cb6b35b9ea3cab9ec649bdae5852555448855bceba94cb4aa9e055c",
+    "metadataOperationListSha256": "27df5f1f2375f3879e291247e03006044422f269408d5b8c7a217c9f13807a6f"
+  },
+  "resolvedOriginalFindings": [
+    {
+      "id": "opaque-configuration-encryption-not-bound",
+      "resolvedInAddendum": true,
+      "evidence": "Both opaque configs treated entirely secret; local operator0700 root,0400 config/markers,0600 artifacts, no parsing/printing. transferGate.allowedNow=false/plaintextTransferAllowed=false/packageIntegrationReady=false. Before any transfer, existing seal_portable_archive exact module46803240fd1a3a43c98ebd227e41bca0001b4a42a5aebdef4e08e9e3f4549162, read_installation_package under exact real identity trust and separate operator key binding are mandatory. No key/passphrase values in plan/argv/payload/logs and no synthetic fixture as current."
+    },
+    {
+      "id": "metadata-only-operations-not-bound",
+      "resolvedInAddendum": true,
+      "evidence": "All112 operations independently equal exact13 original fixed files plus99 METADATA/RECORD/WHEEL files. Both operation-list SHA256 values independently reproduced: b8bbf6db3cb6b35b9ea3cab9ec649bdae5852555448855bceba94cb4aa9e055c and27df5f1f2375f3879e291247e03006044422f269408d5b8c7a217c9f13807a6f.885956bytes total. Existing destinations/roles/modes only. Larger venv/RECORD-referenced payload explicitly excluded."
+    }
+  ],
+  "targetBoundary": {
+    "captureParent": "/var/lib/eva2/e415-executor-host-stage-20261023",
+    "absentTarget": "/var/lib/eva2/e415-executor-host-stage-20261023/selected-host",
+    "bothObservedAbsentBeforeCapture": true,
+    "observationLimit": "Filesystem metadata only; script must enforce absence when invoked. No target created by reviewer.",
+    "fixedLocalSelectedByteStageOnly": true
+  },
+  "scriptAssessment": {
+    "accepted": "Exact plan/proposal/implementation hash pins;112-operation/byte bounds and aggregate operation hash; existing _role check; absolute regular non-symlink source preflight with pinned size/mode/owner and stable fd identity; bounded expectedBytes+1 reads and per-file SHA256; private absent parent/target and O_EXCL/O_NOFOLLOW destination writes, fsync and role modes; end-source metadata and destination-byte checks; single attempt with retained partial target; no source module execution, package writer call, encryption, transfer, service, restore, camera or model call.",
+    "privacy": "Opaque payloads only passed as raw local bytes. Receipts/output contain paths/hashes/counts/error type and bounded traceback function/line metadata, not payload values. Tokens and Environment values are not parsed. No package or encryption action in this script.",
+    "auditHookLimit": "Source contains a deny hook for named subprocess/exec/socket-connect events. This is defense in depth for this reviewed code, not a general OS sandbox or a claim that arbitrary future imported code cannot perform external effects.",
+    "rootExecutionCondition": "Root must separately bind exact reviewed script/addendum/review hashes and root private destination before invocation. Original proposal and NO_GO remain byte-exact. No automatic retry after partial state."
+  },
+  "findings": [],
+  "acceptanceLimits": [
+    "No capture, package creation/encryption/export, transfer, materialization, service action, restore, DB action, venv/executor execution, model/camera or Git action performed by reviewer.",
+    "No selected source/configuration payload or Environment values read by reviewer; only proposal/addendum/script/previous review and required contract source metadata were examined.",
+    "Full venv/runtime/source/nativeOS closure and an exact real installation-package base/trust remain unresolved and outside this112-file step. Package integration/transfer stay forbidden until separately bound existing gates are met.",
+    "No runnable host, loaded-process attestation, current full/coherent backup, LastWorking/fullRecovery/cleanPcRestore, physical greeting or full-card/project completion claim."
+  ],
+  "lastWorking": false,
+  "fullRecovery": false,
+  "cleanPcRestore": false,
+  "capturePerformed": false,
+  "packageIntegrationReady": false,
+  "transferAllowedNow": false,
+  "usage": {
+    "development": {
+      "startedAt": "2026-10-23T19:38:12.769526+00:00",
+      "includesBoundedCoordinationWait": true,
+      "modelTokens": null,
+      "modelCost": null,
+      "credits": null,
+      "unknownMeasurementsRemainUnknown": true,
+      "priorReviewElapsedSeconds": 178.062,
+      "singleReadFixFinalizationElapsedSeconds": 26.672,
+      "singleReadFixStartedAt": "2026-10-23T19:41:56.365655+00:00"
+    },
+    "evaRuntime": {
+      "modelCalls": 0,
+      "executorCalls": 0,
+      "cameraCalls": 0,
+      "databaseQueries": 0,
+      "databaseWrites": 0,
+      "captures": 0,
+      "restores": 0,
+      "serviceActions": 0,
+      "environmentValueReads": 0
+    }
+  },
+  "status": "reviewed_exact_single_local_selected_capture_script",
+  "priorNoGoEvidence": {
+    "reviewPath": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/capture-addendum-review-v1-no-go.private.json",
+    "reviewSha256": "330165b032a2d1fc5ab97d6a9e1f616cf678c8361398bb252c39c86f591de020",
+    "scriptPath": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/capture_executor_host_selected-v1-no-go.py",
+    "scriptSha256": "ef6436ffe6970d1ad7ba7cb40a0c5f9dac25b3ae80a533c1ec607ba796af52ee",
+    "findings": [
+      {
+        "id": "plan-hash-and-parser-use-different-reads",
+        "priority": "P1",
+        "file": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/capture_executor_host_selected.py",
+        "lines": [
+          9,
+          10
+        ],
+        "problem": "Line9 hashes PLAN.read_bytes(), but line10 reparses a second PLAN.read_text(). The operations actually interpreted can differ from the bytes that passed the fixed addendum SHA256 check. This fails exact reviewed-plan binding even though both paths name the same private file.",
+        "smallestCorrection": "Read once into plan_raw; assert hashlib.sha256(plan_raw).hexdigest()==PLAN_SHA; set plan=json.loads(plan_raw). Keep the addendum byte-exact and all other script logic unchanged. Root supplies the new script hash for the bounded completion review.",
+        "requiresRuntimeTest": false
+      }
+    ],
+    "preservedByteExact": true
+  },
+  "minimalCorrectionReview": {
+    "exactNewScriptSha256": "b1f1293137455f9b65f5b053db53c6faddef235c60b9c83c7a4fdd20d9fc9e3a",
+    "addendumSha256Unchanged": "f7560d316dc28b191350d689c574cd2cd061188a7091d75dc7fac5206e1df822",
+    "wholeFileDelta": "Exactly replace the separate PLAN.read_bytes hash / PLAN.read_text parser with plan_raw=PLAN.read_bytes(); assert hashlib.sha256(plan_raw).hexdigest()==PLAN_SHA; plan=json.loads(plan_raw).",
+    "wholeFileOnlyThatChange": true,
+    "resolution": "The parsed operations now necessarily come from the same read bytes that passed the fixed reviewed addendum hash check.",
+    "noAdditionalAuditOrTest": "Only exact old/new script comparison and prior evidence/addendum hash verification. Coordinator reported compilation; no reviewer compile/runtime probe or capture performed.",
+    "executionBinding": "Root verifies and externally binds exact final script b1f1293137455f9b65f5b053db53c6faddef235c60b9c83c7a4fdd20d9fc9e3a, addendum f7560d316dc28b191350d689c574cd2cd061188a7091d75dc7fac5206e1df822 and this final review hash before one script invocation. Existing absent target/partial-retention/no-retry guards remain unchanged."
+  }
+}

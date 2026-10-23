@@ -1,0 +1,160 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.17 scoped E4.15 executor host capture proposal",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T19:35:49.368009+00:00",
+  "verdict": "NO_GO",
+  "status": "original_proposal_requires_exact_capture_addendum",
+  "scope": "NO_GO for executing the exact original cc0c proposal. The 13 selected disk-file inventory, 33 distribution metadata sets and existing role mappings are accepted. Encryption and the exact metadata-only operation mapping must first be materialized and bound by root in a separate addendum. The smallestCaptureInstruction below is that bounded acceptance requirement, not permission to capture under the original proposal. No broader runtime capture, package sealing, restore or runnable-host claim.",
+  "boundedOutcome": {
+    "existing": "Exact E4.15 executor image is already privately preserved; existing selected host disk files and installed distribution metadata are inventoried.",
+    "gap": "Selected host bytes and dependency metadata have not been captured; provenance/role mapping and secret-handling boundaries must be concrete before a bounded next step.",
+    "route": "Existing EvaInstallationRecovery/v1 document_artifact/document_marker/provider_binding roles, existing writer/materializer and existing encrypted portable transport.",
+    "doneWhen": "Record exact original-proposal NO_GO with only the missing encryption/mapping conditions and a concrete smallest addendum instruction; no repeated recovery audit.",
+    "userUse": "Root can materialize a separately bound 13-fixed-plus99-metadata instruction with explicit private/encrypted handling. No payload capture or transfer until that exact corrected plan is bound."
+  },
+  "evidenceBindings": {
+    "proposalPath": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/executor-host-capture-proposal.private.json",
+    "proposalSha256": "cc0c4d182e5fdc36fca85332653f94f1e58c4440e49cb1e18e2773cd12c43176",
+    "basedOn": {
+      "path": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/capture-plan.private.json",
+      "sha256": "00cdd0be79befea07d77c7124a4300968587f6f81e7896bdf34a3899a58a866e"
+    },
+    "writer": {
+      "path": "src/tools/installation_recovery_package.py",
+      "sha256": "cd0652005eeda46298ffa5505f2be22f40455ab9bd43574ea247aeeb320c758a"
+    },
+    "materializer": {
+      "path": "src/tools/installation_recovery_materializer.py",
+      "sha256": "ce5b640c9d0aea547b62c1efd88f2b3d496c36fad4c171c2cf85b4d14fadaaeb"
+    },
+    "existingEncryptedTransport": {
+      "path": "src/tools/portable_transport.py",
+      "sha256": "46803240fd1a3a43c98ebd227e41bca0001b4a42a5aebdef4e08e9e3f4549162"
+    }
+  },
+  "inventoryReview": {
+    "selectedDiskFiles": 13,
+    "selectedDiskBytes": 288126,
+    "existingRoles": {
+      "document_marker": 6,
+      "provider_binding": 2,
+      "document_artifact": 5
+    },
+    "assetKinds": {
+      "unit_fragment": 1,
+      "systemd_drop_in": 4,
+      "opaque_private_configuration": 2,
+      "selected_current_disk_source": 5,
+      "venv_configuration": 1
+    },
+    "fixedOperationsMatchAllPinnedMetadata": true,
+    "distributionCount": 33,
+    "metadataFilesPerDistribution": [
+      "METADATA",
+      "RECORD",
+      "WHEEL"
+    ],
+    "distributionMetadataFileCount": 99,
+    "distributionMetadataBytes": 597830,
+    "selectedSourcePayloadCount": 112,
+    "selectedSourcePayloadBytes": 885956,
+    "safeUniqueRelativeDestinations": true,
+    "suppliedRecordSetSha256": "16423f0e350381ee10d9b29ab96dca66f178665ee2f575bf223000f3c29ff4bc",
+    "aggregateDigestLimit": "Producer recordSetSha256 is a supplied opaque aggregate label. Its serialization is not specified; future capture must independently compare all 99 explicit pinned file hashes and metadata. Do not substitute this label or installed version names for actual file verification."
+  },
+  "existingContracts": {
+    "roles": "Writer lines55-64 accept document_artifact under documents/ as0600, document_marker under documents/ as0400 and provider_binding under config/ as0400. All13 exact operations fit. New99 metadata destinations use existing document_marker0400; no schema or role addition.",
+    "packageRequiredInputs": "Writer lines89-106,123-127,154-197,207-241 require exact core/archive.json, memory/hindsight.dump and gateway/contextforge.sqlite, fixed source_components memory/gateway/documents, supported key-reference labels, validated core identity/trust and exact byte inventory. It is not a standalone host-bundle writer or automatic host capturer.",
+    "privateStaging": "Writer requires operator-owned0700 root, refuses an existing archive.json, rehashes staged regular files, checks identity and applies aggregate1GiB/100000-file bounds. It does not encrypt, strip secrets or itself apply role permissions to source staging.",
+    "materializer": "Materializer lines90-157 needs explicit trusted owners for core/memory/gateway/documents/config, private operator source/parent and an absent absolute destination. It copies verified bytes with role-bound modes, verifies inventory/ownership, publishes without replace and returns materialized_inactive. It does not install units, import DBs, restore host interpreter execution, provision secrets or activate services.",
+    "encryption": "provider_binding0400 is a permission, not encryption. Existing portable_transport.seal_portable_archive lines410-466 provides validated AES-GCM encrypted transport; writer/read_installation_package are plaintext envelope operations. The proposal does not itself bind an encryption step; the mandatory instruction below supplies that gate."
+  },
+  "unitAndProcessSemantics": {
+    "proposalObservationAt": "2026-10-23T19:19:56.444505+00:00",
+    "fragmentAndAllFourEffectiveDropInPathsCovered": true,
+    "selectedUnitFiles": 5,
+    "distinctions": "The unit fragment plus four named drop-ins form a disk inventory. The separately observed effective ExecStart/WorkingDirectory/User/Group/MainPID/ActiveState describe systemd metadata at the proposal time. Neither proves current disk bytes equal loaded Python code, current service memory or a restart/reload outcome.",
+    "configuration": "Effective ExecStart references the existing host venv and opaque service.private.json. No Environment property values were collected or inspected. No unit/drop-in payload, opaque config payload or /proc process environment was read by this review.",
+    "noAction": "No systemctl query/reload/restart, process inspection, interpreter execution in the executor venv or new service attestation was performed by reviewer."
+  },
+  "smallestCaptureInstruction": {
+    "authorizationAndDestination": "Root separately names one previously absent absolute target inside an operator-owned0700 private parent. Only assign private staging of the112 pinned source payloads below. This review does not execute or authorize an expanded runtime capture.",
+    "fixedFiles": "Take exactly captureProposal.fixedFileOperations[0..12] from the exact proposal. Open only regular non-symlink sources with bounded descriptor reads, compare pinned path/hash/size/owner/group/mode and stable identity/size/mtime before and after; abort on drift without refreshing the proposal. Use the exact destination/role/inactiveMode entries; preserve original modes/owners as metadata, not activation permissions.",
+    "metadataMapping": {
+      "sourceSet": "For each dependencyMetadata.distributions item in proposal order, take metadata,record,wheel in that order, using their exact pinned descriptors. Do not follow paths inside RECORD.",
+      "destinationRule": "documents/host-executor/venv/distribution-metadata/<dist-info directory>/<METADATA|RECORD|WHEEL>, where the final two source path components must be strictly relative to the exact sitePackagesRoot.",
+      "role": "document_marker",
+      "inactiveMode": "0400",
+      "fileCount": 99,
+      "operationListSha256": "27df5f1f2375f3879e291247e03006044422f269408d5b8c7a217c9f13807a6f",
+      "operationDigestEncoding": "SHA256 of UTF-8 json.dumps(operation_list,sort_keys=True,separators=(comma,colon)); each operation has source,expectedSha256,expectedBytes,expectedMode,expectedUid,expectedGid,destination,role,inactiveMode exactly as derived above.",
+      "verification": "Check each of the99 pinned SHA256/size/owner/group/mode records and stable reads separately; no distribution import, pip command, metadata fetch or runtime payload traversal."
+    },
+    "privacy": "Treat both opaque service.private.json and procedure-client.private.json as secret-bearing in full, regardless of their current source modes or whether they contain only references. Do not parse or print values. Only private0700 staging,0600 artifacts and0400 marker/config files; no Git, stdout, logs, review attachments or unencrypted transfer of payloads. Existing token/key paths stay references only; do not read or hash token bytes.",
+    "encryptionGate": "Before any transfer/publication/export of opaque configuration or a containing recovery package, use existing seal_portable_archive with a validator that calls read_installation_package under the exact existing identity trust. Supply encryption credentials out of band through the existing secure operator route, never package/key-reference payloads, argv, logs or source code. No new encryption platform or invented key/token role. If that exact private destination and encryption/key handling are unavailable, do not export.",
+    "deferredOperation": "Do not execute captureProposal.venvOperation or produce venv-runtime-files.tar in this112-file step. Distribution payload, native libraries, interpreter/stdlib/OS capture, symlink reconstruction and runtime closure stay unpreserved until separately scoped.",
+    "packageIntegrationGate": "Before write_installation_package, root must bind an actual existing source installation-package path/hash and its core identity/trust, memory/gateway bytes, source_components and key_references. Stage an exact preserved copy in a new absent private root, retaining old packages and every existing payload; then add only this reviewed inventory and use existing write/read validators. Do not fabricate dummy core/memory/gateway or relabel an old synthetic fixture as the current installation. Enforce total package1GiB/100000-file limits. No such exact base package is identified by this proposal, so sealing/integration remains not ready.",
+    "noRestore": "No materialization, extraction, executable permissions, unit installation, daemon-reload, service action, DB action, activation or restore-hold release in this capture step.",
+    "requiresSeparateExactRootAddendumBeforeAnyPayloadCapture": true
+  },
+  "explicitGaps": [
+    "Five selected source modules are not the transitive source closure. The prior bounded traversal stopped beyond180 modules; no traversal or platform audit repeated. Unlisted source/development dependencies are not silently satisfied by preserved core/executor images.",
+    "33 installed distributions and99 metadata hashes are not actual venv payload capture, installed RECORD payload verification or working dependency reconstruction. Venv symlink resolves to external /usr/bin/python3.12; interpreter bytes, stdlib, native/OS dependencies remain outside captured data.",
+    "No concrete authorized private capture destination or exact real installation-package base/trust/encryption binding is supplied. Those are bounded execution/integration prerequisites, not grounds to invent a new recovery platform or snapshot.",
+    "Secrets reprovisioning, consistent current DB/authority snapshot, face/biometric assets and remote relink are not supplied by this inventory and were not accessed."
+  ],
+  "findings": [
+    {
+      "id": "opaque-configuration-encryption-not-bound",
+      "priority": "P1",
+      "location": "captureProposal.sealing",
+      "problem": "Original proposal names only write_installation_package/read_installation_package. These are plaintext envelope validators/writers, not encryption. The exact proposal contains no explicit encrypted transport/key-binding condition for the two opaque private configuration payloads.",
+      "requiredChange": "Add explicit local operator-private0700 staging and0400 opaque files; before any transfer use existing seal_portable_archive under exact package identity trust with separate existing key/passphrase handling. Treat both opaque configurations as entirely secret and never parse/print values. No payload capture or transfer until the corrected plan is exactly bound."
+    },
+    {
+      "id": "metadata-only-operations-not-bound",
+      "priority": "P2",
+      "location": "dependencyMetadata and captureProposal.venvOperation",
+      "problem": "33 metadata sets are pinned, but the proposal does not give concrete metadata-only capture destinations/roles for their99 files. The separately deferred venvOperation targets a larger runtime payload archive and cannot substitute for this bounded metadata capture.",
+      "requiredChange": "Add exactly99 METADATA/RECORD/WHEEL operations using the deterministic destination rule and operation-list digest27df5f1f2375f3879e291247e03006044422f269408d5b8c7a217c9f13807a6f below. Keep all venv runtime payload capture excluded."
+    }
+  ],
+  "acceptanceLimits": [
+    "NO_GO for original proposal execution until the exact bounded metadata/encryption addendum is bound. Inventory roles are accepted; no payload capture, larger venv or package-sealing readiness is implied.",
+    "No runnable host, loaded-process attestation, current coherent/full backup, clean-PC restore, actual executor work, greeting/hearing, family acceptance or full E4.15/E4.17 completion.",
+    "lastWorking/fullRecovery/cleanPcRestore remain false. Existing executor image preservation evidence is referenced only; no image capture, verification rerun or reexport."
+  ],
+  "lastWorking": false,
+  "fullRecovery": false,
+  "cleanPcRestore": false,
+  "capturePerformed": false,
+  "runnableHost": false,
+  "packageIntegrationReady": false,
+  "usage": {
+    "development": {
+      "elapsedSeconds": 255.733,
+      "startedAt": "2026-10-23T19:31:33.635147+00:00",
+      "modelTokens": null,
+      "modelCost": null,
+      "credits": null,
+      "unknownMeasurementsRemainUnknown": true
+    },
+    "evaRuntime": {
+      "modelCalls": 0,
+      "executorCalls": 0,
+      "cameraCalls": 0,
+      "messages": 0,
+      "databaseQueries": 0,
+      "databaseWrites": 0,
+      "captures": 0,
+      "restores": 0,
+      "serviceActions": 0,
+      "executorVenvInterpreterExecutions": 0,
+      "environmentValueReads": 0
+    }
+  },
+  "inventoryVerdict": "GO",
+  "captureExecutionReady": false
+}

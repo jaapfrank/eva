@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T19:31:16.311347+00:00",
+  "updatedAt": "2026-10-23T19:42:52.025507+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1328,10 +1328,10 @@
     "e415-independent-review-newchat": {
       "task": "E4.15 exact household batch binding review",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "completed_exact_batch_installed_readback",
+      "status": "completed_executor_host_capture_addendum_review_go",
       "coordinator": "windows-root",
       "allowedWritePaths": [
-        "development/reviews/e415-batch-installed-readback-20261023.json",
+        "development/reviews/e417-executor-host-capture-addendum-review-20261023.json",
         "development/coordination/active-executors.json:own section only"
       ],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
@@ -1346,10 +1346,10 @@
         "doneWhen": "Exact hashes and bounded GO/NO_GO with necessary companion hunks; no installation.",
         "userUse": "Coordinator may integrate reviewed candidate after baseline recheck."
       },
-      "completedAt": "2026-10-23T19:27:15.158193+00:00",
+      "completedAt": "2026-10-23T19:42:23.037186+00:00",
       "review": "development/reviews/e415-household-batch-binding-review-20261023.json",
       "verdict": "GO",
-      "nextAction": "Coordinator may report exact installation fidelity only. Preserve actual-use, greeting, source-admission, household_research mismatch and family-acceptance limits; no additional reviewer execution.",
+      "nextAction": "Root externally binds exact final scriptb1f129/addendumf756/finalreview before one local112-file capture. Preserve original NO_GO evidence and all no-package/no-transfer/no-host-readiness limits. No reviewer capture or extra test.",
       "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
       "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
       "previousInstallationReview": "development/reviews/e415-coordinated-installation-review-20261023.json",
@@ -1411,7 +1411,20 @@
           "household_research"
         ],
         "overallCompatible": false
-      }
+      },
+      "executorCaptureReviewStartedAt": "2026-10-23T19:31:33.635147+00:00",
+      "executorHostCaptureProposalReview": "development/reviews/e417-executor-host-capture-proposal-review-20261023.json",
+      "executorHostCaptureProposalReviewSha256": "09aabc806ba942d6f3483b2267a5d1b7ba129fa140159f94fee1549cd864deab",
+      "executorHostCaptureProposalVerdict": "NO_GO",
+      "executorCaptureScope": "Original proposal inventory/roles accepted; no execution until exact13+99 metadata-only mapping and private/encrypted handling are bound in a separate root addendum.",
+      "executorCaptureAddendumReviewStartedAt": "2026-10-23T19:38:12.769526+00:00",
+      "executorHostCaptureAddendumReview": "development/reviews/e417-executor-host-capture-addendum-review-20261023.json",
+      "executorHostCaptureAddendumReviewSha256": "cd8a72232444d8b8a6f07738bb2950cca9b629a11362501ca588e89d7c85862a",
+      "executorHostCaptureAddendumVerdict": "GO",
+      "executorHostCaptureAddendumSha256": "f7560d316dc28b191350d689c574cd2cd061188a7091d75dc7fac5206e1df822",
+      "executorHostCaptureScriptSha256": "b1f1293137455f9b65f5b053db53c6faddef235c60b9c83c7a4fdd20d9fc9e3a",
+      "executorCaptureSingleReadFixStartedAt": "2026-10-23T19:41:56.365655+00:00",
+      "executorCaptureOriginalScriptNoGoSha256": "330165b032a2d1fc5ab97d6a9e1f616cf678c8361398bb252c39c86f591de020"
     }
   },
   "protectedExistingWork": {
@@ -1652,7 +1665,7 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
-    "parallelBoundedWork": "Current exact batch images preserved and independently reviewed. Host executor13file/33distribution capture proposal prepared only; actual payload/sourceclosure/face data/current DB restore remain open.",
+    "parallelBoundedWork": "Exact112-file885956-byte host local capture awaiting corrected instruction GO; original encryption/mapping NO_GO retained. Isolated CPU dependency candidate assigned on proven8.15GB vs1GiB gap, no active runtime/env/data mutation.",
     "currentBlocker": "No remaining code/install blocker in selected camera/batch route. Actual new camera ingress and normal silence observed; positive face/greeting/hearing/later reuse not proven. Owner physical trial deferred; no repeat question.",
     "latestVerifiedOutcome": {
       "status": "installed_current_source_and_silence_proven_positive_greeting_pending",
@@ -1668,13 +1681,13 @@
       "reviewer": {
         "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
         "inputSha256": "cc0c4d182e5fdc36fca85332653f94f1e58c4440e49cb1e18e2773cd12c43176",
-        "writePath": "development/reviews/e417-executor-host-capture-proposal-review-20261023.json",
-        "endCondition": "Bounded GO/NO_GO for selected13disk/33metadata capture using existing recovery contracts; no actual capture or runnable claim"
+        "writePath": "development/reviews/e417-executor-host-capture-addendum-review-20261023.json",
+        "endCondition": "Exact corrected112-file private stage-only instruction/script; original findings preserved, encryption mandatory before transfer, no full-package claim"
       },
       "executor": {
         "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
-        "writePath": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/face-backend-asset-capture-proposal.private.json",
-        "endCondition": "Exact current facebridge/CPUvenv/two pinned ONNX asset capture proposal, no privateDB/biometric reads or effects"
+        "writePath": "/home/administrator/project/.eva2-artifacts/e415-face-cpu-candidate-20261023/",
+        "endCondition": "Existing pinned bytes only, inert isolated CPU-library import proof without oldsite leakage; actual size/ABI/OS gaps, no live install/inference/DB/socket/dependency download"
       },
       "maxExecutorsReviewers": 2,
       "noRepeatedLiveProbeOrOwnerQuestion": true,
