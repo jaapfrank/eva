@@ -520,6 +520,7 @@
       },
       "activeAssignment": {
         "task": "E4.17",
+        "assignedAt": "2026-10-23T20:28:02.293070+00:00",
         "writePaths": [
           "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json",
           "src/tools/installation_recovery_package.py",
@@ -533,13 +534,19 @@
           "src/tools/installer_portable_restore.py",
           "development/tests/portable/test_installer_runtime_archive.py",
           "src/tools/portable_runtime_profile.py",
-          "development/tests/portable/test_portable_v2_current_work.py"
+          "development/tests/portable/test_portable_v2_current_work.py",
+          "src/tools/portable_transport.py",
+          "src/tools/installer_restore_wizard.py",
+          "development/tests/portable/test_portable_transport.py",
+          "development/tests/portable/test_transport_header_bound.py",
+          "development/tests/portable/test_installation_recovery_package.py",
+          "development/tests/portable/test_installation_recovery_materializer.py",
+          "development/tests/portable/test_installation_transport_policy.py"
         ],
-        "assignedAt": "2026-10-23T20:28:02.293070+00:00",
         "privateOutput": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/",
         "testWritePathsRequireExactConfirmation": true,
         "noCpuRunOrSharedInstallOrVoiceChange": true,
-        "resultNow": "Fix actual0011 current-runtime export/reader/target compatibility; frozenv2 profile unchanged. Face adapter delivered and independently tested."
+        "resultNow": "Preserve validated real core export; add trusted installation-only fixed 2 GiB total policy across existing package, transport, materializer and wizard, keeping default 1 GiB/per-file 1 GiB/100k files. Then finish actual encrypted offline recovery roundtrip. Independent review required before integration."
       },
       "extensionArtifactRequest": {
         "to": "wsl-e18",
@@ -1648,8 +1655,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
-    "parallelBoundedWork": "Builder existing package integration; independent reviewer unreviewed15faceassets and same final package; no CPU run.",
-    "currentBlocker": "Actual native core, memory and gateway snapshots plus limited enrolled profiles and host dependency closure must still be completed; staged bytes are not full recovery.",
+    "parallelBoundedWork": "One builder repairs the existing installation transport policy and finishes the real recovery package. One independent tester/reviewer checks exact code, security boundaries and real roundtrip; tester writes reviews only.",
+    "currentBlocker": "Measured complete selected recovery payload is 1,645,299,983 bytes before manifest; fixed 1 GiB transport guard cannot carry it. Independent reviewer recommends explicit trusted installation-only 2 GiB policy, retaining every selected byte, 1 GiB per file and unchanged ordinary portable defaults. Builder authorized; candidate and real roundtrip not yet reviewed.",
     "latestVerifiedOutcome": {
       "status": "installed_current_source_and_silence_proven_positive_greeting_pending",
       "evidence": "development/evidence/product/e415-household-batch-binding-20261023.json",
