@@ -17,7 +17,53 @@
     "missingTransfer": "Current external provider catalog has no direct Telegram contact/send action. Ordinary private replies work but owner-requested outbound contact becomes delegated investigation through Home Assistant.",
     "observedFailure": "One message task ended budget_exceeded after 4 measured model responses and 3 tools; a later attempt also encountered HTTP 503. Neither establishes delivery.",
     "claims": "Acknowledgement text repeatedly promises to ask without established delivery capability or result.",
-    "repairStatus": "Direct contact provider assigned with exact separate files; not implemented or installed by this evidence. E4.15 camera-binding candidate remains uninstalled."
+    "repairStatus": "Optional direct-contact provider implemented, independently reviewed, installed in actual core and digital worker; live owner-authorized question sent once with exact canonical Telegram receipt."
   },
-  "coordination": "E4.17 actual-source restore and 3-input behavior evidence acknowledged in workboard; next executor scope recorded in active-executors.json."
+  "coordination": "E4.17 actual-source restore and 3-input behavior evidence acknowledged in workboard; next executor scope recorded in active-executors.json.",
+  "directContact": {
+    "installed": true,
+    "checkedAt": "2026-10-23T16:59:07.773712+00:00",
+    "providerSourceSha256": "580ef2e67d853ee19dd0af4ae9b2d0a6dda731b3ff20638dc51f591a0df63660",
+    "testsPassed": 17,
+    "independentReview": "review_cursor source/install GO and private grant addition GO",
+    "installation": {
+      "core": "sha256:d141fca07e9c5442be3fc226dae83a12165e11536eaeea266730ce37752d65a8",
+      "delegated-work-worker": "sha256:128e036d4106d25e480c6a31a2cf23b528ab24929e67c1f4943f52b2ae12ee2b"
+    },
+    "changedSources": [
+      "providers/bundled.py",
+      "providers/telegram_contacts.py",
+      "contracts/delegated_digital_work.py (two private capabilities only)"
+    ],
+    "configuration": "Opt-in on core and worker; same existing bot token mounted read-only in existing worker; no database/schema changes",
+    "live": {
+      "entryRoute": "Explicit Codex operator relay of retained owner request via existing authenticated dashboard conversation, using real installed Eva model and provider. Not an ordinary new Telegram ingress acceptance test.",
+      "modelSelectedTools": [
+        "list_telegram_contacts",
+        "send_telegram_message"
+      ],
+      "dispatchCountForSource": 1,
+      "canonicalState": "STATE_VERIFIED",
+      "exactRecipientAndTextVerified": true,
+      "transportAcceptance": true,
+      "readOrReplyClaimed": false,
+      "elapsedSeconds": 40.137,
+      "modelCallsObserved": 3,
+      "taskDelegationObserved": false,
+      "homeAssistantCallsObserved": false,
+      "conversationAndRecipientIdentifiersPublished": false
+    },
+    "profiles": {
+      "sharedProviderDigitalAndPrivateResearchMatch": true,
+      "preexistingMismatch": [
+        "household_research"
+      ]
+    },
+    "limits": [
+      "40-second full model conversation is still too slow; do not call latency fixed.",
+      "Ordinary owner Telegram wording and reply-continuity need follow-up without repeating the sent message.",
+      "Separate private chat access is owner-confirmed; current proof does not establish general household understanding."
+    ]
+  },
+  "nextAction": "Reduce measured direct contact round-trip and inspect actual failing owner replies; reuse existing Telegram receipt and do not send the food question again. Then complete retained E4.15 binding candidate."
 }

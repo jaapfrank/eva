@@ -61,7 +61,7 @@
         "worker": "sha256:51074546eb3807ff78950f49a389d235e4828555ca0415b425fb0357c0ef56ac"
       },
       "status": "E1.9 completed and installed; E4.15 current",
-      "updatedAt": "2026-10-23T16:37:20.668392+00:00",
+      "updatedAt": "2026-10-23T16:59:07.773712+00:00",
       "e418StatusIntegrated": {
         "at": "2026-10-23T13:38:37.899875+00:00",
         "sourceCommit": "2daf9b8d717ff193120d28e19f006386c3062d6f",
@@ -124,7 +124,7 @@
       },
       "telegramContactAssignment": {
         "id": "telegram-separate-contact-20261023",
-        "status": "authorized_to_start",
+        "status": "completed_installed_live_receipt",
         "priority": "Owner explicitly prioritized fixing Telegram family contact over E4.15 binding.",
         "allowedPaths": [
           "src/eva/providers/telegram_contacts.py",
@@ -142,9 +142,19 @@
         ],
         "doneWhen": "Focused candidate demonstrates exact-recipient delivery receipt and no duplicate effect after ambiguity; root can integrate existing provider registration without second transport.",
         "context": "Actual transport is deploy/telegram-bridge/standalone.mjs under eva2-telegram.service. Lola private chat now works with her own principal; owner task to ask food preferences instead discovers HA and exhausts work grant. No native Telegram send/contact tool in current external provider catalog.",
-        "updatedAt": "2026-10-23T16:37:20.668392+00:00"
+        "updatedAt": "2026-10-23T16:37:20.668392+00:00",
+        "executor": "/root/telegram_contact",
+        "note": "No acknowledgement or candidate from external executor at transfer. External codex-e418 must not start these files; root subagent now owns exact two implementation/test files.",
+        "evidence": "development/evidence/product/telegram-family-contact-20261023.json",
+        "sourceScopeCompleted": true
       },
-      "currentPriority": "Restore useful Telegram family contact; E4.15 runtime binding candidate retained uninstalled."
+      "currentPriority": "Transfer to one Windows/WSL coordinator; Telegram contact dispatch works, latency and ordinary Telegram acceptance remain; next retained build E4.15.",
+      "handoff": "development/docs/OVERDRACHT-WINDOWS.md",
+      "coordinatorTransfer": {
+        "status": "ready_for_new_windows_session",
+        "instruction": "New leader must acknowledge takeover, inspect current reservations and live installation; old external chat must not start the completed Telegram assignment.",
+        "previousChatMayClose": true
+      }
     },
     "codex-e418": {
       "task": "E4.17",

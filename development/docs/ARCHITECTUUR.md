@@ -535,6 +535,19 @@ modelselectie en gemeten gebruik. Een kanaaladapter verzorgt ontvangst, werkelij
 persoon/gespreksbinding, eventuele media en aflevering bij de oorspronkelijke
 ontvanger. Beide zijn vervangbaar zonder nieuwe identiteit, geheugenbank of uitvoerder.
 
+De actieve Telegram-ingang gebruikt `deploy/telegram-bridge/standalone.mjs` onder
+`eva2-telegram.service`. Een ander gezinslid krijgt een eigen trusted privébinding;
+`/link` is geen gezinsuitnodiging. De optionele `telegram_contacts`-provider gebruikt
+dezelfde contactbindings en bestaande duurzame tool-/receiptketen voor een expliciet
+gevraagd bericht aan een apart contact. Metadata via `getChat` is alleen een label;
+de concrete binding, actuele eigenaar en STOP bepalen toegang. Telegram-acceptatie
+bindt ontvanger en tekst, maar bewijst niet lezen of antwoorden. De module is op
+23 oktober in kern en digitale worker geïnstalleerd; één vraag is live eenmaal
+verstuurd via een expliciete operatoroverdracht aan Eva. De hele conversatie duurde
+40 seconden: de verzendmogelijkheid is bewezen, normale Telegram-ingress en snelle
+vervolggesprekken daarmee nog niet. Zie het
+[gerichte bewijs](../evidence/product/telegram-family-contact-20261023.json).
+
 E2.5 levert optionele Anthropic- en OpenAI-compatibele adapters via PydanticAI
 voor privétekstgesprekken op website/Telegram. Dezelfde identiteit, context,
 geheugenopslag, requestjournal en actie-uitvoerder blijven gelden. Instellingen

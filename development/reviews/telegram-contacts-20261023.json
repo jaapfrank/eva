@@ -1,0 +1,15 @@
+{
+  "scope": "Optional direct Telegram contact provider and two private work capability names",
+  "sourceSha256": "580ef2e67d853ee19dd0af4ae9b2d0a6dda731b3ff20638dc51f591a0df63660",
+  "reviewer": "review_cursor",
+  "verdict": "GO",
+  "testsPassed": 17,
+  "checks": [
+    "exact separately bound recipient/text receipt",
+    "late STOP/background authority/cancellation check",
+    "uncertain effect never replayed",
+    "trusted recipient file is current active ingress authority, no owner DBgrant for family member",
+    "household and autonomous initiative capabilities unchanged"
+  ],
+  "limit": "Live proof is recorded separately; no proof of recipient reading/reply or ordinary subsequent Telegram ingress."
+}

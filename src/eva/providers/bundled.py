@@ -10,6 +10,7 @@ import os
 
 _REGISTRY = (
     ("agentmail", "eva.providers.agentmail", "AgentMailProviderFactory"),
+    ("telegram_contacts", "eva.providers.telegram_contacts", "TelegramContactsProviderFactory"),
     ("home_assistant", "eva.providers.home_assistant", "HomeAssistantProviderFactory"),
     ("mcp_gateway", "eva.providers.mcp_gateway", "McpGatewayProviderFactory"),
     ("mcp_autonomy", "eva.providers.mcp_autonomy", "McpAutonomyProviderFactory"),

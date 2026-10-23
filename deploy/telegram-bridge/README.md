@@ -77,3 +77,23 @@ opgeruimd. Dit geeft geen toegang; namen zijn geen identiteitsbewijs. Een beheer
 kan zo het door het gezin aangewezen account afzonderlijk toelaten. Na aanpassen
 van het systemd-credentialbestand wordt uitsluitend de idle Telegram-service
 herstart; bestaande onzekere afleveringen worden niet opnieuw uitgevoerd.
+
+### Explicit messages to separate private contacts
+
+The optional `telegram_contacts` provider exposes `list_telegram_contacts` and
+`send_telegram_message` on Eva's existing conversation/action route. Set
+`EVA_TELEGRAM_CONTACTS_ENABLED=true` in the selected core and digital worker and
+reuse `EVA_TELEGRAM_BOT_TOKEN_FILE`, `EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE` and the
+existing private owner configuration. The worker needs the same bot token as a
+read-only secret mount. An opt-in module/configuration change is not an image-only
+update; retain the current Compose configuration and validate both installed work
+profiles after a coordinated idle deployment.
+
+Separate household members retain separate private bindings. Do not use `/link`
+to merge them into the owner. Contact discovery reads only current Telegram profile
+metadata, not private conversations. Sending requires an explicit owner instruction;
+shared-household and autonomous-initiative grants do not include these capabilities.
+A saved receipt proves exact Telegram acceptance, not reading or answering. Unknown
+acceptance must be inspected without resending. See
+`development/evidence/product/telegram-family-contact-20261023.json` for the measured
+installed result and remaining latency/ordinary-ingress limits.

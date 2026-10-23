@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-23T16:37:20.668392+00:00",
+  "lastUpdated": "2026-10-23T16:59:07.773712+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E4.15",
@@ -847,7 +847,7 @@
     "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
     "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "Bouw en controleer eerst de ontbrekende algemene verbinding van de opgeslagen, beoordeelde uitbreiding naar bestaande huishoudelijke bronvalidatie, aandacht, STOP en duurzame aflevering; pas daarna één volledige live acceptatie. Behoud de huidige V2-bron en geef dezelfde uitbreiding aan E4.17 voor herstel.",
+    "nextAction": "Neem de Windows/WSL-overdracht over (development/docs/OVERDRACHT-WINDOWS.md). De urgente Telegram-contactroute is geïnstalleerd en heeft eenmaal exact verzonden; verlaag de gemeten 40 seconden en toets normale Telegram-vervolgen zonder opnieuw te sturen. Rond daarna de bewaarde E4.15-koppelkandidaat af met actuele bronbinding, aandacht, STOP, installatie en live gebruik; behoud V2 en E4.17-herstelbewijs.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -8016,7 +8016,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Bouw en controleer eerst de ontbrekende algemene verbinding van de opgeslagen, beoordeelde uitbreiding naar bestaande huishoudelijke bronvalidatie, aandacht, STOP en duurzame aflevering; pas daarna één volledige live acceptatie. Behoud de huidige V2-bron en geef dezelfde uitbreiding aan E4.17 voor herstel.",
+                "nextAction": "Neem de Windows/WSL-overdracht over (development/docs/OVERDRACHT-WINDOWS.md). De urgente Telegram-contactroute is geïnstalleerd en heeft eenmaal exact verzonden; verlaag de gemeten 40 seconden en toets normale Telegram-vervolgen zonder opnieuw te sturen. Rond daarna de bewaarde E4.15-koppelkandidaat af met actuele bronbinding, aandacht, STOP, installatie en live gebruik; behoud V2 en E4.17-herstelbewijs.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -13970,7 +13970,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Bouw en controleer eerst de ontbrekende algemene verbinding van de opgeslagen, beoordeelde uitbreiding naar bestaande huishoudelijke bronvalidatie, aandacht, STOP en duurzame aflevering; pas daarna één volledige live acceptatie. Behoud de huidige V2-bron en geef dezelfde uitbreiding aan E4.17 voor herstel.",
+              "nextAction": "Neem de Windows/WSL-overdracht over (development/docs/OVERDRACHT-WINDOWS.md). De urgente Telegram-contactroute is geïnstalleerd en heeft eenmaal exact verzonden; verlaag de gemeten 40 seconden en toets normale Telegram-vervolgen zonder opnieuw te sturen. Rond daarna de bewaarde E4.15-koppelkandidaat af met actuele bronbinding, aandacht, STOP, installatie en live gebruik; behoud V2 en E4.17-herstelbewijs.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [

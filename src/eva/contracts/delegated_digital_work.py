@@ -96,6 +96,7 @@ class DelegatedDigitalWorkGrant(DelegatedWorkGrant):
                    "list_reusable_procedures", "resolve_reusable_procedure",
                    "designate_reusable_procedure", "save_workspace_document", "save_work_progress",
                    "register_own_contribution",
+                   "list_telegram_contacts", "send_telegram_message",
                    "list_programming_tools", "use_programming_tool", "write_programming_file", "start_programming_process", "run_tool_program",
                    "read_own_component_source", "draft_own_component_improvement",
                    "evaluate_own_component_improvement", "compare_own_component_improvements",
