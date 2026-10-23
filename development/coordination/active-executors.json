@@ -169,7 +169,9 @@
         "development/tests/portable/test_e417_extension_restore.py",
         "development/design/architecture/e417-extension-restore-ownership-20261023.json",
         "development/evidence/reassessment/e417-extension-restore-20261023.json",
-        "development/reviews/e417-extension-restore-20261023.json"
+        "development/reviews/e417-extension-restore-20261023.json",
+        "src/tools/portable_runtime_archive.py",
+        "src/tools/postgres_portable_export.py"
       ],
       "requestedAdditionalPaths": [
         {
@@ -210,30 +212,34 @@
         {
           "path": "src/tools/portable_runtime_archive.py",
           "requestedAt": "2026-10-23T14:57:41.748272+00:00",
-          "status": "awaiting_per_file_confirmation",
+          "status": "confirmed_direct_owner_reply",
           "reason": "E4.17 existing v3 core archive export fails before any extension transfer because _schemas() forces checkout deploy/schemas, whose moved record-schema manifest no longer matches original closed hash. The already packaged eva.resources.portable_v1 resource matches the pinned authority exactly.",
           "scope": "Only change _schemas() from _schema_payloads(Path(__file__).resolve().parents[2] / \"deploy/schemas\") to _schema_payloads(). Existing default loader already uses the sealed packaged resource. No hash/criteria/schema/restore authority change. No install/restart.",
           "beforeSha256": "243844be0fd173530d7411c1df88e80f02dda9ab103b4a178b8555f5c5558e49",
           "reproduction": "3 setup failures in development/tests/portable/test_e417_extension_restore.py; actual checkout manifest 44ad41ec..., sealed resource and expected hash de2e302c...",
-          "candidateWhilePending": "Run the same unchanged test cases in an isolated process overriding only _schemas to its existing packaged-resource default. Do not edit this product path before explicit confirmation."
+          "candidateWhilePending": "Run the same unchanged test cases in an isolated process overriding only _schemas to its existing packaged-resource default. Do not edit this product path before explicit confirmation.",
+          "confirmationAt": "2026-10-23T15:49:38.782985+00:00",
+          "confirmationSource": "Direct reply call_d185ea7a833e4fe4877745bcd4fa1dde: Ja, alleen deze twee broncorrecties"
         },
         {
           "path": "src/tools/postgres_portable_export.py",
           "requestedAt": "2026-10-23T14:58:52.193838+00:00",
-          "status": "awaiting_per_file_confirmation",
+          "status": "confirmed_direct_owner_reply",
           "reason": "Second half of the same root-move mismatch: CATALOG_SPEC now contains deploy/schemas archive paths; sealed resources and archive manifest require original schemas/... paths. Existing v3 reader fails with KeyError after selecting the correct sealed source.",
           "scope": "Only normalize record_schema_relative_path in _default_table_specs by removing the known deploy/ checkout prefix. Keep generated catalog, all record/schema hashes, data, fields and frozen resources unchanged. Existing schemas/... paths remain unchanged. No runtime/restart.",
-          "beforeSha256": "c49b08236d07bd21203ad91c8c647d902c9058ec140b0f0bc138a1d116067dd7"
+          "beforeSha256": "c49b08236d07bd21203ad91c8c647d902c9058ec140b0f0bc138a1d116067dd7",
+          "confirmationAt": "2026-10-23T15:49:38.782985+00:00",
+          "confirmationSource": "Direct reply call_d185ea7a833e4fe4877745bcd4fa1dde: Ja, alleen deze twee broncorrecties"
         }
       ],
       "statusProposal": {
         "taskId": "E4.17",
         "status": "in_progress",
-        "progress": "E4.17 geïsoleerde herstelkandidaat onafhankelijk akkoord: 15/15 controles, pakketversies/configuratieschema/eigen gegevens/pauzemarkering exact behouden en hetzelfde offline resultaat nadat bronmappen zijn verwijderd. Twee bestaande exportgrenzen vragen een kleine broncorrectie; exacte aanvullende paden nog ter bevestiging. Productiebron en gedeelde installatie blijven ongewijzigd. Volledige E4.17 vereist nog de echte E4.15-uitbreiding en herstel/adoptie.",
-        "checkedAt": "2026-10-23T15:09:00.302141+00:00",
+        "progress": "E4.17-hersteloverdracht gericht hersteld: v3-export gebruikt de oorspronkelijke verpakte schemabron en juiste archiefpaden. Twee expliciet vrijgegeven bronregels toegepast, exact gelijk aan onafhankelijk beoordeelde kandidaat. 15/15 controles slagen nu op echte bron zonder overrides: pakketversies, configuratieschema, eigen gegevens en pauzemarkering behouden, hetzelfde offline resultaat na verwijderen van bronmappen. Geen gedeelde installatie gewijzigd. Volledige E4.17 blijft open voor de echte E4.15-uitbreiding en herstel/adoptie.",
+        "checkedAt": "2026-10-23T15:51:04.488341+00:00",
         "ownerActionRequired": false,
         "fullTaskCompleted": false,
-        "nextAction": "Coördinator: bevestig de twee extra bronpaden of neem het exacte kandidaatpakket over; daarna 15 controles op echte bron zonder overrides. Bind vervolgens aan de echte E4.15-uitbreiding. Volledige E4.17 blijft open.",
+        "nextAction": "Hergebruik deze geverifieerde hersteloverdracht voor de echte E4.15-uitbreiding; controleer diens werkelijke afhankelijkheden, gegevens, adoptie-/pauzestatus en native herstel. Geen nieuw herstelplatform of brede herhaalproef.",
         "evidenceToAppend": [
           "development/evidence/reassessment/e417-extension-restore-20261023.json"
         ],
@@ -242,7 +248,10 @@
         ],
         "boundedOutcomeCompleted": true,
         "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
-        "independentReview": "development/reviews/e417-extension-restore-20261023.json"
+        "independentReview": "development/reviews/e417-extension-restore-20261023.json",
+        "sourceCommit": "5ac595869c675beca2d384f09b45ad6d9cd3da33",
+        "gitPushed": true,
+        "sourceCommitScope": "Two explicitly approved tool-source lines, focused tests and bound design/evidence/review; no shared deployment."
       },
       "conditions": [
         "Read E4.18 and existing E3/E4 inventories; select one concrete used route or proven-unused helper. No broad cleanup.",
@@ -253,9 +262,9 @@
         "E4.15/E4.17 dependencies remain. Early bounded cleanup does not close E4.18.",
         "Use statusProposal for workboard/docs changes; WSL integrates shared files preserving foreign hunks."
       ],
-      "updatedAt": "2026-10-23T15:10:52.301723+00:00",
+      "updatedAt": "2026-10-23T15:51:40.925219+00:00",
       "reviewRequest": {
-        "status": "independently_reviewed_GO_CANDIDATE",
+        "status": "GO_CANDIDATE_exact_bytes_applied_workspace_verified",
         "reviewer": "/root/e47_mcp_catalog",
         "task": "E4.17",
         "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023",
@@ -275,18 +284,15 @@
       "gitRequest": {
         "status": "committed_and_pushed",
         "paths": [
-          "src/tools/file_inspection.py",
-          "src/tools/living_core_source_provenance.py",
-          "src/tools/repository_inventory.py",
-          "development/tests/tools/test_e418_file_inspection.py",
-          "development/design/architecture/e418-file-inspection-ownership.json",
-          "development/evidence/reassessment/e418-file-inspection-20261023.json",
-          "development/reviews/e418-file-inspection-20261023.json"
+          "src/tools/portable_runtime_archive.py",
+          "src/tools/postgres_portable_export.py",
+          "development/tests/portable/test_e417_extension_restore.py",
+          "development/design/architecture/e417-extension-restore-ownership-20261023.json",
+          "development/evidence/reassessment/e417-extension-restore-20261023.json",
+          "development/reviews/e417-extension-restore-20261023.json"
         ],
-        "noSharedInstallationChange": true,
-        "independentReviewSha256": "878889fe1212ca618a20bb08a67bb4d21ef941fa4ac0d7011084a8828ff8dffc",
-        "method": "Native git commit --only exact 7 case paths; preserve foreign staged blobs and exclude shared coordination/workboard files.",
-        "commit": "2daf9b8d717ff193120d28e19f006386c3062d6f",
+        "sharedInstallationChanged": false,
+        "commit": "5ac595869c675beca2d384f09b45ad6d9cd3da33",
         "foreignStagedBlobsPreserved": true
       },
       "continuation": {
@@ -323,26 +329,13 @@
         "remainingWorkWithinScope": "Read-only owner mapping of existing conversation/HA/browser/tool-program/delivery handoffs. No product source changes or new cleanup candidates before E4.15/E4.17."
       },
       "dashboardIntegrationRequest": {
-        "requestedAt": "2026-10-23T12:44:31.771584+00:00",
-        "status": "applied_by_wsl_coordinator",
+        "taskId": "E4.17",
+        "requestedAt": "2026-10-23T15:51:40.925219+00:00",
+        "status": "awaiting_coordinator_integration",
         "to": "wsl-e18",
-        "request": "Exact 3-field E4.18-only patch prepared, not applied. Please apply at your boundary if baseline hash still matches, otherwise merge only the named fields from statusProposal preserving your current changes. Both canonical and dashboard projection are included; no task completion/criteria/count changes. Then assign a next task/exact file scope. Shared board/WERKBORD remain coordinator-owned.",
-        "previousUpdateConfirmedVisible": true,
-        "protected": "E1.8, geheugencontinuïteit, initiatief, spraak en gedeelde installatie blijven ongemoeid.",
-        "independentGo": true,
-        "sourceCommit": "2daf9b8d717ff193120d28e19f006386c3062d6f",
-        "gitPushed": true,
-        "followupAt": "2026-10-23T12:53:12.540199+00:00",
-        "followup": "Eigenaar vraagt huidige taak af te ronden of verder te gaan. De code-uitkomst is gereed en gepusht; verwerkt de coördinator statusProposal bij de eerstvolgende grens? Bevestig verwerking of geef exact E4.18-only bordvelden vrij; root wijzigt gedeeld bord niet zonder die bevestiging.",
-        "handoffCommit": "b7d6dfefb920666db820d609aaab1c98582a0a66",
-        "handoffRequest": "Ook het afgebakende read-only routeoverzicht is klaar en gepusht. Root heeft geen volgende productwijziging binnen deze afbakening zonder E4.15/E4.17-overdracht of expliciete nieuwe bestandsverantwoordelijkheid. Verwerk finale statusProposal; sluit E4.18 als geheel niet.",
-        "exactPreparedPatch": "/home/administrator/project/.eva2-artifacts/e418-dashboard-integration-20261023/e418-only.private.patch",
-        "preparedPatchMetadata": "/home/administrator/project/.eva2-artifacts/e418-dashboard-integration-20261023/handoff.private.json",
-        "baselineBoardSha256": "e8153d1d01b5075f8606acaa4210443ab1f7843faebedd8cc55b90a85ad4e5c1",
-        "confirmation": {
-          "at": "2026-10-23T13:46:28.447868+00:00",
-          "commit": "eefd3548"
-        }
+        "request": "Verwerk finale E4.17 statusProposal inclusief codecommit en 15/15 echte-broncontroles. De twee extra paden zijn rechtstreeks bevestigd. Behoud in_progress/fullTaskCompleted false: echte E4.15-uitbreiding, native herstel/adoptie en dependencyinstallatie blijven apart. Geen gedeelde installatie of herstart door root.",
+        "sourceCommit": "5ac595869c675beca2d384f09b45ad6d9cd3da33",
+        "independentReview": "development/reviews/e417-extension-restore-20261023.json"
       },
       "routeOwnershipHandoff": {
         "startedAt": "2026-10-23T12:47:35.343506+00:00",
@@ -496,7 +489,9 @@
           "development/tests/portable/test_e417_extension_restore.py",
           "development/design/architecture/e417-extension-restore-ownership-20261023.json",
           "development/evidence/reassessment/e417-extension-restore-20261023.json",
-          "development/reviews/e417-extension-restore-20261023.json"
+          "development/reviews/e417-extension-restore-20261023.json",
+          "src/tools/portable_runtime_archive.py",
+          "src/tools/postgres_portable_export.py"
         ],
         "existing": "AgentSkillPackage exact-byte bundles referenced by existing procedure/documents; role-bound installation archive, encrypted transport, inactive materializer and separate guarded document relocation.",
         "gapToCheck": "End-to-end preservation of a skill bundle plus pinned dependency/config/data/paused-state artifacts after original source directory is gone. Existing code may already suffice; do not add a parallel extension store.",
@@ -520,8 +515,16 @@
           "originalSchemaResourcePinsAndCatalogBytesUnchanged": true,
           "derivedProfileHashChanges": true
         },
-        "status": "isolated_candidate_ready_pending_exact_source_handoff",
-        "privateCandidatePatch": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate.patch.private.diff"
+        "status": "bounded_outcome_completed_and_pushed",
+        "privateCandidatePatch": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate.patch.private.diff",
+        "workspaceVerification": {
+          "passed": 15,
+          "failed": 0,
+          "skipped": 0,
+          "overrides": false,
+          "sameAsReviewedCandidate": true
+        },
+        "fullTaskCompleted": false
       },
       "extensionArtifactRequest": {
         "to": "wsl-e18",
@@ -530,15 +533,20 @@
         "blocksIsolatedProof": false
       },
       "candidateHandoff": {
-        "status": "reviewed_isolated_candidate_ready",
+        "status": "source_correction_applied_and_verified",
         "manifest": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate-handoff.private.json",
         "patch": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate.patch.private.diff",
         "preparedTest": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/prepared-tests/development/tests/portable/test_e417_extension_restore.py",
         "passed": 15,
         "independentGo": true,
-        "productionFilesModified": false,
-        "requiredAction": "Explicitly confirm both requested source paths, or coordinator applies these same two line changes and prepared test. Preserve all original schema/resource pins; run same 15 cases without process overrides before promotion. No shared restart under this scope.",
-        "fullE417Complete": false
+        "productionFilesModified": true,
+        "requiredAction": "Merge definitive statusProposal into E4.17/dashboard and bind this existing-format recovery route to the actual E4.15 extension. No shared install/restart under this scope.",
+        "fullE417Complete": false,
+        "metadataCommit": "684a3244bfd52ad028173cf8db111b07ef1af4c6",
+        "metadataPushed": true,
+        "sourceCommit": "5ac595869c675beca2d384f09b45ad6d9cd3da33",
+        "sourcePushed": true,
+        "workspaceTestsWithoutOverrides": 15
       }
     }
   },
