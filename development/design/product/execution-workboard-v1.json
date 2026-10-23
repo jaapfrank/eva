@@ -847,7 +847,7 @@
     "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
     "status": "in_progress",
     "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
-    "nextAction": "E4.17: het volledige versleutelde pakket en de volledige inactieve hostprepare zijn onafhankelijk goedgekeurd: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes werkelijk gehasht en 1.879 oorspronkelijke SDK-bestanden bewezen. Bouwer sluit de exacte CPU/loader-, ledger-, lege-state-, STOP- en dispatchervoorwaarden en levert één uitvoerbaar plan voor dezelfde oorspronkelijke hostprocedure. Tester beoordeelt die grenzen en daarna het werkelijke functionele resultaat. Canonical workflow met 13 integratiegevallen is gepusht. Kernherstel onder hold blijft afzonderlijk bewezen op de eerdere outer. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
+    "nextAction": "E4.17: versleuteld herstel en volledige inactieve hostprepare onafhankelijk bewezen. Volgende uitkomst is hetzelfde gedrag van de oorspronkelijke uitbreiding via de bestaande beperkte /run-procedure-servicemodus. Bouwer levert exacte optionele targetconfig plus koud-start/replay/STOPplan met oorspronkelijke service/API/image/budget/CPUbackend en schone omgeving/lege state. Tester controleert vóór start de bestaande contracten en beschermingsgrenzen. Fullsourceconfig en bronattest/ledger blijven intact; afgeschermde eindbeoordelingen zijn geen extra herstelopdracht. Geen volledig hostplatform- of E4.17-eindclaim; geen eigenaaractie nodig.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -8113,9 +8113,9 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "E4.17: het volledige versleutelde pakket en de volledige inactieve hostprepare zijn onafhankelijk goedgekeurd: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes werkelijk gehasht en 1.879 oorspronkelijke SDK-bestanden bewezen. Bouwer sluit de exacte CPU/loader-, ledger-, lege-state-, STOP- en dispatchervoorwaarden en levert één uitvoerbaar plan voor dezelfde oorspronkelijke hostprocedure. Tester beoordeelt die grenzen en daarna het werkelijke functionele resultaat. Canonical workflow met 13 integratiegevallen is gepusht. Kernherstel onder hold blijft afzonderlijk bewezen op de eerdere outer. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
+                "nextAction": "E4.17: versleuteld herstel en volledige inactieve hostprepare onafhankelijk bewezen. Volgende uitkomst is hetzelfde gedrag van de oorspronkelijke uitbreiding via de bestaande beperkte /run-procedure-servicemodus. Bouwer levert exacte optionele targetconfig plus koud-start/replay/STOPplan met oorspronkelijke service/API/image/budget/CPUbackend en schone omgeving/lege state. Tester controleert vóór start de bestaande contracten en beschermingsgrenzen. Fullsourceconfig en bronattest/ledger blijven intact; afgeschermde eindbeoordelingen zijn geen extra herstelopdracht. Geen volledig hostplatform- of E4.17-eindclaim; geen eigenaaractie nodig.",
                 "progress": "Volledig versleuteld herstel en volledige inactieve hostprepare onafhankelijk op daadwerkelijke bestanden bewezen. Volgende eindvoorwaarde: dezelfde oorspronkelijke procedure werkt op het geïsoleerde hersteldoel met behouden stop/hold-grenzen.",
-                "checkedAt": "2026-10-23T23:40:57.404970+00:00",
+                "checkedAt": "2026-10-23T23:42:43.673680+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
                 "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -8740,7 +8740,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.17: het volledige versleutelde pakket en de volledige inactieve hostprepare zijn onafhankelijk goedgekeurd: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes werkelijk gehasht en 1.879 oorspronkelijke SDK-bestanden bewezen. Bouwer sluit de exacte CPU/loader-, ledger-, lege-state-, STOP- en dispatchervoorwaarden en levert één uitvoerbaar plan voor dezelfde oorspronkelijke hostprocedure. Tester beoordeelt die grenzen en daarna het werkelijke functionele resultaat. Canonical workflow met 13 integratiegevallen is gepusht. Kernherstel onder hold blijft afzonderlijk bewezen op de eerdere outer. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
+        "nextAction": "E4.17: versleuteld herstel en volledige inactieve hostprepare onafhankelijk bewezen. Volgende uitkomst is hetzelfde gedrag van de oorspronkelijke uitbreiding via de bestaande beperkte /run-procedure-servicemodus. Bouwer levert exacte optionele targetconfig plus koud-start/replay/STOPplan met oorspronkelijke service/API/image/budget/CPUbackend en schone omgeving/lege state. Tester controleert vóór start de bestaande contracten en beschermingsgrenzen. Fullsourceconfig en bronattest/ledger blijven intact; afgeschermde eindbeoordelingen zijn geen extra herstelopdracht. Geen volledig hostplatform- of E4.17-eindclaim; geen eigenaaractie nodig.",
         "finishOrder": [
           "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14097,9 +14097,9 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "E4.17: het volledige versleutelde pakket en de volledige inactieve hostprepare zijn onafhankelijk goedgekeurd: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes werkelijk gehasht en 1.879 oorspronkelijke SDK-bestanden bewezen. Bouwer sluit de exacte CPU/loader-, ledger-, lege-state-, STOP- en dispatchervoorwaarden en levert één uitvoerbaar plan voor dezelfde oorspronkelijke hostprocedure. Tester beoordeelt die grenzen en daarna het werkelijke functionele resultaat. Canonical workflow met 13 integratiegevallen is gepusht. Kernherstel onder hold blijft afzonderlijk bewezen op de eerdere outer. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
+              "nextAction": "E4.17: versleuteld herstel en volledige inactieve hostprepare onafhankelijk bewezen. Volgende uitkomst is hetzelfde gedrag van de oorspronkelijke uitbreiding via de bestaande beperkte /run-procedure-servicemodus. Bouwer levert exacte optionele targetconfig plus koud-start/replay/STOPplan met oorspronkelijke service/API/image/budget/CPUbackend en schone omgeving/lege state. Tester controleert vóór start de bestaande contracten en beschermingsgrenzen. Fullsourceconfig en bronattest/ledger blijven intact; afgeschermde eindbeoordelingen zijn geen extra herstelopdracht. Geen volledig hostplatform- of E4.17-eindclaim; geen eigenaaractie nodig.",
               "progress": "Volledig versleuteld herstel en volledige inactieve hostprepare onafhankelijk op daadwerkelijke bestanden bewezen. Volgende eindvoorwaarde: dezelfde oorspronkelijke procedure werkt op het geïsoleerde hersteldoel met behouden stop/hold-grenzen.",
-              "checkedAt": "2026-10-23T23:40:57.404970+00:00",
+              "checkedAt": "2026-10-23T23:42:43.673680+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
               "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
               "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -14724,7 +14724,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.17: het volledige versleutelde pakket en de volledige inactieve hostprepare zijn onafhankelijk goedgekeurd: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes werkelijk gehasht en 1.879 oorspronkelijke SDK-bestanden bewezen. Bouwer sluit de exacte CPU/loader-, ledger-, lege-state-, STOP- en dispatchervoorwaarden en levert één uitvoerbaar plan voor dezelfde oorspronkelijke hostprocedure. Tester beoordeelt die grenzen en daarna het werkelijke functionele resultaat. Canonical workflow met 13 integratiegevallen is gepusht. Kernherstel onder hold blijft afzonderlijk bewezen op de eerdere outer. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
+      "nextAction": "E4.17: versleuteld herstel en volledige inactieve hostprepare onafhankelijk bewezen. Volgende uitkomst is hetzelfde gedrag van de oorspronkelijke uitbreiding via de bestaande beperkte /run-procedure-servicemodus. Bouwer levert exacte optionele targetconfig plus koud-start/replay/STOPplan met oorspronkelijke service/API/image/budget/CPUbackend en schone omgeving/lege state. Tester controleert vóór start de bestaande contracten en beschermingsgrenzen. Fullsourceconfig en bronattest/ledger blijven intact; afgeschermde eindbeoordelingen zijn geen extra herstelopdracht. Geen volledig hostplatform- of E4.17-eindclaim; geen eigenaaractie nodig.",
       "finishOrder": [
         "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -17013,7 +17013,7 @@
       "coreValidationStillRunning": false,
       "selectedBytesRemoved": 0,
       "transportLimitChanged": false,
-      "nextAction": "E4.17: het volledige versleutelde pakket en de volledige inactieve hostprepare zijn onafhankelijk goedgekeurd: alle 576 geselecteerde bestanden behouden, 18.067 doelbestanden/2.014.796.251 bytes werkelijk gehasht en 1.879 oorspronkelijke SDK-bestanden bewezen. Bouwer sluit de exacte CPU/loader-, ledger-, lege-state-, STOP- en dispatchervoorwaarden en levert één uitvoerbaar plan voor dezelfde oorspronkelijke hostprocedure. Tester beoordeelt die grenzen en daarna het werkelijke functionele resultaat. Canonical workflow met 13 integratiegevallen is gepusht. Kernherstel onder hold blijft afzonderlijk bewezen op de eerdere outer. Werkend hostgedrag en volledige E4.17 blijven open; geen eigenaaractie nodig.",
+      "nextAction": "E4.17: versleuteld herstel en volledige inactieve hostprepare onafhankelijk bewezen. Volgende uitkomst is hetzelfde gedrag van de oorspronkelijke uitbreiding via de bestaande beperkte /run-procedure-servicemodus. Bouwer levert exacte optionele targetconfig plus koud-start/replay/STOPplan met oorspronkelijke service/API/image/budget/CPUbackend en schone omgeving/lege state. Tester controleert vóór start de bestaande contracten en beschermingsgrenzen. Fullsourceconfig en bronattest/ledger blijven intact; afgeschermde eindbeoordelingen zijn geen extra herstelopdracht. Geen volledig hostplatform- of E4.17-eindclaim; geen eigenaaractie nodig.",
       "independentDesignRecommendation": "explicit_trusted_installation_policy_2GiB_default_and_per_file_1GiB",
       "implementationAuthorized": true,
       "existingBrowserUploadLimitBytes": 67108864,
@@ -17175,7 +17175,7 @@
       "referenceCaptureIndependentVerdict": "GO_SCOPED_ACTUAL_REFERENCE_CAPTURE_AND_STATIC_CONSTRUCTOR_CHAIN_NOT_START",
       "referenceCaptureFiles": 4,
       "referenceCaptureBytes": 75290,
-      "constructorLedgerCapturePending": true,
+      "constructorLedgerCapturePending": false,
       "constructorEmptyTargetAndDispatcherBoundaryPending": true,
       "fullHostPreparationReceiptSha256": "d8710121f4117aff9928b64bbad3c8d8274627d9d7010f2b107929ada1ae04c3",
       "fullHostPreparationReportedFiles": 18067,
@@ -17192,7 +17192,20 @@
       "actual576IndependentPreparedFilesHashed": 18067,
       "actual576IndependentPreparedHashSeconds": 6.841563,
       "actual576IndependentCipherAndMetadataSeconds": 1.423546,
-      "actual576IndependentReportSha256": "3ee611244afe28c075ce063804f4e347b0018180f6e62d307cb657e880004f4d"
+      "actual576IndependentReportSha256": "3ee611244afe28c075ce063804f4e347b0018180f6e62d307cb657e880004f4d",
+      "functionalProbeScope": {
+        "decision": "existing_optional_run_procedure_only_target_view",
+        "originalFullSourceConfigurationPreserved": true,
+        "originalServiceApiImageBudgetAndCpuBackendRequired": true,
+        "protectedFinalResourcesProvisionedOrRead": false,
+        "sourcePhysicalAttestationRewrittenOrReusedAsTargetProof": false,
+        "unusedReferenceCandidatesNotRequiredForAdoption": true,
+        "exactConfigurationAndStateThreadPlanReviewRequiredBeforeStart": true,
+        "sameOriginalProcedureBehaviorStillRequired": true,
+        "wholeHostPlatformRestoredClaimed": false
+      },
+      "constructorLedgerCaptureReceiptSha256": "1bf12ed5f7e34041403fdf439fb19ed0c29499f5fd04a9de22a3479c522c0702",
+      "cpuContextualStaticReceiptSha256": "764f4cfdfa9c7748f806bb88ad0c9e47f05ea73db7c775a08f26347e1877e296"
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",

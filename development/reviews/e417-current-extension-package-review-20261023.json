@@ -1731,6 +1731,53 @@
         "Four later actual-reference constructor files remain separate and not automatically adopted; original base/config constructor mismatch is not claimed functionally repaired by this576 package.",
         "Prospective target admission/client mapping, source-ledger dependency, saved state/STOP/held/dispatcher boundaries and original-service functional behavior remain open."
       ]
+    },
+    "staticHostBridgeLoaderAbiReview": {
+      "verdict": "GO_SCOPED_STATIC_HOST_BRIDGE_DECLARED_ABI_METADATA_NOT_RUNTIME",
+      "receiptSha256": "0412f0f8471fbaef58bcbe7885444ef00c3ffa9bf8b3edf10862a5a7745b65dc",
+      "checkerSourceSha256": "590e65fbfed67e800e97daced69327592ac8fd96b474cf73c7cca9d9d6da6401",
+      "objectPinsIndependentlyHashed": 26,
+      "actualGnuSectionsReReadWithPinnedReadelf": 26,
+      "elfRoots": 16,
+      "wheelDistributionsIndependentlyParsed": 45,
+      "dependencyEdgesChecked": 107,
+      "allNeededSonamesResolvedAndActualVersionSetsSatisfyRequirements": true,
+      "allElfClassAndMachineMatch": true,
+      "actualNonemptyRpathRunpathOrNodefaultlib": [],
+      "systemCacheAndLdconfigSnapshotPinsMatch": true,
+      "localPrimaryLoaderManualPinMatches": true,
+      "remainingStaticIssues": 0,
+      "requiredCleanEnvironmentRecordedButLaunchEnforcementNotYetProven": true,
+      "loaderEnvironmentMustBeControlledBeforeInterpreterExec": true,
+      "runtimeImportLateDlopenSymbolsOrCpuFunctionProven": false,
+      "targetInterpreterLddLoaderOrSdkScorerExecution": 0,
+      "servicesStarted": 0,
+      "reviewSeconds": 0.349322,
+      "reviewedAt": "2026-10-23T23:42:37.072892+00:00",
+      "cleanLoaderEnvironmentRequired": {
+        "LD_AUDIT": null,
+        "LD_LIBRARY_PATH": "",
+        "LD_PRELOAD": null,
+        "PYTHONHOME": null,
+        "PYTHONPATH": null
+      },
+      "staticUtilityPins": {
+        "readelfSha256": "871be389739ecf9924b052c2fde4d2a2068a54e882201b9c34897337a5a0a130",
+        "ldconfigCacheOutputSha256": "e7a89447bc2d174ccd9f0e26b39481a57d25eb4d5b24d5c3194f37277d52e451",
+        "systemLoaderCacheFileSha256": "d1a854757fe982181ad141136fce95df8d631959c62010389e5b73f34822bd2a",
+        "localPrimaryLoaderManualSha256": "1ace29ec8045d4dc0a43f02f46caa70d891796e4bb7a26d338596f350d97564c",
+        "actualLibcPath": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+        "actualLibcSha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf"
+      },
+      "scopeAndMethod": "Only16 existing host/bridge/interpreter ELF roots and their26 unique current objects,45 installed WHEEL records. Read bytes and invoke pinned readelf for ELF/GNU section metadata and ldconfig -p as a read-only cache reader under a minimal clean tool environment. No target ELF, target interpreter, ldd/target loader, SDK, scorer, verifier, image model or service executed.",
+      "loaderRulesReview": "Actual26-object graph has no RPATH, RUNPATH or NODEFAULTLIB. All107 edges resolve to the first matching current x86-64 ldconfig candidate; exact provider GNU version-definition sets satisfy per-SONAME GNU version requirements, not merely the maximum GLIBC number. Current cache and source file hashes match the receipt. No generic RPATH/token expansion claim for future CPU graphs.",
+      "preStartEnvironmentCondition": "A future actual launch must enforce the declared loader environment before executing the copied interpreter, preferably via an explicit minimal allowlist that excludes unmodelled LD_* or GLIBC_TUNABLES overrides. LD_PRELOAD/LD_AUDIT/LD_LIBRARY_PATH controls cannot be established after the ELF interpreter has started; -I/-S/PYTHONPATH replacement alone is not that proof. No actual launch environment was admitted or executed in this review.",
+      "limits": [
+        "This is static declared architecture/SONAME/GNU-version/WHEEL-tag coverage on the pinned current host; it does not prove imported symbol resolution, late dlopen, native CPU/optional GPU functionality, cross-machine compatibility or service behavior.",
+        "Actual authenticated CPU tree is a separate next evidence object; no CPU extension imports, third harness or old strict CPU retry was run. The original strict CPU FAIL remains unchanged.",
+        "No need to repeat old host packet/fullprepare/cipher/core/PG suites. Next review remains the concrete ledger/state/dispatcher boundary and exact original-procedure functional plan."
+      ],
+      "functionalStartAdmitted": false
     }
   },
   "contractRequirements": {
@@ -1846,6 +1893,20 @@
       "newDecryptEncryptExpandOrSemanticCoreRuns": 0,
       "databaseQueriesOrImports": 0,
       "targetSdkScorerImportsOrServiceStarts": 0,
+      "developmentTokens": null,
+      "developmentCredits": null
+    },
+    "latestStaticHostBridgeReview": {
+      "measuredSeconds": 0.349322,
+      "objectsHashedAndStaticSectionsRead": 26,
+      "wheelRecordsParsed": 45,
+      "dependencyEdgesChecked": 107,
+      "executedTools": [
+        "pinned readelf metadata read",
+        "ldconfig -p cache read"
+      ],
+      "targetInterpreterImportsOrLddLoaderExecutions": 0,
+      "sdkScorerServicesOrModelCalls": 0,
       "developmentTokens": null,
       "developmentCredits": null
     }
