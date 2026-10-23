@@ -6,13 +6,13 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Van zelfontdekte behoefte naar eigen uitvinding en later gebruik
 
-Batchkoppeling geïnstalleerd en onafhankelijk teruggelezen. Twee nieuwe echte camerawaarnemingen en een gewone afweging met stilte zijn bewezen; de laatste camera zag geen gezichten. Begroeting, fysiek horen en later hergebruik blijven open. Herhaal geen oude bron of vraag aan eigenaar; behoud de actuele uitbreiding en exacte herstelafhankelijkheden via bestaande voorzieningen. Volledige E4.15 en E4.17 blijven open.
+Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.
 
 Klaar wanneer: Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.
 
 ## Afmaakvolgorde
 
-1. E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.
+1. Actueel E4.15 functioneel afmaken; E4.17 herstelt daarna dezelfde uitbreiding. Overige kaartvolgorde behouden: E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.
 2. E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.
 3. E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.
 4. E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.

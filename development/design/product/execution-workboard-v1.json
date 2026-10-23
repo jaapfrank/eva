@@ -847,7 +847,7 @@
     "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
     "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "Batchkoppeling geïnstalleerd en onafhankelijk teruggelezen. Twee nieuwe echte camerawaarnemingen en een gewone afweging met stilte zijn bewezen; de laatste camera zag geen gezichten. Begroeting, fysiek horen en later hergebruik blijven open. Herhaal geen oude bron of vraag aan eigenaar; behoud de actuele uitbreiding en exacte herstelafhankelijkheden via bestaande voorzieningen. Volledige E4.15 en E4.17 blijven open.",
+    "nextAction": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -863,9 +863,11 @@
     "Geen nieuwe vergelijkingsserie; spraak geparkeerd."
   ],
   "team": {
-    "coordinator": "/root",
-    "architectureReviewer": "/root/e33_state_adapters",
-    "documentationReviewer": "/root/e33_interface_adapters"
+    "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+    "executor": "01a0c537-54d0-7080-9e4c-74db537877af",
+    "independentReviewer": "01a16a55-1607-7171-820e-a3918acaea3f",
+    "maxConcurrentExecutorsIncludingReview": 2,
+    "noSubagentsOrNewChats": true
   },
   "audit": {
     "projectDashboard": {
@@ -2992,13 +2994,13 @@
         "now": {
           "taskId": "E4.15",
           "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-          "summary": "Batchkoppeling geïnstalleerd en onafhankelijk teruggelezen. Twee nieuwe echte camerawaarnemingen en een gewone afweging met stilte zijn bewezen; de laatste camera zag geen gezichten. Begroeting, fysiek horen en later hergebruik blijven open. Herhaal geen oude bron of vraag aan eigenaar; behoud de actuele uitbreiding en exacte herstelafhankelijkheden via bestaande voorzieningen. Volledige E4.15 en E4.17 blijven open.",
+          "summary": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
           "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform."
         },
         "next": {
-          "taskId": "F2.1",
-          "title": "Zeven dagen gezinsgebruik",
-          "detail": "Bestaande echte gezinsproef; geen vervanging door technische tests. Spraak blijft bij de andere uitvoerder."
+          "taskId": "E4.17",
+          "title": "Dezelfde uitbreiding volledig herstelbaar opleveren",
+          "detail": "Na E4.15; geselecteerde bytes zijn geen volledig herstelpakket. Overige verplichte kaarten blijven open voor gezinsoplevering."
         },
         "ownerAction": {
           "required": false,
@@ -8021,7 +8023,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Batchkoppeling geïnstalleerd en onafhankelijk teruggelezen. Twee nieuwe echte camerawaarnemingen en een gewone afweging met stilte zijn bewezen; de laatste camera zag geen gezichten. Begroeting, fysiek horen en later hergebruik blijven open. Herhaal geen oude bron of vraag aan eigenaar; behoud de actuele uitbreiding en exacte herstelafhankelijkheden via bestaande voorzieningen. Volledige E4.15 en E4.17 blijven open.",
+                "nextAction": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -8109,7 +8111,7 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "Root verwerkt exacte lokale hostbewaring; reviewer toetst alleen geselecteerde faceassets. Bouwer corrigeert bestaande importharness met onveranderde denyguards en één gerichte nieuwe check op gewijzigde oorzaak. Pas na import- en gedragbewijs verdereCPUadoptie; echte huidige pakket/trust/key/data/restore blijven open.",
+                "nextAction": "Bewaar geselecteerde hostbytes en 15 faceassets lokaal prive. CPU-kandidaat blijft niet-live en strict-import-v2 FAIL; geen nieuwe run of guardverruiming. Na E4.15-overdracht uitsluitend noodzakelijk herstel van dezelfde uitbreiding via bestaande pakket/trust/key/gegevensroute afmaken. Volledig aangesloten schoon herstel nog onbewezen.",
                 "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
                 "checkedAt": "2026-10-23T19:49:14.921610+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
@@ -8729,9 +8731,9 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Batchkoppeling geïnstalleerd en onafhankelijk teruggelezen. Twee nieuwe echte camerawaarnemingen en een gewone afweging met stilte zijn bewezen; de laatste camera zag geen gezichten. Begroeting, fysiek horen en later hergebruik blijven open. Herhaal geen oude bron of vraag aan eigenaar; behoud de actuele uitbreiding en exacte herstelafhankelijkheden via bestaande voorzieningen. Volledige E4.15 en E4.17 blijven open.",
+        "nextAction": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
         "finishOrder": [
-          "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
+          "Actueel E4.15 functioneel afmaken; E4.17 herstelt daarna dezelfde uitbreiding. Overige kaartvolgorde behouden: E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
           "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
           "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -9148,7 +9150,7 @@
             "E2.6",
             "C4.3"
           ],
-          "activeTask": "E1.6",
+          "activeTask": "E4.15",
           "rules": [
             "Eén primaire uitvoeruitkomst; de bestaande spraakuitvoerder behoudt zijn eigen route.",
             "E4.16 en E4.18 lossen eerder concrete blokkerende fouten/duplicatie op; hun volledige afronding volgt vóór de eindvergelijking.",
@@ -13998,7 +14000,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Batchkoppeling geïnstalleerd en onafhankelijk teruggelezen. Twee nieuwe echte camerawaarnemingen en een gewone afweging met stilte zijn bewezen; de laatste camera zag geen gezichten. Begroeting, fysiek horen en later hergebruik blijven open. Herhaal geen oude bron of vraag aan eigenaar; behoud de actuele uitbreiding en exacte herstelafhankelijkheden via bestaande voorzieningen. Volledige E4.15 en E4.17 blijven open.",
+              "nextAction": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -14086,7 +14088,7 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "Root verwerkt exacte lokale hostbewaring; reviewer toetst alleen geselecteerde faceassets. Bouwer corrigeert bestaande importharness met onveranderde denyguards en één gerichte nieuwe check op gewijzigde oorzaak. Pas na import- en gedragbewijs verdereCPUadoptie; echte huidige pakket/trust/key/data/restore blijven open.",
+              "nextAction": "Bewaar geselecteerde hostbytes en 15 faceassets lokaal prive. CPU-kandidaat blijft niet-live en strict-import-v2 FAIL; geen nieuwe run of guardverruiming. Na E4.15-overdracht uitsluitend noodzakelijk herstel van dezelfde uitbreiding via bestaande pakket/trust/key/gegevensroute afmaken. Volledig aangesloten schoon herstel nog onbewezen.",
               "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
               "checkedAt": "2026-10-23T19:49:14.921610+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
@@ -14706,9 +14708,9 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Batchkoppeling geïnstalleerd en onafhankelijk teruggelezen. Twee nieuwe echte camerawaarnemingen en een gewone afweging met stilte zijn bewezen; de laatste camera zag geen gezichten. Begroeting, fysiek horen en later hergebruik blijven open. Herhaal geen oude bron of vraag aan eigenaar; behoud de actuele uitbreiding en exacte herstelafhankelijkheden via bestaande voorzieningen. Volledige E4.15 en E4.17 blijven open.",
+      "nextAction": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
       "finishOrder": [
-        "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
+        "Actueel E4.15 functioneel afmaken; E4.17 herstelt daarna dezelfde uitbreiding. Overige kaartvolgorde behouden: E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
         "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
         "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -15125,7 +15127,7 @@
           "E2.6",
           "C4.3"
         ],
-        "activeTask": "E1.6",
+        "activeTask": "E4.15",
         "rules": [
           "Eén primaire uitvoeruitkomst; de bestaande spraakuitvoerder behoudt zijn eigen route.",
           "E4.16 en E4.18 lossen eerder concrete blokkerende fouten/duplicatie op; hun volledige afronding volgt vóór de eindvergelijking.",
@@ -16922,6 +16924,43 @@
       "independentFinalReviewSha256": "40bf7527abc399b3edc6170b4fe5ffdae8da6f2f8217dfbd82005998dc1cdeca",
       "ownerAcceptance": false,
       "familyAcceptance": false
+    },
+    "projectAlignment20261023": {
+      "scope": "All current canonical cards, documents, live dashboard and Git; no product closure.",
+      "snapshot": "development/archive/history/20261023-central-coordination/snapshot.json",
+      "registeredTasks": 103,
+      "technicalCompleted": 79,
+      "openTasks": 24,
+      "notProductPercentage": true,
+      "findings": [
+        "E4.15 open while work drifted into E4.17 import/dependency preparation.",
+        "Historical team and install coordinator differed from actual chats.",
+        "Old E1.6 first-step text differed from currentWork E4.15.",
+        "Dashboard next F2.1 skipped mandatory open work.",
+        "Dated MD 25-open statement corrected to current 24."
+      ],
+      "liveCanonicalRevision": "306827b61e70345395fb78d742697ad0ce162eaab02b5601e083fcd6b5bd2aa0",
+      "liveShaAndDeliveryPlanMatched": true,
+      "branch": "main",
+      "remote": "https://github.com/jaapfrank/eva.git",
+      "headAndOriginBeforeChange": "73a59cb1da537e9f77640232d01540edd9fd8281",
+      "newRuntimeModelCalls": 0,
+      "newCameraCaptures": 0,
+      "newMessages": 0,
+      "newInstalls": 0,
+      "existingRuntimeTokens": 8652,
+      "existingRuntimeModelAttempts": 1,
+      "existingRuntimeTools": 1,
+      "runtimeCredits": null,
+      "developmentTokens": null,
+      "developmentCredits": null,
+      "wholeAuditElapsedSeconds": null,
+      "review": "development/reviews/e415-central-alignment-readiness-review-20261023.json",
+      "verdict": "GO_alignment_and_bounded_diagnosis_only",
+      "measuredReviewIntervalSeconds": 179.318,
+      "reviewIntervalIncludesWaiting": true,
+      "wholeReviewTimeUnknown": true,
+      "codePatchNotMandatedByStaticCoverageLimitation": true
     }
   },
   "updatedAt": "2026-10-20T13:28:55.822181+00:00",

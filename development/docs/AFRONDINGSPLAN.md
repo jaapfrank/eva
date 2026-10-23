@@ -12,8 +12,10 @@ De [samengevoegde scope](../design/product/living-housemate-task-scope-20261022.
 behoudt Household Artifacts, tijdige hulp, ondersteuningskansen, Personality Deltas en
 Inner Life. De leidende richting is nu gerichte continuïteit: Eva onderhoudt echte
 verantwoordelijkheden en eigen projecten tussen gesprekken en gebruikt denkvermogen
-wanneer dat iets toevoegt. E1.6 is de primaire bouwstap; spraak blijft bij de bestaande
-uitvoerder. Dit is bouwvoorbereiding, geen geïnstalleerde nieuwe werking.
+wanneer dat iets toevoegt. De actuele uitvoering blijft E4.15 volgens currentWork:
+dezelfde door Eva gemaakte voorziening functioneel afmaken, daarna herstel van dezelfde
+uitbreiding onder E4.17. De tabel bewaart de overige kaartvolgorde en afhankelijkheden;
+zij start geen parallelle E1.6-bouw. Spraak blijft bij de bestaande uitvoerder.
 
 | Volgorde | Taken | Concrete uitkomst |
 | --- | --- | --- |
@@ -30,7 +32,9 @@ Drie aanvullende kaarten: **E1.13** gericht denkvermogen, **E1.14** continuïtei
 uitval/herstart en **E4.19** zelfstandig updateonderhoud. De eerdere vier toevoegingen
 E4.17, E1.12, E2.9 en E4.18 blijven behouden. Bestaande kaarten krijgen gerichte
 bouwstappen; oorspronkelijke eindvoorwaarden en eerdere afrondingen blijven intact.
-Alle 25 open kaarten staan eenmaal in de hoofd-, parallelle of optionele volgorde.
+De actuele bordcontrole van 23 oktober telt 24 open kaarten in deze volgorde.
+De eerdere telling was 25; oorspronkelijke criteria en technische afrondingen blijven
+behouden. De telling is geen productpercentage.
 
 ### Kleine bouwstappen op de bestaande route
 
@@ -94,8 +98,10 @@ meerdere echte dagen bewijzen continuïteit. Begin dat gebruik zodra de route kl
 zodat observatiedagen niet pas na alle overige bouw beginnen. F2 blijft de gezamenlijke
 eindacceptatie. Herhaal een proef alleen bij gewijzigde oorzaak of ontbrekend bewijs.
 
-De eerste uitvoeractie is E1.6: volg de bestaande bron-/aandachtoverdracht, meet de
-huidige route en sluit het concrete gat. Geen nieuwe algemene architectuurronde.
+De actuele uitvoeractie is E4.15: volg herkenning, voorstel, afweging en aflevering
+met geldig bestaand bewijs en sluit uitsluitend een bewezen ontbrekende overdracht.
+Begroeting, horen en later hergebruik blijven open; de fysieke proef is uitgesteld.
+Geen nieuwe CPU-/importproef of algemene architectuurronde.
 
 ### Hergebruik en wat vervalt als bouwvoorstel
 

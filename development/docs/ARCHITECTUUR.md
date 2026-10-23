@@ -321,10 +321,13 @@ Een ontbrekende algemene interface wordt afzonderlijk gemotiveerd en beoordeeld.
 De huidige procedure-route kan een opgeslagen Python-bestand of skill-pakket
 registreren, teruglezen en met expliciete JSON-invoer geïsoleerd uitvoeren.
 `ProcedureReferenceActions` en de bestaande procedure-uitvoerder verzorgen dit;
-een geregistreerd pakket is daardoor nog geen actieve eventhandler. De automatische
-binding van zo'n pakket aan de huishoudelijke observatieroute ontbreekt nog.
-E4.15 moet die overdracht verbinden met bestaande bronvalidatie, actuele toestemming,
-STOP, aandacht en duurzame aflevering. Pakketuitvoer blijft voorsteldata en krijgt
+een geregistreerd pakket is daardoor nog geen actieve eventhandler. De E4.15-binding
+aan de huishoudelijke observatiebatch is op 23 oktober geïnstalleerd en onafhankelijk
+teruggelezen, met bestaande bronvalidatie, actuele toestemming, STOP en aflevering.
+Nieuwe echte waarnemingen en passende stilte zijn gezien; positieve begroeting,
+hoorbaarheid en later hergebruik blijven onbewezen. Het bewijs staat in
+`development/evidence/product/e415-household-batch-binding-20261023.json`.
+Pakketuitvoer blijft voorsteldata en krijgt
 geen eigen spreekbevoegdheid, scheduler of directe toegang tot geheimen.
 
 Bij langlopend digitaal werk mogen exacte historische broncodelezingen vóór een

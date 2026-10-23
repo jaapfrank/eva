@@ -139,5 +139,180 @@
     "sourceClosureIncomplete": true,
     "diskBytesAreNotLoadedProcessAttestation": true,
     "faceOrLegacyDbContentsRead": false
+  },
+  "readinessHandoff": {
+    "checkedAt": "2026-10-23T20:03:20.416878+00:00",
+    "method": "Static trace of the existing installed route plus preserved readbacks only. No new live query, import, test, model/executor call, camera, message, code or voice change.",
+    "conclusion": "Conditional technical path present: a qualifying fresh camera source can reach an appropriate greeting outside the existing300s review window. The installed general handoffs are present, but the300s admission policy can consume a30s proposal lifetime; reliable timely coverage and the ordinary positive proposal/guard/offered/heard chain remain unproved. This is not a claim that the whole route is unusable or that a real greeting was observed missed.",
+    "authority": {
+      "goalPath": "development/docs/PROJECTDOEL.md",
+      "goalSha256": "4021a96c72a7e2e9d077e0d39d5a560d993a45437aefeee8e25e1a3b93455eb7",
+      "goalLines": "93-104",
+      "cameraAcceptance": "Eva onderzoekt zelf aanwezige camera’s, herkenning en deurbelspraak, realiseert de ontbrekende verbinding en laat bekende personen passend begroeten. Onbekend blijft onbekend. Dezelfde uitbreiding moet daarna op een schone installatie herstelbaar zijn.",
+      "originalDoneWhenPath": "audit.projectDashboard.deliveryPlan.implementationSlices[27].remainingTasks[id=E4.15].doneWhen",
+      "workboardSha256": "2812a27b663f142ecd23d7bbc50409461a0fdf28dd47cd8647e3a07e3a4f3c7e",
+      "originalDoneWhenUnchanged": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform."
+    },
+    "sourceBindings": {
+      "src/eva/providers/home_assistant_procedure.py": {
+        "sha256": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
+        "coreReadbackSha256": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
+        "matchesRecordedCore": true
+      },
+      "src/eva/application/household_procedure.py": {
+        "sha256": "7ae69ecc75a66260fe69cc120f2fbd4bcd49396d34f8e62d757dee8e086d0ccc",
+        "coreReadbackSha256": "7ae69ecc75a66260fe69cc120f2fbd4bcd49396d34f8e62d757dee8e086d0ccc",
+        "matchesRecordedCore": true
+      },
+      "src/eva/application/free_will.py": {
+        "sha256": "410d3f00f7a7f5a394d9169ec678cf2cb8ce8618ba497cf5854e5616bb1b2a10",
+        "coreReadbackSha256": "410d3f00f7a7f5a394d9169ec678cf2cb8ce8618ba497cf5854e5616bb1b2a10",
+        "matchesRecordedCore": true
+      },
+      "src/eva/bootstrap/household_initiative.py": {
+        "sha256": "b7a17d6fd0a74cba581a7e146c6882bab73d718c0bae0ede095633a6c0e82fad",
+        "coreReadbackSha256": "b7a17d6fd0a74cba581a7e146c6882bab73d718c0bae0ede095633a6c0e82fad",
+        "matchesRecordedCore": true
+      },
+      "src/eva/bootstrap/household_initiative_delivery.py": {
+        "sha256": "503efb65943893c58f1047fc93cacbdc4326565479476f696bc6865101dc0597",
+        "coreReadbackSha256": "503efb65943893c58f1047fc93cacbdc4326565479476f696bc6865101dc0597",
+        "matchesRecordedCore": true
+      },
+      "src/eva/adapters/postgres/sensory_events.py": {
+        "sha256": "64bae55b47f452b28876c926601cd99612f54a55da5573597267ae8326125413",
+        "coreReadbackSha256": "64bae55b47f452b28876c926601cd99612f54a55da5573597267ae8326125413",
+        "matchesRecordedCore": true
+      },
+      "src/eva/application/household_initiative.py": {
+        "sha256": "087eba048cf38838a91a2d056c651f1fb60bdafb64d9799f0b327f6d85fdcc02",
+        "coreReadbackSha256": null,
+        "matchesRecordedCore": null
+      },
+      "src/eva/adapters/model/pydantic_conversation.py": {
+        "sha256": "d04d71a7360ab9097831bd837d8c96ee8c1f29d8c87dc4cb8c347fcd9decc884",
+        "coreReadbackSha256": "d04d71a7360ab9097831bd837d8c96ee8c1f29d8c87dc4cb8c347fcd9decc884",
+        "matchesRecordedCore": true
+      },
+      "src/eva/adapters/connectors/camera_observer.py": {
+        "sha256": "1b8230c86528351bc48bff86994282be1704ac15c5a6d3cadb92015f28cbdc0c",
+        "coreReadbackSha256": null,
+        "matchesRecordedCore": null
+      },
+      "src/eva/adapters/connectors/local_face_identity.py": {
+        "sha256": "acdf5f96cb398296f2ac7c89533190666486d1e3cfb8b8ef7509b8141179d4c4",
+        "coreReadbackSha256": null,
+        "matchesRecordedCore": null
+      },
+      "src/eva/contracts/camera_observation.py": {
+        "sha256": "6d33560f1f143928a0e9d09d4eb16a12b26af5ad5fda7552d510c4e7ba3cd958",
+        "coreReadbackSha256": null,
+        "matchesRecordedCore": null
+      },
+      "src/eva/bootstrap/native_work_delivery.py": {
+        "sha256": "fd814928c357a4a51de128043543ef2deb7b6dd7af0a2123d7606ec7e7a89519",
+        "coreReadbackSha256": null,
+        "matchesRecordedCore": null
+      }
+    },
+    "authoredExtension": {
+      "file": "camera_greeting_adapter_v2.py",
+      "sha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+      "outsideCore": true,
+      "unchanged": true,
+      "scope": "propose() returns a generic greeting suggestion, never audio or permission. known_candidate labels remain in normalized evidence supplied to Eva; no claim that the adapter itself greets by name."
+    },
+    "preservedReadbackBindings": {
+      "development/evidence/product/e415-household-procedure-binding-20261023.json": "155abc53b922f460c4e8355fcc8c86e5ebcc19b710952986b6d90d96e67c2ce4",
+      "development/reviews/e415-installed-binding-readback-20261023.json": "64236214de0b5208dc894391baac9ae294dc012bcb03293e23314314cd16a7b1",
+      "development/reviews/e415-batch-installed-readback-20261023.json": "625db52c107d776ac53afe0e005ea8fd35f8f2d3754599c5390e67cdf5ff7a73",
+      "development/reviews/e415-household-batch-binding-review-20261023.json": "7ddf6cbc2158efd944125375c9924c42d54e321a5b4b4e9411c2dbf0a70b8b39"
+    },
+    "route": [
+      {
+        "stage": "recognition_to_retained_source",
+        "source": "adapters/connectors/camera_observer.py:149-186,188-245; local_face_identity.py:110-157",
+        "behavior": "Registry-selected trigger on -> bounded existing snapshot/face backend -> normalized camera/recognition metadata -> existing handler. known_candidate is a similarity candidate with person_label, unknown has no label; neither authenticates a person.",
+        "proof": "Existing live record proves 2 new camera observations, latest zero faces. Positive known-person recognition in this installed chain is not measured."
+      },
+      {
+        "stage": "retained_source_to_household_batch",
+        "source": "adapters/postgres/sensory_events.py:41-88,440-628; application/household_initiative.py:89-137",
+        "behavior": "Original hashes/times retained; newest camera outcome and same-second ambiguity resolved before 16-member/6144-byte/32-row cuts. Shared binding wraps original or immutable batch.",
+        "proof": "44 recorded focused cases and independent installed source readback; ordinary batch plus silence observed. The admission gate below still precedes fresh selection."
+      },
+      {
+        "stage": "external_propose",
+        "source": "providers/home_assistant_procedure.py:37-114,117-233",
+        "behavior": "Opt-in, exact reviewed source/current retained reference, registry/profile/backend/current rights bind a selected child younger than30s. Existing offline executor runs external propose; valid output becomes <=4096-byte untrusted proposal context, not execution authority.",
+        "proof": "Installed reviewed opt-in/source/config verified. Preserved isolated leaf returned action none/event_binding; no actual positive propose_greeting receipt is recorded."
+      },
+      {
+        "stage": "ordinary_eva_judgement",
+        "source": "application/household_procedure.py:20-46; application/free_will.py:384-467,623-699; adapters/model/pydantic_conversation.py:3324-3329,3348-3375,3538-3559",
+        "behavior": "Same model receives the full normalized household event plus optional untrusted proposal and shared-only context. It may respond or choose silence; labels are available as candidates. Source/rights/expiry are rechecked after the model, without rerunning the authored procedure.",
+        "proof": "One measured ordinary decision8536 input/116 output tokens,1 model attempt/1 toolcall ended silence with no guard or prepared greeting. It does not prove the positive proposal path."
+      },
+      {
+        "stage": "durable_prepare_and_expiry",
+        "source": "adapters/postgres/sensory_events.py:1270-1405,1706-1817,1835-1892",
+        "behavior": "A respond decision stores original event/context/guard/expiry; current binding, claimed revision/lease, expiry and source are checked before effect. Pending/claimed/recent same-entity expressions have existing cooldowns; uncertain sends are not replayed.",
+        "proof": "Source and existing focused checks cover the contract. No recorded camera greeting reached prepared/claimed/offered on the observed ordinary run."
+      },
+      {
+        "stage": "chosen_household_output",
+        "source": "bootstrap/household_initiative.py:28-41,59-145; household_initiative_delivery.py:67-138; native_work_delivery.py:53-57",
+        "behavior": "One selected policy-bound HA assist_satellite (recent native session, otherwise first policy device), idle check, STOP/current authority/window/guard/expiry checks -> assist_satellite.announce -> durable offered receipt. Quiet hours22:00-08:00 Europe/Amsterdam and foreground activity can suppress delivery.",
+        "proof": "Exactly one reviewed household binding and installed delivery glue; offered is not heard. Doorbell intercom output, every speaker and physical hearing are not demonstrated by this chain."
+      }
+    ],
+    "technicalBlocker": {
+      "id": "household_admission_outlives_short_source_opportunity",
+      "status": "source_proven_reachable_timing_conflict_not_new_runtime_measurement",
+      "references": [
+        "adapters/postgres/sensory_events.py:92-130 (default300seconds)",
+        "bootstrap/household_initiative.py:72-75 (no freshness override)",
+        "adapters/postgres/sensory_events.py:534-551 (any recent WILL_MODEL_STARTED blocks, even completed silence)",
+        "adapters/postgres/sensory_events.py:456-457,605-606 (gate before selection/admission)",
+        "providers/home_assistant_procedure.py:139-145,219-221 (child lifetime<30seconds)",
+        "camera_greeting_adapter_v2.py:52-58,83 (original trigger+30seconds)"
+      ],
+      "logicalCounterexample": "A normal household model starts at t=0 and completes with silence. A genuine camera event at t=10 expires at t=40, but the existing gate can forbid its household evaluation until t=300. No timestamp refresh, model retry or forced greeting may turn this old source into a fresh opportunity. This is reasoning over source constants, not an executed test.",
+      "smallestNextStep": "Finish the same ordinary installed greeting route under a coordinator-approved resolution of the short-opportunity/admission mismatch. Preserve existing >=300s bundling and budget/conversation priorities unless the governing contract is explicitly revised; do not simply reduce a guard or dispatch a paid model call per camera event. Keep single durable ownership, deduplication, true unresolved/UNKNOWN blocking, current source/registry/profile/household binding, STOP, original times and source expiry. Outside the existing window, observe one naturally qualifying source->external proposal->Eva judgement->guard->offered outcome through the existing route; physical hearing and later reuse remain separate acceptance. No new dependency/import series or fabricated/replayed camera source.",
+      "existingAdmissionContract": {
+        "path": "development/docs/ARCHITECTUUR.md",
+        "sha256": "3178769110dcc040115f85b8054a9f00ff93c7621d0a2a577c09a6adb2e77c66",
+        "lines": "525-528",
+        "policy": "Existing bundling keeps at least300seconds; requested/effective times remain separate, conversations take priority, deferral preserves the same event, current mandate/STOP/UNKNOWN remain guarded. This is a retained design contract, not an arbitrary knob to lower."
+      },
+      "runningVersusCompleted": "The recent WILL_MODEL_STARTED query uses event time only and therefore blocks during the300s window both a still-running review and one already completed with silence/respond. A separate unresolved-phase query also blocks will_model_started/will_usage_uncertain independently of that time window. An unresolved/uncertain claim must not be mistaken for a merely recent completed review or bypassed."
+    },
+    "remainingAcceptance": {
+      "positiveLivePath": "Outside the existing300s review window, a naturally qualifying fresh face source may use the installed route. Its positive external proposal, appropriate Eva response, current guard and one offered receipt remain unmeasured; the latest zero-face silence is neither a failed nor a successful greeting.",
+      "namesAndOutput": "Named/known-person suitability requires real source evidence and Eva judgement. Generic proposal text alone is not named greeting proof; existing normalized person_label is not absent. Current output is a selected household satellite; doorbell speech coverage is unproved.",
+      "laterReuseAndLearning": "Original E4.15 also requires Eva-origin need/design, reusable alternative comparison, independent quality assessment, actual user availability, feedback and later reviewed improvement or justified retention/reuse. Installed adapter alone does not close those criteria.",
+      "restore": "Current native image preservation and bounded inactive source/config materialization are recorded; full same-extension dependencies/profile data/clean-install restoration remain unproved. The isolated CPU dependency candidate is not adopted and is irrelevant to declaring this existing greeting chain ready.",
+      "ownerActionRequiredNow": false,
+      "physicalHearing": null,
+      "fullE415Complete": false,
+      "ownerAcceptance": false
+    },
+    "limits": [
+      "All prior evidence fields, status, original failures, source hashes/times and unknown costs remain unchanged.",
+      "Static timing conflict is not attribution of the recorded silence: the latest measured frame had no faces.",
+      "Configured quiet hours, current rights, idle checks, cooldowns, expiry and deliberate model silence remain real behavior; readiness never requires greeting every trigger.",
+      "No new runtime state, current idleness, active claim, speaker availability or face health is asserted from historical readbacks.",
+      "No blanket technical-ready, positive greeting, heard, later reuse, clean-PC or complete project claim."
+    ],
+    "usage": {
+      "newLiveQueries": 0,
+      "newModelCalls": 0,
+      "newExecutorCalls": 0,
+      "newCameraCaptures": 0,
+      "newMessages": 0,
+      "newTestsOrImports": 0,
+      "codeOrVoiceChanges": 0,
+      "developmentCreditCost": null
+    }
   }
 }
