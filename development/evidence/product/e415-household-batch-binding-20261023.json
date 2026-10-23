@@ -1,0 +1,52 @@
+{
+  "contract": "EvaBoundedInstalledRouteOutcome/v1",
+  "task": "E4.15",
+  "checkedAt": "2026-10-23T19:15:42.692394+00:00",
+  "status": "built_independently_reviewed_installation_guard_refinement_pending",
+  "existing": "Eva-authored pure proposal source plus ordinary household batching/assessment/STOP/durable delivery",
+  "gap": "Actual batch children were not passed to the opt-in procedure; producer also discarded newer unavailable frames or same-second conflicts",
+  "changedProductFiles": [
+    "src/eva/providers/home_assistant_procedure.py",
+    "src/eva/adapters/postgres/sensory_events.py"
+  ],
+  "sourceProgramSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+  "sourceProgramUnchanged": true,
+  "sourceReview": "development/reviews/e415-household-batch-binding-review-20261023.json",
+  "checks": {
+    "focusedCasesPassed": 44,
+    "providerCases": 43,
+    "unchangedExistingConnectorCase": 1,
+    "seconds": 1.86,
+    "independentRootCauseCasesPassed": 2,
+    "newRuntimeModelOrExecutorCallsByChecks": 0,
+    "originalParentChildTimesAndHashesRetained": true,
+    "latestUnavailableEmptyAndAmbiguousCameraCannotReleaseOlderPositive": true,
+    "selectionPrecedes16Member6144ByteAnd32SqlRowCuts": true,
+    "actualProductionSelectionHelperUsedBySeamTests": true,
+    "guardRevalidationDoesNotRerunAuthoredProcedure": true,
+    "perRolePatchReverseRestoresEntireActualBaseline": true
+  },
+  "candidateImages": {
+    "core": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+    "worker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
+  },
+  "candidateCompatibility": {
+    "actualRuntimeCompositionVerified": true,
+    "sharedDigitalPublicProfilesMatch": true,
+    "preexistingHouseholdResearchMismatchRetained": true,
+    "onlyTwoImagesAndTwoCodeFilesPerRole": true,
+    "voiceMountsDataConfigAndForeignRoleDifferencesPreserved": true
+  },
+  "installation": {
+    "dispatched": false,
+    "reason": "Initial guard conservatively included old logical lifecycle states with NULL deadlines; no dispatch. Revised process-bound NULL/admitted ownership and all actual lease states under independent guard review; real active model lease later observed and untouched."
+  },
+  "limits": [
+    "No positive camera procedure proposal, offered greeting, physical hearing, later reuse or full E4.15 closure proved.",
+    "Prior candidate failures and both original NO_GO reviews retained exactly.",
+    "No old source refreshed or replayed; no new family messages or captures.",
+    "Development tokens/credit costs unknown; general background runtime usage is separately scoped."
+  ],
+  "fullTaskCompleted": false,
+  "ownerAcceptance": false
+}

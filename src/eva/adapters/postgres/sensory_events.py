@@ -39,16 +39,53 @@ _LEGACY_COST_BLOCK_FINGERPRINT = hashlib.sha256(
 
 
 def _household_observation_selection_key(event: SensoryEvent) -> tuple:
-    """A newer binary reset must not displace the last actual camera evidence.
+    """Keep the newest camera outcome independently from ordinary sensor state.
 
-    Keep one newest image per device and one newest ordinary sensor state.
+    Failed or empty newer camera evidence supersedes an older positive image.
+    A later binary reset must not erase that newer camera outcome either.
     The original trigger, retrieval time and unknown capture time remain intact;
     selecting an image does not turn it into a live presence assertion.
     """
     camera = event.payload.get('camera_observation')
-    if isinstance(camera, dict) and camera.get('status') == 'observed' and camera.get('image_sha256'):
+    if isinstance(camera, dict) and camera.get('device_id'):
         return event.source, 'camera_evidence', camera.get('device_id')
     return event.source, 'sensor_state', event.payload.get('entity_id')
+
+
+def _select_household_observation_members(events, household_binding, *, truncated_at=None):
+    """Select existing newest-first sources without hiding conflicting camera evidence.
+
+    Resolve ambiguity before the member/byte cut. The last timestamp of a full
+    SQL page cannot prove that a same-second sibling is absent beyond that page.
+    """
+    newest = {}
+    for event in events:
+        key = _household_observation_selection_key(event)
+        if key[1] != 'camera_evidence':
+            continue
+        identity = canonical_sha256(
+            household_binding.observation_event(event).payload['observation'])
+        previous = newest.get(key)
+        if previous is None or event.occurred_at > previous[0]:
+            newest[key] = (event.occurred_at, identity, False)
+        elif event.occurred_at == previous[0] and identity != previous[1]:
+            newest[key] = (previous[0], previous[1], True)
+    ambiguous = {key for key, (at, _, conflict) in newest.items()
+                 if conflict or (truncated_at is not None and at <= truncated_at)}
+    selected, members, keys = [], [], set()
+    for event in events:
+        key = _household_observation_selection_key(event)
+        if key in ambiguous or key in keys:
+            continue
+        public = household_binding.observation_event(event).payload['observation']
+        # Preserve the existing single-source path's own normalization bounds.
+        if len(events) > 1 and (len(members) >= 16
+                or len(canonical_json_bytes([*members, public])) > 6144):
+            break
+        keys.add(key)
+        members.append(public)
+        selected.append(event)
+    return selected, members, keys
 
 
 class PostgresSensoryEventStore:
@@ -460,21 +497,13 @@ class PostgresSensoryEventStore:
                              if event.event_type == "household_observation_batch"), None)
             if existing is not None:
                 return existing
-            if len(pending) == 1:
-                return pending[0][1]
-            selected, members, keys = [], [], set()
-            for row, event in pending:
-                key = _household_observation_selection_key(event)
-                if key in keys:
-                    continue  # Query is newest-first: retain only the latest state.
-                public = self._household_binding.observation_event(event).payload["observation"]
-                if len(members) >= 16 or len(canonical_json_bytes([*members, public])) > 6144:
-                    break
-                keys.add(key)
-                members.append(public)
-                selected.append(event)
+            selected, members, keys = _select_household_observation_members(
+                [event for _, event in pending], self._household_binding,
+                truncated_at=rows[-1]['source_at'] if len(rows) == 32 else None)
             if not selected:
                 return None
+            if len(pending) == 1:
+                return selected[0]
             if len(pending) > 1:
                 payload = {"observations": members, "selection_limit": 16,
                            "historical_observations_not_live_proof": True}

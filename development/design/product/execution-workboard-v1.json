@@ -847,7 +847,7 @@
     "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
     "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "E4.15-koppeling geïnstalleerd; oude onzekere beoordeling veilig afgehandeld en gewone scheduler koos weer stilte (1modelpoging/9404tokens, credits onbekend). Batchadapter gebouwd; review vereist nog conservatieve afhandeling van conflicterende camerabeelden op exact dezelfde seconde vóór de provider. Huidige discovery werkt; één eerdere onverklaarde leesfout blijft bewaard. Corrigeer alleen die producergrens, beoordeel en installeer gericht; daarna nieuwe echte bronroute controleren zonder replay. Fysieke proef uitgesteld; volledige E4.15/E4.17 open.",
+    "nextAction": "Definitieve batchkoppeling onafhankelijk GO:44 gerichte controles, echte producerhelper en per-rol overlay met behoud van andere wijzigingen. Gedeelde installatie nog niet uitgevoerd: private guard wordt gecorrigeerd voor historische NULL-lifecyclestatussen en huidige echte uitvoerleases. Installeer pas na guardreview en verse rustige uitvoertoestand; lees daarna echte runtime/profielen/nieuwe bronnen terug. Fysieke begroetingsproef uitgesteld door eigenaar; volledige E4.15/E4.17 open.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2992,7 +2992,7 @@
         "now": {
           "taskId": "E4.15",
           "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-          "summary": "E4.15-koppeling geïnstalleerd; oude onzekere beoordeling veilig afgehandeld en gewone scheduler koos weer stilte (1modelpoging/9404tokens, credits onbekend). Batchadapter gebouwd; review vereist nog conservatieve afhandeling van conflicterende camerabeelden op exact dezelfde seconde vóór de provider. Huidige discovery werkt; één eerdere onverklaarde leesfout blijft bewaard. Corrigeer alleen die producergrens, beoordeel en installeer gericht; daarna nieuwe echte bronroute controleren zonder replay. Fysieke proef uitgesteld; volledige E4.15/E4.17 open.",
+          "summary": "Definitieve batchkoppeling onafhankelijk GO:44 gerichte controles, echte producerhelper en per-rol overlay met behoud van andere wijzigingen. Gedeelde installatie nog niet uitgevoerd: private guard wordt gecorrigeerd voor historische NULL-lifecyclestatussen en huidige echte uitvoerleases. Installeer pas na guardreview en verse rustige uitvoertoestand; lees daarna echte runtime/profielen/nieuwe bronnen terug. Fysieke begroetingsproef uitgesteld door eigenaar; volledige E4.15/E4.17 open.",
           "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform."
         },
         "next": {
@@ -3005,7 +3005,7 @@
           "detail": "Geen handeling nodig. Fysieke camera-/hoorproef is uitgesteld; de technische route wordt eerst afgemaakt. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-23T19:03:38.237152+00:00",
+        "checkedAt": "2026-10-23T19:15:42.692394+00:00",
         "reviewedAt": "2026-10-21T09:48:32.565185+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -8021,7 +8021,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "E4.15-koppeling geïnstalleerd; oude onzekere beoordeling veilig afgehandeld en gewone scheduler koos weer stilte (1modelpoging/9404tokens, credits onbekend). Batchadapter gebouwd; review vereist nog conservatieve afhandeling van conflicterende camerabeelden op exact dezelfde seconde vóór de provider. Huidige discovery werkt; één eerdere onverklaarde leesfout blijft bewaard. Corrigeer alleen die producergrens, beoordeel en installeer gericht; daarna nieuwe echte bronroute controleren zonder replay. Fysieke proef uitgesteld; volledige E4.15/E4.17 open.",
+                "nextAction": "Definitieve batchkoppeling onafhankelijk GO:44 gerichte controles, echte producerhelper en per-rol overlay met behoud van andere wijzigingen. Gedeelde installatie nog niet uitgevoerd: private guard wordt gecorrigeerd voor historische NULL-lifecyclestatussen en huidige echte uitvoerleases. Installeer pas na guardreview en verse rustige uitvoertoestand; lees daarna echte runtime/profielen/nieuwe bronnen terug. Fysieke begroetingsproef uitgesteld door eigenaar; volledige E4.15/E4.17 open.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -8044,10 +8044,10 @@
                   "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-23T19:03:38.237152+00:00",
+                "checkedAt": "2026-10-23T19:15:42.692394+00:00",
                 "progress": "Exacte V2-bron340eef via beoordeelde kern/workerverbinding geïnstalleerd en onafhankelijk teruggelezen. Oude blokkerende onzekere beoordeling nu append-only afgehandeld met oorspronkelijke fout en onbekend verbruik behouden. Werkelijke bronroute bundelt waarnemingen; ontbrekende providerkoppeling gebouwd32/32, review/installatie nog nodig. Begroeting, fysiek horen, later hergebruik en volledige E4.15 niet bewezen.",
                 "evidence": "development/evidence/product/e415-installed-route-20261023.json",
-                "latestEvidence": "development/evidence/product/e415-household-procedure-binding-20261023.json"
+                "latestEvidence": "development/evidence/product/e415-household-batch-binding-20261023.json"
               },
               {
                 "id": "E4.16",
@@ -8721,7 +8721,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.15-koppeling geïnstalleerd; oude onzekere beoordeling veilig afgehandeld en gewone scheduler koos weer stilte (1modelpoging/9404tokens, credits onbekend). Batchadapter gebouwd; review vereist nog conservatieve afhandeling van conflicterende camerabeelden op exact dezelfde seconde vóór de provider. Huidige discovery werkt; één eerdere onverklaarde leesfout blijft bewaard. Corrigeer alleen die producergrens, beoordeel en installeer gericht; daarna nieuwe echte bronroute controleren zonder replay. Fysieke proef uitgesteld; volledige E4.15/E4.17 open.",
+        "nextAction": "Definitieve batchkoppeling onafhankelijk GO:44 gerichte controles, echte producerhelper en per-rol overlay met behoud van andere wijzigingen. Gedeelde installatie nog niet uitgevoerd: private guard wordt gecorrigeerd voor historische NULL-lifecyclestatussen en huidige echte uitvoerleases. Installeer pas na guardreview en verse rustige uitvoertoestand; lees daarna echte runtime/profielen/nieuwe bronnen terug. Fysieke begroetingsproef uitgesteld door eigenaar; volledige E4.15/E4.17 open.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9008,7 +9008,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-23T19:03:38.237152+00:00",
+        "checkedAt": "2026-10-23T19:15:42.692394+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -13990,7 +13990,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "E4.15-koppeling geïnstalleerd; oude onzekere beoordeling veilig afgehandeld en gewone scheduler koos weer stilte (1modelpoging/9404tokens, credits onbekend). Batchadapter gebouwd; review vereist nog conservatieve afhandeling van conflicterende camerabeelden op exact dezelfde seconde vóór de provider. Huidige discovery werkt; één eerdere onverklaarde leesfout blijft bewaard. Corrigeer alleen die producergrens, beoordeel en installeer gericht; daarna nieuwe echte bronroute controleren zonder replay. Fysieke proef uitgesteld; volledige E4.15/E4.17 open.",
+              "nextAction": "Definitieve batchkoppeling onafhankelijk GO:44 gerichte controles, echte producerhelper en per-rol overlay met behoud van andere wijzigingen. Gedeelde installatie nog niet uitgevoerd: private guard wordt gecorrigeerd voor historische NULL-lifecyclestatussen en huidige echte uitvoerleases. Installeer pas na guardreview en verse rustige uitvoertoestand; lees daarna echte runtime/profielen/nieuwe bronnen terug. Fysieke begroetingsproef uitgesteld door eigenaar; volledige E4.15/E4.17 open.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -14013,10 +14013,10 @@
                 "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-23T19:03:38.237152+00:00",
+              "checkedAt": "2026-10-23T19:15:42.692394+00:00",
               "progress": "Exacte V2-bron340eef via beoordeelde kern/workerverbinding geïnstalleerd en onafhankelijk teruggelezen. Oude blokkerende onzekere beoordeling nu append-only afgehandeld met oorspronkelijke fout en onbekend verbruik behouden. Werkelijke bronroute bundelt waarnemingen; ontbrekende providerkoppeling gebouwd32/32, review/installatie nog nodig. Begroeting, fysiek horen, later hergebruik en volledige E4.15 niet bewezen.",
               "evidence": "development/evidence/product/e415-installed-route-20261023.json",
-              "latestEvidence": "development/evidence/product/e415-household-procedure-binding-20261023.json"
+              "latestEvidence": "development/evidence/product/e415-household-batch-binding-20261023.json"
             },
             {
               "id": "E4.16",
@@ -14690,7 +14690,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.15-koppeling geïnstalleerd; oude onzekere beoordeling veilig afgehandeld en gewone scheduler koos weer stilte (1modelpoging/9404tokens, credits onbekend). Batchadapter gebouwd; review vereist nog conservatieve afhandeling van conflicterende camerabeelden op exact dezelfde seconde vóór de provider. Huidige discovery werkt; één eerdere onverklaarde leesfout blijft bewaard. Corrigeer alleen die producergrens, beoordeel en installeer gericht; daarna nieuwe echte bronroute controleren zonder replay. Fysieke proef uitgesteld; volledige E4.15/E4.17 open.",
+      "nextAction": "Definitieve batchkoppeling onafhankelijk GO:44 gerichte controles, echte producerhelper en per-rol overlay met behoud van andere wijzigingen. Gedeelde installatie nog niet uitgevoerd: private guard wordt gecorrigeerd voor historische NULL-lifecyclestatussen en huidige echte uitvoerleases. Installeer pas na guardreview en verse rustige uitvoertoestand; lees daarna echte runtime/profielen/nieuwe bronnen terug. Fysieke begroetingsproef uitgesteld door eigenaar; volledige E4.15/E4.17 open.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14977,7 +14977,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-23T19:03:38.237152+00:00",
+      "checkedAt": "2026-10-23T19:15:42.692394+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [

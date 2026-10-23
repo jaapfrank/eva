@@ -1,8 +1,8 @@
 {
   "contract": "EvaHouseholdProcedureBindingOutcome/v1",
   "task": "E4.15",
-  "checkedAt": "2026-10-23T19:03:38.237152+00:00",
-  "status": "installed_binding_recovered_producer_ambiguity_fix_pending",
+  "checkedAt": "2026-10-23T19:15:42.692394+00:00",
+  "status": "installed_original_binding_final_batch_built_reviewed_installation_pending",
   "existing": "Eva-authored independently preserved pure procedure plus ordinary household observation/assessment/STOP/durable delivery/executor",
   "gap": "Actual ordinary route supplies household observation batches, not direct camera events; batch adapter candidate built and under independent review.",
   "endCondition": "Installed exact bridge processes actual source, preserves negative/freshness/STOP boundaries and permits ordinary appropriate greeting; full E4.15 requires later reuse/feedback and remains open",
@@ -181,12 +181,13 @@
       "src/eva/providers/home_assistant_procedure.py",
       "development/tests/providers/test_home_assistant_procedure.py"
     ],
-    "testsPassed": 35,
-    "testSeconds": 1.61,
-    "independentReview": "NO_GO_due_same_second_conflict_lost_before_provider",
+    "testsPassed": 44,
+    "testSeconds": 1.86,
+    "independentReview": "GO_exact_final_source_and_role_candidates",
     "installed": false,
     "initialUnavailableResetGapFixed": true,
-    "review": "development/reviews/e415-household-batch-binding-review-20261023.json"
+    "review": "development/reviews/e415-household-batch-binding-review-20261023.json",
+    "evidence": "development/evidence/product/e415-household-batch-binding-20261023.json"
   },
   "executorImagePreservation": {
     "evidence": "development/evidence/reassessment/e415-executor-image-preservation-20261023.json",

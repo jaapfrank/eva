@@ -13,7 +13,7 @@ import httpx2 as httpx
 from eva.adapters.connectors.camera_observer import HomeAssistantCameraDiscovery
 from eva.adapters.connectors.procedure_execution import configured_procedure_executor
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
-from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 
 # Trusted interface glue, not the authored application's decision logic.
 RUNNER = '''import json,sys
@@ -113,25 +113,82 @@ class HomeAssistantProcedure:
                 'device_id':device.device_id, 'discovery_revision':inventory.revision,
                 'backend_revision':self.settings.face_revision, 'profile_revision':health['profile_revision']}
 
+    @staticmethod
+    def _select_observation(parent, *, now):
+        if parent['event_type'] != 'household_observation_batch':
+            return (parent, {}) if 'camera_observation' in parent['payload'] else (None, {})
+        members = parent['payload'].get('observations')
+        if (not isinstance(members, list) or not 1 <= len(members) <= 16
+                or len(canonical_json_bytes(members)) > 6144):
+            raise ValueError('camera proposal batch differs from shared observation bounds')
+        latest = {}
+        for child in members:
+            camera = child['payload'].get('camera_observation')
+            if camera is None:
+                continue
+            at = datetime.fromisoformat(child['occurred_at'])
+            key = camera['device_id']
+            digest = canonical_sha256(child)
+            previous = latest.get(key)
+            if previous is None or at > previous[0]:
+                latest[key] = (at, digest, child)
+            elif at == previous[0] and digest != previous[1]:
+                # Equal-second conflicting images cannot establish which is newest.
+                latest[key] = (at, previous[1], None)
+        eligible = []
+        for at, digest, child in latest.values():
+            if child is None or not 0 <= (now-at).total_seconds() < 30:
+                continue
+            camera = child['payload']['camera_observation']
+            # Supersession precedes eligibility: never fall back to an older face.
+            if (camera['status'] != 'observed' or not camera.get('image_sha256')
+                    or not camera.get('recognition', {}).get('faces')):
+                continue
+            eligible.append((at, digest, child))
+        if not eligible:
+            return None, {}
+        child = max(eligible, key=lambda item: item[:2])[2]
+        return child, {'parent_observation_sha256': canonical_sha256(parent),
+                       'selected_observation_sha256': canonical_sha256(child)}
+
+    @staticmethod
+    def _proposal_guard(configuration, binding, selection):
+        return canonical_sha256({'configuration': configuration,
+                                 'source': canonical_sha256(binding), **selection})
+
     def validate_current(self, context):
         _, guard = self._current()
-        source = canonical_sha256(self._binding(context['observation']))
-        if canonical_sha256({'configuration':guard, 'source':source}) != context['binding_sha256']:
+        observation = context['observation']
+        selection = {key: context[key] for key in
+                     ('parent_observation_sha256', 'selected_observation_sha256') if key in context}
+        if selection:
+            import re
+            if (len(selection) != 2 or any(re.fullmatch('[0-9a-f]{64}', str(value)) is None
+                                          for value in selection.values())
+                    or selection['selected_observation_sha256'] != canonical_sha256(observation)
+                    or not 0 <= (datetime.now(UTC) - datetime.fromisoformat(
+                        observation['occurred_at'])).total_seconds() < 30):
+                raise ValueError('camera proposal batch selection changed or expired')
+        binding = self._binding(observation)
+        if self._proposal_guard(guard, binding, selection) != context['binding_sha256']:
             raise ValueError('camera proposal source or configuration changed')
 
     def validate_expression(self, event, digest):
         if digest is not None:
             if not self.household.matches_event(event):
                 raise ValueError('procedure delivery source audience differs')
-            self.validate_current({'observation':event.payload['observation'], 'binding_sha256':digest})
+            observation, selection = self._select_observation(event.payload['observation'], now=datetime.now(UTC))
+            if observation is None:
+                raise ValueError('camera proposal no longer has a current selected source')
+            self.validate_current({'observation': observation, 'binding_sha256': digest, **selection})
 
     def __call__(self, event, *, now):
         if event.event_type != 'household_observation_review':
             return None
         if not self.household.matches_event(event):
             raise ValueError('procedure observation audience differs')
-        observation = event.payload['observation']
-        if 'camera_observation' not in observation['payload']:
+        observation, selection = self._select_observation(event.payload['observation'], now=now)
+        if observation is None:
             return None
         source, guard = self._current()
         binding = self._binding(observation)
@@ -160,11 +217,17 @@ class HomeAssistantProcedure:
                 or output['identity_is_not_authentication'] is not True
                 or output['requires_existing_household_assessment_stop_and_durable_delivery'] is not True
                 or type(expires) not in (int,float) or not float(expires).is_integer()
-                or not now.timestamp() < expires <= event.occurred_at.timestamp()+30):
+                or not now.timestamp() < expires <= datetime.fromisoformat(
+                    observation['occurred_at']).timestamp()+30):
             raise ValueError('household procedure output is not a bound current proposal')
         context = {'proposal_text':output['text'], 'expires_at_epoch':int(expires),
-                   'binding_sha256':canonical_sha256({'configuration':guard, 'source':canonical_sha256(binding)}), 'source_sha256':hashlib.sha256(source.encode()).hexdigest(),
+                   'binding_sha256':self._proposal_guard(guard, binding, selection), 'source_sha256':hashlib.sha256(source.encode()).hexdigest(),
                    'source_binding_sha256':canonical_sha256(binding), 'observation':observation,
-                   'is_execution_permission':False}
+                   'is_execution_permission':False, **selection}
+        if len(canonical_json_bytes(context)) > 4096:
+            # An optional proposal that cannot fit the existing model contract
+            # must not turn an ordinary household assessment into an error.
+            self.validate_guard(guard)
+            return None
         self.validate_current(context)
         return context

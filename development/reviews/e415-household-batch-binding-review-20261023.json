@@ -1,149 +1,150 @@
 {
   "contract": "EvaIndependentReview/v1",
-  "task": "E4.15 household batch binding with minimal producer helper follow-up",
+  "task": "E4.15 real household batch and conservative producer binding",
   "reviewer": "e415-independent-review-newchat",
   "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-  "reviewedAt": "2026-10-23T19:03:33.300718+00:00",
-  "verdict": "NO_GO",
-  "scope": "Updated exact provider/store/helper/test set and role materialization, retaining original immutable NO_GO. Original unavailable/reset defect resolved; a same-second producer information-loss defect remains. No installation admission.",
+  "reviewedAt": "2026-10-23T19:11:28.455244+00:00",
+  "verdict": "GO",
+  "scope": "Exact final provider/shared producer/test set, per-role materialization and guarded image-only v2 installation plan. Reviewer performed no installation or live household trial.",
   "sourceBindings": {
     "src/eva/providers/home_assistant_procedure.py": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
-    "src/eva/adapters/postgres/sensory_events.py": "97ab454d7762747d315ee354608421612e993350149ec6cb2e61217ca983670c",
-    "development/tests/providers/test_home_assistant_procedure.py": "45c331223db1727a4fd3631b84986a846a8f6888cc310395f368f2762953dc51"
+    "src/eva/adapters/postgres/sensory_events.py": "64bae55b47f452b28876c926601cd99612f54a55da5573597267ae8326125413",
+    "development/tests/providers/test_home_assistant_procedure.py": "a4bc8ca2d4719472114b65165a197ee042aaf6a6d387a26a64044978e5ece371"
   },
-  "originalNoGo": {
-    "sha256": "3df16a399f36a3cde0af9473245fe8d7ca9fc34fde2cd4476d0620e86e1790d1",
-    "preservedExactPrivateArtifact": "e415-batch-binding-20261023/original-no-go-review.private.json",
-    "originalFindingResolved": true,
-    "resolution": "All device-bound camera outcomes now use separate camera_evidence key; later ordinary reset no longer hides newer unavailable outcome.",
-    "independentChangedCauseCheck": "Original pending/routine→actual helper→normalized batch→provider unavailable/reset case now passes, with original positive removed and zero fake executor calls."
-  },
-  "findings": [
+  "priorNoGoEvidence": [
     {
-      "priority": 2,
-      "path": "src/eva/adapters/postgres/sensory_events.py",
-      "function": "next_household_observation newest-first selection using _household_observation_selection_key",
-      "problem": "Same-second conflicting camera outcomes are reduced to one device key before the provider can apply its existing conflict refusal. SQL orders equal timestamps by thread_id; a positive outcome can win that lexical order while an equally timed empty outcome is omitted.",
-      "evidence": {
-        "kind": "One targeted synthetic pure interface probe, no DB/model/real executor/camera.",
-        "inputs": [
-          "same device, identical original UTC second: home-assistant:a-positive with face",
-          "same device, identical original UTC second: home-assistant:z-empty without faces"
-        ],
-        "normalPendingRoutineBoundary": "Both binary_sensor events survive actual _bounded_routine_decision with None.",
-        "actualSqlSelectionOrder": "occurred_at DESC, checkpoint thread_id ASC",
-        "actualKeyResult": "One camera_evidence/device key keeps positive first and drops conflicting empty child.",
-        "providerResult": "Non-null proposal from a-positive, one fake executor call.",
-        "existingExpectedBoundary": "test_conflicting_same_second_camera_frames_do_not_resurrect_a_face already requires no proposal when conflicting children reach provider."
-      },
-      "whyCurrentTestsDoNotProveBoundary": "Current same-second test still uses store_shaped_batch directly. New producer_selected_batch cases address different-time refusal/reset but do not retain/check the equally timed conflict through actual producer selection.",
-      "requiredAction": "Retain or conservatively reject same-time conflicting camera evidence at the producer boundary so it cannot arbitrarily select a positive proposal. Exercise the existing same-second refusal through that seam, without changing original timestamps or independent criteria.",
-      "installBlock": true
+      "artifact": "e415-batch-binding-20261023/original-no-go-review.private.json",
+      "sha256": "3df16a399f36a3cde0af9473245fe8d7ca9fc34fde2cd4476d0620e86e1790d1",
+      "finding": "Newer unavailable camera lost behind later ordinary reset, allowing older positive fallback.",
+      "resolved": true
+    },
+    {
+      "artifact": "e415-batch-binding-v2-20261023/second-no-go-review.private.json",
+      "sha256": "a8e3ad6e307f36b44097039dba3d6c89ea265279eb0916e7f3f19d09e0f08b68",
+      "finding": "Contradictory equal-second camera outcome lost before provider, allowing lexical-first positive proposal.",
+      "resolved": true
     }
   ],
-  "reviewedGoodBoundaries": [
-    "Provider hash59efe00... unchanged; source340eef and adoption unchanged.",
-    "Exact normalized real batch1..16/6144-byte contract matches current producer, selected child original time/source/image and expiry preserved.",
-    "When available in parent, latest empty/unavailable overrides older same-device positive, another current camera can be selected, tamper/current registry/profile/source/config and expiry remain guarded.",
-    "After-model and actual stored-parent delivery validation retain immutable parent/child hashes and do not rerun authored procedure.",
-    "Optional4096-byte context fallback and direct path remain unchanged.",
-    "Minimal helper is the only sensory source hunk per role; reversed helper replacement reproduces each full current installed baseline exactly. Foreign worker bytes preserved."
-  ],
-  "testEvidence": {
-    "builderRegisteredProviderCases": 35,
-    "builderProviderSeconds": 1.61,
-    "unchangedConnectorSelectionCases": 1,
-    "newReviewerFollowupProbes": [
+  "producerReview": {
+    "actualSharedHelper": "Production next_household_observation and provider seam tests call _select_household_observation_members; test-owned dedup loop removed.",
+    "normalPendingRoutine": "Existing routine filter runs first. Relevant binary camera/reset sources stay pending; ordinary actuator no-model silence unchanged.",
+    "conflictAndBounds": "Prescan computes newest per source/device using canonical normalized child SHA. Conflicting newest second excludes entire camera key, including older positives, before16members/6144bytes and single-source return. Exact duplicate child remains admissible.",
+    "fullSqlPage": "Cutoff is original rows[-1].source_at iff len(rows)==32, not filtered pending count. Camera with newest time at/before cutoff is conservatively omitted because an unseen same-second sibling may lie outside page. No query changed/added.",
+    "preserved": "Other sensors/current camera, original timestamps/hashes and existing immutable-batch ownership remain intact; no refresh/replay or new policy."
+  },
+  "providerGuardReview": {
+    "batchShape": "Actual normalized observations/list1..16/6144bytes retained. Only selected original child/time/source/image enters existing isolated procedure.",
+    "freshness": "Integral deadline bounded to original selected child+30seconds, never parent-minimum/current-time rejuvenation. Expired/future or superseded camera cannot resurrect older positive; other current camera can supply proposal.",
+    "bindingAndContext": "Current config/authorized exact source/transport/executor/registry/profile plus immutable parent and selected-child hashes form guard. Selected compact context and optional4096-byte fallback preserve ordinary assessment.",
+    "afterModelAndBeforeEffect": "Existing application authorizes/validates after model and retains original expiry. Delivery reselects from stored parent, validates current guard and final durable source/expiry/attention before effect. No procedure rerun.",
+    "authoredSourceAndAdoption": "Exact source340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773 and current adopted siblings/config/review unchanged; unknown capture time and candidate-only identity retained."
+  },
+  "targetedEvidence": {
+    "builderLatestRegisteredRun": {
+      "passed": 44,
+      "seconds": 1.86,
+      "meaning": "43 provider cases plus1 unchanged connector selection regression; stale41/42 count descriptions superseded."
+    },
+    "reviewerCollectionOnly": {
+      "count": 44,
+      "seconds": 1.62,
+      "execution": false
+    },
+    "reviewerChangedCauseChecks": [
       {
-        "case": "original unavailable+reset producer collision",
-        "result": "PASS; no proposal and zero fake executor calls"
+        "case": "Original same-second lexical positive/empty failure through exact shared helper after normal pending classification",
+        "result": "PASS: entire key rejected; zero executor calls."
       },
       {
-        "case": "same-second positive/empty producer conflict",
-        "result": "FAIL intended refusal; proposal and one fake executor call"
+        "case": "Full SQL page edge with only one pending camera after routine filtering",
+        "result": "PASS: omitted before single-source shortcut; zero executor calls."
       }
     ],
-    "suiteRerunsByReviewer": 0,
-    "limits": "Pure helper/normalizer/provider seam with static SQL-order/selection comparison, not full PostgreSQL/live runtime proof."
+    "earlierFinding": "Earlier targeted unavailable/reset follow-up passed; current focused cases preserve that and existing reset/current camera behavior.",
+    "limits": "Pure shared helper/seam and static actual SQL-call linkage; no new PostgreSQL transaction or live behavior trial, no broad successful suite rerun."
   },
   "roleMaterialization": {
-    "manifestSha256": "4934b6cb73313afa74a93730d5f3b92a64ded9af06ed110feff3012db01f93a8",
+    "manifestSha256": "49b5791ba1699d0e807d03d96fb37de605ca06bb33ea170da6a55e4b6aec69d2",
+    "sensoryPatchSha256": "d820b40c57377ea1a57b680cb6a7aa3e77c1340661eb9b4a0a69db4a5fc8b4d0",
     "roles": {
       "core": {
         "base": "sha256:27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
         "container": "976def96de8e982c07bcde57fa549d8c79a12a8efd494174a745b33a8dd6d66c",
-        "candidate": "sha256:589b6456e84ba1160fe573a74bb980368a6ce2828c8fb7c3c7acd6908cb5165f",
+        "candidate": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
         "files": {
           "providers/home_assistant_procedure.py": {
             "before": "8cd3c01e95e2916aa82b4eb636f23f0b1cb07605c781b93d20a75018a973412e",
             "after": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
-            "onlyExistingHelperChanged": false
+            "exactPatchReverseToActualBaseline": false
           },
           "adapters/postgres/sensory_events.py": {
             "before": "e3ab40f597aca6127981416ff7e1bc95bc1463689ecbbf56d0574d01b1d5313c",
-            "after": "97ab454d7762747d315ee354608421612e993350149ec6cb2e61217ca983670c",
-            "onlyExistingHelperChanged": true
+            "after": "64bae55b47f452b28876c926601cd99612f54a55da5573597267ae8326125413",
+            "exactPatchReverseToActualBaseline": true
           }
         }
       },
       "delegated-work-worker": {
         "base": "sha256:ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979",
         "container": "ab17357fcf908959ea8c6dd5a2ee20e99521e2572ff7412a4630181ff5a2eae3",
-        "candidate": "sha256:62642e85b8302c2bf3facfa0490b627b9aa1d606f77f3d658bcb0948396bc166",
+        "candidate": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44",
         "files": {
           "providers/home_assistant_procedure.py": {
             "before": "8cd3c01e95e2916aa82b4eb636f23f0b1cb07605c781b93d20a75018a973412e",
             "after": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
-            "onlyExistingHelperChanged": false
+            "exactPatchReverseToActualBaseline": false
           },
           "adapters/postgres/sensory_events.py": {
             "before": "eb988fa0537161dfa613a866a9f31f96d6959a7a63ad4b7ac5a2be06d7ba5064",
-            "after": "b48ac114bf5d779f3205dcb1464f262778cd104ce4368cd54067aed7b058df8e",
-            "onlyExistingHelperChanged": true
+            "after": "ccb0ac863c85d5026391ac96708a1ca41829deeb03a7813e13331274226e8afe",
+            "exactPatchReverseToActualBaseline": true
           }
         }
       }
     },
-    "sameReviewedNewHelperSha256": "f55b15e0f9da96bab632b3491601bca1f9eae9efa4d484dd57b2e8c23aa08395",
-    "oldHelperSha256": "f520c64c3a9018b8bc9505ae7d55f07a9efedefced8277d23d1d6f7701474e45",
-    "actualRoleBaselineHashesMatch": true,
-    "bothWholeFilesReverseExactlyToActualBase": true,
-    "providerBytesBothExact": true,
-    "candidateImageConfigsEqualBaseline": true,
-    "composeDeltaOnlyTwoImages": true,
-    "notAdmittedDueToSemanticFinding": true
+    "independentProof": "Applied exact two-hunk patch in memory with unique complete-context matches to actual separately read role baselines. Reproduced exact corresponding candidates; reversed all hunks to entire original role bytes. No whole core file substitution into worker.",
+    "actualBaseImageSourceHashesMatch": true,
+    "providerBothHash59efe": true,
+    "baseCandidateImageConfigEqual": true,
+    "composeDeltaOnlyTwoImages": true
   },
-  "installationPlanInspection": {
-    "scriptSha256": "40459bf6bdabba8af50657e037e792d6c2adefbe1d33f3d1e1cf2b79458341ca",
-    "retainsMountsSourceConfig": true,
-    "reviewDigestGate": "Root supplies completed GO review binding only after final semantic review; no GO for current set.",
-    "currentClaimsGuard": "Fresh global RLS-verified readonly active claim count includes null-deadline active rows, plus delegated work and component-evaluation guards.",
-    "durableUnknownReceiptAndNoAutoRetry": true,
-    "postConfigurationBindingChecks": true,
-    "limits": "Concept inspection only; NO_GO prevents shared installation of these hashes."
-  },
-  "retainedCandidateEvidence": {
+  "candidateProof": {
     "coreProfilesSha256": "70fb6d445eecb4cb2e98412491da939dded4804f2572b44e144beb9d6b59fbcc",
     "workerProfilesSha256": "47779a140312c890660341c2efc9d4f2474090b6948ce35718a70d22f4e49acc",
+    "digitalSharedPublicAgree": true,
+    "oldHouseholdResearchMismatch": "Explicit existing mismatch retained, not fixed or permitted to claim mismatched work.",
     "compositionLogSha256": "8f0236caa9fc0d908ba75b1e4f98533164e9db2e64c48483420dfb79716db6ba",
-    "note": "Root reports shared/digital/public match; existing household_research mismatch explicit. Saved actual consumer/output/wrapper/source4686/guard proof is not a new review execution or household-use proof."
+    "composition": "Retained actual create_runtime_app-without-lifespan proof:1real loop, selected binding match, wrapper/delivery guard,4686current source,0writes/callbacks/models/effects. Reviewer read proof without repetition."
   },
+  "installationPlan": {
+    "installScriptSha256": "f939dff795cbc6637265e3807e16fc389803b47c39e0cd002634b434ff2e3c1e",
+    "previousConfigSha256": "1984bd21e9bd5359f66a7e11d7a97416fcf8083e41199512c0ead82a697e1f42",
+    "candidateConfigSha256": "89a83c9c0f5a56ca11706ad1cecf8111ee000018dd9de850566a19d98e310225",
+    "checks": "Exact completed GO review/manifest binding; current role container/image/source and storage/Compose identity; unchanged adopted source/config/review hashes/permissions; fresh globally RLS-covered active conversation/model/work check including null-deadline active rows and component-evaluation guards. Busy state aborts.",
+    "dispatch": "Durable unknown receipt before one image-only Compose no-deps/no-build/pull-never replacement; no automatic retry; exact new images/storage/Compose readback.",
+    "changeScope": "Same reviewed guarded script, only v2 private directory changed. Root alone integrates and installs."
+  },
+  "findings": [],
+  "conditions": [
+    "Use exact reviewed artifacts and bind completed review hash before guarded installation. Do not bypass current readiness/source/config checks or interrupt active evaluation.",
+    "Preserve both original NO_GO artifacts and initial probe failures; no independent criteria, old source/error or voice/research work replacement.",
+    "Unknown dispatch remains inspection-only without automatic retry.",
+    "Installed hashes/profiles and new ordinary source behavior remain distinct from actual greeting/hearing, physical participation and full E4.15 acceptance."
+  ],
   "acceptanceLimits": [
-    "Current set remains uninstalled and must not receive installation GO until same-second boundary is corrected or conservatively handled.",
-    "No criteria, source timestamps, source340eef, current adoption, old marker/source/error evidence or unrelated WIP changed by reviewer.",
-    "No real models, executor, camera, messages, DB mutation, install, rebuild or Git action performed.",
-    "No actual greeting/hearing, ordinary use, owner acceptance or full E4.15 completion."
+    "Physical owner/camera trial deferred; no actual recognition/greeting/hearing or family acceptance proved.",
+    "No authored-source340eef edits, new framework, extra experiment series or full E4.15/recovery/last-working claim."
   ],
   "usage": {
-    "followupElapsedSeconds": 248.893,
+    "finalProducerReviewElapsedSeconds": 193.3,
     "developmentModelTokens": null,
     "developmentCreditCost": null,
     "evaRuntimeModelCalls": 0,
     "evaRuntimeCreditCost": null,
-    "targetedPureFollowupProbes": 2,
-    "fakeExecutorCalls": 1,
-    "realExecutorCalls": 0,
+    "newPureBoundaryChecks": 2,
+    "fakeOrRealExecutorCalls": 0,
+    "collectionOnlyCalls": 1,
     "testSuiteReruns": 0,
-    "productionDbOrModelCameraMessageInstallMutations": 0
+    "productionDbMutationsBuildsInstallsModelCameraMessagesGitOrCriteriaChanges": 0
   }
 }

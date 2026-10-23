@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T19:03:38.237152+00:00",
+  "updatedAt": "2026-10-23T19:15:42.692394+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -157,7 +157,7 @@
       }
     },
     "codex-e418": {
-      "task": "E4.15 read-only actual camera ingress readiness",
+      "task": "E4.15 same-second producer information-loss repair completed",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "development/design/architecture/e418-*.json",
@@ -391,12 +391,12 @@
         "allNamedInstalledMethodsValidated": true
       },
       "nextTaskRequest": {
-        "requestedAt": "2026-10-23T18:58:41.182031+00:00",
+        "requestedAt": "2026-10-23T19:10:40.012552+00:00",
         "to": "windows-root",
         "coordinatorThreadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
-        "status": "upstream_repair_delivered_wait_independent_rereview_or_next_root_assignment",
+        "status": "existing_instrument_ready_waiting_root_inputs_then_next_assignment",
         "standingOwnerInstruction": "Na afronding rechtstreeks bij de coördinator om volgende taak blijven vragen; Jaap niet als tussenpersoon gebruiken.",
-        "completedOutcome": "E2.9 current-project view installed and read-only live verified; canonical dashboard and GitHub commit06195e62 confirmed.",
+        "completedOutcome": "Final same-second camera producer candidate sealed; 44 checks/1.86s metadata consistent; existing post-install read-only snapshot usage prepared without source changes or new runtime calls.",
         "request": "Next independent task with exact paths, existing route, end condition and shared-installation boundaries. Preserve coordinator-owned integration/Git/installation, voice and other reserved work.",
         "noOwnActiveModelOrInstall": true
       },
@@ -625,7 +625,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "Frozen candidate; read existing observer/source hook and installed service wiring; no new trigger/capture/measurement",
+      "status": "Canonical child conflicts and original32-row cutoff/singlepending cases finalized;44 focused checks passed, ready independent GO",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1227,12 +1227,108 @@
         "output": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/camera-ingress-readiness.private.json",
         "noCaptureEventModelExecutorMessageOrMutation": true,
         "noRepeatedSourceMeasurement": true
+      },
+      "cameraIngressResult": {
+        "path": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/camera-ingress-readiness.private.json",
+        "sha256": "1580359192abc5ad55f21e427598675aa9713a0fbc3fb8f86032f7143a259150",
+        "configurationAndRegistryReady": true,
+        "actualCaptureOrHookTransferProven": false,
+        "initialUnlocatedValueErrorPreserved": true,
+        "currentDiscoveryDevices": 3,
+        "currentCameraEntities": 7,
+        "noStructuralPatchJustified": true,
+        "noThirdProbe": true
+      },
+      "sameSecondProducerPlan": {
+        "preparedAt": "2026-10-23T19:05:22.564685+00:00",
+        "status": "confirmed_by_root_exact_helper_extraction_and_seam_test",
+        "paths": [
+          "src/eva/adapters/postgres/sensory_events.py:existing selection helper/next_household_observation selection loop only",
+          "development/tests/providers/test_home_assistant_procedure.py:existing real producer seam tests"
+        ],
+        "frozenProvider": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
+        "plan": [
+          "Pre-scan bounded producer candidates before16member/6144byte selection. For each camera device determine newest original trigger timestamp; two different immutable children at that exact newest timestamp block that camera key completely, including older positive fallback. Other devices/sensor states retain original behavior.",
+          "Conservatively exclude camera candidates at oldest returned timestamp if existing SQL32row window is full: an unseen same-time sibling may lie just outside cutoff. No SQL/index/source/criteria/time rewrite.",
+          "Extract existing bounded normalization/member selection into a small same-file pure helper used by next_household_observation and seam test. Preserve original batch payload/min parent timestamp/existing group transitions; no new planner/store/framework.",
+          "Apply ambiguity filtering before single-pending shortcut too, so a32row cutoff cannot bypass it. Previously already-created immutable batches/history never rewritten or replayed.",
+          "Change existing test seam to invoke actual producer helper, replacing its test-owned key/dedup loop; feed lex-first positive and lex-later empty at same second, plus16member and6144byte boundaries, cutoff32 ambiguity and newer-unambiguous replacement. No fake/model/executor calls outside unit doubles."
+        ],
+        "acceptance": "Actual producer selection plus provider returns no older/arbitrary positive proposal on same-second conflict; direct camera/reset/newest empty and other device paths retain behavior."
+      },
+      "sameSecondProducerBaseline": {
+        "src/eva/adapters/postgres/sensory_events.py": "97ab454d7762747d315ee354608421612e993350149ec6cb2e61217ca983670c",
+        "development/tests/providers/test_home_assistant_procedure.py": "45c331223db1727a4fd3631b84986a846a8f6888cc310395f368f2762953dc51",
+        "src/eva/providers/home_assistant_procedure.py": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f"
+      },
+      "sameSecondProducerResult": {
+        "completedAt": "2026-10-23T19:07:25.720179+00:00",
+        "sourceSha256": {
+          "src/eva/adapters/postgres/sensory_events.py": "64bae55b47f452b28876c926601cd99612f54a55da5573597267ae8326125413",
+          "src/eva/providers/home_assistant_procedure.py": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
+          "development/tests/providers/test_home_assistant_procedure.py": "a4bc8ca2d4719472114b65165a197ee042aaf6a6d387a26a64044978e5ece371"
+        },
+        "changedScope": "sensory_events selection key/docstring, pure same-file producer selection helper and next_household_observation selection loop; existing providertest only.",
+        "otherStoreAstIdenticalToRetainedE3abBaseline": true,
+        "provider59efeUnchanged": true,
+        "source340eefUntouched": true,
+        "rules": [
+          "Resolve newest-camera-second ambiguity before16member/6144byte cuts, never select arbitrary lex-first positive or older image fallback.",
+          "Conservatively omit camera at oldest timestamp on full existing32row SQL window; no added SQL query.",
+          "Filter ambiguity before single-pending shortcut; immutable preexisting batches and timestamps remain unchanged.",
+          "Other device camera and ordinary sensor state continue through same existing path.",
+          "Actual production helper now used by provider seam tests; no test-owned dedup algorithm."
+        ],
+        "checks": {
+          "passed": 44,
+          "seconds": 1.86,
+          "selectionSeamScenarios": [
+            "positivelexfirst/emptylexlater same newest second with/withoutordinaryreset",
+            "conflict outside16member cut",
+            "conflict across6144byte cut",
+            "32row cutoff potential unseen sibling",
+            "newerunambiguous camera replaces olderconflict",
+            "new empty/unavailable suppresses olderpositive despite reset",
+            "ordinarycurrent camera and other device continue"
+          ],
+          "cases": "43 provider cases +1 existing unchanged connector selection regression",
+          "noBroadPostgresRerun": true,
+          "realModelExecutorCameraMessages": 0,
+          "caseCountMeaning": "44 total: 43 provider +1 existing unchanged connector selection regression",
+          "reviewRefinements": [
+            "Conflicts use canonical normalized childSHA; exact duplicatechild remains admissible.",
+            "Original rowslen32/source_at cutoff passed independently of pending count; both32pending and31routine-filtered+1pending paths covered."
+          ],
+          "actualOutputConfirmedBy": "windows-root final instruction: passed44, seconds1.86; tests not repeated"
+        },
+        "roleIntegration": "Root applies exact helper/loop hunkset independently to actual coree3ab/worker eb988 baselines; never replaces whole worker file.",
+        "independentReviewRequestedFrom": "windows-root",
+        "noCodeInstallationGitOrDataMutation": true
+      },
+      "postInstallationReadOnlyPreparation": {
+        "preparedAt": "2026-10-23T19:10:40.012552+00:00",
+        "status": "ready_waiting_for_root_actual_new_installation_receipt",
+        "script": "/home/administrator/project/.eva2-artifacts/e415-uncertain-household-review-20261023/post_recovery_readonly.py",
+        "scriptSha256": "597ddb2de2d50ce532f90c02dcd14c9191db76b8819d907a78ea1d31b9b98f1b",
+        "scriptUnchanged": true,
+        "usage": "/home/administrator/project/.eva2-artifacts/e415-uncertain-household-review-20261023/POST-RECOVERY-USAGE.md",
+        "usageSha256": "12e0b620008844728601e4f18da7a7731e4e5d6427fdbfc232a73934fc62339d",
+        "requiredRootInputs": [
+          "completed new installation receipt path",
+          "exact new core container ID",
+          "explicit post-installation UTC after boundary"
+        ],
+        "output": "/home/administrator/project/.eva2-artifacts/e415-uncertain-household-review-20261023/post-installation-result.private.json",
+        "oneSnapshotOnly": true,
+        "executionStarted": false,
+        "sourceTestProviderFilesFrozen": true,
+        "noRuntimeModelExecutorCameraMessageOrInstallation": true
       }
     },
     "e415-independent-review-newchat": {
       "task": "E4.15 exact household batch binding review",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "completed_batch_producer_followup_NO_GO_same_second",
+      "status": "in_progress_install_guard_phase_semantics_review",
       "coordinator": "windows-root",
       "allowedWritePaths": [
         "development/reviews/e415-household-batch-binding-review-20261023.json",
@@ -1250,10 +1346,10 @@
         "doneWhen": "Exact hashes and bounded GO/NO_GO with necessary companion hunks; no installation.",
         "userUse": "Coordinator may integrate reviewed candidate after baseline recheck."
       },
-      "completedAt": "2026-10-23T19:03:33.300718+00:00",
+      "completedAt": "2026-10-23T19:11:28.455244+00:00",
       "review": "development/reviews/e415-household-batch-binding-review-20261023.json",
-      "verdict": "NO_GO",
-      "nextAction": "Await same-second producer conflict handling through existing seam; no shared install.",
+      "verdict": "GO",
+      "nextAction": "Read existing in-flight/lease semantics only; propose minimal precise guard predicate. Product review and code frozen.",
       "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
       "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
       "previousInstallationReview": "development/reviews/e415-coordinated-installation-review-20261023.json",
@@ -1278,7 +1374,10 @@
         "Read back terminal checkpoint phase/status/revision and unchanged retry/fingerprint/operation."
       ],
       "previousUncertainRecoveryReview": "development/reviews/e415-uncertain-household-review-recovery-20261023.json",
-      "followupStartedAt": "2026-10-23T18:59:24.407975+00:00"
+      "followupStartedAt": "2026-10-23T18:59:24.407975+00:00",
+      "sameSecondPlanReviewedAt": "2026-10-23T19:06:59.116517+00:00",
+      "finalProducerReviewStartedAt": "2026-10-23T19:08:15.155515+00:00",
+      "guardReviewStartedAt": "2026-10-23T19:12:44.191335+00:00"
     }
   },
   "protectedExistingWork": {
@@ -1518,6 +1617,6 @@
     },
     "ownerQuestion": "Owner cannot do camera trial now; previous early question withdrawn; no repeat before actual route ready.",
     "parallelBoundedWork": "Independent two-file batch review plus read-only post-recovery source observation; max two executors/reviewers.",
-    "currentBlocker": "Second focused NO_GO: same-second conflicting camera frames collapse at producer before provider; conservative fix assigned, no install. Current discovery succeeds; initial unexplained failure retained, no discovery patch authorized."
+    "currentBlocker": "Final batch source/role overlay GO and44 focused checks pass; no shared replacement yet. Private installguard needs exact ownership/lease refinement after historical lifecycle falsepositive. Genuine newly observed model lease left uninterrupted."
   }
 }
