@@ -52,8 +52,17 @@ def current_archive(tmp_path_factory):
         databases.append(name)
         engine = sa.create_engine(admin.url.set(database=name))
         engines.append(engine)
-        receipt = install_schema(engine.url.render_as_string(hide_password=False), alembic_ini=ROOT / "deploy/alembic.ini")
-        assert receipt.final_revision == "4e_0009_restore_hold"
+        install_schema(engine.url.render_as_string(hide_password=False), alembic_ini=ROOT / "deploy/alembic.ini")
+        # Fresh test databases use the real migration path back to the frozen
+        # v2 contract. Never stamp a current schema with an older head label.
+        from alembic import command
+        from alembic.config import Config
+        from tools.portable_v2_profile import SCHEMA_HEAD
+        config = Config(str(ROOT / "deploy/alembic.ini"))
+        config.set_main_option("sqlalchemy.url", engine.url.render_as_string(hide_password=False).replace("%", "%%"))
+        command.downgrade(config, SCHEMA_HEAD)
+        with engine.connect() as connection:
+            assert connection.exec_driver_sql("SELECT version_num FROM public.eva_alembic_version").scalar_one() == SCHEMA_HEAD
         return engine
 
     try:

@@ -7,6 +7,22 @@ import stat
 from tools.portable_v2_restore import _restore_archive
 
 
+def verify_runtime_restore_target(connection, source_schema_head):
+    """Only matching0010/0010 or0011/0011 targets; no implicit migration."""
+    from tools.portable_runtime_archive import (
+        SCHEMA_HEAD, runtime_profile_for_head, verify_runtime_database_head)
+    from tools.portable_v2_restore import verify_current_target
+    runtime_profile_for_head(source_schema_head)
+    if source_schema_head == SCHEMA_HEAD:
+        # Keep the historical empty-target/default-head boundary unchanged.
+        verify_current_target(connection)
+        actual = SCHEMA_HEAD
+    else:
+        actual = verify_runtime_database_head(connection, expected_head=source_schema_head)
+        verify_current_target(connection, expected_schema_head=source_schema_head)
+    return {"source_schema_head": source_schema_head, "target_schema_head": actual}
+
+
 def validate_identity_destination(destination: Path, runtime_owner=None):
     """Check host ownership authority before any database insertion occurs."""
     owner = runtime_owner if runtime_owner is not None else {"uid": os.geteuid(), "gid": os.getegid()}
@@ -64,7 +80,8 @@ def restore_runtime_archive(connection, directory: Path, *, identity_trust,
     with connection.begin_nested():
         result = _restore_archive(connection, archive, directory,
             authority_reader=authority_reader, expected_runtime_identity=expected_runtime_identity,
-            object_store_root=object_store_root, key_resolver=key_resolver)
+            object_store_root=object_store_root, key_resolver=key_resolver,
+            runtime_schema_head=archive["manifest"]["schema_head"])
         digest = _preserve_identity(archive["runtime_identity_bytes"], identity_destination, identity_runtime_owner)
     return {**result, "runtime_identity_sha256": digest,
             "runtime_identity_disposition": "preserved_inactive_requires_operator_activation"}

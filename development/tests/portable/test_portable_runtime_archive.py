@@ -177,3 +177,85 @@ def test_nonempty_attention_reuses_current_and_legacy_contracts(runtime_archive,
         _rewrite(args["destination"], spec["record_jsonl_relative_path"], canonical_json_bytes(record) + b"\n")
         with pytest.raises(ValueError):
             archive.read_runtime_archive(args["destination"], identity_trust=args["identity_trust"])
+
+
+class SchemaResult:
+    def __init__(self, value):
+        self.value = value
+
+    def scalar_one(self):
+        return self.value
+
+    def scalar_one_or_none(self):
+        return self.value
+
+    def fetchone(self):
+        return (self.value,)
+
+
+class SchemaConnection(Connection):
+    def __init__(self, head, *, index_valid=True):
+        self.head, self.index_valid, self.queries = head, index_valid, []
+
+    def exec_driver_sql(self, sql, parameters=()):
+        self.queries.append(sql)
+        if "version_num" in sql:
+            value = self.head
+        elif "pg_catalog.pg_index" in sql:
+            value = self.index_valid
+        elif "SHOW transaction_isolation" in sql:
+            value = "serializable"
+        elif "pg_advisory_xact_lock" in sql:
+            value = None
+        elif "to_regclass" in sql:
+            value = True
+        elif "SELECT COUNT(*)" in sql:
+            value = 0
+        else:
+            raise AssertionError("Unexpected schema-interface SQL")
+        return SchemaResult(value)
+
+
+def test_0011_export_and_reader_bind_real_head_and_index_profile(runtime_archive, tmp_path):
+    import json
+    args, _ = runtime_archive
+    current = dict(args, destination=tmp_path / "current0011")
+    connection = SchemaConnection(archive.CURRENT_SCHEMA_HEAD)
+    manifest = archive.export_runtime_archive(connection, **current)
+    checked = archive.read_runtime_archive(current["destination"], identity_trust=args["identity_trust"])
+    profile = json.loads((current["destination"] / "profile.json").read_bytes())
+    assert manifest["schema_head"] == checked["manifest"]["schema_head"] == archive.CURRENT_SCHEMA_HEAD
+    assert profile["required_indexes"][0]["columns"] == ["tenant_id", "installation_id", "event_type", "occurred_at"]
+    assert manifest["profile_sha256"] != archive.PROFILE_SHA256
+    assert archive.PROFILE["schema_head"] == archive.SCHEMA_HEAD == "4e_0010_memory_compaction"
+    assert any("i.indisvalid AND i.indisready" in query for query in connection.queries)
+    assert any("i.indnkeyatts = 4 AND i.indnatts = 4" in query for query in connection.queries)
+
+
+@pytest.mark.parametrize("head,index_valid,reason", [
+    ("4e_0012_conversation_source_lock", True, "unsupported"),
+    (archive.CURRENT_SCHEMA_HEAD, False, "pinned shape"),
+    (archive.CURRENT_SCHEMA_HEAD, None, "pinned shape"),
+])
+def test_unknown_head_or_unusable_0011_index_never_publishes(runtime_archive, tmp_path, head, index_valid, reason):
+    args, _ = runtime_archive
+    current = dict(args, destination=tmp_path / "rejected")
+    with pytest.raises(ValueError, match=reason):
+        archive.export_runtime_archive(SchemaConnection(head, index_valid=index_valid), **current)
+    assert not current["destination"].exists()
+
+
+def test_0011_archive_cannot_substitute_legacy_or_different_index_pin(runtime_archive, tmp_path):
+    import json
+    args, _ = runtime_archive
+    current = dict(args, destination=tmp_path / "pin0011")
+    archive.export_runtime_archive(SchemaConnection(archive.CURRENT_SCHEMA_HEAD), **current)
+    profile = json.loads((current["destination"] / "profile.json").read_bytes())
+    profile["required_indexes"][0]["columns"][2:] = ["occurred_at", "event_type"]
+    _rewrite(current["destination"], "profile.json", canonical_json_bytes(profile))
+    manifest_path = current["destination"] / "archive.json"
+    manifest = json.loads(manifest_path.read_bytes())
+    manifest["profile_sha256"] = hashlib.sha256(canonical_json_bytes(profile)).hexdigest()
+    manifest_path.write_bytes(canonical_json_bytes(manifest))
+    with pytest.raises(ValueError, match="profile differs"):
+        archive.read_runtime_archive(current["destination"], identity_trust=args["identity_trust"])

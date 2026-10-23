@@ -50,6 +50,56 @@ _FIELDS = {"contract", "schema_version", "archive_id", "source_tenant_id",
     "profile_sha256", "files", "external_requirements", "target_activation", "export_sequence"}
 
 
+# These legacy constants remain byte-identical for existing v3/0010 archives.
+# Only the current v3 route selects a second, explicitly supported profile.
+CURRENT_SCHEMA_HEAD = "4e_0011_timeline_type_time"
+_TYPE_TIME_INDEX = {
+    "schema": "eva_core", "table": "operational_events",
+    "name": "ix_operational_events__type_time", "method": "btree",
+    "columns": ["tenant_id", "installation_id", "event_type", "occurred_at"],
+    "unique": False, "predicate": None, "expressions": None, "included_columns": [],
+}
+_TYPE_TIME_INDEX_SQL = """
+    SELECT i.indisvalid AND i.indisready AND NOT i.indisunique
+      AND i.indpred IS NULL AND i.indexprs IS NULL
+      AND i.indnkeyatts = 4 AND i.indnatts = 4 AND am.amname = 'btree'
+      AND ARRAY(SELECT pg_catalog.pg_get_indexdef(i.indexrelid, n, false)
+          FROM generate_series(1, i.indnkeyatts) AS n ORDER BY n)
+          = ARRAY['tenant_id','installation_id','event_type','occurred_at']
+    FROM pg_catalog.pg_index i
+    JOIN pg_catalog.pg_class idx ON idx.oid = i.indexrelid
+    JOIN pg_catalog.pg_namespace ns ON ns.oid = idx.relnamespace
+    JOIN pg_catalog.pg_class tbl ON tbl.oid = i.indrelid
+    JOIN pg_catalog.pg_am am ON am.oid = idx.relam
+    WHERE ns.nspname = 'eva_core' AND idx.relname = 'ix_operational_events__type_time'
+      AND tbl.relname = 'operational_events' AND tbl.relnamespace = ns.oid
+"""
+
+
+def runtime_profile_for_head(schema_head):
+    """Pin exactly the old row contract or its index-only installed successor."""
+    if schema_head not in (SCHEMA_HEAD, CURRENT_SCHEMA_HEAD):
+        raise ValueError("runtime portable schema head is unsupported")
+    result = json.loads(json.dumps(PROFILE))
+    result["schema_head"] = schema_head
+    if schema_head == CURRENT_SCHEMA_HEAD:
+        result["required_indexes"] = [json.loads(json.dumps(_TYPE_TIME_INDEX))]
+    return result
+
+
+def verify_runtime_database_head(connection, *, expected_head=None):
+    """Attest the real database head and, for0011, the exact usable index shape."""
+    head = connection.exec_driver_sql(
+        "SELECT version_num FROM public.eva_alembic_version").scalar_one()
+    runtime_profile_for_head(head)  # closed0/1 selection; never trust a label alone
+    if expected_head is not None and head != expected_head:
+        raise ValueError("runtime source and target schema heads differ")
+    if head == CURRENT_SCHEMA_HEAD:
+        if connection.exec_driver_sql(_TYPE_TIME_INDEX_SQL).scalar_one_or_none() is not True:
+            raise ValueError("runtime timeline type/time index differs from its pinned shape")
+    return head
+
+
 def _schemas():
     return _schema_payloads()
 
@@ -99,10 +149,13 @@ def read_runtime_archive(directory: Path, *, identity_trust: IdentityPackTrustBi
         manifest = _load_canonical_object(manifest_raw, label="runtime manifest")
         if (set(manifest) != _FIELDS or manifest["contract"] != CONTRACT
                 or type(manifest["schema_version"]) is not int or manifest["schema_version"] != 3
-                or manifest["schema_head"] != SCHEMA_HEAD or manifest["profile_sha256"] != PROFILE_SHA256
                 or manifest["external_requirements"] != list(EXTERNAL_REQUIREMENTS)
                 or manifest["target_activation"] != "closed"
                 or type(manifest["export_sequence"]) is not int or manifest["export_sequence"] < 1):
+            raise ValueError("runtime archive profile differs")
+        profile = runtime_profile_for_head(manifest["schema_head"])
+        profile_sha256 = hashlib.sha256(canonical_json_bytes(profile)).hexdigest()
+        if manifest["profile_sha256"] != profile_sha256:
             raise ValueError("runtime archive profile differs")
         for field in ("archive_id", "source_tenant_id", "source_installation_id"):
             if str(UUID(manifest[field])) != manifest[field]:
@@ -115,7 +168,7 @@ def read_runtime_archive(directory: Path, *, identity_trust: IdentityPackTrustBi
         contents = {name: _read_regular(root, name) for name in sorted(expected_files)}
         if any(hashlib.sha256(raw).hexdigest() != entries[name] for name, raw in contents.items()):
             raise ValueError("runtime archive file hash differs")
-        if (contents["profile.json"] != canonical_json_bytes(PROFILE)
+        if (contents["profile.json"] != canonical_json_bytes(profile)
                 or any(contents[name] != raw for name, raw in schema_bytes.items())):
             raise ValueError("runtime archive schema authority differs")
         identity_raw = contents[IDENTITY_PATH]
@@ -195,9 +248,9 @@ def export_runtime_archive(connection, *, tenant_id, installation_id, runtime_id
     """
     verify_identity_pack_bytes(runtime_identity_bytes, trust=identity_trust)
     with connection.begin():
-        revision = connection.exec_driver_sql("SELECT version_num FROM public.eva_alembic_version").scalar_one()
-        if revision != SCHEMA_HEAD:
-            raise ValueError("runtime portable source schema head differs")
+        revision = verify_runtime_database_head(connection)
+    profile = runtime_profile_for_head(revision)
+    profile_sha256 = hashlib.sha256(canonical_json_bytes(profile)).hexdigest()
     with CurrentSnapshot(connection, tenant_id=tenant_id, installation_id=installation_id,
                          runtime_identity=runtime_identity) as snapshot:
         raw = snapshot.read_all()
@@ -207,11 +260,11 @@ def export_runtime_archive(connection, *, tenant_id, installation_id, runtime_id
     payloads = {s["record_jsonl_relative_path"]: encode_jsonl_records(records[s["table"]],
                     primary_key_columns=s["primary_key"]) for s in ALL_SPECS}
     payloads.update(_schemas())
-    payloads.update({"profile.json": canonical_json_bytes(PROFILE), IDENTITY_PATH: runtime_identity_bytes})
+    payloads.update({"profile.json": canonical_json_bytes(profile), IDENTITY_PATH: runtime_identity_bytes})
     manifest = {"contract": CONTRACT, "schema_version": 3, "archive_id": str(uuid4()),
         "source_tenant_id": tenant_id, "source_installation_id": installation_id,
-        "created_at": created_at, "runtime_identity": runtime_identity, "schema_head": SCHEMA_HEAD,
-        "profile_sha256": PROFILE_SHA256, "export_sequence": export_sequence,
+        "created_at": created_at, "runtime_identity": runtime_identity, "schema_head": revision,
+        "profile_sha256": profile_sha256, "export_sequence": export_sequence,
         "files": {name: hashlib.sha256(raw).hexdigest() for name, raw in payloads.items()},
         "external_requirements": list(EXTERNAL_REQUIREMENTS), "target_activation": "closed"}
     payloads["archive.json"] = canonical_json_bytes(manifest)

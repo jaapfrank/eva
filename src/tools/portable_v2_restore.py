@@ -26,14 +26,15 @@ def restore_specs():
     return tuple(specs[name] for name in TopologicalSorter(dependencies).static_order())
 
 
-def verify_current_target(connection):
+def verify_current_target(connection, *, expected_schema_head=None):
     verify_empty_restore_target(connection, table_specs=ALL_SPECS)
     if connection.exec_driver_sql("SELECT COUNT(*) FROM eva_core.operational_checkpoints").scalar_one():
         raise ValueError("current restore checkpoint target is not empty")
     if connection.exec_driver_sql("SELECT COUNT(*) FROM eva_core.restore_activation").scalar_one():
         raise ValueError("restore target already has local activation state")
     from tools.portable_v2_profile import SCHEMA_HEAD
-    if connection.exec_driver_sql("SELECT version_num FROM public.eva_alembic_version").scalar_one() != SCHEMA_HEAD:
+    expected = SCHEMA_HEAD if expected_schema_head is None else expected_schema_head
+    if connection.exec_driver_sql("SELECT version_num FROM public.eva_alembic_version").scalar_one() != expected:
         raise ValueError("current restore target schema differs")
 
 
@@ -48,7 +49,8 @@ def restore_current_archive(connection, directory: Path, *, authority_reader,
 
 
 def _restore_archive(connection, archive, directory, *, authority_reader,
-                     expected_runtime_identity, object_store_root, key_resolver=None):
+                     expected_runtime_identity, object_store_root, key_resolver=None,
+                     runtime_schema_head=None):
     """Shared insertion path; callers must fully verify their versioned archive."""
     manifest, raw = archive["manifest"], archive["manifest_raw"]
     if manifest["runtime_identity"] != expected_runtime_identity:
@@ -57,7 +59,15 @@ def _restore_archive(connection, archive, directory, *, authority_reader,
                                restore_authority_raw=authority_reader())
     records = archive["records"]
     with connection.begin_nested():
-        verify_current_target(connection)
+        schema_binding = {}
+        if runtime_schema_head is None:
+            verify_current_target(connection)  # frozen v2 path/default unchanged
+        else:
+            if (manifest.get("contract") != "EvaPortableArchive/v3"
+                    or manifest.get("schema_head") != runtime_schema_head):
+                raise ValueError("runtime restore schema selection differs from its verified archive")
+            from tools.portable_runtime_restore import verify_runtime_restore_target
+            schema_binding = verify_runtime_restore_target(connection, runtime_schema_head)
         connection.exec_driver_sql("SET CONSTRAINTS ALL DEFERRED")
         materialized = ()
         if records["eva_evidence.object_refs"]:
@@ -85,7 +95,7 @@ def _restore_archive(connection, archive, directory, *, authority_reader,
         # inserts, still inside the rollback-capable caller transaction.
         authorize_portable_restore(archive_manifest_raw=raw,
                                    restore_authority_raw=authority_reader())
-    return {"status": "restored", "restore_id": restore_id, "inserted_records": inserted,
+    return {**schema_binding, "status": "restored", "restore_id": restore_id, "inserted_records": inserted,
             "rebuilt_checkpoints": len(archive["projections"]),
             "target_activation": "closed", "object_store_disposition": "private_inactive_preserved",
             "external_requirements": manifest["external_requirements"],

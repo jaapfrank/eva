@@ -166,6 +166,21 @@ class InstallerPortableRestore:
             return read_runtime_archive(directory, identity_trust=self.identity_trust)
         return validate_and_derive(directory)
 
+
+    def _verify_archive_target(self, connection, directory, manifest):
+        header = json.loads(manifest)
+        if header.get("contract") == "EvaInstallationRecovery/v1":
+            from tools.installation_recovery_package import read_installation_package
+            package = read_installation_package(directory, identity_trust=self.identity_trust)
+            if package["manifest_raw"] != manifest:
+                raise ValueError("installation package changed before target validation")
+            header = package["core_archive"]["manifest"]
+        if header.get("contract") == "EvaPortableArchive/v3":
+            from tools.portable_runtime_restore import verify_runtime_restore_target
+            return verify_runtime_restore_target(connection, header["schema_head"])
+        from tools.portable_v2_restore import verify_current_target
+        return verify_current_target(connection)
+
     @staticmethod
     def _object_source(directory: Path, manifest: bytes) -> Path:
         header = json.loads(manifest)
@@ -320,7 +335,7 @@ class InstallerPortableRestore:
                         if self.runtime_guard is not None:
                             self.runtime_guard(connection)
                         if current:
-                            verify_current_target(connection)
+                            self._verify_archive_target(connection, directory, manifest)
                         else:
                             verify_empty_restore_target(connection, table_specs=CANONICAL_EXPORT_SPECS)
                 token = secrets.token_urlsafe(32)
@@ -339,7 +354,7 @@ class InstallerPortableRestore:
         if config is None:
             raise ValueError("installation materialization configuration is absent")
         destination = Path(config["destination"])
-        verify_current_target(connection)
+        self._verify_archive_target(connection, directory, manifest)
         package = read_installation_package(directory)
         if package["manifest_raw"] != manifest:
             raise ValueError("installation package changed after preview")

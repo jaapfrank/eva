@@ -171,3 +171,81 @@ finally:
         "PYTHONPATH=" + os.pathsep.join(sys.path), sys.executable, "-c", script,
         str(tmp_path / "runtime-private")], capture_output=True, text=True)
     assert done.returncode == 0, done.stderr
+
+
+@pytest.mark.parametrize("source_head,target_head,index_valid,reason", [
+    ("4e_0011_timeline_type_time", "4e_0010_memory_compaction", True, "heads differ"),
+    ("4e_0010_memory_compaction", "4e_0011_timeline_type_time", True, "target schema differs"),
+    ("4e_0011_timeline_type_time", "4e_0012_conversation_source_lock", True, "unsupported"),
+    ("4e_0011_timeline_type_time", "4e_0011_timeline_type_time", False, "pinned shape"),
+    ("4e_0012_conversation_source_lock", "4e_0012_conversation_source_lock", True, "unsupported"),
+])
+def test_runtime_target_pair_and_index_are_not_spoofed(source_head, target_head, index_valid, reason):
+    from tests.portable.test_portable_runtime_archive import SchemaConnection
+    from tools.portable_runtime_restore import verify_runtime_restore_target
+    with pytest.raises(ValueError, match=reason):
+        verify_runtime_restore_target(SchemaConnection(target_head, index_valid=index_valid), source_head)
+
+
+def test_real_target_interface_checks_empty_and_matching_0011_without_writes():
+    from tests.portable.test_portable_runtime_archive import SchemaConnection
+    from tools.portable_runtime_restore import verify_runtime_restore_target
+    connection = SchemaConnection("4e_0011_timeline_type_time")
+    assert verify_runtime_restore_target(connection, connection.head) == {
+        "source_schema_head": connection.head, "target_schema_head": connection.head}
+    assert any("to_regclass" in query for query in connection.queries)
+    assert any("SELECT COUNT(*) FROM eva_core.operational_checkpoints" in query for query in connection.queries)
+    assert not any(query.lstrip().upper().startswith(("INSERT", "UPDATE", "DELETE", "CREATE", "ALTER")) for query in connection.queries)
+
+
+def test_installation_preview_resolves_inner_v3_head(runtime_archive, tmp_path, monkeypatch):
+    import json
+    from tests.portable.test_portable_runtime_archive import SchemaConnection
+    import tools.installation_recovery_package as package
+    args, _ = runtime_archive
+    workflow = _workflow(args, tmp_path)
+    manifest = json.dumps({"contract": "EvaInstallationRecovery/v1"}).encode()
+    head = "4e_0011_timeline_type_time"
+    def verified_inner(directory, *, identity_trust):
+        assert identity_trust == args["identity_trust"]
+        return {"manifest_raw": manifest, "core_archive": {"manifest": {
+            "contract": "EvaPortableArchive/v3", "schema_head": head}}}
+    monkeypatch.setattr(package, "read_installation_package", verified_inner)
+    try:
+        assert workflow._verify_archive_target(SchemaConnection(head), args["destination"], manifest) == {
+            "source_schema_head": head, "target_schema_head": head}
+        with pytest.raises(ValueError, match="heads differ"):
+            workflow._verify_archive_target(SchemaConnection("4e_0010_memory_compaction"), args["destination"], manifest)
+    finally:
+        workflow.close()
+
+
+def test_0011_wizard_preview_and_execution_keep_runtime_head(runtime_archive, tmp_path, monkeypatch):
+    from tests.portable.test_portable_runtime_archive import SchemaConnection
+    import tools.portable_runtime_archive as source
+    import tools.portable_runtime_restore as restore
+    args, _ = runtime_archive
+    current = dict(args, destination=tmp_path / "actual-head0011")
+    source.export_runtime_archive(SchemaConnection(source.CURRENT_SCHEMA_HEAD), **current)
+    workflow = _workflow(current, tmp_path)
+    class CurrentEngine(Engine, SchemaConnection):
+        pass
+    workflow.engine = CurrentEngine(source.CURRENT_SCHEMA_HEAD)
+    calls = []
+    def inactive_restore(connection, directory, **kwargs):
+        checked = read_runtime_archive(directory, identity_trust=kwargs["identity_trust"])
+        assert checked["manifest"]["schema_head"] == source.CURRENT_SCHEMA_HEAD
+        binding = restore.verify_runtime_restore_target(connection, checked["manifest"]["schema_head"])
+        calls.append(binding)
+        return {"status": "restored", "target_activation": "closed", **binding}
+    monkeypatch.setattr(restore, "restore_runtime_archive", inactive_restore)
+    blob = tmp_path / "actual-head0011.eva"
+    seal_portable_archive(current["destination"], blob, passphrase="a sufficiently long passphrase",
+        validator=lambda path: read_runtime_archive(path, identity_trust=args["identity_trust"]))
+    try:
+        preview = workflow.prepare(blob.read_bytes(), "a sufficiently long passphrase")
+        result = workflow.execute(str(preview["confirmation"]))
+        assert result["source_schema_head"] == result["target_schema_head"] == source.CURRENT_SCHEMA_HEAD
+        assert result["target_activation"] == "closed" and len(calls) == 1
+    finally:
+        workflow.close()

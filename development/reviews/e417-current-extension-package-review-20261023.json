@@ -263,7 +263,7 @@
           "id": "E417-CAPTURE-003",
           "severity": "P1",
           "scope": "current core export and restore schema compatibility",
-          "status": "open",
+          "status": "corrected_candidate_passed_focused_and_actual_pg_interfaces_awaiting_current_capture",
           "title": "Current installed schema0011 is rejected by runtime archive bound to historical0010",
           "trigger": "Coordinator executed the revised host capture once; existing runtime exporter checked the actual source revision.",
           "reportedActualSourceHead": "4e_0011_timeline_type_time",
@@ -382,10 +382,28 @@
         "Original live profile database not reopened by reviewer.",
         "Only hashes/counts/revision/integrity observed; no labels, vectors, photographs, tokens or conversations printed.",
         "This verifies the inactive package input, not restored live face recognition or full E4.17 completion."
-      ]
+      ],
+      "viewPrivacyProbe": {
+        "checkedAt": "2026-10-23T20:52:53.885972+00:00",
+        "case": "Synthetic faces VIEW on restricted_profiles; one isolated probe",
+        "adapterSha256": "09c94726a256c7d3d6beafc921bfe21ab36bba8d1510bba3369b7d041864fab2",
+        "preconditionExistingReaderAcceptsView": true,
+        "originalAuthorizerDeniedRestrictedTableRead": true,
+        "exception": "FaceProfileSnapshotError",
+        "privateValueInError": false,
+        "exceptionChainExposed": false,
+        "publishedDestinationExists": false,
+        "privateValueInPartialOutput": false,
+        "sourceBytesUnchanged": true,
+        "livePrivateSourceReads": 0,
+        "temporaryFixtureRemoved": true,
+        "toolWallSeconds": 0.7880349,
+        "verdict": "PASS",
+        "newDefect": null
+      }
     },
     "currentSchemaHandoffReview": {
-      "status": "prepared_awaiting_builder_correction",
+      "status": "schema0011_fix_and_all_affected_regressions_passed",
       "migration": "deploy/migrations/versions/4e_0011_timeline_type_time.py",
       "migrationSha256": "ab45971f51bf38d501173bb693534d38a37b1ba99692bf178b18a041e05258c7",
       "oldProfileSha256": "cc52332535f6e179759f7b6513e5a6b4dc3ee871efd13cb3673e271ebdeb2008",
@@ -397,7 +415,130 @@
         "Frozen historical v2 SCHEMA_HEAD/profile authority remains unchanged.",
         "Existing closed activation, external trust and transactional restore boundaries remain in the reached current restore path."
       ],
-      "limits": "No old migration/load test rerun; no live database queries, export retries, source edits or migrations by reviewer."
+      "limits": "No old migration/load test rerun; no live database queries, export retries, source edits or migrations by reviewer.",
+      "verdict": "GO_SCOPED_SCHEMA0011_ARCHIVE_RESTORE",
+      "candidateMetadataSha256": "603f68729a9e6540f05f18438f172e7b832ef0eb92c0be277409587996fd00f6",
+      "allSixCandidateHashesMatch": true,
+      "frozenV2ProfileMatches": true,
+      "checkedAt": "2026-10-23T21:04:19.017417+00:00",
+      "focusedTests": {
+        "passed": 29,
+        "skipped": 0,
+        "seconds": 16.24
+      },
+      "actualPostgresChecks": {
+        "passed": 8,
+        "seconds": 10.414456,
+        "serverVersionNum": "180006",
+        "cases": [
+          "Real0011 source index/export/reader",
+          "Real empty0011 target accepted",
+          "Missing0011 index refused",
+          "Wrong index key order refused",
+          "0010 archive to0011 target refused",
+          "0011 archive to0010 target refused",
+          "Actual0012 source export refused",
+          "Encrypted wizard with actual insertion:tenant1/installation1/restore_hold1; held=true; exact identity bytes"
+        ],
+        "targetContainerId": "020dd43c8bf0cdb255ac01b176defafd7ea414fe49226eacaeeb0c1e88231d5b",
+        "targetName": "eva2-review-e417-schema0011-b3acb5913b",
+        "createdDatabasesRemoved": 4,
+        "productionDatabaseAccess": false,
+        "ownContainerRemoved": true,
+        "remainingOwnTestDatabasesBeforeContainerRemoval": 0,
+        "allSixCandidateFilesUnchangedAtCompletion": true,
+        "foreignContainerTouched": false
+      },
+      "existingV2RegressionRun": {
+        "status": "PASS",
+        "passed": 14,
+        "skipped": 0,
+        "seconds": 43.37,
+        "fixtureSha256": "edcfaad3ec556a355b8ba4d372c03d7823b31f0da748644e503ac13146bcfde2",
+        "behaviorFunctionAstsUnchanged": true,
+        "behaviorFunctionCount": 6,
+        "realFixtureRoute": "Fresh own database: actual install0012 -> real Alembic downgrade0010 -> actual SELECT schema head equals frozen0010.",
+        "command": "Existing gate interpreter -B -m pytest -q -ra --tb=short -p no:cacheprovider development/tests/portable/test_portable_v2_current_work.py; isolated reviewer-owned admin DSN only."
+      },
+      "currentCaptureAfterFix": {
+        "schemaMismatchResolved": true,
+        "canonicalScopeInputCorrected": true,
+        "actualRowsReached": true,
+        "acceptedArchive": false,
+        "differentFailure": "E417-CAPTURE-005",
+        "checkedAt": "2026-10-23T21:04:51.560213+00:00"
+      }
+    },
+    "nativeCaptureDeltaReview": {
+      "checkedAt": "2026-10-23T21:06:19.975172+00:00",
+      "verdict": "GO_SCOPED_SINGLE_NATIVE_CAPTURE",
+      "captureSha256": "203e28bebc5abdf46d178119d2de1d6e590a9aadcfcb7e2cb71d294e42007b04",
+      "driverSha256": "31cd7f23589c0a18830673a1e05b38d73b2141a6bb1a9339e3668d7c57e14976",
+      "existingFileHelperSha256": "63cbc4e7275bed24e4925541bfa3ca951cc61fcee2bf3ce2567e3e9564fe29a5",
+      "delta": "Remove CPU-heavy portable export from live fence; retain current head/index verification, exclusive stable identity/trust copy and existing gateway snapshot; native core+memory dump exit0/fsync/hash acknowledgement precedes successful fence completion.",
+      "unchangedBoundaries": "Same current claim checks,90s alarm, read-only source-table access, writer locks, rollback/finally and own-child cleanup; private root0700 and exclusive0600 output.",
+      "observedFreshOutputs": true,
+      "newDefects": [],
+      "scope": "One coordinator-owned native capture after fresh global claims check. Native capture success, isolated clone conversion and full package acceptance remain unproven.",
+      "oldTimeoutProofPreserved": true,
+      "result": {
+        "checkedAt": "2026-10-23T21:09:47.160629+00:00",
+        "verdict": "GO_SCOPED_NATIVE_CAPTURE_INPUTS",
+        "readyReceiptSha256": "79f216abae4b826659ece782b81119ae922490762d76b9159809ec20d83bbd1e",
+        "completeReceiptSha256": "249cbddd7ff40bd2a17a0c911e9e9569ccd14ab6ccf4235b901bd7045f85978b",
+        "dumpAckSha256": "fa8c8003ed4ec85652fd7051be80dcca0f3ea1788392d399daf4969f6dedfe3e",
+        "files": [
+          {
+            "name": "nativeCore",
+            "bytes": 83639239,
+            "sha256": "cc532a00e80fa4ff82f6c7a797fabcabf39aeae10c72be2d12f2cdca5194aae4"
+          },
+          {
+            "name": "memory",
+            "bytes": 7801789,
+            "sha256": "65e56dc36589cdfe7901090b20ea896e9b57db6d5153561c53cb0da509982d14"
+          },
+          {
+            "name": "gateway",
+            "bytes": 2289664,
+            "sha256": "2e34d655e18d35424624813ed5e5e89ced6079692453ffc4416bf6d206515e1a"
+          },
+          {
+            "name": "current.json",
+            "bytes": 1635,
+            "sha256": "96bec21f0eb19378e1e1c5b02fe2b875149bca402b1b72c1a08980d7ee4567fd"
+          },
+          {
+            "name": "trust.json",
+            "bytes": 298,
+            "sha256": "a1149f21d86b652c8d7a76528e6d31e9340e34f8cbbbffec0db272f1659ed0bf"
+          }
+        ],
+        "allFiveTargetsMatchReceiptAndStableDescriptors": true,
+        "allTargetsRootRoot0600SingleLinkPrivateParent0700": true,
+        "customDumpHeadersMatch": true,
+        "timestampOrder": "Identity/trust/gateway <= ready <= core dump <= memory dump <= dump ack <= fence completion.",
+        "elapsedSeconds": 15.04770182899665,
+        "fenceSeconds": 14.993337239022367,
+        "schemaHead": "4e_0011_timeline_type_time",
+        "sourceDataWritesReported": 0,
+        "servicesStoppedReported": 0,
+        "executionEvidence": {
+          "thread": "01a16a55-7f38-76c2-9691-31421caafbe7",
+          "commandId": "exec-edfa0680-37d8-4b5f-8ae7-61114c2fd242",
+          "status": "completed",
+          "exitCode": 0,
+          "durationMs": 17175,
+          "exactNativeDriverCommandMatched": true,
+          "outputNotTruncated": true,
+          "outputReceiptMatchesFiles": true,
+          "consequence": "Reviewed driver requires child exit0 before final success output; capture finally rolls back all source fences."
+        },
+        "targetBindingToolSeconds": 0.7725775,
+        "sourceFilesReread": false,
+        "liveDatabaseAccess": false,
+        "limits": "Native snapshot input only; isolated native restore, portable conversion and full package remain pending."
+      }
     }
   },
   "contractRequirements": {
@@ -522,7 +663,7 @@
       "id": "E417-CAPTURE-003",
       "severity": "P1",
       "scope": "current core export and restore schema compatibility",
-      "status": "open",
+      "status": "corrected_candidate_passed_focused_and_actual_pg_interfaces_awaiting_current_capture",
       "title": "Current installed schema0011 is rejected by runtime archive bound to historical0010",
       "trigger": "Coordinator executed the revised host capture once; existing runtime exporter checked the actual source revision.",
       "reportedActualSourceHead": "4e_0011_timeline_type_time",
@@ -544,6 +685,65 @@
       "relatedRestoreInterface": "portable_runtime_restore delegates to portable_v2_restore._restore_archive; verify_current_target also pins0010. Export-only relaxation would leave target restore incoherent.",
       "repairBoundary": "Current v3 source/archive/restore compatibility must explicitly preserve the real0011 schema and exact expected index, without changing frozen historical v2 profile/hash or spoofing source/target revisions. No production schema downgrade or unknown-head admission.",
       "acceptance": "Review and test only the changed v3 export/reader/restore interfaces with real0011/index acceptance, wrong index/unknown-head refusal and unchanged frozen v2 authority before another current export."
+    },
+    {
+      "id": "E417-TEST-001",
+      "severity": "P2",
+      "scope": "existing PostgreSQL regression test fixture",
+      "status": "fixed_and_all14_real_pg_regressions_passed",
+      "file": "development/tests/portable/test_portable_v2_current_work.py",
+      "line": 56,
+      "cause": "Module fixture installs default checkout schema0012 but asserts final_revision0009; frozen v2 profile requires0010.",
+      "reproduction": "Run existing v2 regression file with EVA2_IN002_TEST_ADMIN_DSN pointing only at reviewer-owned empty temporary PostgreSQL18.6.",
+      "observed": "AssertionError:4e_0012_conversation_source_lock !=4e_0009_restore_hold;1 setup error in5.78s before actual regression assertions.",
+      "impact": "The14 previously skipped real PostgreSQL regressions still cannot supply a success result. No product regression established by this fixture error.",
+      "repairBoundary": "Use a genuine isolated schema0010 fixture for frozen v2; retain semantic assertions/profile authority and never spoof source revision.",
+      "resolution": {
+        "fixtureSha256": "edcfaad3ec556a355b8ba4d372c03d7823b31f0da748644e503ac13146bcfde2",
+        "change": "Only fixture setup uses actual supported migration/downgrade to frozen0010; all6 behavior function ASTs unchanged.",
+        "passed": 14,
+        "skipped": 0,
+        "seconds": 43.37
+      }
+    },
+    {
+      "id": "E417-CAPTURE-004",
+      "severity": "P1",
+      "scope": "operator export input bindings; not a schemafix product regression",
+      "status": "operator_scope_corrected_next_actual_attempt_reached_record_conversion",
+      "cause": "Coordinator supplied logical runtime IDs as canonical tenant/installation UUID scope; exporter requires those identities separately.",
+      "observed": "PortableArchiveError: snapshot scope is not a UUID",
+      "evidence": {
+        "receipt": "/home/administrator/project/.eva2-artifacts/e417-coordinator-capture-20261023-host-schema0011/capture-failure.private.json",
+        "sha256": "f1847d7a8b0e5c1364c05e4a446d667d272de1fb42f50187f24f72a750098a02",
+        "bytes": 150,
+        "elapsedSeconds": 0.9996023869607598,
+        "readyReceiptExists": false,
+        "completeReceiptExists": false,
+        "verification": "Private failure receipt independently read; operator cause acknowledged by coordinator."
+      },
+      "impact": "Current capture rejected before row export; no accepted archive.",
+      "repairBoundary": "Bind canonical UUID scope separately from logical runtime identity using actual configuration; validate before connecting. Preserve schema/identity/source checks."
+    },
+    {
+      "id": "E417-CAPTURE-005",
+      "severity": "P1",
+      "scope": "current operator snapshot duration and live writer-fence composition",
+      "status": "native_capture_accepted_under15s_fence_offline_conversion_still_pending",
+      "cause": "Full portable record conversion/validation runs while the live writer fence is still held; actual current data conversion exceeds the bounded capture duration.",
+      "observed": "TimeoutError: Bounded source capture timed out at90.21634091599844s; stack includes _encode_column and _validate_json_value.",
+      "evidence": {
+        "receipt": "/home/administrator/project/.eva2-artifacts/e417-coordinator-capture-20261023-host-schema0011-scope/capture-failure.private.json",
+        "receiptSha256": "3cda89f0561b1c98a6368ffc74d346db6926b23bab609638105932aaafcb9894",
+        "receiptBytes": 145,
+        "logSha256": "fe572e6ba64dcb4358b49dd56d8fe4b57197075a10779cb5e51a37756a86e574",
+        "logBytes": 3657,
+        "readyReceiptExists": false,
+        "completeReceiptExists": false,
+        "verification": "Private failure receipt and exact conversion/timeout frame presence independently checked; source data not inspected."
+      },
+      "impact": "No accepted current archive/package; schema and corrected UUID scope passed far enough to read and convert actual source rows.",
+      "repairBoundary": "Keep the bounded live fence. Coordinator proposes short actual native snapshots under the fence, then existing portable conversion/validation on an isolated restored snapshot. The new composition is not yet reviewed or accepted."
     }
   ]
 }

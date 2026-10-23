@@ -525,13 +525,21 @@
           "src/tools/installation_recovery_package.py",
           "src/tools/installation_recovery_materializer.py",
           "src/tools/installation_face_profile_snapshot.py",
-          "development/tests/portable/test_installation_face_profile_snapshot.py"
+          "development/tests/portable/test_installation_face_profile_snapshot.py",
+          "src/tools/portable_runtime_archive.py",
+          "src/tools/portable_runtime_restore.py",
+          "src/tools/portable_v2_restore.py",
+          "development/tests/portable/test_portable_runtime_archive.py",
+          "src/tools/installer_portable_restore.py",
+          "development/tests/portable/test_installer_runtime_archive.py",
+          "src/tools/portable_runtime_profile.py",
+          "development/tests/portable/test_portable_v2_current_work.py"
         ],
         "assignedAt": "2026-10-23T20:28:02.293070+00:00",
         "privateOutput": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/",
         "testWritePathsRequireExactConfirmation": true,
         "noCpuRunOrSharedInstallOrVoiceChange": true,
-        "resultNow": "133 real component files staged; implementing required limited face-profile snapshot adapter while coordinator supplies actual core/memory/gateway captures"
+        "resultNow": "Fix actual0011 current-runtime export/reader/target compatibility; frozenv2 profile unchanged. Face adapter delivered and independently tested."
       },
       "extensionArtifactRequest": {
         "to": "wsl-e18",
