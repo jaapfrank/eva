@@ -847,7 +847,7 @@
     "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
     "status": "in_progress",
     "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
-    "nextAction": "Eigenaar23oktober: doorwerken terwijl fysieke E4.15-proef later volgt. Maak dezelfde uitbreiding onderE4.17 werkelijk herstelbaar/testklaar via bestaande pakket/materialisatieroute. Bouwer integreert actuele bron/config/gegevens/trust; reviewer controleert nog onbeoordeelde15faceassets en hetzelfde concrete pakket. Geen CPUimportserie, nieuwpakketformaat of gedeelde/spraakinstallatie. Concrete resterende eigenaarproef apart houden.",
+    "nextAction": "E4.17 in uitvoering:135 echte pakketcomponenten inclusief beperkte24-profielenexport gestaged; adapter10tests en onafhankelijke controle geslaagd. Actuele core-export vond echte herstelblokkade: DB4e0011 versus portableprofile4e0010. Bouwer maakt uitsluitend huidigev3-export/restorecompatibiliteit af met behoud historischeprofielen. Daarna actuele gefencete core/geheugen/gatewaycapture, bestaandpakket valideren en schoon herstel testen. FysiekeE4.15proef blijft later; geen eigenaarhandelingnu.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -865,9 +865,11 @@
   "team": {
     "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "executor": "01a0c537-54d0-7080-9e4c-74db537877af",
-    "independentReviewer": "01a16a55-1607-7171-820e-a3918acaea3f",
+    "independentReviewer": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
     "maxConcurrentExecutorsIncludingReview": 2,
-    "noSubagentsOrNewChats": true
+    "noSubagentsOrNewChats": true,
+    "standbyControlChat": "01a16a55-1607-7171-820e-a3918acaea3f",
+    "reviewerRole": "Tests/review of concrete deliveries; records reproducible errors; no coding or coordination"
   },
   "audit": {
     "projectDashboard": {
@@ -2994,7 +2996,7 @@
         "now": {
           "taskId": "E4.17",
           "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
-          "summary": "Eigenaar23oktober: doorwerken terwijl fysieke E4.15-proef later volgt. Maak dezelfde uitbreiding onderE4.17 werkelijk herstelbaar/testklaar via bestaande pakket/materialisatieroute. Bouwer integreert actuele bron/config/gegevens/trust; reviewer controleert nog onbeoordeelde15faceassets en hetzelfde concrete pakket. Geen CPUimportserie, nieuwpakketformaat of gedeelde/spraakinstallatie. Concrete resterende eigenaarproef apart houden.",
+          "summary": "E4.17 in uitvoering:135 echte pakketcomponenten inclusief beperkte24-profielenexport gestaged; adapter10tests en onafhankelijke controle geslaagd. Actuele core-export vond echte herstelblokkade: DB4e0011 versus portableprofile4e0010. Bouwer maakt uitsluitend huidigev3-export/restorecompatibiliteit af met behoud historischeprofielen. Daarna actuele gefencete core/geheugen/gatewaycapture, bestaandpakket valideren en schoon herstel testen. FysiekeE4.15proef blijft later; geen eigenaarhandelingnu.",
           "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd."
         },
         "next": {
@@ -8111,8 +8113,8 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "Eigenaar23oktober: doorwerken terwijl fysieke E4.15-proef later volgt. Maak dezelfde uitbreiding onderE4.17 werkelijk herstelbaar/testklaar via bestaande pakket/materialisatieroute. Bouwer integreert actuele bron/config/gegevens/trust; reviewer controleert nog onbeoordeelde15faceassets en hetzelfde concrete pakket. Geen CPUimportserie, nieuwpakketformaat of gedeelde/spraakinstallatie. Concrete resterende eigenaarproef apart houden.",
-                "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
+                "nextAction": "E4.17 in uitvoering:135 echte pakketcomponenten inclusief beperkte24-profielenexport gestaged; adapter10tests en onafhankelijke controle geslaagd. Actuele core-export vond echte herstelblokkade: DB4e0011 versus portableprofile4e0010. Bouwer maakt uitsluitend huidigev3-export/restorecompatibiliteit af met behoud historischeprofielen. Daarna actuele gefencete core/geheugen/gatewaycapture, bestaandpakket valideren en schoon herstel testen. FysiekeE4.15proef blijft later; geen eigenaarhandelingnu.",
+                "progress": "Limited active profile snapshot adapter built, tested10/10, independently reviewed and used for actual24-row inactive export; not full recovery.",
                 "checkedAt": "2026-10-23T19:49:14.921610+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
@@ -8731,7 +8733,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Eigenaar23oktober: doorwerken terwijl fysieke E4.15-proef later volgt. Maak dezelfde uitbreiding onderE4.17 werkelijk herstelbaar/testklaar via bestaande pakket/materialisatieroute. Bouwer integreert actuele bron/config/gegevens/trust; reviewer controleert nog onbeoordeelde15faceassets en hetzelfde concrete pakket. Geen CPUimportserie, nieuwpakketformaat of gedeelde/spraakinstallatie. Concrete resterende eigenaarproef apart houden.",
+        "nextAction": "E4.17 in uitvoering:135 echte pakketcomponenten inclusief beperkte24-profielenexport gestaged; adapter10tests en onafhankelijke controle geslaagd. Actuele core-export vond echte herstelblokkade: DB4e0011 versus portableprofile4e0010. Bouwer maakt uitsluitend huidigev3-export/restorecompatibiliteit af met behoud historischeprofielen. Daarna actuele gefencete core/geheugen/gatewaycapture, bestaandpakket valideren en schoon herstel testen. FysiekeE4.15proef blijft later; geen eigenaarhandelingnu.",
         "finishOrder": [
           "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14088,8 +14090,8 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "Eigenaar23oktober: doorwerken terwijl fysieke E4.15-proef later volgt. Maak dezelfde uitbreiding onderE4.17 werkelijk herstelbaar/testklaar via bestaande pakket/materialisatieroute. Bouwer integreert actuele bron/config/gegevens/trust; reviewer controleert nog onbeoordeelde15faceassets en hetzelfde concrete pakket. Geen CPUimportserie, nieuwpakketformaat of gedeelde/spraakinstallatie. Concrete resterende eigenaarproef apart houden.",
-              "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
+              "nextAction": "E4.17 in uitvoering:135 echte pakketcomponenten inclusief beperkte24-profielenexport gestaged; adapter10tests en onafhankelijke controle geslaagd. Actuele core-export vond echte herstelblokkade: DB4e0011 versus portableprofile4e0010. Bouwer maakt uitsluitend huidigev3-export/restorecompatibiliteit af met behoud historischeprofielen. Daarna actuele gefencete core/geheugen/gatewaycapture, bestaandpakket valideren en schoon herstel testen. FysiekeE4.15proef blijft later; geen eigenaarhandelingnu.",
+              "progress": "Limited active profile snapshot adapter built, tested10/10, independently reviewed and used for actual24-row inactive export; not full recovery.",
               "checkedAt": "2026-10-23T19:49:14.921610+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
               "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
@@ -14708,7 +14710,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Eigenaar23oktober: doorwerken terwijl fysieke E4.15-proef later volgt. Maak dezelfde uitbreiding onderE4.17 werkelijk herstelbaar/testklaar via bestaande pakket/materialisatieroute. Bouwer integreert actuele bron/config/gegevens/trust; reviewer controleert nog onbeoordeelde15faceassets en hetzelfde concrete pakket. Geen CPUimportserie, nieuwpakketformaat of gedeelde/spraakinstallatie. Concrete resterende eigenaarproef apart houden.",
+      "nextAction": "E4.17 in uitvoering:135 echte pakketcomponenten inclusief beperkte24-profielenexport gestaged; adapter10tests en onafhankelijke controle geslaagd. Actuele core-export vond echte herstelblokkade: DB4e0011 versus portableprofile4e0010. Bouwer maakt uitsluitend huidigev3-export/restorecompatibiliteit af met behoud historischeprofielen. Daarna actuele gefencete core/geheugen/gatewaycapture, bestaandpakket valideren en schoon herstel testen. FysiekeE4.15proef blijft later; geen eigenaarhandelingnu.",
       "finishOrder": [
         "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -16960,7 +16962,23 @@
       "measuredReviewIntervalSeconds": 179.318,
       "reviewIntervalIncludesWaiting": true,
       "wholeReviewTimeUnknown": true,
-      "codePatchNotMandatedByStaticCoverageLimitation": true
+      "codePatchNotMandatedByStaticCoverageLimitation": true,
+      "ownerReviewerCorrection": "Latest direct owner instruction: original chat01a169f2 is sole tester/reviewer; replacement01a16a55-1607 is standby with claims released."
+    },
+    "e417CurrentDelivery20261023": {
+      "stage": "in_progress_current_schema_compatibility",
+      "profileAdapter": "src/tools/installation_face_profile_snapshot.py",
+      "profileTestsPassed": 10,
+      "actualProfileRows": 24,
+      "review": "development/reviews/e417-current-extension-package-review-20261023.json",
+      "coreExportRejectedSchema": "4e_0011_timeline_type_time",
+      "historicalProfileHead": "4e_0010_memory_compaction",
+      "snapshotRejectedNotCompleted": true,
+      "coreExportAttemptSeconds": 2.6094063270138577,
+      "runtimeModelCalls": 0,
+      "developmentTokens": null,
+      "developmentCredits": null,
+      "fullTaskCompleted": false
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",

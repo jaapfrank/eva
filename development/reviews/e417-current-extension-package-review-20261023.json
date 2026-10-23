@@ -1,0 +1,549 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.17 same E4.15 extension recovery package",
+  "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "status": "asset_input_verified_awaiting_concrete_package",
+  "verdict": "PENDING_PACKAGE_REVIEW",
+  "startedAt": "2026-10-23T20:27:36Z",
+  "assetInput": {
+    "verdict": "GO_TARGET_ONLY_ASSET_INPUT",
+    "checkedAt": "2026-10-23T20:28:12.824476+00:00",
+    "files": 15,
+    "bytes": 191351328,
+    "directories": 14,
+    "directoryMode": "0700",
+    "owner": "0:0",
+    "roles": {
+      "document_marker": 3,
+      "document_artifact": 12
+    },
+    "stableDescriptorAndPathMetadata": true,
+    "allActualTargetHashesMatchProposalAndReceipt": true,
+    "proposalSha256": "50834d99f282f5ede89bae46e935ca704ecdce113e19cb9d73228a1f933eb8a5",
+    "receiptSha256": "8ee66e8649038ca15d332849a7ed3d0b99ef669533e92d7100b4fd99a7f9348a",
+    "filesVerified": [
+      {
+        "path": "documents/face-backend/bridge-venv/pyvenv.cfg",
+        "sha256": "bfb27eda706026a276460dccc3ef5ae18a56b463c25948a121c755b9bd2be68c",
+        "bytes": 220,
+        "role": "document_marker",
+        "mode": "0400"
+      },
+      {
+        "path": "documents/face-backend/cpu-venv/pyvenv.cfg",
+        "sha256": "91a38794dd2242dfc20ad44f86c9492e29ab074c394f59232bb242892f8a66fb",
+        "bytes": 179,
+        "role": "document_marker",
+        "mode": "0400"
+      },
+      {
+        "path": "documents/face-backend/models/buffalo_l/det_10g.onnx",
+        "sha256": "5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91",
+        "bytes": 16923827,
+        "role": "document_artifact",
+        "mode": "0600"
+      },
+      {
+        "path": "documents/face-backend/models/buffalo_l/w600k_r50.onnx",
+        "sha256": "4c06341c33c2ca1f86781dab0e829f88ad5b64be9fba56e56bc9ebdefc619e43",
+        "bytes": 174383860,
+        "role": "document_artifact",
+        "mode": "0600"
+      },
+      {
+        "path": "documents/face-backend/source/eva/__init__.py",
+        "sha256": "63cf510d417042028e225b6fc431355071320b7b2f49aad9f6bc09d6a2001d41",
+        "bytes": 157,
+        "role": "document_artifact",
+        "mode": "0600"
+      },
+      {
+        "path": "documents/face-backend/source/eva/adapters/__init__.py",
+        "sha256": "6ae0ae23199095324aa1341ddb54c5d3bc569813e774907427eda5e74a499331",
+        "bytes": 51,
+        "role": "document_artifact",
+        "mode": "0600"
+      },
+      {
+        "path": "documents/face-backend/source/eva/adapters/connectors/__init__.py",
+        "sha256": "8cbe688cea58e49fd5c30bda5cec9feb9ca9f3877d417c949010693773e0caf2",
+        "bytes": 756,
+        "role": "document_artifact",
+        "mode": "0600"
+      },
+      {
+        "path": "documents/face-backend/source/eva/adapters/connectors/home_assistant_camera.py",
+        "sha256": "392d9843bef402ce5427dae8e43cb6538509cf701da86b7803ec9a064155d906",
+        "bytes": 3301,
+        "role": "document_artifact",
+        "mode": "0600"
+      },
+      {
+        "path": "documents/face-backend/source/eva/adapters/connectors/local_face_identity.py",
+        "sha256": "acdf5f96cb398296f2ac7c89533190666486d1e3cfb8b8ef7509b8141179d4c4",
+        "bytes": 11460,
+        "role": "document_artifact",
+        "mode": "0600"
+      },
+      {
+        "path": "documents/face-backend/source/eva/adapters/credentials/__init__.py",
+        "sha256": "2a0d3712f8e3f7f51d45b940f90e67a413bb281e8fe04178f793cefb6d1aec13",
+        "bytes": 66,
+        "role": "document_artifact",
+        "mode": "0600"
+      },
+      {
+        "path": "documents/face-backend/source/eva/adapters/credentials/runtime_files.py",
+        "sha256": "4c9012decf849405d3ef6f1fa74f5c399cdf2dece2ec81f27602ddea90337d28",
+        "bytes": 8884,
+        "role": "document_artifact",
+        "mode": "0600"
+      },
+      {
+        "path": "documents/face-backend/source/eva/operations/__init__.py",
+        "sha256": "7384006d1ff93760c1fd757406c09741b0e78ae127429f52f7019d2482bda3e2",
+        "bytes": 81,
+        "role": "document_artifact",
+        "mode": "0600"
+      },
+      {
+        "path": "documents/face-backend/source/eva/operations/local_face_cpu.py",
+        "sha256": "2b23b5dd7f2d6b1b25af52c306c3609dee77ccecea02013cfb81725e3d36f9ba",
+        "bytes": 5436,
+        "role": "document_artifact",
+        "mode": "0600"
+      },
+      {
+        "path": "documents/face-backend/source/eva/operations/local_face_identity_bridge.py",
+        "sha256": "30d66b14d0277dc7ddf7bd32097e77497b4fe6d794d6dd16dca3c730d5a2d653",
+        "bytes": 11754,
+        "role": "document_artifact",
+        "mode": "0600"
+      },
+      {
+        "path": "documents/face-backend/systemd/eva2-local-face-bridge.service",
+        "sha256": "b762fcbc283454994b453b1e0caa14448f5884c12db19c3294d58a0ef3a8d01a",
+        "bytes": 1296,
+        "role": "document_marker",
+        "mode": "0400"
+      }
+    ],
+    "scope": "Target-only opened-byte verification; original source paths not reopened. Configuration/unit/model bytes hashed opaquely, not interpreted or printed.",
+    "target": "/var/lib/eva2/e415-face-asset-stage-20261023/selected-face-assets",
+    "receipt": "/var/lib/eva2/e415-face-asset-stage-20261023/capture.private.json",
+    "proposalReview": "development/reviews/e417-face-assets-proposal-review-20261023.json"
+  },
+  "packageReview": {
+    "status": "awaiting_real_current_package_coordinator_ready_notice",
+    "verdict": null,
+    "preparation": {
+      "currentComponentStage": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/package-staging",
+      "stagingReceiptSha256": "6f62431e5d555e846a92ceeadeb8d88dfa82df1f9d659a3ad07ac4e271823cfb",
+      "roleMapSha256": "204deeaf6dd1c2e1de19a4b5a79a2ca97dcc7492aab069efc99c9b5e04fd0425",
+      "metadataJsonParse": "passed_actual_two_metadata_files",
+      "stagedComponents": 133,
+      "stagedBytes": 792383610,
+      "actualCoreMemoryGatewayTrustMissingIsAcknowledgedPendingInputNotNewDefect": true,
+      "oldPositiveSuitesRerun": false,
+      "nextTargetedChecks": [
+        "Actual package read validator under supplied actual external identity trust; canonical exact inventory/roles/aggregate limit and current provenance.",
+        "One isolated inactive materialization with explicit trusted component owners; exact output/readback and no existing destination replacement or activation.",
+        "Current privacy/key references/real-source binding and STOP/paused/replay boundaries; no claim source/profile/runtime closure from bytes alone."
+      ]
+    },
+    "preExecutionCaptureReview": {
+      "reviewedAt": "2026-10-23T20:41:16.697080+00:00",
+      "status": "actual_host_capture_rejected_by_current_export_schema_contract",
+      "sources": [
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/e417-coordinator-capture-20261023/fenced_current_capture.py",
+          "sha256": "5593a72e4632a9f8222e5d6c52bafdfe4686ef316f3249ca20c48da6146ea877"
+        },
+        {
+          "path": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/current_package_existing_route.py",
+          "sha256": "78af669818adda6480a0aa77a298d54f7e4783c779e2d316ebc799e28ea1dac9"
+        },
+        {
+          "path": "src/tools/installation_gateway_snapshot.py",
+          "sha256": "7ed1719d7fc0c76431cd87e6209c546ad3b1395c8de327b5551d6704bdec7274"
+        }
+      ],
+      "isolatedCheck": {
+        "fixtureOnly": true,
+        "journalModes": [
+          "wal",
+          "delete"
+        ],
+        "successfulSnapshots": 2,
+        "guardCallsPerSnapshot": 2,
+        "copiedFixtureContentMatches": true,
+        "writerFenceHeldUntilExplicitRollback": true,
+        "liveDataReads": 0,
+        "liveDataWrites": 0,
+        "fixtureRemoved": true,
+        "toolWallSeconds": 0.7127291
+      },
+      "sourceObservations": [
+        "PostgreSQL SHARE locks permit read-only core export and pg_dump ACCESS SHARE locks.",
+        "Current helper delegates to existing core validator/exporter and SQLite WAL-aware snapshot helper.",
+        "The orchestration waits for an external native-memory success marker; its producer and outer process deadline are not present in this file."
+      ],
+      "pendingConcreteComposition": [],
+      "reproducedDefects": [
+        {
+          "id": "E417-CAPTURE-001",
+          "severity": "P1",
+          "scope": "operator current-source capture; not an installed product regression",
+          "status": "corrected_in_operator_source_awaiting_actual_capture",
+          "file": "/home/administrator/project/.eva2-artifacts/e417-coordinator-capture-20261023/capture_driver.py",
+          "line": 18,
+          "title": "Root capture with all capabilities dropped cannot open the actual private sources",
+          "trigger": "Run capture_driver.py with --user 0 --cap-drop ALL against the stated existing bind mounts.",
+          "observed": "Actual identity directory UID65532 mode0700 and files0600; core DSN UID65532 mode0600; memory DSN UID1000 mode0600; gateway directory UID10001 mode0700/database0600. UID0 without DAC capabilities cannot traverse/read these sources.",
+          "reproduction": {
+            "method": "Existing WSL setpriv with UID0, bounding/inheritable/ambient capabilities removed and supplementary groups cleared; os.open then immediate close only, never read.",
+            "effectiveUid": 0,
+            "CapEff": "0000000000000000",
+            "CapBnd": "0000000000000000",
+            "coreDsnErrno": 13,
+            "memoryDsnErrno": 13,
+            "identityErrno": 13,
+            "gatewayDirectoryErrno": 13,
+            "sourceBytesRead": 0,
+            "sourceDataWrites": 0,
+            "toolWallSeconds": 0.6377677
+          },
+          "impact": "The operator capture fails before producing a usable current core/memory/gateway package.",
+          "repairBoundary": "Adjust only the operator launcher access capabilities or its controlled access composition; preserve existing source ownership and modes. Read-only mounts remain read-only. Gateway writer fencing needs the intended existing RW access.",
+          "acceptance": "The exact revised operator command can open the required existing mounts under its actual capability set; then current capture must still satisfy real quiescence, successful dump and completion receipt/exit requirements.",
+          "originalLauncherSha256": "20a632b146c50fe734913f7244c184fcb898753d8d3ef8b9e4ba7bed98d07878",
+          "resolution": {
+            "launcherSha256": "cbdd5c23fdddb3fbdd63d71733c7a0d841e69b06dbe906c6a7828a52f7c3750b",
+            "change": "Keep cap-drop ALL and add only DAC_OVERRIDE; preserve read-only identity/DSN/source/helper mounts and existing source ownership/modes.",
+            "reviewMethod": "Exact corrected source and actual source metadata; original denial retained; no current capture success inferred."
+          }
+        },
+        {
+          "id": "E417-CAPTURE-002",
+          "severity": "P1",
+          "scope": "operator current-source capture; not an installed Eva product regression",
+          "status": "corrected_operator_environment_independently_import_verified_awaiting_actual_capture",
+          "title": "Selected capture image cannot import sqlite3 because libsqlite3.so.0 is absent",
+          "trigger": "Coordinator executed the exact scoped approved operator capture once using current core image sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85.",
+          "observed": "ImportError: libsqlite3.so.0: cannot open shared object file: No such file or directory",
+          "evidence": {
+            "path": "/home/administrator/project/.eva2-artifacts/e417-coordinator-capture-20261023/capture-driver.private.log",
+            "sha256": "1ae039009fbb74bb893d5615abaab8b975491a4960222555d17fb8081569322b",
+            "bytes": 447,
+            "source": "Actual coordinator execution; independently verified private log dependency error only.",
+            "readyReceiptExists": false,
+            "completeReceiptExists": false,
+            "failureReceiptExists": false
+          },
+          "impact": "No usable current snapshot/package. Import fails at line1 before source database engines, locks or exports are constructed.",
+          "repairBoundary": "Correct the operator runtime dependency using existing compatible installed runtime/library; preserve production source configuration and existing failure log. No unchanged retry.",
+          "acceptance": "Exact corrected operator runtime can import SQLite and the existing export dependencies; then one capture must meet current source-fence and successful output requirements.",
+          "resolution": {
+            "method": "Use already existing gate interpreter and dependency PYTHONPATH on WSL host; no dependency installation or production service replacement.",
+            "interpreter": "/home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python",
+            "independentImports": [
+              "sqlite3",
+              "sqlalchemy",
+              "psycopg",
+              "export_runtime_archive",
+              "snapshot_gateway_database",
+              "sqlalchemy_postgres_dsn"
+            ],
+            "databaseConnects": 0,
+            "toolWallSeconds": 2.31345,
+            "originalFailureLogRetained": true
+          }
+        },
+        {
+          "id": "E417-CAPTURE-003",
+          "severity": "P1",
+          "scope": "current core export and restore schema compatibility",
+          "status": "open",
+          "title": "Current installed schema0011 is rejected by runtime archive bound to historical0010",
+          "trigger": "Coordinator executed the revised host capture once; existing runtime exporter checked the actual source revision.",
+          "reportedActualSourceHead": "4e_0011_timeline_type_time",
+          "independentlyVerifiedExpectedProfileHead": "4e_0010_memory_compaction",
+          "observed": "ValueError: runtime portable source schema head differs",
+          "evidence": {
+            "failureReceipt": "/home/administrator/project/.eva2-artifacts/e417-coordinator-capture-20261023-host/capture-failure.private.json",
+            "failureReceiptSha256": "033af565d48140a5b1997874be720b234024952608057db0e636d182a90c9850",
+            "failureReceiptBytes": 155,
+            "logSha256": "339d6a818b2358a56db96b0626202606ff2a5863c071ed5787e7f3ec3370e186",
+            "logBytes": 1632,
+            "elapsedSeconds": 2.6094063270138577,
+            "readyReceiptExists": false,
+            "completeReceiptExists": false,
+            "memoryAckExists": false,
+            "verificationBoundary": "Actual failure receipt/log and old portable profile independently read; actual installed source head supplied by coordinator, not re-queried by reviewer."
+          },
+          "impact": "A valid current core archive cannot be produced, so the concrete current recovery package is not ready. Existing rejection prevents a false successful capture.",
+          "relatedRestoreInterface": "portable_runtime_restore delegates to portable_v2_restore._restore_archive; verify_current_target also pins0010. Export-only relaxation would leave target restore incoherent.",
+          "repairBoundary": "Current v3 source/archive/restore compatibility must explicitly preserve the real0011 schema and exact expected index, without changing frozen historical v2 profile/hash or spoofing source/target revisions. No production schema downgrade or unknown-head admission.",
+          "acceptance": "Review and test only the changed v3 export/reader/restore interfaces with real0011/index acceptance, wrong index/unknown-head refusal and unchanged frozen v2 authority before another current export."
+        }
+      ],
+      "executionGo": false,
+      "limit": "No current live capture, pg_dump, package roundtrip, database import or runtime installation performed by reviewer.",
+      "verdict": "NO_GO_CURRENT_SCHEMA_HANDOFF",
+      "updatedAt": "2026-10-23T20:47:44.682709+00:00",
+      "latestSourceHashes": {
+        "fenced_current_capture.py": "6e4aed57774019fc1ef03b22aaafd7df14aaab2af718da8fc94aa1d60bca8525",
+        "capture_driver.py": "cbdd5c23fdddb3fbdd63d71733c7a0d841e69b06dbe906c6a7828a52f7c3750b"
+      },
+      "acceptanceReview": {
+        "fencedScriptSha256": "6e4aed57774019fc1ef03b22aaafd7df14aaab2af718da8fc94aa1d60bca8525",
+        "driverSha256": "cbdd5c23fdddb3fbdd63d71733c7a0d841e69b06dbe906c6a7828a52f7c3750b",
+        "existingWriteDumpSourceSha256": "24688f1e66a7c11c8f929b730938cf1b0c958708ace214574decea625fd5d2df",
+        "observations": [
+          "SIGALRM starts before primary/memory connects and lock acquisition; signal is cancelled in finally.",
+          "Existing native dump helper uses exclusive mode0600 output, pg_dump returncode check, flush/fsync and timeout300; success acknowledgement follows helper return.",
+          "Driver requires capture process alive after dump, then exit0 and capture-complete receipt before reporting success. A dump longer than the fence cannot be accepted.",
+          "Cleanup stops only the named image-and-task-label-bound operator container, then waits; shared services are untouched.",
+          "Private output/package roots observed root:root0700; private driver log created under umask0077."
+        ],
+        "scope": "One coordinator-owned current capture after fresh global conversation/model/work checks. This is not package acceptance, native database restore proof or full E4.17 completion."
+      },
+      "priorScopedGo": {
+        "status": "scoped_operator_capture_go",
+        "verdict": "GO_SCOPED_SINGLE_CURRENT_CAPTURE",
+        "executionGo": true,
+        "updatedAt": "2026-10-23T20:42:34.441873+00:00"
+      },
+      "hostEnvironmentDeltaReview": {
+        "reviewedAt": "2026-10-23T20:45:46.498235+00:00",
+        "verdict": "GO_SCOPED_SINGLE_CURRENT_HOST_CAPTURE",
+        "captureSha256": "ff87d329c7d199663ef77be74f404d68f3b90aa8b1b7d565d5266e7bb266d564",
+        "driverSha256": "4c80a2a2e676384a0c834633108b165e7c26fe32e08e4b1aaff1cecc1f31dafc",
+        "observations": [
+          "Actual independent root-host import smoke succeeded without database connections.",
+          "Exact host bridge endpoints independently matched running core PostgreSQL and Hindsight containers at inspection.",
+          "Changes are host paths/bridge addresses/connect_timeout3/existing interpreter and own Popen-child cleanup; source locks, quiet checks, dump and successful ack/exit/completion requirements remain.",
+          "Output root independently observed root:root0700 with no ready/complete/dump acknowledgement receipts.",
+          "SIGALRM90 starts before database connections; own child is terminated/waited on driver failure. Shared services are untouched."
+        ],
+        "requiredLaunchEnvironment": {
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONPATH": "/home/administrator/.local/lib/python3.12/site-packages:/home/administrator/project/Eva2/src:/home/administrator/project/Eva2/development"
+        },
+        "scope": "One coordinator-owned corrected-cause capture after fresh global conversation/model/work claims check. No current snapshot/package success inferred."
+      },
+      "lastHostCaptureGo": {
+        "status": "scoped_corrected_host_operator_capture_go",
+        "verdict": "GO_SCOPED_SINGLE_CURRENT_HOST_CAPTURE",
+        "executionGo": true,
+        "updatedAt": "2026-10-23T20:45:46.498267+00:00"
+      }
+    },
+    "faceProfileAdapterReview": {
+      "reviewedAt": "2026-10-23T20:43:28.837704+00:00",
+      "verdict": "GO_SCOPED_FACE_PROFILE_SNAPSHOT_INPUT",
+      "sourceSha256": "09c94726a256c7d3d6beafc921bfe21ab36bba8d1510bba3369b7d041864fab2",
+      "testsSha256": "e5d14e2ce5319e2ccdc05f559362377e63938d84fbdc55976ba6f2797123a81c",
+      "existingReaderSha256": "acdf5f96cb398296f2ac7c89533190666486d1e3cfb8b8ef7509b8141179d4c4",
+      "independentTestRun": {
+        "command": "Existing pydantic-ai-2.37 gate venv Python -B -m pytest -q -p no:cacheprovider development/tests/portable/test_installation_face_profile_snapshot.py; plugin autoload and bytecode disabled",
+        "passed": 10,
+        "testSeconds": 0.48,
+        "toolWallSeconds": 1.4389604999999999,
+        "coverage": [
+          "Actual existing reader-selected active ArcFace rows and revision preserved; unrelated conversation bytes excluded.",
+          "Current WAL rows retained.",
+          "Existing destination, unsafe symlinks and public parent refused.",
+          "Invalid vector encoding and concurrent revision drift remain private failures without publication.",
+          "Source authorizer denies unrelated table reads and writes; over4096 selection rejected."
+        ],
+        "environmentAttempt": {
+          "systemPython": "Collection failed because httpx2 was absent; not classified as a product defect.",
+          "resolution": "Use the already existing project gate venv; no dependency installed."
+        }
+      },
+      "actualPackageInput": {
+        "relativePath": "documents/face-backend/data/enrolled-profiles.sqlite",
+        "sha256": "e2b4a7d90a08bb1f6123169bd4e6ff5269ae244573f15deb6a2c22d366d8dab2",
+        "bytes": 110592,
+        "mode": "0600",
+        "uid": 0,
+        "gid": 0,
+        "integrityOk": true,
+        "onlyFacesTable": true,
+        "rows": 24,
+        "selectedRows": 24,
+        "existingReaderProfileCount": 24,
+        "existingReaderRevision": "5320a6c409458d98e8b91334c33e5bf68c1ad14e8382f23a5ea52c70e461c2d5",
+        "toolWallSeconds": 0.6193629
+      },
+      "findings": [],
+      "limits": [
+        "Original live profile database not reopened by reviewer.",
+        "Only hashes/counts/revision/integrity observed; no labels, vectors, photographs, tokens or conversations printed.",
+        "This verifies the inactive package input, not restored live face recognition or full E4.17 completion."
+      ]
+    },
+    "currentSchemaHandoffReview": {
+      "status": "prepared_awaiting_builder_correction",
+      "migration": "deploy/migrations/versions/4e_0011_timeline_type_time.py",
+      "migrationSha256": "ab45971f51bf38d501173bb693534d38a37b1ba99692bf178b18a041e05258c7",
+      "oldProfileSha256": "cc52332535f6e179759f7b6513e5a6b4dc3ee871efd13cb3673e271ebdeb2008",
+      "verifiedDelta": "0011 only adds and verifies nonunique nonpartial nonexpression valid ready btree index ix_operational_events__type_time on eva_core.operational_events(tenant_id,installation_id,event_type,occurred_at); no row/column/RLS authority migration.",
+      "necessaryChecks": [
+        "Actual0011 source is accepted only with the declared exact usable index; exported manifest/profile retains the actual source head.",
+        "Current reader validates the corresponding head-bound profile/hash; unknown head, incorrect profile and tampered archive remain rejected.",
+        "Current restore checks the actual target head and required index before insertion; export and restore must agree.",
+        "Frozen historical v2 SCHEMA_HEAD/profile authority remains unchanged.",
+        "Existing closed activation, external trust and transactional restore boundaries remain in the reached current restore path."
+      ],
+      "limits": "No old migration/load test rerun; no live database queries, export retries, source edits or migrations by reviewer."
+    }
+  },
+  "contractRequirements": {
+    "existingRoute": [
+      "src/tools/installation_recovery_package.py",
+      "src/tools/installation_recovery_materializer.py",
+      "src/tools/portable_transport.py"
+    ],
+    "roles": "3 document_marker0400 and12 document_artifact0600; inactive directories0700 and separately trusted component owners.",
+    "preserve": "Real existing base/archive and core identity trust; unchanged core/memory/gateway/source_components/key_references unless an explicitly authorized concrete transition is supplied.",
+    "limits": {
+      "aggregateBytes": 1073741824,
+      "files": 100000
+    },
+    "transport": "Existing scrypt/AES-256-GCM encrypted transport with separate key/passphrase handling; no transfer authorization inferred.",
+    "materialization": "Inactive byte materialization does not import databases, install dependencies, reconcile identities, provision secrets, activate runtime or release restore hold."
+  },
+  "limits": [
+    "No recheck of112executor capture.",
+    "No original source recapture, model/import/inference/live query, pixels, faceDB, embeddings or token reads.",
+    "Asset bytes alone do not preserve enrollment/profile state, complete Python/ABI/OS runtime or prove service activation.",
+    "No fullRecovery, cleanPcRestore, lastWorking, E4.15/E4.17 closure or owner acceptance."
+  ],
+  "usage": {
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "wholeElapsedSeconds": null,
+    "newEvaRuntimeModelCalls": 0,
+    "newInferenceCalls": 0,
+    "newImports": 0,
+    "newLiveQueries": 0,
+    "newServicesActions": 0,
+    "newDatabaseReads": 0,
+    "newCaptures": 0,
+    "newFamilyMessages": 0
+  },
+  "onlyWritePath": "development/reviews/e417-current-extension-package-review-20261023.json",
+  "handoff": {
+    "previousReviewerThreadId": "01a16a55-1607-7171-820e-a3918acaea3f",
+    "originalAssignedReviewSha256": "653950a6e5083f0cf6df2fd7b5bf9b0a066c8b9c8790e89c4f4d1d64605606d2",
+    "acceptedAt": "2026-10-23T20:37:28.088247+00:00",
+    "assetInputRehashed": false,
+    "onlyTesterReviewer": true
+  },
+  "liveRuntimeClaimHeld": false,
+  "pairedCompletedProductReview": {
+    "path": "development/reviews/e29-installed-product-status-review-20261023.json",
+    "sha256": "cb4ac4d0d4de2b24c74eea84df2a1cd3019dc91af3d77d962e44aa1e3ba3d31d",
+    "liveApiUiClaimReleased": true
+  },
+  "newReproducibleDefects": [
+    {
+      "id": "E417-CAPTURE-001",
+      "severity": "P1",
+      "scope": "operator current-source capture; not an installed product regression",
+      "status": "corrected_in_operator_source_awaiting_actual_capture",
+      "file": "/home/administrator/project/.eva2-artifacts/e417-coordinator-capture-20261023/capture_driver.py",
+      "line": 18,
+      "title": "Root capture with all capabilities dropped cannot open the actual private sources",
+      "trigger": "Run capture_driver.py with --user 0 --cap-drop ALL against the stated existing bind mounts.",
+      "observed": "Actual identity directory UID65532 mode0700 and files0600; core DSN UID65532 mode0600; memory DSN UID1000 mode0600; gateway directory UID10001 mode0700/database0600. UID0 without DAC capabilities cannot traverse/read these sources.",
+      "reproduction": {
+        "method": "Existing WSL setpriv with UID0, bounding/inheritable/ambient capabilities removed and supplementary groups cleared; os.open then immediate close only, never read.",
+        "effectiveUid": 0,
+        "CapEff": "0000000000000000",
+        "CapBnd": "0000000000000000",
+        "coreDsnErrno": 13,
+        "memoryDsnErrno": 13,
+        "identityErrno": 13,
+        "gatewayDirectoryErrno": 13,
+        "sourceBytesRead": 0,
+        "sourceDataWrites": 0,
+        "toolWallSeconds": 0.6377677
+      },
+      "impact": "The operator capture fails before producing a usable current core/memory/gateway package.",
+      "repairBoundary": "Adjust only the operator launcher access capabilities or its controlled access composition; preserve existing source ownership and modes. Read-only mounts remain read-only. Gateway writer fencing needs the intended existing RW access.",
+      "acceptance": "The exact revised operator command can open the required existing mounts under its actual capability set; then current capture must still satisfy real quiescence, successful dump and completion receipt/exit requirements.",
+      "originalLauncherSha256": "20a632b146c50fe734913f7244c184fcb898753d8d3ef8b9e4ba7bed98d07878",
+      "resolution": {
+        "launcherSha256": "cbdd5c23fdddb3fbdd63d71733c7a0d841e69b06dbe906c6a7828a52f7c3750b",
+        "change": "Keep cap-drop ALL and add only DAC_OVERRIDE; preserve read-only identity/DSN/source/helper mounts and existing source ownership/modes.",
+        "reviewMethod": "Exact corrected source and actual source metadata; original denial retained; no current capture success inferred."
+      }
+    },
+    {
+      "id": "E417-CAPTURE-002",
+      "severity": "P1",
+      "scope": "operator current-source capture; not an installed Eva product regression",
+      "status": "corrected_operator_environment_independently_import_verified_awaiting_actual_capture",
+      "title": "Selected capture image cannot import sqlite3 because libsqlite3.so.0 is absent",
+      "trigger": "Coordinator executed the exact scoped approved operator capture once using current core image sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85.",
+      "observed": "ImportError: libsqlite3.so.0: cannot open shared object file: No such file or directory",
+      "evidence": {
+        "path": "/home/administrator/project/.eva2-artifacts/e417-coordinator-capture-20261023/capture-driver.private.log",
+        "sha256": "1ae039009fbb74bb893d5615abaab8b975491a4960222555d17fb8081569322b",
+        "bytes": 447,
+        "source": "Actual coordinator execution; independently verified private log dependency error only.",
+        "readyReceiptExists": false,
+        "completeReceiptExists": false,
+        "failureReceiptExists": false
+      },
+      "impact": "No usable current snapshot/package. Import fails at line1 before source database engines, locks or exports are constructed.",
+      "repairBoundary": "Correct the operator runtime dependency using existing compatible installed runtime/library; preserve production source configuration and existing failure log. No unchanged retry.",
+      "acceptance": "Exact corrected operator runtime can import SQLite and the existing export dependencies; then one capture must meet current source-fence and successful output requirements.",
+      "resolution": {
+        "method": "Use already existing gate interpreter and dependency PYTHONPATH on WSL host; no dependency installation or production service replacement.",
+        "interpreter": "/home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python",
+        "independentImports": [
+          "sqlite3",
+          "sqlalchemy",
+          "psycopg",
+          "export_runtime_archive",
+          "snapshot_gateway_database",
+          "sqlalchemy_postgres_dsn"
+        ],
+        "databaseConnects": 0,
+        "toolWallSeconds": 2.31345,
+        "originalFailureLogRetained": true
+      }
+    },
+    {
+      "id": "E417-CAPTURE-003",
+      "severity": "P1",
+      "scope": "current core export and restore schema compatibility",
+      "status": "open",
+      "title": "Current installed schema0011 is rejected by runtime archive bound to historical0010",
+      "trigger": "Coordinator executed the revised host capture once; existing runtime exporter checked the actual source revision.",
+      "reportedActualSourceHead": "4e_0011_timeline_type_time",
+      "independentlyVerifiedExpectedProfileHead": "4e_0010_memory_compaction",
+      "observed": "ValueError: runtime portable source schema head differs",
+      "evidence": {
+        "failureReceipt": "/home/administrator/project/.eva2-artifacts/e417-coordinator-capture-20261023-host/capture-failure.private.json",
+        "failureReceiptSha256": "033af565d48140a5b1997874be720b234024952608057db0e636d182a90c9850",
+        "failureReceiptBytes": 155,
+        "logSha256": "339d6a818b2358a56db96b0626202606ff2a5863c071ed5787e7f3ec3370e186",
+        "logBytes": 1632,
+        "elapsedSeconds": 2.6094063270138577,
+        "readyReceiptExists": false,
+        "completeReceiptExists": false,
+        "memoryAckExists": false,
+        "verificationBoundary": "Actual failure receipt/log and old portable profile independently read; actual installed source head supplied by coordinator, not re-queried by reviewer."
+      },
+      "impact": "A valid current core archive cannot be produced, so the concrete current recovery package is not ready. Existing rejection prevents a false successful capture.",
+      "relatedRestoreInterface": "portable_runtime_restore delegates to portable_v2_restore._restore_archive; verify_current_target also pins0010. Export-only relaxation would leave target restore incoherent.",
+      "repairBoundary": "Current v3 source/archive/restore compatibility must explicitly preserve the real0011 schema and exact expected index, without changing frozen historical v2 profile/hash or spoofing source/target revisions. No production schema downgrade or unknown-head admission.",
+      "acceptance": "Review and test only the changed v3 export/reader/restore interfaces with real0011/index acceptance, wrong index/unknown-head refusal and unchanged frozen v2 authority before another current export."
+    }
+  ]
+}

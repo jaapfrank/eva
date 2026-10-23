@@ -523,12 +523,15 @@
         "writePaths": [
           "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json",
           "src/tools/installation_recovery_package.py",
-          "src/tools/installation_recovery_materializer.py"
+          "src/tools/installation_recovery_materializer.py",
+          "src/tools/installation_face_profile_snapshot.py",
+          "development/tests/portable/test_installation_face_profile_snapshot.py"
         ],
         "assignedAt": "2026-10-23T20:28:02.293070+00:00",
         "privateOutput": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/",
         "testWritePathsRequireExactConfirmation": true,
-        "noCpuRunOrSharedInstallOrVoiceChange": true
+        "noCpuRunOrSharedInstallOrVoiceChange": true,
+        "resultNow": "133 real component files staged; implementing required limited face-profile snapshot adapter while coordinator supplies actual core/memory/gateway captures"
       },
       "extensionArtifactRequest": {
         "to": "wsl-e18",
@@ -1298,11 +1301,14 @@
       "activeCodeOrInstallClaim": false
     },
     "e415-independent-review-newchat": {
-      "task": "E4.15 exact household batch binding review",
+      "task": "Independent E2.9 installed product status/access tests now; E4.17 package review when delivered. No coding/coordination.",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "handed_off_no_current_claim",
+      "status": "active_sole_tester_reviewer_owner_confirmed",
       "coordinator": "windows-root",
-      "allowedWritePaths": [],
+      "allowedWritePaths": [
+        "development/reviews/e417-current-extension-package-review-20261023.json",
+        "development/reviews/e29-installed-product-status-review-20261023.json"
+      ],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
       "endCondition": "Exact provider+test hashes, actual store batch shape,original childtime/newest camera/guards independent GO/NO_GO; no code/install/model/DB/external effects",
       "noGitInstallationModelOrExternalEffects": true,
@@ -1413,11 +1419,11 @@
       "faceBackendAssetProposalVerdict": "GO",
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
-      "activeIndependentReviewClaim": false
+      "activeIndependentReviewClaim": true
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "in_progress_e417_asset_input_then_package_review",
+      "status": "standby_claim_released_owner_role_correction",
       "allowedWritePaths": [
         "development/reviews/e417-current-extension-package-review-20261023.json"
       ],
@@ -1616,7 +1622,7 @@
       "latestQueryOverlay": "/var/lib/eva2/contact-preparation-20261023",
       "latestQueryStatus": "installed_targeted_live_improvement_speed_target_open"
     },
-    "newReviewerThread": "01a16a55-1607-7171-820e-a3918acaea3f",
+    "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
     "e415Candidate": {
       "path": "/var/lib/eva2/e415-reviewed-binding-20261023",
       "status": "installed_independently_read_back_natural_camera_ingress_and_silence_observed_positive_greeting_pending",
@@ -1635,7 +1641,7 @@
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
     "parallelBoundedWork": "Builder existing package integration; independent reviewer unreviewed15faceassets and same final package; no CPU run.",
-    "currentBlocker": "No remaining code/install blocker in selected camera/batch route. Actual new camera ingress and normal silence observed; positive face/greeting/hearing/later reuse not proven. Owner physical trial deferred; no repeat question.",
+    "currentBlocker": "Actual native core, memory and gateway snapshots plus limited enrolled profiles and host dependency closure must still be completed; staged bytes are not full recovery.",
     "latestVerifiedOutcome": {
       "status": "installed_current_source_and_silence_proven_positive_greeting_pending",
       "evidence": "development/evidence/product/e415-household-batch-binding-20261023.json",
@@ -1648,7 +1654,7 @@
       "primaryTaskRemains": "E4.17",
       "maxExecutorsReviewers": 2,
       "executorThread": "01a0c537-54d0-7080-9e4c-74db537877af",
-      "reviewerThread": "01a16a55-1607-7171-820e-a3918acaea3f",
+      "reviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
       "noSubagentsOrNewChats": true,
       "onlyCoordinatorIntegratesGitAndSharedInstallation": true
     },

@@ -1,0 +1,196 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E2.9 installed product projects status and access handoff",
+  "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "coordinatorThreadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
+  "reviewedAt": "2026-10-23T20:36:42.164742+00:00",
+  "verdict": "GO_SCOPED_INSTALLED_STATUS_AND_ACCESS_HANDOFF",
+  "status": "actual_installed_product_test_completed",
+  "fullTaskCompleted": false,
+  "boundedOutcome": {
+    "existing": "Previously reviewed E2.9 current-projects UI installed with the Telegram fix; old candidate/unit/mobile proofs retained.",
+    "gap": "Independent proof of current backend-to-visible statuses, cross-origin/scoped access rejection and loss of authorization after private data was already loaded.",
+    "route": "Actual owner-local44711 /internal/v1/dashboard#/?section=initiative, protected core44710 /internal/v1/dashboard/initiatives/history and unchanged installed static assets.",
+    "doneWhen": "Actual status agrees with retained backend response, previously visible private cards disappear on401, access recovery refetches current data, unauthorized direct/cross-site/scope requests are refused.",
+    "userUse": "The installed owner UI can be used to inspect actual current project status under the tested local-owner access boundary; no whole-E2.9 lifecycle claim."
+  },
+  "release": {
+    "core": {
+      "containerId": "2537aad79a8a8b6fc221e7bf06459b92538477e9991823083e980fa11353d28c",
+      "image": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+      "startedAt": "2026-10-23T19:23:39.404546191Z",
+      "healthyAtInspection": true
+    },
+    "worker": {
+      "containerId": "234102ddfc43bdf434f70e0b5cd227a07480bb80fe776088ee81f78a3c96caac",
+      "image": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44",
+      "startedAt": "2026-10-23T19:23:50.983923851Z",
+      "healthyAtInspection": true
+    },
+    "actualFourInstalledAssetsSha256": {
+      "index.html": "4d77a6dc6ef5b33aa324e584e24ebc33dc975d04ae221b1eea9292eea4e1ae6b",
+      "eva-dashboard-assets.json": "668005b46975f440cb9ae7e0efc07b00e2122e92ebea2d1f2887a9837c8209bc",
+      "assets/index-CcepJUrD.js": "391f2adf94ce6bc91a5c94cca716872f901545eb9239fc9e7391be697531752e",
+      "assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e"
+    },
+    "allAssetsEqualPreviouslyReviewedCandidate": true,
+    "productEvidencePath": "development/evidence/product/e29-current-projects-20261023.json",
+    "sourceOwnerComponents": [
+      "development/tools/project-dashboard/src/owner-initiatives.jsx",
+      "development/tools/project-dashboard/src/owner-current-projects.jsx",
+      "development/tools/project-dashboard/src/owner-current-projects.mjs"
+    ],
+    "liveOwnerProxyBind": "127.0.0.1:44711",
+    "rawBackendBind": "127.0.0.1:44710"
+  },
+  "tests": {
+    "actualUi": {
+      "contract": "EvaIndependentInstalledProjectsTest/v1",
+      "startedAt": "2026-10-23T20:35:17.186Z",
+      "cases": [
+        {
+          "name": "actual-installed-backend-to-visible-project-status",
+          "status": "passed",
+          "retainedCards": 25,
+          "matchedVisibleStatuses": 25,
+          "openProjects": 6,
+          "selectedProjects": 2,
+          "sourceBoundCardIdentityDigest": "2f77801d3616564a68d1ccb9da167c698e365d815f2bd9f7977894c36002187a",
+          "truncated": false,
+          "privateContentsPrinted": false
+        },
+        {
+          "name": "already-loaded-owner-data-cleared-on-401",
+          "status": "passed",
+          "syntheticBrowserResponseOnly": true,
+          "backendMutation": false,
+          "remainingProjectCards": 0
+        },
+        {
+          "name": "owner-access-recovery-uses-fresh-backend-status",
+          "status": "passed",
+          "retainedCards": 25,
+          "matchedVisibleStatuses": 25,
+          "openProjects": 6,
+          "selectedProjects": 2,
+          "sourceBoundCardIdentityDigest": "2f77801d3616564a68d1ccb9da167c698e365d815f2bd9f7977894c36002187a",
+          "truncated": false,
+          "privateContentsPrinted": false
+        }
+      ],
+      "findings": [],
+      "mutatingRequests": 0,
+      "externalRequests": 0,
+      "artifactRequests": 0,
+      "javascriptErrors": [],
+      "historyRequests": 3,
+      "interceptedAuthorizationFailures": 1,
+      "privateContentsPrinted": false,
+      "liveWrites": 0,
+      "status": "passed",
+      "liveApiUiClaimReleased": true,
+      "finishedAt": "2026-10-23T20:35:20.793Z"
+    },
+    "directAccessNegativeChecks": [
+      {
+        "case": "protected_backend_missing_authorization",
+        "url": "http://127.0.0.1:44710/internal/v1/dashboard/initiatives/history",
+        "expectedStatus": 401,
+        "actualStatus": 401,
+        "privatePayloadReturned": false,
+        "responseSha256": "d01bb573a504f3b6817c2beb1533a29b3035461c93316ba0278c44ff5666ff33"
+      },
+      {
+        "case": "protected_backend_invalid_bearer",
+        "url": "http://127.0.0.1:44710/internal/v1/dashboard/initiatives/history",
+        "expectedStatus": 401,
+        "actualStatus": 401,
+        "privatePayloadReturned": false,
+        "responseSha256": "d01bb573a504f3b6817c2beb1533a29b3035461c93316ba0278c44ff5666ff33"
+      },
+      {
+        "case": "owner_proxy_foreign_origin",
+        "url": "http://127.0.0.1:44711/internal/v1/dashboard/initiatives/history",
+        "requestHeader": "Origin: https://e29-untrusted.invalid",
+        "expectedStatus": 403,
+        "actualStatus": 403,
+        "privatePayloadReturned": false,
+        "responseSha256": "ea16aa5f92bd9a657f06358bfcc68269b2a4c76559b967a9fe94e4a36f6b5fe3"
+      },
+      {
+        "case": "owner_scope_override_rejected",
+        "status": 422,
+        "bytes": 53,
+        "responseSha256": "d06b5cf792c8cb15b9cb2c72c1e5de8583cf0fefd4518f3dd765765a504be667",
+        "payloadPrinted": false
+      },
+      {
+        "case": "owner_proxy_foreign_host",
+        "status": 403,
+        "bytes": 32,
+        "responseSha256": "ea16aa5f92bd9a657f06358bfcc68269b2a4c76559b967a9fe94e4a36f6b5fe3",
+        "payloadPrinted": false
+      },
+      {
+        "case": "owner_proxy_cross_site_fetch",
+        "status": 403,
+        "bytes": 32,
+        "responseSha256": "ea16aa5f92bd9a657f06358bfcc68269b2a4c76559b967a9fe94e4a36f6b5fe3",
+        "payloadPrinted": false
+      }
+    ],
+    "operatorContextQualification": "44711 is the existing loopback owner ingress. Local no-token/invalid-client-header requests there returned owner data as in the prior verifier; those are not unauthenticated raw-backend tests. The protected44710 backend rejects missing/invalid tokens, while the owner ingress rejects foreign Origin/Host/cross-site requests. Caller-supplied principal_id is rejected422; scope is server bound.",
+    "browserAuthorizationFailure": "One browser-local401 interception uses the actual raw-backend unauthorized response shape. It tests the installed UI transition from populated owner data to access error; it does not mutate or revoke real backend authorization. Both surrounding successful status snapshots came from actual live backend responses.",
+    "expectedScopeRejection": "GET owner history with principal_id=e29-untrusted-test must return422 before accepting client-controlled scope; observed422. No alternative principal account was impersonated or token created."
+  },
+  "testMethod": {
+    "actualBrowser": "Fresh existing Playwright/Chromium context, actual installed JavaScript/CSS/HTML and live owner API. Independently compare all25 source-bound history-card identities/titles/status labels and the two newest of six open projects. No replay of old44/64test suites.",
+    "privacy": "Only counts, statuses, hashes and test-control names returned. No real project title/body/person/private identity/token/header secret printed or screenshot saved. No artifact body fetched.",
+    "effectGuards": "Abort non-GET/HEAD, all off-origin requests and artifact GETs in browser routing. Actual observed0mutating/0external/0artifact requests and0JavaScript errors. Only refresh button clicked; no stop/feedback/work/model action.",
+    "negativeRequests": "Read-only HTTP GET against existing endpoints with missing/invalid authorization and synthetic untrusted Origin/Host/Sec-Fetch-Site/principal query. No live write or alternate-user data read."
+  },
+  "findings": [],
+  "coordinatorRepairQueue": {
+    "taskId": "E2.9",
+    "newReproducibleDefects": [],
+    "noRepairAssignedByReviewer": true,
+    "note": "No product defect reproduced within these targeted cases. Do not fabricate an issue or infer full-card acceptance; coordinator may retain this proof and assign only concrete later failures."
+  },
+  "remainingLimits": [
+    "Full E2.9 still includes other existing house-artifact/project/personality lifecycle routes; this test covers the installed limited owner-project status/access handoff only.",
+    "Open work is not proof of a running worker, actual useful progress, delivery or family acceptance.",
+    "No live valid non-owner credential/account was supplied or impersonated; tested direct negative credentials, foreign web access and client scope override only.",
+    "No authorization change, stop, feedback, actual artifact download, phone/speaker flow, model question, family message, runtime installation or backup/restore action performed.",
+    "E4.17 concrete package remains a separate pending result; existing15-assetGO and112captureproof were reused, not rehashed here."
+  ],
+  "runtimeClaim": {
+    "liveApiUiClaimReleased": true,
+    "releasedAfterBrowserClosedAndFinalHttpChecks": true,
+    "coordinatorExplicitlyNotified": true,
+    "noFurtherLiveCallsPlannedForThisResult": true
+  },
+  "usage": {
+    "development": {
+      "wholeElapsedSeconds": null,
+      "unmeasuredPreparationRemainsUnknown": true,
+      "actualBrowserIntervalSeconds": 3.607,
+      "actualBrowserToolWallSeconds": 4.735,
+      "browserCases": 3,
+      "negativeAccessCases": 6,
+      "historyBrowserRequests": 3,
+      "browserLocal401Interceptions": 1,
+      "modelTokens": null,
+      "modelCost": null,
+      "credits": null
+    },
+    "evaRuntime": {
+      "modelCalls": 0,
+      "inferenceCalls": 0,
+      "familyMessages": 0,
+      "mutatingRequests": 0,
+      "artifactDownloads": 0,
+      "serviceChanges": 0,
+      "installationChanges": 0
+    }
+  }
+}
