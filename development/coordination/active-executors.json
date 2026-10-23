@@ -157,7 +157,7 @@
       }
     },
     "codex-e418": {
-      "task": "E4.17",
+      "task": "E2.9",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "development/design/architecture/e418-*.json",
@@ -210,7 +210,13 @@
         "development/evidence/reassessment/e417-extension-restore-20261023.json",
         "development/reviews/e417-extension-restore-20261023.json",
         "src/tools/portable_runtime_archive.py",
-        "src/tools/postgres_portable_export.py"
+        "src/tools/postgres_portable_export.py",
+        "development/tools/project-dashboard/src/owner-initiatives.jsx",
+        "development/tools/project-dashboard/src/owner-current-projects.jsx",
+        "development/tools/project-dashboard/src/owner-current-projects.mjs",
+        "development/tools/project-dashboard/owner-current-projects.test.mjs",
+        "development/tools/project-dashboard/verify-owner-current-projects.cjs",
+        "development/evidence/product/e29-current-projects-20261023.json"
       ],
       "requestedAdditionalPaths": [
         {
@@ -272,26 +278,18 @@
         }
       ],
       "statusProposal": {
-        "taskId": "E4.17",
+        "taskId": "E2.9",
         "status": "in_progress",
-        "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
-        "checkedAt": "2026-10-23T16:09:13.785800+00:00",
+        "checkedAt": "2026-10-23T17:09:23.774714+00:00",
         "ownerActionRequired": false,
+        "boundedOutcomeCompleted": false,
         "fullTaskCompleted": false,
-        "nextAction": "Coördinator: verbind de bestaande echte E4.15-uitbreiding en lever de daadwerkelijke configuratie-, data-, dependency-, rechten-/pauze- en laatste-werkende-versie-eigenaren over. Hergebruik de nu bewezen bestaande herstelroute; geen nieuwe synthetische proef of tweede pakketformaat.",
+        "progress": "Bestaande initiatiefweergave uitgebreid met maximaal twee werkelijk geregistreerde open projecten, volgende verkenning, wijzigingsdatum en bewaarde bijdrage. Afgerond/gestopt blijven in historie; open betekent niet actief bezig. Details, feedback en stoppen gebruiken dezelfde bestaande bediening. Drie selectiecontroles, geïsoleerde browsercontrole en onafhankelijke review GO; verzegelde assets laden in de huidige core-image. Nog niet gedeeld geïnstalleerd. Andere E2.9-gegevensroutes blijven open.",
+        "nextAction": "Coördinator: integreer de vier exact verzegelde UI-assets op de actuele corebasis, met bestaande werkclaimcontrole en zonder spraak-/workerwijziging; controleer dezelfde privéweergave daarna live. Geen volledige E2.9-acceptatie afleiden uit deze beperkte UI-uitkomst.",
         "evidenceToAppend": [
-          "development/evidence/reassessment/e417-extension-restore-20261023.json"
+          "development/evidence/product/e29-current-projects-20261023.json"
         ],
-        "reviewToAppend": [
-          "development/reviews/e417-extension-restore-20261023.json"
-        ],
-        "boundedOutcomeCompleted": true,
-        "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
-        "independentReview": "development/reviews/e417-extension-restore-20261023.json",
-        "sourceCommit": "5ac595869c675beca2d384f09b45ad6d9cd3da33",
-        "gitPushed": true,
-        "sourceCommitScope": "Two explicitly approved tool-source lines, focused tests and bound design/evidence/review; no shared deployment.",
-        "evidenceCommit": "ec6f589f19a2337c2992d05dba6940492a74d95d"
+        "sourceCommit": "0f5720869156e75759a5a1784bae7166df64445c"
       },
       "conditions": [
         "Read E4.18 and existing E3/E4 inventories; select one concrete used route or proven-unused helper. No broad cleanup.",
@@ -302,24 +300,14 @@
         "E4.15/E4.17 dependencies remain. Early bounded cleanup does not close E4.18.",
         "Use statusProposal for workboard/docs changes; WSL integrates shared files preserving foreign hunks."
       ],
-      "updatedAt": "2026-10-23T16:09:38.803472+00:00",
+      "updatedAt": "2026-10-23T17:09:23.774714+00:00",
       "reviewRequest": {
-        "status": "GO_CANDIDATE_exact_bytes_applied_workspace_verified",
+        "task": "E2.9",
+        "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
         "reviewer": "/root/e47_mcp_catalog",
-        "task": "E4.17",
-        "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023",
-        "exactPatch": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate.patch.private.diff",
-        "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
-        "testCases": 15,
-        "sourcePermissionsPending": [
-          "src/tools/portable_runtime_archive.py",
-          "src/tools/postgres_portable_export.py"
-        ],
-        "noExtraModelOrProviderExecution": true,
-        "finalTestSourceSha256": "8434403afbc11086f94313b913f08e851570b0f2e87078bb6b0b86c09ec70a90",
-        "finalReport": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/final-candidate-regressions.private.xml",
-        "privateReviewSha256": "f309f7c331f3de2ead072bc3df39f7f22533ece7fedc8d529afc4910ac9b8cc0",
-        "review": "development/reviews/e417-extension-restore-20261023.json"
+        "privateReview": "/home/administrator/project/.eva2-artifacts/e29-current-projects-20261023/review.private.json",
+        "privateReviewSha256": "f811942130facd4143ad36f5cb1d44d448a26934da13f5dc67fc61c5653ad7e5",
+        "noSharedInstallation": true
       },
       "gitRequest": {
         "status": "committed_and_pushed",
@@ -369,14 +357,13 @@
         "remainingWorkWithinScope": "Read-only owner mapping of existing conversation/HA/browser/tool-program/delivery handoffs. No product source changes or new cleanup candidates before E4.15/E4.17."
       },
       "dashboardIntegrationRequest": {
-        "taskId": "E4.17",
-        "requestedAt": "2026-10-23T16:09:13.785800+00:00",
+        "taskId": "E2.9",
+        "requestedAt": "2026-10-23T17:09:23.774714+00:00",
         "status": "awaiting_coordinator_integration",
-        "to": "wsl-e18",
-        "request": "Verwerk statusProposal inclusief extra 3/3 identieke offline-uitkomsten op echte herstelde bron en onafhankelijke GO. Behoud volledige taak in_progress. Geen nieuwe groene claim voor live/native adoptie.",
-        "sourceCommit": "5ac595869c675beca2d384f09b45ad6d9cd3da33",
-        "independentReview": "development/reviews/e417-extension-restore-20261023.json",
-        "evidenceCommit": "ec6f589f19a2337c2992d05dba6940492a74d95d"
+        "to": "current coordinator",
+        "request": "Verwerk E2.9 statusProposal als gebouwd/beoordeeld, niet geïnstalleerd en niet geheel afgerond. E4.17 is reeds door wsl-e18 erkend. Bewaar de huidige primaire Telegram/E4.15-volgorde; deze kandidaat kan bij volgende passende veilige installatie worden meegenomen.",
+        "sourceCommit": "0f5720869156e75759a5a1784bae7166df64445c",
+        "evidence": "development/evidence/product/e29-current-projects-20261023.json"
       },
       "routeOwnershipHandoff": {
         "startedAt": "2026-10-23T12:47:35.343506+00:00",
@@ -405,7 +392,8 @@
         "to": "wsl-e18",
         "currentScope": "All current bounded E4.17 source correction, actual V2 inactive preservation and same-offline-behavior evidence finished and independently reviewed. Await concrete next scope or real E4.15 managed package handoff.",
         "request": "Verwerk E4.17-status/dashboard en wijs een volgende zelfstandig uitvoerbare opdracht met concrete bestanden toe, of lever de echte E4.15-pakketoverdracht binnen bestaande E4.17-scope. Geen nieuwe eigenaarvraag of herhaalde ongewijzigde proef nodig.",
-        "sharedInstallationChanged": false
+        "sharedInstallationChanged": false,
+        "status": "E2.9 source-only substep self-selected under direct owner continuation; candidate now awaits exact shared integration."
       },
       "assignmentStatus": "in_progress",
       "assignmentCompletion": {
@@ -629,9 +617,10 @@
           "src/eva/adapters/credentials/telegram_bindings.py",
           "src/eva/adapters/postgres/telegram_pairing.py"
         ],
-        "blocksE417": false
+        "blocksE417": false,
+        "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "All assigned bounded E4.17 checks finished, independently reviewed and pushed; awaiting managed E4.15 package or next exact assignment.",
+      "status": "E2.9 candidate built, reviewed and pushed; exact static-assets integration request ready. Shared deployment remains coordinator-owned.",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -656,6 +645,84 @@
         "independentReviewSha256": "46135d05f5bec48c9df9bc29d01e411075a5ff2041ff08e77dea42db9b88066c",
         "evidenceCommit": "ec6f589f19a2337c2992d05dba6940492a74d95d",
         "gitPushed": true
+      },
+      "previousE417StatusProposal": {
+        "taskId": "E4.17",
+        "status": "in_progress",
+        "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
+        "checkedAt": "2026-10-23T16:09:13.785800+00:00",
+        "ownerActionRequired": false,
+        "fullTaskCompleted": false,
+        "nextAction": "Coördinator: verbind de bestaande echte E4.15-uitbreiding en lever de daadwerkelijke configuratie-, data-, dependency-, rechten-/pauze- en laatste-werkende-versie-eigenaren over. Hergebruik de nu bewezen bestaande herstelroute; geen nieuwe synthetische proef of tweede pakketformaat.",
+        "evidenceToAppend": [
+          "development/evidence/reassessment/e417-extension-restore-20261023.json"
+        ],
+        "reviewToAppend": [
+          "development/reviews/e417-extension-restore-20261023.json"
+        ],
+        "boundedOutcomeCompleted": true,
+        "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
+        "independentReview": "development/reviews/e417-extension-restore-20261023.json",
+        "sourceCommit": "5ac595869c675beca2d384f09b45ad6d9cd3da33",
+        "gitPushed": true,
+        "sourceCommitScope": "Two explicitly approved tool-source lines, focused tests and bound design/evidence/review; no shared deployment.",
+        "evidenceCommit": "ec6f589f19a2337c2992d05dba6940492a74d95d"
+      },
+      "selfSelectedAssignment": {
+        "id": "e29-current-projects-20261023",
+        "task": "E2.9",
+        "ownerInstruction": "Direct owner reply ga maar gewoon door to pending next-work assignment question. Select existing non-overlapping work; preserve coordinator reservations.",
+        "startedAt": "2026-10-23T16:58:23.738797+00:00",
+        "chosenPaths": [
+          "development/tools/project-dashboard/src/owner-initiatives.jsx",
+          "development/tools/project-dashboard/src/owner-current-projects.jsx",
+          "development/tools/project-dashboard/src/owner-current-projects.mjs",
+          "development/tools/project-dashboard/owner-current-projects.test.mjs",
+          "development/tools/project-dashboard/verify-owner-current-projects.cjs",
+          "development/evidence/product/e29-current-projects-20261023.json"
+        ],
+        "existing": "Owner initiatives history already returns private scoped cards, current status, result preview and feedback, with stop route.",
+        "gap": "Existing initiative screen presents every historical initiative in one board, without a compact view of at most two current open projects and clear separation of open work from recorded results.",
+        "outcome": "Existing screen shows at most two actual open projects first with source date and links to existing controls/results; handles none/unknown/failure honestly. No new store, automatic model call or fabricated inner state.",
+        "endCondition": "Source-driven selection and browser UI verified; existing full history/stop/feedback retained. Candidate assets separately handed off for co-installation by coordinator. Not full E2.9 completion.",
+        "budget": "One small UI candidate, focused selection tests and isolated browser check. No model calls or shared install/restart.",
+        "integrationOwner": "wsl-e18: bundled asset registration/pins/deployment after reviewed exact candidate, preferably alongside current Telegram integration.",
+        "status": "candidate_built_verified_reviewed",
+        "sourceCommit": "0f5720869156e75759a5a1784bae7166df64445c",
+        "gitPushed": true,
+        "independentReview": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
+        "verification": {
+          "unitTestsPassed": 3,
+          "isolatedBrowserPassed": true,
+          "mobileWidth": 390,
+          "actualCurrentImageAssetLoaderPassed": true
+        },
+        "installed": false
+      },
+      "installationRequest": {
+        "requestedAt": "2026-10-23T17:09:23.774714+00:00",
+        "to": "current coordinator, wsl-e18/new Windows leader",
+        "status": "exact_candidate_ready_awaiting_coordinator_integration",
+        "sourceCommit": "0f5720869156e75759a5a1784bae7166df64445c",
+        "candidateManifest": "/home/administrator/project/.eva2-artifacts/e29-current-projects-20261023/candidate.private.json",
+        "stagedStaticRoot": "/home/administrator/project/.eva2-artifacts/e29-current-projects-20261023/staged/src/eva/adapters/api/dashboard_static",
+        "assetSha256": {
+          "assets/index-CcepJUrD.js": "391f2adf94ce6bc91a5c94cca716872f901545eb9239fc9e7391be697531752e",
+          "assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e",
+          "index.html": "4d77a6dc6ef5b33aa324e584e24ebc33dc975d04ae221b1eea9292eea4e1ae6b",
+          "eva-dashboard-assets.json": "668005b46975f440cb9ae7e0efc07b00e2122e92ebea2d1f2887a9837c8209bc"
+        },
+        "baseImagesObserved": {
+          "eva2-managed-b-slot3-core": "sha256:d141fca07e9c5442be3fc226dae83a12165e11536eaeea266730ce37752d65a8",
+          "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:128e036d4106d25e480c6a31a2cf23b528ab24929e67c1f4943f52b2ae12ee2b"
+        },
+        "services": [
+          "eva2-managed-b-slot3-core"
+        ],
+        "change": "Only four sealed dashboard static asset files; no conversation, initiative, memory, voice, provider settings or worker code change. Materialize matching repository package assets as part of coordinator integration.",
+        "validation": "Reviewed exact source/build; real current image loader accepts the candidate; isolated browser verifies existing stop/details and stale clearing. Before deployment recheck actual base image, full configuration, active conversation/work/review claims. After install verify asset manifest and same owner screen read-only; never replay synthetic stop against production.",
+        "recovery": "Retain actual previous core image/config and static manifest for targeted correction if needed; no automatic rollback/replay.",
+        "restartPerformed": false
       }
     }
   },
