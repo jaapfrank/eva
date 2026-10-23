@@ -58,3 +58,22 @@ Record installed source/configuration hashes and live health in the delivery
 receipt. Those fake-transport checks do not prove a new real Telegram exchange
 or the owner's acceptance. Existing host backups and the separate drop-in provide
 the return path without changing the Eva1 database or Eva2 memory.
+
+### Huidige privétoegang en contactgrens
+
+De geïnstalleerde standalone Node-transport gebruikt de vertrouwde
+`EvaTelegramPrincipalBindings`-lijst. Een andere huisgenoot krijgt een eigen
+principal en uitsluitend de bedoelde chattoegang; `/link` in de afzonderlijke
+Python-pairingroute koppelt accounts van dezelfde persoon en is hiervoor onjuist.
+Een geaccepteerde privéchat bewijst niet dat het model een andere persoon vanuit
+een opdracht kan benaderen: daarvoor is een afzonderlijk aangeboden verzendtool
+met ontvangerbinding en afleverreceipt nodig.
+
+Geblokkeerde privéaccounts laten nu maximaal 32 metadataregistraties achter in
+`telegram_access_requests` van de bestaande transportdatabase: numeriek account,
+voornaam, eventuele gebruikersnaam en ontvangsttijd. Berichtinhoud blijft buiten
+opslag en model. Bij een volgende aanvraag worden registraties ouder dan een dag
+opgeruimd. Dit geeft geen toegang; namen zijn geen identiteitsbewijs. Een beheerder
+kan zo het door het gezin aangewezen account afzonderlijk toelaten. Na aanpassen
+van het systemd-credentialbestand wordt uitsluitend de idle Telegram-service
+herstart; bestaande onzekere afleveringen worden niet opnieuw uitgevoerd.

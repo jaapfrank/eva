@@ -1,0 +1,23 @@
+{
+  "scope": "Owner-requested repair of separate family Telegram access and contact diagnosis",
+  "actualRoute": "systemd eva2-telegram.service -> deploy/telegram-bridge/standalone.mjs -> existing core Telegram endpoint",
+  "accessRepair": {
+    "installed": true,
+    "separatePrincipal": true,
+    "ownerBindingUnchanged": true,
+    "groupAccessAdded": false,
+    "accountLinkingUsed": false,
+    "transportTestsPassed": 7,
+    "independentReview": "review_cursor GO before idle service restart",
+    "ownerConfirmedPrivateChatWorks": true,
+    "privateAccountDetailsPublished": false
+  },
+  "diagnosis": {
+    "incorrectAdvice": "Model inspected Python pairing code instead of the installed Node route and suggested same-person linking for another person.",
+    "missingTransfer": "Current external provider catalog has no direct Telegram contact/send action. Ordinary private replies work but owner-requested outbound contact becomes delegated investigation through Home Assistant.",
+    "observedFailure": "One message task ended budget_exceeded after 4 measured model responses and 3 tools; a later attempt also encountered HTTP 503. Neither establishes delivery.",
+    "claims": "Acknowledgement text repeatedly promises to ask without established delivery capability or result.",
+    "repairStatus": "Direct contact provider assigned with exact separate files; not implemented or installed by this evidence. E4.15 camera-binding candidate remains uninstalled."
+  },
+  "coordination": "E4.17 actual-source restore and 3-input behavior evidence acknowledged in workboard; next executor scope recorded in active-executors.json."
+}

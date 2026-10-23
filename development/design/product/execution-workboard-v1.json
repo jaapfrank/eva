@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-23T15:51:46.172592+00:00",
+  "lastUpdated": "2026-10-23T16:37:20.668392+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E4.15",
@@ -8102,7 +8102,10 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "Controleer waar zelfgemaakte code en eigen gegevens nu werkelijk worden opgeslagen en sluit precies de ontbrekende pakket-/hersteloverdracht."
+                "nextAction": "Coördinator: verbind de bestaande echte E4.15-uitbreiding en lever de daadwerkelijke configuratie-, data-, dependency-, rechten-/pauze- en laatste-werkende-versie-eigenaren over. Hergebruik de nu bewezen bestaande herstelroute; geen nieuwe synthetische proef of tweede pakketformaat.",
+                "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
+                "checkedAt": "2026-10-23T16:37:20.668392+00:00",
+                "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json"
               },
               {
                 "id": "E4.18",
@@ -14053,7 +14056,10 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "Controleer waar zelfgemaakte code en eigen gegevens nu werkelijk worden opgeslagen en sluit precies de ontbrekende pakket-/hersteloverdracht."
+              "nextAction": "Coördinator: verbind de bestaande echte E4.15-uitbreiding en lever de daadwerkelijke configuratie-, data-, dependency-, rechten-/pauze- en laatste-werkende-versie-eigenaren over. Hergebruik de nu bewezen bestaande herstelroute; geen nieuwe synthetische proef of tweede pakketformaat.",
+              "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
+              "checkedAt": "2026-10-23T16:37:20.668392+00:00",
+              "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json"
             },
             {
               "id": "E4.18",

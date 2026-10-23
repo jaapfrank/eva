@@ -61,7 +61,7 @@
         "worker": "sha256:51074546eb3807ff78950f49a389d235e4828555ca0415b425fb0357c0ef56ac"
       },
       "status": "E1.9 completed and installed; E4.15 current",
-      "updatedAt": "2026-10-23T13:38:37.899875+00:00",
+      "updatedAt": "2026-10-23T16:37:20.668392+00:00",
       "e418StatusIntegrated": {
         "at": "2026-10-23T13:38:37.899875+00:00",
         "sourceCommit": "2daf9b8d717ff193120d28e19f006386c3062d6f",
@@ -115,7 +115,36 @@
           "src/tools/postgres_portable_export.py"
         ],
         "scope": "Apply exactly reviewed two-line candidate from candidate-handoff.private.json and prepared test. Preserve sealed hashes and catalog. Run same 15 cases without overrides. No shared restart. Own code/test commit and push allowed; root integrates board. E4.15 real extension not ready; synthetic recovery does not close E4.17."
-      }
+      },
+      "e417StatusAcknowledged": {
+        "evidenceCommit": "ec6f589f19a2337c2992d05dba6940492a74d95d",
+        "processedAt": "2026-10-23T16:37:20.668392+00:00",
+        "fullTaskCompleted": false,
+        "boundedOutcomeAccepted": true
+      },
+      "telegramContactAssignment": {
+        "id": "telegram-separate-contact-20261023",
+        "status": "authorized_to_start",
+        "priority": "Owner explicitly prioritized fixing Telegram family contact over E4.15 binding.",
+        "allowedPaths": [
+          "src/eva/providers/telegram_contacts.py",
+          "development/tests/providers/test_telegram_contacts.py",
+          "development/reviews/telegram-contacts-20261023.json"
+        ],
+        "task": "Implement one optional provider on existing conversation/action/receipt route: inspect current trusted private Telegram contacts and send an explicitly requested private message to an exact independently bound recipient. Reuse Telegram API transport and durable timeline; no new channel agent, memory, scheduler or account-linking. Investigate existing implementation before code. Root owns bundled factory registration, source/profile pins, deployment and live acceptance.",
+        "constraints": [
+          "Read-only account/contact discovery uses actual installed bindings, never infer person identity from name alone.",
+          "Current sending owner authority, source turn/STOP and recipient binding must be checked before dispatch. No reading other person conversations.",
+          "Durable call identity before effect; Telegram exact send receipt binds recipient/text. Uncertain send never auto-replayed.",
+          "No production send, access changes or shared restart from this executor. Candidate review first.",
+          "Private chat access and outbound contact are distinct. Do not use /link for a different person.",
+          "Do not edit root E4.15 candidate or existing foreign work. Preserve all old receipts."
+        ],
+        "doneWhen": "Focused candidate demonstrates exact-recipient delivery receipt and no duplicate effect after ambiguity; root can integrate existing provider registration without second transport.",
+        "context": "Actual transport is deploy/telegram-bridge/standalone.mjs under eva2-telegram.service. Lola private chat now works with her own principal; owner task to ask food preferences instead discovers HA and exhausts work grant. No native Telegram send/contact tool in current external provider catalog.",
+        "updatedAt": "2026-10-23T16:37:20.668392+00:00"
+      },
+      "currentPriority": "Restore useful Telegram family contact; E4.15 runtime binding candidate retained uninstalled."
     },
     "codex-e418": {
       "task": "E4.17",

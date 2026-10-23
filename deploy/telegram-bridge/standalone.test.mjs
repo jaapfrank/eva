@@ -52,3 +52,18 @@ test('existing photo adapter feeds interpreted image to the same Eva2 route', as
   await h.handler(c);assert.equal(submitted.mediaContext.description,'Een groene doos');assert.equal(submitted.mediaContext.source_ref,'telegram:12:7');
   h.journal.close();
 });
+test('blocked private account records bounded identity metadata, not content or permission', async () => {
+  const h = harness(); const c = ctx(8, 'private message must not be retained', 99);
+  c.message.chat.type = 'private'; c.message.from.first_name = 'New household member';
+  await h.handler(c); await h.handler(c);
+  const rows = h.journal.db.prepare('SELECT * FROM telegram_access_requests').all();
+  assert.equal(rows.length, 1); assert.equal(rows[0].telegram_user_id, 99);
+  assert.equal(rows[0].first_name, 'New household member');
+  assert.equal(JSON.stringify(rows).includes('private message'), false);
+  assert.equal(h.calls.length, 0);
+  assert.equal(h.journal.db.prepare('SELECT count(*) AS n FROM telegram_transport').get().n, 0);
+  const group = ctx(9, 'group private text', 100); group.message.chat = {type:'group',id:-123};
+  await h.handler(group);
+  assert.equal(h.journal.db.prepare('SELECT count(*) AS n FROM telegram_access_requests').get().n, 1);
+  h.journal.close();
+});

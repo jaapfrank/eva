@@ -15,6 +15,24 @@ export class TransportJournal {
       update_id INTEGER PRIMARY KEY, chat_id TEXT NOT NULL, message_id INTEGER NOT NULL,
       original_update TEXT NOT NULL, state TEXT NOT NULL, media_context TEXT,
       response TEXT, delivery_receipt TEXT, changed_at TEXT NOT NULL);`);
+    this.db.exec(`CREATE TABLE IF NOT EXISTS telegram_access_requests (
+      telegram_user_id INTEGER PRIMARY KEY, first_name TEXT NOT NULL,
+      username TEXT, seen_at TEXT NOT NULL);`);
+  }
+  noteAccessRequest(message) {
+    const user = message?.from;
+    if (message?.chat?.type !== 'private' || !Number.isSafeInteger(user?.id)
+        || user.id < 1 || message.chat.id !== user.id || user.is_bot) return;
+    // Account metadata only: no unadmitted message, photo, or conversation.
+    this.db.prepare('DELETE FROM telegram_access_requests WHERE seen_at < ?')
+      .run(new Date(Date.now() - 86400000).toISOString());
+    this.db.prepare(`INSERT INTO telegram_access_requests VALUES (?,?,?,?)
+      ON CONFLICT(telegram_user_id) DO UPDATE SET first_name=excluded.first_name,
+      username=excluded.username,seen_at=excluded.seen_at`)
+      .run(user.id, String(user.first_name ?? '').slice(0, 128),
+        typeof user.username === 'string' ? user.username.slice(0, 64) : null, new Date().toISOString());
+    this.db.exec(`DELETE FROM telegram_access_requests WHERE telegram_user_id NOT IN
+      (SELECT telegram_user_id FROM telegram_access_requests ORDER BY seen_at DESC LIMIT 32)`);
   }
   claim(update) {
     const message = update.message;
@@ -61,7 +79,10 @@ export function telegramReplyContext(message) {
 export function createTransportHandler({ journal, bindings, baseUrl, photoProvider = null, downloadFile, makeDraft, coreRequest = askEva2Canary }) {
   return async ctx => {
     const message = ctx.message;
-    if (!permittedMessage(message, bindings)) return;
+    if (!permittedMessage(message, bindings)) {
+      journal.noteAccessRequest(message);
+      return;
+    }
     if (!journal.claim(ctx.update)) return;
     const id = ctx.update.update_id;
     let typing;
