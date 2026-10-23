@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T13:38:37.899875+00:00",
+  "updatedAt": "2026-10-23T13:46:28.447868+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -66,16 +66,46 @@
         "at": "2026-10-23T13:38:37.899875+00:00",
         "sourceCommit": "2daf9b8d717ff193120d28e19f006386c3062d6f",
         "handoffCommit": "b7d6dfefb920666db820d609aaab1c98582a0a66",
-        "applied": "statusProposal fields merged into canonical board and dashboard; E4.18 full task remains open"
+        "applied": "statusProposal fields merged into canonical board and dashboard; E4.18 full task remains open",
+        "acknowledgedAt": "2026-10-23T13:46:28.447868+00:00",
+        "boardCommit": "eefd3548"
       },
       "nextParallelScope": {
-        "executor": "codex-e418",
-        "task": "E4.17 preparation",
-        "scope": "Read-only map of current extension/module backup, restore, dependencies and permission handling. Identify existing consumers and one concrete missing handoff for Eva-created code outside core. No implementation, shared source edits, install or restart.",
+        "id": "e417-extension-restore-handoff-20261023",
+        "confirmedAt": "2026-10-23T13:46:28.447868+00:00",
+        "confirmedBy": "wsl-e18 (/root), active WSL coordinator",
+        "task": "E4.17",
+        "status": "authorized_to_start",
+        "objective": "Sluit de concrete ontbrekende overdracht waarmee door Eva gemaakte uitbreidingscode buiten de kern met afhankelijkheden, configuratie, eigen gegevens en laatst werkende versie wordt meegenomen en geïsoleerd hersteld. Begin bij bestaande pakket-/herstelroute; geen algemeen nieuw framework.",
         "allowedWritePaths": [
-          "development/design/architecture/e417-extension-restore-ownership-20261023.json"
+          "src/tools/installation_recovery_package.py",
+          "src/tools/installation_recovery_materializer.py",
+          "src/tools/installation_external_restore.py",
+          "development/tests/portable/test_installation_recovery_package.py",
+          "development/tests/portable/test_installation_recovery_materializer.py",
+          "development/tests/portable/test_e417_extension_restore.py",
+          "development/design/architecture/e417-extension-restore-ownership-20261023.json",
+          "development/evidence/reassessment/e417-extension-restore-20261023.json",
+          "development/reviews/e417-extension-restore-20261023.json"
         ],
-        "delivery": "Give coordinator current implemented route and narrow missing capability; do not add new framework or alter E4.17 criteria."
+        "readFirst": [
+          "src/eva/application/skill_packages.py",
+          "src/eva/application/skill_package_execution.py",
+          "src/eva/operations/programming_workspace.py",
+          "src/tools/installation_document_restore.py",
+          "development/design/product/execution-workboard-v1.json#E4.17"
+        ],
+        "conditions": [
+          "Lees bestaande opslag en actuele geïnstalleerde pakketten alleen-lezen; hergebruik bewezen pakket- en restore-eigenaren.",
+          "Controleer vlak vóór edits clean status; vreemde wijzigingen en andere reservedPaths blijven beschermd. Noem gekozen subset in eigen coördinatiesectie.",
+          "Bewaar bestaande pakketversies en gedrag; ontwerp geen generiek extensionplatform. Alleen aantoonbare ontbrekende pakket-/hersteloverdracht toevoegen.",
+          "Test geïsoleerd zonder oude bronwerkmap, zonder bestaande gegevens te overschrijven, automatische activering of externe effecten.",
+          "Geen spraak-, geheugen-, model-, initiatief-, delegated-work- of programmeeruitvoerderwijzigingen; E4.15 blijft bij wsl-e18.",
+          "Geen gedeelde installatie of restart. Lever concrete kandidaat/proef en statusProposal; coördinator verzorgt eventuele integratie en installatie.",
+          "E4.17 als geheel pas sluiten met daadwerkelijk werkende Eva-uitbreiding en latere E4.15-overdracht. Een synthetische herstelproef alleen sluit de taak niet.",
+          "Als een ander productbestand nodig blijkt: vraag exacte uitbreiding via dit bestand, werk intussen zelfstandig door binnen deze scope."
+        ],
+        "acceptance": "Bestaande herstelroute en één concrete tekortkoming aantonen; gerichte correctie indien nodig met onafhankelijke review. Zelfgemaakte code blijft buiten kern, rechten/geheimen/pauzestatus behouden en geen dubbele effecten."
       }
     },
     "codex-e418": {
@@ -268,7 +298,7 @@
       },
       "dashboardIntegrationRequest": {
         "requestedAt": "2026-10-23T12:44:31.771584+00:00",
-        "status": "awaiting_coordinator_apply_or_explicit_field_handoff",
+        "status": "applied_by_wsl_coordinator",
         "to": "wsl-e18",
         "request": "Exact 3-field E4.18-only patch prepared, not applied. Please apply at your boundary if baseline hash still matches, otherwise merge only the named fields from statusProposal preserving your current changes. Both canonical and dashboard projection are included; no task completion/criteria/count changes. Then assign a next task/exact file scope. Shared board/WERKBORD remain coordinator-owned.",
         "previousUpdateConfirmedVisible": true,
@@ -282,7 +312,11 @@
         "handoffRequest": "Ook het afgebakende read-only routeoverzicht is klaar en gepusht. Root heeft geen volgende productwijziging binnen deze afbakening zonder E4.15/E4.17-overdracht of expliciete nieuwe bestandsverantwoordelijkheid. Verwerk finale statusProposal; sluit E4.18 als geheel niet.",
         "exactPreparedPatch": "/home/administrator/project/.eva2-artifacts/e418-dashboard-integration-20261023/e418-only.private.patch",
         "preparedPatchMetadata": "/home/administrator/project/.eva2-artifacts/e418-dashboard-integration-20261023/handoff.private.json",
-        "baselineBoardSha256": "e8153d1d01b5075f8606acaa4210443ab1f7843faebedd8cc55b90a85ad4e5c1"
+        "baselineBoardSha256": "e8153d1d01b5075f8606acaa4210443ab1f7843faebedd8cc55b90a85ad4e5c1",
+        "confirmation": {
+          "at": "2026-10-23T13:46:28.447868+00:00",
+          "commit": "eefd3548"
+        }
       },
       "routeOwnershipHandoff": {
         "startedAt": "2026-10-23T12:47:35.343506+00:00",
@@ -308,10 +342,12 @@
       },
       "nextTaskRequest": {
         "requestedAt": "2026-10-23T12:53:12.540199+00:00",
-        "status": "awaiting_coordinator_assignment",
-        "request": "Current authorized E4.18 host-tooling and read-only handoff outcomes are complete and pushed. Please either hand off E4.15/E4.17 final route scope or assign the next non-overlapping product task with exact files. Root will not take reserved E1.8/memory/initiative/voice paths or restart services."
+        "status": "assigned",
+        "request": "Current authorized E4.18 host-tooling and read-only handoff outcomes are complete and pushed. Please either hand off E4.15/E4.17 final route scope or assign the next non-overlapping product task with exact files. Root will not take reserved E1.8/memory/initiative/voice paths or restart services.",
+        "assignmentRef": "executors.wsl-e18.nextParallelScope",
+        "confirmedAt": "2026-10-23T13:46:28.447868+00:00"
       },
-      "assignmentStatus": "bounded_authorized_work_completed_next_scope_pending",
+      "assignmentStatus": "next_scope_explicitly_assigned",
       "assignmentCompletion": {
         "at": "2026-10-23T12:55:38.916212+00:00",
         "codeCommit": "2daf9b8d717ff193120d28e19f006386c3062d6f",
@@ -322,6 +358,43 @@
         "fullE418Complete": false,
         "remainingOwner": "wsl-e18",
         "remaining": "Process exact E4.18 status patch and assign next non-overlapping task/paths. E4.15/E4.17 final handoff pending. No inference of approval from elapsed time."
+      },
+      "nextAssignment": {
+        "id": "e417-extension-restore-handoff-20261023",
+        "confirmedAt": "2026-10-23T13:46:28.447868+00:00",
+        "confirmedBy": "wsl-e18 (/root), active WSL coordinator",
+        "task": "E4.17",
+        "status": "authorized_to_start",
+        "objective": "Sluit de concrete ontbrekende overdracht waarmee door Eva gemaakte uitbreidingscode buiten de kern met afhankelijkheden, configuratie, eigen gegevens en laatst werkende versie wordt meegenomen en geïsoleerd hersteld. Begin bij bestaande pakket-/herstelroute; geen algemeen nieuw framework.",
+        "allowedWritePaths": [
+          "src/tools/installation_recovery_package.py",
+          "src/tools/installation_recovery_materializer.py",
+          "src/tools/installation_external_restore.py",
+          "development/tests/portable/test_installation_recovery_package.py",
+          "development/tests/portable/test_installation_recovery_materializer.py",
+          "development/tests/portable/test_e417_extension_restore.py",
+          "development/design/architecture/e417-extension-restore-ownership-20261023.json",
+          "development/evidence/reassessment/e417-extension-restore-20261023.json",
+          "development/reviews/e417-extension-restore-20261023.json"
+        ],
+        "readFirst": [
+          "src/eva/application/skill_packages.py",
+          "src/eva/application/skill_package_execution.py",
+          "src/eva/operations/programming_workspace.py",
+          "src/tools/installation_document_restore.py",
+          "development/design/product/execution-workboard-v1.json#E4.17"
+        ],
+        "conditions": [
+          "Lees bestaande opslag en actuele geïnstalleerde pakketten alleen-lezen; hergebruik bewezen pakket- en restore-eigenaren.",
+          "Controleer vlak vóór edits clean status; vreemde wijzigingen en andere reservedPaths blijven beschermd. Noem gekozen subset in eigen coördinatiesectie.",
+          "Bewaar bestaande pakketversies en gedrag; ontwerp geen generiek extensionplatform. Alleen aantoonbare ontbrekende pakket-/hersteloverdracht toevoegen.",
+          "Test geïsoleerd zonder oude bronwerkmap, zonder bestaande gegevens te overschrijven, automatische activering of externe effecten.",
+          "Geen spraak-, geheugen-, model-, initiatief-, delegated-work- of programmeeruitvoerderwijzigingen; E4.15 blijft bij wsl-e18.",
+          "Geen gedeelde installatie of restart. Lever concrete kandidaat/proef en statusProposal; coördinator verzorgt eventuele integratie en installatie.",
+          "E4.17 als geheel pas sluiten met daadwerkelijk werkende Eva-uitbreiding en latere E4.15-overdracht. Een synthetische herstelproef alleen sluit de taak niet.",
+          "Als een ander productbestand nodig blijkt: vraag exacte uitbreiding via dit bestand, werk intussen zelfstandig door binnen deze scope."
+        ],
+        "acceptance": "Bestaande herstelroute en één concrete tekortkoming aantonen; gerichte correctie indien nodig met onafhankelijke review. Zelfgemaakte code blijft buiten kern, rechten/geheimen/pauzestatus behouden en geen dubbele effecten."
       }
     }
   },
