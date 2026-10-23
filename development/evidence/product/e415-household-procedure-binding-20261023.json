@@ -1,10 +1,10 @@
 {
   "contract": "EvaHouseholdProcedureBindingOutcome/v1",
   "task": "E4.15",
-  "checkedAt": "2026-10-23T19:15:42.692394+00:00",
-  "status": "installed_original_binding_final_batch_built_reviewed_installation_pending",
+  "checkedAt": "2026-10-23T19:28:18.184213+00:00",
+  "status": "installed_independently_read_back_natural_camera_ingress_and_silence_observed_positive_greeting_pending",
   "existing": "Eva-authored independently preserved pure procedure plus ordinary household observation/assessment/STOP/durable delivery/executor",
-  "gap": "Actual ordinary route supplies household observation batches, not direct camera events; batch adapter candidate built and under independent review.",
+  "gap": "Ordinary camera/batch route now installed and actually observed; positive greeting, physical hearing and later reuse remain unproven",
   "endCondition": "Installed exact bridge processes actual source, preserves negative/freshness/STOP boundaries and permits ordinary appropriate greeting; full E4.15 requires later reuse/feedback and remains open",
   "source": {
     "sha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
@@ -53,26 +53,68 @@
     "Development model tokens/credits unknown; actual runtime usage to be measured separately."
   ],
   "installation": {
-    "core": "sha256:27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
-    "worker": "sha256:ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979",
+    "dispatched": true,
+    "singleComposeReplacement": true,
+    "installedAt": "2026-10-23T19:24:07.206598Z",
     "receiptState": "running_exact_configuration",
-    "activeCheckpointsBeforeDispatch": 0,
-    "activeWorkBeforeDispatch": 0,
-    "independentInstalledReadback": "development/reviews/e415-installed-binding-readback-20261023.json",
-    "all14InstalledSourceHashesVerified": true,
-    "sourceCurrentConfigReviewReadableByRuntimeUid": true,
-    "existingMountsAndVoiceFilesPreserved": true,
-    "sharedDigitalAndPrivateResearchMatch": true,
-    "preexistingMismatch": [
-      "household_research"
-    ]
+    "sourceReview": "development/reviews/e415-household-batch-binding-review-20261023.json",
+    "guardReviews": [
+      "development/reviews/e415-batch-installation-guard-review-20261023.json",
+      "development/reviews/e415-batch-installation-guard-lifecycle-review-20261023.json"
+    ],
+    "independentInstalledReadback": "development/reviews/e415-batch-installed-readback-20261023.json",
+    "healthyBothRoles": true,
+    "fourActualChangedCodeHashesMatch": true,
+    "actualConfigMountsOptInAndSourceAdoptionMatch": true,
+    "freshGlobalReadiness": {
+      "checkedAt": "2026-10-23T19:23:15.117606Z",
+      "globalRlsReadCoverage": true,
+      "activeUnexpiredCheckpointLeases": 0,
+      "currentGenerationUnknownNullCheckpoints": 0,
+      "activeWork": 0,
+      "componentReviewQuiet": true,
+      "exactPidStartedAtRechecked": true
+    },
+    "priorPrivateGuardRefusalsPreserved": true,
+    "oldUnknownMarkersUnchanged": true,
+    "receiptFieldMeaning": "services.container and runtimeGeneration bind pre-replacement input/guard generation; independent actual IDs are separate readback, not rewritten into original receipt",
+    "core": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+    "worker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
   },
   "live": {
     "normalSourceSnapshotAfterInstall": {
-      "newRawCameraObservations": 0,
-      "newEventsForSelectedHouseholdBinding": 0,
-      "faceCounts": null,
-      "limit": "No new camera source is missing evidence, not a measured zero-face frame."
+      "snapshotAt": "2026-10-23T19:25:46Z",
+      "originalSourceTimeAfter": "2026-10-23T19:24:08Z",
+      "newRawSources": 4,
+      "newCameraSources": 2,
+      "latestGenuineCameraAt": "2026-10-23T19:25:19Z",
+      "cameraStatus": "observed",
+      "latestFaceCounts": {
+        "unknown": 0,
+        "knownCandidate": 0
+      },
+      "topLevelCaptureTimeProjection": null,
+      "topLevelNullIsNotProofImageCaptureTimeMissing": true,
+      "newOrdinaryBatchReview": {
+        "claimedAt": "2026-10-23T19:24:30Z",
+        "modelStartedAt": "2026-10-23T19:24:30Z",
+        "decidedAt": "2026-10-23T19:24:36Z",
+        "disposition": "silence",
+        "originalParentAt": "2026-10-23T19:23:01Z",
+        "originalChildrenAt": [
+          "2026-10-23T19:24:14Z",
+          "2026-10-23T19:23:08Z",
+          "2026-10-23T19:23:01Z"
+        ],
+        "guardProposal": false,
+        "offered": false
+      },
+      "oldFourReviewEventsStillExact": true,
+      "oldUsageStillUnknown": true,
+      "positiveGreeting": false,
+      "physicalHearing": null,
+      "ordinaryLaterReuse": false,
+      "operatorSourceRefreshReplayOrCapture": false
     },
     "operatorInstalledAdmission": {
       "currentVoiceAndInitiativePolicyValidated": true,
@@ -124,6 +166,12 @@
       "newCameraEventsInSnapshot": 0,
       "positiveGreeting": false,
       "operatorAssistedRecovery": true
+    },
+    "initialNormalSourceSnapshotAfterInstall": {
+      "newRawCameraObservations": 0,
+      "newEventsForSelectedHouseholdBinding": 0,
+      "faceCounts": null,
+      "limit": "No new camera source is missing evidence, not a measured zero-face frame."
     }
   },
   "ownerActionPending": null,
@@ -184,10 +232,11 @@
     "testsPassed": 44,
     "testSeconds": 1.86,
     "independentReview": "GO_exact_final_source_and_role_candidates",
-    "installed": false,
+    "installed": true,
     "initialUnavailableResetGapFixed": true,
     "review": "development/reviews/e415-household-batch-binding-review-20261023.json",
-    "evidence": "development/evidence/product/e415-household-batch-binding-20261023.json"
+    "evidence": "development/evidence/product/e415-household-batch-binding-20261023.json",
+    "independentInstalledReadback": "development/reviews/e415-batch-installed-readback-20261023.json"
   },
   "executorImagePreservation": {
     "evidence": "development/evidence/reassessment/e415-executor-image-preservation-20261023.json",
@@ -201,5 +250,37 @@
     "review": "development/reviews/e417-installed-extension-recovery-gap-review-20261023.json",
     "captured": false,
     "fullRestoreProven": false
+  },
+  "initialInstallation": {
+    "core": "sha256:27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
+    "worker": "sha256:ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979",
+    "receiptState": "running_exact_configuration",
+    "activeCheckpointsBeforeDispatch": 0,
+    "activeWorkBeforeDispatch": 0,
+    "independentInstalledReadback": "development/reviews/e415-installed-binding-readback-20261023.json",
+    "all14InstalledSourceHashesVerified": true,
+    "sourceCurrentConfigReviewReadableByRuntimeUid": true,
+    "existingMountsAndVoiceFilesPreserved": true,
+    "sharedDigitalAndPrivateResearchMatch": true,
+    "preexistingMismatch": [
+      "household_research"
+    ]
+  },
+  "currentInstalledImagePreservation": {
+    "evidence": "development/evidence/reassessment/e415-batch-installed-image-preservation-20261023.json",
+    "review": "development/reviews/e415-batch-installed-image-preservation-review-20261023.json",
+    "actualCurrentImages": 2,
+    "archiveSha256": "f540a62508c505e11dff444ef1f843a1fdef74c9aaf1475a9b6f2bc46d5b88a4",
+    "oldArchiveRetained": true,
+    "nativeLoadOrCleanRestore": false
+  },
+  "executorHostCapturePreparation": {
+    "proposalSha256": "cc0c4d182e5fdc36fca85332653f94f1e58c4440e49cb1e18e2773cd12c43176",
+    "selectedDiskFiles": 13,
+    "installedDistributionMetadataSets": 33,
+    "captured": false,
+    "sourceClosureIncomplete": true,
+    "diskBytesAreNotLoadedProcessAttestation": true,
+    "faceOrLegacyDbContentsRead": false
   }
 }

@@ -1,0 +1,102 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.15 private installation guard lifecycle addendum",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T19:22:46.460907+00:00",
+  "verdict": "GO",
+  "scope": "Only the one-line current_null query delta from the exact prior reviewed private installer. All original guard, source and installation limitations remain applicable. No present installation-readiness claim.",
+  "bindings": {
+    "installerPath": "/var/lib/eva2/e415-batch-binding-v2-20261023/install.py",
+    "installerSha256": "3749b39e34176a519782ce5a2394fd7f77d69887fb714fdaff0c2430950f5a6d",
+    "priorInstallerPath": "/var/lib/eva2/e415-batch-binding-v2-20261023/install-v3-generation-all-null.py",
+    "priorInstallerSha256": "108244d77f4cc49483b64cdc959403c1b756fb2f7862f27e9546cb62da40f44e",
+    "priorFrozenReviews": {
+      "development/reviews/e415-batch-installation-guard-review-20261023.json": "a2c02b52d1492df43c6a2463489de0d887376d3723e40313188dab6dea2ef8ad",
+      "development/reviews/e415-household-batch-binding-review-20261023.json": "7ddf6cbc2158efd944125375c9924c42d54e321a5b4b4e9411c2dbf0a70b8b39"
+    },
+    "manifestSha256": "49b5791ba1699d0e807d03d96fb37de605ca06bb33ea170da6a55e4b6aec69d2",
+    "savedNullOwnerMetadataSha256": "46a3c266e6617644f97747e413b7cbcd8f1e0b36a313f1f920a13df8ec7192c6",
+    "savedDeferredReadbackSha256": "f0c39a79e93872f6ecf62c3523d5e1a47bc8fa3e260e44cd647693d0575a81ca",
+    "priorGuardReviewPrivateCopySha256": "a2c02b52d1492df43c6a2463489de0d887376d3723e40313188dab6dea2ef8ad",
+    "priorReviewBindingSha256": "0ed8a43f7c65b4fb4db39945fa7a22f9bbfacf42d60ad7a3f9e0ae39ff92c86c"
+  },
+  "boundedOutcome": {
+    "existing": "Fresh v2 guard deferred before dispatch with leases=0/work=0 and one current-generation active NULL admitted marker.",
+    "gap": "The known initial initiative-execution binding is durable provenance and remains active without owning a provider call or queue execution.",
+    "route": "Existing installed PostgresInitiativeAuthority.bind and native digital-work admission.",
+    "doneWhen": "Recognize only that exact initial lifecycle contract while preserving all actual execution guards.",
+    "userUse": "Coordinator externally binds this exact installer and both guard reviews, then runs the fresh existing preflight."
+  },
+  "installedContract": {
+    "initiativeExecutionFileSha256": "89995121545245b7fee6ae5a0ec39132d2255e3a83a751bb37382f626a891443",
+    "readLocation": "/proc/4000724/root/opt/eva/src/eva/adapters/postgres/initiative_execution.py",
+    "bindInstalledLines": [
+      626,
+      656
+    ],
+    "bindWorktreeLines": [
+      644,
+      674
+    ],
+    "bindMethodSha256": "ada9f8f44d1452daa33a2032c052ca126681115ef50e3241a4e470f1124d1a30",
+    "methodHashEncoding": "UTF-8 method source lines joined with LF and no terminal LF; installed and worktree methods identical although whole files differ.",
+    "binding": "Creates initiative-execution:<intent>/:bound with only intent_id, origin, mandate_sha256 and turn_sha256. Default timeline create_thread writes INGRESS_COMMITTED/admitted/active/deadline=None. This binding alone has no call or queue ownership.",
+    "timelineFileSha256": "e7b113105c976bbdc33b500d000ff10ff7f8e95e147fbf5b6021a051d54c247a",
+    "queueFile": "src/eva/bootstrap/native_initiative_work.py:30",
+    "queueFileSha256": "223799a7528bad44dc50cc813a268dfc20e9cef8425f17f0600b5b54ebd2ce5b",
+    "queueOwnership": "Only installed authority.bind call is native queue admission. Real delegated row admission and the original parent initiative_work_waiting transition are separate and atomic in the transaction at lines59-73. The binding is not a completion marker.",
+    "modelJournalFileSha256": "d5f13a284fc6c394b0578e06dc44c33c519bb718ad422fee9e34e0fe4ad63dc6",
+    "modelOwnership": "Installed conversation_journal.py267-298 separately writes fresh conversation-model:UUID / CONVERSATION_MODEL_ADMITTED / model_admitted before provider I/O. Its current-generation active NULL marker remains protected."
+  },
+  "exactException": {
+    "outerPredicate": "c.status='active' AND c.deadline IS NULL AND c.updated_at>=:started",
+    "excludedOnlyWhen": "c.phase='admitted' AND c.revision=1 AND c.thread_id LIKE 'initiative-execution:%' AND EXISTS(scoped event sequence=1,event_type='INGRESS_COMMITTED') AND NOT EXISTS(scoped event sequence<>1)",
+    "scope": "Both correlated event subqueries require tenant_id, installation_id and thread_id equal to the checkpoint.",
+    "failClosed": "Any different phase, revision, namespace, first event type or additional event remains counted. No individual identity or extra age cutoff. model_admitted and every other current-generation active NULL phase still block.",
+    "onlyCodeDifference": "Line20 of private install.py; exact whole-file comparison found only this line changed."
+  },
+  "retainedGuards": [
+    "All nonexpired active/waiting_for_proof execution leases remain counted; existing memory retention and future scheduled-start exclusions unchanged.",
+    "Delegated admitted/call_started work, component evaluation checks, read-only global RLS coverage and all-zero readiness assertion unchanged.",
+    "Floored earliest exact container StartedAt epoch, exact ID/image/PID/StartedAt pin and immediate pre-dispatch generation recheck unchanged.",
+    "Current image/source/config/storage bindings, durable dispatch_result_unknown receipt before compose, no automatic retry and post-install checks unchanged."
+  ],
+  "savedEvidence": {
+    "metadata": "Only admitted/INGRESS_COMMITTED sequence1, initiative-execution prefix, original at2026-10-23T19:18:05Z; payload hash fe46e7e882ce840e898d9aa3fa9e09697126bea68ba29500e26e8b26a2de136b. No raw private identity or payload copied.",
+    "readback": "Saved 2026-10-23T19:19:43.494133Z readback reports no leases or active work and one such NULL marker. This is historical evidence, not a fresh pass."
+  },
+  "conditions": [
+    "Coordinator must externally verify exact current installer SHA3749b39e34176a519782ce5a2394fd7f77d69887fb714fdaff0c2430950f5a6d, this completed addendum hash, prior guard review a2c02b52d1492df43c6a2463489de0d887376d3723e40313188dab6dea2ef8ad and frozen source review/manifest before invoking the installer.",
+    "The addendum supersedes only the prior installer hash and blanket current-generation NULL rule. Original review evidence stays byte-exact. Preserve the old script/binding and refusal logs.",
+    "Run the actual fresh guard and defer on any remaining activity or changed generation. No marker modification, provider cancellation, replay, source refresh or inferred zero usage.",
+    "The existing coordinated quiet handoff remains necessary; a point-in-time guard is not an admission barrier. No product or general liveness policy change."
+  ],
+  "verification": {
+    "performed": "Read saved metadata/readback and exact installed source contracts; compare installed/worktree bind methods; verify exact one-line private installer delta and frozen evidence hashes.",
+    "notPerformed": "No database query, installer execution, test series, model call, provider effect or product code change. Root-reported compilation is not an independent runtime test.",
+    "findings": []
+  },
+  "acceptanceLimits": [
+    "Scoped guard GO only. Not installed, used, family accepted, technically completed E4.15 or whole-project complete by this review.",
+    "Historical uncertain usage and remote provider outcomes remain unknown; no retained marker is closed, erased or reclassified as successful."
+  ],
+  "usage": {
+    "development": {
+      "exactAddendumFinalizationElapsedSeconds": 45.06,
+      "exactAddendumFinalizationStartedAt": "2026-10-23T19:22:01.400862+00:00",
+      "earlierContractPreparationElapsedSeconds": null,
+      "modelTokens": null,
+      "modelCost": null,
+      "credits": null,
+      "unknownMeasurementsRemainUnknown": true
+    },
+    "evaRuntime": {
+      "reviewTriggeredModelCalls": 0,
+      "reviewTriggeredToolEffects": 0,
+      "reviewTriggeredDatabaseQueries": 0,
+      "reviewTriggeredDatabaseMutations": 0,
+      "reviewTriggeredInstallations": 0
+    }
+  }
+}

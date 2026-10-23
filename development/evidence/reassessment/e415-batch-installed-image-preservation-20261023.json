@@ -1,0 +1,52 @@
+{
+  "contract": "EvaInstalledImagePreservationOutcome/v1",
+  "task": "E4.15 supporting exact current runtime preservation",
+  "checkedAt": "2026-10-23T19:30:09.984868+00:00",
+  "status": "saved_exact_current_native_images_verified_independently_reviewed_not_restored",
+  "causeForNewCapture": "Installed batch/producer code changed after the prior native archive; preserve this actual new version once without replacing the earlier proof.",
+  "images": [
+    {
+      "imageId": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+      "configurationDigest": "sha256:cf42ca8b49480d3b6193f13c795236329113d72bbfa3dc2a853a4cda5c2f4639",
+      "layerCount": 222
+    },
+    {
+      "imageId": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44",
+      "configurationDigest": "sha256:00a6f7639e09831181e6bf438a74b14c115ff7560671e4770769cde948116b55",
+      "layerCount": 174
+    }
+  ],
+  "archive": {
+    "bytes": 474316288,
+    "sha256": "f540a62508c505e11dff444ef1f843a1fdef74c9aaf1475a9b6f2bc46d5b88a4",
+    "fileMode": "0600",
+    "directoryMode": "0700",
+    "nativeExports": 1,
+    "elapsedSeconds": 14.495,
+    "uniqueBlobsVerified": 400
+  },
+  "verification": {
+    "actualCurrentContainerAndImagePinsBeforeExport": true,
+    "exactTwoNativeOciImageDescriptors": true,
+    "allBlobHashesAndDescriptorSizes": true,
+    "rootFsDiffIdsMatchExactSavedInspect": true,
+    "priorArchiveRetained": true,
+    "priorEvidence": "development/evidence/reassessment/e415-installed-image-preservation-20261023.json",
+    "noRestoredExecution": true,
+    "all396OrderedUncompressedLayerDiffIdsIndependentlyVerified": true,
+    "independentReviewSeconds": 1.46
+  },
+  "independentReview": "development/reviews/e415-batch-installed-image-preservation-review-20261023.json",
+  "usage": {
+    "modelCalls": 0,
+    "nativeLoads": 0,
+    "builds": 0,
+    "serviceActions": 0,
+    "databaseExports": 0,
+    "creditCosts": null
+  },
+  "scope": "Native image code/config/layers and built-in dependencies only; no host service/face backend/biometric/DB/runtime credential backup claim.",
+  "lastWorking": false,
+  "fullRecovery": false,
+  "cleanPcRestore": false
+}

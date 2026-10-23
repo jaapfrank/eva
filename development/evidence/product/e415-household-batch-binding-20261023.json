@@ -1,8 +1,8 @@
 {
   "contract": "EvaBoundedInstalledRouteOutcome/v1",
   "task": "E4.15",
-  "checkedAt": "2026-10-23T19:15:42.692394+00:00",
-  "status": "built_independently_reviewed_installation_guard_refinement_pending",
+  "checkedAt": "2026-10-23T19:28:18.184213+00:00",
+  "status": "installed_independently_read_back_natural_camera_ingress_and_silence_observed_positive_greeting_pending",
   "existing": "Eva-authored pure proposal source plus ordinary household batching/assessment/STOP/durable delivery",
   "gap": "Actual batch children were not passed to the opt-in procedure; producer also discarded newer unavailable frames or same-second conflicts",
   "changedProductFiles": [
@@ -38,8 +38,31 @@
     "voiceMountsDataConfigAndForeignRoleDifferencesPreserved": true
   },
   "installation": {
-    "dispatched": false,
-    "reason": "Initial guard conservatively included old logical lifecycle states with NULL deadlines; no dispatch. Revised process-bound NULL/admitted ownership and all actual lease states under independent guard review; real active model lease later observed and untouched."
+    "dispatched": true,
+    "singleComposeReplacement": true,
+    "installedAt": "2026-10-23T19:24:07.206598Z",
+    "receiptState": "running_exact_configuration",
+    "sourceReview": "development/reviews/e415-household-batch-binding-review-20261023.json",
+    "guardReviews": [
+      "development/reviews/e415-batch-installation-guard-review-20261023.json",
+      "development/reviews/e415-batch-installation-guard-lifecycle-review-20261023.json"
+    ],
+    "independentInstalledReadback": "development/reviews/e415-batch-installed-readback-20261023.json",
+    "healthyBothRoles": true,
+    "fourActualChangedCodeHashesMatch": true,
+    "actualConfigMountsOptInAndSourceAdoptionMatch": true,
+    "freshGlobalReadiness": {
+      "checkedAt": "2026-10-23T19:23:15.117606Z",
+      "globalRlsReadCoverage": true,
+      "activeUnexpiredCheckpointLeases": 0,
+      "currentGenerationUnknownNullCheckpoints": 0,
+      "activeWork": 0,
+      "componentReviewQuiet": true,
+      "exactPidStartedAtRechecked": true
+    },
+    "priorPrivateGuardRefusalsPreserved": true,
+    "oldUnknownMarkersUnchanged": true,
+    "receiptFieldMeaning": "services.container and runtimeGeneration bind pre-replacement input/guard generation; independent actual IDs are separate readback, not rewritten into original receipt"
   },
   "limits": [
     "No positive camera procedure proposal, offered greeting, physical hearing, later reuse or full E4.15 closure proved.",
@@ -48,5 +71,73 @@
     "Development tokens/credit costs unknown; general background runtime usage is separately scoped."
   ],
   "fullTaskCompleted": false,
-  "ownerAcceptance": false
+  "ownerAcceptance": false,
+  "live": {
+    "snapshotAt": "2026-10-23T19:25:46Z",
+    "originalSourceTimeAfter": "2026-10-23T19:24:08Z",
+    "newRawSources": 4,
+    "newCameraSources": 2,
+    "latestGenuineCameraAt": "2026-10-23T19:25:19Z",
+    "cameraStatus": "observed",
+    "latestFaceCounts": {
+      "unknown": 0,
+      "knownCandidate": 0
+    },
+    "topLevelCaptureTimeProjection": null,
+    "topLevelNullIsNotProofImageCaptureTimeMissing": true,
+    "newOrdinaryBatchReview": {
+      "claimedAt": "2026-10-23T19:24:30Z",
+      "modelStartedAt": "2026-10-23T19:24:30Z",
+      "decidedAt": "2026-10-23T19:24:36Z",
+      "disposition": "silence",
+      "originalParentAt": "2026-10-23T19:23:01Z",
+      "originalChildrenAt": [
+        "2026-10-23T19:24:14Z",
+        "2026-10-23T19:23:08Z",
+        "2026-10-23T19:23:01Z"
+      ],
+      "guardProposal": false,
+      "offered": false
+    },
+    "oldFourReviewEventsStillExact": true,
+    "oldUsageStillUnknown": true,
+    "positiveGreeting": false,
+    "physicalHearing": null,
+    "ordinaryLaterReuse": false,
+    "operatorSourceRefreshReplayOrCapture": false
+  },
+  "usage": {
+    "scope": "Exactly one observed19:24:30→19:24:36 ordinary household decision; all other background runtime excluded",
+    "modelAttempts": 1,
+    "toolCalls": 1,
+    "inputTokens": 8536,
+    "outputTokens": 116,
+    "measurement": "measured",
+    "creditCost": null,
+    "operatorModelExecutorCameraOrMessageCalls": 0,
+    "developmentTokens": null,
+    "developmentCreditCost": null
+  },
+  "ownerTrial": {
+    "status": "deferred_owner_unavailable",
+    "repeatQuestionAsked": false,
+    "ownerActionRequiredNow": false
+  },
+  "currentInstalledImagePreservation": {
+    "evidence": "development/evidence/reassessment/e415-batch-installed-image-preservation-20261023.json",
+    "review": "development/reviews/e415-batch-installed-image-preservation-review-20261023.json",
+    "actualCurrentImages": 2,
+    "archiveSha256": "f540a62508c505e11dff444ef1f843a1fdef74c9aaf1475a9b6f2bc46d5b88a4",
+    "oldArchiveRetained": true,
+    "nativeLoadOrCleanRestore": false
+  },
+  "executorHostCapturePreparation": {
+    "proposalSha256": "cc0c4d182e5fdc36fca85332653f94f1e58c4440e49cb1e18e2773cd12c43176",
+    "selectedDiskFiles": 13,
+    "installedDistributionMetadataSets": 33,
+    "captured": false,
+    "sourceClosureIncomplete": true,
+    "diskBytesAreNotLoadedProcessAttestation": true,
+    "faceOrLegacyDbContentsRead": false
+  }
 }

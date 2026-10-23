@@ -1,0 +1,80 @@
+{
+  "contract": "EvaInstalledImagePreservationReview/v1",
+  "reviewedAt": "2026-10-23T19:28:27.434552+00:00",
+  "reviewer": "codex-e418 independent executor; no capture implementation or export by reviewer",
+  "scope": "Only newly installed E4.15 core/worker native-image preservation. No full E4.15, clean-PC restore, last-working or data-backup approval.",
+  "verdict": "GO",
+  "findings": [],
+  "status": "exact_two_installed_images_native_capture_verified_read_only_not_restored",
+  "archive": {
+    "path": "/home/administrator/project/.eva2-artifacts/e415-batch-runtime-images-20261023/installed-core-worker.tar",
+    "bytes": 474316288,
+    "sha256": "f540a62508c505e11dff444ef1f843a1fdef74c9aaf1475a9b6f2bc46d5b88a4",
+    "mode": "0600",
+    "parentMode": "0700",
+    "stableBeforeAfterRead": true
+  },
+  "images": [
+    {
+      "role": "core",
+      "imageId": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+      "configurationDigest": "sha256:cf42ca8b49480d3b6193f13c795236329113d72bbfa3dc2a853a4cda5c2f4639",
+      "layerCount": 222,
+      "exactSavedContainerImageBinding": true,
+      "descriptorSizesAndHashes": true,
+      "orderedConfigRootfsMatchesSavedInspect": true,
+      "everyActualUncompressedLayerMatchesDiffId": true
+    },
+    {
+      "role": "worker",
+      "imageId": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44",
+      "configurationDigest": "sha256:00a6f7639e09831181e6bf438a74b14c115ff7560671e4770769cde948116b55",
+      "layerCount": 174,
+      "exactSavedContainerImageBinding": true,
+      "descriptorSizesAndHashes": true,
+      "orderedConfigRootfsMatchesSavedInspect": true,
+      "everyActualUncompressedLayerMatchesDiffId": true
+    }
+  ],
+  "uniqueOciBlobsVerified": 400,
+  "uniqueActualLayerDiffIdsVerified": 396,
+  "savedMetadataSha256": {
+    "manifest.private.json": "dedd3db32a78080a84fe29c5faf16f8c6bf90b9d90647dda7e684d279e28b47f",
+    "core-image-inspect.private.json": "c352402c6ee01b0c0f864ff4ad2531893a8d4ded71672a3a918a74346fcfc90c",
+    "core-container-inspect.private.json": "9b7ce105238b2e9dfe8aa9643e633e9855c53e83887304431bb323aac069983c",
+    "worker-image-inspect.private.json": "0f57ac2a8ad38bf39f6d54bc923279ce54368c029f2234fc81211f968c587bde",
+    "worker-container-inspect.private.json": "b7c598213983192e96073d3c5248532a279b13aa8c0170aa5f93817828dc772f"
+  },
+  "priorArchive": {
+    "path": "/home/administrator/project/.eva2-artifacts/e415-runtime-images-20261023/installed-core-worker.tar",
+    "exists": true,
+    "priorRecordedSha256": "20ba8f9b26520da0e0bdf7cdb1e6767e54cce322d736f398f506624c6a39c20c",
+    "oldArchiveRehashedOrModified": false
+  },
+  "exportEvidence": {
+    "nativeSaveExitCodeRecordedByProducer": 0,
+    "nativeExportsRecordedByProducer": 1,
+    "producerElapsedSeconds": 14.495,
+    "reviewerExports": 0
+  },
+  "inspectionSeconds": 1.46,
+  "reviewerActions": {
+    "dockerLoad": 0,
+    "reexport": 0,
+    "build": 0,
+    "serviceActions": 0,
+    "liveDockerOrDatabaseQueries": 0,
+    "modelCalls": 0,
+    "cameraCalls": 0
+  },
+  "limits": [
+    "This validates preserved native image bytes, descriptor/config/layer bindings and saved contemporaneous inspect evidence. No new live container health or loaded-process attestation.",
+    "No volume/database/credential/face-profile/remote-service backup, host dependency capture, successful restore or clean-PC operation is proved.",
+    "No LastWorking claim, complete E4.15 acceptance, physical greeting or family usefulness follows from this image archive.",
+    "Saved inspect environments and configuration payloads were not copied into this public review."
+  ],
+  "lastWorking": false,
+  "fullRecovery": false,
+  "cleanPcRestore": false,
+  "fullE415Complete": false
+}

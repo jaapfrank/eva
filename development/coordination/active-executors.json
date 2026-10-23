@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T19:15:42.692394+00:00",
+  "updatedAt": "2026-10-23T19:30:09.984868+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1328,10 +1328,10 @@
     "e415-independent-review-newchat": {
       "task": "E4.15 exact household batch binding review",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "in_progress_install_guard_phase_semantics_review",
+      "status": "completed_exact_batch_installed_readback",
       "coordinator": "windows-root",
       "allowedWritePaths": [
-        "development/reviews/e415-household-batch-binding-review-20261023.json",
+        "development/reviews/e415-batch-installed-readback-20261023.json",
         "development/coordination/active-executors.json:own section only"
       ],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
@@ -1346,10 +1346,10 @@
         "doneWhen": "Exact hashes and bounded GO/NO_GO with necessary companion hunks; no installation.",
         "userUse": "Coordinator may integrate reviewed candidate after baseline recheck."
       },
-      "completedAt": "2026-10-23T19:11:28.455244+00:00",
+      "completedAt": "2026-10-23T19:27:15.158193+00:00",
       "review": "development/reviews/e415-household-batch-binding-review-20261023.json",
       "verdict": "GO",
-      "nextAction": "Read existing in-flight/lease semantics only; propose minimal precise guard predicate. Product review and code frozen.",
+      "nextAction": "Coordinator may report exact installation fidelity only. Preserve actual-use, greeting, source-admission, household_research mismatch and family-acceptance limits; no additional reviewer execution.",
       "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
       "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
       "previousInstallationReview": "development/reviews/e415-coordinated-installation-review-20261023.json",
@@ -1377,7 +1377,41 @@
       "followupStartedAt": "2026-10-23T18:59:24.407975+00:00",
       "sameSecondPlanReviewedAt": "2026-10-23T19:06:59.116517+00:00",
       "finalProducerReviewStartedAt": "2026-10-23T19:08:15.155515+00:00",
-      "guardReviewStartedAt": "2026-10-23T19:12:44.191335+00:00"
+      "guardReviewStartedAt": "2026-10-23T19:12:44.191335+00:00",
+      "guardReview": "development/reviews/e415-batch-installation-guard-review-20261023.json",
+      "guardReviewSha256": "a2c02b52d1492df43c6a2463489de0d887376d3723e40313188dab6dea2ef8ad",
+      "guardVerdict": "GO",
+      "reviewedInstallerSha256": "3749b39e34176a519782ce5a2394fd7f77d69887fb714fdaff0c2430950f5a6d",
+      "guardIngressContractReviewedAt": "2026-10-23T19:21:44.857009+00:00",
+      "guardIngressContract": {
+        "installedInitiativeExecutionSha256": "89995121545245b7fee6ae5a0ec39132d2255e3a83a751bb37382f626a891443",
+        "installedAndWorktreeBindMethodSha256": "ada9f8f44d1452daa33a2032c052ca126681115ef50e3241a4e470f1124d1a30",
+        "savedMetadataSha256": "46a3c266e6617644f97747e413b7cbcd8f1e0b36a313f1f920a13df8ec7192c6",
+        "scope": "Only admitted/revision1/initiative-execution prefix with exactly one scoped INGRESS_COMMITTED event; all other generation NULL phases and real claim guards retained."
+      },
+      "lifecycleAddendumStartedAt": "2026-10-23T19:22:01.400862+00:00",
+      "lifecycleGuardReview": "development/reviews/e415-batch-installation-guard-lifecycle-review-20261023.json",
+      "lifecycleGuardReviewSha256": "920b9483962c4d4a1fb545802c832f8aa966739b4439596af65d897672a906f4",
+      "lifecycleGuardVerdict": "GO",
+      "installedBatchReadbackStartedAt": "2026-10-23T19:25:06.578888+00:00",
+      "batchInstalledReadbackReview": "development/reviews/e415-batch-installed-readback-20261023.json",
+      "batchInstalledReadbackReviewSha256": "625db52c107d776ac53afe0e005ea8fd35f8f2d3754599c5390e67cdf5ff7a73",
+      "batchInstalledReadbackVerdict": "GO",
+      "installedBatchImages": {
+        "core": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+        "delegated-work-worker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
+      },
+      "installedProfileCompatibility": {
+        "equal": [
+          "digital_work",
+          "shared_provider",
+          "public_research"
+        ],
+        "knownMismatch": [
+          "household_research"
+        ],
+        "overallCompatible": false
+      }
     }
   },
   "protectedExistingWork": {
@@ -1603,20 +1637,30 @@
     "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
     "e415Candidate": {
       "path": "/var/lib/eva2/e415-reviewed-binding-20261023",
-      "status": "installed_binding_old_review_recovered_batch_patch_review_pending",
+      "status": "installed_independently_read_back_natural_camera_ingress_and_silence_observed_positive_greeting_pending",
       "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
       "sourceOutsideCore": true,
       "ordinaryLolaQuestionMustNotBeRepeated": true,
       "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
       "batchOverlay": {
-        "path": "/var/lib/eva2/e415-batch-binding-20261023",
-        "status": "built_composition_profiles_verified_final_review_pending",
+        "path": "/var/lib/eva2/e415-batch-binding-v2-20261023",
+        "status": "installed_independently_read_back_natural_ingress_silence_observed",
         "filesPerRole": 2,
         "preservedRoleSpecificSensorySource": true
-      }
+      },
+      "currentCore": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+      "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
-    "ownerQuestion": "Owner cannot do camera trial now; previous early question withdrawn; no repeat before actual route ready.",
-    "parallelBoundedWork": "Independent two-file batch review plus read-only post-recovery source observation; max two executors/reviewers.",
-    "currentBlocker": "Final batch source/role overlay GO and44 focused checks pass; no shared replacement yet. Private installguard needs exact ownership/lease refinement after historical lifecycle falsepositive. Genuine newly observed model lease left uninterrupted."
+    "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
+    "parallelBoundedWork": "Current exact batch images preserved and independently reviewed. Host executor13file/33distribution capture proposal prepared only; actual payload/sourceclosure/face data/current DB restore remain open.",
+    "currentBlocker": "No remaining code/install blocker in selected camera/batch route. Actual new camera ingress and normal silence observed; positive face/greeting/hearing/later reuse not proven. Owner physical trial deferred; no repeat question.",
+    "latestVerifiedOutcome": {
+      "status": "installed_current_source_and_silence_proven_positive_greeting_pending",
+      "evidence": "development/evidence/product/e415-household-batch-binding-20261023.json",
+      "review": "development/reviews/e415-batch-installed-readback-20261023.json",
+      "newCameraSources": 2,
+      "positiveGreeting": false,
+      "fullTaskCompleted": false
+    }
   }
 }

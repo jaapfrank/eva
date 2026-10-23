@@ -1,0 +1,107 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.15 exact private batch installation guard",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T19:18:53.448577+00:00",
+  "verdict": "GO",
+  "scope": "Only the exact private installer guard delta. Product source review and overlay manifest remain frozen. This is not a live installation-readiness verdict.",
+  "boundedOutcome": {
+    "existing": "Exact batch provider/store overlay already has a separate source GO. Original installation was deferred before dispatch by a blanket historical NULL-deadline guard.",
+    "gap": "Durable active lifecycle rows were treated as current execution without process ownership.",
+    "route": "Existing private one-shot coordinated core/worker installer and read-only claim preflight.",
+    "doneWhen": "Bind the exact revised guard and record its phase and process-generation limits without changing product code or persistent markers.",
+    "userUse": "Coordinator can bind this review separately and run the existing fresh guard before any installation."
+  },
+  "bindings": {
+    "installerPath": "/var/lib/eva2/e415-batch-binding-v2-20261023/install.py",
+    "installerSha256": "108244d77f4cc49483b64cdc959403c1b756fb2f7862f27e9546cb62da40f44e",
+    "manifestPath": "/var/lib/eva2/e415-batch-binding-v2-20261023/manifest.private.json",
+    "manifestSha256": "49b5791ba1699d0e807d03d96fb37de605ca06bb33ea170da6a55e4b6aec69d2",
+    "sourceReviewPath": "development/reviews/e415-household-batch-binding-review-20261023.json",
+    "sourceReviewSha256": "7ddf6cbc2158efd944125375c9924c42d54e321a5b4b4e9411c2dbf0a70b8b39",
+    "savedEvidence": {
+      "install-v1-null-lifecycle-no-go.py": "f939dff795cbc6637265e3807e16fc389803b47c39e0cd002634b434ff2e3c1e",
+      "install-v2-epoch-unfloored.py": "2ae4b7d004aeab50d619d467f49eb82ca0ec4ce9378b7a826bd0665daa55cc9c",
+      "claim-phase-diagnosis.private.json": "d001a44b7baffb52b82c071cd3192c048761158acd349645db0e0f04e6791479",
+      "all-unexpired-checkpoints.private.json": "09e359f7d2c49afda03ad011f73900104b0fc5d544e928cd5662bea7e255865d",
+      "review-binding.private.json": "336af42058e99a0a6faa353d40a67cd6dd7bf8d8537bf3c35722586132fa9b15",
+      "review-binding-v1-before-dispatch.private.json": "336af42058e99a0a6faa353d40a67cd6dd7bf8d8537bf3c35722586132fa9b15"
+    }
+  },
+  "predicate": {
+    "activeLeases": "status IN ('active','waiting_for_proof') AND deadline > now() AND phase NOT IN ('memory_storage_reserved','memory_storage_retained','scheduled')",
+    "currentGenerationNullMarkers": "status = 'active' AND deadline IS NULL AND updated_at >= floor_to_second(min(bound_core.StartedAt, bound_worker.StartedAt))",
+    "delegatedWork": "state IN ('admitted','call_started')",
+    "allowOnlyIf": "All three counts are zero, read-only query has global RLS coverage, component evaluation is idle, exact runtime/config/source bindings still hold.",
+    "epoch": "Derive from the actual exact bound running containers, not the clock or an arbitrary age cutoff. Floor to UTC second to cover second-precision checkpoint timestamps.",
+    "generationPin": "Initial ID/base image/Running and PID/StartedAt per role; recheck both exact generations immediately before durable dispatch receipt. Any change aborts and requires fresh readiness.",
+    "receipt": "The existing durable dispatch_result_unknown receipt now also retains runtimeGeneration. No receipt means no dispatch by this script; an existing receipt forbids automatic retry."
+  },
+  "phaseExclusions": [
+    {
+      "phase": "memory_storage_reserved",
+      "source": "src/eva/adapters/postgres/runtime_resource_usage.py:913",
+      "reason": "Initial active reservation deadline is retention_until, not an execution lease."
+    },
+    {
+      "phase": "memory_storage_retained",
+      "source": "src/eva/adapters/postgres/runtime_resource_usage.py:969",
+      "reason": "Retained memory keeps the same retention deadline while active."
+    },
+    {
+      "phase": "scheduled",
+      "source": "src/eva/adapters/postgres/scheduled_work.py:139",
+      "reason": "WORK_START_SCHEDULED deadline is the due/start time. A future appointment is not a current executing claim."
+    }
+  ],
+  "ownershipRationale": [
+    "The timeline create_thread defaults permit active lifecycle rows without deadlines. Historic active is not proof of current local execution.",
+    "Conversation journal begin_model_request uses a fresh request UUID and durable model_admitted before provider I/O. Old uncertain admissions remain uncertain; this review does not cancel, replay, complete, or assign zero usage to them.",
+    "Real sensory model work uses nonexpired will_claimed/will_model_started deadlines; personal exploration/prototype/release claims may use waiting_for_proof, now included.",
+    "The earliest bound process start is a conservative ownership boundary for the exact core and worker being replaced. Pre-generation NULL rows cannot alone prove local work still owned by these processes. This is not evidence that remote provider work finished.",
+    "Any post-generation active NULL lifecycle row still defers conservatively, even when not proven to be a live model call. No marker cleanup or guessed expiration is introduced."
+  ],
+  "savedSnapshot": {
+    "claimPhaseDiagnosisCheckedAt": "2026-10-23T19:12:33.862622+00:00",
+    "nullMarkers": "Saved NULL-deadline phase-summary maxima precede the bound current container starts; no rows were changed.",
+    "allUnexpiredSnapshot": "Contains 7 memory reservations, 1773 retained-memory rows, 1 future scheduled start, AND 1 will_model_started active lease.",
+    "modelLeaseDeadline": "2026-10-23T19:19:27+00:00",
+    "interpretation": "That real model lease must block while still unexpired/current. The snapshot is not empty and gives no present readiness or provider completion proof. Only the actual fresh installer guard may authorize dispatch."
+  },
+  "installationBinding": {
+    "observedBindingInstallerSha256": "f939dff795cbc6637265e3807e16fc389803b47c39e0cd002634b434ff2e3c1e",
+    "observedBindingStillStale": true,
+    "requiredBeforeDispatch": "Coordinator must retain the old binding evidence, bind installer 108244d77f4cc49483b64cdc959403c1b756fb2f7862f27e9546cb62da40f44e and this separate completed guard-review hash, preserve source review 7ddf6cbc2158efd944125375c9924c42d54e321a5b4b4e9411c2dbf0a70b8b39 / manifest 49b5791ba1699d0e807d03d96fb37de605ca06bb33ea170da6a55e4b6aec69d2, and run fresh readiness.",
+    "notedLimit": "The private script verifies source-review/manifest binding but does not itself assert installerSha256 or a separate guard-review hash. The coordinator execution binding must therefore verify the exact reviewed script and separate guard review before invocation."
+  },
+  "verification": {
+    "method": "Read exact saved files, compare private v1-to-current guard delta and relevant existing source contracts, rehash frozen source review/manifest. No new database probe, test series, model request, component assessment, or installer execution.",
+    "rootReportedSyntaxChecks": "Coordinator reported outer and inner compilation successful; not counted as an independent runtime test.",
+    "unresolvedCodeFindings": []
+  },
+  "limits": [
+    "GO is only for this exact private guard and this coordinated overlay; not a generic liveness classifier or a product policy change.",
+    "A passing checkpoint snapshot is a point-in-time observation, not an admission barrier. Keep the existing coordinated quiet handoff; any intervening known activity, failure or runtime generation change requires deferral and a fresh guard.",
+    "No alteration of data, status, historical criteria, protected evidence, voice route, provider selection or product source. Old NO_GO scripts and failed/deferred evidence are retained.",
+    "No deployment performed by reviewer; no actual-use, family acceptance, E4.15 completion, full recovery or whole-project completion claim."
+  ],
+  "usage": {
+    "development": {
+      "elapsedSeconds": 369.257,
+      "elapsedIncludesReviewPreparationAndCoordination": true,
+      "modelTokens": null,
+      "modelCost": null,
+      "currency": null,
+      "credits": null,
+      "unknownMeasurementsRemainUnknown": true
+    },
+    "evaRuntime": {
+      "reviewTriggeredModelCalls": 0,
+      "reviewTriggeredToolEffects": 0,
+      "reviewTriggeredDatabaseQueries": 0,
+      "reviewTriggeredDatabaseMutations": 0,
+      "reviewTriggeredInstallations": 0
+    }
+  }
+}

@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Van zelfontdekte behoefte naar eigen uitvinding en later gebruik
 
-Definitieve batchkoppeling onafhankelijk GO:44 gerichte controles, echte producerhelper en per-rol overlay met behoud van andere wijzigingen. Gedeelde installatie nog niet uitgevoerd: private guard wordt gecorrigeerd voor historische NULL-lifecyclestatussen en huidige echte uitvoerleases. Installeer pas na guardreview en verse rustige uitvoertoestand; lees daarna echte runtime/profielen/nieuwe bronnen terug. Fysieke begroetingsproef uitgesteld door eigenaar; volledige E4.15/E4.17 open.
+Batchkoppeling geïnstalleerd en onafhankelijk teruggelezen. Twee nieuwe echte camerawaarnemingen en een gewone afweging met stilte zijn bewezen; de laatste camera zag geen gezichten. Begroeting, fysiek horen en later hergebruik blijven open. Herhaal geen oude bron of vraag aan eigenaar; behoud de actuele uitbreiding en exacte herstelafhankelijkheden via bestaande voorzieningen. Volledige E4.15 en E4.17 blijven open.
 
 Klaar wanneer: Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.
 
@@ -145,7 +145,7 @@ E5.1 heeft beperkt oorspronkelijk technisch bewijs. E1.4 controleert nu werkelij
 
 ## Van jou
 
-Geen handeling nodig. Fysieke camera-/hoorproef is uitgesteld; de technische route wordt eerst afgemaakt. Spraak blijft bij de andere uitvoerder.
+Geen handeling nodig. Je kunt de fysieke proef nu niet doen; die blijft uitgesteld. De technische camera-/batchroute is geïnstalleerd en nieuwe waarnemingen zijn gezien. Spraak blijft bij de andere uitvoerder.
 
 ## Historie
 

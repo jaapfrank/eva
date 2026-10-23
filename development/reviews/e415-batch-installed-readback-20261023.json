@@ -1,0 +1,320 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.15 exact installed household batch overlay readback",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T19:27:15.158193+00:00",
+  "verdict": "GO",
+  "status": "installed_exact_reviewed_batch_overlay",
+  "scope": "One independent readback of actual installed core/worker images, four changed code hashes, exact declared configuration/storage and mounted authored procedure/adoption, plus actual installed runtime-profile fingerprints. GO applies to installation fidelity only. Overall cross-role profile compatibility remains false for the already known household_research mismatch.",
+  "boundedOutcome": {
+    "existing": "Coordinator installed the reviewed batch overlay after the exact externally bound guarded preflight passed.",
+    "gap": "Independent proof that the running roles contain the reviewed bytes/configuration and actual source-bound profiles rather than only a saved candidate.",
+    "route": "Existing WSL installation, exact current container IDs, readonly mounted procedure and check_delegated_runtime_profiles.py.",
+    "doneWhen": "Actual bytes/config/profiles match reviewed candidates and all live proof limits are explicit.",
+    "userUse": "Coordinator can report exact installation complete while retaining actual-use and family-acceptance work as open."
+  },
+  "installationReceipt": {
+    "path": "/var/lib/eva2/e415-batch-binding-v2-20261023/installation.private.json",
+    "sha256": "8fcbfdb6b4f07f3584722909ab0c202a898bfb98e278c39a56b41d4c4444413e",
+    "status": "running_exact_configuration",
+    "installedAt": "2026-10-23T19:24:07.206598+00:00",
+    "beforeCanonicalSha256": "08c68a6124ab44afdb3828d5a25d19308a5ac3933abeee0101c56aa3198ef5df",
+    "afterCanonicalSha256": "585c9ba01619765f44b1ac45d1507342ef9d043d9410bade17531172309d1431",
+    "servicesEqualReviewedManifest": true,
+    "beforeAfterCanonicalHashesMatch": true,
+    "configDeltaOnlyTwoImages": true
+  },
+  "reviewBindings": {
+    "reviewBindingSha256": "845e8327350306f0eb4e41d78c6bb64119e0468f2355bf6cb3f327ae45b3f790",
+    "manifestSha256": "49b5791ba1699d0e807d03d96fb37de605ca06bb33ea170da6a55e4b6aec69d2",
+    "installerSha256": "3749b39e34176a519782ce5a2394fd7f77d69887fb714fdaff0c2430950f5a6d",
+    "frozenReviews": {
+      "development/reviews/e415-household-batch-binding-review-20261023.json": "7ddf6cbc2158efd944125375c9924c42d54e321a5b4b4e9411c2dbf0a70b8b39",
+      "development/reviews/e415-batch-installation-guard-review-20261023.json": "a2c02b52d1492df43c6a2463489de0d887376d3723e40313188dab6dea2ef8ad",
+      "development/reviews/e415-batch-installation-guard-lifecycle-review-20261023.json": "920b9483962c4d4a1fb545802c832f8aa966739b4439596af65d897672a906f4"
+    },
+    "allExactBindingsVerified": true
+  },
+  "coordinatorPreflight": {
+    "source": "Saved readiness.private.json; not repeated by reviewer.",
+    "sha256": "f909b55f5886bec7f364134ecb8b20c2c24763f9c07d1c35070cc37dbec97d09",
+    "readiness": {
+      "checkedAt": "2026-10-23T19:23:15.117606+00:00",
+      "globalRlsReadCoverage": true,
+      "activeUnexpiredCheckpointLeases": 0,
+      "currentGenerationNullCheckpoints": 0,
+      "boundProcessGenerationAfter": "2026-10-23T18:24:16+00:00",
+      "activeWork": 0
+    },
+    "generationRecheck": "Receipt retains exact old core/worker generation and reviewed script rechecks it before durable dispatch; independent review did not rerun historical claim checks."
+  },
+  "actualReadback": {
+    "checkedAt": "2026-10-23T19:26:13.337020+00:00",
+    "receiptSha256": "8fcbfdb6b4f07f3584722909ab0c202a898bfb98e278c39a56b41d4c4444413e",
+    "status": "running_exact_configuration",
+    "installedAt": "2026-10-23T19:24:07.206598+00:00",
+    "reviewBindingSha256": "845e8327350306f0eb4e41d78c6bb64119e0468f2355bf6cb3f327ae45b3f790",
+    "manifestSha256": "49b5791ba1699d0e807d03d96fb37de605ca06bb33ea170da6a55e4b6aec69d2",
+    "installerSha256": "3749b39e34176a519782ce5a2394fd7f77d69887fb714fdaff0c2430950f5a6d",
+    "profileCheckerSha256": "970aebf7c75bdbf7e0e8446722817c6e7d54d8856bc25cd55f0216f4895cbee5",
+    "configDeltaOnlyTwoImages": true,
+    "beforeCanonicalSha256": "08c68a6124ab44afdb3828d5a25d19308a5ac3933abeee0101c56aa3198ef5df",
+    "afterCanonicalSha256": "585c9ba01619765f44b1ac45d1507342ef9d043d9410bade17531172309d1431",
+    "services": {
+      "core": {
+        "containerId": "2537aad79a8a8b6fc221e7bf06459b92538477e9991823083e980fa11353d28c",
+        "image": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+        "state": "running",
+        "health": "healthy",
+        "startedAt": "2026-10-23T19:23:39.404546191Z",
+        "pid": 799575,
+        "readonlyRootfs": true,
+        "declaredEnvironmentValuesMatch": true,
+        "composeConfigHashMatches": true,
+        "persistentMountsMatchCandidate": true,
+        "procedureParentMountReadonly": true,
+        "procedureParentMountSourceMatches": true,
+        "procedureOptIn": "/run/eva/household-voice/procedure/current.json",
+        "readback": {
+          "uid": 65532,
+          "gid": 65532,
+          "sourceSha256": {
+            "providers/home_assistant_procedure.py": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
+            "adapters/postgres/sensory_events.py": "64bae55b47f452b28876c926601cd99612f54a55da5573597267ae8326125413"
+          },
+          "extensionFiles": {
+            "current.json": {
+              "sha256": "732ff63fa5918410d9ecb94d44cb7b4b245a3aa3014736873f61af78b4f72428",
+              "bytes": 998,
+              "ownerMode": "root:65532 0640",
+              "notSymlink": true,
+              "readable": true
+            },
+            "camera_greeting_adapter_v2.py": {
+              "sha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+              "bytes": 4686,
+              "ownerMode": "root:65532 0640",
+              "notSymlink": true,
+              "readable": true
+            },
+            "adoption-review.json": {
+              "sha256": "7bedd1f16f92f1692d0cbd865f370146ba9eef99eab4d9520a473b830b86a369",
+              "bytes": 10120,
+              "ownerMode": "root:65532 0640",
+              "notSymlink": true,
+              "readable": true
+            }
+          },
+          "directoryOwnerMode": "root:65532 0750",
+          "procedure": {
+            "enabled": true,
+            "contract": "EvaHouseholdProcedureBinding/v1",
+            "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+            "reviewSha256": "7bedd1f16f92f1692d0cbd865f370146ba9eef99eab4d9520a473b830b86a369",
+            "sourceFilename": "camera_greeting_adapter_v2.py",
+            "householdBindingSha256": "cda032648a51d53cc2e2ae89aa1d96c76b94a922f3b6c765bbe5a145160ecf06",
+            "referenceIdSha256": "f090e41f1cc35bd88ec5e8d3db82574de0234109f61917d034ce7144dc1556af",
+            "sourcePrincipalIdSha256": "547262a5e00deb3ed2a6b3c5818fa2a4c0192af8c32575ac322cb995be82eeb5"
+          }
+        },
+        "actualProfiles": {
+          "digital_work": {
+            "worker_profile_release_sha256": "26b4bebc1420d0f8e563813ed8b597ad65e462a9fdfe6ff4c6899b953ca648e5",
+            "model_profile_release_sha256": "bfc1b54be66e72d402370ff8a4047a39efe8a2d072b8df69464f3b96d32adc64",
+            "worker_program_sha256": "cb19dd40975940f3853df29a629916f3c7920a6b490198735a5ed770b49d7575",
+            "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+            "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+          },
+          "shared_provider": {
+            "worker_profile_release_sha256": "1495b2c255e7ab03620cae26167a364476c1b04b4ab30faae148093e89a55192",
+            "model_profile_release_sha256": "82686b1fd6d05eeab299bfa896f9d651c072d959e814b272bf2519c39c66222f",
+            "worker_program_sha256": "1f0a13c4721d05ab47a4d2f526ae4e4e15fedad391f0c15018fdb01530d36baa",
+            "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+            "output_schema_sha256": "d45b0589c23a3066b6c3dc49bafb0c04cc5d12f49d9717b430263fd69631de2e"
+          },
+          "public_research": {
+            "worker_profile_release_sha256": "4b71e8bffd1c4f68bac632d0f9c7506c494f0546c81be0b33b38dccb8fefd8d7",
+            "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+            "worker_program_sha256": "3ee3e0a5835c48a0ca3f43c5a58bc6e9b2398a6e1b2adece234c27db0d5c4c61",
+            "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+            "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+          },
+          "household_research": {
+            "worker_profile_release_sha256": "e37be67b5da71b17163cf04f3026d77fa9ac4fc77c5150acd723904b75c23bc1",
+            "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+            "worker_program_sha256": "2df67391fed0f9a2881224c0ac9fcd928924bae045e7a59f542919e17a959a0d",
+            "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+            "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+          }
+        },
+        "candidateProfilesSha256": "70fb6d445eecb4cb2e98412491da939dded4804f2572b44e144beb9d6b59fbcc",
+        "actualProfilesEqualReviewedCandidate": true,
+        "generationUnchangedThroughReadback": true
+      },
+      "delegated-work-worker": {
+        "containerId": "234102ddfc43bdf434f70e0b5cd227a07480bb80fe776088ee81f78a3c96caac",
+        "image": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44",
+        "state": "running",
+        "health": "healthy",
+        "startedAt": "2026-10-23T19:23:50.983923851Z",
+        "pid": 803990,
+        "readonlyRootfs": true,
+        "declaredEnvironmentValuesMatch": true,
+        "composeConfigHashMatches": true,
+        "persistentMountsMatchCandidate": true,
+        "procedureParentMountReadonly": true,
+        "procedureParentMountSourceMatches": true,
+        "procedureOptIn": "/run/eva/household-voice/procedure/current.json",
+        "readback": {
+          "uid": 65532,
+          "gid": 65532,
+          "sourceSha256": {
+            "providers/home_assistant_procedure.py": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
+            "adapters/postgres/sensory_events.py": "ccb0ac863c85d5026391ac96708a1ca41829deeb03a7813e13331274226e8afe"
+          },
+          "extensionFiles": {
+            "current.json": {
+              "sha256": "732ff63fa5918410d9ecb94d44cb7b4b245a3aa3014736873f61af78b4f72428",
+              "bytes": 998,
+              "ownerMode": "root:65532 0640",
+              "notSymlink": true,
+              "readable": true
+            },
+            "camera_greeting_adapter_v2.py": {
+              "sha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+              "bytes": 4686,
+              "ownerMode": "root:65532 0640",
+              "notSymlink": true,
+              "readable": true
+            },
+            "adoption-review.json": {
+              "sha256": "7bedd1f16f92f1692d0cbd865f370146ba9eef99eab4d9520a473b830b86a369",
+              "bytes": 10120,
+              "ownerMode": "root:65532 0640",
+              "notSymlink": true,
+              "readable": true
+            }
+          },
+          "directoryOwnerMode": "root:65532 0750",
+          "procedure": {
+            "enabled": true,
+            "contract": "EvaHouseholdProcedureBinding/v1",
+            "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+            "reviewSha256": "7bedd1f16f92f1692d0cbd865f370146ba9eef99eab4d9520a473b830b86a369",
+            "sourceFilename": "camera_greeting_adapter_v2.py",
+            "householdBindingSha256": "cda032648a51d53cc2e2ae89aa1d96c76b94a922f3b6c765bbe5a145160ecf06",
+            "referenceIdSha256": "f090e41f1cc35bd88ec5e8d3db82574de0234109f61917d034ce7144dc1556af",
+            "sourcePrincipalIdSha256": "547262a5e00deb3ed2a6b3c5818fa2a4c0192af8c32575ac322cb995be82eeb5"
+          }
+        },
+        "actualProfiles": {
+          "digital_work": {
+            "worker_profile_release_sha256": "26b4bebc1420d0f8e563813ed8b597ad65e462a9fdfe6ff4c6899b953ca648e5",
+            "model_profile_release_sha256": "bfc1b54be66e72d402370ff8a4047a39efe8a2d072b8df69464f3b96d32adc64",
+            "worker_program_sha256": "cb19dd40975940f3853df29a629916f3c7920a6b490198735a5ed770b49d7575",
+            "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+            "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+          },
+          "shared_provider": {
+            "worker_profile_release_sha256": "1495b2c255e7ab03620cae26167a364476c1b04b4ab30faae148093e89a55192",
+            "model_profile_release_sha256": "82686b1fd6d05eeab299bfa896f9d651c072d959e814b272bf2519c39c66222f",
+            "worker_program_sha256": "1f0a13c4721d05ab47a4d2f526ae4e4e15fedad391f0c15018fdb01530d36baa",
+            "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+            "output_schema_sha256": "d45b0589c23a3066b6c3dc49bafb0c04cc5d12f49d9717b430263fd69631de2e"
+          },
+          "public_research": {
+            "worker_profile_release_sha256": "4b71e8bffd1c4f68bac632d0f9c7506c494f0546c81be0b33b38dccb8fefd8d7",
+            "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+            "worker_program_sha256": "3ee3e0a5835c48a0ca3f43c5a58bc6e9b2398a6e1b2adece234c27db0d5c4c61",
+            "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+            "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+          },
+          "household_research": {
+            "worker_profile_release_sha256": "e37be67b5da71b17163cf04f3026d77fa9ac4fc77c5150acd723904b75c23bc1",
+            "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+            "worker_program_sha256": "1737dfab9446cd4c0631094dda1f4a91828c62ac0edec7b69b1fb395c0c19486",
+            "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+            "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+          }
+        },
+        "candidateProfilesSha256": "47779a140312c890660341c2efc9d4f2474090b6948ce35718a70d22f4e49acc",
+        "actualProfilesEqualReviewedCandidate": true,
+        "generationUnchangedThroughReadback": true
+      }
+    },
+    "profileComparison": {
+      "equalProfiles": [
+        "digital_work",
+        "public_research",
+        "shared_provider"
+      ],
+      "mismatchedProfiles": [
+        "household_research"
+      ],
+      "allRolesEqualTheirReviewedCandidates": true,
+      "overallCompatible": false,
+      "knownHouseholdResearchMismatchPreserved": true
+    },
+    "finishedAt": "2026-10-23T19:26:25.484838+00:00",
+    "noModelCameraExecutorOrFunctionalCall": true,
+    "noDatabaseWriteOrTaskAdmission": true
+  },
+  "profileVerdict": {
+    "tool": "src/tools/check_delegated_runtime_profiles.py",
+    "toolSha256": "970aebf7c75bdbf7e0e8446722817c6e7d54d8856bc25cd55f0216f4895cbee5",
+    "method": "Called its installed_profiles helper once per exact running container, with core/worker role, using the unchanged shipped PROBE. No task or model request.",
+    "bothActualRoleProfilesEqualTheirSavedReviewedCandidates": true,
+    "compatibleProfiles": [
+      "digital_work",
+      "shared_provider",
+      "public_research"
+    ],
+    "overallCrossRoleCompatible": false,
+    "mismatchedProfiles": [
+      "household_research"
+    ],
+    "householdResearchMismatch": "Pre-existing reviewed worker_program_sha256 mismatch remains: core2df67391fed0f9a2881224c0ac9fcd928924bae045e7a59f542919e17a959a0d versus worker1737dfab9446cd4c0631094dda1f4a91828c62ac0edec7b69b1fb395c0c19486. Other four release fields agree. No new mismatch introduced and no repair or route-readiness claim for that profile.",
+    "workerAdmissionLimit": "A live worker is not proof it can accept a different source-bound release. The existing release-match claim guard must keep refusing mismatched household_research work; no mismatched task was admitted or executed in this readback."
+  },
+  "method": {
+    "dockerReadback": "Read exact container ID/image/Running/Health/PID/StartedAt/ReadonlyRootfs, declared environment and Compose labels. Verify all persistent bind/volume/config/secret identities and RW flags against candidate with existing helpers. No configuration values or secrets printed.",
+    "sourceReadback": "One python -B metadata-only read per role as65532:65532 hashes the two changed source files and all three mounted procedure siblings; checks directory/file owner/mode, readability, non-symlink files, enabled/source/review hash bindings. No eva imports in this metadata probe.",
+    "runtimeProfileReadback": "One existing installed_profiles probe per role; compare all four returned release profiles against that exact saved candidate role, then compare roles. Probe constructs profiles without create_runtime_app, lifespan, task admission, provider dispatch, model/camera/executor calls or DB writes.",
+    "stability": "Exact container ID/image/PID/StartedAt stayed unchanged through each role readback; health remained healthy. This is the recorded readback interval, not an admission lock or continuing health monitor."
+  },
+  "findings": [],
+  "liveLimits": [
+    "Actual installation fidelity is verified. No greeting, initiative proposal, delivery, speaker hearing, model judgement, human response, later learning reuse or family acceptance was exercised or inferred.",
+    "Mounted reviewed source/config/adoption hashes and opt-in are verified; no new live source-resolution/registry/owner-admission query, reference replacement, remote executor invocation or camera capture was performed. Existing runtime guards must still enforce current registry/profile/source/consent before effect.",
+    "Source-bound digital_work/shared_provider/public_research fingerprints match across actual core/worker; household_research retains the known mismatch and is not declared ready by this review.",
+    "Saved preflight is historical authorization evidence. This readback neither asserts the system is presently idle nor repeats checks or cancels any current work.",
+    "No product code, voice installation, marker, private criteria, original NO_GO evidence or user data changed by reviewer. No rebuild, reinstall or repeated functional proof.",
+    "No full E4.15 card, E4.17, complete recovery or project/family completion claim."
+  ],
+  "usage": {
+    "development": {
+      "elapsedSeconds": 128.579,
+      "startedAt": "2026-10-23T19:25:06.578888+00:00",
+      "includesPreparationAndReadback": true,
+      "measuredRuntimeProfileReadbackIntervalSeconds": 12.148,
+      "metadataPythonExecs": 2,
+      "installedProfileHelperCalls": 2,
+      "dockerInspectsForReadback": 4,
+      "composeConfigHashReads": 2,
+      "modelTokens": null,
+      "modelCost": null,
+      "credits": null,
+      "unknownMeasurementsRemainUnknown": true
+    },
+    "evaRuntime": {
+      "reviewTriggeredModelRequests": 0,
+      "reviewTriggeredProviderCalls": 0,
+      "reviewTriggeredCameraCaptures": 0,
+      "reviewTriggeredExecutorCalls": 0,
+      "reviewTriggeredTaskAdmissions": 0,
+      "reviewTriggeredDatabaseWrites": 0,
+      "reviewTriggeredInstallations": 0
+    }
+  }
+}
