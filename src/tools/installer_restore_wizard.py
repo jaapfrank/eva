@@ -26,7 +26,7 @@ def configured_restore_workflow(config):
     """
     required = {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_guard"}
     if (not isinstance(config, dict) or not required <= set(config)
-            or not set(config) <= required | {"runtime_identity", "runtime_identity_restore", "recovery_materialization", "external_recovery", "document_recovery", "document_connection", "document_gateway_binding", "gateway_start", "document_write_access", "activation", "installation_transport_policy"}
+            or not set(config) <= required | {"runtime_identity", "runtime_identity_restore", "recovery_materialization", "external_recovery", "document_recovery", "document_connection", "document_gateway_binding", "gateway_start", "document_write_access", "activation", "installation_transport_policy", "host_preparation"}
             or config["traffic_closed"] is not True):
         raise ValueError("restore configuration requires pinned runtime_guard identities and closed traffic")
     selected_policy = config.get("installation_transport_policy", "portable")
@@ -35,6 +35,13 @@ def configured_restore_workflow(config):
     transport_policy = TransportPolicy(selected_policy)
     if transport_policy is TransportPolicy.INSTALLATION_RECOVERY and "recovery_materialization" not in config:
         raise ValueError("installation transport requires trusted materialization settings")
+    if "host_preparation" in config:
+        if not isinstance(config["host_preparation"], dict):
+            raise ValueError("host preparation requires explicit trusted settings")
+        if "recovery_materialization" not in config:
+            raise ValueError("host preparation requires trusted materialization settings")
+        if set(config) & {"document_connection", "document_gateway_binding", "gateway_start", "document_write_access", "activation"}:
+            raise ValueError("inactive host preparation cannot select connection or activation")
     if "document_recovery" in config and not {"external_recovery", "recovery_materialization"} <= set(config):
         raise ValueError("document recovery requires external recovery and materialization")
     if "document_connection" in config and "document_recovery" not in config:
@@ -158,6 +165,8 @@ def configured_restore_workflow(config):
             runtime_identity=config.get("runtime_identity"),
             runtime_guard=partial(verify_restore_runtime, expected=config["runtime_guard"]),
             recovery_materialization=config.get("recovery_materialization"),
+            host_preparation=config.get("host_preparation"),
+            native_document_configuration=(config.get("document_recovery") if "host_preparation" in config else None),
             external_restore=external_restore,
             document_prepare=document_prepare,
             document_connect=document_connect,

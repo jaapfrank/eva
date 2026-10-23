@@ -847,7 +847,7 @@
     "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
     "status": "in_progress",
     "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
-    "nextAction": "E4.17: het werkelijke kernherstel is onafhankelijk bevestigd: 345.664 records, 150.577 checkpoints, echte commit, één gesloten herstelhold en geweigerd hergebruik van de bevestiging. Native geheugen/gateway en hostwerking zijn daarmee niet geclaimd. Bouwer maakt de complete 576-bestandenversie met volledige inactieve hostprepare af en sluit één rechtstreeks benodigde werkelijke referentiemodule plus bronattestation/verifier aan; bron/WIP en criteria blijven ongewijzigd. De goedgekeurde private workflowpatch wordt toegepast zodra geen lopende sourceguard daarvan afhankelijk is. Daarna volgt alleen de exact gereviewde functionele proef; geen eigenaaractie blokkeert het uitvoerbare werk.",
+    "nextAction": "E4.17: werkelijk kernherstel onafhankelijk bevestigd en onder herstelhold. De bestaande hostherstelworkflow is nu toegepast op de projectbron; dezelfde 13 integratiegevallen slagen en hun testkoppeling is onafhankelijk goedgekeurd. De enige 576-bestandenproef met volledige inactieve hostprepare loopt door. Vier exacte actuele referentiebestanden zijn afzonderlijk beoordeeld; bouwer sluit uitsluitend hun vereiste ledgerprovenance en lege doelstate/STOP/held/dispatcher-grenzen vóór een eventuele functionele start. Bronattestaties gelden niet als targetbewijs. Geen eigenaaractie nodig; volledig hersteld hostgedrag blijft open.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -8113,9 +8113,9 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "E4.17: het werkelijke kernherstel is onafhankelijk bevestigd: 345.664 records, 150.577 checkpoints, echte commit, één gesloten herstelhold en geweigerd hergebruik van de bevestiging. Native geheugen/gateway en hostwerking zijn daarmee niet geclaimd. Bouwer maakt de complete 576-bestandenversie met volledige inactieve hostprepare af en sluit één rechtstreeks benodigde werkelijke referentiemodule plus bronattestation/verifier aan; bron/WIP en criteria blijven ongewijzigd. De goedgekeurde private workflowpatch wordt toegepast zodra geen lopende sourceguard daarvan afhankelijk is. Daarna volgt alleen de exact gereviewde functionele proef; geen eigenaaractie blokkeert het uitvoerbare werk.",
-                "progress": "Echte lokale operatorroute heeft de kerngegevens gecommit en blijft onder herstelhold; onafhankelijke target-only readback bevestigt schema, lineage, aantallen, identiteit en replay-afwijzing. Hostadapter/SDK-bytevoorbereiding en private integratiecode zijn beoordeeld; volledige hostprepare, referentiecompatibiliteit en werkend hersteld gedrag blijven open.",
-                "checkedAt": "2026-10-23T22:09:08.394308+00:00",
+                "nextAction": "E4.17: werkelijk kernherstel onafhankelijk bevestigd en onder herstelhold. De bestaande hostherstelworkflow is nu toegepast op de projectbron; dezelfde 13 integratiegevallen slagen en hun testkoppeling is onafhankelijk goedgekeurd. De enige 576-bestandenproef met volledige inactieve hostprepare loopt door. Vier exacte actuele referentiebestanden zijn afzonderlijk beoordeeld; bouwer sluit uitsluitend hun vereiste ledgerprovenance en lege doelstate/STOP/held/dispatcher-grenzen vóór een eventuele functionele start. Bronattestaties gelden niet als targetbewijs. Geen eigenaaractie nodig; volledig hersteld hostgedrag blijft open.",
+                "progress": "Kerngegevens werkelijk gecommit en onafhankelijk teruggelezen; hostworkflowcode plus 13 canonical integratiegevallen technisch afgerond en gereviewd. Volledige hostprepare, feitelijke ABI/constructorgrenzen en hetzelfde gedrag op een geïsoleerd hersteldoel zijn nog niet bewezen.",
+                "checkedAt": "2026-10-23T23:34:21.737023+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
                 "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -8740,7 +8740,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.17: het werkelijke kernherstel is onafhankelijk bevestigd: 345.664 records, 150.577 checkpoints, echte commit, één gesloten herstelhold en geweigerd hergebruik van de bevestiging. Native geheugen/gateway en hostwerking zijn daarmee niet geclaimd. Bouwer maakt de complete 576-bestandenversie met volledige inactieve hostprepare af en sluit één rechtstreeks benodigde werkelijke referentiemodule plus bronattestation/verifier aan; bron/WIP en criteria blijven ongewijzigd. De goedgekeurde private workflowpatch wordt toegepast zodra geen lopende sourceguard daarvan afhankelijk is. Daarna volgt alleen de exact gereviewde functionele proef; geen eigenaaractie blokkeert het uitvoerbare werk.",
+        "nextAction": "E4.17: werkelijk kernherstel onafhankelijk bevestigd en onder herstelhold. De bestaande hostherstelworkflow is nu toegepast op de projectbron; dezelfde 13 integratiegevallen slagen en hun testkoppeling is onafhankelijk goedgekeurd. De enige 576-bestandenproef met volledige inactieve hostprepare loopt door. Vier exacte actuele referentiebestanden zijn afzonderlijk beoordeeld; bouwer sluit uitsluitend hun vereiste ledgerprovenance en lege doelstate/STOP/held/dispatcher-grenzen vóór een eventuele functionele start. Bronattestaties gelden niet als targetbewijs. Geen eigenaaractie nodig; volledig hersteld hostgedrag blijft open.",
         "finishOrder": [
           "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14097,9 +14097,9 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "E4.17: het werkelijke kernherstel is onafhankelijk bevestigd: 345.664 records, 150.577 checkpoints, echte commit, één gesloten herstelhold en geweigerd hergebruik van de bevestiging. Native geheugen/gateway en hostwerking zijn daarmee niet geclaimd. Bouwer maakt de complete 576-bestandenversie met volledige inactieve hostprepare af en sluit één rechtstreeks benodigde werkelijke referentiemodule plus bronattestation/verifier aan; bron/WIP en criteria blijven ongewijzigd. De goedgekeurde private workflowpatch wordt toegepast zodra geen lopende sourceguard daarvan afhankelijk is. Daarna volgt alleen de exact gereviewde functionele proef; geen eigenaaractie blokkeert het uitvoerbare werk.",
-              "progress": "Echte lokale operatorroute heeft de kerngegevens gecommit en blijft onder herstelhold; onafhankelijke target-only readback bevestigt schema, lineage, aantallen, identiteit en replay-afwijzing. Hostadapter/SDK-bytevoorbereiding en private integratiecode zijn beoordeeld; volledige hostprepare, referentiecompatibiliteit en werkend hersteld gedrag blijven open.",
-              "checkedAt": "2026-10-23T22:09:08.394308+00:00",
+              "nextAction": "E4.17: werkelijk kernherstel onafhankelijk bevestigd en onder herstelhold. De bestaande hostherstelworkflow is nu toegepast op de projectbron; dezelfde 13 integratiegevallen slagen en hun testkoppeling is onafhankelijk goedgekeurd. De enige 576-bestandenproef met volledige inactieve hostprepare loopt door. Vier exacte actuele referentiebestanden zijn afzonderlijk beoordeeld; bouwer sluit uitsluitend hun vereiste ledgerprovenance en lege doelstate/STOP/held/dispatcher-grenzen vóór een eventuele functionele start. Bronattestaties gelden niet als targetbewijs. Geen eigenaaractie nodig; volledig hersteld hostgedrag blijft open.",
+              "progress": "Kerngegevens werkelijk gecommit en onafhankelijk teruggelezen; hostworkflowcode plus 13 canonical integratiegevallen technisch afgerond en gereviewd. Volledige hostprepare, feitelijke ABI/constructorgrenzen en hetzelfde gedrag op een geïsoleerd hersteldoel zijn nog niet bewezen.",
+              "checkedAt": "2026-10-23T23:34:21.737023+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
               "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
               "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -14724,7 +14724,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.17: het werkelijke kernherstel is onafhankelijk bevestigd: 345.664 records, 150.577 checkpoints, echte commit, één gesloten herstelhold en geweigerd hergebruik van de bevestiging. Native geheugen/gateway en hostwerking zijn daarmee niet geclaimd. Bouwer maakt de complete 576-bestandenversie met volledige inactieve hostprepare af en sluit één rechtstreeks benodigde werkelijke referentiemodule plus bronattestation/verifier aan; bron/WIP en criteria blijven ongewijzigd. De goedgekeurde private workflowpatch wordt toegepast zodra geen lopende sourceguard daarvan afhankelijk is. Daarna volgt alleen de exact gereviewde functionele proef; geen eigenaaractie blokkeert het uitvoerbare werk.",
+      "nextAction": "E4.17: werkelijk kernherstel onafhankelijk bevestigd en onder herstelhold. De bestaande hostherstelworkflow is nu toegepast op de projectbron; dezelfde 13 integratiegevallen slagen en hun testkoppeling is onafhankelijk goedgekeurd. De enige 576-bestandenproef met volledige inactieve hostprepare loopt door. Vier exacte actuele referentiebestanden zijn afzonderlijk beoordeeld; bouwer sluit uitsluitend hun vereiste ledgerprovenance en lege doelstate/STOP/held/dispatcher-grenzen vóór een eventuele functionele start. Bronattestaties gelden niet als targetbewijs. Geen eigenaaractie nodig; volledig hersteld hostgedrag blijft open.",
       "finishOrder": [
         "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -16980,7 +16980,7 @@
       "ownerReviewerCorrection": "Latest direct owner instruction: original chat01a169f2 is sole tester/reviewer; replacement01a16a55-1607 is standby with claims released."
     },
     "e417CurrentDelivery20261023": {
-      "stage": "real_operator_core_restore_independently_confirmed_host_fullprepare_and_reference_closure_in_progress",
+      "stage": "canonical_host_workflow_and_13_cases_reviewed_fullprepare_and_prestart_boundaries_in_progress",
       "profileAdapter": "src/tools/installation_face_profile_snapshot.py",
       "profileTestsPassed": 10,
       "actualProfileRows": 24,
@@ -17013,7 +17013,7 @@
       "coreValidationStillRunning": false,
       "selectedBytesRemoved": 0,
       "transportLimitChanged": false,
-      "nextAction": "E4.17: het werkelijke kernherstel is onafhankelijk bevestigd: 345.664 records, 150.577 checkpoints, echte commit, één gesloten herstelhold en geweigerd hergebruik van de bevestiging. Native geheugen/gateway en hostwerking zijn daarmee niet geclaimd. Bouwer maakt de complete 576-bestandenversie met volledige inactieve hostprepare af en sluit één rechtstreeks benodigde werkelijke referentiemodule plus bronattestation/verifier aan; bron/WIP en criteria blijven ongewijzigd. De goedgekeurde private workflowpatch wordt toegepast zodra geen lopende sourceguard daarvan afhankelijk is. Daarna volgt alleen de exact gereviewde functionele proef; geen eigenaaractie blokkeert het uitvoerbare werk.",
+      "nextAction": "E4.17: werkelijk kernherstel onafhankelijk bevestigd en onder herstelhold. De bestaande hostherstelworkflow is nu toegepast op de projectbron; dezelfde 13 integratiegevallen slagen en hun testkoppeling is onafhankelijk goedgekeurd. De enige 576-bestandenproef met volledige inactieve hostprepare loopt door. Vier exacte actuele referentiebestanden zijn afzonderlijk beoordeeld; bouwer sluit uitsluitend hun vereiste ledgerprovenance en lege doelstate/STOP/held/dispatcher-grenzen vóór een eventuele functionele start. Bronattestaties gelden niet als targetbewijs. Geen eigenaaractie nodig; volledig hersteld hostgedrag blijft open.",
       "independentDesignRecommendation": "explicit_trusted_installation_policy_2GiB_default_and_per_file_1GiB",
       "implementationAuthorized": true,
       "existingBrowserUploadLimitBytes": 67108864,
@@ -17162,7 +17162,21 @@
       "gatewayNativeImportCompleted": false,
       "privateHostIntegrationIndependentVerdict": "GO_SCOPED_PRIVATE_HOST_WORKFLOW_INTEGRATION_CODE",
       "privateHostIntegrationV2FreezeSha256": "3c62b3eda8734db1e71f4c454f7b2091be0824ac411459449d5ae23de1a7cc04",
-      "actualV2SnapshotPathMismatchClarified": true
+      "actualV2SnapshotPathMismatchClarified": true,
+      "canonicalHostIntegrationApplied": true,
+      "canonicalHostIntegrationCasesPassed": 13,
+      "canonicalHostIntegrationSeconds": 56.76,
+      "canonicalTestBindingIndependentVerdict": "GO_SCOPED_CANONICAL_TEST_BINDING_PROMOTION",
+      "canonicalHostIntegrationSourceSha256": {
+        "src/tools/installer_portable_restore.py": "d54ab386af275a15c22c52df757e2225f241299fc4638f950e7b8883a478a211",
+        "src/tools/installer_restore_wizard.py": "37e08816f716cf9eb73f6fe9ca5e05f6404bf48a4ef94e0bb49aa2473baa3af0"
+      },
+      "canonicalHostIntegrationTestSha256": "ae003001410bb688707a068eb66b7e5551399dd36e75352618a8f5a10d9f716e",
+      "referenceCaptureIndependentVerdict": "GO_SCOPED_ACTUAL_REFERENCE_CAPTURE_AND_STATIC_CONSTRUCTOR_CHAIN_NOT_START",
+      "referenceCaptureFiles": 4,
+      "referenceCaptureBytes": 75290,
+      "constructorLedgerCapturePending": true,
+      "constructorEmptyTargetAndDispatcherBoundaryPending": true
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",

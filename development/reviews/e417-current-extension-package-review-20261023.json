@@ -1449,6 +1449,165 @@
         "Prospective target admission/client-suite mapping, actual complete authenticated version/full host adapter invocation, runtime API compatibility/ABI/UID/credentials and host behavior remain open.",
         "Reported52309 component_application_runtime/current config mismatch awaits exact original-reference provenance. No compatible WIP substitution or broader client authority is admitted."
       ]
+    },
+    "actualReferenceConstructorChainReview": {
+      "verdict": "GO_SCOPED_ACTUAL_REFERENCE_CAPTURE_AND_STATIC_CONSTRUCTOR_CHAIN_NOT_START",
+      "handoffSha256": "abb6074fb9df36f303b52f7f85708b9a3d6806d543942c888153c6a24528ccf3",
+      "runtimeCaptureReceiptSha256": "cacc7a900a68a34069221e081eef6fed31b4b35993a926bc35ee4faf63af9732",
+      "helperCaptureReceiptSha256": "d158b906ff9b651eb942247a63985e16438ca3dd6694d8eb94ee3f3db50151dd",
+      "capturedFiles": [
+        {
+          "name": "component_application_runtime.py",
+          "bytes": 43824,
+          "sha256": "a579151a76191c26cd937c6f245e22a15c7b13f4968c0b258477538545f72d11",
+          "mode": "0600",
+          "sourcePath": "/home/administrator/project/Eva2/src/eva/operations/component_application_runtime.py",
+          "targetPath": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/actual-runtime-reference-capture-20261024/package-staging/documents/host-executor/reference-runtime-supplement/src/eva/operations/component_application_runtime.py",
+          "sourceStatStillMatches": true
+        },
+        {
+          "name": "physical-usage-attestation.private.json",
+          "bytes": 899,
+          "sha256": "a8393c58b9c994c021230a27122a59d406d6e7f8961ac09fe78c753ea665b25f",
+          "mode": "0600",
+          "sourcePath": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261014/independent-review/physical-ancestor-usage-attestation.private.json",
+          "targetPath": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/actual-runtime-reference-capture-20261024/package-staging/documents/host-executor/reference-runtime-supplement/source-evidence/physical-usage-attestation.private.json",
+          "sourceStatStillMatches": true
+        },
+        {
+          "name": "behavior-verifier.private.py",
+          "bytes": 4443,
+          "sha256": "85993c721128bce650f14b65b831f42b7df7349b746b1d03e610e2682b710f6a",
+          "mode": "0600",
+          "sourcePath": "/home/administrator/project/.eva2-artifacts/e45-timestamps-20261017/behavior_verifier.py",
+          "targetPath": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/actual-runtime-reference-capture-20261024/package-staging/documents/host-executor/reference-runtime-supplement/source-evidence/behavior-verifier.private.py",
+          "sourceStatStillMatches": true
+        },
+        {
+          "name": "reviewed_component_application.py",
+          "bytes": 26124,
+          "sha256": "0283775fcfe408d89362b3e251488719d19bf69a21d408eae14844d081e45cfd",
+          "mode": "0600",
+          "sourcePath": "/home/administrator/project/Eva2/src/eva/operations/reviewed_component_application.py",
+          "targetPath": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/actual-reviewed-application-reference-capture-20261024/package-staging/documents/host-executor/reference-runtime-supplement/src/eva/operations/reviewed_component_application.py",
+          "sourceStatStillMatches": true
+        }
+      ],
+      "fileCount": 4,
+      "payloadBytes": 75290,
+      "closedPrivateTargetInventories": true,
+      "sourceMetadataStableAndTargetsIndependent": true,
+      "gitProvenanceChecks": [
+        {
+          "module": "component_application_runtime.py",
+          "recordedGitHead": "d07c7fbd57c282df30e8bed2317414301df14cc4",
+          "git693Sha256": "2afbb48bd6f60549372c071a906776dc666135738403669407a4191bb21cdffc",
+          "recordedHeadModuleSha256": "2afbb48bd6f60549372c071a906776dc666135738403669407a4191bb21cdffc",
+          "actualCaptureDiffersFromBoth": true
+        },
+        {
+          "module": "reviewed_component_application.py",
+          "recordedGitHead": "700f4a41fe8d18386e49cf5e958220b314a08185",
+          "git693Sha256": "9109c96e8d714580c9c9d5d90e25f24d3fe4c18ece6e79fa4cd6d327ffaa8404",
+          "recordedHeadModuleSha256": "9109c96e8d714580c9c9d5d90e25f24d3fe4c18ece6e79fa4cd6d327ffaa8404",
+          "actualCaptureDiffersFromBoth": true
+        }
+      ],
+      "recordedEffectiveSourceSelectionVerified": true,
+      "uncommittedActualOnDiskReferencesNotHistoricalLoadedOrLastWorking": true,
+      "originalConfigurationSha256": "f98773109740cf6048cb9dcb9adf624dc43b6270319553544d640fc515daa914",
+      "configuredKeys": [
+        "behavior_verifiers",
+        "core_container",
+        "physical_usage_attestation",
+        "scope_sha256"
+      ],
+      "constructorSourceSha256": "89f43814505568021e918af7fd0193b3762d6b1742823075ad94ac7cb843812d",
+      "helperSignature": [
+        "binding"
+      ],
+      "helperSourceSha256": "0283775fcfe408d89362b3e251488719d19bf69a21d408eae14844d081e45cfd",
+      "configuredAttestationAndVerifierPinsMatchCaptures": true,
+      "runtimeRepairFlagNotEnabled": true,
+      "queueConfiguredReleaseCount": 0,
+      "sourceAttestationContract": "EvaPhysicalAncestorUsage/v1",
+      "sourceLedgerStartupDependenciesNotRead": [
+        {
+          "sourcePath": "/home/administrator/project/.eva2-artifacts/hue-aide-cycle-20261014/parent-preparation/construction-fresh/accounting/accounting.json",
+          "sha256": "9f7b0adbb2c80b876da5818504caf7bc774f5b195ee55df5ce41ad9562280c0f",
+          "bodyReadByReviewer": false,
+          "amongFourCaptures": false
+        }
+      ],
+      "constructorStartsDispatcherThread": true,
+      "notAdoptedInto576VersionOrEffectiveTree": true,
+      "sdkImportsOrVerifierScorerExecutionOrServicesStarted": 0,
+      "reviewSeconds": 0.027566,
+      "reviewedAt": "2026-10-23T23:31:29.727870+00:00",
+      "inactiveCandidatePinningScope": "Exact actual-reference modules and source-evidence bytes may be pinned as separate, explicitly uncommitted layers for an inactive isolated functional candidate. No production adoption, Git693/HEAD equivalence, historical loaded module or LastWorking claim.",
+      "staticInterfaceFindings": [
+        "Captured ComponentApplicationRuntime constructor accepts exactly the original four configured runtime keys plus optional runtime_repair_enabled, which original config does not enable. Constructor source89f438... matches receipt.",
+        "Captured helper supplies _verified_behavior_source(binding), verifies absolute canonical host-owned regular source and fixed SHA within64KiB, and returns path/raw; constructor does not execute the verifier. Existing component_release_import base evidence is reused, without new copy/recheck.",
+        "Configured physical_usage_attestation and one behavior_verifiers binding exactly select the two captured source evidence files. Source scope and criterion references remain unchanged.",
+        "Configured queue shape accepts receipt_root/releases/poll_seconds; config has zero explicit releases. Existing persisted registry and jobs are not inferred empty.",
+        "Factory first constructs runtime, then ReviewedComponentApplications. Its constructor creates/locks receipt directories, loads/validates saved releases/jobs, rewrites waiting jobs to interrupted_before_dispatch and starts a dispatcher thread. It is not a passive metadata reader."
+      ],
+      "requiredBeforeAnyStart": [
+        "Resolve the single hash-bound ledger dependency read unconditionally by _load_physical_usage_attestation. It is not among these four captures and its body was not opened. Any permitted source-evidence capture and target relocation must be separately authorized and pinned; keep source attestation immutable and distinguish derived source relocation from new target physical proof.",
+        "Restore/classify exact queue/registry/job state and preserve STOP/held boundaries before constructing the original helper. Account for constructor-triggered dispatcher and receipt writes; do not substitute empty state or assume a service cold start performs no work.",
+        "Deliver exact new inactive candidate layer precedence and module-origin closure, prospectively admitted target suite/runtime/config mapping, remaining resources, CPU/OS ABI/runtime UID and token provisioning, full authenticated package and full adapter readback.",
+        "Keep behavior verifiers, scorers and criteria unexecuted/unmodified until their separately bounded original-service functional scope is admitted. Source physical attestation never establishes new target physical usage."
+      ],
+      "functionalStartAdmitted": false,
+      "productionModuleAdoptionAdmitted": false
+    },
+    "canonicalHostIntegrationTestPromotionReview": {
+      "reviewedAt": "2026-10-23T23:32:33.927730+00:00",
+      "verdict": "GO_SCOPED_CANONICAL_TEST_BINDING_PROMOTION",
+      "freezeSha256": "6659fe5862e9831f8047a545aeebe055a58327950ea8e4c6c62e3d2fdb584ea7",
+      "testSha256": "ae003001410bb688707a068eb66b7e5551399dd36e75352618a8f5a10d9f716e",
+      "privateTestSha256": "6f58e3c224ba1d7618a7820169af1b2557f71c220ddc76c0c512582439b09df5",
+      "astEvidenceSha256": "d825bdfd1fdc3f16c939cc0349fe5dbfb95d052784319be46f32f18f28698307",
+      "canonicalRunReceiptSha256": "27bda6eb89667c13969ec279facc4f25809cd33a2d61adec52f44c0382911a23",
+      "canonicalSourceFiles": {
+        "development/tests/portable/test_installer_host_recovery.py": {
+          "bytes": 12087,
+          "sha256": "ae003001410bb688707a068eb66b7e5551399dd36e75352618a8f5a10d9f716e"
+        },
+        "src/tools/installer_portable_restore.py": {
+          "bytes": 53218,
+          "sha256": "d54ab386af275a15c22c52df757e2225f241299fc4638f950e7b8883a478a211"
+        },
+        "src/tools/installer_restore_wizard.py": {
+          "bytes": 15893,
+          "sha256": "37e08816f716cf9eb73f6fe9ca5e05f6404bf48a4ef94e0bb49aa2473baa3af0"
+        }
+      },
+      "topLevelTestAndHelperFunctionsIndependentlyAstCompared": 10,
+      "allFunctionAssertionsIndependentlyAstCompared": 25,
+      "testFunctions": 7,
+      "parametrizedCases": 13,
+      "onlyChanges": "Module docstring and private module-path/cache bootstrap replaced by checkout-relative CANDIDATE root. Two module-level private-cache assertions removed; all ten function bodies/decorators and25 contained assertions exactly preserved.",
+      "canonicalBindingPointsToActualRepoSrcTools": true,
+      "insideTestCanonicalModuleSourceAssertionPreserved": true,
+      "priorNinePgAndFourPathEvidenceReused": true,
+      "builderCanonical13PassEvidence": {
+        "actualPostgresUsed": true,
+        "broadSuitesOrNewCasesAdded": false,
+        "elapsedSeconds": 58.58157319301972,
+        "exitCode": 0,
+        "failures": [],
+        "instrumentedFixtureGuardNotNewProductionLineageProof": true,
+        "modelProviderCalls": 0,
+        "publicTestSha256": "ae003001410bb688707a068eb66b7e5551399dd36e75352618a8f5a10d9f716e",
+        "status": "canonical13_test_run_complete",
+        "summary": "13 passed in 56.76s"
+      },
+      "reviewerRepeatedFull13PgRun": false,
+      "reviewerDatabaseQueries": 0,
+      "reviewerSdkImportsOrServiceStarts": 0,
+      "oldOperatorProofStillV3": true,
+      "scope": "Only canonical code/test binding bundle. No new production Docker-lineage, deployed runtime, full host constructor, ABI, service/function or full E417 proof."
     }
   },
   "contractRequirements": {
@@ -1541,6 +1700,17 @@
       "executionWallMilliseconds": 3377627,
       "reportedPeakRssKiB": 8242568,
       "runtimeModelCalls": 0,
+      "developmentTokens": null,
+      "developmentCredits": null
+    },
+    "latestActualReferenceConstructorReview": {
+      "filesIndependentlyHashed": 4,
+      "bytes": 75290,
+      "measuredSeconds": 0.027566,
+      "sourceLedgerBodiesRead": 0,
+      "verifierOrScorerExecutions": 0,
+      "sdkImportsOrModelCalls": 0,
+      "serviceStarts": 0,
       "developmentTokens": null,
       "developmentCredits": null
     }

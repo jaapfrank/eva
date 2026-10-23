@@ -576,6 +576,26 @@
           "pinnedLibraryAndFullSdkClosureRequiredBeforeStart": true,
           "cpuOrImportOrInferenceOrServiceStartAuthorized": false,
           "sharedInstallationAuthorized": false
+        },
+        "canonicalHostIntegrationTests": {
+          "status": "promoted_and_13_cases_passed_canonical_no_git",
+          "path": "development/tests/portable/test_installer_host_recovery.py",
+          "sha256": "ae003001410bb688707a068eb66b7e5551399dd36e75352618a8f5a10d9f716e",
+          "freezeSha256": "6659fe5862e9831f8047a545aeebe055a58327950ea8e4c6c62e3d2fdb584ea7",
+          "functionAstsUnchanged": 10,
+          "assertionsUnchanged": 25,
+          "testResult": "13 passed in 56.76s",
+          "newCasesOrBroadSuite": false,
+          "independentVerdict": "GO_SCOPED_CANONICAL_TEST_BINDING_PROMOTION"
+        },
+        "actualReferenceConstructorCapture": {
+          "status": "four_exact_files_captured_for_independent_provenance_review_not_adopted",
+          "handoffSha256": "abb6074fb9df36f303b52f7f85708b9a3d6806d543942c888153c6a24528ccf3",
+          "files": 4,
+          "bytes": 75290,
+          "sourceWipMutated": false,
+          "sourcePhysicalEvidenceIsNotTargetProof": true,
+          "newImportsOrServices": false
         }
       },
       "extensionArtifactRequest": {
@@ -1685,8 +1705,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
-    "parallelBoundedWork": "One builder repairs the existing installation transport policy and finishes the real recovery package. One independent tester/reviewer checks exact code, security boundaries and real roundtrip; tester writes reviews only.",
-    "currentBlocker": "V3 transport/file-intake code received independent scoped GO. Real V1 whole package/AES/open/inactive roundtrip succeeded with all 301 payload files retained. Actual V3 reopen and large configured operator restore still pending. Two own never-started core pins and empty official 0011 target are prepared; actual current erasure floor272 preserved. Inactive hostadapter preparation authorized, complete original library/SDK closure and restored behavior remain required.",
+    "parallelBoundedWork": "One builder finishes the existing 576-file full inactive host preparation and exact ledger/state/thread preconditions. One independent tester/reviewer checks delivered evidence and actual boundaries; no product building by reviewer.",
+    "currentBlocker": "Kerngegevens werkelijk gecommit en onafhankelijk teruggelezen; hostworkflowcode plus 13 canonical integratiegevallen technisch afgerond en gereviewd. Volledige hostprepare, feitelijke ABI/constructorgrenzen en hetzelfde gedrag op een geïsoleerd hersteldoel zijn nog niet bewezen.",
     "latestVerifiedOutcome": {
       "status": "installed_current_source_and_silence_proven_positive_greeting_pending",
       "evidence": "development/evidence/product/e415-household-batch-binding-20261023.json",

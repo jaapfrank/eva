@@ -69,6 +69,8 @@ class InstallerPortableRestore:
         runtime_identity: dict[str, str] | None = None,
         runtime_guard: Callable[[Any], None] | None = None,
         recovery_materialization: dict | None = None,
+        host_preparation: dict | None = None,
+        native_document_configuration: dict | None = None,
         external_restore: Callable[..., dict] | None = None,
         document_prepare: Callable[..., dict] | None = None,
         document_connect: Callable[..., dict] | None = None,
@@ -147,6 +149,38 @@ class InstallerPortableRestore:
         if (transport_policy is TransportPolicy.INSTALLATION_RECOVERY
                 and recovery_materialization is None):
             raise ValueError("installation transport requires trusted materialization settings")
+        if host_preparation is not None:
+            if (not isinstance(host_preparation, dict)
+                    or set(host_preparation) != {"destination", "configuration"}
+                    or not isinstance(host_preparation["destination"], str)
+                    or not isinstance(host_preparation["configuration"], dict)
+                    or recovery_materialization is None or not callable(runtime_guard)):
+                raise ValueError("host preparation requires trusted destination, inventory and runtime guard")
+            target = Path(host_preparation["destination"])
+            protected = [Path(recovery_materialization["destination"]), workspace, object_store_root]
+            if identity_destination is not None:
+                protected.append(identity_destination)
+            # New host opt-in admits only canonical absolute roots. A lexical
+            # path with dotdot or a parent symlink must not hide a real overlap.
+            if any(not value.is_absolute() or value.resolve() != value for value in protected):
+                raise ValueError("host preparation protected roots must be canonical absolute paths")
+            if (not target.is_absolute() or target.resolve() != target
+                    or target.exists() or target.is_symlink()
+                    or any(target == value or target in value.parents or value in target.parents
+                           for value in protected)):
+                raise ValueError("host preparation needs a disjoint absent private destination")
+            if any(callback is not None for callback in
+                   (document_connect, gateway_start, document_promote, verify_components, start_runtime)):
+                raise ValueError("inactive host preparation cannot connect or activate services")
+            if (native_document_configuration is None) != (document_prepare is None):
+                raise ValueError("native document preparation requires its trusted coverage configuration")
+            if native_document_configuration is not None:
+                from tools.installation_document_restore import validate_document_configuration
+                validate_document_configuration(native_document_configuration)
+        elif native_document_configuration is not None:
+            raise ValueError("explicit native coverage requires host preparation")
+        self.host_preparation = deepcopy(host_preparation)
+        self.native_document_configuration = deepcopy(native_document_configuration)
         self.recovery_materialization = deepcopy(recovery_materialization)
         self._lock = Lock()
         self._pending: tuple[TemporaryDirectory, str, float, str] | None = None
@@ -202,8 +236,35 @@ class InstallerPortableRestore:
             return directory / "core" / "canonical" / "objects"
         return directory / "canonical" / "objects" if header.get("schema_version") == 2 else directory / "objects"
 
+    def _host_document_coverage(self, package):
+        """Partition actual retained data; an empty native plan waives no file."""
+        from tools.installation_host_extension_restore import _configuration
+        entries = package["manifest"]["files"]
+        host_owned, _ = _configuration(entries, self.host_preparation["configuration"])
+        covered = set()
+        for provider in (self.native_document_configuration or {}).get("providers", []):
+            if provider["original_binding"] in host_owned or provider["catalog_path"] in host_owned:
+                raise ValueError("host and native document authority ownership overlaps")
+            for key, roles in (("document_directory", {"document_artifact"}),
+                               ("journal_directory", {"document_journal", "document_marker"})):
+                selected = {name for name in entries if name.startswith(provider[key] + "/")}
+                if selected & host_owned:
+                    raise ValueError("host and native document data ownership overlaps")
+                if ((key == "document_directory" and not selected)
+                        or any(entries[name]["role"] not in roles for name in selected)):
+                    raise ValueError("native document coverage differs")
+                covered.update(selected)
+        expected = {name for name, item in entries.items() if item["role"] in
+                    {"document_artifact", "document_journal", "document_marker"}}
+        if covered | (host_owned & expected) != expected:
+            raise ValueError("host and native document plans do not cover all retained documents")
+        return host_owned
+
     def _read(self, directory: Path) -> tuple[dict, bytes, dict]:
         validated = self._validate_archive(directory)
+        if self.host_preparation is not None and (not isinstance(validated, dict)
+                or validated["manifest"]["contract"] != "EvaInstallationRecovery/v1"):
+            raise ValueError("host preparation requires an installation recovery package")
         if isinstance(validated, dict):
             from tools.portable_v2_profile import ALL_SPECS
             installation = validated["manifest"]["contract"] == "EvaInstallationRecovery/v1"
@@ -248,6 +309,10 @@ class InstallerPortableRestore:
                     external_components="not_materialized",
                     object_recovery_notice="Een mislukte poging kan een volledige inactieve bestandskopie achterlaten. Deze wordt niet verwijderd of overschreven; de operator moet de kopie beoordelen en een nieuw leeg hersteldoel configureren voor een nieuwe poging.",
                 )
+                if self.host_preparation is not None:
+                    self._host_document_coverage(package)
+                    summary.update(host_components="preparation_planned_inactive",
+                        notice="De kern wordt inactief hersteld. De bewaarde hostuitbreiding en afhankelijkheden worden afzonderlijk klaargezet; er worden geen hostdiensten gestart of vrijgegeven.")
                 if self.document_prepare is not None:
                     summary.update(
                         document_components="preparation_planned",
@@ -488,18 +553,35 @@ class InstallerPortableRestore:
         authorize_installation_recovery(package_manifest_raw=manifest,
             core_manifest_raw=package["core_archive"]["manifest_raw"],
             restore_authority_raw=self.authority_reader())
+        host = None
+        def guard():
+            if self.runtime_guard is not None:
+                self.runtime_guard(connection)
+            authorize_installation_recovery(package_manifest_raw=manifest,
+                core_manifest_raw=package["core_archive"]["manifest_raw"],
+                restore_authority_raw=self.authority_reader())
+        if self.host_preparation is not None:
+            from tools.installation_host_extension_restore import prepare_host_extension, _validate_prepared
+            expected_host = self._host_document_coverage(package)
+            guard()
+            materialization_state["host_preparation_attempted"] = True
+            host_target = Path(self.host_preparation["destination"])
+            host = prepare_host_extension(destination, host_target,
+                configuration=self.host_preparation["configuration"], verify_guard=guard,
+                identity_trust=self.identity_trust)
+            if (host.get("status") != "prepared_inactive"
+                    or host.get("runtimeActivated") is not False
+                    or host.get("functionalHostRestoreProven") is not False
+                    or _validate_prepared(package, host_target) != expected_host):
+                raise ValueError("host preparation receipt or physical coverage differs")
+            materialization_state["host_preparation"] = deepcopy(host)
+            guard()
         external = None
         documents = None
         document_connection = None
         gateway_connection = None
         document_promotion = None
         if self.external_restore is not None:
-            def guard():
-                if self.runtime_guard is not None:
-                    self.runtime_guard(connection)
-                authorize_installation_recovery(package_manifest_raw=manifest,
-                    core_manifest_raw=package["core_archive"]["manifest_raw"],
-                    restore_authority_raw=self.authority_reader())
             materialization_state["external_import_attempted"] = True
             external = self.external_restore(destination, guard=guard)
             guard()
@@ -597,6 +679,8 @@ class InstallerPortableRestore:
             "external_components": ("memory_imported_gateway_started" if gateway_connection is not None
                                     else "imported_inactive" if external is not None else "materialized_inactive"),
             "external_restore": external,
+            **({"host_preparation": host, "host_components": "prepared_inactive_not_verified"}
+               if host is not None else {}),
             **({"document_preparation": documents, "document_components": "prepared_not_connected"}
                if documents is not None else {}),
             **({"document_connection": document_connection, "document_components": "connected_read_only"}
@@ -616,6 +700,8 @@ class InstallerPortableRestore:
                 if documents is not None else
                 "Kern, geheugen en gateway zijn geïmporteerd maar blijven inactief. Koppel en controleer de documentproviders vóór vrijgave."
                 if external is not None else
+                "De kern en de bewaarde hostuitbreiding staan inactief klaar. SDK-bestanden zijn teruggezet; hostwerking, ABI, aanmeldgegevens en vrijgave zijn nog niet bevestigd. Er is geen hostdienst gestart."
+                if host is not None else
                 "De kern is hersteld en de bestanden staan inactief klaar. Eva blijft uit. Importeer eerst geheugen- en gatewaydatabases, koppel en controleer documentproviders en laat de operator daarna afzonderlijk vrijgeven.")}
 
     def execute(self, confirmation: str) -> dict[str, object]:
