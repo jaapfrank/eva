@@ -1,0 +1,31 @@
+{
+  "contract": "EvaE417ExtensionRestoreReview/v1",
+  "task": "E4.17",
+  "checkedAt": "2026-10-23T15:09:00.302141+00:00",
+  "decision": "GO_CANDIDATE",
+  "independentGo": true,
+  "blockingFindings": [],
+  "privateReviewSha256": "f309f7c331f3de2ead072bc3df39f7f22533ece7fedc8d529afc4910ac9b8cc0",
+  "scope": "Only isolated two-boundary candidate and existing-format preservation proof; actual source paths still require coordinator confirmation and workspace verification.",
+  "verified": [
+    "Two exact candidate line changes; original product files not edited.",
+    "Original pinned schema/resource authority and generated catalog bytes remain intact.",
+    "Derived v3 profile identity changes explicitly; no blanket historical archive compatibility claim.",
+    "Final test source and saved XML bind 15 passing, zero failed/skipped cases.",
+    "Original archive/source and prior offline script directories removed before restore; exact bundled versions/config schema/data/status markers preserved; same trusted standalone offline result."
+  ],
+  "limitations": [
+    "Synthetic core rows and opaque dump bytes: no real database/native provider restore.",
+    "Standard-library-only dependency lock: no third-party dependency reinstallation.",
+    "Companion status/rights/credential references are preserved bytes, not runtime enforcement or new rights.",
+    "No service activation, shared installation, restart, model or provider call.",
+    "Actual Eva-built E4.15 extension and complete E4.17 acceptance remain open."
+  ],
+  "reviewerActivity": {
+    "testsRerun": 0,
+    "providerCalls": 0,
+    "runtimeChanges": 0,
+    "repositoryEdits": 0
+  },
+  "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json"
+}

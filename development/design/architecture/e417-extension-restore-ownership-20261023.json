@@ -1,0 +1,61 @@
+{
+  "contract": "EvaE417ExtensionRestoreOwnership/v1",
+  "task": "E4.17",
+  "checkedAt": "2026-10-23T15:09:00.302141+00:00",
+  "scope": "Existing-format AgentSkillPackage/document artifact recovery; isolated candidate only until exact source-file approval. No new extension platform.",
+  "owners": {
+    "packageBytesAndManifest": "eva.application.skill_packages.AgentSkillPackage",
+    "executionInputContract": "eva.application.skill_package_execution.procedure_input",
+    "durablePackageStorage": "Existing verified workspace documents (.skill.json), referenced by existing procedure sources/save receipts; no package code added to core",
+    "archiveEnvelope": "tools.installation_recovery_package",
+    "encryptedTransport": "tools.portable_transport",
+    "inactiveFilesAndOwnership": "tools.installation_recovery_materializer",
+    "providerNativeRelocation": "tools.installation_document_restore (existing, unchanged; not executed here)",
+    "externalDatabaseImport": "tools.installation_external_restore (existing, unchanged; not executed here)",
+    "runtimeActivation": "Existing separately guarded coordinator-owned release; never implied by archive or file restoration"
+  },
+  "actualStorageObservation": {
+    "validSkillBundlesOnCurrentSharedDocumentVolume": 2,
+    "invalidSkillBundles": 0,
+    "limit": "Presence/format metadata only. Not proof of procedure admission, adopted state or live package use."
+  },
+  "concreteGap": {
+    "cause": "Checkout relocation leaked deploy/ prefixes into archive schema addresses and left v3 _schemas bound to moved checkout manifests. Exact original sealed resources still exist.",
+    "isolatedCorrection": [
+      {
+        "path": "src/tools/portable_runtime_archive.py",
+        "change": "_schemas() uses existing _schema_payloads() packaged-resource default."
+      },
+      {
+        "path": "src/tools/postgres_portable_export.py",
+        "change": "Only record_schema_relative_path normalizes known deploy/ source prefix at catalog-to-archive boundary."
+      }
+    ],
+    "authority": "All original pinned schema/resource hashes, generated catalog and test criteria retained."
+  },
+  "reuseDecision": "The existing role-bound document archive already preserves bundle bytes and companion configuration/data/status. No new extension roles, registry, dependency installer or automatic activation added.",
+  "candidateSha256": {
+    "src/tools/portable_runtime_archive.py": "93a125892bd21bda246f9677519cca1f50e7cc2014bbcb6de5b0c39223b45e47",
+    "src/tools/postgres_portable_export.py": "2250c374d29d8d9c339e1d1381fcd1827a1ae2cfd3b3e8c33786eb997db66d4c"
+  },
+  "protectedOwnersUnchanged": [
+    "src/tools/installation_recovery_package.py",
+    "src/tools/installation_recovery_materializer.py",
+    "src/tools/installation_external_restore.py",
+    "src/eva/application/skill_packages.py",
+    "src/eva/application/skill_package_execution.py",
+    "src/eva/operations/programming_workspace.py",
+    "src/tools/installation_document_restore.py"
+  ],
+  "fullE417Complete": false,
+  "remaining": [
+    "Explicit per-file approval and real workspace application/verification of the two-line candidate.",
+    "Actual Eva-created E4.15 extension, native provider relocation/connection and real restoration/adoption/stop behavior via coordinator."
+  ],
+  "derivedProfileHashChange": {
+    "before": "b16347e87d831d69066456c6c101feb5f14a312ef1c7ab01a5b9729d8ab412bd",
+    "candidate": "a349244d38cbe83d90a9e9e4bc3d6b1149c7076de4d2936bcd71c17ae00a2910"
+  },
+  "compatibilityLimit": "Do not equate preserved original schema/resource pins with unchanged derived profile identity or blanket historical-archive compatibility.",
+  "independentCandidateReview": "GO_CANDIDATE"
+}

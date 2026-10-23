@@ -220,13 +220,20 @@
       "statusProposal": {
         "taskId": "E4.17",
         "status": "in_progress",
-        "progress": "Geïsoleerde kandidaat met twee bestaande bron-/archiefrandcorrecties doorstaat 3/3 herstelgevallen: oorspronkelijke bronmap verwijderd, pakketversies/configuratie/eigen gegevens/pauzemarkering exact bewaard en hetzelfde offline resultaat. Productiebestanden nog ongewijzigd; gerichte bestandsvrijgave voor de twee correcties gevraagd. Geen automatische activering of gedeelde installatie.",
-        "checkedAt": "2026-10-23T14:59:27.987496+00:00",
+        "progress": "E4.17 geïsoleerde herstelkandidaat onafhankelijk akkoord: 15/15 controles, pakketversies/configuratieschema/eigen gegevens/pauzemarkering exact behouden en hetzelfde offline resultaat nadat bronmappen zijn verwijderd. Twee bestaande exportgrenzen vragen een kleine broncorrectie; exacte aanvullende paden nog ter bevestiging. Productiebron en gedeelde installatie blijven ongewijzigd. Volledige E4.17 vereist nog de echte E4.15-uitbreiding en herstel/adoptie.",
+        "checkedAt": "2026-10-23T15:09:00.302141+00:00",
         "ownerActionRequired": false,
         "fullTaskCompleted": false,
-        "nextAction": "Bevestig alleen portable_runtime_archive.py:_schemas en postgres_portable_export.py:_default_table_specs; daarna exacte kandidaat vastleggen, gericht verifiëren en onafhankelijk beoordelen.",
-        "evidenceToAppend": [],
-        "reviewToAppend": []
+        "nextAction": "Coördinator: bevestig de twee extra bronpaden of neem het exacte kandidaatpakket over; daarna 15 controles op echte bron zonder overrides. Bind vervolgens aan de echte E4.15-uitbreiding. Volledige E4.17 blijft open.",
+        "evidenceToAppend": [
+          "development/evidence/reassessment/e417-extension-restore-20261023.json"
+        ],
+        "reviewToAppend": [
+          "development/reviews/e417-extension-restore-20261023.json"
+        ],
+        "boundedOutcomeCompleted": true,
+        "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
+        "independentReview": "development/reviews/e417-extension-restore-20261023.json"
       },
       "conditions": [
         "Read E4.18 and existing E3/E4 inventories; select one concrete used route or proven-unused helper. No broad cleanup.",
@@ -237,16 +244,24 @@
         "E4.15/E4.17 dependencies remain. Early bounded cleanup does not close E4.18.",
         "Use statusProposal for workboard/docs changes; WSL integrates shared files preserving foreign hunks."
       ],
-      "updatedAt": "2026-10-23T14:59:27.987496+00:00",
+      "updatedAt": "2026-10-23T15:10:52.301723+00:00",
       "reviewRequest": {
-        "status": "independently_reviewed_GO",
+        "status": "independently_reviewed_GO_CANDIDATE",
         "reviewer": "/root/e47_mcp_catalog",
-        "scope": "Only 3 host tool files and own E4.18 tests/evidence. Exact hash extraction plus measured existing current-layout root defect. No protected runtime areas.",
-        "evidence": "development/evidence/reassessment/e418-file-inspection-20261023.json",
-        "privateBaseline": "/home/administrator/project/.eva2-artifacts/e418-file-inspection-20261023",
-        "review": "development/reviews/e418-file-inspection-20261023.json",
+        "task": "E4.17",
+        "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023",
+        "exactPatch": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate.patch.private.diff",
+        "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
+        "testCases": 15,
+        "sourcePermissionsPending": [
+          "src/tools/portable_runtime_archive.py",
+          "src/tools/postgres_portable_export.py"
+        ],
         "noExtraModelOrProviderExecution": true,
-        "privateReviewSha256": "878889fe1212ca618a20bb08a67bb4d21ef941fa4ac0d7011084a8828ff8dffc"
+        "finalTestSourceSha256": "8434403afbc11086f94313b913f08e851570b0f2e87078bb6b0b86c09ec70a90",
+        "finalReport": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/final-candidate-regressions.private.xml",
+        "privateReviewSha256": "f309f7c331f3de2ead072bc3df39f7f22533ece7fedc8d529afc4910ac9b8cc0",
+        "review": "development/reviews/e417-extension-restore-20261023.json"
       },
       "gitRequest": {
         "status": "committed_and_pushed",
@@ -488,19 +503,33 @@
             "portable_runtime_archive._schemas -> existing _schema_payloads() packaged default",
             "postgres_portable_export canonical record_schema_relative_path removes known deploy/ source prefix"
           ],
-          "originalAuthorityHashesUnchanged": true,
           "oldSourceRemovedBeforeRestore": true,
           "allPackageVersionsConfigDataPausedMarkerPreserved": true,
           "sameOfflineOutput": true,
           "externalEffects": false,
-          "fullE417Complete": false
-        }
+          "fullE417Complete": false,
+          "originalSchemaResourcePinsAndCatalogBytesUnchanged": true,
+          "derivedProfileHashChanges": true
+        },
+        "status": "isolated_candidate_ready_pending_exact_source_handoff",
+        "privateCandidatePatch": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate.patch.private.diff"
       },
       "extensionArtifactRequest": {
         "to": "wsl-e18",
         "requestedAt": "2026-10-23T14:52:17.507425+00:00",
         "request": "Voor latere echte E4.15/E4.17-binding: lever het exacte door Eva gemaakte pakket/artifactpad en zijn bestaande configuratie-/data-/pauzestatus-eigenaren zodra beschikbaar. Ik bouw intussen een geïsoleerde proef van het bestaande AgentSkillPackage/document/installation-archive-pad; geen nieuw packageplatform of wijzigingen aan programmeeruitvoerder.",
         "blocksIsolatedProof": false
+      },
+      "candidateHandoff": {
+        "status": "reviewed_isolated_candidate_ready",
+        "manifest": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate-handoff.private.json",
+        "patch": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate.patch.private.diff",
+        "preparedTest": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/prepared-tests/development/tests/portable/test_e417_extension_restore.py",
+        "passed": 15,
+        "independentGo": true,
+        "productionFilesModified": false,
+        "requiredAction": "Explicitly confirm both requested source paths, or coordinator applies these same two line changes and prepared test. Preserve all original schema/resource pins; run same 15 cases without process overrides before promotion. No shared restart under this scope.",
+        "fullE417Complete": false
       }
     }
   },

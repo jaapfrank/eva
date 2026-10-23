@@ -1,0 +1,73 @@
+{
+  "contract": "EvaE417ExtensionRestoreOutcome/v1",
+  "task": "E4.17",
+  "checkedAt": "2026-10-23T15:09:00.302141+00:00",
+  "status": "isolated_candidate_independently_reviewed_awaiting_source_path_confirmation",
+  "baselineCommit": "581c33f6f2a8570017a7bc69f4c197a456b1558d",
+  "candidateSha256": {
+    "src/tools/portable_runtime_archive.py": "93a125892bd21bda246f9677519cca1f50e7cc2014bbcb6de5b0c39223b45e47",
+    "src/tools/postgres_portable_export.py": "2250c374d29d8d9c339e1d1381fcd1827a1ae2cfd3b3e8c33786eb997db66d4c"
+  },
+  "testSourceSha256": "8434403afbc11086f94313b913f08e851570b0f2e87078bb6b0b86c09ec70a90",
+  "measurements": {
+    "baseline": "Three setup failures on original v3 archive path: moved manifest conflicts with existing pinned hash.",
+    "candidateSchemaLoaderOnly": "Three setup failures on archive key deploy/schemas/...: same relocation cause at spec boundary.",
+    "candidateTwoBoundaries": {
+      "focused": {
+        "passed": 3
+      },
+      "withExistingV3Regressions": {
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0,
+        "processSeconds": 11.005932075029705
+      }
+    },
+    "firstAttemptReport": "Initial report write failed because root-created private output directory was not administrator-owned; result unknown, ownership corrected. No product state changed.",
+    "pytestData": "Fixed synthetic v3 rows reuse existing signed default identity and original sealed schema authority; memory/gateway opaque fixture bytes, no database restore.",
+    "proof": "Encrypt existing-format bundle versions and companion docs; remove original staging and core-source dirs; decrypt, validate and materialize in fresh absent target; compare exact bytes, preserved current/last-good/candidate identifiers, config, data, paused marker and independent offline Python output. Existing destination remains unchanged. The prior offline source directory is removed too; restored package configuration schema validates the restored configuration.",
+    "preservedMarkersLimit": "Companion pause/permission/credential-reference markers are copied exactly. This is not proof of runtime enforcement, new secret access, real-world adoption or no external effects in a real extension.",
+    "executionLimit": "Trusted synthetic package in fresh Python -I -S process; same offline output. The existing procedure input contract is checked. Not the full programming backend or active Eva runtime.",
+    "derivedProfileSha256": {
+      "before": "b16347e87d831d69066456c6c101feb5f14a312ef1c7ab01a5b9729d8ab412bd",
+      "candidate": "a349244d38cbe83d90a9e9e4bc3d6b1149c7076de4d2936bcd71c17ae00a2910"
+    },
+    "compatibilityLimit": "Original pinned schema/resource hashes and generated catalog bytes are preserved. Derived v3 profile hash changes with corrected archive paths; compatibility with arbitrary historical production archives is not proven. No pin relaxation or automatic migration.",
+    "dependencyLimit": "Dependency file is preserved; this synthetic bundle requires only Python standard library. Third-party installation not proven.",
+    "testEnvironment": "Existing host gate Python, fresh -I -S subprocess; no target-image execution claim."
+  },
+  "sourceState": {
+    "productionSourceModified": false,
+    "originalResourceHashesChanged": false,
+    "coreLogicChanged": false,
+    "sharedInstallationChanged": false,
+    "serviceRestarted": false
+  },
+  "usage": {
+    "evaRuntimeModelCalls": 0,
+    "providerCalls": 0,
+    "messagesSent": 0,
+    "externalEffects": 0,
+    "databaseRestoreCalls": 0,
+    "developmentCreditCost": null,
+    "developmentCreditCostState": "unknown; not estimated"
+  },
+  "independentReview": {
+    "decision": "GO_CANDIDATE",
+    "privateReviewSha256": "f309f7c331f3de2ead072bc3df39f7f22533ece7fedc8d529afc4910ac9b8cc0",
+    "blockingFindings": []
+  },
+  "review": "development/reviews/e417-extension-restore-20261023.json",
+  "fullTaskCompleted": false,
+  "candidatePatch": {
+    "scope": "Two exact line changes; not yet applied to production source files.",
+    "privatePath": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate.patch.private.diff",
+    "sha256": "e5bcd0d410ec9902d264a4ff5828ad80f2e63a4345cab121809462bf0d0ae72e"
+  },
+  "preparedCandidate": {
+    "manifest": "/home/administrator/project/.eva2-artifacts/e417-extension-restore-20261023/candidate-handoff.private.json",
+    "testSourceState": "Prepared in explicitly authorized worktree and copied into private candidate packet; not added to default Git test suite before the two source corrections are integrated.",
+    "workspaceIntegrationPending": true,
+    "actualWorkspaceTestsWithoutOverrides": "not run: exact two-source-path confirmation pending"
+  }
+}
