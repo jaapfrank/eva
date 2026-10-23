@@ -11,7 +11,7 @@ from __future__ import annotations
 import re
 from copy import deepcopy
 
-from tools.eva2_quiescent_cutover import SystemBackend, _shared_database_consumers
+from tools.container_inspection import inspect_all as inspect_containers, shared_database_consumers as _shared_database_consumers
 
 
 class RestoreRuntimeGuardError(ValueError):
@@ -60,7 +60,7 @@ def verify_restore_runtime(connection, *, expected, inspect_all=None):
     Inspection injection exists for isolated tests; production uses Docker.
     """
     _configuration(expected)
-    documents = (SystemBackend._inspect_all if inspect_all is None else inspect_all)()
+    documents = (inspect_containers if inspect_all is None else inspect_all)()
     if not isinstance(documents, list) or any(not isinstance(item, dict) for item in documents):
         raise RestoreRuntimeGuardError("restore Docker inventory is invalid")
     for side in ("source", "target"):

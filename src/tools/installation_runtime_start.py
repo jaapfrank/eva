@@ -11,7 +11,7 @@ import time
 import sqlalchemy as sa
 
 from eva.operations.restore_activation import require_restore_activation
-from tools.eva2_quiescent_cutover import SystemBackend, _shared_database_consumers
+from tools.container_inspection import inspect_all as inspect_containers, shared_database_consumers as _shared_database_consumers
 from tools.installation_document_connection import _command
 from tools.restore_runtime_guard import verify_restore_runtime
 
@@ -91,7 +91,7 @@ def start_restored_runtime(engine, *, expected, restore_id, archive_sha256, rele
     receipt = {"contract": "EvaRestoredRuntimeStart/v1", "status": "not_started",
                "restore_id": str(restore_id), "archive_sha256": archive_sha256,
                "attempted": [], "started": [], "ready": [], "runtime_started": False}
-    inspect = SystemBackend._inspect_all if inspect_all is None else inspect_all
+    inspect = inspect_containers if inspect_all is None else inspect_all
     start = (lambda identifier: _command(["docker", "start", identifier], deadline=30, limit=4096)) if start_container is None else start_container
     try:
         if type(timeout_seconds) not in (int, float) or not 0 < timeout_seconds <= 120:

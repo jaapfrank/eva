@@ -36,6 +36,7 @@ from tools.eva2_canary_cutover import (
     canonical_dropin,
 )
 from eva.operations.logical_restore_authority import logical_restore_preparation_sql
+from tools.container_inspection import inspect_all, shared_database_consumers
 
 
 DOCKER = "/usr/bin/docker"
@@ -222,46 +223,12 @@ def _sanitize(value: str) -> str:
 
 
 def _shared_database_consumers(
-    *,
-    retained_core: str,
-    inspected: Iterable[dict[str, Any]],
+    *, retained_core: str, inspected: Iterable[dict[str, Any]],
 ) -> list[str]:
-    """Return running sibling containers that mount the retained core database."""
-
-    documents = list(inspected)
-    core = next(
-        (
-            document
-            for document in documents
-            if str(document.get("Name", "")).lstrip("/") == retained_core
-        ),
-        None,
+    return shared_database_consumers(
+        retained_core=retained_core, inspected=inspected,
+        error_type=QuiescentCutoverError,
     )
-    if core is None:
-        raise QuiescentCutoverError("retained slot core inspection is missing")
-    sources = {
-        str(mount.get("Source", ""))
-        for mount in core.get("Mounts", [])
-        if mount.get("Destination") == "/run/secrets/database_dsn"
-        and mount.get("Source")
-    }
-    if len(sources) != 1:
-        raise QuiescentCutoverError("retained slot database mount is invalid")
-    source = next(iter(sources))
-    consumers: list[str] = []
-    for document in documents:
-        name = str(document.get("Name", "")).lstrip("/")
-        if not name or name == retained_core:
-            continue
-        if document.get("State", {}).get("Running") is not True:
-            continue
-        if any(
-            mount.get("Destination") == "/run/secrets/database_dsn"
-            and mount.get("Source") == source
-            for mount in document.get("Mounts", [])
-        ):
-            consumers.append(name)
-    return sorted(consumers)
 
 
 class SystemBackend:
@@ -361,20 +328,7 @@ class SystemBackend:
 
     @staticmethod
     def _inspect_all() -> list[dict[str, Any]]:
-        names = SystemBackend._run(
-            [DOCKER, "ps", "-a", "--format", "{{.Names}}"]
-        ).splitlines()
-        if not names:
-            return []
-        try:
-            documents = json.loads(SystemBackend._run([DOCKER, "inspect", *names]))
-        except (ValueError, TypeError) as exc:
-            raise QuiescentCutoverError("Docker inspection was invalid") from exc
-        if not isinstance(documents, list) or any(
-            not isinstance(document, dict) for document in documents
-        ):
-            raise QuiescentCutoverError("Docker inspection was invalid")
-        return documents
+        return inspect_all(run=SystemBackend._run, error_type=QuiescentCutoverError)
 
     @classmethod
     def _connector_settings(cls, environment: dict[str, str]) -> dict[str, str] | None:

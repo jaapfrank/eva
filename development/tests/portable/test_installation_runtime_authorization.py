@@ -45,7 +45,7 @@ def test_fresh_target_bindings_and_disabled_restored_connectors(monkeypatch, tmp
                 return SimpleNamespace(mappings=lambda: SimpleNamespace(one=lambda: hold))
             return SimpleNamespace(mappings=lambda: SimpleNamespace(all=lambda: [binding]))
     monkeypatch.setattr(module, 'verify_restore_runtime', lambda *a, **k: None)
-    monkeypatch.setattr(module.SystemBackend, '_inspect_all', lambda: [row])
+    monkeypatch.setattr(module, 'inspect_containers', lambda: [row])
     monkeypatch.setattr(module, 'read_installation_package', lambda root: {'archive_sha256': 'c'*64})
     monkeypatch.setattr(module, 'build_access_lease', lambda path: b'expected-access-only-lease')
     monkeypatch.setattr(module, 'read_shared_runtime_file_bytes', lambda *a, **k:

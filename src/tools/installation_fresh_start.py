@@ -17,7 +17,7 @@ from sqlalchemy.engine import make_url
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.initialize_dashboard_authority import initialize_dashboard_authority
-from tools.eva2_quiescent_cutover import SystemBackend, _shared_database_consumers
+from tools.container_inspection import inspect_all as inspect_containers, shared_database_consumers as _shared_database_consumers
 from tools.installation_document_connection import _command
 from tools.installation_target_provisioning import _validate
 
@@ -99,7 +99,7 @@ def start_fresh_runtime(*, runtime_inputs, launch_graph, preparation, image_role
     receipt = {"contract": "EvaFreshRuntimeStart/v1", "status": "not_started",
                "authority_initialized": False, "attempted": [], "started": [],
                "ready": [], "runtime_started": False}
-    inspect = SystemBackend._inspect_all if inspect_all is None else inspect_all
+    inspect = inspect_containers if inspect_all is None else inspect_all
     engine = None
     try:
         graph, prepared, authority = deepcopy(launch_graph), deepcopy(preparation), deepcopy(authority)

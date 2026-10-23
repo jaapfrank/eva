@@ -1,0 +1,116 @@
+{
+  "contract": "EvaE418ContainerInspectionEvidence/v1",
+  "task": "E4.18",
+  "status": "host_tooling_in_use_independently_reviewed",
+  "checkedAt": "2026-10-23T10:42:19.873923+00:00",
+  "baselineCommit": "360ffc783a87ee796003caa533621a1339d68b59",
+  "scopeRecord": "development/design/architecture/e418-container-inspection-ownership.json",
+  "sourceHashes": {
+    "src/tools/eva2_quiescent_cutover.py": "24688f1e66a7c11c8f929b730938cf1b0c958708ace214574decea625fd5d2df",
+    "src/tools/container_inspection.py": "4ccac5fb42fac769fe2a2b08aabd68dd1e6e6c974e7993274b78608791ffb0f0",
+    "development/tests/tools/test_e418_container_inspection.py": "2037ba5711c1c6d8f50384e1e00f6018f0aa8b9ab8f0d374beff893fdb9b3857",
+    "src/tools/restore_runtime_guard.py": "b727d3a14fac27ad6c749f744f097a106ff871c941b92d297d11c487f6c4a6e4",
+    "src/tools/installation_runtime_start.py": "0d3c5322fb927979f53b500933be7e9781dc0579fc96e8d8beb8c11636df86f0",
+    "src/tools/installation_fresh_start.py": "c1bcc063ccd3fa625977bb707c0b7189a7fe5bc0d664c711c3840f09a9926329",
+    "src/tools/installation_runtime_authorization.py": "61437fb996d8f57b2ce309883ec078252c4084de03986aa56d7711089ef5eee5",
+    "development/tests/portable/test_installation_runtime_authorization.py": "0a85e6b865beb249546bddba61e15a757a6455bd0b625d1d12cb6c892afc5d91"
+  },
+  "newTestHash": "2037ba5711c1c6d8f50384e1e00f6018f0aa8b9ab8f0d374beff893fdb9b3857",
+  "checks": {
+    "sharedOwnerAndExistingLegacyCases": {
+      "passed": 16,
+      "seconds": 0.25,
+      "deselected": 151
+    },
+    "isolatedConsumerCandidate": {
+      "uniquePassed": 109,
+      "skipped": 1,
+      "workspaceConsumerFilesChanged": false,
+      "initialRun": "93 pass,16 fail,1 skip; all failures were a removed monkeypatch target in one existing test.",
+      "seamCorrectionRun": "36 pass after changing only the test monkeypatch target in a private candidate copy; existing inputs/assertions unchanged.",
+      "modelCalls": 0
+    },
+    "actualDockerReadOnlyComparison": {
+      "containers": 480,
+      "dsnOwnerComparisons": 65,
+      "sameSnapshotResultsIdentical": true,
+      "serviceStartStopCalls": 0
+    },
+    "candidateActualSourceBinding": {
+      "exactSameBytes": true,
+      "unitTestOnlyChangedSeam": true,
+      "noUnchangedBroadSuiteRerun": true
+    },
+    "actualConsumerImportClosures": [
+      {
+        "module": "tools.restore_runtime_guard",
+        "inspectionOwner": "tools.container_inspection",
+        "legacyCutoverImported": false,
+        "legacyCanaryImported": false
+      },
+      {
+        "module": "tools.installation_runtime_start",
+        "inspectionOwner": "tools.container_inspection",
+        "legacyCutoverImported": false,
+        "legacyCanaryImported": false
+      },
+      {
+        "module": "tools.installation_fresh_start",
+        "inspectionOwner": "tools.container_inspection",
+        "legacyCutoverImported": false,
+        "legacyCanaryImported": false
+      },
+      {
+        "module": "tools.installation_runtime_authorization",
+        "inspectionOwner": "tools.container_inspection",
+        "legacyCutoverImported": false,
+        "legacyCanaryImported": false
+      }
+    ],
+    "actualConsumerImportClosuresScope": "Actual checkout entry imports, not clean-PC install or restored user-flow acceptance."
+  },
+  "beforeAfter": {
+    "measuredScope": "Three fresh Python subprocess imports of restore_runtime_guard; isolated consumer candidate, not deployed user route or Eva reply speed.",
+    "beforeMedianSeconds": 0.05888534098630771,
+    "candidateAfterMedianSeconds": 0.010517294984310865,
+    "beforeProjectModules": [
+      "eva.operations",
+      "eva.operations.logical_restore_authority",
+      "tools.eva2_canary_cutover",
+      "tools.eva2_quiescent_cutover",
+      "tools.restore_runtime_guard"
+    ],
+    "candidateAfterProjectModules": [
+      "tools.container_inspection",
+      "tools.restore_runtime_guard"
+    ],
+    "noClaimOfEvaRuntimeOrTokenImprovement": true
+  },
+  "installation": {
+    "sharedInstallationChanged": false,
+    "restartOrReplacementRequested": false,
+    "consumerWorkspacePathsChanged": true,
+    "currentHostFacadeUsesSharedOwner": true,
+    "noNewContainerOrDaemon": true,
+    "allPathsConfirmedBeforeEdit": true,
+    "actualHostReadSucceeded": true,
+    "historicalCutoverImportedOnActualHostRead": false,
+    "serviceLifecycleCalls": 0
+  },
+  "review": "development/reviews/e418-container-inspection-20261023.json",
+  "usage": {
+    "extraEvaModelCalls": 0,
+    "creditCost": null,
+    "developmentTokens": null,
+    "developmentCost": null
+  },
+  "fullE418Complete": false,
+  "reviewPending": false,
+  "independentReview": {
+    "decision": "GO_SCOPED_HOST_TOOLING_CHANGE",
+    "privateReviewSha256": "c7d8f6e691aad71947ea84ad10b99c8d1eca0eb36f3e26ff9ba43175c4ad6501",
+    "blockingFindings": []
+  },
+  "remaining": "Full E4.18 remains open for actual E4.15/E4.17 handoff and clean-restore/used-route final review. This bounded host-tool change is independently reviewed; no shared runtime restart or replacement.",
+  "gitOwnership": "Only exact confirmed E4.18 paths and own coordination section; foreign staged work was preserved and committed by its executor before E4.18 staging."
+}

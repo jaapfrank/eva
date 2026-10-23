@@ -15,7 +15,7 @@ import sqlalchemy as sa
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.model_credentials import build_access_lease
 from eva.adapters.credentials.runtime_files import read_shared_runtime_file_bytes
-from tools.eva2_quiescent_cutover import SystemBackend
+from tools.container_inspection import inspect_all as inspect_containers
 from tools.installation_gateway_start import _host_file
 from tools.installation_recovery_package import read_installation_package
 from tools.restore_runtime_guard import verify_restore_runtime
@@ -161,7 +161,7 @@ def verify_runtime_authorization(connection, *, package_root, restore_id,
 
 
 def _verify_targets(configuration, runtime_configuration, root, authority, expected_lease):
-    rows = SystemBackend._inspect_all()
+    rows = inspect_containers()
     pins = {item['id']: item for item in runtime_configuration['target']['workers']}
     if {item['id'] for item in configuration['writers']} != set(pins):
         raise ValueError("runtime authorization target coverage differs")

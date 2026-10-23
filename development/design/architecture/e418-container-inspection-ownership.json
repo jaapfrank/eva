@@ -1,0 +1,81 @@
+{
+  "contract": "EvaE418ContainerInspectionOwnership/v1",
+  "task": "E4.18",
+  "checkedAt": "2026-10-23T10:32:36.747445+00:00",
+  "scope": "One read-only inventory and exact DSN consumer owner used by existing maintenance routes; no platform refactor.",
+  "originalTaskCriteriaUnchanged": true,
+  "baselineCommit": "360ffc783a87ee796003caa533621a1339d68b59",
+  "owners": {
+    "containerInventoryAndDsnConsumerSelection": "tools.container_inspection",
+    "historicalCutoverCommandsAndErrors": "tools.eva2_quiescent_cutover; retained facade",
+    "restoreAuthorityAndActivation": "existing restore/runtime operators unchanged",
+    "taskStatusAndDashboard": "wsl-e18 through statusProposal"
+  },
+  "beforeChangeDecision": "Recorded chosenPaths and requestedAdditionalPaths before edits; four active consumers require explicit additional path confirmation.",
+  "compatibility": {
+    "legacyPublicNamesPreserved": [
+      "_shared_database_consumers",
+      "SystemBackend._inspect_all",
+      "QuiescentCutoverError"
+    ],
+    "legacyRunnerInjectionPreserved": true,
+    "onlyChangedLegacyDefinitions": [
+      "_shared_database_consumers",
+      "SystemBackend._inspect_all"
+    ],
+    "otherLegacyMethodAstsUnchanged": true,
+    "defaultCommands": [
+      "docker ps -a --format {{.Names}}",
+      "docker inspect <returned names>"
+    ],
+    "dsnSelection": "Exact /run/secrets/database_dsn mount-source equality and Running is True, unchanged limitations.",
+    "activeConsumerException": "Neutral ContainerInspectionError remains RuntimeError; legacy facades retain QuiescentCutoverError. Existing contracts fail closed; no success inferred from errors.",
+    "dataMigration": null,
+    "serviceLifecycleChanges": false
+  },
+  "fileDecisions": [
+    {
+      "path": "src/tools/eva2_quiescent_cutover.py",
+      "decision": "retain historical commands/public facade; delegate only read-only selection/inventory",
+      "reason": "Active source snapshot still uses _write_dump; historical operator tests/release bindings remain. Not proven deletable."
+    },
+    {
+      "path": "src/tools/eva2_canary_cutover.py",
+      "decision": "retain unchanged",
+      "reason": "Historical cutover and source snapshot dependency remain until actual replacement reviewed."
+    },
+    {
+      "path": "deploy/release/managed-b-release-input-authority-v1.json",
+      "decision": "retain unchanged",
+      "reason": "Original release binding is not silently repinned or treated as current candidate approval."
+    },
+    {
+      "path": "src/tools/installation_source_snapshot.py",
+      "decision": "retain unchanged",
+      "reason": "Uses historical _write_dump, outside this bounded read-only inventory extraction."
+    }
+  ],
+  "deletions": [],
+  "pendingAdditionalPathConfirmations": [],
+  "protectedScopes": [
+    "E1.8",
+    "memory continuity",
+    "initiative",
+    "voice",
+    "HA routes",
+    "model/self-repair WIP",
+    "shared workboard and installation"
+  ],
+  "fullE418Complete": false,
+  "reasonFullTaskRemainsOpen": "E4.15/E4.17 concrete extension/clean-restore acceptance and final used-route review are not completed by this maintenance extraction.",
+  "confirmedAdditionalPaths": {
+    "at": "2026-10-23T10:34:55.687299+00:00",
+    "paths": [
+      "src/tools/restore_runtime_guard.py",
+      "src/tools/installation_runtime_start.py",
+      "src/tools/installation_fresh_start.py",
+      "src/tools/installation_runtime_authorization.py",
+      "development/tests/portable/test_installation_runtime_authorization.py"
+    ]
+  }
+}
