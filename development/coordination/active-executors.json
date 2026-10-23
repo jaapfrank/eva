@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T17:56:29.505254+00:00",
+  "updatedAt": "2026-10-23T18:10:00.634017+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -151,13 +151,13 @@
       "currentPriority": "Transfer to one Windows/WSL coordinator; Telegram contact dispatch works, latency and ordinary Telegram acceptance remain; next retained build E4.15.",
       "handoff": "development/docs/OVERDRACHT-WINDOWS.md",
       "coordinatorTransfer": {
-        "status": "ready_for_new_windows_session",
+        "status": "acknowledged_windows_root_is_active_leader",
         "instruction": "New leader must acknowledge takeover, inspect current reservations and live installation; old external chat must not start the completed Telegram assignment.",
         "previousChatMayClose": true
       }
     },
     "codex-e418": {
-      "task": "E2.9",
+      "task": "E4.15 private exact source/configuration binding proposal",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "development/design/architecture/e418-*.json",
@@ -300,7 +300,7 @@
         "E4.15/E4.17 dependencies remain. Early bounded cleanup does not close E4.18.",
         "Use statusProposal for workboard/docs changes; WSL integrates shared files preserving foreign hunks."
       ],
-      "updatedAt": "2026-10-23T17:56:14.071340+00:00",
+      "updatedAt": "2026-10-23T17:58:45.888199+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -388,12 +388,14 @@
         "allNamedInstalledMethodsValidated": true
       },
       "nextTaskRequest": {
-        "requestedAt": "2026-10-23T16:03:18.537098+00:00",
-        "to": "wsl-e18",
-        "currentScope": "All current bounded E4.17 source correction, actual V2 inactive preservation and same-offline-behavior evidence finished and independently reviewed. Await concrete next scope or real E4.15 managed package handoff.",
-        "request": "Verwerk E4.17-status/dashboard en wijs een volgende zelfstandig uitvoerbare opdracht met concrete bestanden toe, of lever de echte E4.15-pakketoverdracht binnen bestaande E4.17-scope. Geen nieuwe eigenaarvraag of herhaalde ongewijzigde proef nodig.",
-        "sharedInstallationChanged": false,
-        "status": "E2.9 source-only substep self-selected under direct owner continuation; candidate now awaits exact shared integration."
+        "requestedAt": "2026-10-23T18:07:04.166345+00:00",
+        "to": "windows-root",
+        "coordinatorThreadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
+        "status": "candidate_handed_to_coordinator_request_next_or_review_feedback",
+        "standingOwnerInstruction": "Na afronding rechtstreeks bij de coördinator om volgende taak blijven vragen; Jaap niet als tussenpersoon gebruiken.",
+        "completedOutcome": "E2.9 current-project view installed and read-only live verified; canonical dashboard and GitHub commit06195e62 confirmed.",
+        "request": "Next independent task with exact paths, existing route, end condition and shared-installation boundaries. Preserve coordinator-owned integration/Git/installation, voice and other reserved work.",
+        "noOwnActiveModelOrInstall": true
       },
       "assignmentStatus": "in_progress",
       "assignmentCompletion": {
@@ -620,7 +622,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "Completed exact requested E2.9 live UI/hash check; public own evidence and statusProposal ready. Coordinator integrates canonical board/Git; no executor mutation/Git/install.",
+      "status": "Read-only actual source/config/dependency/rights investigation; only private proposal outputs",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -761,6 +763,189 @@
           "instructions": "Read-only live UI/hash verification and own E2.9 evidence only; no stops/mutations/Git/shared installation. Coordinator handles canonical board/Git."
         },
         "resultReadyForCoordinator": true
+      },
+      "coordinatorAssignment": {
+        "id": "e415-household-procedure-candidate-review-20261023",
+        "status": "paused_after_current_read_for_urgent_telegram_review",
+        "coordinator": "windows-root",
+        "task": "E4.15",
+        "outcome": "Independent exact retained candidate review while coordinator completes Telegram latency",
+        "readPaths": [
+          "src/eva/application/household_procedure.py",
+          "src/eva/providers/home_assistant_procedure.py",
+          "src/eva/application/free_will.py:candidate hunks",
+          "src/eva/adapters/postgres/sensory_events.py:candidate hunks",
+          "src/eva/bootstrap/household_initiative.py:candidate hunks",
+          "src/eva/bootstrap/household_initiative_delivery.py:candidate hunks",
+          "src/eva/adapters/model/pydantic_conversation.py:proposal context hunk only"
+        ],
+        "writePaths": [
+          "development/reviews/e415-household-procedure-candidate-20261023.json",
+          "development/coordination/active-executors.json:own section only"
+        ],
+        "endCondition": "Exact hashes and independent GO/NO_GO with source/freshness/STOP/attention and foreign-hunk boundaries; no product acceptance inferred",
+        "restrictions": [
+          "No product edits",
+          "No Git/staging",
+          "No shared installation",
+          "No model probes or external effects",
+          "Reuse prior successful evidence; only necessary missing targeted check"
+        ],
+        "assignedAt": "2026-10-23T17:58:25.854268+00:00"
+      },
+      "previousE29StatusProposal": {
+        "taskId": "E2.9",
+        "status": "in_progress",
+        "checkedAt": "2026-10-23T17:55:42.287866+00:00",
+        "ownerActionRequired": false,
+        "boundedOutcomeCompleted": true,
+        "fullTaskCompleted": false,
+        "progress": "Nieuwe projectenweergave is door windows-root geïnstalleerd en op de echte Eva gecontroleerd. Maximaal twee werkelijk open projecten boven bestaande historie, met geregistreerde bijdrage en directe bestaande bediening. Live: 2 van 6 open projecten, drie geserveerde assethashes exact gelijk aan beoordeelde build, detailnavigatie en mobiel390px goed, nul mutaties/modelcalls/berichten/JS-fouten. Open status wordt niet als lopende uitvoering voorgesteld. Overige E2.9-lifecycles/gegevensroutes blijven open.",
+        "nextAction": "Behoud geïnstalleerde projectenweergave; werk resterende E2.9 Household Artifact/curiosity/trace/personality-gegevensroutes via bestaande bijbehorende kaarten af. Deze beperkte UI-uitkomst is klaar; geen herhaalde proef of volledige E2.9-acceptatieclaim.",
+        "evidenceToAppend": [
+          "development/evidence/product/e29-current-projects-20261023.json"
+        ],
+        "sourceCommit": "0f5720869156e75759a5a1784bae7166df64445c"
+      },
+      "readOnlyReviewAssignment": {
+        "startedAt": "2026-10-23T17:58:45.888199+00:00",
+        "sourceThreadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
+        "outcome": "Exact retained E4.15 household procedure candidate GO/NO_GO with hash-bound findings and acceptance limits.",
+        "readScope": [
+          "src/eva/application/household_procedure.py",
+          "src/eva/providers/home_assistant_procedure.py",
+          "candidate hunks src/eva/application/free_will.py",
+          "candidate hunks src/eva/adapters/postgres/sensory_events.py",
+          "candidate hunks src/eva/bootstrap/household_initiative.py",
+          "candidate hunks src/eva/bootstrap/household_initiative_delivery.py",
+          "small proposal-context hunk only src/eva/adapters/model/pydantic_conversation.py",
+          "associated existing candidate tests",
+          "development/docs/OVERDRACHT-WINDOWS.md",
+          "private windows-handoff-20261023/eva-e415-binding-20261023",
+          "private windows-handoff-20261023/eva-e415-procedure-20261023"
+        ],
+        "writeScope": [
+          "development/reviews/e415-household-procedure-candidate-20261023.json",
+          "own executor coordination section"
+        ],
+        "constraints": [
+          "No source/criteria edits, staging, Git, installation, model/provider/external effects.",
+          "Reuse saved tests/evidence; only concretely missing affected check once.",
+          "No ffff placeholder authority or full E4.15 completion inference. Preserve unrelated model hunks."
+        ]
+      },
+      "urgentReview": {
+        "id": "telegram-learning-successor-query-20261023",
+        "status": "assigned",
+        "readPaths": [
+          "src/eva/adapters/postgres/people_memory_overview.py",
+          "development/tests/postgres/test_contact_person_context.py",
+          "existing private paired runtime-role query evidence"
+        ],
+        "writePaths": [
+          "development/reviews/telegram-learning-successor-query-20261023.json",
+          "development/coordination/active-executors.json:own section"
+        ],
+        "outcome": "Independent review of logically redundant outer event-type filter preserving RLS/typed revision/erasure checks and exact installed overlay",
+        "restrictions": [
+          "No Git",
+          "No installation",
+          "No model or external effects",
+          "Resume retained E4.15 review after urgent review"
+        ]
+      },
+      "urgentReviewAssignment": {
+        "writePaths": [
+          "development/reviews/telegram-learning-successor-query-20261023.json",
+          "development/coordination/active-executors.json:executors.codex-e418"
+        ],
+        "sourceSha256": "0c522a3eac2e3a737d72e6c34adc081244107c3d20b904ec59d1fe05abfdc084",
+        "noCodeGitInstallOrModel": true
+      },
+      "pausedE415Review": {
+        "path": "development/reviews/e415-household-procedure-candidate-20261023.json",
+        "status": "NO_GO_RETAINED_WORKER_CANDIDATE",
+        "remainingReview": true
+      },
+      "urgentReviewResult": {
+        "path": "development/reviews/telegram-learning-successor-query-20261023.json",
+        "sha256": "4d03a0652bfe5692d2f7254eb0f93a06cba2022cafe7d003335b83d8deb6eeb8",
+        "verdict": "GO_SCOPED_QUERY_OVERLAY",
+        "coordinatorMayIntegrate": true,
+        "installedByReviewer": false
+      },
+      "readOnlyReviewResult": {
+        "path": "development/reviews/e415-household-procedure-candidate-20261023.json",
+        "sha256": "d43d6504866c9b9e2369e8920a4a3b801b701a0e99daa7ab74b39c05cd63b2f5",
+        "verdict": "NO_GO",
+        "blockingSourceSha256": "84e97f9b25f8274f0be7479ea1e0c5d5e8948408aecaa34294385c560ad27b2a",
+        "coordinatorRepairRequired": true,
+        "noCodeInstallGitOrModel": true
+      },
+      "privateCandidateAssignment": {
+        "path": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023",
+        "allowedOutputs": [
+          "candidate/bootstrap/household_initiative.py",
+          "candidate/bootstrap/household_initiative_delivery.py",
+          "patches",
+          "manifest"
+        ],
+        "noGitInstallModelOrWorktreeSourceChanges": true
+      },
+      "privateCandidateResult": {
+        "manifest": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/manifest.json",
+        "sha256": "6ee30fa271a20c3835e24dd059e066acf9c4097eb908d066a6746f1b0e206d1e",
+        "files": [
+          {
+            "source": "src/eva/bootstrap/household_initiative.py",
+            "baseSha256": "f1adbe83be1533eccdd8a62496419a87616917eb7d10d76a853ade2375bfbb07",
+            "candidateSha256": "e864e62dd86d3084a9eb1d644d5ad54526cc5253facf72de7e58bd1e56eec765",
+            "patchSha256": "7e8da06ed9020ff1479bcda23271103311c5a25224aee53225799ac22bfc24e3",
+            "compile": "passed_in_memory_no_import_or_effect",
+            "reason": "Preserve worker-specific base. Hook existing model and delivery validator."
+          },
+          {
+            "source": "src/eva/bootstrap/household_initiative_delivery.py",
+            "baseSha256": "a19361a793457523ee5fddb2db204a5e1ee432be93593361a9aa1815d238c65a",
+            "candidateSha256": "1d1033e36bcc0caa8506b587f9f98d339cbfff16fe8c965152ffa1b8d0cefc87",
+            "patchSha256": "aed55ab708700065f33326e427d8fafe25eb27538b7902c579d5c6adb49566e4",
+            "compile": "passed_in_memory_no_import_or_effect",
+            "reason": "Place retained guard, current authority/provenance and attention recheck before external POST; preserve original receipt after effect. No unrelated core quiet-window hunk copied."
+          }
+        ],
+        "compiled": 2,
+        "installed": false,
+        "worktreeSourceChanged": false
+      },
+      "chosenPrivatePaths": [
+        "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023"
+      ],
+      "privateBindingProposalAssignment": {
+        "outputRoot": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023",
+        "noSourceSharedConfigInstallGitModelCameraOrMessages": true,
+        "reviewAdmissionMustBeReal": true
+      }
+    },
+    "e415-independent-review-newchat": {
+      "task": "E4.15",
+      "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+      "status": "in_progress_exact_worker_review",
+      "coordinator": "windows-root",
+      "allowedWritePaths": [
+        "development/reviews/e415-worker-rematerialization-review-20261023.json",
+        "development/coordination/active-executors.json:own section only"
+      ],
+      "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
+      "endCondition": "Independent exact baseline/candidate hashes and GO/NO_GO; guards before effect and receipt intact; no full E4.15 completion",
+      "noGitInstallationModelOrExternalEffects": true,
+      "assignedAt": "2026-10-23T18:07:51.748863+00:00",
+      "startedAt": "2026-10-23T18:08:28.582875+00:00",
+      "boundedOutcome": {
+        "existing": "Retained two worker candidates and original NO_GO.",
+        "gap": "Independent proof corrected exact worker bytes compile and validate before effect against current installation.",
+        "route": "Existing household initiative composition and durable HA delivery.",
+        "doneWhen": "Exact hashes and bounded GO/NO_GO with necessary companion hunks; no installation.",
+        "userUse": "Coordinator may integrate reviewed candidate after baseline recheck."
       }
     }
   },
@@ -940,11 +1125,11 @@
     "authority": "Direct owner instruction 2026-10-23: sole main coordinator; integration, GitHub and shared installation exclusively here.",
     "previousCoordinator": "wsl-e18",
     "preserveExistingReservations": true,
-    "activeOutcome": "Telegram latency and ordinary follow-up before retained E4.15 candidate",
+    "activeOutcome": "Retained E4.15 corrected candidate review and real procedure binding; Telegram speed limits retained",
     "doNotRepeatSentLolaQuestion": true,
     "agents": {
       "telegram_diagnosis": {
-        "mode": "read_only_preparation_latency_diagnosis",
+        "mode": "completed_64_PG_tests_passed",
         "scope": [
           "deploy/telegram-bridge/standalone.mjs",
           "src/eva/application/conversation.py",
@@ -956,10 +1141,16 @@
           "src/eva/providers/telegram_contacts.py",
           "development/tests/providers/test_telegram_contacts.py"
         ],
-        "result": "81 targeted checks passed; provider patch ready"
+        "result": "81 targeted checks passed; provider patch ready",
+        "additionalWriteScope": [
+          "src/eva/adapters/postgres/people_memory_overview.py",
+          "development/tests/postgres/test_contact_person_context.py"
+        ],
+        "endCondition": "Same live-source typed revision and erasure semantics, measured successor-query bottleneck removed with minimal reviewed change; no shared installation or schema change",
+        "evidence": "Actual source-correct read_contact_context 11.32s, _learning_successors SQL waits 10.48s; previous wrong namespace 2ms timing explicitly withdrawn"
       },
       "telegram_review": {
-        "mode": "completed_GO_bounded_live",
+        "mode": "stopped_replaced_by_explicitly_requested_new_chat",
         "scope": [
           "src/eva/providers/telegram_contacts.py",
           "development/tests/providers/test_telegram_contacts.py",
@@ -973,8 +1164,11 @@
     "installationCandidate": {
       "path": "/var/lib/eva2/telegram-latency-20261023",
       "scope": "Telegram provider continuation in core/worker plus separately reviewed exact four E2.9 assets",
-      "status": "installed_live_contact_and_projects_verified_preparation_latency_open",
-      "noQuestionResend": true
-    }
+      "status": "installed_contact_and_projects_verified_following_query_overlay_installed",
+      "noQuestionResend": true,
+      "latestQueryOverlay": "/var/lib/eva2/contact-preparation-20261023",
+      "latestQueryStatus": "installed_targeted_live_improvement_speed_target_open"
+    },
+    "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
   }
 }

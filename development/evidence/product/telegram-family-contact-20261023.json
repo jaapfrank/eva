@@ -65,7 +65,7 @@
       "Separate private chat access is owner-confirmed; current proof does not establish general household understanding."
     ]
   },
-  "nextAction": "Resolve measured 6-7.6 second contact preparation on current installed route, preserve ordinary follow-up and no-repeat delivery; then finish retained E4.15 candidate.",
+  "nextAction": "Preserve installed verified contact/query improvements and explicit latency limits; complete corrected retained E4.15 worker materialization review, exact current provider binding, installation and live verification. Never resend Lola question.",
   "latencyRepair": {
     "checkedAt": "2026-10-23T17:55:36.593259+00:00",
     "status": "installed_contact_continuation_proven_preparation_latency_open",
@@ -127,6 +127,79 @@
       "Prior 40.137 s sending task is not a matched before/after sample for these read-only probes.",
       "No genuine incoming Telegram update or external reply delivery acceptance inferred from captured operator probes.",
       "Development model tokens/credits unavailable; runtime usage above covers only two probes."
+    ]
+  },
+  "preparationQueryRepair": {
+    "checkedAt": "2026-10-23T18:10:00.634017+00:00",
+    "status": "installed_targeted_live_improvement_speed_target_open",
+    "cause": "Runtime RLS prevented the event-type restriction inside mixed JSON relation OR from using the existing index; query scanned about 149283 checkpoints with event lookups.",
+    "change": "One logically redundant outer event-type IN filter; existing RLS, sources, revisions, hashes, erasure and privileges unchanged. No schema/index change.",
+    "sourceSha256": "0c522a3eac2e3a737d72e6c34adc081244107c3d20b904ec59d1fe05abfdc084",
+    "pairedRuntimeRoleReadOnlyQuery": {
+      "baselineSeconds": 1.1753,
+      "candidateSeconds": 0.0198,
+      "sameSnapshotScopeAndParameters": true,
+      "sameRows": true,
+      "baselineExplainMilliseconds": 1382.6,
+      "candidateExplainMilliseconds": 22.6
+    },
+    "tests": {
+      "passed": 64,
+      "seconds": 19.04,
+      "modules": [
+        "test_people_memory_overview",
+        "test_contact_person_context"
+      ],
+      "database": "Own isolated disposable PostgreSQL16.13; no production test data/schema",
+      "initialEnvironmentImportFailurePreserved": true
+    },
+    "review": "development/reviews/telegram-learning-successor-query-20261023.json",
+    "installation": {
+      "core": "sha256:98e6dab1bb50d301164944a345034bd4ab0a2e62f0e4687c356fe2fb1919dd74",
+      "worker": "sha256:c851c7e03f6ab87e7d613993391b56a183a95ae81032163b68486e25b2258740",
+      "configurationPreserved": true,
+      "initialGuardDeferrals": 2,
+      "activeTurnInterrupted": false,
+      "finalGuardActiveCheckpoints": 0,
+      "finalGuardActiveWork": 0
+    },
+    "live": {
+      "mode": "Same two ordinary read-only cases through actual handler/canary/installed model; local outbound capture only",
+      "contactList": {
+        "beforeMilliseconds": 13890,
+        "afterMilliseconds": 9153,
+        "beforePreparationMilliseconds": 6536,
+        "afterPreparationMilliseconds": 1309,
+        "modelCalls": 2,
+        "tools": 1
+      },
+      "ordinaryFollowup": {
+        "beforeMilliseconds": 10913,
+        "afterMilliseconds": 6839,
+        "beforePreparationMilliseconds": 7568,
+        "afterPreparationMilliseconds": 2361,
+        "modelCalls": 1,
+        "tools": 0,
+        "correctlyDeniesReadOrReplyProof": true
+      },
+      "newSends": 0,
+      "newJobs": 0,
+      "inputTokens": 36158,
+      "outputTokens": 93,
+      "credits": null,
+      "ownProbeSourcesNormallyErased": true
+    },
+    "profiles": {
+      "sharedDigitalAndPrivateResearchMatch": true,
+      "preexistingMismatch": [
+        "household_research"
+      ]
+    },
+    "limits": [
+      "Total reply latency still exceeds1-2 second goal; no general speed acceptance.",
+      "No new genuine Telegram incoming update or outbound delivery proof from local captures.",
+      "Original dashboard send receipt is not automatically canonical tool evidence in a different Telegram conversation; source-authenticated history may show the prior answer, which remains model output.",
+      "Development model/tool credits and full runtime costs unknown."
     ]
   }
 }

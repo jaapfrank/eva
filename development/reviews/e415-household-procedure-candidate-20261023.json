@@ -1,0 +1,168 @@
+{
+  "task": "E4.15",
+  "status": "NO_GO_RETAINED_WORKER_CANDIDATE",
+  "reviewIncomplete": false,
+  "interruption": "Urgent Telegram-query review completed; original assigned review now finalized with retained blocking finding.",
+  "productTaskCompleted": false,
+  "findings": [
+    {
+      "priority": 1,
+      "path": "worker-candidate/src/eva/bootstrap/household_initiative_delivery.py",
+      "sha256": "84e97f9b25f8274f0be7479ea1e0c5d5e8948408aecaa34294385c560ad27b2a",
+      "problem": "Validation block inserted inside canonical_sha256 dictionary after HTTP announce; saved worker candidate cannot compile.",
+      "syntax": {
+        "line": 104,
+        "message": "invalid syntax"
+      },
+      "requiredAction": "Coordinator/builder must prepare corrected worker-specific patch against actual installed worker base, preserve existing guards, and request independent review before installation."
+    }
+  ],
+  "otherObservedLimits": [
+    "Core candidate differs from worker candidate; never substitute full core bootstrap files into worker.",
+    "Independent review hash placeholder is not admission.",
+    "Foreign model hunks remain protected; only exact reviewed model-context patch allowed."
+  ],
+  "noCodeOrInstallOrGitOrModelCalls": true,
+  "contract": "EvaIndependentReview/v1",
+  "reviewedAt": "2026-10-23T18:05:51.621739+00:00",
+  "verdict": "NO_GO",
+  "reviewer": "codex-e418 independent read-only reviewer",
+  "sourceBindings": [
+    {
+      "service": "core",
+      "source": "src/eva/application/household_procedure.py",
+      "sourceSha256": "7ae69ecc75a66260fe69cc120f2fbd4bcd49396d34f8e62d757dee8e086d0ccc",
+      "baselineSha256": null
+    },
+    {
+      "service": "core",
+      "source": "src/eva/providers/home_assistant_procedure.py",
+      "sourceSha256": "8cd3c01e95e2916aa82b4eb636f23f0b1cb07605c781b93d20a75018a973412e",
+      "baselineSha256": null
+    },
+    {
+      "service": "core",
+      "source": "src/eva/application/free_will.py",
+      "sourceSha256": "410d3f00f7a7f5a394d9169ec678cf2cb8ce8618ba497cf5854e5616bb1b2a10",
+      "baselineSha256": "5a24686147988ef07c65034bff07d4b49cd8e3dcf9ecbd176d0396fae0725309"
+    },
+    {
+      "service": "core",
+      "source": "src/eva/adapters/postgres/sensory_events.py",
+      "sourceSha256": "e3ab40f597aca6127981416ff7e1bc95bc1463689ecbbf56d0574d01b1d5313c",
+      "baselineSha256": "5145a8cb88994ee38cc00150306e30499b3b041ca6ca5feb16fffe49d40bcf91"
+    },
+    {
+      "service": "core",
+      "source": "src/eva/bootstrap/household_initiative.py",
+      "sourceSha256": "b7a17d6fd0a74cba581a7e146c6882bab73d718c0bae0ede095633a6c0e82fad",
+      "baselineSha256": "283d54b46ee6aadd6cb9428912793e43f48c477cec7712866a36e4a9bbbb545a"
+    },
+    {
+      "service": "core",
+      "source": "src/eva/bootstrap/household_initiative_delivery.py",
+      "sourceSha256": "503efb65943893c58f1047fc93cacbdc4326565479476f696bc6865101dc0597",
+      "baselineSha256": "033b8495db400ec5bad68e8102f41428306aa8dbdebadabe3ce4d6d50d1c3ad4"
+    },
+    {
+      "service": "core",
+      "source": "src/eva/adapters/model/pydantic_conversation.py",
+      "sourceSha256": "d04d71a7360ab9097831bd837d8c96ee8c1f29d8c87dc4cb8c347fcd9decc884",
+      "baselineSha256": "fff3b962caf5a02bddfa2f272f05caa5143603c15b8b4628f117209a672eadfc"
+    },
+    {
+      "service": "delegated-work-worker",
+      "source": "src/eva/application/household_procedure.py",
+      "sourceSha256": "7ae69ecc75a66260fe69cc120f2fbd4bcd49396d34f8e62d757dee8e086d0ccc",
+      "baselineSha256": null
+    },
+    {
+      "service": "delegated-work-worker",
+      "source": "src/eva/providers/home_assistant_procedure.py",
+      "sourceSha256": "8cd3c01e95e2916aa82b4eb636f23f0b1cb07605c781b93d20a75018a973412e",
+      "baselineSha256": null
+    },
+    {
+      "service": "delegated-work-worker",
+      "source": "src/eva/application/free_will.py",
+      "sourceSha256": "410d3f00f7a7f5a394d9169ec678cf2cb8ce8618ba497cf5854e5616bb1b2a10",
+      "baselineSha256": "5a24686147988ef07c65034bff07d4b49cd8e3dcf9ecbd176d0396fae0725309"
+    },
+    {
+      "service": "delegated-work-worker",
+      "source": "src/eva/adapters/postgres/sensory_events.py",
+      "sourceSha256": "eb988fa0537161dfa613a866a9f31f96d6959a7a63ad4b7ac5a2be06d7ba5064",
+      "baselineSha256": "cd929213339d5478c0ffcde281ad661ec030de8dab06a1703a6fd4a87d9a8904"
+    },
+    {
+      "service": "delegated-work-worker",
+      "source": "src/eva/bootstrap/household_initiative.py",
+      "sourceSha256": "e864e62dd86d3084a9eb1d644d5ad54526cc5253facf72de7e58bd1e56eec765",
+      "baselineSha256": "f1adbe83be1533eccdd8a62496419a87616917eb7d10d76a853ade2375bfbb07"
+    },
+    {
+      "service": "delegated-work-worker",
+      "source": "src/eva/bootstrap/household_initiative_delivery.py",
+      "sourceSha256": "84e97f9b25f8274f0be7479ea1e0c5d5e8948408aecaa34294385c560ad27b2a",
+      "baselineSha256": "a19361a793457523ee5fddb2db204a5e1ee432be93593361a9aa1815d238c65a"
+    },
+    {
+      "service": "delegated-work-worker",
+      "source": "src/eva/adapters/model/pydantic_conversation.py",
+      "sourceSha256": "d04d71a7360ab9097831bd837d8c96ee8c1f29d8c87dc4cb8c347fcd9decc884",
+      "baselineSha256": "fff3b962caf5a02bddfa2f272f05caa5143603c15b8b4628f117209a672eadfc"
+    }
+  ],
+  "patchBindings": {
+    "adapters_model_pydantic_conversation.py.patch": "5d937754f297aa8ff82eccef84a95f2159fd9160131d7c1168766ed4465d8e32",
+    "adapters_postgres_sensory_events.py.patch": "adad1a1583dc1b91208cf7e24804c70f570fcf1c378886921387d8b6ef7d2e7e",
+    "application_free_will.py.patch": "baff8e84660efc2ae72cd1bbbb4708a837b550e8d511861184800edaf7c18986",
+    "application_household_procedure.py.patch": "304ddae1be2dcdc6787a8880243c5d6dcf62fa236009c00e68e962fba511180f",
+    "bootstrap_household_initiative.py.patch": "5a6135c27cd17421f81a1c55f25aae4b33d4d45d394a1174a53e0ea0e4354baa",
+    "bootstrap_household_initiative_delivery.py.patch": "13fc62f8dd0eaba376489ac2be3c92b02987c5fb6986a92018539369319e46a3",
+    "model.patch": "5d937754f297aa8ff82eccef84a95f2159fd9160131d7c1168766ed4465d8e32",
+    "providers_home_assistant_procedure.py.patch": "dda473d9ea508df3b5fa22e0067c75f2fea8386d52b34f0f0d65b0b675ac9d7c"
+  },
+  "authoredProcedure": {
+    "bytes": 4686,
+    "sha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+    "outsideCore": true,
+    "authority": "Untrusted isolated proposal only, not execution permission"
+  },
+  "observed": {
+    "actualInstalledBaselineComparison": "Read-only docker exec/hash comparison found both actual installed seven-file service baselines equal retained respective before-files; new modules absent. No install executed.",
+    "corePatches": "All seven core exact-context patches reproduce saved core candidate; worktree equals those saved candidate files.",
+    "workerPatches": "Five exact-context core patches reproduce respective worker candidate; two bootstrap patches do not fit worker baseline exact contexts. Saved worker delivery has SyntaxError line104. No fuzzy-patch repair attempted.",
+    "syntaxCheck": "One in-memory AST parse of each retained candidate source: 13 valid, worker delivery invalid. No imports/network/provider actions.",
+    "existingTestsInspected": [
+      "development/tests/application/test_household_procedure.py",
+      "development/tests/providers/test_home_assistant_procedure.py",
+      "development/tests/postgres/test_household_procedure_expiry.py",
+      "development/tests/bootstrap/test_initiative_quiet_delivery.py"
+    ],
+    "testEvidenceLimit": "Existing source cases inspected and handoff claims retained; no independent saved result found in assigned artifact directories. No broad reruns while candidate already fails syntax."
+  },
+  "contractReview": {
+    "sourceBinding": "Checks exact source hash against current retained ProcedureReference and memory admission scoped principal/project; source stays outside core.",
+    "freshness": "Checks integer expiry bounded to original observation+30s, before/after existing model, and durable expression claim at delivery. Does not invent capture freshness when unknown.",
+    "stopAndAuthority": "Rechecks existing authorization around model/proposal and before effect; custom execution guard tied to current config/reference/transport/source binding. Existing durable no-replay delivery route remains owner of effect.",
+    "attention": "Core candidate keeps existing idle/window checks and rechecks after custom validator; saved worker materialization invalid so cannot claim equivalent functioning worker.",
+    "independentReviewAdmission": "Runtime validates review_sha256 shape only. Draft ffff value is not real review admission; trusted deployment must bind completed actual independent review evidence and exact new candidate.",
+    "foreignModelHunks": "Only exact small household_proposal_context patch reviewed; do not stage/copy whole model file from worktree or discard foreign hunks."
+  },
+  "acceptanceLimits": [
+    "No installation approval for these retained hashes, including no core-only partial adoption to evade worker failure.",
+    "Prepare corrected worker-specific materialization from then-current installed baseline; preserve original error and request review of exact changed candidate/guards.",
+    "Any new worker materialization must preserve worker-specific existing checks, not replace whole bootstrap files with core versions.",
+    "Functional source binding/freshness/STOP/attention and actual isolated procedure usage remain bounded evidence requirements for corrected candidate, not satisfied by AST alone.",
+    "No full E4.15, autonomous household benefit, model quality or family acceptance claim.",
+    "No voice-code/config/installation changes reviewed or authorized."
+  ],
+  "usage": {
+    "newModelProviderTrials": 0,
+    "testSuiteReruns": 0,
+    "sharedRestarts": 0,
+    "gitMutations": 0,
+    "creditCosts": "unknown"
+  }
+}

@@ -366,6 +366,9 @@ class PostgresOwnerMemorySources:
                 c.installation_id == e.installation_id, c.thread_id == e.thread_id)).where(
             e.tenant_id == self._scope.tenant_id, e.installation_id == self._scope.installation_id,
             e.sequence == 1, e.occurred_at <= now,
+            # Keep the indexed event-type restriction outside the JSON relation.
+            # Runtime RLS cannot push its LIKE branches below the security barrier.
+            e.event_type.in_(("HUMAN_UNDERSTANDING_ADMITTED", "MEMORY_RETAIN_QUEUED")),
             data["principal_id"].astext == principal_id,
             data["project_id"].astext.is_not_distinct_from(query.project_id), relation,
         ).limit(MAX_LEARNING_RECORDS * 2 + 1)).all()

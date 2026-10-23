@@ -1,0 +1,113 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "Telegram learning-successor query latency",
+  "reviewedAt": "2026-10-23T18:05:08.277804+00:00",
+  "reviewer": "codex-e418 independent from builder/windows-root",
+  "verdict": "GO_SCOPED_QUERY_OVERLAY",
+  "findings": [],
+  "scope": {
+    "source": "src/eva/adapters/postgres/people_memory_overview.py",
+    "symbol": "PostgresOwnerMemorySources._learning_successors",
+    "baselineSha256": "6ad6481a6c116b6d492ec4900a28b52bbb674458e41e92097e7079e728ebea38",
+    "candidateSha256": "0c522a3eac2e3a737d72e6c34adc081244107c3d20b904ec59d1fe05abfdc084",
+    "change": "Two comments and one logically redundant event_type IN predicate outside existing relation OR. No other changes in actual installed base-to-overlay diff for either service."
+  },
+  "correctness": {
+    "logicalEquivalence": "Each existing relation branch already requires one of exactly the two selected event types; SQL NULL behavior cannot admit a row excluded by the new redundant predicate.",
+    "unchanged": [
+      "tenant/installation/principal/project constraints",
+      "sequence/time conditions",
+      "same REPEATABLE READ authority snapshot and runtime RLS",
+      "payload hash checks",
+      "bounded predecessor/successor chain traversal",
+      "pending and erased successor blocking",
+      "source content/trust/origin checks",
+      "query row limit and overflow rejection"
+    ],
+    "noSchemaIndexRlsChanges": true
+  },
+  "measurement": {
+    "origin": "Builder evidence read and hash-bound by independent reviewer; not rerun",
+    "evidenceSha256": "6482d7007c80c097b5bafa829246f21fc30a46b1df0334725407d7f83af20b1a",
+    "runtimeRole": "eva_runtime",
+    "isolation": "REPEATABLE READ READ ONLY",
+    "sameBindParameters": true,
+    "baselineSeconds": 1.1753,
+    "candidateSeconds": 0.0198,
+    "baselineResultRows": 0,
+    "candidateResultRows": 0,
+    "planBaselineMilliseconds": 1382.593,
+    "planCandidateMilliseconds": 22.557,
+    "interpretation": "Measured query optimization on this snapshot; not proof of full Telegram end-to-end latency or all nonempty datasets. Existing correctness cases provide complementary coverage."
+  },
+  "existingTests": {
+    "rerunByReviewer": false,
+    "passed": 64,
+    "seconds": 19.04,
+    "paths": [
+      "development/tests/postgres/test_people_memory_overview.py",
+      "development/tests/postgres/test_contact_person_context.py"
+    ],
+    "testLogSha256": "fa2930ab36d95d6fd7d0c0e5534e0bdee72e16fd303b9131b5e1bb17d717df69",
+    "environment": "Coordinator reports pinned pydantic-ai2.37 environment and disposable PG16.13; reviewer read resulting log.",
+    "earlierEnvironmentFailureRetainedSha256": "1c3022b4225aa823bcd07ae123a6e742b1ef6f1e2d517909c3ada3e71bbd07e8"
+  },
+  "installationCandidate": {
+    "manifest": {
+      "core": {
+        "base": "sha256:4a9757c78aa5304b685bea16d1451b045d05ef7071ed018049d70406a92db021",
+        "container": "43b88e4e98fe58368b7b39f703fa5182085797560b644e791644db87f5d25525",
+        "candidate": "sha256:98e6dab1bb50d301164944a345034bd4ab0a2e62f0e4687c356fe2fb1919dd74",
+        "files": {
+          "adapters/postgres/people_memory_overview.py": {
+            "before": "6ad6481a6c116b6d492ec4900a28b52bbb674458e41e92097e7079e728ebea38",
+            "after": "0c522a3eac2e3a737d72e6c34adc081244107c3d20b904ec59d1fe05abfdc084"
+          }
+        }
+      },
+      "delegated-work-worker": {
+        "base": "sha256:35ab213c37486b3a904c19935c7254ee230bc440297658c0bf54ec4dc5f0e658",
+        "container": "122a0075c464958a5c72485c77797b14513fab7b93d430164fb763e3e3a50a0b",
+        "candidate": "sha256:c851c7e03f6ab87e7d613993391b56a183a95ae81032163b68486e25b2258740",
+        "files": {
+          "adapters/postgres/people_memory_overview.py": {
+            "before": "6ad6481a6c116b6d492ec4900a28b52bbb674458e41e92097e7079e728ebea38",
+            "after": "0c522a3eac2e3a737d72e6c34adc081244107c3d20b904ec59d1fe05abfdc084"
+          }
+        }
+      }
+    },
+    "manifestSha256": "a938e45fc6e98e4e0232467bdea56c59632357f319edb62fbeb9f02045c1f2ac",
+    "beforeConfigurationSha256": "b41ae82aac73f2d4abbfc7cf6dd862d83a691a7a7290fb03c9495ee4036dc247",
+    "candidateConfigurationSha256": "d2e35988a75ac4ab8958786d12ae8706fc5f1703696f96110103610179c40a88",
+    "installScriptSha256": "c77f8e711f72f9fbae11f9d07addd2ebfe97acff25151afb9aba3727fccfe553",
+    "verifiedReadOnly": [
+      "Both actual running bases match manifest baseline image and source hashes",
+      "Overlay source matches reviewed worktree exact hash in both services",
+      "Candidate image Config equals respective actual baseline Config",
+      "All respective base RootFS layers preserved, one new COPY layer each",
+      "Dockerfiles copy only reviewed source file",
+      "Compose changes only core/image and delegated-work-worker/image",
+      "Installer rechecks baseline image, compose binding and exact storage, then active checkpoints/background work/component evaluation before dispatch",
+      "Existing durable pre-dispatch receipt/no automatic retry retained",
+      "Installer postchecks image/storage/configuration and Compose --wait"
+    ],
+    "reviewDoesNotExecuteInstall": true,
+    "admissionConditions": [
+      "Coordinator must repeat live active-claim checks immediately before replacement",
+      "Only these exact images/config/script; preserve other executor work",
+      "Verify actual contact route after install; health alone is not user outcome"
+    ]
+  },
+  "limits": [
+    "Not approval of retained E4.15 worker candidate; that has separate NO_GO",
+    "No voice implementation or installation changes authorized by this review",
+    "No whole-project completion or household acceptance claim",
+    "Zero model/provider calls, no external messages or runtime effects by review"
+  ],
+  "usage": {
+    "evaRuntimeModelCalls": 0,
+    "independentModelTrials": 0,
+    "credits": "unknown; not estimated"
+  }
+}
