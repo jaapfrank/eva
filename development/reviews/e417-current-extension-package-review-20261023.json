@@ -2,7 +2,7 @@
   "contract": "EvaIndependentReview/v1",
   "task": "E4.17 same E4.15 extension recovery package",
   "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-  "status": "operator_core_and_complete_inactive_host_data_verified_functional_acceptance_open",
+  "status": "phase1_cold_start_admitted_actual_execution_pending_phase2_input_binding_open",
   "verdict": "GO_SCOPED_OPERATOR_NATIVE_CORE_RESTORE_HOST_FUNCTION_PENDING",
   "startedAt": "2026-10-23T20:27:36Z",
   "assetInput": {
@@ -1954,6 +1954,111 @@
         "Expected result determined from those actual facts under these existing guards, never from an invented faces=0 payload."
       ],
       "actualFunctionalInputOrReplayApproved": false
+    },
+    "phase1ColdStartLaunchPlanReview": {
+      "verdict": "GO_SCOPED_PHASE1_COLD_START_HEALTH_AUTH401_STOP",
+      "checkedAtMachineUtc": "2026-10-23T23:58:00.707278+00:00",
+      "clientTaskDate": "2026-10-24",
+      "planPath": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/phase1-cold-start-plan.private.json",
+      "planSha256": "f565d2cd0e7c0d3983ce2a7d8275ab092c3930dececdd0c56613e3b3016646e3",
+      "targetRoot": "/home/administrator/project/.eva2-artifacts/e417-cold-probe-20261024",
+      "optionalViewReceiptSha256": "4ca1c439b8f9e019098eb4905e4dfae71281a899373e7e3664a3435fbd82a900",
+      "independentObserved": {
+        "all13DeclaredActualFileSha256Match": true,
+        "actualUidGid": [
+          1000,
+          1000
+        ],
+        "all13RegularSingleLinkPrivateMode": true,
+        "emptyStateRootsChecked": 8,
+        "stateFilesOrLinks": 0,
+        "prospectiveProfileOnlyChangedKeys": [
+          "readyToLaunch",
+          "runtimeUidProvisioningAdmitted"
+        ],
+        "prospectiveProfileSha256": "afa9b92905c3b274215538a044e11521b91200d586884beb3026d6ef1bd11111",
+        "envIExplicitBeforeCopiedElf": true,
+        "wrapperFlags": [
+          "-I",
+          "-S",
+          "-B"
+        ],
+        "dependencyRootsCanonicalPresent": 3,
+        "dependencyPthFiles": 0,
+        "dependencySymlinks": 0,
+        "originalConfigSha256": "f98773109740cf6048cb9dcb9adf624dc43b6270319553544d640fc515daa914",
+        "originalFieldsEqual": [
+          "allowed_paths",
+          "command",
+          "cpus",
+          "deadline_seconds",
+          "image",
+          "memory_mb",
+          "output_bytes",
+          "pids",
+          "procedure_execution_enabled"
+        ],
+        "viewConfigKeys": [
+          "allowed_paths",
+          "bind_host",
+          "command",
+          "cpus",
+          "deadline_seconds",
+          "image",
+          "memory_mb",
+          "output_bytes",
+          "pids",
+          "port",
+          "procedure_execution_enabled",
+          "token_file"
+        ],
+        "optionalDispatcherKeysAbsent": true,
+        "originalGenericEvaluateEndpointStillExists": true,
+        "credentialFilesMetadataOnly": {
+          "count": 2,
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "regularSingleLink": true,
+          "valuesOrHashesRead": false
+        },
+        "portListenersObserved": {
+          "46080": 0,
+          "46081": 0
+        },
+        "originalCpuHealthSourcePath": "FaceIdentityBridge health -> _cpu_result(None) -> original local_face_cpu.py --check -> pinned_models + CPUExecutionProvider availability; extract branch not selected",
+        "cpuCheckInferenceChecked": false,
+        "cpuCheckDownloads": false
+      },
+      "admittedScope": [
+        "start only the two own UID1000 process groups with declared clean environment and private logs",
+        "public host /health",
+        "one unauthorized no-body POST /run-procedure expecting 401",
+        "authenticated original CPU bridge /health with --check only",
+        "STOP recorded own process groups; record exit and port closure; exact own container cleanup only if any recorded"
+      ],
+      "executorPreStartRequirements": [
+        "coordinator admission of this exact plan",
+        "recheck declared pins, empty state, free ports and own held core/worker created/Pid0",
+        "atomic copy exact prospective profile bytes as UID1000, preserving inactive profile evidence",
+        "record actual UID/GID and process-group IDs; enforce bounded STOP/cleanup"
+      ],
+      "notAdmitted": [
+        "authenticated /run-procedure",
+        "/evaluate",
+        "camera",
+        "inference/model/scorer calls",
+        "core/worker start",
+        "live household action",
+        "full E417 or family acceptance"
+      ],
+      "phase2": "Separate NO_GO pending independently bound original discovery inventory and authenticated profile-health facts; source-event extraction alone does not provide those bindings.",
+      "reviewerStartedServices": false,
+      "reviewerImportedTargetSdkOrExecutedTargetModules": false,
+      "existingStrictCpuImportFailureUnchanged": true,
+      "largerPackageElfDatabaseOrResourceTestsRepeated": false,
+      "newBlockingDefects": [],
+      "handoff": "Exact scoped GO sent directly to coordinator before report serialization so the builder can proceed."
     }
   },
   "contractRequirements": {
@@ -2095,6 +2200,19 @@
       "targetImportsScorersModelsOrServices": 0,
       "developmentTokens": null,
       "developmentCredits": null
+    },
+    "latestPhase1LaunchPlanReview": {
+      "reviewerServiceStarts": 0,
+      "reviewerTargetImports": 0,
+      "modelCalls": 0,
+      "inferenceCalls": 0,
+      "credentialValueOrHashReads": 0,
+      "liveDatabaseQueries": 0,
+      "additionalPaidRoutes": 0,
+      "developmentTokens": null,
+      "developmentCredits": null,
+      "wholeElapsedSeconds": null,
+      "boundary": "Read-only exact launch-plan/config/source/metadata review. Prior data and ABI proof reused; no new execution evidence claimed."
     }
   },
   "onlyWritePath": "development/reviews/e417-current-extension-package-review-20261023.json",

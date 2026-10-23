@@ -16980,7 +16980,7 @@
       "ownerReviewerCorrection": "Latest direct owner instruction: original chat01a169f2 is sole tester/reviewer; replacement01a16a55-1607 is standby with claims released."
     },
     "e417CurrentDelivery20261023": {
-      "stage": "full_inactive_host_preparation_independently_verified_functional_start_boundaries_open",
+      "stage": "exact_phase1_independently_approved_and_private_execution_authorized",
       "profileAdapter": "src/tools/installation_face_profile_snapshot.py",
       "profileTestsPassed": 10,
       "actualProfileRows": 24,
@@ -17240,9 +17240,22 @@
       "cpuContextualEntryPoints": 214,
       "cpuContextualDependencyEdges": 1867,
       "sourceLedgerCpuSchemaIndependentReportSha256": "96e10edd9bbcb8194f0880c7324e03e03077379a2346b06ce004a6f6ce5868c4",
-      "functionalStartConfigurationReviewPending": true,
+      "functionalStartConfigurationReviewPending": false,
       "functionalInputProvenanceReviewPending": true,
-      "procedureOptionalSchemaIndependentReview": "GO_SCOPED_EXISTING_OPTIONAL_CONFIG_VIEW_FEASIBILITY_NOT_START"
+      "procedureOptionalSchemaIndependentReview": "GO_SCOPED_EXISTING_OPTIONAL_CONFIG_VIEW_FEASIBILITY_NOT_START",
+      "functionalPhase1IndependentVerdict": "GO_SCOPED_PHASE1_COLD_START_HEALTH_AUTH401_STOP",
+      "functionalPhase1ExecutionAuthorized": true,
+      "functionalPhase1ExecutionComplete": false,
+      "functionalPhase1PreflightAttempt1": {
+        "receiptSha256": "dd2217a79f8716752c82f8d821182778cbb9117bb5577923f2458020e5c9dd6a",
+        "result": "raw_bind_46080_errno98_before_profile_activation_or_service_start",
+        "listenerObserved": false,
+        "coordinatorSubsequentTcpTablesContain46080Or46081": false,
+        "foreignProcessStopped": false,
+        "causeUnproven": true,
+        "oneRetryWithUnchangedPlanAndAllOriginalGuardsAuthorized": true,
+        "furtherRetryLoopAuthorized": false
+      }
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",
