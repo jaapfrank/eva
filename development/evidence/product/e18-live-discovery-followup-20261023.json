@@ -1,0 +1,87 @@
+{
+  "task": "E1.8",
+  "recordedAt": "2026-10-23T10:40:58.164149+00:00",
+  "outcome": "Existing installed private chat/worker found an actual household sensor with unavailable battery data. A second owner-authorized developer request created one future read-only check.",
+  "trigger": "Codex-relayed practical task; not spontaneous initiative. No entity ID, desired household finding or future check time supplied.",
+  "sourceDiscovery": {
+    "actualHomeAssistantAvailable": true,
+    "operatorSawCalendarsAndBackupSources": true,
+    "operatorFindingsNotSuppliedToLiveTask": true
+  },
+  "liveRoute": {
+    "ingress": "POST /internal/v1/dashboard/conversation/respond",
+    "firstReplySeconds": 9.876,
+    "firstReplyWasAcknowledgement": true,
+    "workStartedAt": "2026-10-23T10:34:19Z",
+    "workCompletedAt": "2026-10-23T10:35:18Z",
+    "workState": "succeeded",
+    "outputSha256": "1b1ae1231fa8e47728e57ba209fb917e2d40af925af481cbe7a379af6b1ef550",
+    "wholeResultSemanticallyVerified": false,
+    "measuredPartialUsage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "partial",
+      "completed_model_responses": 6,
+      "tool_calls": 5,
+      "input_tokens": 73934,
+      "output_tokens": 747,
+      "total_tokens": 74681,
+      "cost_usd_micros": null
+    },
+    "verifiedReadReceipts": {
+      "route": "exact background execution namespace",
+      "operations": [
+        "bounded entity inventory",
+        "bounded entity inventory",
+        "template POST used only to read six sensor states",
+        "exact entity GET"
+      ],
+      "terminalEvents": "STATE_VERIFIED",
+      "exactGetHttpStatus": 200,
+      "exactGetState": "unavailable",
+      "sourceResponseSha256": "08852a8d4230ebdbfe3152c2a2e5ef8f12415367a35f1dcb789c3b403ad44b94",
+      "physicalBatteryConditionProven": false
+    },
+    "externalMessagesRequested": false,
+    "deviceChangesRequested": false
+  },
+  "followup": {
+    "replySeconds": 19.65,
+    "trigger": "Second Codex-relayed request to persist one later read; not autonomously stored by the first research task.",
+    "state": "scheduled",
+    "runAtUtc": "2026-10-24T08:00:00Z",
+    "localTime": "2026-10-24 10:00 Europe/Amsterdam",
+    "timeChosenByEva": true,
+    "independentlyReloaded": true,
+    "recurrent": false,
+    "destination": "original private dashboard conversation",
+    "executionObserved": false,
+    "resultContent": "If the value returns, finish; otherwise record one concrete next step without automatic retries."
+  },
+  "modelProbes": {
+    "scope": "Shadow only, no adoption/delivery; source-supplied case not source-discovery proof.",
+    "candidate": "Clearer API descriptor prefix, no installed source change.",
+    "candidateOutcome": "Both baseline and metadata-only candidate chose silence; candidate rejected.",
+    "calls": 4,
+    "inputTokens": 50116,
+    "outputTokens": 858,
+    "seconds": 48.164
+  },
+  "ownerFeedback": {
+    "recordedThrough": "existing owner initiative feedback service, request-key idempotent",
+    "source": "Actual owner development conversation; no fabricated Telegram ingress",
+    "completedResultPreserved": true
+  },
+  "installation": {
+    "newCodeOrRestartNeeded": false,
+    "reason": "Existing installed chat, worker, source tools and durable scheduling performed the task."
+  },
+  "boundaries": [
+    "Followup is stored, not executed yet.",
+    "Original E1.8 anticipation and later owner-correction conditions are not all proven.",
+    "Schedule reply included unnecessary internal identifier/storage-time prose; no natural-language quality completion claim.",
+    "Worker usage is partial; credits and whole development cost unknown.",
+    "Private calendar titles, raw source data and conversation text are not published."
+  ],
+  "fullE18Complete": false
+}

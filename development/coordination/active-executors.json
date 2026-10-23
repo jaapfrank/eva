@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T10:06:37.095295+00:00",
+  "updatedAt": "2026-10-23T10:34:55.687299+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -32,7 +32,19 @@
         "development/design/product/execution-workboard-v1.json",
         "development/docs/WERKBORD.md"
       ],
-      "note": "Reservations do not transfer ownership of foreign WIP in these files."
+      "note": "Reservations do not transfer ownership of foreign WIP in these files.",
+      "e418AdditionalPathConfirmation": {
+        "confirmedAt": "2026-10-23T10:34:55.687299+00:00",
+        "paths": [
+          "src/tools/restore_runtime_guard.py",
+          "src/tools/installation_runtime_start.py",
+          "src/tools/installation_fresh_start.py",
+          "src/tools/installation_runtime_authorization.py",
+          "development/tests/portable/test_installation_runtime_authorization.py"
+        ],
+        "status": "approved_for_import_replacement_only",
+        "scope": "Replace historical cutover imports with the shared read-only inspection helper. Preserve signatures, errors, DSN matching, ordering, authority and startup/restore semantics. No deployment or restart approval. Recheck concurrent changes before edits. Existing test may redirect its monkeypatch to the new inspection seam only; inputs and assertions unchanged."
+      }
     },
     "codex-e418": {
       "task": "E4.18",

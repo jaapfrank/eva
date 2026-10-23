@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-23T08:46:02.452131+00:00",
+  "lastUpdated": "2026-10-23T10:40:58.321748+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E1.8",
@@ -847,8 +847,8 @@
     "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
     "status": "in_progress",
     "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.",
-    "nextAction": "Voor de afsluitende praktijkproef is één echte aankomende gezinsafspraak of terugkerende zorg met moment gevraagd. Actuele bedoelingen en gewone open opdrachten gecontroleerd: alleen oude technische taken beschikbaar, waaronder onzekere UniFi-uitvoering; die niet blind hervatten. Daarna de afspraak via de herstelde dagcontext naar nuttig initiatief, correctie en latere uitkomst volgen.",
-    "ownerActionRequired": true
+    "nextAction": "Controleer vanaf 24 oktober 10:00 Amsterdam de werkelijke uitvoering en terugmelding van de opgeslagen eenmalige sensorcontrole. Behoud oude bron als historie en verwerk echte correctie wanneer beschikbaar. Originele E1.8-eindvoorwaarden blijven open; geen extra planning, automatische herhaling of fictieve eigenaarafspraak toevoegen.",
+    "ownerActionRequired": false
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -2992,7 +2992,7 @@
         "now": {
           "taskId": "E1.8",
           "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
-          "summary": "E1.8: echte ochtendopvolging gecontroleerd: Eva gebruikte het zelfgekozen moment om 08:01 UTC, maar miste twee ontvangen antwoorden. Oorzaak: compactie verwijderde gesprekstekst binnen één uur bij UTC-middernacht; nul duurzame feiten sloten recent gesprek eveneens uit. Herstel geïnstalleerd op kern en werker: volledige 24-uurscontext, ook na nul duurzame feiten. Dezelfde geïnstalleerde code doorstaat avond→droom→ochtend→wissen, naast regressies. Oude gecompacteerde tekst niet hersteld. Geen nieuwe planner of synthetische gezinsafspraak.",
+          "summary": "E1.8: echte privéchat/werker onderzocht zelf beschikbare huisbronnen en vond een ontbrekende sensorbatterijwaarde; actuele GET-bron onafhankelijk gecontroleerd. Na expliciet Codex-vervolgverzoek koos Eva zelf 24 oktober 10:00 Amsterdam voor één opgeslagen leescontrole; planning onafhankelijk teruggelezen. Geen bron-ID/uitkomst voorgezegd, geen apparaatwijziging of extern bericht. Bestaande geïnstalleerde route, geen nieuwe patch. Dit is begeleide praktijkuitvoering, geen spontaan initiatief of reeds uitgevoerde vervolgcontrole.",
           "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel."
         },
         "next": {
@@ -5892,7 +5892,7 @@
                 "kind": "owner_requested_followup",
                 "scopeOrigin": "entity-development-20261021",
                 "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
-                "ownerActionRequired": true,
+                "ownerActionRequired": false,
                 "ownerAuthorization": "Eigenaar21oktober2026: vergelijk OpenClaw, Hermes en OpenCode, maak ook taken voor het voorafgaande voorstel over zelfstandig mens-/huisbegrip, routines, voorkeuren, humor, initiatief en eigen leven, en werk een ambitieuzere onderscheidende Eva uit. Deze registratie plant uitvoering; een onderzoeksdocument is geen gebouwde functie.",
                 "requiredForCurrentDelivery": true,
                 "scopeDecision": "Nieuwe expliciete eigenaaruitkomst binnen bestaande E1/E4; eerdere gesloten criteria en acceptaties blijven exact behouden.",
@@ -5930,7 +5930,7 @@
                 "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Voor de afsluitende praktijkproef is één echte aankomende gezinsafspraak of terugkerende zorg met moment gevraagd. Actuele bedoelingen en gewone open opdrachten gecontroleerd: alleen oude technische taken beschikbaar, waaronder onzekere UniFi-uitvoering; die niet blind hervatten. Daarna de afspraak via de herstelde dagcontext naar nuttig initiatief, correctie en latere uitkomst volgen.",
+                "nextAction": "Controleer vanaf 24 oktober 10:00 Amsterdam de werkelijke uitvoering en terugmelding van de opgeslagen eenmalige sensorcontrole. Behoud oude bron als historie en verwerk echte correctie wanneer beschikbaar. Originele E1.8-eindvoorwaarden blijven open; geen extra planning, automatische herhaling of fictieve eigenaarafspraak toevoegen.",
                 "ownerInitiativeClarification20261021": {
                   "status": "required_not_yet_proven",
                   "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -5952,8 +5952,8 @@
                   "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "E1.8: echte ochtendopvolging gecontroleerd: Eva gebruikte het zelfgekozen moment om 08:01 UTC, maar miste twee ontvangen antwoorden. Oorzaak: compactie verwijderde gesprekstekst binnen één uur bij UTC-middernacht; nul duurzame feiten sloten recent gesprek eveneens uit. Herstel geïnstalleerd op kern en werker: volledige 24-uurscontext, ook na nul duurzame feiten. Dezelfde geïnstalleerde code doorstaat avond→droom→ochtend→wissen, naast regressies. Oude gecompacteerde tekst niet hersteld. Geen nieuwe planner of synthetische gezinsafspraak.",
-                "checkedAt": "2026-10-23T08:46:02.452107+00:00"
+                "progress": "E1.8: echte privéchat/werker onderzocht zelf beschikbare huisbronnen en vond een ontbrekende sensorbatterijwaarde; actuele GET-bron onafhankelijk gecontroleerd. Na expliciet Codex-vervolgverzoek koos Eva zelf 24 oktober 10:00 Amsterdam voor één opgeslagen leescontrole; planning onafhankelijk teruggelezen. Geen bron-ID/uitkomst voorgezegd, geen apparaatwijziging of extern bericht. Bestaande geïnstalleerde route, geen nieuwe patch. Dit is begeleide praktijkuitvoering, geen spontaan initiatief of reeds uitgevoerde vervolgcontrole.",
+                "checkedAt": "2026-10-23T10:40:58.321742+00:00"
               },
               {
                 "id": "E1.9",
@@ -8097,7 +8097,7 @@
               {
                 "id": "E4.18",
                 "title": "Gebruikte uitvoering en onderhoud gericht vereenvoudigen",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "scopeOrigin": "living-housemate-20261022",
                 "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
@@ -8113,11 +8113,13 @@
                   "E4.15",
                   "E4.17"
                 ],
-                "nextAction": "Gebruik de concrete E4.15/E4.17-overdracht als afbakening; leg te verwijderen duplicatie en compatibiliteit vast vóór wijzigingen, hergebruik de bestaande inventaris.",
+                "nextAction": "Onafhankelijke review van de concrete bronkandidaat; gedeelde Git-index van andere uitvoerder niet wijzigen. Integreer deze onderhoudsuitkomst in E4.18 zonder de volledige kaart te sluiten.",
                 "continuityImplementationSteps": [
                   "Consolideer alleen dubbel werk op deze gebruikte route; geen procespopulatie of metabolismeframework."
                 ],
-                "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection"
+                "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
+                "progress": "Afgesproken containerinspectie-extractie is in de actuele hosttooling toegepast.16gerichte bron-/legacychecks en109unieke kandidaatgevalcontroles geslaagd,1skip. Echte hostinspectie gebruikt de neutrale eigenaar zonder historische overzetmodule; geen daemonherstart of runtimewinst geclaimd.",
+                "checkedAt": "2026-10-23T10:37:37.537828+00:00"
               },
               {
                 "id": "E4.19",
@@ -8689,7 +8691,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Voor de afsluitende praktijkproef is één echte aankomende gezinsafspraak of terugkerende zorg met moment gevraagd. Actuele bedoelingen en gewone open opdrachten gecontroleerd: alleen oude technische taken beschikbaar, waaronder onzekere UniFi-uitvoering; die niet blind hervatten. Daarna de afspraak via de herstelde dagcontext naar nuttig initiatief, correctie en latere uitkomst volgen.",
+        "nextAction": "Controleer vanaf 24 oktober 10:00 Amsterdam de werkelijke uitvoering en terugmelding van de opgeslagen eenmalige sensorcontrole. Behoud oude bron als historie en verwerk echte correctie wanneer beschikbaar. Originele E1.8-eindvoorwaarden blijven open; geen extra planning, automatische herhaling of fictieve eigenaarafspraak toevoegen.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -11829,7 +11831,7 @@
               "kind": "owner_requested_followup",
               "scopeOrigin": "entity-development-20261021",
               "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
-              "ownerActionRequired": true,
+              "ownerActionRequired": false,
               "ownerAuthorization": "Eigenaar21oktober2026: vergelijk OpenClaw, Hermes en OpenCode, maak ook taken voor het voorafgaande voorstel over zelfstandig mens-/huisbegrip, routines, voorkeuren, humor, initiatief en eigen leven, en werk een ambitieuzere onderscheidende Eva uit. Deze registratie plant uitvoering; een onderzoeksdocument is geen gebouwde functie.",
               "requiredForCurrentDelivery": true,
               "scopeDecision": "Nieuwe expliciete eigenaaruitkomst binnen bestaande E1/E4; eerdere gesloten criteria en acceptaties blijven exact behouden.",
@@ -11867,7 +11869,7 @@
               "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Voor de afsluitende praktijkproef is één echte aankomende gezinsafspraak of terugkerende zorg met moment gevraagd. Actuele bedoelingen en gewone open opdrachten gecontroleerd: alleen oude technische taken beschikbaar, waaronder onzekere UniFi-uitvoering; die niet blind hervatten. Daarna de afspraak via de herstelde dagcontext naar nuttig initiatief, correctie en latere uitkomst volgen.",
+              "nextAction": "Controleer vanaf 24 oktober 10:00 Amsterdam de werkelijke uitvoering en terugmelding van de opgeslagen eenmalige sensorcontrole. Behoud oude bron als historie en verwerk echte correctie wanneer beschikbaar. Originele E1.8-eindvoorwaarden blijven open; geen extra planning, automatische herhaling of fictieve eigenaarafspraak toevoegen.",
               "ownerInitiativeClarification20261021": {
                 "status": "required_not_yet_proven",
                 "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -11889,8 +11891,8 @@
                 "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "E1.8: echte ochtendopvolging gecontroleerd: Eva gebruikte het zelfgekozen moment om 08:01 UTC, maar miste twee ontvangen antwoorden. Oorzaak: compactie verwijderde gesprekstekst binnen één uur bij UTC-middernacht; nul duurzame feiten sloten recent gesprek eveneens uit. Herstel geïnstalleerd op kern en werker: volledige 24-uurscontext, ook na nul duurzame feiten. Dezelfde geïnstalleerde code doorstaat avond→droom→ochtend→wissen, naast regressies. Oude gecompacteerde tekst niet hersteld. Geen nieuwe planner of synthetische gezinsafspraak.",
-              "checkedAt": "2026-10-23T08:46:02.452107+00:00"
+              "progress": "E1.8: echte privéchat/werker onderzocht zelf beschikbare huisbronnen en vond een ontbrekende sensorbatterijwaarde; actuele GET-bron onafhankelijk gecontroleerd. Na expliciet Codex-vervolgverzoek koos Eva zelf 24 oktober 10:00 Amsterdam voor één opgeslagen leescontrole; planning onafhankelijk teruggelezen. Geen bron-ID/uitkomst voorgezegd, geen apparaatwijziging of extern bericht. Bestaande geïnstalleerde route, geen nieuwe patch. Dit is begeleide praktijkuitvoering, geen spontaan initiatief of reeds uitgevoerde vervolgcontrole.",
+              "checkedAt": "2026-10-23T10:40:58.321742+00:00"
             },
             {
               "id": "E1.9",
@@ -14034,7 +14036,7 @@
             {
               "id": "E4.18",
               "title": "Gebruikte uitvoering en onderhoud gericht vereenvoudigen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "scopeOrigin": "living-housemate-20261022",
               "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
@@ -14050,11 +14052,13 @@
                 "E4.15",
                 "E4.17"
               ],
-              "nextAction": "Gebruik de concrete E4.15/E4.17-overdracht als afbakening; leg te verwijderen duplicatie en compatibiliteit vast vóór wijzigingen, hergebruik de bestaande inventaris.",
+              "nextAction": "Onafhankelijke review van de concrete bronkandidaat; gedeelde Git-index van andere uitvoerder niet wijzigen. Integreer deze onderhoudsuitkomst in E4.18 zonder de volledige kaart te sluiten.",
               "continuityImplementationSteps": [
                 "Consolideer alleen dubbel werk op deze gebruikte route; geen procespopulatie of metabolismeframework."
               ],
-              "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection"
+              "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
+              "progress": "Afgesproken containerinspectie-extractie is in de actuele hosttooling toegepast.16gerichte bron-/legacychecks en109unieke kandidaatgevalcontroles geslaagd,1skip. Echte hostinspectie gebruikt de neutrale eigenaar zonder historische overzetmodule; geen daemonherstart of runtimewinst geclaimd.",
+              "checkedAt": "2026-10-23T10:37:37.537828+00:00"
             },
             {
               "id": "E4.19",
@@ -14626,7 +14630,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Voor de afsluitende praktijkproef is één echte aankomende gezinsafspraak of terugkerende zorg met moment gevraagd. Actuele bedoelingen en gewone open opdrachten gecontroleerd: alleen oude technische taken beschikbaar, waaronder onzekere UniFi-uitvoering; die niet blind hervatten. Daarna de afspraak via de herstelde dagcontext naar nuttig initiatief, correctie en latere uitkomst volgen.",
+      "nextAction": "Controleer vanaf 24 oktober 10:00 Amsterdam de werkelijke uitvoering en terugmelding van de opgeslagen eenmalige sensorcontrole. Behoud oude bron als historie en verwerk echte correctie wanneer beschikbaar. Originele E1.8-eindvoorwaarden blijven open; geen extra planning, automatische herhaling of fictieve eigenaarafspraak toevoegen.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
