@@ -1,0 +1,84 @@
+{
+  "task": "E1.8",
+  "recordedAt": "2026-10-23T08:00:07.206335+00:00",
+  "installedImage": "sha256:02594028e25a4752f2031bde0ca3e81d244b99686fa7aba7d5c6698abd2bf860",
+  "test": "development/tests/postgres/test_live_installed_feedback_conversation.py",
+  "result": {
+    "passed": 1,
+    "elapsedSeconds": 33.25,
+    "outcome": {
+      "reply": "Ik heb het containerinitiatief stopgezet: geen nieuwe herinnering of vervolgonderzoek meer. Iets dat al onderweg was, kan nog doorkomen. Ik laat het verder aan de buurman over.",
+      "modelCalls": 2,
+      "action": "stop_own_initiative",
+      "feedback": null,
+      "stopOrFeedbackEvents": 1,
+      "phase": "personal_stopped",
+      "dueAttention": "idle",
+      "productionWrites": false,
+      "delivered": false
+    }
+  },
+  "pipeline": [
+    "LivingConversation with isolated owner/initiative and current initiative metadata from real action adapter",
+    "Request passed to installed Astra/medium model and identity",
+    "Exact returned action and intent ID executed by PostgresDelegatedWorkActions and DelegatedWorkOwnerService",
+    "Real action receipt returned through LivingConversation to same model for final reply",
+    "Same action replay leaves one STOP event",
+    "Reloaded stores retain personal_stopped and do not claim chosen future attention"
+  ],
+  "modelRounds": [
+    {
+      "seconds": 6.549,
+      "usage": {
+        "measurement": "measured",
+        "model_attempts": 1,
+        "tool_calls": 1,
+        "input_tokens": 3022,
+        "output_tokens": 83
+      }
+    },
+    {
+      "seconds": 6.59,
+      "usage": {
+        "measurement": "measured",
+        "model_attempts": 1,
+        "tool_calls": 0,
+        "input_tokens": 2769,
+        "output_tokens": 46
+      }
+    }
+  ],
+  "developmentUsageIncludingFirstRun": {
+    "model_attempts": 4,
+    "tool_calls": 2,
+    "input_tokens": 11582,
+    "output_tokens": 256
+  },
+  "credits": null,
+  "initialRuns": [
+    {
+      "issue": "Temporary bridge not writable by image user; failed before model dispatch.",
+      "fix": "Corrected permissions only on isolated temporary exchange directory."
+    },
+    {
+      "issue": "Model validly chose stop_own_initiative; overly specific test demanded give_initiative_feedback. Later assertions were not reached.",
+      "fix": "Independent review accepted either valid action while retaining exact intent, persisted stop, replay and due-attention criteria.",
+      "modelCalls": 2
+    }
+  ],
+  "review": {
+    "reviewer": "/root/review_cursor",
+    "criterionCorrection": "GO: judge the explicit stop outcome; STOP does not prove preservation of the neighbor explanation as owner feedback."
+  },
+  "boundaries": [
+    "Synthetic initiative and isolated PostgreSQL16.13 owner bindings; no production data mutation.",
+    "Three relevant action names exposed; no full installed tool catalog comparison.",
+    "Model uses installed identity with empty isolated memory, not live household memory selection.",
+    "No Telegram/API ingress, production journal or actual delivery exercised.",
+    "13.139 seconds measured across two model rounds; 33.25s includes setup/RPC and is not production chat latency.",
+    "This STOP result does not prove storing the neighbor explanation as initiative feedback."
+  ],
+  "runtimeCodeChanged": false,
+  "installationNeeded": false,
+  "fullE18Complete": false
+}

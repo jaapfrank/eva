@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-23T07:49:04.035240+00:00",
+  "lastUpdated": "2026-10-23T08:00:07.338961+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E1.8",
@@ -847,7 +847,7 @@
     "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
     "status": "in_progress",
     "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.",
-    "nextAction": "Controleer bij een echte eigenaarscorrectie de volledige route van gesprek naar opgeslagen bijsturing en latere passende opvolging. Afgeronde initiatieven en gewone geplande taken zijn niet met deze actieve-initiatiefproef afgedekt.",
+    "nextAction": "Pas dezelfde bewezen stopoverdracht toe op echte correctie/afspraak via normale ingress en controleer latere gezinsuitkomst; modelkeuze en uitvoering zijn nu verbonden beproefd, productiecontext en aflevering nog niet.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2992,7 +2992,7 @@
         "now": {
           "taskId": "E1.8",
           "title": "Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen",
-          "summary": "E1.8: bestaande actieve-initiatief-feedback op exacte geïnstalleerde image gecontroleerd in geïsoleerde PostgreSQL. Correctie stopt uitvoering, blijft na herladen zichtbaar, replay maakt één event en geplande vervolgaandacht krijgt geen claim. Losse echte modelproef kiest give_initiative_feedback met juiste ID en bedoeling (7,824s;2533 input/88 outputtokens). Gesprekscatalogus live beschikbaar. Dit zijn afzonderlijke componentproeven, geen volledige productieconversatie. Geen runtimepatch nodig.",
+          "summary": "E1.8 geïntegreerde stopproef geslaagd op geïnstalleerde code: gewone correctie → echte modelkeuze → echte actieadapter/eigenaarservice → PostgreSQL-stop → ontvangstbewijs → modelantwoord → herladen aandacht blijft idle. Exact intent-ID, één stopregistratie na replay. Twee modelrondes samen 13,139s; totale proef 33,25s inclusief opbouw, geen productiechatlatentie. Synthetische afspraak, beperkte actieselectie, geen Telegram/API-ingress of aflevering. STOP bewaart geen afzonderlijke buurman-toelichting als feedback. Geen runtimepatch nodig.",
           "doneWhen": "Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel."
         },
         "next": {
@@ -5930,7 +5930,7 @@
                 "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Controleer bij een echte eigenaarscorrectie de volledige route van gesprek naar opgeslagen bijsturing en latere passende opvolging. Afgeronde initiatieven en gewone geplande taken zijn niet met deze actieve-initiatiefproef afgedekt.",
+                "nextAction": "Pas dezelfde bewezen stopoverdracht toe op echte correctie/afspraak via normale ingress en controleer latere gezinsuitkomst; modelkeuze en uitvoering zijn nu verbonden beproefd, productiecontext en aflevering nog niet.",
                 "ownerInitiativeClarification20261021": {
                   "status": "required_not_yet_proven",
                   "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -5952,8 +5952,8 @@
                   "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "E1.8: bestaande actieve-initiatief-feedback op exacte geïnstalleerde image gecontroleerd in geïsoleerde PostgreSQL. Correctie stopt uitvoering, blijft na herladen zichtbaar, replay maakt één event en geplande vervolgaandacht krijgt geen claim. Losse echte modelproef kiest give_initiative_feedback met juiste ID en bedoeling (7,824s;2533 input/88 outputtokens). Gesprekscatalogus live beschikbaar. Dit zijn afzonderlijke componentproeven, geen volledige productieconversatie. Geen runtimepatch nodig.",
-                "checkedAt": "2026-10-23T07:49:04.035214+00:00"
+                "progress": "E1.8 geïntegreerde stopproef geslaagd op geïnstalleerde code: gewone correctie → echte modelkeuze → echte actieadapter/eigenaarservice → PostgreSQL-stop → ontvangstbewijs → modelantwoord → herladen aandacht blijft idle. Exact intent-ID, één stopregistratie na replay. Twee modelrondes samen 13,139s; totale proef 33,25s inclusief opbouw, geen productiechatlatentie. Synthetische afspraak, beperkte actieselectie, geen Telegram/API-ingress of aflevering. STOP bewaart geen afzonderlijke buurman-toelichting als feedback. Geen runtimepatch nodig.",
+                "checkedAt": "2026-10-23T08:00:07.338937+00:00"
               },
               {
                 "id": "E1.9",
@@ -8689,7 +8689,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Controleer bij een echte eigenaarscorrectie de volledige route van gesprek naar opgeslagen bijsturing en latere passende opvolging. Afgeronde initiatieven en gewone geplande taken zijn niet met deze actieve-initiatiefproef afgedekt.",
+        "nextAction": "Pas dezelfde bewezen stopoverdracht toe op echte correctie/afspraak via normale ingress en controleer latere gezinsuitkomst; modelkeuze en uitvoering zijn nu verbonden beproefd, productiecontext en aflevering nog niet.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -11867,7 +11867,7 @@
               "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Controleer bij een echte eigenaarscorrectie de volledige route van gesprek naar opgeslagen bijsturing en latere passende opvolging. Afgeronde initiatieven en gewone geplande taken zijn niet met deze actieve-initiatiefproef afgedekt.",
+              "nextAction": "Pas dezelfde bewezen stopoverdracht toe op echte correctie/afspraak via normale ingress en controleer latere gezinsuitkomst; modelkeuze en uitvoering zijn nu verbonden beproefd, productiecontext en aflevering nog niet.",
               "ownerInitiativeClarification20261021": {
                 "status": "required_not_yet_proven",
                 "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -11889,8 +11889,8 @@
                 "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "E1.8: bestaande actieve-initiatief-feedback op exacte geïnstalleerde image gecontroleerd in geïsoleerde PostgreSQL. Correctie stopt uitvoering, blijft na herladen zichtbaar, replay maakt één event en geplande vervolgaandacht krijgt geen claim. Losse echte modelproef kiest give_initiative_feedback met juiste ID en bedoeling (7,824s;2533 input/88 outputtokens). Gesprekscatalogus live beschikbaar. Dit zijn afzonderlijke componentproeven, geen volledige productieconversatie. Geen runtimepatch nodig.",
-              "checkedAt": "2026-10-23T07:49:04.035214+00:00"
+              "progress": "E1.8 geïntegreerde stopproef geslaagd op geïnstalleerde code: gewone correctie → echte modelkeuze → echte actieadapter/eigenaarservice → PostgreSQL-stop → ontvangstbewijs → modelantwoord → herladen aandacht blijft idle. Exact intent-ID, één stopregistratie na replay. Twee modelrondes samen 13,139s; totale proef 33,25s inclusief opbouw, geen productiechatlatentie. Synthetische afspraak, beperkte actieselectie, geen Telegram/API-ingress of aflevering. STOP bewaart geen afzonderlijke buurman-toelichting als feedback. Geen runtimepatch nodig.",
+              "checkedAt": "2026-10-23T08:00:07.338937+00:00"
             },
             {
               "id": "E1.9",
@@ -14626,7 +14626,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Controleer bij een echte eigenaarscorrectie de volledige route van gesprek naar opgeslagen bijsturing en latere passende opvolging. Afgeronde initiatieven en gewone geplande taken zijn niet met deze actieve-initiatiefproef afgedekt.",
+      "nextAction": "Pas dezelfde bewezen stopoverdracht toe op echte correctie/afspraak via normale ingress en controleer latere gezinsuitkomst; modelkeuze en uitvoering zijn nu verbonden beproefd, productiecontext en aflevering nog niet.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",

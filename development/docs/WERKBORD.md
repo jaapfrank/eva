@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Knelpunten vooraf herkennen vanuit mensen, huis en bedoelingen
 
-E1.8: bestaande actieve-initiatief-feedback op exacte geïnstalleerde image gecontroleerd in geïsoleerde PostgreSQL. Correctie stopt uitvoering, blijft na herladen zichtbaar, replay maakt één event en geplande vervolgaandacht krijgt geen claim. Losse echte modelproef kiest give_initiative_feedback met juiste ID en bedoeling (7,824s;2533 input/88 outputtokens). Gesprekscatalogus live beschikbaar. Dit zijn afzonderlijke componentproeven, geen volledige productieconversatie. Geen runtimepatch nodig.
+E1.8 geïntegreerde stopproef geslaagd op geïnstalleerde code: gewone correctie → echte modelkeuze → echte actieadapter/eigenaarservice → PostgreSQL-stop → ontvangstbewijs → modelantwoord → herladen aandacht blijft idle. Exact intent-ID, één stopregistratie na replay. Twee modelrondes samen 13,139s; totale proef 33,25s inclusief opbouw, geen productiechatlatentie. Synthetische afspraak, beperkte actieselectie, geen Telegram/API-ingress of aflevering. STOP bewaart geen afzonderlijke buurman-toelichting als feedback. Geen runtimepatch nodig.
 
 Klaar wanneer: Eva verbindt een echte open bedoeling met relevante beschikbare huis-/persoonsbronnen en herkent vóór het betreffende moment een onderbouwd knelpunt of kans. Zij vergelijkt ten minste de huidige gang van zaken met een inhoudelijk alternatief, kiest passend voorbereiding, voorstel, toegestane actie of stilte en controleert later de relevante uitkomst. Een gecorrigeerde aanname verandert een volgend voorstel. Onwaargenomen aanwezigheid, emoties en causale effecten worden niet als feiten ingevuld; geen vaste agenda-/kamer-/apparaatregel.
 
