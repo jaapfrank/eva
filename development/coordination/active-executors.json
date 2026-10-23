@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T18:55:55.677218+00:00",
+  "updatedAt": "2026-10-23T19:03:38.237152+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -157,7 +157,7 @@
       }
     },
     "codex-e418": {
-      "task": "E4.15 minimal existing camera batch provider connection",
+      "task": "E4.15 read-only actual camera ingress readiness",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "development/design/architecture/e418-*.json",
@@ -218,7 +218,8 @@
         "development/tools/project-dashboard/verify-owner-current-projects.cjs",
         "development/evidence/product/e29-current-projects-20261023.json",
         "src/eva/providers/home_assistant_procedure.py",
-        "development/tests/providers/test_home_assistant_procedure.py"
+        "development/tests/providers/test_home_assistant_procedure.py",
+        "src/eva/adapters/postgres/sensory_events.py"
       ],
       "requestedAdditionalPaths": [
         {
@@ -390,10 +391,10 @@
         "allNamedInstalledMethodsValidated": true
       },
       "nextTaskRequest": {
-        "requestedAt": "2026-10-23T18:35:18.763449+00:00",
+        "requestedAt": "2026-10-23T18:58:41.182031+00:00",
         "to": "windows-root",
         "coordinatorThreadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
-        "status": "batch_candidate_delivered_wait_independent_review_or_next_coordinator_assignment",
+        "status": "upstream_repair_delivered_wait_independent_rereview_or_next_root_assignment",
         "standingOwnerInstruction": "Na afronding rechtstreeks bij de coördinator om volgende taak blijven vragen; Jaap niet als tussenpersoon gebruiken.",
         "completedOutcome": "E2.9 current-project view installed and read-only live verified; canonical dashboard and GitHub commit06195e62 confirmed.",
         "request": "Next independent task with exact paths, existing route, end condition and shared-installation boundaries. Preserve coordinator-owned integration/Git/installation, voice and other reserved work.",
@@ -624,7 +625,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "Minimal two-file batch adapter complete; 32 focused cases pass, exact diff ready for independent review; no installation/Git/model",
+      "status": "Frozen candidate; read existing observer/source hook and installed service wiring; no new trigger/capture/measurement",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1161,12 +1162,77 @@
         "noSharedInstallOrGit": true,
         "reviewRequestedFrom": "windows-root",
         "creditCosts": null
+      },
+      "postRecoveryInstrument": {
+        "script": "/home/administrator/project/.eva2-artifacts/e415-uncertain-household-review-20261023/post_recovery_readonly.py",
+        "scriptSha256": "597ddb2de2d50ce532f90c02dcd14c9191db76b8819d907a78ea1d31b9b98f1b",
+        "usage": "/home/administrator/project/.eva2-artifacts/e415-uncertain-household-review-20261023/POST-RECOVERY-USAGE.md",
+        "usageSha256": "959647e5039bc205d9f8630668a1831649e1207ac00a96e8599fec790be37074",
+        "executed": false,
+        "explicitRootReceiptAndBoundaryReceived": true,
+        "after": "2026-10-23T18:54:30Z",
+        "oneSnapshotNoPolling": true,
+        "preparationFailure": "First inline writer had nested-quote syntax error before any file write/runtime execution; corrected host script and inner probe both syntax-compiled."
+      },
+      "batchCandidateFrozenForReview": true,
+      "postRecoveryResult": {
+        "path": "/home/administrator/project/.eva2-artifacts/e415-uncertain-household-review-20261023/post-recovery-result.private.json",
+        "sha256": "852c9a1d8a9f6f11fe1b5c6fb0256a45dc13857aefe626321a02a0ff3e733fe4",
+        "snapshots": 1,
+        "oldOriginalHashesUnchanged": true,
+        "oldReviewFinalPhase": "will_abandoned",
+        "householdWindowActiveAtSnapshot": true,
+        "newMarkerCounts": {
+          "WILL_DECIDED": 1
+        },
+        "noPositiveGreetingClaim": true
+      },
+      "upstreamKeyAssignment": {
+        "path": "src/eva/adapters/postgres/sensory_events.py",
+        "function": "_household_observation_selection_key",
+        "baselineSha256": "e3ab40f597aca6127981416ff7e1bc95bc1463689ecbbf56d0574d01b1d5313c",
+        "test": "development/tests/providers/test_home_assistant_procedure.py",
+        "frozenProviderSha256": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
+        "noSqlOrOtherProductHunks": true
+      },
+      "upstreamKeyResult": {
+        "paths": [
+          "src/eva/providers/home_assistant_procedure.py",
+          "src/eva/adapters/postgres/sensory_events.py",
+          "development/tests/providers/test_home_assistant_procedure.py"
+        ],
+        "hashes": {
+          "src/eva/providers/home_assistant_procedure.py": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
+          "src/eva/adapters/postgres/sensory_events.py": "97ab454d7762747d315ee354608421612e993350149ec6cb2e61217ca983670c",
+          "development/tests/providers/test_home_assistant_procedure.py": "45c331223db1727a4fd3631b84986a846a8f6888cc310395f368f2762953dc51"
+        },
+        "providerFrozenUnchanged": true,
+        "storeScope": "Only _household_observation_selection_key docstring+one if condition. Every normalized camera outcome shares per-device camera_evidence lane, separate from binary sensor_state lane.",
+        "actualProducerRegression": "Positive5s + unavailable/empty3s + reset1s goes through actual store key before batch/provider; old positive not selected. Current camera beside reset preserved; another actual camera works.",
+        "checks": {
+          "providerCasesPassed": 35,
+          "providerSeconds": 1.61,
+          "unchangedConnectorSelectionRegressionPassed": 1,
+          "connectorFile": "development/tests/connectors/test_camera_observer.py",
+          "connectorFileModified": false,
+          "otherCasesRerun": false,
+          "diffCheck": 0
+        },
+        "integrationWarning": "Core and worker sensory_events bases differ; apply same function hunk separately onto actual respective image baselines, never whole core file into worker.",
+        "noSqlAppModelVoiceResearchOrCriteriaChange": true,
+        "noRuntimeModelExecutorCameraMessageOrGitAction": true,
+        "independentReviewRequestedFrom": "windows-root"
+      },
+      "cameraIngressAssignment": {
+        "output": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/camera-ingress-readiness.private.json",
+        "noCaptureEventModelExecutorMessageOrMutation": true,
+        "noRepeatedSourceMeasurement": true
       }
     },
     "e415-independent-review-newchat": {
       "task": "E4.15 exact household batch binding review",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "in_progress_household_batch_binding_review",
+      "status": "completed_batch_producer_followup_NO_GO_same_second",
       "coordinator": "windows-root",
       "allowedWritePaths": [
         "development/reviews/e415-household-batch-binding-review-20261023.json",
@@ -1184,10 +1250,10 @@
         "doneWhen": "Exact hashes and bounded GO/NO_GO with necessary companion hunks; no installation.",
         "userUse": "Coordinator may integrate reviewed candidate after baseline recheck."
       },
-      "completedAt": "2026-10-23T18:53:43.717026+00:00",
-      "review": "development/reviews/e415-uncertain-household-review-recovery-20261023.json",
-      "verdict": "GO",
-      "nextAction": "Root owns exact single guarded owner action; no reviewer mutation. Await concrete next assignment.",
+      "completedAt": "2026-10-23T19:03:33.300718+00:00",
+      "review": "development/reviews/e415-household-batch-binding-review-20261023.json",
+      "verdict": "NO_GO",
+      "nextAction": "Await same-second producer conflict handling through existing seam; no shared install.",
       "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
       "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
       "previousInstallationReview": "development/reviews/e415-coordinated-installation-review-20261023.json",
@@ -1211,7 +1277,8 @@
         "Persist exact request/container binding in durable pre-dispatch receipt.",
         "Read back terminal checkpoint phase/status/revision and unchanged retry/fingerprint/operation."
       ],
-      "previousUncertainRecoveryReview": "development/reviews/e415-uncertain-household-review-recovery-20261023.json"
+      "previousUncertainRecoveryReview": "development/reviews/e415-uncertain-household-review-recovery-20261023.json",
+      "followupStartedAt": "2026-10-23T18:59:24.407975+00:00"
     }
   },
   "protectedExistingWork": {
@@ -1441,10 +1508,16 @@
       "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
       "sourceOutsideCore": true,
       "ordinaryLolaQuestionMustNotBeRepeated": true,
-      "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+      "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+      "batchOverlay": {
+        "path": "/var/lib/eva2/e415-batch-binding-20261023",
+        "status": "built_composition_profiles_verified_final_review_pending",
+        "filesPerRole": 2,
+        "preservedRoleSpecificSensorySource": true
+      }
     },
     "ownerQuestion": "Owner cannot do camera trial now; previous early question withdrawn; no repeat before actual route ready.",
     "parallelBoundedWork": "Independent two-file batch review plus read-only post-recovery source observation; max two executors/reviewers.",
-    "currentBlocker": "Obsolete uncertain household review reconciled via existing owner endpoint with unknown usage preserved. Normal batch adapter built32/32; independent review and targeted installation pending."
+    "currentBlocker": "Second focused NO_GO: same-second conflicting camera frames collapse at producer before provider; conservative fix assigned, no install. Current discovery succeeds; initial unexplained failure retained, no discovery patch authorized."
   }
 }

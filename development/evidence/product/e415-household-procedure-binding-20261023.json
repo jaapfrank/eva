@@ -1,8 +1,8 @@
 {
   "contract": "EvaHouseholdProcedureBindingOutcome/v1",
   "task": "E4.15",
-  "checkedAt": "2026-10-23T18:55:55.677218+00:00",
-  "status": "installed_binding_old_review_recovered_batch_patch_review_pending",
+  "checkedAt": "2026-10-23T19:03:38.237152+00:00",
+  "status": "installed_binding_recovered_producer_ambiguity_fix_pending",
   "existing": "Eva-authored independently preserved pure procedure plus ordinary household observation/assessment/STOP/durable delivery/executor",
   "gap": "Actual ordinary route supplies household observation batches, not direct camera events; batch adapter candidate built and under independent review.",
   "endCondition": "Installed exact bridge processes actual source, preserves negative/freshness/STOP boundaries and permits ordinary appropriate greeting; full E4.15 requires later reuse/feedback and remains open",
@@ -109,6 +109,21 @@
       "databaseWrites": 0,
       "ordinaryCameraUse": false,
       "greetingProof": false
+    },
+    "postRecoveryOrdinaryScheduler": {
+      "disposition": "silence",
+      "finishedAt": "2026-10-23T18:54:32Z",
+      "modelStartedAt": "2026-10-23T18:54:22Z",
+      "modelAttempts": 1,
+      "toolCalls": 1,
+      "inputTokens": 9283,
+      "outputTokens": 121,
+      "creditCost": null,
+      "oldSourceNotReplayedByOperator": true,
+      "originalBatchTimesPreserved": true,
+      "newCameraEventsInSnapshot": 0,
+      "positiveGreeting": false,
+      "operatorAssistedRecovery": true
     }
   },
   "ownerActionPending": null,
@@ -166,10 +181,12 @@
       "src/eva/providers/home_assistant_procedure.py",
       "development/tests/providers/test_home_assistant_procedure.py"
     ],
-    "testsPassed": 32,
-    "testSeconds": 1.42,
-    "independentReview": "pending",
-    "installed": false
+    "testsPassed": 35,
+    "testSeconds": 1.61,
+    "independentReview": "NO_GO_due_same_second_conflict_lost_before_provider",
+    "installed": false,
+    "initialUnavailableResetGapFixed": true,
+    "review": "development/reviews/e415-household-batch-binding-review-20261023.json"
   },
   "executorImagePreservation": {
     "evidence": "development/evidence/reassessment/e415-executor-image-preservation-20261023.json",
