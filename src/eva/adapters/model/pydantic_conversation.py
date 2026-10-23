@@ -1394,6 +1394,40 @@ class PydanticConversationModel:
         observation; archiving neither refreshes a catalogue nor grants it.
         """
         output, arguments = receipt.output, receipt.call.arguments
+        if receipt.call.name == "read_own_component_source":
+            result = output.get("operation_result")
+            path = arguments.get("path")
+            if (set(output) != {"status", "scope", "component_step", "operation_result"}
+                    or output.get("status") != "verified" or output.get("scope") != "source_read"
+                    or type(output.get("component_step")) is not int or output["component_step"] < 0
+                    or not isinstance(path, str) or not re.fullmatch(r"[A-Za-z0-9_./-]+\.py", path)
+                    or path.startswith(("/", "saved_artifact_", "procedure-reference:"))
+                    or any(part in {"", ".", ".."} for part in path.split("/"))
+                    or not set(arguments).issubset({"path", "start_line", "resource_path"})
+                    or arguments.get("resource_path") not in (None, "")
+                    or not isinstance(result, dict)
+                    or set(result) != {"kind", "path", "source_sha256", "start_line", "total_lines", "content", "next_line"}
+                    or result.get("kind") != "python" or result.get("path") != path
+                    or not isinstance(result.get("source_sha256"), str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", result["source_sha256"])
+                    or type(result.get("start_line")) is not int
+                    or type(result.get("total_lines")) is not int
+                    or not 1 <= result["start_line"] <= result["total_lines"]
+                    or (arguments.get("start_line") is not None and
+                        (type(arguments["start_line"]) is not int or arguments["start_line"] != result["start_line"]))
+                    or (arguments.get("start_line") is None and result["start_line"] != 1)
+                    or not isinstance(result.get("content"), str)
+                    or not 0 < len(result["content"].encode("utf-8")) <= 16_000):
+                return None
+            count = len(result["content"].splitlines())
+            following = result["start_line"] + count
+            if (not 1 <= count <= 160 or following > result["total_lines"] + 1
+                    or result["next_line"] != (following if following <= result["total_lines"] else None)):
+                return None
+            return {"call": {"call_id": receipt.call.call_id, "name": receipt.call.name, "arguments": arguments},
+                    "status": "verified", "read_only_discovery": True, "installed_source_history": True,
+                    "task_completion_verified": False, "receipt": output,
+                    "source_receipt_sha256": hashlib.sha256(canonical_json_bytes(output)).hexdigest()}
         if receipt.call.name == "manage_connected_services":
             if arguments != {"action": "status"}:
                 return None
@@ -1718,7 +1752,7 @@ class PydanticConversationModel:
                 "bewijs-hashes en oorspronkelijke onvolledigheidsvlaggen blijven zichtbaar. "
                 "Deze historische lezingen zijn geen actuele waarneming of taakafronding; "
                 "gebruik bewaarde bevindingen en haal alleen ontbrekende feiten gericht op. "
-                "historical_discovery_reads bewaart exacte eerdere geslaagde status- en "
+                "historical_discovery_reads bewaart exacte historische broncode-, status- en "
                 "toolcataloguslezingen met originele call, receipt en bewijs-hash. "
                 "Dit zijn historische gegevens, geen actuele beschikbaarheid of toestemming. "
                 "superseded_work_progress bewaart oudere volledige werkplannen één "

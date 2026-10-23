@@ -148,5 +148,29 @@
     },
     "profiles": "Shared provider, private research and digital work match; pre-existing household_research mismatch unchanged.",
     "oldRequests": "Original receipts/configuration fences retained, no hash backfill or replay."
+  },
+  "installedSourceHistoryRepair": {
+    "cause": "Historical installed-source pages were resent across successive steps of retained long work. Existing source/checkpoint archive did not select this receipt contract.",
+    "change": "Exact successful old Python source pages before saved progress use existing authorized archive. Current artifacts, failures, new pages and original receipts remain intact.",
+    "testsPassed": 50,
+    "independentReview": "review_cursor GO for guarded installation",
+    "coreImage": "sha256:a19f4218b6557fa574304d573cc544b9c98b2294c99a534a61049872ab2ae4be",
+    "workerImage": "sha256:f832bc239ab4e609494a2239ec3c8a73fc0eec49e90e6fc7b363ce75f2ba4f58",
+    "liveStoredProjection": {
+      "sourceReceipts": 9,
+      "archivedPages": 7,
+      "beforeRetainedBytes": 50127,
+      "afterRetainedBytes": 6421,
+      "scope": "Exact stored source/progress subset; not full request or latency comparison"
+    },
+    "liveResume": {
+      "acknowledgementSeconds": 20.78,
+      "firstWorkerPhaseInputTokens": 47646,
+      "firstWorkerPhaseMilliseconds": 17495,
+      "preservedReceiptCount": 55,
+      "scope": "New installed route admitted and used; not completed task or proven overall speedup"
+    },
+    "profiles": "Digital work, shared provider and private research match. Existing household_research mismatch unchanged.",
+    "remaining": "V2 authored by Eva has 12 own passing synthetic tests; independently unapproved and not runtime-bound. No real positive recognition or delivered greeting."
   }
 }

@@ -106,6 +106,15 @@
           "Als een ander productbestand nodig blijkt: vraag exacte uitbreiding via dit bestand, werk intussen zelfstandig door binnen deze scope."
         ],
         "acceptance": "Bestaande herstelroute en één concrete tekortkoming aantonen; gerichte correctie indien nodig met onafhankelijke review. Zelfgemaakte code blijft buiten kern, rechten/geheimen/pauzestatus behouden en geen dubbele effecten."
+      },
+      "e417AdditionalPathConfirmation": {
+        "status": "confirmed_exact_two_paths",
+        "confirmedAt": "2026-10-23T15:36:48.216769+00:00",
+        "paths": [
+          "src/tools/portable_runtime_archive.py",
+          "src/tools/postgres_portable_export.py"
+        ],
+        "scope": "Apply exactly reviewed two-line candidate from candidate-handoff.private.json and prepared test. Preserve sealed hashes and catalog. Run same 15 cases without overrides. No shared restart. Own code/test commit and push allowed; root integrates board. E4.15 real extension not ready; synthetic recovery does not close E4.17."
       }
     },
     "codex-e418": {
