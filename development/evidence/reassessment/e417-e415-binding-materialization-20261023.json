@@ -1,0 +1,109 @@
+{
+  "contract": "EvaE417E415BindingMaterializationOutcome/v1",
+  "task": "E4.17 supporting E4.15 exact binding transfer",
+  "checkedAt": "2026-10-23T18:30:36.937941+00:00",
+  "status": "passed_exact_inactive_materialization",
+  "scope": "One isolated compatibility case for existing exact Eva-authored source, reviewed binding configuration, adoption review and existing executor-client reference using existing installation package/materializer.",
+  "fixture": "Reused previously retained, validated E4.17 signed synthetic core archive and opaque synthetic memory/gateway bytes. Not a backup of the actual current installation. No replacement fixture generated.",
+  "actualInputs": {
+    "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+    "bindingConfigurationSha256": "732ff63fa5918410d9ecb94d44cb7b4b245a3aa3014736873f61af78b4f72428",
+    "adoptionReviewSha256": "7bedd1f16f92f1692d0cbd865f370146ba9eef99eab4d9520a473b830b86a369",
+    "stagingProposalSha256": "5ad283caf3bfe583ad6a59d2757fb1450defcd2f735eb901c93505fbe392aac6"
+  },
+  "existingRoute": {
+    "package": "src/tools/installation_recovery_package.py",
+    "materializer": "src/tools/installation_recovery_materializer.py",
+    "toolSourceSha256": {
+      "src/tools/installation_recovery_package.py": "cd0652005eeda46298ffa5505f2be22f40455ab9bd43574ea247aeeb320c758a",
+      "src/tools/installation_recovery_materializer.py": "ce5b640c9d0aea547b62c1efd88f2b3d496c36fad4c171c2cf85b4d14fadaaeb"
+    },
+    "oldArchiveSha256": "26e84a51182ddd39050c7dd650dd6dfcb80b9b22778cda7d3a00d4514a8d9206",
+    "oldCoreArchiveSha256": "071df67dea58c0bd2c32404448361553c0eceebb6c39fc1559a6cf185f84d158",
+    "newArchiveSha256": "4b47d6074297e9b95aab6ec03b1716feb81b2e865ac4b48f7ba21f0617d92ca8",
+    "coreFixtureUnchanged": true
+  },
+  "verifiedFiles": [
+    {
+      "packagePath": "documents/household-procedure/camera_greeting_adapter_v2.py",
+      "sha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+      "uid": 0,
+      "gid": 65532,
+      "mode": "0o600",
+      "role": "document_artifact"
+    },
+    {
+      "packagePath": "config/household-procedure/current.json",
+      "sha256": "732ff63fa5918410d9ecb94d44cb7b4b245a3aa3014736873f61af78b4f72428",
+      "uid": 0,
+      "gid": 65532,
+      "mode": "0o400",
+      "role": "provider_binding"
+    },
+    {
+      "packagePath": "documents/household-procedure/adoption-review.json",
+      "sha256": "7bedd1f16f92f1692d0cbd865f370146ba9eef99eab4d9520a473b830b86a369",
+      "uid": 0,
+      "gid": 65532,
+      "mode": "0o400",
+      "role": "document_marker"
+    },
+    {
+      "packagePath": "config/household-procedure/procedure-execution-client.json",
+      "sha256": "2cc6824fe449aa3b73c045fd046e812ade5184dc2f263e52df2b6e3712292c7f",
+      "uid": 0,
+      "gid": 65532,
+      "mode": "0o400",
+      "role": "provider_binding"
+    }
+  ],
+  "verified": [
+    "Existing package validates exact retained synthetic corefixture under unchanged external default identity trust.",
+    "Exact three root-materialized extension files plus existing executorclient configuration bytes included under existing explicit file_roles.",
+    "Source and real adoption-review hash references in bindingconfig remain equal; executor endpoint/token-file-reference/pinned-image/timeout/output fields preserved without token bytes.",
+    "New absent isolated destination materialized_inactive; exact new package manifest and file hashes/roles/modes/component owners verified.",
+    "Document/config components root:65532 with prescribed0600/0400 file roles and0700 directories; no runtime permission/activation claim.",
+    "Original oldfixture and prior staging proposal bytes remain unchanged.",
+    "External dispatch audit forbids subprocess/socket connection and observed zero such events during case; no service, procedure or model execution."
+  ],
+  "measurements": {
+    "cases": 1,
+    "passed": 1,
+    "seconds": 0.949,
+    "newProcedureBehaviorCases": 0,
+    "oldProcedureCasesRepeated": 0,
+    "broadTestSuites": 0,
+    "nativeDatabaseImports": 0,
+    "currentDatabaseExports": 0,
+    "modelProviderCalls": 0,
+    "cameraCaptures": 0,
+    "messages": 0,
+    "sharedRestarts": 0,
+    "runtimeChangesByThisCase": 0,
+    "creditCosts": null
+  },
+  "limits": [
+    "Old core rows and opaque memory/gateway dumps remain explicitly synthetic; no current household data backup/DB import.",
+    "Exact three sibling bytes and existing executorclientref preserved; source/config land in separate inactive role-bound components.",
+    "Inactive directories0700 and roles0600/0400 intentionally differ from live root:65532 siblings0640/0750; root-only activation reprovisioning and current rights revalidation still required.",
+    "Enabledtrue bytes are preserved config data, never permission to start. No live opt-in changed or dispatch started by this process.",
+    "Secrets were not loaded/staged; actual key provisioning, clean-PC dependency reinstall, pause/STOP enforcement after restore and reactivation remain unproved.",
+    "No actual new route greeting/hearing, last-working status or fullE4.17 claim."
+  ],
+  "runtimeActivatedByThisCase": false,
+  "lastWorking": false,
+  "fullE417Completed": false,
+  "cleanPcRestoreProven": false,
+  "keyProvisioningOrReactivationProven": false,
+  "independentReview": {
+    "status": "requested_from_coordinator",
+    "verdict": null
+  },
+  "privateProof": {
+    "harnessSha256": "7dfde876f90efdd7e3e63265bfa03d3c1e5f80847e43846a0e4af0f66c8babb5",
+    "resultSha256": "2fab5521b45eaafd07533c52455d11a8aae7169ef2a7adff487fa3a961bf5b5a",
+    "stagingProposalSha256": "5ad283caf3bfe583ad6a59d2757fb1450defcd2f735eb901c93505fbe392aac6",
+    "retainedCoreFixtureManifestSha256": "071df67dea58c0bd2c32404448361553c0eceebb6c39fc1559a6cf185f84d158"
+  },
+  "integration": "Coordinator owns workboard/dashboard, independent review and Git. No product sources/schema/criteria changed."
+}

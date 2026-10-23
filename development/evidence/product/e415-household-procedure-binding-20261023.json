@@ -1,7 +1,7 @@
 {
   "contract": "EvaHouseholdProcedureBindingOutcome/v1",
   "task": "E4.15",
-  "checkedAt": "2026-10-23T18:28:28.857500+00:00",
+  "checkedAt": "2026-10-23T18:33:33.289384+00:00",
   "status": "installed_current_authority_verified_first_real_greeting_pending",
   "existing": "Eva-authored independently preserved pure procedure plus ordinary household observation/assessment/STOP/durable delivery/executor",
   "gap": "Exact authored source bound to current authorized source, opt-in and reviewed per-role composition",
@@ -104,5 +104,16 @@
     "developmentModelTokens": null,
     "developmentCreditCost": null,
     "runtimeCreditCost": null
+  },
+  "recoveryCompatibility": {
+    "evidence": "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json",
+    "review": "development/reviews/e417-e415-binding-materialization-review-20261023.json",
+    "newExactInputs": 4,
+    "inactiveRoundtripVerified": true,
+    "sourceCurrentConfigReviewAndExecutorReferencePreserved": true,
+    "syntheticOldCoreFixture": true,
+    "currentWholeBackup": false,
+    "cleanPcRestore": false,
+    "reactivationProven": false
   }
 }

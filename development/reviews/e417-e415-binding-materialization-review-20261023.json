@@ -1,0 +1,124 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.17 supporting E4.15 exact binding transfer",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T18:32:04.108337+00:00",
+  "verdict": "GO",
+  "scope": "One exact four-input inactive package/materializer compatibility outcome using the preserved old synthetic E4.17 corefixture. No current backup, native database restore, reactivation or full E4.17 acceptance.",
+  "evidenceBindings": {
+    "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json": "8351b489702cbb94face5fa209700f9dc6b94626c82a4965d0a9474e345b5051",
+    "materialize_private.py": "7dfde876f90efdd7e3e63265bfa03d3c1e5f80847e43846a0e4af0f66c8babb5",
+    "result.private.json": "2fab5521b45eaafd07533c52455d11a8aae7169ef2a7adff487fa3a961bf5b5a",
+    "recovery-staging-proposal.json": "5ad283caf3bfe583ad6a59d2757fb1450defcd2f735eb901c93505fbe392aac6",
+    "restore-binding-readonly.json": "f74e6bad721aec0b109168be6a11adfd35e78b4368f32a5f1cf311bf6c66812a"
+  },
+  "packageBindings": {
+    "oldArchiveSha256": "26e84a51182ddd39050c7dd650dd6dfcb80b9b22778cda7d3a00d4514a8d9206",
+    "unchangedOldCoreArchiveSha256": "071df67dea58c0bd2c32404448361553c0eceebb6c39fc1559a6cf185f84d158",
+    "newArchiveSha256": "4b47d6074297e9b95aab6ec03b1716feb81b2e865ac4b48f7ba21f0617d92ca8",
+    "stageAndRestoredManifestBytesEqual": true,
+    "exactlyFourAdditionalFiles": true,
+    "noOldFilesRemoved": true,
+    "allOldEntriesAndBytesUnchanged": true,
+    "retainedOldFixtureCopyByteIdentical": true,
+    "originalFixtureAndProposalPreserved": true,
+    "oldIdentityComponentInventoryAndKeyReferenceMetadataUnchanged": true,
+    "newManifestFileCountIncludingArchive": 168
+  },
+  "verifiedInputs": [
+    {
+      "packagePath": "documents/household-procedure/camera_greeting_adapter_v2.py",
+      "sha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+      "bytes": 4686,
+      "role": "document_artifact",
+      "mode": "0600",
+      "uid": 0,
+      "gid": 65532,
+      "exactCurrentInputAndStagedBytesMatch": true
+    },
+    {
+      "packagePath": "config/household-procedure/current.json",
+      "sha256": "732ff63fa5918410d9ecb94d44cb7b4b245a3aa3014736873f61af78b4f72428",
+      "bytes": 998,
+      "role": "provider_binding",
+      "mode": "0400",
+      "uid": 0,
+      "gid": 65532,
+      "exactCurrentInputAndStagedBytesMatch": true
+    },
+    {
+      "packagePath": "documents/household-procedure/adoption-review.json",
+      "sha256": "7bedd1f16f92f1692d0cbd865f370146ba9eef99eab4d9520a473b830b86a369",
+      "bytes": 10120,
+      "role": "document_marker",
+      "mode": "0400",
+      "uid": 0,
+      "gid": 65532,
+      "exactCurrentInputAndStagedBytesMatch": true
+    },
+    {
+      "packagePath": "config/household-procedure/procedure-execution-client.json",
+      "sha256": "2cc6824fe449aa3b73c045fd046e812ade5184dc2f263e52df2b6e3712292c7f",
+      "bytes": 232,
+      "role": "provider_binding",
+      "mode": "0400",
+      "uid": 0,
+      "gid": 65532,
+      "exactCurrentInputAndStagedBytesMatch": true
+    }
+  ],
+  "materialization": {
+    "builderReceiptStatus": "materialized_inactive",
+    "independentlyInspectedTarget": "Retained new-private-installation/inactive directory, separate from live installation.",
+    "rootDirectory": "root:root 0700",
+    "documentsConfigDirectories": "root:65532 0700, including household-procedure subdirectories",
+    "sourceFile": "root:65532 0600",
+    "bindingReviewAndExecutorReferenceFiles": "root:65532 0400",
+    "allRestoredEntriesRegularFilesOrDirectoriesNoSymlinks": true,
+    "ownersSource": "Operator-supplied component owner mapping in reviewed harness, not authority from archived config.",
+    "noRuntimePermissionsInferred": "Inactive owner-only roles intentionally do not provide live UID65532 readability. Runtime provisioning remains a separate trusted root step."
+  },
+  "contractReview": {
+    "existingRolesOnly": "document_artifact, document_marker and provider_binding exactly match current package ROLES. No package/schema/product-source changes.",
+    "fixtureProvenance": "Exact retained previously tested E4.17 corefixture, created 2026-09-29, with synthetic core rows and opaque synthetic memory/gateway payloads. New envelope preserves old core and metadata; it is explicitly NOT a current installation backup.",
+    "sourceAndReviewBinding": "Restored current.json source and review hashes equal exact restored source and completed independent adoption review; unchanged canonical proposal field values are preserved by exact file hash.",
+    "executorReference": "Exact 232-byte existing executor client with only url/token_file/image_id/timeout_seconds/output_bytes. Token reference and pinned execution-image identity preserved; no token bytes or new credentials staged.",
+    "noSecretsOrPrivateConversationAddition": "The four added byte-exact files comprise previously reviewed generic pure source, binding metadata, public adoption review and reference-only client. No raw camera data, credentials or private conversation content added. Old synthetic fixture preserved unchanged.",
+    "noAutomaticAdoption": "Materializer copies verified bytes to an absent private inactive target, returning materialized_inactive; it does not execute source, import native databases, change live opt-in or start services. Preserved enabledtrue is data, never authority to activate.",
+    "retainedHarness": "Reviewed one-call builder harness uses unchanged package writer/materializer/default identity trust, forbids external subprocess/socket dispatch via audit hook, records no such events and does not execute procedure or old three offline cases. Reviewer did not rerun it."
+  },
+  "findings": [],
+  "activationAndAcceptanceLimits": [
+    "GO covers exact input/output preservation and inactive materialization only. Current runtime binding values packaged beside an old synthetic core do not prove coherent actual restored installation lineage.",
+    "Before any future activation, trusted root must provision exact siblings with live permissions, provision existing keys independently, revalidate current source/reference/household/STOP/quiet/transport/executor profiles and release restore hold through existing authorized route.",
+    "Current complete backup/snapshot consistency, native database import, clean-PC dependencies, actual key provisioning, pause/STOP enforcement after restore and reactivation remain unproved.",
+    "No actual greeting delivery/hearing, ordinary later use, last-working release status, family acceptance or full E4.15/E4.17 completion.",
+    "lastWorking remains false for this preservation outcome; new envelope is explicitly old/synthetic, not a current backup."
+  ],
+  "builtEvidence": {
+    "cases": 1,
+    "passed": 1,
+    "seconds": 0.949,
+    "oldThreeProcedureCasesRepeated": 0,
+    "newProcedureExecution": false,
+    "runtimeActivated": false,
+    "lastWorking": false,
+    "dispatchAuditEvents": [],
+    "sourceToolHashesUnchanged": true
+  },
+  "usage": {
+    "developmentElapsedSeconds": 249.062,
+    "developmentModelTokens": null,
+    "developmentCreditCost": null,
+    "evaRuntimeModelCalls": 0,
+    "evaRuntimeCreditCost": null,
+    "reviewerTestsOrMaterializerInvocations": 0,
+    "reviewerProviderOrModelCalls": 0,
+    "cameraCaptures": 0,
+    "messages": 0,
+    "sharedRestarts": 0,
+    "productCodeEdits": 0,
+    "gitMutations": 0
+  }
+}
