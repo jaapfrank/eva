@@ -235,8 +235,8 @@
       "statusProposal": {
         "taskId": "E4.17",
         "status": "in_progress",
-        "progress": "E4.17-herstelroute gecorrigeerd en 15/15 controles op echte bron geslaagd. Daarna is ook Eva’s werkelijk opgeslagen V2-bron (4686 bytes) via bestaand versleuteld pakket naar een nieuwe inactieve bestemming hersteld; hash en bestandsrechten exact gelijk. Eén aanvullende controle en onafhankelijke GO voor uitsluitend documentbehoud. Geen activering of gedeelde herstart. Volledige E4.17 blijft open: E4.15-aansluiting, echte configuratie/data/laatst werkende versie en native herstel met hetzelfde gedrag ontbreken nog.",
-        "checkedAt": "2026-10-23T16:03:18.537098+00:00",
+        "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
+        "checkedAt": "2026-10-23T16:09:13.785800+00:00",
         "ownerActionRequired": false,
         "fullTaskCompleted": false,
         "nextAction": "Coördinator: verbind de bestaande echte E4.15-uitbreiding en lever de daadwerkelijke configuratie-, data-, dependency-, rechten-/pauze- en laatste-werkende-versie-eigenaren over. Hergebruik de nu bewezen bestaande herstelroute; geen nieuwe synthetische proef of tweede pakketformaat.",
@@ -252,7 +252,7 @@
         "sourceCommit": "5ac595869c675beca2d384f09b45ad6d9cd3da33",
         "gitPushed": true,
         "sourceCommitScope": "Two explicitly approved tool-source lines, focused tests and bound design/evidence/review; no shared deployment.",
-        "evidenceCommit": "fd9e9fba249eaa24dc41edc9ec09359b882da62a"
+        "evidenceCommit": "ec6f589f19a2337c2992d05dba6940492a74d95d"
       },
       "conditions": [
         "Read E4.18 and existing E3/E4 inventories; select one concrete used route or proven-unused helper. No broad cleanup.",
@@ -263,7 +263,7 @@
         "E4.15/E4.17 dependencies remain. Early bounded cleanup does not close E4.18.",
         "Use statusProposal for workboard/docs changes; WSL integrates shared files preserving foreign hunks."
       ],
-      "updatedAt": "2026-10-23T16:03:58.151861+00:00",
+      "updatedAt": "2026-10-23T16:09:38.803472+00:00",
       "reviewRequest": {
         "status": "GO_CANDIDATE_exact_bytes_applied_workspace_verified",
         "reviewer": "/root/e47_mcp_catalog",
@@ -331,13 +331,13 @@
       },
       "dashboardIntegrationRequest": {
         "taskId": "E4.17",
-        "requestedAt": "2026-10-23T16:03:18.537098+00:00",
+        "requestedAt": "2026-10-23T16:09:13.785800+00:00",
         "status": "awaiting_coordinator_integration",
         "to": "wsl-e18",
-        "request": "Verwerk definitieve statusProposal met 15/15 broncontroles plus één werkelijk V2-documentbehoud en onafhankelijke GO. Houd de volledige kaart in_progress; documentbehoud is geen native herstel of werkende E4.15-adoptie. Geen actie van Jaap nodig.",
+        "request": "Verwerk statusProposal inclusief extra 3/3 identieke offline-uitkomsten op echte herstelde bron en onafhankelijke GO. Behoud volledige taak in_progress. Geen nieuwe groene claim voor live/native adoptie.",
         "sourceCommit": "5ac595869c675beca2d384f09b45ad6d9cd3da33",
         "independentReview": "development/reviews/e417-extension-restore-20261023.json",
-        "evidenceCommit": "fd9e9fba249eaa24dc41edc9ec09359b882da62a"
+        "evidenceCommit": "ec6f589f19a2337c2992d05dba6940492a74d95d"
       },
       "routeOwnershipHandoff": {
         "startedAt": "2026-10-23T12:47:35.343506+00:00",
@@ -364,7 +364,7 @@
       "nextTaskRequest": {
         "requestedAt": "2026-10-23T16:03:18.537098+00:00",
         "to": "wsl-e18",
-        "currentScope": "E4.17 bounded recovery-source correction and actual retained V2 inactive preservation finished; reviewed.",
+        "currentScope": "All current bounded E4.17 source correction, actual V2 inactive preservation and same-offline-behavior evidence finished and independently reviewed. Await concrete next scope or real E4.15 managed package handoff.",
         "request": "Verwerk E4.17-status/dashboard en wijs een volgende zelfstandig uitvoerbare opdracht met concrete bestanden toe, of lever de echte E4.15-pakketoverdracht binnen bestaande E4.17-scope. Geen nieuwe eigenaarvraag of herhaalde ongewijzigde proef nodig.",
         "sharedInstallationChanged": false
       },
@@ -592,7 +592,32 @@
         ],
         "blocksE417": false
       },
-      "status": "Bounded E4.17 work completed and pushed; coordinator integration and real active E4.15 handoff remain."
+      "status": "All assigned bounded E4.17 checks finished, independently reviewed and pushed; awaiting managed E4.15 package or next exact assignment.",
+      "actualExtensionBehaviorPreservation": {
+        "status": "completed_scoped_behavior_reviewed",
+        "startedAt": "2026-10-23T16:06:47.389862+00:00",
+        "objective": "Complete missing same-behavior check for actual recovered pure V2 source, not activate or assess product correctness.",
+        "chosenPaths": [
+          "development/evidence/reassessment/e417-extension-restore-20261023.json",
+          "development/design/architecture/e417-extension-restore-ownership-20261023.json",
+          "development/reviews/e417-extension-restore-20261023.json"
+        ],
+        "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+        "inspectedContract": "Pure propose(event,binding,now); standard library imports; no persistence/network/execution APIs in source.",
+        "endCondition": "Same deterministic outputs for synthetic input before/after restore in separate network-none read-only disposable containers, each mounting only its one module and generic harness.",
+        "budget": "Two local sandbox invocations, one bounded review. Zero model/provider calls or shared restart. No unchanged 15-case rerun.",
+        "limits": "No production observation or valid household binding; not runtime adoption, actual delivery/STOP, last-good state or complete E4.17.",
+        "equalCases": 3,
+        "localSandboxRuns": 2,
+        "pinnedImage": "sha256:89d1f772f877681da8d6abf342293becd79e6f891c306f97ffa2d9782680e01c",
+        "actualSourceExecutedOffline": true,
+        "runtimeActivated": false,
+        "sharedInstallationChanged": false,
+        "completedAt": "2026-10-23T16:09:13.785800+00:00",
+        "independentReviewSha256": "46135d05f5bec48c9df9bc29d01e411075a5ff2041ff08e77dea42db9b88066c",
+        "evidenceCommit": "ec6f589f19a2337c2992d05dba6940492a74d95d",
+        "gitPushed": true
+      }
     }
   },
   "protectedExistingWork": {
