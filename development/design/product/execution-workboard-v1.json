@@ -847,7 +847,7 @@
     "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
     "status": "in_progress",
     "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
-    "nextAction": "E4.17: onafhankelijk advies bevestigt een expliciete installatieoptie van maximaal 2 GiB als kleinste herstelreparatie voor de gemeten 1.645.299.983 bytes. Gewone portable-transporten blijven maximaal 1 GiB; elk bestand blijft maximaal 1 GiB. Bouwer werkt dezelfde bestaande pakket-, transport-, materialisatie- en wizardroute af. Tester beoordeelt beveiligingsgrenzen en de echte volledige versleutelde herstelproef. Geen geselecteerde gegevens weglaten; hetzelfde herstelde gedrag blijft vereist. Fysieke E4.15-proef volgt later.",
+    "nextAction": "E4.17: werkelijke kernexport is atomair gevalideerd en onafhankelijk op alle 159 vermelde bestandshashes, volledige lijst, identiteit, vertrouwen en 0011-profiel gecontroleerd. Alleen de overbodige tweede semantische lezing is beëindigd; eigen kopie blijft alleen-lezen. Bouwer bevriest de begrensde installatiepolicy en lokale bestandsinname voor onafhankelijke review en de echte grote herstelproef. Daarna ontbreekt nog de kleine hostcomponentoverdracht die de bewaarde bron en afhankelijkheden zonder oude werkmap als werkende uitbreiding terugzet. Alle gegevens en criteria blijven behouden; fysieke E4.15-proef volgt later.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -8113,13 +8113,13 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "E4.17: schema0011-export/reader/restore/installer gerepareerd;29gerichte+8echte0011PG+14legacyPGchecks onafhankelijk geslaagd. Echte core/geheugen/gateway/identity/trust onder15sbronhek bewaard en onafhankelijk gebonden. Bouwer zet nativecorekopie geïsoleerd om en maakt bestaande versleutelde package/materialisatie af; geenproductieservicesgestopt. Pakketfit envolledigzelfderestoregedrag nog open; fysiekeE4.15proef blijft later.",
-                "progress": "Limited active profile snapshot adapter built, tested10/10, independently reviewed and used for actual24-row inactive export; not full recovery.",
-                "checkedAt": "2026-10-23T19:49:14.921610+00:00",
+                "nextAction": "E4.17: werkelijke kernexport is atomair gevalideerd en onafhankelijk op alle 159 vermelde bestandshashes, volledige lijst, identiteit, vertrouwen en 0011-profiel gecontroleerd. Alleen de overbodige tweede semantische lezing is beëindigd; eigen kopie blijft alleen-lezen. Bouwer bevriest de begrensde installatiepolicy en lokale bestandsinname voor onafhankelijke review en de echte grote herstelproef. Daarna ontbreekt nog de kleine hostcomponentoverdracht die de bewaarde bron en afhankelijkheden zonder oude werkmap als werkende uitbreiding terugzet. Alle gegevens en criteria blijven behouden; fysieke E4.15-proef volgt later.",
+                "progress": "Werkelijke kernexport na interne readercontrole atomair gepubliceerd; native kern-, geheugen-, gateway- en identiteitsbronnen onder circa 15 seconden schrijfhek bewaard. Transport- en bestandsinnamekandidaat gebouwd; 46 gerichte controles en vijf bestaande transportgevallen volgens bouwer geslaagd. Onafhankelijke kandidaatcontrole en grote herstelproef volgen. Werkende hostcomponentoverdracht op een schone installatie ontbreekt nog; geen taakafronding.",
+                "checkedAt": "2026-10-23T21:47:09.980964+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
                 "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
-                "latestBoundedOutcome": "112 geselecteerde hostbestanden (885956bytes) lokaalprivé vastgelegd en onafhankelijkgecontroleerd; geenherstelpakket/overdracht/hostclosureclaim. Geïsoleerde CPUkandidaat uit28bestaande dependencies549600671bytes; met modelassets740908358bytes, maar inertimport nog nietgeslaagd doorharnessfout en gevangen socketpoging. Huidigeomgevingbehouden, geeninstallatie/modelinference.",
+                "latestBoundedOutcome": "Echte export bevat 160 bestanden inclusief manifest; manifest ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e. Payload met alle geselecteerde herstelonderdelen is voorlopig 1.645.299.983 bytes vóór pakketmanifest. Expliciete installatiepolicy tot 2 GiB en lokale bestandsroute zijn in uitvoering; gewone portable- en browsergrenzen blijven behouden.",
                 "installedImagePreservationEvidence": "development/evidence/reassessment/e415-installed-image-preservation-20261023.json",
                 "installedImagePreservationReview": "development/reviews/e415-installed-image-preservation-review-20261023.json",
                 "executorImagePreservationEvidence": "development/evidence/reassessment/e415-executor-image-preservation-20261023.json",
@@ -8132,6 +8132,13 @@
                   "sha256": "cc0c4d182e5fdc36fca85332653f94f1e58c4440e49cb1e18e2773cd12c43176",
                   "captured": false,
                   "scope": "13 selected host diskfiles and33distributionmetadata sets; actual payload/import closure and face-only data still not preserved."
+                },
+                "fullTaskCompleted": false,
+                "previousBoundedOutcomeBeforeActualPackage20261023": {
+                  "nextAction": "E4.17: schema0011-export/reader/restore/installer gerepareerd;29gerichte+8echte0011PG+14legacyPGchecks onafhankelijk geslaagd. Echte core/geheugen/gateway/identity/trust onder15sbronhek bewaard en onafhankelijk gebonden. Bouwer zet nativecorekopie geïsoleerd om en maakt bestaande versleutelde package/materialisatie af; geenproductieservicesgestopt. Pakketfit envolledigzelfderestoregedrag nog open; fysiekeE4.15proef blijft later.",
+                  "progress": "Limited active profile snapshot adapter built, tested10/10, independently reviewed and used for actual24-row inactive export; not full recovery.",
+                  "latestBoundedOutcome": "112 geselecteerde hostbestanden (885956bytes) lokaalprivé vastgelegd en onafhankelijkgecontroleerd; geenherstelpakket/overdracht/hostclosureclaim. Geïsoleerde CPUkandidaat uit28bestaande dependencies549600671bytes; met modelassets740908358bytes, maar inertimport nog nietgeslaagd doorharnessfout en gevangen socketpoging. Huidigeomgevingbehouden, geeninstallatie/modelinference.",
+                  "checkedAt": "2026-10-23T19:49:14.921610+00:00"
                 }
               },
               {
@@ -8733,7 +8740,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.17: onafhankelijk advies bevestigt een expliciete installatieoptie van maximaal 2 GiB als kleinste herstelreparatie voor de gemeten 1.645.299.983 bytes. Gewone portable-transporten blijven maximaal 1 GiB; elk bestand blijft maximaal 1 GiB. Bouwer werkt dezelfde bestaande pakket-, transport-, materialisatie- en wizardroute af. Tester beoordeelt beveiligingsgrenzen en de echte volledige versleutelde herstelproef. Geen geselecteerde gegevens weglaten; hetzelfde herstelde gedrag blijft vereist. Fysieke E4.15-proef volgt later.",
+        "nextAction": "E4.17: werkelijke kernexport is atomair gevalideerd en onafhankelijk op alle 159 vermelde bestandshashes, volledige lijst, identiteit, vertrouwen en 0011-profiel gecontroleerd. Alleen de overbodige tweede semantische lezing is beëindigd; eigen kopie blijft alleen-lezen. Bouwer bevriest de begrensde installatiepolicy en lokale bestandsinname voor onafhankelijke review en de echte grote herstelproef. Daarna ontbreekt nog de kleine hostcomponentoverdracht die de bewaarde bron en afhankelijkheden zonder oude werkmap als werkende uitbreiding terugzet. Alle gegevens en criteria blijven behouden; fysieke E4.15-proef volgt later.",
         "finishOrder": [
           "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14090,13 +14097,13 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "E4.17: schema0011-export/reader/restore/installer gerepareerd;29gerichte+8echte0011PG+14legacyPGchecks onafhankelijk geslaagd. Echte core/geheugen/gateway/identity/trust onder15sbronhek bewaard en onafhankelijk gebonden. Bouwer zet nativecorekopie geïsoleerd om en maakt bestaande versleutelde package/materialisatie af; geenproductieservicesgestopt. Pakketfit envolledigzelfderestoregedrag nog open; fysiekeE4.15proef blijft later.",
-              "progress": "Limited active profile snapshot adapter built, tested10/10, independently reviewed and used for actual24-row inactive export; not full recovery.",
-              "checkedAt": "2026-10-23T19:49:14.921610+00:00",
+              "nextAction": "E4.17: werkelijke kernexport is atomair gevalideerd en onafhankelijk op alle 159 vermelde bestandshashes, volledige lijst, identiteit, vertrouwen en 0011-profiel gecontroleerd. Alleen de overbodige tweede semantische lezing is beëindigd; eigen kopie blijft alleen-lezen. Bouwer bevriest de begrensde installatiepolicy en lokale bestandsinname voor onafhankelijke review en de echte grote herstelproef. Daarna ontbreekt nog de kleine hostcomponentoverdracht die de bewaarde bron en afhankelijkheden zonder oude werkmap als werkende uitbreiding terugzet. Alle gegevens en criteria blijven behouden; fysieke E4.15-proef volgt later.",
+              "progress": "Werkelijke kernexport na interne readercontrole atomair gepubliceerd; native kern-, geheugen-, gateway- en identiteitsbronnen onder circa 15 seconden schrijfhek bewaard. Transport- en bestandsinnamekandidaat gebouwd; 46 gerichte controles en vijf bestaande transportgevallen volgens bouwer geslaagd. Onafhankelijke kandidaatcontrole en grote herstelproef volgen. Werkende hostcomponentoverdracht op een schone installatie ontbreekt nog; geen taakafronding.",
+              "checkedAt": "2026-10-23T21:47:09.980964+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
               "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
               "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
-              "latestBoundedOutcome": "112 geselecteerde hostbestanden (885956bytes) lokaalprivé vastgelegd en onafhankelijkgecontroleerd; geenherstelpakket/overdracht/hostclosureclaim. Geïsoleerde CPUkandidaat uit28bestaande dependencies549600671bytes; met modelassets740908358bytes, maar inertimport nog nietgeslaagd doorharnessfout en gevangen socketpoging. Huidigeomgevingbehouden, geeninstallatie/modelinference.",
+              "latestBoundedOutcome": "Echte export bevat 160 bestanden inclusief manifest; manifest ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e. Payload met alle geselecteerde herstelonderdelen is voorlopig 1.645.299.983 bytes vóór pakketmanifest. Expliciete installatiepolicy tot 2 GiB en lokale bestandsroute zijn in uitvoering; gewone portable- en browsergrenzen blijven behouden.",
               "installedImagePreservationEvidence": "development/evidence/reassessment/e415-installed-image-preservation-20261023.json",
               "installedImagePreservationReview": "development/reviews/e415-installed-image-preservation-review-20261023.json",
               "executorImagePreservationEvidence": "development/evidence/reassessment/e415-executor-image-preservation-20261023.json",
@@ -14109,6 +14116,13 @@
                 "sha256": "cc0c4d182e5fdc36fca85332653f94f1e58c4440e49cb1e18e2773cd12c43176",
                 "captured": false,
                 "scope": "13 selected host diskfiles and33distributionmetadata sets; actual payload/import closure and face-only data still not preserved."
+              },
+              "fullTaskCompleted": false,
+              "previousBoundedOutcomeBeforeActualPackage20261023": {
+                "nextAction": "E4.17: schema0011-export/reader/restore/installer gerepareerd;29gerichte+8echte0011PG+14legacyPGchecks onafhankelijk geslaagd. Echte core/geheugen/gateway/identity/trust onder15sbronhek bewaard en onafhankelijk gebonden. Bouwer zet nativecorekopie geïsoleerd om en maakt bestaande versleutelde package/materialisatie af; geenproductieservicesgestopt. Pakketfit envolledigzelfderestoregedrag nog open; fysiekeE4.15proef blijft later.",
+                "progress": "Limited active profile snapshot adapter built, tested10/10, independently reviewed and used for actual24-row inactive export; not full recovery.",
+                "latestBoundedOutcome": "112 geselecteerde hostbestanden (885956bytes) lokaalprivé vastgelegd en onafhankelijkgecontroleerd; geenherstelpakket/overdracht/hostclosureclaim. Geïsoleerde CPUkandidaat uit28bestaande dependencies549600671bytes; met modelassets740908358bytes, maar inertimport nog nietgeslaagd doorharnessfout en gevangen socketpoging. Huidigeomgevingbehouden, geeninstallatie/modelinference.",
+                "checkedAt": "2026-10-23T19:49:14.921610+00:00"
               }
             },
             {
@@ -14710,7 +14724,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.17: onafhankelijk advies bevestigt een expliciete installatieoptie van maximaal 2 GiB als kleinste herstelreparatie voor de gemeten 1.645.299.983 bytes. Gewone portable-transporten blijven maximaal 1 GiB; elk bestand blijft maximaal 1 GiB. Bouwer werkt dezelfde bestaande pakket-, transport-, materialisatie- en wizardroute af. Tester beoordeelt beveiligingsgrenzen en de echte volledige versleutelde herstelproef. Geen geselecteerde gegevens weglaten; hetzelfde herstelde gedrag blijft vereist. Fysieke E4.15-proef volgt later.",
+      "nextAction": "E4.17: werkelijke kernexport is atomair gevalideerd en onafhankelijk op alle 159 vermelde bestandshashes, volledige lijst, identiteit, vertrouwen en 0011-profiel gecontroleerd. Alleen de overbodige tweede semantische lezing is beëindigd; eigen kopie blijft alleen-lezen. Bouwer bevriest de begrensde installatiepolicy en lokale bestandsinname voor onafhankelijke review en de echte grote herstelproef. Daarna ontbreekt nog de kleine hostcomponentoverdracht die de bewaarde bron en afhankelijkheden zonder oude werkmap als werkende uitbreiding terugzet. Alle gegevens en criteria blijven behouden; fysieke E4.15-proef volgt later.",
       "finishOrder": [
         "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -16966,7 +16980,7 @@
       "ownerReviewerCorrection": "Latest direct owner instruction: original chat01a169f2 is sole tester/reviewer; replacement01a16a55-1607 is standby with claims released."
     },
     "e417CurrentDelivery20261023": {
-      "stage": "installation_transport_policy_repair_in_progress",
+      "stage": "actual_core_export_verified_transport_candidate_pending_independent_review",
       "profileAdapter": "src/tools/installation_face_profile_snapshot.py",
       "profileTestsPassed": 10,
       "actualProfileRows": 24,
@@ -16996,10 +17010,10 @@
       "provisionalPackagePayloadBytes": 1645299983,
       "existingTransportLimitBytes": 1073741824,
       "provisionalLimitExcessBytes": 571558159,
-      "coreValidationStillRunning": true,
+      "coreValidationStillRunning": false,
       "selectedBytesRemoved": 0,
       "transportLimitChanged": false,
-      "nextAction": "E4.17: onafhankelijk advies bevestigt een expliciete installatieoptie van maximaal 2 GiB als kleinste herstelreparatie voor de gemeten 1.645.299.983 bytes. Gewone portable-transporten blijven maximaal 1 GiB; elk bestand blijft maximaal 1 GiB. Bouwer werkt dezelfde bestaande pakket-, transport-, materialisatie- en wizardroute af. Tester beoordeelt beveiligingsgrenzen en de echte volledige versleutelde herstelproef. Geen geselecteerde gegevens weglaten; hetzelfde herstelde gedrag blijft vereist. Fysieke E4.15-proef volgt later.",
+      "nextAction": "E4.17: werkelijke kernexport is atomair gevalideerd en onafhankelijk op alle 159 vermelde bestandshashes, volledige lijst, identiteit, vertrouwen en 0011-profiel gecontroleerd. Alleen de overbodige tweede semantische lezing is beëindigd; eigen kopie blijft alleen-lezen. Bouwer bevriest de begrensde installatiepolicy en lokale bestandsinname voor onafhankelijke review en de echte grote herstelproef. Daarna ontbreekt nog de kleine hostcomponentoverdracht die de bewaarde bron en afhankelijkheden zonder oude werkmap als werkende uitbreiding terugzet. Alle gegevens en criteria blijven behouden; fysieke E4.15-proef volgt later.",
       "independentDesignRecommendation": "explicit_trusted_installation_policy_2GiB_default_and_per_file_1GiB",
       "implementationAuthorized": true,
       "existingBrowserUploadLimitBytes": 67108864,
@@ -17008,7 +17022,29 @@
       "freeDiskObservedBytes": 265460645888,
       "converterObservedRssKiB": 7846348,
       "converterObservedElapsedSeconds": 840,
-      "converterPeakStillUnknown": true
+      "converterPeakStillUnknown": true,
+      "coreAtomicallyPublishedAfterExporterValidation": true,
+      "coreManifestSha256": "ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e",
+      "coreListedFiles": 159,
+      "coreFilesIncludingManifest": 160,
+      "redundantSecondCoreReadCancellationAuthorized": true,
+      "packagePolicyCandidateBuilt": true,
+      "focusedPolicyAndFileCasesReportedPassed": 46,
+      "focusedPolicyAndFileCasesReportedSeconds": 16.41,
+      "legacyTransportCasesReportedPassed": 5,
+      "hostComponentRestoreGapIdentified": true,
+      "hostComponentRestoreProven": false,
+      "corePublicationReceiptSha256": "0e262507b3276ece346e2ec0bf028a784fe6d4781bfa1abc3b7200b39fb1bcc7",
+      "coreExportPayloadBytesIncludingManifest": 711922736,
+      "allCoreManifestHashesIndependentlyChecked": 159,
+      "coreInventoryFilesIndependentlyChecked": 160,
+      "independentCoreBindingCheckSeconds": 2.398,
+      "redundantSecondCoreReadCancelled": true,
+      "helperDidNotReturn": true,
+      "copyReadOnly": true,
+      "unexpectedCopyClients": 0,
+      "sourceDataWrites": 0,
+      "converterObservedHighWaterKiBBeforeCancellation": 8753624
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",
