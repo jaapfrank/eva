@@ -109,7 +109,7 @@
       }
     },
     "codex-e418": {
-      "task": "E4.18",
+      "task": "E4.17",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "development/design/architecture/e418-*.json",
@@ -156,7 +156,11 @@
         "development/evidence/reassessment/e418-file-inspection-20261023.json",
         "development/reviews/e418-file-inspection-20261023.json",
         "development/design/architecture/e418-used-route-owners.json",
-        "development/evidence/reassessment/e418-used-route-owners-20261023.json"
+        "development/evidence/reassessment/e418-used-route-owners-20261023.json",
+        "development/tests/portable/test_e417_extension_restore.py",
+        "development/design/architecture/e417-extension-restore-ownership-20261023.json",
+        "development/evidence/reassessment/e417-extension-restore-20261023.json",
+        "development/reviews/e417-extension-restore-20261023.json"
       ],
       "requestedAdditionalPaths": [
         {
@@ -193,38 +197,36 @@
           "status": "confirmed_by_wsl_e18",
           "confirmationAt": "2026-10-23T10:34:55.687299+00:00",
           "confirmationSource": "executors.wsl-e18.e418AdditionalPathConfirmation"
+        },
+        {
+          "path": "src/tools/portable_runtime_archive.py",
+          "requestedAt": "2026-10-23T14:57:41.748272+00:00",
+          "status": "awaiting_per_file_confirmation",
+          "reason": "E4.17 existing v3 core archive export fails before any extension transfer because _schemas() forces checkout deploy/schemas, whose moved record-schema manifest no longer matches original closed hash. The already packaged eva.resources.portable_v1 resource matches the pinned authority exactly.",
+          "scope": "Only change _schemas() from _schema_payloads(Path(__file__).resolve().parents[2] / \"deploy/schemas\") to _schema_payloads(). Existing default loader already uses the sealed packaged resource. No hash/criteria/schema/restore authority change. No install/restart.",
+          "beforeSha256": "243844be0fd173530d7411c1df88e80f02dda9ab103b4a178b8555f5c5558e49",
+          "reproduction": "3 setup failures in development/tests/portable/test_e417_extension_restore.py; actual checkout manifest 44ad41ec..., sealed resource and expected hash de2e302c...",
+          "candidateWhilePending": "Run the same unchanged test cases in an isolated process overriding only _schemas to its existing packaged-resource default. Do not edit this product path before explicit confirmation."
+        },
+        {
+          "path": "src/tools/postgres_portable_export.py",
+          "requestedAt": "2026-10-23T14:58:52.193838+00:00",
+          "status": "awaiting_per_file_confirmation",
+          "reason": "Second half of the same root-move mismatch: CATALOG_SPEC now contains deploy/schemas archive paths; sealed resources and archive manifest require original schemas/... paths. Existing v3 reader fails with KeyError after selecting the correct sealed source.",
+          "scope": "Only normalize record_schema_relative_path in _default_table_specs by removing the known deploy/ checkout prefix. Keep generated catalog, all record/schema hashes, data, fields and frozen resources unchanged. Existing schemas/... paths remain unchanged. No runtime/restart.",
+          "beforeSha256": "c49b08236d07bd21203ad91c8c647d902c9058ec140b0f0bc138a1d116067dd7"
         }
       ],
       "statusProposal": {
-        "taskId": "E4.18",
+        "taskId": "E4.17",
         "status": "in_progress",
-        "alreadyWorks": "Existing restore/fresh-install guards check exact containers and shared DSN mounts.",
-        "concreteGap": "Four active tools import the 1875-line historical Eva1 retained-slot cutover solely for read-only inventory and DSN consumer lookup. That imports unrelated traffic/cutover dependencies.",
-        "chosenOutcome": "One neutral read-only inspection owner, existing historical facade preserved; consumers redirected only after requested path confirmation.",
-        "scope": "No E1.8, memory continuity, initiative, HA, voice, model/self-repair WIP or shared installation changes.",
-        "endCondition": "Same inspection/error/no-effect behavior, focused regression checks, before/after import closure and actual read-only inventory comparison. Full E4.18 remains open for E4.15/E4.17-dependent final review.",
-        "nextAction": "Deze drie afgeronde onderhoudsuitkomsten hergebruiken bij de resterende E4.18-routecontrole wanneer E4.15/E4.17 is overgedragen. Geen nieuwe brede opschoonronde.",
+        "progress": "Geïsoleerde kandidaat met twee bestaande bron-/archiefrandcorrecties doorstaat 3/3 herstelgevallen: oorspronkelijke bronmap verwijderd, pakketversies/configuratie/eigen gegevens/pauzemarkering exact bewaard en hetzelfde offline resultaat. Productiebestanden nog ongewijzigd; gerichte bestandsvrijgave voor de twee correcties gevraagd. Geen automatische activering of gedeelde installatie.",
+        "checkedAt": "2026-10-23T14:59:27.987496+00:00",
         "ownerActionRequired": false,
-        "evidence": "development/evidence/reassessment/e418-file-inspection-20261023.json",
-        "runtimeInstallationRequired": "No process restart for host tooling; no shared install without separate candidate-specific confirmation.",
-        "progress": "Containerinspectie en de negen verplaatste ontwikkeltests blijven afgerond. Ook bestandsregistratie en bronherkomst zijn gericht vereenvoudigd/hersteld: één neutrale bestandshasher, geen containerherkomstimport bij registratie, en correcte controle van de huidige deploy/*-mappen. De 17 bestaande tests slagen nu allemaal (vooraf 3 fouten); samen met de nieuwe grensgevallen 46/46 groen. Onafhankelijke review GO. Geen gedeelde installatie gewijzigd; volledige E4.18 blijft open. De vijf bestaande uitvoer-/afleverroutes zijn nu ook alleen-lezen aan hun eigenaren en 18 geselecteerde bronbestanden in kern/werker gebonden. Twee bronverschillen blijven bewust bij de coördinator; dit is geen nieuw gedragsbewijs.",
-        "checkedAt": "2026-10-23T12:50:22.445377+00:00",
-        "independentReview": "development/reviews/e418-file-inspection-20261023.json",
-        "boundedOutcomeCompleted": true,
         "fullTaskCompleted": false,
-        "sourceCommit": "2daf9b8d717ff193120d28e19f006386c3062d6f",
-        "gitPushed": true,
-        "evidenceToAppend": [
-          "development/evidence/reassessment/e418-container-inspection-20261023.json",
-          "development/evidence/reassessment/e418-project-update-test-location-20261023.json",
-          "development/evidence/reassessment/e418-file-inspection-20261023.json",
-          "development/evidence/reassessment/e418-used-route-owners-20261023.json"
-        ],
-        "reviewToAppend": [
-          "development/reviews/e418-container-inspection-20261023.json",
-          "development/reviews/e418-project-update-test-location-20261023.json",
-          "development/reviews/e418-file-inspection-20261023.json"
-        ]
+        "nextAction": "Bevestig alleen portable_runtime_archive.py:_schemas en postgres_portable_export.py:_default_table_specs; daarna exacte kandidaat vastleggen, gericht verifiëren en onafhankelijk beoordelen.",
+        "evidenceToAppend": [],
+        "reviewToAppend": []
       },
       "conditions": [
         "Read E4.18 and existing E3/E4 inventories; select one concrete used route or proven-unused helper. No broad cleanup.",
@@ -235,7 +237,7 @@
         "E4.15/E4.17 dependencies remain. Early bounded cleanup does not close E4.18.",
         "Use statusProposal for workboard/docs changes; WSL integrates shared files preserving foreign hunks."
       ],
-      "updatedAt": "2026-10-23T12:55:38.916212+00:00",
+      "updatedAt": "2026-10-23T14:59:27.987496+00:00",
       "reviewRequest": {
         "status": "independently_reviewed_GO",
         "reviewer": "/root/e47_mcp_catalog",
@@ -347,7 +349,7 @@
         "assignmentRef": "executors.wsl-e18.nextParallelScope",
         "confirmedAt": "2026-10-23T13:46:28.447868+00:00"
       },
-      "assignmentStatus": "next_scope_explicitly_assigned",
+      "assignmentStatus": "in_progress",
       "assignmentCompletion": {
         "at": "2026-10-23T12:55:38.916212+00:00",
         "codeCommit": "2daf9b8d717ff193120d28e19f006386c3062d6f",
@@ -395,6 +397,110 @@
           "Als een ander productbestand nodig blijkt: vraag exacte uitbreiding via dit bestand, werk intussen zelfstandig door binnen deze scope."
         ],
         "acceptance": "Bestaande herstelroute en één concrete tekortkoming aantonen; gerichte correctie indien nodig met onafhankelijke review. Zelfgemaakte code blijft buiten kern, rechten/geheimen/pauzestatus behouden en geen dubbele effecten."
+      },
+      "previousAssignment": {
+        "task": "E4.18",
+        "statusProposal": {
+          "taskId": "E4.18",
+          "status": "in_progress",
+          "alreadyWorks": "Existing restore/fresh-install guards check exact containers and shared DSN mounts.",
+          "concreteGap": "Four active tools import the 1875-line historical Eva1 retained-slot cutover solely for read-only inventory and DSN consumer lookup. That imports unrelated traffic/cutover dependencies.",
+          "chosenOutcome": "One neutral read-only inspection owner, existing historical facade preserved; consumers redirected only after requested path confirmation.",
+          "scope": "No E1.8, memory continuity, initiative, HA, voice, model/self-repair WIP or shared installation changes.",
+          "endCondition": "Same inspection/error/no-effect behavior, focused regression checks, before/after import closure and actual read-only inventory comparison. Full E4.18 remains open for E4.15/E4.17-dependent final review.",
+          "nextAction": "Deze drie afgeronde onderhoudsuitkomsten hergebruiken bij de resterende E4.18-routecontrole wanneer E4.15/E4.17 is overgedragen. Geen nieuwe brede opschoonronde.",
+          "ownerActionRequired": false,
+          "evidence": "development/evidence/reassessment/e418-file-inspection-20261023.json",
+          "runtimeInstallationRequired": "No process restart for host tooling; no shared install without separate candidate-specific confirmation.",
+          "progress": "Containerinspectie en de negen verplaatste ontwikkeltests blijven afgerond. Ook bestandsregistratie en bronherkomst zijn gericht vereenvoudigd/hersteld: één neutrale bestandshasher, geen containerherkomstimport bij registratie, en correcte controle van de huidige deploy/*-mappen. De 17 bestaande tests slagen nu allemaal (vooraf 3 fouten); samen met de nieuwe grensgevallen 46/46 groen. Onafhankelijke review GO. Geen gedeelde installatie gewijzigd; volledige E4.18 blijft open. De vijf bestaande uitvoer-/afleverroutes zijn nu ook alleen-lezen aan hun eigenaren en 18 geselecteerde bronbestanden in kern/werker gebonden. Twee bronverschillen blijven bewust bij de coördinator; dit is geen nieuw gedragsbewijs.",
+          "checkedAt": "2026-10-23T12:50:22.445377+00:00",
+          "independentReview": "development/reviews/e418-file-inspection-20261023.json",
+          "boundedOutcomeCompleted": true,
+          "fullTaskCompleted": false,
+          "sourceCommit": "2daf9b8d717ff193120d28e19f006386c3062d6f",
+          "gitPushed": true,
+          "evidenceToAppend": [
+            "development/evidence/reassessment/e418-container-inspection-20261023.json",
+            "development/evidence/reassessment/e418-project-update-test-location-20261023.json",
+            "development/evidence/reassessment/e418-file-inspection-20261023.json",
+            "development/evidence/reassessment/e418-used-route-owners-20261023.json"
+          ],
+          "reviewToAppend": [
+            "development/reviews/e418-container-inspection-20261023.json",
+            "development/reviews/e418-project-update-test-location-20261023.json",
+            "development/reviews/e418-file-inspection-20261023.json"
+          ]
+        },
+        "assignmentCompletion": {
+          "at": "2026-10-23T12:55:38.916212+00:00",
+          "codeCommit": "2daf9b8d717ff193120d28e19f006386c3062d6f",
+          "handoffCommit": "b7d6dfefb920666db820d609aaab1c98582a0a66",
+          "verifiedCases": 46,
+          "independentGo": true,
+          "productSourceWorkWithinConfirmedScopeComplete": true,
+          "fullE418Complete": false,
+          "remainingOwner": "wsl-e18",
+          "remaining": "Process exact E4.18 status patch and assign next non-overlapping task/paths. E4.15/E4.17 final handoff pending. No inference of approval from elapsed time."
+        },
+        "routeOwnershipHandoff": {
+          "startedAt": "2026-10-23T12:47:35.343506+00:00",
+          "status": "bounded_read_only_handoff_completed",
+          "paths": [
+            "development/design/architecture/e418-used-route-owners.json",
+            "development/evidence/reassessment/e418-used-route-owners-20261023.json"
+          ],
+          "scope": "Static ownership/binding map for existing conversation, HA, browser, tool-program and saved result return. Product sources only read; no runtime calls or modifications. Installed source digests/symbols only.",
+          "acceptance": "Each named owner binds to exact current and installed source hash with observed differences explicit. No claim of executed family behavior from source inspection. Retain live helpers; no deletions without pending E4.15/E4.17 handoff.",
+          "completedAt": "2026-10-23T12:50:22.445377+00:00",
+          "evidence": "development/evidence/reassessment/e418-used-route-owners-20261023.json",
+          "routesMapped": 5,
+          "selectedSourceFiles": 18,
+          "noSharedInstallationOrRestart": true,
+          "installedWorkspaceDifferences": [
+            "src/eva/adapters/postgres/external_conversation_tools.py",
+            "src/eva/adapters/postgres/private_work_return.py"
+          ],
+          "commit": "b7d6dfefb920666db820d609aaab1c98582a0a66",
+          "gitPushed": true,
+          "allNamedInstalledMethodsValidated": true
+        }
+      },
+      "activeAssignment": {
+        "id": "e417-extension-restore-handoff-20261023",
+        "startedAt": "2026-10-23T14:52:17.507425+00:00",
+        "chosenPaths": [
+          "development/tests/portable/test_e417_extension_restore.py",
+          "development/design/architecture/e417-extension-restore-ownership-20261023.json",
+          "development/evidence/reassessment/e417-extension-restore-20261023.json",
+          "development/reviews/e417-extension-restore-20261023.json"
+        ],
+        "existing": "AgentSkillPackage exact-byte bundles referenced by existing procedure/documents; role-bound installation archive, encrypted transport, inactive materializer and separate guarded document relocation.",
+        "gapToCheck": "End-to-end preservation of a skill bundle plus pinned dependency/config/data/paused-state artifacts after original source directory is gone. Existing code may already suffice; do not add a parallel extension store.",
+        "endCondition": "An isolated existing-format roundtrip with exact package/config/data/state bytes and same offline behavior. Never auto-activate or replay effects; preserve bad-source/old-destination rejection. Full E4.17 awaits actual E4.15 extension.",
+        "budget": "One bounded existing-route proof and focused regressions, one independent review, no Eva model/provider calls or shared restart. Credit cost unknown.",
+        "sourceChanges": "None until an actual missing transfer is demonstrated.",
+        "discoveredGap": "Root-move mismatch in exactly two boundaries: runtime _schemas chooses altered checkout instead of sealed resource; PostgreSQL exporter leaks checkout deploy/ prefix into archive record schema paths. Original resource hashes and record data need no change.",
+        "candidateResult": {
+          "at": "2026-10-23T14:59:27.987496+00:00",
+          "status": "isolated_two_boundary_candidate_3_cases_pass",
+          "productionSourceModified": false,
+          "sourceOverrides": [
+            "portable_runtime_archive._schemas -> existing _schema_payloads() packaged default",
+            "postgres_portable_export canonical record_schema_relative_path removes known deploy/ source prefix"
+          ],
+          "originalAuthorityHashesUnchanged": true,
+          "oldSourceRemovedBeforeRestore": true,
+          "allPackageVersionsConfigDataPausedMarkerPreserved": true,
+          "sameOfflineOutput": true,
+          "externalEffects": false,
+          "fullE417Complete": false
+        }
+      },
+      "extensionArtifactRequest": {
+        "to": "wsl-e18",
+        "requestedAt": "2026-10-23T14:52:17.507425+00:00",
+        "request": "Voor latere echte E4.15/E4.17-binding: lever het exacte door Eva gemaakte pakket/artifactpad en zijn bestaande configuratie-/data-/pauzestatus-eigenaren zodra beschikbaar. Ik bouw intussen een geïsoleerde proef van het bestaande AgentSkillPackage/document/installation-archive-pad; geen nieuw packageplatform of wijzigingen aan programmeeruitvoerder.",
+        "blocksIsolatedProof": false
       }
     }
   },
