@@ -1,6 +1,6 @@
 {
   "task": "E4.15",
-  "checkedAt": "2026-10-23T14:32:42.169478+00:00",
+  "checkedAt": "2026-10-23T14:40:19.700000+00:00",
   "status": "in_progress",
   "route": "ordinary installed dashboard conversation -> start_digital_work -> existing delegated worker",
   "ownerRequest": "Previously authorized camera/recognition/greeting acceptance, explicitly relayed by Codex; not spontaneous discovery.",
@@ -75,7 +75,7 @@
     "independentReview": "review_cursor GO",
     "installedCore": "sha256:1336692a61655316cc58f57493f2906c0f4e51b7ee46dc9871358cd5128e6dac",
     "installedWorker": "sha256:ee89daaa2d8ed8a6bf7c015100f29d6d64945d78f988e02891f5a389f97f26e4",
-    "live": "Ordinary original-work resume passed the previous failure and requested a corrected tool call in the same model loop. Full work outcome pending."
+    "live": "Same model loop attempted an argument correction, then failed on empty optional resource_path. This preserved failure is addressed by sourceReadCompletion below."
   },
   "faceAdapterCheck": {
     "health": "CPUExecutionProvider ready; enrolled profiles present; no automatic enrollment",
@@ -83,5 +83,20 @@
     "facesFound": 0,
     "pixelsPersisted": false,
     "limit": "Actual inference completed; no identified person or greeting demonstrated."
+  },
+  "sourceReadCompletion": {
+    "cause": "Exact failure fingerprint matched component_action.resource_path text length is invalid. Optional empty field rejected; normalized arguments were not used by READ.",
+    "change": "Normalize absent optional selectors and use validated arguments; missing runtime source gets existing bounded correction feedback. Preserve original call for replay.",
+    "testsPassed": 37,
+    "review": "review_cursor GO",
+    "coreImage": "sha256:db296dcb1277ee7feaa658d7063459d8ae0042dd197e4c34fe3647156eaf9811",
+    "workerImage": "sha256:d4e8c551076e3be38e2ad76b20a79886ac5a7c82a44f8e9f2a9fed11c34c859b",
+    "restoredWorkerSources": {
+      "bootstrap/camera_observer.py": "1555892971f8fc89c6d5ac700cbd3c6e35e42d3df635d71393a21de1f6b12942",
+      "adapters/connectors/camera_observer.py": "1b8230c86528351bc48bff86994282be1704ac15c5a6d3cadb92015f28cbdc0c",
+      "adapters/connectors/local_face_identity.py": "acdf5f96cb398296f2ac7c89533190666486d1e3cfb8b8ef7509b8141179d4c4",
+      "contracts/camera_observation.py": "6d33560f1f143928a0e9d09d4eb16a12b26af5ad5fda7552d510c4e7ba3cd958"
+    },
+    "sourceRestore": "Only four absent modules copied byte-exact from actual core, existing sources/config unchanged. Imports validated in isolated candidate. No service activation or recognition proof."
   }
 }

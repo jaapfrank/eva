@@ -172,7 +172,13 @@ class ComponentImprovementActions:
                     "For installed source, use a package-relative path and omit resource_path "
                     "or set it to null. resource_path is only for saved skill packages. "
                     "No source was read or changed; correct this tool call.")
-            return read_component(self.root, path, start_line), None
+            try:
+                return read_component(self.root, path, start_line), None
+            except FileNotFoundError as error:
+                raise ConversationActionInputRejected(("path",), prompt=
+                    "This path is absent from this installed runtime. Read path='' to list "
+                    "available source directories, then use a returned package-relative path. "
+                    "No source was read or changed.") from error
         if self.source_resolver is None:
             raise ConversationConflict("saved improvement source route unavailable")
         resolved = (self.source_resolver(self.source, document_id) if resource_path is None else
@@ -252,7 +258,8 @@ class ComponentImprovementActions:
         arguments = call.arguments
         if call.name in {READ, DRAFT, PREPARE}:
             arguments = {key: value for key, value in arguments.items()
-                         if key not in {"parent_draft_step", "selection_step", "resource_path"} or value is not None}
+                         if (key not in {"parent_draft_step", "selection_step", "resource_path", "start_line"} or value is not None)
+                         and not (key == "resource_path" and value == "")}
         validate_schema_value(arguments, _SCHEMAS[call.name], "component_action")
         replay = self.pending(turn, step_index=step_index)
         if replay is not None:
@@ -430,9 +437,9 @@ class ComponentImprovementActions:
                         or selected.get("baseline_sha256") != parent["source_sha256"]):
                     raise ConversationConflict("parent differs from selected development winner")
             if call.name == READ:
-                value, _ = self._source(call.arguments["path"],
-                    start_line=call.arguments.get("start_line", 1),
-                    resource_path=call.arguments.get("resource_path"))
+                value, _ = self._source(arguments["path"],
+                    start_line=arguments.get("start_line", 1),
+                    resource_path=arguments.get("resource_path"))
                 path = value.get("path")
                 if (self.evaluator is not None and hasattr(self.evaluator, "round_status")
                         and path in dict(getattr(self.evaluator, "final_assessment_scopes", ()))):

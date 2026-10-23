@@ -32,3 +32,33 @@ def test_installed_read_keeps_path_boundary(tmp_path):
     adapter.root = tmp_path
     with pytest.raises(ValueError, match="relative"):
         adapter._source("../outside.py")
+
+
+@pytest.mark.parametrize("resource", [None, ""])
+def test_execute_uses_normalized_optional_selectors(tmp_path, resource):
+    from tests.application.test_scoped_component_evaluation_actions import adapter
+    from eva.adapters.postgres.component_improvement_actions import READ
+    from eva.application.conversation import ConversationActionCall
+    component, checks, _ = adapter()
+    component.action_names = (READ,)
+    component.root = tmp_path
+    component.evaluator = None
+    component._source = ComponentImprovementActions._source.__get__(component)
+    (tmp_path / "example.py").write_text("VALUE = 1\n")
+    call = ConversationActionCall("read", READ,
+        {"path": "example.py", "resource_path": resource, "start_line": None})
+    result = component.execute(component.source, call, step_index=3)
+    assert result.call == call
+    assert result.output["operation_result"]["content"] == "VALUE = 1\n"
+    assert component.execute(component.source, call, step_index=3) == result
+    assert sum(kind == "dispatch" for kind, turn in checks) == 1
+
+
+def test_absent_runtime_source_is_correctable_without_claiming_module_absent(tmp_path):
+    component = ComponentImprovementActions.__new__(ComponentImprovementActions)
+    component.root = tmp_path
+    with pytest.raises(ConversationActionInputRejected) as error:
+        component._source("bootstrap/not_installed.py")
+    assert error.value.fields == ("path",)
+    listing, _ = component._source("")
+    assert listing["kind"] == "directory"
