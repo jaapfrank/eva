@@ -1869,6 +1869,91 @@
       ],
       "functionalStartAdmitted": false,
       "productCodeChangedOrNewEndpointAdded": false
+    },
+    "originalProcedureInputContractPreparation": {
+      "reviewedAt": "2026-10-23T23:53:03.729593+00:00",
+      "verdict": "ORIGINAL_INPUT_CONTRACT_IDENTIFIED_ACTUAL_INPUT_NOT_YET_REVIEWED",
+      "sourceOnly": true,
+      "newCandidateOrInputCreated": false,
+      "originalFactsQueried": false,
+      "modelOrNativeCallsOrScenariosRun": false,
+      "preservedSourcePins": {
+        "savedProcedure": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+        "homeAssistantProcedureProvider": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
+        "householdProcedureContext": "7ae69ecc75a66260fe69cc120f2fbd4bcd49396d34f8e62d757dee8e086d0ccc",
+        "cameraObservationNormalization": "6d33560f1f143928a0e9d09d4eb16a12b26af5ad5fda7552d510c4e7ba3cd958",
+        "procedureClient": "16d74fb37dcb91894bbe7edb8ec724478677827ee4822fcacb2d00214096a245"
+      },
+      "originalTransportProgram": {
+        "name": "HomeAssistantProcedure.RUNNER",
+        "sha256": "b3b414a1281cec8c3978d389f8f8cc70102711fbbd97138be94b3ffc4e70c9db",
+        "utf8Bytes": 349,
+        "role": "Existing fixed stdin JSON/compile/propose/print glue. It is sent as ProcedureExecutionClient.execute(source,...). The authored340eef module is passed inside input_data.source, not sent bare as a standalone program."
+      },
+      "requiredRootInputFields": [
+        "source",
+        "event",
+        "binding",
+        "now"
+      ],
+      "requiredRootSemantics": {
+        "source": "Exact reviewed authored Python source bytes/text from the retained340eef artifact.",
+        "event": "The actually selected original normalized observer observation, not the outer operational-event row or an aggregate counter.",
+        "binding": "Separate trusted event-consumer/discovery/face-health binding, not independently established by copying untrusted event fields.",
+        "now": "Timezone-aware ISO timestamp from the trusted household clock. Preserve recovered original clock when claiming exact replay; label any reconstructed clock provenance and do not freshen old facts for a chosen output."
+      },
+      "fieldsForNominalNoFacesOrGreetingBranch": [
+        "event.source",
+        "event.source_event_id",
+        "event.occurred_at",
+        "event.payload.entity_id",
+        "event.payload.new_state",
+        "event.payload.camera_observation.contract",
+        "event.payload.camera_observation.status",
+        "event.payload.camera_observation.camera_entity_id",
+        "event.payload.camera_observation.device_id",
+        "event.payload.camera_observation.discovery_revision",
+        "event.payload.camera_observation.image_sha256",
+        "event.payload.camera_observation.retrieved_at",
+        "event.payload.camera_observation.recognition.contract",
+        "event.payload.camera_observation.recognition.image_sha256",
+        "event.payload.camera_observation.recognition.evidence_kind",
+        "event.payload.camera_observation.recognition.backend",
+        "event.payload.camera_observation.recognition.backend_revision",
+        "event.payload.camera_observation.recognition.profile_revision",
+        "event.payload.camera_observation.recognition.analyzed_at",
+        "event.payload.camera_observation.recognition.faces"
+      ],
+      "conditionalFields": {
+        "captured_at": "Optional/None; no exposure time may be inferred from retrieval/analysis. Retained normalizer permits only unknown/None capture time.",
+        "nonemptyFaces": "Actual face dictionaries with original status and bounded ordered four-integer region. Do not construct a faces list or regions from aggregate facesDetected. Private names/vectors/pixels are not output evidence."
+      },
+      "trustedBindingFields": [
+        "source",
+        "source_event_id",
+        "occurred_at",
+        "trigger_entity_id",
+        "camera_entity_id",
+        "device_id",
+        "discovery_revision",
+        "backend_revision",
+        "profile_revision"
+      ],
+      "bindingProvenance": "Original _binding checks discovery camera/device/trigger membership and matching inventory revision, then reads profile revision from the configured face health. Need preserved original equivalent evidence or explicitly bounded restored-source reconstruction; source fact equality alone does not establish independent registry trust.",
+      "timeAndSelectionRules": "Propose checks original trigger age0..30s and trigger<=retrieved<=analyzed<=now; optional capture lies between trigger/retrieval. Original batch selector uses newest per device, suppresses equal-time conflicting observations, requires age<30s and a nonempty face list. It never falls back to older face evidence.",
+      "batchNoFaceControlFlow": "For a batch with no eligible face observation, original provider returns None before _binding or execute. A faces=0/no-proposal aggregate therefore does not prove an original ProcedureExecutionClient request existed. A later manual direct adapter reconstruction is not a literal replay of that absent call.",
+      "existingOutputOnly": {
+        "none": "Existing action=none, reason and version from the first failed original guard. This is not delivery, registration or a positive greeting.",
+        "no_faces": "Only if all earlier binding/status/revision/time guards pass and the authoritative recognition.faces list is genuinely empty. Aggregate faces=0 is insufficient.",
+        "stale_or_unordered": "Can follow from historical observations with a current probe clock after earlier bindings pass; do not rewrite timestamps to force no_faces.",
+        "propose_greeting": "Only if every original guard passes and the actual bounded faces list is nonempty. Output is generic proposal data with deterministic version/source/source_event_id/device delivery key and trigger+30s expiry, requiring the existing household assessment/STOP/durable delivery. No identity authentication or spoken/family outcome."
+      },
+      "remainingActualInputEvidence": [
+        "Exact recovered request or clearly labelled reconstruction from original allowed camera/perception facts, with source record/content pins and original context shape.",
+        "Trusted binding origin and clock/selection provenance; aggregate E415 counters are not substitutes.",
+        "Expected result determined from those actual facts under these existing guards, never from an invented faces=0 payload."
+      ],
+      "actualFunctionalInputOrReplayApproved": false
     }
   },
   "contractRequirements": {

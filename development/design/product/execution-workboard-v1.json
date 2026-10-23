@@ -847,7 +847,7 @@
     "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
     "status": "in_progress",
     "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
-    "nextAction": "E4.17: versleuteld herstel en volledige inactieve hostprepare onafhankelijk bewezen. Volgende uitkomst is hetzelfde gedrag van de oorspronkelijke uitbreiding via de bestaande beperkte /run-procedure-servicemodus. Bouwer levert exacte optionele targetconfig plus koud-start/replay/STOPplan met oorspronkelijke service/API/image/budget/CPUbackend en schone omgeving/lege state. Tester controleert vóór start de bestaande contracten en beschermingsgrenzen. Fullsourceconfig en bronattest/ledger blijven intact; afgeschermde eindbeoordelingen zijn geen extra herstelopdracht. Geen volledig hostplatform- of E4.17-eindclaim; geen eigenaaractie nodig.",
+    "nextAction": "E4.17: volledig pakket en 18.067 inactieve hostbestanden onafhankelijk bewezen. Tester beoordeelt nu exact fase1-plan f565d2 voor private start, gezondheid, authenticatie en gecontroleerde STOP/cleanup zonder procedure/evaluate. Eén oorspronkelijke camera-event is read-only teruggevonden; fase2-aanroep blijft open wegens ontbrekende onafhankelijke discovery-inventory- en healthbinding, zonder synthese of geforceerde klok. Bouwer bereidt intussen alleen-lezen de bestaande E1.12-overdracht voor; geen tweede actieve implementatie. Na fase1-GO direct de echte startproef uitvoeren. Volledige E4.17 en gezinsacceptatie blijven open; geen huidige eigenaaractie.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -8113,9 +8113,9 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "E4.17: versleuteld herstel en volledige inactieve hostprepare onafhankelijk bewezen. Volgende uitkomst is hetzelfde gedrag van de oorspronkelijke uitbreiding via de bestaande beperkte /run-procedure-servicemodus. Bouwer levert exacte optionele targetconfig plus koud-start/replay/STOPplan met oorspronkelijke service/API/image/budget/CPUbackend en schone omgeving/lege state. Tester controleert vóór start de bestaande contracten en beschermingsgrenzen. Fullsourceconfig en bronattest/ledger blijven intact; afgeschermde eindbeoordelingen zijn geen extra herstelopdracht. Geen volledig hostplatform- of E4.17-eindclaim; geen eigenaaractie nodig.",
+                "nextAction": "E4.17: volledig pakket en 18.067 inactieve hostbestanden onafhankelijk bewezen. Tester beoordeelt nu exact fase1-plan f565d2 voor private start, gezondheid, authenticatie en gecontroleerde STOP/cleanup zonder procedure/evaluate. Eén oorspronkelijke camera-event is read-only teruggevonden; fase2-aanroep blijft open wegens ontbrekende onafhankelijke discovery-inventory- en healthbinding, zonder synthese of geforceerde klok. Bouwer bereidt intussen alleen-lezen de bestaande E1.12-overdracht voor; geen tweede actieve implementatie. Na fase1-GO direct de echte startproef uitvoeren. Volledige E4.17 en gezinsacceptatie blijven open; geen huidige eigenaaractie.",
                 "progress": "Volledig versleuteld herstel en volledige inactieve hostprepare onafhankelijk op daadwerkelijke bestanden bewezen. Volgende eindvoorwaarde: dezelfde oorspronkelijke procedure werkt op het geïsoleerde hersteldoel met behouden stop/hold-grenzen.",
-                "checkedAt": "2026-10-23T23:42:43.673680+00:00",
+                "checkedAt": "2026-10-23T23:55:01.874341+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
                 "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -8740,7 +8740,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.17: versleuteld herstel en volledige inactieve hostprepare onafhankelijk bewezen. Volgende uitkomst is hetzelfde gedrag van de oorspronkelijke uitbreiding via de bestaande beperkte /run-procedure-servicemodus. Bouwer levert exacte optionele targetconfig plus koud-start/replay/STOPplan met oorspronkelijke service/API/image/budget/CPUbackend en schone omgeving/lege state. Tester controleert vóór start de bestaande contracten en beschermingsgrenzen. Fullsourceconfig en bronattest/ledger blijven intact; afgeschermde eindbeoordelingen zijn geen extra herstelopdracht. Geen volledig hostplatform- of E4.17-eindclaim; geen eigenaaractie nodig.",
+        "nextAction": "E4.17: volledig pakket en 18.067 inactieve hostbestanden onafhankelijk bewezen. Tester beoordeelt nu exact fase1-plan f565d2 voor private start, gezondheid, authenticatie en gecontroleerde STOP/cleanup zonder procedure/evaluate. Eén oorspronkelijke camera-event is read-only teruggevonden; fase2-aanroep blijft open wegens ontbrekende onafhankelijke discovery-inventory- en healthbinding, zonder synthese of geforceerde klok. Bouwer bereidt intussen alleen-lezen de bestaande E1.12-overdracht voor; geen tweede actieve implementatie. Na fase1-GO direct de echte startproef uitvoeren. Volledige E4.17 en gezinsacceptatie blijven open; geen huidige eigenaaractie.",
         "finishOrder": [
           "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14097,9 +14097,9 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "E4.17: versleuteld herstel en volledige inactieve hostprepare onafhankelijk bewezen. Volgende uitkomst is hetzelfde gedrag van de oorspronkelijke uitbreiding via de bestaande beperkte /run-procedure-servicemodus. Bouwer levert exacte optionele targetconfig plus koud-start/replay/STOPplan met oorspronkelijke service/API/image/budget/CPUbackend en schone omgeving/lege state. Tester controleert vóór start de bestaande contracten en beschermingsgrenzen. Fullsourceconfig en bronattest/ledger blijven intact; afgeschermde eindbeoordelingen zijn geen extra herstelopdracht. Geen volledig hostplatform- of E4.17-eindclaim; geen eigenaaractie nodig.",
+              "nextAction": "E4.17: volledig pakket en 18.067 inactieve hostbestanden onafhankelijk bewezen. Tester beoordeelt nu exact fase1-plan f565d2 voor private start, gezondheid, authenticatie en gecontroleerde STOP/cleanup zonder procedure/evaluate. Eén oorspronkelijke camera-event is read-only teruggevonden; fase2-aanroep blijft open wegens ontbrekende onafhankelijke discovery-inventory- en healthbinding, zonder synthese of geforceerde klok. Bouwer bereidt intussen alleen-lezen de bestaande E1.12-overdracht voor; geen tweede actieve implementatie. Na fase1-GO direct de echte startproef uitvoeren. Volledige E4.17 en gezinsacceptatie blijven open; geen huidige eigenaaractie.",
               "progress": "Volledig versleuteld herstel en volledige inactieve hostprepare onafhankelijk op daadwerkelijke bestanden bewezen. Volgende eindvoorwaarde: dezelfde oorspronkelijke procedure werkt op het geïsoleerde hersteldoel met behouden stop/hold-grenzen.",
-              "checkedAt": "2026-10-23T23:42:43.673680+00:00",
+              "checkedAt": "2026-10-23T23:55:01.874341+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
               "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
               "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -14724,7 +14724,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.17: versleuteld herstel en volledige inactieve hostprepare onafhankelijk bewezen. Volgende uitkomst is hetzelfde gedrag van de oorspronkelijke uitbreiding via de bestaande beperkte /run-procedure-servicemodus. Bouwer levert exacte optionele targetconfig plus koud-start/replay/STOPplan met oorspronkelijke service/API/image/budget/CPUbackend en schone omgeving/lege state. Tester controleert vóór start de bestaande contracten en beschermingsgrenzen. Fullsourceconfig en bronattest/ledger blijven intact; afgeschermde eindbeoordelingen zijn geen extra herstelopdracht. Geen volledig hostplatform- of E4.17-eindclaim; geen eigenaaractie nodig.",
+      "nextAction": "E4.17: volledig pakket en 18.067 inactieve hostbestanden onafhankelijk bewezen. Tester beoordeelt nu exact fase1-plan f565d2 voor private start, gezondheid, authenticatie en gecontroleerde STOP/cleanup zonder procedure/evaluate. Eén oorspronkelijke camera-event is read-only teruggevonden; fase2-aanroep blijft open wegens ontbrekende onafhankelijke discovery-inventory- en healthbinding, zonder synthese of geforceerde klok. Bouwer bereidt intussen alleen-lezen de bestaande E1.12-overdracht voor; geen tweede actieve implementatie. Na fase1-GO direct de echte startproef uitvoeren. Volledige E4.17 en gezinsacceptatie blijven open; geen huidige eigenaaractie.",
       "finishOrder": [
         "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -17013,7 +17013,7 @@
       "coreValidationStillRunning": false,
       "selectedBytesRemoved": 0,
       "transportLimitChanged": false,
-      "nextAction": "E4.17: versleuteld herstel en volledige inactieve hostprepare onafhankelijk bewezen. Volgende uitkomst is hetzelfde gedrag van de oorspronkelijke uitbreiding via de bestaande beperkte /run-procedure-servicemodus. Bouwer levert exacte optionele targetconfig plus koud-start/replay/STOPplan met oorspronkelijke service/API/image/budget/CPUbackend en schone omgeving/lege state. Tester controleert vóór start de bestaande contracten en beschermingsgrenzen. Fullsourceconfig en bronattest/ledger blijven intact; afgeschermde eindbeoordelingen zijn geen extra herstelopdracht. Geen volledig hostplatform- of E4.17-eindclaim; geen eigenaaractie nodig.",
+      "nextAction": "E4.17: volledig pakket en 18.067 inactieve hostbestanden onafhankelijk bewezen. Tester beoordeelt nu exact fase1-plan f565d2 voor private start, gezondheid, authenticatie en gecontroleerde STOP/cleanup zonder procedure/evaluate. Eén oorspronkelijke camera-event is read-only teruggevonden; fase2-aanroep blijft open wegens ontbrekende onafhankelijke discovery-inventory- en healthbinding, zonder synthese of geforceerde klok. Bouwer bereidt intussen alleen-lezen de bestaande E1.12-overdracht voor; geen tweede actieve implementatie. Na fase1-GO direct de echte startproef uitvoeren. Volledige E4.17 en gezinsacceptatie blijven open; geen huidige eigenaaractie.",
       "independentDesignRecommendation": "explicit_trusted_installation_policy_2GiB_default_and_per_file_1GiB",
       "implementationAuthorized": true,
       "existingBrowserUploadLimitBytes": 67108864,
@@ -17207,12 +17207,13 @@
           "exact_reviewed_private_coldstart_health_auth_stop_cleanup_without_procedure_or_evaluate",
           "separately_admitted_original_procedure_call_only_after_input_provenance_review"
         ],
-        "launchPlanSha256": "fba2d9a6863ec44e965bdc5d0e28a8b5a82d0632171e27db9c3a375435dbc892"
+        "launchPlanSha256": "fba2d9a6863ec44e965bdc5d0e28a8b5a82d0632171e27db9c3a375435dbc892",
+        "phase1PlanSha256": "f565d2cd0e7c0d3983ce2a7d8275ab092c3930dececdd0c56613e3b3016646e3"
       },
       "constructorLedgerCaptureReceiptSha256": "1bf12ed5f7e34041403fdf439fb19ed0c29499f5fd04a9de22a3479c522c0702",
       "cpuContextualStaticReceiptSha256": "764f4cfdfa9c7748f806bb88ad0c9e47f05ea73db7c775a08f26347e1877e296",
       "functionalReplayInput": {
-        "status": "bounded_existing_artifact_lookup_or_restored_camera_facts_read_authorized",
+        "status": "one_original_camera_fact_extracted_read_only_phase2_binding_evidence_missing_no_synthesis",
         "originalRequestNotFoundInAggregateReports": true,
         "liveSourceOrProductionRead": false,
         "privateConversationsOrProtectedTestsIncluded": false,
@@ -17225,7 +17226,14 @@
         "adapterModuleNotStandaloneStdinProgram": true,
         "historicalClockSubstitutionForDesiredFreshnessAllowed": false,
         "reconstructionWithCurrentTrustedClockMayProveOnlyActualNegativeGuard": true,
-        "fullHistoricalEndToEndReplayClaimed": false
+        "fullHistoricalEndToEndReplayClaimed": false,
+        "handoffSha256": "f4b04f5c0470e480623637c4372139d9ba09f8b3816d58680300213f3c9ff253",
+        "extractionReceiptSha256": "c2318436a95f6c9d2d3607b098bbc37abe1b9bb60d4ee34c0c71b39594accbed",
+        "missingIndependentBindings": [
+          "original_discovery_inventory_binding",
+          "authenticated_health_binding"
+        ],
+        "furtherBroadLookupAuthorized": false
       },
       "constructorLedgerIndependentReview": "GO_SCOPED_ORIGINAL_LEDGER_OPAQUE_BYTES_SOURCE_EVIDENCE_ONLY",
       "cpuContextualStaticIndependentReview": "GO_SCOPED_CONTEXTUAL_CPYTHON_STATIC_METADATA_NOT_IMPORT",
