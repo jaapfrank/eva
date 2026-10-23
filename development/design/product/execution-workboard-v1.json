@@ -17205,7 +17205,17 @@
         "wholeHostPlatformRestoredClaimed": false
       },
       "constructorLedgerCaptureReceiptSha256": "1bf12ed5f7e34041403fdf439fb19ed0c29499f5fd04a9de22a3479c522c0702",
-      "cpuContextualStaticReceiptSha256": "764f4cfdfa9c7748f806bb88ad0c9e47f05ea73db7c775a08f26347e1877e296"
+      "cpuContextualStaticReceiptSha256": "764f4cfdfa9c7748f806bb88ad0c9e47f05ea73db7c775a08f26347e1877e296",
+      "functionalReplayInput": {
+        "status": "bounded_existing_artifact_lookup_or_restored_camera_facts_read_authorized",
+        "originalRequestNotFoundInAggregateReports": true,
+        "liveSourceOrProductionRead": false,
+        "privateConversationsOrProtectedTestsIncluded": false,
+        "fabricatedFacesZeroInputAllowed": false,
+        "originalRequestByteIdentityRequiresActualRequest": true,
+        "reconstructedInputMustUseOriginalStoredFactsAndExistingContextShape": true,
+        "exactInputProvenanceReviewBeforeStart": true
+      }
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",
