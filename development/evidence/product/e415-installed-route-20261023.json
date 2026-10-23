@@ -1,6 +1,6 @@
 {
   "task": "E4.15",
-  "checkedAt": "2026-10-23T13:58:10.380427+00:00",
+  "checkedAt": "2026-10-23T14:23:44.922343+00:00",
   "status": "in_progress",
   "route": "ordinary installed dashboard conversation -> start_digital_work -> existing delegated worker",
   "ownerRequest": "Previously authorized camera/recognition/greeting acceptance, explicitly relayed by Codex; not spontaneous discovery.",
@@ -33,12 +33,37 @@
     "kind": "Explicit Codex operator request under ongoing owner instruction; normal resume route, not automatic retry",
     "acknowledgementSeconds": 14.782,
     "priorResultsRetained": 5,
-    "firstNewModelPhase": "completed with five original receipts already in context"
+    "firstNewModelPhase": "completed with five original receipts already in context",
+    "outcome": "incomplete_work after 17 model responses and 16 further tool calls; saved progress retained",
+    "usage": {
+      "inputTokens": 306860,
+      "outputTokens": 2048,
+      "measurement": "partial"
+    }
   },
   "limits": [
     "No working camera extension or completed E4.15 claim.",
     "No root-cause claim from diagnostic patch.",
     "Earlier ambiguous attempt and partial usage retained.",
     "Household-research profile mismatch predates this change; provider/private-research/digital-work profiles remain matched."
-  ]
+  ],
+  "cameraAnalysisRepair": {
+    "cause": "Camera bytes arrived but configured local analyzer connection failed; generic tool failure hid the distinction.",
+    "change": "Return image_received and local_vision_unreachable/timeout without pixels or exception text. No automatic GPU startup or retry.",
+    "testsPassed": 30,
+    "independentReview": "review_cursor GO",
+    "installedCore": "sha256:cd9586b42f725649c253e6b292d6d57ea97165c32cb1fe11b17f56b76cb16c6b",
+    "installedWorker": "sha256:b587dd0caf98cf57e413ab64e96d27a27b0c88ba10ba6c2ce2fd3f0b0b6541d1",
+    "liveAdapterRead": {
+      "seconds": 0.369,
+      "httpStatus": 200,
+      "imageReceived": true,
+      "analysisAvailable": false,
+      "error": "local_vision_unreachable",
+      "pixelsPersisted": false
+    },
+    "profileComparison": "Shared provider, digital work and private research match; pre-existing household_research mismatch remains.",
+    "limit": "Actual installed adapter read; does not prove complete worker recovery or recognition/greeting."
+  },
+  "nextAction": "Explicitly continue existing work using observed distinction and existing CPU face/camera modules; operator assistance remains recorded, no spontaneous invention claim."
 }

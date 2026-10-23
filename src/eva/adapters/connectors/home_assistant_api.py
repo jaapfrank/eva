@@ -225,7 +225,18 @@ class HomeAssistantApiTool:
                             status["success"] = False
                         else:
                             snapshot = CameraSnapshot(match[1], media_type, raw, datetime.now(UTC))
-                            value = self.vision.analyze(snapshot).payload
+                            try:
+                                value = self.vision.analyze(snapshot).payload
+                            except (httpx.TimeoutException, httpx.ConnectError) as error:
+                                # Receiving an image and interpreting it are separate
+                                # outcomes. Do not hide an offline analyzer behind a
+                                # generic camera failure or disclose pixels/error text.
+                                value = {"error": ("local_vision_timeout" if isinstance(error, httpx.TimeoutException)
+                                                   else "local_vision_unreachable"),
+                                    "image_received": True, "image_sha256": snapshot.sha256,
+                                    "analysis_available": False,
+                                    "guidance": "The camera returned an image, but its configured local analyzer is unavailable. Repeating the same camera read does not restore that analyzer. Check the existing analyzer configuration/service; no scene or identity was established."}
+                                status["success"] = False
                     else:
                         try:
                             value = json.loads(raw) if raw else None

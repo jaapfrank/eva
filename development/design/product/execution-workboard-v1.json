@@ -838,7 +838,7 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-23T13:59:04.199075+00:00",
+  "lastUpdated": "2026-10-23T14:23:44.966376+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
   "activeTaskId": "E4.15",
@@ -2992,7 +2992,7 @@
         "now": {
           "taskId": "E4.15",
           "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-          "summary": "Echte opdracht via Codex doorgegeven en aangenomen. Eva las camera-/huisinventaris en bewaarde haar uitvoerplan. Eerste poging brak na vijf tooluitkomsten af met verborgen geneste modelfout; diagnostiek gericht hersteld en in kern/worker geïnstalleerd, 15 controles groen. Eén expliciete hervatting bewaart de oorspronkelijke uitvoering en vijf receipts; de werker onderzoekt de bestaande mogelijkheden verder. Geen werkende camera-uitbreiding, spontane behoefteontdekking of E4.15-afronding geclaimd.",
+          "summary": "De oorspronkelijke cameraopdracht en één hervatting hebben inventaris en voortgang opgeleverd, maar nog geen werkende voorziening. Concreet defect opgelost: ontvangen beeld en onbereikbare lokale analyse werden als generieke camerafout gemeld. Gerichte fix geïnstalleerd in kern/worker; 30 controles en onafhankelijke review groen. De echte adapter leest een beeld in 0,369 seconde en meldt correct de onbereikbare analyse. GPU blijft uit; CPU-herkenningsroute bestaat al. Dezelfde opdracht krijgt expliciet vervolg op die bevindingen, geen tweede project of claim van spontane ontdekking.",
           "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform."
         },
         "next": {
@@ -8039,8 +8039,8 @@
                   "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-23T13:59:04.199075+00:00",
-                "progress": "Echte opdracht via Codex doorgegeven en aangenomen. Eva las camera-/huisinventaris en bewaarde haar uitvoerplan. Eerste poging brak na vijf tooluitkomsten af met verborgen geneste modelfout; diagnostiek gericht hersteld en in kern/worker geïnstalleerd, 15 controles groen. Eén expliciete hervatting bewaart de oorspronkelijke uitvoering en vijf receipts; de werker onderzoekt de bestaande mogelijkheden verder. Geen werkende camera-uitbreiding, spontane behoefteontdekking of E4.15-afronding geclaimd.",
+                "checkedAt": "2026-10-23T14:23:44.966376+00:00",
+                "progress": "De oorspronkelijke cameraopdracht en één hervatting hebben inventaris en voortgang opgeleverd, maar nog geen werkende voorziening. Concreet defect opgelost: ontvangen beeld en onbereikbare lokale analyse werden als generieke camerafout gemeld. Gerichte fix geïnstalleerd in kern/worker; 30 controles en onafhankelijke review groen. De echte adapter leest een beeld in 0,369 seconde en meldt correct de onbereikbare analyse. GPU blijft uit; CPU-herkenningsroute bestaat al. Dezelfde opdracht krijgt expliciet vervolg op die bevindingen, geen tweede project of claim van spontane ontdekking.",
                 "evidence": "development/evidence/product/e415-installed-route-20261023.json"
               },
               {
@@ -8714,7 +8714,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-23T13:59:04.199075+00:00",
+        "updatedAt": "2026-10-23T14:23:44.966376+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -13990,8 +13990,8 @@
                 "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-23T13:59:04.199075+00:00",
-              "progress": "Echte opdracht via Codex doorgegeven en aangenomen. Eva las camera-/huisinventaris en bewaarde haar uitvoerplan. Eerste poging brak na vijf tooluitkomsten af met verborgen geneste modelfout; diagnostiek gericht hersteld en in kern/worker geïnstalleerd, 15 controles groen. Eén expliciete hervatting bewaart de oorspronkelijke uitvoering en vijf receipts; de werker onderzoekt de bestaande mogelijkheden verder. Geen werkende camera-uitbreiding, spontane behoefteontdekking of E4.15-afronding geclaimd.",
+              "checkedAt": "2026-10-23T14:23:44.966376+00:00",
+              "progress": "De oorspronkelijke cameraopdracht en één hervatting hebben inventaris en voortgang opgeleverd, maar nog geen werkende voorziening. Concreet defect opgelost: ontvangen beeld en onbereikbare lokale analyse werden als generieke camerafout gemeld. Gerichte fix geïnstalleerd in kern/worker; 30 controles en onafhankelijke review groen. De echte adapter leest een beeld in 0,369 seconde en meldt correct de onbereikbare analyse. GPU blijft uit; CPU-herkenningsroute bestaat al. Dezelfde opdracht krijgt expliciet vervolg op die bevindingen, geen tweede project of claim van spontane ontdekking.",
               "evidence": "development/evidence/product/e415-installed-route-20261023.json"
             },
             {
@@ -14665,7 +14665,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-23T13:59:04.199075+00:00",
+      "updatedAt": "2026-10-23T14:23:44.966376+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
