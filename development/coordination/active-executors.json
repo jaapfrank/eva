@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T19:30:09.984868+00:00",
+  "updatedAt": "2026-10-23T19:31:16.311347+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1661,6 +1661,24 @@
       "newCameraSources": 2,
       "positiveGreeting": false,
       "fullTaskCompleted": false
+    },
+    "nextBoundedAssignments": {
+      "primaryTaskRemains": "E4.15",
+      "purpose": "Preserve this same installed optional extension while physical hearing and later ordinary reuse remain unproven; no new product feature or parent completion",
+      "reviewer": {
+        "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+        "inputSha256": "cc0c4d182e5fdc36fca85332653f94f1e58c4440e49cb1e18e2773cd12c43176",
+        "writePath": "development/reviews/e417-executor-host-capture-proposal-review-20261023.json",
+        "endCondition": "Bounded GO/NO_GO for selected13disk/33metadata capture using existing recovery contracts; no actual capture or runnable claim"
+      },
+      "executor": {
+        "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
+        "writePath": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/face-backend-asset-capture-proposal.private.json",
+        "endCondition": "Exact current facebridge/CPUvenv/two pinned ONNX asset capture proposal, no privateDB/biometric reads or effects"
+      },
+      "maxExecutorsReviewers": 2,
+      "noRepeatedLiveProbeOrOwnerQuestion": true,
+      "onlyCoordinatorIntegratesGitAndSharedInstallation": true
     }
   }
 }
