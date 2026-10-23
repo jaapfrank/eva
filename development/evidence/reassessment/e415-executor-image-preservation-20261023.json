@@ -1,0 +1,115 @@
+{
+  "contract": "EvaExecutorImagePreservationOutcome/v1",
+  "task": "E4.17 supporting exact E4.15 executor dependency preservation",
+  "checkedAt": "2026-10-23T18:43:38.859856+00:00",
+  "status": "saved_exact_executor_image_content_verified_not_restored",
+  "imageId": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+  "archive": {
+    "sha256": "e24661b0f5771246999e7aa36b5b4a3551edfc504c5e2d6ed905e17ebd88465c",
+    "bytes": 125813248,
+    "mode": "0600",
+    "directoryMode": "0700"
+  },
+  "exactBinding": {
+    "inspectId": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+    "inspectDescriptor": {
+      "mediaType": "application/vnd.oci.image.index.v1+json",
+      "digest": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+      "size": 857
+    },
+    "nodes": [
+      {
+        "digest": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "kind": "index",
+        "children": [
+          "sha256:4d831b26c88cf5df053329ad433781b356b00bff6ef94ce9cc5b1141ae5ac8d5",
+          "sha256:ecda67ab01f2a5cbfc2449576bc1b671fc3cc0023fea312cf9587b05e907af18"
+        ]
+      },
+      {
+        "digest": "sha256:4d831b26c88cf5df053329ad433781b356b00bff6ef94ce9cc5b1141ae5ac8d5",
+        "kind": "manifest",
+        "configurationDigest": "sha256:4e875a5b47131a66ce200d636c23ecbbbeb1b09c27885681bd22b8f9a433b8ce",
+        "layers": 242,
+        "orderedRootFsDiffIdsMatchInspect": true,
+        "chainFromExactImageId": [
+          "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+          "sha256:4d831b26c88cf5df053329ad433781b356b00bff6ef94ce9cc5b1141ae5ac8d5"
+        ]
+      },
+      {
+        "digest": "sha256:ecda67ab01f2a5cbfc2449576bc1b671fc3cc0023fea312cf9587b05e907af18",
+        "kind": "manifest",
+        "configurationDigest": "sha256:3cb036f05fc08348f42428efd8a81a95c8b76838de8995523e95516e0816c17c",
+        "layers": 1,
+        "orderedRootFsDiffIdsMatchInspect": false,
+        "chainFromExactImageId": [
+          "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+          "sha256:ecda67ab01f2a5cbfc2449576bc1b671fc3cc0023fea312cf9587b05e907af18"
+        ]
+      }
+    ],
+    "verifiedUniqueBlobs": 248,
+    "matchingRuntimeManifestPaths": [
+      {
+        "digest": "sha256:4d831b26c88cf5df053329ad433781b356b00bff6ef94ce9cc5b1141ae5ac8d5",
+        "kind": "manifest",
+        "configurationDigest": "sha256:4e875a5b47131a66ce200d636c23ecbbbeb1b09c27885681bd22b8f9a433b8ce",
+        "layers": 242,
+        "orderedRootFsDiffIdsMatchInspect": true,
+        "chainFromExactImageId": [
+          "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+          "sha256:4d831b26c88cf5df053329ad433781b356b00bff6ef94ce9cc5b1141ae5ac8d5"
+        ]
+      }
+    ],
+    "legacyConfigDigestNotEquatedToImageId": true
+  },
+  "configurationReferences": {
+    "clientSha256": "2cc6824fe449aa3b73c045fd046e812ade5184dc2f263e52df2b6e3712292c7f",
+    "unitSha256": "c65c7f354331600688f4303eaa5f1fd52a80c4cbd1a1db947b4ec31da1ec2bd7",
+    "serviceRefConfigSha256": "f98773109740cf6048cb9dcb9adf624dc43b6270319553544d640fc515daa914",
+    "meaning": "Exact unchanged approved reference paths/hashes/owner modes only. No unit/config/hostvenv/code archive or loaded-process attestation inferred. No token values read/copied."
+  },
+  "measurements": {
+    "nativeExports": 1,
+    "nativeSaveExitCode": 0,
+    "seconds": 4.861,
+    "loadsBuildsRunsPushesServiceChanges": 0,
+    "modelsCameraMessagesDatabaseExports": 0,
+    "creditCosts": null
+  },
+  "spaceCheck": {
+    "linuxFreeBytes": 271028822016,
+    "windowsFreeBytesAtPrecheck": 669204627456,
+    "minimumRequiredBytes": 2304481976,
+    "margin": "25% image size plus2GiB"
+  },
+  "excluded": [
+    "Face service/models/profiles",
+    "Current native core DB snapshot",
+    "Host executor service source/venv and loaded process state",
+    "Credentials/keys/secret values",
+    "Remote Home Assistant installation",
+    "Native image load/restored execution/reactivation"
+  ],
+  "lastWorking": false,
+  "fullE417": false,
+  "cleanPcRestore": false,
+  "independentReview": {
+    "status": "requested_from_coordinator",
+    "verdict": null
+  },
+  "privateProof": {
+    "manifestSha256": "980ca3ac45fc9bc0d2531ad6ef20641eea0bdf5469bc56fc2d67c07089f8d37d",
+    "harnessSha256": "ac2c665a12c2bac7ac9c523ad9d7de9d99d03cbe44981a8d3bc20424a2bdff74",
+    "referencesSha256": "64bda9712a7a99bcdf75cd95b9392fb6e4c1ce03196bf675b382f612c51554fb"
+  },
+  "limits": [
+    "Native saved bytes/config/layers verified; no load or restored runtime behavior.",
+    "Core/worker images preserved separately; this exact executorimage is a distinct dependency.",
+    "Hostcode/venv and current loaded process attestation remain separately open.",
+    "Face service/profiles/current DBsnapshot and remote HA are not covered."
+  ],
+  "integration": "Coordinator owns review, board/dashboard and Git."
+}

@@ -1,10 +1,10 @@
 {
   "contract": "EvaHouseholdProcedureBindingOutcome/v1",
   "task": "E4.15",
-  "checkedAt": "2026-10-23T18:39:18.764031+00:00",
-  "status": "installed_current_authority_verified_first_real_greeting_pending",
+  "checkedAt": "2026-10-23T18:55:55.677218+00:00",
+  "status": "installed_binding_old_review_recovered_batch_patch_review_pending",
   "existing": "Eva-authored independently preserved pure procedure plus ordinary household observation/assessment/STOP/durable delivery/executor",
-  "gap": "Exact authored source bound to current authorized source, opt-in and reviewed per-role composition",
+  "gap": "Actual ordinary route supplies household observation batches, not direct camera events; batch adapter candidate built and under independent review.",
   "endCondition": "Installed exact bridge processes actual source, preserves negative/freshness/STOP boundaries and permits ordinary appropriate greeting; full E4.15 requires later reuse/feedback and remains open",
   "source": {
     "sha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
@@ -111,7 +111,7 @@
       "greetingProof": false
     }
   },
-  "ownerActionPending": "A natural camera observation containing a face is required; user was asked once to walk into the doorbell camera view and report hearing. Independent recovery preparation continues.",
+  "ownerActionPending": null,
   "usage": {
     "scope": "Root operator admission/leaf checks and linked selected-household snapshot only; general background runtime excluded",
     "runtimeModelCalls": 0,
@@ -144,5 +144,44 @@
     "nativeLoadPerformed": false,
     "dataVolumesAndCredentialsIncluded": false,
     "currentWholeBackup": false
+  },
+  "obsoleteReviewRecovery": {
+    "evidence": "development/evidence/product/e415-uncertain-household-review-recovery-20261023.json",
+    "review": "development/reviews/e415-uncertain-household-review-recovery-20261023.json",
+    "verified": true,
+    "unknownUsageRetained": true,
+    "oldFourEventsPreserved": true,
+    "sourceReplay": false
+  },
+  "ownerTrial": {
+    "status": "deferred_owner_unavailable_and_route_not_ready",
+    "ownerReply": "Ik kan dit nu niet doen",
+    "requestedBeforeFullRouteVerified": true,
+    "previousQuestionWithdrawn": true,
+    "repeatRequestPending": false,
+    "physicalHearing": null
+  },
+  "builtBatchAdapter": {
+    "files": [
+      "src/eva/providers/home_assistant_procedure.py",
+      "development/tests/providers/test_home_assistant_procedure.py"
+    ],
+    "testsPassed": 32,
+    "testSeconds": 1.42,
+    "independentReview": "pending",
+    "installed": false
+  },
+  "executorImagePreservation": {
+    "evidence": "development/evidence/reassessment/e415-executor-image-preservation-20261023.json",
+    "review": "development/reviews/e415-executor-image-preservation-review-20261023.json",
+    "nativeExports": 1,
+    "archiveBytes": 125813248,
+    "nativeLoadPerformed": false
+  },
+  "remainingRecoveryDependencies": {
+    "evidence": "development/evidence/reassessment/e417-installed-extension-recovery-gap-20261023.json",
+    "review": "development/reviews/e417-installed-extension-recovery-gap-review-20261023.json",
+    "captured": false,
+    "fullRestoreProven": false
   }
 }

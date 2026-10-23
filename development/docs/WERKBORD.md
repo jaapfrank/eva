@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Van zelfontdekte behoefte naar eigen uitvinding en later gebruik
 
-E4.15-koppeling is geïnstalleerd en onafhankelijk teruggelezen; huidige bron/authority/UID en profielen zijn gecontroleerd. Echte begroeting blijft open: sinds installatie nog geen nieuwe camerabron, één natuurlijke camera-/hoorproef gevraagd. Controleer nieuwe echte bron/afweging/aflevering zonder replay; maak parallel alleen de exacte configuratiehersteloverdracht af. Volledige E4.15 en E4.17 blijven open.
+Oude onzekere huishoudbeoordeling via bestaande beheerroute eenmalig afgehandeld; onbekend verbruik en vier oorspronkelijke events behouden. Echte batchkoppeling gebouwd (32 controles), nu onafhankelijk beoordelen en gericht op actuele images installeren. Daarna nieuwe echte bron/afweging/aflevering controleren zonder replay. Eigenaar kan fysieke proef nu niet doen; geen herhaalde vraag. Volledige E4.15 en E4.17 blijven open.
 
 Klaar wanneer: Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.
 
@@ -145,7 +145,7 @@ E5.1 heeft beperkt oorspronkelijk technisch bewijs. E1.4 controleert nu werkelij
 
 ## Van jou
 
-Geen handeling nodig. Spraak blijft bij de andere uitvoerder.
+Geen handeling nodig. Fysieke camera-/hoorproef is uitgesteld; de technische route wordt eerst afgemaakt. Spraak blijft bij de andere uitvoerder.
 
 ## Historie
 

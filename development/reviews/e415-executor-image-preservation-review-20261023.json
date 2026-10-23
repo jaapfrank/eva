@@ -1,0 +1,75 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.15 separate executor image preservation",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T18:44:23.581002+00:00",
+  "verdict": "GO",
+  "scope": "Closed native save of exact separate procedure-executor image and client/unit/service reference hash metadata only. No host code/venv or loaded process claim.",
+  "archive": {
+    "sha256": "e24661b0f5771246999e7aa36b5b4a3551edfc504c5e2d6ed905e17ebd88465c",
+    "bytes": 125813248,
+    "rootDirectory": "root:root 0700",
+    "archive": "root:root 0600, regular single-link file",
+    "metadataStableAcrossIndependentRead": true
+  },
+  "exactBinding": {
+    "actualInspectId": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+    "ociRootIndexDigest": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+    "runtimeManifestDigest": "sha256:4d831b26c88cf5df053329ad433781b356b00bff6ef94ce9cc5b1141ae5ac8d5",
+    "runtimeConfigDigest": "sha256:4e875a5b47131a66ce200d636c23ecbbbeb1b09c27885681bd22b8f9a433b8ce",
+    "runtimePlatform": "linux/amd64",
+    "runtimeLayers": 242,
+    "rawConfigAndOrderedRootFSDiffIdsMatchSavedAndCurrentImageInspect": true,
+    "attestationManifestDigest": "sha256:ecda67ab01f2a5cbfc2449576bc1b671fc3cc0023fea312cf9587b05e907af18",
+    "attestationPlatform": "unknown/unknown, marked attestation-manifest under exact root index",
+    "note": "One authorized root image includes its referenced runnable and attestation manifests. Image ID is the root OCI index digest, not either configuration digest. No extra root image adopted."
+  },
+  "independentChecks": {
+    "wholeArchiveHashVerified": true,
+    "outerTarMembers": 253,
+    "uniqueReachableBlobsHashedAndSized": 248,
+    "onlyOneAuthorizedRootIndexDescriptor": true,
+    "noExtraUnreferencedBlobs": true,
+    "noDuplicateOuterPathsLinksDevicesOrTraversal": true,
+    "nativeLegacyManifestEntries": 1,
+    "legacyConfigAndOrderedLayersMatchRuntimeManifest": true,
+    "sourceRefHashesRecheckedWithoutContentPublication": {
+      "client": "2cc6824fe449aa3b73c045fd046e812ade5184dc2f263e52df2b6e3712292c7f",
+      "unit": "c65c7f354331600688f4303eaa5f1fd52a80c4cbd1a1db947b4ec31da1ec2bd7",
+      "serviceReferenceConfig": "f98773109740cf6048cb9dcb9adf624dc43b6270319553544d640fc515daa914"
+    },
+    "allThreeReferenceMetadataContentsCopied": false,
+    "tokenValuesReadOrCopied": false
+  },
+  "evidenceBindings": {
+    "manifest.private.json": "980ca3ac45fc9bc0d2531ad6ef20641eea0bdf5469bc56fc2d67c07089f8d37d",
+    "references.private.json": "64bda9712a7a99bcdf75cd95b9392fb6e4c1ce03196bf675b382f612c51554fb",
+    "image-inspect.private.json": "3e6149183ce29fefa2eef75eca90a3993c459fd2b00257ec8133500ad0b17e8d",
+    "save_once.py": "ac2c665a12c2bac7ac9c523ad9d7de9d99d03cbe44981a8d3bc20424a2bdff74",
+    "export-started.private.json": "809ff5c2b46f28a763b8bae4a84031360f2af476b1c0561612ec067972bea50f",
+    "publicEvidenceSha256": "d54d372f0bf10f0b7eb08118f5c6cb71ba8104b49e2ee6dbc403ade83c03bdfe"
+  },
+  "findings": [],
+  "limits": [
+    "Only image code/built-in dependencies plus reference hashes preserved. Client/unit/service config hash metadata does not copy/reconstruct host service code, venv or loaded process state.",
+    "No docker load/run/build/push, new export, service action, database snapshot, camera/model/message or runtime activation by reviewer.",
+    "Face service/models/profile data, current DB/authority snapshot, secrets/keys/provisioning, total restore chain and actual greeting remain unresolved.",
+    "No native restored execution, clean-PC or last-working success inferred from archive integrity."
+  ],
+  "lastWorking": false,
+  "fullRecovery": false,
+  "cleanPcRestore": false,
+  "usage": {
+    "developmentElapsedSeconds": 121.712,
+    "developmentModelTokens": null,
+    "developmentCreditCost": null,
+    "evaRuntimeModelCalls": 0,
+    "evaRuntimeCreditCost": null,
+    "builderNativeExports": 1,
+    "builderSeconds": 4.861,
+    "reviewerArchiveIntegrityPasses": 1,
+    "reviewerExportsLoadsRunsBuildsPushesServiceActions": 0,
+    "testSuites": 0
+  }
+}

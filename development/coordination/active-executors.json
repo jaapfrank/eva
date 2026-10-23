@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T18:28:28.857500+00:00",
+  "updatedAt": "2026-10-23T18:55:55.677218+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -157,7 +157,7 @@
       }
     },
     "codex-e418": {
-      "task": "E4.17 exact installed extension recovery dependency gap inventory",
+      "task": "E4.15 minimal existing camera batch provider connection",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "development/design/architecture/e418-*.json",
@@ -216,7 +216,9 @@
         "development/tools/project-dashboard/src/owner-current-projects.mjs",
         "development/tools/project-dashboard/owner-current-projects.test.mjs",
         "development/tools/project-dashboard/verify-owner-current-projects.cjs",
-        "development/evidence/product/e29-current-projects-20261023.json"
+        "development/evidence/product/e29-current-projects-20261023.json",
+        "src/eva/providers/home_assistant_procedure.py",
+        "development/tests/providers/test_home_assistant_procedure.py"
       ],
       "requestedAdditionalPaths": [
         {
@@ -391,7 +393,7 @@
         "requestedAt": "2026-10-23T18:35:18.763449+00:00",
         "to": "windows-root",
         "coordinatorThreadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
-        "status": "image_preservation_delivered_next_task_or_review_feedback_requested",
+        "status": "batch_candidate_delivered_wait_independent_review_or_next_coordinator_assignment",
         "standingOwnerInstruction": "Na afronding rechtstreeks bij de coördinator om volgende taak blijven vragen; Jaap niet als tussenpersoon gebruiken.",
         "completedOutcome": "E2.9 current-project view installed and read-only live verified; canonical dashboard and GitHub commit06195e62 confirmed.",
         "request": "Next independent task with exact paths, existing route, end condition and shared-installation boundaries. Preserve coordinator-owned integration/Git/installation, voice and other reserved work.",
@@ -622,7 +624,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "Read-only selected executor/face/source-binding dependencies; no pixels/embedding/token contents or export",
+      "status": "Minimal two-file batch adapter complete; 32 focused cases pass, exact diff ready for independent review; no installation/Git/model",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1053,22 +1055,128 @@
           "exact installed ProcedureReference/household/currentconfig binding"
         ],
         "noFullServerInventoryOrMutation": true
+      },
+      "dependencyGapResult": {
+        "privatePlan": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/capture-plan.private.json",
+        "privateSha256": "00cdd0be79befea07d77c7124a4300968587f6f81e7896bdf34a3899a58a866e",
+        "publicEvidence": "development/evidence/reassessment/e417-installed-extension-recovery-gap-20261023.json",
+        "publicSha256": "4e05475ee970df5ab11095b0071f7f89aafe6835cfa16f6345b7d286d6138ef1",
+        "pinnedModelsMatch": true,
+        "profileDataOrTokensRead": false,
+        "recommendedNextCapture": "Separate exact executor native image; root decides",
+        "fullRecovery": false,
+        "lastWorking": false
+      },
+      "executorImageAssignment": {
+        "privateRoot": "/home/administrator/project/.eva2-artifacts/e415-procedure-executor-image-20261023",
+        "image": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+        "oneSaveNoAutomaticRetry": true,
+        "noLoadBuildRunPushStartStopOrSecrets": true
+      },
+      "executorImageResult": {
+        "privateManifest": "/home/administrator/project/.eva2-artifacts/e415-procedure-executor-image-20261023/manifest.private.json",
+        "privateManifestSha256": "980ca3ac45fc9bc0d2531ad6ef20641eea0bdf5469bc56fc2d67c07089f8d37d",
+        "archive": {
+          "path": "/home/administrator/project/.eva2-artifacts/e415-procedure-executor-image-20261023/procedure-executor-image.tar",
+          "sha256": "e24661b0f5771246999e7aa36b5b4a3551edfc504c5e2d6ed905e17ebd88465c",
+          "bytes": 125813248,
+          "mode": "0o600"
+        },
+        "publicEvidence": "development/evidence/reassessment/e415-executor-image-preservation-20261023.json",
+        "publicSha256": "d54d372f0bf10f0b7eb08118f5c6cb71ba8104b49e2ee6dbc403ade83c03bdfe",
+        "lastWorking": false,
+        "fullE417": false
+      },
+      "uncertainHouseholdAssignment": {
+        "privateOutput": "/home/administrator/project/.eva2-artifacts/e415-uncertain-household-review-20261023/diagnosis.private.json",
+        "noResetDeletionUsageZeroReplayNewSourceModelOrDbMutation": true,
+        "owner": "root only intervention"
+      },
+      "uncertainHouseholdDiagnosis": {
+        "path": "/home/administrator/project/.eva2-artifacts/e415-uncertain-household-review-20261023/diagnosis.private.json",
+        "sha256": "15eb7d14c9bde0def6e7ff8a2745b27c41f8f76ae721db22059f52c705763c41",
+        "existingAbandonPreconditionsPass": true,
+        "ownerPredicatesPass": true,
+        "originalHouseholdBindingMatches": true,
+        "expectedRevision": 4,
+        "codePatchNeededForFirstBlocker": false,
+        "batchAdapterEditNeedsRootApproval": true,
+        "dbOrCodeMutationByDiagnosis": false
+      },
+      "urgentBatchAssignment": {
+        "task": "E4.15",
+        "status": "authorized_implementation",
+        "writePaths": [
+          "src/eva/providers/home_assistant_procedure.py",
+          "development/tests/providers/test_home_assistant_procedure.py"
+        ],
+        "endCondition": "Actual existing household batch mapped to exact unmodified camera child with immutable parent+child guard, original30s clocks and current before-effect validation; meaningful regression passes; no model/effects/install/Git",
+        "sourceProgramSha256Unchanged": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773"
+      },
+      "batchImplementationAssignment": {
+        "chosenPaths": [
+          "src/eva/providers/home_assistant_procedure.py",
+          "development/tests/providers/test_home_assistant_procedure.py"
+        ],
+        "baselineSha256": {
+          "src/eva/providers/home_assistant_procedure.py": "8cd3c01e95e2916aa82b4eb636f23f0b1cb07605c781b93d20a75018a973412e",
+          "development/tests/providers/test_home_assistant_procedure.py": "ad0d6e648527139e109aba10f577d0ca04dcfed4b69fa3f6f4f7504ca56cb100"
+        },
+        "constraints": "Original parent+child times/hash/source; latest empty/unavailable same device shadows earlier; <=30s child deadline; compact4096 context; same validate-current/delivery guard; source340eef unchanged; no model/executor/camera/effect",
+        "noGitOrInstallation": true
+      },
+      "batchImplementationResult": {
+        "completedAt": "2026-10-23T18:53:40.743330+00:00",
+        "paths": [
+          "src/eva/providers/home_assistant_procedure.py",
+          "development/tests/providers/test_home_assistant_procedure.py"
+        ],
+        "sourceSha256": {
+          "src/eva/providers/home_assistant_procedure.py": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
+          "development/tests/providers/test_home_assistant_procedure.py": "89087bdb6d9f4a7aaac0497095840548bc4d71d8685bd8135ce1a9297a4cee21"
+        },
+        "tests": {
+          "file": "development/tests/providers/test_home_assistant_procedure.py",
+          "passed": 32,
+          "seconds": 1.42,
+          "firstFocusedRun": {
+            "passed": 31,
+            "seconds": 1.87
+          },
+          "secondRunReason": "Added explicit existing4096-byte context-bound fallback and one meaningful UTF8-bound case after first focused pass; no broad suites repeated.",
+          "environment": "Existing pydantic-ai2.37 gate venv, bytecode/cache/autoload disabled; fake HTTP/executor only.",
+          "originalDirectCasesPreserved": true
+        },
+        "behavior": [
+          "Existing16member/6144byte real household batch shape accepted; parent unchanged.",
+          "Newest image per device selected before eligibility, empty/unavailable/stale/future/ambiguous same-second frames block old face fallback; another current camera can be chosen.",
+          "Only selected real child and original trigger/time/source/image passed to existing executor; no trigger rewriting; child30s expiry, not minbatch time.",
+          "Parent canonicalSHA+selectedchildSHA/current binding bound in opaque guard; after-model and actual stored-parent delivery validation detect tamper/revocation/expiry without procedure rerun.",
+          "Model context contains selectedchild+digests, no entire batch duplication; optional context exceeding existing4096bytes declined without ordinary assessment error.",
+          "Direct existing proposal path remains compatible."
+        ],
+        "source340eefUnchanged": true,
+        "appStoreModelVoiceResearchUntouched": true,
+        "realExecutorModelCameraMessageCalls": 0,
+        "noSharedInstallOrGit": true,
+        "reviewRequestedFrom": "windows-root",
+        "creditCosts": null
       }
     },
     "e415-independent-review-newchat": {
-      "task": "E4.15 source/config adoption",
+      "task": "E4.15 exact household batch binding review",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "completed_installed_image_preservation_GO",
+      "status": "in_progress_household_batch_binding_review",
       "coordinator": "windows-root",
       "allowedWritePaths": [
-        "development/reviews/e415-installed-image-preservation-review-20261023.json",
+        "development/reviews/e415-household-batch-binding-review-20261023.json",
         "development/coordination/active-executors.json:own section only"
       ],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
-      "endCondition": "Final exact two installed images native-save archive/config/layer/input/privacy read-only GO/NO_GO; no load/run/build/push",
+      "endCondition": "Exact provider+test hashes, actual store batch shape,original childtime/newest camera/guards independent GO/NO_GO; no code/install/model/DB/external effects",
       "noGitInstallationModelOrExternalEffects": true,
       "assignedAt": "2026-10-23T18:07:51.748863+00:00",
-      "startedAt": "2026-10-23T18:33:01.018612+00:00",
+      "startedAt": "2026-10-23T18:54:19.592226+00:00",
       "boundedOutcome": {
         "existing": "Retained two worker candidates and original NO_GO.",
         "gap": "Independent proof corrected exact worker bytes compile and validate before effect against current installation.",
@@ -1076,15 +1184,34 @@
         "doneWhen": "Exact hashes and bounded GO/NO_GO with necessary companion hunks; no installation.",
         "userUse": "Coordinator may integrate reviewed candidate after baseline recheck."
       },
-      "completedAt": "2026-10-23T18:36:39.471878+00:00",
-      "review": "development/reviews/e415-installed-image-preservation-review-20261023.json",
+      "completedAt": "2026-10-23T18:53:43.717026+00:00",
+      "review": "development/reviews/e415-uncertain-household-review-recovery-20261023.json",
       "verdict": "GO",
-      "nextAction": "Await next concrete coordinator assignment. Actual data/keys/services/full recovery and household use remain open.",
+      "nextAction": "Root owns exact single guarded owner action; no reviewer mutation. Await concrete next assignment.",
       "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
       "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
       "previousInstallationReview": "development/reviews/e415-coordinated-installation-review-20261023.json",
       "previousInstalledReadbackReview": "development/reviews/e415-installed-binding-readback-20261023.json",
-      "previousInactiveMaterializationReview": "development/reviews/e417-e415-binding-materialization-review-20261023.json"
+      "previousInactiveMaterializationReview": "development/reviews/e417-e415-binding-materialization-review-20261023.json",
+      "previousImagePreservationReview": "development/reviews/e415-installed-image-preservation-review-20261023.json",
+      "previousRecoveryGapReview": "development/reviews/e417-installed-extension-recovery-gap-review-20261023.json",
+      "preparedRecoveryBoundaries": {
+        "installedSensoryStoreSha256": "e3ab40f597aca6127981416ff7e1bc95bc1463689ecbbf56d0574d01b1d5313c",
+        "installedFreeWillSha256": "410d3f00f7a7f5a394d9169ec678cf2cb8ce8618ba497cf5854e5616bb1b2a10",
+        "existingOwnerRoute": "PostgresOwnerInitiatives.abandon_uncertain_review",
+        "keepUsageUnknown": true,
+        "noReplayOrSourceRefresh": true,
+        "existingDefaultBlockTestPreserved": true,
+        "requireExactCurrentOwnerScopeRevisionAndSafeHistory": true,
+        "requireNoLiveAssessmentBeforeApplication": true
+      },
+      "noDbOrCodeMutationByReviewer": true,
+      "resolvedReviewFindings": [
+        "Bind reviewed request/four source payload hashes and actual core ID/image before POST.",
+        "Persist exact request/container binding in durable pre-dispatch receipt.",
+        "Read back terminal checkpoint phase/status/revision and unchanged retry/fingerprint/operation."
+      ],
+      "previousUncertainRecoveryReview": "development/reviews/e415-uncertain-household-review-recovery-20261023.json"
     }
   },
   "protectedExistingWork": {
@@ -1310,13 +1437,14 @@
     "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
     "e415Candidate": {
       "path": "/var/lib/eva2/e415-reviewed-binding-20261023",
-      "status": "installed_current_authority_verified_positive_source_pending",
+      "status": "installed_binding_old_review_recovered_batch_patch_review_pending",
       "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
       "sourceOutsideCore": true,
       "ordinaryLolaQuestionMustNotBeRepeated": true,
       "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
     },
-    "ownerQuestion": "One natural doorbell-camera walk/hearing check asked asynchronously; do not ask again or repeat Lola message",
-    "parallelBoundedWork": "Exact newly configured E4.15 source/config/review inactive recovery compatibility; no full-backup claim"
+    "ownerQuestion": "Owner cannot do camera trial now; previous early question withdrawn; no repeat before actual route ready.",
+    "parallelBoundedWork": "Independent two-file batch review plus read-only post-recovery source observation; max two executors/reviewers.",
+    "currentBlocker": "Obsolete uncertain household review reconciled via existing owner endpoint with unknown usage preserved. Normal batch adapter built32/32; independent review and targeted installation pending."
   }
 }

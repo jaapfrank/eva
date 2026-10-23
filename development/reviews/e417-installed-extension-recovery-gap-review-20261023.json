@@ -1,0 +1,105 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.17 dependencies of installed E4.15 optional extension",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T18:40:37.567515+00:00",
+  "verdict": "GO",
+  "scope": "Read-only dependency-gap and next-capture plan review. GO confirms the exact missing local transfer and bounded end condition; no capture, restore or full-recovery success.",
+  "evidenceBindings": {
+    "capture-plan.private.json": "00cdd0be79befea07d77c7124a4300968587f6f81e7896bdf34a3899a58a866e",
+    "development/evidence/reassessment/e417-installed-extension-recovery-gap-20261023.json": "4e05475ee970df5ab11095b0071f7f89aafe6835cfa16f6345b7d286d6138ef1",
+    "development/reviews/e415-installed-image-preservation-review-20261023.json": "d341a1ab2d14a53117283f2e61c9fcd7707daf7ce8475ae6c20fae854893221c",
+    "development/reviews/e417-e415-binding-materialization-review-20261023.json": "98173f8886e0115bcd96692e6274827cdac038b34a0847745bb5c2ee389a8986"
+  },
+  "alreadyProven": "Two actually installed core/worker image archives and exact four-input source/config/review/executor-client inactive materialization. Neither contains the separate executor image or proves current full DB/native face/service recovery.",
+  "oneMissingTransfer": {
+    "name": "Preserve the separately pinned procedure-executor image with its exact existing client/service reference metadata.",
+    "imageId": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+    "observedImageSizeBytes": 125598663,
+    "existingClientSha256": "2cc6824fe449aa3b73c045fd046e812ade5184dc2f263e52df2b6e3712292c7f",
+    "currentServiceUnitSha256": "c65c7f354331600688f4303eaa5f1fd52a80c4cbd1a1db947b4ec31da1ec2bd7",
+    "currentServiceConfigMetadataSha256": "f98773109740cf6048cb9dcb9adf624dc43b6270319553544d640fc515daa914",
+    "whyThisFirst": "Finite currently local dependency absent from the two saved images. Its image/reference preservation needs no biometric payload, current DB snapshot, remote HA action or new framework.",
+    "testableDoneWhen": [
+      "One private native image archive is produced for exactly the currently rechecked executor image pin, with sufficient disk margin and preserved single-dispatch receipt.",
+      "Independent readonly inspection verifies immutable whole-archive hash, exact current image-to-OCI descriptor chain, all referenced config/layer blob digest/size bindings and only intended image identity. Handle the observed OCI index-versus-manifest/config identity shape exactly; do not assume config digest equals image ID.",
+      "Private current client/unit/service-reference metadata is bound by digest to that archive; existing image pin/client settings/token-file reference stay exact, token values excluded.",
+      "Archive and metadata remain under0700/0600 storage; if staged into the existing installation envelope, use explicit existing document_artifact/provider_binding/document_marker roles, transport bounds and inactive materialization only.",
+      "Record preserved_not_loaded: no build/load/run/service activation, no new host-environment reproducibility or actual procedure success claim."
+    ],
+    "notDoneByThisReview": true
+  },
+  "boundaryAssessment": [
+    {
+      "part": "Separate executor service and host environment",
+      "state": "Local missing preservation/reprovisioning, not remote relink.",
+      "reason": "Client reference already preserved; pinned execution image is separate and currently available. Host service uses a separate Python environment and checkout code. Metadata/version samples are not dependency closure or an attestation of running process memory."
+    },
+    {
+      "part": "Local face service/models/profiles",
+      "state": "Local dependencies/data remain outside current preservation proof.",
+      "reason": "Optional bridge/CPU environment and two pinned model files need their own exact private transfer. Existing legacy profile database has WAL/SHM and unrelated contents; no whole-file copy or current profile revision claim from stat metadata. Any face-only consistent data transfer must be separately scoped; no second old agent."
+    },
+    {
+      "part": "Current ProcedureReference/household policy/activation authority",
+      "state": "Current-file/source proof plus a future current native DB snapshot/revalidation boundary.",
+      "reason": "Exact source/config/review bytes survive; synthetic old core rows do not preserve current source/save/STOP/mandate/ingress state. Existing current native DB workflow must own consistency, followed by current authorization and paused/inactive checks."
+    },
+    {
+      "part": "Remote Home Assistant",
+      "state": "External reconnect and current registry/source verification.",
+      "reason": "Remote devices, HA registry/database and token provisioning are not local image/archive contents. Reuse current endpoint/credential references and discover current authorized sources after relink."
+    }
+  ],
+  "existingContractReview": {
+    "fileRoles": "Existing document_artifact/journal/marker and provider_binding can preserve explicitly staged bytes/references. They do not grant service execution, new key provisioning or automatic discovery.",
+    "componentInventory": "Existing package source_components is fixed to memory/gateway/documents. No new face/executor component role or native importer inferred.",
+    "nativeImporter": "Existing external restore imports only bounded memory/gateway targets under existing guards, not optional host services, face database, keys or activation.",
+    "transportBoundBytes": 1073741824,
+    "futureCaptureBound": "Do not infer unlimited aggregate capture or silently extend the existing transport bound."
+  },
+  "independentChecks": {
+    "planAndPublicHashAgree": true,
+    "executorPinnedImageCurrentlyExistsAndMatches": true,
+    "executorAbsentFromPreviouslySavedTwoImageSet": true,
+    "selectedServiceUnitHashesMatchDisk": 2,
+    "selectedCodeModuleHashesMatchDisk": 4,
+    "executorClientFieldsReferenceOnly": true,
+    "profileDatabaseAndSidecars": "Existence/mode stat only; no database open, read, hash or schema/record query.",
+    "sourceContractInspection": "Read static read_enrolled_profiles query and existing package/importer code without importing/executing optional service.",
+    "hostCodeCoverageLimit": "Builder reports6of9 selected host modules match installed core files; executor host modules are absent/different in that core. On-disk code hash does not attest already-loaded process bytes; no running-source equivalence claim.",
+    "weights": "Reviewed plan metadata for the two code-pinned assets; no repeated weight hashing or model use.",
+    "profileRevision": "Retained prior revision is historical evidence only; no current enrolled profiles digest recomputed."
+  },
+  "privacy": {
+    "tokenValuesRead": false,
+    "profileRowsLabelsEmbeddingsRead": false,
+    "pixelsRead": false,
+    "privateConversationsRead": false,
+    "servicePrivateConfigContentsOpenedByReviewer": false,
+    "publicReportContainsPrivatePayloads": false
+  },
+  "findings": [],
+  "acceptanceLimits": [
+    "GO is for the scoped plan and one next transfer, not execution authorization delegated to this reviewer; root chooses the next concrete implementation.",
+    "No actual new capture/current backup, DB export/import, model download, face-only data extraction, service stop/start or reactivation performed.",
+    "Biometric transfer, optional host dependency reconstruction, keys, current DB consistency, restore STOP/quiet rights and remote relink remain separate unresolved requirements.",
+    "No new speech/greeting/hearing, full E4.15/E4.17, clean-PC restore, fullRecovery or lastWorking claim."
+  ],
+  "lastWorking": false,
+  "fullRecovery": false,
+  "cleanPcRestore": false,
+  "usage": {
+    "developmentElapsedSeconds": 218.084,
+    "developmentModelTokens": null,
+    "developmentCreditCost": null,
+    "evaRuntimeModelCalls": 0,
+    "evaRuntimeCreditCost": null,
+    "exportsOrRestores": 0,
+    "modelCameraOrMessageCalls": 0,
+    "serviceActions": 0,
+    "tests": 0,
+    "productCodeSchemaOrGitChanges": 0
+  }
+}

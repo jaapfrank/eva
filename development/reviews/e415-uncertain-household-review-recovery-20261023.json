@@ -1,0 +1,129 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.15 obsolete uncertain household review recovery",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T18:53:43.717026+00:00",
+  "verdict": "GO",
+  "status": "reviewed_one_existing_owner_action_not_executed",
+  "scope": "One authenticated existing owner endpoint action for the exact hash-bound obsolete household review at revision4. No code/criteria/query change, source replay, usage reconciliation-as-measurement or reviewer mutation.",
+  "artifactBindings": {
+    "recover.py": "e39f39489606925ed4382755e8a98db1450f15014ff92be894c45c952eeb064e",
+    "preflight.py": "7066b244dbb97efadfa914d676f21947bac3fbc3654ee97fef3c0b19d9605122",
+    "review-binding.private.json": "57ad317b946f234174e3b0e74cb1f6aaca2867be962015d1e45ce1b4a7c752b5",
+    "request.private.json": "398139ae351cd2b18bbbc92fa3370c50e273ed4d64c9cb1acbd56b1e2561d88c",
+    "recover-v1-review-no-go.py": "932c1cfeb15aeba8bb17105baaf69d956b4c36e97828b24236550bdb4cf4f696",
+    "preflight-provenance.private.json": "57e0b4def111415c397f2b2f5392cbb43f22354111b0802e633be7896edde2b1",
+    "owner-preflight-v1-tool-output.private.json": "2b2b617682800b86d260eb2cc548c48d9e0f4ad34c0551e77e32d6ac92c2b9a0",
+    "preflight-v1-tool-output.private.json": "e0feb152985e22b5db9f66286fbd5218e7dda278ef43adf0840cdfc025714bb5",
+    "owner-preflight-v2-global.private.json": "751ccff1823d1b7540fa5420ff668868c09a82431c14b2244d7add3ca1730883",
+    "preflight-v2-global.private.json": "39d6a4873d813ff71c6c8ee440d26aaebcc1a931342e445ddcb3a96737dd509a"
+  },
+  "diagnosisBinding": {
+    "sha256": "15eb7d14c9bde0def6e7ff8a2745b27c41f8f76ae721db22059f52c705763c41",
+    "householdWindowActive": true,
+    "reviewCount": 1,
+    "checkpointPhase": "will_usage_uncertain",
+    "checkpointStatus": "needs_help",
+    "revision": 4,
+    "updatedAt": "2026-10-19T18:29:53Z",
+    "deadline": null,
+    "oldHistoryTypes": [
+      "SENSORY_EVENT_OBSERVED",
+      "WILL_EVALUATION_CLAIMED",
+      "WILL_MODEL_STARTED",
+      "WILL_USAGE_UNCERTAIN"
+    ],
+    "oldSequencePayloadHashes": [
+      [
+        1,
+        "97395ffb5a95f8bc2ac588683fc450c68cd5b0924330f00ff194c20481b12472"
+      ],
+      [
+        2,
+        "33d03a6f5e1f51cf6fbae160a992d39d8acf14659ec4920ed87dd3d11cc26d76"
+      ],
+      [
+        3,
+        "1bb994844804daaff61dca24562215c3e7602816156979b2c7e390de06c3424c"
+      ],
+      [
+        4,
+        "7134298bdb8fa51c9d2e1206830ada4ff00d68196c968b9ef63ce25f70ef8cec"
+      ]
+    ],
+    "allHistoryHashesVerified": true,
+    "sourceBindingValidInDiagnosis": true,
+    "noExpressionOrWorkDispatchInExactHistory": true,
+    "usage": null,
+    "providerRequestOrMeasuredUsageProof": false,
+    "limit": "Failure is ConversationModelError with provider_usage_error false; neither actual provider dispatch nor pre-provider failure nor cancellation is established."
+  },
+  "plannedAction": {
+    "endpoint": "POST /internal/v1/dashboard/initiatives/review/abandon",
+    "requestSha256": "398139ae351cd2b18bbbc92fa3370c50e273ed4d64c9cb1acbd56b1e2561d88c",
+    "reviewBindingSha256": "57ad317b946f234174e3b0e74cb1f6aaca2867be962015d1e45ce1b4a7c752b5",
+    "expectedRevision": 4,
+    "containerId": "976def96de8e982c07bcde57fa549d8c79a12a8efd494174a745b33a8dd6d66c",
+    "imageId": "sha256:27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
+    "authority": "Coordinator acting within the standing owner repair instruction. Existing authenticated owner endpoint validates current server-bound identity and scope; no extra consent or fictional literal owner quotation inferred.",
+    "actorAudit": "Durable intent explicitly names coordinator repair on behalf of ongoing instruction. Built-in owner-recovery reason is an administrative event label, not a claimed verbatim owner statement.",
+    "exactOutcomeRequired": "Append one WILL_REVIEW_ABANDONED event, transition to will_abandoned/completed revision5, retain usageNone/replayedFalse and original operation/retry/error fingerprint.",
+    "noReviewerDispatch": true
+  },
+  "guardReview": {
+    "exactTarget": "Hard-bound request hash, exact container/image, exact old checkpoint fields and all four sequence/payload hashes. Source history is read again and canonical hashes checked before the single POST.",
+    "freshReadiness": "Script reruns reviewed preflight.py inside receipt lock, requires global RLS read coverage, current owner predicate, exact phase/status/revision and zero active unexpired non-memory/scheduled checkpoints, admitted/call_started work and component-evaluation children/containers; preflight younger than30seconds. No running assessment inferred solely from marker age.",
+    "globalReadCoverage": "Reviewed separate READ ONLY connection verifies rolbypassrls or rolsuper before aggregate claim queries, avoiding false scoped-zero evidence.",
+    "ownerEndpoint": "DashboardAccess and closed body/query schema, server-bound owner/scope; installed helper repeats current owner retention/verified binding FOR SHARE, exact row FOR UPDATE/CAS, allowed complete event history/hash and original household source validation in one transaction.",
+    "durableSingleDispatch": "Receipt absence/lock required; target/request/binding/container/image saved before POST. One client.post only. Nonzero/unknown outcome leaves inspection-only receipt and forbids automatic retry.",
+    "postReadback": "Exactly five events, old four event IDs/hashes equal, new event usageNone/replayedFalse; checkpoint phase/status/revision5 and original operation/retry/error fingerprint must match. Any mismatch is failed verification, not permission to retry.",
+    "runtimeIndependence": "Any later normally scheduled new review belongs to a fresh autonomous opportunity and its own budget/authority; it is not an operator replay of the obsolete source."
+  },
+  "existingBehaviorAndTestsPreserved": {
+    "defaultUnknownUsage": "Unresolved unknown usage still blocks by default; no age filter, zero cost backfill or weakened scheduling predicate.",
+    "sourceAndFaultPreservation": "Append-only action retains all old events, source timestamps/hashes, failure evidence, retry count and error fingerprint; no old source refresh.",
+    "effects": "Installed helper refuses histories outside the allowed decision-only types, including expression/delivery/work outcomes. No ambiguous effect is converted into known non-effect.",
+    "inspectedTests": [
+      "development/tests/postgres/test_household_observation_initiative.py:test_unknown_provider_outcome_cannot_be_reclassified_as_pre_dispatch",
+      "development/tests/postgres/test_sensory_admission.py:test_uncertain_model_usage_survives_restart_without_recall_or_retry",
+      "development/tests/postgres/test_owner_initiatives.py:test_owner_abandons_only_exact_uncertain_review_and_preserves_usage",
+      "development/tests/api/test_dashboard_initiatives.py:test_private_review_recovery_is_authenticated_and_scope_closed"
+    ],
+    "testsRunByReviewer": 0,
+    "foreignWip": "Relevant installed _authorize/_validate_review_source/abandon method sources equal current methods; whole owner_initiatives source differs from worktree elsewhere. No whole-file substitution reviewed or needed."
+  },
+  "provenance": {
+    "initialNoGoCandidateSha256": "932c1cfeb15aeba8bb17105baaf69d956b4c36e97828b24236550bdb4cf4f696",
+    "initialGuardGaps": [
+      "No explicit reviewed four-hash/container identity pin before POST.",
+      "Durable intent lacked exact target/request/container binding.",
+      "Postcheck omitted terminal checkpoint and operation/retry/fingerprint checks."
+    ],
+    "resolvedByCurrentCandidate": true,
+    "originalDiagnosisReadonlyAuthorityFailure": "Original FOR SHARE-in-READ ONLY failure retained. This was diagnostic transaction incompatibility, not proof of revoked owner authority.",
+    "preflightRestoration": "First successful snapshot filenames were refreshed before archival. Root reconstructed exact bytes from retained tool output; both v1 hashes fully match this reviewer earlier recorded hashes. They are explicitly reconstructed historical snapshots, not freshly observed or untouched originals.",
+    "currentGlobalSnapshot": "Separate v2-global files retain current successful predicate/readiness evidence; recover script must rerun fresh preflight at dispatch."
+  },
+  "findings": [],
+  "conditions": [
+    "Use only exact reviewed script/preflight/binding/request. Do not bypass fail-closed checks or edit diagnosis to obtain GO.",
+    "No automatic resend after timeout, subprocess failure, uncertain response or CAS conflict; inspect existing target journal and durable receipt only.",
+    "Do not claim recovered usage, zero tokens/cost, provider cancellation or pre-provider failure. Unknown remains unknown.",
+    "Do not infer camera/procedure compatibility, greeting delivery, new ordinary use or full E4.15 completion from closing this obsolete marker. Batch-adapter gap remains a separate concrete follow-up."
+  ],
+  "usage": {
+    "developmentFormalReviewElapsedSeconds": 312.15,
+    "priorPreparationTime": "unmetered separately; not included in formal elapsed value",
+    "developmentModelTokens": null,
+    "developmentCreditCost": null,
+    "evaRuntimeModelCalls": 0,
+    "evaRuntimeCreditCost": null,
+    "reviewerDbMutations": 0,
+    "reviewerEndpointCalls": 0,
+    "reviewerTests": 0,
+    "cameraOrMessages": 0,
+    "sharedRestarts": 0,
+    "productCodeCriteriaOrGitChanges": 0
+  }
+}

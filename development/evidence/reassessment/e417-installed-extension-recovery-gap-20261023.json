@@ -1,0 +1,73 @@
+{
+  "contract": "EvaE417InstalledExtensionRecoveryGap/v1",
+  "task": "E4.17 dependencies of installed E4.15 optional extension",
+  "checkedAt": "2026-10-23T18:38:55.368878+00:00",
+  "status": "scoped_readonly_capture_plan_completed_transfers_pending",
+  "scope": [
+    "Existing isolated procedure executor",
+    "Existing optional local face backend, model assets, Python environment and profile store",
+    "Exact current source/reference/household/activation binding"
+  ],
+  "alreadyPreserved": [
+    "Exact installed core and worker native image code/config/layers, including retained baseline.",
+    "Exact authored source, reviewed bindingconfig and adoption review, plus existing executor client reference: one synthetic-core inactive materialization case."
+  ],
+  "remainingGaps": [
+    {
+      "part": "Procedure executor",
+      "state": "Separate pinned executor image and host service/environment/config are outside the two saved runtime images. Client reference is preserved; credential bytes remain separately provisioned.",
+      "nextTransfer": "One separately authorized save of exact executor image and explicit existing-role capture of minimal selected host service/config/version metadata."
+    },
+    {
+      "part": "Local face recognition",
+      "state": "Two pinned local model hashes match actual files. CPU Python environment, host bridge service and biometric profiles are not included in current image or synthetic archive proof.",
+      "nextTransfer": "Preserve model/service/dependency assets; root separately scopes consistent minimal face-only dataset transfer. Avoid copying unrelated legacy database content."
+    },
+    {
+      "part": "Current authority and data",
+      "state": "Current ProcedureReference, ingress/save authority, household policy and activation references are known. No actual consistent current core DB backup is proved by old synthetic fixture or image archive.",
+      "nextTransfer": "Use existing current native DB workflow only in a separately authorized bounded capture; revalidate rights/profile/source bindings before any later activation."
+    },
+    {
+      "part": "Remote HA",
+      "state": "External HA service/devices/database are not local backup contents.",
+      "nextTransfer": "Relink existing endpoint/credentials and validate current registry/source data on target; no preselected camera assumptions."
+    }
+  ],
+  "observed": [
+    "Selected systemd executor and face bridge services active; metadata/units/source hashes recorded privately.",
+    "Existing two ONNX model assets match code-pinned hashes; no download/inference.",
+    "Last stored profile revision recorded without labels/embeddings; not recomputed current profile hash.",
+    "Token values, profile database contents, images and private conversations not read.",
+    "No export, process/service action, schema/product/voice policy change or Git mutation."
+  ],
+  "sourceCodeCoverage": {
+    "selectedModules": 9,
+    "exactCurrentInstalledMatches": 6,
+    "limit": "Hashes compare current on-disk service code to selected installed core files. They do not attest unchanged already-loaded Python process memory since its start or preserve host environment/wheels/service configuration."
+  },
+  "recommendedNextBoundedCapture": "Exact separate procedure-executor image preservation first; root chooses capture and owner, this inventory does not run it.",
+  "existingBackupRoles": "Use existing document_artifact/provider_binding/document_marker or opaque document_journal roles as appropriate; no new package role/native importer or secret access inferred.",
+  "lastWorking": false,
+  "fullRecovery": false,
+  "cleanPcRestore": false,
+  "currentInstallationBackup": false,
+  "independentReview": {
+    "status": "requested_from_coordinator",
+    "verdict": null
+  },
+  "privateProof": {
+    "capturePlanSha256": "00cdd0be79befea07d77c7124a4300968587f6f81e7896bdf34a3899a58a866e",
+    "publicEvidenceContainsSecretsOrBiometrics": false
+  },
+  "usage": {
+    "newModelCalls": 0,
+    "cameraRequests": 0,
+    "messages": 0,
+    "exports": 0,
+    "restores": 0,
+    "runtimeChanges": 0,
+    "creditCosts": null
+  },
+  "integration": "Coordinator integrates workboard/dashboard/Git and selects one missing actual transfer. Optional voice code and old household research profile mismatch remain unchanged."
+}
