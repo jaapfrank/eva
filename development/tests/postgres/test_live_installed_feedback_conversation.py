@@ -29,13 +29,13 @@ pytestmark = pytest.mark.skipif(not os.environ.get('EVA_INSTALLED_MODEL_PROBE_DI
 
 
 class InstalledModel:
-    def __init__(self, directory):
-        self.directory, self.calls = directory, 0
+    def __init__(self, directory, case):
+        self.directory, self.case, self.calls = directory, case, 0
 
     def generate(self, turn, identity, memory, recent_messages, **kwargs):
         self.calls += 1
         assert self.calls <= 4, 'Probe model-call budget exceeded'
-        key = str(self.calls)
+        key = self.case + "-" + str(self.calls)
         payload = {'turn':asdict(turn), 'self_context':kwargs.get('self_context',()),
             'available_actions':kwargs.get('available_actions',()),
             'completed_action':None if kwargs.get('completed_action') is None else asdict(kwargs['completed_action']),
@@ -56,7 +56,8 @@ class InstalledModel:
             usage=ConversationModelUsage(**data['usage']), text_phase=data.get('text_phase'))
 
 
-def test_real_model_correction_is_stored_once_and_cancels_attention(review_setup):
+@pytest.mark.parametrize('correction', [True, False])
+def test_real_model_correction_is_stored_once_and_cancels_attention(review_setup, correction):
     auth, old, control, budget, source, factory, *_ = review_setup
     origin = finish(source, choice=NextAttention(NOW + timedelta(minutes=5), 'Review pending container preparation'),
         initiative=PersonalInitiativeProposal('Containerophaling voorbereiden',
@@ -76,12 +77,14 @@ def test_real_model_correction_is_stored_once_and_cancels_attention(review_setup
             return self.execute(turn, call, step_index=step_index)
     actions = Actions(control._engine, service)
     bridge = Path(os.environ['EVA_INSTALLED_MODEL_PROBE_DIR'])
-    model = InstalledModel(bridge)
+    case = 'correction' if correction else 'bare-stop'
+    model = InstalledModel(bridge, case)
     conversation = LivingConversation(_Memory(), model,
         IdentityProfile('Eva','Housemate',('Honest',),80), actions, contact_model=model)
     turn = ConversationTurn.private(control._tenant_id, control._installation_id,
         str(control._owner), 'telegram:feedback-probe', 'feedback-probe-1',
-        'Dat containeronderzoek is niet meer nodig. De buurman regelt het, dus geen herinnering of vervolgonderzoek meer.',
+        ('Dat containeronderzoek is niet meer nodig. De buurman regelt het, dus geen herinnering of vervolgonderzoek meer.'
+         if correction else 'Stop dat containeronderzoek.'),
         at.strftime('%Y-%m-%dT%H:%M:%SZ'))
     reply = conversation.respond(turn)
     receipt = actions.pending(turn)
@@ -94,12 +97,16 @@ def test_real_model_correction_is_stored_once_and_cancels_attention(review_setup
                 if e.event_type in {'PERSONAL_INITIATIVE_FEEDBACK', 'PERSONAL_INITIATIVE_STOPPED'}]
     assert len(feedback) == 1
     retained = next(x for x in factory().recent_initiatives() if x['intent_id'] == intent)
-    if receipt.call.name == 'give_initiative_feedback':
+    if correction:
+        assert retained.get('owner_feedback'), 'The substantive correction must remain available'
         assert retained['owner_feedback'] == receipt.call.arguments['feedback']
+        assert 'buurman' in retained['owner_feedback'].casefold()
+    else:
+        assert receipt.call.name == 'stop_own_initiative'
     assert retained['phase'] == 'personal_stopped'
     assert factory().schedule_context_review(now=NOW+timedelta(minutes=5)) == 'idle'
     assert factory().claim_next(now=NOW+timedelta(minutes=5)) is None
-    (bridge/'outcome.json').write_text(json.dumps({'reply':reply.text,'modelCalls':model.calls,
+    (bridge/('outcome-'+case+'.json')).write_text(json.dumps({'reply':reply.text,'modelCalls':model.calls,
         'action':receipt.call.name,'feedback':retained.get('owner_feedback'),
         'stopOrFeedbackEvents':len(feedback),'phase':retained['phase'],'dueAttention':'idle',
         'productionWrites':False,'delivered':False},ensure_ascii=False))

@@ -107,6 +107,12 @@ De deadline is expliciet een wachttijdgrens en geen kalendergebeurtenis; ruwe
 uitvoeringsinstructies worden niet gekopieerd. Deze E1.8-selectie vervangt geen inhoudelijke afweging van
 gevolgen of alternatieven; werkelijk vooruitzien blijft afzonderlijk te bewijzen.
 
+Bij een stopverzoek met relevante inhoudelijke bijsturing kiest het gesprek bij
+voorkeur de bestaande initiatief-feedbackactie: die stopt lopend initiatiefwerk en
+bewaart de toelichting voor latere afwegingen. Een kale stop behoudt de gewone
+stopactie. De bestaande eigenaarcontrole, herhaalbaarheid en aandachtsonderdrukking
+blijven gelden; er is geen extra modelronde of opslagroute toegevoegd.
+
 E1.13 plaatst sinds 23 oktober de bestaande privé-afweging vóór interesse-uitvoering
 in dezelfde toegelaten achtergrondcyclus. Nieuw gekozen werk hoeft daardoor niet
 uitsluitend vanwege de callbackvolgorde een volgende vijfminutenronde af te wachten.

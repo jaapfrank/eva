@@ -1,0 +1,79 @@
+{
+  "task": "E1.8",
+  "recordedAt": "2026-10-23T08:08:55.267960+00:00",
+  "problem": "Prior integrated explicit stop worked, but relevant neighbor/no-followup explanation was not retained as initiative feedback.",
+  "change": "Two existing tool descriptions distinguish substantive correction from a bare stop. Existing feedback both stops active work and retains correction; no schema, storage, authority or model-round added.",
+  "baseline": "development/evidence/product/e18-integrated-feedback-20261023.json",
+  "candidate": {
+    "passed": 2,
+    "elapsedTestSeconds": 58.99,
+    "method": "Actual installed model with exact candidate descriptions; existing conversation/action/storage chain on isolated PostgreSQL."
+  },
+  "installed": {
+    "passed": 2,
+    "elapsedTestSeconds": 55.97,
+    "method": "Same integrated tests with no descriptor override and no source overlay; installed model and installed image action/storage chain.",
+    "outcomes": {
+      "correction": {
+        "reply": "Helder, de buurman regelt het. Mijn containeronderzoek is gestopt; er komt van mij geen herinnering of vervolgonderzoek meer.",
+        "modelCalls": 2,
+        "action": "give_initiative_feedback",
+        "feedback": "Containeronderzoek is niet meer nodig: de buurman regelt het. Stop dit initiatief; geen herinnering of vervolgonderzoek meer.",
+        "stopOrFeedbackEvents": 1,
+        "phase": "personal_stopped",
+        "dueAttention": "idle",
+        "productionWrites": false,
+        "delivered": false
+      },
+      "bare-stop": {
+        "reply": "Het containeronderzoek staat op gestopt. Een eventueel al lopende actie kan nog afronden.",
+        "modelCalls": 2,
+        "action": "stop_own_initiative",
+        "feedback": null,
+        "stopOrFeedbackEvents": 1,
+        "phase": "personal_stopped",
+        "dueAttention": "idle",
+        "productionWrites": false,
+        "delivered": false
+      }
+    }
+  },
+  "installation": {
+    "coreImage": "sha256:e23b5bd065fbeeab36acc11304b64736149029fd68271cd552ce7c28aa373c26",
+    "workerImage": "sha256:38f7845ae95f28fc5e90af0263cc0c3b2cbeeb5ef35cbdb317468ddca2d8f7d0",
+    "sourceFile": "src/eva/adapters/postgres/delegated_work_actions.py",
+    "sourceSha256Both": "3fda8981c7d593f8c44307a6e2467d7a6d32ba203bf48603aeebf70f456438b3",
+    "bothHealthy": true,
+    "digitalAndPublicAndSharedProfilesMatch": true,
+    "preexistingMismatchedProfiles": [
+      "household_research"
+    ],
+    "otherExecutorChangesPreserved": true
+  },
+  "independentReview": {
+    "reviewer": "/root/review_cursor",
+    "verdict": "GO for guarded installation of two descriptor changes after both integrated cases passed."
+  },
+  "developmentModelUsage": {
+    "candidate": {
+      "calls": 4,
+      "modelSeconds": 24.282,
+      "inputTokens": 11788,
+      "outputTokens": 283
+    },
+    "installed": {
+      "calls": 4,
+      "modelSeconds": 23.553,
+      "inputTokens": 11787,
+      "outputTokens": 259
+    }
+  },
+  "credits": null,
+  "boundaries": [
+    "Synthetic intention and isolated DB; no real owner conversation or Telegram delivery.",
+    "Three relevant actions, empty isolated model memory; not whole production context selection.",
+    "Two cases support behavior, not a guarantee of all future model choices.",
+    "Test durations include setup/RPC and are not production chat latency."
+  ],
+  "fullE18Complete": false
+}
