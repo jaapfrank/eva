@@ -235,11 +235,11 @@
       "statusProposal": {
         "taskId": "E4.17",
         "status": "in_progress",
-        "progress": "E4.17-hersteloverdracht gericht hersteld: v3-export gebruikt de oorspronkelijke verpakte schemabron en juiste archiefpaden. Twee expliciet vrijgegeven bronregels toegepast, exact gelijk aan onafhankelijk beoordeelde kandidaat. 15/15 controles slagen nu op echte bron zonder overrides: pakketversies, configuratieschema, eigen gegevens en pauzemarkering behouden, hetzelfde offline resultaat na verwijderen van bronmappen. Geen gedeelde installatie gewijzigd. Volledige E4.17 blijft open voor de echte E4.15-uitbreiding en herstel/adoptie.",
-        "checkedAt": "2026-10-23T15:51:04.488341+00:00",
+        "progress": "E4.17-herstelroute gecorrigeerd en 15/15 controles op echte bron geslaagd. Daarna is ook Eva’s werkelijk opgeslagen V2-bron (4686 bytes) via bestaand versleuteld pakket naar een nieuwe inactieve bestemming hersteld; hash en bestandsrechten exact gelijk. Eén aanvullende controle en onafhankelijke GO voor uitsluitend documentbehoud. Geen activering of gedeelde herstart. Volledige E4.17 blijft open: E4.15-aansluiting, echte configuratie/data/laatst werkende versie en native herstel met hetzelfde gedrag ontbreken nog.",
+        "checkedAt": "2026-10-23T16:03:18.537098+00:00",
         "ownerActionRequired": false,
         "fullTaskCompleted": false,
-        "nextAction": "Hergebruik deze geverifieerde hersteloverdracht voor de echte E4.15-uitbreiding; controleer diens werkelijke afhankelijkheden, gegevens, adoptie-/pauzestatus en native herstel. Geen nieuw herstelplatform of brede herhaalproef.",
+        "nextAction": "Coördinator: verbind de bestaande echte E4.15-uitbreiding en lever de daadwerkelijke configuratie-, data-, dependency-, rechten-/pauze- en laatste-werkende-versie-eigenaren over. Hergebruik de nu bewezen bestaande herstelroute; geen nieuwe synthetische proef of tweede pakketformaat.",
         "evidenceToAppend": [
           "development/evidence/reassessment/e417-extension-restore-20261023.json"
         ],
@@ -251,7 +251,8 @@
         "independentReview": "development/reviews/e417-extension-restore-20261023.json",
         "sourceCommit": "5ac595869c675beca2d384f09b45ad6d9cd3da33",
         "gitPushed": true,
-        "sourceCommitScope": "Two explicitly approved tool-source lines, focused tests and bound design/evidence/review; no shared deployment."
+        "sourceCommitScope": "Two explicitly approved tool-source lines, focused tests and bound design/evidence/review; no shared deployment.",
+        "evidenceCommit": "fd9e9fba249eaa24dc41edc9ec09359b882da62a"
       },
       "conditions": [
         "Read E4.18 and existing E3/E4 inventories; select one concrete used route or proven-unused helper. No broad cleanup.",
@@ -262,7 +263,7 @@
         "E4.15/E4.17 dependencies remain. Early bounded cleanup does not close E4.18.",
         "Use statusProposal for workboard/docs changes; WSL integrates shared files preserving foreign hunks."
       ],
-      "updatedAt": "2026-10-23T15:51:40.925219+00:00",
+      "updatedAt": "2026-10-23T16:03:58.151861+00:00",
       "reviewRequest": {
         "status": "GO_CANDIDATE_exact_bytes_applied_workspace_verified",
         "reviewer": "/root/e47_mcp_catalog",
@@ -330,12 +331,13 @@
       },
       "dashboardIntegrationRequest": {
         "taskId": "E4.17",
-        "requestedAt": "2026-10-23T15:51:40.925219+00:00",
+        "requestedAt": "2026-10-23T16:03:18.537098+00:00",
         "status": "awaiting_coordinator_integration",
         "to": "wsl-e18",
-        "request": "Verwerk finale E4.17 statusProposal inclusief codecommit en 15/15 echte-broncontroles. De twee extra paden zijn rechtstreeks bevestigd. Behoud in_progress/fullTaskCompleted false: echte E4.15-uitbreiding, native herstel/adoptie en dependencyinstallatie blijven apart. Geen gedeelde installatie of herstart door root.",
+        "request": "Verwerk definitieve statusProposal met 15/15 broncontroles plus één werkelijk V2-documentbehoud en onafhankelijke GO. Houd de volledige kaart in_progress; documentbehoud is geen native herstel of werkende E4.15-adoptie. Geen actie van Jaap nodig.",
         "sourceCommit": "5ac595869c675beca2d384f09b45ad6d9cd3da33",
-        "independentReview": "development/reviews/e417-extension-restore-20261023.json"
+        "independentReview": "development/reviews/e417-extension-restore-20261023.json",
+        "evidenceCommit": "fd9e9fba249eaa24dc41edc9ec09359b882da62a"
       },
       "routeOwnershipHandoff": {
         "startedAt": "2026-10-23T12:47:35.343506+00:00",
@@ -360,11 +362,11 @@
         "allNamedInstalledMethodsValidated": true
       },
       "nextTaskRequest": {
-        "requestedAt": "2026-10-23T12:53:12.540199+00:00",
-        "status": "assigned",
-        "request": "Current authorized E4.18 host-tooling and read-only handoff outcomes are complete and pushed. Please either hand off E4.15/E4.17 final route scope or assign the next non-overlapping product task with exact files. Root will not take reserved E1.8/memory/initiative/voice paths or restart services.",
-        "assignmentRef": "executors.wsl-e18.nextParallelScope",
-        "confirmedAt": "2026-10-23T13:46:28.447868+00:00"
+        "requestedAt": "2026-10-23T16:03:18.537098+00:00",
+        "to": "wsl-e18",
+        "currentScope": "E4.17 bounded recovery-source correction and actual retained V2 inactive preservation finished; reviewed.",
+        "request": "Verwerk E4.17-status/dashboard en wijs een volgende zelfstandig uitvoerbare opdracht met concrete bestanden toe, of lever de echte E4.15-pakketoverdracht binnen bestaande E4.17-scope. Geen nieuwe eigenaarvraag of herhaalde ongewijzigde proef nodig.",
+        "sharedInstallationChanged": false
       },
       "assignmentStatus": "in_progress",
       "assignmentCompletion": {
@@ -530,7 +532,10 @@
         "to": "wsl-e18",
         "requestedAt": "2026-10-23T14:52:17.507425+00:00",
         "request": "Voor latere echte E4.15/E4.17-binding: lever het exacte door Eva gemaakte pakket/artifactpad en zijn bestaande configuratie-/data-/pauzestatus-eigenaren zodra beschikbaar. Ik bouw intussen een geïsoleerde proef van het bestaande AgentSkillPackage/document/installation-archive-pad; geen nieuw packageplatform of wijzigingen aan programmeeruitvoerder.",
-        "blocksIsolatedProof": false
+        "blocksIsolatedProof": false,
+        "sourceNowLocated": true,
+        "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+        "remainingRequest": "Real V2 source found and being preserved inactive. Supply existing dependency/config/data/adoption/pause owners and last-working version when E4.15 connection exists. No synthetic replacements for those claims."
       },
       "candidateHandoff": {
         "status": "source_correction_applied_and_verified",
@@ -547,7 +552,47 @@
         "sourceCommit": "5ac595869c675beca2d384f09b45ad6d9cd3da33",
         "sourcePushed": true,
         "workspaceTestsWithoutOverrides": 15
-      }
+      },
+      "actualExtensionPreservation": {
+        "status": "completed_scoped_preservation_reviewed",
+        "startedAt": "2026-10-23T15:56:12.312355+00:00",
+        "source": "Existing document volume: camera_greeting_adapter_v2.py",
+        "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+        "sourceBytes": 4686,
+        "chosenPaths": [
+          "development/evidence/reassessment/e417-extension-restore-20261023.json",
+          "development/design/architecture/e417-extension-restore-ownership-20261023.json",
+          "development/reviews/e417-extension-restore-20261023.json"
+        ],
+        "scope": "One existing-format inactive roundtrip of actual Eva V2 document, without executing or activating source. Existing signed synthetic core fixture, not full native restore. No made-up dependencies, config, data or adoption state.",
+        "endCondition": "Exact real source hash survives source-copy removal and encrypted package materialization; enumerate unprovided companion owners separately.",
+        "budget": "One new focused local case because actual artifact now exists. No provider/model calls or shared restart.",
+        "casePassed": 1,
+        "restoredSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+        "runtimeActivated": false,
+        "sourceExecuted": false,
+        "sharedInstallationChanged": false,
+        "fullTaskCompleted": false,
+        "completedAt": "2026-10-23T16:03:18.537098+00:00",
+        "independentReview": "GO_SCOPED_ACTUAL_SOURCE_PRESERVATION",
+        "privateReviewSha256": "4a36bae34067feb92a49a7ef06ffbfd19cc1fe2f619ee45904597cc55cb98934",
+        "evidenceCommit": "fd9e9fba249eaa24dc41edc9ec09359b882da62a",
+        "gitPushed": true
+      },
+      "telegramFamilyOnboardingRequest": {
+        "requestedAt": "2026-10-23T15:59:35.558696+00:00",
+        "to": "wsl-e18",
+        "origin": "Direct owner question: hoe verbind ik lola haar telegram met eva?",
+        "observed": "Actual running standalone transport admits static trusted bindings only; current config has one bound private account. Native /link aliases confirmer identity and is not new-family onboarding.",
+        "request": "Provide route for separate Lola Telegram identity and private memory; coordinate Telegram binding/service edits. No account or runtime modified by E4.17 executor. Need secure acquisition of Lola numeric Telegram sender ID; do not tell her to confirm /link under owner identity.",
+        "filesReadOnly": [
+          "deploy/telegram-bridge/standalone.mjs",
+          "src/eva/adapters/credentials/telegram_bindings.py",
+          "src/eva/adapters/postgres/telegram_pairing.py"
+        ],
+        "blocksE417": false
+      },
+      "status": "Bounded E4.17 work completed and pushed; coordinator integration and real active E4.15 handoff remain."
     }
   },
   "protectedExistingWork": {
