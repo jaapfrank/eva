@@ -17001,7 +17001,14 @@
       "transportLimitChanged": false,
       "nextAction": "E4.17: onafhankelijk advies bevestigt een expliciete installatieoptie van maximaal 2 GiB als kleinste herstelreparatie voor de gemeten 1.645.299.983 bytes. Gewone portable-transporten blijven maximaal 1 GiB; elk bestand blijft maximaal 1 GiB. Bouwer werkt dezelfde bestaande pakket-, transport-, materialisatie- en wizardroute af. Tester beoordeelt beveiligingsgrenzen en de echte volledige versleutelde herstelproef. Geen geselecteerde gegevens weglaten; hetzelfde herstelde gedrag blijft vereist. Fysieke E4.15-proef volgt later.",
       "independentDesignRecommendation": "explicit_trusted_installation_policy_2GiB_default_and_per_file_1GiB",
-      "implementationAuthorized": true
+      "implementationAuthorized": true,
+      "existingBrowserUploadLimitBytes": 67108864,
+      "largeBrowserUploadClaimed": false,
+      "operatorFileIntakeAuthorized": true,
+      "freeDiskObservedBytes": 265460645888,
+      "converterObservedRssKiB": 7846348,
+      "converterObservedElapsedSeconds": 840,
+      "converterPeakStillUnknown": true
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",

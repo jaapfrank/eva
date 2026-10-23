@@ -541,12 +541,15 @@
           "development/tests/portable/test_transport_header_bound.py",
           "development/tests/portable/test_installation_recovery_package.py",
           "development/tests/portable/test_installation_recovery_materializer.py",
-          "development/tests/portable/test_installation_transport_policy.py"
+          "development/tests/portable/test_installation_transport_policy.py",
+          "development/tests/portable/test_installer_portable_restore.py",
+          "development/tests/portable/test_installer_restore_composition.py"
         ],
         "privateOutput": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/",
         "testWritePathsRequireExactConfirmation": true,
         "noCpuRunOrSharedInstallOrVoiceChange": true,
-        "resultNow": "Preserve validated real core export; add trusted installation-only fixed 2 GiB total policy across existing package, transport, materializer and wizard, keeping default 1 GiB/per-file 1 GiB/100k files. Then finish actual encrypted offline recovery roundtrip. Independent review required before integration."
+        "resultNow": "Preserve validated real core export; add trusted installation-only fixed 2 GiB total policy across existing package, transport, materializer and wizard, keeping default 1 GiB/per-file 1 GiB/100k files. Then finish actual encrypted offline recovery roundtrip. Independent review required before integration.",
+        "operatorFileIntake": "Use same InstallerPortableRestore via bounded private-owner single-link no-follow streamed prepare_file; same trusted configured workflow, preview/authority/one-use execute. Existing HTTP/base64/browser intake stays 64 MiB. No claim that large browser upload works."
       },
       "extensionArtifactRequest": {
         "to": "wsl-e18",
@@ -1656,7 +1659,7 @@
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
     "parallelBoundedWork": "One builder repairs the existing installation transport policy and finishes the real recovery package. One independent tester/reviewer checks exact code, security boundaries and real roundtrip; tester writes reviews only.",
-    "currentBlocker": "Measured complete selected recovery payload is 1,645,299,983 bytes before manifest; fixed 1 GiB transport guard cannot carry it. Independent reviewer recommends explicit trusted installation-only 2 GiB policy, retaining every selected byte, 1 GiB per file and unchanged ordinary portable defaults. Builder authorized; candidate and real roundtrip not yet reviewed.",
+    "currentBlocker": "Measured complete selected recovery payload is 1,645,299,983 bytes before manifest; fixed 1 GiB transport guard cannot carry it. Independent reviewer recommends explicit trusted installation-only 2 GiB policy, retaining every selected byte, 1 GiB per file and unchanged ordinary portable defaults. Builder authorized; candidate and real roundtrip not yet reviewed. Existing wizard/browser API intake separately caps 64 MiB and holds multiple whole-memory representations; builder authorized to complete bounded operator file intake on same restore workflow, without increasing HTTP/base64 caps.",
     "latestVerifiedOutcome": {
       "status": "installed_current_source_and_silence_proven_positive_greeting_pending",
       "evidence": "development/evidence/product/e415-household-batch-binding-20261023.json",
