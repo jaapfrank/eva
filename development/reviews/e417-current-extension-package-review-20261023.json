@@ -878,6 +878,157 @@
         "Existing large package and ciphertext remain the prior frozen version; supplement integration and fresh outer manifest are not proven by this byte review."
       ],
       "pendingPhysicalSdkResolutionCriterion": "All 54 exact reused bridge payloads must be physically present in the resolved complete SDK at the restored inactive destination, not only retained archive references. The 1879 count above proves RECORD byte coverage across original retained archives, not restored SDK resolution."
+    },
+    "originalSdkPhysicalAssemblyReview": {
+      "reviewedAt": "2026-10-23T22:48:00.525644+00:00",
+      "verdict": "GO_SCOPED_PHYSICAL_ORIGINAL_SDK_ASSEMBLY",
+      "receiptSha256": "c58adffaa5cc6ed12e60282feee891bb67ddfbe6735b0ebeed9d25655179ca8f",
+      "driverSha256": "a229020e204b6b90e923e5565fae49838867f176ed16112aaa03726ab6f4cdfd",
+      "target": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/sdk-original-assembly-20261024",
+      "sdkFileCount": 1879,
+      "sdkPayloadBytes": 54088650,
+      "sourceCounts": {
+        "sdk-supplement": 1825,
+        "bridge": 54
+      },
+      "completeProofTargetFileCount": 4031,
+      "privateDirectoryCount": 600,
+      "allTargetAndExpandedSourceBytesIndependentlyHashed": true,
+      "exactOriginalRecordDigestMapReused": true,
+      "allAssembledFilesAreIndependentRegularSingleLinkCopies": true,
+      "exactDeterministicBridgeBeforeSupplementSelection": true,
+      "allFiles0600AndDirectories0700RootOwned": true,
+      "missingOrExtraFiles": 0,
+      "reviewSeconds": 0.70291,
+      "fullHostAdapterPrepared": false,
+      "sdkImportsOrLaunchersOrPthExecuted": false,
+      "runtimeActivated": false,
+      "limits": [
+        "This targeted proof calls original frozen _sdk_assembly/_expand/_write_new on retained original bytes, not full prepare_host_extension.",
+        "The old authenticated installation package has not been regenerated to include SDK/library supplements.",
+        "CPython/system shared-library ABI, effective module loading, service token rebinding and functional host behavior remain unproven."
+      ]
+    },
+    "inactiveHostAdapterFrozenCodeReview": {
+      "reviewedAt": "2026-10-23T22:48:00.525644+00:00",
+      "verdict": "GO_SCOPED_INACTIVE_HOST_ADAPTER_CODE_AND_SYNTHETIC_INTERFACES",
+      "sourceFreezeSha256": "e429da6ec9845340f034ca73206ff8525c231c608ede8e2f8247059072bbc4d9",
+      "files": {
+        "development/tests/portable/test_installation_host_extension_restore.py": {
+          "bytes": 13894,
+          "sha256": "c619e043523f0b49411a39411a36dd76d6eabda0ad5dcacafa9c851d68f0c349"
+        },
+        "src/tools/installation_host_extension_restore.py": {
+          "bytes": 24592,
+          "sha256": "36e7acf5636deff198b826799e6e4fcfbd8d176db96a1b01ea6e3edbd10f4327"
+        },
+        "src/tools/installer_document_components.py": {
+          "bytes": 7678,
+          "sha256": "6c1ac5917c1d3c2e8a9ecdc84d3cc6cc9ee0ebaa4230114b31ed3faf98629370"
+        }
+      },
+      "independentTests": {
+        "passed": 19,
+        "skipped": 0,
+        "pytestSeconds": 25.44,
+        "measuredTestCommandSeconds": 26.662208,
+        "totalWithOwnTestDatabaseSeconds": 33.054413,
+        "exitCode": 0,
+        "testContainerId": "99c05eb699159bf5838c1cc2ca103c0579372f379f078ff7650630ea8443be8a",
+        "testImageSha256": "7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+        "ownTestDatabasesRemaining": 0,
+        "ownTestContainerRemoved": true,
+        "productionDatabaseCalls": 0,
+        "nativeSdkImports": 0,
+        "evaServicesStarted": 0
+      },
+      "codeReview": [
+        "Host prefix/role inventory must be complete; no unowned native document can be omitted. Host and native layout authority/data ownership disjoint; empty native layouts require full real host-document coverage.",
+        "Existing package/trust reader is retained. Dependency archive and original manifest sizes/hashes closed; decoded gzip/tar bounded; only exact regular member inventory and post-expansion hashes accepted.",
+        "Original RECORDs supply canonical hashes and sizes, cache rows excluded, metadata triplets mandatory; deterministic explicit bundle order with only retained metadata fallback, never old workspace fallback.",
+        "New absolute private parent; staging private directories; exclusive no-follow writes, single-link checks, exact mode/owner, full inventory revalidation and fresh final guard; atomic no-overwrite publication. Repeat rejects without changing existing target.",
+        "Original config bindings preserved; launchers/.pth remain0600 data. No activation authority, SDK import, credential use or service start introduced."
+      ],
+      "v3FrozenSourceAndTestsUnchanged": true,
+      "v3SourcePinsChecked": 9,
+      "originalOwnershipGapReceiptSha256": "56629aa66d93c521dd1e50152c3cf08c7e32a6c1300d3fd09dd1f85718c69d40",
+      "builderInitialFixtureDsnErrorRetained": "inactive-host-sdk-assembly-tests.private.json",
+      "limits": [
+        "Actual full host adapter invocation against final authenticated complete package is still pending; physical SDK proof above is narrower.",
+        "No full SDK-ready, ABI compatibility, host function, clean-PC or E417 acceptance."
+      ]
+    },
+    "configurationSpecificLibrarySupplementReview": {
+      "reviewedAt": "2026-10-23T22:48:00.525644+00:00",
+      "verdict": "GO_SCOPED_CONFIG_SPECIFIC_PINNED_LIBRARY_SUPPLEMENT_BYTES",
+      "receiptSha256": "e134d33c578f92f91ac844eb6cb6c82d8847cadcb9efe2762c50c8b6d9432d72",
+      "planSha256": "453cc8675caff810b8cd0047c554e52ad200b0abc15e0b9a2c9ba4b3a85c4968",
+      "pinnedGitCommit": "693578154400bff915eea30e1987a751891fa431",
+      "configurationPackagePath": "config/host-executor/service.private.json",
+      "configurationSha256": "f98773109740cf6048cb9dcb9adf624dc43b6270319553544d640fc515daa914",
+      "files": {
+        "eva/operations/_hermes_lsp_protocol.py": {
+          "bytes": 7069,
+          "evaModuleImports": [],
+          "gitBlob": "1e3d4fded93030f9e6ecf063b2c12e6e548d018d",
+          "path": "src/eva/operations/_hermes_lsp_protocol.py",
+          "referenceStat": {
+            "ctimeNs": 1792518869664172240,
+            "device": 2096,
+            "inode": 10176445,
+            "mtimeNs": 1792518869664172240,
+            "size": 7069
+          },
+          "sha256": "ec4a95673a491a60ba5828d661512f22f464761ce6459bc30e3a66c72351fa91"
+        },
+        "eva/operations/programming_diagnostics.py": {
+          "bytes": 18088,
+          "evaModuleImports": [
+            "eva/operations/_hermes_lsp_protocol.py"
+          ],
+          "gitBlob": "b5653ef2261e766af5299519503cff0b9d8d32d2",
+          "path": "src/eva/operations/programming_diagnostics.py",
+          "referenceStat": {
+            "ctimeNs": 1792519075790414481,
+            "device": 2096,
+            "inode": 10185644,
+            "mtimeNs": 1792519075790414481,
+            "size": 18088
+          },
+          "sha256": "540f306e636500bf175be4f083b8a75d99187b07176431fc219d8830a6511001"
+        },
+        "eva/operations/programming_workspace.py": {
+          "bytes": 26404,
+          "evaModuleImports": [
+            "eva/operations/programming_diagnostics.py"
+          ],
+          "gitBlob": "8d25316f1f9d14d4008f8cf28972b502ad1f16e7",
+          "path": "src/eva/operations/programming_workspace.py",
+          "referenceStat": {
+            "ctimeNs": 1792519092397973221,
+            "device": 2096,
+            "inode": 9562773,
+            "mtimeNs": 1792519092397973221,
+            "size": 26404
+          },
+          "sha256": "6af24c1152474677ee900bd3283e0765d002c0fb245829b736c63c5cec43a1b5"
+        }
+      },
+      "fileCount": 3,
+      "payloadBytes": 51561,
+      "allThreeTargetFilesIndependentlyComparedWithExactGitBlobsAndSha256": true,
+      "planAndCompletionFilePinsSame": true,
+      "astEvaImportChain": "programming_workspace -> programming_diagnostics -> _hermes_lsp_protocol; last module has no Eva imports",
+      "sourceOverlaysRetainedSeparately": 5,
+      "baseImagePin": "52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+      "baseImageModulePresenceEvidenceReused": "pinned-eva-library-and-abi.private.json SHA4e845a44f3c3b3db1262a75e55650a237fb785c104c11590e14f2bbc2e7471fe; no image rootfs extraction or start by reviewer",
+      "configurationBranchReview": "Actual retained config has programming_workspace and procedure_execution_enabled=true; runtime_repairs absent. Retained service overlay imports runtime_repair_service only under that absent key. Optional branch exclusion is supported.",
+      "moduleImportsPerformed": false,
+      "gitComparisonSeconds": 0.034086,
+      "limits": [
+        "Base image+five overlay+three supplement effective library relocation/resolution is not yet proven by a real full inactive host target.",
+        "Static host CPython3.12/SOABI descriptors do not prove shared-library ABI or module loading; no native import/inference was run."
+      ]
     }
   },
   "contractRequirements": {
@@ -912,7 +1063,18 @@
     "newServicesActions": 0,
     "newDatabaseReads": 0,
     "newCaptures": 0,
-    "newFamilyMessages": 0
+    "newFamilyMessages": 0,
+    "latestIndependentHostAdapterTests": {
+      "passed": 19,
+      "pytestSeconds": 25.44,
+      "measuredCommandSeconds": 26.662208,
+      "ownTemporaryTestDatabaseContainerStarted": 1,
+      "ownTemporaryTestDatabaseContainerRemoved": 1,
+      "evaRuntimeModelCalls": 0,
+      "sdkImportsOrInference": 0,
+      "developmentTokens": null,
+      "developmentCredits": null
+    }
   },
   "onlyWritePath": "development/reviews/e417-current-extension-package-review-20261023.json",
   "handoff": {

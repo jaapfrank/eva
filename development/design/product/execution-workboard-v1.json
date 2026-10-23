@@ -847,7 +847,7 @@
     "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
     "status": "in_progress",
     "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
-    "nextAction": "E4.17: de echte grote operatorproef draait in real_cli_execute met actuele bevoegdheids-, SQL- en commitcontroles; een eindresultaat is nog niet ontvangen. De oorspronkelijke SDK-aanvulling is onafhankelijk op alle 1.825 nieuwe en 54 bestaande bestanden gecontroleerd: 1.879 niet-cachepaden zonder gaten, circa 15 MB gecomprimeerd. Bouwer werkt de inactieve hostadapter en gepinde bibliotheek-/ABI-dekking af; de 54 gedeelde bestanden moeten ook fysiek in de herstelde SDK terechtkomen. Eindpakket en werkend hostgedrag blijven open. Geen eigenaaractie blokkeert het uitvoerbare werk.",
+    "nextAction": "E4.17: de inactieve hostadapter en de fysieke SDK-assemblage van alle 1.879 oorspronkelijke bestanden zijn onafhankelijk goedgekeurd. De drie configuratiespecifieke bibliotheekbestanden zijn exact tegen gepinde Git-bytes gecontroleerd. Bouwer maakt een private aansluiting op de bestaande herstelworkflow; actuele V3-bronnen en de echte operatorproef blijven ongewijzigd. Daarna zijn het volledige nieuwe hostdoel/eindpakket, effectieve bibliotheek-/ABI-resolutie, afzonderlijke tokens en werkelijk hersteld gedrag nog nodig. Geen hostactivatie of taakafronding geclaimd.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -8113,7 +8113,7 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "E4.17: de echte grote operatorproef draait in real_cli_execute met actuele bevoegdheids-, SQL- en commitcontroles; een eindresultaat is nog niet ontvangen. De oorspronkelijke SDK-aanvulling is onafhankelijk op alle 1.825 nieuwe en 54 bestaande bestanden gecontroleerd: 1.879 niet-cachepaden zonder gaten, circa 15 MB gecomprimeerd. Bouwer werkt de inactieve hostadapter en gepinde bibliotheek-/ABI-dekking af; de 54 gedeelde bestanden moeten ook fysiek in de herstelde SDK terechtkomen. Eindpakket en werkend hostgedrag blijven open. Geen eigenaaractie blokkeert het uitvoerbare werk.",
+                "nextAction": "E4.17: de inactieve hostadapter en de fysieke SDK-assemblage van alle 1.879 oorspronkelijke bestanden zijn onafhankelijk goedgekeurd. De drie configuratiespecifieke bibliotheekbestanden zijn exact tegen gepinde Git-bytes gecontroleerd. Bouwer maakt een private aansluiting op de bestaande herstelworkflow; actuele V3-bronnen en de echte operatorproef blijven ongewijzigd. Daarna zijn het volledige nieuwe hostdoel/eindpakket, effectieve bibliotheek-/ABI-resolutie, afzonderlijke tokens en werkelijk hersteld gedrag nog nodig. Geen hostactivatie of taakafronding geclaimd.",
                 "progress": "V3-code, echte V1 volledige data-roundtrip, echte V3-ciphertext-heropening en geïsoleerde nooitgestarte doelreferenties onafhankelijk goedgekeurd binnen hun beperkte scope. De daadwerkelijke operatorimport en werkende herstelde hostuitbreiding zijn nog niet bewezen.",
                 "checkedAt": "2026-10-23T22:09:08.394308+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
@@ -8740,7 +8740,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.17: de echte grote operatorproef draait in real_cli_execute met actuele bevoegdheids-, SQL- en commitcontroles; een eindresultaat is nog niet ontvangen. De oorspronkelijke SDK-aanvulling is onafhankelijk op alle 1.825 nieuwe en 54 bestaande bestanden gecontroleerd: 1.879 niet-cachepaden zonder gaten, circa 15 MB gecomprimeerd. Bouwer werkt de inactieve hostadapter en gepinde bibliotheek-/ABI-dekking af; de 54 gedeelde bestanden moeten ook fysiek in de herstelde SDK terechtkomen. Eindpakket en werkend hostgedrag blijven open. Geen eigenaaractie blokkeert het uitvoerbare werk.",
+        "nextAction": "E4.17: de inactieve hostadapter en de fysieke SDK-assemblage van alle 1.879 oorspronkelijke bestanden zijn onafhankelijk goedgekeurd. De drie configuratiespecifieke bibliotheekbestanden zijn exact tegen gepinde Git-bytes gecontroleerd. Bouwer maakt een private aansluiting op de bestaande herstelworkflow; actuele V3-bronnen en de echte operatorproef blijven ongewijzigd. Daarna zijn het volledige nieuwe hostdoel/eindpakket, effectieve bibliotheek-/ABI-resolutie, afzonderlijke tokens en werkelijk hersteld gedrag nog nodig. Geen hostactivatie of taakafronding geclaimd.",
         "finishOrder": [
           "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14097,7 +14097,7 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "E4.17: de echte grote operatorproef draait in real_cli_execute met actuele bevoegdheids-, SQL- en commitcontroles; een eindresultaat is nog niet ontvangen. De oorspronkelijke SDK-aanvulling is onafhankelijk op alle 1.825 nieuwe en 54 bestaande bestanden gecontroleerd: 1.879 niet-cachepaden zonder gaten, circa 15 MB gecomprimeerd. Bouwer werkt de inactieve hostadapter en gepinde bibliotheek-/ABI-dekking af; de 54 gedeelde bestanden moeten ook fysiek in de herstelde SDK terechtkomen. Eindpakket en werkend hostgedrag blijven open. Geen eigenaaractie blokkeert het uitvoerbare werk.",
+              "nextAction": "E4.17: de inactieve hostadapter en de fysieke SDK-assemblage van alle 1.879 oorspronkelijke bestanden zijn onafhankelijk goedgekeurd. De drie configuratiespecifieke bibliotheekbestanden zijn exact tegen gepinde Git-bytes gecontroleerd. Bouwer maakt een private aansluiting op de bestaande herstelworkflow; actuele V3-bronnen en de echte operatorproef blijven ongewijzigd. Daarna zijn het volledige nieuwe hostdoel/eindpakket, effectieve bibliotheek-/ABI-resolutie, afzonderlijke tokens en werkelijk hersteld gedrag nog nodig. Geen hostactivatie of taakafronding geclaimd.",
               "progress": "V3-code, echte V1 volledige data-roundtrip, echte V3-ciphertext-heropening en geïsoleerde nooitgestarte doelreferenties onafhankelijk goedgekeurd binnen hun beperkte scope. De daadwerkelijke operatorimport en werkende herstelde hostuitbreiding zijn nog niet bewezen.",
               "checkedAt": "2026-10-23T22:09:08.394308+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
@@ -14724,7 +14724,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.17: de echte grote operatorproef draait in real_cli_execute met actuele bevoegdheids-, SQL- en commitcontroles; een eindresultaat is nog niet ontvangen. De oorspronkelijke SDK-aanvulling is onafhankelijk op alle 1.825 nieuwe en 54 bestaande bestanden gecontroleerd: 1.879 niet-cachepaden zonder gaten, circa 15 MB gecomprimeerd. Bouwer werkt de inactieve hostadapter en gepinde bibliotheek-/ABI-dekking af; de 54 gedeelde bestanden moeten ook fysiek in de herstelde SDK terechtkomen. Eindpakket en werkend hostgedrag blijven open. Geen eigenaaractie blokkeert het uitvoerbare werk.",
+      "nextAction": "E4.17: de inactieve hostadapter en de fysieke SDK-assemblage van alle 1.879 oorspronkelijke bestanden zijn onafhankelijk goedgekeurd. De drie configuratiespecifieke bibliotheekbestanden zijn exact tegen gepinde Git-bytes gecontroleerd. Bouwer maakt een private aansluiting op de bestaande herstelworkflow; actuele V3-bronnen en de echte operatorproef blijven ongewijzigd. Daarna zijn het volledige nieuwe hostdoel/eindpakket, effectieve bibliotheek-/ABI-resolutie, afzonderlijke tokens en werkelijk hersteld gedrag nog nodig. Geen hostactivatie of taakafronding geclaimd.",
       "finishOrder": [
         "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -16980,7 +16980,7 @@
       "ownerReviewerCorrection": "Latest direct owner instruction: original chat01a169f2 is sole tester/reviewer; replacement01a16a55-1607 is standby with claims released."
     },
     "e417CurrentDelivery20261023": {
-      "stage": "real_operator_execute_in_progress_original_sdk_byte_coverage_reviewed",
+      "stage": "inactive_host_code_and_physical_sdk_reviewed_private_workflow_integration_in_progress",
       "profileAdapter": "src/tools/installation_face_profile_snapshot.py",
       "profileTestsPassed": 10,
       "actualProfileRows": 24,
@@ -17013,7 +17013,7 @@
       "coreValidationStillRunning": false,
       "selectedBytesRemoved": 0,
       "transportLimitChanged": false,
-      "nextAction": "E4.17: de echte grote operatorproef draait in real_cli_execute met actuele bevoegdheids-, SQL- en commitcontroles; een eindresultaat is nog niet ontvangen. De oorspronkelijke SDK-aanvulling is onafhankelijk op alle 1.825 nieuwe en 54 bestaande bestanden gecontroleerd: 1.879 niet-cachepaden zonder gaten, circa 15 MB gecomprimeerd. Bouwer werkt de inactieve hostadapter en gepinde bibliotheek-/ABI-dekking af; de 54 gedeelde bestanden moeten ook fysiek in de herstelde SDK terechtkomen. Eindpakket en werkend hostgedrag blijven open. Geen eigenaaractie blokkeert het uitvoerbare werk.",
+      "nextAction": "E4.17: de inactieve hostadapter en de fysieke SDK-assemblage van alle 1.879 oorspronkelijke bestanden zijn onafhankelijk goedgekeurd. De drie configuratiespecifieke bibliotheekbestanden zijn exact tegen gepinde Git-bytes gecontroleerd. Bouwer maakt een private aansluiting op de bestaande herstelworkflow; actuele V3-bronnen en de echte operatorproef blijven ongewijzigd. Daarna zijn het volledige nieuwe hostdoel/eindpakket, effectieve bibliotheek-/ABI-resolutie, afzonderlijke tokens en werkelijk hersteld gedrag nog nodig. Geen hostactivatie of taakafronding geclaimd.",
       "independentDesignRecommendation": "explicit_trusted_installation_policy_2GiB_default_and_per_file_1GiB",
       "implementationAuthorized": true,
       "existingBrowserUploadLimitBytes": 67108864,
@@ -17126,7 +17126,23 @@
       "originalSdkByteCoverageGaps": 0,
       "sdkActuallyRestoredAndUsable": false,
       "currentSealedPackageIncludesSdkSupplement": false,
-      "hostLibraryAbiAndDynamicImportClosureProven": false
+      "hostLibraryAbiAndDynamicImportClosureProven": false,
+      "inactiveHostSourceFreezeSha256": "e429da6ec9845340f034ca73206ff8525c231c608ede8e2f8247059072bbc4d9",
+      "inactiveHostAdapterIndependentVerdict": "GO_SCOPED_INACTIVE_HOST_ADAPTER_CODE_AND_SYNTHETIC_INTERFACES",
+      "inactiveHostAdapterIndependentCasesPassed": 19,
+      "inactiveHostAdapterIndependentTestSeconds": 25.44,
+      "sdkPhysicalAssemblyIndependentVerdict": "GO_SCOPED_PHYSICAL_ORIGINAL_SDK_ASSEMBLY",
+      "sdkPhysicalAssemblyReceiptSha256": "c58adffaa5cc6ed12e60282feee891bb67ddfbe6735b0ebeed9d25655179ca8f",
+      "sdkPhysicalAssemblyFiles": 1879,
+      "sdkPhysicalAssemblyPayloadBytes": 54088650,
+      "sdkPhysicalAssemblyUsesAll54ExistingBridgeFiles": true,
+      "sdkPhysicalAssemblyProofFilesIndependentlyHashed": 4031,
+      "configurationSpecificLibrarySupplementBytes": 51561,
+      "configurationSpecificLibrarySupplementFiles": 3,
+      "configurationSpecificLibrarySupplementReceiptSha256": "e134d33c578f92f91ac844eb6cb6c82d8847cadcb9efe2762c50c8b6d9432d72",
+      "fullHostAdapterPrepared": false,
+      "effectiveHostLibraryAndAbiProven": false,
+      "hostRuntimeActivated": false
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",

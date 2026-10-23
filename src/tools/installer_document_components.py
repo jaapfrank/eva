@@ -21,7 +21,7 @@ _LAYOUT_FIELDS = {"original_binding", "catalog_path", "document_directory",
 
 def build_document_components(*, package_root, layouts, runtime_image, runtime_uid,
                               runtime_gid, credentials, network_id, namespace,
-                              workspace, gateway_database):
+                              workspace, gateway_database, host_preparation=None):
     """Generate all four document callback configurations for one target.
 
     Provider layouts must come from the saved installation inventory. Ambiguous
@@ -32,18 +32,24 @@ def build_document_components(*, package_root, layouts, runtime_image, runtime_u
     target = Path(workspace)
     if not target.is_absolute() or target.resolve() != target:
         raise ValueError("document target workspace must be absolute without links")
-    if not isinstance(layouts, list) or not 1 <= len(layouts) <= 16:
+    if not isinstance(layouts, list) or len(layouts) > 16 or (not layouts and host_preparation is None):
         raise ValueError("saved document provider layouts required")
     if set(credentials) != {"jwt_secret_file", "encryption_secret_file", "admin_password_file"}:
         raise ValueError("explicit document runtime credentials required")
     package = read_installation_package(root)
     entries = package["manifest"]["files"]
+    host_owned = frozenset()
+    if host_preparation is not None:
+        from tools.installation_host_extension_restore import _validate_prepared
+        host_owned = _validate_prepared(package, Path(host_preparation))
     preparation, connections, bindings, promotion = [], [], [], []
     covered = set()
     document_roots = set()
     for index, layout in enumerate(layouts):
         if not isinstance(layout, dict) or set(layout) != _LAYOUT_FIELDS:
             raise ValueError("saved document layout differs")
+        if layout["original_binding"] in host_owned or layout["catalog_path"] in host_owned:
+            raise ValueError("host and document authority ownership overlaps")
         _relative(layout["original_binding"], "config")
         gateway_catalog = layout["catalog_path"] == "gateway/contextforge.sqlite"
         if not gateway_catalog:
@@ -65,6 +71,8 @@ def build_document_components(*, package_root, layouts, runtime_image, runtime_u
             prefix = layout[key] + "/"
             selected = {name for name in entries if name.startswith(prefix)}
             shared_documents = key == "document_directory" and layout[key] in document_roots
+            if selected & host_owned:
+                raise ValueError("host and document data ownership overlaps")
             if ((not selected and key != "journal_directory")
                     or (selected & covered and not shared_documents)
                     or any(entries[name]["role"] not in roles for name in selected)):
@@ -93,8 +101,11 @@ def build_document_components(*, package_root, layouts, runtime_image, runtime_u
         promotion.append({"preparation_index": index, "container_name": f"{namespace}-documents-{index}-rw"})
     expected = {name for name, item in entries.items() if item["role"] in
                 {"document_artifact", "document_journal", "document_marker"}}
-    if covered != expected:
+    host_documents = host_owned & expected
+    if covered & host_documents or covered | host_documents != expected:
         raise ValueError("saved layouts do not cover all retained documents")
+    if not layouts:
+        return {}
     result = {"document_recovery": {"providers": preparation},
               "document_connection": {"providers": connections},
               "document_gateway_binding": {"target_path": str(gateway_database), "providers": bindings},
