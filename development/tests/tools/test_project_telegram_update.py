@@ -1,14 +1,11 @@
 """Offline tests: real SQLite claims and process-boundary delivery adapter stub."""
-import importlib.util
 import json
 from pathlib import Path
 import tempfile
 import threading
 import unittest
 
-spec = importlib.util.spec_from_file_location("project_update", Path(__file__).with_name("send_project_telegram_update.py"))
-helper = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(helper)
+from tools import send_project_telegram_update as helper
 KEY = "2026-09-12T15:00Z"
 RECEIPT = {"provider_receipt_sha256": "a" * 64, "private_chat_and_exact_text_verified": True}
 

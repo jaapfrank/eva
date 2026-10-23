@@ -1,0 +1,68 @@
+{
+  "contract": "EvaE418TestPlacementEvidence/v1",
+  "task": "E4.18",
+  "status": "development_test_relocation_completed_independently_reviewed",
+  "checkedAt": "2026-10-23T12:02:31.018318+00:00",
+  "scopeRecord": "development/design/architecture/e418-project-update-test-location.json",
+  "review": "development/reviews/e418-project-update-test-location-20261023.json",
+  "before": {
+    "sourcePath": "src/tools/test_project_telegram_update.py",
+    "sha256": "44a77ef2cec882c71eb957138a961b5ba2ed40a763a58daf56fecf279adcbfc6",
+    "existingCasesPassed": 9,
+    "seconds": 0.18,
+    "ordinaryToolsCollectionDeliveryCases": 0,
+    "toolsPackageModules": 139,
+    "testPackaged": true
+  },
+  "after": {
+    "sourcePath": "development/tests/tools/test_project_telegram_update.py",
+    "sha256": "4e623e9fa521674e37c55f38dcd132cb7248efe6515454b84993d2734fd8dfc7",
+    "sameCasesPassed": 9,
+    "seconds": 0.15,
+    "ordinaryToolsCollectionDeliveryCases": 9,
+    "toolsPackageModules": 138,
+    "testPackaged": false
+  },
+  "measurement": "Exact setuptools84.0.0 build_py.find_package_modules tools enumeration using unchanged pyproject discovery. This is package membership/discovery improvement, not a full wheel, deployment, Eva speed or token saving claim.",
+  "preservation": {
+    "senderSha256": "45ecfa2099c1e0cde64cb7379735c8bc60c75b85f1cbe88dae536f63d04ca4b1",
+    "pyprojectSha256": "5558c1b81dd1a7c02079b58f15f2107446b634bb7bc432b55f3a8beb19d03768",
+    "entireTestClassAstIdentical": true,
+    "historicalReferencesRetainedExactly": true,
+    "noPublicProductEndpointOrModuleChanged": true
+  },
+  "externalEffects": {
+    "telegramDispatches": 0,
+    "modelCalls": 0,
+    "containerChanges": 0,
+    "restarts": 0,
+    "sharedInstallationChanged": false
+  },
+  "runtimeCreditCost": null,
+  "developmentCost": null,
+  "fullE418Completed": false,
+  "remaining": "E4.15/E4.17-dependent route/clean-restore acceptance still open; no broad cleanup or new product task.",
+  "historicalReferenceFiles": [
+    "development/archive/history/eva2/design/product/project-telegram-updates.md",
+    "development/archive/layout-migration-20261013.json",
+    "development/archive/migration-manifest.json",
+    "development/docs/eva-repository-inventory.generated.json",
+    "development/evidence/reassessment/e33-file-dispositions-20261017.json",
+    "development/evidence/reassessment/e33-import-consumers-20261017.json",
+    "development/reviews/project-telegram-normalization-review-2026-09-12.md"
+  ],
+  "coordinationReferenceFiles": [
+    "development/coordination/active-executors.json"
+  ],
+  "additionalEntrypointCheck": {
+    "systemdDropinsAndCronMatchCount": 0,
+    "scope": "Named test and configured pytest/unittest src/tools-suite references; no runtime configuration modified."
+  },
+  "independentReview": {
+    "decision": "GO_SCOPED_TEST_LOCATION_CHANGE",
+    "privateReviewSha256": "53c2474e700a2e3eb9ad9508acbda64a0fc90a52347b5b54dbc49dcd8bd319b0",
+    "blockingFindings": []
+  },
+  "uniqueExistingCasesPreserved": 9,
+  "installationScope": "Developer test source location only; no application deployment needed or performed."
+}

@@ -1,0 +1,31 @@
+{
+  "contract": "EvaE418TestFilePlacement/v1",
+  "task": "E4.18",
+  "checkedAt": "2026-10-23T11:59:46.616162+00:00",
+  "decision": "Move existing offline project-update tests from runtime tools package to the existing development test directory.",
+  "baselineCommit": "d194f32c7ee2e427446c518c292f467287ba1efd",
+  "source": {
+    "oldPath": "src/tools/test_project_telegram_update.py",
+    "oldSha256": "44a77ef2cec882c71eb957138a961b5ba2ed40a763a58daf56fecf279adcbfc6",
+    "newPath": "development/tests/tools/test_project_telegram_update.py",
+    "newSha256": "4e623e9fa521674e37c55f38dcd132cb7248efe6515454b84993d2734fd8dfc7"
+  },
+  "consumers": {
+    "testOwner": "Existing development/tests/tools pytest collection; unittest entry retained in relocated test file.",
+    "productionSender": "src/tools/send_project_telegram_update.py remains byte-identical.",
+    "importsAndDynamicCalls": "E3 import registry sites empty; fresh tracked-reference scan found only historical docs/review/inventory/migration metadata. Original test dynamically loaded adjacent sender; relocated test imports same sender through normal tools package.",
+    "entrypoints": "No active tracked entrypoint or systemd service references the old test path.",
+    "releaseAndRestore": "No current release/source pin or restore dependency references this test module. Prior E3 disposition retain_until_E34_E41 is superseded for this path only; immutable registry/history remains unchanged.",
+    "installedUse": "Inspection of current core Python namespace reports tools not importable. Not proof of file removal from any running image; no image changed.",
+    "standaloneTestUsage": "Use the normal installed/PYTHONPATH=src test environment at the new path; no active standalone old-path caller found."
+  },
+  "preserved": {
+    "senderSha256": "45ecfa2099c1e0cde64cb7379735c8bc60c75b85f1cbe88dae536f63d04ca4b1",
+    "pyprojectSha256": "5558c1b81dd1a7c02079b58f15f2107446b634bb7bc432b55f3a8beb19d03768",
+    "entireTestClassAstIdentical": true,
+    "historicalReferencesRetainedExactly": true,
+    "noPublicProductEndpointOrModuleChanged": true
+  },
+  "forbiddenScopesChanged": [],
+  "fullE418Completed": false
+}
