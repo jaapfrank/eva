@@ -50,7 +50,7 @@ uitvoeren of deze hele kaarten ten onrechte sluiten.
 De camera-uitbreiding is door Eva gemaakt en buiten de kern opgeslagen. SHA256:
 `340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773`.
 De functie is `propose(event, binding, *, now)`; het is geen JSON-stdin-programma.
-De koppeling bestaat als **niet geïnstalleerde kandidaat**, geen werkende begroeting.
+De gecorrigeerde koppeling is nu **geïnstalleerd en onafhankelijk teruggelezen**, maar een werkelijke begroeting is nog niet bewezen. De actuele installatie- en gebruiksgrenzen staan in `development/evidence/product/e415-household-procedure-binding-20261023.json`.
 
 Eigen kandidaatbestanden zijn `application/household_procedure.py`,
 `providers/home_assistant_procedure.py`, kleine wijzigingen in
@@ -67,7 +67,7 @@ Die map bevat privégegevens en hoort niet op GitHub. Scripts daarin verwijzen d
 nog naar `/tmp`; behandel ze als herbruikbare bron, niet als blind uitvoercommando.
 Een configuratievoorbeeld met een `ffff...` reviewhash is een concept, geen toelating.
 De kandidaat heeft gerichte model/quiet-delivery/providertests en twee echte
-PostgreSQL-vervalproeven doorlopen. Eindreview en installatie moeten nog volgen.
+PostgreSQL-vervalproeven doorlopen. De nieuwe onafhankelijke chat heeft de gecorrigeerde worker, bronadoptie en installatie beoordeeld. Kern en worker gebruiken de exacte beoordeelde bestanden en opt-in via de bestaande readonly map. De oude defecte worker-kandidaat blijft NO_GO bewaard. Na installatie was nog geen nieuwe camerabron opgeslagen; een gerichte actuele bronlezing kon ook geen verse bron gebruiken. Geen historische bron als nieuwe proef opvoeren. De eigenaar heeft eenmaal een concrete natuurlijke camera-/hoorproef gevraagd gekregen; parallel wordt alleen de nieuwe configuratiehersteloverdracht geïsoleerd gecontroleerd.
 Behoud de bestaande modellen, stilte/STOP en aandacht; geen camera-demoregel in de kern.
 
 ## Coördinatie en behoud

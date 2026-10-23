@@ -1,8 +1,8 @@
 {
   "contract": "EvaHouseholdProcedureBindingOutcome/v1",
   "task": "E4.15",
-  "checkedAt": "2026-10-23T18:23:36.623909+00:00",
-  "status": "built_reviewed_not_installed",
+  "checkedAt": "2026-10-23T18:28:28.857500+00:00",
+  "status": "installed_current_authority_verified_first_real_greeting_pending",
   "existing": "Eva-authored independently preserved pure procedure plus ordinary household observation/assessment/STOP/durable delivery/executor",
   "gap": "Exact authored source bound to current authorized source, opt-in and reviewed per-role composition",
   "endCondition": "Installed exact bridge processes actual source, preserves negative/freshness/STOP boundaries and permits ordinary appropriate greeting; full E4.15 requires later reuse/feedback and remains open",
@@ -51,5 +51,58 @@
     "One exact reviewed output binding, no general two-speaker or face-identity claim.",
     "Full configured/active clean restore not yet proven; existing source preservation evidence remains bounded.",
     "Development model tokens/credits unknown; actual runtime usage to be measured separately."
-  ]
+  ],
+  "installation": {
+    "core": "sha256:27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
+    "worker": "sha256:ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979",
+    "receiptState": "running_exact_configuration",
+    "activeCheckpointsBeforeDispatch": 0,
+    "activeWorkBeforeDispatch": 0,
+    "independentInstalledReadback": "development/reviews/e415-installed-binding-readback-20261023.json",
+    "all14InstalledSourceHashesVerified": true,
+    "sourceCurrentConfigReviewReadableByRuntimeUid": true,
+    "existingMountsAndVoiceFilesPreserved": true,
+    "sharedDigitalAndPrivateResearchMatch": true,
+    "preexistingMismatch": [
+      "household_research"
+    ]
+  },
+  "live": {
+    "normalSourceSnapshotAfterInstall": {
+      "newRawCameraObservations": 0,
+      "newEventsForSelectedHouseholdBinding": 0,
+      "faceCounts": null,
+      "limit": "No new camera source is missing evidence, not a measured zero-face frame."
+    },
+    "operatorInstalledAdmission": {
+      "currentVoiceAndInitiativePolicyValidated": true,
+      "exactCurrentAuthorizedArtifactValidated": true,
+      "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+      "configurationGuardSha256": "b5ed0553c59d772dea81946356b961c95570554742eb0071774fc36f2ab7cdf6",
+      "modelCalls": 0,
+      "databaseWrites": 0,
+      "effects": 0
+    },
+    "freshSourceLeafAttempt": {
+      "result": "no_genuine_fresh_camera_source",
+      "sourceNotReplayedOrRefreshed": true,
+      "sandboxRuns": 0,
+      "modelCalls": 0,
+      "deliveryCalls": 0
+    },
+    "positiveGreeting": false,
+    "offeredReceipt": false,
+    "physicalHearing": null,
+    "ordinaryLaterReuse": false
+  },
+  "ownerActionPending": "A natural camera observation containing a face is required; user was asked once to walk into the doorbell camera view and report hearing. Independent recovery preparation continues.",
+  "usage": {
+    "scope": "Root operator admission/leaf checks and linked selected-household snapshot only; general background runtime excluded",
+    "runtimeModelCalls": 0,
+    "runtimeMessages": 0,
+    "operatorCameraCaptures": 0,
+    "developmentModelTokens": null,
+    "developmentCreditCost": null,
+    "runtimeCreditCost": null
+  }
 }

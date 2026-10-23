@@ -1,0 +1,115 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.15",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T18:26:48.235104+00:00",
+  "verdict": "GO",
+  "status": "installed_binding_matches_exact_reviewed_configuration",
+  "scope": "Independent read-only post-install image/source/config/mount/UID-readability verification. Installed proposal facility only; not speech or full E4.15 acceptance.",
+  "installationReceipt": {
+    "sha256": "51ac9e1ce50e2c2ff9474afe78c9053fc214f15a55279e53186ec5b010cdb4be",
+    "status": "running_exact_configuration",
+    "beforeCanonicalSha256Matches": true,
+    "afterCanonicalSha256Matches": true,
+    "servicesMatchReviewedManifest": true
+  },
+  "priorReview": {
+    "path": "development/reviews/e415-coordinated-installation-review-20261023.json",
+    "sha256": "7189e7c25a84bf289ad33fd7ec2e03af79fc7230c3732741f726870f33c67c36",
+    "allBoundPrivateArtifactsStillExact": true
+  },
+  "services": {
+    "core": {
+      "containerId": "976def96de8e982c07bcde57fa549d8c79a12a8efd494174a745b33a8dd6d66c",
+      "image": "sha256:27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
+      "state": "running",
+      "health": "healthy",
+      "readonlyRootfs": true,
+      "sourceSha256": {
+        "application/household_procedure.py": "7ae69ecc75a66260fe69cc120f2fbd4bcd49396d34f8e62d757dee8e086d0ccc",
+        "providers/home_assistant_procedure.py": "8cd3c01e95e2916aa82b4eb636f23f0b1cb07605c781b93d20a75018a973412e",
+        "application/free_will.py": "410d3f00f7a7f5a394d9169ec678cf2cb8ce8618ba497cf5854e5616bb1b2a10",
+        "adapters/postgres/sensory_events.py": "e3ab40f597aca6127981416ff7e1bc95bc1463689ecbbf56d0574d01b1d5313c",
+        "bootstrap/household_initiative.py": "b7a17d6fd0a74cba581a7e146c6882bab73d718c0bae0ede095633a6c0e82fad",
+        "bootstrap/household_initiative_delivery.py": "503efb65943893c58f1047fc93cacbdc4326565479476f696bc6865101dc0597",
+        "adapters/model/pydantic_conversation.py": "d04d71a7360ab9097831bd837d8c96ee8c1f29d8c87dc4cb8c347fcd9decc884"
+      },
+      "allSevenLiveSourceHashesMatchReviewed": true,
+      "procedureOptIn": "/run/eva/household-voice/procedure/current.json",
+      "allDeclaredEnvironmentValuesMatch": true,
+      "composeConfigHashMatches": true,
+      "persistentMountsMatchReviewedConfiguration": true,
+      "procedureParentMountReadonly": true,
+      "extensionFilesSha256": {
+        "current.json": "732ff63fa5918410d9ecb94d44cb7b4b245a3aa3014736873f61af78b4f72428",
+        "camera_greeting_adapter_v2.py": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+        "adoption-review.json": "7bedd1f16f92f1692d0cbd865f370146ba9eef99eab4d9520a473b830b86a369"
+      },
+      "allExtensionFilesReadableAsUidGid": "65532:65532",
+      "extensionFilesOwnerMode": "root:65532 0640",
+      "extensionDirectoryOwnerMode": "root:65532 0750",
+      "extensionFilesAreNotSymlinks": true
+    },
+    "delegated-work-worker": {
+      "containerId": "ab17357fcf908959ea8c6dd5a2ee20e99521e2572ff7412a4630181ff5a2eae3",
+      "image": "sha256:ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979",
+      "state": "running",
+      "health": "healthy",
+      "readonlyRootfs": true,
+      "sourceSha256": {
+        "application/household_procedure.py": "7ae69ecc75a66260fe69cc120f2fbd4bcd49396d34f8e62d757dee8e086d0ccc",
+        "providers/home_assistant_procedure.py": "8cd3c01e95e2916aa82b4eb636f23f0b1cb07605c781b93d20a75018a973412e",
+        "application/free_will.py": "410d3f00f7a7f5a394d9169ec678cf2cb8ce8618ba497cf5854e5616bb1b2a10",
+        "adapters/postgres/sensory_events.py": "eb988fa0537161dfa613a866a9f31f96d6959a7a63ad4b7ac5a2be06d7ba5064",
+        "bootstrap/household_initiative.py": "e864e62dd86d3084a9eb1d644d5ad54526cc5253facf72de7e58bd1e56eec765",
+        "bootstrap/household_initiative_delivery.py": "1d1033e36bcc0caa8506b587f9f98d339cbfff16fe8c965152ffa1b8d0cefc87",
+        "adapters/model/pydantic_conversation.py": "d04d71a7360ab9097831bd837d8c96ee8c1f29d8c87dc4cb8c347fcd9decc884"
+      },
+      "allSevenLiveSourceHashesMatchReviewed": true,
+      "procedureOptIn": "/run/eva/household-voice/procedure/current.json",
+      "allDeclaredEnvironmentValuesMatch": true,
+      "composeConfigHashMatches": true,
+      "persistentMountsMatchReviewedConfiguration": true,
+      "procedureParentMountReadonly": true,
+      "extensionFilesSha256": {
+        "current.json": "732ff63fa5918410d9ecb94d44cb7b4b245a3aa3014736873f61af78b4f72428",
+        "camera_greeting_adapter_v2.py": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+        "adoption-review.json": "7bedd1f16f92f1692d0cbd865f370146ba9eef99eab4d9520a473b830b86a369"
+      },
+      "allExtensionFilesReadableAsUidGid": "65532:65532",
+      "extensionFilesOwnerMode": "root:65532 0640",
+      "extensionDirectoryOwnerMode": "root:65532 0750",
+      "extensionFilesAreNotSymlinks": true
+    }
+  },
+  "method": {
+    "dockerInspect": "Read actual running container Image/State/Health/ReadonlyRootfs/Env/Mounts/Compose labels. Read reviewed Compose config hash and verify persistent mount identities against candidate config.",
+    "sourceReadback": "One metadata-only Python exec as UID65532:GID65532 per service reads/hashes seven installed source files and three mounted extension files, plus stat/access. No eva imports, create_runtime_app, callbacks, provider/source-resolution, model or camera.",
+    "conclusionLimit": "Actual images, artifact hashes, declared env, Compose identity, persistent mount sources/RW and scoped source/payload hashes match approved installation. Unrelated mutable user data not hashed.",
+    "reportTooling": "Initial local report writer lacked host dependency search path and wrote nothing; corrected using existing local libraries. No runtime checks repeated."
+  },
+  "preservedLimits": [
+    "Installed source/configuration verified, not actual proposal generation, voice offering, physical hearing, later use or household acceptance.",
+    "Live source-admission and profile measurements remain coordinator-owned; natural observation read belongs to other assigned executor and was not repeated.",
+    "Earlier bounded reviews, original NO_GO, private artifacts and unrelated voice/WIP remain within prior scope.",
+    "Full E4.15 and E4.17 remain open."
+  ],
+  "findings": [],
+  "usage": {
+    "developmentElapsedSeconds": 78.759,
+    "developmentModelTokens": null,
+    "developmentCreditCost": null,
+    "evaRuntimeModelCalls": 0,
+    "evaRuntimeCreditCost": null,
+    "metadataOnlyContainerReadProcesses": 2,
+    "testSuiteRuns": 0,
+    "createRuntimeAppCalls": 0,
+    "serviceCallbacks": 0,
+    "cameraCaptures": 0,
+    "messages": 0,
+    "databaseMutations": 0,
+    "gitMutations": 0,
+    "sharedRestarts": 0
+  }
+}

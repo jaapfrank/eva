@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T18:23:36.623909+00:00",
+  "updatedAt": "2026-10-23T18:28:28.857500+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -157,7 +157,7 @@
       }
     },
     "codex-e418": {
-      "task": "E4.15 one read-only stored camera observation baseline",
+      "task": "E4.17 isolated E4.15 config/review materialization compatibility",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "development/design/architecture/e418-*.json",
@@ -622,7 +622,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "One readonly stored-observation baseline complete; no replay/poll/capture/effect",
+      "status": "Locate exact preserved valid corefixture before bounded inactive materialization; no live export or new archive rules",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -987,22 +987,42 @@
         "freshPositiveSourceAvailable": false,
         "optInPresentAtSnapshot": false,
         "noFollowupUntilRootInstallMoment": true
+      },
+      "postInstallObservationAssignment": {
+        "output": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/e415-observation-readonly-after-install.private.json",
+        "onlyAfterActualContainerCreated": true,
+        "namesPixelsAndExpressionTextNotFetched": true
+      },
+      "postInstallObservationResult": {
+        "path": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/e415-observation-readonly-after-install.private.json",
+        "sha256": "2a884d0a81e3599cc1f34441a499d5f6bec627aff4c4e038c3c8e0fbe2c3d597",
+        "createdBoundary": "2026-10-23T18:24:06.362655322Z",
+        "rawCameraEvents": 0,
+        "guardedProposalEvidence": false,
+        "offeredReceipts": 0,
+        "noPositiveGreetingClaim": true
+      },
+      "materializationAssignment": {
+        "privateRoot": "/home/administrator/project/.eva2-artifacts/e417-e415-binding-materialization-20261023",
+        "publicEvidence": "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json",
+        "noCurrentBackupProductCodeSchemaGitInstallOrExternalEffects": true,
+        "noRepetitionOfOldProcedureCases": true
       }
     },
     "e415-independent-review-newchat": {
       "task": "E4.15 source/config adoption",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "completed_coordinated_installation_GO",
+      "status": "in_progress_e417_e415_materialization_review",
       "coordinator": "windows-root",
       "allowedWritePaths": [
-        "development/reviews/e415-coordinated-installation-review-20261023.json",
+        "development/reviews/e417-e415-binding-materialization-review-20261023.json",
         "development/coordination/active-executors.json:own section only"
       ],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
-      "endCondition": "Exact candidate/install guards GO/NO_GO; read only, no tests/install/model/effects",
+      "endCondition": "Exact four inputs/roles/inactive/mode/owner/no-secrets/no-auto-adoption read-only review after builder result, no tests/code/install",
       "noGitInstallationModelOrExternalEffects": true,
       "assignedAt": "2026-10-23T18:07:51.748863+00:00",
-      "startedAt": "2026-10-23T18:20:48.858474+00:00",
+      "startedAt": "2026-10-23T18:27:55.046753+00:00",
       "boundedOutcome": {
         "existing": "Retained two worker candidates and original NO_GO.",
         "gap": "Independent proof corrected exact worker bytes compile and validate before effect against current installation.",
@@ -1010,12 +1030,14 @@
         "doneWhen": "Exact hashes and bounded GO/NO_GO with necessary companion hunks; no installation.",
         "userUse": "Coordinator may integrate reviewed candidate after baseline recheck."
       },
-      "completedAt": "2026-10-23T18:22:32.868270+00:00",
-      "review": "development/reviews/e415-coordinated-installation-review-20261023.json",
+      "completedAt": "2026-10-23T18:26:48.235104+00:00",
+      "review": "development/reviews/e415-installed-binding-readback-20261023.json",
       "verdict": "GO",
-      "nextAction": "Root owns exact guarded installation. Await next concrete assignment.",
+      "nextAction": "Await next concrete assignment; root owns live source/profile evidence, other executor natural observation.",
       "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
-      "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json"
+      "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
+      "previousInstallationReview": "development/reviews/e415-coordinated-installation-review-20261023.json",
+      "previousInstalledReadbackReview": "development/reviews/e415-installed-binding-readback-20261023.json"
     }
   },
   "protectedExistingWork": {
@@ -1241,11 +1263,13 @@
     "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
     "e415Candidate": {
       "path": "/var/lib/eva2/e415-reviewed-binding-20261023",
-      "status": "built_reviewed_preinstall",
+      "status": "installed_current_authority_verified_positive_source_pending",
       "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
       "sourceOutsideCore": true,
       "ordinaryLolaQuestionMustNotBeRepeated": true,
       "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
-    }
+    },
+    "ownerQuestion": "One natural doorbell-camera walk/hearing check asked asynchronously; do not ask again or repeat Lola message",
+    "parallelBoundedWork": "Exact newly configured E4.15 source/config/review inactive recovery compatibility; no full-backup claim"
   }
 }

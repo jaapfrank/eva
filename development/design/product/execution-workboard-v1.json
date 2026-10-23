@@ -847,7 +847,7 @@
     "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
     "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "E4.15: exacte zelfgemaakte bron en gecorrigeerde kern-/worker-kandidaat hebben onafhankelijke GO. Installeer nu de bestaande procedureverbinding via actuele claims, controleer echte bronverwerking/stop/stilte en daadwerkelijke aflevering afzonderlijk. Verse bron zonder gezichten is geen begroetingsbewijs. Telegramwinst blijft behouden; snelheidsdoel en volledige E4.15 blijven open.",
+    "nextAction": "E4.15-koppeling is geïnstalleerd en onafhankelijk teruggelezen; huidige bron/authority/UID en profielen zijn gecontroleerd. Echte begroeting blijft open: sinds installatie nog geen nieuwe camerabron, één natuurlijke camera-/hoorproef gevraagd. Controleer nieuwe echte bron/afweging/aflevering zonder replay; maak parallel alleen de exacte configuratiehersteloverdracht af. Volledige E4.15 en E4.17 blijven open.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2992,7 +2992,7 @@
         "now": {
           "taskId": "E4.15",
           "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-          "summary": "E4.15: exacte zelfgemaakte bron en gecorrigeerde kern-/worker-kandidaat hebben onafhankelijke GO. Installeer nu de bestaande procedureverbinding via actuele claims, controleer echte bronverwerking/stop/stilte en daadwerkelijke aflevering afzonderlijk. Verse bron zonder gezichten is geen begroetingsbewijs. Telegramwinst blijft behouden; snelheidsdoel en volledige E4.15 blijven open.",
+          "summary": "E4.15-koppeling is geïnstalleerd en onafhankelijk teruggelezen; huidige bron/authority/UID en profielen zijn gecontroleerd. Echte begroeting blijft open: sinds installatie nog geen nieuwe camerabron, één natuurlijke camera-/hoorproef gevraagd. Controleer nieuwe echte bron/afweging/aflevering zonder replay; maak parallel alleen de exacte configuratiehersteloverdracht af. Volledige E4.15 en E4.17 blijven open.",
           "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform."
         },
         "next": {
@@ -8021,7 +8021,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "E4.15: exacte zelfgemaakte bron en gecorrigeerde kern-/worker-kandidaat hebben onafhankelijke GO. Installeer nu de bestaande procedureverbinding via actuele claims, controleer echte bronverwerking/stop/stilte en daadwerkelijke aflevering afzonderlijk. Verse bron zonder gezichten is geen begroetingsbewijs. Telegramwinst blijft behouden; snelheidsdoel en volledige E4.15 blijven open.",
+                "nextAction": "E4.15-koppeling is geïnstalleerd en onafhankelijk teruggelezen; huidige bron/authority/UID en profielen zijn gecontroleerd. Echte begroeting blijft open: sinds installatie nog geen nieuwe camerabron, één natuurlijke camera-/hoorproef gevraagd. Controleer nieuwe echte bron/afweging/aflevering zonder replay; maak parallel alleen de exacte configuratiehersteloverdracht af. Volledige E4.15 en E4.17 blijven open.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -8046,7 +8046,8 @@
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
                 "checkedAt": "2026-10-23T15:51:46.172592+00:00",
                 "progress": "CPU-herkenningsmodule en verkleining van historische broncontext zijn geïnstalleerd. Ook de concrete fout bij teruglezen van een geregistreerde procedure is gerepareerd: 63 controles, onafhankelijke review en succesvolle oorspronkelijke pending read via echte werker; resultaat-hash past exact bij Eva’s eigen V2-bron. V2 blijft een niet-actieve kandidaat. De volledige opdracht is te vaak hervat; verdere volledige proeven wachten op de concreet ontbrekende beheerde verbinding naar huishoudelijke bronvalidatie, afweging en duurzame aflevering. Latere model-503 blijft afzonderlijk foutbewijs. Geen begroeting of E4.15-afronding bewezen.",
-                "evidence": "development/evidence/product/e415-installed-route-20261023.json"
+                "evidence": "development/evidence/product/e415-installed-route-20261023.json",
+                "latestEvidence": "development/evidence/product/e415-household-procedure-binding-20261023.json"
               },
               {
                 "id": "E4.16",
@@ -8711,7 +8712,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.15: exacte zelfgemaakte bron en gecorrigeerde kern-/worker-kandidaat hebben onafhankelijke GO. Installeer nu de bestaande procedureverbinding via actuele claims, controleer echte bronverwerking/stop/stilte en daadwerkelijke aflevering afzonderlijk. Verse bron zonder gezichten is geen begroetingsbewijs. Telegramwinst blijft behouden; snelheidsdoel en volledige E4.15 blijven open.",
+        "nextAction": "E4.15-koppeling is geïnstalleerd en onafhankelijk teruggelezen; huidige bron/authority/UID en profielen zijn gecontroleerd. Echte begroeting blijft open: sinds installatie nog geen nieuwe camerabron, één natuurlijke camera-/hoorproef gevraagd. Controleer nieuwe echte bron/afweging/aflevering zonder replay; maak parallel alleen de exacte configuratiehersteloverdracht af. Volledige E4.15 en E4.17 blijven open.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -13980,7 +13981,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "E4.15: exacte zelfgemaakte bron en gecorrigeerde kern-/worker-kandidaat hebben onafhankelijke GO. Installeer nu de bestaande procedureverbinding via actuele claims, controleer echte bronverwerking/stop/stilte en daadwerkelijke aflevering afzonderlijk. Verse bron zonder gezichten is geen begroetingsbewijs. Telegramwinst blijft behouden; snelheidsdoel en volledige E4.15 blijven open.",
+              "nextAction": "E4.15-koppeling is geïnstalleerd en onafhankelijk teruggelezen; huidige bron/authority/UID en profielen zijn gecontroleerd. Echte begroeting blijft open: sinds installatie nog geen nieuwe camerabron, één natuurlijke camera-/hoorproef gevraagd. Controleer nieuwe echte bron/afweging/aflevering zonder replay; maak parallel alleen de exacte configuratiehersteloverdracht af. Volledige E4.15 en E4.17 blijven open.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -14005,7 +14006,8 @@
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
               "checkedAt": "2026-10-23T15:51:46.172592+00:00",
               "progress": "CPU-herkenningsmodule en verkleining van historische broncontext zijn geïnstalleerd. Ook de concrete fout bij teruglezen van een geregistreerde procedure is gerepareerd: 63 controles, onafhankelijke review en succesvolle oorspronkelijke pending read via echte werker; resultaat-hash past exact bij Eva’s eigen V2-bron. V2 blijft een niet-actieve kandidaat. De volledige opdracht is te vaak hervat; verdere volledige proeven wachten op de concreet ontbrekende beheerde verbinding naar huishoudelijke bronvalidatie, afweging en duurzame aflevering. Latere model-503 blijft afzonderlijk foutbewijs. Geen begroeting of E4.15-afronding bewezen.",
-              "evidence": "development/evidence/product/e415-installed-route-20261023.json"
+              "evidence": "development/evidence/product/e415-installed-route-20261023.json",
+              "latestEvidence": "development/evidence/product/e415-household-procedure-binding-20261023.json"
             },
             {
               "id": "E4.16",
@@ -14670,7 +14672,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.15: exacte zelfgemaakte bron en gecorrigeerde kern-/worker-kandidaat hebben onafhankelijke GO. Installeer nu de bestaande procedureverbinding via actuele claims, controleer echte bronverwerking/stop/stilte en daadwerkelijke aflevering afzonderlijk. Verse bron zonder gezichten is geen begroetingsbewijs. Telegramwinst blijft behouden; snelheidsdoel en volledige E4.15 blijven open.",
+      "nextAction": "E4.15-koppeling is geïnstalleerd en onafhankelijk teruggelezen; huidige bron/authority/UID en profielen zijn gecontroleerd. Echte begroeting blijft open: sinds installatie nog geen nieuwe camerabron, één natuurlijke camera-/hoorproef gevraagd. Controleer nieuwe echte bron/afweging/aflevering zonder replay; maak parallel alleen de exacte configuratiehersteloverdracht af. Volledige E4.15 en E4.17 blijven open.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
