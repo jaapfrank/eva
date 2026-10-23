@@ -841,13 +841,13 @@
   "lastUpdated": "2026-10-23T16:59:07.773712+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.15",
+  "activeTaskId": "E4.17",
   "currentWork": {
-    "id": "E4.15",
-    "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
+    "id": "E4.17",
+    "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
     "status": "in_progress",
-    "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
+    "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
+    "nextAction": "Eigenaar23oktober: doorwerken terwijl fysieke E4.15-proef later volgt. Maak dezelfde uitbreiding onderE4.17 werkelijk herstelbaar/testklaar via bestaande pakket/materialisatieroute. Bouwer integreert actuele bron/config/gegevens/trust; reviewer controleert nog onbeoordeelde15faceassets en hetzelfde concrete pakket. Geen CPUimportserie, nieuwpakketformaat of gedeelde/spraakinstallatie. Concrete resterende eigenaarproef apart houden.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2992,15 +2992,15 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.15",
-          "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-          "summary": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
-          "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform."
+          "taskId": "E4.17",
+          "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
+          "summary": "Eigenaar23oktober: doorwerken terwijl fysieke E4.15-proef later volgt. Maak dezelfde uitbreiding onderE4.17 werkelijk herstelbaar/testklaar via bestaande pakket/materialisatieroute. Bouwer integreert actuele bron/config/gegevens/trust; reviewer controleert nog onbeoordeelde15faceassets en hetzelfde concrete pakket. Geen CPUimportserie, nieuwpakketformaat of gedeelde/spraakinstallatie. Concrete resterende eigenaarproef apart houden.",
+          "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd."
         },
         "next": {
-          "taskId": "E4.17",
-          "title": "Dezelfde uitbreiding volledig herstelbaar opleveren",
-          "detail": "Na E4.15; geselecteerde bytes zijn geen volledig herstelpakket. Overige verplichte kaarten blijven open voor gezinsoplevering."
+          "taskId": "E1.12",
+          "title": "Dezelfde voorziening beheren en pauzeren",
+          "detail": "Na noodzakelijke E4.17-overdracht; eigenaaracceptatie van E4.15 blijft apart open."
         },
         "ownerAction": {
           "required": false,
@@ -3189,7 +3189,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.15",
+        "currentStep": "E4.17",
         "steps": [
           {
             "number": 1,
@@ -8096,7 +8096,7 @@
               {
                 "id": "E4.17",
                 "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "scopeOrigin": "living-housemate-20261022",
                 "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
@@ -8111,7 +8111,7 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "Bewaar geselecteerde hostbytes en 15 faceassets lokaal prive. CPU-kandidaat blijft niet-live en strict-import-v2 FAIL; geen nieuwe run of guardverruiming. Na E4.15-overdracht uitsluitend noodzakelijk herstel van dezelfde uitbreiding via bestaande pakket/trust/key/gegevensroute afmaken. Volledig aangesloten schoon herstel nog onbewezen.",
+                "nextAction": "Eigenaar23oktober: doorwerken terwijl fysieke E4.15-proef later volgt. Maak dezelfde uitbreiding onderE4.17 werkelijk herstelbaar/testklaar via bestaande pakket/materialisatieroute. Bouwer integreert actuele bron/config/gegevens/trust; reviewer controleert nog onbeoordeelde15faceassets en hetzelfde concrete pakket. Geen CPUimportserie, nieuwpakketformaat of gedeelde/spraakinstallatie. Concrete resterende eigenaarproef apart houden.",
                 "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
                 "checkedAt": "2026-10-23T19:49:14.921610+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
@@ -8731,9 +8731,9 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
+        "nextAction": "Eigenaar23oktober: doorwerken terwijl fysieke E4.15-proef later volgt. Maak dezelfde uitbreiding onderE4.17 werkelijk herstelbaar/testklaar via bestaande pakket/materialisatieroute. Bouwer integreert actuele bron/config/gegevens/trust; reviewer controleert nog onbeoordeelde15faceassets en hetzelfde concrete pakket. Geen CPUimportserie, nieuwpakketformaat of gedeelde/spraakinstallatie. Concrete resterende eigenaarproef apart houden.",
         "finishOrder": [
-          "Actueel E4.15 functioneel afmaken; E4.17 herstelt daarna dezelfde uitbreiding. Overige kaartvolgorde behouden: E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
+          "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
           "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
           "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -9150,7 +9150,7 @@
             "E2.6",
             "C4.3"
           ],
-          "activeTask": "E4.15",
+          "activeTask": "E4.17",
           "rules": [
             "Eén primaire uitvoeruitkomst; de bestaande spraakuitvoerder behoudt zijn eigen route.",
             "E4.16 en E4.18 lossen eerder concrete blokkerende fouten/duplicatie op; hun volledige afronding volgt vóór de eindvergelijking.",
@@ -9166,7 +9166,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.15",
+      "currentStep": "E4.17",
       "steps": [
         {
           "number": 1,
@@ -14073,7 +14073,7 @@
             {
               "id": "E4.17",
               "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "scopeOrigin": "living-housemate-20261022",
               "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
@@ -14088,7 +14088,7 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "Bewaar geselecteerde hostbytes en 15 faceassets lokaal prive. CPU-kandidaat blijft niet-live en strict-import-v2 FAIL; geen nieuwe run of guardverruiming. Na E4.15-overdracht uitsluitend noodzakelijk herstel van dezelfde uitbreiding via bestaande pakket/trust/key/gegevensroute afmaken. Volledig aangesloten schoon herstel nog onbewezen.",
+              "nextAction": "Eigenaar23oktober: doorwerken terwijl fysieke E4.15-proef later volgt. Maak dezelfde uitbreiding onderE4.17 werkelijk herstelbaar/testklaar via bestaande pakket/materialisatieroute. Bouwer integreert actuele bron/config/gegevens/trust; reviewer controleert nog onbeoordeelde15faceassets en hetzelfde concrete pakket. Geen CPUimportserie, nieuwpakketformaat of gedeelde/spraakinstallatie. Concrete resterende eigenaarproef apart houden.",
               "progress": "E4.17-herstelroute gecorrigeerd; 15/15 controles geslaagd. Eva’s echte V2-bron daarna via versleuteld pakket bytegelijk naar nieuwe inactieve bestemming hersteld. Nu ook dezelfde pure functie vóór en na herstel in twee afgesloten containers uitgevoerd: 3/3 synthetische invoeren geven exact hetzelfde resultaat. Onafhankelijke GO voor beide beperkte bewijzen. Geen gedeelde activering/herstart of modelcalls. E4.17 als geheel blijft open: echte E4.15-aansluiting en volledig pakket met daadwerkelijke gegevens, rechten/pauze en laatste werkende versie ontbreken nog.",
               "checkedAt": "2026-10-23T19:49:14.921610+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
@@ -14708,9 +14708,9 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
+      "nextAction": "Eigenaar23oktober: doorwerken terwijl fysieke E4.15-proef later volgt. Maak dezelfde uitbreiding onderE4.17 werkelijk herstelbaar/testklaar via bestaande pakket/materialisatieroute. Bouwer integreert actuele bron/config/gegevens/trust; reviewer controleert nog onbeoordeelde15faceassets en hetzelfde concrete pakket. Geen CPUimportserie, nieuwpakketformaat of gedeelde/spraakinstallatie. Concrete resterende eigenaarproef apart houden.",
       "finishOrder": [
-        "Actueel E4.15 functioneel afmaken; E4.17 herstelt daarna dezelfde uitbreiding. Overige kaartvolgorde behouden: E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
+        "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
         "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
         "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -15127,7 +15127,7 @@
           "E2.6",
           "C4.3"
         ],
-        "activeTask": "E4.15",
+        "activeTask": "E4.17",
         "rules": [
           "Eén primaire uitvoeruitkomst; de bestaande spraakuitvoerder behoudt zijn eigen route.",
           "E4.16 en E4.18 lossen eerder concrete blokkerende fouten/duplicatie op; hun volledige afronding volgt vóór de eindvergelijking.",
@@ -16963,7 +16963,7 @@
       "codePatchNotMandatedByStaticCoverageLimitation": true
     }
   },
-  "updatedAt": "2026-10-20T13:28:55.822181+00:00",
+  "updatedAt": "2026-10-23T20:27:52.074803+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -17054,6 +17054,14 @@
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
     "nextAction": "Nog open: een zelfgekozen bron volgen en bij een echte verandering passend afwegen. De gekozen bronverkenning, uitvoering, later resultaatgebruik en Telegram-terugkoppeling zijn nu onafhankelijk bevestigd; geen kunstmatige bron of nieuwe vergelijkingsserie.",
     "checkedAt": "2026-10-21T09:48:32.565185+00:00",
+    "ownerActionRequired": false
+  },
+  "previousCurrentWorkBeforeE41720261023": {
+    "id": "E4.15",
+    "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
+    "status": "in_progress",
+    "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
+    "nextAction": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
     "ownerActionRequired": false
   }
 }

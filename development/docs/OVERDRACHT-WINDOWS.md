@@ -39,8 +39,9 @@ dit vervangt geen acceptatie van een gewone nieuwe Telegram-opdracht. Het volled
 gesprek duurde 40,137 seconden. De centrale chat 01a16a55-7f38-76c2-9691-31421caafbe7 heeft na veilige overdracht de enige projectcoördinatie; alle opdrachten komen daarvandaan. Onafhankelijke controle uitsluitend via 01a16a55-1607-7171-820e-a3918acaea3f. De onnodige werkmodel-/geheugenovergang na contactontdekking is hersteld en in kern en worker geïnstalleerd; onafhankelijk beoordeelde proeven via de echte handler en kern tonen contactenlijst en gewone vervolgsemantiek zonder nieuwe verzending. De antwoorden zijn lokaal afgevangen. De opvolgende queryverbetering is eveneens onafhankelijk beoordeeld en geïnstalleerd (64 PostgreSQL-controles groen). Dezelfde lokale liveproeven daalden van 13,890/10,913 naar 9,153/6,839 seconden; het 1–2 s doel blijft open. Huidige images en meetgrenzen staan in telegram-family-contact-20261023.json. De eerdere reviewerchat 01a169f2-6ff6-7961-b16f-9fd0b836d3e3 heeft die workerbeoordeling afgerond en haar claims veilig overgedragen. Nieuwe opdrachten en de ene gebundelde onafhankelijke controle lopen uitsluitend via de centrale coördinator en nieuwe controlechat. De oude worker-kandidaat is NO_GO (SyntaxError en deliveryguard na effect), blijft behouden en mag niet geïnstalleerd worden. De reeds beoordeelde E2.9-projectenweergave is mee geïnstalleerd en live alleen-lezen gecontroleerd. Stuur de reeds verstuurde vraag niet opnieuw. Een verzendbewijs betekent
 Telegram-acceptatie, niet dat iemand las of antwoordde.
 
-Daarna blijft E4.15 de hoofdtaak: een werkelijk door Eva gemaakte uitbreiding
-bruikbaar aansluiten. E4.17 heeft echte bronbytes en drie gelijke offline uitkomsten
+E4.15 blijft open voor gewone positieve werking, horen en later gebruik. Op verzoek
+van de eigenaar gaat de uitvoering door met E4.17 voor dezelfde uitbreiding terwijl
+de fysieke proef later volgt; uitvoerbaar werk wacht daar niet op. E4.17 heeft echte bronbytes en drie gelijke offline uitkomsten
 na geïsoleerd herstel bewezen; volledige aangesloten herstelbaarheid is nog geen
 bewezen uitkomst. E4.18 heeft afgebakende onderhoudsstappen opgeleverd. Niet opnieuw
 uitvoeren of deze hele kaarten ten onrechte sluiten.

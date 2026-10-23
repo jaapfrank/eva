@@ -12,10 +12,11 @@ De [samengevoegde scope](../design/product/living-housemate-task-scope-20261022.
 behoudt Household Artifacts, tijdige hulp, ondersteuningskansen, Personality Deltas en
 Inner Life. De leidende richting is nu gerichte continuïteit: Eva onderhoudt echte
 verantwoordelijkheden en eigen projecten tussen gesprekken en gebruikt denkvermogen
-wanneer dat iets toevoegt. De actuele uitvoering blijft E4.15 volgens currentWork:
-dezelfde door Eva gemaakte voorziening functioneel afmaken, daarna herstel van dezelfde
-uitbreiding onder E4.17. De tabel bewaart de overige kaartvolgorde en afhankelijkheden;
-zij start geen parallelle E1.6-bouw. Spraak blijft bij de bestaande uitvoerder.
+wanneer dat iets toevoegt. De actuele uitvoering is E4.17 volgens currentWork:
+dezelfde uitbreiding herstelbaar en testklaar maken terwijl de fysieke E4.15-proef
+is uitgesteld. De eigenaar vroeg op 23 oktober uitvoerbaar werk door te zetten zonder
+op zijn tests te wachten. Dit sluit E4.15 of haar overige criteria niet af.
+De tabel bewaart de overige kaartvolgorde; spraak blijft bij de bestaande uitvoerder.
 
 | Volgorde | Taken | Concrete uitkomst |
 | --- | --- | --- |
@@ -98,10 +99,10 @@ meerdere echte dagen bewijzen continuïteit. Begin dat gebruik zodra de route kl
 zodat observatiedagen niet pas na alle overige bouw beginnen. F2 blijft de gezamenlijke
 eindacceptatie. Herhaal een proef alleen bij gewijzigde oorzaak of ontbrekend bewijs.
 
-De actuele uitvoeractie is E4.15: volg herkenning, voorstel, afweging en aflevering
-met geldig bestaand bewijs en sluit uitsluitend een bewezen ontbrekende overdracht.
-Begroeting, horen en later hergebruik blijven open; de fysieke proef is uitgesteld.
-Geen nieuwe CPU-/importproef of algemene architectuurronde.
+De actuele uitvoeractie is E4.17: integreer dezelfde bewaarde uitbreiding in de
+bestaande herstelroute en maak het herstel zover mogelijk zonder eigenaar testklaar.
+E4.15-begroeting, horen en later hergebruik blijven open; haar fysieke proef is
+uitgesteld. Geen nieuwe CPU-/importserie of algemene architectuurronde.
 
 ### Hergebruik en wat vervalt als bouwvoorstel
 
