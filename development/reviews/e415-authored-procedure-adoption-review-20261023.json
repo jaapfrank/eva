@@ -1,0 +1,145 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.15",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T18:15:27.319285+00:00",
+  "verdict": "GO",
+  "scope": "Exact Eva-authored pure source and exact corrected binding proposal with the narrowly specified final enabled/review-hash transformation. No standalone deployment approval or full E4.15 completion.",
+  "source": {
+    "filename": "camera_greeting_adapter_v2.py",
+    "sha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+    "bytes": 4686,
+    "signature": "propose(event, binding, *, now)",
+    "outsideCore": true,
+    "byteEquality": [
+      "Original workspace-volume source",
+      "Retained eva-authored-adapter.py",
+      "Original verified-source readback sourceContent"
+    ],
+    "authorshipEvidence": "Retained verified-source evidence and development/evidence/product/e415-installed-route-20261023.json document Eva saved and designated the exact artifact through the existing worker; owner-relayed assignment, not spontaneous invention.",
+    "standardLibraryImports": [
+      "hashlib",
+      "json",
+      "re",
+      "datetime"
+    ],
+    "mutableState": null,
+    "effectCapabilitiesInSource": null
+  },
+  "binding": {
+    "proposalSha256": "614b52611d6226bc49ddd7e3633e7b577f2feb0cd8df986a73030841cf97546f",
+    "proposalManifestSha256": "c2d3e7c60fe745f144270d2e2af5811678e84087fd42e61dcacb3bb821d2fe29",
+    "currentProposalEnabled": false,
+    "currentProposalReviewDigest": null,
+    "correctedCanonicalOwnerPrincipal": true,
+    "referenceReused": true,
+    "newReferenceCreated": false,
+    "referenceProjectIsNone": true,
+    "referenceRetentionUntil": "2027-01-23T00:00:00Z",
+    "exactHouseholdAndOutputScope": "Private hash-bound proposal, one retained current household/output only; no broader two-speaker claim.",
+    "originalDraftRetained": "Original incorrect principal and ffff review placeholder remain historical draft only; neither is admission.",
+    "currentPolicyCanonicalHashMatchesProposal": true,
+    "coreWorkerSnapshotPolicyHashesEqual": true
+  },
+  "currentSourceAdmission": {
+    "privateArtifact": "read-only-host-resolution.json",
+    "artifactSha256": "847f8bf85a1149c06679e489022ce25915d830f4a813f0033740463f7ec3a525",
+    "checkedAt": "2026-10-23T18:14:23.703246+00:00",
+    "state": "resolved_current_authorized_artifact",
+    "phasesCompleted": [
+      "resolve_existing_memory_document",
+      "load_current_provider_settings",
+      "build_existing_provider",
+      "load_exact_stored_source_turn",
+      "authorize_current_existing_host",
+      "resolve_current_candidates_and_artifact_read",
+      "verify_exact_bytes"
+    ],
+    "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+    "sourceBytes": 4686,
+    "exactStoredScopeMatchesProposal": true,
+    "evidenceLimit": "Reviewed retained builder report from actual core: current source_loader, route._host and ProcedureReferences.resolve_candidates returned exact existing source. Reviewer did not repeat live host read. PostgreSQL reference alone was not accepted.",
+    "noNewRightsOrReference": true
+  },
+  "reviewedGlue": {
+    "src/eva/providers/home_assistant_procedure.py": "8cd3c01e95e2916aa82b4eb636f23f0b1cb07605c781b93d20a75018a973412e",
+    "src/eva/application/household_procedure.py": "7ae69ecc75a66260fe69cc120f2fbd4bcd49396d34f8e62d757dee8e086d0ccc",
+    "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
+    "workerBootstrapReviewSha256": "fd52584a239c193cef3633efbaa6bbcbe154a76f64b055855528085de8bd26f6",
+    "companionRequirement": "Integrate existing reviewed application/provider, FreeWillDecision expiry/guard, sensory store persist/claim/authorize and ONLY bounded model proposal-context hunk with correct per-service bootstraps. Preserve all unrelated model work."
+  },
+  "verification": {
+    "compile": "Exact source compiles in memory.",
+    "newPureChecksPassed": 13,
+    "cases": [
+      "Expired trigger",
+      "Future trigger",
+      "Future analysis",
+      "Capture before trigger",
+      "Changed profile revision",
+      "Changed backend revision",
+      "Changed discovery revision",
+      "Mismatched image hash",
+      "Authentication evidence-kind refusal",
+      "Invalid face region",
+      "Too many faces",
+      "Absent capture timestamp remains unverified; no candidate-label output",
+      "Present ordered capture timestamp flag; no candidate-label output"
+    ],
+    "method": "Single pure in-memory execution of exact source with explicitly synthetic dictionaries and clock; no filesystem outputs, model, camera, network or sandbox invocation. Not a new independent end-criteria suite.",
+    "reusedIndependentEvidence": {
+      "path": "development/reviews/e417-extension-restore-20261023.json",
+      "sourcePreservationReviewSha256": "4a36bae34067feb92a49a7ef06ffbfd19cc1fe2f619ee45904597cc55cb98934",
+      "sameOfflineBehaviorReviewSha256": "46135d05f5bec48c9df9bc29d01e411075a5ff2041ff08e77dea42db9b88066c",
+      "limits": "Exact source preservation and three prior synthetic offline results only; those cases not rerun or upgraded to live acceptance."
+    },
+    "existingProviderTests": "Inspected test_home_assistant_procedure.py: credential exclusion, guarded source/config/revocation and invalid executor output. No previously passed broad suite repeated."
+  },
+  "contractReview": {
+    "proposalNotAuthority": "Pure source emits generic greeting data only; model wrapper passes bounded untrusted proposal to existing household assessment. No names or identity privileges; no direct audio/transport/state. STOP, quiet window and durable delivery remain host responsibilities.",
+    "freshnessAndRevisions": "Exact source/device/camera/event/time binding, discovery/backend/profile revision and image hash checked. Trigger age <=30 seconds; retrieved/analysis ordered and not future; provided capture time bounded to trigger/retrieval. Missing capture timestamp stays unverified. Provider requires unexpired integral deadline no later than original observation+30s; exact deadline at delivery rejected by durable store.",
+    "sandboxInputs": "Existing isolated executor receives exact source, normalized observation metadata, live trusted registry/profile binding and explicit time. Provider does not include pixels, private conversations/memory or HA/face/executor credential bytes. No extra dependency, daemon, planner or transport.",
+    "currentRights": "Provider resolves exact current authorized artifact and scope, checks retention and hash; guard includes source config, transport/executor identity and wrapper. Recheck after model and immediately before effect; STOP/revocation/source/config changes must fail closed.",
+    "dedupAndReceipt": "delivery_key alone grants neither dedup nor delivery. Existing durable claims, ambiguous no-replay handling and post-effect receipt remain required. Offered is not heard."
+  },
+  "finalConfigurationTransformation": {
+    "input": "Exact binding.proposal.json SHA256 614b52611d6226bc49ddd7e3633e7b577f2feb0cd8df986a73030841cf97546f",
+    "permittedFieldChanges": {
+      "enabled": true,
+      "review_sha256": "SHA256 of the completed bytes of THIS review file, calculated after it is written; never a placeholder."
+    },
+    "allOtherFields": "Byte-value-equivalent JSON fields to exact reviewed proposal: source filename/hash, canonical source principal, existing reference and exact current household binding. Preserve project None in reference resolution.",
+    "nonCircularHashing": "This review binds source and disabled/null-review proposal plus precise transformation rule. Final runtime config references this completed review hash. This review does not contain its own hash or demand a hash of the final self-referencing config.",
+    "materialization": "Root-controlled sibling source/current.json under existing reviewed readonly mount; exact source bytes unchanged. Verify runtime UID65532 can read source/config; keep original source permissions unchanged. Source remains outside src/eva.",
+    "activationPreconditions": [
+      "Immediately recheck current authority/reference retention/source bytes and exact selected household policy/output applicability. Expired policy or reference blocks use.",
+      "Integrate required companion hunks and corrected per-service candidates; verify actual shared/digital runtime profiles and active claims before shared replacement. Preserve unrelated work.",
+      "Final config must contain actual completed independent review hash and source hash, no ffff placeholder, and be mounted readonly with required runtime readability.",
+      "Keep exact source/config/review/dependency references and independent last-working status together on existing restore route; revalidate rights after restore."
+    ]
+  },
+  "findings": [],
+  "acceptanceLimits": [
+    "GO is bounded to exact source/config proposal and named transformation, not arbitrary edited source, principal, output, reference or provider revision.",
+    "Current proposal is deliberately not a valid runtime enabled config. No installation or activation performed by reviewer.",
+    "Coordinator-reported newly built overlay imports/profiles not independently examined in this source/config review; no blanket image approval inferred.",
+    "No real person recognition, greeting delivery/hearing, later ordinary use, improvement or family acceptance proved. Full E4.15 and E4.17 stay open.",
+    "Policy/reference expiry, stop, source deletion/revocation and quiet attention must remain effective on installed route."
+  ],
+  "usage": {
+    "developmentElapsedSeconds": 186.883,
+    "developmentModelTokens": null,
+    "developmentCreditCost": null,
+    "evaRuntimeModelCalls": 0,
+    "evaRuntimeCreditCost": null,
+    "newPureCases": 13,
+    "reviewerHostProviderReads": 0,
+    "cameraCaptures": 0,
+    "messages": 0,
+    "sandboxRuns": 0,
+    "databaseMutations": 0,
+    "gitMutations": 0,
+    "sharedRestarts": 0
+  }
+}

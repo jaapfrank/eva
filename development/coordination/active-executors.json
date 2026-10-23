@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T18:10:00.634017+00:00",
+  "updatedAt": "2026-10-23T18:23:36.623909+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Active WSL executor /root, E1.8; owner requested this confirmation",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -157,7 +157,7 @@
       }
     },
     "codex-e418": {
-      "task": "E4.15 private exact source/configuration binding proposal",
+      "task": "E4.15 one read-only stored camera observation baseline",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "development/design/architecture/e418-*.json",
@@ -388,10 +388,10 @@
         "allNamedInstalledMethodsValidated": true
       },
       "nextTaskRequest": {
-        "requestedAt": "2026-10-23T18:07:04.166345+00:00",
+        "requestedAt": "2026-10-23T18:20:19.810263+00:00",
         "to": "windows-root",
         "coordinatorThreadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
-        "status": "candidate_handed_to_coordinator_request_next_or_review_feedback",
+        "status": "staging_proposal_delivered_next_assignment_requested",
         "standingOwnerInstruction": "Na afronding rechtstreeks bij de coördinator om volgende taak blijven vragen; Jaap niet als tussenpersoon gebruiken.",
         "completedOutcome": "E2.9 current-project view installed and read-only live verified; canonical dashboard and GitHub commit06195e62 confirmed.",
         "request": "Next independent task with exact paths, existing route, end condition and shared-installation boundaries. Preserve coordinator-owned integration/Git/installation, voice and other reserved work.",
@@ -622,7 +622,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "Read-only actual source/config/dependency/rights investigation; only private proposal outputs",
+      "status": "One readonly stored-observation baseline complete; no replay/poll/capture/effect",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -924,29 +924,98 @@
         "outputRoot": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023",
         "noSourceSharedConfigInstallGitModelCameraOrMessages": true,
         "reviewAdmissionMustBeReal": true
+      },
+      "privateBindingProposalResult": {
+        "manifest": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/manifest.json",
+        "sha256": "c2d3e7c60fe745f144270d2e2af5811678e84087fd42e61dcacb3bb821d2fe29",
+        "proposal": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/binding.proposal.json",
+        "newReferenceCreated": false,
+        "sharedChanges": false,
+        "missingAdoptionGo": true
+      },
+      "authorizedHostResolutionAssignment": {
+        "writePaths": [
+          "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/read-only-host-resolution.json",
+          "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/failure.private.json"
+        ],
+        "preserveExistingManifestBytes": true,
+        "noSourceOrCriteriaSharedConfigGitWrites": true
+      },
+      "authorizedHostResolutionResult": {
+        "path": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/read-only-host-resolution.json",
+        "sha256": "847f8bf85a1149c06679e489022ce25915d830f4a813f0033740463f7ec3a525",
+        "phase": null,
+        "status": "resolved_current_authorized_artifact",
+        "proposalManifestUnchanged": true
+      },
+      "restoreBindingAssignment": {
+        "output": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/restore-binding-readonly.json",
+        "preservePriorBytes": true,
+        "noCodeSchemaFrameworkInstallGitModelOrExternalEffects": true
+      },
+      "restoreBindingResult": {
+        "path": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/restore-binding-readonly.json",
+        "sha256": "f74e6bad721aec0b109168be6a11adfd35e78b4368f32a5f1cf311bf6c66812a",
+        "proposedHostDirectory": "/var/lib/eva2/managed-b-slot3/household-voice/procedure",
+        "usesExistingReadOnlyMount": true,
+        "activeRestoreProven": false,
+        "priorProposalPreserved": true
+      },
+      "recoveryStagingAssignment": {
+        "output": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/recovery-staging-proposal.json",
+        "noBackupRestoreInstallGitModelOrProductCodeChanges": true
+      },
+      "recoveryStagingResult": {
+        "path": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/recovery-staging-proposal.json",
+        "sha256": "5ad283caf3bfe583ad6a59d2757fb1450defcd2f735eb901c93505fbe392aac6",
+        "stagedExtensionFiles": 3,
+        "existingExecutorConfigurationReferences": 1,
+        "runtimeOptInObservedPresent": false,
+        "lastWorking": false,
+        "oldOutputsPreserved": true
+      },
+      "cameraBaselineAssignment": {
+        "output": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/e415-observation-readonly-baseline.private.json",
+        "onceOnly": true,
+        "noPollingOrNewProcessesSchedulers": true,
+        "scope": "Existing runtime/household normalized observations, deadlines and stop metadata only"
+      },
+      "cameraBaselineResult": {
+        "path": "/home/administrator/project/.eva2-artifacts/e415-procedure-binding-proposal-20261023/e415-observation-readonly-baseline.private.json",
+        "sha256": "203d7d2384d23db99a71579522848ae3430b561b199b07817457a955da53df00",
+        "checkedAt": "2026-10-23T18:22:14+00:00",
+        "freshPositiveSourceAvailable": false,
+        "optInPresentAtSnapshot": false,
+        "noFollowupUntilRootInstallMoment": true
       }
     },
     "e415-independent-review-newchat": {
-      "task": "E4.15",
+      "task": "E4.15 source/config adoption",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "in_progress_exact_worker_review",
+      "status": "completed_coordinated_installation_GO",
       "coordinator": "windows-root",
       "allowedWritePaths": [
-        "development/reviews/e415-worker-rematerialization-review-20261023.json",
+        "development/reviews/e415-coordinated-installation-review-20261023.json",
         "development/coordination/active-executors.json:own section only"
       ],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
-      "endCondition": "Independent exact baseline/candidate hashes and GO/NO_GO; guards before effect and receipt intact; no full E4.15 completion",
+      "endCondition": "Exact candidate/install guards GO/NO_GO; read only, no tests/install/model/effects",
       "noGitInstallationModelOrExternalEffects": true,
       "assignedAt": "2026-10-23T18:07:51.748863+00:00",
-      "startedAt": "2026-10-23T18:08:28.582875+00:00",
+      "startedAt": "2026-10-23T18:20:48.858474+00:00",
       "boundedOutcome": {
         "existing": "Retained two worker candidates and original NO_GO.",
         "gap": "Independent proof corrected exact worker bytes compile and validate before effect against current installation.",
         "route": "Existing household initiative composition and durable HA delivery.",
         "doneWhen": "Exact hashes and bounded GO/NO_GO with necessary companion hunks; no installation.",
         "userUse": "Coordinator may integrate reviewed candidate after baseline recheck."
-      }
+      },
+      "completedAt": "2026-10-23T18:22:32.868270+00:00",
+      "review": "development/reviews/e415-coordinated-installation-review-20261023.json",
+      "verdict": "GO",
+      "nextAction": "Root owns exact guarded installation. Await next concrete assignment.",
+      "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
+      "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json"
     }
   },
   "protectedExistingWork": {
@@ -1125,7 +1194,7 @@
     "authority": "Direct owner instruction 2026-10-23: sole main coordinator; integration, GitHub and shared installation exclusively here.",
     "previousCoordinator": "wsl-e18",
     "preserveExistingReservations": true,
-    "activeOutcome": "Retained E4.15 corrected candidate review and real procedure binding; Telegram speed limits retained",
+    "activeOutcome": "E4.15 exact reviewed household-procedure activation and live verification",
     "doNotRepeatSentLolaQuestion": true,
     "agents": {
       "telegram_diagnosis": {
@@ -1169,6 +1238,14 @@
       "latestQueryOverlay": "/var/lib/eva2/contact-preparation-20261023",
       "latestQueryStatus": "installed_targeted_live_improvement_speed_target_open"
     },
-    "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+    "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+    "e415Candidate": {
+      "path": "/var/lib/eva2/e415-reviewed-binding-20261023",
+      "status": "built_reviewed_preinstall",
+      "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+      "sourceOutsideCore": true,
+      "ordinaryLolaQuestionMustNotBeRepeated": true,
+      "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+    }
   }
 }

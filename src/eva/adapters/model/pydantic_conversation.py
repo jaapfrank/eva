@@ -3248,6 +3248,7 @@ class PydanticConversationModel:
         private_contact_allowed: bool = False,
         private_context_search: Callable[[str], dict] | None = None,
         private_day_context: dict | None = None,
+        household_proposal_context: dict | None = None,
     ) -> FreeWillDecision:
         """Evaluate a household event or plan useful private work through one protocol."""
 
@@ -3268,6 +3269,13 @@ class PydanticConversationModel:
                     or private_day_context.get("is_execution_permission") is not False
                     or len(canonical_json_bytes(private_day_context)) > 4096):
                 raise ValueError("private day context requires its bounded private review")
+
+        if household_proposal_context is not None:
+            from eva.contracts.canonical_json import canonical_json_bytes
+            if (event.source != "household-initiative" or event.event_type != "household_observation_review"
+                    or household_proposal_context.get("is_execution_permission") is not False
+                    or len(canonical_json_bytes(household_proposal_context)) > 4096):
+                raise ValueError("extension proposal requires bounded household observation context")
 
         # Keep the existing recall selection and its provenance. A past test
         # statement must not look like a current, unqualified owner preference.
@@ -3312,6 +3320,8 @@ class PydanticConversationModel:
                                if orientation_context is not None else {}),
                             "available_native_actions": initiative_capabilities,
                             "native_source_outcomes": initiative_source_outcomes,
+                            **({"untrusted_household_proposal": household_proposal_context}
+                               if household_proposal_context is not None else {}),
                             "resident_attention": (
                                 None
                                 if attention is None

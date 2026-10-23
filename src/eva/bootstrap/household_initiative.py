@@ -86,7 +86,21 @@ class HouseholdInitiativeLoop:
                     and canonical_sha256(self.voice.policy.model_dump(mode="json")) == policy_sha
                     and self.can_decide())
 
-        worker = SensoryDecisionWorker(store, self.model, self.memory, self.identity,
+        model, validate_expression = self.model, None
+        import os
+        procedure_path = os.environ.get("EVA_HOUSEHOLD_PROCEDURE_FILE")
+        if procedure_path:
+            from eva.providers.home_assistant_procedure import HomeAssistantProcedure
+            from eva.application.household_procedure import HouseholdProcedureModel
+            proposal = HomeAssistantProcedure(procedure_path, settings=self.provider,
+                engine=self.engine, household=binding, authorize=self._authorize)
+            model = HouseholdProcedureModel(self.model, proposal, authorize=self._authorize)
+            def validate_expression(claim):
+                prepared = store._prepared_expression(claim.thread_id)
+                proposal.validate_expression(store._event_from_thread(claim.thread_id),
+                                             prepared.get("expression_guard_sha256"))
+
+        worker = SensoryDecisionWorker(store, model, self.memory, self.identity,
             tenant_id=policy.tenant_id, installation_id=policy.installation_id,
             principal_id=self.principal_id, admission_blocker=self.model.autonomous_admission_blocker,
             context_review_budget=self.budget, context_review_authorizer=self._authorize,
@@ -95,7 +109,8 @@ class HouseholdInitiativeLoop:
             dispatch_ready=self.can_decide,
             clock=lambda: datetime.now(UTC).replace(microsecond=0))
         delivery = HouseholdInitiativeDelivery(store, binding, self._authorize, self.provider,
-            delivery_window=window)
+            delivery_window=window, **({"validate_expression": validate_expression}
+                                     if validate_expression is not None else {}))
         result = (store, worker, delivery, window)
         self._components[key] = result
         return result

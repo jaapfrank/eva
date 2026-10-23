@@ -1324,6 +1324,10 @@ class PostgresSensoryEventStore:
                    if decision.source_context_sha256 is not None else {}),
                 **({"memory_search_context": decision.memory_search_context}
                    if decision.memory_search_context is not None else {}),
+                **({"expression_guard_sha256": decision.expression_guard_sha256}
+                   if decision.expression_guard_sha256 is not None else {}),
+                **({"expression_expires_at_epoch": decision.expression_expires_at_epoch}
+                   if decision.expression_expires_at_epoch is not None else {}),
                 "source_event_id": claim.event.source_event_id,
                 "urgency": decision.urgency,
                 "usage": None if decision.usage is None else asdict(decision.usage),
@@ -1729,7 +1733,8 @@ class PostgresSensoryEventStore:
             if self._household_binding is not None:
                 self._validate_household_expression(state.thread_id, self._household_binding.to_payload())
                 event = self._event_from_thread(state.thread_id)
-                if now - event.occurred_at > timedelta(minutes=15):
+                if (now - event.occurred_at > timedelta(minutes=15)
+                        or now.timestamp() >= self._prepared_expression(state.thread_id).get("expression_expires_at_epoch", float("inf"))):
                     try:
                         self._timeline.transition(thread_id=state.thread_id,
                             expected_revision=state.revision,
@@ -1819,6 +1824,9 @@ class PostgresSensoryEventStore:
         self._initiative_authorizer()
         return self.claim_next_expression(now=now)
 
+    def household_expression_requires_guard(self, claim):
+        return self._prepared_expression(claim.thread_id).get("expression_guard_sha256") is not None
+
     def authorize_household_expression(self, claim, *, binding, now):
         self._validate_household_expression(claim.thread_id, binding)
         state = self._timeline.load(claim.thread_id)
@@ -1827,6 +1835,7 @@ class PostgresSensoryEventStore:
         if (state.phase != "expression_claimed" or state.status != "active"
                 or state.revision != claim.revision or state.deadline is None
                 or state.deadline <= now or now - event.occurred_at > timedelta(minutes=15)
+                or now.timestamp() >= prepared.get("expression_expires_at_epoch", float("inf"))
                 or prepared["source_event_id"] != claim.source_event_id
                 or prepared["expression"] != claim.text):
             raise CheckpointConflict("household expression claim is stale or differs")
@@ -2095,6 +2104,8 @@ class PostgresSensoryEventStore:
                     "expression": expression,
                     "source_event_id": source_event_id,
                     "urgency": urgency,
+                    **({key: data[key] for key in ("expression_expires_at_epoch", "expression_guard_sha256")
+                        if key in data}),
                     **({"private_contact": data["private_contact"]}
                        if "private_contact" in data else {}),
                 }

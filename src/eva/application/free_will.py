@@ -97,8 +97,17 @@ class FreeWillDecision:
     next_attention: NextAttention | None = None
     memory_search_context: dict | None = None
     feedback_application: dict | None = None
+    expression_expires_at_epoch: int | None = None
+    expression_guard_sha256: str | None = None
 
     def __post_init__(self) -> None:
+        if self.expression_guard_sha256 is not None:
+            import re
+            if not isinstance(self.expression_guard_sha256, str) or re.fullmatch("[0-9a-f]{64}", self.expression_guard_sha256) is None:
+                raise ValueError("expression guard must be a source/configuration digest")
+        if self.expression_expires_at_epoch is not None and (
+                type(self.expression_expires_at_epoch) is not int or self.expression_expires_at_epoch < 0):
+            raise ValueError("expression expiry must be whole Unix seconds")
         if self.feedback_application is not None:
             from eva.application.human_understanding import validate_feedback_application
             validate_feedback_application(self.feedback_application)

@@ -847,7 +847,7 @@
     "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
     "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "Telegram-contactvervolg en queryversnelling zijn geïnstalleerd en gericht live gecontroleerd zonder nieuwe verzending. Totale proeflatentie 9,153/6,839 s: snelheidsdoel blijft open. Rond nu de gecorrigeerde E4.15-worker-kandidaat en actuele provider-/bronbinding af met onafhankelijke nieuwe chatreview, veilige installatie en live gebruik. Oorspronkelijke foutkandidaat behouden; vraag aan Lola nooit herhalen.",
+    "nextAction": "E4.15: exacte zelfgemaakte bron en gecorrigeerde kern-/worker-kandidaat hebben onafhankelijke GO. Installeer nu de bestaande procedureverbinding via actuele claims, controleer echte bronverwerking/stop/stilte en daadwerkelijke aflevering afzonderlijk. Verse bron zonder gezichten is geen begroetingsbewijs. Telegramwinst blijft behouden; snelheidsdoel en volledige E4.15 blijven open.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2992,7 +2992,7 @@
         "now": {
           "taskId": "E4.15",
           "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-          "summary": "Telegram-contactvervolg en queryversnelling zijn geïnstalleerd en gericht live gecontroleerd zonder nieuwe verzending. Totale proeflatentie 9,153/6,839 s: snelheidsdoel blijft open. Rond nu de gecorrigeerde E4.15-worker-kandidaat en actuele provider-/bronbinding af met onafhankelijke nieuwe chatreview, veilige installatie en live gebruik. Oorspronkelijke foutkandidaat behouden; vraag aan Lola nooit herhalen.",
+          "summary": "E4.15: exacte zelfgemaakte bron en gecorrigeerde kern-/worker-kandidaat hebben onafhankelijke GO. Installeer nu de bestaande procedureverbinding via actuele claims, controleer echte bronverwerking/stop/stilte en daadwerkelijke aflevering afzonderlijk. Verse bron zonder gezichten is geen begroetingsbewijs. Telegramwinst blijft behouden; snelheidsdoel en volledige E4.15 blijven open.",
           "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform."
         },
         "next": {
@@ -8021,7 +8021,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Telegram-contactvervolg en queryversnelling zijn geïnstalleerd en gericht live gecontroleerd zonder nieuwe verzending. Totale proeflatentie 9,153/6,839 s: snelheidsdoel blijft open. Rond nu de gecorrigeerde E4.15-worker-kandidaat en actuele provider-/bronbinding af met onafhankelijke nieuwe chatreview, veilige installatie en live gebruik. Oorspronkelijke foutkandidaat behouden; vraag aan Lola nooit herhalen.",
+                "nextAction": "E4.15: exacte zelfgemaakte bron en gecorrigeerde kern-/worker-kandidaat hebben onafhankelijke GO. Installeer nu de bestaande procedureverbinding via actuele claims, controleer echte bronverwerking/stop/stilte en daadwerkelijke aflevering afzonderlijk. Verse bron zonder gezichten is geen begroetingsbewijs. Telegramwinst blijft behouden; snelheidsdoel en volledige E4.15 blijven open.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -8711,7 +8711,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Telegram-contactvervolg en queryversnelling zijn geïnstalleerd en gericht live gecontroleerd zonder nieuwe verzending. Totale proeflatentie 9,153/6,839 s: snelheidsdoel blijft open. Rond nu de gecorrigeerde E4.15-worker-kandidaat en actuele provider-/bronbinding af met onafhankelijke nieuwe chatreview, veilige installatie en live gebruik. Oorspronkelijke foutkandidaat behouden; vraag aan Lola nooit herhalen.",
+        "nextAction": "E4.15: exacte zelfgemaakte bron en gecorrigeerde kern-/worker-kandidaat hebben onafhankelijke GO. Installeer nu de bestaande procedureverbinding via actuele claims, controleer echte bronverwerking/stop/stilte en daadwerkelijke aflevering afzonderlijk. Verse bron zonder gezichten is geen begroetingsbewijs. Telegramwinst blijft behouden; snelheidsdoel en volledige E4.15 blijven open.",
         "finishOrder": [
           "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -13980,7 +13980,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Telegram-contactvervolg en queryversnelling zijn geïnstalleerd en gericht live gecontroleerd zonder nieuwe verzending. Totale proeflatentie 9,153/6,839 s: snelheidsdoel blijft open. Rond nu de gecorrigeerde E4.15-worker-kandidaat en actuele provider-/bronbinding af met onafhankelijke nieuwe chatreview, veilige installatie en live gebruik. Oorspronkelijke foutkandidaat behouden; vraag aan Lola nooit herhalen.",
+              "nextAction": "E4.15: exacte zelfgemaakte bron en gecorrigeerde kern-/worker-kandidaat hebben onafhankelijke GO. Installeer nu de bestaande procedureverbinding via actuele claims, controleer echte bronverwerking/stop/stilte en daadwerkelijke aflevering afzonderlijk. Verse bron zonder gezichten is geen begroetingsbewijs. Telegramwinst blijft behouden; snelheidsdoel en volledige E4.15 blijven open.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -14670,7 +14670,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Telegram-contactvervolg en queryversnelling zijn geïnstalleerd en gericht live gecontroleerd zonder nieuwe verzending. Totale proeflatentie 9,153/6,839 s: snelheidsdoel blijft open. Rond nu de gecorrigeerde E4.15-worker-kandidaat en actuele provider-/bronbinding af met onafhankelijke nieuwe chatreview, veilige installatie en live gebruik. Oorspronkelijke foutkandidaat behouden; vraag aan Lola nooit herhalen.",
+      "nextAction": "E4.15: exacte zelfgemaakte bron en gecorrigeerde kern-/worker-kandidaat hebben onafhankelijke GO. Installeer nu de bestaande procedureverbinding via actuele claims, controleer echte bronverwerking/stop/stilte en daadwerkelijke aflevering afzonderlijk. Verse bron zonder gezichten is geen begroetingsbewijs. Telegramwinst blijft behouden; snelheidsdoel en volledige E4.15 blijven open.",
       "finishOrder": [
         "E1.6 → E1.7 → E1.13 → E1.8: één werkelijke bron-/opvolgroute, routines en gerichte inzet van denkvermogen.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",

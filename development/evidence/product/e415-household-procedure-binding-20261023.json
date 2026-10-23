@@ -1,0 +1,55 @@
+{
+  "contract": "EvaHouseholdProcedureBindingOutcome/v1",
+  "task": "E4.15",
+  "checkedAt": "2026-10-23T18:23:36.623909+00:00",
+  "status": "built_reviewed_not_installed",
+  "existing": "Eva-authored independently preserved pure procedure plus ordinary household observation/assessment/STOP/durable delivery/executor",
+  "gap": "Exact authored source bound to current authorized source, opt-in and reviewed per-role composition",
+  "endCondition": "Installed exact bridge processes actual source, preserves negative/freshness/STOP boundaries and permits ordinary appropriate greeting; full E4.15 requires later reuse/feedback and remains open",
+  "source": {
+    "sha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+    "bytes": 4686,
+    "outsideCore": true,
+    "existingReferenceReused": true,
+    "wrongDraftPrincipalCorrectedToStoredCanonicalScope": true,
+    "referenceRetentionUntil": "2027-01-23T00:00:00Z"
+  },
+  "reviews": [
+    "development/reviews/e415-household-procedure-candidate-20261023.json",
+    "development/reviews/e415-worker-rematerialization-review-20261023.json",
+    "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
+    "development/reviews/e415-coordinated-installation-review-20261023.json"
+  ],
+  "originalWorkerFailurePreserved": true,
+  "correctedWorkerReviewed": true,
+  "installationCandidate": {
+    "core": "sha256:27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
+    "worker": "sha256:ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979",
+    "changedFilesPerRole": 7,
+    "configurationDelta": "Only images and opt-in environment; existing readonly source mount reused",
+    "originalVoiceFilesChanged": false
+  },
+  "checks": {
+    "allSevenImportsBothImages": true,
+    "currentActualProducerAndSelectedBinding": true,
+    "actualSourceAdmissionBothRoles": true,
+    "runtimeUidReadable": true,
+    "sharedDigitalAndPrivateResearchProfilesMatch": true,
+    "existingHouseholdResearchMismatchRetained": true,
+    "newReviewerPureCases": 13,
+    "correctedWorkerDeliveryCases": 9,
+    "correctedWorkerQuietPairs": 5,
+    "newModelCalls": 0,
+    "newMessages": 0,
+    "cameraCapturesByOperator": 0
+  },
+  "lastWorking": false,
+  "fullTaskCompleted": false,
+  "ownerAcceptance": false,
+  "limits": [
+    "Newest genuine camera observation had zero faces; this is not positive greeting proof.",
+    "One exact reviewed output binding, no general two-speaker or face-identity claim.",
+    "Full configured/active clean restore not yet proven; existing source preservation evidence remains bounded.",
+    "Development model tokens/credits unknown; actual runtime usage to be measured separately."
+  ]
+}

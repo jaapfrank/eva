@@ -38,12 +38,14 @@ class HouseholdInitiativeDelivery:
     def __init__(self, store: HouseholdExpressionStore, binding: HouseholdInitiativeBinding,
                  authorize: Callable[[], None], provider, *,
                  delivery_window: Callable[[datetime], bool] | None = None,
+                 validate_expression: Callable[[ProactiveExpressionClaim], None] | None = None,
                  clock: Callable[[], datetime] | None = None):
         if not isinstance(binding, HouseholdInitiativeBinding) or not callable(authorize):
             raise ValueError("household initiative delivery requires bound current authority")
         if delivery_window is not None and not callable(delivery_window):
             raise ValueError("household delivery window is invalid")
         self.store, self.binding, self.authorize, self.provider = store, binding, authorize, provider
+        self.validate_expression = validate_expression
         self.delivery_window = delivery_window
         self.clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
 
@@ -97,6 +99,14 @@ class HouseholdInitiativeDelivery:
                 # Durable provenance may block while a conversation starts or
                 # quiet hours begin. Recheck the current attention window after
                 # that read, immediately before offering an unsolicited message.
+                if not self._window_open(self._now()):
+                    return self._interrupted(claim, payload)
+                if self.validate_expression is not None:
+                    self.validate_expression(claim)
+                elif self.store.household_expression_requires_guard(claim):
+                    return self._interrupted(claim, payload)
+                self.authorize()
+                self.store.authorize_household_expression(claim, binding=payload, now=self._now())
                 if not self._window_open(self._now()):
                     return self._interrupted(claim, payload)
                 response = client.post("/api/services/assist_satellite/announce",

@@ -1,0 +1,187 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.15",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T18:22:32.868270+00:00",
+  "verdict": "GO",
+  "scope": "Exact coordinated two-role image plus procedure opt-in installation candidate and current guard script only. Root remains sole installer; no installation, tests or new effects executed by reviewer.",
+  "artifactBindings": {
+    "manifest.private.json": "ee8c2af8c84e3871aec31347eee10a30df30425a72a452d7ea85fc20baef32de",
+    "previous.private.json": "d2e35988a75ac4ab8958786d12ae8706fc5f1703696f96110103610179c40a88",
+    "candidate.private.json": "a22bf980ad343ceb61baa7ce419967ba659779f919bea68fe89479c70a50b46e",
+    "extension-manifest.private.json": "db65644b65e13cf024dbcba9254e4341c00033d36c4fb294a5cfbb7a1419bb39",
+    "install.py": "5538d24b106553c7cca948d0af50da63e61f630ef7c5432c07d0fd12a60bf473",
+    "preinstall-composition.py": "2a49faa85cd6fc441c78848407a01cd1f89c7af3284c2d3b08c7a1be747b24b4"
+  },
+  "imageBindings": {
+    "core": {
+      "base": "sha256:98e6dab1bb50d301164944a345034bd4ab0a2e62f0e4687c356fe2fb1919dd74",
+      "candidate": "sha256:27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213"
+    },
+    "delegated-work-worker": {
+      "base": "sha256:c851c7e03f6ab87e7d613993391b56a183a95ae81032163b68486e25b2258740",
+      "candidate": "sha256:ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979"
+    }
+  },
+  "sourceBindings": {
+    "core": {
+      "application/household_procedure.py": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "7ae69ecc75a66260fe69cc120f2fbd4bcd49396d34f8e62d757dee8e086d0ccc",
+        "correctedWorker": false
+      },
+      "providers/home_assistant_procedure.py": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "8cd3c01e95e2916aa82b4eb636f23f0b1cb07605c781b93d20a75018a973412e",
+        "correctedWorker": false
+      },
+      "application/free_will.py": {
+        "before": "5a24686147988ef07c65034bff07d4b49cd8e3dcf9ecbd176d0396fae0725309",
+        "after": "410d3f00f7a7f5a394d9169ec678cf2cb8ce8618ba497cf5854e5616bb1b2a10",
+        "correctedWorker": false
+      },
+      "adapters/postgres/sensory_events.py": {
+        "before": "5145a8cb88994ee38cc00150306e30499b3b041ca6ca5feb16fffe49d40bcf91",
+        "after": "e3ab40f597aca6127981416ff7e1bc95bc1463689ecbbf56d0574d01b1d5313c",
+        "correctedWorker": false
+      },
+      "bootstrap/household_initiative.py": {
+        "before": "283d54b46ee6aadd6cb9428912793e43f48c477cec7712866a36e4a9bbbb545a",
+        "after": "b7a17d6fd0a74cba581a7e146c6882bab73d718c0bae0ede095633a6c0e82fad",
+        "correctedWorker": false
+      },
+      "bootstrap/household_initiative_delivery.py": {
+        "before": "033b8495db400ec5bad68e8102f41428306aa8dbdebadabe3ce4d6d50d1c3ad4",
+        "after": "503efb65943893c58f1047fc93cacbdc4326565479476f696bc6865101dc0597",
+        "correctedWorker": false
+      },
+      "adapters/model/pydantic_conversation.py": {
+        "before": "fff3b962caf5a02bddfa2f272f05caa5143603c15b8b4628f117209a672eadfc",
+        "after": "d04d71a7360ab9097831bd837d8c96ee8c1f29d8c87dc4cb8c347fcd9decc884",
+        "correctedWorker": false
+      }
+    },
+    "delegated-work-worker": {
+      "application/household_procedure.py": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "7ae69ecc75a66260fe69cc120f2fbd4bcd49396d34f8e62d757dee8e086d0ccc",
+        "correctedWorker": false
+      },
+      "providers/home_assistant_procedure.py": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "8cd3c01e95e2916aa82b4eb636f23f0b1cb07605c781b93d20a75018a973412e",
+        "correctedWorker": false
+      },
+      "application/free_will.py": {
+        "before": "5a24686147988ef07c65034bff07d4b49cd8e3dcf9ecbd176d0396fae0725309",
+        "after": "410d3f00f7a7f5a394d9169ec678cf2cb8ce8618ba497cf5854e5616bb1b2a10",
+        "correctedWorker": false
+      },
+      "adapters/postgres/sensory_events.py": {
+        "before": "cd929213339d5478c0ffcde281ad661ec030de8dab06a1703a6fd4a87d9a8904",
+        "after": "eb988fa0537161dfa613a866a9f31f96d6959a7a63ad4b7ac5a2be06d7ba5064",
+        "correctedWorker": false
+      },
+      "bootstrap/household_initiative.py": {
+        "before": "f1adbe83be1533eccdd8a62496419a87616917eb7d10d76a853ade2375bfbb07",
+        "after": "e864e62dd86d3084a9eb1d644d5ad54526cc5253facf72de7e58bd1e56eec765",
+        "correctedWorker": true
+      },
+      "bootstrap/household_initiative_delivery.py": {
+        "before": "a19361a793457523ee5fddb2db204a5e1ee432be93593361a9aa1815d238c65a",
+        "after": "1d1033e36bcc0caa8506b587f9f98d339cbfff16fe8c965152ffa1b8d0cefc87",
+        "correctedWorker": true
+      },
+      "adapters/model/pydantic_conversation.py": {
+        "before": "fff3b962caf5a02bddfa2f272f05caa5143603c15b8b4628f117209a672eadfc",
+        "after": "d04d71a7360ab9097831bd837d8c96ee8c1f29d8c87dc4cb8c347fcd9decc884",
+        "correctedWorker": false
+      }
+    }
+  },
+  "configurationReview": {
+    "onlyDelta": [
+      "core.image",
+      "delegated-work-worker.image",
+      "core.environment.EVA_HOUSEHOLD_PROCEDURE_FILE",
+      "delegated-work-worker.environment.EVA_HOUSEHOLD_PROCEDURE_FILE"
+    ],
+    "environmentValue": "/run/eva/household-voice/procedure/current.json",
+    "allOtherConfigurationValuesEqual": true,
+    "existingReadonlyMountReused": true,
+    "actualBaselinesUnchangedAtReview": true,
+    "actualLiveOptInAbsentAtReview": true,
+    "baseCandidateImageRuntimeConfigEqual": true,
+    "mountsDataAndOtherVoiceFiles": "No configuration changes to retained mounts/data/voice route; sibling procedure payload only. No voice code replacement."
+  },
+  "extensionReview": {
+    "files": {
+      "current.json": "732ff63fa5918410d9ecb94d44cb7b4b245a3aa3014736873f61af78b4f72428",
+      "camera_greeting_adapter_v2.py": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+      "adoption-review.json": "7bedd1f16f92f1692d0cbd865f370146ba9eef99eab4d9520a473b830b86a369"
+    },
+    "finalConfigMatchesApprovedTransformation": true,
+    "sourceOutsideCore": true,
+    "permissionObservation": {
+      "directory": "root:65532 0750",
+      "allThreeFiles": "root:65532 0640, regular files, no symlinks"
+    },
+    "reviewReference": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
+    "workerCorrectionReference": "development/reviews/e415-worker-rematerialization-review-20261023.json",
+    "sevenFilesPerRoleMatchPriorReviewedSourceHashes": true,
+    "foreignModelWork": "Only retained proposal-context hunk from exact installed baseline; complete model file with arbitrary foreign modifications not adopted."
+  },
+  "retainedEvidence": {
+    "method": "Read saved logs and scripts, exact source/artifact hashes, actual installed Docker image/config metadata and staged file metadata. No reviewer rerun of imports, composition, profiles or behavior.",
+    "logs": {
+      "core-imports.private.log": "58519ba317a347144ec3c2d1e3a8799c3693cf3320dae38bb6a59735ae1f89a9",
+      "delegated-work-worker-imports.private.log": "58519ba317a347144ec3c2d1e3a8799c3693cf3320dae38bb6a59735ae1f89a9",
+      "core-profiles.private.log": "6b87f3f80e0d5929cc478869a94acd8e05a2f60f81a870515231fc891181ad72",
+      "delegated-work-worker-profiles.private.log": "e95640b671b6d9a6a5cd6410ccfc3de50b13374019be6143a8aaa770c3dde42d",
+      "core-admission.private.log": "ee6cc1126519636ea716150b542c1ffe71981a09d3f6c3d23a638aabdbcb7d3d",
+      "delegated-work-worker-admission.private.log": "ee6cc1126519636ea716150b542c1ffe71981a09d3f6c3d23a638aabdbcb7d3d",
+      "core-composition.private.log": "8f0236caa9fc0d908ba75b1e4f98533164e9db2e64c48483420dfb79716db6ba"
+    },
+    "imports": "Saved logs state all seven integrated modules import with expected interfaces for both roles.",
+    "profiles": "Parsed retained profile JSON: digital_work, shared_provider and public_research agree across candidates. Pre-existing household_research worker_program mismatch remains explicit, not repaired or silently accepted as matching.",
+    "composition": "Saved actual create_runtime_app composition without lifespan reports one real provider-service household loop, actual selected output equal reviewed config, HouseholdProcedureModel wrapper and validator, 4686 current source bytes, current voice/initiative/source authority, runtime readability, no service callback/model/effect.",
+    "limits": "Saved probe evidence consistency is reviewed; no new live household-use or independent repeated execution claim."
+  },
+  "installationGuardReview": {
+    "exactDiff": "Build expected config from before by changing precisely two image IDs and two exact opt-in env settings; abort unless equal to candidate.",
+    "baselineAndStorage": "Within receipt lock: verify exact current container images, actual persistent storage and Compose labels/config hash against previous config; verify all fourteen staged module hashes. Candidate Docker Config equals its baseline image Config as independently read.",
+    "sourceAdmission": "Verify staged source/config/review hash, no symlink and exact file uid/gid/mode; rerun exact preinstall composition before activation. Provider _current enforces config matches actual selected household binding, current voice/initiative authorization, reference retention and exact source through current authorized host.",
+    "activeClaims": "Immediately after necessary composition read: query current production namespace in READ ONLY transaction; require zero active nonexpired operational checkpoints except explicitly nonworking memory/scheduled phases, and zero admitted/call_started delegated runs. Then require no component-evaluation child or active component-evaluation container. Any failure aborts before replacement.",
+    "dispatchAndReplay": "Receipt lock and absence of prior receipt required. Persist dispatch_pending then dispatch_result_unknown before the single Compose up. Use no-deps/no-build/pull never, wait for same process to return. Existing receipt prevents automatic repeat after uncertainty.",
+    "postDispatch": "Check exact candidate images, retained storage and exact Compose config binding, then persist running_exact_configuration. This is configuration installation, not demonstrated household behavior.",
+    "compositionObservation": "The selected-output equality is logged; fail-closed _current config-versus-household binding check also enforces the match before dispatch.",
+    "reviewGate": "Coordinator must obtain this exact GO and keep reviewed artifact hashes unchanged before invoking install.py; this report itself performs no deployment."
+  },
+  "findings": [],
+  "conditions": [
+    "Install only the exact candidate images/config/scripts and payload hashes bound here; any changed cause or input requires targeted re-review.",
+    "Allow all current source/authority/expiry/claims/component checks to run immediately before replacement; abort rather than interrupt ongoing work or evaluation.",
+    "Preserve original NO_GO/error bytes and all unrelated WIP; no broad cleanup or restore/reinstall cycle.",
+    "Retain and inspect durable receipt on uncertain dispatch; no automatic retry or action replay.",
+    "After root installation distinguish configuration running from actual household use and owner acceptance."
+  ],
+  "acceptanceLimits": [
+    "No full E4.15 completion, spontaneous invention, live recognition/greeting/hearing, later use or family acceptance inferred.",
+    "No claim that existing household_research mismatch is fixed or able to accept mismatched work.",
+    "No new camera/model/household message, test rerun or installation by reviewer."
+  ],
+  "usage": {
+    "developmentElapsedSeconds": 104.01,
+    "developmentModelTokens": null,
+    "developmentCreditCost": null,
+    "evaRuntimeModelCalls": 0,
+    "evaRuntimeCreditCost": null,
+    "reviewerTestRuns": 0,
+    "reviewerCompositionRuns": 0,
+    "cameraCaptures": 0,
+    "messages": 0,
+    "sharedRestarts": 0,
+    "gitMutations": 0
+  }
+}

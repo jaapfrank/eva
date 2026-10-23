@@ -1,0 +1,106 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.15",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T18:11:43.078079+00:00",
+  "verdict": "GO",
+  "scope": "Exact corrected two worker bootstrap files as coordinated companion integration, not standalone deployment or full E4.15 acceptance.",
+  "manifestSha256": "6ee30fa271a20c3835e24dd059e066acf9c4097eb908d066a6746f1b0e206d1e",
+  "sourceBindings": [
+    {
+      "source": "src/eva/bootstrap/household_initiative.py",
+      "baseSha256": "f1adbe83be1533eccdd8a62496419a87616917eb7d10d76a853ade2375bfbb07",
+      "candidateSha256": "e864e62dd86d3084a9eb1d644d5ad54526cc5253facf72de7e58bd1e56eec765",
+      "patchSha256": "7e8da06ed9020ff1479bcda23271103311c5a25224aee53225799ac22bfc24e3",
+      "compile": "passed_in_memory_no_import_or_effect",
+      "reason": "Preserve worker-specific base. Hook existing model and delivery validator."
+    },
+    {
+      "source": "src/eva/bootstrap/household_initiative_delivery.py",
+      "baseSha256": "a19361a793457523ee5fddb2db204a5e1ee432be93593361a9aa1815d238c65a",
+      "candidateSha256": "1d1033e36bcc0caa8506b587f9f98d339cbfff16fe8c965152ffa1b8d0cefc87",
+      "patchSha256": "aed55ab708700065f33326e427d8fafe25eb27538b7902c579d5c6adb49566e4",
+      "compile": "passed_in_memory_no_import_or_effect",
+      "reason": "Place retained guard, current authority/provenance and attention recheck before external POST; preserve original receipt after effect. No unrelated core quiet-window hunk copied."
+    }
+  ],
+  "installedBaseline": {
+    "service": "delegated-work-worker",
+    "containerId": "35b610cd80d9",
+    "imageId": "sha256:c851c7e03f6ab87e7d613993391b56a183a95ae81032163b68486e25b2258740",
+    "bothCurrentBootstrapHashesMatch": true,
+    "bothPatchesReproduceExactCandidateFromInstalledBytes": true,
+    "note": "Coordinator query-only overlay changed image from manifest 35ab213c...; actual bootstrap bytes stayed identical. Recheck before install."
+  },
+  "findings": [],
+  "checks": {
+    "inMemoryCompilePassed": 2,
+    "existingDeliveryCasesPassed": 9,
+    "existingQuietHourPairsPassed": 5,
+    "deliveryMethod": "Unchanged test_pending_message_respects_late_attention_changes executed directly on exact candidate delivery in worker Python; minimal pytest mark/monkeypatch harness, worker-independent composition fixture adapter. Not a pytest suite run. All nine existing transition inputs passed, including guard missing, validator-induced busy/quiet and success.",
+    "compositionMethod": "Exact worker composition with worker-compatible synthetic Policy/Store/model; same five existing UTC quiet-hour input/expected pairs, and delivery window callback identity passed.",
+    "harnessFailures": [
+      "Direct current core fixture failed because worker constructor lacks source_store/can_decide. Worker baseline intentionally differs; no product change.",
+      "Initial worker-compatible synthetic fixture used invalid consent reference; corrected to existing household-consent:fixture."
+    ],
+    "receipt": "Entire tail from client.post through HTTP success, canonical ha-offered receipt, acknowledgment and ambiguous no-replay handling byte-identical to installed baseline. Synthetic success case passed. Offered does not prove heard.",
+    "expiry": "Inspected existing application/provider and expiry cases; no broad suite or production DB trial repeated."
+  },
+  "contractReview": {
+    "beforeEffect": "Custom validate_expression (or interrupt when guarded without validator), then current authorize, durable authorize_household_expression and final window check all occur before POST. Existing satellite idle checks retained.",
+    "sourceBinding": "Composition passes stored guard and original thread event to provider validator. Provider checks household audience, exact current authorized source artifact, config/executor/transport and observed source binding. Model wrapper rechecks after model and retains original expiry.",
+    "stopQuietFreshness": "Worker-specific session/consent/authority and quiet window retained. Durable expiry checked at claim and final authorization; proposal bounded to observation plus 30 seconds. Unknown capture freshness remains unknown; identity is not authentication.",
+    "receiptAfterEffect": "raise_for_status before canonical receipt bound to household, operation/thread/revision/source/text hash/status. Durable uncertain-effect handling retained.",
+    "foreignModelHunks": "Only exact retained bounded household_proposal_context signature/validation/untrusted-data injection hunk reviewed; never copy complete model file."
+  },
+  "requiredCoordinatedCompanionHunks": [
+    {
+      "path": "src/eva/application/household_procedure.py",
+      "purpose": "Model wrapper: authorization, revocation, expiry and guard propagation."
+    },
+    {
+      "path": "src/eva/providers/home_assistant_procedure.py",
+      "purpose": "Isolated proposal and current artifact/config/source validation."
+    },
+    {
+      "path": "src/eva/application/free_will.py",
+      "purpose": "Validated expression deadline and guard fields."
+    },
+    {
+      "path": "src/eva/adapters/postgres/sensory_events.py",
+      "purpose": "Persist guard/deadline through prepared expression, expiry at claim/authorize, household_expression_requires_guard."
+    },
+    {
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "purpose": "Only retained household_proposal_context hunk, no foreign work.",
+      "patchSha256": "5d937754f297aa8ff82eccef84a95f2159fd9160131d7c1168766ed4465d8e32"
+    }
+  ],
+  "originalNoGo": {
+    "path": "development/reviews/e415-household-procedure-candidate-20261023.json",
+    "preserved": true,
+    "originalErrorSha256": "84e97f9b25f8274f0be7479ea1e0c5d5e8948408aecaa34294385c560ad27b2a",
+    "errorBytesRehashedUnchanged": true
+  },
+  "acceptanceLimits": [
+    "GO covers these exact bootstrap hashes with required companion hunks integrated together.",
+    "Coordinator owns installation, actual claims/profile checks and immediate baseline recheck. No installation performed.",
+    "Draft ffff review hash is not admission. Bind real independent evidence and exact reviewed bytes; format-only review hash check does not prove review.",
+    "No live household message, model trial, real extension usage or family acceptance. Full E4.15 remains open.",
+    "Preserve speech route and all foreign WIP."
+  ],
+  "usage": {
+    "developmentElapsedSeconds": 194.495,
+    "developmentModelTokens": null,
+    "developmentCreditCost": null,
+    "evaRuntimeModelCalls": 0,
+    "evaRuntimeCreditCost": null,
+    "isolatedHarnessInvocations": 4,
+    "harnessFixtureFailures": 2,
+    "passingCases": 14,
+    "productionNetworkOrDatabaseCalls": 0,
+    "sharedRestarts": 0,
+    "gitMutations": 0
+  }
+}

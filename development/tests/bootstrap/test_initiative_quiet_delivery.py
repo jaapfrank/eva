@@ -24,7 +24,7 @@ def test_actual_composed_window_keeps_amsterdam_quiet_hours(monkeypatch, at, exp
     assert delivery.delivery_window is window
 
 
-@pytest.mark.parametrize("transition", ["already_busy", "first_state_read", "second_state_read", "final_provenance", "quiet_hours_begin", "none"])
+@pytest.mark.parametrize("transition", ["already_busy", "first_state_read", "second_state_read", "final_provenance", "quiet_hours_begin", "missing_extension_validator", "extension_busy", "extension_quiet", "none"])
 def test_pending_message_respects_late_attention_changes(monkeypatch, transition):
     available = [transition != "already_busy"]
     now = [datetime(2026, 10, 16, 12, tzinfo=UTC)]
@@ -39,6 +39,7 @@ def test_pending_message_respects_late_attention_changes(monkeypatch, transition
             if self.authorizations == 2:
                 if transition == "final_provenance": available[0] = False
                 if transition == "quiet_hours_begin": now[0] = now[0].replace(hour=20)
+        def household_expression_requires_guard(self, claim): return transition == "missing_extension_validator"
         def acknowledge_household_expression(self, *args, **kwargs): calls.append(kwargs["disposition"])
         def fail_expression(self, *args, **kwargs): raise AssertionError("No ambiguous failure expected")
     class Client:
@@ -60,6 +61,11 @@ def test_pending_message_respects_late_attention_changes(monkeypatch, transition
     loop.provider = SimpleNamespace(endpoint_url="http://isolated.invalid", credential="synthetic")
     _, _, delivery, _ = loop._components_for(loop._selected())
     delivery.clock = lambda: now[0]
+    if transition in {"extension_busy", "extension_quiet"}:
+        def validate(claim):
+            if transition == "extension_busy": available[0] = False
+            else: now[0] = now[0].replace(hour=20)
+        delivery.validate_expression = validate
     result = delivery.run_once()
     assert result == ("offered" if transition == "none" else "idle" if transition in {"already_busy", "first_state_read"} else "interrupted")
     assert ("post" in calls) == (transition == "none")
