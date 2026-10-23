@@ -1,0 +1,104 @@
+{
+  "contract": "EvaCurrentProjectsOutcome/v1",
+  "task": "E2.9",
+  "checkedAt": "2026-10-23T17:08:26.750497+00:00",
+  "status": "built_verified_not_installed",
+  "outcome": "Existing initiative screen starts with at most two source-bound open projects, next exploration, last modification and optional stored contribution; direct navigation to unchanged stop/feedback/history.",
+  "scope": "Only existing owner initiative projection; no curiosity, shared trace, household artifacts or personality-delta implementation claim.",
+  "verification": {
+    "recording": "Builder summary of successful tool outputs; tests not rerun solely to create this file.",
+    "unitTests": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "source": "node --test owner-current-projects.test.mjs"
+    },
+    "browser": {
+      "contract": "EvaCurrentProjectsBrowserProof/v1",
+      "status": "passed",
+      "mode": "isolated",
+      "maximumCurrentProjects": 2,
+      "existingHistoryNavigation": true,
+      "existingStopRoute": true,
+      "automaticArtifactReads": 0,
+      "syntheticWrites": 1,
+      "noProjectsAndFailureClear": true,
+      "mobileWidth": 390,
+      "javascriptErrors": 0,
+      "externalRequests": 0,
+      "modelCalls": 0
+    },
+    "visualInspection": "Desktop and mobile screenshot viewed. Initial inherited five-column board clipped cards on mobile; final local responsive grid stacks them and has a local overflow assertion. One rendering-only rebuild/recheck after that concrete fix.",
+    "readOnlyLiveApi": {
+      "contract": "EvaOwnerInitiativeHistory/v1",
+      "count": 24,
+      "statuses": {
+        "done": 15,
+        "attention": 6,
+        "stopped": 3
+      },
+      "allHaveUpdateDate": true,
+      "allHaveIntentId": true,
+      "checkedAt": "2026-10-23T17:03:25+00:00",
+      "truncated": false,
+      "contentPublished": false
+    },
+    "sharedInstallationChanged": false,
+    "creditCost": null
+  },
+  "candidate": "/home/administrator/project/.eva2-artifacts/e29-current-projects-20261023/candidate.private.json",
+  "independentReview": {
+    "decision": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
+    "privateReviewSha256": "f811942130facd4143ad36f5cb1d44d448a26934da13f5dc67fc61c5653ad7e5",
+    "reviewer": "/root/e47_mcp_catalog",
+    "scope": "Exact five source/test files and sealed staged assets; no shared install or full E2.9 acceptance."
+  },
+  "installation": "Coordinator owns shared static asset integration and exact current-image guarded deployment; no shared restart performed.",
+  "fullTaskCompleted": false,
+  "limits": [
+    "Private owner screen only; no family access expansion.",
+    "Open work is not proof of currently running execution, delivery, value or autonomous progress.",
+    "The whole E2.9 card still requires its other existing lifecycle/data routes.",
+    "Synthetic browser screenshots and mutations are isolated checks, not actual family use."
+  ],
+  "actualImageLoader": {
+    "status": "passed_actual_image_loader",
+    "imageId": "sha256:d141fca07e9c5442be3fc226dae83a12165e11536eaeea266730ce37752d65a8",
+    "seconds": 3.68041406897828,
+    "network": "none",
+    "sharedInstallationChanged": false,
+    "modelCalls": 0,
+    "initialProbeFailure": "Probe used Python -S, suppressing installed FastAPI dependency during package initialization; no product defect established. Corrected probe keeps normal installed site packages.",
+    "returnCode": 0,
+    "loaded": {
+      "entry": "index.html",
+      "assets": {
+        "assets/index-CcepJUrD.js": "391f2adf94ce6bc91a5c94cca716872f901545eb9239fc9e7391be697531752e",
+        "assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e",
+        "index.html": "4d77a6dc6ef5b33aa324e584e24ebc33dc975d04ae221b1eea9292eea4e1ae6b"
+      }
+    }
+  },
+  "candidateSha256": {
+    "sourceSha256": {
+      "development/tools/project-dashboard/src/owner-initiatives.jsx": "871af3a3079ea3391d519bbc959749a758cfcfcf02273cd7b50bb2645a50c0b4",
+      "development/tools/project-dashboard/src/owner-current-projects.jsx": "07e2339b9e79808467acd4b45eb8b5e16bb458bb7efa38ed07b5edb7bf2d0c80",
+      "development/tools/project-dashboard/src/owner-current-projects.mjs": "81ba5887ae1ea98e6f90f60e83abe27b926e8941c5535daaf60b7ff26d18007b",
+      "development/tools/project-dashboard/owner-current-projects.test.mjs": "5c27def31a38ca1276ca5986a8baf9787a59e5478f8d0141754a0a72f4dc0699",
+      "development/tools/project-dashboard/verify-owner-current-projects.cjs": "7d9ce01ccaac2bf5e23dd8fccd1ec8c84323a5ee13bfff66b336db13fa76a39b"
+    },
+    "stagedAssets": {
+      "assets/index-CcepJUrD.js": "391f2adf94ce6bc91a5c94cca716872f901545eb9239fc9e7391be697531752e",
+      "assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e",
+      "index.html": "4d77a6dc6ef5b33aa324e584e24ebc33dc975d04ae221b1eea9292eea4e1ae6b",
+      "eva-dashboard-assets.json": "668005b46975f440cb9ae7e0efc07b00e2122e92ebea2d1f2887a9837c8209bc"
+    },
+    "stagedRoot": "/home/administrator/project/.eva2-artifacts/e29-current-projects-20261023/staged/src/eva/adapters/api/dashboard_static",
+    "actualImagesAtPreparation": {
+      "eva2-managed-b-slot3-core": "sha256:d141fca07e9c5442be3fc226dae83a12165e11536eaeea266730ce37752d65a8",
+      "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:128e036d4106d25e480c6a31a2cf23b528ab24929e67c1f4943f52b2ae12ee2b"
+    },
+    "sharedInstallationChanged": false,
+    "newRequestsToEva": 0
+  }
+}

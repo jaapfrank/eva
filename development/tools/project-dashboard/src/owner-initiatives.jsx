@@ -1,5 +1,7 @@
 import React from 'react';
 import OwnerLearning from './owner-learning.jsx';
+import OwnerCurrentProjects from './owner-current-projects.jsx';
+import { initiativeCardId } from './owner-current-projects.mjs';
 
 const endpoint = '/internal/v1/dashboard/initiatives';
 const labels = { working: 'Bezig', done: 'Resultaat klaar', stopped: 'Gestopt', attention: 'Aandacht nodig' };
@@ -112,6 +114,12 @@ export default function OwnerInitiatives() {
     {notice && <p role="status">{notice}</p>}
     {!page && !error && <p>Initiatieven ophalen…</p>}
     {page && !error && <ReviewStatus page={page} />}
+    {page && !error && <OwnerCurrentProjects page={page} openProject={intentId => {
+      const target = document.getElementById(initiativeCardId(intentId));
+      target?.scrollIntoView({ behavior: 'auto', block: 'start' });
+      target?.focus({ preventScroll: true });
+    }} />}
+    {page && !error && <h3>Volledige historie, resultaten en bediening</h3>}
     {page && !error && !page.cards.length && <p>Nog geen eigen initiatief opgepakt.</p>}
     <div className="board">{!error && page?.cards.map(card => <InitiativeCard key={card.intent_id} card={card} busy={busy} stop={stop} refresh={refresh} />)}</div>
     {!error && page?.truncated && <p>De 64 laatst bijgewerkte initiatieven worden getoond.</p>}
@@ -139,7 +147,7 @@ function InitiativeCard({ card, busy, stop, refresh }) {
     } catch { setNotice('Je feedback is niet bevestigd. Vernieuw eerst voordat je opnieuw verstuurt.'); }
     finally { setSending(false); }
   }
-  return <article className="card" aria-label={'Initiatief: ' + card.title}>
+  return <article id={initiativeCardId(card.intent_id)} tabIndex={-1} className="card" aria-label={'Initiatief: ' + card.title}>
     <h3>{card.title}</h3><strong>{labels[card.status] || 'Status onbekend'}</strong>
     <p><strong>Aanleiding en eigen besluit</strong><br />{card.motivation}</p><p>{card.question}</p>
     <small>Opgepakt: {new Date(card.adopted_at).toLocaleString('nl-NL')}</small>
