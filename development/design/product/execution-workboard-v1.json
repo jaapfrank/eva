@@ -8114,7 +8114,9 @@
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json",
                 "latestIndependentReview": "development/reviews/e417-e415-binding-materialization-review-20261023.json",
-                "latestBoundedOutcome": "Exacte nieuwe bron/configuratie/review/uitvoerderverwijzing via bestaande rollen inactief hersteld op expliciet oude/synthetische corefixture. Vier nieuwe inputhashes/modi/owners geverifieerd; geen actuele volledige backup, schoon-pc-herstel, activering of E4.17-afronding."
+                "latestBoundedOutcome": "Exacte nieuwe bron/configuratie/review/uitvoerderverwijzing via bestaande rollen inactief hersteld op expliciet oude/synthetische corefixture. Vier nieuwe inputhashes/modi/owners geverifieerd; geen actuele volledige backup, schoon-pc-herstel, activering of E4.17-afronding.",
+                "installedImagePreservationEvidence": "development/evidence/reassessment/e415-installed-image-preservation-20261023.json",
+                "installedImagePreservationReview": "development/reviews/e415-installed-image-preservation-review-20261023.json"
               },
               {
                 "id": "E4.18",
@@ -14077,7 +14079,9 @@
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
               "latestEvidence": "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json",
               "latestIndependentReview": "development/reviews/e417-e415-binding-materialization-review-20261023.json",
-              "latestBoundedOutcome": "Exacte nieuwe bron/configuratie/review/uitvoerderverwijzing via bestaande rollen inactief hersteld op expliciet oude/synthetische corefixture. Vier nieuwe inputhashes/modi/owners geverifieerd; geen actuele volledige backup, schoon-pc-herstel, activering of E4.17-afronding."
+              "latestBoundedOutcome": "Exacte nieuwe bron/configuratie/review/uitvoerderverwijzing via bestaande rollen inactief hersteld op expliciet oude/synthetische corefixture. Vier nieuwe inputhashes/modi/owners geverifieerd; geen actuele volledige backup, schoon-pc-herstel, activering of E4.17-afronding.",
+              "installedImagePreservationEvidence": "development/evidence/reassessment/e415-installed-image-preservation-20261023.json",
+              "installedImagePreservationReview": "development/reviews/e415-installed-image-preservation-review-20261023.json"
             },
             {
               "id": "E4.18",

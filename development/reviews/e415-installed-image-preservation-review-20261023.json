@@ -1,0 +1,112 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.15 supporting installed runtime image preservation",
+  "reviewer": "e415-independent-review-newchat",
+  "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "reviewedAt": "2026-10-23T18:36:39.471878+00:00",
+  "verdict": "GO",
+  "scope": "One already completed native save archive containing exactly the two actually installed core/worker images. Exact code and built-in dependency image preservation only; not native load, restored execution or full recovery.",
+  "archive": {
+    "filename": "installed-core-worker.tar",
+    "sizeBytes": 474254336,
+    "sha256": "20ba8f9b26520da0e0bdf7cdb1e6767e54cce322d736f398f506624c6a39c20c",
+    "rootDirectoryOwnerMode": "root:root 0700",
+    "archiveOwnerMode": "root:root 0600",
+    "regularFileSingleLinkNoSymlink": true,
+    "noPublicArchiveOrImageContent": true,
+    "sizeInodeDeviceMtimeStableAcrossReview": true
+  },
+  "images": [
+    {
+      "role": "core",
+      "inputContainerId": "976def96de8e982c07bcde57fa549d8c79a12a8efd494174a745b33a8dd6d66c",
+      "installedImageId": "sha256:27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
+      "ociIndexDescriptorDigest": "sha256:27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
+      "rawOciManifestSha256": "27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
+      "rawConfigBlobDigest": "sha256:d9b0c7330fe360ff3b3290c74e7d14bd79b0a2e3fd117f0ee8d2830de22be203",
+      "layerCount": 220,
+      "orderedRootFSDiffIdsSha256": "c6d66001a4a3f86c2e16c4ccacda98593c88acecf6a5b3a1d8ca97d48afe2005",
+      "configJsonAndRootFSDiffIdsMatchSavedAndActualDockerInspect": true,
+      "legacyNativeManifestConfigAndLayerOrderMatchOciManifest": true
+    },
+    {
+      "role": "worker",
+      "inputContainerId": "ab17357fcf908959ea8c6dd5a2ee20e99521e2572ff7412a4630181ff5a2eae3",
+      "installedImageId": "sha256:ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979",
+      "ociIndexDescriptorDigest": "sha256:ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979",
+      "rawOciManifestSha256": "ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979",
+      "rawConfigBlobDigest": "sha256:1d7f5fd0dca7974c6fbd606e08056697a086160a31207e1b610b91d802cac380",
+      "layerCount": 172,
+      "orderedRootFSDiffIdsSha256": "925a90afcf3f91609224bb04da91b751d4c8f3fbafaedb8589c42a4040a5baee",
+      "configJsonAndRootFSDiffIdsMatchSavedAndActualDockerInspect": true,
+      "legacyNativeManifestConfigAndLayerOrderMatchOciManifest": true
+    }
+  ],
+  "independentVerification": {
+    "inputBinding": "Current container inspect IDs/images agree with retained pre-export container/image metadata and exact two authorized image IDs.",
+    "wholeArchiveSha256Verified": true,
+    "outerTarEntries": 401,
+    "uniqueReferencedBlobsVerified": 396,
+    "descriptorDigestAndSizeChecks": "Streamed SHA256 and size for every unique OCI manifest/config/layer blob, compared to exact descriptor. No extraction or execution.",
+    "exactTwoImagesOnly": true,
+    "noUnreferencedBlobs": true,
+    "noDuplicateOuterPathsLinksDevicesOrTraversal": true,
+    "ociLayoutVersion": "1.0.0",
+    "ociIndexSchemaVersion": 2,
+    "configEquality": "Archived config.config equals current Docker image Config; archived rootfs.diff_ids exactly equal saved and current ordered RootFS.Layers. Architecture/OS also match.",
+    "payloadLimit": "Compressed/uncompressed layer blobs are verified as bytes against their pinned manifest descriptors. No layer filesystem extraction, code execution or separate decompression-based runtime trial.",
+    "nativeLegacyView": "manifest.json contains exactly two untagged entries pointing to the same config blobs and ordered layers as the exact OCI manifest descriptors."
+  },
+  "originalFailurePreserved": {
+    "file": "manifest.private.json",
+    "sha256": "ef79dea47e4f68df595769c2ab82bee9f5319dd343730c1c5a964bb19096492f",
+    "status": "failed_or_uncertain_preserved_no_retry",
+    "dockerSaveExitCode": 0,
+    "failurePhase": "hash_and_native_manifest_read",
+    "explanation": "Original post-export check equated native Config blob digest with Docker inspect image ID. Here the exact observed installed IDs are OCI manifest digests in index.json. Raw manifest hashes match those IDs and bind separate config digests plus all layer descriptors. Independent byte validation resolves the metadata error on the same archive without changing export bytes or acceptance scope.",
+    "exportRepeated": false,
+    "errorEvidenceRewritten": false
+  },
+  "evidenceBindings": {
+    "save_once.py": "9e621e4a183ec7c7b05d301e6b89cca49e3d2a185bd7ca984b025106bbef613e",
+    "archive-inspection.private.json": "20a64261b5d5c5ed775ca7689ff3b4d01603a6836bee3fa0469be917d3502bf8",
+    "core-container-inspect.private.json": "0f7fdfd20c2738e7e4f80978f3e5946230e08b8c1e5c428db991b16a683063e9",
+    "worker-container-inspect.private.json": "de4f5ab12c959674aed32e45a4716564043211601e1f89686a5728648da38f55",
+    "core-image-inspect.private.json": "e5059a3aac926282d70db24833d219b806a84c60631984969fbff558d333af2e",
+    "worker-image-inspect.private.json": "dffd10a2c4384a04a2a308b0a85c50eeafac6f9ac63f006779461a915e56e5c7",
+    "development/evidence/reassessment/e415-installed-image-preservation-20261023.json": "d532b2b4d19f6765816c047c9fd065f7f80838abd52c23e3691b53f7fc59f313"
+  },
+  "existingContractReview": [
+    "Existing native image-save helpers bind private regular archives by streamed hash and retained image identity; no registry/tag substitution required.",
+    "Existing runtime-start contract requires actual locally inspected immutable image pins. This review does not satisfy future load/start/identity-readiness or current authority gates."
+  ],
+  "exclusions": [
+    "Current database/data backup, native database export/import and volume contents.",
+    "Bind-mounted runtime configuration, source/adoption config files and mounted credentials/secrets; these need their existing separate preservation/provisioning routes.",
+    "External native face/vision services, isolated executor service/image, gateway services and their host dependencies.",
+    "Docker load, clean-PC/different-daemon image identity retention, restored execution, activation, key provisioning and full recovery.",
+    "Actual greeting, hearing, ordinary later use or family acceptance."
+  ],
+  "privacyLimit": "Archive and Docker metadata remain private. No comprehensive audit of every inherited image-layer file for historical sensitive content is claimed; no runtime mounts/secrets were opened or added by the save.",
+  "lastWorking": false,
+  "fullRecovery": false,
+  "cleanPcRestore": false,
+  "findings": [],
+  "usage": {
+    "developmentElapsedSeconds": 218.453,
+    "developmentModelTokens": null,
+    "developmentCreditCost": null,
+    "evaRuntimeModelCalls": 0,
+    "evaRuntimeCreditCost": null,
+    "builderNativeExports": 1,
+    "builderExportAndOriginalCheckSeconds": 14.423,
+    "reviewerNativeExports": 0,
+    "reviewerArchiveIntegrityPasses": 1,
+    "dockerLoadRunBuildPushOrServiceActions": 0,
+    "modelProviderCalls": 0,
+    "cameraCaptures": 0,
+    "messages": 0,
+    "testSuites": 0,
+    "gitMutations": 0
+  }
+}

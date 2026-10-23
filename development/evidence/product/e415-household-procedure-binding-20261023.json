@@ -1,7 +1,7 @@
 {
   "contract": "EvaHouseholdProcedureBindingOutcome/v1",
   "task": "E4.15",
-  "checkedAt": "2026-10-23T18:33:33.289384+00:00",
+  "checkedAt": "2026-10-23T18:36:54.725250+00:00",
   "status": "installed_current_authority_verified_first_real_greeting_pending",
   "existing": "Eva-authored independently preserved pure procedure plus ordinary household observation/assessment/STOP/durable delivery/executor",
   "gap": "Exact authored source bound to current authorized source, opt-in and reviewed per-role composition",
@@ -115,5 +115,17 @@
     "currentWholeBackup": false,
     "cleanPcRestore": false,
     "reactivationProven": false
+  },
+  "installedImagePreservation": {
+    "evidence": "development/evidence/reassessment/e415-installed-image-preservation-20261023.json",
+    "review": "development/reviews/e415-installed-image-preservation-review-20261023.json",
+    "actualImagesPreserved": 2,
+    "archiveBytes": 474254336,
+    "archiveSha256": "20ba8f9b26520da0e0bdf7cdb1e6767e54cce322d736f398f506624c6a39c20c",
+    "nativeExports": 1,
+    "metadataIdentityCorrectionPreserved": true,
+    "nativeLoadPerformed": false,
+    "dataVolumesAndCredentialsIncluded": false,
+    "currentWholeBackup": false
   }
 }

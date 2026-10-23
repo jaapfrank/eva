@@ -157,7 +157,7 @@
       }
     },
     "codex-e418": {
-      "task": "E4.17 isolated E4.15 config/review materialization compatibility",
+      "task": "E4.17 exact installed extension recovery dependency gap inventory",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "development/design/architecture/e418-*.json",
@@ -388,10 +388,10 @@
         "allNamedInstalledMethodsValidated": true
       },
       "nextTaskRequest": {
-        "requestedAt": "2026-10-23T18:30:36.943281+00:00",
+        "requestedAt": "2026-10-23T18:35:18.763449+00:00",
         "to": "windows-root",
         "coordinatorThreadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
-        "status": "materialization_case_delivered_next_task_or_review_feedback_requested",
+        "status": "image_preservation_delivered_next_task_or_review_feedback_requested",
         "standingOwnerInstruction": "Na afronding rechtstreeks bij de coördinator om volgende taak blijven vragen; Jaap niet als tussenpersoon gebruiken.",
         "completedOutcome": "E2.9 current-project view installed and read-only live verified; canonical dashboard and GitHub commit06195e62 confirmed.",
         "request": "Next independent task with exact paths, existing route, end condition and shared-installation boundaries. Preserve coordinator-owned integration/Git/installation, voice and other reserved work.",
@@ -622,7 +622,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "New one-case inactive exact config/source/review/executor-reference materialization passed; independent review requested",
+      "status": "Read-only selected executor/face/source-binding dependencies; no pixels/embedding/token contents or export",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1018,12 +1018,47 @@
         "lastWorking": false,
         "fullE417": false,
         "newArchiveIsSyntheticFixtureNotCurrentBackup": true
+      },
+      "imagePreservationAssignment": {
+        "privateRoot": "/home/administrator/project/.eva2-artifacts/e415-runtime-images-20261023",
+        "publicEvidence": "development/evidence/reassessment/e415-installed-image-preservation-20261023.json",
+        "images": [
+          "sha256:27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
+          "sha256:ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979"
+        ],
+        "hostWindowsFreeBytesAtCheck": 669449150464,
+        "singleExportNoAutomaticRetry": true
+      },
+      "imagePreservationResult": {
+        "privateRoot": "/home/administrator/project/.eva2-artifacts/e415-runtime-images-20261023",
+        "archive": "/home/administrator/project/.eva2-artifacts/e415-runtime-images-20261023/installed-core-worker.tar",
+        "archiveSha256": "20ba8f9b26520da0e0bdf7cdb1e6767e54cce322d736f398f506624c6a39c20c",
+        "size": 474254336,
+        "inspection": "/home/administrator/project/.eva2-artifacts/e415-runtime-images-20261023/archive-inspection.private.json",
+        "inspectionSha256": "20a64261b5d5c5ed775ca7689ff3b4d01603a6836bee3fa0469be917d3502bf8",
+        "originalManifestRetainedSha256": "ef79dea47e4f68df595769c2ab82bee9f5319dd343730c1c5a964bb19096492f",
+        "publicEvidence": "development/evidence/reassessment/e415-installed-image-preservation-20261023.json",
+        "publicEvidenceSha256": "d532b2b4d19f6765816c047c9fd065f7f80838abd52c23e3691b53f7fc59f313",
+        "lastWorking": false,
+        "fullRecovery": false,
+        "cleanPc": false,
+        "exports": 1
+      },
+      "dependencyGapAssignment": {
+        "privateOutput": "/home/administrator/project/.eva2-artifacts/e415-installed-recovery-dependencies-20261023/capture-plan.private.json",
+        "publicOutput": "development/evidence/reassessment/e417-installed-extension-recovery-gap-20261023.json",
+        "scope": [
+          "procedure-executor",
+          "local-face-service/profile/model roots",
+          "exact installed ProcedureReference/household/currentconfig binding"
+        ],
+        "noFullServerInventoryOrMutation": true
       }
     },
     "e415-independent-review-newchat": {
       "task": "E4.15 source/config adoption",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "in_progress_installed_image_preservation_review",
+      "status": "completed_installed_image_preservation_GO",
       "coordinator": "windows-root",
       "allowedWritePaths": [
         "development/reviews/e415-installed-image-preservation-review-20261023.json",
@@ -1041,10 +1076,10 @@
         "doneWhen": "Exact hashes and bounded GO/NO_GO with necessary companion hunks; no installation.",
         "userUse": "Coordinator may integrate reviewed candidate after baseline recheck."
       },
-      "completedAt": "2026-10-23T18:32:04.108337+00:00",
-      "review": "development/reviews/e417-e415-binding-materialization-review-20261023.json",
+      "completedAt": "2026-10-23T18:36:39.471878+00:00",
+      "review": "development/reviews/e415-installed-image-preservation-review-20261023.json",
       "verdict": "GO",
-      "nextAction": "Await next concrete coordinator assignment; full restore/reactivation/household acceptance remain open.",
+      "nextAction": "Await next concrete coordinator assignment. Actual data/keys/services/full recovery and household use remain open.",
       "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
       "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
       "previousInstallationReview": "development/reviews/e415-coordinated-installation-review-20261023.json",

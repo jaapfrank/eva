@@ -1,0 +1,80 @@
+{
+  "contract": "EvaInstalledImagePreservationOutcome/v1",
+  "task": "E4.15 supporting exact installed runtime preservation",
+  "checkedAt": "2026-10-23T18:35:18.760365+00:00",
+  "status": "saved_exact_native_images_content_verified_not_restored",
+  "images": [
+    {
+      "imageId": "sha256:27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
+      "ociManifestSha256": "27e737ae430c15c89b76f9eb908f5ea959beb5c4b7a7a34331eda1b477805213",
+      "configurationDigest": "sha256:d9b0c7330fe360ff3b3290c74e7d14bd79b0a2e3fd117f0ee8d2830de22be203",
+      "layerCount": 220,
+      "diffIdsMatchExactSavedInspect": true,
+      "allReferencedConfigAndLayerBlobDigestsAndSizesVerified": true
+    },
+    {
+      "imageId": "sha256:ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979",
+      "ociManifestSha256": "ff3c08922a65789dc4b9dd68ce47686f638154e3974381af235218b8aeb61979",
+      "configurationDigest": "sha256:1d7f5fd0dca7974c6fbd606e08056697a086160a31207e1b610b91d802cac380",
+      "layerCount": 172,
+      "diffIdsMatchExactSavedInspect": true,
+      "allReferencedConfigAndLayerBlobDigestsAndSizesVerified": true
+    }
+  ],
+  "archive": {
+    "sizeBytes": 474254336,
+    "sha256": "20ba8f9b26520da0e0bdf7cdb1e6767e54cce322d736f398f506624c6a39c20c",
+    "mode": "0600",
+    "directoryMode": "0700"
+  },
+  "verification": [
+    "Current requested container/image IDs matched immediately before one native docker image save.",
+    "Existing retained/foreign base layers and native image Config preserved; original Docker inspect metadata retained privately.",
+    "Native save exited0; exact OCI index contains only requested core and worker image descriptors.",
+    "OCI manifest/config and all referenced layer blob digests/sizes match archive bytes; rootFS diffIDs match exact image inspect.",
+    "Initial config-digest/image-ID assumption failure preserved separately; corrected read-only OCI descriptor interpretation on same archive, no repeat export."
+  ],
+  "scope": "Actual installed native image code and built-in dependency preservation only; not a current full installation/data backup.",
+  "exclusions": [
+    "Data volumes and bind-mounted runtime configuration",
+    "Credentials and secret files",
+    "External local-face/vision/executor services and their dependencies",
+    "Database exports/native import/runtime activation"
+  ],
+  "measurements": {
+    "nativeExports": 1,
+    "exportAndInitialInspectionSeconds": 14.423,
+    "readOnlyNativeContentInspectionSeconds": 0.922,
+    "uniqueBlobsVerified": 396,
+    "bytes": 474254336,
+    "loads": 0,
+    "builds": 0,
+    "pushes": 0,
+    "serviceStartsStops": 0,
+    "databaseExports": 0,
+    "modelProviderCalls": 0,
+    "creditCosts": null
+  },
+  "spaceCheck": {
+    "linuxFreeBytes": 271505514496,
+    "windowsFreeBytesAtPrecheck": 669449150464,
+    "summedImageSizesConservativeUpperBound": 473910436,
+    "minimumRequiredBytes": 2739871693,
+    "margin": "25% of summed virtual image size plus2GiB; both Linux and Windows host precheck must fit."
+  },
+  "lastWorking": false,
+  "fullRecovery": false,
+  "cleanPcRestore": false,
+  "nativeLoadAndRestoredExecutionProven": false,
+  "independentReview": {
+    "status": "requested_from_coordinator",
+    "verdict": null
+  },
+  "privateProof": {
+    "saveHarnessSha256": "9e621e4a183ec7c7b05d301e6b89cca49e3d2a185bd7ca984b025106bbef613e",
+    "originalManifestSha256": "ef79dea47e4f68df595769c2ab82bee9f5319dd343730c1c5a964bb19096492f",
+    "nativeArchiveInspectionSha256": "20a64261b5d5c5ed775ca7689ff3b4d01603a6836bee3fa0469be917d3502bf8",
+    "archiveSha256": "20ba8f9b26520da0e0bdf7cdb1e6767e54cce322d736f398f506624c6a39c20c"
+  },
+  "integration": "Coordinator owns public workboard/dashboard/Git. Archive, Docker metadata and any private configuration are not published."
+}
