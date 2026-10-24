@@ -1,0 +1,18 @@
+{
+  "contract": "EvaIndependentHouseholdIncidentRecoveryReview/v1",
+  "taskId": "E4.15",
+  "checkedAt": "2026-10-24T15:44:15.830924+00:00",
+  "verdict": "GO_specific_new_incident_closed_and_one_new_natural_review_completed",
+  "evidence": "development/evidence/product/e415-household-continuation-145510-20261024.json",
+  "privateReviewSha256": "c7880db7af0a87a5f6de1c9f7a978370eaba642a812c6a3149c26b7798ca3c5a",
+  "executionSha256": "40d97dd1b3ef0cd374c31df4c99985e8d1bd44702e7da1a1fbbe9b4d723423fb",
+  "actualPostReadbackSha256": "2c1de88103204a69f16201382637ef680676848a2e0ecd1ae81fa3536a3da7f3",
+  "oldFourHashesTypesTimesUsagePreserved": true,
+  "exactAppend5HeadCompleted": true,
+  "retryErrorFingerprintAndNullUsagePreserved": true,
+  "newNaturalSilentDecisionAfterActualAction": true,
+  "newModelCallsByReviewer": 0,
+  "newQueriesOrTestMatrixByReviewer": 0,
+  "positiveGreetingHearingOrFullCardAccepted": false,
+  "structuralRootCauseFixed": false
+}

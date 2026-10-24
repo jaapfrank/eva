@@ -1,8 +1,8 @@
 {
   "contract": "EvaHouseholdContinuationIncident/v1",
   "taskId": "E4.15",
-  "checkedAt": "2026-10-24T15:38:37.173860+00:00",
-  "status": "new_uncertain_review_abandoned_actual_natural_continuation_pending",
+  "checkedAt": "2026-10-24T15:44:15.830924+00:00",
+  "status": "new_incident_closed_one_natural_review_completed_independently_verified",
   "incident": {
     "observedAt": "2026-10-24T14:55:10Z",
     "phase": "will_usage_uncertain",
@@ -54,16 +54,43 @@
     "disposition": "abandoned",
     "usage": "unknown",
     "replayed": false,
-    "actualPostReadbackPending": true
+    "actualPostReadbackPending": false,
+    "postReadbackSha256": "2c1de88103204a69f16201382637ef680676848a2e0ecd1ae81fa3536a3da7f3",
+    "postHandoffSha256": "792096d578f0dea676a8ab3dadf0b8b8f70588147f566b20180dc32e7ceee23b",
+    "independentActualReviewSha256": "c7880db7af0a87a5f6de1c9f7a978370eaba642a812c6a3149c26b7798ca3c5a",
+    "originalFourEventsPreserved": true,
+    "oldUsageRemainsNull": true,
+    "terminalPhase": "will_abandoned",
+    "terminalRevision": 5,
+    "appendedEventSha256": "ca7d87197a36c25b3b674ec9ca0ab40d52cf0832be2dcb9bc1611d9d172b29d1"
   },
   "constraints": {
-    "old0910IncidentOrActionRepeated": false,
     "productCodeChanged": false,
     "installationOrRestartPerformed": false,
     "policySeconds": 300,
     "ownerActionRequired": false,
     "newOriginalCardsCompleted": 0,
-    "fullOriginalCardCompleted": false
+    "fullOriginalCardCompleted": false,
+    "old0909IncidentOrActionRepeated": false
   },
-  "remaining": "Read back exact append and one genuinely new natural assessment; positive greeting/hearing, need discovery, later feedback/reuse and full original card remain open."
+  "remaining": "Positive greeting/hearing, need discovery, feedback/reuse and full original card remain open. This one incident is resolved; the general provider missing-usage cause and autonomous durable recovery are not proved fixed.",
+  "independentReview": "development/reviews/e415-household-continuation-145510-20261024.json",
+  "ordinaryUseAfterRecovery": {
+    "startedAt": "2026-10-24T15:37:05Z",
+    "completedAt": "2026-10-24T15:37:16Z",
+    "disposition": "silence",
+    "modelStartSha256": "4a2c1ea5e839257562bb24beb9a9fac83e6b62a81c5ecccd10608a23392e02de",
+    "decisionSha256": "a2abd8c4b327c5ab3dd7801da9f1fc0f02b25e2cdefecfee9f4cc18a81a5ac1f",
+    "originalObservationTime": "2026-10-24T15:32:57Z",
+    "observationNotRetimestamped": true,
+    "inputTokens": 8035,
+    "outputTokens": 123,
+    "totalTokens": 8158,
+    "modelAttempts": 1,
+    "reportedFunctionCalls": 1,
+    "cost": null,
+    "positiveGreetingProved": false,
+    "oldUncertainMarkerGone": true,
+    "current300sGuardFromNewNormalModelStart": true
+  }
 }
