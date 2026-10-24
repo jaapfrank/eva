@@ -1,0 +1,14 @@
+{
+  "contract": "EvaBoundedHouseholdRecoveryIndependentReview/v1",
+  "verdict": "GO_INSTALLED_SOURCE_HEALTH_FOUR_PROFILES_ONLY",
+  "checkedAt": "2026-10-24T16:31:11.100464+00:00",
+  "privateReviewSha256": "ebf91f6b26fdcb90448f0f1bd940e83e80708e3d589b0d0919e0fffa604a4774",
+  "sourceReviewSha256": "2a7fca64e474390d7c892dd0eba3d2e866927f7c8b1628de06f3792f1b9824b7",
+  "packageReviewSha256": "a121b7195f6340fd10f51bd9a6ed1047d03224f66ae354dae1fe49dfd2fa3f66",
+  "guardReviewSha256": "c44e676f89bce5c487f04d6d965e486710be255921f11021b335a4a8dafbe9c8",
+  "testsPassed": 14,
+  "installed": true,
+  "actualUseProven": false,
+  "fullCardCompleted": false,
+  "limits": "One exact retained completed authorization record classified without mutation. All other active work/model/memory/configuration guards retained. Natural readback empty; no future failure recovery or school result inferred."
+}

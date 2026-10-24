@@ -1,7 +1,7 @@
 {
   "contract": "EvaBoundedHouseholdRecoveryDelivery/v1",
-  "status": "built_reviewed_source_tests_four_profiles_match_installation_pending",
-  "checkedAt": "2026-10-24T16:17:23.243163+00:00",
+  "status": "installed_independently_source_health_and_four_profiles_verified",
+  "checkedAt": "2026-10-24T16:31:11.100464+00:00",
   "gitCommit": "30eaf49d4f7f0bfef760a927d5beb47db995d647",
   "sourceReviewSha256": "2a7fca64e474390d7c892dd0eba3d2e866927f7c8b1628de06f3792f1b9824b7",
   "tests": {
@@ -11,8 +11,25 @@
   },
   "candidateProfilesEqual": true,
   "change": "After a proven locally returned uncertain household call, one different current observation may proceed under unchanged existing authority, timing and budget. Original usage and source remain unknown/preserved. A second unmeasured failure cannot replenish the slot.",
-  "installed": false,
+  "installed": true,
   "actualUseProven": false,
   "fullCardCompleted": false,
-  "familyAcceptance": false
+  "familyAcceptance": false,
+  "installedAt": "2026-10-24T16:26:14.494466+00:00",
+  "actualInstallReviewSha256": "ebf91f6b26fdcb90448f0f1bd940e83e80708e3d589b0d0919e0fffa604a4774",
+  "installedProfilesSha256": "33dc02abeba83e3d27e3ae9a37ffd4e9a865691ca1a3b062ada1d86feb1f2dd8",
+  "installationSha256": "151262299c6fa012ebd6dd476298c7eb4bd412b67fc345dce5bfe6ae4c866981",
+  "remaining": "No natural post-install review in the one retained readback. Next real uncertain-call recovery and full original autonomous repair/later-use criteria remain open.",
+  "measuredUsageExplanation": {
+    "windowStartUtc": "2026-10-24T11:16:15Z",
+    "windowEndUtc": "2026-10-24T16:16:15Z",
+    "schoolMeasuredTokensMinimum": 1133035,
+    "householdMeasuredTokensMinimum": 214923,
+    "runtimeTotalTokensMinimum": 1347958,
+    "credits": null,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "incomplete": true,
+    "receiptSha256": "d35d9080ebc5842f6cbc1babc079680cde0d613953c2bc5a4bcb13176361bcb2"
+  }
 }

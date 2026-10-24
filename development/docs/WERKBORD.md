@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen
 
-Bron en14gerichte regressies onafhankelijk goedgekeurd; minimale rolgescheiden kandidaat gebouwd en alle4profielen gelijk. Coördinator rondt pakketreview, actuele claimcontrole en installatie af. Schoolnaam is werkelijk ontvangen; bestaande taakcorrectie wordt voorbereid, geen nieuwe loginvraag. Volledige E4.16 blijft open.
+Begrensd herstel na een lokaal beëindigde onzekere huisbeoordeling geïnstalleerd om18:26NL;14gerichte tests en onafhankelijke bron/pakket/werkelijke-installatiecontrole geslaagd, alle4profielen gelijk. Volgende echte hersteluitkomst en volledige autonome E4.16-keten blijven open. Schoolnaam werkelijk in dezelfde opdracht opgeslagen; één hervatting draait, nog geen bruikbaar schoolresultaat.
 
 Klaar wanneer: Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.
 
@@ -145,7 +145,7 @@ Vier van de oorspronkelijke 24 taken afgerond (83/103). E4.16 is geïnstalleerd 
 
 ## Van jou
 
-Schoolnaam ontvangen; geen nieuwe eigenaarhandeling nodig voor de lopende reparatie en voorbereiding van dezelfde schoolopdracht.
+Schoolnaam is verwerkt in dezelfde Eva-opdracht; nu geen nieuwe eigenaarhandeling gevraagd. Schoolresultaat en volledige kaartafronding zijn nog niet aangetoond.
 
 ## Historie
 

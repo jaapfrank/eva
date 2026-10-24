@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:56:37.055465+00:00",
-  "status": "app_auth_progress_saved_later_astra_responses_verified_school_identification_pending",
+  "status": "real_school_name_correction_saved_existing_successor_running",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -115,20 +115,7 @@
     "historicalRepairStillBlocked": true,
     "originalCardsNewlyCompleted": 0
   },
-  "ownerAction": {
-    "required": true,
-    "questionAlreadyAsked": true,
-    "action": "Provide the intended school name in the existing unanswered question, or concrete information locating the existing school integration/session.",
-    "purpose": "Select and verify the intended school/account; a school UUID is not mandatory to construct generic PKCE.",
-    "manualLoginRequested": false,
-    "newQuestionSent": false,
-    "existingTaskContextHasExplicitSchoolName": false,
-    "wholeHouseholdAbsenceClaimed": false,
-    "loginOrSchoolOutcomeProven": false,
-    "otherExecutableWorkNotBlocked": true,
-    "nextStepAssessmentSha256": "7e6fa00a84d85de66bdae7cb9977d023b87bbc811b8205f8955fd8617f2129b8",
-    "independentReviewSha256": "1162bd4c61d91a7b1f7d7d57baee2a6dca525cb4bd34ab5c45dfec82b4db641d"
-  },
+  "ownerAction": "Geen nieuwe eigenaarhandeling gevraagd; de echte schoolnaam is opgeslagen en dezelfde opdracht is hervat.",
   "latestOwnerCorrection": {
     "receivedAt": "2026-10-24T13:11:01.504395+00:00",
     "text": "Nee eva moet zoeken online hoe ze in kan loggen. er is geen somtoday pagina waar je in kan loggen dat gaat normaliter via de app. Maar het kan ook anders.",
@@ -374,5 +361,16 @@
     "Owner login through the verified same-session interface and actual school data/help are still open.",
     "Historical pre-model selfrepair failure remains blocked and its unknown usage/error evidence remains unchanged.",
     "Full E4.16 autonomous repair and later reuse are not proved by manual fixes or installation."
-  ]
+  ],
+  "checkedAt": "2026-10-24T16:31:11.100464+00:00",
+  "latestSchoolIdentification": {
+    "received": true,
+    "savedOnceThroughExistingOwnerRevision": true,
+    "newWorkId": "work:eva-resume:8768071e-0047-5438-8c17-d0d8990a71c9",
+    "state": "call_started",
+    "receiptSha256": "af3765c9dac9897b5f2c8a256f9b60c9d868b856a4031b30e7a67cd474d40608",
+    "readbackSha256": "3268559e1e0e802bc421d2731e6b5033e2a69cb9f464fcc57032d67821727367",
+    "schoolResultCompleted": false,
+    "ownerLoginClaimed": false
+  }
 }
