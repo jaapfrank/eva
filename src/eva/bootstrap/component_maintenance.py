@@ -228,7 +228,7 @@ def observe_installed_maintenance(authority,observation,*,sensory_store=None,now
     from eva.application.sensory import SensoryEvent
     from eva.adapters.postgres.sensory_events import PostgresSensoryEventStore
     from eva.adapters.postgres.operational_timeline import CheckpointConflict
-    policy,_=maintenance_policy(authority);now=now or datetime.now(UTC)
+    policy,_=maintenance_policy(authority);now=now or datetime.now(UTC).replace(microsecond=0)
     if set(observation)!={'source_sha256','inventory_sha256','official_releases','versions'}:
         raise ValueError('closed software observation required')
     for key in ('source_sha256','inventory_sha256'):_sha(observation[key])

@@ -306,3 +306,48 @@ def test_pg18_ha_owned_source_reaches_private_decision_without_forced_model_choi
         assert store._private_maintenance_context_reader(connection, store._timeline._scope_value,
             f.claim.principal_id, at) == ()
     assert store.schedule_context_review(now=at+timedelta(seconds=2)) == 'mandate_unavailable'
+
+
+
+def test_default_observation_clock_satisfies_actual_timeline_second_contract(monkeypatch):
+    import eva.bootstrap.component_maintenance as maintenance
+    from eva.adapters.postgres.operational_timeline import _require_utc_second
+    instants=[]
+    class FractionalClock(datetime):
+        @classmethod
+        def now(cls,tz=None):return datetime(2026,10,24,9,39,20,522907,tzinfo=UTC)
+    monkeypatch.setattr(maintenance,'datetime',FractionalClock)
+    def create(**kwargs):
+        _require_utc_second(kwargs['occurred_at'],'occurred_at')
+        instants.append(kwargs['occurred_at'])
+    def retain(event):
+        _require_utc_second(event.occurred_at,'occurred_at')
+        instants.append(event.occurred_at)
+        return 'retained'
+    authority=SimpleNamespace(policy=lambda:({'component_maintenance':POLICY},'a'*64),
+        owner=SimpleNamespace(),timeline=SimpleNamespace(create_thread=create))
+    observation=dict(source_sha256='a'*64,inventory_sha256='b'*64,
+        official_releases={'psycopg':'c'*64,'psycopg-binary':'d'*64},
+        versions={'core':{'psycopg':'3.3.4','psycopg-binary':'3.3.4'}})
+    assert maintenance.observe_installed_maintenance(authority,observation,
+        sensory_store=SimpleNamespace(retain=retain))['state']=='retained'
+    assert instants==[datetime(2026,10,24,9,39,20,tzinfo=UTC)]*2
+
+
+def test_pg18_default_observation_clock_reaches_real_retained_source(costless_native,monkeypatch):
+    import json
+    import eva.bootstrap.component_maintenance as maintenance
+    auth,old,interests,owner,sensory,path,policy=costless_native
+    policy['component_maintenance']=dict(POLICY);path.write_text(json.dumps(policy))
+    class FractionalClock(datetime):
+        @classmethod
+        def now(cls,tz=None):return NOW.replace(microsecond=522907)
+    monkeypatch.setattr(maintenance,'datetime',FractionalClock)
+    observation=dict(source_sha256='a'*64,inventory_sha256='b'*64,
+        official_releases={'psycopg':'c'*64,'psycopg-binary':'d'*64},
+        versions={'core':{'psycopg':'3.3.4','psycopg-binary':'3.3.4'}})
+    assert maintenance.observe_installed_maintenance(auth,observation,sensory_store=sensory)['state']=='retained'
+    retained=auth.timeline.events('component-maintenance-source:'+'a'*64)
+    assert len(retained)==1 and retained[0].occurred_at==NOW
+    source=sensory._event_from_thread('sensory:maintenance-'+'a'*64)
+    assert source.occurred_at==NOW and source.source=='component_maintenance'
