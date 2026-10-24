@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:15:03.895788+00:00",
-  "status": "portal_opened_internal_resume_progress_conflict_unresolved",
+  "status": "continuation_repairs_installed_original_owner_outcome_open",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -16,8 +16,12 @@
   "autonomousRecoveryProven": false,
   "usefulOwnerOutcomeProven": false,
   "originalCardsNewlyCompleted": [],
-  "productOrRuntimeSourceChanged": false,
-  "remaining": "Actual access and useful result must be checked. Bounded automatic continuation after the actual unknown-usage provider failure remains unresolved; do not count an easier unrelated case as its repair.",
+  "productOrRuntimeSourceChanged": true,
+  "remaining": [
+    "Original useful owner result and actual access still open.",
+    "True selfrepair stops before model due to catalog/grant mismatch; identified and being repaired.",
+    "Full E4.16 requires actual autonomous repair and later reuse, not manual installation alone."
+  ],
   "actualOutcome": {
     "completedAt": "2026-10-24T11:14:19Z",
     "state": "failed",
@@ -59,5 +63,23 @@
     "originalOwnerTaskPreserved": true,
     "typedSourceCandidateReviewed": true,
     "candidateInstalled": false
+  },
+  "installedRepair": {
+    "at": "2026-10-24T11:46:04.720029+00:00",
+    "sourceCommit": "db26a2981dd851b4fe28690010f2f09f307a3b59",
+    "files": {
+      "src/eva/bootstrap/delegated_digital_runner.py": "57267717486f8870eadcce3fcc0b5bea3e9eb4abd3de135ad765ead354aa35f9",
+      "src/eva/adapters/postgres/delegated_work.py": "7776b22475557036e23bfe71459bf2b554f9550843f1afe6eb40a564dd2b5ac2",
+      "src/eva/adapters/postgres/initiative_execution.py": "6c2aec649d04869f5c4b7781742349b377b9f3cb4eb3f4eb87c32ee91cadd39b",
+      "src/eva/adapters/postgres/scheduled_work.py": "a525d3600c704e5760f3088388915e37b4b975450a49357fdf8a4b89d4b383a7"
+    },
+    "installationReceiptSha256": "e01a58ec961ef19ca1d4c06fefe04369560f4fc0fbe25539df7cdf4d6b760b0b",
+    "actualProfilesSha256": "fb894590da834cae88d50f0dd6bd9565a604b485eb3fbbb157859562145f4ab9",
+    "allFourProfilesMatch": true,
+    "ownerPreflightSha256": "44bc413f166deb0800f5b98976e029d22beb5e3c1a0cf3cd033001d6cf44e991",
+    "nextPhysicalAction": 14,
+    "retainedActionBindings": 12,
+    "originalOwnerOutcomeCompleted": false,
+    "futureRecoveryProspectiveOnly": true
   }
 }
