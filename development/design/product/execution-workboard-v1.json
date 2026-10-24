@@ -841,13 +841,13 @@
   "lastUpdated": "2026-10-24T07:24:28.185511+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.19",
+  "activeTaskId": "E4.16",
   "currentWork": {
-    "id": "E4.19",
-    "title": "Relevante updates zelfstandig ontdekken en beheerd toepassen",
+    "id": "E4.16",
+    "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
-    "doneWhen": "Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap.",
-    "nextAction": "Volg één echte door Eva gekozen update via bestaande host, onafhankelijke beoordeling, bevoegde toepassing, werkelijk gebruik en geïsoleerd herstel. De onderhoudsroute is geïnstalleerd; E1.14-continuïteit en E1.11-afronding lopen als afzonderlijk afgebakend werk door.",
+    "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+    "nextAction": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3081,8 +3081,8 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.19",
-          "title": "Relevante updates zelfstandig ontdekken en beheerd toepassen",
+          "taskId": "E4.16",
+          "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
           "summary": "Vier van de oorspronkelijke24 taken afgerond (83/103). E4.16 is geïnstalleerd; werkelijk automatisch herstel blijft open. E4.19: de tester heeft de huidige driverfout 4/4 bevestigd; bouwer maakt de complete onderhoudsroute en reviewcorrecties af. Kandidaatwinst, autonome update en volledig herstel nog te bewijzen.",
           "doneWhen": "Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap."
         },
@@ -3278,7 +3278,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.19",
+        "currentStep": "E4.16",
         "steps": [
           {
             "number": 1,
@@ -8262,7 +8262,7 @@
               {
                 "id": "E4.16",
                 "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraakuitvoerder behoudt implementatie-eigendom",
                 "ownerActionRequired": false,
@@ -8276,7 +8276,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Laat de bestaande geïnstalleerde route een echte brongebonden fout afwerken en controleer oorspronkelijk gedrag en later onafhankelijk hergebruik. Geen fout verzinnen of onzeker extern effect herhalen. E4.19 gaat ondertussen door.",
+                "nextAction": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8286,8 +8286,11 @@
                 ],
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [],
-                  "scope": "Installed activation delivered; root retains bounded observation of real incidents. Builder and tester now assigned to E4.19."
+                  "activeWorkers": [
+                    "01a0c537-54d0-7080-9e4c-74db537877af",
+                    "01a16a55-1607-7171-820e-a3918acaea3f"
+                  ],
+                  "scope": "Hoofdbouwer herstelt de concrete opdracht; tester beoordeelt onafhankelijk zonder productcode. Coördinator integreert en installeert."
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/e416-installed-activation-review-20261024.json",
@@ -8300,8 +8303,8 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T07:24:28.185511+00:00",
-                "progress": "Eenmalig geïnstalleerd op de bestaande WSL-installatie; exacte bronbestanden, werkprofielen, schema0012, host, eigenaar-CAS en actuele HTTP gecontroleerd. Onafhankelijke GO, 11 gerichte controles. Nog geen echte autonome foutketen of later hergebruik; oorspronkelijke kaart blijft open.",
+                "checkedAt": "2026-10-24T09:57:30.604406+00:00",
+                "progress": "Een echte digitale opdracht eindigde met budget_exceeded zonder eindresultaat. Rond dezelfde afhandeling registreerde de modelroute HTTP503. De primaire oorzaak en hersteloverdracht worden onderzocht; oorspronkelijke kaart niet afgerond.",
                 "latestEvidence": "development/evidence/product/e416-installed-activation-20261024.json"
               },
               {
@@ -8416,19 +8419,14 @@
                 "checkedAt": "2026-10-24T09:42:36.372006+00:00",
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [
-                    "01a0c537-54d0-7080-9e4c-74db537877af",
-                    "01a169e0-4ed1-75d1-9541-b5dae109b328",
-                    "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-                    "01a16a55-1607-7171-820e-a3918acaea3f"
-                  ],
+                  "activeWorkers": [],
                   "roles": {
                     "01a0c537-54d0-7080-9e4c-74db537877af": "native maintenance integration",
                     "01a169e0-4ed1-75d1-9541-b5dae109b328": "retained-image loader and host compatibility",
                     "01a169f2-6ff6-7961-b16f-9fd0b836d3e3": "immutable delivery packaging",
                     "01a16a55-1607-7171-820e-a3918acaea3f": "independent tester/reviewer"
                   },
-                  "scope": "Five existing chats, separate files; coordinator owns shared installation/Git. One E419 outcome, no duplicate recovery route."
+                  "scope": "Beoordeelde timestampcorrectie en images gereed voor gebundelde installatie. Hoofdbouwer en tester nu E4.16; coder1 E1.14; coder2 exact runtimepakket."
                 },
                 "review": "development/reviews/e419-final-candidate-review-20261024.json",
                 "progress": "V2 daadwerkelijk geïnstalleerd en onafhankelijk goedgekeurd. Kern, worker en host gebruiken de beoordeelde bronnen/configuratie; normale softwarewaarneming bestaat. Bouwer controleert de overdracht naar Eva en de eerste echte updateketen. Volledige kaart blijft open.",
@@ -9418,7 +9416,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.19",
+      "currentStep": "E4.16",
       "steps": [
         {
           "number": 1,
@@ -14402,7 +14400,7 @@
             {
               "id": "E4.16",
               "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraakuitvoerder behoudt implementatie-eigendom",
               "ownerActionRequired": false,
@@ -14416,7 +14414,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Laat de bestaande geïnstalleerde route een echte brongebonden fout afwerken en controleer oorspronkelijk gedrag en later onafhankelijk hergebruik. Geen fout verzinnen of onzeker extern effect herhalen. E4.19 gaat ondertussen door.",
+              "nextAction": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14426,8 +14424,11 @@
               ],
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [],
-                "scope": "Installed activation delivered; root retains bounded observation of real incidents. Builder and tester now assigned to E4.19."
+                "activeWorkers": [
+                  "01a0c537-54d0-7080-9e4c-74db537877af",
+                  "01a16a55-1607-7171-820e-a3918acaea3f"
+                ],
+                "scope": "Hoofdbouwer herstelt de concrete opdracht; tester beoordeelt onafhankelijk zonder productcode. Coördinator integreert en installeert."
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/e416-installed-activation-review-20261024.json",
@@ -14440,8 +14441,8 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T07:24:28.185511+00:00",
-              "progress": "Eenmalig geïnstalleerd op de bestaande WSL-installatie; exacte bronbestanden, werkprofielen, schema0012, host, eigenaar-CAS en actuele HTTP gecontroleerd. Onafhankelijke GO, 11 gerichte controles. Nog geen echte autonome foutketen of later hergebruik; oorspronkelijke kaart blijft open.",
+              "checkedAt": "2026-10-24T09:57:30.604406+00:00",
+              "progress": "Een echte digitale opdracht eindigde met budget_exceeded zonder eindresultaat. Rond dezelfde afhandeling registreerde de modelroute HTTP503. De primaire oorzaak en hersteloverdracht worden onderzocht; oorspronkelijke kaart niet afgerond.",
               "latestEvidence": "development/evidence/product/e416-installed-activation-20261024.json"
             },
             {
@@ -14556,19 +14557,14 @@
               "checkedAt": "2026-10-24T09:42:36.372006+00:00",
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [
-                  "01a0c537-54d0-7080-9e4c-74db537877af",
-                  "01a169e0-4ed1-75d1-9541-b5dae109b328",
-                  "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-                  "01a16a55-1607-7171-820e-a3918acaea3f"
-                ],
+                "activeWorkers": [],
                 "roles": {
                   "01a0c537-54d0-7080-9e4c-74db537877af": "native maintenance integration",
                   "01a169e0-4ed1-75d1-9541-b5dae109b328": "retained-image loader and host compatibility",
                   "01a169f2-6ff6-7961-b16f-9fd0b836d3e3": "immutable delivery packaging",
                   "01a16a55-1607-7171-820e-a3918acaea3f": "independent tester/reviewer"
                 },
-                "scope": "Five existing chats, separate files; coordinator owns shared installation/Git. One E419 outcome, no duplicate recovery route."
+                "scope": "Beoordeelde timestampcorrectie en images gereed voor gebundelde installatie. Hoofdbouwer en tester nu E4.16; coder1 E1.14; coder2 exact runtimepakket."
               },
               "review": "development/reviews/e419-final-candidate-review-20261024.json",
               "progress": "V2 daadwerkelijk geïnstalleerd en onafhankelijk goedgekeurd. Kern, worker en host gebruiken de beoordeelde bronnen/configuratie; normale softwarewaarneming bestaat. Bouwer controleert de overdracht naar Eva en de eerste echte updateketen. Volledige kaart blijft open.",

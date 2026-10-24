@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T09:42:36.372006+00:00",
+  "updatedAt": "2026-10-24T09:57:30.604406+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -159,7 +159,7 @@
       "activeCodeOrInstallClaim": false
     },
     "codex-e418": {
-      "task": "E4.19",
+      "task": "E4.16",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "src/eva/bootstrap/component_maintenance.py",
@@ -618,7 +618,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "active_native_maintenance_handoff_and_update_chain",
+      "status": "active_actual_owner_command_repair",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1412,12 +1412,13 @@
         "src/eva/adapters/postgres/sensory_events.py",
         "development/tests/operations/test_runtime_dependency_update.py",
         "development/tests/bootstrap/test_component_maintenance.py"
-      ]
+      ],
+      "currentOutcome": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten."
     },
     "e415-independent-review-newchat": {
       "task": "E4.19",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "actual_software_observation_then_E111_responsibility",
+      "status": "active_exact_runtime_handoff_support",
       "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
       "allowedWritePaths": [],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
@@ -1435,7 +1436,7 @@
       "completedAt": "2026-10-23T19:48:37.263117+00:00",
       "review": "development/reviews/e415-household-batch-binding-review-20261023.json",
       "verdict": "GO",
-      "nextAction": "Freeze original E419 acceptance before candidate comparison; keep reference when gain unproven.",
+      "nextAction": "Rond exacte queue-bronbinding af; bereid daarna beoordeelde reparatie op actuele images voor zonder installatie.",
       "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
       "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
       "previousInstallationReview": "development/reviews/e415-coordinated-installation-review-20261023.json",
@@ -1543,13 +1544,13 @@
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "installed_foundation_review_delivered_native_review_active",
+      "status": "active_actual_owner_command_independent_review",
       "allowedWritePaths": [
         "development/reviews/e419-final-candidate-review-20261024.json"
       ],
       "activeIndependentReviewClaim": true,
       "review": "development/reviews/e415-central-alignment-readiness-review-20261023.json",
-      "task": "E4.19",
+      "task": "E4.16",
       "assignedAt": "2026-10-23T20:28:02.293070+00:00",
       "role": "independent_tester_reviewer",
       "activeCodeOrInstallClaim": false,
@@ -1566,7 +1567,7 @@
         "development/tests/portable/test_installation_runtime_image_restore.py"
       ],
       "activeCodeOrInstallClaim": true,
-      "scope": "Existing retained-image loader only; unused duplicate orchestrator withdrawn. No deployment.",
+      "scope": "E1.14: één geïsoleerde proef met bestaande huishoudroute, bronuitval, modeluitval en procesherstart. Geen productie-effecten of productcode.",
       "currentWritePaths": [
         "development/evidence/product/e114-continuity-outage-restart-20261024.json",
         "/home/administrator/project/.eva2-artifacts/e114-continuity-20261024"
@@ -1755,7 +1756,7 @@
     "authority": "Direct owner instruction 2026-10-23: sole main coordinator; integration, GitHub and shared installation exclusively here.",
     "previousCoordinator": "windows-root",
     "preserveExistingReservations": true,
-    "activeOutcome": "E4.19",
+    "activeOutcome": "E4.16",
     "doNotRepeatSentLolaQuestion": true,
     "agents": {},
     "maxConcurrentExecutorsReviewers": 4,
@@ -1820,8 +1821,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
-    "parallelBoundedWork": "E419 native chain and independent installed review; coder1 E1.14 continuity; coder2 package observation then E1.11 existing responsibility.",
-    "currentBlocker": "Geen eigenaarblokkade; onderhoudsroute geïnstalleerd. Echte native update/use/recovery nog te leveren.",
+    "parallelBoundedWork": "Hoofdbouwer: echte opdrachtfout; tester: onafhankelijke review; coder1: E1.14 continuïteit; coder2: exact runtimepakket; coördinator: integratie en installatie.",
+    "currentBlocker": "Concrete eigenaaropdracht mislukte; oorspronkelijke fout en veilige voortzetting worden vastgesteld. Geen eigenaarhandeling nodig.",
     "latestVerifiedOutcome": {
       "task": "E4.17",
       "status": "completed_original_restore_card_technical",
@@ -1830,10 +1831,10 @@
       "at": "2026-10-24T06:06:08.566732+00:00"
     },
     "nextBoundedAssignments": {
-      "executor": "Observe and finish one actual native E419 update/use/recovery chain",
-      "recoveryExecutor": "Finish original E1.14 continuity on existing isolated route",
-      "deliveryExecutor": "Read first actual software observation/package binding, then E1.11 concrete existing responsibility",
-      "reviewer": "Independent E419 installed/native review, then E1.14 concrete result",
+      "executor": "Repair actual owner command failure",
+      "recoveryExecutor": "Finish isolated E1.14 continuity proof",
+      "deliveryExecutor": "Exact runtime handoff and reviewed repair packaging",
+      "reviewer": "Independently verify actual command failure and concrete fix",
       "coordinator": "Integrate, verify live claims, install and close only original proven cards"
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
