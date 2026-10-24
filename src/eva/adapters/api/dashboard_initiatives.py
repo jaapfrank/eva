@@ -34,6 +34,48 @@ def install_dashboard_initiatives(app, *, access, runtime):
             raise HTTPException(422, "initiative scope is server-bound")
         return JSONResponse(invoke("dashboard_initiatives"), headers={"Cache-Control": "no-store"})
 
+    @app.get("/internal/v1/dashboard/household-provisions")
+    def household_provisions(request: Request):
+        access.require(request)
+        if request.query_params:
+            raise HTTPException(422, "household provision scope is server-bound")
+        return JSONResponse(invoke("dashboard_household_provisions"),
+                            headers={"Cache-Control": "no-store"})
+
+    @app.post("/internal/v1/dashboard/household-provisions/register")
+    def register_household_provision(request: Request, payload: dict):
+        access.require(request)
+        if (request.query_params or set(payload) != {"request_id"}
+                or not isinstance(payload["request_id"], str)
+                or not 1 <= len(payload["request_id"]) <= 160
+                or not payload["request_id"].strip()):
+            raise HTTPException(422, "invalid household provision registration")
+        # Source, household, evidence and verifier callbacks belong to the host.
+        return JSONResponse(invoke("dashboard_register_household_provision",
+                                   payload["request_id"]),
+                            headers={"Cache-Control": "no-store"})
+
+    @app.post("/internal/v1/dashboard/household-provisions/command")
+    def household_provision_command(request: Request, payload: dict):
+        access.require(request)
+        import re
+        fields = {"provision_id", "action", "expected_revision", "binding_sha256", "request_id"}
+        if (request.query_params or set(payload) != fields
+                or not isinstance(payload["action"], str)
+                or payload["action"] not in {"adopt", "pause", "resume", "reject", "retire", "stop"}
+                or type(payload["expected_revision"]) is not int
+                or payload["expected_revision"] < 1
+                or not isinstance(payload["binding_sha256"], str)
+                or re.fullmatch("[0-9a-f]{64}", payload["binding_sha256"]) is None
+                or any(not isinstance(payload[key], str)
+                       or not 1 <= len(payload[key]) <= 160 or not payload[key].strip()
+                       for key in ("provision_id", "request_id"))):
+            raise HTTPException(422, "invalid household provision command")
+        return JSONResponse(invoke("dashboard_household_provision_command",
+            payload["provision_id"], payload["action"], payload["expected_revision"],
+            payload["binding_sha256"], payload["request_id"]),
+            headers={"Cache-Control": "no-store"})
+
     @app.post("/internal/v1/dashboard/initiatives/review/abandon")
     def abandon_review(request: Request, payload: dict):
         access.require(request)

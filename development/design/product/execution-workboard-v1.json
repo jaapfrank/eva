@@ -6190,7 +6190,15 @@
                   "ownerApiCandidateSha256": "a072bd76609f40c70c7fc132e204314f16f298b3fdd1899f67963864ca363f3e",
                   "ownerApiCasesReportedPassed": 5,
                   "ownerApiRuntimeConnected": false,
-                  "privateHostWiringHandoffSha256": "5c7980a6e237453a1aa6e3526a8f9fa4eec37f1bb08ffbaeaaa174550266a7e9"
+                  "privateHostWiringHandoffSha256": "5c7980a6e237453a1aa6e3526a8f9fa4eec37f1bb08ffbaeaaa174550266a7e9",
+                  "ownerApiIndependentVerdict": "GO_SCOPED_OWNER_API_ROUTES_CODE",
+                  "ownerApiIndependentCasesPassed": 5,
+                  "ownerApiIndependentSeconds": 1.37,
+                  "privateHostWiringCasesReportedPassed": 10,
+                  "privateHostWiringIndependentCasesPassed": 10,
+                  "privateHostWiringIndependentSeconds": 1.62,
+                  "privateHostWiringFinding": "E112-WIRING-001/P2: recheck captured managed configuration after blocking proof/effect callbacks",
+                  "privateHostWiringFindingOpen": true
                 }
               },
               {
@@ -12198,7 +12206,15 @@
                 "ownerApiCandidateSha256": "a072bd76609f40c70c7fc132e204314f16f298b3fdd1899f67963864ca363f3e",
                 "ownerApiCasesReportedPassed": 5,
                 "ownerApiRuntimeConnected": false,
-                "privateHostWiringHandoffSha256": "5c7980a6e237453a1aa6e3526a8f9fa4eec37f1bb08ffbaeaaa174550266a7e9"
+                "privateHostWiringHandoffSha256": "5c7980a6e237453a1aa6e3526a8f9fa4eec37f1bb08ffbaeaaa174550266a7e9",
+                "ownerApiIndependentVerdict": "GO_SCOPED_OWNER_API_ROUTES_CODE",
+                "ownerApiIndependentCasesPassed": 5,
+                "ownerApiIndependentSeconds": 1.37,
+                "privateHostWiringCasesReportedPassed": 10,
+                "privateHostWiringIndependentCasesPassed": 10,
+                "privateHostWiringIndependentSeconds": 1.62,
+                "privateHostWiringFinding": "E112-WIRING-001/P2: recheck captured managed configuration after blocking proof/effect callbacks",
+                "privateHostWiringFindingOpen": true
               }
             },
             {

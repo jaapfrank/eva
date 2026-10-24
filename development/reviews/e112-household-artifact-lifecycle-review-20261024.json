@@ -4,8 +4,8 @@
   "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
   "clientTaskDate": "2026-10-24",
   "checkedAtMachineUtc": "2026-10-24T00:05:14.877182+00:00",
-  "status": "lifecycle_adapter_provider_v2_review_passed_actual_host_wiring_pending",
-  "verdict": "GO_SCOPED_LIFECYCLE_ADAPTER_PROVIDER_V2_CODE",
+  "status": "owner_api_code_review_passed_private_composition_one_proof_freshness_gap_open",
+  "verdict": "REQUEST_CHANGES_SCOPED_PRIVATE_HOST_FACTORY_FRESHNESS",
   "onlyWritePath": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
   "authority": {
     "boardPath": "development/design/product/execution-workboard-v1.json",
@@ -388,6 +388,37 @@
           "No live enrollment, activation, camera/model call, same-facility restore or owner/full E112 acceptance."
         ]
       }
+    },
+    {
+      "id": "E112-WIRING-001",
+      "severity": "P2",
+      "kind": "reproduced_private_factory_freshness_gap",
+      "status": "open_builder_coordinator_fix_required",
+      "title": "A positive realization proof escapes after managed configuration changed inside its callback",
+      "source": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/host-wiring-candidate/household_provision_host.py",
+      "line": 84,
+      "candidateSourceSha256": "7386ddd6713f24ca6050c942da306e39bbf385808b60fd31e4bc55ddb0d8557d",
+      "cause": "verify_realization runs current_host only before the potentially blocking trusted callback, then returns directly. Adapter.command invokes that callback last before writing verified active state, after its earlier verify_current.",
+      "reproduction": {
+        "cases": 1,
+        "seconds": 0.9512129939976148,
+        "realPrivateFactoryExecuted": true,
+        "setup": "Private temporary config and matching explicit enrollment, synthetic household binding from existing fixture, no-connect engine stub. Trusted proof callback changes current review digest and matching managed config digest before returning a positive receipt digest.",
+        "actual": {
+          "positiveProofReturned": true,
+          "managedKeyChangedDuringCallback": true,
+          "returnedProofSha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "databaseQueries": 0,
+          "modelCalls": 0,
+          "liveFilesOrRequests": 0
+        },
+        "actualActiveSqlWriteClaimed": false
+      },
+      "impact": "The freshness wrapper can hand a stale positive result to the pending active transition after source/config changed. Provider guards later fail closed, but the declaration/transition boundary itself lacks the promised current-source check.",
+      "expected": "Recheck the same captured managed configuration key after a blocking proof callback and before returning its value for DB append. Apply same freshness principle to analogous returning effect-status callback where required; no new schema/platform or live trial.",
+      "criteriaSource": "Existing minimal contract racePriorities source changes win; callbacks explicitly host/source/revision bound.",
+      "repairOwner": "coordinator/builder private host factory; reviewer changes no source or criteria",
+      "evidencePreservation": "Keep current5c798/7386/c7d/09f8 candidate and10PASS separate from this one source-change repro."
     }
   ],
   "existingNoPostFixture": {
@@ -417,7 +448,7 @@
     "reviewerProductWrites": 0
   },
   "usage": {
-    "testsRun": 84,
+    "testsRun": 99,
     "newDatabaseQueries": null,
     "newServiceStarts": 2,
     "newModelCalls": 0,
@@ -509,6 +540,37 @@
       "sourceDatabaseOrRuntimeActions": 0,
       "modelCalls": 0,
       "cameraCalls": 0
+    },
+    "latestOwnerApiReview": {
+      "cases": 5,
+      "existing": 2,
+      "new": 3,
+      "pytestSeconds": 1.37,
+      "processSeconds": 1.923315549036488,
+      "exitCode": 0,
+      "sourceAndTestPinsBeforeAfterUnchanged": true,
+      "realHttpCalls": 0,
+      "postgresQueries": 0,
+      "modelCalls": 0
+    },
+    "latestPrivateCompositionReview": {
+      "cases": 10,
+      "pytestSeconds": 1.62,
+      "processSeconds": 2.3815351389930584,
+      "exitCode": 0,
+      "realHttpCalls": 0,
+      "postgresQueries": 0,
+      "modelCalls": 0,
+      "invocationImportMode": "importlib",
+      "sourceOrTestBytesChanged": false
+    },
+    "latestProofFreshnessReproducer": {
+      "cases": 1,
+      "seconds": 0.9512129939976148,
+      "result": "positive proof returned after managed key changed",
+      "postgresQueries": 0,
+      "modelCalls": 0,
+      "liveEffects": 0
     }
   },
   "handoff": "Concrete findings sent directly to coordinator during review. Waiting for exact frozen implementation and owner integration; no general test series, code edits, installs or extra agents.",
@@ -749,6 +811,105 @@
     "limits": [
       "Code only; actual owner/current/realization/effect callbacks and bootstrap/API integration still pending.",
       "No live enrollment, activation, camera/model call, same-facility restore or owner/full E112 acceptance."
+    ]
+  },
+  "coordinatorOwnerApiV1Review": {
+    "verdict": "GO_SCOPED_OWNER_API_ROUTES_CODE",
+    "checkedAtMachineUtc": "2026-10-24T00:22:31.322913+00:00",
+    "freezeSha256": "a072bd76609f40c70c7fc132e204314f16f298b3fdd1899f67963864ca363f3e",
+    "sourceSha256": "655440a6ccb1b82cc3c14e7fdb32f1fe01956dc35b310c112a704d248f4bba92",
+    "testSha256": "ff26ee4ede8148e93801b7e4bd11a9fdf84dfbd50a29963556a08efe740e526f",
+    "independentTests": {
+      "cases": 5,
+      "existing": 2,
+      "new": 3,
+      "pytestSeconds": 1.37,
+      "processSeconds": 1.923315549036488,
+      "exitCode": 0,
+      "sourceAndTestPinsBeforeAfterUnchanged": true,
+      "realHttpCalls": 0,
+      "postgresQueries": 0,
+      "modelCalls": 0
+    },
+    "confirmed": [
+      "access.require precedes each new runtime invocation; unauthorized list/register/command denied.",
+      "Caller query/scope/owner/evidence/authorize fields rejected; host owns source/evidence/callback selection.",
+      "Command requires exact fields, positive actual int revision, lowercase64hex binding and bounded IDs; bool revision rejected.",
+      "No-store responses and unavailable runtime503 preserved."
+    ],
+    "limits": [
+      "Runtime methods not yet connected; fake-runtime API transport/control contract only.",
+      "No real enrollment/adoption/pause or installed/full E112 acceptance."
+    ]
+  },
+  "privateCompositionV1Review": {
+    "verdict": "REQUEST_CHANGES_SCOPED_PROOF_FRESHNESS_WRAPPER",
+    "checkedAtMachineUtc": "2026-10-24T00:22:31.323055+00:00",
+    "handoffSha256": "5c7980a6e237453a1aa6e3526a8f9fa4eec37f1bb08ffbaeaaa174550266a7e9",
+    "files": [
+      {
+        "bytes": 8276,
+        "path": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/host-wiring-candidate/household_initiative.baseline.py",
+        "sha256": "b7a17d6fd0a74cba581a7e146c6882bab73d718c0bae0ede095633a6c0e82fad"
+      },
+      {
+        "bytes": 10327,
+        "path": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/host-wiring-candidate/household_initiative.py",
+        "sha256": "c7d701670fa01d3d86f38cd97f11f9e787f04351fdd7c195e464d46b32039a04"
+      },
+      {
+        "bytes": 5119,
+        "path": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/host-wiring-candidate/household_provision_host.py",
+        "sha256": "7386ddd6713f24ca6050c942da306e39bbf385808b60fd31e4bc55ddb0d8557d"
+      },
+      {
+        "bytes": 5749,
+        "path": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/host-wiring-candidate/composition.private.patch",
+        "sha256": "d5e78533de138a14fddeb04624bd801e64c4a2e359bd136363d9f4d3d1acd7ce"
+      },
+      {
+        "bytes": 1856,
+        "path": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/host-wiring-candidate/integration-tests.private.json",
+        "sha256": "b7b1f2841183c86e5c4218919ce62021866dafac9b8af954d9a9c8d25caea6f9"
+      },
+      {
+        "bytes": 1376,
+        "path": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/host-wiring-candidate/runtime-usage.private.txt",
+        "sha256": "1740946b369e80923dc2b1430d2323bf72f890644453074a75eca5a13e86c7e3"
+      }
+    ],
+    "testSha256": "09f8f66dd2486d9209b031ffc105ad91ff18deb5f47fe7b90a6aad581d1e87e7",
+    "builderTestReceiptSha256": "941cdc5acc965f143a988665efde758963dc6249e8f135d3de288f7ae7e437cc",
+    "independentTests": {
+      "cases": 10,
+      "pytestSeconds": 1.62,
+      "processSeconds": 2.3815351389930584,
+      "exitCode": 0,
+      "realHttpCalls": 0,
+      "postgresQueries": 0,
+      "modelCalls": 0,
+      "invocationImportMode": "importlib",
+      "sourceOrTestBytesChanged": false
+    },
+    "originalCollectionFailure": {
+      "exitCode": 2,
+      "processSeconds": 0.5613200480001979,
+      "pytestSeconds": 0.29,
+      "casesExecuted": 0,
+      "reason": "Default pytest import mode cannot import dotted filename test_host_wiring.private.py: ModuleNotFoundError test_host_wiring.",
+      "correction": "Only --import-mode=importlib was added to the same original private test bytes; no assertions/criteria or source modified."
+    },
+    "confirmed": [
+      "Private clone exactly based on b7a source; original channel/destination/quiet/authority route retained.",
+      "Explicit enrolled factory passes actual scoped adapter; explicit None legacy separate from missing managed key.",
+      "Managed source/enrollment/path cache changes invalidate old window/provider authorization.",
+      "Callbacks forward same prepared store/event/guard/claim and unchanged settlement; verify_realization None remains absent."
+    ],
+    "newConcreteDefect": "E112-WIRING-001",
+    "runtimeLoaderNote": "runtime-usage.private.txt:6-7 uses config.get(enrollment), which can silently map missing key to legacyNone. Actual tests correctly use required key indexing. Root loader must be strict; current sketch is not an approved runtime implementation.",
+    "limits": [
+      "Real trusted owner/current/proof/effect callbacks and config loader not yet connected.",
+      "No actual enrollment, positive realization, SQL state activation, shared install or full E112 claim."
     ]
   }
 }
