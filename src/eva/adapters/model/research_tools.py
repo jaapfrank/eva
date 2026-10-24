@@ -351,6 +351,103 @@ class OwnerResearchContinuationTool(NativeResearchTool):
         self._validate_execution_input(arguments)
         return self._preparation(arguments, {"policy": "ordinary_requested_research"})
 
+    def recoverable_terminal_read_failure(self, turn, events):
+        """Keep a measured, rejected public response as failed read context.
+
+        This does not dispatch the historical request or invent an artifact.
+        Only the ordinary task route may choose another currently allowed tool.
+        Other failures, unknown usage and uncertain effects remain closed.
+        """
+        from eva.application.background_execution import background_execution_namespace
+        from eva.application.cancellation import check_cancellation
+        from eva.application.conversation import ConversationModelUsage
+
+        if (type(self) is not OwnerResearchContinuationTool
+                or require_initiative_context(turn) is not None
+                or getattr(self.research, "turn", None) != turn):
+            return None
+        namespace = background_execution_namespace(turn)
+        authorize = getattr(self.research, "authorize", None)
+        if namespace is None or not callable(authorize):
+            return None
+        check_cancellation()
+        authorize(turn)
+        try:
+            if ([event.event_type for event in events] != [
+                    "TOOL_REQUEST_ADMITTED", "TOOL_PREPARED", "RECOVERY_FAILED"]
+                    or any(canonical_sha256(event.payload) != event.payload_sha256 for event in events)):
+                return None
+            operation = events[0].payload["checkpoint"]["operation_id"]
+            if events[0].thread_id != "tool:" + operation:
+                return None
+            for index, event in enumerate(events, 1):
+                checkpoint = event.payload["checkpoint"]
+                if (event.sequence != index or checkpoint["revision"] != index
+                        or checkpoint["operation_id"] != operation
+                        or event.thread_id != events[0].thread_id
+                        or (index > 1 and event.occurred_at < events[index - 2].occurred_at)):
+                    return None
+            admission, prepared, failed = (event.payload["data"] for event in events)
+            output_error = hashlib.sha256(
+                b"ConversationModelError: conversation provider exceeded the runtime output budget"
+            ).hexdigest()
+            if (admission.get("action_name") != "research_current_options"
+                    or admission.get("principal_id") != turn.principal_id
+                    or admission.get("conversation_id") != turn.conversation_id
+                    or admission.get("source_message_id") != turn.message_id
+                    or admission.get("execution_namespace") != namespace
+                    or admission.get("request_tool_name") != self.tool_name
+                    or admission.get("request_observation_tool_name") != self.tool_name
+                    or prepared.get("tool_name") != self.tool_name
+                    or prepared.get("observation_tool_name") != self.tool_name
+                    or events[-1].payload["checkpoint"].get("status") != "failed"
+                    or failed.get("error_fingerprint") != output_error):
+                return None
+            usage = ConversationModelUsage.from_wire(failed["model_usage"])
+            if (usage.measurement != "measured" or usage.model_attempts != 1
+                    or usage.input_tokens <= 0 or usage.output_tokens <= 0):
+                return None
+            arguments = self.validate_arguments(admission["action_arguments"])
+            self._validate_execution_input(arguments)
+            if ("options" not in arguments or arguments != admission["action_arguments"]
+                    or any(value != arguments for value in (
+                        admission.get("request_arguments"), admission.get("request_observation_arguments"),
+                        prepared.get("arguments"), prepared.get("observation_arguments")))):
+                return None
+            output = admission["receipt_output"]
+            body = output["provider_request_body"]
+            body_hash = canonical_sha256(body)
+            expected = {"provider_envelope_sha256": body_hash}
+            configuration = self._configuration_sha256()
+            if (output.get("verification_scope") != "research_artifact_only"
+                    or output.get("external_state_verified") is not False
+                    or output.get("public_input_checks") != {"policy": "ordinary_requested_research"}
+                    or body_hash != output.get("provider_request_body_sha256")
+                    or admission.get("request_expected_proof") != expected
+                    or prepared.get("expected_proof") != expected
+                    or body != self.research.research_request_payload(
+                        question=arguments["question"], options=tuple(arguments["options"]),
+                        **self._mode(arguments))
+                    or body.get("tools") != [{"search_context_size": "low", "type": "web_search"}]
+                    or body.get("store") is not False
+                    or any(key in output for key in ("result", "research_artifact"))
+                    or any(key in failed for key in ("proof", "dispatch", "result", "research_artifact"))
+                    or prepared.get("tool_configuration_sha256") != configuration
+                    or admission.get("request_tool_configuration_sha256") != configuration):
+                return None
+        except (ConversationConflict, ConversationActionInputRejected, KeyError, TypeError, ValueError, AttributeError):
+            return None
+        check_cancellation()
+        authorize(turn)
+        return {"evidence": {"source": "public_research_source_read_error",
+            "operation_kind": "read", "provider_completed": True, "external_state_verified": False,
+            "error": {"code": "research_response_output_rejected", "model_usage": usage.to_wire(),
+                "error_fingerprint": output_error, "artifact_status": "no_recorded_artifact"},
+            "admission_sha256": events[0].payload_sha256,
+            "terminal_event_sha256": events[-1].payload_sha256,
+            "event_chain_sha256": canonical_sha256([
+                {"type": event.event_type, "payload_sha256": event.payload_sha256} for event in events])}}
+
     def _configuration_sha256(self):
         return canonical_sha256({"research": super()._configuration_sha256(),
             "input_policy": "ordinary_requested_research", "contract": "owner-research-continuation-v1"})

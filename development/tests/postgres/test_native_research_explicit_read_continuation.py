@@ -236,3 +236,185 @@ def test_real_instructions_distinguish_explicit_live_resume_without_expanding_au
         f.control.stop(f.claim.intent_id, now=NOW)
         with pytest.raises(RuntimeError):
             live.instructions()
+
+
+def owner_terminal_fixture(tmp_path):
+    import asyncio
+    from copy import deepcopy
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.bootstrap.background_research import AccountedResearch
+    from eva.application.conversation import ConversationActionCall, ConversationModelUsage
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from tests.model.test_conversation_model import _runtime_budget
+
+    turn = ConversationTurn.private("owner-test", "home", "owner", "chat", "source",
+        "Read the public specification.", NOW.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    namespace = BackgroundExecutionScope(turn, "original-owner-execution").namespace
+    model = PydanticConversationModel(auth_file=tmp_path / "unused", resource_budget=_runtime_budget())
+    calls = Mock(side_effect=AssertionError("historical research must never be dispatched"))
+    provider = SimpleNamespace(research_request_payload=model.research_request_payload,
+        research_configuration_sha256=model.research_configuration_sha256,
+        native_research_timeout_seconds=lambda: 120, research_current_options=calls)
+    authorize = Mock()
+    phase = AccountedResearch(provider, turn=turn, journal=Mock(), authorize=authorize,
+        grant=SimpleNamespace(maximum_model_runs=32, maximum_input_tokens=200000,
+                              maximum_output_tokens=38400), input_bound=64000, output_bound=1200)
+    adapter = OwnerResearchContinuationTool(phase, PostgresConversationActions._validated_research_arguments)
+    args = {"question": "Which interface does the public specification describe?",
+            "title": "Public specification", "options": ["https://example.org/specification"],
+            "research_mode": "topic", "public_review": "not_applicable"}
+    call = ConversationActionCall("old-owner-read", "research_current_options", args)
+    with background_execution(BackgroundExecutionScope(turn, "original-owner-execution")):
+        prepared = asyncio.run(adapter.prepare(turn, call))
+    admission = {"action_name": call.name, "action_call_id": call.call_id,
+        "action_arguments": args, "principal_id": turn.principal_id,
+        "conversation_id": turn.conversation_id, "source_message_id": turn.message_id,
+        "execution_namespace": namespace, "step_index": 18,
+        "request_tool_name": prepared.tool_name,
+        "request_observation_tool_name": prepared.observation_tool_name,
+        "request_arguments": prepared.arguments,
+        "request_observation_arguments": prepared.observation_arguments,
+        "request_expected_proof": prepared.expected_proof,
+        "request_tool_configuration_sha256": prepared.tool_configuration_sha256,
+        "receipt_output": prepared.receipt_output,
+        "observation_output_key": prepared.observation_output_key}
+    operation = PostgresExternalConversationTools._historical_operation_id(turn, call.name, admission, 18)
+    data = (admission, {"tool_name": prepared.tool_name,
+        "observation_tool_name": prepared.observation_tool_name,
+        "arguments": prepared.arguments, "observation_arguments": prepared.observation_arguments,
+        "expected_proof": prepared.expected_proof,
+        "tool_configuration_sha256": prepared.tool_configuration_sha256},
+        {"error_fingerprint": "3f731937657d3f9ba91d53f807608083a70fee5e650d607ec57a4115a2b3843d",
+         "retry_count": 1, "model_usage": ConversationModelUsage.measured(
+             model_attempts=1, input_tokens=38391, output_tokens=1211, tool_calls=7).to_wire()})
+    history = []
+    for index, (kind, value) in enumerate(zip(
+            ("TOOL_REQUEST_ADMITTED", "TOOL_PREPARED", "RECOVERY_FAILED"), data), 1):
+        payload = {"data": deepcopy(value), "checkpoint": {"operation_id": operation,
+            "revision": index, "status": "failed" if index == 3 else "waiting_for_proof"}}
+        history.append(SimpleNamespace(thread_id="tool:" + operation, sequence=index,
+            event_type=kind, occurred_at=NOW, payload=payload, payload_sha256=canonical_sha256(payload)))
+    return turn, adapter, tuple(history), calls, authorize
+
+
+def test_owner_terminal_measured_public_failure_restores_failed_context_only(tmp_path):
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from eva.adapters.connectors.delegated_completion import completed_tool_evidence, recoverable_completion_context
+    turn, adapter, history, calls, authorize = owner_terminal_fixture(tmp_path)
+    original = [event.payload_sha256 for event in history]
+    external = PostgresExternalConversationTools(None, adapter, adapter)
+    with background_execution(BackgroundExecutionScope(turn, "original-owner-execution")):
+        receipt = external._receipt(turn, history, step_index=18, project=False)
+    assert receipt.output["status"] == "failed"
+    assert receipt.output["recoverable_read_error"] is True
+    evidence = receipt.output["proof"]["evidence"]
+    assert evidence["source"] == "public_research_source_read_error"
+    assert evidence["provider_completed"] is True and evidence["external_state_verified"] is False
+    assert evidence["error"]["model_usage"]["output_tokens"] == 1211
+    assert evidence["error"]["artifact_status"] == "no_recorded_artifact"
+    assert recoverable_completion_context(receipt) and not completed_tool_evidence([receipt])
+    assert [event.payload_sha256 for event in history] == original
+    assert history[-1].event_type == "RECOVERY_FAILED" and calls.call_count == 0
+    assert authorize.call_count == 2
+
+
+@pytest.mark.parametrize("fault", ["unknown_usage", "partial_usage", "other_error", "zero_output",
+    "foreign_source", "namespace", "configuration", "envelope", "event_hash", "executed", "effect"])
+def test_owner_terminal_unknown_or_changed_history_remains_closed(tmp_path, fault):
+    from eva.application.conversation import ConversationModelUsage
+    turn, adapter, history, calls, authorize = owner_terminal_fixture(tmp_path)
+    admission, prepared, failed = (event.payload["data"] for event in history)
+    if fault == "unknown_usage": failed["model_usage"] = ConversationModelUsage.unmeasured().to_wire()
+    elif fault == "partial_usage": failed["model_usage"] = ConversationModelUsage.partial(
+        model_attempts=1, input_tokens=38391, output_tokens=1211, tool_calls=7).to_wire()
+    elif fault == "other_error": failed["error_fingerprint"] = "0" * 64
+    elif fault == "zero_output": failed["model_usage"]["output_tokens"] = 0
+    elif fault == "foreign_source": admission["source_message_id"] = "foreign"
+    elif fault == "namespace": admission["execution_namespace"] = "background-work:" + "0" * 64
+    elif fault == "configuration": prepared["tool_configuration_sha256"] = "0" * 64
+    elif fault == "envelope": admission["receipt_output"]["provider_request_body"]["store"] = True
+    elif fault == "event_hash": failed["retry_count"] = 2
+    elif fault == "executed": history[1].event_type = "TOOL_EXECUTED"
+    else: failed["dispatch"] = {"accepted": True}
+    if fault != "event_hash":
+        for event in history: event.payload_sha256 = canonical_sha256(event.payload)
+    with background_execution(BackgroundExecutionScope(turn, "original-owner-execution")):
+        assert adapter.recoverable_terminal_read_failure(turn, history) is None
+    assert calls.call_count == 0
+
+
+@pytest.mark.parametrize("guard", ["no_background", "native", "subclass", "wrong_turn", "stop", "revoke_after_read"])
+def test_owner_terminal_current_scope_and_stop_are_not_bypassed(tmp_path, guard):
+    from contextlib import nullcontext
+    from eva.application.conversation import ConversationConflict
+    turn, adapter, history, calls, authorize = owner_terminal_fixture(tmp_path)
+    source = turn
+    if guard == "subclass":
+        class OtherOwnerTool(OwnerResearchContinuationTool): pass
+        adapter = OtherOwnerTool(adapter.research, adapter.validate_arguments)
+    if guard == "wrong_turn": source = replace(turn, message_id="foreign")
+    if guard == "stop": authorize.side_effect = ConversationConflict("stopped")
+    if guard == "revoke_after_read": authorize.side_effect = [None, ConversationConflict("revoked")]
+    background = (nullcontext() if guard == "no_background" else
+                  background_execution(BackgroundExecutionScope(turn, "original-owner-execution")))
+    native = (initiative_execution(SimpleNamespace(turn=turn, check=Mock()))
+              if guard == "native" else nullcontext())
+    with background, native:
+        if guard in {"native", "stop", "revoke_after_read"}:
+            try:
+                proof = adapter.recoverable_terminal_read_failure(source, history)
+            except ConversationConflict:
+                proof = None
+            assert proof is None
+        else:
+            assert adapter.recoverable_terminal_read_failure(source, history) is None
+    assert calls.call_count == 0
+
+
+@pytest.mark.parametrize("grant", ["permitted", "not_admitted", "exhausted"])
+def test_owner_terminal_real_loop_offers_only_currently_permitted_alternatives(tmp_path, grant):
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from eva.bootstrap.delegated_digital_runner import BackgroundConnectorActions
+    from eva.application.conversation import ConversationActionCall, ConversationActionReceipt, ConversationConflict, LivingConversation
+    from tests.application.test_contact_model import IDENTITY, Model
+    from tests.application.test_conversation import _Memory
+    turn, adapter, history, calls, authorize = owner_terminal_fixture(tmp_path)
+    external = PostgresExternalConversationTools(None, adapter, adapter)
+    fallback_calls = []
+    class Historical:
+        action_names = ("research_current_options",)
+        def available_for(self, source): return source == turn
+        def active_context(self, source): return ()
+        def pending(self, source, *, step_index):
+            return external._receipt(source, history, 18, project=False) if step_index == 18 else None
+        def execute(self, *args, **kwargs): pytest.fail("historical research must not be replayed")
+    class Fallback:
+        action_names = ("fetch_source",)
+        def available_for(self, source): return source == turn
+        def active_context(self, source): return ()
+        def pending(self, source, *, step_index): return None
+        def execute(self, source, call, *, step_index):
+            fallback_calls.append((call.name, step_index))
+            return ConversationActionReceipt(call, {"status": "verified", "result": {"text": "Public source read."}})
+    allowed = ("research_current_options",) + (() if grant == "not_admitted" else ("fetch_source",))
+    actions = BackgroundConnectorActions((Historical(), Fallback()), allowed, authorize,
+        0 if grant == "exhausted" else 1,
+        recorded_action_slots=lambda: ((18, "research_current_options", "old-owner-read"),))
+    def choose(source, context):
+        receipt = context["completed_action"]
+        if receipt.call.name == "research_current_options":
+            assert receipt.output["status"] == "failed"
+            assert "fetch_source" in context["available_actions"] if grant != "not_admitted" else "fetch_source" not in context["available_actions"]
+            return ("No permitted alternative is available." if grant == "not_admitted" else
+                    ConversationActionCall("alternative", "fetch_source", {}))
+        return "The alternative public source was read."
+    model = Model(choose)
+    with background_execution(BackgroundExecutionScope(turn, "original-owner-execution")):
+        conversation = LivingConversation(_Memory(), model, IDENTITY, actions)
+        if grant == "exhausted":
+            with pytest.raises(ConversationConflict): conversation.respond(turn)
+        else:
+            conversation.respond(turn)
+    assert fallback_calls == ([] if grant != "permitted" else [("fetch_source", 19)])
+    assert calls.call_count == 0
+    assert history[-1].event_type == "RECOVERY_FAILED"
