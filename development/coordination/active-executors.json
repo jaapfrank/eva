@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T16:54:04.181887+00:00",
+  "updatedAt": "2026-10-24T19:27:32.292568+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -305,7 +305,7 @@
         "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
         "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
       ],
-      "updatedAt": "2026-10-24T16:54:04.181887+00:00",
+      "updatedAt": "2026-10-24T19:27:32.292568+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -586,7 +586,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "bounded_provider_diagnostics_delivered",
+      "status": "new_503_bounded_diagnosis_in_progress",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1286,7 +1286,7 @@
         "noRuntimeModelExecutorCameraMessageOrInstallation": true
       },
       "previousStatusBeforeCentralHandoff": "Canonical child conflicts and original32-row cutoff/singlepending cases finalized;44 focused checks passed, ready independent GO",
-      "activeCodeOrInstallClaim": false,
+      "activeCodeOrInstallClaim": true,
       "e417ColdStartHandoff": {
         "updatedAt": "2026-10-23T23:53:39.681074+00:00",
         "status": "phase1_exact_plan_pending_coordinator_tester_admission_not_started",
@@ -1303,7 +1303,9 @@
         "coordinatorNotified": true,
         "nextTaskRequestedDirectly": true
       },
-      "currentWritePaths": [],
+      "currentWritePaths": [
+        "src/eva/adapters/model/openai_codex_provider.py"
+      ],
       "e110Progress": {
         "status": "frozen_candidate_handed_off",
         "manifest": "/home/administrator/project/.eva2-artifacts/e110-housemate-development-20261024/candidate-manifest.private.json",
@@ -1371,10 +1373,12 @@
         "preserveE416FrozenBlobs": true
       },
       "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
-      "currentExclusiveWritePaths": [],
+      "currentExclusiveWritePaths": [
+        "src/eva/adapters/model/openai_codex_provider.py"
+      ],
       "currentOutcome": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
-      "scope": "Completed assigned bounded HTTP diagnostic source, regression or independent review. No new live school retry or extra work assigned merely to keep this chat active.",
-      "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-owner-useful-completion-20261024",
+      "scope": "Inspect exact installed provider ExceptionGroup metadata transfer for the two new HTTP503 failures; only change provider source if a reproducible defect is proven.",
+      "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/provider-failure-8768-main/new-503-1925/",
       "activeIndependentReviewClaim": false
     },
     "e415-independent-review-newchat": {
@@ -1536,15 +1540,15 @@
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
       "task": "E4.16",
       "role": "executor",
-      "status": "bounded_provider_diagnostics_delivered",
+      "status": "new_503_bounded_diagnosis_in_progress",
       "allowedWritePaths": [
         "development/tests/postgres/test_native_research_explicit_read_continuation.py"
       ],
       "activeCodeOrInstallClaim": false,
-      "scope": "Completed assigned bounded HTTP diagnostic source, regression or independent review. No new live school retry or extra work assigned merely to keep this chat active.",
+      "scope": "Read-only binding of the two observed failure hashes to actual work, claims and native recovery; no retry or product mutation.",
       "currentWritePaths": [],
-      "updatedAt": "2026-10-24T16:54:04.181887+00:00",
-      "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e16-natural-source-followthrough-20261024/coder1",
+      "updatedAt": "2026-10-24T19:27:32.292568+00:00",
+      "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/owner-school-name/coder1/new-503-1925/",
       "latestBoundedReadback": {
         "checkedThrough": "2026-10-24T11:56:03Z",
         "findingSha256": "ad09f57df2116fa47fd015fcf81c0445f99f849011cd4c82153713e278198b32",
@@ -1770,8 +1774,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": null,
-    "parallelBoundedWork": "Single-file provider diagnostics, four offline SDK checks, independent review and current-runtime installation completed.",
-    "currentBlocker": "Historical upstream503 reason unknown; school result remains open. No identical school retry.",
+    "parallelBoundedWork": "Two new observed core HTTP503 failures: builder checks exact installed metadata handoff; coder1 reads actual work and recovery status.",
+    "currentBlocker": "Two new ordinary-core HTTP503 failures; concrete cause and affected work under bounded read-only investigation. No school retry.",
     "latestVerifiedOutcome": {
       "task": "E4.17",
       "status": "completed_original_restore_card_technical",
@@ -1780,10 +1784,10 @@
       "at": "2026-10-24T06:06:08.566732+00:00"
     },
     "nextBoundedAssignments": {
-      "builder": "No current product claim; next task requires a concrete original-card gap.",
-      "regressionExecutor": "Targeted four-case regression delivered; no repeated old matrix.",
-      "reviewer": "Source/test/package and actual installation reviews complete.",
-      "coordinator": "Current board/Git/dashboard reflect bounded install; preserve ordinary use and original open acceptance criteria."
+      "builder": "Inspect available metadata propagation for two new ExceptionGroup HTTP503 failures; only fix a proven reproducible source defect.",
+      "regressionExecutor": "Bind the two actual failures to work and native recovery state, read-only.",
+      "reviewer": "Independent review follows concrete evidence or a proven candidate; no product code.",
+      "coordinator": "Maintain current claims and board; decide a bounded next action from actual findings, no new model call or install."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {
