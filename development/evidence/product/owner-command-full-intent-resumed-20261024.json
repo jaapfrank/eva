@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:56:37.055465+00:00",
-  "status": "owner_corrected_route_online_discovery_resume_preparation",
+  "status": "corrected_resume_used_research_tool_failed_no_useful_school_result",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -131,5 +131,37 @@
     "actualLoginConfirmed": false,
     "originalSchoolOutcomeStillOpen": true,
     "instruction": "Hervat dezelfde schoolopdracht met de nieuwe eigenaarcorrectie: Eva onderzoekt zelf online appauthenticatie en andere toegestane/onofficiële routes, vergelijkt concrete alternatieven en controleert de oorspronkelijke bruikbare uitkomst. Een handmatige browserlogin is niet vooraf vereist. Geef geen loginbevestiging of afronding voor zonder echt bewijs; bestaande bron, bevoegdheden, verbruik en oorspronkelijke ontvanger behouden."
+  },
+  "latestActualOwnerCorrectionAttempt": {
+    "workId": "work:eva-resume:4a94cb08-b2bc-5eab-a178-0b8a9272c4b2",
+    "admittedAt": "2026-10-24T13:13:57Z",
+    "deadline": "2026-10-24T13:33:57Z",
+    "terminalAt": "2026-10-24T13:15:42Z",
+    "state": "failed",
+    "outcomeKind": "incomplete_work",
+    "specSha256": "fa8c0c83b29475306c6ed9787306576944ef0292f6241a197d9df1858d286059",
+    "originalSourceGrantDestinationPreserved": true,
+    "oldTwelveExternalHeadsPreserved": true,
+    "researchFailureFingerprint": "3f731937657d3f9ba91d53f807608083a70fee5e650d607ec57a4115a2b3843d",
+    "researchFailureReceiptSha256": "9ed294db4ce0b143cb6ca7fb9696919a60edfdd600cdcd13d6de71053139a6ff",
+    "executionReceiptSha256": "94e18c1be3151277709c935a2845c5ffff8b6d997eac0b955ce05937f60de62e",
+    "actualEvidenceSha256": "64f24721fd47eabe9aad7d02c5eaa313c1697b661589b9a67439a183c6e4497a",
+    "independentReviewSha256": "c3816fdd928463992ab3a05518e9e9bb5b5f9a687425c8773ca80df7fd18c5be",
+    "usableSourceResult": false,
+    "usableSchoolResult": false,
+    "loginRequiredProved": false,
+    "terminalAckIsNotCompletion": true,
+    "runtimeUsage": {
+      "measurement": "partial",
+      "modelResponses": 4,
+      "inputTokens": 143377,
+      "outputTokens": 1658,
+      "aggregateReportedToolCalls": 1,
+      "nestedResearchReportedToolCalls": 7,
+      "cost": null,
+      "differentScopesNotSummed": true
+    },
+    "developmentTokens": null,
+    "developmentCost": null
   }
 }
