@@ -228,16 +228,16 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             raise DelegatedWorkConflict("household continuation differs from its admitted execution")
         self._authorize_household(work.spec, connection, read_only=True)
 
-    def _authorize_household_request(self, work, connection, *, origin, request_origin):
-        """Bind a new native request to the sealed retained task on the same device."""
+    def _authorize_household_request(self, work, connection, *, origin, request_origin, read_only=False):
+        """Bind retained household work to two admitted devices under the same household authority."""
         from eva.adapters.postgres.household_work_sessions import verify_origin
         if (not isinstance(work.spec, _HOUSEHOLD_WORK_TYPES) or origin is None
                 or work.spec.origin != origin or self._household_clock() >= work.retention_until):
             raise DelegatedWorkNotFound("retained household work is absent")
         self._authorize_household(work.spec, connection, read_only=True)
-        original = verify_origin(connection, self.scope, work.spec.origin,
+        verify_origin(connection, self.scope, work.spec.origin,
             require_open=False, now=self._household_clock())
-        current = verify_origin(connection, self.scope, request_origin,
+        verify_origin(connection, self.scope, request_origin,
             require_open=True, now=self._household_clock())
         authority = getattr(self._household_authorizer, "__self__", None)
         retained_read = (
@@ -245,17 +245,20 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             and authority.permits_retained_read(work.spec)
             and request_origin.research_policy_sha256 == authority.sha256
         )
-        if (original.get("native_conversation_key") is None
-                or current.get("native_conversation_key") is None
-                or any(getattr(work.spec.origin, key) != getattr(request_origin, key) for key in (
-                    "tenant_id", "installation_id", "household_id", "actor_id",
-                    "satellite_id", "device_id", "consent_operation_id",
+        if not callable(getattr(authority, "validate_device", None)):
+            raise DelegatedWorkNotFound("household device authority is unavailable")
+        for admitted in (work.spec.origin, request_origin):
+            authority.validate_device(admitted.satellite_id, admitted.device_id)
+            if admitted.actor_id != "household-device:" + admitted.device_id:
+                raise DelegatedWorkNotFound("household actor differs from its admitted device")
+        if (any(getattr(work.spec.origin, key) != getattr(request_origin, key) for key in (
+                    "tenant_id", "installation_id", "household_id", "consent_operation_id",
                     "household_policy_sha256"))
-                or (not retained_read and work.spec.origin.research_policy_sha256
+                or ((read_only or not retained_read) and work.spec.origin.research_policy_sha256
                     != request_origin.research_policy_sha256)):
             raise DelegatedWorkNotFound("retained household request differs from its device authority")
 
-    def _authorize_household_delivery(self, work, connection, *, origin, binding):
+    def _authorize_household_delivery(self, work, connection, *, origin, binding, explicit=False):
         """Read only a retained outcome for its sealed original native destination."""
         from eva.adapters.postgres.household_work_sessions import verify_origin
         from eva.application.work_failure_notice import delivery_outcome
@@ -267,17 +270,21 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         self._authorize_household(work.spec, connection, read_only=True)
         original = verify_origin(connection, self.scope, work.spec.origin,
             require_open=False, now=self._household_clock())
-        if original.get("native_conversation_key") is None:
+        if explicit:
+            from eva.adapters.postgres.household_work_destination import read_destination, validate_destination
+            validate_destination(connection, self.scope, self._household_authorizer.__self__, work.spec,
+                read_destination(connection, self.scope, work.spec.work_id))
+        elif original.get("native_conversation_key") is None:
             raise DelegatedWorkNotFound("retained household outcome requires its native destination")
 
     def _authorize_household_access(self, work, connection, *, origin,
-                                    execution_id=None, request_origin=None, delivery_binding=None):
+                                    execution_id=None, request_origin=None, delivery_binding=None, explicit_delivery=False):
         if sum(value is not None for value in (execution_id, request_origin, delivery_binding)) > 1:
             raise DelegatedWorkConflict("household access paths cannot be combined")
         if request_origin is not None:
             self._authorize_household_request(work, connection, origin=origin, request_origin=request_origin)
         elif delivery_binding is not None:
-            self._authorize_household_delivery(work, connection, origin=origin, binding=delivery_binding)
+            self._authorize_household_delivery(work, connection, origin=origin, binding=delivery_binding, explicit=explicit_delivery)
         elif execution_id is not None:
             self._authorize_household_continuation(work, connection, origin=origin, execution_id=execution_id)
         else:
@@ -340,7 +347,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 raise DelegatedWorkConflict("native queue authority scope differs")
             _native_guard.check_locked(_connection)
             PostgresOperationalTimeline(self._engine, self.scope)._scope(_connection)
-        elif _connection is not None or _native_guard is not None:
+        elif _native_guard is not None or (_connection is not None and not isinstance(spec, _HOUSEHOLD_WORK_TYPES)):
             raise DelegatedWorkConflict("owner admission cannot borrow a native transaction")
         # These three values are trusted operator-display labels, not task text.
         # The local cockpit remains unauthenticated until its own product gate.
@@ -1259,6 +1266,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         household_continuation_execution_id: str | None = None,
         household_request_origin=None,
         household_delivery_binding=None,
+        household_read_origin=None,
+        household_explicit_delivery=False,
     ) -> StoredDelegatedWork:
         with self._engine.connect() as connection:
             transaction = connection.begin()
@@ -1270,9 +1279,18 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     principal_binding_id=principal_binding_id,
                 )
                 loaded = self._load_locked(connection, work_id)
-                self._authorize_household_access(loaded, connection, origin=household_origin,
-                    execution_id=household_continuation_execution_id, request_origin=household_request_origin,
-                    delivery_binding=household_delivery_binding)
+                if household_explicit_delivery and (household_delivery_binding is None or household_read_origin is not None):
+                    raise DelegatedWorkConflict("explicit household output requires its retained delivery binding")
+                if household_read_origin is not None:
+                    if any(value is not None for value in (household_continuation_execution_id,
+                            household_request_origin, household_delivery_binding)):
+                        raise DelegatedWorkConflict("household read paths cannot be combined")
+                    self._authorize_household_request(loaded, connection, origin=household_origin,
+                        request_origin=household_read_origin, read_only=True)
+                else:
+                    self._authorize_household_access(loaded, connection, origin=household_origin,
+                        execution_id=household_continuation_execution_id, request_origin=household_request_origin,
+                        delivery_binding=household_delivery_binding, explicit_delivery=household_explicit_delivery)
                 if loaded.spec.owner_principal_id != str(
                     owner_principal_id
                 ) or loaded.spec.principal_binding_id != str(principal_binding_id):
