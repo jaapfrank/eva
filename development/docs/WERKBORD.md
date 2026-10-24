@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen
 
-Eigenaarsopdracht niet afgerond: afgeleverd voorstel was onvoldoende en ten onrechte als klaar gemeld. Bestaande koppeling terugzoeken en bruikbare uitkomst via huidige Eva-uitvoerder afmaken. Oorspronkelijke telling blijft4/24 gesloten.
+De volledige gecorrigeerde eigenaaropdracht is om 13:12 hervat en door de bestaande worker aangenomen. Bruikbare uitkomst nog niet bewezen. De onterechte afrondingsclaim blijft ingetrokken; oorspronkelijke kaarten niet extra gesloten.
 
 Klaar wanneer: Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.
 
@@ -145,7 +145,7 @@ Vier van de oorspronkelijke 24 taken afgerond (83/103). E4.16 is geïnstalleerd 
 
 ## Van jou
 
-Geen handeling nodig. Je kunt de fysieke proef nu niet doen; die blijft uitgesteld. De technische camera-/batchroute is geïnstalleerd en nieuwe waarnemingen zijn gezien. Spraak blijft bij de andere uitvoerder.
+Nu geen eigenaarhandeling nodig. De lopende opdracht controleert bestaande toegang; alleen een werkelijk aangetoonde ontbrekende stap wordt concreet voorgelegd.
 
 ## Historie
 

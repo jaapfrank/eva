@@ -1,0 +1,21 @@
+{
+  "contract": "EvaOwnerFullIntentResume/v1",
+  "recordedAt": "2026-10-24T11:15:03.895788+00:00",
+  "status": "linked_attempt_running_useful_outcome_unproven",
+  "admittedAt": "2026-10-24T11:12:24Z",
+  "deadline": "2026-10-24T11:32:24Z",
+  "actualWorkerClaimCount": 1,
+  "source": "Existing corrected owner task; original source, execution, grant, recipients and six verified read receipts retained.",
+  "priorWrongCompletionClaim": "development/evidence/product/owner-command-completion-correction-20261024.json",
+  "semanticReview": "development/reviews/owner-command-semantic-acceptance-correction-20261024.json",
+  "scriptSha256": "8536ba90de99de5be23f59664de383021d6331a724bf746f0ef70db85b1c749e",
+  "admissionReviewSha256": "96301a84bb7d4d46f260b6f0fc591c224ef1c8457597f90069885deb1bb8380e",
+  "dispatchEvidenceSha256": "fae902271954ccf8a1ce92520f23d575a061d844768ac03873f7c43af10eaecd",
+  "oldUnknownUsagePreserved": true,
+  "explicitOperatorContinuation": true,
+  "autonomousRecoveryProven": false,
+  "usefulOwnerOutcomeProven": false,
+  "originalCardsNewlyCompleted": [],
+  "productOrRuntimeSourceChanged": false,
+  "remaining": "Actual access and useful result must be checked. Bounded automatic continuation after the actual unknown-usage provider failure remains unresolved; do not count an easier unrelated case as its repair."
+}
