@@ -316,5 +316,39 @@
     "credentialsRead": false,
     "authOrRefreshCalls": 0,
     "newRuntimeModelCalls": 0
+  },
+  "passiveProviderRecovery": {
+    "status": "five_later_measured_astra_will_calls_observed_review_pending",
+    "handoffSha256": "553c55bab6cb60a16cadc190ce1d623dd71045606b8f3500d72ebb4c2ba7a32b",
+    "fixedWindow": {
+      "after_exclusive": "2026-10-24T14:17:47Z",
+      "through_inclusive": "2026-10-24T14:44:27.814245Z"
+    },
+    "completedAt": [
+      "2026-10-24 14:20:00+00:00",
+      "2026-10-24 14:25:01+00:00",
+      "2026-10-24 14:30:03+00:00",
+      "2026-10-24 14:35:07+00:00",
+      "2026-10-24 14:40:07+00:00"
+    ],
+    "eventSha256": [
+      "634173ce1bb0d915c91f99ed8aead3ee9206fa448d581d6921523412cda7e4e6",
+      "311008476e8a9bd61f0e05087c61c7b164320da93b837bf3690524e3d1b21064",
+      "8da1067106bb1626d67e27c70801fdcdde70db2e2effaa7c8eccc908fdf25532",
+      "8510b75799264ad0e8b2ec8c4279ca53b3170b554d4d95c989675a20106ac284",
+      "a8c1745dc0e6a1e08d72d47a88c3910f9dec3df56509090fdc1224065a038e96"
+    ],
+    "provider": "chatgpt-codex:gpt-6-astra",
+    "measuredEvaRuntimeUsage": {
+      "model_attempts": 5,
+      "reported_function_calls": 5,
+      "input_tokens": 43253,
+      "output_tokens": 620,
+      "cost": "unknown",
+      "total_tokens": 43873
+    },
+    "limits": "Ordinary will-route recovery evidence only; digital school-worker route and useful school outcome not proven. Earlier unknown usage/cost and consumed cooled retry remain unchanged.",
+    "newModelCalls": 0,
+    "resumePerformed": false
   }
 }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T14:41:15.449342+00:00",
+  "updatedAt": "2026-10-24T14:50:03.166466+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -305,7 +305,7 @@
         "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
         "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
       ],
-      "updatedAt": "2026-10-24T14:26:01.802717+00:00",
+      "updatedAt": "2026-10-24T14:50:03.166466+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -520,39 +520,7 @@
           "allNamedInstalledMethodsValidated": true
         }
       },
-      "activeAssignment": {
-        "task": "E4.19",
-        "resultNow": "Complete native selected Psycopg update chain through existing assessment/install/readback and held restore; foundation candidate under construction",
-        "writePaths": [
-          "src/eva/bootstrap/component_maintenance.py",
-          "src/eva/operations/runtime_dependency_update.py",
-          "src/tools/runtime_dependency_overlay.py",
-          "src/tools/installation_runtime_image_restore.py",
-          "src/eva/operations/runtime_repair_development.py",
-          "src/eva/operations/component_evaluation_service.py",
-          "src/eva/adapters/connectors/component_evaluation.py",
-          "src/eva/adapters/postgres/component_improvement_actions.py",
-          "src/eva/bootstrap/runtime_repair_host.py",
-          "src/eva/bootstrap/runtime_repair_work.py",
-          "src/eva/adapters/postgres/initiative_execution.py",
-          "src/eva/operations/component_release_publisher.py",
-          "src/eva/operations/reviewed_component_application.py",
-          "src/eva/operations/component_application_runtime.py",
-          "src/eva/bootstrap/delegated_work_provider.py",
-          "src/eva/bootstrap/runtime.py",
-          "src/tools/installation_recovery_package.py",
-          "src/tools/installation_recovery_materializer.py",
-          "development/tests/operations/test_runtime_dependency_update.py",
-          "development/tests/bootstrap/test_component_maintenance.py",
-          "development/tests/portable/test_runtime_dependency_overlay.py",
-          "development/tests/portable/test_installation_runtime_image_restore.py",
-          "src/eva/contracts/delegated_digital_work.py",
-          "src/eva/adapters/postgres/owner_initiatives.py"
-        ],
-        "sharedInstallationAuthorized": false,
-        "independentCriteriaOwnedBy": "tester/root",
-        "runtimePy": "private_hunk_only"
-      },
+      "activeAssignment": "Read only already available school task context and saved progress; identify a useful remaining step without new research or repeated owner question.",
       "extensionArtifactRequest": {
         "to": "wsl-e18",
         "requestedAt": "2026-10-23T14:52:17.507425+00:00",
@@ -618,7 +586,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "actual_school_research_and_terminal_handoff_complete",
+      "status": "post_recovery_executable_next_step_assessment",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1335,7 +1303,9 @@
         "coordinatorNotified": true,
         "nextTaskRequestedDirectly": true
       },
-      "currentWritePaths": [],
+      "currentWritePaths": [
+        "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/post-recovery-next-step-main.private.json"
+      ],
       "e110Progress": {
         "status": "frozen_candidate_handed_off",
         "manifest": "/home/administrator/project/.eva2-artifacts/e110-housemate-development-20261024/candidate-manifest.private.json",
@@ -1405,14 +1375,14 @@
       "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "currentExclusiveWritePaths": [],
       "currentOutcome": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
-      "scope": "Werkelijke broninhoud en laatste opgeslagen voortgang beoordeeld; geen nieuw codewerk bewezen. Alleen nieuw resultaat/foutsignaal of afgebakende vervolgopdracht oppakken.",
+      "scope": "Read only already available school task context and saved progress; identify a useful remaining step without new research or repeated owner question.",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-owner-useful-completion-20261024",
       "activeIndependentReviewClaim": false
     },
     "e415-independent-review-newchat": {
       "task": "E4.16",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "passive_provider_recovery_observation_in_progress",
+      "status": "passive_provider_recovery_observation_complete",
       "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
       "allowedWritePaths": [],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
@@ -1526,12 +1496,12 @@
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": false,
-      "updatedAt": "2026-10-24T14:41:15.449342+00:00",
-      "activeAssignment": "E4.16: one passive metadata snapshot of already occurred provider calls after 2026-10-24T14:17:47Z.",
+      "updatedAt": "2026-10-24T14:50:03.166466+00:00",
+      "activeAssignment": "Five later measured Astra will calls established within one fixed window. No resume or new model calls.",
       "writePaths": [],
       "role": "executor",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/provider-recovery-observation-coder2/",
-      "scope": "No model request, resume, runtime mutation, private conversation content or repeated task lineage; distinguish actual completed same-route use from absence of evidence.",
+      "scope": "Five later measured Astra will calls established within one fixed window. No resume or new model calls.",
       "nextTask": "E1.11",
       "latestBoundedReadback": {
         "path": "/home/administrator/project/.eva2-artifacts/e415-positive-use-readback-20261024/coder2/post-recovery/post-recovery-result.private.json",
@@ -1540,13 +1510,11 @@
         "checkedThrough": "2026-10-24T12:19:40+00:00",
         "doNotRepeatWithoutNewEvidence": true
       },
-      "currentWritePaths": [
-        "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/provider-recovery-observation-coder2/"
-      ]
+      "currentWritePaths": []
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "actual_source_progress_and_terminal_review_complete",
+      "status": "passive_recovery_evidence_independent_review",
       "allowedWritePaths": [
         "development/reviews/e419-final-candidate-review-20261024.json",
         "development/reviews/owner-command-provider-fix-20261024.json"
@@ -1558,9 +1526,12 @@
       "role": "independent_tester_reviewer",
       "activeCodeOrInstallClaim": false,
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024",
-      "scope": "Onafhankelijke begrensde GO voor daadwerkelijke bronlezing+opgeslagen voortgang; schooltoegang/bruikbare schoolhulp/full E4.16 open. Geen productcode.",
-      "updatedAt": "2026-10-24T14:26:01.802717+00:00",
-      "currentWritePaths": []
+      "scope": "Independently assess actual five later Astra calls and limits of one possible existing owner resume. No product code or runtime mutation.",
+      "updatedAt": "2026-10-24T14:50:03.166466+00:00",
+      "currentWritePaths": [
+        "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/provider-recovery-observation-review.private.json"
+      ],
+      "activeAssignment": "Independently assess actual five later Astra calls and limits of one possible existing owner resume. No product code or runtime mutation."
     },
     "e419-recovery-executor": {
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
@@ -1894,7 +1865,41 @@
       "durableProgressEventSha256": "1ddbf18cab188c989ad90bea13e5d82c995e8a37c55c8a074e8213dd93affe60",
       "durableProgressSequence": 3,
       "schoolNameQuestionPending": true,
-      "manualLoginRequestedAgain": false
+      "manualLoginRequestedAgain": false,
+      "providerRecoveryEvidence": {
+        "status": "five_later_measured_astra_will_calls_observed_review_pending",
+        "handoffSha256": "553c55bab6cb60a16cadc190ce1d623dd71045606b8f3500d72ebb4c2ba7a32b",
+        "fixedWindow": {
+          "after_exclusive": "2026-10-24T14:17:47Z",
+          "through_inclusive": "2026-10-24T14:44:27.814245Z"
+        },
+        "completedAt": [
+          "2026-10-24 14:20:00+00:00",
+          "2026-10-24 14:25:01+00:00",
+          "2026-10-24 14:30:03+00:00",
+          "2026-10-24 14:35:07+00:00",
+          "2026-10-24 14:40:07+00:00"
+        ],
+        "eventSha256": [
+          "634173ce1bb0d915c91f99ed8aead3ee9206fa448d581d6921523412cda7e4e6",
+          "311008476e8a9bd61f0e05087c61c7b164320da93b837bf3690524e3d1b21064",
+          "8da1067106bb1626d67e27c70801fdcdde70db2e2effaa7c8eccc908fdf25532",
+          "8510b75799264ad0e8b2ec8c4279ca53b3170b554d4d95c989675a20106ac284",
+          "a8c1745dc0e6a1e08d72d47a88c3910f9dec3df56509090fdc1224065a038e96"
+        ],
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "measuredEvaRuntimeUsage": {
+          "model_attempts": 5,
+          "reported_function_calls": 5,
+          "input_tokens": 43253,
+          "output_tokens": 620,
+          "cost": "unknown",
+          "total_tokens": 43873
+        },
+        "limits": "Ordinary will-route recovery evidence only; digital school-worker route and useful school outcome not proven. Earlier unknown usage/cost and consumed cooled retry remain unchanged.",
+        "newModelCalls": 0,
+        "resumePerformed": false
+      }
     }
   }
 }
