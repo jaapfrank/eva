@@ -8277,7 +8277,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Concrete verloren household-afweging is via bestaande route afgehandeld en onafhankelijk gecontroleerd. Twee nieuwe gewone afwegingen kozen stilte, met302s tussen starts. Behoud300s-policy; alleen nieuwe natuurlijke geschikte bron/positieve voorstel→afweging→guard→eenmaal aangeboden uiting kan verdere afronding bewijzen. Geen oude herstelactie/proef herhalen. Begroeting, horen, eigen behoefteontdekking en later feedback/hergebruik blijven open.",
+                "nextAction": "Coder2 controleert eenmalig uitsluitend nieuwe natuurlijke operationele metadata tussen13:05:13en15:15:44UTC op werkelijk positief voorstel/uiting of feedback/hergebruik. Geen nieuwe modelaanroep, fysieke proef, herstelactie of oude matrix; bij stilte blijft de volledige kaart open. De schoolnaamvraag blokkeert deze controle niet.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -8300,7 +8300,7 @@
                   "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T12:23:24.574244+00:00",
+                "checkedAt": "2026-10-24T15:17:30.876196+00:00",
                 "progress": "Concrete vastloper hersteld24oktober14:13CEST: originele vier events en onbekend verbruik behouden, geen oude aanvraag herhaald. Twee andere natuurlijke afwegingen afgerond14:14/14:19CEST, beide stilte. Beperkte onafhankelijke herstelGO; volledige E4.15 niet afgerond.",
                 "evidence": "development/evidence/product/e415-installed-route-20261023.json",
                 "latestEvidence": "development/evidence/product/e415-uncertain-household-continuation-20261024.json",
@@ -14449,7 +14449,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Concrete verloren household-afweging is via bestaande route afgehandeld en onafhankelijk gecontroleerd. Twee nieuwe gewone afwegingen kozen stilte, met302s tussen starts. Behoud300s-policy; alleen nieuwe natuurlijke geschikte bron/positieve voorstel→afweging→guard→eenmaal aangeboden uiting kan verdere afronding bewijzen. Geen oude herstelactie/proef herhalen. Begroeting, horen, eigen behoefteontdekking en later feedback/hergebruik blijven open.",
+              "nextAction": "Coder2 controleert eenmalig uitsluitend nieuwe natuurlijke operationele metadata tussen13:05:13en15:15:44UTC op werkelijk positief voorstel/uiting of feedback/hergebruik. Geen nieuwe modelaanroep, fysieke proef, herstelactie of oude matrix; bij stilte blijft de volledige kaart open. De schoolnaamvraag blokkeert deze controle niet.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -14472,7 +14472,7 @@
                 "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T12:23:24.574244+00:00",
+              "checkedAt": "2026-10-24T15:17:30.876196+00:00",
               "progress": "Concrete vastloper hersteld24oktober14:13CEST: originele vier events en onbekend verbruik behouden, geen oude aanvraag herhaald. Twee andere natuurlijke afwegingen afgerond14:14/14:19CEST, beide stilte. Beperkte onafhankelijke herstelGO; volledige E4.15 niet afgerond.",
               "evidence": "development/evidence/product/e415-installed-route-20261023.json",
               "latestEvidence": "development/evidence/product/e415-uncertain-household-continuation-20261024.json",
