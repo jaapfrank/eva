@@ -1,0 +1,62 @@
+{
+  "contract": "EvaProviderSdkNativeHeadersDelivery/v1",
+  "status": "built_reviewed_installation_deferred",
+  "checkedAt": "2026-10-24T19:38:07.383929+00:00",
+  "gitCommit": "45dc51f3256a6530a79a0925079346ecd318d384",
+  "change": "Preserve allowed HTTP metadata from the real SDK native headers field before the existing response.headers fallback; categories, sanitizers, retry and usage semantics unchanged.",
+  "productFiles": [
+    "src/eva/adapters/model/openai_codex_provider.py"
+  ],
+  "baselineSourceSha256": "ffd0f047c71f81e9dcbdb0ca8a0dd0c631682bc04a59353ec60a7027ee80a1d9",
+  "candidateSourceSha256": "f1627e09212de3ac6efa1698ef26511f6ca120e6e87c31cecae33321e6ef23a0",
+  "sourceReviewSha256": "4f9c16f254c93a49df295a63cbdbdbbc622ccaae8b1640f0f5c0242c2e996a56",
+  "packageReviewSha256": "0d0e13e22c1250c5482293eacdd9198dfabcc5caeda3d58c026ddbf9323f4c68",
+  "packageSha256": "38d02d4d9c45180cf9889b8513c6be7ae8d2b7fe0af03623d448da131d3f7ee0",
+  "candidateProfilesSha256": "2185d70fdd963b527edc54b9389489bcfe0bd4271b68c87fc3c60827540520ac",
+  "candidateFourProfilesEqual": true,
+  "tests": {
+    "path": "development/tests/model/test_codex_provider_sdk_http_headers.py",
+    "sha256": "90b634920c63204a18a3f79f4aea837c112314e67faf767bd376865eeeb93199",
+    "baselineFailed": 3,
+    "baselinePassed": 1,
+    "candidatePassed": 8,
+    "newCases": 4,
+    "existingAffectedCases": 4,
+    "baselineSeconds": 0.173,
+    "candidateSeconds": 1.352,
+    "liveRequests": 0
+  },
+  "ordinaryObservedOutcome": {
+    "independentReviewSha256": "19c638d593f10aeabffd805811e87e90f86a1fca05d366a60265b0d900341b3e",
+    "failedHttp503Requests": 2,
+    "subsequentSuccessfulRequests": 2,
+    "bothRepliesCommitted": true,
+    "memoryRetainQueued": true,
+    "failedRequestUsage": null,
+    "successfulInputTokens": 18978,
+    "successfulOutputTokens": 73,
+    "savedReplyUsageCompleteness": "partial",
+    "physicalHearingOrAnswerQualityProven": false,
+    "schoolWork": false,
+    "upstreamCauseKnown": false
+  },
+  "installation": {
+    "performed": false,
+    "runtimeStopped": false,
+    "reason": "Fresh installation guard found one admitted active ingress checkpoint with no deadline and no proven terminal receipt; preserve it. No active model/work leases or memory operations in the recorded guard snapshot.",
+    "guardSnapshotSha256": "a6e085703f4cb364f5c2ec5897ad5f5e03c0c01b44d14ce19169eeac79e6298c",
+    "markerSnapshotSha256": "a791fdc0170bdb5d951eae2cc2b2d4eaa51e41d68a9eb1805038ffd7099faad8",
+    "originalInstallationRetained": true
+  },
+  "fullCardCompleted": false,
+  "familyAcceptance": false,
+  "schoolOutcomeCompleted": false,
+  "usage": {
+    "newEvaModelCalls": 0,
+    "newSchoolAttempts": 0,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "runtimeFailedUsageAndCosts": null
+  },
+  "remaining": "Install only after the existing claim gate is satisfied or the exact marker is independently proven to be completed non-execution metadata. No unchanged retry or broadened exclusion. Historical upstream503 cause, useful school outcome and full E4.16 remain open."
+}

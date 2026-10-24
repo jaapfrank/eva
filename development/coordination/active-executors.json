@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T19:27:32.292568+00:00",
+  "updatedAt": "2026-10-24T19:38:07.383929+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -305,7 +305,7 @@
         "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
         "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
       ],
-      "updatedAt": "2026-10-24T19:27:32.292568+00:00",
+      "updatedAt": "2026-10-24T19:38:07.383929+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -586,7 +586,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "new_503_bounded_diagnosis_in_progress",
+      "status": "native_header_source_tests_or_review_delivered",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1286,7 +1286,7 @@
         "noRuntimeModelExecutorCameraMessageOrInstallation": true
       },
       "previousStatusBeforeCentralHandoff": "Canonical child conflicts and original32-row cutoff/singlepending cases finalized;44 focused checks passed, ready independent GO",
-      "activeCodeOrInstallClaim": true,
+      "activeCodeOrInstallClaim": false,
       "e417ColdStartHandoff": {
         "updatedAt": "2026-10-23T23:53:39.681074+00:00",
         "status": "phase1_exact_plan_pending_coordinator_tester_admission_not_started",
@@ -1303,9 +1303,7 @@
         "coordinatorNotified": true,
         "nextTaskRequestedDirectly": true
       },
-      "currentWritePaths": [
-        "src/eva/adapters/model/openai_codex_provider.py"
-      ],
+      "currentWritePaths": [],
       "e110Progress": {
         "status": "frozen_candidate_handed_off",
         "manifest": "/home/administrator/project/.eva2-artifacts/e110-housemate-development-20261024/candidate-manifest.private.json",
@@ -1373,9 +1371,7 @@
         "preserveE416FrozenBlobs": true
       },
       "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
-      "currentExclusiveWritePaths": [
-        "src/eva/adapters/model/openai_codex_provider.py"
-      ],
+      "currentExclusiveWritePaths": [],
       "currentOutcome": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
       "scope": "Inspect exact installed provider ExceptionGroup metadata transfer for the two new HTTP503 failures; only change provider source if a reproducible defect is proven.",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/provider-failure-8768-main/new-503-1925/",
@@ -1384,7 +1380,7 @@
     "e415-independent-review-newchat": {
       "task": "E4.16",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "terminal_outcome_review_complete",
+      "status": "native_header_source_tests_or_review_delivered",
       "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
       "allowedWritePaths": [],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
@@ -1498,7 +1494,7 @@
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": false,
-      "updatedAt": "2026-10-24T16:43:08.510440+00:00",
+      "updatedAt": "2026-10-24T19:38:07.383929+00:00",
       "activeAssignment": "Actual terminal failure and six verified outer tool completions reviewed; no more queries or product edits.",
       "writePaths": [],
       "role": "executor",
@@ -1512,13 +1508,12 @@
         "checkedThrough": "2026-10-24T12:19:40+00:00",
         "doNotRepeatWithoutNewEvidence": true
       },
-      "currentWritePaths": [
-        "/home/administrator/project/.eva2-artifacts/e416-durable-household-recovery-20261024/coder2/"
-      ]
+      "currentWritePaths": [],
+      "currentExclusiveWritePaths": []
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "bounded_provider_diagnostics_delivered",
+      "status": "native_header_source_tests_or_review_delivered",
       "allowedWritePaths": [
         "development/reviews/e419-final-candidate-review-20261024.json",
         "development/reviews/owner-command-provider-fix-20261024.json"
@@ -1531,7 +1526,7 @@
       "activeCodeOrInstallClaim": false,
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024",
       "scope": "Completed assigned bounded HTTP diagnostic source, regression or independent review. No new live school retry or extra work assigned merely to keep this chat active.",
-      "updatedAt": "2026-10-24T16:54:04.181887+00:00",
+      "updatedAt": "2026-10-24T19:38:07.383929+00:00",
       "currentWritePaths": [],
       "activeAssignment": "Independent review only upon concrete candidate; prior installation review remains complete.",
       "currentExclusiveWritePaths": []
@@ -1540,14 +1535,14 @@
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
       "task": "E4.16",
       "role": "executor",
-      "status": "new_503_bounded_diagnosis_in_progress",
+      "status": "exact_install_ingress_readonly_review",
       "allowedWritePaths": [
         "development/tests/postgres/test_native_research_explicit_read_continuation.py"
       ],
       "activeCodeOrInstallClaim": false,
-      "scope": "Read-only binding of the two observed failure hashes to actual work, claims and native recovery; no retry or product mutation.",
+      "scope": "Read only the exact currently blocking admitted ingress and its source/terminal semantics; no retry, marker mutation or blanket exclusion.",
       "currentWritePaths": [],
-      "updatedAt": "2026-10-24T19:27:32.292568+00:00",
+      "updatedAt": "2026-10-24T19:38:07.383929+00:00",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/owner-school-name/coder1/new-503-1925/",
       "latestBoundedReadback": {
         "checkedThrough": "2026-10-24T11:56:03Z",
@@ -1748,13 +1743,12 @@
     "agents": {},
     "maxConcurrentExecutorsReviewers": 4,
     "installationCandidate": {
-      "path": "/var/lib/eva2/e416-durable-household-recovery-20261024",
-      "status": "installed_independently_source_health_four_profiles_verified",
-      "installedAt": "2026-10-24T16:26:14.494466+00:00",
+      "path": "/var/lib/eva2/e416-provider-native-headers-20261024",
+      "status": "built_reviewed_installation_deferred_unknown_ingress",
+      "evidence": "development/evidence/product/e416-provider-native-headers-20261024.json",
+      "review": "development/reviews/e416-provider-native-headers-20261024.json",
       "fullE416Completed": false,
-      "originalOwnerOutcomeCompleted": false,
-      "evidence": "development/evidence/product/e416-bounded-household-recovery-20261024.json",
-      "review": "development/reviews/e416-bounded-household-recovery-20261024.json"
+      "originalOwnerOutcomeCompleted": false
     },
     "newReviewerThread": "01a16a55-1607-7171-820e-a3918acaea3f",
     "e415Candidate": {
@@ -1774,8 +1768,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": null,
-    "parallelBoundedWork": "Two new observed core HTTP503 failures: builder checks exact installed metadata handoff; coder1 reads actual work and recovery status.",
-    "currentBlocker": "Two new ordinary-core HTTP503 failures; concrete cause and affected work under bounded read-only investigation. No school retry.",
+    "parallelBoundedWork": "Provider native-header repair built and independently reviewed; one exact active ingress claim is being assessed before installation.",
+    "currentBlocker": "Existing installation guard deferred before any mutation: one admitted active NULL-deadline conversation checkpoint, no proven terminal binding.",
     "latestVerifiedOutcome": {
       "task": "E4.17",
       "status": "completed_original_restore_card_technical",
@@ -1784,10 +1778,10 @@
       "at": "2026-10-24T06:06:08.566732+00:00"
     },
     "nextBoundedAssignments": {
-      "builder": "Inspect available metadata propagation for two new ExceptionGroup HTTP503 failures; only fix a proven reproducible source defect.",
-      "regressionExecutor": "Bind the two actual failures to work and native recovery state, read-only.",
-      "reviewer": "Independent review follows concrete evidence or a proven candidate; no product code.",
-      "coordinator": "Maintain current claims and board; decide a bounded next action from actual findings, no new model call or install."
+      "builder": "Exact provider candidate frozen; no current code claim.",
+      "regressionExecutor": "Read-only source and terminal binding of the exact admitted ingress blocking installation.",
+      "reviewer": "Source/tests/package and ordinary-turn outcome reviewed; actual installation review follows only after a safe real installation.",
+      "coordinator": "Preserve running runtime; integrate only when fresh existing claims permit. No repeated school/model attempt."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {
@@ -1934,7 +1928,12 @@
       "evidence": "development/evidence/product/e416-provider-http-diagnostics-20261024.json",
       "review": "development/reviews/e416-provider-http-diagnostics-20261024.json",
       "fullE416Completed": false,
-      "schoolOutcomeCompleted": false
+      "schoolOutcomeCompleted": false,
+      "nativeHeaderFollowup": {
+        "status": "built_reviewed_installation_deferred",
+        "evidence": "development/evidence/product/e416-provider-native-headers-20261024.json",
+        "review": "development/reviews/e416-provider-native-headers-20261024.json"
+      }
     }
   }
 }

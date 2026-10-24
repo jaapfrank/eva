@@ -1,0 +1,10 @@
+{
+  "contract": "EvaIndependentReviewSummary/v1",
+  "status": "GO_SOURCE_REGRESSION_PACKAGE_INSTALLATION_DEFERRED",
+  "checkedAt": "2026-10-24T19:38:07.383929+00:00",
+  "evidence": "development/evidence/product/e416-provider-native-headers-20261024.json",
+  "sourceAndRegressionReviewSha256": "4f9c16f254c93a49df295a63cbdbdbbc622ccaae8b1640f0f5c0242c2e996a56",
+  "packageReviewSha256": "0d0e13e22c1250c5482293eacdd9198dfabcc5caeda3d58c026ddbf9323f4c68",
+  "ordinaryOutcomeReviewSha256": "19c638d593f10aeabffd805811e87e90f86a1fca05d366a60265b0d900341b3e",
+  "scope": "Real SDK interface regression, exact minimal source/package and recorded recovery of two actual ordinary turns. No actual installation or physical hearing claimed."
+}
