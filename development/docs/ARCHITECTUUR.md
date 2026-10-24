@@ -12,7 +12,7 @@ opleverstatus; een ontwerp hieronder betekent niet dat die werking al geïnstall
 E4.15 verbindt nu de bestaande uitvoering aan een daadwerkelijk bruikbare eigen
 voorziening. E4.17 verzorgt de ontbrekende hersteloverdracht; E4.18 vereenvoudigt
 bewezen gebruikte routes. E4.18 is op 24 oktober volledig technisch afgerond met onafhankelijke review en
-werkelijk gebruik in de huidige WSL-operatorroute. E4.15 en E4.17 blijven open.
+werkelijk gebruik in de huidige WSL-operatorroute. E4.17 is op 24 oktober eveneens onafhankelijk technisch afgerond met werkelijk herstelde en uitgevoerde oorspronkelijke procedure. E4.15 blijft open voor de echte begroeting en later gebruik. E4.16 is geïnstalleerd en onafhankelijk teruggelezen; de volledige autonome foutketen en later hergebruik blijven open.
 
 ## Eén kringloop voor vier uitkomsten
 
