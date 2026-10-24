@@ -36,9 +36,14 @@ class AccountedResearch:
                 or self.grant.maximum_input_tokens - used.input_tokens < self.input_bound
                 or self.grant.maximum_output_tokens - used.output_tokens < self.output_bound):
             raise ConversationExecutionLimitReached("remaining task budget cannot admit research")
+        # Freeze the admitted task allowance before this request's own pending
+        # journal entry makes its usage unknown. The contact model's default
+        # response size is not the remaining budget of a digital research task.
+        remaining_output = self.grant.maximum_output_tokens - used.output_tokens
         request_id = self.journal.begin_model_request(self.turn)
         try:
-            artifact = self.research.research_current_options(**kwargs)
+            artifact = self.research.research_current_options(
+                **kwargs, output_tokens_limit=remaining_output)
         except BaseException as error:
             usage = getattr(error, "model_usage", None)
             if not isinstance(usage, ConversationModelUsage):

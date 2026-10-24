@@ -2983,8 +2983,15 @@ class PydanticConversationModel:
         options: tuple[str, ...],
         researched_at: str,
         research_mode: str = "comparison",
+        output_tokens_limit: int | None = None,
     ) -> ResearchArtifact:
         """Run one explicit web-grounded research task outside ordinary chat."""
+
+        if output_tokens_limit is not None:
+            from eva.application.background_execution import has_background_execution
+            if (not has_background_execution() or type(output_tokens_limit) is not int
+                    or output_tokens_limit <= 0):
+                raise ConversationModelError("task research output allowance is invalid")
 
         question = question.strip()
         title = title.strip()
@@ -2999,7 +3006,8 @@ class PydanticConversationModel:
             raise ValueError("research request is invalid")
         options = tuple(option.strip() for option in options)
         body = self.research_request_payload(question=question, options=options, research_mode=research_mode)
-        (content, cited, consulted), usage = self._request_research(body)
+        (content, cited, consulted), usage = self._request_research(
+            body, output_tokens_limit=output_tokens_limit)
         selected: list[ResearchSource] = []
         if research_mode == "topic" and not cited:
             raise ConversationModelError("topic research lacks cited sources", model_usage=usage)
@@ -3789,7 +3797,7 @@ class PydanticConversationModel:
         return self._request(body)
 
     def _request_research(
-        self, body: dict[str, Any]
+        self, body: dict[str, Any], *, output_tokens_limit: int | None = None
     ) -> tuple[tuple[str, tuple[ResearchSource, ...], tuple[ResearchSource, ...]], ConversationModelUsage]:
         return self._request_using(
             body,
@@ -3798,6 +3806,7 @@ class PydanticConversationModel:
                 if _native_research_context() else self._research_timeout_seconds),
             include_usage=True,
             provider_managed_research_input=True,
+            output_tokens_limit=output_tokens_limit,
         )
 
     def _request_using(
@@ -3810,6 +3819,7 @@ class PydanticConversationModel:
         include_usage: bool = False,
         include_timing: bool = False,
         provider_managed_research_input: bool = False,
+        output_tokens_limit: int | None = None,
     ) -> Any:
         if provider_managed_research_input and (
             parser != self._parse_research_sse or not include_usage or autonomous
@@ -3817,6 +3827,11 @@ class PydanticConversationModel:
             or self._endpoint != "https://chatgpt.com/backend-api/codex/responses"
         ):
             raise ConversationModelError("provider-managed research input scope is invalid")
+        if output_tokens_limit is not None and (
+            not provider_managed_research_input or type(output_tokens_limit) is not int
+            or output_tokens_limit <= 0
+        ):
+            raise ConversationModelError("task research output allowance is invalid")
         self._admit_request(body, autonomous=autonomous)
         last_auth: tuple[str, str] | None = None
         research_deadline = (
@@ -3936,6 +3951,7 @@ class PydanticConversationModel:
                     )
                     self._enforce_reported_usage(
                         usage, provider_managed_research_input=provider_managed_research_input,
+                        output_tokens_limit=output_tokens_limit,
                     )
                     return (parsed, usage) if include_usage else parsed
                 except (TimeoutError, socket.timeout, urllib.error.URLError) as error:
