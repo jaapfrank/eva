@@ -847,8 +847,8 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Somtoday-opdracht hervatten via de voorbereide bestaande API zodra de eigenaar de login in dezelfde taakbrowser bevestigt. De concrete E4.15-initiatiefblokkade is afgehandeld en twee nieuwe gewone afwegingen zijn bewezen. Voor volledige E4.15-afronding alleen nieuwe natuurlijke positieve uiting en later feedback/hergebruik beoordelen; geen oude proef of herstelactie herhalen.",
-    "ownerActionRequired": true
+    "nextAction": "Hervat dezelfde schoolopdracht met de nieuwe eigenaarcorrectie: Eva onderzoekt zelf online appauthenticatie en andere toegestane/onofficiële routes, vergelijkt concrete alternatieven en controleert de oorspronkelijke bruikbare uitkomst. Een handmatige browserlogin is niet vooraf vereist. Geef geen loginbevestiging of afronding voor zonder echt bewijs; bestaande bron, bevoegdheden, verbruik en oorspronkelijke ontvanger behouden.",
+    "ownerActionRequired": false
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -3093,7 +3093,7 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "De hervattingsreparatie is werkelijk gebruikt; schoolhulp wacht op dezelfde browserlogin. De blokkade van huishoudelijk initiatief is hersteld: twee nieuwe gewone afwegingen zijn afgerond. Volledige begroeting en autonome herstelkaart blijven open.",
+          "summary": "De eigenaar corrigeert de aanpak: Eva moet eerst zelf online appauthenticatie en alternatieve routes onderzoeken. Dezelfde schoolopdracht wordt hervat; er wordt geen login of bruikbaar resultaat voorgewend.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid."
         },
         "next": {
@@ -3103,7 +3103,7 @@
         },
         "ownerAction": {
           "required": false,
-          "detail": "Nu geen eigenaarhandeling nodig. De lopende opdracht controleert bestaande toegang; alleen een werkelijk aangetoonde ontbrekende stap wordt concreet voorgelegd.",
+          "detail": "Geen eigenaarhandeling nu: eerst de nieuwe expliciete opdracht uitvoeren. Alleen een werkelijk ontbrekende toegang of interactieve stap kan later een concrete vraag vereisen.",
           "steps": []
         },
         "checkedAt": "2026-10-24T11:29:40.552939+00:00",
@@ -8312,7 +8312,7 @@
                 "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraakuitvoerder behoudt implementatie-eigendom",
-                "ownerActionRequired": true,
+                "ownerActionRequired": false,
                 "requiredForCurrentDelivery": true,
                 "ownerAuthorization": "Eigenaar22oktober2026: echte problemen moeten automatisch tot blijvend herstel leiden, kort melden dat Eva zichzelf gaat repareren; maak Eva autonoom voortdurend verbeterend en reparerend.",
                 "scopeOrigin": "autonomous-repair-20261022",
@@ -8323,7 +8323,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Somtoday-opdracht hervatten via de voorbereide bestaande API zodra de eigenaar de login in dezelfde taakbrowser bevestigt. De concrete E4.15-initiatiefblokkade is afgehandeld en twee nieuwe gewone afwegingen zijn bewezen. Voor volledige E4.15-afronding alleen nieuwe natuurlijke positieve uiting en later feedback/hergebruik beoordelen; geen oude proef of herstelactie herhalen.",
+                "nextAction": "Hervat dezelfde schoolopdracht met de nieuwe eigenaarcorrectie: Eva onderzoekt zelf online appauthenticatie en andere toegestane/onofficiële routes, vergelijkt concrete alternatieven en controleert de oorspronkelijke bruikbare uitkomst. Een handmatige browserlogin is niet vooraf vereist. Geef geen loginbevestiging of afronding voor zonder echt bewijs; bestaande bron, bevoegdheden, verbruik en oorspronkelijke ontvanger behouden.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8343,7 +8343,7 @@
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/owner-command-provider-fix-20261024.json",
-                "implementationStatus": "installed_resume_used_real_login_gate_prepared_catalog_fix_installed_native_repair_open",
+                "implementationStatus": "owner_corrected_route_online_discovery_resume_preparation",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8352,7 +8352,7 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T11:56:37.055465+00:00",
+                "checkedAt": "2026-10-24T13:11:01.504395+00:00",
                 "progress": "Hervatting is werkelijk gebruikt: bestaande portal gelezen en voortgang behouden; echte loginblokkade veroorzaakt geen onterechte codeherstelpoging. De afzonderlijke reparatiecatalogusfout is onafhankelijk beoordeeld en geïnstalleerd. Schoolgegevens en bruikbare schoolhulp ontbreken nog. Oude mislukte zelfreparatie blijft eerlijk geblokkeerd; volledige autonome herstelkaart niet afgerond.",
                 "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
               },
@@ -9030,9 +9030,9 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Somtoday-opdracht hervatten via de voorbereide bestaande API zodra de eigenaar de login in dezelfde taakbrowser bevestigt. De concrete E4.15-initiatiefblokkade is afgehandeld en twee nieuwe gewone afwegingen zijn bewezen. Voor volledige E4.15-afronding alleen nieuwe natuurlijke positieve uiting en later feedback/hergebruik beoordelen; geen oude proef of herstelactie herhalen.",
+        "nextAction": "Hervat dezelfde schoolopdracht met de nieuwe eigenaarcorrectie: Eva onderzoekt zelf online appauthenticatie en andere toegestane/onofficiële routes, vergelijkt concrete alternatieven en controleert de oorspronkelijke bruikbare uitkomst. Een handmatige browserlogin is niet vooraf vereist. Geef geen loginbevestiging of afronding voor zonder echt bewijs; bestaande bron, bevoegdheden, verbruik en oorspronkelijke ontvanger behouden.",
         "finishOrder": [
-          "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van24 gesloten. E4.16-schoolopdracht wacht op dezelfde browserlogin. De concrete E4.15-initiatiefblokkade is hersteld en gewone afweging hervat; positieve uiting en later gebruik blijven open. Volg uitsluitend concrete nieuwe bevindingen en bestaande volledige eindvoorwaarden.",
+          "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus4van24 gesloten. Nieuwe eigenaarcorrectie: dezelfde E4.16-schoolopdracht hervatten met zelfstandig online onderzoek naar appauthenticatie en alternatieve toegestane routes. De concrete E4.15-blokkade is hersteld; volledige gebruikscriteria blijven open.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
           "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
           "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -9041,7 +9041,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T12:23:24.574244+00:00",
+        "updatedAt": "2026-10-24T13:11:01.504395+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -14489,7 +14489,7 @@
               "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraakuitvoerder behoudt implementatie-eigendom",
-              "ownerActionRequired": true,
+              "ownerActionRequired": false,
               "requiredForCurrentDelivery": true,
               "ownerAuthorization": "Eigenaar22oktober2026: echte problemen moeten automatisch tot blijvend herstel leiden, kort melden dat Eva zichzelf gaat repareren; maak Eva autonoom voortdurend verbeterend en reparerend.",
               "scopeOrigin": "autonomous-repair-20261022",
@@ -14500,7 +14500,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Somtoday-opdracht hervatten via de voorbereide bestaande API zodra de eigenaar de login in dezelfde taakbrowser bevestigt. De concrete E4.15-initiatiefblokkade is afgehandeld en twee nieuwe gewone afwegingen zijn bewezen. Voor volledige E4.15-afronding alleen nieuwe natuurlijke positieve uiting en later feedback/hergebruik beoordelen; geen oude proef of herstelactie herhalen.",
+              "nextAction": "Hervat dezelfde schoolopdracht met de nieuwe eigenaarcorrectie: Eva onderzoekt zelf online appauthenticatie en andere toegestane/onofficiële routes, vergelijkt concrete alternatieven en controleert de oorspronkelijke bruikbare uitkomst. Een handmatige browserlogin is niet vooraf vereist. Geef geen loginbevestiging of afronding voor zonder echt bewijs; bestaande bron, bevoegdheden, verbruik en oorspronkelijke ontvanger behouden.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14520,7 +14520,7 @@
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/owner-command-provider-fix-20261024.json",
-              "implementationStatus": "installed_resume_used_real_login_gate_prepared_catalog_fix_installed_native_repair_open",
+              "implementationStatus": "owner_corrected_route_online_discovery_resume_preparation",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -14529,7 +14529,7 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T11:56:37.055465+00:00",
+              "checkedAt": "2026-10-24T13:11:01.504395+00:00",
               "progress": "Hervatting is werkelijk gebruikt: bestaande portal gelezen en voortgang behouden; echte loginblokkade veroorzaakt geen onterechte codeherstelpoging. De afzonderlijke reparatiecatalogusfout is onafhankelijk beoordeeld en geïnstalleerd. Schoolgegevens en bruikbare schoolhulp ontbreken nog. Oude mislukte zelfreparatie blijft eerlijk geblokkeerd; volledige autonome herstelkaart niet afgerond.",
               "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
             },
@@ -15207,9 +15207,9 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Somtoday-opdracht hervatten via de voorbereide bestaande API zodra de eigenaar de login in dezelfde taakbrowser bevestigt. De concrete E4.15-initiatiefblokkade is afgehandeld en twee nieuwe gewone afwegingen zijn bewezen. Voor volledige E4.15-afronding alleen nieuwe natuurlijke positieve uiting en later feedback/hergebruik beoordelen; geen oude proef of herstelactie herhalen.",
+      "nextAction": "Hervat dezelfde schoolopdracht met de nieuwe eigenaarcorrectie: Eva onderzoekt zelf online appauthenticatie en andere toegestane/onofficiële routes, vergelijkt concrete alternatieven en controleert de oorspronkelijke bruikbare uitkomst. Een handmatige browserlogin is niet vooraf vereist. Geef geen loginbevestiging of afronding voor zonder echt bewijs; bestaande bron, bevoegdheden, verbruik en oorspronkelijke ontvanger behouden.",
       "finishOrder": [
-        "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van24 gesloten. E4.16-schoolopdracht wacht op dezelfde browserlogin. De concrete E4.15-initiatiefblokkade is hersteld en gewone afweging hervat; positieve uiting en later gebruik blijven open. Volg uitsluitend concrete nieuwe bevindingen en bestaande volledige eindvoorwaarden.",
+        "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus4van24 gesloten. Nieuwe eigenaarcorrectie: dezelfde E4.16-schoolopdracht hervatten met zelfstandig online onderzoek naar appauthenticatie en alternatieve toegestane routes. De concrete E4.15-blokkade is hersteld; volledige gebruikscriteria blijven open.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
         "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
         "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -15218,7 +15218,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T12:23:24.574244+00:00",
+      "updatedAt": "2026-10-24T13:11:01.504395+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",

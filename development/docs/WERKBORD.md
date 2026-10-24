@@ -6,13 +6,13 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen
 
-De hervattingsreparatie is werkelijk gebruikt; schoolhulp wacht op dezelfde browserlogin. De blokkade van huishoudelijk initiatief is hersteld: twee nieuwe gewone afwegingen zijn afgerond. Volledige begroeting en autonome herstelkaart blijven open.
+De eigenaar corrigeert de aanpak: Eva moet eerst zelf online appauthenticatie en alternatieve routes onderzoeken. Dezelfde schoolopdracht wordt hervat; er wordt geen login of bruikbaar resultaat voorgewend.
 
 Klaar wanneer: Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.
 
 ## Afmaakvolgorde
 
-1. E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van24 gesloten. E4.16-schoolopdracht wacht op dezelfde browserlogin. De concrete E4.15-initiatiefblokkade is hersteld en gewone afweging hervat; positieve uiting en later gebruik blijven open. Volg uitsluitend concrete nieuwe bevindingen en bestaande volledige eindvoorwaarden.
+1. E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus4van24 gesloten. Nieuwe eigenaarcorrectie: dezelfde E4.16-schoolopdracht hervatten met zelfstandig online onderzoek naar appauthenticatie en alternatieve toegestane routes. De concrete E4.15-blokkade is hersteld; volledige gebruikscriteria blijven open.
 2. E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.
 3. E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.
 4. E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.
@@ -145,7 +145,7 @@ Vier van de oorspronkelijke 24 taken afgerond (83/103). E4.16 is geïnstalleerd 
 
 ## Van jou
 
-Nu geen eigenaarhandeling nodig. De lopende opdracht controleert bestaande toegang; alleen een werkelijk aangetoonde ontbrekende stap wordt concreet voorgelegd.
+Geen eigenaarhandeling nu: eerst de nieuwe expliciete opdracht uitvoeren. Alleen een werkelijk ontbrekende toegang of interactieve stap kan later een concrete vraag vereisen.
 
 ## Historie
 

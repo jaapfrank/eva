@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T12:23:24.574244+00:00",
+  "updatedAt": "2026-10-24T13:11:01.504395+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -159,7 +159,7 @@
       "activeCodeOrInstallClaim": false
     },
     "codex-e418": {
-      "task": "E4.15",
+      "task": "E4.16",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "src/eva/bootstrap/component_maintenance.py",
@@ -305,7 +305,7 @@
         "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
         "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
       ],
-      "updatedAt": "2026-10-24T12:23:24.574244+00:00",
+      "updatedAt": "2026-10-24T13:11:01.504395+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -618,7 +618,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "completed_existing_household_recovery_preparation",
+      "status": "active_corrected_school_continuation_preflight",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1405,13 +1405,13 @@
       "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
       "currentExclusiveWritePaths": [],
       "currentOutcome": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
-      "scope": "Exacte bestaande hersteloverdracht opgeleverd en uitgevoerd door coordinator; Somtoday-hervatting wacht op echte eigenaarloginmelding.",
+      "scope": "Verse huidige lineage, bron/profile en browsercontrole; exacte normaleAPIhervatting op echte nieuwe eigenaarcorrectie, geen fictieve login.",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-owner-useful-completion-20261024"
     },
     "e415-independent-review-newchat": {
-      "task": "E4.15",
+      "task": "E4.16",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "completed_actual_household_recovery_readback",
+      "status": "prepared_corrected_school_actual_readback",
       "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
       "allowedWritePaths": [],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
@@ -1525,12 +1525,12 @@
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": false,
-      "updatedAt": "2026-10-24T12:23:24.574244+00:00",
+      "updatedAt": "2026-10-24T13:11:01.504395+00:00",
       "activeAssignment": "One affected PostgreSQL regression suite for actual unmeasured failure, STOP/effects/budget/max-one/manual successor; primary portal routing fact supplied to main.",
       "writePaths": [],
       "role": "executor",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e16-household-release-alignment-20261024/package",
-      "scope": "Eén geslaagde echte nacontrole: oude4hashes/NULL behouden, appendrev5 en twee nieuwe gewone stiltebesluiten; geen nieuwe query zonder nieuwe concrete bron.",
+      "scope": "Actual-outputcontrole na concrete rootdispatchreceipt; geen modellen of dubbele taak starten.",
       "nextTask": "E1.11",
       "latestBoundedReadback": {
         "path": "/home/administrator/project/.eva2-artifacts/e415-positive-use-readback-20261024/coder2/post-recovery/post-recovery-result.private.json",
@@ -1542,31 +1542,31 @@
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "completed_independent_household_recovery_and_use_review",
+      "status": "active_corrected_school_resume_independent_review",
       "allowedWritePaths": [
         "development/reviews/e419-final-candidate-review-20261024.json",
         "development/reviews/owner-command-provider-fix-20261024.json"
       ],
-      "activeIndependentReviewClaim": false,
+      "activeIndependentReviewClaim": true,
       "review": "development/reviews/e415-household-continuation-20261024.json",
-      "task": "E4.15",
+      "task": "E4.16",
       "assignedAt": "2026-10-23T20:28:02.293070+00:00",
       "role": "independent_tester_reviewer",
       "activeCodeOrInstallClaim": false,
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024",
-      "scope": "Beperkte onafhankelijke GO voor echte afhandeling en hervatte gewone afweging; volledige kaart open, geen productcode.",
-      "updatedAt": "2026-10-24T12:23:24.574244+00:00"
+      "scope": "Onafhankelijke review van concrete herziene gewoneAPIhandoff en werkelijke uitkomst; geen productcode.",
+      "updatedAt": "2026-10-24T13:11:01.504395+00:00"
     },
     "e419-recovery-executor": {
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
       "task": "E1.6",
       "role": "executor",
-      "status": "active_two_new_private_decisions_readback",
+      "status": "active_exact_new_adopted_initiative_handoff",
       "allowedWritePaths": [],
       "activeCodeOrInstallClaim": false,
-      "scope": "Only new ordinary private decisions at12:00:19UTC and13:03:51UTC after previous11:56:54 snapshot; check actual source/attention choice, stop without further work when absent. No product/model/effect/installation writes.",
+      "scope": "Alleen de echte nieuw aangetroffen adopted-initiatiefketen12:00:19 naar bestaande taakstatus/resultaat; geen nieuw onderzoek/model/replay.",
       "currentWritePaths": [],
-      "updatedAt": "2026-10-24T13:07:24.640927+00:00",
+      "updatedAt": "2026-10-24T13:11:01.504395+00:00",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e16-natural-source-followthrough-20261024/coder1",
       "latestBoundedReadback": {
         "checkedThrough": "2026-10-24T11:56:03Z",
@@ -1790,8 +1790,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Same managed browser: Connections / Eva task browser / Take over / View and control / sign in / Give back; root resumes original work after explicit owner confirmation.",
-    "parallelBoundedWork": "Concrete E4.15 recovery preparation, actual execution and independent readback completed. Existing team retained for next necessary work triggered by real owner login or new ordinary use/fault evidence; no filler builds or repeated probes.",
-    "currentBlocker": "Original school outcome still requires explicit same-session login confirmation. The concrete household uncertain review no longer blocks new initiative; two ordinary decisions verified.",
+    "parallelBoundedWork": "Main corrected continuation; coder1 exact newly adopted real initiative handoff; coder2 actual successor result; independent tester review; coordinator integrates and dispatches existing API.",
+    "currentBlocker": "Owner explicitly rejected premature manual-login prerequisite; fresh corrected school-task continuation in preparation. No actual login is claimed.",
     "latestVerifiedOutcome": {
       "task": "E4.17",
       "status": "completed_original_restore_card_technical",
@@ -1845,14 +1845,25 @@
     },
     "currentOwnerContinuation": {
       "workId": "work:eva-resume:5c85e2f2-d47e-5312-bc5e-b1c9e7b3354c",
-      "status": "waiting_explicit_owner_login_confirmation",
+      "status": "owner_corrected_route_research_resume_preparation",
       "ownerConfirmationReceived": false,
       "mustNotInferConfirmationFromElapsedTimeOrBrowserControlAlone": true,
       "existingApiHandoff": "/home/administrator/project/.eva2-artifacts/e416-owner-useful-completion-20261024/existing-owner-after-login-handoff-ebe7c702e0ca0624.private.json",
       "handoffSha256": "ebe7c702e0ca06240475eda7f9f0b42bbba4bf4ab6a1a8b477e75e9e2b373471",
       "installedApiSourcePinsSha256": "a4ccb6a2320db098baaf6933e909a79371c6be074b18c36baa2c30cd2ee0320f",
-      "instruction": "After actual explicit same-session login/return confirmation, inspect current browser control, source/profile and lineage, then use the one existing revise_digital action; inspect uncertain responses instead of retrying. Original school result remains open.",
-      "independentReviewSha256": "4ef253fc3d8d5ce89dfa4cf353b7e441368f987c602f4877f3ff25ced09df229"
+      "instruction": "Hervat dezelfde schoolopdracht met de nieuwe eigenaarcorrectie: Eva onderzoekt zelf online appauthenticatie en andere toegestane/onofficiële routes, vergelijkt concrete alternatieven en controleert de oorspronkelijke bruikbare uitkomst. Een handmatige browserlogin is niet vooraf vereist. Geef geen loginbevestiging of afronding voor zonder echt bewijs; bestaande bron, bevoegdheden, verbruik en oorspronkelijke ontvanger behouden.",
+      "independentReviewSha256": "4ef253fc3d8d5ce89dfa4cf353b7e441368f987c602f4877f3ff25ced09df229",
+      "supersededLoginRequirement": {
+        "status": "waiting_explicit_owner_login_confirmation",
+        "instruction": "After actual explicit same-session login/return confirmation, inspect current browser control, source/profile and lineage, then use the one existing revise_digital action; inspect uncertain responses instead of retrying. Original school result remains open.",
+        "supersededBy": "direct_owner_route_correction"
+      },
+      "ownerCorrection": {
+        "receivedAt": "2026-10-24T13:11:01.504395+00:00",
+        "text": "Nee eva moet zoeken online hoe ze in kan loggen. er is geen somtoday pagina waar je in kan loggen dat gaat normaliter via de app. Maar het kan ook anders.",
+        "source": "direct human reply to login question",
+        "loginConfirmed": false
+      }
     }
   }
 }

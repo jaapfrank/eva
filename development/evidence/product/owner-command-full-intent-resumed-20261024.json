@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:56:37.055465+00:00",
-  "status": "installed_resume_actually_used_login_required_same_session_handoff_prepared",
+  "status": "owner_corrected_route_online_discovery_resume_preparation",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -123,5 +123,13 @@
     "loginOrSchoolOutcomeProven": false,
     "rootWillResumeSameWorkAfterExplicitOwnerConfirmation": true,
     "otherExecutableWorkNotBlocked": true
+  },
+  "latestOwnerCorrection": {
+    "receivedAt": "2026-10-24T13:11:01.504395+00:00",
+    "text": "Nee eva moet zoeken online hoe ze in kan loggen. er is geen somtoday pagina waar je in kan loggen dat gaat normaliter via de app. Maar het kan ook anders.",
+    "manualLoginPrerequisiteWithdrawn": true,
+    "actualLoginConfirmed": false,
+    "originalSchoolOutcomeStillOpen": true,
+    "instruction": "Hervat dezelfde schoolopdracht met de nieuwe eigenaarcorrectie: Eva onderzoekt zelf online appauthenticatie en andere toegestane/onofficiële routes, vergelijkt concrete alternatieven en controleert de oorspronkelijke bruikbare uitkomst. Een handmatige browserlogin is niet vooraf vereist. Geef geen loginbevestiging of afronding voor zonder echt bewijs; bestaande bron, bevoegdheden, verbruik en oorspronkelijke ontvanger behouden."
   }
 }
