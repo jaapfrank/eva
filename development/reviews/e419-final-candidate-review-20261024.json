@@ -1,0 +1,385 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E4.19 V2 foundation activation",
+  "reviewerThreadId": "01a16a55-1607-7171-820e-a3918acaea3f",
+  "reviewedAt": "2026-10-24T09:42:14.616777+00:00",
+  "status": "INSTALLED_EXACT_V2_FOUNDATION_INDEPENDENTLY_READ_BACK_NATIVE_E419_ACCEPTANCE_OPEN",
+  "verdict": "GO_INSTALLED_FOUNDATION_ONLY",
+  "scope": "Only changed attention/canonical008, new closure007 and final package/installer binding. Existing valid matrix reused. No own assembly code accepted as independent evidence.",
+  "closedCriteriaRefs": {
+    "criteria.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/criteria.private.json",
+      "sha256": "068d4f3887e0dff659e852bc0b83c1b505df3b5a1ec2f1eba1ef460be0ee16c5"
+    },
+    "native-interfaces.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/native-interfaces.private.json",
+      "sha256": "61a8df51d9f23c317808fbac307ff7a1153d337a03e344b137f8227b3fd9538b"
+    },
+    "held-image-recovery-interface.private.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/held-image-recovery-interface.private.json",
+      "sha256": "aa4cd9c9bd85c55ab1f76478628f40a3c83368161047819200ba5d98f490e26a"
+    },
+    "held-image-recovery-harness-v1.py": {
+      "path": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/held-image-recovery-harness-v1.py",
+      "sha256": "f900e32ef4500338c2e6041d4c008ed5876d4b924b14edf7ce7be24d67893b3e"
+    }
+  },
+  "inspectedAttentionManifest": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v2/attention-final/manifest.private.json",
+    "sha256": "dafd211198191e5f620bd436796fb30e9107b0ed3e98327903397733a971cd4b"
+  },
+  "inspectedRoleSources": [
+    {
+      "role": "core",
+      "path": "src/eva/bootstrap/component_maintenance.py",
+      "sha256": "f1bfa6a54e71e6d091619641b97b0f02652b80cadf938a72c6b836d6b6de8f32",
+      "v1BeforeSha256": "0abe2a8deb351fc7234d9a9923e9c9e11b5b55b5107166a7c0222775816e9d47",
+      "patchSha256": "d12d191ebb47580cf48d6c307ca9b902c621371b96df41c65c8d01f43ba14da8"
+    },
+    {
+      "role": "core",
+      "path": "src/eva/adapters/postgres/initiative_context.py",
+      "sha256": "9872a87190ccb9628db4bc0e49813e8ef1ef75528b617a96164301b8b676a7c0",
+      "v1BeforeSha256": "588d3cf256cf347a87c2b373be2ede25ee00d46f90a79c5d4135bd296010615c",
+      "patchSha256": "44a06dfaa3f2fdf082013a14efb15c09652975417d4a9a30cf3f73eeb2a40b88"
+    },
+    {
+      "role": "core",
+      "path": "src/eva/adapters/postgres/sensory_events.py",
+      "sha256": "e300cd1b6c2281f53fd7f5bd5683286067b65ba2f4976286d77c7b48e9383ee1",
+      "v1BeforeSha256": "2e3ea66d1fdae7d4d1d59b173483c70f3d7e1ff082f3a2648fcde1dc9b23dd1f",
+      "patchSha256": "058288c82539351cec2bcc14f1982fb18a6a896fd7128d586e1fc7dac5dca439"
+    },
+    {
+      "role": "delegated-work-worker",
+      "path": "src/eva/bootstrap/component_maintenance.py",
+      "sha256": "f1bfa6a54e71e6d091619641b97b0f02652b80cadf938a72c6b836d6b6de8f32",
+      "v1BeforeSha256": "0abe2a8deb351fc7234d9a9923e9c9e11b5b55b5107166a7c0222775816e9d47",
+      "patchSha256": "d12d191ebb47580cf48d6c307ca9b902c621371b96df41c65c8d01f43ba14da8"
+    },
+    {
+      "role": "delegated-work-worker",
+      "path": "src/eva/adapters/postgres/initiative_context.py",
+      "sha256": "90fe5adc3d187c2a863edf7f087b4508347cebac7281562de61fbd809d681cc5",
+      "v1BeforeSha256": "4d40c131a67f57a575827fa11a2891205905a11bd47c29033419e2a95b99da4a",
+      "patchSha256": "01b6985356c36239a530bd7426e0475ca688125f945a27d57b83d0f880948e3d"
+    },
+    {
+      "role": "delegated-work-worker",
+      "path": "src/eva/adapters/postgres/sensory_events.py",
+      "sha256": "2af53c3566d5a6363079bb0e8e9d4e9767f4b4216c376b68168f3771ae1debe6",
+      "v1BeforeSha256": "2ea320afbfb375498f165d0057cab5bb5d52cbcd9210a30349658715b5b303de",
+      "patchSha256": "5c0bd14e0f657ce2ee42bf9e0a32b89e89374722769e3f4779b3749960ed0743"
+    }
+  ],
+  "attentionResult": "Bounded static review found no blocking defect; final source hash binding pending.",
+  "canonical008": {
+    "readSourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v2/git-attention-and-time/manifest.private.json",
+      "sha256": "41f8442bcf77ea4ca42237924548b65789e1f6c68a0e991d63ccf8f9aff979d1"
+    },
+    "finding": "Both elapsed producers changed to integer elapsed_ms and exact decimal string; actual canonical persistence test in retained proof covers both producers.",
+    "reuseEvidence": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v2/attention-final-bounded-input-and-interfaces.private.log",
+        "sha256": "0116f74277e2bd87feb3c842ba8368f155e413e5575d207aa8d0e39f0f44b4e3"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v2/canonical-report-producers.private.log",
+        "sha256": "37ccf969a9f942380df2440e496742b569eca9d792befbaee7a3dbba2e28311e"
+      }
+    ],
+    "noNewMatrix": true
+  },
+  "findings": [
+    {
+      "contract": "E419IndependentInstallerFinding/v1",
+      "id": "E419-POSTCAS-AUTHORITY-009",
+      "priority": 1,
+      "status": "RESOLVED_IN_EXACT_APPROVED_SEAL",
+      "reviewedAt": "2026-10-24T09:07:53.739351+00:00",
+      "sourcePins": {
+        "/var/lib/eva2/e419-activation-v2-20261024/operator-actions.py": "6de35986c1c34859ce4f77418207846ba3b0614eaf81b895e89ad3cc3288b603",
+        "/var/lib/eva2/e419-activation-v2-20261024/readiness-probe-v3.py": "dfeeb6b6f0fb1fe3c13ce9997e581cf8f4bb80b4f39a7e1ab0b60fbe387ca758"
+      },
+      "finding": "post-admission-check disposes its engine and executes claim guard without rerunning source(c), state(c) and current policy a._read(). Guard proves exact persisted grant checkpoint/payload and authority source hash; it does not revalidate current DB system/database/user/schema, current owner authorization, enabled policy and NEW digest.",
+      "reachableCase": "After admit returns, owner authority or enabled/policy changes while stored grant checkpoint remains identical. Post-admission exact-grant exemption can still pass and allow roles/host start using stale admission proof.",
+      "requiredBoundary": "Immediately before final readiness/start gate revalidate exact current source identity/schema, owner._authorize/current active nonrevoked grant, and actual enabled policy NEW digest against this same grant; preserve global claim guard afterward. Root owns installer correction; no tester source change.",
+      "newExecution": false,
+      "productionWrites": 0,
+      "scope": "Installer binding only; not criteria, source acceptance or native update success.",
+      "resolution": {
+        "status": "FIXED_BY_ROOT_STATIC_DELTA_REVIEWED_PENDING_FINAL_HASH_BINDING",
+        "operatorActionsSha256": "bd59bf95c00e2996a6e60a5b10a5b6eae2b056b8a12b52b6ac6524c3156d3828",
+        "reviewedAt": "2026-10-24T09:08:37.673477+00:00",
+        "behavior": "Both post-stop and post-admission revalidate read-only source/schema, owner authorization and active mandate, current enabled OLD/NEW policy digest and exact post-admission grant binding/revision/data before global claim guard.",
+        "newTests": 0
+      },
+      "originalStatus": "NO_GO_INSTALL_PENDING_EXACT_FIX"
+    },
+    {
+      "id": "E419-LAUNCHER-BEFORE-010",
+      "priority": 2,
+      "status": "RESOLVED_IN_EXACT_APPROVED_SEAL",
+      "sourcePath": "/var/lib/eva2/e419-activation-v2-20261024/operator-launcher.py",
+      "sourceSha256": "c2f8ac073be0fe52ecb85443df60b3b459fad1a01b1f13539e2e5e5fd9e667cd",
+      "finding": "Launcher compares actual production core image to build.roles.core.base; V2 minimal overlay builds from V1 foundation while actual production baseline remains E416. The assert therefore rejects the correct production baseline for that build representation.",
+      "requiredBoundary": "Bind actual production image against exact reviewed role-manifest.core.base. Keep operator execution image separately pinned to build.roles.core.image. Preserve both baseline and buildfoundation meanings.",
+      "productionExecution": false,
+      "resolution": {
+        "status": "RESOLVED_IN_BUILD_RECEIPT_PRODUCER_PENDING_ACTUAL_RECEIPT_BINDING",
+        "buildScriptSha256": "49f71aeaeaa40f055a29927f07d06ba07ad164019bdcb79ebcb299538cdc6669",
+        "behavior": "Producer preserves roles.base as exact production baseline from roles-before-build; separate buildBase records V1foundation. Launcher compares actual baseline to preserved base; execution image remains V2candidate.",
+        "actualBuildExecutedByReviewer": false
+      },
+      "originalStatus": "PENDING_ROOT_FIX"
+    },
+    {
+      "id": "E419-READBACK-V2-BINDING-011",
+      "priority": 2,
+      "status": "RESOLVED_IN_EXACT_APPROVED_SEAL",
+      "file": "live-readback.py",
+      "finding": "Current readback still hardcodes V1package path and old policy/client hashes. It cannot attest the V2host/policy/client until bound to exact final activationplan/mandatebinding/clientref.",
+      "requiredBoundary": "Read exact final reviewed plan+mandate/clientbinding; no invented postinstall values.",
+      "sourcePath": "/var/lib/eva2/e419-activation-v2-20261024/live-readback.py",
+      "sourceSha256": "60740a0096986927c29d6e92289f9dab08d7c803916c289d70c8998ab9af06c9",
+      "resolution": {
+        "status": "FIXED_STATIC_DELTA_REVIEWED_PENDING_FINAL_PLAN_BINDING",
+        "sourceSha256": "60740a0096986927c29d6e92289f9dab08d7c803916c289d70c8998ab9af06c9",
+        "meaning": "Finalplan package/hostpath, exactmandate/clientrefs and configurationafterhashes drive readback. Bothroles must be running/healthy. Authority/schemaquery uses READ ONLY.",
+        "newExecution": false
+      },
+      "originalStatus": "PENDING_FINAL_ROOT_BINDING"
+    },
+    {
+      "id": "E419-HELPER-SOURCE-PINS-012",
+      "priority": 1,
+      "status": "RESOLVED_IN_EXACT_APPROVED_SEAL",
+      "file": "prepare-activation.py",
+      "finding": "Preparation explicitly pins recoveryinterface+harness but not helper_candidate artifact and every sourceFiles entry. If source-onlyhelper reuses V1closure, filtering V1pins can omit its source boundary from final installpins.",
+      "requiredBoundary": "Final plan pins exact helper_candidate artifact and all its trusted hostsourcefiles, including unchanged V1files if those are referenced.",
+      "sourcePath": "/var/lib/eva2/e419-activation-v2-20261024/prepare-activation.py",
+      "sourceSha256": "c78044b075308f0ccf31e0b08ea2419231099de0ceb9b959fe8a466bacc08aa6",
+      "resolution": {
+        "status": "FIXED_STATIC_DELTA_REVIEWED_PENDING_FINAL_PLAN_BINDING",
+        "sourceSha256": "c78044b075308f0ccf31e0b08ea2419231099de0ceb9b959fe8a466bacc08aa6",
+        "meaning": "Preparation explicitly includes helpercandidate artifact and all hash-bound sourceFiles within its absolute trustedroot, including retainedV1sources.",
+        "newExecution": false
+      },
+      "originalStatus": "PENDING_FINAL_ROOT_BINDING"
+    }
+  ],
+  "closure007": "Reviewed exact final single-harness dispatch and original same-job receipt barrier; source GO only, no actual native recovery claim.",
+  "package": "Exact final inventory, role/host/config/source-onlyhelper and22Gitbytes/patches independently verified. Assembly authored by reviewer not used as proof.",
+  "foundationInstallApproved": true,
+  "nativeHeldRecoveryExecuted": false,
+  "fullE419Completed": false,
+  "ownerAcceptance": false,
+  "projectCompleted": false,
+  "usage": {
+    "newMatrixRuns": 0,
+    "newTests": 0,
+    "newImports": 0,
+    "newModelCalls": 0,
+    "newRuntimeQueries": 0,
+    "productionWrites": 0,
+    "installs": 0,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "reviewElapsedSeconds": null,
+    "isolatedFixtureIdentityReads": 1,
+    "isolatedFixtureTransactionsRolledBack": 1,
+    "productionDatabaseQueriesByReviewer": 0,
+    "wholeReviewElapsedSeconds": null,
+    "measurement": "partial",
+    "EvaRuntimeTotalKnown": false,
+    "measuredReviewSegmentFrom": "2026-10-24T09:05:06.346714+00:00",
+    "measuredReviewSegmentSeconds": 1451.308,
+    "segmentIncludesCoordinationWaiting": true,
+    "newFunctionalMatrixRuns": 0,
+    "newModelCallsByReviewer": 0,
+    "newApplicationImports": 0,
+    "newProductionDatabaseQueries": 0,
+    "newProductionWrites": 0,
+    "independentMetadataOnlyContainerPythonReads": 2
+  },
+  "rootProfilesPreparation": {
+    "sha256": "4a06d686019758e81125e2e6457fde98f5b654a2a5e3be0daa687161b198d023",
+    "result": "Static inspected script distinguishes actual production baseline from V1 build foundation; actual profile execution/result not yet reviewed."
+  },
+  "finalSourceReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/source-review.private.json",
+    "sha256": "2a4e37a50e058dfeb65276e320c1c6b56aec0bbe592c92ed443aea376c780560",
+    "verdict": "GO_FROZEN_SOURCE_ONLY_NOT_INSTALLATION_OR_E419_ACCEPTANCE",
+    "manifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v2/controller-final/manifest.private.json",
+      "sha256": "a8bcc4e4b218d183bcc683f616a06993eeaec9fe1856f6625c9aaa4e66f45138"
+    },
+    "roleDifferencesPreserved": {
+      "src/eva/bootstrap/component_maintenance.py": true,
+      "src/eva/adapters/postgres/initiative_context.py": true,
+      "src/eva/adapters/postgres/sensory_events.py": true
+    }
+  },
+  "harnessValidatorSeamReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/harness-validator-seam-review.private.json",
+    "sha256": "d3f2aff22f808bbff0b5fa850255da11796b0e48e19f0f7e124815552f43396c",
+    "verdict": "GO_STATIC_SEAM_NOT_NATIVE_EXECUTION"
+  },
+  "ownerLockCompatibilityCorrection": {
+    "reviewedAt": "2026-10-24T09:23:00.418928+00:00",
+    "status": "FIXED_STATIC_DELTA_REVIEWED_PENDING_FINAL_BINDING",
+    "basis": "New concrete READ ONLY failure at original owner._authorize SELECT FOR SHARE. Earlier static approval of explicit READ ONLY did not account for this existing lock contract.",
+    "frozenOwnerSourceSha256": "00fcd0622f86629457c143e983637e692539006255121d65342b1a531e618f89",
+    "operatorActionsSha256": "821eec1e9546cfe4775761a80a4d19f7168fcca8a045d779988019d1bd7f85db",
+    "liveReadbackSha256": "2339893ef323a32747acdc171de34f82364c75f8cdd9fd2a7fe2743957450754",
+    "delta": "Only explicit SET TRANSACTION READ ONLY removed from owner-authorization transactions. Exact source/schema/current owner/policy/grant checks retained. These branches execute SELECT/locks and no DML; connection closes with rollback.",
+    "previousInspectedBytesPreserved": true,
+    "newTestsOrProductionWritesByReviewer": 0
+  },
+  "finalPackageReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/package-review.private.json",
+    "sha256": "3c689170e721fb16e062810345e2fc90e40c82dcc28fdca1b120cfb81f7f5710",
+    "verdict": "GO_PACKAGE_NOT_INSTALLATION_OR_NATIVE_ACCEPTANCE",
+    "packageRefs": {
+      "candidate-manifest.private.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v2-delivery/candidate-manifest.private.json",
+        "sha256": "d15e4e0c5df27e00c366de612ff26466f5a38b82248607408a40531299d2d34b"
+      },
+      "handoff.private.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v2-delivery/handoff.private.json",
+        "sha256": "caf2daf33afb9bfef748b9d35ef9ef09a54ef67ab5c7269930fa92c429efa8d6"
+      },
+      "package-manifest.private.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v2-delivery/package-manifest.private.json",
+        "sha256": "ab9d90152672c02d77651e1e1d2d0f38b659bc996c389fbf0a0904e7cefc3716"
+      },
+      "git-handoff.private.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v2-delivery/git-handoff.private.json",
+        "sha256": "4a10d42277e2a90ea6fbc939453779423583e01846ed3c5077b31624ac9eea40"
+      }
+    }
+  },
+  "approvalScope": "Only exact E4.19 foundation source/host/config/images and existing owner admission. No accepted Psycopg3.3.6 native update, gain, daily usefulness or full card acceptance.",
+  "activationBindingReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/activation-binding-review.private.json",
+    "sha256": "eccb12851947f3755140d402bdeae7aa5a711d76f9a23b4aa736bcf1c010df55"
+  },
+  "approvedBindings": {
+    "operatorManifest": {
+      "path": "/var/lib/eva2/e419-activation-v2-20261024/operator-manifest.private.json",
+      "sha256": "ea68363f7bb197b3be9ce8d90a580bf8444f4ee2d40c910f280fc8ba1aa4df9b"
+    },
+    "operatorFiles": {
+      "install.py": "79ca1f4da4114ba8da11b21ff2a010e785320fdd0d5bd1f1117f684ec6e0b9b0",
+      "operator-actions.py": "821eec1e9546cfe4775761a80a4d19f7168fcca8a045d779988019d1bd7f85db",
+      "operator-launcher.py": "c2f8ac073be0fe52ecb85443df60b3b459fad1a01b1f13539e2e5e5fd9e667cd",
+      "readiness-probe-v3.py": "3c1494a79eaada78f0965d395d16ad5d235b2fbd80b50962f23e32e6e872eb69",
+      "live-readback.py": "2339893ef323a32747acdc171de34f82364c75f8cdd9fd2a7fe2743957450754",
+      "observe-native.py": "1afabd1e5091e9652bd4c53744cb06c18a3aa5df54e6fc4c43e76cd96616674f",
+      "prepare-build.py": "9ff1d87c3d83ac053c162b85b8728fcf473f7ec244fa78a52ae85b7ba999c449",
+      "build.py": "49f71aeaeaa40f055a29927f07d06ba07ad164019bdcb79ebcb299538cdc6669",
+      "candidate-profiles.py": "4a06d686019758e81125e2e6457fde98f5b654a2a5e3be0daa687161b198d023",
+      "prepare-activation.py": "c78044b075308f0ccf31e0b08ea2419231099de0ceb9b959fe8a466bacc08aa6",
+      "activation-plan.private.json": "67110adcabfd8ca09c0e72982a3585ecd922e9108f9e36974709a0d7dd1fbd5a",
+      "package-binding.private.json": "89586736792f348cced2d42e2bc091dd8b6e6b1929a161c9a5b1493dc5edd72f",
+      "role-manifest.private.json": "10ab900778c89ccfcddec843341047907cc2ee00f8ec00acbe4f37caf51a8eea",
+      "build-receipt.private.json": "70e386a59e12f490f801625bf785921efcac47e7d0dda54a3aa5e622723711ea",
+      "roles-before-build.private.json": "996cf1b36df7f4d2ce0fb0b318f2ebe6cfde2b13fffd19cfb238e52989237f47",
+      "build-plan.private.json": "1cc5fa24e351de97aaccfea59c5c08ddd1793ea2af7634f83366102be53898c0",
+      "candidate-profiles.private.json": "37d7121dfda96c8771ff9fd1ed1254bf582eefaf9050b1b2da03231c57f53d99",
+      "previous.private.json": "e2a31489399326d30f9427dc329ac6fe1d774ff01dee4ae5947bab289e267af2",
+      "candidate.private.json": "60dc5a1b22608099475fd78ddc81865069dd7e9d3bdf805f14c913114e96670b",
+      "mandate-after.private.json": "6b774f8dafd26157a073dbfaebdf22bd1037a85e32daed8c81d8fd70db0d5fc8",
+      "operator-input/mandate-binding.private.json": "16eafad1970887c9d14127e6f3d48c50d280245736ec75a33b3fb02fd1a14a29",
+      "operator-input/instance-binding.private.json": "4939bc8ad206eff72def4b08a88d57becb79a12b370172aa4832761c884a40e8",
+      "operator-input/schema-validation.private.json": "0e62c9405c8bf12fa6ca51c650cf29664db9afb6a90a4e7506eb7627dfcee0ab",
+      "preflight-lockcheck-dispatch.private.json": "3172f2ba5cc8ce60e6c7ea346f0a77f706228e58745a5805ec6139e32f71cc6c",
+      "preparation-resume-delta.private.json": "dd41566ca2540853a6f8fc040bfd8edd670132092dd24efc7fbe629e47b9a8d2",
+      "completed-audit-classification.private.json": "2169341f7c4ff4aa610af096c38838d208897a2143cfd60904a701cc49413d3e"
+    },
+    "sourcePinCount": 183,
+    "packageManifestSha256": "ab9d90152672c02d77651e1e1d2d0f38b659bc996c389fbf0a0904e7cefc3716",
+    "candidateManifestSha256": "d15e4e0c5df27e00c366de612ff26466f5a38b82248607408a40531299d2d34b",
+    "activationPlanSha256": "67110adcabfd8ca09c0e72982a3585ecd922e9108f9e36974709a0d7dd1fbd5a",
+    "buildReceiptSha256": "70e386a59e12f490f801625bf785921efcac47e7d0dda54a3aa5e622723711ea",
+    "profileReceiptSha256": "37d7121dfda96c8771ff9fd1ed1254bf582eefaf9050b1b2da03231c57f53d99",
+    "roleManifestSha256": "10ab900778c89ccfcddec843341047907cc2ee00f8ec00acbe4f37caf51a8eea",
+    "images": {
+      "core": "sha256:3a73b6ceed08911e4f5567f43bc271fe5d18796eba20342b3dd5fb2424933940",
+      "delegated-work-worker": "sha256:b6bdd741d363c4d4a39acef1dc20d32f25e9a3760aef7783505fb9c9ce651096"
+    },
+    "digitalProfileSha256": "0f845686c68043f8d890bcef44a2a285d734b0c989b1b1c5aaf5531697216bc5",
+    "compatibleProfiles": [
+      "digital_work",
+      "shared_provider",
+      "public_research"
+    ],
+    "knownRejectedMismatchedProfile": "household_research"
+  },
+  "dispatchConditions": [
+    "Root only, exact reviewed seal/package/images/plan.",
+    "Fresh globalRLScovered conversation/model/work/memory and hostevaluationclaims must pass immediately beforestop and required later gates; no interruption of ongoing evaluation.",
+    "Exact current source/schema/owner/active OLD/NEWpolicy/grant checks retained. Owner lock transactions use SELECT FOR SHARE without forcedREADONLY and contain no DML except explicit admitted CASphase.",
+    "Unknown dispatch inspection only; never automatic rerun.",
+    "Keep existing household_research release mismatch refused; no compatibilityclaim for that profile.",
+    "Root separately authorizes one pre-dispatch resumption only after fresh global/hostclaims clear. Any nonemptyjournal or changedsource/backup/config fails closed; never rerun ambiguous effect.",
+    "Recheck liveglobal/hostclaims immediately at actual dispatch. Any new work, changed historical bindings/parent/work lease/state/hash, changed owner/policy or existing installationjournal fails closed; no unknown-effect replay."
+  ],
+  "heldFixtureIdentity": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/held-fixture-identity.private.json",
+    "sha256": "9a30e9cb8d0e96894f046a4d2c138ac62ad6332cd2ee31fdf8bdf1b0b122a79a",
+    "scope": "One current isolated PG18identity SELECT in READONLYtransaction+rollback, no oldbehaviorcase rerun. Retained only for same future nativejob; revalidate at use."
+  },
+  "postInstallReview": "Completed for exact installed foundation; original installapproval232b892... kept immutable in private snapshot. Native update/fullE419 acceptance remains open.",
+  "preDispatchResumeReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/preparation-resume-review.private.json",
+    "sha256": "e0339a71bd82405498da68dfc446d5db61e4513641a0c536c7cf82541485756b",
+    "priorApprovalSnapshot": {
+      "path": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/install-go.review.private.json",
+      "sha256": "25fdeab9d17cd7f778dbb11f632e15837c7d5091ae069988f6aef5e7a7cb5dac"
+    }
+  },
+  "exactTerminalAuditReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/terminal-audit-review.private.json",
+    "sha256": "09e380bb0e9a746633540283bd0213f27e5548f44be5c9c423e0fb75977e0c63",
+    "scope": "Exactly one historical initiative_dispatch_admitted audit checkpoint, not a running work/model/effect exemption."
+  },
+  "installedFoundationReview": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/installed-foundation-review.private.json",
+    "sha256": "e582957d41057677f20fa3cc3dfe2e00f25cc70f7838b7527ca32f3bf498cbf7",
+    "verdict": "GO_INSTALLED_FOUNDATION_ONLY",
+    "installation": {
+      "path": "/var/lib/eva2/e419-activation-v2-20261024/installation.private.json",
+      "sha256": "e4ff65beafedfe1c62a5541f6164ec7f9b1a6dd190e9abb2a5b6a9313e0330ea",
+      "installedAt": "2026-10-24T09:39:07.291994+00:00",
+      "approvedReviewSha256": "232b89200d0aea61b201f8733bd196246c3fe94155a1d85b667dee348c22dd84",
+      "all9PhasesCompleted": true,
+      "freshGuardsBeforeStopAfterStopAfterCasPassed": true
+    },
+    "rootLiveReadback": {
+      "path": "/var/lib/eva2/e419-activation-v2-20261024/live-readback.private.json",
+      "sha256": "8da044b3670e784fa33f7d65e7465369f47541bfdaa642a92b3462772e32c9b2",
+      "actualProfilesEqualReviewedCandidates": true,
+      "sameExactOwnerGrantSchemaAndExistingFunctionPrivileges": true,
+      "threeConfigurationAfterHashesMatch": true,
+      "hostAuthenticatedHealth": true,
+      "dashboardStatus": 200
+    },
+    "ownIndependentRuntimeReadback": {
+      "path": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/independent-installed-runtime-readback.private.json",
+      "sha256": "1613e2cfe4114710bac6528ed5238e63e63804e6eca2cb8a8060772d9f1672b4",
+      "actualSourceHashes": 22,
+      "hashingUid": 65532,
+      "bothHealthyAndStableGeneration": true,
+      "metadataOnlyNoAppImport": true
+    },
+    "delegatedActualHostReadback": {
+      "path": "/home/administrator/project/.eva2-artifacts/e419-image-recovery-20261024/host-contract-readiness/actual-installed-host-readback.private.json",
+      "sha256": "acd463c320714310b051cf64f47470be40e3379f6cbea8b8b7e9185f9e43e484",
+      "actualProcessConfigPathAnd64SourcesMatch": true,
+      "liveSysModulesNotClaimed": true
+    }
+  },
+  "nextReviewScope": "Follow same actual native E419 chain and exact newly delivered results only; no oldmatrix, forced3.3.6proof or installation rerun."
+}
