@@ -1314,16 +1314,18 @@ def test_background_unknown_or_exhausted_usage_stops_before_new_admission(tmp_pa
     # No offered descriptors are needed to establish the pre-admission bound.
     tools.available_for = lambda turn: False
     outcome = asyncio.run(runner.run(spec, call_id="call:blocked-output"))
-    assert outcome.status == "budget_exceeded", outcome
+    assert outcome.status == ("invalid_usage" if prior == "unknown" else "budget_exceeded"), outcome
     assert admissions == scripted.captures == tools.calls == []
 
 
 
-def test_unknown_usage_after_unavailable_failure_cannot_start_internal_retry(tmp_path):
+@pytest.mark.parametrize("prior_effect", [False, True])
+def test_unknown_usage_after_unavailable_failure_cannot_start_internal_retry(tmp_path, prior_effect):
     from eva.adapters.model.openai_codex_provider import CodexProviderError
     from eva.adapters.model.pydantic_conversation import PydanticConversationModel
     from tests.model.test_pydantic_conversation_model import _runtime_budget
-    from tests.support.scripted_pydantic_conversation import ScriptedPydanticConversation, ScriptedPhase
+    from tests.support.scripted_pydantic_conversation import ScriptedPydanticConversation, ScriptedPhase, ScriptedCall
+    from eva.application.conversation import ConversationToolDescriptor
     _, spec, _, tools, _, runner, _ = fixture()
     admissions = []
     class DurableJournal(Journal):
@@ -1336,16 +1338,34 @@ def test_unknown_usage_after_unavailable_failure_cannot_start_internal_retry(tmp
                 ConversationModelUsage.partial(model_attempts=1, tool_calls=0, input_tokens=0, output_tokens=0)
                 if usage.measurement == "unmeasured" else usage for usage in self.usages))
     journal = DurableJournal()
+    repair_calls = []
+    runner.failure_observer = lambda *args: repair_calls.append(args)
     runner.journal_factory = lambda *_: journal
-    scripted = ScriptedPydanticConversation((ScriptedPhase.failure(CodexProviderError("unavailable")),
-                                            ScriptedPhase.text("Retry must not start.")))
+    phases = ([ScriptedPhase.deferred(ScriptedCall("read-once", "use_connector_tool", {}))]
+              if prior_effect else [])
+    scripted = ScriptedPydanticConversation((*phases,
+        ScriptedPhase.failure(CodexProviderError("unavailable")),
+        ScriptedPhase.text("Retry must not start.")))
     runner.model = PydanticConversationModel(auth_file=tmp_path/"unused.json", model_backend=scripted.model,
-        resource_budget=_runtime_budget(max_input_tokens=65_536))
-    tools.available_for = lambda turn: False
+        resource_budget=_runtime_budget(max_input_tokens=65_536), conversation_tools=tuple(
+            ConversationToolDescriptor(name, "Controlled task tool", {
+                "type":"object", "properties":{}, "required":[], "additionalProperties":False})
+            for name in tools.action_names) if prior_effect else ())
+    tools.available_for = lambda turn: prior_effect
+    tools.release.set()
+    grant_before = spec.grant.to_payload()
     outcome = asyncio.run(runner.run(spec, call_id="call:unknown-retry"))
-    assert outcome.status == "budget_exceeded", outcome
-    assert len(admissions) == len(scripted.captures) == 1
-    assert tools.calls == [] and journal.usages == [ConversationModelUsage.unmeasured()]
+    assert outcome.status == "provider_unavailable", outcome
+    assert len(admissions) == len(scripted.captures) == (2 if prior_effect else 1)
+    assert len(tools.calls) == int(prior_effect)
+    assert journal.usages[-1] == ConversationModelUsage.unmeasured()
+    if prior_effect:
+        assert journal.usages[0].measurement == "measured"
+        assert outcome.usage.input_tokens == journal.usages[0].input_tokens
+        assert outcome.usage.output_tokens == journal.usages[0].output_tokens
+    assert outcome.usage.measurement == "partial" and outcome.retryable is False
+    assert spec.grant.to_payload() == grant_before
+    assert repair_calls == [] and outcome.failure_report is None
 
 
 @pytest.mark.parametrize("boundary", ["task_deadline", "shorter_deadline", "legacy_grant", "owner_stop", "expired_before_admission"])

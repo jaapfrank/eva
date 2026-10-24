@@ -193,6 +193,10 @@ class _ProviderUsageError(ConversationModelError):
     """Provider output cannot establish consumption for the completed request."""
 
 
+class _ProviderUnavailable(ConversationModelError):
+    """The provider failed; a blocked retry must not replace that cause."""
+
+
 class _InputBudgetError(ConversationModelError):
     """The local request envelope does not fit; no provider request was made."""
 
@@ -2272,12 +2276,24 @@ class PydanticConversationModel:
             ConversationModelTiming,
         ]:
             dispatched_attempts = 0
+            unavailable_failure: CodexProviderError | None = None
             for attempt in range(2):
                 check_cancellation()
                 # Refresh before admission: retries and language repair spend
                 # the same durable task balance, never a fresh response budget.
-                maximum_output_tokens = (output_tokens_limit() if output_tokens_limit is not None
-                    else self._resource_budget.max_output_tokens if self._resource_budget is not None else None)
+                try:
+                    maximum_output_tokens = (output_tokens_limit() if output_tokens_limit is not None
+                        else self._resource_budget.max_output_tokens if self._resource_budget is not None else None)
+                except _ProviderUsageError as usage_error:
+                    if unavailable_failure is None:
+                        raise
+                    # The failed provider request has no attested usage. Keep
+                    # that uncertainty and the original cause; do not renew its
+                    # allowance, dispatch a retry, or report an exhausted budget.
+                    raise _ProviderUnavailable(
+                        "conversation provider is unavailable; retry blocked by incomplete usage",
+                        model_usage=usage_error.model_usage,
+                    ) from unavailable_failure
                 output_started = [False]
                 session = None
                 request_id = None
@@ -2361,6 +2377,7 @@ class PydanticConversationModel:
                         and error.category == "unavailable"
                         and not output_started[0]
                     ):
+                        unavailable_failure = error
                         continue
                     if error.category == "deadline":
                         raise ConversationModelDeadlineExceeded(
@@ -2372,7 +2389,7 @@ class PydanticConversationModel:
                     elif error.category == "credentials_rejected":
                         message = "conversation credentials were rejected"
                     elif error.category == "unavailable":
-                        message = "conversation provider is unavailable"
+                        raise _ProviderUnavailable("conversation provider is unavailable") from error
                     else:
                         message = "conversation provider returned an invalid response"
                     raise ConversationModelError(message) from error

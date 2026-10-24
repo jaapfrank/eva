@@ -444,7 +444,8 @@ class DelegatedDigitalRunner:
             # An empty durable journal is unmeasured. Admitted requests without
             # known usage become partial totals, so they cannot renew allowance.
             if actual.measurement == "partial":
-                raise _DigitalBudgetExceeded("background model output usage is incomplete")
+                from eva.adapters.model.pydantic_conversation import _ProviderUsageError
+                raise _ProviderUsageError("background model output usage is incomplete", model_usage=actual)
             consumed = actual.output_tokens if actual.measurement == "measured" else 0
             remaining = spec.grant.maximum_output_tokens - consumed
             if remaining <= 0:
@@ -679,7 +680,9 @@ class DelegatedDigitalRunner:
                 usage=usage.to_payload(), completed_at=self.clock().strftime("%Y-%m-%dT%H:%M:%SZ"))
             outcome = ToolFreeChildOutcome("succeeded", result, usage, False, None)
         except Exception as error:
-            from eva.adapters.model.pydantic_conversation import _InputBudgetError
+            from eva.adapters.model.pydantic_conversation import (
+                _InputBudgetError, _ProviderUnavailable, _ProviderUsageError,
+            )
             from eva.adapters.model.contracts import ResearchCitationError
             if journal is not None and source is not None:
                 with suppress(Exception):
@@ -688,7 +691,8 @@ class DelegatedDigitalRunner:
                 else "timed_out" if isinstance(error, ConversationModelDeadlineExceeded) or self.clock() >= deadline
                 else "budget_exceeded" if isinstance(error, (_DigitalBudgetExceeded, ConversationExecutionLimitReached, _InputBudgetError))
                 else "incomplete_work" if isinstance(error, (_UnfinishedWorkPlan, ResearchCitationError))
-                else "provider_unavailable" if type(error) is McpGatewayUnavailable
+                else "provider_unavailable" if isinstance(error, _ProviderUnavailable) or type(error) is McpGatewayUnavailable
+                else "invalid_usage" if isinstance(error, _ProviderUsageError)
                 else "internal_error")
             if (self.failure_observer is not None and native_guard is None and source is not None
                     and status in {'internal_error','incomplete_work','budget_exceeded'}):
