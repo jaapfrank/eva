@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Noodzakelijke accountstap is concreet voorbereid: in Verbindingen bij Eva’s taakbrowser overnemen, Somtoday aanmelden en teruggeven; daarna dezelfde opdracht hervatten. De geïnstalleerde hervattings- en planblokkadereparatie zijn werkelijk gebruikt. Parallel alleen nieuw gewoon gebruik voor bestaande E1.6/E4.15 controleren; geen oude proef herhalen.",
+    "nextAction": "Somtoday-login in dezelfde taakbrowser blijft voorbereid en wacht op echte eigenaarbevestiging. Ondertussen de concrete E4.15-blokkade afhandelen: onopgeloste household-modelafweging sinds11:09CEST houdt nieuw initiatief tegen. Gebruik bestaande herstelroute met actuele bron-/call-/effectcontrole, behoud onbekend verbruik en300s-policy; daarna alleen werkelijk nieuw gebruik volgen.",
     "ownerActionRequired": true
   },
   "historicalWorkboard": {
@@ -3093,7 +3093,7 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "De gewone portal is daadwerkelijk geopend tot schoolkeuze/inloggen. Hervatten botst op een intern stapnummer vóór bewaarde voortgang; broncorrectie loopt. Geen schoolgegevens of bruikbare schoolhulp opgeleverd, geen extra oorspronkelijke taak gesloten.",
+          "summary": "De hervattingsreparatie is geïnstalleerd en werkelijk gebruikt; schoolhulp wacht op dezelfde browserlogin. Parallel wordt de concrete blokkade van huishoudelijk initiatief opgelost. Geen nieuwe volledige kaart afgerond.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid."
         },
         "next": {
@@ -8275,9 +8275,9 @@
                   "opencode-lsp"
                 ],
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
-                "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
+                "assignment": "Hoofdbouwer: bestaande actuele herstelroute; coder1: noodzakelijke minimale productroute; coder2: gerichte regressies. Onafhankelijke tester beoordeelt, coordinator beheert productie en integratie.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
+                "nextAction": "Handel eerst de concrete onopgeloste household-afweging af via bestaande herstelroute, na actuele call-/bron-/effectcontrole. Bewaar usageNULL, oude foutbewijzen en300s-policy; herhaal geen oude bron of onzeker effect. Daarna natuurlijke positieve voorstel→afweging→guard→eenmaal aangeboden uiting volgen. Volledige behoefteontdekking, horen en later feedback/hergebruik blijven open.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -8300,10 +8300,10 @@
                   "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-23T19:28:18.184213+00:00",
-                "progress": "Exacte Eva-V2-bron buiten kern behouden; gewone batchkoppeling en conservatieve camerabronselectie gebouwd44 gerichte controles, onafhankelijk beoordeeld, gericht geïnstalleerd en teruggelezen. Nieuwe echte cameraingress2/gewone afwegingstilte waargenomen; gemeten8652tokens/1modelpoging/1tool, credits onbekend. Positieve begroeting, fysieke gezinsproef, zelfontdekte behoefte en later hergebruik/feedback niet bewezen; kaart blijft open.",
+                "checkedAt": "2026-10-24T12:09:34.350200+00:00",
+                "progress": "Nieuw gewoon gebruik gecontroleerd:317camerawaarnemingen,7herkenningskandidaten en35stiltebesluiten; geen positieve aangeboden uiting bewezen. Eén onopgeloste modelafweging sinds11:09CEST blokkeert huidig household-initiatief. Bestaande herstelroute wordt concreet voorbereid en onafhankelijk beoordeeld; nog geen herstel of kaartafronding geclaimd.",
                 "evidence": "development/evidence/product/e415-installed-route-20261023.json",
-                "latestEvidence": "development/evidence/product/e415-household-batch-binding-20261023.json",
+                "latestEvidence": "development/evidence/product/e415-uncertain-household-continuation-20261024.json",
                 "latestIndependentReview": "development/reviews/e415-batch-installed-readback-20261023.json"
               },
               {
@@ -8323,7 +8323,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Noodzakelijke accountstap is concreet voorbereid: in Verbindingen bij Eva’s taakbrowser overnemen, Somtoday aanmelden en teruggeven; daarna dezelfde opdracht hervatten. De geïnstalleerde hervattings- en planblokkadereparatie zijn werkelijk gebruikt. Parallel alleen nieuw gewoon gebruik voor bestaande E1.6/E4.15 controleren; geen oude proef herhalen.",
+                "nextAction": "Somtoday-login in dezelfde taakbrowser blijft voorbereid en wacht op echte eigenaarbevestiging. Ondertussen de concrete E4.15-blokkade afhandelen: onopgeloste household-modelafweging sinds11:09CEST houdt nieuw initiatief tegen. Gebruik bestaande herstelroute met actuele bron-/call-/effectcontrole, behoud onbekend verbruik en300s-policy; daarna alleen werkelijk nieuw gebruik volgen.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -9030,9 +9030,9 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Noodzakelijke accountstap is concreet voorbereid: in Verbindingen bij Eva’s taakbrowser overnemen, Somtoday aanmelden en teruggeven; daarna dezelfde opdracht hervatten. De geïnstalleerde hervattings- en planblokkadereparatie zijn werkelijk gebruikt. Parallel alleen nieuw gewoon gebruik voor bestaande E1.6/E4.15 controleren; geen oude proef herhalen.",
+        "nextAction": "Somtoday-login in dezelfde taakbrowser blijft voorbereid en wacht op echte eigenaarbevestiging. Ondertussen de concrete E4.15-blokkade afhandelen: onopgeloste household-modelafweging sinds11:09CEST houdt nieuw initiatief tegen. Gebruik bestaande herstelroute met actuele bron-/call-/effectcontrole, behoud onbekend verbruik en300s-policy; daarna alleen werkelijk nieuw gebruik volgen.",
         "finishOrder": [
-          "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van 24 gesloten. E4.16 en E4.19 geïnstalleerd; echte gebruiks-/herstelketens nog open. Drie uitvoerders werken afzonderlijk aan native E4.19, E1.14-continuïteit en E1.11; tester beoordeelt onafhankelijk.",
+          "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van24 gesloten. E4.16-schoolopdracht wacht op dezelfde browserlogin. Drie uitvoerders werken afzonderlijk aan de concreet gevonden E4.15-initiatiefblokkade: bestaande herstelroute, noodzakelijke productcorrectie en gerichte regressies; tester beoordeelt onafhankelijk.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
           "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
           "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -9041,7 +9041,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T11:56:37.055465+00:00",
+        "updatedAt": "2026-10-24T12:09:34.350200+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -14452,9 +14452,9 @@
                 "opencode-lsp"
               ],
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
-              "assignment": "Gewone camera-acceptatieopdracht loopt via geïnstalleerde chat en bestaande digitale werker; kernuitvoerder volgt resultaat en ontbrekende overdrachten. E4.17-herstelroute heeft een afzonderlijk afgebakende uitvoerder.",
+              "assignment": "Hoofdbouwer: bestaande actuele herstelroute; coder1: noodzakelijke minimale productroute; coder2: gerichte regressies. Onafhankelijke tester beoordeelt, coordinator beheert productie en integratie.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
+              "nextAction": "Handel eerst de concrete onopgeloste household-afweging af via bestaande herstelroute, na actuele call-/bron-/effectcontrole. Bewaar usageNULL, oude foutbewijzen en300s-policy; herhaal geen oude bron of onzeker effect. Daarna natuurlijke positieve voorstel→afweging→guard→eenmaal aangeboden uiting volgen. Volledige behoefteontdekking, horen en later feedback/hergebruik blijven open.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -14477,10 +14477,10 @@
                 "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-23T19:28:18.184213+00:00",
-              "progress": "Exacte Eva-V2-bron buiten kern behouden; gewone batchkoppeling en conservatieve camerabronselectie gebouwd44 gerichte controles, onafhankelijk beoordeeld, gericht geïnstalleerd en teruggelezen. Nieuwe echte cameraingress2/gewone afwegingstilte waargenomen; gemeten8652tokens/1modelpoging/1tool, credits onbekend. Positieve begroeting, fysieke gezinsproef, zelfontdekte behoefte en later hergebruik/feedback niet bewezen; kaart blijft open.",
+              "checkedAt": "2026-10-24T12:09:34.350200+00:00",
+              "progress": "Nieuw gewoon gebruik gecontroleerd:317camerawaarnemingen,7herkenningskandidaten en35stiltebesluiten; geen positieve aangeboden uiting bewezen. Eén onopgeloste modelafweging sinds11:09CEST blokkeert huidig household-initiatief. Bestaande herstelroute wordt concreet voorbereid en onafhankelijk beoordeeld; nog geen herstel of kaartafronding geclaimd.",
               "evidence": "development/evidence/product/e415-installed-route-20261023.json",
-              "latestEvidence": "development/evidence/product/e415-household-batch-binding-20261023.json",
+              "latestEvidence": "development/evidence/product/e415-uncertain-household-continuation-20261024.json",
               "latestIndependentReview": "development/reviews/e415-batch-installed-readback-20261023.json"
             },
             {
@@ -14500,7 +14500,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Noodzakelijke accountstap is concreet voorbereid: in Verbindingen bij Eva’s taakbrowser overnemen, Somtoday aanmelden en teruggeven; daarna dezelfde opdracht hervatten. De geïnstalleerde hervattings- en planblokkadereparatie zijn werkelijk gebruikt. Parallel alleen nieuw gewoon gebruik voor bestaande E1.6/E4.15 controleren; geen oude proef herhalen.",
+              "nextAction": "Somtoday-login in dezelfde taakbrowser blijft voorbereid en wacht op echte eigenaarbevestiging. Ondertussen de concrete E4.15-blokkade afhandelen: onopgeloste household-modelafweging sinds11:09CEST houdt nieuw initiatief tegen. Gebruik bestaande herstelroute met actuele bron-/call-/effectcontrole, behoud onbekend verbruik en300s-policy; daarna alleen werkelijk nieuw gebruik volgen.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -15207,9 +15207,9 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Noodzakelijke accountstap is concreet voorbereid: in Verbindingen bij Eva’s taakbrowser overnemen, Somtoday aanmelden en teruggeven; daarna dezelfde opdracht hervatten. De geïnstalleerde hervattings- en planblokkadereparatie zijn werkelijk gebruikt. Parallel alleen nieuw gewoon gebruik voor bestaande E1.6/E4.15 controleren; geen oude proef herhalen.",
+      "nextAction": "Somtoday-login in dezelfde taakbrowser blijft voorbereid en wacht op echte eigenaarbevestiging. Ondertussen de concrete E4.15-blokkade afhandelen: onopgeloste household-modelafweging sinds11:09CEST houdt nieuw initiatief tegen. Gebruik bestaande herstelroute met actuele bron-/call-/effectcontrole, behoud onbekend verbruik en300s-policy; daarna alleen werkelijk nieuw gebruik volgen.",
       "finishOrder": [
-        "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van 24 gesloten. E4.16 en E4.19 geïnstalleerd; echte gebruiks-/herstelketens nog open. Drie uitvoerders werken afzonderlijk aan native E4.19, E1.14-continuïteit en E1.11; tester beoordeelt onafhankelijk.",
+        "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van24 gesloten. E4.16-schoolopdracht wacht op dezelfde browserlogin. Drie uitvoerders werken afzonderlijk aan de concreet gevonden E4.15-initiatiefblokkade: bestaande herstelroute, noodzakelijke productcorrectie en gerichte regressies; tester beoordeelt onafhankelijk.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
         "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
         "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -15218,7 +15218,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T11:56:37.055465+00:00",
+      "updatedAt": "2026-10-24T12:09:34.350200+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",

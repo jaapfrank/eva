@@ -1,0 +1,42 @@
+{
+  "contract": "EvaHouseholdContinuationFinding/v1",
+  "taskId": "E4.15",
+  "checkedAt": "2026-10-24T12:09:34.350200+00:00",
+  "status": "actual_uncertain_review_blocks_new_household_initiative_recovery_in_progress",
+  "finding": {
+    "observedSince": "2026-10-24T09:09:30Z",
+    "phase": "will_usage_uncertain",
+    "status": "needs_help",
+    "revision": 4,
+    "providerUsageError": true,
+    "usage": null,
+    "failureFingerprint": "62e7a2a6ec5973233b236b063ec7db242f222f08e691db9b917917bd16defa24",
+    "lastEventPayloadSha256": "ada7b5ae6b5b7ee226b7c076b4f0d2aa6ebd5d2c7e2477a80f28855a99ac468f",
+    "installedAdmissionGuardBlocksUnresolvedBeyond300Seconds": true
+  },
+  "naturalUse": {
+    "cameraObservations": 317,
+    "recognitionCandidateMarkers": 7,
+    "ordinaryHouseholdSilenceDecisions": 35,
+    "positiveOfferedExpressionsProved": false,
+    "missedSuitableGreetingProved": false
+  },
+  "sourceEvidenceSha256": "96e29e8fedae9e4da5906f29e778e48a9117d2351196a1be3fb73c2cea27b339",
+  "workSplit": {
+    "mainBuilder": "Exact current provider lifecycle and existing abandon/reconciliation handoff; no production mutation.",
+    "coder1": "Minimal existing product-route analysis; no code until necessity and exclusive paths confirmed.",
+    "coder2": "Targeted regression cases and existing test path; no old matrix.",
+    "tester": "Independent evidence and concrete recovery review; no product code.",
+    "coordinator": "Review current claims, execute authorized existing recovery if valid, integrate Git and any necessary installation."
+  },
+  "constraints": {
+    "policySeconds": 300,
+    "unknownUsagePreserved": true,
+    "oldSourcesAndErrorReceiptsPreserved": true,
+    "uncertainEffectsNeverReplayed": true,
+    "newSourceOrOwnerStatementNotFabricated": true,
+    "newOriginalCardsCompleted": 0,
+    "fullOriginalCardCompleted": false,
+    "ownerActionRequiredForThisRepair": false
+  }
+}
