@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Een herkenbare eigenheid uit echte ervaringen en creatieve projecten ontwikkelen
 
-Maak de ontbrekende E1.10-bronroute voor eigen ontwikkeling af via bestaande droom-, geheugen-, project- en aandachtwerking; broncorrectie, wissen en STOP blijven leidend. De onafhankelijke tester beoordeelt de bevroren E2.9-consumer; root installeert alleen de goedgekeurde gerichte overlay na verse werk-/modelclaims. E1.13 is volledig technisch afgerond; echte meerdaagse gezinswaardering blijft afzonderlijk open.
+E1.10-bronroute onafhankelijk beoordelen en samen met de aansluiting op de bestaande E2.9-bediening installeren. De eerste E2.9-bronweergave is geïnstalleerd en met echte actuele bronnen gecontroleerd. E1.13 is volledig technisch afgerond; meerdaags gebruik en gezinswaardering blijven open.
 
 Klaar wanneer: Eva kiest zelf een passende creatieve of onderzoekende lijn, maakt een concreet resultaat en ontwikkelt die op een latere echte dag verder vanuit wat zij leerde of werkelijk met het gezin meemaakte. In een later gesprek gebruikt zij passende gedeelde geschiedenis en een onderbouwd eigen oordeel zonder standaardgrappen, verzonnen belevenissen of druk om aandacht. Betrokken gezinsleden beoordelen herkenbaarheid, plezier en timing afzonderlijk; een humorvoorkeur wordt niet voor anderen veralgemeniseerd. Privéervaringen blijven afgeschermd en correctie/vergeten werkt door.
 

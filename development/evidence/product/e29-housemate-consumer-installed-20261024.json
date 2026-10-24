@@ -1,0 +1,81 @@
+{
+  "contract": "EvaInstalledDeliveryEvidence/v1",
+  "task": "E2.9",
+  "checkedAt": "2026-10-24T05:24:20.112922+00:00",
+  "scope": "Current private learning sources in existing owner initiative screen with existing source correction/forget handoff",
+  "built": true,
+  "installed": true,
+  "technicalBoundedOutcomeCompleted": true,
+  "fullTaskCompleted": false,
+  "ownerAcceptance": false,
+  "familyAcceptance": false,
+  "independentReview": "development/reviews/e29-housemate-consumer-review-20261024.json",
+  "independentReviewSha256": "a3fa562743dc90e3419d92801e03951ea9bc27d3bb17c29be9a51f291dd46950",
+  "installation": {
+    "status": "running_exact_configuration",
+    "installedAt": "2026-10-24T05:20:29.620472+00:00",
+    "core": "sha256:aa0d48c4ea7b1c9569227a597bb9714cda5aff00a1992ccbe150ea9703c32996",
+    "coreId": "366d41dc69698c183d0f65fe713f7be23a7a0c429bd6db5431bfe57e13849faf",
+    "workerImage": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
+    "workerUnchanged": true,
+    "configurationStorageSchemaUnchanged": true,
+    "dispatches": 1,
+    "liveClaimsCheckedBeforeDispatch": true
+  },
+  "installedReadback": {
+    "files": {
+      "bootstrap/dashboard_housemate.py": "5a13fe5c299941ff184c0b69ee8ff881cb51d3d41299bb5c6a46bac7dde1f5a3",
+      "adapters/api/dashboard_initiatives.py": "e4c2d1e2b61c8ec729686448542e8510f8e31dc1c4691d64d8246f82237a7824",
+      "adapters/api/dashboard_static/eva-dashboard-assets.json": "4e40b98bda6dc1629aff0769c940800839dbf23717e07c27656be23b90b63cd9",
+      "adapters/api/dashboard_static/index.html": "750be9cd4db7fc650cf05bcccc64c10803a488975e56d849cd5d72d9d36271f4",
+      "adapters/api/dashboard_static/assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e",
+      "adapters/api/dashboard_static/assets/index-CtWahsk6.js": "f90abd003497355668fadeb602e85a447bd9e78829894eeb1ec05d64acaf1fb5"
+    },
+    "unauthenticatedStatus": 401,
+    "authenticatedStatus": 200,
+    "contract": "EvaOwnerHousemateState/v1",
+    "noStore": true,
+    "nosniff": true,
+    "currentLearningCount": 4,
+    "currentLearningKinds": [
+      "person_hypothesis"
+    ],
+    "explicitlyAbsentTypedDelta": true,
+    "sharedTraceAbsent": true,
+    "responseSha256": "e00e122dd0c09f5a51fbc5d416af87a5fae8fc42fdb422df2738da0dbddc00eb",
+    "responseMilliseconds": 509.764,
+    "providerCalls": 0,
+    "productionPosts": 0,
+    "sourceTextPublished": false,
+    "coreId": "366d41dc69698c183d0f65fe713f7be23a7a0c429bd6db5431bfe57e13849faf",
+    "coreImage": "sha256:aa0d48c4ea7b1c9569227a597bb9714cda5aff00a1992ccbe150ea9703c32996",
+    "health": "healthy",
+    "preservedObserverFailure": "Original readback converted HTTP headers to case-sensitive dict; exact wire headers are lower-case. Corrected observer uses standard case-insensitive header lookup; no product change."
+  },
+  "independentTests": {
+    "passed": 8,
+    "pytestSeconds": 2.18,
+    "containerProcessSeconds": 4.802409330033697
+  },
+  "sourceManifestSha256": "3b1622bfb4366b3d670a4c9fd3e23e4a5f6fb18e50abfb7e3abf5ea75fc4da2e",
+  "overlayManifestSha256": "1d905c4bbca3c7118d0cae05cf61b5b6de63aeaa621de88415c925bb6611d12b",
+  "profileComparison": {
+    "matched": [
+      "shared_provider",
+      "public_research",
+      "digital_work"
+    ],
+    "retainedHistoricalMismatch": [
+      "household_research"
+    ]
+  },
+  "usableRoute": "Eva beheer → Eigen initiatieven → Wat Eva voorlopig over jou heeft geleerd → open bron → bestaande corrigeren/vergeten-bediening.",
+  "remaining": "Typed E1.10 development state/personality-delta source and its owner display are being completed together. Genuine use/adoption and family acceptance remain distinct; private hypotheses are not personality deltas.",
+  "usage": {
+    "runtimeProviderCallsForDelivery": 0,
+    "productionPosts": 0,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "runtimeCredits": null
+  }
+}

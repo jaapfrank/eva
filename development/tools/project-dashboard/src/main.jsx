@@ -401,7 +401,11 @@ function Dashboard() {
       </section>}
       {selected === 'memory' && <><OwnerMemoryView revision={memoryRevision} onSource={id => setSelectedSource({ id, revision: Date.now() })} /><MemorySources selectedSource={selectedSource} onMemoryChanged={memoryChanged} /></>}
       {selected === 'work' && <OwnerWork key={selectedWork || 'all'} initialWorkId={selectedWork} />}
-      {selected === 'initiative' && <OwnerInitiatives />}
+      {selected === 'initiative' && <OwnerInitiatives onSource={id => {
+        setSelectedSource({ id, revision: Date.now() });
+        setSelected('memory');
+        window.location.hash = ownerSectionHref('memory');
+      }} />}
       {selected === 'connections' && <><OwnerModelProviders /><OwnerWhatsApp /><OwnerHealth /><section className="owner-panel"><h2>Optionele verbindingen</h2>
         <p>Modelproviders en WhatsApp beheer je hierboven. Iedere verbinding blijft optioneel.</p>
       </section><OwnerBrowser /></>}

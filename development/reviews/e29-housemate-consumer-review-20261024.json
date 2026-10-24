@@ -1,0 +1,210 @@
+{
+  "contract": "EvaIndependentDeliveryReview/v1",
+  "task": "E2.9",
+  "checkedAt": "2026-10-24T05:17:45.581929+00:00",
+  "reviewerRole": "Independent reviewer/tester; coordinator owns installation, board and Git",
+  "verdict": "GO",
+  "verdictScope": "Source-bound owner current-learning consumer and exact six-file aa0 image overlay with the reviewed guarded installer only. Not full E2.9 completion.",
+  "fullTaskCompleted": false,
+  "ownerAcceptance": false,
+  "installedAtReview": false,
+  "actualNewConsumerUseVerified": false,
+  "originalDoneWhen": "De bestaande Eva-productbediening toont toegestane Household Artifacts en voorstellen, actuele curiosity, maximaal twee eigen projectstatussen, optionele laatste Shared Trace en recente actuele Personality Deltas. Betrokken gebruikers kunnen adopteren, feedback geven, pauzeren/stoppen en corrigeren; resultaten komen via dezelfde bestaande autoriteits- en uitvoerroute terug. Privégegevens blijven afgeschermd en bronwissen/correctie wordt zichtbaar. Geen aparte app, dashboardstore of tweede planner. De weergave werkt met echte geregistreerde toestand, niet alleen vaste demo-inhoud.",
+  "originalDoneWhenSha256": "0d63e8f1657ecb3abba226e568297f4f9adf4792e4f029572aafb323acd2c3c9",
+  "criteriaChanged": false,
+  "findings": [],
+  "reviewedBindings": {
+    "handoff": {
+      "path": "/home/administrator/project/.eva2-artifacts/e29-housemate-consumer-20261024/handoff.private.json",
+      "sha256": "5b2e8c22dddbbe68c81358e340ecc2d06b620d6f9b8946791552b1b50073376c"
+    },
+    "sourceManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/e29-housemate-consumer-20261024/candidate-manifest.private.json",
+      "sha256": "3b1622bfb4366b3d670a4c9fd3e23e4a5f6fb18e50abfb7e3abf5ea75fc4da2e"
+    },
+    "beforeAfterBinding": {
+      "path": "/home/administrator/project/.eva2-artifacts/e29-housemate-consumer-20261024/before-after-source-binding.private.json",
+      "sha256": "bd13fc53c73df80f6ce7a9c1bb3b3681d85e211854c638b932638bcb9f231f08"
+    },
+    "sourceFiles": {
+      "src/eva/bootstrap/dashboard_housemate.py": "5a13fe5c299941ff184c0b69ee8ff881cb51d3d41299bb5c6a46bac7dde1f5a3",
+      "src/eva/adapters/api/dashboard_initiatives.py": "e4c2d1e2b61c8ec729686448542e8510f8e31dc1c4691d64d8246f82237a7824",
+      "development/tools/project-dashboard/src/owner-initiatives.jsx": "e4cc9fb4b221fdd5a5c7afe99b920fe392a9fd0cbdd8cb70f7fb0c560ae14d24",
+      "development/tools/project-dashboard/src/owner-housemate-state.jsx": "2f143b48c799682f8810240938a67be1b6e114b4441f347c44defb4072efcb55",
+      "development/tools/project-dashboard/src/owner-housemate-state.mjs": "907e93203698f9bb6d78cc8505bb886de5dbe8d10204704cfa11ce9a5a5e7d3d",
+      "development/tools/project-dashboard/src/main.jsx": "7f93185f02bfd863ae5bc517fcafada81c747348afee50eb5566830bcfcdb99b",
+      "development/tests/bootstrap/test_dashboard_housemate.py": "9ad5bba80e2a473ac11d5244a6d0bb2c47e9a86e16d1863710046ed094d57c85",
+      "development/tests/api/test_dashboard_housemate_routes.py": "44931115709b87439d0f2ee02501fa86ea19ef75bf0ce3dcabe2690d82ca9a0a",
+      "development/tools/project-dashboard/owner-housemate-state.test.mjs": "918262f7728de6c0ef1cfc523a67f3713820012430507daccdae1733445bdc95",
+      "development/tools/project-dashboard/verify-owner-housemate.cjs": "634084934c58c4dae746bb8f928a6d2afdc9ee757fd80ee7a509fdc390390dd9"
+    },
+    "overlayManifest": {
+      "path": "/var/lib/eva2/e29-housemate-consumer-20261024/manifest.private.json",
+      "sha256": "1d905c4bbca3c7118d0cae05cf61b5b6de63aeaa621de88415c925bb6611d12b"
+    },
+    "candidateImage": "sha256:aa0d48c4ea7b1c9569227a597bb9714cda5aff00a1992ccbe150ea9703c32996",
+    "baseImage": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+    "workerImage": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
+    "candidateReadback": {
+      "path": "/var/lib/eva2/e29-housemate-consumer-20261024/candidate-readback.private.json",
+      "sha256": "7f77b8cb1ed7034e2e0aca1de8385273b2595ac59d1804916371436ae4695664"
+    },
+    "candidateProfiles": {
+      "path": "/var/lib/eva2/e29-housemate-consumer-20261024/candidate-profiles.private.json",
+      "sha256": "b0ece7cfee7b05b8dc776890d4355bdae3c4fcb353b28c97830d8a610cef3c30"
+    },
+    "installer": {
+      "path": "/var/lib/eva2/e29-housemate-consumer-20261024/install.py",
+      "sha256": "7a3cd1adbd7caf427610f719d5fc1eec3bb503f66572d8f23b3968cd42357090",
+      "executedByReviewer": false
+    },
+    "readinessProbe": {
+      "path": "/var/lib/eva2/e29-housemate-consumer-20261024/readiness-probe.py",
+      "sha256": "1c662189d90f9e94cc79ac127d39c88fafc20aa60e7fd4200f0d3873a4807f7c"
+    },
+    "previousConfigFileSha256": "91b9cb9bd1cef58e42e71aa376cea8765334c9686683f6131cf9c884e6726ac4",
+    "candidateConfigFileSha256": "9db1e994fc8d5cc8b2fd46b57246715ca82480b4a9a1e4701046ba7cf8f47c2b",
+    "dockerfileSha256": "275e6f9aa4e9e743306cf1f3025f4ce324381016c06cc35fbeb87d1f6c315c8b"
+  },
+  "independentReview": [
+    {
+      "area": "Current private source and authority",
+      "status": "PASS",
+      "evidence": "Existing trusted owner-turn and source-reader routes reused. Server selects owner/current private alias, not browser actor/scope. Typed context and document principal/source/evidence are bound. Current heads deduplicate; erased or unreachable head is skipped without predecessor fallback. Final source/service authority and principal-set checks fail closed. No semantic/model recall, second store, planner or permission grant."
+    },
+    {
+      "area": "API",
+      "status": "PASS",
+      "evidence": "New read-only GET /internal/v1/dashboard/initiatives/state requires access before projection, rejects query parameters, returns no-store/nosniff and generic 503 on projection failure. Existing history, E112 and work routes are not replaced."
+    },
+    {
+      "area": "UI and existing memory handoff",
+      "status": "PASS",
+      "evidence": "Reviewed validator, escaped React text, abort/sequence/focus/visibility refresh and private-state clearing. Exact current source UUID opens existing memory correction/forget controls. Existing initiative project/history and E112 controls are reused. Existing built-browser proof is synthetic and shows current-source correction, erasure after reload, text escaping, failure clearing and 390px layout; it is not family-use proof."
+    },
+    {
+      "area": "Honest product meaning",
+      "status": "PASS_WITH_ORIGINAL_REMAINDERS",
+      "evidence": "Person hypotheses/expectations are visibly provisional, not labelled Personality Deltas. Curiosity is explicitly existing open-project questions; maximum two open statuses do not claim currently running research. No separate typed delta/InnerState producer or registered Shared Trace is fabricated."
+    },
+    {
+      "area": "Exact overlay",
+      "status": "PASS",
+      "evidence": "All ten frozen source/test pins verified. Context contains exactly the six manifest files and no foreign WIP. Six files independently hashed inside aa0 under actual runtime UID. Candidate has all 251 base layers unchanged plus one overlay layer; image Config is unchanged. Before/after compose objects differ only in exact core image, with worker/config/storage preserved."
+    },
+    {
+      "area": "Delegated profiles",
+      "status": "PASS_WITH_RETAINED_HISTORICAL_MISMATCH",
+      "evidence": "Candidate profile receipt binds aa0 and current 57cc worker; shared_provider, public_research and digital_work match. Existing household_research worker-program mismatch remains explicitly retained; no claim that every profile is compatible or claimable."
+    },
+    {
+      "area": "Guarded installer static review",
+      "status": "PASS_FOR_PINNED_SCRIPT",
+      "evidence": "Existing runtime-image-update lock/storage/compose helpers; required exact review/manifest/installer hash binding; core and worker health/generation/storage/compose checks; six before/source-after pins; candidate readback/profile constraints; source-pinned fresh conversation/model/work/native-memory readiness and evaluator checks immediately before dispatch; durable unknown-result receipt before one compose core-only dispatch; no automatic retry; post-dispatch image/storage/compose and unchanged-worker-generation checks. Reviewer did not execute the installer or readiness probe. Coordinator must obtain fresh guards at actual dispatch and independently record installed source/assets/auth/profile readback."
+    }
+  ],
+  "independentTests": {
+    "status": "PASS",
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "pytestSeconds": 2.18,
+    "containerProcessSeconds": 4.802409330033697,
+    "codeImage": "sha256:aa0d48c4ea7b1c9569227a597bb9714cda5aff00a1992ccbe150ea9703c32996",
+    "runtimeUid": "65532:65532",
+    "network": "none",
+    "rootFilesystem": "read_only",
+    "allCapabilitiesDropped": true,
+    "sources": "Only two byte-identical frozen new test files copied into reviewer-owned read-only temporary fixture; immutable pytest dependencies mounted read-only; actual image app sources imported. No checkout app source or production config/database mounted.",
+    "testFiles": {
+      "development/tests/bootstrap/test_dashboard_housemate.py": "9ad5bba80e2a473ac11d5244a6d0bb2c47e9a86e16d1863710046ed094d57c85",
+      "development/tests/api/test_dashboard_housemate_routes.py": "44931115709b87439d0f2ee02501fa86ea19ef75bf0ce3dcabe2690d82ca9a0a"
+    },
+    "affectedAssertions": [
+      "corrected current-head selection and chain deduplication",
+      "erased head never falls back",
+      "foreign principal/wrong source document/revoked access fail closed",
+      "principal alias change fails closed",
+      "API access/query/no-store/nosniff",
+      "generic unavailable response without private error content"
+    ],
+    "preservedReviewerHarnessFailures": [
+      {
+        "phase": "before test execution",
+        "result": "root UID with all capabilities dropped could not read UID65532 mode0700 pytest dependencies; ModuleNotFoundError was a launcher access error, not a missing package or product failure"
+      },
+      {
+        "phase": "test collection",
+        "result": "runtime UID could read pytest but could not read root-owned mode0400 frozen tests; collection failed before any test ran"
+      },
+      {
+        "resolution": "Copied only two original test files byte-for-byte to own runtime-UID-readable fixture; preserved exact source/test pins and all criteria. No dependency installation or product change."
+      }
+    ]
+  },
+  "builderEvidenceReviewedNotRepeated": {
+    "python": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 2.06,
+      "path": "/home/administrator/project/.eva2-artifacts/e29-housemate-consumer-20261024/python-consumer-tests.private.txt"
+    },
+    "javascriptContract": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "source": "successful node --test owner-housemate-state.test.mjs tool output; unchanged validator, not rerun solely to create this record"
+    },
+    "builtBrowser": {
+      "status": "passed",
+      "correctedCurrentSourceNavigation": true,
+      "erasureVisibleAfterReload": true,
+      "unavailableOptionalRoutesHonest": true,
+      "failureClearsPrivatePanel": true,
+      "untrustedTextEscaped": true,
+      "syntheticSourceMutations": 2,
+      "productionPosts": 0,
+      "modelCalls": 0,
+      "javascriptErrors": 0,
+      "externalRequests": 0,
+      "mobileWidth": 390
+    },
+    "unchangedProjectsBrowser": {
+      "contract": "EvaCurrentProjectsBrowserProof/v1",
+      "status": "passed",
+      "mode": "isolated",
+      "maximumCurrentProjects": 2,
+      "existingHistoryNavigation": true,
+      "existingStopRoute": true,
+      "automaticArtifactReads": 0,
+      "syntheticWrites": 1,
+      "noProjectsAndFailureClear": true,
+      "mobileWidth": 390,
+      "javascriptErrors": 0,
+      "externalRequests": 0,
+      "modelCalls": 0
+    },
+    "qualification": "Reviewed existing bounded evidence; old E112/E113 cases and model scenarios were not rerun. Browser fixture mutations are synthetic, not production adoption/correction/erasure."
+  },
+  "remainingOriginalConditions": [
+    "E2.9 remains open: actual typed Personality Delta/InnerState source and separately registered Shared Trace are absent upstream; provisional human-understanding records do not satisfy them.",
+    "Exact overlay is reviewed but not installed at this review. Coordinator owns fresh-claim guarded installation and actual authenticated readback of the delivered route/assets.",
+    "Genuine installed use, household feedback/adoption and owner/family acceptance are not established by these technical tests. Existing E112 scoped acceptance remains distinct."
+  ],
+  "handoffToCoordinator": "Use GO only for the exact manifest/image/installer hashes in this report. Register the limited delivery and real installation/readback separately, preserve full E2.9 remaining criteria and route upstream work through existing cards.",
+  "frozenPriorReviews": {
+    "development/reviews/e113-existing-natural-handoff-review-20261024.json": "a7af62e90a8f1c4818e8605a876581eb6b83632bcf8a931d32a33155447f2045",
+    "development/reviews/e112-household-artifact-lifecycle-review-20261024.json": "c45aaaed29855f8d14b77e464818bc970a2a9d1f0f9b8e65c2da4152bbee67e5"
+  },
+  "usage": {
+    "reviewRuntimeProviderCalls": 0,
+    "reviewProductionPosts": 0,
+    "reviewProductionWrites": 0,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "completeDevelopmentToolCount": null,
+    "timeUnit": "seconds; only measured test subprocess times reported"
+  },
+  "changesByReviewer": "Only this new review report and private temporary test fixture; no product/source/install/config/voice/board/Git changes."
+}

@@ -18,6 +18,18 @@ def install_dashboard_initiatives(app, *, access, runtime):
         except Exception as error:
             raise HTTPException(503, "owner initiatives unavailable") from error
 
+    @app.get("/internal/v1/dashboard/initiatives/state")
+    def housemate_state(request: Request):
+        access.require(request)
+        if request.query_params:
+            raise HTTPException(422, "housemate overview scope is server-bound")
+        from eva.bootstrap.dashboard_housemate import housemate_state as project
+        try:
+            result = project(runtime)
+        except Exception:
+            raise HTTPException(503, "owner housemate overview unavailable") from None
+        return JSONResponse(result, headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"})
+
     @app.get("/internal/v1/dashboard/initiatives/history")
     def history(request: Request):
         access.require(request)

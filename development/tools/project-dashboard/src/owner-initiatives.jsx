@@ -1,5 +1,6 @@
 import React from 'react';
 import OwnerLearning from './owner-learning.jsx';
+import OwnerHousemateState from './owner-housemate-state.jsx';
 import OwnerCurrentProjects from './owner-current-projects.jsx';
 import OwnerHouseholdProvisions from './owner-household-provisions.jsx';
 import { initiativeCardId } from './owner-current-projects.mjs';
@@ -56,7 +57,7 @@ function ReviewStatus({ page }) {
   </div>;
 }
 
-export default function OwnerInitiatives() {
+export default function OwnerInitiatives({ onSource }) {
   const [page, setPage] = React.useState(null);
   const [error, setError] = React.useState('');
   const [busy, setBusy] = React.useState(false);
@@ -121,6 +122,7 @@ export default function OwnerInitiatives() {
       target?.scrollIntoView({ behavior: 'auto', block: 'start' });
       target?.focus({ preventScroll: true });
     }} />}
+    {page && !error && <OwnerHousemateState onSource={onSource} />}
     {page && !error && <h3>Volledige historie, resultaten en bediening</h3>}
     {page && !error && !page.cards.length && <p>Nog geen eigen initiatief opgepakt.</p>}
     <div className="board">{!error && page?.cards.map(card => <InitiativeCard key={card.intent_id} card={card} busy={busy} stop={stop} refresh={refresh} />)}</div>
