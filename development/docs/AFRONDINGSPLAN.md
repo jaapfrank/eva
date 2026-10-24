@@ -99,10 +99,12 @@ meerdere echte dagen bewijzen continuïteit. Begin dat gebruik zodra de route kl
 zodat observatiedagen niet pas na alle overige bouw beginnen. F2 blijft de gezamenlijke
 eindacceptatie. Herhaal een proef alleen bij gewijzigde oorzaak of ontbrekend bewijs.
 
-De actuele uitvoeractie is E4.17: integreer dezelfde bewaarde uitbreiding in de
-bestaande herstelroute en maak het herstel zover mogelijk zonder eigenaar testklaar.
-E4.15-begroeting, horen en later hergebruik blijven open; haar fysieke proef is
-uitgesteld. Geen nieuwe CPU-/importserie of algemene architectuurronde.
+De actuele uitvoeractie is E4.18: rond de drie bestaande onderhoudsuitkomsten af
+met gebruik in de huidige WSL-installatie, actuele bron- en herstelbindingen en
+onafhankelijke eindcontrole. Werkbord, dashboard en Git volgen dezelfde oplevering.
+E1.12 blijft gebouwd maar bevroren. E4.15-begroeting, horen en later hergebruik en
+de volledige E4.17-acceptatie blijven open; de fysieke proef is uitgesteld.
+Geen nieuwe bouwsporen, CPU-/importserie of algemene architectuurronde.
 
 ### Hergebruik en wat vervalt als bouwvoorstel
 

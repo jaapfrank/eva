@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T20:28:02.293070+00:00",
+  "updatedAt": "2026-10-24T00:34:29.028365+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -159,7 +159,7 @@
       "activeCodeOrInstallClaim": false
     },
     "codex-e418": {
-      "task": "E1.12",
+      "task": "E4.18",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "development/design/architecture/e418-*.json",
@@ -305,7 +305,7 @@
         "E4.15/E4.17 dependencies remain. Early bounded cleanup does not close E4.18.",
         "Use statusProposal for workboard/docs changes; WSL integrates shared files preserving foreign hunks."
       ],
-      "updatedAt": "2026-10-23T17:58:45.888199+00:00",
+      "updatedAt": "2026-10-24T00:34:29.028365+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -519,7 +519,7 @@
         }
       },
       "activeAssignment": {
-        "task": "E1.12",
+        "task": "E4.18",
         "assignedAt": "2026-10-23T20:28:02.293070+00:00",
         "writePaths": [
           "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json",
@@ -551,7 +551,7 @@
         "privateOutput": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/",
         "testWritePathsRequireExactConfirmation": true,
         "noCpuRunOrSharedInstallOrVoiceChange": true,
-        "resultNow": "E112 adapter/provider V2 independently approved; private host factory/composition candidate delivered and targeted interface tests in progress; no live enrollment/install.",
+        "resultNow": "Huidige WSL-operatorrun en bestaande drie onderhoudsuitkomsten definitief afleveren; geen E1.12-vervolgbouw.",
         "operatorFileIntake": "Use same InstallerPortableRestore via bounded private-owner single-link no-follow streamed prepare_file; same trusted configured workflow, preview/authority/one-use execute. Existing HTTP/base64/browser intake stays 64 MiB. No claim that large browser upload works.",
         "isolatedOperatorProvisioning": {
           "status": "authorized",
@@ -686,7 +686,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "in_progress_private_host_wiring_tests_adapter_v2_delivered",
+      "status": "finishing_existing_e418_outcome",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1389,14 +1389,12 @@
       "activeCodeOrInstallClaim": false
     },
     "e415-independent-review-newchat": {
-      "task": "Independent E1.12 lifecycle/pause/adoption/STOP contract and concrete patch review; no product coding. E417 phase1 delivered, phase2/full card open.",
+      "task": "E4.18",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "active_sole_tester_reviewer_owner_confirmed",
+      "status": "independent_e418_final_review",
       "coordinator": "windows-root",
       "allowedWritePaths": [
-        "development/reviews/e417-current-extension-package-review-20261023.json",
-        "development/reviews/e29-installed-product-status-review-20261023.json",
-        "development/reviews/e112-household-artifact-lifecycle-review-20261024.json"
+        "development/reviews/e418-file-inspection-20261023.json"
       ],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
       "endCondition": "Exact provider+test hashes, actual store batch shape,original childtime/newest camera/guards independent GO/NO_GO; no code/install/model/DB/external effects",
@@ -1508,7 +1506,8 @@
       "faceBackendAssetProposalVerdict": "GO",
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
-      "activeIndependentReviewClaim": true
+      "activeIndependentReviewClaim": true,
+      "updatedAt": "2026-10-24T00:34:29.028365+00:00"
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
@@ -1699,7 +1698,7 @@
     "authority": "Direct owner instruction 2026-10-23: sole main coordinator; integration, GitHub and shared installation exclusively here.",
     "previousCoordinator": "windows-root",
     "preserveExistingReservations": true,
-    "activeOutcome": "E1.12 lifecycle/adoption/pause on same existing procedure; E4.17 package/coldstart handed off, authentic procedure acceptance remains open",
+    "activeOutcome": "E4.18",
     "doNotRepeatSentLolaQuestion": true,
     "agents": {},
     "maxConcurrentExecutorsReviewers": 2,
@@ -1729,8 +1728,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
-    "parallelBoundedWork": "One builder verifies private host composition interfaces. One independent tester reviews exact owner API and composition candidates; coordinator integrates approved code and runtime, preserves foreign WIP.",
-    "currentBlocker": "E112 adapter/providerV2 and final effect-admissionV2 independently approved. Remaining concrete integration: trusted runtime/config/proof callbacks and owner API + actual lifecycle/restore verification. No owner question blocks implementation.",
+    "parallelBoundedWork": "Geen tweede uitkomst; één bouwer en één onafhankelijke tester/reviewer, twee overige chats idle.",
+    "currentBlocker": "Nog definitieve onafhankelijke beoordeling van volledige bestaande E4.18-eindvoorwaarde; geen eigenaarhandeling nodig.",
     "latestVerifiedOutcome": {
       "status": "installed_current_source_and_silence_proven_positive_greeting_pending",
       "evidence": "development/evidence/product/e415-household-batch-binding-20261023.json",

@@ -4,15 +4,15 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien
+E4.18 · Gebruikte uitvoering en onderhoud afmaken
 
-E1.12: bouwer heeft lifecycle/providerkandidaat met62gerichte groene cases incl9echtePG16.13 opgeleverd; tester beoordeelt exacte bron-/scope-/STOP-/replay-/proofgrenzen. Coördinator finale effectadmissie heeft22groene cases en onafhankelijke V2GO na gerichte aandachtracefix. Nu kleine bestaande bootstrap/runtime/ownerbediening aansluiten, expliciete enrollment onderscheiden van legacy en ontbrekend realisatiebewijs eerlijk onbekend laten. Geen liveadoptie/installatie of volledigekaartclaim vóór werkelijke integratie en verificatie.
+Maak uitsluitend E4.18 helemaal af: de drie bestaande vereenvoudigingen koppelen aan daadwerkelijk huidige WSL-operatorroute en geïnstalleerde bron-/herstelbindingen, onafhankelijk toetsen aan de ongewijzigde eindvoorwaarde, daarna Git en dashboard opleveren. E1.12 gebouwd werk blijft bewaard en bevroren; geen nieuwe bouwsporen.
 
-Klaar wanneer: Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.
+Klaar wanneer: Voor de daadwerkelijk gebruikte gesprek-/HA-/browser-/toolprogramma-/afleverroute zijn bron, toestemming, uitvoering, receipt, controle en resultaatbinding aan duidelijke bestaande eigenaren gekoppeld. Aangetoonde dubbele verantwoordelijkheden en actieve afhankelijkheden van historische operaties worden gericht vereenvoudigd met gedragsbehoud. Een begrensde lijst archief-/verwijderbesluiten controleert imports, dynamische aanroepen, entrypoints, geïnstalleerd gebruik, herstel en releasebindingen; noodzakelijke helpers blijven beschikbaar. Grote geraakte klassen worden alleen op concrete verantwoordelijkheden gesplitst. Geheugen, stoppen, geen dubbele externe effecten, huidige instellingen en schone-pc-herstel blijven werken. Voor/na-metingen tonen werkelijke vereenvoudiging; verplaatste regels tellen niet als bewezen runtimewinst.
 
 ## Afmaakvolgorde
 
-1. Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.
+1. Nu E4.18 helemaal afronden: bestaande drie onderhoudsuitkomsten, huidige WSL-installatie en herstelbinding, onafhankelijke eindcontrole, Git en dashboard. E1.12 blijft gebouwd maar bevroren; fysieke E4.15-acceptatie en volledige E4.17-acceptatie blijven afzonderlijk open.
 2. E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.
 3. E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.
 4. E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.
