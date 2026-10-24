@@ -1,0 +1,58 @@
+{
+  "contract": "EvaE16E419AlignmentIndependentReview/v1",
+  "reviewedAt": "2026-10-24T10:57:50.218167+00:00",
+  "verdict": "GO_SCOPED_INSTALLED_ALIGNMENT_AND_ORDINARY_DECLARED_POLICY_INPUT_USE",
+  "result": "Het versieverschil tussen kern en worker voor huishoudonderzoek is gericht hersteld. De bestaande onderhoudscontext toont nu ook de huidige verklaarde eigenaarafspraak. Beide correcties zijn samen geïnstalleerd en op hun concrete werking gecontroleerd.",
+  "changes": {
+    "workerAlignment": "Alleen twee workerbestanden zijn gelijkgetrokken met de al geïnstalleerde kern: bestaande MATERIALIZED-selectie en privécontextmarkering.",
+    "maintenanceContext": "Begrensde beleidsprovenance met volledige hash en expliciete truncatie; geen nieuwe uitvoerrechten, budgetten of nulprijs.",
+    "preserved": "Bestaande spraakbytes, andere werkmapwijzigingen, providerreparatie, gegevens, hostconfiguratie en mandaat blijven behouden."
+  },
+  "verification": {
+    "householdOriginalFunctionalAssertionsPassed": 4,
+    "maintenanceExistingPrivateWireStopCasesPassed": 5,
+    "actualLiveSourceHashesVerified": 20,
+    "allFourCompleteProfilesCoherentAcrossCoreAndWorker": true,
+    "actualInstalledIsolatedDatabaseAdmissionAndClaim": true,
+    "previousWorkerSelectorRejectsSameNewRow": true,
+    "matchingWorkerClaimsOnce": true,
+    "stopDeadlineAndAmbiguousEffectGuardsPreserved": true,
+    "ordinaryMaintenanceContextActuallyUsed": true,
+    "laterDecision": "silence_no_new_task_or_update",
+    "reviewerNewModelRequests": 0,
+    "reviewerProductionWrites": 0,
+    "legacyPg16FixtureClaimedPassing": false
+  },
+  "actualUsageBoundary": "De echte taakclaim is aangetoond in een eigen PostgreSQL-testomgeving met de werkelijk geïnstalleerde worker. Er is geen productieonderzoek, fysieke spraak- of gezinsacceptatie geclaimd. De onderhoudscorrectie is in de gewone geïnstalleerde afweging gebruikt.",
+  "maintenanceDecisionBoundary": "Eva koos geen herhaald onderzoek of update: dezelfde versies en geen bewezen lokale noodzaak; kosten blijven onbekend. Dit is een geldige afweging en geen updatesucces.",
+  "measuredUsage": {
+    "originalFunctionalCasesMs": 2016,
+    "isolatedInstalledAdmissionMs": 5711,
+    "ordinaryDecisionInputTokens": 19524,
+    "ordinaryDecisionOutputTokens": 160,
+    "ordinaryDecisionMeasurement": "measured",
+    "ordinaryDecisionCost": null,
+    "developmentCredits": null
+  },
+  "privateEvidenceSha256": {
+    "source_review": "6bef3fbd8dfd9deb87113aebd9675e7970ae6932bb3212da8b60ceb918b2f6d4",
+    "package_review": "4cdd6d8db30c81f57a20a2e407c1ad588b6a553e9291458ab33cd41d573fe96e",
+    "exact_guard_install_review": "511a9b6baea6bdcf3afdc8364d28768abcbaed767d8011e0a3e03966e6a3f98e",
+    "launch_v2_review": "830031dcf1e56894b94237fce0f352066d7ae54d5108f4dcf0528c57d3f44905",
+    "actual_own_sources": "7646665b998ae2ab7e03a8fc1dd66780926df476ff3e1d86831b92999971793d",
+    "actual_official_profiles": "155a1c17582b94a5cc89ee89e36c98951fc11ac1ca1cd225c07df734a8105d1b",
+    "root_installation": "694810d9b33f6876197bd73cd94bf55c93c655bc6169febfdfb84949ae190607",
+    "actual_isolated_admission": "05a86b6282bc7b9f6550efe1f64b84c2cad89decb22116c0897d62c455da647c",
+    "actual_isolated_dispatch": "c950d648f69383d674be112bd1bd7f5dbc50faa293df11c1fb237d843aa16c24",
+    "actual_private_context": "3818e1a7003a6bbbc7e7b10b91197f2da8e4d7d4ee400372a8a796bfb7d728ec",
+    "actual_context_report": "bb83f038d241b08cdfeaa04999864fdfcc0ef9a61941fb72f6c7e550b5bfbd9a",
+    "own_fixture_cleanup": "a1760c4fd0f6e11152ead2483f7b18c529c43846516253bef865c62b03f72fe3",
+    "root_fixture_cleanup": "cde440d1bc41aabe0c42ebe499480382c2768a160abba4c4de3b359bb95af4fc"
+  },
+  "privateFinalReviewSha256": "1ffc057866b4b2651d14a8d8495ff634c96eed60ae5db6ff8b2e8bed520c5d50",
+  "ownerHelpNecessaryNow": false,
+  "fullE16Completed": false,
+  "fullE419Completed": false,
+  "projectCompleted": false,
+  "ownerAcceptance": false
+}

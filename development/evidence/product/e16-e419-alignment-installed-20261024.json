@@ -1,0 +1,84 @@
+{
+  "contract": "EvaE16E419InstalledAlignment/v1",
+  "checkedAt": "2026-10-24T10:58:51.156682+00:00",
+  "status": "independently_verified_installed_alignment_and_actual_context_use",
+  "scope": "Restore household research source compatibility and expose already declared maintenance policy to the existing private context.",
+  "installedAt": "2026-10-24T10:49:56.612535+00:00",
+  "installedImages": {
+    "core": "sha256:c2b7e0ae3f3bfb4aa5fe30289a844fe4dbf6cc191cd5a158d21734f70ba9c972",
+    "delegated-work-worker": "sha256:8b7594f0da948207825c4e950dcb6da80e01bece31e55d31559e4711fbc72960"
+  },
+  "sourceFilesChanged": {
+    "core": [
+      "src/eva/bootstrap/component_maintenance.py"
+    ],
+    "worker": [
+      "src/eva/bootstrap/component_maintenance.py",
+      "src/eva/adapters/postgres/household_work_sessions.py",
+      "src/eva/adapters/postgres/scoped_delegated_work_actions.py"
+    ]
+  },
+  "preserved": {
+    "providerOutageFix": true,
+    "voiceSourceAndConfiguration": true,
+    "dataAndMounts": true,
+    "ownerMandate": true,
+    "hostConfigurationAndHelper": true,
+    "historicalSpecsAndMarkers": true,
+    "unrelatedWorkspaceChanges": true
+  },
+  "installation": {
+    "oneCombinedUpdate": true,
+    "preStopAndPostStopClaimsVerified": true,
+    "exactTerminalAuditRetained": true,
+    "newAuthorityOrPaidRoute": false,
+    "privateInstallationReceiptSha256": "694810d9b33f6876197bd73cd94bf55c93c655bc6169febfdfb84949ae190607"
+  },
+  "verification": {
+    "actualInstalledWorkerImageUsed": true,
+    "realIsolatedDatabaseAdmissionAndClaim": true,
+    "oldSelectorRefusesSameAdmittedRow": true,
+    "matchingSelectorClaimsOnce": true,
+    "stopPreventsCallStart": true,
+    "expiredDeadlineNotExtended": true,
+    "uncertainExecutionNotReclaimed": true,
+    "elapsedMs": 5711,
+    "modelCalls": 0,
+    "externalEffects": 0,
+    "productionTaskAdmission": false,
+    "actualResearchExecution": false,
+    "privateResultSha256": "05a86b6282bc7b9f6550efe1f64b84c2cad89decb22116c0897d62c455da647c",
+    "allFourActualRuntimeProfilesCoherent": true,
+    "mismatchedProfiles": [],
+    "actualProfileReadbackSha256": "155a1c17582b94a5cc89ee89e36c98951fc11ac1ca1cd225c07df734a8105d1b",
+    "independentLiveSourceReadbackSha256": "7646665b998ae2ab7e03a8fc1dd66780926df476ff3e1d86831b92999971793d",
+    "isolatedDatabaseStopped": true,
+    "isolatedDatabaseStopReceiptSha256": "cde440d1bc41aabe0c42ebe499480382c2768a160abba4c4de3b359bb95af4fc"
+  },
+  "normalMaintenanceContext": {
+    "newObservationAt": "2026-10-24T10:50:14Z",
+    "installedSourcePublicationVerified": true,
+    "actualPrivateInputVerified": true,
+    "actualUpdateChosen": false,
+    "actualPrivateInputAt": "2026-10-24T10:54:54Z",
+    "actualDecisionAt": "2026-10-24T10:55:08Z",
+    "decision": "No new task or update: prior research complete, no demonstrated local need, costs unknown.",
+    "declaredPolicyDelivered": true,
+    "executionPermissionExpanded": false,
+    "zeroPriceInvented": false,
+    "privateProofSha256": "bb83f038d241b08cdfeaa04999864fdfcc0ef9a61941fb72f6c7e550b5bfbd9a",
+    "runtimeModelResponses": 1,
+    "registeredInputTokens": 19524,
+    "registeredOutputTokens": 160,
+    "costUsdMicros": null
+  },
+  "originalCardsCompleted": [],
+  "fullE16Completed": false,
+  "fullE419Completed": false,
+  "ownerAcceptance": false,
+  "familyAcceptance": false,
+  "projectCompleted": false,
+  "remaining": "Original full source-watch and autonomous relevant update/application/use/recovery criteria remain open. Same valid rejection is not forcibly reopened; no owner action is required for these completed corrections.",
+  "independentReview": "development/reviews/e16-e419-alignment-20261024.json",
+  "independentReviewSha256": "8072e6587a62bc029120f096f8035d600e51dfe59044459191a5d4f2bf059940"
+}

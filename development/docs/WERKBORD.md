@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Relevante updates zelfstandig ontdekken en beheerd toepassen
 
-Vier van de oorspronkelijke24 taken afgerond (83/103). E4.16 is geïnstalleerd; werkelijk automatisch herstel blijft open. E4.19: de tester heeft de huidige driverfout 4/4 bevestigd; bouwer maakt de complete onderhoudsroute en reviewcorrecties af. Kandidaatwinst, autonome update en volledig herstel nog te bewijzen.
+4 van24 oorspronkelijke kaarten gesloten;83/103totaal. Eigenaaropdracht12:15CEST afgeleverd. Huisonderzoek-profielblokkade en onderhoudscontext12:49CEST geïnstalleerd; daadwerkelijke geïsoleerde claim en gewone modelinvoer12:54CEST bewezen. Eva koos terecht geen update zonder aangetoonde lokale noodzaak; volledige E4.19 blijft open.
 
 Klaar wanneer: Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap.
 
