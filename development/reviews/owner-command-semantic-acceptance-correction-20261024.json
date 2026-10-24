@@ -1,0 +1,24 @@
+{
+  "contract": "EvaOwnerCommandSemanticCompletionClaimCorrection/v1",
+  "reviewedAt": "2026-10-24T11:04:41.447555+00:00",
+  "verdict": "ORIGINAL_USER_OUTCOME_REMAINS_OPEN",
+  "correction": "De eerdere technische reparatie en aflevering van een samenvattend voorstel bewijzen geen bruikbare afronding van de oorspronkelijke gebruikersopdracht.",
+  "cause": "Een operatorbijsturing versmalde het vervolg tot samenvatten van eerder onderzoek. Onze beoordeling toetste die beperkte uitvoering en transport, onvoldoende de oorspronkelijke gebruikersuitkomst. Er is hiermee geen nieuw productdefect bewezen.",
+  "acceptance": "De gevraagde bestaande route aantoonbaar terugvinden en toetsen, relevante toegestane werking controleren en een concreet bruikbaar resultaat leveren. Een niet-officieel karakter is op zichzelf geen blokkade.",
+  "blockedBoundary": "Een aantoonbaar ontbrekende noodzakelijke toegang blijft een open blokkade met één concrete benodigde handeling; een algemeen voorstel of ontvangstbevestiging maakt de opdracht niet af. Reeds gegeven informatie en toestemming blijven gelden.",
+  "historyPreserved": {
+    "priorTechnicalAndDeliveryReview": "development/reviews/owner-command-provider-fix-20261024.json",
+    "priorReviewSha256": "f19b06a90637c73ce6917b561ef88c93ad865da8d6f79fb170c7bddf8081c99e",
+    "originalProofAndLimitedGoUnchanged": true,
+    "deliveryAcknowledgementStillValidWithinLimitedScope": true
+  },
+  "privateAcceptanceReviewSha256": "16a5586681ae9e8eb3cfe7ffd9050b13235e3beb397ee65078b13c3e9b0813d2",
+  "ownerOutcomeCompleted": false,
+  "usefulOutcomeProven": false,
+  "newProductBugEstablished": false,
+  "productCodeOrRuntimeWritesByReviewer": 0,
+  "newModelCallsByReviewer": 0,
+  "projectCompleted": false,
+  "privateEarlierAcceptanceReviewSha256": "5ea15f3528bcfc480b060aa927d2df7d14abb65f17d9558a9ff905e873874a15",
+  "currentFollowupBoundary": "De latere gecorrigeerde opdracht meldde geen voortijdig succes en bleef zonder resultaat na provideruitval. Alleen geverifieerde leesstappen waren uitgevoerd. Vervolg moet die actuele opdracht en bewaarde voortgang hergebruiken, zonder de eerdere versmalling of nieuwe eigenaaruitleg."
+}
