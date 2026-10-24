@@ -1,0 +1,161 @@
+{
+  "contract": "Eva2IndependentE419BaselinePreflightReview/v1",
+  "task": "E4.19",
+  "checkedAt": "2026-10-24T07:45:55.203919+00:00",
+  "verdict": "BASELINE_DEFECT_REPRODUCED_4_OF_4_CANDIDATE_PENDING",
+  "fullOriginalTaskCompleted": false,
+  "candidateCompared": false,
+  "candidateApprovedOrInstalled": false,
+  "criteriaChanged": false,
+  "driverChanged": false,
+  "criteriaRef": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/criteria.private.json",
+    "sha256": "068d4f3887e0dff659e852bc0b83c1b505df3b5a1ec2f1eba1ef460be0ee16c5"
+  },
+  "driverRef": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/sync-interruption-driver.py",
+    "sha256": "e4c8f6495c6c48d31cd4c890c456e603715b50a001b82464763ac68b69c807c0"
+  },
+  "originalDoneWhenSha256": "c838edf471b4ee3c7a576dce1bafadb1e47696d67eeca7cd0033d63af7db5aa0",
+  "actualBaselineRef": {
+    "path": "/var/lib/eva2/e419-activation-20261024/baseline.private.json",
+    "sha256": "a8768694424de5c395a95f831cf91b05d00f4a08f47a684262efc7a9a416c1b3"
+  },
+  "runnerEvidence": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/baseline-preflight-v3.private.json",
+    "sha256": "6dcddb242f5f72fc3278165242e6d3bf6a7e67eb0fdbdff6ca75b9dfa8b387e5",
+    "runnerPath": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/baseline-preflight-v3.py",
+    "runnerSha256": "c2a273a52ebb1d1f42a0cf16513c8278355597c4562767197ef8b1ffc0198295",
+    "frozenExistingEvaluatorSourceSha256": "c2b9cf52ced6a02ca21c290c71518ec8c50e035e948123bc8e48911ff9f575cd",
+    "successfulRunnerElapsedSeconds": 128.81246468197787,
+    "note": "This duration includes successful fixture setup and4 exact baseline runs; it is not all Codex development time."
+  },
+  "measurements": [
+    {
+      "role": "core",
+      "repetition": 1,
+      "image": "sha256:8b63103d434068c8f9257608849385299c6f255266d25491220281a5169e37cb",
+      "expectedOriginalNonReturnReproduced": true,
+      "outerElapsedMs": 31506,
+      "innerElapsedSeconds": 30.014270341023803,
+      "oneInterruptionSent": true,
+      "forcedOwnChildCleanupAt30Seconds": true,
+      "artifactPath": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/baseline-core-1.private.json",
+      "artifactSha256": "2b836162bfaca7623aaa441c4a2aa4c12e796adb6fdb4d09d15f6a780a44702e"
+    },
+    {
+      "role": "core",
+      "repetition": 2,
+      "image": "sha256:8b63103d434068c8f9257608849385299c6f255266d25491220281a5169e37cb",
+      "expectedOriginalNonReturnReproduced": true,
+      "outerElapsedMs": 31555,
+      "innerElapsedSeconds": 30.01749135600403,
+      "oneInterruptionSent": true,
+      "forcedOwnChildCleanupAt30Seconds": true,
+      "artifactPath": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/baseline-core-2.private.json",
+      "artifactSha256": "588ca0a9403da5405920b905241e6055514c19c188979e646fe2c7f23c7eb47a"
+    },
+    {
+      "role": "delegated-work-worker",
+      "repetition": 1,
+      "image": "sha256:fd942c6df0fc81213e9b1424b5f85cc51f08bd274bd348046c7c3fd73596a0d7",
+      "expectedOriginalNonReturnReproduced": true,
+      "outerElapsedMs": 31356,
+      "innerElapsedSeconds": 30.02847630000906,
+      "oneInterruptionSent": true,
+      "forcedOwnChildCleanupAt30Seconds": true,
+      "artifactPath": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/baseline-delegated-work-worker-1.private.json",
+      "artifactSha256": "6473fef9736c8c8795a0f45c7ff8637e974e3d66d29e86fef52ef7a3cc940aff"
+    },
+    {
+      "role": "delegated-work-worker",
+      "repetition": 2,
+      "image": "sha256:fd942c6df0fc81213e9b1424b5f85cc51f08bd274bd348046c7c3fd73596a0d7",
+      "expectedOriginalNonReturnReproduced": true,
+      "outerElapsedMs": 31155,
+      "innerElapsedSeconds": 30.01794837997295,
+      "oneInterruptionSent": true,
+      "forcedOwnChildCleanupAt30Seconds": true,
+      "artifactPath": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/baseline-delegated-work-worker-2.private.json",
+      "artifactSha256": "2e3e933d32d73e23b08eb3d7a2def9ddb6fe364f308570613ea7173ddf0ce9fc"
+    }
+  ],
+  "actualProductionRolesUntouchedAndUnchanged": {
+    "core": {
+      "sameGeneration": true,
+      "sameImage": true,
+      "healthy": true
+    },
+    "delegated-work-worker": {
+      "sameGeneration": true,
+      "sameImage": true,
+      "healthy": true
+    }
+  },
+  "executionBounds": {
+    "caseIds": [
+      "sync_interruption"
+    ],
+    "repeatsPerRole": 2,
+    "innerSeconds": 30,
+    "outerSeconds": 35,
+    "network": "none",
+    "productionMounts": false,
+    "productionCredentials": false,
+    "ownSyntheticFixtureOnly": true,
+    "expectedCasesOutsideEvaluatorMounts": true,
+    "criteriaOutsideEvaluatorMounts": true
+  },
+  "fixture": {
+    "container": "bf1a6a976f97521660515245f444686bc22fd8f459c656d91519f6183e41ca2e",
+    "name": "eva2-e419-review-pg18-7093a19cad33",
+    "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+    "metadataPath": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/baseline-fixture-v3/fixture.json",
+    "metadataSha256": "cd29d7b0895332459b4d41dc943d042b080b8d0ce4901642f185761e1220d4b0",
+    "runningWithoutExternalNetwork": true,
+    "remainingOtherSessions": 0,
+    "socketSourcePath": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/baseline-fixture-v3/socket",
+    "socketTargetPath": "/run/eva-dependency-pg",
+    "metadataTargetPath": "/run/eva-dependency-review/fixture.json",
+    "heldOnlyForThisCandidateComparison": true,
+    "cleanupOwner": "Independent reviewer; no E113/shared/production fixture may be stopped or changed."
+  },
+  "preservedHarnessFailures": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/baseline-preflight.private.json",
+      "sha256": "a1eade266c847d7d1b9d50128bfa440dd7f5dca612aa78090b14625186bd0430",
+      "driverObservations": 0,
+      "cause": "Fixture image clears PGHOST inside docker_process_sql and bootstraps through compiled default/tmp; initial custom-only socket prevented initialization. Exact logs/inspect retained underbaseline-fixture."
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/baseline-preflight-v2.private.json",
+      "sha256": "c4ea2735c93e0dab23d904b3a5949ed70da9e465c8286b1c4e9196a23d39024d",
+      "driverObservations": 0,
+      "cause": "PGHOST environment alone cannot override that deliberately cleared bootstrap environment. Exact image source confirms cause; corrected ownfixture socket list includes/tmp and explicit test socket, readiness waits for postgresPID1. Failed container logs/inspect retained underbaseline-fixture-v2."
+    }
+  ],
+  "fixtureCorrectionsOnly": true,
+  "firstTwoFailedOwnedFixtureContainersRemoved": true,
+  "comparisonBoundary": "This is preflight of the frozen test and actual current3.3.4 baseline behavior. It establishes no candidate gain or autonomous-maintenance completion. If later installation changes the foundation image, final admission must bind that actual baseline and identical unrelated source; these old image results do not silently authorize different bytes.",
+  "nextRequired": "Separate actual native oracle/reviewer must bind the fixed criteria and exact candidate images, prove the expected improved result under the identical protocol, and satisfy all6 unchanged original acceptance checks for normal use, source/STOP, actual installed use and held image/data recovery. Tie/loss/unreproducible or missing proof retains3.3.4.",
+  "usage": {
+    "evaRuntimeModelRequests": 0,
+    "reviewerProductionWrites": 0,
+    "reviewerServiceChanges": 0,
+    "fixtureAndEvaluationContainersOnly": true,
+    "developmentTokens": null,
+    "developmentCredits": null
+  },
+  "findings": [
+    {
+      "id": "E419-BASELINE-INTERRUPT-001",
+      "priority": 2,
+      "status": "REPRODUCED_ON_BOTH_ACTUAL_BASELINE_IMAGES_CANDIDATE_NOT_YET_TESTED",
+      "title": "The actual3.3.4 synchronous database driver does not return after one interruption when an established PG connection stops answering.",
+      "trigger": "Independently controlled isolated test Unixsocket preserves an established connection while withholding replies; exactly one process interruption follows. No production fault injected or historical production incident asserted.",
+      "observed": "All4 fixed observations reach the30second child bound without delivering interruption; the harness then terminates only its own child. Outer evaluator exits successfully within35seconds and retains raw stdout/stderr.",
+      "affected": "Actual core and delegated-worker3.3.4 pair with binary libpq180000, exact immutable images in measurements.",
+      "coordinatorAction": "Assess the one official3.3.6 pair through the existing scoped maintenance route against unchanged independent criteria. Keep3.3.4 if the same testcase or any original acceptance requirement fails; no alternate package series or criteria adjustment."
+    }
+  ]
+}

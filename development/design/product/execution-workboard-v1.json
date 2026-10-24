@@ -847,7 +847,7 @@
     "title": "Relevante updates zelfstandig ontdekken en beheerd toepassen",
     "status": "in_progress",
     "doneWhen": "Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap.",
-    "nextAction": "Maak één werkelijke Psycopg-update via bestaande geplande aandacht, native beoordeling en beheerde installatie volledig af; controleer gebruikte driver en herstel van de laatste werkende images. Bij geen bewezen winst blijft de referentie. E4.16 blijft beschikbaar voor echte brongebonden fouten.",
+    "nextAction": "Maak de complete bron-/hostoverdracht af inclusief de drie concrete reviewcorrecties, bundel onafhankelijke review en installeer de onderhoudsroute met verse claims. Laat daarna Eva één echte update kiezen, beoordelen, toepassen en teruglezen met herstelbewijs; behoud de referentie bij ontbrekende winst.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3077,7 +3077,7 @@
         "now": {
           "taskId": "E4.19",
           "title": "Relevante updates zelfstandig ontdekken en beheerd toepassen",
-          "summary": "Vier van de oorspronkelijke 24 taken afgerond (83/103). E4.16 is geïnstalleerd en onafhankelijk teruggelezen; echte autonome foutafhandeling en later hergebruik blijven open. Eén bouwer maakt E4.19 volledig af; één onafhankelijke tester bewaakt de oorspronkelijke eindcriteria. Geen eigenaarhandeling nodig.",
+          "summary": "Vier van de oorspronkelijke24 taken afgerond (83/103). E4.16 is geïnstalleerd; werkelijk automatisch herstel blijft open. E4.19: de tester heeft de huidige driverfout 4/4 bevestigd; bouwer maakt de complete onderhoudsroute en reviewcorrecties af. Kandidaatwinst, autonome update en volledig herstel nog te bewijzen.",
           "doneWhen": "Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap."
         },
         "next": {
@@ -3090,12 +3090,12 @@
           "detail": "Geen handeling nodig. Je kunt de fysieke proef nu niet doen; die blijft uitgesteld. De technische camera-/batchroute is geïnstalleerd en nieuwe waarnemingen zijn gezien. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-24T07:24:28.185511+00:00",
+        "checkedAt": "2026-10-24T07:54:30.973301+00:00",
         "reviewedAt": "2026-10-21T09:48:32.565185+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
-      "checkedAt": "2026-10-24T07:24:28.185511+00:00",
+      "checkedAt": "2026-10-24T07:54:30.973301+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3229,7 +3229,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-24T07:24:28.185511+00:00",
+      "lastUpdatedAt": "2026-10-24T07:54:30.973301+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3263,7 +3263,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-24T07:24:28.185511+00:00",
+      "updatedAt": "2026-10-24T07:54:30.973301+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -8396,9 +8396,9 @@
                   "E4.16",
                   "E4.17"
                 ],
-                "nextAction": "Maak één werkelijke Psycopg-update via bestaande geplande aandacht, native beoordeling en beheerde installatie volledig af; controleer gebruikte driver en herstel van de laatste werkende images. Bij geen bewezen winst blijft de referentie. E4.16 blijft beschikbaar voor echte brongebonden fouten.",
-                "implementationStatus": "complete_existing_update_route_in_implementation",
-                "checkedAt": "2026-10-24T07:24:28.185511+00:00",
+                "nextAction": "Maak de complete bron-/hostoverdracht af inclusief de drie concrete reviewcorrecties, bundel onafhankelijke review en installeer de onderhoudsroute met verse claims. Laat daarna Eva één echte update kiezen, beoordelen, toepassen en teruglezen met herstelbewijs; behoud de referentie bij ontbrekende winst.",
+                "implementationStatus": "complete_route_built_targeted_integration_and_review_in_progress",
+                "checkedAt": "2026-10-24T07:54:30.973301+00:00",
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                   "activeWorkers": [
@@ -8406,7 +8406,9 @@
                     "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
                   ],
                   "scope": "One builder owns exact full-update handoff paths; reviewer owns independent criteria and review only; root shared installation, integration and Git."
-                }
+                },
+                "review": "development/reviews/e419-baseline-preflight-review-20261024.json",
+                "progress": "Onafhankelijke vaste criteria vastgelegd; bestaande driver blijft in 4/4 gerichte onderbrekingsmetingen langer dan30s hangen. Nieuwe wheel/binary-overdracht en bestaande hostaansluitingen gericht gecontroleerd; echte PG18/schema0012-native lifecycle, STOP en bronafwijzing 3/3 geslaagd. Drie concrete reviewbevindingen in archivebegrenzing/fixturetype/tijdmeting worden gecorrigeerd. Volledige kandidaat nog niet bevroren of geïnstalleerd; daadwerkelijke autonome update, gebruik en herstel blijven open."
               }
             ],
             "previousBoundedCompletion": {
@@ -8957,7 +8959,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Maak één werkelijke Psycopg-update via bestaande geplande aandacht, native beoordeling en beheerde installatie volledig af; controleer gebruikte driver en herstel van de laatste werkende images. Bij geen bewezen winst blijft de referentie. E4.16 blijft beschikbaar voor echte brongebonden fouten.",
+        "nextAction": "Maak de complete bron-/hostoverdracht af inclusief de drie concrete reviewcorrecties, bundel onafhankelijke review en installeer de onderhoudsroute met verse claims. Laat daarna Eva één echte update kiezen, beoordelen, toepassen en teruglezen met herstelbewijs; behoud de referentie bij ontbrekende winst.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van de oorspronkelijke 24 open taken gesloten. E4.16 geïnstalleerd; echte foutketen en later hergebruik blijven open. Nu E4.19 volledig afmaken met één bouwer en één onafhankelijke tester; eigenaarproeven blokkeren ander werk niet.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -8968,7 +8970,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T07:24:28.185511+00:00",
+        "updatedAt": "2026-10-24T07:54:30.973301+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9244,7 +9246,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-24T07:24:28.185511+00:00",
+        "checkedAt": "2026-10-24T07:54:30.973301+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -14516,9 +14518,9 @@
                 "E4.16",
                 "E4.17"
               ],
-              "nextAction": "Maak één werkelijke Psycopg-update via bestaande geplande aandacht, native beoordeling en beheerde installatie volledig af; controleer gebruikte driver en herstel van de laatste werkende images. Bij geen bewezen winst blijft de referentie. E4.16 blijft beschikbaar voor echte brongebonden fouten.",
-              "implementationStatus": "complete_existing_update_route_in_implementation",
-              "checkedAt": "2026-10-24T07:24:28.185511+00:00",
+              "nextAction": "Maak de complete bron-/hostoverdracht af inclusief de drie concrete reviewcorrecties, bundel onafhankelijke review en installeer de onderhoudsroute met verse claims. Laat daarna Eva één echte update kiezen, beoordelen, toepassen en teruglezen met herstelbewijs; behoud de referentie bij ontbrekende winst.",
+              "implementationStatus": "complete_route_built_targeted_integration_and_review_in_progress",
+              "checkedAt": "2026-10-24T07:54:30.973301+00:00",
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                 "activeWorkers": [
@@ -14526,7 +14528,9 @@
                   "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
                 ],
                 "scope": "One builder owns exact full-update handoff paths; reviewer owns independent criteria and review only; root shared installation, integration and Git."
-              }
+              },
+              "review": "development/reviews/e419-baseline-preflight-review-20261024.json",
+              "progress": "Onafhankelijke vaste criteria vastgelegd; bestaande driver blijft in 4/4 gerichte onderbrekingsmetingen langer dan30s hangen. Nieuwe wheel/binary-overdracht en bestaande hostaansluitingen gericht gecontroleerd; echte PG18/schema0012-native lifecycle, STOP en bronafwijzing 3/3 geslaagd. Drie concrete reviewbevindingen in archivebegrenzing/fixturetype/tijdmeting worden gecorrigeerd. Volledige kandidaat nog niet bevroren of geïnstalleerd; daadwerkelijke autonome update, gebruik en herstel blijven open."
             }
           ],
           "previousBoundedCompletion": {
@@ -15077,7 +15081,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Maak één werkelijke Psycopg-update via bestaande geplande aandacht, native beoordeling en beheerde installatie volledig af; controleer gebruikte driver en herstel van de laatste werkende images. Bij geen bewezen winst blijft de referentie. E4.16 blijft beschikbaar voor echte brongebonden fouten.",
+      "nextAction": "Maak de complete bron-/hostoverdracht af inclusief de drie concrete reviewcorrecties, bundel onafhankelijke review en installeer de onderhoudsroute met verse claims. Laat daarna Eva één echte update kiezen, beoordelen, toepassen en teruglezen met herstelbewijs; behoud de referentie bij ontbrekende winst.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van de oorspronkelijke 24 open taken gesloten. E4.16 geïnstalleerd; echte foutketen en later hergebruik blijven open. Nu E4.19 volledig afmaken met één bouwer en één onafhankelijke tester; eigenaarproeven blokkeren ander werk niet.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15088,7 +15092,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T07:24:28.185511+00:00",
+      "updatedAt": "2026-10-24T07:54:30.973301+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -15364,7 +15368,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-24T07:24:28.185511+00:00",
+      "checkedAt": "2026-10-24T07:54:30.973301+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -17629,7 +17633,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T07:24:28.185511+00:00",
+  "updatedAt": "2026-10-24T07:54:30.973301+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -17711,8 +17715,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-10-24T07:24:28.185511+00:00",
-  "checkedAt": "2026-10-24T07:24:28.185511+00:00",
+  "lastUpdatedAt": "2026-10-24T07:54:30.973301+00:00",
+  "checkedAt": "2026-10-24T07:54:30.973301+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

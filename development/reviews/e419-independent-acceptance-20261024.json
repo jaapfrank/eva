@@ -1,0 +1,27 @@
+{
+  "contract": "Eva2IndependentE419AcceptanceRegistration/v1",
+  "task": "E4.19",
+  "status": "INDEPENDENT_CRITERIA_FROZEN_BEFORE_CANDIDATE_COMPARISON",
+  "registeredAt": "2026-10-24T07:32:48.401724+00:00",
+  "originalDoneWhenSha256": "c838edf471b4ee3c7a576dce1bafadb1e47696d67eeca7cd0033d63af7db5aa0",
+  "fullUpdateHandoffSha256": "19e2fdbc1750167d9523a72bd379cb645dd33289c46640e19d402415c9c74ca1",
+  "originalAcceptanceSha256": "d38eee7ade6f00acefa064d0ff1af89f0fb2f6c2bd5a79e769a251752664be18",
+  "actualPostE416BaselineSha256": "a8768694424de5c395a95f831cf91b05d00f4a08f47a684262efc7a9a416c1b3",
+  "criteriaRef": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-independent-review-20261024/criteria.private.json",
+    "sha256": "068d4f3887e0dff659e852bc0b83c1b505df3b5a1ec2f1eba1ef460be0ee16c5"
+  },
+  "driverArtifactSha256": "e4c8f6495c6c48d31cd4c890c456e603715b50a001b82464763ac68b69c807c0",
+  "scope": "One fixed Psycopg pair and one independently frozen synchronous connection-interruption comparison on isolated PG18; all six original update/use/restore/identity/gain/recovery conditions retained.",
+  "sameProtocolForBothRoleImages": true,
+  "referenceRetainedOnTieLossOrMissingProof": "3.3.4",
+  "candidateCompared": false,
+  "productApprovedOrInstalled": false,
+  "fullOriginalTaskCompleted": false,
+  "criteriaAndExpectedCasesMustRemainOutsideBuilderCandidateMounts": true,
+  "nativeIndependentStagesAndMeasuredUsageRequired": true,
+  "newProductCodeByReviewer": false,
+  "modelRequests": 0,
+  "productionWrites": 0,
+  "developmentCredits": null
+}

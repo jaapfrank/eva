@@ -183,7 +183,9 @@
         "development/tests/operations/test_runtime_dependency_update.py",
         "development/tests/bootstrap/test_component_maintenance.py",
         "development/tests/portable/test_runtime_dependency_overlay.py",
-        "development/tests/portable/test_installation_runtime_image_restore.py"
+        "development/tests/portable/test_installation_runtime_image_restore.py",
+        "src/eva/contracts/delegated_digital_work.py",
+        "src/eva/adapters/postgres/owner_initiatives.py"
       ],
       "excludedToolPatterns": [
         "*install*",
@@ -219,7 +221,9 @@
         "development/tests/operations/test_runtime_dependency_update.py",
         "development/tests/bootstrap/test_component_maintenance.py",
         "development/tests/portable/test_runtime_dependency_overlay.py",
-        "development/tests/portable/test_installation_runtime_image_restore.py"
+        "development/tests/portable/test_installation_runtime_image_restore.py",
+        "src/eva/contracts/delegated_digital_work.py",
+        "src/eva/adapters/postgres/owner_initiatives.py"
       ],
       "requestedAdditionalPaths": [
         {
@@ -301,7 +305,7 @@
         "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
         "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
       ],
-      "updatedAt": "2026-10-24T05:01:43.046218+00:00",
+      "updatedAt": "2026-10-24T07:37:09.534573+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -517,13 +521,37 @@
         }
       },
       "activeAssignment": {
-        "task": "E4.16",
-        "resultNow": "Exact minimal root installation/configuration package from current core/worker/host, no activation",
+        "task": "E4.19",
+        "resultNow": "Complete native selected Psycopg update chain through existing assessment/install/readback and held restore; foundation candidate under construction",
         "writePaths": [
-          "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024"
+          "src/eva/bootstrap/component_maintenance.py",
+          "src/eva/operations/runtime_dependency_update.py",
+          "src/tools/runtime_dependency_overlay.py",
+          "src/tools/installation_runtime_image_restore.py",
+          "src/eva/operations/runtime_repair_development.py",
+          "src/eva/operations/component_evaluation_service.py",
+          "src/eva/adapters/connectors/component_evaluation.py",
+          "src/eva/adapters/postgres/component_improvement_actions.py",
+          "src/eva/bootstrap/runtime_repair_host.py",
+          "src/eva/bootstrap/runtime_repair_work.py",
+          "src/eva/adapters/postgres/initiative_execution.py",
+          "src/eva/operations/component_release_publisher.py",
+          "src/eva/operations/reviewed_component_application.py",
+          "src/eva/operations/component_application_runtime.py",
+          "src/eva/bootstrap/delegated_work_provider.py",
+          "src/eva/bootstrap/runtime.py",
+          "src/tools/installation_recovery_package.py",
+          "src/tools/installation_recovery_materializer.py",
+          "development/tests/operations/test_runtime_dependency_update.py",
+          "development/tests/bootstrap/test_component_maintenance.py",
+          "development/tests/portable/test_runtime_dependency_overlay.py",
+          "development/tests/portable/test_installation_runtime_image_restore.py",
+          "src/eva/contracts/delegated_digital_work.py",
+          "src/eva/adapters/postgres/owner_initiatives.py"
         ],
-        "productionModelsOrEffectsAuthorized": false,
-        "sharedInstallationAuthorized": false
+        "sharedInstallationAuthorized": false,
+        "independentCriteriaOwnedBy": "tester/root",
+        "runtimePy": "private_hunk_only"
       },
       "extensionArtifactRequest": {
         "to": "wsl-e18",
