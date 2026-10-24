@@ -4,8 +4,8 @@
   "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
   "clientTaskDate": "2026-10-24",
   "checkedAtMachineUtc": "2026-10-24T00:05:14.877182+00:00",
-  "status": "effect_admission_v2_code_review_passed_durable_provider_and_runtime_integration_pending",
-  "verdict": "GO_SCOPED_EFFECT_ADMISSION_V2_INTEGRATION_PENDING",
+  "status": "lifecycle_adapter_provider_v2_review_passed_actual_host_wiring_pending",
+  "verdict": "GO_SCOPED_LIFECYCLE_ADAPTER_PROVIDER_V2_CODE",
   "onlyWritePath": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
   "authority": {
     "boardPath": "development/design/product/execution-workboard-v1.json",
@@ -274,6 +274,120 @@
         "existing14AndPrior6IndependentPassesReused": true,
         "remainingBoundary": "Actual durable PostgreSQL settlement enum/API, provider/runtime wiring, installed use and full E112 acceptance remain open."
       }
+    },
+    {
+      "id": "E112-REGISTRATION-001",
+      "severity": "P2",
+      "kind": "reproduced_registration_contract_gap",
+      "status": "fixed_v2_targeted_independent_real_postgres_case_passed",
+      "title": "An honestly unverified proposal cannot register without a realization receipt",
+      "source": "src/eva/adapters/postgres/household_provisions.py",
+      "line": 121,
+      "candidateSourceSha256": "61ee9acdfebf92bf83a53df669f48ea752d9c6bc1e67520dca70456d00aa0b65",
+      "cause": "The digest loop excludes only reference_id and unconditionally validates realization_receipt_sha256.",
+      "reproduction": {
+        "intendedState": "proposed_unverified",
+        "inputDelta": "realization_receipt_sha256=None; other source/binding/review digests remain valid",
+        "actualException": "ValueError: provision digest is invalid",
+        "databaseBegins": 0,
+        "seconds": 0.9893661179812625,
+        "realNetworkOrModelCalls": 0,
+        "testFixtureSourceOnly": true
+      },
+      "impact": "Current real provision lacks positive realization evidence. API cannot truthfully register it as proposed unless an unrelated/fictitious digest is substituted. No such substitution was performed.",
+      "expected": "Permit explicit None only for genuinely absent realization receipt; keep other hashes strict and active exclusively dependent on trusted verify_realization. Adoption without positive realization remains proposed; resume without proof rejects.",
+      "criteriaSource": "Existing6b139minimal contract firstSequence/stateContract.proposed+active and current84a handoff remaining; no new acceptance criterion.",
+      "repairOwner": "coordinator assigned builder minimal V2 field/test fix; reviewer makes no product changes",
+      "resolution": {
+        "verdict": "GO_SCOPED_LIFECYCLE_ADAPTER_PROVIDER_V2_CODE",
+        "checkedAtMachineUtc": "2026-10-24T00:19:01.863066+00:00",
+        "handoffSha256": "01af323ca5615443c60be8190d6c3783393d2a2b833e761f40b17b76ccb67466",
+        "adapterSha256": "9b1e5824d5fbba722439170fb2530c31da28c9b8e393da7c7f623ce51bec1c2f",
+        "pgTestsSha256": "be399ed1ef1d700f504d740789fe80a1f56191b9b589af98338fcd3c555c9b8c",
+        "providerApplicationAndGuardTestExactV1": true,
+        "boundedDiff": "Only None exception for realization_receipt_sha256 and rejection restricted to proposed+unadopted. Other digests strict; existing adoption/verification/STOP/effect authority unchanged.",
+        "independentRetest": {
+          "cases": 2,
+          "pytestSeconds": 4.11,
+          "processSeconds": 5.857891979976557,
+          "exitCode": 0,
+          "serverVersionNum": 160013,
+          "executionId": "exec-de475666-3cb7-4442-b9cd-90b60e1261cf",
+          "executionStatus": "completed",
+          "all5PinsBeforeAfterUnchanged": true,
+          "all5V1RawFilesAndHandoffExact0400": true,
+          "prior62TestsRepeated": false,
+          "ownContainerId": "805cf6875013d2de687ab6771594406af9554d0f39b8bbc604b57c4141b04e8a",
+          "ownContainerAfter": "exited_retained",
+          "privatePgWallSeconds": 8.909111696993932,
+          "sourceDatabaseOrRuntimeActions": 0,
+          "modelCalls": 0,
+          "cameraCalls": 0
+        },
+        "proved": [
+          "Absent realization receipt stays explicit None in proposed registration; explicit adoption without verified realization remains proposed; resume remains blocked.",
+          "Other three source/binding/review digests still reject None.",
+          "Only unadopted proposed provision can be rejected; active/adopted/paused cannot; retirement retains adoption and exact timeline history."
+        ],
+        "communicationCorrection": "A preliminary message incorrectly announced completion and guessed times before the yielded command output was available. It was explicitly withdrawn immediately. Original completed execution was read back without rerunning tests; only actual 4.11s/5.857891979976557s values are authoritative. No preliminary numbers were stored as evidence.",
+        "limits": [
+          "Code only; actual owner/current/realization/effect callbacks and bootstrap/API integration still pending.",
+          "No live enrollment, activation, camera/model call, same-facility restore or owner/full E112 acceptance."
+        ]
+      }
+    },
+    {
+      "id": "E112-STATE-001",
+      "severity": "P2",
+      "kind": "source_and_executed_case_contract_mismatch",
+      "status": "fixed_v2_targeted_independent_real_postgres_case_passed",
+      "title": "A previously adopted active facility can be recorded as a rejected proposal",
+      "source": "src/eva/adapters/postgres/household_provisions.py",
+      "line": 219,
+      "candidateSourceSha256": "61ee9acdfebf92bf83a53df669f48ea752d9c6bc1e67520dca70456d00aa0b65",
+      "cause": "command only rejects already retired/rejected states, then maps reject to rejected regardless of existing adoption/active history.",
+      "executedEvidence": "Independently passed test_stop_retirement_and_rejection_cannot_resume[reject] first calls active(provision), then command(reject,revision2); source writes rejected. No extra PG probe needed.",
+      "impact": "Management history does not preserve the declared distinction between rejecting a proposal and retiring an adopted facility. Terminal no-dispatch itself is preserved.",
+      "expected": "Keep rejection of a not-yet-adopted proposal distinct from retiring/stopping an adopted provision, using existing lifecycle data and unchanged timeline enums.",
+      "criteriaSource": "Exact6b139minimal contract stateContract.retired: Rejected proposal distinct from previously active retired.",
+      "repairOwner": "coordinator to resolve/assign; reviewer does not change criteria/source/tests",
+      "resolution": {
+        "verdict": "GO_SCOPED_LIFECYCLE_ADAPTER_PROVIDER_V2_CODE",
+        "checkedAtMachineUtc": "2026-10-24T00:19:01.863066+00:00",
+        "handoffSha256": "01af323ca5615443c60be8190d6c3783393d2a2b833e761f40b17b76ccb67466",
+        "adapterSha256": "9b1e5824d5fbba722439170fb2530c31da28c9b8e393da7c7f623ce51bec1c2f",
+        "pgTestsSha256": "be399ed1ef1d700f504d740789fe80a1f56191b9b589af98338fcd3c555c9b8c",
+        "providerApplicationAndGuardTestExactV1": true,
+        "boundedDiff": "Only None exception for realization_receipt_sha256 and rejection restricted to proposed+unadopted. Other digests strict; existing adoption/verification/STOP/effect authority unchanged.",
+        "independentRetest": {
+          "cases": 2,
+          "pytestSeconds": 4.11,
+          "processSeconds": 5.857891979976557,
+          "exitCode": 0,
+          "serverVersionNum": 160013,
+          "executionId": "exec-de475666-3cb7-4442-b9cd-90b60e1261cf",
+          "executionStatus": "completed",
+          "all5PinsBeforeAfterUnchanged": true,
+          "all5V1RawFilesAndHandoffExact0400": true,
+          "prior62TestsRepeated": false,
+          "ownContainerId": "805cf6875013d2de687ab6771594406af9554d0f39b8bbc604b57c4141b04e8a",
+          "ownContainerAfter": "exited_retained",
+          "privatePgWallSeconds": 8.909111696993932,
+          "sourceDatabaseOrRuntimeActions": 0,
+          "modelCalls": 0,
+          "cameraCalls": 0
+        },
+        "proved": [
+          "Absent realization receipt stays explicit None in proposed registration; explicit adoption without verified realization remains proposed; resume remains blocked.",
+          "Other three source/binding/review digests still reject None.",
+          "Only unadopted proposed provision can be rejected; active/adopted/paused cannot; retirement retains adoption and exact timeline history."
+        ],
+        "communicationCorrection": "A preliminary message incorrectly announced completion and guessed times before the yielded command output was available. It was explicitly withdrawn immediately. Original completed execution was read back without rerunning tests; only actual 4.11s/5.857891979976557s values are authoritative. No preliminary numbers were stored as evidence.",
+        "limits": [
+          "Code only; actual owner/current/realization/effect callbacks and bootstrap/API integration still pending.",
+          "No live enrollment, activation, camera/model call, same-facility restore or owner/full E112 acceptance."
+        ]
+      }
     }
   ],
   "existingNoPostFixture": {
@@ -303,9 +417,9 @@
     "reviewerProductWrites": 0
   },
   "usage": {
-    "testsRun": 0,
-    "newDatabaseQueries": 0,
-    "newServiceStarts": 0,
+    "testsRun": 84,
+    "newDatabaseQueries": null,
+    "newServiceStarts": 2,
     "newModelCalls": 0,
     "newInferenceCalls": 0,
     "newCameraReads": 0,
@@ -358,6 +472,43 @@
       "postgresQueries": 0,
       "modelCalls": 0,
       "otherTestsRepeated": false
+    },
+    "initialContractPreparationTestsRun": 0,
+    "sourceRuntimeServiceStarts": 0,
+    "privateTestPostgresStarts": 2,
+    "databaseQueryMeasurement": "Only own disposable test PostgreSQL; SQL statement count not metered. No source/live database query.",
+    "latestIndependentBuilderLifecycleReview": {
+      "distinctCandidateCases": 62,
+      "providerCases": 53,
+      "providerPytestSeconds": 1.75,
+      "postgresCases": 9,
+      "postgresPytestSeconds": 3.56,
+      "separateNullRegistrationReproducerSeconds": 0.9893661179812625,
+      "modelCalls": 0,
+      "cameraCalls": 0,
+      "sharedInstallationsChanged": 0,
+      "peakRssKiB": null,
+      "developmentTokens": null,
+      "developmentCredits": null
+    },
+    "uniquePrivateTestPostgresContainers": 1,
+    "latestIndependentLifecycleV2Retest": {
+      "cases": 2,
+      "pytestSeconds": 4.11,
+      "processSeconds": 5.857891979976557,
+      "exitCode": 0,
+      "serverVersionNum": 160013,
+      "executionId": "exec-de475666-3cb7-4442-b9cd-90b60e1261cf",
+      "executionStatus": "completed",
+      "all5PinsBeforeAfterUnchanged": true,
+      "all5V1RawFilesAndHandoffExact0400": true,
+      "prior62TestsRepeated": false,
+      "ownContainerId": "805cf6875013d2de687ab6771594406af9554d0f39b8bbc604b57c4141b04e8a",
+      "ownContainerAfter": "exited_retained",
+      "privatePgWallSeconds": 8.909111696993932,
+      "sourceDatabaseOrRuntimeActions": 0,
+      "modelCalls": 0,
+      "cameraCalls": 0
     }
   },
   "handoff": "Concrete findings sent directly to coordinator during review. Waiting for exact frozen implementation and owner integration; no general test series, code edits, installs or extra agents.",
@@ -452,5 +603,152 @@
     },
     "existing14AndPrior6IndependentPassesReused": true,
     "remainingBoundary": "Actual durable PostgreSQL settlement enum/API, provider/runtime wiring, installed use and full E112 acceptance remain open."
+  },
+  "builderLifecycleCandidateV1Review": {
+    "verdict": "REQUEST_CHANGES_SCOPED_REGISTRATION_AND_STATE_TRANSITIONS",
+    "checkedAtMachineUtc": "2026-10-24T00:15:47.829401+00:00",
+    "freezePath": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/candidate-handoff.private.json",
+    "freezeSha256": "84a2300d5a2b6c1e2f16b4d641c0923f00ad511d9bb03b73305bcf6de19c51d9",
+    "files": [
+      {
+        "bytes": 17863,
+        "path": "src/eva/adapters/postgres/household_provisions.py",
+        "sha256": "61ee9acdfebf92bf83a53df669f48ea752d9c6bc1e67520dca70456d00aa0b65"
+      },
+      {
+        "bytes": 18651,
+        "path": "src/eva/providers/home_assistant_procedure.py",
+        "sha256": "de872a3615283e4d786512cdd0a67ef65e126ce3617853010787931fa6dd6bf8"
+      },
+      {
+        "bytes": 2512,
+        "path": "src/eva/application/household_procedure.py",
+        "sha256": "313bb6f4cbc3445ca3fb0b663e31fcfef593dfb853f1179674b1cb6915690d41"
+      },
+      {
+        "bytes": 7164,
+        "path": "development/tests/postgres/test_household_provisions.py",
+        "sha256": "e288578b6e40789c18cd4816e1c02948d91c52928f0c20d65493a8c69ea9131f"
+      },
+      {
+        "bytes": 5852,
+        "path": "development/tests/providers/test_household_provision_guard.py",
+        "sha256": "9670fbeb2c20bb01f61c574a3682238d531d928e2d6610cb6b1b663b9ab30681"
+      }
+    ],
+    "sourcePinsAtReport": [
+      {
+        "path": "src/eva/adapters/postgres/household_provisions.py",
+        "sha256": "9b1e5824d5fbba722439170fb2530c31da28c9b8e393da7c7f623ce51bec1c2f",
+        "matchesV1": false
+      },
+      {
+        "path": "src/eva/providers/home_assistant_procedure.py",
+        "sha256": "de872a3615283e4d786512cdd0a67ef65e126ce3617853010787931fa6dd6bf8",
+        "matchesV1": true
+      },
+      {
+        "path": "src/eva/application/household_procedure.py",
+        "sha256": "313bb6f4cbc3445ca3fb0b663e31fcfef593dfb853f1179674b1cb6915690d41",
+        "matchesV1": true
+      },
+      {
+        "path": "development/tests/postgres/test_household_provisions.py",
+        "sha256": "be399ed1ef1d700f504d740789fe80a1f56191b9b589af98338fcd3c555c9b8c",
+        "matchesV1": false
+      },
+      {
+        "path": "development/tests/providers/test_household_provision_guard.py",
+        "sha256": "9670fbeb2c20bb01f61c574a3682238d531d928e2d6610cb6b1b663b9ab30681",
+        "matchesV1": true
+      }
+    ],
+    "independentProviderTests": {
+      "cases": 53,
+      "legacy": 43,
+      "newGuard": 10,
+      "pytestSeconds": 1.75,
+      "processSeconds": 2.416995436011348,
+      "exitCode": 0,
+      "realNetworkCalls": 0,
+      "modelCalls": 0,
+      "testFiles": [
+        "development/tests/providers/test_home_assistant_procedure.py",
+        "development/tests/providers/test_household_provision_guard.py"
+      ]
+    },
+    "independentPostgresTests": {
+      "cases": 9,
+      "pytestSeconds": 3.56,
+      "processSeconds": 5.203111408045515,
+      "exitCode": 0,
+      "serverVersionNum": 160013,
+      "imageId": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "ownContainerId": "805cf6875013d2de687ab6771594406af9554d0f39b8bbc604b57c4141b04e8a",
+      "ownContainerName": "eva2-e112-review-pg-f037b88f75",
+      "ownContainerAfter": "exited_retained_for_bounded_review",
+      "privateTestWallSeconds": 7.622362497029826,
+      "onlyLoopbackDynamicPort": true,
+      "onlyTmpfsData": true,
+      "sourceAndPgTestPinsBeforeAfterUnchanged": true,
+      "builderContainerOrSourceDbStarted": false,
+      "sourceDatabaseQueries": 0,
+      "sharedRuntimeActions": 0
+    },
+    "confirmedBoundaries": [
+      "Existing scoped timeline row FOR UPDATE, same lifecycle checkpoint for pause/admit and expected_revision conflicts.",
+      "Current owner callback runs before idempotent replay; stored owner+household and all event hashes/projection checked.",
+      "Registration proposed versus explicit adoption versus independent positive verification remain distinct.",
+      "STOP/retirement and unresolved in_flight/unknown effects reject resume/admission; old request/claim replay never returns admitted_now=True.",
+      "Provider explicit enrollment distinguishes legacy None from missing managed state; source/authority errors retained.",
+      "Pause during source binding is rechecked before executor; late pause/source/version guard and post-model neutral silence retain model usage."
+    ],
+    "newDefects": [
+      "E112-REGISTRATION-001",
+      "E112-STATE-001"
+    ],
+    "limits": [
+      "All62 supplied cases pass; NULL-registration gap is separate from those cases.",
+      "Current real owner/current/realization/effect callbacks are not supplied by these unit fixtures and are still coordinator-owned integration.",
+      "No runtime/API/bootstrap/restore/installed facility behavior or full E112 acceptance.",
+      "Version change/undo and same-facility recovery remain full-card work, not silently covered by pause/resume tests."
+    ]
+  },
+  "builderLifecycleCandidateV2Review": {
+    "verdict": "GO_SCOPED_LIFECYCLE_ADAPTER_PROVIDER_V2_CODE",
+    "checkedAtMachineUtc": "2026-10-24T00:19:01.863066+00:00",
+    "handoffSha256": "01af323ca5615443c60be8190d6c3783393d2a2b833e761f40b17b76ccb67466",
+    "adapterSha256": "9b1e5824d5fbba722439170fb2530c31da28c9b8e393da7c7f623ce51bec1c2f",
+    "pgTestsSha256": "be399ed1ef1d700f504d740789fe80a1f56191b9b589af98338fcd3c555c9b8c",
+    "providerApplicationAndGuardTestExactV1": true,
+    "boundedDiff": "Only None exception for realization_receipt_sha256 and rejection restricted to proposed+unadopted. Other digests strict; existing adoption/verification/STOP/effect authority unchanged.",
+    "independentRetest": {
+      "cases": 2,
+      "pytestSeconds": 4.11,
+      "processSeconds": 5.857891979976557,
+      "exitCode": 0,
+      "serverVersionNum": 160013,
+      "executionId": "exec-de475666-3cb7-4442-b9cd-90b60e1261cf",
+      "executionStatus": "completed",
+      "all5PinsBeforeAfterUnchanged": true,
+      "all5V1RawFilesAndHandoffExact0400": true,
+      "prior62TestsRepeated": false,
+      "ownContainerId": "805cf6875013d2de687ab6771594406af9554d0f39b8bbc604b57c4141b04e8a",
+      "ownContainerAfter": "exited_retained",
+      "privatePgWallSeconds": 8.909111696993932,
+      "sourceDatabaseOrRuntimeActions": 0,
+      "modelCalls": 0,
+      "cameraCalls": 0
+    },
+    "proved": [
+      "Absent realization receipt stays explicit None in proposed registration; explicit adoption without verified realization remains proposed; resume remains blocked.",
+      "Other three source/binding/review digests still reject None.",
+      "Only unadopted proposed provision can be rejected; active/adopted/paused cannot; retirement retains adoption and exact timeline history."
+    ],
+    "communicationCorrection": "A preliminary message incorrectly announced completion and guessed times before the yielded command output was available. It was explicitly withdrawn immediately. Original completed execution was read back without rerunning tests; only actual 4.11s/5.857891979976557s values are authoritative. No preliminary numbers were stored as evidence.",
+    "limits": [
+      "Code only; actual owner/current/realization/effect callbacks and bootstrap/API integration still pending.",
+      "No live enrollment, activation, camera/model call, same-facility restore or owner/full E112 acceptance."
+    ]
   }
 }

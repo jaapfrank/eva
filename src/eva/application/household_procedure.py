@@ -9,6 +9,10 @@ from eva.application.free_will import FreeWillDecision
 from eva.contracts.canonical_json import canonical_sha256
 
 
+class HouseholdProvisionInactive(RuntimeError):
+    """Known lifecycle denial before dispatch, not an uncertain external effect."""
+
+
 class HouseholdProcedureModel:
     def __init__(self, model, proposal, *, authorize, clock=None):
         self.model, self.proposal, self.authorize = model, proposal, authorize
@@ -33,6 +37,9 @@ class HouseholdProcedureModel:
             self.authorize()
             # Recheck source/rights after the model; never execute the module twice.
             self.proposal.validate_current(context)
+        except HouseholdProvisionInactive:
+            return FreeWillDecision('silence', 'De voorziening is niet actief.', 0,
+                'eva:inactive-household-provision', usage=result.usage)
         except Exception as error:
             error.model_usage = result.usage
             error.validation_failure_stage = "sensory_decision"

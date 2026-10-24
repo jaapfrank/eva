@@ -6168,7 +6168,7 @@
                   "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "Bouwer levert dunne lifecycleprojectie, provider/late-guard en62gerichte geslaagde cases incl9echtePG16.13; onafhankelijke review loopt. Coördinator effectadmissie na laatste provenance-read gebouwd:22cases groen; reviewer herstelde aandacht-race gericht bevestigd. Nog niet geïntegreerd/geïnstalleerd, geen daadwerkelijke adoptie/activeclaim.",
+                "progress": "Lifecycle/providercode V2 onafhankelijk goedgekeurd: eerdere62gerichte cases en2gerichte echtePG16.13-herstelcases voor ontbrekend bewijs en reject/retire. Finale effectadmissie V2 onafhankelijk goedgekeurd,22huidige gerichte cases. Owner-APIroutes gebouwd met5groene cases, review en daadwerkelijke runtime/wiring nog open. Niet geïnstalleerd; geen active/adoptie/volledige-kaartclaim.",
                 "checkedAt": "2026-10-24T00:14:01.686633+00:00",
                 "fullTaskCompleted": false,
                 "implementationEvidence": {
@@ -6180,7 +6180,17 @@
                   "coordinatorIndependentVerdict": "GO_SCOPED_COORDINATOR_EFFECT_ADMISSION_SEAM_V2",
                   "review": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
                   "installed": false,
-                  "fullTaskCompleted": false
+                  "fullTaskCompleted": false,
+                  "builderV1IndependentCasesPassed": 62,
+                  "builderV2ChangedCausePgCasesPassed": 2,
+                  "builderV2ChangedCauseIndependentPgSeconds": 4.11,
+                  "builderV2HandoffSha256": "01af323ca5615443c60be8190d6c3783393d2a2b833e761f40b17b76ccb67466",
+                  "builderV2IndependentVerdict": "GO_SCOPED_LIFECYCLE_ADAPTER_PROVIDER_V2_CODE",
+                  "builderV2IndependentReportSha256": "d2f1bdcbfda96c1fbe42432dee15f5aaffe89f6edd3d197abdd15e37326fe64f",
+                  "ownerApiCandidateSha256": "a072bd76609f40c70c7fc132e204314f16f298b3fdd1899f67963864ca363f3e",
+                  "ownerApiCasesReportedPassed": 5,
+                  "ownerApiRuntimeConnected": false,
+                  "privateHostWiringHandoffSha256": "5c7980a6e237453a1aa6e3526a8f9fa4eec37f1bb08ffbaeaaa174550266a7e9"
                 }
               },
               {
@@ -12166,7 +12176,7 @@
                 "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "Bouwer levert dunne lifecycleprojectie, provider/late-guard en62gerichte geslaagde cases incl9echtePG16.13; onafhankelijke review loopt. Coördinator effectadmissie na laatste provenance-read gebouwd:22cases groen; reviewer herstelde aandacht-race gericht bevestigd. Nog niet geïntegreerd/geïnstalleerd, geen daadwerkelijke adoptie/activeclaim.",
+              "progress": "Lifecycle/providercode V2 onafhankelijk goedgekeurd: eerdere62gerichte cases en2gerichte echtePG16.13-herstelcases voor ontbrekend bewijs en reject/retire. Finale effectadmissie V2 onafhankelijk goedgekeurd,22huidige gerichte cases. Owner-APIroutes gebouwd met5groene cases, review en daadwerkelijke runtime/wiring nog open. Niet geïnstalleerd; geen active/adoptie/volledige-kaartclaim.",
               "checkedAt": "2026-10-24T00:14:01.686633+00:00",
               "fullTaskCompleted": false,
               "implementationEvidence": {
@@ -12178,7 +12188,17 @@
                 "coordinatorIndependentVerdict": "GO_SCOPED_COORDINATOR_EFFECT_ADMISSION_SEAM_V2",
                 "review": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
                 "installed": false,
-                "fullTaskCompleted": false
+                "fullTaskCompleted": false,
+                "builderV1IndependentCasesPassed": 62,
+                "builderV2ChangedCausePgCasesPassed": 2,
+                "builderV2ChangedCauseIndependentPgSeconds": 4.11,
+                "builderV2HandoffSha256": "01af323ca5615443c60be8190d6c3783393d2a2b833e761f40b17b76ccb67466",
+                "builderV2IndependentVerdict": "GO_SCOPED_LIFECYCLE_ADAPTER_PROVIDER_V2_CODE",
+                "builderV2IndependentReportSha256": "d2f1bdcbfda96c1fbe42432dee15f5aaffe89f6edd3d197abdd15e37326fe64f",
+                "ownerApiCandidateSha256": "a072bd76609f40c70c7fc132e204314f16f298b3fdd1899f67963864ca363f3e",
+                "ownerApiCasesReportedPassed": 5,
+                "ownerApiRuntimeConnected": false,
+                "privateHostWiringHandoffSha256": "5c7980a6e237453a1aa6e3526a8f9fa4eec37f1bb08ffbaeaaa174550266a7e9"
               }
             },
             {

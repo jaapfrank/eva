@@ -13,6 +13,8 @@ import httpx2 as httpx
 from eva.adapters.connectors.camera_observer import HomeAssistantCameraDiscovery
 from eva.adapters.connectors.procedure_execution import configured_procedure_executor
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
+from eva.adapters.postgres.household_provisions import procedure_provision_id
+from eva.application.household_procedure import HouseholdProvisionInactive
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 
 # Trusted interface glue, not the authored application's decision logic.
@@ -27,10 +29,13 @@ print(json.dumps(result,allow_nan=False))
 
 
 class HomeAssistantProcedure:
-    def __init__(self, path, *, settings, engine, household, authorize, executor=None):
+    def __init__(self, path, *, settings, engine, household, authorize, executor=None, provisions=None):
         self.path = Path(path)
         self.settings, self.engine = settings, engine
         self.household, self.authorize = household, authorize
+        # Explicit host wiring distinguishes legacy from enrolled-but-missing
+        # restored state. Never silently enroll or activate an existing route.
+        self.provisions = provisions
         self.executor = executor or configured_procedure_executor()
         self.discovery = HomeAssistantCameraDiscovery(base_url=settings.endpoint_url, token=settings.credential)
 
@@ -82,9 +87,33 @@ class HomeAssistantProcedure:
             'face_endpoint':self.settings.face_endpoint,'face_revision':self.settings.face_revision,
             'face_credential_sha256':hashlib.sha256(self.settings.face_credential.encode()).hexdigest(),
             'executor':executor_config}
-        guard = canonical_sha256({'config':config, 'execution':execution,
-                                  'wrapper_sha256':hashlib.sha256(RUNNER.encode()).hexdigest()})
+        guarded = {'config':config, 'execution':execution,
+                   'wrapper_sha256':hashlib.sha256(RUNNER.encode()).hexdigest()}
+        lifecycle = self._lifecycle(config)
+        if lifecycle is not None:
+            guarded['provision'] = {'id': lifecycle['provision_id'], 'revision': lifecycle['revision']}
+        guard = canonical_sha256(guarded)
         return source.decode('utf-8'), guard
+
+    def _lifecycle(self, config):
+        if self.provisions is None:
+            return None
+        state = self.provisions.inspect(procedure_provision_id(config), now=datetime.now(UTC).replace(microsecond=0))
+        if state is None:
+            raise LookupError('enrolled household provision state is missing')
+        evidence = state['evidence']
+        if (state['household_binding_sha256'] != canonical_sha256(config['household_binding'])
+                or state['owner_principal_id'] != config['source_principal_id']
+                or evidence['binding_sha256'] != canonical_sha256(config)
+                or any(evidence[key] != config[key] for key in
+                       ('source_sha256', 'review_sha256', 'reference_id'))):
+            raise ValueError('household provision source or audience changed')
+        if (state['status'] != 'active' or state['stopped']
+                or state['effect_status'] != 'clear'):
+            raise HouseholdProvisionInactive('household provision is not dispatchable')
+        if not state['adoption'] or not state['verification_sha256']:
+            raise ValueError('active household provision lacks adoption or verified realization')
+        return state
 
     def validate_guard(self, digest):
         if digest is not None and self._current()[1] != digest:
@@ -180,7 +209,46 @@ class HomeAssistantProcedure:
             observation, selection = self._select_observation(event.payload['observation'], now=datetime.now(UTC))
             if observation is None:
                 raise ValueError('camera proposal no longer has a current selected source')
-            self.validate_current({'observation': observation, 'binding_sha256': digest, **selection})
+            try:
+                self.validate_current({'observation': observation, 'binding_sha256': digest, **selection})
+            except HouseholdProvisionInactive:
+                return False
+
+    def admit_expression(self, event, digest, claim):
+        """Final scoped admission after the delivery's last potentially blocking read."""
+        if self.provisions is None or digest is None:
+            return {'admitted_now': True, 'receipt': None}
+        from eva.adapters.postgres.operational_timeline import CheckpointConflict
+        try:
+            if self.validate_expression(event, digest) is False:
+                return {'admitted_now': False, 'receipt': None}
+            config = json.loads(self.path.read_text())
+            state = self._lifecycle(config)
+            # Bind this snapshot to the prepared guard too. A pause+resume
+            # between the first guard read and snapshot must not renew an old
+            # expression. The row-lock then compares this exact revision again.
+            if self.validate_expression(event, digest) is False:
+                return {'admitted_now': False, 'receipt': None}
+            claim_binding = {key: getattr(claim, key) for key in
+                             ('thread_id', 'operation_id', 'revision', 'source_event_id')}
+            return self.provisions.admit_effect(state['provision_id'], claim_binding,
+                expected_revision=state['revision'], binding_sha256=canonical_sha256(config),
+                request_id='expression-admit:' + canonical_sha256(claim_binding),
+                now=datetime.now(UTC).replace(microsecond=0))
+        except (HouseholdProvisionInactive, CheckpointConflict):
+            return {'admitted_now': False, 'receipt': None}
+
+    def settle_expression(self, admission, *, outcome, proof_sha256):
+        receipt = admission.get('receipt')
+        if receipt is None:
+            return
+        if self.provisions is None:
+            raise ValueError('enrolled provision settlement route is absent')
+        self.provisions.settle_effect(receipt['provision_id'],
+            admission_id=receipt['admission_id'], outcome=outcome, proof_sha256=proof_sha256,
+            request_id='expression-settle:' + canonical_sha256(
+                {'admission': receipt['admission_id'], 'outcome': outcome, 'proof': proof_sha256}),
+            now=datetime.now(UTC).replace(microsecond=0))
 
     def __call__(self, event, *, now):
         if event.event_type != 'household_observation_review':
@@ -190,11 +258,18 @@ class HomeAssistantProcedure:
         observation, selection = self._select_observation(event.payload['observation'], now=now)
         if observation is None:
             return None
-        source, guard = self._current()
+        try:
+            source, guard = self._current()
+        except HouseholdProvisionInactive:
+            return None
         binding = self._binding(observation)
         if self.executor is None:
             raise ValueError('existing procedure executor unavailable')
         inputs = {'source':source, 'event':observation, 'binding':binding, 'now':now.isoformat()}
+        try:
+            self.validate_guard(guard)
+        except HouseholdProvisionInactive:
+            return None
         report = self.executor.execute(RUNNER, inputs)
         result = report['result']
         if (result.get('exit_code') != 0 or result.get('timed_out') is not False
