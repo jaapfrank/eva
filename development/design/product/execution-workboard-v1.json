@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "planned",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Maak de bestaande E4.16-fout→duurzaam hersteldoel→ontwikkeluitvoerder→onafhankelijke beoordeling→bevoegde installatie af. De concrete kandidaat-overdracht is bevroren; maak de huidige intake, host en native client exact installeerbaar met behoud van alle andere wijzigingen en oorspronkelijke criteria. Geen tweede herstelplatform; alleen werkelijke brongebonden fouten.",
+    "nextAction": "Rond de onafhankelijke controle van de exacte0012-migratie, herstelcompatibiliteit en eenmalige installatie af. Installeer daarna bestaande zelfherstelroute met verse werkclaims en eigenaar-CAS; controleer werkelijke compositie en laat echte brongebonden fouten via dezelfde route afwerken.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3061,7 +3061,7 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "Maak de bestaande E4.16-fout→duurzaam hersteldoel→ontwikkeluitvoerder→onafhankelijke beoordeling→bevoegde installatie af. De concrete kandidaat-overdracht is bevroren; maak de huidige intake, host en native client exact installeerbaar met behoud van alle andere wijzigingen en oorspronkelijke criteria. Geen tweede herstelplatform; alleen werkelijke brongebonden fouten.",
+          "summary": "Vier van de oorspronkelijke24 taken technisch afgerond (83/103). E4.16: kandidaten en activeringsprocedure gereed; tester controleert migratie/herstel/installatie. Bouwer bereidt bestaande E4.19 voor terwijl coördinator E4.16 afmaakt. Geen eigenaarhandeling nodig.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid."
         },
         "next": {
@@ -8245,7 +8245,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Maak de bestaande E4.16-fout→duurzaam hersteldoel→ontwikkeluitvoerder→onafhankelijke beoordeling→bevoegde installatie af. De concrete kandidaat-overdracht is bevroren; maak de huidige intake, host en native client exact installeerbaar met behoud van alle andere wijzigingen en oorspronkelijke criteria. Geen tweede herstelplatform; alleen werkelijke brongebonden fouten.",
+                "nextAction": "Rond de onafhankelijke controle van de exacte0012-migratie, herstelcompatibiliteit en eenmalige installatie af. Installeer daarna bestaande zelfherstelroute met verse werkclaims en eigenaar-CAS; controleer werkelijke compositie en laat echte brongebonden fouten via dezelfde route afwerken.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8262,8 +8262,8 @@
                   "scope": "Builder exact existing E416 activation bundle and four narrow handoff changes; independent tester original handoff/activation contracts; root shared installation/model practice/Git."
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
-                "review": "development/reviews/autonomous-repair-foundation-20261022.json",
-                "implementationStatus": "partial_uninstalled_supporting_work",
+                "review": "development/reviews/e416-handoff-activation-review-20261024.json",
+                "implementationStatus": "frozen_candidates_and_activation_procedure_under_independent_review",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8272,8 +8272,8 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T06:06:08.566732+00:00",
-                "progress": "Actueel vastgesteld: herstelmodules ontbreken nog in beide gebruikte images en bestaande hostconfig activeert runtime_repairs nog niet. Concrete ontbrekende builderoverdracht hersteld in bevroren4hunks: describe→hostgebonden candidate.json→éénsubmit→bouwfase afsluiten; zes gerichte controles geslaagd. Exact minimaal activeringspakket en onafhankelijke integratiereview lopen; nog geen productieclaim of volledige afronding."
+                "checkedAt": "2026-10-24T06:42:25.745112+00:00",
+                "progress": "Twee exacte kandidaten gebouwd en36 bronbestanden teruggelezen; digitaal profiel in beide rollen gelijk. Bron/host/client/mandaat en eenmalige activeringsprocedure bevroren. Gerichte0012-backup/herstelreparatie opgeleverd; onafhankelijke migratie-, herstel- en installatiereview loopt. Nog niet geïnstalleerd en geen automatisch opgelost praktijkincident; oorspronkelijke kaart blijft open."
               },
               {
                 "id": "E4.17",
@@ -14357,7 +14357,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Maak de bestaande E4.16-fout→duurzaam hersteldoel→ontwikkeluitvoerder→onafhankelijke beoordeling→bevoegde installatie af. De concrete kandidaat-overdracht is bevroren; maak de huidige intake, host en native client exact installeerbaar met behoud van alle andere wijzigingen en oorspronkelijke criteria. Geen tweede herstelplatform; alleen werkelijke brongebonden fouten.",
+              "nextAction": "Rond de onafhankelijke controle van de exacte0012-migratie, herstelcompatibiliteit en eenmalige installatie af. Installeer daarna bestaande zelfherstelroute met verse werkclaims en eigenaar-CAS; controleer werkelijke compositie en laat echte brongebonden fouten via dezelfde route afwerken.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14374,8 +14374,8 @@
                 "scope": "Builder exact existing E416 activation bundle and four narrow handoff changes; independent tester original handoff/activation contracts; root shared installation/model practice/Git."
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
-              "review": "development/reviews/autonomous-repair-foundation-20261022.json",
-              "implementationStatus": "partial_uninstalled_supporting_work",
+              "review": "development/reviews/e416-handoff-activation-review-20261024.json",
+              "implementationStatus": "frozen_candidates_and_activation_procedure_under_independent_review",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -14384,8 +14384,8 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T06:06:08.566732+00:00",
-              "progress": "Actueel vastgesteld: herstelmodules ontbreken nog in beide gebruikte images en bestaande hostconfig activeert runtime_repairs nog niet. Concrete ontbrekende builderoverdracht hersteld in bevroren4hunks: describe→hostgebonden candidate.json→éénsubmit→bouwfase afsluiten; zes gerichte controles geslaagd. Exact minimaal activeringspakket en onafhankelijke integratiereview lopen; nog geen productieclaim of volledige afronding."
+              "checkedAt": "2026-10-24T06:42:25.745112+00:00",
+              "progress": "Twee exacte kandidaten gebouwd en36 bronbestanden teruggelezen; digitaal profiel in beide rollen gelijk. Bron/host/client/mandaat en eenmalige activeringsprocedure bevroren. Gerichte0012-backup/herstelreparatie opgeleverd; onafhankelijke migratie-, herstel- en installatiereview loopt. Nog niet geïnstalleerd en geen automatisch opgelost praktijkincident; oorspronkelijke kaart blijft open."
             },
             {
               "id": "E4.17",
