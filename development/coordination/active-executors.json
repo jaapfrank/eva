@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T11:22:16.644834+00:00",
+  "updatedAt": "2026-10-24T11:29:40.552939+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -305,7 +305,7 @@
         "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
         "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
       ],
-      "updatedAt": "2026-10-24T11:19:33.342503+00:00",
+      "updatedAt": "2026-10-24T11:29:40.552939+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -618,7 +618,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "active_actual_incomplete_outcome_continuation",
+      "status": "active_blocked_plan_and_resume_index_repair",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1318,7 +1318,7 @@
         "noRuntimeModelExecutorCameraMessageOrInstallation": true
       },
       "previousStatusBeforeCentralHandoff": "Canonical child conflicts and original32-row cutoff/singlepending cases finalized;44 focused checks passed, ready independent GO",
-      "activeCodeOrInstallClaim": false,
+      "activeCodeOrInstallClaim": true,
       "e417ColdStartHandoff": {
         "updatedAt": "2026-10-23T23:53:39.681074+00:00",
         "status": "phase1_exact_plan_pending_coordinator_tester_admission_not_started",
@@ -1405,9 +1405,12 @@
         "preserveE416FrozenBlobs": true
       },
       "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
-      "currentExclusiveWritePaths": [],
+      "currentExclusiveWritePaths": [
+        "src/eva/bootstrap/delegated_digital_runner.py",
+        "development/tests/application/test_delegated_digital_runner.py"
+      ],
       "currentOutcome": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
-      "scope": "Inspect actual incomplete-work outcome and self-repair side effects; prepare remaining normal account/browser route through existing task.",
+      "scope": "Typed blocked-plan classification and actual persisted-step resume conflict; preserve guard, progress and real error recovery. Shared install stays with root.",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-owner-useful-completion-20261024"
     },
     "e415-independent-review-newchat": {
@@ -1561,15 +1564,17 @@
       "status": "active_bounded_provider_recovery_implementation",
       "allowedWritePaths": [
         "src/eva/adapters/postgres/initiative_execution.py",
-        "src/eva/adapters/postgres/scheduled_work.py"
+        "src/eva/adapters/postgres/scheduled_work.py",
+        "src/eva/adapters/postgres/delegated_work.py"
       ],
       "activeCodeOrInstallClaim": true,
       "scope": "Optional typed private_work_recovery policy through existing strict reader and scheduled owner work; at most one separately authorized v4 successor including manual attempts. Old usage immutable; no inferred credit or remaining-budget claim. Root owns activation.",
       "currentWritePaths": [
         "src/eva/adapters/postgres/initiative_execution.py",
-        "src/eva/adapters/postgres/scheduled_work.py"
+        "src/eva/adapters/postgres/scheduled_work.py",
+        "src/eva/adapters/postgres/delegated_work.py"
       ],
-      "updatedAt": "2026-10-24T11:19:33.342503+00:00",
+      "updatedAt": "2026-10-24T11:29:40.552939+00:00",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/owner-school-request-20261024/provider-continuation"
     }
   },
@@ -1789,7 +1794,7 @@
     },
     "ownerQuestion": "No current owner action; actual access will be checked by the resumed task.",
     "parallelBoundedWork": "Main: actual resumed owner execution and result; coder1: exact provider-outage continuation repair; coder2: affected regression cases; independent tester: semantic outcome and repair review. Root integrates, owns Git and shared installation.",
-    "currentBlocker": "Actual resumed task ended incomplete_work without school data; missing route location and a browser error tab do not yet prove account access is unavailable.",
+    "currentBlocker": "Portal was opened and school-selection/login page observed. Task then failed on ConversationConflict: resumed step index preceded saved progress. Preserve browser read and repair continuation before retry.",
     "latestVerifiedOutcome": {
       "task": "E4.17",
       "status": "completed_original_restore_card_technical",

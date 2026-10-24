@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:15:03.895788+00:00",
-  "status": "attempt_ended_incomplete_actual_access_block_unproven",
+  "status": "portal_opened_internal_resume_progress_conflict_unresolved",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -33,5 +33,31 @@
     "measurement": "partial",
     "moneyCost": null,
     "privateEvidenceSha256": "8e3c91ba040eabe145fe3e2c112375cc31af9b48692649d0ea562c59209ef49e"
+  },
+  "portalFollowup": {
+    "admittedAt": "2026-10-24T11:22:54Z",
+    "state": "ambiguous",
+    "error": "internal_error",
+    "cause": "ConversationConflict: task progress cannot overwrite a later step",
+    "errorFingerprint": "0e1ae13cc84fe70035c44579e13218bcd6a8eb41f41695fcbc2e2b2743850d8a",
+    "browserActionProven": "Normal public portal opened; school-selection/login page observed. Existing browser state must be reused.",
+    "schoolDataRead": false,
+    "rawBrowserEvidencePrivate": true,
+    "privateBrowserEvidenceSha256": "9094e61b97487b461b0448c647763f204bf2ed5497a99bae4347d6be2c7871e9",
+    "privateTerminalEvidenceSha256": "5033229b5e3079628d0727a21de10c06ea656ddd8193f7b0ec5b5c09b426a3a7",
+    "models": 4,
+    "tools": 3,
+    "inputTokens": 117065,
+    "outputTokens": 822,
+    "measurement": "partial",
+    "moneyCost": null,
+    "freshUserActionRequiredYet": false,
+    "noBlindReplay": true
+  },
+  "misclassifiedBlockedPlanRepairStopped": {
+    "privateEvidenceSha256": "9e3c3bf60644070fbaf1096c3f63f1012eb2779d7db751b62f11fecd5f70b3dd",
+    "originalOwnerTaskPreserved": true,
+    "typedSourceCandidateReviewed": true,
+    "candidateInstalled": false
   }
 }
