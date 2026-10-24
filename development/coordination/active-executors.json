@@ -606,6 +606,19 @@
           "runtimeActivated": false,
           "modelCalls": 0,
           "independentVerdict": "GO_SCOPED_AUTHENTICATED576_PACKAGE_AND_FULL_INACTIVE_HOST_PREPARATION"
+        },
+        "e112Implementation": {
+          "contractSha256": "6b139a17f52f3ef3342235a14851fae64151cb49e4bec0bd4b6b6907d66328d6",
+          "writePaths": [
+            "src/eva/adapters/postgres/household_provisions.py",
+            "src/eva/providers/home_assistant_procedure.py",
+            "src/eva/application/household_procedure.py",
+            "development/tests/postgres/test_household_provisions.py",
+            "development/tests/providers/test_household_provision_guard.py"
+          ],
+          "sharedRuntimeAndDeliveryOwnedByCoordinator": true,
+          "newSchemaStoreDaemonAllowed": false,
+          "speechCodeOrInstallationAssigned": false
         }
       },
       "extensionArtifactRequest": {

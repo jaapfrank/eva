@@ -1,0 +1,456 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E1.12 household artifact lifecycle",
+  "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "clientTaskDate": "2026-10-24",
+  "checkedAtMachineUtc": "2026-10-24T00:05:14.877182+00:00",
+  "status": "effect_admission_v2_code_review_passed_durable_provider_and_runtime_integration_pending",
+  "verdict": "GO_SCOPED_EFFECT_ADMISSION_V2_INTEGRATION_PENDING",
+  "onlyWritePath": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
+  "authority": {
+    "boardPath": "development/design/product/execution-workboard-v1.json",
+    "observedBoardSha256": "94960b9dbc4d91413e95f3fde8f364d5e5ac3ad6ac236ae22b640306eaad30fc",
+    "currentWork": "E1.12",
+    "fullCardAccepted": false,
+    "criteriaSource": "Existing PROJECTDOEL, ARCHITECTUUR household artifact section and AFRONDINGSPLAN; no new acceptance criteria."
+  },
+  "reviewedInputs": {
+    "existingRouteHandoff": {
+      "path": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/next-e112-existing-route-handoff.private.json",
+      "sha256": "6d3c824880f7d33471461276aa2dff494060d66a450095806ad6ae85aa431c9c"
+    },
+    "minimalPatchContract": {
+      "path": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/minimal-patch-contract.private.json",
+      "sha256": "6b139a17f52f3ef3342235a14851fae64151cb49e4bec0bd4b6b6907d66328d6"
+    },
+    "sourcePins": [
+      {
+        "path": "src/eva/providers/home_assistant_procedure.py",
+        "reviewBasisSha256": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
+        "sha256AtReport": "59efe00e613801d256d6a39f1791242082cd524739bd25b43e5554347c31fe7f",
+        "basisStillMatches": true,
+        "foreignWip": false
+      },
+      {
+        "path": "src/eva/bootstrap/household_initiative.py",
+        "reviewBasisSha256": "b7a17d6fd0a74cba581a7e146c6882bab73d718c0bae0ede095633a6c0e82fad",
+        "sha256AtReport": "b7a17d6fd0a74cba581a7e146c6882bab73d718c0bae0ede095633a6c0e82fad",
+        "basisStillMatches": true,
+        "foreignWip": false
+      },
+      {
+        "path": "src/eva/application/household_procedure.py",
+        "reviewBasisSha256": "7ae69ecc75a66260fe69cc120f2fbd4bcd49396d34f8e62d757dee8e086d0ccc",
+        "sha256AtReport": "7ae69ecc75a66260fe69cc120f2fbd4bcd49396d34f8e62d757dee8e086d0ccc",
+        "basisStillMatches": true,
+        "foreignWip": false
+      },
+      {
+        "path": "src/eva/adapters/postgres/operational_timeline.py",
+        "reviewBasisSha256": "e7b113105c976bbdc33b500d000ff10ff7f8e95e147fbf5b6021a051d54c247a",
+        "sha256AtReport": "e7b113105c976bbdc33b500d000ff10ff7f8e95e147fbf5b6021a051d54c247a",
+        "basisStillMatches": true,
+        "foreignWip": false
+      },
+      {
+        "path": "src/eva/adapters/postgres/delegated_work.py",
+        "reviewBasisSha256": "699faf0a749681def9d0ef0654c58dbbc350a6561693b89bf2cccb027dfb7206",
+        "sha256AtReport": "699faf0a749681def9d0ef0654c58dbbc350a6561693b89bf2cccb027dfb7206",
+        "basisStillMatches": true,
+        "foreignWip": true
+      },
+      {
+        "path": "src/eva/adapters/postgres/saved_work_artifacts.py",
+        "reviewBasisSha256": "fdd5602833fa6de5fd3f468b79e338a4676bc2736a388fef8df6ad8f50ae2614",
+        "sha256AtReport": "fdd5602833fa6de5fd3f468b79e338a4676bc2736a388fef8df6ad8f50ae2614",
+        "basisStillMatches": true,
+        "foreignWip": false
+      },
+      {
+        "path": "src/eva/adapters/postgres/owner_initiatives.py",
+        "reviewBasisSha256": "df61b312e47783ac11851f5512391addee450f7a3639c552c177b29515c39338",
+        "sha256AtReport": "df61b312e47783ac11851f5512391addee450f7a3639c552c177b29515c39338",
+        "basisStillMatches": true,
+        "foreignWip": true
+      },
+      {
+        "path": "src/eva/operations/saved_artifact_application.py",
+        "reviewBasisSha256": "a20b018e2b2810626264ca613286f51c7eaebd1f20d2da27b6113ec2638fefd4",
+        "sha256AtReport": "a20b018e2b2810626264ca613286f51c7eaebd1f20d2da27b6113ec2638fefd4",
+        "basisStillMatches": true,
+        "foreignWip": false
+      },
+      {
+        "path": "src/eva/operations/reviewed_component_application.py",
+        "reviewBasisSha256": "0283775fcfe408d89362b3e251488719d19bf69a21d408eae14844d081e45cfd",
+        "sha256AtReport": "0283775fcfe408d89362b3e251488719d19bf69a21d408eae14844d081e45cfd",
+        "basisStillMatches": true,
+        "foreignWip": true
+      },
+      {
+        "path": "src/eva/bootstrap/runtime.py",
+        "reviewBasisSha256": "b812575ab74864d8d32cd4633b6a88bc739e40c8e2d88998f85477cdd500fa3b",
+        "sha256AtReport": "b812575ab74864d8d32cd4633b6a88bc739e40c8e2d88998f85477cdd500fa3b",
+        "basisStillMatches": true,
+        "foreignWip": true
+      },
+      {
+        "path": "src/tools/installation_host_extension_restore.py",
+        "reviewBasisSha256": "36e7acf5636deff198b826799e6e4fcfbd8d176db96a1b01ea6e3edbd10f4327",
+        "sha256AtReport": "36e7acf5636deff198b826799e6e4fcfbd8d176db96a1b01ea6e3edbd10f4327",
+        "basisStillMatches": true,
+        "foreignWip": false
+      }
+    ]
+  },
+  "actualInstalledPinsMetadataOnly": {
+    "bindingSha256": "732ff63fa5918410d9ecb94d44cb7b4b245a3aa3014736873f61af78b4f72428",
+    "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+    "retainedReviewSha256": "7bedd1f16f92f1692d0cbd865f370146ba9eef99eab4d9520a473b830b86a369",
+    "allThreeActualFilesHashMatched": true,
+    "privateBindingValuesPublished": false
+  },
+  "alreadyWorkingBoundaries": [
+    "Existing provider checks current household authorization, exact source/config/review/reference, source retention and current artifact binding; proposal output is not execution permission.",
+    "HouseholdProcedureModel checks source/rights again after model work and binds expiry/context guard; delivery rechecks provenance, authority and attention before offering.",
+    "Existing timeline provides tenant/installation scope, append-only events, checkpoint row FOR UPDATE and expected_revision conflicts.",
+    "Existing owner controls stop intent/followup or durable effects and preserve in-flight/ambiguous semantics; completed markdown artifacts are retained results."
+  ],
+  "findings": [
+    {
+      "id": "E112-EXISTING-001",
+      "severity": "P2",
+      "kind": "existing_known_missing_product_handoff",
+      "status": "implementation_pending",
+      "title": "Disabled binding is an availability error rather than a recognized facility pause",
+      "source": "src/eva/providers/home_assistant_procedure.py",
+      "line": 42,
+      "related": "src/eva/bootstrap/household_initiative.py:143",
+      "evidence": "_current requires enabled is True; false raises ValueError; enclosing run_once catches all exceptions as unavailable. owner_initiatives.stop affects intent/followup and does not mutate installed provision.",
+      "requiredBoundary": "Known lifecycle pause skips only this optional proposal and blocks its pending guarded expression; preserve failures for malformed/unavailable source/rights. No whole-Eva pause or automatic adoption from enabled."
+    },
+    {
+      "id": "E112-INTEGRATION-001",
+      "severity": "P2",
+      "kind": "concrete_preimplementation_race_risk",
+      "status": "coordinator_delivery_owner_handoff_required",
+      "title": "Lifecycle check currently precedes a later potentially blocking provenance read",
+      "source": "src/eva/bootstrap/household_initiative_delivery.py",
+      "line": 104,
+      "evidence": "validate_expression at104-105, then authority and authorize_household_expression at108-109, window at110, HTTP post at112. Pause during the last read is not covered by a lifecycle check placed only at104.",
+      "requiredBoundary": "Demonstrate exact existing effect-admission/revocation ordering under the declared STOP/source-change priority; preserve in-flight may-complete distinction. A timeline row lock alone is not a lock on current.json or a network effect.",
+      "actualRaceTestRun": false
+    },
+    {
+      "id": "E112-INTEGRATION-002",
+      "severity": "P2",
+      "kind": "existing_interface_mismatch_for_new_lifecycle",
+      "status": "typed_no_dispatch_integration_pending",
+      "title": "Known pre-dispatch pause exception would be classified as ambiguous effect",
+      "source": "src/eva/bootstrap/household_initiative_delivery.py",
+      "line": 125,
+      "evidence": "Any exception after a claim reaches fail_expression/ambiguous. Existing _interrupted at62-65 records known non-dispatch.",
+      "requiredBoundary": "A positively recognized current pause/revocation before dispatch must use existing interrupted/no-post outcome; retain ambiguous for genuinely uncertain sent effects. Owner integration needed; reviewer does not change delivery or voice."
+    },
+    {
+      "id": "E112-CONTRACT-001",
+      "severity": "P2",
+      "kind": "contract_authority_and_identity_boundary",
+      "status": "actual_adapter_patch_pending",
+      "title": "Household artifact identity and adoption cannot be inferred from private intent result or checkpoint status",
+      "source": "src/eva/adapters/postgres/operational_timeline.py",
+      "line": 158,
+      "evidence": "Timeline scope is tenant+installation only; checkpoint status has active/waiting_for_proof/completed/failed/needs_help. OwnerInitiatives selects PERSONAL_INTENT_ADOPTED for one private owner and artifact returns completed .md content.",
+      "requiredBoundary": "Keep facility state/adoption/version in source-bound scoped event data/projected history using current household/owner grants. Do not add generic status variants/schema or turn private .md/task completion into household adoption. Preserve stable provision identity across version changes."
+    },
+    {
+      "id": "E112-CONTRACT-002",
+      "severity": "P2",
+      "kind": "contract_transaction_restore_and_legacy_boundary",
+      "status": "actual_adapter_patch_pending",
+      "title": "Durable management transition must not silently overwrite file state, revive STOP or disable unrelated legacy rights",
+      "source": "src/eva/providers/home_assistant_procedure.py",
+      "line": 37,
+      "evidence": "Provider currently reads current.json/source/reference; timeline transition locks one DB checkpoint with expected_revision and does not atomically update that file. Minimal contract requires pause acknowledgement, exact source/version, idempotency, STOP above resume, restore no duplicate and legacy authorization unchanged.",
+      "requiredBoundary": "Make source of truth/revision and fail-closed partial-transfer ordering explicit in patch. Repeated request returns its bound original receipt; altered payload/stale version cannot replay as new adoption. Restore absent/conflicting managed state is non-dispatchable, without reinterpreting valid unmanaged legacy bindings as adoption or new denial by accident."
+    },
+    {
+      "id": "E112-EVIDENCE-001",
+      "severity": "P2",
+      "kind": "existing_acceptance_evidence_limit",
+      "status": "full_active_acceptance_open",
+      "title": "Installed source and health do not prove a verified active household facility",
+      "source": "development/evidence/product/e415-installed-route-20261023.json",
+      "line": 1,
+      "evidenceSha256": "f07c449ac57ac9bd60172513bb0316f69448ef50649cc26ac553b9fdd5481d0c",
+      "evidence": "Pinned existing product evidence is in_progress and explicitly says no working camera extension/completed E4.15 claim. E417 phase1 only proved private startup/health/auth401/STOP without inference or procedure behavior.",
+      "requiredBoundary": "Register proposed/unverified and separate owner adoption. Missing actual positive realization/effect proof must keep resume nonactive with explicit pending reason; no synthetic active result or full-card closure."
+    },
+    {
+      "id": "E112-EFFECT-001",
+      "severity": "P2",
+      "kind": "reproduced_changed_effect_interface_regression",
+      "status": "fixed_v2_original_independent_reproducer_passed",
+      "title": "A household attention window that closes during final admission still permits a new POST",
+      "source": "src/eva/bootstrap/household_initiative_delivery.py",
+      "line": 126,
+      "candidateSourceSha256": "53d002b6607510eef0f1f909f01b672167a49126e3e01821371b70998970e068",
+      "candidateFreezeSha256": "a83270ff8a6b24c134971c4d8b684300b910d000f955805380bbeaa21ffe6aa6",
+      "cause": "Last _window_open is line120; potentially blocking admit_expression at126 then direct client.post at133. There is no attention/window recheck after the newly added call.",
+      "reproduction": {
+        "existingFixture": "tests.bootstrap.test_initiative_quiet_delivery.configured_loop",
+        "runtimeClass": "real HouseholdInitiativeDelivery",
+        "sourceWrites": 0,
+        "setup": "Existing bound fixture, current can_decide initially True, in-memory Store and HTTP spy; validate_expression returns None; admit callback changes can_decide to False before returning admitted_now=True with own receipt.",
+        "actual": {
+          "result": "offered",
+          "currentCanDecide": false,
+          "postCalls": 1,
+          "calls": [
+            "provenance",
+            "provenance",
+            "provenance",
+            "admit_enter",
+            "became_busy_during_admission",
+            "post",
+            "settle_completed",
+            "offered"
+          ],
+          "realNetworkCalls": 0,
+          "postgresCalls": 0,
+          "modelCalls": 0
+        },
+        "toolSeconds": 2.3099268619553186,
+        "externalHttpOrHouseholdEffects": 0
+      },
+      "impact": "New admission can wait while a conversation begins or quiet hours start; an unsolicited offer is then posted although the existing household attention window is already closed. No externally observed household incident is claimed.",
+      "expected": "Preserve the existing current attention/quiet-hours boundary across the new last blocking admission. A known pre-POST denial must settle as genuinely not dispatched through the existing interface, retain no-replay semantics, and avoid inventing an uncertain sent effect.",
+      "repairOwner": "coordinator existing delivery integration; reviewer does not change source",
+      "evidencePreservation": "Original20PASS result retained separately from this single changed-interface reproduction. Keep original53d/3dde candidate and a832 freeze before fix.",
+      "blocksScopedEffectSeamGo": false,
+      "newAcceptanceCriteria": false,
+      "resolution": {
+        "verdict": "GO_SCOPED_COORDINATOR_EFFECT_ADMISSION_SEAM_V2",
+        "checkedAtMachineUtc": "2026-10-24T00:11:29.814765+00:00",
+        "freezeSha256": "5246ff813aa478a8ebc71aa2f8cae17db09b6131cdb2ddce191be1c8df39af17",
+        "sourceSha256": "f1b998d46a12f33a079dcae4c12c101fa9b9de03fb1b3425b369b7e7434a1d4d",
+        "testSha256": "5daaa0d1230aa598e654dfacbb1355596390c79c29deac6b094ed7b9eaf277ec",
+        "changedCause": "One attention-window check added immediately after admission; known closed gate settles not_dispatched, sets settled=True and interrupts before HTTP.",
+        "independentRetest": {
+          "cases": 1,
+          "originalExactReproducerReused": true,
+          "exitCode": 0,
+          "elapsedSeconds": 1.5104975170106627,
+          "result": "interrupted",
+          "currentCanDecide": false,
+          "postCalls": 0,
+          "trace": [
+            "provenance",
+            "provenance",
+            "provenance",
+            "admit_enter",
+            "became_busy_during_admission",
+            "settle_not_dispatched",
+            "interrupted"
+          ],
+          "sourceAndTestPinsUnchanged": true,
+          "realNetworkCalls": 0,
+          "postgresQueries": 0,
+          "modelCalls": 0,
+          "otherTestsRepeated": false
+        },
+        "priorV1ExactSourceAndTestActuallyPreserved": {
+          "sourceSha256": "53d002b6607510eef0f1f909f01b672167a49126e3e01821371b70998970e068",
+          "testSha256": "3dde84898b74a84093be871600da1e559984eeaecf172582862723842b8a03e5",
+          "root": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/coordinator-integration/v1-rejected",
+          "bothMode": "0400",
+          "actualHashesChecked": true
+        },
+        "builderReportedV2Tests": {
+          "cases": 22,
+          "pytestSeconds": 1.25,
+          "independentlyRepeatedAll22": false
+        },
+        "existing14AndPrior6IndependentPassesReused": true,
+        "remainingBoundary": "Actual durable PostgreSQL settlement enum/API, provider/runtime wiring, installed use and full E112 acceptance remain open."
+      }
+    }
+  ],
+  "existingNoPostFixture": {
+    "path": "development/tests/bootstrap/test_initiative_quiet_delivery.py",
+    "sha256": "9a7a6297fa5ce93db208e9237c879e6b42c0addbc9821ce5a2ba24ca9e29d40f",
+    "function": "test_pending_message_respects_late_attention_changes",
+    "inspectedNotRun": true,
+    "boundary": "Composed real delivery with synthetic store/client spy; current fixture handles attention/window changes. It does not yet test the new lifecycle change during the last provenance read."
+  },
+  "scopeAndOwnership": {
+    "builder": [
+      "new thin adapters/postgres/household_provisions.py",
+      "providers/home_assistant_procedure.py",
+      "optional small typed no-dispatch application/household_procedure.py seam",
+      "two narrow PG/provider test files"
+    ],
+    "coordinatorOrExistingOwner": [
+      "bootstrap/runtime.py authenticated owner control",
+      "bootstrap/household_initiative_delivery.py if no-dispatch guard seam required"
+    ],
+    "foreignWipPreserved": [
+      "adapters/postgres/owner_initiatives.py",
+      "adapters/postgres/delegated_work.py",
+      "operations/reviewed_component_application.py",
+      "bootstrap/runtime.py"
+    ],
+    "reviewerProductWrites": 0
+  },
+  "usage": {
+    "testsRun": 0,
+    "newDatabaseQueries": 0,
+    "newServiceStarts": 0,
+    "newModelCalls": 0,
+    "newInferenceCalls": 0,
+    "newCameraReads": 0,
+    "credentialValuesOrHashesRead": 0,
+    "newOwnerMessages": 0,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "wholeElapsedSeconds": null,
+    "measurement": "Read-only source/config/evidence-contract review; no runtime acceptance claimed.",
+    "latestIndependentEffectAdmissionTests": {
+      "cases": 20,
+      "pytestSeconds": 1.45,
+      "commandSeconds": 2.0584858870133758,
+      "exitCode": 0,
+      "sourceAndTestPinsUnchanged": true,
+      "realNetworkCalls": 0,
+      "postgresQueries": 0,
+      "modelCalls": 0,
+      "inferenceCalls": 0
+    },
+    "latestChangedInterfaceReproducer": {
+      "cases": 1,
+      "seconds": 2.3099268619553186,
+      "result": "offered while currentCanDecide=false",
+      "httpSpyPosts": 1,
+      "realNetworkCalls": 0,
+      "postgresQueries": 0,
+      "modelCalls": 0,
+      "canonicalCodeOrTestWrites": 0
+    },
+    "latestChangedInterfaceRetest": {
+      "cases": 1,
+      "originalExactReproducerReused": true,
+      "exitCode": 0,
+      "elapsedSeconds": 1.5104975170106627,
+      "result": "interrupted",
+      "currentCanDecide": false,
+      "postCalls": 0,
+      "trace": [
+        "provenance",
+        "provenance",
+        "provenance",
+        "admit_enter",
+        "became_busy_during_admission",
+        "settle_not_dispatched",
+        "interrupted"
+      ],
+      "sourceAndTestPinsUnchanged": true,
+      "realNetworkCalls": 0,
+      "postgresQueries": 0,
+      "modelCalls": 0,
+      "otherTestsRepeated": false
+    }
+  },
+  "handoff": "Concrete findings sent directly to coordinator during review. Waiting for exact frozen implementation and owner integration; no general test series, code edits, installs or extra agents.",
+  "coordinatorEffectAdmissionCandidateReview": {
+    "verdict": "REQUEST_CHANGES_SCOPED_LATE_ATTENTION_REGRESSION",
+    "checkedAtMachineUtc": "2026-10-24T00:09:45.230701+00:00",
+    "freezePath": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/coordinator-integration/effect-admission-freeze.private.json",
+    "freezeSha256": "a83270ff8a6b24c134971c4d8b684300b910d000f955805380bbeaa21ffe6aa6",
+    "sourceSha256": "53d002b6607510eef0f1f909f01b672167a49126e3e01821371b70998970e068",
+    "testSha256": "3dde84898b74a84093be871600da1e559984eeaecf172582862723842b8a03e5",
+    "baselineSourceSha256": "503efb65943893c58f1047fc93cacbdc4326565479476f696bc6865101dc0597",
+    "baselineTestSha256": "9a7a6297fa5ce93db208e9237c879e6b42c0addbc9821ce5a2ba24ca9e29d40f",
+    "independentExistingAndAddedTests": {
+      "exitCode": 0,
+      "elapsedSeconds": 2.0584858870133758,
+      "sourceAndTestPinsAfter": {
+        "src/eva/bootstrap/household_initiative_delivery.py": "53d002b6607510eef0f1f909f01b672167a49126e3e01821371b70998970e068",
+        "development/tests/bootstrap/test_initiative_quiet_delivery.py": "3dde84898b74a84093be871600da1e559984eeaecf172582862723842b8a03e5"
+      },
+      "pinsUnchanged": true,
+      "command": [
+        "/home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "development/tests/bootstrap/test_initiative_quiet_delivery.py"
+      ],
+      "liveHttpRequests": 0,
+      "postgresQueries": 0,
+      "modelCalls": 0,
+      "inferenceCalls": 0
+    },
+    "passedCaseCount": 20,
+    "pytestSeconds": 1.45,
+    "baseline14CasesPreserved": true,
+    "newCases": 6,
+    "confirmedBehavior": [
+      "Paired optional callbacks required; unchanged legacy None validator accepted.",
+      "Explicit validator False and repeated admission cause interrupted with no post.",
+      "Final admission is after the old blocking provenance read.",
+      "Successful HTTP offer settles original offered proof only, not heard/active/adoption.",
+      "Uncertain POST settles unknown; later acknowledgement failure preserves already completed admission."
+    ],
+    "newConcreteDefect": "E112-EFFECT-001",
+    "realPostgresAdmissionOrProviderWiringReviewed": false,
+    "installed": false,
+    "fullE112Accepted": false
+  },
+  "coordinatorEffectAdmissionCandidateV2Review": {
+    "verdict": "GO_SCOPED_COORDINATOR_EFFECT_ADMISSION_SEAM_V2",
+    "checkedAtMachineUtc": "2026-10-24T00:11:29.814765+00:00",
+    "freezeSha256": "5246ff813aa478a8ebc71aa2f8cae17db09b6131cdb2ddce191be1c8df39af17",
+    "sourceSha256": "f1b998d46a12f33a079dcae4c12c101fa9b9de03fb1b3425b369b7e7434a1d4d",
+    "testSha256": "5daaa0d1230aa598e654dfacbb1355596390c79c29deac6b094ed7b9eaf277ec",
+    "changedCause": "One attention-window check added immediately after admission; known closed gate settles not_dispatched, sets settled=True and interrupts before HTTP.",
+    "independentRetest": {
+      "cases": 1,
+      "originalExactReproducerReused": true,
+      "exitCode": 0,
+      "elapsedSeconds": 1.5104975170106627,
+      "result": "interrupted",
+      "currentCanDecide": false,
+      "postCalls": 0,
+      "trace": [
+        "provenance",
+        "provenance",
+        "provenance",
+        "admit_enter",
+        "became_busy_during_admission",
+        "settle_not_dispatched",
+        "interrupted"
+      ],
+      "sourceAndTestPinsUnchanged": true,
+      "realNetworkCalls": 0,
+      "postgresQueries": 0,
+      "modelCalls": 0,
+      "otherTestsRepeated": false
+    },
+    "priorV1ExactSourceAndTestActuallyPreserved": {
+      "sourceSha256": "53d002b6607510eef0f1f909f01b672167a49126e3e01821371b70998970e068",
+      "testSha256": "3dde84898b74a84093be871600da1e559984eeaecf172582862723842b8a03e5",
+      "root": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/coordinator-integration/v1-rejected",
+      "bothMode": "0400",
+      "actualHashesChecked": true
+    },
+    "builderReportedV2Tests": {
+      "cases": 22,
+      "pytestSeconds": 1.25,
+      "independentlyRepeatedAll22": false
+    },
+    "existing14AndPrior6IndependentPassesReused": true,
+    "remainingBoundary": "Actual durable PostgreSQL settlement enum/API, provider/runtime wiring, installed use and full E112 acceptance remain open."
+  }
+}

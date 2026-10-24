@@ -38,14 +38,21 @@ class HouseholdInitiativeDelivery:
     def __init__(self, store: HouseholdExpressionStore, binding: HouseholdInitiativeBinding,
                  authorize: Callable[[], None], provider, *,
                  delivery_window: Callable[[datetime], bool] | None = None,
-                 validate_expression: Callable[[ProactiveExpressionClaim], None] | None = None,
+                 validate_expression: Callable[[ProactiveExpressionClaim], bool | None] | None = None,
+                 admit_expression: Callable[[ProactiveExpressionClaim], dict] | None = None,
+                 settle_expression: Callable[..., None] | None = None,
                  clock: Callable[[], datetime] | None = None):
         if not isinstance(binding, HouseholdInitiativeBinding) or not callable(authorize):
             raise ValueError("household initiative delivery requires bound current authority")
         if delivery_window is not None and not callable(delivery_window):
             raise ValueError("household delivery window is invalid")
+        if ((admit_expression is None) != (settle_expression is None)
+                or (admit_expression is not None and
+                    (not callable(admit_expression) or not callable(settle_expression)))):
+            raise ValueError("household effect admission requires paired settlement")
         self.store, self.binding, self.authorize, self.provider = store, binding, authorize, provider
         self.validate_expression = validate_expression
+        self.admit_expression, self.settle_expression = admit_expression, settle_expression
         self.delivery_window = delivery_window
         self.clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
 
@@ -66,6 +73,8 @@ class HouseholdInitiativeDelivery:
 
     def run_once(self) -> str:
         claim = None
+        admission = None
+        settled = False
         payload = self.binding.to_payload()
         try:
             self.authorize()
@@ -102,13 +111,34 @@ class HouseholdInitiativeDelivery:
                 if not self._window_open(self._now()):
                     return self._interrupted(claim, payload)
                 if self.validate_expression is not None:
-                    self.validate_expression(claim)
+                    if self.validate_expression(claim) is False:
+                        return self._interrupted(claim, payload)
                 elif self.store.household_expression_requires_guard(claim):
                     return self._interrupted(claim, payload)
                 self.authorize()
                 self.store.authorize_household_expression(claim, binding=payload, now=self._now())
                 if not self._window_open(self._now()):
                     return self._interrupted(claim, payload)
+                # This is the final admission point, after potentially blocking
+                # provenance reads. Pause/STOP serialize with this admission;
+                # an already admitted effect may finish, and is never replayed.
+                if self.admit_expression is not None:
+                    admission = self.admit_expression(claim)
+                    if (not isinstance(admission, dict)
+                            or type(admission.get("admitted_now")) is not bool
+                            or "receipt" not in admission):
+                        raise ValueError("household effect admission is invalid")
+                    if not admission["admitted_now"]:
+                        return self._interrupted(claim, payload)
+                    # Admission can block while a conversation or quiet hours
+                    # begin. No HTTP effect has started when this gate closes.
+                    if not self._window_open(self._now()):
+                        self.settle_expression(admission, outcome="not_dispatched",
+                            proof_sha256=canonical_sha256({"operation_id": claim.operation_id,
+                                "source_event_id": claim.source_event_id,
+                                "outcome": "attention closed before household announcement"}))
+                        settled = True
+                        return self._interrupted(claim, payload)
                 response = client.post("/api/services/assist_satellite/announce",
                     json={"entity_id": self.binding.satellite_id, "message": claim.text,
                           "preannounce": False})
@@ -119,10 +149,24 @@ class HouseholdInitiativeDelivery:
                     "source_event_id": claim.source_event_id,
                     "text_sha256": canonical_sha256(claim.text),
                     "http_status": response.status_code})
+                if admission is not None:
+                    # The existing receipt proves offered, never heard or adoption.
+                    self.settle_expression(admission, outcome="completed",
+                        proof_sha256=receipt.removeprefix("ha-offered:"))
+                    settled = True
             self.store.acknowledge_household_expression(claim, binding=payload,
                 disposition="offered", provider_message_id=receipt, now=self._now())
             return "offered"
         except Exception:
+            if isinstance(admission, dict) and admission.get("admitted_now") is True and not settled:
+                try:
+                    self.settle_expression(admission, outcome="unknown",
+                        proof_sha256=canonical_sha256({"operation_id": claim.operation_id,
+                            "source_event_id": claim.source_event_id,
+                            "outcome": "household announcement unconfirmed"}))
+                except Exception:
+                    # An unsettled admission remains non-replayable.
+                    pass
             # Exceptions can carry bearer credentials or spoken content. Persist
             # only a fixed fingerprint source; never replay an uncertain claim.
             _LOG.warning("Household initiative delivery unavailable")

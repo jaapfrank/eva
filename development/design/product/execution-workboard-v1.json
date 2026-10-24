@@ -847,7 +847,7 @@
     "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
     "status": "in_progress",
     "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.",
-    "nextAction": "E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.",
+    "nextAction": "E1.12: bouwer heeft lifecycle/providerkandidaat met62gerichte groene cases incl9echtePG16.13 opgeleverd; tester beoordeelt exacte bron-/scope-/STOP-/replay-/proofgrenzen. Coördinator finale effectadmissie heeft22groene cases en onafhankelijke V2GO na gerichte aandachtracefix. Nu kleine bestaande bootstrap/runtime/ownerbediening aansluiten, expliciete enrollment onderscheiden van legacy en ontbrekend realisatiebewijs eerlijk onbekend laten. Geen liveadoptie/installatie of volledigekaartclaim vóór werkelijke integratie en verificatie.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2996,7 +2996,7 @@
         "now": {
           "taskId": "E1.12",
           "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
-          "summary": "E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.",
+          "summary": "E1.12: bouwer heeft lifecycle/providerkandidaat met62gerichte groene cases incl9echtePG16.13 opgeleverd; tester beoordeelt exacte bron-/scope-/STOP-/replay-/proofgrenzen. Coördinator finale effectadmissie heeft22groene cases en onafhankelijke V2GO na gerichte aandachtracefix. Nu kleine bestaande bootstrap/runtime/ownerbediening aansluiten, expliciete enrollment onderscheiden van legacy en ontbrekend realisatiebewijs eerlijk onbekend laten. Geen liveadoptie/installatie of volledigekaartclaim vóór werkelijke integratie en verificatie.",
           "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact."
         },
         "next": {
@@ -6163,14 +6163,25 @@
                   "E4.17",
                   "E1.9"
                 ],
-                "nextAction": "E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.",
+                "nextAction": "E1.12: bouwer heeft lifecycle/providerkandidaat met62gerichte groene cases incl9echtePG16.13 opgeleverd; tester beoordeelt exacte bron-/scope-/STOP-/replay-/proofgrenzen. Coördinator finale effectadmissie heeft22groene cases en onafhankelijke V2GO na gerichte aandachtracefix. Nu kleine bestaande bootstrap/runtime/ownerbediening aansluiten, expliciete enrollment onderscheiden van legacy en ontbrekend realisatiebewijs eerlijk onbekend laten. Geen liveadoptie/installatie of volledigekaartclaim vóór werkelijke integratie en verificatie.",
                 "continuityImplementationSteps": [
                   "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "Echte geïnstalleerde procedure/current.json, bestaande timeline/resultaat/feedback/stoproute en11bronpinnen alleen-lezen nagevolgd. Adoptie/status en werkelijke blijvende pauze zijn nog niet gebouwd; minimale patchgrens wordt vastgesteld.",
-                "checkedAt": "2026-10-24T00:02:34.876868+00:00",
-                "fullTaskCompleted": false
+                "progress": "Bouwer levert dunne lifecycleprojectie, provider/late-guard en62gerichte geslaagde cases incl9echtePG16.13; onafhankelijke review loopt. Coördinator effectadmissie na laatste provenance-read gebouwd:22cases groen; reviewer herstelde aandacht-race gericht bevestigd. Nog niet geïntegreerd/geïnstalleerd, geen daadwerkelijke adoptie/activeclaim.",
+                "checkedAt": "2026-10-24T00:14:01.686633+00:00",
+                "fullTaskCompleted": false,
+                "implementationEvidence": {
+                  "builderCandidateHandoffSha256": "84a2300d5a2b6c1e2f16b4d641c0923f00ad511d9bb03b73305bcf6de19c51d9",
+                  "builderCasesReportedPassed": 62,
+                  "builderRealPgCasesReportedPassed": 9,
+                  "coordinatorV2FreezeSha256": "5246ff813aa478a8ebc71aa2f8cae17db09b6131cdb2ddce191be1c8df39af17",
+                  "coordinatorCasesPassed": 22,
+                  "coordinatorIndependentVerdict": "GO_SCOPED_COORDINATOR_EFFECT_ADMISSION_SEAM_V2",
+                  "review": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
+                  "installed": false,
+                  "fullTaskCompleted": false
+                }
               },
               {
                 "id": "E1.13",
@@ -8743,7 +8754,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.",
+        "nextAction": "E1.12: bouwer heeft lifecycle/providerkandidaat met62gerichte groene cases incl9echtePG16.13 opgeleverd; tester beoordeelt exacte bron-/scope-/STOP-/replay-/proofgrenzen. Coördinator finale effectadmissie heeft22groene cases en onafhankelijke V2GO na gerichte aandachtracefix. Nu kleine bestaande bootstrap/runtime/ownerbediening aansluiten, expliciete enrollment onderscheiden van legacy en ontbrekend realisatiebewijs eerlijk onbekend laten. Geen liveadoptie/installatie of volledigekaartclaim vóór werkelijke integratie en verificatie.",
         "finishOrder": [
           "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -12150,14 +12161,25 @@
                 "E4.17",
                 "E1.9"
               ],
-              "nextAction": "E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.",
+              "nextAction": "E1.12: bouwer heeft lifecycle/providerkandidaat met62gerichte groene cases incl9echtePG16.13 opgeleverd; tester beoordeelt exacte bron-/scope-/STOP-/replay-/proofgrenzen. Coördinator finale effectadmissie heeft22groene cases en onafhankelijke V2GO na gerichte aandachtracefix. Nu kleine bestaande bootstrap/runtime/ownerbediening aansluiten, expliciete enrollment onderscheiden van legacy en ontbrekend realisatiebewijs eerlijk onbekend laten. Geen liveadoptie/installatie of volledigekaartclaim vóór werkelijke integratie en verificatie.",
               "continuityImplementationSteps": [
                 "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "Echte geïnstalleerde procedure/current.json, bestaande timeline/resultaat/feedback/stoproute en11bronpinnen alleen-lezen nagevolgd. Adoptie/status en werkelijke blijvende pauze zijn nog niet gebouwd; minimale patchgrens wordt vastgesteld.",
-              "checkedAt": "2026-10-24T00:02:34.876868+00:00",
-              "fullTaskCompleted": false
+              "progress": "Bouwer levert dunne lifecycleprojectie, provider/late-guard en62gerichte geslaagde cases incl9echtePG16.13; onafhankelijke review loopt. Coördinator effectadmissie na laatste provenance-read gebouwd:22cases groen; reviewer herstelde aandacht-race gericht bevestigd. Nog niet geïntegreerd/geïnstalleerd, geen daadwerkelijke adoptie/activeclaim.",
+              "checkedAt": "2026-10-24T00:14:01.686633+00:00",
+              "fullTaskCompleted": false,
+              "implementationEvidence": {
+                "builderCandidateHandoffSha256": "84a2300d5a2b6c1e2f16b4d641c0923f00ad511d9bb03b73305bcf6de19c51d9",
+                "builderCasesReportedPassed": 62,
+                "builderRealPgCasesReportedPassed": 9,
+                "coordinatorV2FreezeSha256": "5246ff813aa478a8ebc71aa2f8cae17db09b6131cdb2ddce191be1c8df39af17",
+                "coordinatorCasesPassed": 22,
+                "coordinatorIndependentVerdict": "GO_SCOPED_COORDINATOR_EFFECT_ADMISSION_SEAM_V2",
+                "review": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
+                "installed": false,
+                "fullTaskCompleted": false
+              }
             },
             {
               "id": "E1.13",
@@ -14730,7 +14752,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.",
+      "nextAction": "E1.12: bouwer heeft lifecycle/providerkandidaat met62gerichte groene cases incl9echtePG16.13 opgeleverd; tester beoordeelt exacte bron-/scope-/STOP-/replay-/proofgrenzen. Coördinator finale effectadmissie heeft22groene cases en onafhankelijke V2GO na gerichte aandachtracefix. Nu kleine bestaande bootstrap/runtime/ownerbediening aansluiten, expliciete enrollment onderscheiden van legacy en ontbrekend realisatiebewijs eerlijk onbekend laten. Geen liveadoptie/installatie of volledigekaartclaim vóór werkelijke integratie en verificatie.",
       "finishOrder": [
         "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
