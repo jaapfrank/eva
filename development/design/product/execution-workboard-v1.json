@@ -847,8 +847,8 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "De bestaande schoolnaamvraag blijft de concrete volgende stap voor de juiste school/accountkeuze, tenzij nieuwe taakgebonden informatie de bestaande koppeling of sessie identificeert. In de reeds beschikbare opdrachtcontext staat geen expliciete schoolnaam. Appaanmeldbrononderzoek is klaar. Vijf latere gemeten Astra-beslissingen zijn onafhankelijk bevestigd; dat bewijst geen herstel van de digitale schoolroute. Geen nieuwe resume, herhaalvraag of onderzoek zonder uitvoerbaar vervolg. Ander uitvoerbaar projectwerk blijft mogelijk; schooltoegang/-hulp en volledige E4.16 blijven open.",
-    "ownerActionRequired": true
+    "nextAction": "Na twee echte verloren huishoudbeoordelingen: werk de bestaande E4.16-herstelroute duurzaam af voor aantoonbaar lokaal beëindigde aanroepen met onbekend gebruik. Bouw één begrensd prospectief vervolg onder bestaande expliciete autorisatie/budget/STOP/300sbeleid, zonder oud verzoek/effect te herhalen; tweede onzekerheid zonder tussentijds succes blijft geblokkeerd. Hoofdbouwer maakt minimaal contract/kandidaat, coder1 gerichte onafhankelijke regressies. Ontbrekende autorisatie niet verzinnen. Schoolnaamvraag blijft apart open en blokkeert dit uitvoerbare herstelwerk niet; geen volledigekaartclaim.",
+    "ownerActionRequired": false
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -8312,7 +8312,7 @@
                 "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraakuitvoerder behoudt implementatie-eigendom",
-                "ownerActionRequired": true,
+                "ownerActionRequired": false,
                 "requiredForCurrentDelivery": true,
                 "ownerAuthorization": "Eigenaar22oktober2026: echte problemen moeten automatisch tot blijvend herstel leiden, kort melden dat Eva zichzelf gaat repareren; maak Eva autonoom voortdurend verbeterend en reparerend.",
                 "scopeOrigin": "autonomous-repair-20261022",
@@ -8323,7 +8323,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "De bestaande schoolnaamvraag blijft de concrete volgende stap voor de juiste school/accountkeuze, tenzij nieuwe taakgebonden informatie de bestaande koppeling of sessie identificeert. In de reeds beschikbare opdrachtcontext staat geen expliciete schoolnaam. Appaanmeldbrononderzoek is klaar. Vijf latere gemeten Astra-beslissingen zijn onafhankelijk bevestigd; dat bewijst geen herstel van de digitale schoolroute. Geen nieuwe resume, herhaalvraag of onderzoek zonder uitvoerbaar vervolg. Ander uitvoerbaar projectwerk blijft mogelijk; schooltoegang/-hulp en volledige E4.16 blijven open.",
+                "nextAction": "Na twee echte verloren huishoudbeoordelingen: werk de bestaande E4.16-herstelroute duurzaam af voor aantoonbaar lokaal beëindigde aanroepen met onbekend gebruik. Bouw één begrensd prospectief vervolg onder bestaande expliciete autorisatie/budget/STOP/300sbeleid, zonder oud verzoek/effect te herhalen; tweede onzekerheid zonder tussentijds succes blijft geblokkeerd. Hoofdbouwer maakt minimaal contract/kandidaat, coder1 gerichte onafhankelijke regressies. Ontbrekende autorisatie niet verzinnen. Schoolnaamvraag blijft apart open en blokkeert dit uitvoerbare herstelwerk niet; geen volledigekaartclaim.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8333,12 +8333,15 @@
                 ],
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [],
-                  "scope": "Bounded source preparation and passive recovery review complete. Reopen same owner task on school/account identification or new existing integration/session evidence; no duplicate question/research."
+                  "activeWorkers": [
+                    "01a0c537-54d0-7080-9e4c-74db537877af",
+                    "01a169e0-4ed1-75d1-9541-b5dae109b328"
+                  ],
+                  "scope": "Existing E4.16 durable recovery applied to twice-observed household-lane blockage; separate producer/candidate and meaningful isolated regression ownership. No new platform or fabricated authorization."
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/owner-command-provider-fix-20261024.json",
-                "implementationStatus": "app_auth_progress_saved_later_astra_responses_verified_school_identification_pending",
+                "implementationStatus": "durable_bounded_household_recovery_contract_and_candidate_in_progress",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8347,7 +8350,7 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T14:54:36.804705+00:00",
+                "checkedAt": "2026-10-24T15:47:17.179837+00:00",
                 "progress": "Twee gerichte onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt. Eva las de appaanmeldbron en sloeg inspect-sources duurzaam op. De9b-poging eindigde14:17:47UTC met503; oudere onbekende kosten blijven behouden. Vijf gewone Astra-beslissingen tussen14:20en14:40UTC zijn nadien gemeten afgerond en onafhankelijk beoordeeld. Er is nog geen werkende schooltoegang/-hulp. De bestaande schoolnaamvraag is nodig voor bedoelde school/accountkeuze; generieke PKCE vereist geen schoolUUID en handmatig inloggen is nu niet gevraagd.",
                 "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
               },
@@ -9025,7 +9028,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De bestaande schoolnaamvraag blijft de concrete volgende stap voor de juiste school/accountkeuze, tenzij nieuwe taakgebonden informatie de bestaande koppeling of sessie identificeert. In de reeds beschikbare opdrachtcontext staat geen expliciete schoolnaam. Appaanmeldbrononderzoek is klaar. Vijf latere gemeten Astra-beslissingen zijn onafhankelijk bevestigd; dat bewijst geen herstel van de digitale schoolroute. Geen nieuwe resume, herhaalvraag of onderzoek zonder uitvoerbaar vervolg. Ander uitvoerbaar projectwerk blijft mogelijk; schooltoegang/-hulp en volledige E4.16 blijven open.",
+        "nextAction": "Na twee echte verloren huishoudbeoordelingen: werk de bestaande E4.16-herstelroute duurzaam af voor aantoonbaar lokaal beëindigde aanroepen met onbekend gebruik. Bouw één begrensd prospectief vervolg onder bestaande expliciete autorisatie/budget/STOP/300sbeleid, zonder oud verzoek/effect te herhalen; tweede onzekerheid zonder tussentijds succes blijft geblokkeerd. Hoofdbouwer maakt minimaal contract/kandidaat, coder1 gerichte onafhankelijke regressies. Ontbrekende autorisatie niet verzinnen. Schoolnaamvraag blijft apart open en blokkeert dit uitvoerbare herstelwerk niet; geen volledigekaartclaim.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt; appauthbrononderzoek is opgeslagen. Vijf latere Astra-responsen bevestigd, schooltoegang/-hulp ontbreekt. Bestaande schoolnaamvraag voor bedoelde school/accountkeuze blijft open; geen herhaalvraag of blind vervolg. Ander uitvoerbaar werk niet blokkeren.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14484,7 +14487,7 @@
               "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraakuitvoerder behoudt implementatie-eigendom",
-              "ownerActionRequired": true,
+              "ownerActionRequired": false,
               "requiredForCurrentDelivery": true,
               "ownerAuthorization": "Eigenaar22oktober2026: echte problemen moeten automatisch tot blijvend herstel leiden, kort melden dat Eva zichzelf gaat repareren; maak Eva autonoom voortdurend verbeterend en reparerend.",
               "scopeOrigin": "autonomous-repair-20261022",
@@ -14495,7 +14498,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "De bestaande schoolnaamvraag blijft de concrete volgende stap voor de juiste school/accountkeuze, tenzij nieuwe taakgebonden informatie de bestaande koppeling of sessie identificeert. In de reeds beschikbare opdrachtcontext staat geen expliciete schoolnaam. Appaanmeldbrononderzoek is klaar. Vijf latere gemeten Astra-beslissingen zijn onafhankelijk bevestigd; dat bewijst geen herstel van de digitale schoolroute. Geen nieuwe resume, herhaalvraag of onderzoek zonder uitvoerbaar vervolg. Ander uitvoerbaar projectwerk blijft mogelijk; schooltoegang/-hulp en volledige E4.16 blijven open.",
+              "nextAction": "Na twee echte verloren huishoudbeoordelingen: werk de bestaande E4.16-herstelroute duurzaam af voor aantoonbaar lokaal beëindigde aanroepen met onbekend gebruik. Bouw één begrensd prospectief vervolg onder bestaande expliciete autorisatie/budget/STOP/300sbeleid, zonder oud verzoek/effect te herhalen; tweede onzekerheid zonder tussentijds succes blijft geblokkeerd. Hoofdbouwer maakt minimaal contract/kandidaat, coder1 gerichte onafhankelijke regressies. Ontbrekende autorisatie niet verzinnen. Schoolnaamvraag blijft apart open en blokkeert dit uitvoerbare herstelwerk niet; geen volledigekaartclaim.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14505,12 +14508,15 @@
               ],
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [],
-                "scope": "Bounded source preparation and passive recovery review complete. Reopen same owner task on school/account identification or new existing integration/session evidence; no duplicate question/research."
+                "activeWorkers": [
+                  "01a0c537-54d0-7080-9e4c-74db537877af",
+                  "01a169e0-4ed1-75d1-9541-b5dae109b328"
+                ],
+                "scope": "Existing E4.16 durable recovery applied to twice-observed household-lane blockage; separate producer/candidate and meaningful isolated regression ownership. No new platform or fabricated authorization."
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/owner-command-provider-fix-20261024.json",
-              "implementationStatus": "app_auth_progress_saved_later_astra_responses_verified_school_identification_pending",
+              "implementationStatus": "durable_bounded_household_recovery_contract_and_candidate_in_progress",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -14519,7 +14525,7 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T14:54:36.804705+00:00",
+              "checkedAt": "2026-10-24T15:47:17.179837+00:00",
               "progress": "Twee gerichte onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt. Eva las de appaanmeldbron en sloeg inspect-sources duurzaam op. De9b-poging eindigde14:17:47UTC met503; oudere onbekende kosten blijven behouden. Vijf gewone Astra-beslissingen tussen14:20en14:40UTC zijn nadien gemeten afgerond en onafhankelijk beoordeeld. Er is nog geen werkende schooltoegang/-hulp. De bestaande schoolnaamvraag is nodig voor bedoelde school/accountkeuze; generieke PKCE vereist geen schoolUUID en handmatig inloggen is nu niet gevraagd.",
               "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
             },
@@ -15197,7 +15203,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De bestaande schoolnaamvraag blijft de concrete volgende stap voor de juiste school/accountkeuze, tenzij nieuwe taakgebonden informatie de bestaande koppeling of sessie identificeert. In de reeds beschikbare opdrachtcontext staat geen expliciete schoolnaam. Appaanmeldbrononderzoek is klaar. Vijf latere gemeten Astra-beslissingen zijn onafhankelijk bevestigd; dat bewijst geen herstel van de digitale schoolroute. Geen nieuwe resume, herhaalvraag of onderzoek zonder uitvoerbaar vervolg. Ander uitvoerbaar projectwerk blijft mogelijk; schooltoegang/-hulp en volledige E4.16 blijven open.",
+      "nextAction": "Na twee echte verloren huishoudbeoordelingen: werk de bestaande E4.16-herstelroute duurzaam af voor aantoonbaar lokaal beëindigde aanroepen met onbekend gebruik. Bouw één begrensd prospectief vervolg onder bestaande expliciete autorisatie/budget/STOP/300sbeleid, zonder oud verzoek/effect te herhalen; tweede onzekerheid zonder tussentijds succes blijft geblokkeerd. Hoofdbouwer maakt minimaal contract/kandidaat, coder1 gerichte onafhankelijke regressies. Ontbrekende autorisatie niet verzinnen. Schoolnaamvraag blijft apart open en blokkeert dit uitvoerbare herstelwerk niet; geen volledigekaartclaim.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt; appauthbrononderzoek is opgeslagen. Vijf latere Astra-responsen bevestigd, schooltoegang/-hulp ontbreekt. Bestaande schoolnaamvraag voor bedoelde school/accountkeuze blijft open; geen herhaalvraag of blind vervolg. Ander uitvoerbaar werk niet blokkeren.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
