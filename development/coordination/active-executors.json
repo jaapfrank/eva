@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T11:19:33.342503+00:00",
+  "updatedAt": "2026-10-24T11:22:16.644834+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1560,14 +1560,14 @@
       "role": "executor",
       "status": "active_bounded_provider_recovery_implementation",
       "allowedWritePaths": [
-        "src/eva/adapters/postgres/scheduled_work.py",
-        "src/eva/bootstrap/delegated_work_owner_service.py"
+        "src/eva/adapters/postgres/initiative_execution.py",
+        "src/eva/adapters/postgres/scheduled_work.py"
       ],
       "activeCodeOrInstallClaim": true,
-      "scope": "One separately authorized bounded v4 recovery attempt via existing scheduled owner work; explicit existing policy binding, old unknown usage preserved, manual successor counts. Root owns activation.",
+      "scope": "Optional typed private_work_recovery policy through existing strict reader and scheduled owner work; at most one separately authorized v4 successor including manual attempts. Old usage immutable; no inferred credit or remaining-budget claim. Root owns activation.",
       "currentWritePaths": [
-        "src/eva/adapters/postgres/scheduled_work.py",
-        "src/eva/bootstrap/delegated_work_owner_service.py"
+        "src/eva/adapters/postgres/initiative_execution.py",
+        "src/eva/adapters/postgres/scheduled_work.py"
       ],
       "updatedAt": "2026-10-24T11:19:33.342503+00:00",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/owner-school-request-20261024/provider-continuation"
