@@ -845,9 +845,9 @@
   "currentWork": {
     "id": "E4.18",
     "title": "Gebruikte uitvoering en onderhoud gericht vereenvoudigen",
-    "status": "in_progress",
+    "status": "completed",
     "doneWhen": "Voor de daadwerkelijk gebruikte gesprek-/HA-/browser-/toolprogramma-/afleverroute zijn bron, toestemming, uitvoering, receipt, controle en resultaatbinding aan duidelijke bestaande eigenaren gekoppeld. Aangetoonde dubbele verantwoordelijkheden en actieve afhankelijkheden van historische operaties worden gericht vereenvoudigd met gedragsbehoud. Een begrensde lijst archief-/verwijderbesluiten controleert imports, dynamische aanroepen, entrypoints, geïnstalleerd gebruik, herstel en releasebindingen; noodzakelijke helpers blijven beschikbaar. Grote geraakte klassen worden alleen op concrete verantwoordelijkheden gesplitst. Geheugen, stoppen, geen dubbele externe effecten, huidige instellingen en schone-pc-herstel blijven werken. Voor/na-metingen tonen werkelijke vereenvoudiging; verplaatste regels tellen niet als bewezen runtimewinst.",
-    "nextAction": "Maak uitsluitend E4.18 helemaal af: de drie bestaande vereenvoudigingen koppelen aan daadwerkelijk huidige WSL-operatorroute en geïnstalleerde bron-/herstelbindingen, onafhankelijk toetsen aan de ongewijzigde eindvoorwaarde, daarna Git en dashboard opleveren. E1.12 gebouwd werk blijft bewaard en bevroren; geen nieuwe bouwsporen.",
+    "nextAction": "Afgerond; behoud bestaande gedeelde helpers, historische noodzakelijke operatorfuncties en bewezen grenzen. Geen nieuwe E4.18-opschoonronde.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1634,6 +1634,22 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.18 · Gebruikte uitvoering en onderhoud vereenvoudigd",
+            "state": "installed",
+            "summary": "Gedeelde containerinspectie en bestandshashing werkelijk gebruikt in de huidige WSL-operatorroute; ontwikkeltests op hun juiste plek. Volledige oorspronkelijke kaart onafhankelijk goedgekeurd.",
+            "remaining": "Geen technische E4.18-stap; andere kaarten en gezinsacceptatie blijven open.",
+            "source": "development/evidence/reassessment/e418-maintenance-delivery-20261024.json",
+            "review": "development/reviews/e418-file-inspection-20261023.json",
+            "checkedAt": "2026-10-24T00:40:10.374271+00:00",
+            "completedAt": "2026-10-24T00:40:10.374271+00:00",
+            "completedTaskIds": [
+              "E4.18"
+            ],
+            "newProductFunctionCompleted": false,
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E1.6 · Eigen bronvervolg uitgevoerd en via Telegram teruggekoppeld",
             "state": "installed",
@@ -2995,8 +3011,8 @@
         },
         "now": {
           "taskId": "E4.18",
-          "title": "E4.18 · Gebruikte uitvoering en onderhoud afmaken",
-          "summary": "Maak uitsluitend E4.18 helemaal af: de drie bestaande vereenvoudigingen koppelen aan daadwerkelijk huidige WSL-operatorroute en geïnstalleerde bron-/herstelbindingen, onafhankelijk toetsen aan de ongewijzigde eindvoorwaarde, daarna Git en dashboard opleveren. E1.12 gebouwd werk blijft bewaard en bevroren; geen nieuwe bouwsporen.",
+          "title": "E4.18 · Volledig technisch afgerond",
+          "summary": "Drie onderhoudsuitkomsten volledig opgeleverd en in de huidige WSL-operatorroute gebruikt. Vijf route-eigenaren, 38 geïnstalleerde bronkoppelingen en herstel-/releasebindingen onafhankelijk gecontroleerd; definitieve GO op alle oorspronkelijke criteria. Geen appoverlay vereist voor hosttools. E4.15/E4.17 en eigenaaracceptatie blijven afzonderlijk open.",
           "doneWhen": "Voor de daadwerkelijk gebruikte gesprek-/HA-/browser-/toolprogramma-/afleverroute zijn bron, toestemming, uitvoering, receipt, controle en resultaatbinding aan duidelijke bestaande eigenaren gekoppeld. Aangetoonde dubbele verantwoordelijkheden en actieve afhankelijkheden van historische operaties worden gericht vereenvoudigd met gedragsbehoud. Een begrensde lijst archief-/verwijderbesluiten controleert imports, dynamische aanroepen, entrypoints, geïnstalleerd gebruik, herstel en releasebindingen; noodzakelijke helpers blijven beschikbaar. Grote geraakte klassen worden alleen op concrete verantwoordelijkheden gesplitst. Geheugen, stoppen, geen dubbele externe effecten, huidige instellingen en schone-pc-herstel blijven werken. Voor/na-metingen tonen werkelijke vereenvoudiging; verplaatste regels tellen niet als bewezen runtimewinst."
         },
         "next": {
@@ -8176,7 +8192,7 @@
               {
                 "id": "E4.18",
                 "title": "Gebruikte uitvoering en onderhoud gericht vereenvoudigen",
-                "status": "in_progress",
+                "status": "completed",
                 "kind": "owner_requested_followup",
                 "scopeOrigin": "living-housemate-20261022",
                 "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
@@ -8192,15 +8208,17 @@
                   "E4.15",
                   "E4.17"
                 ],
-                "nextAction": "Maak uitsluitend E4.18 helemaal af: de drie bestaande vereenvoudigingen koppelen aan daadwerkelijk huidige WSL-operatorroute en geïnstalleerde bron-/herstelbindingen, onafhankelijk toetsen aan de ongewijzigde eindvoorwaarde, daarna Git en dashboard opleveren. E1.12 gebouwd werk blijft bewaard en bevroren; geen nieuwe bouwsporen.",
+                "nextAction": "Afgerond; behoud bestaande gedeelde helpers, historische noodzakelijke operatorfuncties en bewezen grenzen. Geen nieuwe E4.18-opschoonronde.",
                 "continuityImplementationSteps": [
                   "Consolideer alleen dubbel werk op deze gebruikte route; geen procespopulatie of metabolismeframework."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "Containerinspectie en de negen verplaatste ontwikkeltests blijven afgerond. Ook bestandsregistratie en bronherkomst zijn gericht vereenvoudigd/hersteld: één neutrale bestandshasher, geen containerherkomstimport bij registratie, en correcte controle van de huidige deploy/*-mappen. De 17 bestaande tests slagen nu allemaal (vooraf 3 fouten); samen met de nieuwe grensgevallen 46/46 groen. Onafhankelijke review GO. Geen gedeelde installatie gewijzigd; volledige E4.18 blijft open. De vijf bestaande uitvoer-/afleverroutes zijn nu ook alleen-lezen aan hun eigenaren en 18 geselecteerde bronbestanden in kern/werker gebonden. Twee bronverschillen blijven bewust bij de coördinator; dit is geen nieuw gedragsbewijs.",
-                "checkedAt": "2026-10-23T12:50:22.445377+00:00",
-                "evidence": "development/evidence/reassessment/e418-file-inspection-20261023.json",
-                "independentReview": "development/reviews/e418-file-inspection-20261023.json"
+                "progress": "Drie onderhoudsuitkomsten volledig opgeleverd en in de huidige WSL-operatorroute gebruikt. Vijf route-eigenaren, 38 geïnstalleerde bronkoppelingen en herstel-/releasebindingen onafhankelijk gecontroleerd; definitieve GO op alle oorspronkelijke criteria. Geen appoverlay vereist voor hosttools. E4.15/E4.17 en eigenaaracceptatie blijven afzonderlijk open.",
+                "checkedAt": "2026-10-24T00:40:10.374271+00:00",
+                "evidence": "development/evidence/reassessment/e418-maintenance-delivery-20261024.json",
+                "independentReview": "development/reviews/e418-file-inspection-20261023.json",
+                "completedAt": "2026-10-24T00:40:10.374271+00:00",
+                "completionEvidence": "development/evidence/reassessment/e418-maintenance-delivery-20261024.json"
               },
               {
                 "id": "E4.19",
@@ -8772,9 +8790,9 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Maak uitsluitend E4.18 helemaal af: de drie bestaande vereenvoudigingen koppelen aan daadwerkelijk huidige WSL-operatorroute en geïnstalleerde bron-/herstelbindingen, onafhankelijk toetsen aan de ongewijzigde eindvoorwaarde, daarna Git en dashboard opleveren. E1.12 gebouwd werk blijft bewaard en bevroren; geen nieuwe bouwsporen.",
+        "nextAction": "E4.18 is volledig technisch afgerond met onafhankelijke GO en daadwerkelijk huidig WSL-gebruik. Integreer deze oplevering in Git/dashboard; kies vervolgens uitsluitend de bestaande volgende uitvoerbare kaart.",
         "finishOrder": [
-          "Nu E4.18 helemaal afronden: bestaande drie onderhoudsuitkomsten, huidige WSL-installatie en herstelbinding, onafhankelijke eindcontrole, Git en dashboard. E1.12 blijft gebouwd maar bevroren; fysieke E4.15-acceptatie en volledige E4.17-acceptatie blijven afzonderlijk open.",
+          "E4.18 technisch afgerond: bestaande drie onderhoudsuitkomsten, huidig WSL-gebruik, release-/herstelbinding en onafhankelijke volledige GO. Volgende uitvoerbare bestaande kaart afmaken; eigenaarproeven blokkeren ander werk niet.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
           "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
           "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -8783,7 +8801,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T00:34:29.028365+00:00",
+        "updatedAt": "2026-10-24T00:40:10.374271+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -14192,7 +14210,7 @@
             {
               "id": "E4.18",
               "title": "Gebruikte uitvoering en onderhoud gericht vereenvoudigen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "owner_requested_followup",
               "scopeOrigin": "living-housemate-20261022",
               "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
@@ -14208,15 +14226,17 @@
                 "E4.15",
                 "E4.17"
               ],
-              "nextAction": "Maak uitsluitend E4.18 helemaal af: de drie bestaande vereenvoudigingen koppelen aan daadwerkelijk huidige WSL-operatorroute en geïnstalleerde bron-/herstelbindingen, onafhankelijk toetsen aan de ongewijzigde eindvoorwaarde, daarna Git en dashboard opleveren. E1.12 gebouwd werk blijft bewaard en bevroren; geen nieuwe bouwsporen.",
+              "nextAction": "Afgerond; behoud bestaande gedeelde helpers, historische noodzakelijke operatorfuncties en bewezen grenzen. Geen nieuwe E4.18-opschoonronde.",
               "continuityImplementationSteps": [
                 "Consolideer alleen dubbel werk op deze gebruikte route; geen procespopulatie of metabolismeframework."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "Containerinspectie en de negen verplaatste ontwikkeltests blijven afgerond. Ook bestandsregistratie en bronherkomst zijn gericht vereenvoudigd/hersteld: één neutrale bestandshasher, geen containerherkomstimport bij registratie, en correcte controle van de huidige deploy/*-mappen. De 17 bestaande tests slagen nu allemaal (vooraf 3 fouten); samen met de nieuwe grensgevallen 46/46 groen. Onafhankelijke review GO. Geen gedeelde installatie gewijzigd; volledige E4.18 blijft open. De vijf bestaande uitvoer-/afleverroutes zijn nu ook alleen-lezen aan hun eigenaren en 18 geselecteerde bronbestanden in kern/werker gebonden. Twee bronverschillen blijven bewust bij de coördinator; dit is geen nieuw gedragsbewijs.",
-              "checkedAt": "2026-10-23T12:50:22.445377+00:00",
-              "evidence": "development/evidence/reassessment/e418-file-inspection-20261023.json",
-              "independentReview": "development/reviews/e418-file-inspection-20261023.json"
+              "progress": "Drie onderhoudsuitkomsten volledig opgeleverd en in de huidige WSL-operatorroute gebruikt. Vijf route-eigenaren, 38 geïnstalleerde bronkoppelingen en herstel-/releasebindingen onafhankelijk gecontroleerd; definitieve GO op alle oorspronkelijke criteria. Geen appoverlay vereist voor hosttools. E4.15/E4.17 en eigenaaracceptatie blijven afzonderlijk open.",
+              "checkedAt": "2026-10-24T00:40:10.374271+00:00",
+              "evidence": "development/evidence/reassessment/e418-maintenance-delivery-20261024.json",
+              "independentReview": "development/reviews/e418-file-inspection-20261023.json",
+              "completedAt": "2026-10-24T00:40:10.374271+00:00",
+              "completionEvidence": "development/evidence/reassessment/e418-maintenance-delivery-20261024.json"
             },
             {
               "id": "E4.19",
@@ -14788,9 +14808,9 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Maak uitsluitend E4.18 helemaal af: de drie bestaande vereenvoudigingen koppelen aan daadwerkelijk huidige WSL-operatorroute en geïnstalleerde bron-/herstelbindingen, onafhankelijk toetsen aan de ongewijzigde eindvoorwaarde, daarna Git en dashboard opleveren. E1.12 gebouwd werk blijft bewaard en bevroren; geen nieuwe bouwsporen.",
+      "nextAction": "E4.18 is volledig technisch afgerond met onafhankelijke GO en daadwerkelijk huidig WSL-gebruik. Integreer deze oplevering in Git/dashboard; kies vervolgens uitsluitend de bestaande volgende uitvoerbare kaart.",
       "finishOrder": [
-        "Nu E4.18 helemaal afronden: bestaande drie onderhoudsuitkomsten, huidige WSL-installatie en herstelbinding, onafhankelijke eindcontrole, Git en dashboard. E1.12 blijft gebouwd maar bevroren; fysieke E4.15-acceptatie en volledige E4.17-acceptatie blijven afzonderlijk open.",
+        "E4.18 technisch afgerond: bestaande drie onderhoudsuitkomsten, huidig WSL-gebruik, release-/herstelbinding en onafhankelijke volledige GO. Volgende uitvoerbare bestaande kaart afmaken; eigenaarproeven blokkeren ander werk niet.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
         "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
         "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -14799,7 +14819,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T00:34:29.028365+00:00",
+      "updatedAt": "2026-10-24T00:40:10.374271+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17340,7 +17360,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T00:34:29.028365+00:00",
+  "updatedAt": "2026-10-24T00:40:10.374271+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

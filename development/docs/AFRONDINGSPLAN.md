@@ -99,9 +99,9 @@ meerdere echte dagen bewijzen continuïteit. Begin dat gebruik zodra de route kl
 zodat observatiedagen niet pas na alle overige bouw beginnen. F2 blijft de gezamenlijke
 eindacceptatie. Herhaal een proef alleen bij gewijzigde oorzaak of ontbrekend bewijs.
 
-De actuele uitvoeractie is E4.18: rond de drie bestaande onderhoudsuitkomsten af
-met gebruik in de huidige WSL-installatie, actuele bron- en herstelbindingen en
-onafhankelijke eindcontrole. Werkbord, dashboard en Git volgen dezelfde oplevering.
+E4.18 is op 24 oktober volledig technisch afgerond: de drie onderhoudsuitkomsten
+zijn gebruikt in de huidige WSL-installatie en de actuele bron-/herstelbindingen
+hebben onafhankelijke volledige GO. Werkbord, dashboard en Git volgen die oplevering.
 E1.12 blijft gebouwd maar bevroren. E4.15-begroeting, horen en later hergebruik en
 de volledige E4.17-acceptatie blijven open; de fysieke proef is uitgesteld.
 Geen nieuwe bouwsporen, CPU-/importserie of algemene architectuurronde.

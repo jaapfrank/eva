@@ -18,5 +18,315 @@
   "limitations": [
     "Not a whole-tree/image provenance comparison or measured runtime speed gain.",
     "Full E4.18 remains open for E4.15/E4.17-dependent route review."
-  ]
+  ],
+  "fullCompletionCheck20261024": {
+    "contract": "EvaE418OriginalWholeCardCompletionCheck/v1",
+    "checkedAtMachineUtc": "2026-10-24T00:34:23.211318+00:00",
+    "clientTaskDate": "2026-10-24",
+    "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+    "decision": "NO_GO_PENDING_CURRENT_INSTALLED_USED_ROUTE_AND_RESTORE_BINDING",
+    "independentWholeCardGo": false,
+    "historicalScopedReviewPreservedExactly": true,
+    "historicalScopedReviewSha256": "56d2b63d2305bca492b2ab05c32a4a9e3e6cd2e2dd765fb841cbd9da9df7999c",
+    "verifiedNewOwnerInstruction": {
+      "sourceThreadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
+      "sourceTurnId": "01a16b4f-5f73-71b3-b69f-28079a187c3b",
+      "sourceUserMessageId": "01a16b4f-6265-78a1-8d93-bf3f7084d28c",
+      "text": "Laat de nieuwe coördinator nu één taak van het werkbord helemaal afmaken: bouwen, onafhankelijk controleren, installeren en live bewijzen. Geen nieuwe chats of overdrachten meer.",
+      "verifiedDirectUserMessageNotAgentSummary": true
+    },
+    "originalDoneWhenUnchanged": "Voor de daadwerkelijk gebruikte gesprek-/HA-/browser-/toolprogramma-/afleverroute zijn bron, toestemming, uitvoering, receipt, controle en resultaatbinding aan duidelijke bestaande eigenaren gekoppeld. Aangetoonde dubbele verantwoordelijkheden en actieve afhankelijkheden van historische operaties worden gericht vereenvoudigd met gedragsbehoud. Een begrensde lijst archief-/verwijderbesluiten controleert imports, dynamische aanroepen, entrypoints, geïnstalleerd gebruik, herstel en releasebindingen; noodzakelijke helpers blijven beschikbaar. Grote geraakte klassen worden alleen op concrete verantwoordelijkheden gesplitst. Geheugen, stoppen, geen dubbele externe effecten, huidige instellingen en schone-pc-herstel blijven werken. Voor/na-metingen tonen werkelijke vereenvoudiging; verplaatste regels tellen niet als bewezen runtimewinst.",
+    "originalDependsOn": [
+      "E4.15",
+      "E4.17"
+    ],
+    "evidenceInputs": [
+      {
+        "path": "development/evidence/reassessment/e418-container-inspection-20261023.json",
+        "sha256": "c1d6782b5335a69cc062f1cbe236eeb3caf353b0edb7d9bf6236ed10bfb4a73c"
+      },
+      {
+        "path": "development/evidence/reassessment/e418-project-update-test-location-20261023.json",
+        "sha256": "38e197f6e13c62bb1b73c69fcff2ef14d3999ce99459ec4c754eccb820b8be33"
+      },
+      {
+        "path": "development/evidence/reassessment/e418-file-inspection-20261023.json",
+        "sha256": "08510f25ea98a4c69add2a4d1fc8f3ad21dac61174c36cb3b2741a385ef620ea"
+      },
+      {
+        "path": "development/evidence/reassessment/e418-used-route-owners-20261023.json",
+        "sha256": "957967c5a5c987665d2a4b4d5c58567acbc6246443b4588d4b094affe51ad99d"
+      },
+      {
+        "path": "development/design/architecture/e418-used-route-owners.json",
+        "sha256": "a59cd981b5f94410703f82a006eb2a526549a39150e59a888bb3b23c11654ed4"
+      }
+    ],
+    "criterionChecks": [
+      {
+        "criterion": "Source, authority, execution, receipt, verification and result owners on five actually used routes",
+        "status": "partial_historical_owner_map_available_current_final_binding_missing",
+        "alreadyProven": "Five route owners and18selectedfiles were mapped to prior core/worker sources and AST symbols. Distinct preparation/provider/receipt/delivery roles were not mistaken for duplication.",
+        "remaining": "Bind same selected owners to actual current entrypoints/configuration/core+worker release, including actual tool-program wiring. Existing table images ebe4/5107 and containerIDs7caab/c3b0 are historical, not current installation evidence."
+      },
+      {
+        "criterion": "Targeted simplification of demonstrated duplicate responsibilities and historical dependencies with behavior preserved",
+        "status": "three_bounded_outcomes_already_independently_reviewed",
+        "alreadyProven": "Neutral container inspection owner with legacy facades and four consumers; neutral no-follow file hashing owner and actual configured root fix; nine unchanged development tests relocated out of production tools package.",
+        "remaining": "Only demonstrate those approved bytes used by actual host operator/import path; no new broad cleanup or deletion."
+      },
+      {
+        "criterion": "Bounded archive/removal decisions include imports/dynamic calls/entrypoints/installed use/restore/release, retaining needed helpers",
+        "status": "bounded_decisions_recorded_final_release_link_pending",
+        "alreadyProven": "Explicit keep decisions for container/file inspection, historical cutover/provenance/source-snapshot helpers and release authority; no speculative deletions. Test relocation had no active old-path entrypoint/release binding.",
+        "remaining": "Confirm the current actual operator/installer and recovery dependency closure still contains required shared helper files and retained facades. Do not silently remove historical helpers or re-pin original authority."
+      },
+      {
+        "criterion": "Large touched classes split only on concrete responsibilities",
+        "status": "satisfied_without_additional_class_split",
+        "alreadyProven": "Extracted inspection/hash responsibilities were concrete; other legacy method ASTs retained. No arbitrary size or line-count target."
+      },
+      {
+        "criterion": "Memory, STOP, no duplicate external effects, settings and clean-PC recovery remain working",
+        "status": "existing_bounded_preservation_proofs_available_final_candidate_binding_missing",
+        "alreadyProven": "Read-only helper bodies and retained seams, no external dispatch/settings/service changes by maintenance; original tests and earlier isolated installer/restore proof available.",
+        "remaining": "Bind necessary current runtime/operator/restore interfaces to this exact final maintenance candidate. Reuse actual E417 technical operator restore proof only for identical pinned helper/consumer bytes and preserved boundaries; do not relabel missing extension behavior/family acceptance or infer all-five-route execution from source hashes."
+      },
+      {
+        "criterion": "Before/after metrics demonstrate actual simplification",
+        "status": "bounded_measurements_satisfied_no_unmeasured_runtime_claim",
+        "alreadyProven": "Fresh guard import5projectmodules→2 and median0.05888534098630771s→0.010517294984310865s on isolated candidate; tools package139→138 with nine tests now collected; existing14pass/3fail became46pass including boundary cases after root fix.",
+        "remaining": "No new benchmark needed. These are measured import/package/root-correctness changes, not Eva reply speed, token reduction or household benefit."
+      }
+    ],
+    "requiredFinalHandoff": [
+      "Coordinator/builder supplies actual current host operator/interpreter/entrypoint/configuration and release source pins for the already changed maintenance route; install at that actual location only if genuinely missing.",
+      "Resolve/document the two selected source differences external_conversation_tools.py/private_work_return.py for current chosen release, preserving foreign WIP. Never assume a mismatch is a bug or overwrite it for cleanup.",
+      "Current selected18source/owner binding plus actual safe live read-only maintenance invocation/import result; independent readback against exact current IDs/paths/hashes. No new model, camera, family message or physical trial.",
+      "Show necessary installer/recovery helpers remain available in actual release closure and connect applicable existing real restore evidence; no automatic whole restore rerun.",
+      "Coordinator checks actual active conversation/model/work claims and core/worker profiles immediately before any shared installation change; reviewer does not install. Update one workboard card only after all original conditions actually met."
+    ],
+    "fullE418Completed": false,
+    "noNewAcceptanceCriteriaOrBroadStudy": true,
+    "reviewerActions": {
+      "newTests": 0,
+      "newModelCalls": 0,
+      "newProviderCalls": 0,
+      "newSourceDatabaseQueries": 0,
+      "newMessagesToHousehold": 0,
+      "serviceStartsStops": 0,
+      "installations": 0,
+      "productSourceWrites": 0,
+      "developmentTokens": null,
+      "developmentCredits": null
+    },
+    "handoff": "Concrete missing current installation/live/import/recovery bindings sent to coordinator; waiting for exact current operator/install handoff. E112 remains frozen/open and is not retested."
+  },
+  "fullCardFinalReview20261024": {
+    "contract": "EvaE418OriginalWholeCardFinalIndependentReview/v1",
+    "checkedAtMachineUtc": "2026-10-24T00:39:45.929209+00:00",
+    "clientTaskDate": "2026-10-24",
+    "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+    "decision": "GO_FULL_CARD_E418_ORIGINAL_CRITERIA",
+    "independentWholeCardGo": true,
+    "originalDoneWhenUnchanged": "Voor de daadwerkelijk gebruikte gesprek-/HA-/browser-/toolprogramma-/afleverroute zijn bron, toestemming, uitvoering, receipt, controle en resultaatbinding aan duidelijke bestaande eigenaren gekoppeld. Aangetoonde dubbele verantwoordelijkheden en actieve afhankelijkheden van historische operaties worden gericht vereenvoudigd met gedragsbehoud. Een begrensde lijst archief-/verwijderbesluiten controleert imports, dynamische aanroepen, entrypoints, geïnstalleerd gebruik, herstel en releasebindingen; noodzakelijke helpers blijven beschikbaar. Grote geraakte klassen worden alleen op concrete verantwoordelijkheden gesplitst. Geheugen, stoppen, geen dubbele externe effecten, huidige instellingen en schone-pc-herstel blijven werken. Voor/na-metingen tonen werkelijke vereenvoudiging; verplaatste regels tellen niet als bewezen runtimewinst.",
+    "originalCriteriaChanged": false,
+    "supersedesInitialMissingBindingDecisionOnly": true,
+    "historicalScopedReviewsAndInitialNoGoPreserved": true,
+    "definitiveDeliveryReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/e418-current-operator-delivery-20261024/definitive-delivery-receipt.private.json",
+      "sha256": "bbd5892913b15b983cc9090c34ecdbbf9ea40b6df3b46407d51f6e3549ed2b10"
+    },
+    "newFinalProofs": [
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/e418-current-operator-delivery-20261024/operator-run.private.json",
+        "sha256": "1073709b744576992aa6122e22206273dd4604c841a9bc3cd6b78140a6901e07"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/e418-current-operator-delivery-20261024/installed-tool-program-wiring.private.json",
+        "sha256": "2bfeb38db4467cc4b8ed6ea2dc4e4112afcdfb2b3ba2ea3b9a05c159293744c3"
+      },
+      {
+        "path": "/home/administrator/project/.eva2-artifacts/e418-current-operator-delivery-20261024/restore-transitive-source-binding.private.json",
+        "sha256": "44de1600870b467eb01673a1877933108291a6dc619fbb27f11bc22837356c9c"
+      }
+    ],
+    "criterionVerdicts": [
+      {
+        "originalClause": "Source, authority, execution, receipt, verification and result owners on the actually used conversation/HA/browser/tool-program/delivery routes",
+        "verdict": "COVERED",
+        "evidence": "Preserved five-owner map plus actual current36selectedcore/workersourcehashes; actual19thinstalledrunnercall AST shows actions factory and grant/capability intersection. Current HA8a740061 equals both installed/worktree; two deliberate role/source differences explicitly retained by release owner."
+      },
+      {
+        "originalClause": "Targeted simplification of demonstrated duplicate/historical responsibilities with behavior preserved",
+        "verdict": "COVERED",
+        "evidence": "Three independently reviewed outcomes are present in actual used host path: neutral container owner/four consumers with legacy facades, neutral hashing/root check owner, nine AST-identical tests moved into development tests. No additional broad cleanup."
+      },
+      {
+        "originalClause": "Bounded archive/removal decisions check imports, dynamic calls, entrypoints, installed use, recovery and release; retain necessary helpers",
+        "verdict": "COVERED",
+        "evidence": "Eight named current file decisions hash-checked; old testpath absent/newpath exact, sender/pyproject unchanged. Required dump/cutover/provenance/release helpers retained; current inspection import excludes historical operations and actual restore chain remains available."
+      },
+      {
+        "originalClause": "Large touched classes split only on concrete responsibilities",
+        "verdict": "COVERED",
+        "evidence": "Existing review proved exact extracted hash/inspection responsibilities with remaining legacy method ASTs preserved. No additional class split or line-count target justified."
+      },
+      {
+        "originalClause": "Memory, STOP, no duplicate external effects, current configuration and clean-PC recovery continue working",
+        "verdict": "COVERED_FOR_THE_MAINTENANCE_CHANGE",
+        "evidence": "No app behavior/configuration or external-effect owner altered by E418. Current installed source baseline and current live read-only operator verified. Existing actual inactive clean-target native-core CLIrestore6680 and V3freeze9ea remain exact, same b727 guard/4cca inspector/e9fd hasher available. Historical wizard403a and current separately reviewed37e integration explicitly distinguished; no new full restore or historical loaded-module trace claimed. E417 full extension behavior is not reclassified."
+      },
+      {
+        "originalClause": "Before/after measurements demonstrate real simplification; moved lines are not runtime gain",
+        "verdict": "COVERED",
+        "evidence": "Preserved measured restoreguard imports5→2 and candidate fresh-import median58.885ms→10.517ms; nine tests now ordinary discovery with tools package139→138; three measured root regressions repaired/46affectedcases passed. Current actual imports confirm neutral ownership. No Eva-response/token/household-speed claim."
+      }
+    ],
+    "unmetOriginalCriteria": [],
+    "independentActualOperatorReadback": {
+      "loadedModules": {
+        "tools.repository_inventory": {
+          "path": "/home/administrator/project/Eva2/src/tools/repository_inventory.py",
+          "sha256": "12166b5b6193a1b89a7030c1a774bc6600de767962d3d191654cd29a4e92514e"
+        },
+        "tools.container_inspection": {
+          "path": "/home/administrator/project/Eva2/src/tools/container_inspection.py",
+          "sha256": "4ccac5fb42fac769fe2a2b08aabd68dd1e6e6c974e7993274b78608791ffb0f0"
+        },
+        "tools.restore_runtime_guard": {
+          "path": "/home/administrator/project/Eva2/src/tools/restore_runtime_guard.py",
+          "sha256": "b727d3a14fac27ad6c749f744f097a106ff871c941b92d297d11c487f6c4a6e4"
+        },
+        "tools.file_inspection": {
+          "path": "/home/administrator/project/Eva2/src/tools/file_inspection.py",
+          "sha256": "e9fdf64e37f1ee800117d8b41a511eec3b71337dac4ae43a7de26bd45d29fbce"
+        }
+      },
+      "services": [
+        {
+          "name": "eva2-managed-b-slot3-core",
+          "id": "2537aad79a8a8b6fc221e7bf06459b92538477e9991823083e980fa11353d28c",
+          "image": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+          "running": true,
+          "selected18ActualHashesMatchReceipt": true
+        },
+        {
+          "name": "eva2-managed-b-slot3-delegated-work-worker-1",
+          "id": "234102ddfc43bdf434f70e0b5cd227a07480bb80fe776088ee81f78a3c96caac",
+          "image": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44",
+          "running": true,
+          "selected18ActualHashesMatchReceipt": true
+        }
+      ],
+      "sameSharedConsumerSelection": true,
+      "sharedConsumerNames": [
+        "eva2-document-goal-worker-au006",
+        "eva2-managed-b-slot3-delegated-work-worker-1"
+      ],
+      "containersObserved": 488,
+      "legacyCutoverImported": false,
+      "legacyCanaryImported": false,
+      "sourceDsnContentRead": false,
+      "databaseRecordReads": 0,
+      "modelCalls": 0,
+      "messagesSent": 0,
+      "serviceLifecycleActions": 0,
+      "seconds": 4.001072303042747
+    },
+    "independentFinalToolProgramAndRestoreBindingReadback": {
+      "actualRunnerBindings": [
+        {
+          "container": "2537aad79a8a8b6fc221e7bf06459b92538477e9991823083e980fa11353d28c",
+          "image": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+          "sha256": "bf93dff45917adf36dabb8315fe3ac166538493d432ca9bfffc8ae26305cd91a",
+          "oneActualOwnerCall": true,
+          "actionsAndCapabilityIntersectionExact": true
+        },
+        {
+          "container": "234102ddfc43bdf434f70e0b5cd227a07480bb80fe776088ee81f78a3c96caac",
+          "image": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44",
+          "sha256": "bf93dff45917adf36dabb8315fe3ac166538493d432ca9bfffc8ae26305cd91a",
+          "oneActualOwnerCall": true,
+          "actionsAndCapabilityIntersectionExact": true
+        }
+      ],
+      "restoreStaticBindings": [
+        {
+          "path": "src/tools/installer_restore_wizard.py",
+          "currentSha256": "37e08816f716cf9eb73f6fe9ca5e05f6404bf48a4ef94e0bb49aa2473baa3af0",
+          "priorSha256": "403a6edb3b15b0a44c60b5a4006ee1251b85fad5f3006369f4d0934090b14a93",
+          "sameBytes": false
+        },
+        {
+          "path": "src/tools/restore_runtime_guard.py",
+          "currentSha256": "b727d3a14fac27ad6c749f744f097a106ff871c941b92d297d11c487f6c4a6e4",
+          "priorSha256": "b727d3a14fac27ad6c749f744f097a106ff871c941b92d297d11c487f6c4a6e4",
+          "sameBytes": true
+        },
+        {
+          "path": "src/tools/container_inspection.py",
+          "currentSha256": "4ccac5fb42fac769fe2a2b08aabd68dd1e6e6c974e7993274b78608791ffb0f0",
+          "priorSha256": "4ccac5fb42fac769fe2a2b08aabd68dd1e6e6c974e7993274b78608791ffb0f0",
+          "sameBytes": true
+        },
+        {
+          "path": "src/tools/file_inspection.py",
+          "currentSha256": "e9fdf64e37f1ee800117d8b41a511eec3b71337dac4ae43a7de26bd45d29fbce",
+          "priorSha256": "e9fdf64e37f1ee800117d8b41a511eec3b71337dac4ae43a7de26bd45d29fbce",
+          "sameBytes": true
+        }
+      ],
+      "priorCaptureChange": [
+        {
+          "path": "src/eva/providers/home_assistant.py",
+          "workspaceSha256": "8a740061bec0d86044ee64e23f8c4b6fa61512ac75324d4662e3fbdba20a4ca5",
+          "installedSha256s": {
+            "eva2-managed-b-slot3-core": "8a740061bec0d86044ee64e23f8c4b6fa61512ac75324d4662e3fbdba20a4ca5",
+            "eva2-managed-b-slot3-delegated-work-worker-1": "8a740061bec0d86044ee64e23f8c4b6fa61512ac75324d4662e3fbdba20a4ca5"
+          },
+          "allInstalledEqualCurrentWorktree": true
+        }
+      ],
+      "originalActualRestoreAndFreezeStillExact": true,
+      "seconds": 1.0827626149985008,
+      "modelOrExternalEffectCalls": 0,
+      "restoreRepeated": false,
+      "historicalLoadedTraceClaimed": false
+    },
+    "eightKeepArchiveDecisionsCurrentShaMatched": true,
+    "oldDevelopmentTestAbsentNewPresentSenderAndPyprojectExact": true,
+    "installationAndLiveUse": {
+      "hostToolingInstalledAndActuallyUsed": true,
+      "actualSourcePath": "/home/administrator/project/Eva2/src",
+      "operatorEntrypoint": "tools.repository_inventory.capture_runtime(); tools.container_inspection.inspect_all()/shared_database_consumers()",
+      "sharedApplicationOverlayNeeded": false,
+      "reason": "Maintenance modules execute on existing WSLhost operator path, not inside app containers. Approved modules loaded from exact actual paths/hashes and read real current state. No artificial app image overlay or service restart."
+    },
+    "preservationLimits": [
+      "Entire E4.18 maintenance card accepted; E4.15 physical/family proof, E4.17 full extension behavior and E1.12 remain open as previously recorded.",
+      "Restore source-version/import-chain binding is not a historical loaded-module trace; original successful CLI proof remains its exact original scope.",
+      "No whole-project completion or owner/family acceptance."
+    ],
+    "coordinatorPublicationPending": true,
+    "usage": {
+      "newOrRepeatedPytestCases": 0,
+      "newModelCalls": 0,
+      "providerEffects": 0,
+      "databaseRecordReads": 0,
+      "privateConversationReads": 0,
+      "dsnContentReads": 0,
+      "messagesToHousehold": 0,
+      "serviceStartsStops": 0,
+      "sharedInstallationChanges": 0,
+      "selectedCurrentRuntimeSourceDigestsIndependentlyRead": 38,
+      "operatorReadbackSeconds": 4.001072303042747,
+      "finalBindingsReadbackSeconds": 1.0827626149985008,
+      "developmentTokens": null,
+      "developmentCredits": null
+    },
+    "handoff": "Whole-card independent GO delivered to coordinator. Coordinator owns workboard/dashboard/Git publication and must close only E4.18, preserving other open cards and original criteria."
+  },
+  "wholeCardIndependentDecision": "GO_FULL_CARD_E418_ORIGINAL_CRITERIA",
+  "wholeCardIndependentGo": true
 }

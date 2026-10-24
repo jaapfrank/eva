@@ -11,7 +11,8 @@ Het [werkbord](../design/product/execution-workboard-v1.json) bepaalt de actuele
 opleverstatus; een ontwerp hieronder betekent niet dat die werking al geïnstalleerd is.
 E4.15 verbindt nu de bestaande uitvoering aan een daadwerkelijk bruikbare eigen
 voorziening. E4.17 verzorgt de ontbrekende hersteloverdracht; E4.18 vereenvoudigt
-bewezen gebruikte routes. Deze drie volledige uitkomsten zijn nog niet afgerond.
+bewezen gebruikte routes. E4.18 is op 24 oktober volledig technisch afgerond met onafhankelijke review en
+werkelijk gebruik in de huidige WSL-operatorroute. E4.15 en E4.17 blijven open.
 
 ## Eén kringloop voor vier uitkomsten
 

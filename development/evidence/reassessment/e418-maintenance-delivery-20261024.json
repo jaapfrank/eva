@@ -1,0 +1,572 @@
+{
+  "contract": "EvaE418MaintenanceDelivery/v1",
+  "task": "E4.18",
+  "checkedAt": "2026-10-24T00:40:10.374271+00:00",
+  "status": "completed_installed_used_independently_reviewed",
+  "originalDoneWhen": "Voor de daadwerkelijk gebruikte gesprek-/HA-/browser-/toolprogramma-/afleverroute zijn bron, toestemming, uitvoering, receipt, controle en resultaatbinding aan duidelijke bestaande eigenaren gekoppeld. Aangetoonde dubbele verantwoordelijkheden en actieve afhankelijkheden van historische operaties worden gericht vereenvoudigd met gedragsbehoud. Een begrensde lijst archief-/verwijderbesluiten controleert imports, dynamische aanroepen, entrypoints, geïnstalleerd gebruik, herstel en releasebindingen; noodzakelijke helpers blijven beschikbaar. Grote geraakte klassen worden alleen op concrete verantwoordelijkheden gesplitst. Geheugen, stoppen, geen dubbele externe effecten, huidige instellingen en schone-pc-herstel blijven werken. Voor/na-metingen tonen werkelijke vereenvoudiging; verplaatste regels tellen niet als bewezen runtimewinst.",
+  "originalCriteriaChanged": false,
+  "outcomes": [
+    {
+      "built": "one neutral owner+4consumerimports, original facades preserved",
+      "installed": "approved helper4cca physically selected in actual WSL operator process",
+      "live": "actual current source/DSNconsumer metadata lookup detects currentworker, no DSNcontents read; restoreguard importclosure excludes cutover/canary",
+      "outcome": "container inspection responsibility",
+      "review": "development/reviews/e418-container-inspection-20261023.json"
+    },
+    {
+      "built": "one neutral filehasher, registration avoids provenanceCLI; exact configured roots corrected",
+      "installed": "approved registration12166/hashowner e9fd actually imported from WSLsrc",
+      "live": "capture_runtime executed real currentcore/worker inventory; previously46semantic boundary cases retained, no unchanged repeat",
+      "outcome": "file hashing/root membership",
+      "review": "development/reviews/e418-file-inspection-20261023.json"
+    },
+    {
+      "built": "9unchanged delivery tests relocated into development/tests/tools",
+      "installed": "development test discovery location and packaging are the actual scope, no serviceinstall required",
+      "live": "current oldpathabsent/newpresent, sender/pyproject exactly prior approvedbytes; current image source inventories contain0src/tools, no app image/test transplant needed",
+      "outcome": "development test ownership",
+      "review": "development/reviews/e418-project-update-test-location-20261023.json"
+    }
+  ],
+  "criterionCoverage": [
+    {
+      "delivered": "Five routes mapped;36real installed sourcebindings refreshed and19th installed tool-program caller inspected. Its actual actions=lambda:actions and allowed_names connector capability intersection proven from both current containers AST, not inferred from worktreeWIP.",
+      "requirement": "Clear existing source/permission/execution/receipt/verification/result owners on all used routes"
+    },
+    {
+      "delivered": "Three already-reviewed complete maintenance outcomes: neutral container inspector for4active restore/start consumers; one regular-file hash owner and correct exact deploy/* root matching; existing9developmenttests relocated out of packaged productiontools. No unjustified splitting of large runtime classes.",
+      "requirement": "Simplify demonstrated duplicate/historical responsibilities with behavior preserved"
+    },
+    {
+      "delivered": "8named decisions pinned below reuse existing import/dynamic/entrypoint/history/packaging scans and current actual operator imports. No new speculative file deletions; required legacy dump/facades/release pins retained. Earlier historical references remain exact.",
+      "requirement": "Bounded file/archive/removal decisions cover imports/dynamic entrypoints/installed use/restore/release"
+    },
+    {
+      "delivered": "E418 changes host read-only maintenance owners, not app execution code/settings. Current live operator executed sourcehash and DSNconsumer metadata only;0DBrecords/privateconversations/model/camera/effects/restarts. Necessary restore/start callers import neutral owner; exact transitive closure bound to actual existing restore receipt without rerunning it. New/current wizard opt-in integration is separately pinned, never relabelled as old CLIrun.",
+      "limit": "Preserved bounded maintenance semantics and reused actual inactive clean-target core restore. This is not new full clean-PC hardware/provider activation or family acceptance; E417 full behavior remains separate.",
+      "requirement": "Memory/STOP/no duplicate external effects/current config/clean-restore compatibility preserved",
+      "restore": {
+        "checkpoints": 150577,
+        "entrypoint": "tools.installer_restore_wizard.main --restore-config --restore-archive --passphrase-file --execute",
+        "events": 345379,
+        "externalDatabaseOrHostActivationClaim": false,
+        "holdsClosed": true,
+        "oneUseReplayRejected": true,
+        "proofReceiptSha256": "6680db8f31190abe9b3b0055fff358c3681c2bbca972e03529549f40eea8988b",
+        "records": 345664,
+        "sourceFreezeV3Sha256": "9ea234d6a2642f8d80b865a93b4c4508555bd4c250a89f255967196ca64ca89a"
+      }
+    },
+    {
+      "delivered": "Previously reviewed3fresh-process import measurements: restoreguard project imports5→2, median58.885ms→10.517ms (import-only); historical canary/cutover no longer imported for read-only inspection.46affected hash/rootcasesPASS including repair of3measured baseline failures.9same AST tests discovered normally and tools package modules139→138. Current actual capture7.021s,834sourcefiles (420core/414worker). No household latency/token gain claim.",
+      "requirement": "Before/after actual simplification, no runtime benefit invented from moved lines"
+    }
+  ],
+  "fileDecisions": [
+    {
+      "currentSha256": "4ccac5fb42fac769fe2a2b08aabd68dd1e6e6c974e7993274b78608791ffb0f0",
+      "decision": "retain shared read-only container/DSNconsumer owner; actual host used",
+      "path": "src/tools/container_inspection.py"
+    },
+    {
+      "currentSha256": "e9fdf64e37f1ee800117d8b41a511eec3b71337dac4ae43a7de26bd45d29fbce",
+      "decision": "retain shared regular-file descriptor-check hashing owner; actual registration imported",
+      "path": "src/tools/file_inspection.py"
+    },
+    {
+      "currentSha256": "24688f1e66a7c11c8f929b730938cf1b0c958708ace214574decea625fd5d2df",
+      "decision": "retain historical operator APIs/compatibility facades; existing installation_source_snapshot still uses _write_dump, never infer entire file unused from extracted inspection",
+      "path": "src/tools/eva2_quiescent_cutover.py"
+    },
+    {
+      "currentSha256": "7763a1a36f910f48ee8fa47f8027606df3d2f596024e80b24d1abfd8972f7ce7",
+      "decision": "retain unchanged historical source/release dependency; not loaded by current inspection-only owner",
+      "path": "src/tools/eva2_canary_cutover.py"
+    },
+    {
+      "currentSha256": "63cbc4e7275bed24e4925541bfa3ca951cc61fcee2bf3ce2567e3e9564fe29a5",
+      "decision": "retain current _write_dump consumer unchanged; no new source-dump or release behavior",
+      "path": "src/tools/installation_source_snapshot.py"
+    },
+    {
+      "currentSha256": "c68f66fb124f2cdd0df3952189941bc204c7fe496f9ef82a2e031f6d8681fca8",
+      "decision": "retain frozen-v53 CLI and hash compatibility symbol; current core uses existing capture_runtime instead, no frozen guard widened",
+      "path": "src/tools/living_core_source_provenance.py"
+    },
+    {
+      "currentSha256": "4e623e9fa521674e37c55f38dcd132cb7248efe6515454b84993d2734fd8dfc7",
+      "decision": "already moved, oldsource absent/newpresent; original9AST-identical tests normal discovery, sender+pyproject still exact approved hashes",
+      "newPath": "development/tests/tools/test_project_telegram_update.py",
+      "oldPath": "src/tools/test_project_telegram_update.py"
+    },
+    {
+      "currentSha256": "5ab275bffc194b3a64de9c3697b78dd37f056daf5582b8fb6a59cd28d64b84c4",
+      "decision": "retain original release input pin unchanged; not current app overlay authority",
+      "path": "deploy/release/managed-b-release-input-authority-v1.json"
+    }
+  ],
+  "hostInstallation": {
+    "actualEntrypoint": "tools.repository_inventory.capture_runtime() and tools.container_inspection.inspect_all()/shared_database_consumers()",
+    "actualLoadedModules": {
+      "tools.container_inspection": {
+        "file": "/home/administrator/project/Eva2/src/tools/container_inspection.py",
+        "sha256": "4ccac5fb42fac769fe2a2b08aabd68dd1e6e6c974e7993274b78608791ffb0f0"
+      },
+      "tools.file_inspection": {
+        "file": "/home/administrator/project/Eva2/src/tools/file_inspection.py",
+        "sha256": "e9fdf64e37f1ee800117d8b41a511eec3b71337dac4ae43a7de26bd45d29fbce"
+      },
+      "tools.repository_inventory": {
+        "file": "/home/administrator/project/Eva2/src/tools/repository_inventory.py",
+        "sha256": "12166b5b6193a1b89a7030c1a774bc6600de767962d3d191654cd29a4e92514e"
+      },
+      "tools.restore_runtime_guard": {
+        "file": "/home/administrator/project/Eva2/src/tools/restore_runtime_guard.py",
+        "sha256": "b727d3a14fac27ad6c749f744f097a106ff871c941b92d297d11c487f6c4a6e4"
+      }
+    },
+    "coreWorkerOverlayNeeded": false,
+    "interpreter": {
+      "executable": "/usr/bin/python3",
+      "resolved": "/usr/bin/python3.12",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]"
+    },
+    "reason": "These operator modules execute on the WSLhost from deployed checkout/src and use Docker to inspect app containers. Actual modulepath/hash plus real execution establishes use, not Git presence alone. Core/worker do not contain tools; overlaying them would not install this host route. Existing manual/operator route needs no new service/daemon/CLIframework.",
+    "rootInstallAction": "none beyond retaining already executed hostbytes; preserve existing shared app installation",
+    "sourceConfiguration": {
+      "captureRoot": "/opt/eva/src",
+      "checkout": "/home/administrator/project/Eva2",
+      "containerInterpreter": "/usr/local/bin/python -I",
+      "dockerBinary": "/usr/bin/docker",
+      "fixedCore": "eva2-managed-b-slot3-core",
+      "fixedWorker": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "noHistoricalV53GuardBypassed": true,
+      "sourceSearchPath": "/home/administrator/project/Eva2/src"
+    }
+  },
+  "currentSourceBindings": [
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "7471cdc3cd57e368ca65d775066e7bf45a8a1c4178a1508d7d0398800e8e9649"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "7471cdc3cd57e368ca65d775066e7bf45a8a1c4178a1508d7d0398800e8e9649"
+        }
+      },
+      "path": "src/eva/application/conversation.py",
+      "priorWorkspaceSha256": "7471cdc3cd57e368ca65d775066e7bf45a8a1c4178a1508d7d0398800e8e9649",
+      "workspaceSha256": "7471cdc3cd57e368ca65d775066e7bf45a8a1c4178a1508d7d0398800e8e9649"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "1f01b62c25f96425a8255b57f74efc618cec724637373823ea69c9f022c42870"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "1f01b62c25f96425a8255b57f74efc618cec724637373823ea69c9f022c42870"
+        }
+      },
+      "path": "src/eva/application/orchestration.py",
+      "priorWorkspaceSha256": "1f01b62c25f96425a8255b57f74efc618cec724637373823ea69c9f022c42870",
+      "workspaceSha256": "1f01b62c25f96425a8255b57f74efc618cec724637373823ea69c9f022c42870"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": false,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "40ee8619ba52fcd467561bb3617759c3f2a415625195ac790619d2f48b2c2759"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": false,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "40ee8619ba52fcd467561bb3617759c3f2a415625195ac790619d2f48b2c2759"
+        }
+      },
+      "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+      "priorWorkspaceSha256": "a8ab4acda8ecfba22d6006f513edd2c314736d2718e54159e19508b2dc73de4e",
+      "workspaceSha256": "a8ab4acda8ecfba22d6006f513edd2c314736d2718e54159e19508b2dc73de4e"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "90a488952f6f3c185fe6368fab3e956c75ff1ab66d6b036ae0a8120c5065705a"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "90a488952f6f3c185fe6368fab3e956c75ff1ab66d6b036ae0a8120c5065705a"
+        }
+      },
+      "path": "src/eva/adapters/postgres/connector_results.py",
+      "priorWorkspaceSha256": "90a488952f6f3c185fe6368fab3e956c75ff1ab66d6b036ae0a8120c5065705a",
+      "workspaceSha256": "90a488952f6f3c185fe6368fab3e956c75ff1ab66d6b036ae0a8120c5065705a"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": false,
+          "present": true,
+          "sha256": "8a740061bec0d86044ee64e23f8c4b6fa61512ac75324d4662e3fbdba20a4ca5"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": false,
+          "present": true,
+          "sha256": "8a740061bec0d86044ee64e23f8c4b6fa61512ac75324d4662e3fbdba20a4ca5"
+        }
+      },
+      "path": "src/eva/providers/home_assistant.py",
+      "priorWorkspaceSha256": "f6fa326b7be599260233abdec15854f7057b8c54661005b786e53ac27ca3e567",
+      "workspaceSha256": "8a740061bec0d86044ee64e23f8c4b6fa61512ac75324d4662e3fbdba20a4ca5"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82"
+        }
+      },
+      "path": "src/eva/adapters/connectors/home_assistant.py",
+      "priorWorkspaceSha256": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82",
+      "workspaceSha256": "6ac246949bac29d586cd43b6f5619de357a1759ad48e5771ef170730736c0b82"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "a3323a96b6c5305b36a4856f9a8cb2dba8f6c23be023dc0ea9a345a26fd4802b"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "a3323a96b6c5305b36a4856f9a8cb2dba8f6c23be023dc0ea9a345a26fd4802b"
+        }
+      },
+      "path": "src/eva/providers/mcp_gateway.py",
+      "priorWorkspaceSha256": "a3323a96b6c5305b36a4856f9a8cb2dba8f6c23be023dc0ea9a345a26fd4802b",
+      "workspaceSha256": "a3323a96b6c5305b36a4856f9a8cb2dba8f6c23be023dc0ea9a345a26fd4802b"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8"
+        }
+      },
+      "path": "src/eva/adapters/connectors/mcp_gateway.py",
+      "priorWorkspaceSha256": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8",
+      "workspaceSha256": "b1713783358a5b6bcf4f8dcb00c313dabc44be0429bc279c670bb744842978e8"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "8c7c3d06784573ca9df1f3e1c799a1b4cd67a365e42aa8d77857b3327ce3b572"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "8c7c3d06784573ca9df1f3e1c799a1b4cd67a365e42aa8d77857b3327ce3b572"
+        }
+      },
+      "path": "src/eva/adapters/postgres/tool_program_actions.py",
+      "priorWorkspaceSha256": "8c7c3d06784573ca9df1f3e1c799a1b4cd67a365e42aa8d77857b3327ce3b572",
+      "workspaceSha256": "8c7c3d06784573ca9df1f3e1c799a1b4cd67a365e42aa8d77857b3327ce3b572"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "080f6c3bfdbdaa9189d2fccc64fe2633a62f382aedac6f58686689da2591731b"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "080f6c3bfdbdaa9189d2fccc64fe2633a62f382aedac6f58686689da2591731b"
+        }
+      },
+      "path": "src/eva/application/tool_program.py",
+      "priorWorkspaceSha256": "080f6c3bfdbdaa9189d2fccc64fe2633a62f382aedac6f58686689da2591731b",
+      "workspaceSha256": "080f6c3bfdbdaa9189d2fccc64fe2633a62f382aedac6f58686689da2591731b"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "48e566719bca0a4a66b891e0e03f975bf88267be194dc5bf0cb3dcec059f14bd"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "48e566719bca0a4a66b891e0e03f975bf88267be194dc5bf0cb3dcec059f14bd"
+        }
+      },
+      "path": "src/eva/bootstrap/household_work.py",
+      "priorWorkspaceSha256": "48e566719bca0a4a66b891e0e03f975bf88267be194dc5bf0cb3dcec059f14bd",
+      "workspaceSha256": "48e566719bca0a4a66b891e0e03f975bf88267be194dc5bf0cb3dcec059f14bd"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "399823f0a32498ea5e3d42ac7f580e10e582d52b0e94f005604d861f82599a61"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": false,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "f97948e4caf09aa0cca3e0ae617efded58966d568c8c1cf2957b6ae8c1137428"
+        }
+      },
+      "path": "src/eva/adapters/postgres/private_work_return.py",
+      "priorWorkspaceSha256": "399823f0a32498ea5e3d42ac7f580e10e582d52b0e94f005604d861f82599a61",
+      "workspaceSha256": "399823f0a32498ea5e3d42ac7f580e10e582d52b0e94f005604d861f82599a61"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "fd814928c357a4a51de128043543ef2deb7b6dd7af0a2123d7606ec7e7a89519"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "fd814928c357a4a51de128043543ef2deb7b6dd7af0a2123d7606ec7e7a89519"
+        }
+      },
+      "path": "src/eva/bootstrap/native_work_delivery.py",
+      "priorWorkspaceSha256": "fd814928c357a4a51de128043543ef2deb7b6dd7af0a2123d7606ec7e7a89519",
+      "workspaceSha256": "fd814928c357a4a51de128043543ef2deb7b6dd7af0a2123d7606ec7e7a89519"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "4eb8078377cc96c76a94dba4afa3ebca50f6d5593771f303bdc5f4ed3367ae52"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "4eb8078377cc96c76a94dba4afa3ebca50f6d5593771f303bdc5f4ed3367ae52"
+        }
+      },
+      "path": "src/eva/application/delegated_work_delivery.py",
+      "priorWorkspaceSha256": "4eb8078377cc96c76a94dba4afa3ebca50f6d5593771f303bdc5f4ed3367ae52",
+      "workspaceSha256": "4eb8078377cc96c76a94dba4afa3ebca50f6d5593771f303bdc5f4ed3367ae52"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "6a5397970f5f0ce1285cfba6d4d2da22428ede1897306c611109ea871b410b0f"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "6a5397970f5f0ce1285cfba6d4d2da22428ede1897306c611109ea871b410b0f"
+        }
+      },
+      "path": "src/eva/operations/delegated_work_delivery.py",
+      "priorWorkspaceSha256": "6a5397970f5f0ce1285cfba6d4d2da22428ede1897306c611109ea871b410b0f",
+      "workspaceSha256": "6a5397970f5f0ce1285cfba6d4d2da22428ede1897306c611109ea871b410b0f"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "d69a170b254664ecc9eb72c75a141e6172e22d57f41bbd7f67f018181a738f86"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "d69a170b254664ecc9eb72c75a141e6172e22d57f41bbd7f67f018181a738f86"
+        }
+      },
+      "path": "src/eva/adapters/postgres/delegated_work_delivery.py",
+      "priorWorkspaceSha256": "d69a170b254664ecc9eb72c75a141e6172e22d57f41bbd7f67f018181a738f86",
+      "workspaceSha256": "d69a170b254664ecc9eb72c75a141e6172e22d57f41bbd7f67f018181a738f86"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "06604689e00e24243b63af31cc4c4e300126262d09fad986c673632edddefecd"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "06604689e00e24243b63af31cc4c4e300126262d09fad986c673632edddefecd"
+        }
+      },
+      "path": "src/eva/adapters/connectors/telegram.py",
+      "priorWorkspaceSha256": "06604689e00e24243b63af31cc4c4e300126262d09fad986c673632edddefecd",
+      "workspaceSha256": "06604689e00e24243b63af31cc4c4e300126262d09fad986c673632edddefecd"
+    },
+    {
+      "installed": {
+        "eva2-managed-b-slot3-core": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "d266064296d80656b5aca71a439de717b472a39383511ae10fe4216267b6f3d8"
+        },
+        "eva2-managed-b-slot3-delegated-work-worker-1": {
+          "equalsCurrentWorktree": true,
+          "equalsPriorInstalled": true,
+          "present": true,
+          "sha256": "d266064296d80656b5aca71a439de717b472a39383511ae10fe4216267b6f3d8"
+        }
+      },
+      "path": "src/eva/bootstrap/delegated_work_delivery.py",
+      "priorWorkspaceSha256": "d266064296d80656b5aca71a439de717b472a39383511ae10fe4216267b6f3d8",
+      "workspaceSha256": "d266064296d80656b5aca71a439de717b472a39383511ae10fe4216267b6f3d8"
+    }
+  ],
+  "sourceEvidencePins": [
+    {
+      "path": "development/design/architecture/e418-container-inspection-ownership.json",
+      "sha256": "bcaba7dad33a321204d92cafa51770ec75a96bceecee40a8a5a56338c628a37f"
+    },
+    {
+      "path": "development/design/architecture/e418-file-inspection-ownership.json",
+      "sha256": "c504cf51834dffa5911d5a366ec85092db0f546ca48bf5a4a40637ef8a1ce970"
+    },
+    {
+      "path": "development/design/architecture/e418-project-update-test-location.json",
+      "sha256": "4d7dedf4ef4cdbdc5d7196e66edae3fb00ab186fcad7bfd3a9de2169f3c48a4d"
+    },
+    {
+      "path": "development/design/architecture/e418-used-route-owners.json",
+      "sha256": "a59cd981b5f94410703f82a006eb2a526549a39150e59a888bb3b23c11654ed4"
+    },
+    {
+      "path": "development/evidence/reassessment/e418-container-inspection-20261023.json",
+      "sha256": "c1d6782b5335a69cc062f1cbe236eeb3caf353b0edb7d9bf6236ed10bfb4a73c"
+    },
+    {
+      "path": "development/evidence/reassessment/e418-file-inspection-20261023.json",
+      "sha256": "08510f25ea98a4c69add2a4d1fc8f3ad21dac61174c36cb3b2741a385ef620ea"
+    },
+    {
+      "path": "development/evidence/reassessment/e418-project-update-test-location-20261023.json",
+      "sha256": "38e197f6e13c62bb1b73c69fcff2ef14d3999ce99459ec4c754eccb820b8be33"
+    },
+    {
+      "path": "development/evidence/reassessment/e418-used-route-owners-20261023.json",
+      "sha256": "957967c5a5c987665d2a4b4d5c58567acbc6246443b4588d4b094affe51ad99d"
+    },
+    {
+      "path": "development/reviews/e418-container-inspection-20261023.json",
+      "sha256": "40f6fd9b42bb3bd15003a27240240c7b02ad0c5c43f8d34cbdf8175f2891e0b8"
+    },
+    {
+      "path": "development/reviews/e418-project-update-test-location-20261023.json",
+      "sha256": "cb7220f636ab23c078e4db389a76a30d6a1c5118666b09b6a68d01ecb05706d8"
+    },
+    {
+      "path": "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json",
+      "sha256": "794b0b93c3e268beba6118367795736a32de3e10eae874339de8f7c22755efb7"
+    }
+  ],
+  "privateDeliverySha256": "bbd5892913b15b983cc9090c34ecdbbf9ea40b6df3b46407d51f6e3549ed2b10",
+  "privateProofPins": [
+    {
+      "name": "operator-run.private.json",
+      "sha256": "1073709b744576992aa6122e22206273dd4604c841a9bc3cd6b78140a6901e07"
+    },
+    {
+      "name": "installed-tool-program-wiring.private.json",
+      "sha256": "2bfeb38db4467cc4b8ed6ea2dc4e4112afcdfb2b3ba2ea3b9a05c159293744c3"
+    },
+    {
+      "name": "restore-transitive-source-binding.private.json",
+      "sha256": "44de1600870b467eb01673a1877933108291a6dc619fbb27f11bc22837356c9c"
+    }
+  ],
+  "independentReview": "development/reviews/e418-file-inspection-20261023.json",
+  "fullE418Completed": true,
+  "ownerAcceptance": false,
+  "fullProjectCompleted": false,
+  "otherTasksClosed": [],
+  "measurements": {
+    "currentOperatorCaptureSeconds": 7.020951938990038,
+    "evaRuntimeModelCalls": 0,
+    "providerEffects": 0,
+    "serviceRestarts": 0,
+    "sharedCoreWorkerReplacements": 0,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "costState": "unknown"
+  },
+  "independentVerdict": {
+    "decision": "GO_FULL_CARD_E418_ORIGINAL_CRITERIA",
+    "reviewSha256": "a8c2a1e8dc29c0823662008064c86ef997b561e3cc63542e6fb10e74a12e1aad"
+  }
+}

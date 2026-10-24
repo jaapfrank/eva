@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T00:34:29.028365+00:00",
+  "updatedAt": "2026-10-24T00:40:10.374271+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -686,7 +686,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "finishing_existing_e418_outcome",
+      "status": "e418_delivered_waiting_next_existing_assignment",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1391,7 +1391,7 @@
     "e415-independent-review-newchat": {
       "task": "E4.18",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "independent_e418_final_review",
+      "status": "e418_full_card_go_publication_only",
       "coordinator": "windows-root",
       "allowedWritePaths": [
         "development/reviews/e418-file-inspection-20261023.json"
@@ -1506,7 +1506,7 @@
       "faceBackendAssetProposalVerdict": "GO",
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
-      "activeIndependentReviewClaim": true,
+      "activeIndependentReviewClaim": false,
       "updatedAt": "2026-10-24T00:34:29.028365+00:00"
     },
     "independent-control": {
@@ -1729,14 +1729,13 @@
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
     "parallelBoundedWork": "Geen tweede uitkomst; één bouwer en één onafhankelijke tester/reviewer, twee overige chats idle.",
-    "currentBlocker": "Nog definitieve onafhankelijke beoordeling van volledige bestaande E4.18-eindvoorwaarde; geen eigenaarhandeling nodig.",
+    "currentBlocker": "Geen E4.18-blokkade: volledige onafhankelijke GO; alleen publicatieafronding.",
     "latestVerifiedOutcome": {
-      "status": "installed_current_source_and_silence_proven_positive_greeting_pending",
-      "evidence": "development/evidence/product/e415-household-batch-binding-20261023.json",
-      "review": "development/reviews/e415-batch-installed-readback-20261023.json",
-      "newCameraSources": 2,
-      "positiveGreeting": false,
-      "fullTaskCompleted": false
+      "task": "E4.18",
+      "status": "completed_installed_used_independently_reviewed",
+      "review": "development/reviews/e418-file-inspection-20261023.json",
+      "evidence": "development/evidence/reassessment/e418-maintenance-delivery-20261024.json",
+      "at": "2026-10-24T00:40:10.374271+00:00"
     },
     "nextBoundedAssignments": {
       "primaryTaskRemains": "E4.17",
