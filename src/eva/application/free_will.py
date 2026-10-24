@@ -423,6 +423,8 @@ class SensoryDecisionWorker:
         household_review = event.source == "household-initiative"
         context_review = event.source in {"initiative-review", "household-initiative"}
         model_entered = False
+        model_returned = False
+        model_call_error = None
         try:
             if household_review != (self._household_context is not None):
                 raise RuntimeError("initiative context audience differs from configured worker")
@@ -655,18 +657,24 @@ class SensoryDecisionWorker:
                     now=self._current_time(now))
                 return "waiting_for_model_access"
             model_entered = True  # All later failures remain potentially dispatched.
-            decision = self._model.evaluate_sensory_event(
-                event,
-                self._identity,
-                memory,
-                attention,
-                **({"private_contact_allowed": True} if private_contact else {}),
-                **({"initiative_history": history} if history else {}),
-                **({"initiative_capabilities": capabilities} if callable(capability_reader) else {}),
-                **({"initiative_source_outcomes": source_outcomes} if source_outcomes else {}),
-                **({"private_context_search": private_context_search} if private_context_search is not None else {}),
-                **({"private_day_context": deepcopy(day_context)} if day_context is not None else {}),
-            )
+            try:
+                decision = self._model.evaluate_sensory_event(
+                    event,
+                    self._identity,
+                    memory,
+                    attention,
+                    **({"private_contact_allowed": True} if private_contact else {}),
+                    **({"initiative_history": history} if history else {}),
+                    **({"initiative_capabilities": capabilities} if callable(capability_reader) else {}),
+                    **({"initiative_source_outcomes": source_outcomes} if source_outcomes else {}),
+                    **({"private_context_search": private_context_search} if private_context_search is not None else {}),
+                    **({"private_day_context": deepcopy(day_context)} if day_context is not None else {}),
+                )
+            except Exception as error:
+                model_call_error = error
+                raise
+            finally:
+                model_returned = True
             # A changed feedback source after dispatch is a measured rejection,
             # never a pre-dispatch cancellation or permission to replay the call.
             if event.payload.get("feedback_source") is not None:
@@ -725,7 +733,10 @@ class SensoryDecisionWorker:
             return decision.disposition
         except Exception as error:
             fail_before_dispatch = getattr(self._store, "fail_before_dispatch", None)
-            if (not model_entered and not isinstance(error, AutonomousUsageUncertain)
+            fail_after_return = getattr(self._store, "fail_after_model_return", None)
+            if model_returned and model_call_error is error and callable(fail_after_return):
+                fail_after_return(claim, error, now=self._current_time(now))
+            elif (not model_entered and not isinstance(error, AutonomousUsageUncertain)
                     and callable(fail_before_dispatch)):
                 fail_before_dispatch(claim, error, now=self._current_time(now))
             else:

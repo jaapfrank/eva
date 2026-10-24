@@ -494,7 +494,7 @@ class PostgresSensoryEventStore:
             self._timeline._scope(connection)
             connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                 {"key": "sensory:household-initiative:"})
-            if self._household_window_active(connection, now=now):
+            if self._household_window_active(connection, now=now, allow_prospective=True):
                 return None
             from eva.adapters.postgres.initiative_attention import pending_attention
             from eva.contracts.timestamps import parse_utc_timestamp
@@ -572,7 +572,127 @@ class PostgresSensoryEventStore:
                 return batch
         return None
 
-    def _household_window_active(self, connection, *, now: datetime, excluding_thread: str | None = None) -> bool:
+    def _household_recovery_authority(self):
+        """Reuse current ordinary household authority, never an extra grant."""
+        if self._household_binding is None or not callable(self._initiative_authorizer):
+            return None
+        try:
+            policy, digest = self._initiative_authorizer()
+            if (policy.get("enabled") is True and isinstance(digest, str)
+                    and len(digest) == 64 and all(c in "0123456789abcdef" for c in digest)):
+                return digest
+        except Exception:
+            pass
+        return None
+
+    @staticmethod
+    def _household_original_ids(event):
+        observation = event.payload["observation"]
+        members = (observation["payload"]["observations"]
+                   if observation["event_type"] == "household_observation_batch" else [observation])
+        return {(item["source"], item["source_event_id"]) for item in members}
+
+    def _household_recovery_state(self, connection, *, excluding_thread=None):
+        """Return a single unspent failure anchor; unknown history stays closed.
+
+        A link lives on the NEW model admission. Old failure events, costs and
+        operator recovery remain unchanged. Only its measured decision releases
+        that consumed slot; merely abandoning or stopping the successor does not.
+        """
+        scope, c, e = self._timeline._scope_value, operational_checkpoints.c, operational_events.c
+        query = sa.select(operational_checkpoints).where(c.tenant_id == scope.tenant_id,
+            c.installation_id == scope.installation_id,
+            c.thread_id.startswith("sensory:household-initiative:"),
+            c.phase.in_(("will_model_started", "will_usage_uncertain")))
+        if excluding_thread is not None:
+            query = query.where(c.thread_id != excluding_thread)
+        rows = connection.execute(query).mappings().all()
+        if not rows:
+            return False, None
+        authority = self._household_recovery_authority()
+        if authority is None:
+            return True, None
+
+        def history(thread):
+            events = connection.execute(sa.select(operational_events).where(
+                e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+                e.thread_id == thread).order_by(e.sequence)).all()
+            if (not events or events[0].event_type != "SENSORY_EVENT_OBSERVED"
+                    or any(event.sequence != index or canonical_sha256(event.payload)
+                           != bytes(event.payload_sha256).hex()
+                           for index, event in enumerate(events, 1))):
+                raise ValueError("household recovery history differs")
+            source_data = events[0].payload["data"]
+            original = SensoryEvent(source_data["source"], source_data["source_event_id"],
+                source_data["event_type"], events[0].occurred_at, source_data["payload"])
+            if (not self._matches_household_event(original)
+                    or original.event_type != "household_observation_review"):
+                raise ValueError("household recovery source differs")
+            return events, original
+
+        candidates = []
+        try:
+            for row in rows:
+                if row["phase"] != "will_usage_uncertain" or row["status"] != "needs_help":
+                    return True, None
+                events, original = history(row["thread_id"])
+                failed, started = events[-1], events[-2]
+                data = failed.payload["data"]
+                proof = data.get("local_model_end")
+                expected = {"contract": "SensoryLocalModelReturn/v1",
+                    "source_event_id": original.source_event_id, "operation_id": row["operation_id"],
+                    "claim_revision": started.sequence, "error_fingerprint": data.get("failure_fingerprint")}
+                start_data = started.payload["data"]
+                if (failed.event_type != "WILL_USAGE_UNCERTAIN" or failed.sequence != row["revision"]
+                        or failed.checkpoint_id != row["checkpoint_id"]
+                        or started.event_type != "WILL_MODEL_STARTED" or proof != expected
+                        or data.get("usage") is not None
+                        or start_data.get("household_recovery_contract") != "HouseholdProspectiveRecovery/v1"
+                        or start_data.get("owner_mandate_sha256") != authority
+                        or "recovery_predecessor" in start_data):
+                    return True, None
+                predecessor = {"contract": "HouseholdProspectiveRecovery/v1",
+                    "thread_id": row["thread_id"], "revision": failed.sequence,
+                    "failure_sha256": bytes(failed.payload_sha256).hex(),
+                    "source_sha256": bytes(events[0].payload_sha256).hex(),
+                    "source_event_id": original.source_event_id,
+                    "owner_mandate_sha256": authority,
+                    "household_policy_sha256": self._household_binding.policy_sha256,
+                    "failed_at": failed.occurred_at.isoformat()}
+                links = connection.execute(sa.select(operational_events).where(
+                    e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+                    e.event_type == "WILL_MODEL_STARTED",
+                    e.payload["data"]["recovery_predecessor"]["thread_id"].astext == row["thread_id"])).all()
+                if not links:
+                    candidates.append(predecessor)
+                    continue
+                if len(links) != 1:
+                    return True, None
+                link = links[0]
+                successor, source = history(link.thread_id)
+                if (link.payload["data"].get("recovery_predecessor") != predecessor
+                        or canonical_sha256(link.payload) != bytes(link.payload_sha256).hex()
+                        or not self._household_original_ids(source).isdisjoint(
+                            self._household_original_ids(original))):
+                    return True, None
+                from eva.application.conversation import ConversationModelUsage
+                completed = [event for event in successor
+                             if event.event_type == "WILL_DECIDED" and event.sequence > link.sequence]
+                if len(completed) != 1:
+                    return True, None
+                usage = ConversationModelUsage.from_wire(completed[0].payload["data"]["usage"])
+                if (usage.measurement != "measured" or usage.model_attempts < 1
+                        or completed[0].payload["data"].get("source_event_id") != source.source_event_id):
+                    return True, None
+        except (KeyError, TypeError, ValueError, IndexError, AttributeError):
+            return True, None
+        return (True, None) if len(candidates) > 1 else (False, candidates[0] if candidates else None)
+
+    def fail_after_model_return(self, claim, error, *, now):
+        """Called only after the worker's concrete synchronous invocation ends."""
+        self.fail(claim, error, now=now, _local_model_returned=True)
+
+    def _household_window_active(self, connection, *, now: datetime, excluding_thread: str | None = None, allow_prospective: bool = False) -> bool:
         """One joint household review per existing observation-freshness window."""
         scope, e = self._timeline._scope_value, operational_events.c
         query = sa.select(e.thread_id).where(e.tenant_id == scope.tenant_id,
@@ -583,13 +703,8 @@ class PostgresSensoryEventStore:
             query = query.where(e.thread_id != excluding_thread)
         if connection.execute(query.limit(1)).first() is not None:
             return True
-        c = operational_checkpoints.c
-        unresolved = sa.select(c.thread_id).where(c.tenant_id == scope.tenant_id,
-            c.installation_id == scope.installation_id, c.thread_id.startswith("sensory:household-initiative:"),
-            c.phase.in_(("will_model_started", "will_usage_uncertain")))
-        if excluding_thread is not None:
-            unresolved = unresolved.where(c.thread_id != excluding_thread)
-        return connection.execute(unresolved.limit(1)).first() is not None
+        blocked, predecessor = self._household_recovery_state(connection, excluding_thread=excluding_thread)
+        return blocked or (predecessor is not None and not allow_prospective)
 
     @staticmethod
     def _retained_household_observation(row) -> SensoryEvent:
@@ -643,7 +758,7 @@ class PostgresSensoryEventStore:
                 return "already_routed"
             if row["phase"] != "sensory_observed" or row["status"] != "completed":
                 return "source_unavailable"
-            if self._household_window_active(connection, now=now):
+            if self._household_window_active(connection, now=now, allow_prospective=True):
                 return "window_pending"
             from eva.adapters.postgres.initiative_attention import pending_attention
             from eva.contracts.timestamps import parse_utc_timestamp
@@ -992,12 +1107,33 @@ class PostgresSensoryEventStore:
             if self._household_binding is None:
                 started = self._timeline.transition(**transition)
             else:
+                authority = self._household_recovery_authority()
+                if authority is not None:
+                    transition["data"].update({"household_recovery_contract": "HouseholdProspectiveRecovery/v1",
+                                               "owner_mandate_sha256": authority})
                 scope = self._timeline._scope_value
                 with self._timeline._engine.begin() as connection:
                     self._timeline._scope(connection)
                     connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                         {"key": "sensory:household-initiative:"})
-                    if self._household_window_active(connection, now=now, excluding_thread=claim.thread_id):
+                    blocked = self._household_window_active(connection, now=now,
+                        excluding_thread=claim.thread_id,
+                        allow_prospective=claim.event.event_type == "household_observation_review")
+                    recovery_blocked, predecessor = self._household_recovery_state(
+                        connection, excluding_thread=claim.thread_id)
+                    blocked = blocked or recovery_blocked
+                    if predecessor is not None:
+                        old_source = self._event_from_thread(predecessor["thread_id"])
+                        blocked = blocked or (authority != predecessor["owner_mandate_sha256"]
+                            or now - claim.event.occurred_at > self._observation_freshness
+                            or claim.event.occurred_at > now
+                            or claim.event.occurred_at <= datetime.fromisoformat(predecessor["failed_at"])
+                            or not self._matches_household_event(claim.event)
+                            or not self._household_original_ids(claim.event).isdisjoint(
+                                self._household_original_ids(old_source)))
+                        if not blocked:
+                            transition["data"]["recovery_predecessor"] = predecessor
+                    if blocked:
                         transition_timeline_thread(connection, scope, thread_id=claim.thread_id,
                             expected_revision=claim.revision,
                             checkpoint_id=f"{claim.thread_id}:window-pending:{claim.revision + 1}",
@@ -2092,6 +2228,7 @@ class PostgresSensoryEventStore:
         error: Exception,
         *,
         now: datetime,
+        _local_model_returned: bool = False,
     ) -> None:
         state = self._timeline.load(claim.thread_id)
         from eva.application.conversation import ConversationModelUsage
@@ -2130,6 +2267,21 @@ class PostgresSensoryEventStore:
                 retry_count=claim.retry_count, last_error_fingerprint=fingerprint)
             return
         if isinstance(error, AutonomousUsageUncertain) or state.phase == "will_model_started":
+            local_proof = {}
+            if (_local_model_returned is True and self._household_binding is not None
+                    and state.phase == "will_model_started" and state.status == "active"
+                    and state.revision == claim.revision and state.operation_id == claim.operation_id
+                    and self._matches_household_event(claim.event)
+                    and claim.event.event_type == "household_observation_review"
+                    and self._event_from_thread(claim.thread_id, latest=True) == claim.event):
+                started = self._timeline.events(claim.thread_id)[-1]
+                if (started.event_type == "WILL_MODEL_STARTED"
+                        and started.payload["data"].get("household_recovery_contract")
+                            == "HouseholdProspectiveRecovery/v1"):
+                    local_proof = {"local_model_end": {"contract": "SensoryLocalModelReturn/v1",
+                        "source_event_id": claim.event.source_event_id, "operation_id": claim.operation_id,
+                        "claim_revision": claim.revision, "error_fingerprint": hashlib.sha256(
+                            f"{type(error).__name__}: {error}".encode()).hexdigest()}}
             # A new request cannot recover the missing measurement of this one.
             # Keep the uncertainty durable instead of spending another attempt.
             self._timeline.transition(
@@ -2149,7 +2301,7 @@ class PostgresSensoryEventStore:
                       "failure_fingerprint": hashlib.sha256(
                           f"{type(error).__name__}: {error}".encode()
                       ).hexdigest(),
-                      "provider_usage_error": isinstance(error, AutonomousUsageUncertain)},
+                      "provider_usage_error": isinstance(error, AutonomousUsageUncertain), **local_proof},
                 retry_count=claim.retry_count + 1,
                 last_error_fingerprint=hashlib.sha256(b"autonomous_provider_usage_unverified").hexdigest(),
             )
