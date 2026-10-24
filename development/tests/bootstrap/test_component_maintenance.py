@@ -180,7 +180,8 @@ def test_pg18_minimal_maintenance_grant_stops_and_card_shows_stopped(maintenance
 
 
 
-def test_pg18_ha_owned_source_reaches_private_decision_without_forced_model_choice(native_digital, monkeypatch, tmp_path):
+@pytest.mark.parametrize('authorization_source', [POLICY['authorization_source'], 'Bewuste toestemming — '*30])
+def test_pg18_ha_owned_source_reaches_private_decision_without_forced_model_choice(native_digital, monkeypatch, tmp_path, authorization_source):
     """One real-PG handoff case. No model response, update choice, or success is fabricated.
 
     An explicitly synthetic historical next-attention fixture tests scheduling;
@@ -198,7 +199,7 @@ def test_pg18_ha_owned_source_reaches_private_decision_without_forced_model_choi
     f.control.stop(f.claim.intent_id, now=NOW)
     f.profile = replace(f.profile, capability_ids=f.profile.capability_ids + ("manage_own_component_update",))
     f.policy["digital_work"]["capability_ids"] = list(f.profile.capability_ids)
-    f.policy["component_maintenance"] = dict(POLICY)
+    f.policy["component_maintenance"] = {**POLICY, "authorization_source":authorization_source}
     f.path.write_text(json.dumps(f.policy)); f.auth.policy()
     store = PostgresSensoryEventStore(f.control._engine, tenant_id=f.claim.tenant_id,
         installation_id=f.claim.installation_id, initiative_principal_id=f.claim.principal_id,
@@ -247,6 +248,15 @@ def test_pg18_ha_owned_source_reaches_private_decision_without_forced_model_choi
     assert offered['source_sha256'] != offered['observation_sha256']
     assert offered['source_attention']['available'] is True
     assert offered['installed_versions'] == observation['versions']
+    declared = offered['declared_maintenance_mandate']
+    assert declared['enabled'] is True
+    assert declared['authorization_source'] == authorization_source.encode()[:256].decode('utf-8', errors='ignore')
+    assert declared['authorization_source_sha256'] == hashlib.sha256(authorization_source.encode()).hexdigest()
+    assert declared['authorization_source_truncated'] is (len(authorization_source.encode()) > 256)
+    assert declared['classification'] == 'declared_current_owner_policy_not_execution_permission'
+    assert declared['policy_sha256'] == offered['maintenance_configuration_sha256']
+    assert offered['is_execution_permission'] is False
+    assert 'new_cost_eur_cents' not in declared  # No invented zero price or extra grant.
     assert offered['target_version'] == '3.3.6' and offered['is_current_proof'] is False
     assert claim.event.payload['life_context']['coverage']['byte_budget_truncated'] is True
     assert 'entity_id' not in offered

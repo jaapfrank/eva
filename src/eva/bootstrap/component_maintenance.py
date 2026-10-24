@@ -1,6 +1,7 @@
 """Typed native maintenance authority on existing owner, sensory and work stores."""
 from __future__ import annotations
 from datetime import UTC, datetime
+import hashlib
 import re
 import sqlalchemy as sa
 from eva.contracts.canonical_json import canonical_sha256
@@ -85,6 +86,15 @@ def _maintenance_attention_observations(authority, connection, scope, principal_
                 or any(not isinstance(v, str) or re.fullmatch(r"[0-9A-Za-z.+_-]{1,40}", v) is None
                        for v in packages.values())):
             raise ValueError("maintenance installed version metadata differs")
+    authorization = maintenance["authorization_source"].encode("utf-8")
+    declared_mandate = {
+        "enabled": True,
+        "authorization_source": authorization[:256].decode("utf-8", errors="ignore"),
+        "authorization_source_sha256": hashlib.sha256(authorization).hexdigest(),
+        "authorization_source_truncated": len(authorization) > 256,
+        "policy_sha256": canonical_sha256(maintenance),
+        "classification": "declared_current_owner_policy_not_execution_permission",
+    }
     return ({"source": "component_maintenance", "source_event_id": data["source_event_id"],
         "source_sha256": bytes(row.payload_sha256).hex(), "observed_at": row.occurred_at.isoformat(),
         "event_type": "component_update_available", "component_set": "psycopg",
@@ -92,6 +102,7 @@ def _maintenance_attention_observations(authority, connection, scope, principal_
         "official_releases": releases, "installed_versions": versions,
         "target_version": maintenance["target_version"],
         "maintenance_configuration_sha256": canonical_sha256(maintenance),
+        "declared_maintenance_mandate": declared_mandate,
         "classification": "retained_software_metadata_not_current_proof_or_action_permission",
         "is_current_proof": False, "is_execution_permission": False,
         "next_step": "Weigh relevance; use ordinary native work and manage_own_component_update for separately reviewed maintenance"},)
