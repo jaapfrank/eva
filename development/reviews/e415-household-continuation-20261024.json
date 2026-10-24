@@ -1,0 +1,39 @@
+{
+  "contract": "EvaIndependentHouseholdContinuationReview/v1",
+  "checkedAt": "2026-10-24T12:23:24.574244+00:00",
+  "taskId": "E4.15",
+  "reviewerThreadId": "01a16a55-1607-7171-820e-a3918acaea3f",
+  "verdict": "GO_concrete_lost_review_closed_ordinary_review_resumed_full_card_open",
+  "evidence": "development/evidence/product/e415-uncertain-household-continuation-20261024.json",
+  "privateReviewSha256": "f741d9c7be6153c756fddc79df17020ba0e0dc81803aec9bff7c66b2781b0011",
+  "executionSha256": "2acf7acd551838df562d3b76917e6406b5aca4104cfb21b46442d7d5723f125a",
+  "postReadbackSha256": "75a45c9d17b31b021c2a5fa3a0a25a2e6e6c26ca3bd16324284478962710e321",
+  "checks": {
+    "originalFourHashes": true,
+    "originalFourTypesTimes": true,
+    "originalUsageNull": true,
+    "exactAppend5": true,
+    "headAbandoned5": true,
+    "appendUsageNull": true,
+    "notReplayed": true,
+    "sourceAndPreviousHashes": true,
+    "retryCountPreserved": true,
+    "lastErrorFingerprintPreserved": true
+  },
+  "actualOrdinaryReview": {
+    "decisions": 2,
+    "disposition": "silence",
+    "startGapSeconds": 302,
+    "newSourcesForced": false
+  },
+  "notProved": [
+    "general provider missing-usage root cause resolved",
+    "positive greeting and hearing",
+    "self-discovered need",
+    "later feedback and reuse",
+    "full original E4.15 acceptance"
+  ],
+  "newProductCode": false,
+  "repeatedTestMatrix": false,
+  "ownerActionRequired": false
+}

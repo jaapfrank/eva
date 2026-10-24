@@ -1,8 +1,8 @@
 {
   "contract": "EvaHouseholdContinuationFinding/v1",
   "taskId": "E4.15",
-  "checkedAt": "2026-10-24T12:09:34.350200+00:00",
-  "status": "actual_uncertain_review_blocks_new_household_initiative_recovery_in_progress",
+  "checkedAt": "2026-10-24T12:23:24.574244+00:00",
+  "status": "concrete_household_blocker_resolved_and_ordinary_review_resumed",
   "finding": {
     "observedSince": "2026-10-24T09:09:30Z",
     "phase": "will_usage_uncertain",
@@ -38,5 +38,51 @@
     "newOriginalCardsCompleted": 0,
     "fullOriginalCardCompleted": false,
     "ownerActionRequiredForThisRepair": false
-  }
+  },
+  "actualRecovery": {
+    "executionReceiptSha256": "2acf7acd551838df562d3b76917e6406b5aca4104cfb21b46442d7d5723f125a",
+    "independentActionReviewSha256": "4838d611321cf8521be8f42afcfe7bba222b69040adde274d72ce319add3b321",
+    "startedAt": "2026-10-24T12:13:57.244874+00:00",
+    "finishedAt": "2026-10-24T12:13:57.319536+00:00",
+    "httpStatus": 200,
+    "response": {
+      "contract": "EvaPrivateReviewRecovery/v1",
+      "disposition": "abandoned",
+      "usage": "unknown",
+      "replayed": false
+    },
+    "postReadbackPending": false,
+    "productCodeChanged": false,
+    "installationOrRestartPerformed": false,
+    "postReadbackSha256": "75a45c9d17b31b021c2a5fa3a0a25a2e6e6c26ca3bd16324284478962710e321",
+    "finalIndependentReviewSha256": "f741d9c7be6153c756fddc79df17020ba0e0dc81803aec9bff7c66b2781b0011",
+    "originalFourEventsPreserved": true,
+    "oldUsageRemainsNull": true,
+    "terminalPhase": "will_abandoned",
+    "terminalRevision": 5,
+    "appendedEventSha256": "5b42bc97cf7ace6bfd6130633cea6ffc5816088eced15ca566aaf56888187d2d"
+  },
+  "ordinaryUseAfterRecovery": {
+    "decisionTimes": [
+      "2026-10-24T12:14:09Z",
+      "2026-10-24T12:19:06Z"
+    ],
+    "decisions": [
+      "silence",
+      "silence"
+    ],
+    "newIndependentHouseholdThreads": 2,
+    "modelStartGapSeconds": 302,
+    "originalSourceTimesPreserved": true,
+    "forcedSourcesOrRetries": false,
+    "reportedModelAttempts": 2,
+    "reportedToolCalls": 2,
+    "inputTokens": 17013,
+    "outputTokens": 248,
+    "cost": null,
+    "positiveGreetingProved": false,
+    "originalCardCompleted": false
+  },
+  "scopeLimit": "The concrete stalled assessment is closed and ordinary assessment is working again. General missing-usage root cause is not resolved; positive greeting, hearing, self-discovered need and later feedback/reuse remain open.",
+  "independentReview": "development/reviews/e415-household-continuation-20261024.json"
 }
