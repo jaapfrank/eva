@@ -618,7 +618,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "active_preparing_normal_owner_continuation_after_login",
+      "status": "prepared_normal_owner_resume_waiting_explicit_login",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1554,13 +1554,20 @@
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
       "task": "E1.6",
       "role": "executor",
-      "status": "active_new_natural_source_outcome_readback",
+      "status": "new_natural_source_readback_completed_no_card_closure",
       "allowedWritePaths": [],
       "activeCodeOrInstallClaim": false,
       "scope": "Only new ordinary source-choice/change/followup evidence after known release fix; no code, injections, model calls or old matrix.",
       "currentWritePaths": [],
       "updatedAt": "2026-10-24T11:56:37.055465+00:00",
-      "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/owner-school-request-20261024/provider-continuation"
+      "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/owner-school-request-20261024/provider-continuation",
+      "latestBoundedReadback": {
+        "checkedThrough": "2026-10-24T11:56:03Z",
+        "findingSha256": "ad09f57df2116fa47fd015fcf81c0445f99f849011cd4c82153713e278198b32",
+        "reviewSha256": "c99f416f8cb8260faa4f9487b90a53b35d988967c24e299251d71db26570e5a3",
+        "newFullCardCompletion": false,
+        "doNotRepeatWithoutNewEvidence": true
+      }
     }
   },
   "protectedExistingWork": {
@@ -1828,6 +1835,16 @@
       "kind": "heartbeat",
       "intervalMinutes": 5,
       "status": "ACTIVE"
+    },
+    "currentOwnerContinuation": {
+      "workId": "work:eva-resume:5c85e2f2-d47e-5312-bc5e-b1c9e7b3354c",
+      "status": "waiting_explicit_owner_login_confirmation",
+      "ownerConfirmationReceived": false,
+      "mustNotInferConfirmationFromElapsedTimeOrBrowserControlAlone": true,
+      "existingApiHandoff": "/home/administrator/project/.eva2-artifacts/e416-owner-useful-completion-20261024/existing-owner-after-login-handoff-ebe7c702e0ca0624.private.json",
+      "handoffSha256": "ebe7c702e0ca06240475eda7f9f0b42bbba4bf4ab6a1a8b477e75e9e2b373471",
+      "installedApiSourcePinsSha256": "a4ccb6a2320db098baaf6933e909a79371c6be074b18c36baa2c30cd2ee0320f",
+      "instruction": "After actual explicit same-session login/return confirmation, inspect current browser control, source/profile and lineage, then use the one existing revise_digital action; inspect uncertain responses instead of retrying. Original school result remains open."
     }
   }
 }
