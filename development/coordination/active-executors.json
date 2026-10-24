@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T15:48:14.785400+00:00",
+  "updatedAt": "2026-10-24T15:49:06.488137+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1516,12 +1516,12 @@
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "e415_new_uncertain_actual_review_complete",
+      "status": "durable_household_recovery_independent_contract_review",
       "allowedWritePaths": [
         "development/reviews/e419-final-candidate-review-20261024.json",
         "development/reviews/owner-command-provider-fix-20261024.json"
       ],
-      "activeIndependentReviewClaim": false,
+      "activeIndependentReviewClaim": true,
       "review": "development/reviews/e415-household-continuation-20261024.json",
       "task": "E4.16",
       "assignedAt": "2026-10-23T20:28:02.293070+00:00",
@@ -1529,9 +1529,11 @@
       "activeCodeOrInstallClaim": false,
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024",
       "scope": "Independently assess actual five later Astra calls and limits of one possible existing owner resume. No product code or runtime mutation.",
-      "updatedAt": "2026-10-24T15:44:15.830924+00:00",
-      "currentWritePaths": [],
-      "activeAssignment": "Review pinned root one-shot operator93e4202... and binding623fc... for newly proven locally ended14:55incident. No runtime queries/code/tests/effects."
+      "updatedAt": "2026-10-24T15:49:06.488137+00:00",
+      "currentWritePaths": [
+        "/home/administrator/project/.eva2-artifacts/e416-durable-household-recovery-20261024/reviewer/contract-review.private.json"
+      ],
+      "activeAssignment": "Independently review actual bounded recovery contract and authority/accounting pins; no implementation/criterion relaxation/runtime query."
     },
     "e419-recovery-executor": {
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
