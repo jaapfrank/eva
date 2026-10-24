@@ -847,7 +847,7 @@
     "title": "Relevante updates zelfstandig ontdekken en beheerd toepassen",
     "status": "in_progress",
     "doneWhen": "Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap.",
-    "nextAction": "Lever en review de gerichte V2-aandachtoverdracht; bind de exacte nieuwe werkprofielen en installeer met verse claims. Laat daarna Eva de echte update zelf kiezen, beoordelen, toepassen en gebruiken; sluit alleen op oorspronkelijke criteria.",
+    "nextAction": "Rond de vaste herstelaanroep en V2-overdracht af, laat tester de concrete kandidaat onafhankelijk beoordelen en installeer met verse claims. Laat daarna Eva de echte update zelfstandig kiezen, beoordelen, toepassen en gebruiken; sluit alleen op oorspronkelijke criteria.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -865,11 +865,17 @@
   "team": {
     "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "executor": "01a0c537-54d0-7080-9e4c-74db537877af",
-    "independentReviewer": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-    "maxConcurrentExecutorsIncludingReview": 2,
+    "executors": [
+      "01a0c537-54d0-7080-9e4c-74db537877af",
+      "01a169e0-4ed1-75d1-9541-b5dae109b328",
+      "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+    ],
+    "independentReviewer": "01a16a55-1607-7171-820e-a3918acaea3f",
+    "maxConcurrentExecutorsIncludingReview": 4,
+    "activeChatsIncludingCoordinator": 5,
     "noSubagentsOrNewChats": true,
-    "standbyControlChat": "01a16a55-1607-7171-820e-a3918acaea3f",
-    "reviewerRole": "Tests/review of concrete deliveries; records reproducible errors; no coding or coordination"
+    "reviewerRole": "Independent tests/review of concrete deliveries; reproducible findings and GO/NO_GO; no product coding or coordination",
+    "ownerInstruction": "Direct eigenaar24oktober2026 vraagt vijf actieve chats; vervangt eerdere limiet van één coördinator plus twee uitvoerders."
   },
   "audit": {
     "projectDashboard": {
@@ -8397,19 +8403,27 @@
                   "E4.16",
                   "E4.17"
                 ],
-                "nextAction": "Lever en review de gerichte V2-aandachtoverdracht; bind de exacte nieuwe werkprofielen en installeer met verse claims. Laat daarna Eva de echte update zelf kiezen, beoordelen, toepassen en gebruiken; sluit alleen op oorspronkelijke criteria.",
-                "implementationStatus": "targeted_private_attention_handoff_fix_before_activation",
-                "checkedAt": "2026-10-24T08:39:30.306482+00:00",
+                "nextAction": "Rond de vaste herstelaanroep en V2-overdracht af, laat tester de concrete kandidaat onafhankelijk beoordelen en installeer met verse claims. Laat daarna Eva de echte update zelfstandig kiezen, beoordelen, toepassen en gebruiken; sluit alleen op oorspronkelijke criteria.",
+                "implementationStatus": "final_native_recovery_binding_and_independent_candidate_review",
+                "checkedAt": "2026-10-24T09:05:34.338013+00:00",
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                   "activeWorkers": [
                     "01a0c537-54d0-7080-9e4c-74db537877af",
-                    "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+                    "01a169e0-4ed1-75d1-9541-b5dae109b328",
+                    "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+                    "01a16a55-1607-7171-820e-a3918acaea3f"
                   ],
-                  "scope": "One builder owns exact full-update handoff paths; reviewer owns independent criteria and review only; root shared installation, integration and Git."
+                  "roles": {
+                    "01a0c537-54d0-7080-9e4c-74db537877af": "native maintenance integration",
+                    "01a169e0-4ed1-75d1-9541-b5dae109b328": "retained-image loader and host compatibility",
+                    "01a169f2-6ff6-7961-b16f-9fd0b836d3e3": "immutable delivery packaging",
+                    "01a16a55-1607-7171-820e-a3918acaea3f": "independent tester/reviewer"
+                  },
+                  "scope": "Five existing chats, separate files; coordinator owns shared installation/Git. One E419 outcome, no duplicate recovery route."
                 },
                 "review": "development/reviews/e419-baseline-preflight-review-20261024.json",
-                "progress": "V1 compleet bevroren en foundationimages gebouwd; onafhankelijke review loopt. Actuele configuratiecontrole vindt een echte ontbrekende overdracht: HA bezit sensorbeslissingen en private aandacht selecteert alleen HA-bronnen. Builder repareert alleen de bestaande private metadata-/aandachtoverdracht, zonder extra planner of handmatige updateadoptie. Bestaande resultaten blijven bewaard; nog geen productie-installatie of autonome update.",
+                "progress": "V1-foundation gebouwd en bewaard. Gerichte V2-aandachtoverdracht en canonieke tijdcorrectie gereed voor review. Eén vaste geïsoleerde herstelharness wordt verplicht aan dezelfde native taak gekoppeld; de overbodige tweede herstelimplementatie vervalt. Vijf bestaande chats werken aan integratie, loader/hostvoorwaarden, pakketoplevering en onafhankelijke review. Nog geen E419-productie-installatie of autonome update.",
                 "latestEvidence": "development/evidence/product/e419-foundation-preparation-20261024.json"
               }
             ],
@@ -14521,19 +14535,27 @@
                 "E4.16",
                 "E4.17"
               ],
-              "nextAction": "Lever en review de gerichte V2-aandachtoverdracht; bind de exacte nieuwe werkprofielen en installeer met verse claims. Laat daarna Eva de echte update zelf kiezen, beoordelen, toepassen en gebruiken; sluit alleen op oorspronkelijke criteria.",
-              "implementationStatus": "targeted_private_attention_handoff_fix_before_activation",
-              "checkedAt": "2026-10-24T08:39:30.306482+00:00",
+              "nextAction": "Rond de vaste herstelaanroep en V2-overdracht af, laat tester de concrete kandidaat onafhankelijk beoordelen en installeer met verse claims. Laat daarna Eva de echte update zelfstandig kiezen, beoordelen, toepassen en gebruiken; sluit alleen op oorspronkelijke criteria.",
+              "implementationStatus": "final_native_recovery_binding_and_independent_candidate_review",
+              "checkedAt": "2026-10-24T09:05:34.338013+00:00",
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                 "activeWorkers": [
                   "01a0c537-54d0-7080-9e4c-74db537877af",
-                  "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+                  "01a169e0-4ed1-75d1-9541-b5dae109b328",
+                  "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+                  "01a16a55-1607-7171-820e-a3918acaea3f"
                 ],
-                "scope": "One builder owns exact full-update handoff paths; reviewer owns independent criteria and review only; root shared installation, integration and Git."
+                "roles": {
+                  "01a0c537-54d0-7080-9e4c-74db537877af": "native maintenance integration",
+                  "01a169e0-4ed1-75d1-9541-b5dae109b328": "retained-image loader and host compatibility",
+                  "01a169f2-6ff6-7961-b16f-9fd0b836d3e3": "immutable delivery packaging",
+                  "01a16a55-1607-7171-820e-a3918acaea3f": "independent tester/reviewer"
+                },
+                "scope": "Five existing chats, separate files; coordinator owns shared installation/Git. One E419 outcome, no duplicate recovery route."
               },
               "review": "development/reviews/e419-baseline-preflight-review-20261024.json",
-              "progress": "V1 compleet bevroren en foundationimages gebouwd; onafhankelijke review loopt. Actuele configuratiecontrole vindt een echte ontbrekende overdracht: HA bezit sensorbeslissingen en private aandacht selecteert alleen HA-bronnen. Builder repareert alleen de bestaande private metadata-/aandachtoverdracht, zonder extra planner of handmatige updateadoptie. Bestaande resultaten blijven bewaard; nog geen productie-installatie of autonome update.",
+              "progress": "V1-foundation gebouwd en bewaard. Gerichte V2-aandachtoverdracht en canonieke tijdcorrectie gereed voor review. Eén vaste geïsoleerde herstelharness wordt verplicht aan dezelfde native taak gekoppeld; de overbodige tweede herstelimplementatie vervalt. Vijf bestaande chats werken aan integratie, loader/hostvoorwaarden, pakketoplevering en onafhankelijke review. Nog geen E419-productie-installatie of autonome update.",
               "latestEvidence": "development/evidence/product/e419-foundation-preparation-20261024.json"
             }
           ],
@@ -17637,7 +17659,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T07:54:30.973301+00:00",
+  "updatedAt": "2026-10-24T09:05:34.338013+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

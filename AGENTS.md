@@ -1,6 +1,6 @@
 # Eva2 — actuele werkafspraken
 
-Bijgewerkt op 18 oktober 2026. Dit bestand bevat de geldende uitvoering; gedateerde
+Bijgewerkt op 24 oktober 2026. Dit bestand bevat de geldende uitvoering; gedateerde
 voortgang en oude opdrachten staan in het [exacte archief](development/archive/history/20261015-authority-consolidation/snapshot.json).
 
 ## Eén doel en één werkregistratie
@@ -69,8 +69,8 @@ Eva-agent. Werk die afhankelijkheid gericht weg wanneer haar vervanging is bewez
 
 ## Samenwerken en kosten
 
-Eén coördinator, maximaal twee uitvoerders met afzonderlijke bestandsverantwoordelijkheid.
-Review gebeurt binnen dezelfde teamomvang. Een open gebruikersvraag blokkeert ander
+Eén coördinator, drie uitvoerders met afzonderlijke bestandsverantwoordelijkheid en één onafhankelijke tester/reviewer.
+Deze vijf chats werken op de directe eigenaaropdracht van 24 oktober 2026. Een open gebruikersvraag blokkeert ander
 uitvoerbaar werk niet. Vraag alleen wat werkelijk ontbreekt en geef één concrete
 handeling wanneer die nodig is; reeds gegeven toestemming blijft gelden.
 
