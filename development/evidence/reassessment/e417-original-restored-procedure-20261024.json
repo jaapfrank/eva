@@ -1,0 +1,83 @@
+{
+  "contract": "EvaRestoredExtensionFunctionalEvidence/v1",
+  "task": "E4.17",
+  "checkedAt": "2026-10-24T06:06:08.566732+00:00",
+  "status": "one_original_restored_procedure_completed_expected_stale_guard_and_stopped",
+  "fullTaskCompleted": true,
+  "fullCardReviewPending": false,
+  "sourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+  "runnerSha256": "b3b414a1281cec8c3978d389f8f8cc70102711fbbd97138be94b3ffc4e70c9db",
+  "originalClientSha256": "16d74fb37dcb91894bbe7edb8ec724478677827ee4822fcacb2d00214096a245",
+  "independentReview": "development/reviews/e417-original-binding-review-20261024.json",
+  "originalPreDispatchGoSha256": "d51a66af3e06f3151af46b55a937d0c6ceeb4e24a571f1edbaf7aa7f7a974284",
+  "bindings": {
+    "sourceBundleManifestSha256": "df05579d1e45a39ad9b71588e44b2ddaeef5e427a2164205c622ccb28ece00fb",
+    "actualInputFileSha256": "c11ebbb49aff11c3fa65e600354b3703e437dc737e0e780f33d429aa6945310e",
+    "nativeCanonicalInputSha256": "d085a1a0140574603a10844057c33aa3467f12eb09a80b54b2421fb926f8e8a0",
+    "nativeReportSha256": "0c76affaba67966e5a82eb93e29d7ed0e50f71e5aeadd5c12d52f300d1cf501b",
+    "executionReceiptSha256": "236b4d81e60d57e52014508f7340fad47617e20e39ff87ecb3edd7b981624898"
+  },
+  "actualInput": "Original normalized allowed observation, epoch and genuine empty faces unchanged; current independent discovery inventory/trigger/device join and authenticated health revisions match retained original facts and restored metadata. Only now added at actual dispatch. Not a literal historical HTTP request or batch-selection replay.",
+  "result": {
+    "action": "none",
+    "reason": "stale_or_unordered",
+    "version": "camera-greeting-adapter/2"
+  },
+  "nativeExecution": {
+    "exit_code": 0,
+    "timed_out": false,
+    "cancelled": false,
+    "elapsed_ms": 1203,
+    "stdout_truncated": false,
+    "stderr_truncated": false
+  },
+  "nativeFlagsPreserved": {
+    "semantic_success_verified": false,
+    "installed": false
+  },
+  "separateExpectedResultCheck": "Original client verifies source/input/image binding; actual nested stdout exactly matches the unchanged source stale guard under the true current clock. Independent review determines this bounded meaning separately from native envelope flags.",
+  "cleanup": {
+    "hostExitCode": 0,
+    "stopEscalated": false,
+    "portsWithoutListener": {
+      "46080": true,
+      "46081": true
+    },
+    "remainingOwnTmpMountedContainers": [],
+    "productionGenerationsUnchanged": true,
+    "heldRestoredCoreWorkerNeverStarted": true
+  },
+  "usage": {
+    "procedureCalls": 1,
+    "retries": 0,
+    "runtimeModelCalls": 0,
+    "cameraRequests": 0,
+    "faceInferenceCalls": 0,
+    "householdActionsOrMessages": 0,
+    "bridgeStarts": 0,
+    "clientSeconds": 1.2694280659779906,
+    "operatorSeconds": 79.77072703198064,
+    "operatorTimeQualification": "Includes one final metadata inspection across retained containers; no further scenarios or procedure calls.",
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "runtimeCredits": null
+  },
+  "preservedPriorEvidence": [
+    "development/reviews/e417-current-extension-package-review-20261023.json",
+    "development/evidence/reassessment/e417-extension-restore-20261023.json"
+  ],
+  "limits": [
+    "Bounded original pure-function stale behavior on restored infrastructure; no positive greeting, face recognition or household acceptance inferred.",
+    "No historical clock, invented face/source data or native semantic_success_verified relabeling."
+  ],
+  "preservedPreExecutionObserverFailures": [
+    "Initial pre-injection keycheck required now before adding actual clock; corrected before services/call.",
+    "Initial observer read result fields at envelope top level; corrected to original nested result before services/call.",
+    "Initial empty-state check included permitted empty directories; corrected to original files/links count before services/call."
+  ],
+  "privacy": "Source prose, event identifiers, profile facts and credential values remain private.",
+  "originalCardVerdict": "GO_ORIGINAL_E417_TECHNICAL",
+  "independentReviewSha256": "cb8555242038026fd3ab16218579df27a456d5d333fcb5820ece6635167d19db",
+  "ownerAcceptance": false,
+  "familyAcceptance": false
+}

@@ -1,0 +1,274 @@
+{
+  "contract": "EvaIndependentDeliveryReview/v1",
+  "task": "E4.17",
+  "revision": "one_actual_original_procedure_and_original_restoration_card_final",
+  "checkedAt": "2026-10-24T06:04:41.942561+00:00",
+  "reviewerRole": "Independent reviewer/tester; coordinator alone executes the bounded approved operator plan",
+  "verdict": "GO_ORIGINAL_E417_TECHNICAL",
+  "verdictScope": "Original E4.17 restoration card technically complete for the exact preserved Eva-authored V2 extension and declared current trusted-binding reconstruction on the clean restored isolated target. One actual original-client call matches the original guarded behavior. No historical HTTP replay, positive face/greeting, family acceptance or full-project completion is claimed.",
+  "originalDoneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
+  "originalDoneWhenSha256": "210e294f5d822da7a0f706b4580039f964d51758a64b41643d44a791086c611d",
+  "criteriaChanged": false,
+  "fullOriginalTaskCompleted": true,
+  "ownerAcceptance": false,
+  "executedByReviewer": false,
+  "bindings": {
+    "handoff": {
+      "path": "/home/administrator/project/.eva2-artifacts/e417-original-binding-20261024/handoff.private.json",
+      "sha256": "37130ae7acec617b42a5e8a2d9e010e24039b8d6af9537c5b9452d6d57e01a08"
+    },
+    "bindingManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/e417-original-binding-20261024/manifest.private.json",
+      "sha256": "df05579d1e45a39ad9b71588e44b2ddaeef5e427a2164205c622ccb28ece00fb",
+      "filesVerified": 16
+    },
+    "provenance": {
+      "path": "/home/administrator/project/.eva2-artifacts/e417-original-binding-20261024/binding-provenance.private.json",
+      "sha256": "e230d9860ea0f6cae1d28857a9935c230bbd2c7e9814ab56f336d68aa858c494"
+    },
+    "oneCallPlan": {
+      "path": "/home/administrator/project/.eva2-artifacts/e417-original-binding-20261024/one-original-call-plan.private.json",
+      "sha256": "9e66382fe2e371df06a543cdaf215ecfa1978a7e31299cc79ede46239d81c887"
+    },
+    "operator": {
+      "path": "/home/administrator/project/.eva2-artifacts/e417-original-call-20261024/execute-once.py",
+      "sha256": "a55ca059ea54ce0ebdf189e95f2d8a69894aafe48d3fe8d5a844ac15104d2a2a"
+    },
+    "clientCallRunner": {
+      "path": "/home/administrator/project/.eva2-artifacts/e417-original-call-20261024/original-client-call.py",
+      "sha256": "583de8cd9a50a4b1ac9217a5ddda359a9af396dba642c58ff2f54db2d98c80e3"
+    },
+    "originalClientModuleSha256": "16d74fb37dcb91894bbe7edb8ec724478677827ee4822fcacb2d00214096a245",
+    "originalAuthoredSourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+    "originalRunnerSha256": "b3b414a1281cec8c3978d389f8f8cc70102711fbbd97138be94b3ffc4e70c9db",
+    "inputTemplateSha256": "1d0856980607134023ac4e8b5f0357eb923191fae944253e2f01956312af00da",
+    "retainedPhase1PlanSha256": "f565d2cd0e7c0d3983ce2a7d8275ab092c3930dececdd0c56613e3b3016646e3",
+    "retainedPhase1ReceiptSha256": "2426624cc869a765d8edaf7895d8801e60ea6bcb93cf5bb7c6fdb0ec31069004",
+    "originalFactFileSha256": "ac93e8637231bf02572db1864a37fbbe871ecacf61c38eba12d227c28605c3b2",
+    "originalPayloadSha256": "d4a22d8f9cf145ac15938eeeb8b0f6e089b03215aeb7846b059c56135a7b130e"
+  },
+  "independentBindingChecks": {
+    "status": "PASS",
+    "all16ManifestFilesExactRegularSingleLinkAnd0400": true,
+    "originalFactCanonicalPayloadRecomputed": true,
+    "originalEventSourceIdentityAndEntireCameraObservationUnchanged": true,
+    "sourceEpochUnchanged": true,
+    "independentNormalizedRegistryDevices": 3,
+    "canonicalInventoryRevisionRecomputed": true,
+    "originalDeviceCameraTriggerJoinAndRevisionMatch": true,
+    "healthTransport": "One already captured authenticated existing GET /health, HTTP200/ok/inference_checked=false; reviewer did not repeat the request.",
+    "configuredHealthAndOriginalBackendProfileMatch": true,
+    "restoredPhase1BackendProfileAndModelHashesMatch": true,
+    "originalAndRestoredAuthoredSourceByteIdentical": true,
+    "originalFacesCount": 0,
+    "inputTemplateBeforeClockKeys": [
+      "source",
+      "event",
+      "binding"
+    ],
+    "inputTemplateContainsStoredNow": false,
+    "firstFailedOriginalGuardWithActualCurrentClock": "stale_or_unordered",
+    "guardOrderEvidence": "Original source lines29-51 bind event/trigger/device/discovery/image/backend/profile; lines52-58 reject stale/unordered; original empty-faces guard follows at73-74. Prefixes independently checked without running propose().",
+    "historicalHealthTransportProven": false,
+    "originalExecutorHttpRequestFound": false,
+    "interpretation": "Current independently bound reconstruction of a retained original fact; not literal replay of a missing historical request or original batch selection."
+  },
+  "findings": [
+    {
+      "id": "E417-CALL-001",
+      "priority": 1,
+      "scope": "Operator pre-call assertion, not product regression",
+      "status": "RESOLVED_BEFORE_ANY_EXECUTION",
+      "title": "Clock key required before actual clock injection",
+      "file": "/home/administrator/project/.eva2-artifacts/e417-original-call-20261024/original-client-call.py",
+      "originalLine": 21,
+      "originalClientRunnerSha256": "4c4be8c9aeb0238f7707a4749ed50138ba6a2372f338ad66b002df52135b65bd",
+      "observation": "Exact immutable input template has only source/event/binding, but the original observer required now before adding it. Independent JSON read proved the assertion false.",
+      "resolution": "Pre-injection key check now accepts exactly the three genuine template keys; datetime.now(UTC) is still injected only immediately before the one call. Original source/event/binding are unchanged.",
+      "preservedOriginal": "/home/administrator/project/.eva2-artifacts/e417-original-call-20261024/original-client-call-v1-keycheck.private.py"
+    },
+    {
+      "id": "E417-CALL-002",
+      "priority": 1,
+      "scope": "Operator report observer, not product regression",
+      "status": "RESOLVED_BEFORE_ANY_EXECUTION",
+      "title": "Execution flags and stdout read from wrong envelope level",
+      "file": "/home/administrator/project/.eva2-artifacts/e417-original-call-20261024/original-client-call.py",
+      "originalLine": 30,
+      "priorClientRunnerSha256": "a154d732f4fb414e9854b02b4bc6876eac53fea6725bb7732f755f3a4bd3914d",
+      "observation": "Actual restored procedure_execution returns an envelope with result subobject; actual host forwards it unchanged and original client returns it unchanged. Outer exit_code/stdout do not exist.",
+      "resolution": "Observer validates exact int exit0 and exact False timeout/cancel/truncation flags from report.result, then parses its stdout. Raw original envelope and original source/input/image binding remain intact.",
+      "preservedOriginal": "/home/administrator/project/.eva2-artifacts/e417-original-call-20261024/original-client-call-v2-envelope-check.private.py"
+    }
+  ],
+  "coordinatorSelfCorrectionPreserved": {
+    "scope": "Initial empty-state assertion counted directories although original plan counts files/links.",
+    "status": "RESOLVED_IN_EXACT_OPERATOR",
+    "originalOperatorSha256": "859afc83d6814d3d12554670122122617a5fbfa613cc9d5e067b7e69c08c103d",
+    "preservedOriginal": "/home/administrator/project/.eva2-artifacts/e417-original-call-20261024/execute-once-v1-emptydir-check.private.py",
+    "resolution": "Exact original filesOrLinks count is checked; empty accepted-releases directory is not a new file. No target state or old criteria changed."
+  },
+  "changedObserverInterfaceCheck": {
+    "status": "PASS",
+    "method": "Executed only the exact changed nested-envelope parser/assertions extracted by AST against an own synthetic report-shape fixture; no original business procedure/client/host was run.",
+    "actualNestedEnvelopeAccepted": true,
+    "truncatedResultRejected": true,
+    "nonzeroExitRejected": true,
+    "sourceAndInputUnchanged": true
+  },
+  "operatorStaticReview": {
+    "status": "PASS_FOR_EXACT_TWO_OPERATOR_HASHES",
+    "target": "Existing restored isolated target only; private host46080, no bridge required for pure stale guard.",
+    "verified": [
+      "Required exact review/operator/client-runner hashes and all frozen input-manifest pins; immutable template and original runner/source checks.",
+      "Same reviewed UID1000 clean env-i/copy-ELF host launch, isolated client -I/-S and explicit restored stdlib/dependency/source paths; original client module verified by hash.",
+      "Original declared source/config pins, admitted profile, empty file/link state and free ports checked before effects; held original core/worker remain created/Pid0/network none.",
+      "Current production core/worker generation recorded before and after; no production service changes.",
+      "Existing original output/time/memory/CPU/pid/image/authentication limits retained; one original client call, exact canonical source/input/image report binding.",
+      "Actual current clock captured in saved input at dispatch; unknown-result file before call, no automatic repeat; raw report saved before result validation.",
+      "Own Popen handle/process-group/UID cleanup in finally preserves actual host exit status; port and own temporary-container checks afterward. No global cleanup or image-only deletion."
+    ],
+    "expected": {
+      "action": "none",
+      "reason": "stale_or_unordered",
+      "version": "camera-greeting-adapter/2"
+    },
+    "futureRequiredReadback": [
+      "Exactly one actual original-client report and its original nested result.",
+      "Actual input equals frozen template plus only actual current now; image/source/input hashes match.",
+      "Exit0, timeout/cancel/stdout/stderr truncation all exactFalse and exact expected JSON.",
+      "Actual dispatch/receipt timestamps, host exit, own process/port/container cleanup and unchanged held/production generations."
+    ],
+    "forbidden": "No old clock, freshened camera event, fabricated faces/geometry, new capture/inference, model/scorer/evaluate call, household message, production substitution or source/rights expansion."
+  },
+  "existingEvidenceNotRepeated": {
+    "reviewPath": "development/reviews/e417-current-extension-package-review-20261023.json",
+    "reviewSha256": "4b2dc9f0c87c38a6ff51488933a2b15212246741858a93fe9eada877edde6948",
+    "preserved": "Existing authenticated package,18,067-file restore, private service start/health/auth401/STOP. No full rehash/import/start/health/auth/STOP experiment repeated by reviewer.",
+    "priorUnknownsPreserved": "Earlier detached phase1 process exit codes remain unknown; stopped processes were not relabelled exit0. Existing failed import/capture/port attempts and historical limits remain unchanged."
+  },
+  "originalCardDecisionAfterResult": "Original clauses assessed above using existing package/restore proofs plus the one actual original procedure and cleanup result. Card is technically complete; previous bounded reports and unknown historical exit/transport facts remain unchanged.",
+  "usage": {
+    "existingIndependentCaptureSeconds": 0.4461370409699157,
+    "reviewRuntimeProviderCalls": 0,
+    "reviewProcedureCalls": 0,
+    "reviewNewLiveDiscoveryOrHealthCalls": 0,
+    "reviewServiceStartsOrStops": 0,
+    "reviewInferenceCalls": 0,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "completeDevelopmentToolCount": null
+  },
+  "frozenPriorReports": {
+    "development/reviews/e110-housemate-development-review-20261024.json": "9afd76ebd3087cb62cfaed3bc033cc1f8ef95deebedad3980e8b1cae1fe73013",
+    "development/reviews/e29-housemate-consumer-review-20261024.json": "a3fa562743dc90e3419d92801e03951ea9bc27d3bb17c29be9a51f291dd46950",
+    "development/reviews/e113-existing-natural-handoff-review-20261024.json": "a7af62e90a8f1c4818e8605a876581eb6b83632bcf8a931d32a33155447f2045",
+    "development/reviews/e112-household-artifact-lifecycle-review-20261024.json": "c45aaaed29855f8d14b77e464818bc970a2a9d1f0f9b8e65c2da4152bbee67e5"
+  },
+  "reviewerChanges": "Only this new review and own private evidence; no product, installed runtime, original reports, source facts, models, criteria, Git or board changes.",
+  "actualOriginalCallExecutedByCoordinator": true,
+  "actualResultReview": {
+    "status": "PASS",
+    "executionReceipt": {
+      "path": "/home/administrator/project/.eva2-artifacts/e417-original-call-20261024/execution-receipt.private.json",
+      "sha256": "236b4d81e60d57e52014508f7340fad47617e20e39ff87ecb3edd7b981624898",
+      "approvedReviewSha256": "d51a66af3e06f3151af46b55a937d0c6ceeb4e24a571f1edbaf7aa7f7a974284"
+    },
+    "actualInput": {
+      "path": "/home/administrator/project/.eva2-artifacts/e417-original-call-20261024/actual-input.private.json",
+      "rawFileSha256": "c11ebbb49aff11c3fa65e600354b3703e437dc737e0e780f33d429aa6945310e",
+      "canonicalExecutionInputSha256": "d085a1a0140574603a10844057c33aa3467f12eb09a80b54b2421fb926f8e8a0",
+      "onlyAddedField": "now from actual UTC clock at dispatch",
+      "originalSourceEventBindingOtherwiseExact": true
+    },
+    "originalClientReport": {
+      "path": "/home/administrator/project/.eva2-artifacts/e417-original-call-20261024/original-client-report.private.json",
+      "sha256": "0c76affaba67966e5a82eb93e29d7ed0e50f71e5aeadd5c12d52f300d1cf501b",
+      "image": "sha256:abcaea79e193a9b7d5ea78c5f3d3d4fa737abb67e72fdac3a9af067f3a970ca5",
+      "runnerSha256": "b3b414a1281cec8c3978d389f8f8cc70102711fbbd97138be94b3ffc4e70c9db",
+      "exitCode": 0,
+      "allFourTimeoutCancellationTruncationFlagsExactlyFalse": true,
+      "stderrEmpty": true,
+      "hostSemanticSuccessVerifiedFlagPreserved": false,
+      "hostInstalledFlagPreserved": false
+    },
+    "independentExpectedOutput": {
+      "action": "none",
+      "reason": "stale_or_unordered",
+      "version": "camera-greeting-adapter/2"
+    },
+    "expectationCheck": "Raw native flags remain unchanged; reviewer separately verified actual canonical input/source/image binding and the exact expected JSON from the original guards. Source clock and original observation were not freshened.",
+    "clientDispatch": {
+      "path": "/home/administrator/project/.eva2-artifacts/e417-original-call-20261024/client-dispatch.private.json",
+      "sha256": "ef1733990683ba49a5416c219da7a7129212646f6fbe7a945d7930de3ee3ff09",
+      "actualNow": "2026-10-24T05:58:46.615330+00:00",
+      "completedAt": "2026-10-24T05:58:47.885552+00:00",
+      "calls": 1,
+      "seconds": 1.2694280659779906
+    },
+    "cleanup": {
+      "hostExitCode": 0,
+      "stopEscalated": false,
+      "portsWithoutListener": {
+        "46080": true,
+        "46081": true
+      },
+      "remainingOwnTmpMountedContainers": [],
+      "productionGenerationsBeforeEqualAfter": true,
+      "heldOriginalCoreWorkerUnchanged": true,
+      "bridgeStarted": false,
+      "rootOperatorSeconds": 79.77072703198064,
+      "completedAt": "2026-10-24T06:00:05.249436+00:00",
+      "old491ContainerMetadataInventoryNotRepeatedByReviewer": true
+    },
+    "measurements": {
+      "clientSeconds": 1.2694280659779906,
+      "nativeExecutionMilliseconds": 1203,
+      "operatorSecondsIncludingOriginalMetadataReadback": 79.77072703198064,
+      "runtimeModelCameraInferenceHouseEffects": 0,
+      "developmentCredits": null
+    },
+    "preCallApprovalPreserved": {
+      "path": "/home/administrator/project/.eva2-artifacts/e417-independent-review-20261024/one-original-call-pre-execution-go.private.json",
+      "sha256": "d51a66af3e06f3151af46b55a937d0c6ceeb4e24a571f1edbaf7aa7f7a974284"
+    }
+  },
+  "originalCardAssessment": {
+    "verdict": "GO_ORIGINAL_E417_TECHNICAL",
+    "missingOriginalClauses": [],
+    "clauses": [
+      {
+        "original": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie.",
+        "status": "PASS_FOR_EXACT_EXTENSION",
+        "evidence": "Preserved authenticated versioned package retains exact source340eef/V2, dependency/configuration/rights/data records and original version lineage. Prior independent full-host readback verified18,067 files, owners/modes and exact original source tuples. The current original-client report independently demonstrates that same preserved V2 version executes correctly for the declared original guarded case; no earlier historical success or last-working timestamp is invented."
+      },
+      {
+        "original": "Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee.",
+        "status": "PASS",
+        "evidence": "Previously reviewed actual write/read_installation_package -> AES seal/open -> materialize/readback -> prepare/read_host_preparation route. Exact current outer manifest9be385... and unchanged innerce48... source/authority records and all576 selected tuples preserved. This new result uses the original procedure client16d74 and runnerb3b, not a replacement execution path."
+      },
+      {
+        "original": "Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan.",
+        "status": "PASS_WITH_DECLARED_RECONSTRUCTION",
+        "evidence": "Existing independent clean-target/native restore and copied interpreter/library/configuration proof is retained. This one call ran original restored source with restored client and pinned procedure image under clean isolated paths/UID1000, matching exact original none/stale_or_unordered/version2 semantics. Full event/source/binding is unchanged; only current dispatch clock added. This is explicitly reconstructed current binding, not a missing historical HTTP replay or original batch call."
+      },
+      {
+        "original": "Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld.",
+        "status": "PASS",
+        "evidence": "Preserved real authenticated encrypted package and separate trusted key references/provisioning proof; new target credentials are separately mapped and private. Current metadata binding and original inputs remain in private0700/0400/0600 artifacts. No token values, private face data, pixels, labels or vectors are copied into this review or Git."
+      },
+      {
+        "original": "Stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten.",
+        "status": "PASS",
+        "evidence": "Preserved exact native core/authority records and held restored core/worker boundaries; neither held original core/worker was activated. Exactly one pure original procedure call returned no action, without camera/inference/bridge/model/household delivery. Current own host exits0 without escalation, both private ports are closed and no own temp-mounted containers remain; production generations before/after are identical. No external realization is recreated."
+      },
+      {
+        "original": "Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
+        "status": "PASS",
+        "evidence": "Authored camera_greeting_adapter_v2.py is the preserved outside-core document/replay artifact. Existing separately reviewed generic optional procedure view/client/host interface is reused with original policies/limits. This final binding/call introduces no product, core, voice, module source or rights changes."
+      }
+    ],
+    "evidenceBoundary": "Technical closure of this original recovery card for the exact preserved extension and tested guarded case. Not full family/physical greeting acceptance, a new natural event, current production activation or whole-Eva project completion. Positive greeting/family scenarios are not added as new E417 conditions."
+  },
+  "nextAction": "Coordinator registers original E4.17 technical completion in the existing board/dashboard/Git; no extra procedure, old generic suite or historical proof rerun."
+}

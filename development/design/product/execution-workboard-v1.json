@@ -841,13 +841,13 @@
   "lastUpdated": "2026-10-23T16:59:07.773712+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.17",
+  "activeTaskId": "E4.16",
   "currentWork": {
-    "id": "E4.17",
-    "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
-    "status": "in_progress",
-    "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
-    "nextAction": "Rond de oorspronkelijke E4.17-herstelkaart af met de laatste echte onafhankelijke bronbinding en één gerichte oorspronkelijke procedureaanroep op de reeds herstelde geïsoleerde installatie. Bestaande restore/start/health/STOP-bewijzen blijven staan. E1.10 en E1.12 wachten op werkelijk gebruik en eigen gezinscriteria; dat blokkeert dit werk niet.",
+    "id": "E4.16",
+    "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+    "status": "planned",
+    "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+    "nextAction": "Maak de bestaande E4.16-fout→duurzaam hersteldoel→ontwikkeluitvoerder→onafhankelijke beoordeling→bevoegde installatie af. De concrete kandidaat-overdracht is bevroren; maak de huidige intake, host en native client exact installeerbaar met behoud van alle andere wijzigingen en oorspronkelijke criteria. Geen tweede herstelplatform; alleen werkelijke brongebonden fouten.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1634,6 +1634,23 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.17 · Zelfgemaakte uitbreiding werkelijk hersteld en uitgevoerd",
+            "state": "installed",
+            "summary": "Alle oorspronkelijke herstelclausules onafhankelijk technisch afgerond. Behouden versleuteld pakket en18.067bestanden plus één werkelijke oorspronkelijke procedure op herstelde infrastructuur; juiste verouderingsafwijzing en schone STOP. Productie ongewijzigd.",
+            "remaining": "Geen open oorspronkelijke technische E4.17-clausule; positieve begroeting, later gezinsgebruik en eigenaaracceptatie blijven op eigen kaarten.",
+            "source": "development/evidence/reassessment/e417-original-restored-procedure-20261024.json",
+            "review": "development/reviews/e417-original-binding-review-20261024.json",
+            "checkedAt": "2026-10-24T06:06:08.566732+00:00",
+            "completedAt": "2026-10-24T06:06:08.566732+00:00",
+            "completedTaskIds": [
+              "E4.17"
+            ],
+            "technicalDeliveryComplete": true,
+            "newProductFunctionCompleted": false,
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E2.9 · Huisvoorzieningen, projecten en bijstellingen samen bedienen",
             "state": "installed",
@@ -3042,27 +3059,27 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.17",
-          "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
-          "summary": "Rond de oorspronkelijke E4.17-herstelkaart af met de laatste echte onafhankelijke bronbinding en één gerichte oorspronkelijke procedureaanroep op de reeds herstelde geïsoleerde installatie. Bestaande restore/start/health/STOP-bewijzen blijven staan. E1.10 en E1.12 wachten op werkelijk gebruik en eigen gezinscriteria; dat blokkeert dit werk niet.",
-          "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd."
+          "taskId": "E4.16",
+          "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+          "summary": "Maak de bestaande E4.16-fout→duurzaam hersteldoel→ontwikkeluitvoerder→onafhankelijke beoordeling→bevoegde installatie af. De concrete kandidaat-overdracht is bevroren; maak de huidige intake, host en native client exact installeerbaar met behoud van alle andere wijzigingen en oorspronkelijke criteria. Geen tweede herstelplatform; alleen werkelijke brongebonden fouten.",
+          "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid."
         },
         "next": {
-          "taskId": "E4.16",
-          "title": "Bestaand zelfherstel afronden",
-          "detail": "Na de oorspronkelijke hersteluitkomst de actuele zelfherstelroute afmaken; behoud buitenlandse wijzigingen en bestaand foutbewijs. E1.8 eenmalige broncontrole blijft24oktober08:00UTC."
+          "taskId": "E4.19",
+          "title": "Relevant onderhoud via dezelfde werkende herstelroute",
+          "detail": "Na E4.16 dezelfde bevoegde beoordeling/installatie gebruiken voor echte relevante updates. Geen tweede updater of nieuwe betaalde route. E1.8 eenmalige broncontrole blijft24oktober08:00UTC."
         },
         "ownerAction": {
           "required": false,
           "detail": "Geen handeling nodig. Je kunt de fysieke proef nu niet doen; die blijft uitgesteld. De technische camera-/batchroute is geïnstalleerd en nieuwe waarnemingen zijn gezien. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-24T05:45:11.301685+00:00",
+        "checkedAt": "2026-10-24T06:06:08.566732+00:00",
         "reviewedAt": "2026-10-21T09:48:32.565185+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
-      "checkedAt": "2026-10-24T05:45:11.301685+00:00",
+      "checkedAt": "2026-10-24T06:06:08.566732+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -8228,7 +8245,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Echte fout verbinden aan blijvend hersteldoel met voldoende diagnosecontext.",
+                "nextAction": "Maak de bestaande E4.16-fout→duurzaam hersteldoel→ontwikkeluitvoerder→onafhankelijke beoordeling→bevoegde installatie af. De concrete kandidaat-overdracht is bevroren; maak de huidige intake, host en native client exact installeerbaar met behoud van alle andere wijzigingen en oorspronkelijke criteria. Geen tweede herstelplatform; alleen werkelijke brongebonden fouten.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8237,8 +8254,12 @@
                   "src/eva/operations/component_release_publisher.py"
                 ],
                 "assignment": {
-                  "coordinator": "/root",
-                  "activeWorkers": []
+                  "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                  "activeWorkers": [
+                    "01a0c537-54d0-7080-9e4c-74db537877af",
+                    "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+                  ],
+                  "scope": "Builder exact existing E416 activation bundle and four narrow handoff changes; independent tester original handoff/activation contracts; root shared installation/model practice/Git."
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/autonomous-repair-foundation-20261022.json",
@@ -8250,12 +8271,14 @@
                   "Uitval, ontbrekende toegang/configuratie en codefout onderscheiden; geen blinde herhaling van onzekere effecten.",
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
-                "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
+                "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
+                "checkedAt": "2026-10-24T06:06:08.566732+00:00",
+                "progress": "Actueel vastgesteld: herstelmodules ontbreken nog in beide gebruikte images en bestaande hostconfig activeert runtime_repairs nog niet. Concrete ontbrekende builderoverdracht hersteld in bevroren4hunks: describe→hostgebonden candidate.json→éénsubmit→bouwfase afsluiten; zes gerichte controles geslaagd. Exact minimaal activeringspakket en onafhankelijke integratiereview lopen; nog geen productieclaim of volledige afronding."
               },
               {
                 "id": "E4.17",
                 "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
-                "status": "in_progress",
+                "status": "completed",
                 "kind": "owner_requested_followup",
                 "scopeOrigin": "living-housemate-20261022",
                 "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
@@ -8270,10 +8293,10 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "Rond de oorspronkelijke E4.17-herstelkaart af met de laatste echte onafhankelijke bronbinding en één gerichte oorspronkelijke procedureaanroep op de reeds herstelde geïsoleerde installatie. Bestaande restore/start/health/STOP-bewijzen blijven staan. E1.10 en E1.12 wachten op werkelijk gebruik en eigen gezinscriteria; dat blokkeert dit werk niet.",
-                "progress": "Werkelijke versleutelde restore,18.067bestanden en private dienstenstart/stop onafhankelijk bewezen. Geen succesvolle procedure-uitvoering of volledige kaartafsluiting geclaimd.",
-                "checkedAt": "2026-10-24T05:45:11.301685+00:00",
-                "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
+                "nextAction": "Oorspronkelijke herstelkaart technisch afgerond; geen verdere restore/start/procedureproef zonder nieuwe concrete bevinding. Gezinsgebruik en positieve begroeting blijven op eigen kaarten.",
+                "progress": "Alle zes oorspronkelijke herstelclausules onafhankelijk GO. Bestaand werkelijk versleuteld pakket/18.067bestanden/bron-afhankelijkheden-config-rechten-data-herstel behouden; één echte oorspronkelijke procedure via herstelde host met onafhankelijk gebonden echte brondata en actuele klok geeft exact de verouderingsafwijzing. Exit0/STOP/poortenclosed/geenachterblijvendecontainers; productie en gehouden kern/werker ongewijzigd. Geen positieve begroeting of gezinsacceptatie geclaimd.",
+                "checkedAt": "2026-10-24T06:06:08.566732+00:00",
+                "evidence": "development/evidence/reassessment/e417-original-restored-procedure-20261024.json",
                 "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
                 "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
                 "latestBoundedOutcome": "Echte export bevat 160 bestanden inclusief manifest; manifest ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e. Payload met alle geselecteerde herstelonderdelen is voorlopig 1.645.299.983 bytes vóór pakketmanifest. Expliciete installatiepolicy tot 2 GiB en lokale bestandsroute zijn in uitvoering; gewone portable- en browsergrenzen blijven behouden.",
@@ -8290,7 +8313,7 @@
                   "captured": false,
                   "scope": "13 selected host diskfiles and33distributionmetadata sets; actual payload/import closure and face-only data still not preserved."
                 },
-                "fullTaskCompleted": false,
+                "fullTaskCompleted": true,
                 "previousBoundedOutcomeBeforeActualPackage20261023": {
                   "nextAction": "E4.17: schema0011-export/reader/restore/installer gerepareerd;29gerichte+8echte0011PG+14legacyPGchecks onafhankelijk geslaagd. Echte core/geheugen/gateway/identity/trust onder15sbronhek bewaard en onafhankelijk gebonden. Bouwer zet nativecorekopie geïsoleerd om en maakt bestaande versleutelde package/materialisatie af; geenproductieservicesgestopt. Pakketfit envolledigzelfderestoregedrag nog open; fysiekeE4.15proef blijft later.",
                   "progress": "Limited active profile snapshot adapter built, tested10/10, independently reviewed and used for actual24-row inactive export; not full recovery.",
@@ -8299,12 +8322,15 @@
                 },
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [
-                    "01a0c537-54d0-7080-9e4c-74db537877af",
-                    "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
-                  ],
-                  "scope": "Builder frozen original source/health binding and single isolated procedure plan; independent reviewer exact plan and result; coordinator integration."
-                }
+                  "activeWorkers": [],
+                  "scope": "Completed all six original technical restore clauses; no remaining implementation claim."
+                },
+                "completedAt": "2026-10-24T06:06:08.566732+00:00",
+                "technicalDeliveryCompleted": true,
+                "completionEvidence": "development/evidence/reassessment/e417-original-restored-procedure-20261024.json",
+                "independentReview": "development/reviews/e417-original-binding-review-20261024.json",
+                "independentReviewSha256": "cb8555242038026fd3ab16218579df27a456d5d333fcb5820ece6635167d19db",
+                "ownerAcceptance": false
               },
               {
                 "id": "E4.18",
@@ -8907,9 +8933,9 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Rond de oorspronkelijke E4.17-herstelkaart af met de laatste echte onafhankelijke bronbinding en één gerichte oorspronkelijke procedureaanroep op de reeds herstelde geïsoleerde installatie. Bestaande restore/start/health/STOP-bewijzen blijven staan. E1.10 en E1.12 wachten op werkelijk gebruik en eigen gezinscriteria; dat blokkeert dit werk niet.",
+        "nextAction": "Maak de bestaande E4.16-fout→duurzaam hersteldoel→ontwikkeluitvoerder→onafhankelijke beoordeling→bevoegde installatie af. De concrete kandidaat-overdracht is bevroren; maak de huidige intake, host en native client exact installeerbaar met behoud van alle andere wijzigingen en oorspronkelijke criteria. Geen tweede herstelplatform; alleen werkelijke brongebonden fouten.",
         "finishOrder": [
-          "E4.18, E1.13 en E2.9 volledig technisch afgerond: 82/103, dus 3 van de oorspronkelijke 24 open taken gesloten. Nu E4.17 oorspronkelijke hersteluitkomst afmaken; één bouwer en één onafhankelijke tester. E1.10-praktijk, E1.12-gebruik/adoptie en gezinsacceptatie blijven afzonderlijk open.",
+          "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van de oorspronkelijke 24 open taken gesloten. Nu bestaande E4.16-zelfherstelroute afmaken, daarna E4.19; één bouwer en één onafhankelijke tester. E1.10-praktijk, E1.12-gebruik/adoptie en gezinsacceptatie blijven afzonderlijk open.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
           "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
           "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -8918,7 +8944,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T05:45:11.301685+00:00",
+        "updatedAt": "2026-10-24T06:06:08.566732+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9194,7 +9220,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-24T05:45:11.301685+00:00",
+        "checkedAt": "2026-10-24T06:06:08.566732+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -14331,7 +14357,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Echte fout verbinden aan blijvend hersteldoel met voldoende diagnosecontext.",
+              "nextAction": "Maak de bestaande E4.16-fout→duurzaam hersteldoel→ontwikkeluitvoerder→onafhankelijke beoordeling→bevoegde installatie af. De concrete kandidaat-overdracht is bevroren; maak de huidige intake, host en native client exact installeerbaar met behoud van alle andere wijzigingen en oorspronkelijke criteria. Geen tweede herstelplatform; alleen werkelijke brongebonden fouten.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14340,8 +14366,12 @@
                 "src/eva/operations/component_release_publisher.py"
               ],
               "assignment": {
-                "coordinator": "/root",
-                "activeWorkers": []
+                "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                "activeWorkers": [
+                  "01a0c537-54d0-7080-9e4c-74db537877af",
+                  "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+                ],
+                "scope": "Builder exact existing E416 activation bundle and four narrow handoff changes; independent tester original handoff/activation contracts; root shared installation/model practice/Git."
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/autonomous-repair-foundation-20261022.json",
@@ -14353,12 +14383,14 @@
                 "Uitval, ontbrekende toegang/configuratie en codefout onderscheiden; geen blinde herhaling van onzekere effecten.",
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
-              "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json"
+              "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
+              "checkedAt": "2026-10-24T06:06:08.566732+00:00",
+              "progress": "Actueel vastgesteld: herstelmodules ontbreken nog in beide gebruikte images en bestaande hostconfig activeert runtime_repairs nog niet. Concrete ontbrekende builderoverdracht hersteld in bevroren4hunks: describe→hostgebonden candidate.json→éénsubmit→bouwfase afsluiten; zes gerichte controles geslaagd. Exact minimaal activeringspakket en onafhankelijke integratiereview lopen; nog geen productieclaim of volledige afronding."
             },
             {
               "id": "E4.17",
               "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "owner_requested_followup",
               "scopeOrigin": "living-housemate-20261022",
               "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
@@ -14373,10 +14405,10 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "Rond de oorspronkelijke E4.17-herstelkaart af met de laatste echte onafhankelijke bronbinding en één gerichte oorspronkelijke procedureaanroep op de reeds herstelde geïsoleerde installatie. Bestaande restore/start/health/STOP-bewijzen blijven staan. E1.10 en E1.12 wachten op werkelijk gebruik en eigen gezinscriteria; dat blokkeert dit werk niet.",
-              "progress": "Werkelijke versleutelde restore,18.067bestanden en private dienstenstart/stop onafhankelijk bewezen. Geen succesvolle procedure-uitvoering of volledige kaartafsluiting geclaimd.",
-              "checkedAt": "2026-10-24T05:45:11.301685+00:00",
-              "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
+              "nextAction": "Oorspronkelijke herstelkaart technisch afgerond; geen verdere restore/start/procedureproef zonder nieuwe concrete bevinding. Gezinsgebruik en positieve begroeting blijven op eigen kaarten.",
+              "progress": "Alle zes oorspronkelijke herstelclausules onafhankelijk GO. Bestaand werkelijk versleuteld pakket/18.067bestanden/bron-afhankelijkheden-config-rechten-data-herstel behouden; één echte oorspronkelijke procedure via herstelde host met onafhankelijk gebonden echte brondata en actuele klok geeft exact de verouderingsafwijzing. Exit0/STOP/poortenclosed/geenachterblijvendecontainers; productie en gehouden kern/werker ongewijzigd. Geen positieve begroeting of gezinsacceptatie geclaimd.",
+              "checkedAt": "2026-10-24T06:06:08.566732+00:00",
+              "evidence": "development/evidence/reassessment/e417-original-restored-procedure-20261024.json",
               "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
               "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
               "latestBoundedOutcome": "Echte export bevat 160 bestanden inclusief manifest; manifest ce48ff6357a48cac9b84301e6fcc361e5a180f60f3617a7ec195ddde035af60e. Payload met alle geselecteerde herstelonderdelen is voorlopig 1.645.299.983 bytes vóór pakketmanifest. Expliciete installatiepolicy tot 2 GiB en lokale bestandsroute zijn in uitvoering; gewone portable- en browsergrenzen blijven behouden.",
@@ -14393,7 +14425,7 @@
                 "captured": false,
                 "scope": "13 selected host diskfiles and33distributionmetadata sets; actual payload/import closure and face-only data still not preserved."
               },
-              "fullTaskCompleted": false,
+              "fullTaskCompleted": true,
               "previousBoundedOutcomeBeforeActualPackage20261023": {
                 "nextAction": "E4.17: schema0011-export/reader/restore/installer gerepareerd;29gerichte+8echte0011PG+14legacyPGchecks onafhankelijk geslaagd. Echte core/geheugen/gateway/identity/trust onder15sbronhek bewaard en onafhankelijk gebonden. Bouwer zet nativecorekopie geïsoleerd om en maakt bestaande versleutelde package/materialisatie af; geenproductieservicesgestopt. Pakketfit envolledigzelfderestoregedrag nog open; fysiekeE4.15proef blijft later.",
                 "progress": "Limited active profile snapshot adapter built, tested10/10, independently reviewed and used for actual24-row inactive export; not full recovery.",
@@ -14402,12 +14434,15 @@
               },
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [
-                  "01a0c537-54d0-7080-9e4c-74db537877af",
-                  "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
-                ],
-                "scope": "Builder frozen original source/health binding and single isolated procedure plan; independent reviewer exact plan and result; coordinator integration."
-              }
+                "activeWorkers": [],
+                "scope": "Completed all six original technical restore clauses; no remaining implementation claim."
+              },
+              "completedAt": "2026-10-24T06:06:08.566732+00:00",
+              "technicalDeliveryCompleted": true,
+              "completionEvidence": "development/evidence/reassessment/e417-original-restored-procedure-20261024.json",
+              "independentReview": "development/reviews/e417-original-binding-review-20261024.json",
+              "independentReviewSha256": "cb8555242038026fd3ab16218579df27a456d5d333fcb5820ece6635167d19db",
+              "ownerAcceptance": false
             },
             {
               "id": "E4.18",
@@ -15010,9 +15045,9 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Rond de oorspronkelijke E4.17-herstelkaart af met de laatste echte onafhankelijke bronbinding en één gerichte oorspronkelijke procedureaanroep op de reeds herstelde geïsoleerde installatie. Bestaande restore/start/health/STOP-bewijzen blijven staan. E1.10 en E1.12 wachten op werkelijk gebruik en eigen gezinscriteria; dat blokkeert dit werk niet.",
+      "nextAction": "Maak de bestaande E4.16-fout→duurzaam hersteldoel→ontwikkeluitvoerder→onafhankelijke beoordeling→bevoegde installatie af. De concrete kandidaat-overdracht is bevroren; maak de huidige intake, host en native client exact installeerbaar met behoud van alle andere wijzigingen en oorspronkelijke criteria. Geen tweede herstelplatform; alleen werkelijke brongebonden fouten.",
       "finishOrder": [
-        "E4.18, E1.13 en E2.9 volledig technisch afgerond: 82/103, dus 3 van de oorspronkelijke 24 open taken gesloten. Nu E4.17 oorspronkelijke hersteluitkomst afmaken; één bouwer en één onafhankelijke tester. E1.10-praktijk, E1.12-gebruik/adoptie en gezinsacceptatie blijven afzonderlijk open.",
+        "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van de oorspronkelijke 24 open taken gesloten. Nu bestaande E4.16-zelfherstelroute afmaken, daarna E4.19; één bouwer en één onafhankelijke tester. E1.10-praktijk, E1.12-gebruik/adoptie en gezinsacceptatie blijven afzonderlijk open.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
         "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
         "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -15021,7 +15056,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T05:45:11.301685+00:00",
+      "updatedAt": "2026-10-24T06:06:08.566732+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -15297,7 +15332,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-24T05:45:11.301685+00:00",
+      "checkedAt": "2026-10-24T06:06:08.566732+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -17562,7 +17597,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T05:45:11.301685+00:00",
+  "updatedAt": "2026-10-24T06:06:08.566732+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -17645,7 +17680,7 @@
     }
   ],
   "lastUpdatedAt": "2026-10-20T13:28:55.822181+00:00",
-  "checkedAt": "2026-10-24T05:45:11.301685+00:00",
+  "checkedAt": "2026-10-24T06:06:08.566732+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
