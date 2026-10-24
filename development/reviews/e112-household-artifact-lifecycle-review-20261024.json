@@ -4,8 +4,8 @@
   "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
   "clientTaskDate": "2026-10-24",
   "checkedAtMachineUtc": "2026-10-24T00:05:14.877182+00:00",
-  "status": "owner_api_code_review_passed_private_composition_one_proof_freshness_gap_open",
-  "verdict": "REQUEST_CHANGES_SCOPED_PRIVATE_HOST_FACTORY_FRESHNESS",
+  "status": "proof_handoff_actually_installed_scoped_readback_passed_original_version_and_adoption_gaps_open",
+  "verdict": "GO_SCOPED_ACTUALLY_INSTALLED_PROOF_HANDOFF_READBACK",
   "onlyWritePath": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
   "authority": {
     "boardPath": "development/design/product/execution-workboard-v1.json",
@@ -121,58 +121,63 @@
       "id": "E112-EXISTING-001",
       "severity": "P2",
       "kind": "existing_known_missing_product_handoff",
-      "status": "implementation_pending",
+      "status": "code_lifecycle_pause_handoff_verified_actual_installed_pause_pending",
       "title": "Disabled binding is an availability error rather than a recognized facility pause",
       "source": "src/eva/providers/home_assistant_procedure.py",
       "line": 42,
       "related": "src/eva/bootstrap/household_initiative.py:143",
       "evidence": "_current requires enabled is True; false raises ValueError; enclosing run_once catches all exceptions as unavailable. owner_initiatives.stop affects intent/followup and does not mutate installed provision.",
-      "requiredBoundary": "Known lifecycle pause skips only this optional proposal and blocks its pending guarded expression; preserve failures for malformed/unavailable source/rights. No whole-Eva pause or automatic adoption from enabled."
+      "requiredBoundary": "Known lifecycle pause skips only this optional proposal and blocks its pending guarded expression; preserve failures for malformed/unavailable source/rights. No whole-Eva pause or automatic adoption from enabled.",
+      "previousStatusBeforeCanonicalPromotionReview": "implementation_pending"
     },
     {
       "id": "E112-INTEGRATION-001",
       "severity": "P2",
       "kind": "concrete_preimplementation_race_risk",
-      "status": "coordinator_delivery_owner_handoff_required",
+      "status": "code_final_admission_and_pg_serialization_verified_actual_runtime_pending",
       "title": "Lifecycle check currently precedes a later potentially blocking provenance read",
       "source": "src/eva/bootstrap/household_initiative_delivery.py",
       "line": 104,
       "evidence": "validate_expression at104-105, then authority and authorize_household_expression at108-109, window at110, HTTP post at112. Pause during the last read is not covered by a lifecycle check placed only at104.",
       "requiredBoundary": "Demonstrate exact existing effect-admission/revocation ordering under the declared STOP/source-change priority; preserve in-flight may-complete distinction. A timeline row lock alone is not a lock on current.json or a network effect.",
-      "actualRaceTestRun": false
+      "actualRaceTestRun": false,
+      "previousStatusBeforeCanonicalPromotionReview": "coordinator_delivery_owner_handoff_required"
     },
     {
       "id": "E112-INTEGRATION-002",
       "severity": "P2",
       "kind": "existing_interface_mismatch_for_new_lifecycle",
-      "status": "typed_no_dispatch_integration_pending",
+      "status": "code_known_no_dispatch_path_verified_actual_runtime_pending",
       "title": "Known pre-dispatch pause exception would be classified as ambiguous effect",
       "source": "src/eva/bootstrap/household_initiative_delivery.py",
       "line": 125,
       "evidence": "Any exception after a claim reaches fail_expression/ambiguous. Existing _interrupted at62-65 records known non-dispatch.",
-      "requiredBoundary": "A positively recognized current pause/revocation before dispatch must use existing interrupted/no-post outcome; retain ambiguous for genuinely uncertain sent effects. Owner integration needed; reviewer does not change delivery or voice."
+      "requiredBoundary": "A positively recognized current pause/revocation before dispatch must use existing interrupted/no-post outcome; retain ambiguous for genuinely uncertain sent effects. Owner integration needed; reviewer does not change delivery or voice.",
+      "previousStatusBeforeCanonicalPromotionReview": "typed_no_dispatch_integration_pending"
     },
     {
       "id": "E112-CONTRACT-001",
       "severity": "P2",
       "kind": "contract_authority_and_identity_boundary",
-      "status": "actual_adapter_patch_pending",
+      "status": "adapter_scope_adoption_status_boundary_verified_full_household_lifecycle_pending",
       "title": "Household artifact identity and adoption cannot be inferred from private intent result or checkpoint status",
       "source": "src/eva/adapters/postgres/operational_timeline.py",
       "line": 158,
       "evidence": "Timeline scope is tenant+installation only; checkpoint status has active/waiting_for_proof/completed/failed/needs_help. OwnerInitiatives selects PERSONAL_INTENT_ADOPTED for one private owner and artifact returns completed .md content.",
-      "requiredBoundary": "Keep facility state/adoption/version in source-bound scoped event data/projected history using current household/owner grants. Do not add generic status variants/schema or turn private .md/task completion into household adoption. Preserve stable provision identity across version changes."
+      "requiredBoundary": "Keep facility state/adoption/version in source-bound scoped event data/projected history using current household/owner grants. Do not add generic status variants/schema or turn private .md/task completion into household adoption. Preserve stable provision identity across version changes.",
+      "previousStatusBeforeCanonicalPromotionReview": "actual_adapter_patch_pending"
     },
     {
       "id": "E112-CONTRACT-002",
       "severity": "P2",
       "kind": "contract_transaction_restore_and_legacy_boundary",
-      "status": "actual_adapter_patch_pending",
+      "status": "adapter_revisions_idempotency_verified_actual_loader_restore_and_version_handoff_pending",
       "title": "Durable management transition must not silently overwrite file state, revive STOP or disable unrelated legacy rights",
       "source": "src/eva/providers/home_assistant_procedure.py",
       "line": 37,
       "evidence": "Provider currently reads current.json/source/reference; timeline transition locks one DB checkpoint with expected_revision and does not atomically update that file. Minimal contract requires pause acknowledgement, exact source/version, idempotency, STOP above resume, restore no duplicate and legacy authorization unchanged.",
-      "requiredBoundary": "Make source of truth/revision and fail-closed partial-transfer ordering explicit in patch. Repeated request returns its bound original receipt; altered payload/stale version cannot replay as new adoption. Restore absent/conflicting managed state is non-dispatchable, without reinterpreting valid unmanaged legacy bindings as adoption or new denial by accident."
+      "requiredBoundary": "Make source of truth/revision and fail-closed partial-transfer ordering explicit in patch. Repeated request returns its bound original receipt; altered payload/stale version cannot replay as new adoption. Restore absent/conflicting managed state is non-dispatchable, without reinterpreting valid unmanaged legacy bindings as adoption or new denial by accident.",
+      "previousStatusBeforeCanonicalPromotionReview": "actual_adapter_patch_pending"
     },
     {
       "id": "E112-EVIDENCE-001",
@@ -393,7 +398,7 @@
       "id": "E112-WIRING-001",
       "severity": "P2",
       "kind": "reproduced_private_factory_freshness_gap",
-      "status": "open_builder_coordinator_fix_required",
+      "status": "fixed_private_v2_two_independent_callback_change_cases_passed",
       "title": "A positive realization proof escapes after managed configuration changed inside its callback",
       "source": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/host-wiring-candidate/household_provision_host.py",
       "line": 84,
@@ -418,7 +423,259 @@
       "expected": "Recheck the same captured managed configuration key after a blocking proof callback and before returning its value for DB append. Apply same freshness principle to analogous returning effect-status callback where required; no new schema/platform or live trial.",
       "criteriaSource": "Existing minimal contract racePriorities source changes win; callbacks explicitly host/source/revision bound.",
       "repairOwner": "coordinator/builder private host factory; reviewer changes no source or criteria",
-      "evidencePreservation": "Keep current5c798/7386/c7d/09f8 candidate and10PASS separate from this one source-change repro."
+      "evidencePreservation": "Keep current5c798/7386/c7d/09f8 candidate and10PASS separate from this one source-change repro.",
+      "resolution": {
+        "verdict": "GO_SCOPED_PRIVATE_COMPOSITION_AND_FACTORY_V2_CODE",
+        "checkedAtMachineUtc": "2026-10-24T00:25:13.932394+00:00",
+        "handoffSha256": "a954be9640c6f9121219592da651ea3a3ab0dc4fb1c55c31ab4e849b162c1d9a",
+        "factorySha256": "5922a19da238ff23eebe027ff506f8e7b602a261f5736e404e3b820f228a4f3e",
+        "compositionUnchangedSha256": "c7d701670fa01d3d86f38cd97f11f9e787f04351fdd7c195e464d46b32039a04",
+        "testSha256": "c85fe55512dad07fa3a554f0a84b55bd6a5207e20c81f454e1b585ba44037d17",
+        "boundedChange": "verify_realization and effect_status retain precheck and now capture callback result, check same captured current managed key after callback, then return.",
+        "independentRetest": {
+          "cases": 2,
+          "pytestSeconds": 1.34,
+          "processSeconds": 2.0603789869928733,
+          "exitCode": 0,
+          "allThreePinsBeforeAfterUnchanged": true,
+          "old10CasesRepeated": false,
+          "realHttpCalls": 0,
+          "postgresQueries": 0,
+          "modelCalls": 0,
+          "oldFourRawFilesActuallyExact0400": true
+        },
+        "originalExecutedV1HandoffSha256": "f8fcf56673d3e5f37def3e30cad8bb8d9c82e2cc952686ced374cf0deb49afb3",
+        "originalV1TenIndependentPassesRetained": true,
+        "limits": [
+          "Code/interface proof only, no actual production callbacks or runtime config loader tested.",
+          "Mandatory config key lookup is required; the earlier .get sketch is not an approved fallback.",
+          "No live enrollment, positive realization, active write, installation, restore or full E112 acceptance."
+        ]
+      }
+    },
+    {
+      "id": "E112-CALLBACK-001",
+      "severity": "P2",
+      "kind": "reproduced_trusted_callback_source_race",
+      "status": "fixed_two_targeted_independent_source_drift_cases_passed",
+      "title": "Positive proof survives source-content change during retained chain read while config is unchanged",
+      "source": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/host-wiring-candidate/trusted_runtime_callbacks.private.py",
+      "line": 226,
+      "candidateSha256": "24cb3d944e5ab66d7116d0b86d062d1524b7d9621048377816643e24085d3e65",
+      "cause": "verify_realization calls real _current before potentially blocking lineage/chain reads, then returns _offered directly. Factory postcheck verifies managed config key only and cannot detect changed source bytes with unchanged config.",
+      "reproduction": {
+        "cases": 1,
+        "seconds": 1.4292602050118148,
+        "fixture": "existing private retained fixture with real legacy source hash checks and exact synthetic offered chain",
+        "change": "read_chain returns original valid chain but changes actual temporary extension.py bytes before returning; current.json remains unchanged",
+        "actual": {
+          "positiveProofReturned": true,
+          "actualSourceStillMatchesEvidence": false,
+          "currentConfigUnchanged": true
+        },
+        "databaseQueries": 0,
+        "liveFilesOrRequests": 0,
+        "modelCalls": 0
+      },
+      "requiredBoundary": "Revalidate real current source/authority and compare original execution guard after blocking retained proof reads before positive proof or clear/in_flight classification escapes. Keep source faults visible on verification/adopt/resume; uncertain effect stays unknown. No new platform, search or physical trial.",
+      "criteriaSource": "Existing source-change-wins and exact current-source/guard contract.",
+      "actualCurrentProvisionSafeBoundary": "proof_reference is still None, so current real facility has no success/clear proof and must not become active.",
+      "repairOwner": "coordinator/builder; reviewer makes no product changes",
+      "preserveV1": "2ee34handoff/24cbsource/afabtest and15PASS remain separate from this one reproduction.",
+      "resolution": {
+        "verdict": "GO_SCOPED_TRUSTED_RUNTIME_CALLBACKS_POSTREAD_SOURCE_GUARD",
+        "checkedAtMachineUtc": "2026-10-24T00:47:54.658742+00:00",
+        "handoffSha256": "2fd312ded9da7dbafa24c42e6d4fbaa03f7e06e44bc4479441c181c44488bb98",
+        "helperSha256": "050210aae3137cec1f00d63d5fc202ba0d0def9bcc7d8909cf2b99609f40ac22",
+        "testSha256": "95982375d41beebce7c45bc1cd7967a310893dcad82f5576ffa80c90d4748138",
+        "boundedChange": "Re-read real current source/owner/config/legacy guard after blocking retained chain before returning positive proof or clear effect. Real source faults propagate on verification; effect uncertainty stays unknown.",
+        "independentRetest": {
+          "cases": 2,
+          "pytestSeconds": 1.66,
+          "processSeconds": 2.224690891976934,
+          "exitCode": 0,
+          "originalSourceContentMutationRetained": true,
+          "originalConfigRemainsUnchanged": true,
+          "old15CasesRepeated": false,
+          "extractedLegacyEffectBodyAstIdentical": true,
+          "helperAndTestPinsBeforeAfterUnchanged": true,
+          "realHttpOrDatabaseOrModelCalls": 0
+        },
+        "originalV1SourceSha256": "24cb3d944e5ab66d7116d0b86d062d1524b7d9621048377816643e24085d3e65",
+        "originalV1SourceActuallyPreserved": true,
+        "limits": [
+          "Private helper/interface only; no real runtime installation or active household facility proof.",
+          "Current actual proof_reference remains None, actual verify_realization must remain None and legacy effect status unknown.",
+          "No E1.12 full-card/owner acceptance or success from synthetic positive fixtures."
+        ]
+      }
+    },
+    {
+      "id": "E112-HANDOFF-001",
+      "severity": "P2",
+      "kind": "reproduced_unenrolled_partial_handoff_control",
+      "status": "fixed_original_partial_handoff_and_four_targeted_independent_cases_passed",
+      "title": "Partial registration exposes pause/stop controls while actual factory still selects unmanaged legacy route",
+      "source": "src/eva/bootstrap/household_provision_runtime.py",
+      "line": 431,
+      "candidateSha256": "6a3c725a6332882c6e68c086eb946c04ca29cd0f98f857d0ebc2f81153d1b030",
+      "uiSource": "development/tools/project-dashboard/src/owner-household-provisions.jsx",
+      "uiLine": 83,
+      "uiSha256": "d21f5896dd838e48434cab27e3d3a59dd96a0a61fc709855a1951e7c81483533",
+      "cause": "Register deliberately retains a proposed DB record when managed pointer handoff changes. overview exposes that record with enrollment null, UI still offers pause/stop/retire, and command uses an unenrolled lifecycle store. Host factory returns None and original loop consequently retains the unmanaged legacy provider path. An accepted DB pause/stop therefore does not establish that actual execution is paused/stopped. UI also hides registration retry when a proposed record already exists.",
+      "reproduction": {
+        "cases": 1,
+        "seconds": 1.6203876369982027,
+        "fixture": "Original integration host fixture; actual HouseholdProvisionRuntime and HouseholdProvisionHostFactory with isolated existing fake lifecycle store",
+        "change": "During register callback append newline to temporary managed pointer file; config/source/evidence unchanged. Register handoff raises and retains proposed record.",
+        "actual": {
+          "enrollment": null,
+          "overviewStatus": "proposed",
+          "pauseCommandAcceptedAndForwarded": true,
+          "actualFactoryBeforeAndAfter": null,
+          "realRouteSelection": "legacy remains selected"
+        },
+        "assertionLimit": "Fixture proves runtime forwarding while real factory remains legacy; no actual DB status write or external dispatch occurred. Existing reviewed real PG command source writes paused, while loop source uses legacy when factory returns None.",
+        "realSqlHttpModelCalls": 0,
+        "canonicalSourceOrTestWrites": 0
+      },
+      "requiredBoundary": "Do not offer or confirm execution-control semantics on an unenrolled record. Make partial handoff an explicit fail-closed recoverable state; only report pause/stop after same facility is actually governed by its source-bound lifecycle. Preserve honest proposed/unknown state and original failed handoff.",
+      "repairOwner": "Coordinator assigns existing builder; reviewer changes no product code",
+      "reportedToCoordinator": true,
+      "checkedAtMachineUtc": "2026-10-24T00:58:08.023016+00:00",
+      "resolution": {
+        "checkedAtMachineUtc": "2026-10-24T01:06:05.466483+00:00",
+        "clientTaskDate": "2026-10-24",
+        "verdict": "GO_SCOPED_E112_HANDOFF_001_PARTIAL_REGISTRATION_RECOVERY",
+        "handoffSha256": "2f66e0fe68652de6bdd9042771d8ef4572fd7b3f9eeb938a99e2b06942a4fa8f",
+        "helperSha256": "dfb3b58642f9c3b9aa2fee109a2d6802e28bc1c9fb925c62a53eef081d7f4681",
+        "testSha256": "617f14f90d19c8648b415b4433eea14719b1f3900ae9538e7b0a476f9bb18102",
+        "roleCandidateManifestSha256": "ff52e5363dbdacab2b9f7065db13b42c437322ceafb4f32e22f09a81934ac9fe",
+        "roleCandidateScope": "All six listed candidate file bytes match manifest; this is not review or execution of a final complete installation overlay.",
+        "staticReview": [
+          "Commands require exact actual enrollment pointer before store command can run. Null/different pointer cannot create a false DB-only pause/stop receipt.",
+          "Recovery inspects same source-derived record and accepts only exact owner/household/source/review/reference/binding, proposed/unadopted/unverified/not-stopped/no-pending-effects. No second register event or activation.",
+          "Real current owner/source verification is called inside recovery transaction. Actual owner._authorize establishes its own RLS scope and checks current binding/principal with shared row locks, then restores owner scope.",
+          "Managed file bytes and source config rechecked before pointer replacement; original partial failure remains visible, not claimed atomic across PG/file.",
+          "Previously reviewed trusted callbacks and codecs AST unchanged; existing provider/runtime/contracts hunks unchanged."
+        ],
+        "independentRetest": {
+          "targetedPytestCases": 4,
+          "passed": 4,
+          "oldCasesDeselected": 11,
+          "pytestSeconds": 1.38,
+          "processSeconds": 1.900272238010075,
+          "allFivePinsBeforeAfterUnchanged": true,
+          "wrongSourceAndRevokedOwnerBothRefuseRecovery": true,
+          "originalCounterexampleRetest": {
+            "elapsedSeconds": 1.682954705960583,
+            "originalPointerByteDriftScenarioRetained": true,
+            "unenrolledPauseDeniedBeforeMutation": true,
+            "newRequestRecoversSameOneOriginalRecord": true,
+            "originalRecordAndProvenanceUnchanged": true,
+            "afterRecoveryActualFactoryHasLifecycleGate": true,
+            "status": "proposed",
+            "adoption": null,
+            "verification": null,
+            "actualWorkingProof": false
+          },
+          "originalV1SourceAndHandoffActuallyExact0400": true,
+          "realSqlHttpModelCalls": 0,
+          "sharedRuntimeOrInstallationChanges": 0,
+          "canonicalSourceOrTestWrites": 0
+        },
+        "findingClosed": true,
+        "installationOrWholeE112Go": false,
+        "practicalInstallationCriteria": [
+          "Materialize final bounded overlay from actual current core and worker baselines. Preserve role differences and foreign WIP; include exact helper/runtime/provider/API/loop dependencies and approved UI assets, not just these six candidate files.",
+          "Configure explicit protected regular managed pointer in existing runtime-owned writable mount. Initial null is legacy; explicit owner register/recovery must produce exact pointer before execution controls are represented as operative.",
+          "Compare actually installed core/worker source-bound runtime profiles including digital work with src/tools/check_delegated_runtime_profiles.py; unresolved release/profile mismatch remains an installation/admission blocker.",
+          "Immediately before replacement run reviewed source-pinned readiness guard on actual process generation and check conversation/model/delegated work/native-memory claims plus component evaluation. Unknown or active work defers installation; no marker clearing or age exemption.",
+          "After installation verify actual role source hashes and authenticated owner GET/register/proposed/pause path with exact enrollment, revision and binding; unauthorized access remains denied. Coordinator owns actual installation and mutations.",
+          "Actual proof_reference remains None and effect unknown until genuine original evidence exists. No active/adopt/resume success, restored adoption/pause acceptance or full E1.12 completion follows from this fixture review."
+        ]
+      }
+    },
+    {
+      "id": "E112-VERSION-001",
+      "severity": "P2",
+      "kind": "missing_original_donewhen_functional_interface",
+      "status": "open_reported_coordinator_same_card",
+      "title": "Actual facility change/undo, linked source versions and compact owner history are not wired",
+      "source": "src/eva/adapters/postgres/household_provisions.py",
+      "line": 176,
+      "candidateSha256": "9b1e5824d5fbba722439170fb2530c31da28c9b8e393da7c7f623ce51bec1c2f",
+      "criteriaSource": "Original E1.12.doneWhen: household can actually change and undo facility; versions and protected compact history remain traceable.",
+      "cause": "Stable provision ID is present, but register112-149 rejects an already existing provision except exact request replay; command176-236 only implements adopt/pause/resume/reject/retire/stop and never changes evidence or source version. Changed source binding is rejected by current host factory. Lifecycle revision is not a linked facility source version; retire/stop is not an actual version rollback. overview/API/UI expose current state only.",
+      "alreadyBuilt": "Scoped append-only operational events, original provenance, lifecycle revisions and owner/RLS guards exist. They are preserved and are not relabeled as complete version/change/undo/history product route.",
+      "requiredBoundary": "Complete the original source-bound same-facility change/undo/version/compact-history handoff using existing source and lifecycle routes; no new criterion, store or parallel project.",
+      "testsRepeated": 0,
+      "reportedToCoordinator": true,
+      "checkedAtMachineUtc": "2026-10-24T01:17:38.555430+00:00"
+    },
+    {
+      "id": "E112-ADOPTION-001",
+      "severity": "P2",
+      "kind": "missing_original_donewhen_functional_interface",
+      "status": "open_reported_coordinator_same_card",
+      "title": "Preauthorized trial to evaluated and notified implicit adoption has no connected route",
+      "source": "src/eva/adapters/postgres/household_provisions.py",
+      "line": 217,
+      "candidateSha256": "9b1e5824d5fbba722439170fb2530c31da28c9b8e393da7c7f623ce51bec1c2f",
+      "criteriaSource": "Original E1.12.doneWhen: implicit adoption only continues a previously allowed trial after concrete evaluation with notice and no expanded rights.",
+      "cause": "Only explicit owner command adopt writes adoption as owner/request/at. Current state/controller/API command set has no prior trial grant, bound evaluation, notified continuation or implicit adoption handoff. Existing source/adopt tests cannot demonstrate that missing path.",
+      "alreadyBuilt": "Explicit adoption is separate from usage/active and requires current scoped owner and source checks; assigned proof interface still needs completion.",
+      "requiredBoundary": "Do not claim preauthorized-trial/evaluation/notice/implicit-adoption functionality from explicit adoption/store tests. Any completion must use original permission boundary and original E1.12 outcome.",
+      "testsRepeated": 0,
+      "reportedToCoordinator": true,
+      "checkedAtMachineUtc": "2026-10-24T01:17:38.555430+00:00"
+    },
+    {
+      "id": "E112-EFFECT-002",
+      "severity": "P2",
+      "kind": "reproduced_effect_selector_hides_unresolved_claim",
+      "status": "fixed_original_snapshot_counterexample_and_eight_targeted_pg_cases_passed",
+      "title": "Selecting latest PREPARED lets a settled offer hide an older unresolved effect",
+      "source": "src/eva/bootstrap/household_provision_runtime.py",
+      "line": 379,
+      "candidateSha256": "181c0f1fac20774bc9a7fd0fb4a7628a7acf9b7688288d426e202b04c9c19943",
+      "cause": "V3 current-effect selector orders one matching PREPARED by timestamp/sequence. A newer OFFERED or equal-second tie can win while another same-source/scope effect is still claimed or ambiguous. Proof selection and effect clearance must remain distinct.",
+      "reproduction": {
+        "testCriteriaSha256": "16e938a1bacbcb7621ba7b058342294404ec26342080c69cb992717ba84e6c12",
+        "cases": 1,
+        "expectedFailure": true,
+        "actualSelectedKind": "offered",
+        "expectedKind": "unresolved live claim",
+        "pytestSeconds": 5.15,
+        "processAndPgStartSeconds": 9.185842806007713,
+        "pgWallSeconds": 10.03931590798311,
+        "scope": "Real metadata selector query; no claim of physical effect or complete positive lineage from this fixture alone."
+      },
+      "resolution": {
+        "verdict": "GO_SCOPED_COMPLETE_HOST_PROOF_HANDOFF_AND_EFFECT_SELECTOR_V31",
+        "handoffSha256": "d49d8b88cfdb393a1145cc79a00a0ec319c8072d13132ad0724c096e2a2be397",
+        "helperSha256": "7dfc3db864304e487ae745538df5e71dcb59c258f6408aed269f78b31346032e",
+        "retest": {
+          "cases": 8,
+          "passed": 8,
+          "sameExactFixtureAndAssertionsAsBaseline": true,
+          "pytestSeconds": 6.22,
+          "processAndPgStartSeconds": 10.210917504038662,
+          "pgWallSeconds": 11.107938138011377,
+          "coverage": [
+            "older live claim/newer offer",
+            "same-second tie",
+            "newer live claim/older offer",
+            "older ambiguous/newer offer",
+            "expired claim/newer offer",
+            "foreign household excluded",
+            "foreign owner excluded",
+            "unclaimed pending is distinct from unresolved effect"
+          ]
+        }
+      },
+      "criteriaSource": "Existing current effect/paused/unknown boundary applied to new selector; no new acceptance criterion.",
+      "checkedAtMachineUtc": "2026-10-24T01:37:30.730452+00:00"
     }
   ],
   "existingNoPostFixture": {
@@ -448,9 +705,9 @@
     "reviewerProductWrites": 0
   },
   "usage": {
-    "testsRun": 99,
+    "testsRun": 149,
     "newDatabaseQueries": null,
-    "newServiceStarts": 2,
+    "newServiceStarts": 7,
     "newModelCalls": 0,
     "newInferenceCalls": 0,
     "newCameraReads": 0,
@@ -506,7 +763,7 @@
     },
     "initialContractPreparationTestsRun": 0,
     "sourceRuntimeServiceStarts": 0,
-    "privateTestPostgresStarts": 2,
+    "privateTestPostgresStarts": 7,
     "databaseQueryMeasurement": "Only own disposable test PostgreSQL; SQL statement count not metered. No source/live database query.",
     "latestIndependentBuilderLifecycleReview": {
       "distinctCandidateCases": 62,
@@ -571,6 +828,220 @@
       "postgresQueries": 0,
       "modelCalls": 0,
       "liveEffects": 0
+    },
+    "latestFactoryV2Retest": {
+      "cases": 2,
+      "pytestSeconds": 1.34,
+      "processSeconds": 2.0603789869928733,
+      "exitCode": 0,
+      "allThreePinsBeforeAfterUnchanged": true,
+      "old10CasesRepeated": false,
+      "realHttpCalls": 0,
+      "postgresQueries": 0,
+      "modelCalls": 0,
+      "oldFourRawFilesActuallyExact0400": true
+    },
+    "latestCanonicalPromotionReview": {
+      "testFunctionsAstCompared": 7,
+      "fixtureAstCompared": 1,
+      "importBindingSeconds": 2.3419629920390435,
+      "instancesCreated": 0,
+      "testsRepeated": 0,
+      "realHttpOrDatabaseCalls": 0,
+      "modelCalls": 0
+    },
+    "latestTrustedCallbacksReview": {
+      "cases": 15,
+      "pytestSeconds": 1.36,
+      "processSeconds": 1.9355831420398317,
+      "exitCode": 0,
+      "realHttpOrDatabaseOrModelCalls": 0
+    },
+    "latestSourceDriftReproducer": {
+      "cases": 1,
+      "seconds": 1.4292602050118148,
+      "positiveProofReturnedAfterSourceChanged": true,
+      "actualModelDatabaseOrHttpCalls": 0
+    },
+    "latestTrustedCallbackPostReadRetest": {
+      "cases": 2,
+      "pytestSeconds": 1.66,
+      "processSeconds": 2.224690891976934,
+      "exitCode": 0,
+      "originalSourceContentMutationRetained": true,
+      "originalConfigRemainsUnchanged": true,
+      "old15CasesRepeated": false,
+      "extractedLegacyEffectBodyAstIdentical": true,
+      "helperAndTestPinsBeforeAfterUnchanged": true,
+      "realHttpOrDatabaseOrModelCalls": 0
+    },
+    "latestInstallationReadinessGuardReview": {
+      "metadataSqlCases": 14,
+      "passed": 14,
+      "completedQuerySecondsIncludingOwnPgLifecycle": 3.7376633770181797,
+      "initialHarnessAttemptSeconds": 2.9457103260210715,
+      "initialAttemptCasesExecuted": 0,
+      "sourceDatabaseOrModelOrHttpCalls": 0,
+      "ownPostgresAfter": "exited_retained",
+      "productOrMarkerWrites": 0
+    },
+    "latestConcreteRuntimeIntegrationReview": {
+      "cases": 11,
+      "pytestSeconds": 2.6,
+      "processSeconds": 3.6356256249709986,
+      "exitCode": 0,
+      "allFiveSourcePinsBeforeAfterUnchanged": true,
+      "trustedHelperAndCodecsAstIdentical": true,
+      "older62And31And12CasesRepeated": false,
+      "databaseCalls": 0,
+      "realHttpCalls": 0,
+      "modelCalls": 0,
+      "cameraCalls": 0,
+      "sharedInstallationChanges": 0
+    },
+    "latestPartialHandoffControlReproducer": {
+      "cases": 1,
+      "seconds": 1.6203876369982027,
+      "realSqlHttpModelCalls": 0,
+      "canonicalWrites": 0
+    },
+    "latestPartialHandoffUiBrowserRetest": {
+      "engine": "Existing headless Chromium; actual built dist-v2 React bundle; isolated loopback synthetic API",
+      "changedCauseOnly": true,
+      "elapsedSeconds": 1.2555852320510894,
+      "unboundProposedHasNoExecutionControls": true,
+      "explicitRecoveryPostsRequestIdOnly": true,
+      "unboundPausedHasNoControlsOrRecovery": true,
+      "automaticPosts": 0,
+      "syntheticPosts": 1,
+      "externalRequests": 0,
+      "modelCalls": 0,
+      "oldBroadBrowserFlowRepeated": false,
+      "harnessSha256": "4519eae5b86ebff1730a4859ad9c441ca81c2ba0b91996e498769f8f1b81657e",
+      "changedChecksScriptSha256": "bbf5c3acfdeeba8c175d798905bf7486b91923a28cc8717f8ecf4bdf1ce9f244",
+      "harnessOrUiSourceWrites": 0,
+      "jsBundleSha256": "262e61383cfdd82f1a49310a1a84e7c3c283fc99df0e35a5dc7a3f05831204c2",
+      "assetManifestSha256": "ef793e49f097ac22f5b8cc50ee2d60e575678bba5ef27d00e347f4094eaca221"
+    },
+    "latestPartialHandoffBackendRetest": {
+      "targetedPytestCases": 4,
+      "passed": 4,
+      "oldCasesDeselected": 11,
+      "pytestSeconds": 1.38,
+      "processSeconds": 1.900272238010075,
+      "allFivePinsBeforeAfterUnchanged": true,
+      "wrongSourceAndRevokedOwnerBothRefuseRecovery": true,
+      "originalCounterexampleRetest": {
+        "elapsedSeconds": 1.682954705960583,
+        "originalPointerByteDriftScenarioRetained": true,
+        "unenrolledPauseDeniedBeforeMutation": true,
+        "newRequestRecoversSameOneOriginalRecord": true,
+        "originalRecordAndProvenanceUnchanged": true,
+        "afterRecoveryActualFactoryHasLifecycleGate": true,
+        "status": "proposed",
+        "adoption": null,
+        "verification": null,
+        "actualWorkingProof": false
+      },
+      "originalV1SourceAndHandoffActuallyExact0400": true,
+      "realSqlHttpModelCalls": 0,
+      "sharedRuntimeOrInstallationChanges": 0,
+      "canonicalSourceOrTestWrites": 0
+    },
+    "isolatedUiHttpServersStarted": 2,
+    "newServiceStartsScope": "Counts own disposable PostgreSQL starts only; source runtime starts remain zero. Isolated UI fixture HTTP server tracked separately.",
+    "latestUiV3ChangedCauseBrowser": {
+      "engine": "Actual built dist-v3 React in existing headless Chromium with isolated loopback synthetic API",
+      "runMode": "EVA_DASHBOARD_PROOF_HANDOFF_ONLY=1",
+      "exitCode": 0,
+      "elapsedSeconds": 1.3556082870345563,
+      "proposalBeforeProofLeavesUnenrolled": true,
+      "noCompletionControlsBeforeProof": true,
+      "syntheticHostProofArrivalDoesNotAutoPost": true,
+      "explicitCompletionKeepsSameProposalRevisionUnadopted": true,
+      "registerBodyRequestIdOnly": true,
+      "syntheticPosts": 2,
+      "automaticPosts": 0,
+      "productionPosts": 0,
+      "externalRequests": 0,
+      "modelCalls": 0,
+      "oldBroadBrowserFlowRepeated": false,
+      "sourceAndHarnessPinsBeforeAfterUnchanged": true,
+      "actualDistApplicationAssetsMatchSealed": true,
+      "sealedPackagePinsExact": true
+    },
+    "testsRunMeaning": "Standard targeted cases; separate independent counterexamples and nonconclusive harness attempts retained with their own counts/outcomes.",
+    "latestHostProofLineageAndEffectSelectorReview": {
+      "newHostUnitCases": 4,
+      "unitPassed": 4,
+      "unitPytestSeconds": 1.75,
+      "unitProcessSeconds": 2.49623834999511,
+      "newPgOriginalLineageCases": 4,
+      "pgOriginalLineagePassed": 4,
+      "originalPgCoverage": "3 matching-owner/origin cases plus actual PREPARED→CLAIMED→OFFERED→dynamicproof→explicitregister→adopt→pause→resume→STOP; all synthetic household content in own PG16.13.",
+      "originalPgBatchPytestSecondsIncludingOneNonconclusiveReviewerCase": 10.29,
+      "originalPgBatchProcessAndStartSeconds": 15.130791086994577,
+      "originalPgBatchWallSeconds": 15.992341733013745,
+      "v3Counterexample": {
+        "testCriteriaSha256": "16e938a1bacbcb7621ba7b058342294404ec26342080c69cb992717ba84e6c12",
+        "cases": 1,
+        "expectedFailure": true,
+        "actualSelectedKind": "offered",
+        "expectedKind": "unresolved live claim",
+        "pytestSeconds": 5.15,
+        "processAndPgStartSeconds": 9.185842806007713,
+        "pgWallSeconds": 10.03931590798311,
+        "scope": "Real metadata selector query; no claim of physical effect or complete positive lineage from this fixture alone."
+      },
+      "v31SelectorRetest": {
+        "cases": 8,
+        "passed": 8,
+        "sameExactFixtureAndAssertionsAsBaseline": true,
+        "pytestSeconds": 6.22,
+        "processAndPgStartSeconds": 10.210917504038662,
+        "pgWallSeconds": 11.107938138011377,
+        "coverage": [
+          "older live claim/newer offer",
+          "same-second tie",
+          "newer live claim/older offer",
+          "older ambiguous/newer offer",
+          "expired claim/newer offer",
+          "foreign household excluded",
+          "foreign owner excluded",
+          "unclaimed pending is distinct from unresolved effect"
+        ]
+      },
+      "firstCanonicalBindingAttempt": {
+        "casesExecuted": 0,
+        "result": "Stopped before testing because canonical helper changed during builder fix; frozen snapshots used thereafter."
+      },
+      "nonconclusiveReviewerSetupAttempt": {
+        "cases": 1,
+        "result": "An in-memory multi-event scenario failed an intermediate assertion before intended final observation. Retained as nonconclusive; no product claim or GO derived from it.",
+        "preserved": true,
+        "separateFromProductCounterexample": true
+      },
+      "sourceImportBinding": "All five product modules were loaded from exact immutable V3/V3.1 snapshots through explicit in-memory import finder; canonical product/tests untouched.",
+      "v3ToV31OnlyProductMethodChanged": "HouseholdProvisionRuntime._reference; remainder of helper AST identical and four other product hashes identical.",
+      "all9SnapshotsExact0400AndPinsUnchanged": true,
+      "ownPostgresStartsThisReview": 3,
+      "ownPostgresAfter": "exited_retained",
+      "sourceDatabaseQueries": 0,
+      "modelCalls": 0,
+      "actualHouseholdEffects": 0,
+      "canonicalSourceOrTestWrites": 0,
+      "credentialValuesOrHashesEmitted": 0,
+      "old88AndOld17CallbackSuitesRepeated": false
+    },
+    "latestInstalledReadback": {
+      "independentDirectActualSourceHashes": 7,
+      "root25SourceReadbackEvidenceChecked": true,
+      "independentUnauthorizedHttpGets": 1,
+      "authenticatedHttpGetsByReviewer": 0,
+      "productionPosts": 0,
+      "modelCalls": 0,
+      "credentialValuesOrHashesEmitted": 0,
+      "testsRepeated": 0
     }
   },
   "handoff": "Concrete findings sent directly to coordinator during review. Waiting for exact frozen implementation and owner integration; no general test series, code edits, installs or extra agents.",
@@ -910,6 +1381,818 @@
     "limits": [
       "Real trusted owner/current/proof/effect callbacks and config loader not yet connected.",
       "No actual enrollment, positive realization, SQL state activation, shared install or full E112 claim."
+    ],
+    "executedHandoffSha256": "f8fcf56673d3e5f37def3e30cad8bb8d9c82e2cc952686ced374cf0deb49afb3"
+  },
+  "privateCompositionFactoryV2Review": {
+    "verdict": "GO_SCOPED_PRIVATE_COMPOSITION_AND_FACTORY_V2_CODE",
+    "checkedAtMachineUtc": "2026-10-24T00:25:13.932394+00:00",
+    "handoffSha256": "a954be9640c6f9121219592da651ea3a3ab0dc4fb1c55c31ab4e849b162c1d9a",
+    "factorySha256": "5922a19da238ff23eebe027ff506f8e7b602a261f5736e404e3b820f228a4f3e",
+    "compositionUnchangedSha256": "c7d701670fa01d3d86f38cd97f11f9e787f04351fdd7c195e464d46b32039a04",
+    "testSha256": "c85fe55512dad07fa3a554f0a84b55bd6a5207e20c81f454e1b585ba44037d17",
+    "boundedChange": "verify_realization and effect_status retain precheck and now capture callback result, check same captured current managed key after callback, then return.",
+    "independentRetest": {
+      "cases": 2,
+      "pytestSeconds": 1.34,
+      "processSeconds": 2.0603789869928733,
+      "exitCode": 0,
+      "allThreePinsBeforeAfterUnchanged": true,
+      "old10CasesRepeated": false,
+      "realHttpCalls": 0,
+      "postgresQueries": 0,
+      "modelCalls": 0,
+      "oldFourRawFilesActuallyExact0400": true
+    },
+    "originalExecutedV1HandoffSha256": "f8fcf56673d3e5f37def3e30cad8bb8d9c82e2cc952686ced374cf0deb49afb3",
+    "originalV1TenIndependentPassesRetained": true,
+    "limits": [
+      "Code/interface proof only, no actual production callbacks or runtime config loader tested.",
+      "Mandatory config key lookup is required; the earlier .get sketch is not an approved fallback.",
+      "No live enrollment, positive realization, active write, installation, restore or full E112 acceptance."
     ]
+  },
+  "canonicalPromotionAndTestBindingReview": {
+    "verdict": "GO_SCOPED_CANONICAL_PROMOTION_AND_TEST_BINDING",
+    "checkedAtMachineUtc": "2026-10-24T00:29:11.301139+00:00",
+    "promotionReceiptSha256": "2199f23fc3722a6933bee2998ad6c168b24121eeeb04bf944a219ddc197db48e",
+    "privateTestSha256": "c85fe55512dad07fa3a554f0a84b55bd6a5207e20c81f454e1b585ba44037d17",
+    "canonicalTestPath": "development/tests/bootstrap/test_household_provision_host.py",
+    "canonicalTestSha256": "96ff83910912fde54e288129588d4245cadf1a9235fdc54cf1c8dba130a57f81",
+    "independentAstComparison": {
+      "testFunctions": 7,
+      "allTestFunctionsIncludingDecoratorsIdentical": true,
+      "wiringFixtureIdentical": true,
+      "engineBeginConnectAndHttpDenyRetained": true,
+      "testAssertionsOrCriteriaChanged": false,
+      "onlyChanges": [
+        "normal canonical imports instead of private file-loader",
+        "repo-relative root",
+        "before/after canonical source-byte snapshots instead of external private freeze receipt"
+      ]
+    },
+    "actualImportBinding": {
+      "exitCode": 0,
+      "processSeconds": 2.3419629920390435,
+      "compositionPath": "/home/administrator/project/Eva2/src/eva/bootstrap/household_initiative.py",
+      "compositionSha256": "c7d701670fa01d3d86f38cd97f11f9e787f04351fdd7c195e464d46b32039a04",
+      "factoryPath": "/home/administrator/project/Eva2/src/eva/bootstrap/household_provision_host.py",
+      "factorySha256": "5922a19da238ff23eebe027ff506f8e7b602a261f5736e404e3b820f228a4f3e",
+      "instancesCreated": 0,
+      "testsRepeated": 0,
+      "databaseOrHttpCalls": 0,
+      "modelCalls": 0
+    },
+    "canonicalExecutionReceiptPendingAtThisReview": true,
+    "limits": [
+      "Existing private independent10+2-case proof reused for identical assertions and source; no12/31 test rerun.",
+      "Promotion is source/import/test binding only; no root runtime loader, actual callbacks, installation or household acceptance."
+    ]
+  },
+  "trustedRuntimeCallbacksV1Review": {
+    "verdict": "REQUEST_CHANGES_SCOPED_SOURCE_FRESHNESS_AFTER_CHAIN_READ",
+    "checkedAtMachineUtc": "2026-10-24T00:43:23.867458+00:00",
+    "handoffSha256": "2ee34a417b0cf4fc9c97b9ca4da9985e728c62a8a009acb08603896f7d95751f",
+    "helperSha256": "24cb3d944e5ab66d7116d0b86d062d1524b7d9621048377816643e24085d3e65",
+    "testSha256": "afab82064d293215034e06b57e8c7c4c3a94f11f7f1a52c74b7a0806fde25c25",
+    "independentTests": {
+      "cases": 15,
+      "pytestSeconds": 1.36,
+      "processSeconds": 1.9355831420398317,
+      "exitCode": 0,
+      "realHttpOrDatabaseOrModelCalls": 0
+    },
+    "confirmedBoundaries": [
+      "Host owner/engine/scope/household/path must match actual legacy route; explicit legacy provisions=None avoids recursion.",
+      "Current config/source/review/ProcedureReference is checked using actual legacy current function; no body/model permission flag.",
+      "Current missing proof_reference returns None/unknown without lineage or chain search.",
+      "Exact scoped checkpoint PK with FOR SHARE and at most65event rows; sequence/hash/checkpoint projection checked.",
+      "Retained original full context/source binding and current proposal guard checked; original PREPARED→CLAIMED→OFFERED receipt binds household/source/claim/text. HTTPstatus derives uniquely from original closed2xx hash; offer is not heard/family acceptance.",
+      "Uncertain/expired claimed effects remain unknown; adapter own admission ledger remains separately binding."
+    ],
+    "newDefect": "E112-CALLBACK-001",
+    "actualProvisionProofReference": null,
+    "actualProvisionRealization": "unproven",
+    "installed": false,
+    "fullE112Accepted": false
+  },
+  "trustedRuntimeCallbacksPostReadFixReview": {
+    "verdict": "GO_SCOPED_TRUSTED_RUNTIME_CALLBACKS_POSTREAD_SOURCE_GUARD",
+    "checkedAtMachineUtc": "2026-10-24T00:47:54.658742+00:00",
+    "handoffSha256": "2fd312ded9da7dbafa24c42e6d4fbaa03f7e06e44bc4479441c181c44488bb98",
+    "helperSha256": "050210aae3137cec1f00d63d5fc202ba0d0def9bcc7d8909cf2b99609f40ac22",
+    "testSha256": "95982375d41beebce7c45bc1cd7967a310893dcad82f5576ffa80c90d4748138",
+    "boundedChange": "Re-read real current source/owner/config/legacy guard after blocking retained chain before returning positive proof or clear effect. Real source faults propagate on verification; effect uncertainty stays unknown.",
+    "independentRetest": {
+      "cases": 2,
+      "pytestSeconds": 1.66,
+      "processSeconds": 2.224690891976934,
+      "exitCode": 0,
+      "originalSourceContentMutationRetained": true,
+      "originalConfigRemainsUnchanged": true,
+      "old15CasesRepeated": false,
+      "extractedLegacyEffectBodyAstIdentical": true,
+      "helperAndTestPinsBeforeAfterUnchanged": true,
+      "realHttpOrDatabaseOrModelCalls": 0
+    },
+    "originalV1SourceSha256": "24cb3d944e5ab66d7116d0b86d062d1524b7d9621048377816643e24085d3e65",
+    "originalV1SourceActuallyPreserved": true,
+    "limits": [
+      "Private helper/interface only; no real runtime installation or active household facility proof.",
+      "Current actual proof_reference remains None, actual verify_realization must remain None and legacy effect status unknown.",
+      "No E1.12 full-card/owner acceptance or success from synthetic positive fixtures."
+    ]
+  },
+  "installationReadinessGuardReview": {
+    "checkedAtMachineUtc": "2026-10-24T00:53:39.027479+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_EXACT_DAILY_COUNTER_CLASSIFICATION_AND_NATIVE_PENDING_PROCESSING_BLOCKER",
+    "candidateSha256": "1c662189d90f9e94cc79ac127d39c88fafc20aa60e7fd4200f0d3873a4807f7c",
+    "previousInstallerSourceSha256": "3749b39e34176a519782ce5a2394fd7f77d69887fb714fdaff0c2430950f5a6d",
+    "reviewScope": "Only narrow retained daily budget-counter classification and native pending/processing blocker. No production probe execution, marker mutation or installation by reviewer.",
+    "sourceSemantics": {
+      "runtime_resource_usage.py:226-346": "Both admission and rejection append EvaDailyReflectionBudget/v1 and leave reflection_budget_active. This is a daily ledger, not an executing-model lease.",
+      "memory_background.py:838-867": "Separate post-admission idle recheck, durable source claim and provider dispatch. Budget record alone does not establish dispatch.",
+      "memory_outbox.py:932-953": "Durable source consumption retains MEMORY_REFLECTION_CLAIMED as completed source metadata; completion is separate.",
+      "hindsight.py:283-288,1048-1155": "Exact same installation bank derivation; native model create/refresh queues a separate operation and waits for its settled status."
+    },
+    "sqlReview": {
+      "noAgeBasedExemption": true,
+      "exactPhaseThreadPatternPositiveRevisionAndScopedEventCount": true,
+      "everyEventTypeAndContractDayChecked": true,
+      "missingOrJsonNullContractAndDayRemainBlockers": true,
+      "nullableEventTypeCounterexampleExcludedByActualNotNullSchema": true,
+      "activeLeaseAndAdmittedCallStartedWorkQueriesUnchanged": true,
+      "allOtherCurrentGenerationUnknownNullCheckpointsStillBlock": true,
+      "nativePendingOrProcessingNonzeroOrInvalidResponsesBlock": true,
+      "nativeApiErrorsPropagateAndBlock": true,
+      "processGenerationBindingSuppliedByCoordinatorWrapperNotByFilename": true
+    },
+    "independentFixture": {
+      "kind": "One read-only CTE metadata query against own disposable PostgreSQL 16.13; exact extracted candidate predicates, production table name replaced with fixture CTE name.",
+      "cases": 14,
+      "passed": 14,
+      "casesCovered": [
+        "valid RESERVED",
+        "valid BLOCKED",
+        "valid mixed ledger",
+        "missing contract",
+        "JSON-null contract",
+        "missing day",
+        "wrong day",
+        "mixed unknown event type",
+        "revision mismatch",
+        "zero revision",
+        "no events",
+        "wrong scope",
+        "actual execution phase",
+        "wrong thread"
+      ],
+      "predicateSqlSha256": "c899549859258154cb5224bcb8196f268e157304e8a88deeca09abfd04cfd02d",
+      "candidatePinBeforeAfterUnchanged": true,
+      "elapsedSeconds": 3.7376633770181797,
+      "firstHarnessAttempt": {
+        "exitCode": 1,
+        "elapsedSeconds": 2.9457103260210715,
+        "casesExecuted": 0,
+        "failure": "pg_isready observed temporary initialization Unix socket; socket disappeared before version check.",
+        "correction": "Wait for final 127.0.0.1 TCP listener; predicates and assertions unchanged.",
+        "failurePreserved": true
+      },
+      "ownContainerAfter": "exited_retained",
+      "sourceDatabaseQueries": 0,
+      "productionHttpCalls": 0,
+      "modelCalls": 0,
+      "checkpointMarkerMutations": 0
+    },
+    "installationOrWholeTaskGo": false,
+    "remainingPrerequisites": [
+      "Final exact core/worker overlay manifest and integration review",
+      "Actual delegated runtime profile comparison including digital work",
+      "Fresh process-bound conversation/model/work/native-memory claim check immediately before installation",
+      "Actual installed owner-route readback and honest realization-proof unknown state"
+    ]
+  },
+  "concreteRuntimeOwnerIntegrationReview": {
+    "checkedAtMachineUtc": "2026-10-24T00:55:17.039387+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "NO_GO_PENDING_E112_HANDOFF_001_PARTIAL_ENROLLMENT_CONTROLS",
+    "handoffSha256": "2b1ff14292911a3c913453ba01d51f4b44fdd2fa97a6cd86f8fde0007612ed36",
+    "exactFiveFiles": [
+      {
+        "bytes": 26593,
+        "path": "src/eva/bootstrap/household_provision_runtime.py",
+        "sha256": "6a3c725a6332882c6e68c086eb946c04ca29cd0f98f857d0ebc2f81153d1b030"
+      },
+      {
+        "bytes": 11915,
+        "path": "development/tests/bootstrap/test_household_provision_runtime.py",
+        "sha256": "bbffd1c68bebe225f0086f72cfac623a32debc09034016ba5de037afea6c0c6a"
+      },
+      {
+        "bytes": 96048,
+        "path": "src/eva/bootstrap/runtime.py",
+        "sha256": "26eb20f4be56dd1061bcdde03fcf888e28e4325e16d435d74599000dc99b4321"
+      },
+      {
+        "bytes": 20381,
+        "path": "src/eva/providers/home_assistant.py",
+        "sha256": "9b8b34300cb53fd4871c50d49ebd18986031f636e2d8186fbbae287bad2d322d"
+      },
+      {
+        "bytes": 2203,
+        "path": "src/eva/providers/contracts.py",
+        "sha256": "5cb50dff71dc9d6f8298342ec550096a791f5d863b0fd336c05db9d96550ac23"
+      }
+    ],
+    "reviewedBehavior": [
+      "Absent enrollment setting preserves legacy route; explicit invalid, absent file/key or invalid pointer fails closed. Startup never registers or activates.",
+      "One default-None optional frozen/slotted ProviderServiceContext field carries the existing factory through actual HomeAssistantProviderFactory.build_services into original HouseholdInitiativeLoop.",
+      "Runtime owner_loader/current_authority/foreground closures are invoked after runtime construction: factory_for and loop construction retain dependencies only; actual provision callbacks are created by deferred _build, not eager constructor.",
+      "Owner inspect/register/command methods forward to one controller. Actual owner authorization, current household/consent/device/policy and original source checks remain in trusted callbacks; API authentication reviewed previously remains required.",
+      "Registration derives provenance from host configuration, retains only proposed lifecycle state, then writes explicit pointer under cooperative file lock with changed-config/raw-pointer handoff check. File and database are not claimed atomic.",
+      "Registered missing real realization proof remains None, actual_working_proof_available false, effect_status unknown. No synthetic acceptance, offered-chain discovery or new permissions introduced.",
+      "Commands bind current source-derived provision identifier and forward revision/binding/request; no caller proof/evidence is introduced.",
+      "Previously fixed TrustedHouseholdProvisionCallbacks/_read_json/read_exact_chain AST exactly preserved from reviewed private helper050210."
+    ],
+    "independentValidation": {
+      "cases": 11,
+      "pytestSeconds": 2.6,
+      "processSeconds": 3.6356256249709986,
+      "exitCode": 0,
+      "allFiveSourcePinsBeforeAfterUnchanged": true,
+      "trustedHelperAndCodecsAstIdentical": true,
+      "older62And31And12CasesRepeated": false,
+      "databaseCalls": 0,
+      "realHttpCalls": 0,
+      "modelCalls": 0,
+      "cameraCalls": 0,
+      "sharedInstallationChanges": 0
+    },
+    "newActionableFindings": [],
+    "wholeCardOrInstallationGo": false,
+    "remaining": [
+      "Exact role-preserving overlay manifest/profile checks and fresh active-claim installation admission remain coordinator-owned.",
+      "Actual installed owner API and usable UI must be checked after delivery.",
+      "Real working realization and adopted changes/version/pause/resume/undo/restore criteria still require actual evidence; this integration alone does not complete E1.12."
+    ],
+    "initialVerdictBeforePartialHandoffCounterexample": "GO_SCOPED_RUNTIME_PROVIDER_OWNER_CONTROL_INTEGRATION",
+    "subsequentIndependentCounterexample": "E112-HANDOFF-001",
+    "initial11PassStillValid": true,
+    "currentDispositionAfterRepair": "GO_SCOPED_E112_HANDOFF_001_PARTIAL_REGISTRATION_RECOVERY"
+  },
+  "ownerControlsUiInitialReview": {
+    "checkedAtMachineUtc": "2026-10-24T00:58:08.023016+00:00",
+    "sourceSha256": "d21f5896dd838e48434cab27e3d3a59dd96a0a61fc709855a1951e7c81483533",
+    "parentSourceSha256": "be0cee6729a37467c9e8072c17f7b7cd49a2a1806793962508fa410a194503ca",
+    "verdict": "NO_GO_PENDING_E112_HANDOFF_001",
+    "staticBoundariesPassed": [
+      "GET contract and exact revision/binding used",
+      "No automatic POST",
+      "Unknown working proof hides adopt/resume",
+      "GET error and hidden clear main provision page",
+      "Same-origin credentials and no-store/error redirects"
+    ],
+    "finding": "E112-HANDOFF-001",
+    "independentBrowserAcceptance": false
+  },
+  "ownerControlsUiPartialHandoffFixReview": {
+    "checkedAtMachineUtc": "2026-10-24T01:00:26.467870+00:00",
+    "verdict": "GO_SCOPED_UI_PARTIAL_HANDOFF_CONTROLS_ONLY_BACKEND_FIX_PENDING",
+    "sourceSha256": "668e86208b64e5dab1024ac8fcb8f8ad982d0d81da29ac411e03ec0870aca227",
+    "originalV1RawSha256": "d21f5896dd838e48434cab27e3d3a59dd96a0a61fc709855a1951e7c81483533",
+    "originalV1ActuallyPreserved0400": true,
+    "independentBrowser": {
+      "engine": "Existing headless Chromium; actual built dist-v2 React bundle; isolated loopback synthetic API",
+      "changedCauseOnly": true,
+      "elapsedSeconds": 1.2555852320510894,
+      "unboundProposedHasNoExecutionControls": true,
+      "explicitRecoveryPostsRequestIdOnly": true,
+      "unboundPausedHasNoControlsOrRecovery": true,
+      "automaticPosts": 0,
+      "syntheticPosts": 1,
+      "externalRequests": 0,
+      "modelCalls": 0,
+      "oldBroadBrowserFlowRepeated": false,
+      "harnessSha256": "4519eae5b86ebff1730a4859ad9c441ca81c2ba0b91996e498769f8f1b81657e",
+      "changedChecksScriptSha256": "bbf5c3acfdeeba8c175d798905bf7486b91923a28cc8717f8ecf4bdf1ce9f244",
+      "harnessOrUiSourceWrites": 0,
+      "jsBundleSha256": "262e61383cfdd82f1a49310a1a84e7c3c283fc99df0e35a5dc7a3f05831204c2",
+      "assetManifestSha256": "ef793e49f097ac22f5b8cc50ee2d60e575678bba5ef27d00e347f4094eaca221"
+    },
+    "wholeFindingClosed": true,
+    "remaining": "Backend must deny commands while unenrolled and recover only exact unadopted proposed record under current authority/source guards; verify original counterexample after fix.",
+    "backendResolutionReference": "partialRegistrationRecoveryV2Review"
+  },
+  "partialRegistrationRecoveryV2Review": {
+    "checkedAtMachineUtc": "2026-10-24T01:06:05.466483+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_E112_HANDOFF_001_PARTIAL_REGISTRATION_RECOVERY",
+    "handoffSha256": "2f66e0fe68652de6bdd9042771d8ef4572fd7b3f9eeb938a99e2b06942a4fa8f",
+    "helperSha256": "dfb3b58642f9c3b9aa2fee109a2d6802e28bc1c9fb925c62a53eef081d7f4681",
+    "testSha256": "617f14f90d19c8648b415b4433eea14719b1f3900ae9538e7b0a476f9bb18102",
+    "roleCandidateManifestSha256": "ff52e5363dbdacab2b9f7065db13b42c437322ceafb4f32e22f09a81934ac9fe",
+    "roleCandidateScope": "All six listed candidate file bytes match manifest; this is not review or execution of a final complete installation overlay.",
+    "staticReview": [
+      "Commands require exact actual enrollment pointer before store command can run. Null/different pointer cannot create a false DB-only pause/stop receipt.",
+      "Recovery inspects same source-derived record and accepts only exact owner/household/source/review/reference/binding, proposed/unadopted/unverified/not-stopped/no-pending-effects. No second register event or activation.",
+      "Real current owner/source verification is called inside recovery transaction. Actual owner._authorize establishes its own RLS scope and checks current binding/principal with shared row locks, then restores owner scope.",
+      "Managed file bytes and source config rechecked before pointer replacement; original partial failure remains visible, not claimed atomic across PG/file.",
+      "Previously reviewed trusted callbacks and codecs AST unchanged; existing provider/runtime/contracts hunks unchanged."
+    ],
+    "independentRetest": {
+      "targetedPytestCases": 4,
+      "passed": 4,
+      "oldCasesDeselected": 11,
+      "pytestSeconds": 1.38,
+      "processSeconds": 1.900272238010075,
+      "allFivePinsBeforeAfterUnchanged": true,
+      "wrongSourceAndRevokedOwnerBothRefuseRecovery": true,
+      "originalCounterexampleRetest": {
+        "elapsedSeconds": 1.682954705960583,
+        "originalPointerByteDriftScenarioRetained": true,
+        "unenrolledPauseDeniedBeforeMutation": true,
+        "newRequestRecoversSameOneOriginalRecord": true,
+        "originalRecordAndProvenanceUnchanged": true,
+        "afterRecoveryActualFactoryHasLifecycleGate": true,
+        "status": "proposed",
+        "adoption": null,
+        "verification": null,
+        "actualWorkingProof": false
+      },
+      "originalV1SourceAndHandoffActuallyExact0400": true,
+      "realSqlHttpModelCalls": 0,
+      "sharedRuntimeOrInstallationChanges": 0,
+      "canonicalSourceOrTestWrites": 0
+    },
+    "findingClosed": true,
+    "installationOrWholeE112Go": false,
+    "practicalInstallationCriteria": [
+      "Materialize final bounded overlay from actual current core and worker baselines. Preserve role differences and foreign WIP; include exact helper/runtime/provider/API/loop dependencies and approved UI assets, not just these six candidate files.",
+      "Configure explicit protected regular managed pointer in existing runtime-owned writable mount. Initial null is legacy; explicit owner register/recovery must produce exact pointer before execution controls are represented as operative.",
+      "Compare actually installed core/worker source-bound runtime profiles including digital work with src/tools/check_delegated_runtime_profiles.py; unresolved release/profile mismatch remains an installation/admission blocker.",
+      "Immediately before replacement run reviewed source-pinned readiness guard on actual process generation and check conversation/model/delegated work/native-memory claims plus component evaluation. Unknown or active work defers installation; no marker clearing or age exemption.",
+      "After installation verify actual role source hashes and authenticated owner GET/register/proposed/pause path with exact enrollment, revision and binding; unauthorized access remains denied. Coordinator owns actual installation and mutations.",
+      "Actual proof_reference remains None and effect unknown until genuine original evidence exists. No active/adopt/resume success, restored adoption/pause acceptance or full E1.12 completion follows from this fixture review."
+    ]
+  },
+  "preparedInstallOperatorReview": {
+    "checkedAtMachineUtc": "2026-10-24T01:08:38.055894+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_OPERATOR_STRUCTURE_FINAL_OVERLAY_AND_PROVENANCE_PENDING",
+    "operatorSha256": "fed2f000011709d3b369b68a85915e025b01285dbd3616a01570acf9f9687144",
+    "baselineInstallerSha256": "3749b39e34176a519782ce5a2394fd7f77d69887fb714fdaff0c2430950f5a6d",
+    "reviewMethod": "Read entire concrete operator, compare original installer and actual require_current_storage/_require_compose_binding/_update_lock/_save_receipt implementations; AST compilation only, operator not executed.",
+    "preservedBoundaries": [
+      "Current exact container ID/image/running state and actual storage and compose binding checked before and after dispatch.",
+      "Candidate configuration must equal current complete config with only listed role images plus one explicit core enrollment-file ENV setting changed.",
+      "Manifest candidate source bytes and installed original file hashes checked; absent new file supported without treating absence as an existing source hash.",
+      "Current source extension content and uid/gid/mode remain pinned.",
+      "Reviewed readiness1c662 with actual process-generation cutoff remains mandatory; pending/processing native operations and active/unknown claims block.",
+      "Component evaluation service identity must exist; active child or evaluation container blocks.",
+      "Current PID and StartedAt checked again immediately before receipt/compose dispatch.",
+      "Receipt lock and existing-receipt denial remain; fsync-backed dispatch_result_unknown is saved before one compose attempt. No auto retry, rebuild or image pull.",
+      "Explicit null pointer requires exact bytes, regular non-symlink file, uid/gid65532 and0600. Startup does not register/adopt."
+    ],
+    "profileProofBoundary": {
+      "shared_providerComparison": true,
+      "public_researchComparison": true,
+      "digital_workComparison": true,
+      "knownHouseholdResearchMismatchExplicit": true,
+      "allProfilesCompatibleClaim": false,
+      "pending": "Bind prepared candidate-profile evidence to exact final candidate image IDs in final bounded handoff; perform real installed checker after installation before ready/worker-admission claims. Mismatched household_research tasks remain nonclaimable."
+    },
+    "registrationImpact": {
+      "currentLegacyPreservedWithNullPointer": true,
+      "registeringCurrentRouteWouldInstallProposedLifecycleGate": true,
+      "trustedRuntimeProofReferenceCurrently": null,
+      "effectStatusCurrently": "unknown",
+      "registeringNowCouldPreventFirstPositiveLegacyRun": true,
+      "coordinatorDecision": "No automatic registration or adoption of actual household route; only authenticated GET/authorization denial/assets readback for this installation.",
+      "acceptanceLimit": "Installation and GET/assets prove connected owner controls only. No actual E1.12 registration/pause/adopt/resume or complete household facility acceptance from this delivery. Genuine exact source-bound proof handoff remains open."
+    },
+    "pendingFinalOverlayReview": true,
+    "installationGo": false,
+    "operatorExecuted": false,
+    "productionQueriesOrCommands": 0,
+    "newTestsOrModelCalls": 0,
+    "productionCutoverHeldForFunctionalProofHandoff": false,
+    "finalOverlayResolution": "finalProofHandoffOverlayInstallationReview"
+  },
+  "proofHandoffFunctionalGapClarification": {
+    "checkedAtMachineUtc": "2026-10-24T01:11:42.276154+00:00",
+    "clientTaskDate": "2026-10-24",
+    "scope": "Existing E1.12 source-bound realization proof interface; no new workstream or test series.",
+    "functionalGap": "Canonical HouseholdProvisionRuntime._callbacks passes proof_reference=None and overview returns actual_working_proof_available=False unconditionally. Consequently genuine future retained evidence cannot reach the lifecycle verifier through this runtime interface. This is missing functional code handoff as well as absent actual use evidence.",
+    "acceptanceConsequence": "Installing a registration control for the current route would permit enrollment into a proposed gate with no current functional route to verified activation. Earlier scoped code/UI/operator reviews do not approve that product outcome.",
+    "coordinatorDecision": "Production cutover held while existing builder investigates exact existing PREPARED/proposal preservation of source_context/source_binding and supplies one concrete bounded interface repair. No automatic production registration.",
+    "earlierScopedGoEvidencePreserved": true,
+    "newTestsOrProductionActions": 0,
+    "pending": "Review only delivered concrete proof-handoff interface repair; exact original source lineage, authorizations, unknown and STOP boundaries remain mandatory.",
+    "resolution": "Bounded functional code gap resolved by reviewed frozen V3.1; actual installed natural capture/use remains unproven."
+  },
+  "originalE112DoneWhenCompactFinishCheck": {
+    "checkedAtMachineUtc": "2026-10-24T01:17:38.555430+00:00",
+    "clientTaskDate": "2026-10-24",
+    "method": "One compact read-only comparison of unchanged canonical doneWhen against concrete source and already-recorded delivery evidence; no tests or broad audit.",
+    "originalDoneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.",
+    "originalCriteriaUnchangedAcrossHeadAndCanonicalProjections": true,
+    "functionalGaps": [
+      "Assigned host original-context/binding→PREPARED→dynamic verifier/overview proof handoff; hardcoded None/false is missing functional handoff, not just missing user trial.",
+      "E112-VERSION-001: actual change/undo with linked source versions and compact private owner history.",
+      "E112-ADOPTION-001: prior allowed trial→concrete evaluation+notice→implicit adoption without wider rights."
+    ],
+    "solelyMissingActualUseOrOwnerEvidence": [
+      "A real small lasting facility, exact authorized realization and checked useful behavior on installed original route.",
+      "Actual owner use/adoption and resulting household usefulness; synthetic store, UI and admitted/offered fixtures are not that evidence."
+    ],
+    "restoreEvidenceBoundary": {
+      "built": "Stable identity and append-only scoped PG lifecycle state retain adoption/pause fields across rebuilding the store object.",
+      "alreadyRecordedEvidence": "Existing PG test builds another store against the same database; it is not a backup/restore of an installed adopted/paused facility.",
+      "unverifiedHandoff": "Final actual restore must include the same managed enrollment/source binding as well as lifecycle data. No complete restore/managed-pointer handoff is approved by these store tests; no new restore test started.",
+      "classification": "No new proven restore code defect asserted from missing evidence; complete restore acceptance remains unproven."
+    },
+    "newIndependentCriteria": 0,
+    "newTests": 0,
+    "newProductChanges": 0,
+    "scopeGoPreserved": true,
+    "coordinatorHasNecessaryGaps": true,
+    "criteriaMap": [
+      {
+        "originalCriterion": "Brongebonden Household Artifact zichtbaar met proposed/active/paused/rejected/retired; gebruiksstatus en adoptie onderscheiden.",
+        "existingSource": [
+          "src/eva/adapters/postgres/household_provisions.py:112",
+          "src/eva/adapters/postgres/household_provisions.py:138",
+          "src/eva/bootstrap/household_provision_runtime.py:382",
+          "src/eva/adapters/api/dashboard_initiatives.py:37"
+        ],
+        "assessment": "Scoped lifecycle/storage/current-state owner plumbing built and tested; actual installed lasting facility/user outcome remains unproven."
+      },
+      {
+        "originalCriterion": "Active vereist toegestane realisatie en gecontroleerde werking; expliciete adoptie werkt.",
+        "existingSource": [
+          "src/eva/adapters/postgres/household_provisions.py:204",
+          "src/eva/adapters/postgres/household_provisions.py:217",
+          "src/eva/bootstrap/household_provision_runtime.py:355",
+          "src/eva/bootstrap/household_provision_runtime.py:382"
+        ],
+        "assessment": "Explicit owner command and proof gates exist. Host original-context proof handoff and dynamic availability are missing functional wiring assigned to current builder; actual positive use is separately unproven."
+      },
+      {
+        "originalCriterion": "Stilzwijgende adoptie alleen na vooraf toegestane proef, concrete evaluatie met melding, zonder meer rechten.",
+        "existingSource": [
+          "src/eva/adapters/postgres/household_provisions.py:178",
+          "src/eva/adapters/postgres/household_provisions.py:217"
+        ],
+        "assessment": "E112-ADOPTION-001 functional route absent; explicit adoption does not demonstrate prior trial/evaluation/notice/implicit adoption."
+      },
+      {
+        "originalCriterion": "Werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie herleidbaar.",
+        "existingSource": [
+          "src/eva/adapters/postgres/household_provisions.py:21",
+          "src/eva/adapters/postgres/household_provisions.py:63",
+          "src/eva/adapters/postgres/household_provisions.py:135",
+          "src/eva/adapters/postgres/household_provisions.py:176",
+          "src/eva/bootstrap/household_provision_runtime.py:460",
+          "src/eva/adapters/api/dashboard_initiatives.py:58"
+        ],
+        "assessment": "Pause/stop and protected append-only events exist. E112-VERSION-001 actual source change/undo/version/compact history interface missing; revision and retire are not source versions and undo."
+      },
+      {
+        "originalCriterion": "Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening.",
+        "existingSource": [
+          "src/eva/adapters/postgres/household_provisions.py:21",
+          "src/eva/adapters/postgres/household_provisions.py:63",
+          "src/eva/adapters/postgres/household_provisions.py:135",
+          "development/tests/postgres/test_household_provisions.py:120"
+        ],
+        "assessment": "Stable identity, existing-record refusal and same-PG reloading preserve data in scoped tests. Actual restore including managed pointer/source binding and adopted/paused use remains unproven; no new proven restore code defect asserted."
+      },
+      {
+        "originalCriterion": "Werkelijke blijvende verandering; eenmalige taak of alleen door Eva gebruikte skill telt niet.",
+        "existingSource": [
+          "development/design/product/execution-workboard-v1.json (original E1.12.doneWhen exact text above)"
+        ],
+        "assessment": "Genuine lasting useful household use and owner evidence remain missing, separately from functional interfaces; neither tests, reports nor installation count as that outcome."
+      }
+    ]
+  },
+  "proposedProofEnrollmentSemanticsPendingCandidate": {
+    "coordinatorDirection": "Registration may preserve proposed DB record while pointer remains null until original current OFFERED proof and clear effects; explicit later completion links same exact unadopted proposed record. Legacy remains usable before proof.",
+    "reviewStatus": "GO_SCOPED_COMPLETE_HOST_PROOF_HANDOFF_AND_EFFECT_SELECTOR_V31",
+    "limits": "Model/API cannot mint host lineage, missing historical original context remains unknown; original E112-HANDOFF-001 no-false-controls criterion remains mandatory."
+  },
+  "uiV3CandidatePendingBackendReview": {
+    "sourceSha256": "7ea1e182a756dff8ae4382e7a2813f1f1faf7ec486377855265e57fed10c49ba",
+    "harnessSha256": "8f46ddccbd8c4e6a0e4413a7721c05cf53317e22abb44b3f5c5c4c6b07411d06",
+    "sealedManifestSha256": "d977c0e08b6d9c4487cc7a8dfff7830f8eccb05b05396a553f583d04522e182c",
+    "independentReviewStatus": "GO_SCOPED_UI_V3_PROOF_HANDOFF_BOUNDARY_ONLY",
+    "requestedRunMode": "EVA_DASHBOARD_PROOF_HANDOFF_ONLY=1",
+    "earlierV2ScopedEvidencePreserved": true
+  },
+  "ownerControlsUiV3ProofHandoffReview": {
+    "checkedAtMachineUtc": "2026-10-24T01:21:08.298820+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_UI_V3_PROOF_HANDOFF_BOUNDARY_ONLY",
+    "handoffSha256": "5ea5d2b97bd40e6e9837c0782eec4588a463e65072053895142f55ed3b98ede1",
+    "sourceSha256": "7ea1e182a756dff8ae4382e7a2813f1f1faf7ec486377855265e57fed10c49ba",
+    "harnessSha256": "8f46ddccbd8c4e6a0e4413a7721c05cf53317e22abb44b3f5c5c4c6b07411d06",
+    "sealedManifestSha256": "d977c0e08b6d9c4487cc7a8dfff7830f8eccb05b05396a553f583d04522e182c",
+    "jsBundleSha256": "d10dee29ad81e79e4e5aa69db92c6388f8a2b00b41a4417f91c5f7a96cc709aa",
+    "independentBrowser": {
+      "engine": "Actual built dist-v3 React in existing headless Chromium with isolated loopback synthetic API",
+      "runMode": "EVA_DASHBOARD_PROOF_HANDOFF_ONLY=1",
+      "exitCode": 0,
+      "elapsedSeconds": 1.3556082870345563,
+      "proposalBeforeProofLeavesUnenrolled": true,
+      "noCompletionControlsBeforeProof": true,
+      "syntheticHostProofArrivalDoesNotAutoPost": true,
+      "explicitCompletionKeepsSameProposalRevisionUnadopted": true,
+      "registerBodyRequestIdOnly": true,
+      "syntheticPosts": 2,
+      "automaticPosts": 0,
+      "productionPosts": 0,
+      "externalRequests": 0,
+      "modelCalls": 0,
+      "oldBroadBrowserFlowRepeated": false,
+      "sourceAndHarnessPinsBeforeAfterUnchanged": true,
+      "actualDistApplicationAssetsMatchSealed": true,
+      "sealedPackagePinsExact": true
+    },
+    "previousV2SourceAndHarnessActuallyExact0400": true,
+    "backendVerifierOrFunctionalProofHandoffGo": false,
+    "installationOrRealHouseholdUseGo": false,
+    "remaining": "Review matching concrete backend candidate and then final complete overlay; original E1.12 VERSION/ADOPTION functional gaps and actual usage/owner evidence remain open."
+  },
+  "hostProofLineageAndEffectSelectorV31Review": {
+    "checkedAtMachineUtc": "2026-10-24T01:37:30.730452+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_COMPLETE_HOST_PROOF_HANDOFF_AND_EFFECT_SELECTOR_V31",
+    "v3HandoffSha256": "091b2232577604bb831dd8bb84a735caddcf6c947eace54e8f2bf862ca9a3065",
+    "v31HandoffSha256": "d49d8b88cfdb393a1145cc79a00a0ec319c8072d13132ad0724c096e2a2be397",
+    "runtimeHelperSha256": "7dfc3db864304e487ae745538df5e71dcb59c258f6408aed269f78b31346032e",
+    "otherProductPins": {
+      "src/eva/providers/home_assistant_procedure.py": "e3d968b664d07c866058a1e68eae6831a06c67e3ddc11ea0080014f2813da07d",
+      "src/eva/application/household_procedure.py": "99122ceebaf85e506076c02c5190cf1ad3c5b95729822a57c789a7941f55c894",
+      "src/eva/application/free_will.py": "bf44204a44d7b9cb745ba1ece7629a45325cf78aec6fca3fb28e73fd0a078d13",
+      "src/eva/adapters/postgres/sensory_events.py": "2e3ea66d1fdae7d4d1d59b173483c70f3d7e1ff082f3a2648fcde1dc9b23dd1f"
+    },
+    "requiredReviewedLifecycleDependencySha256": "9b1e5824d5fbba722439170fb2530c31da28c9b8e393da7c7f623ce51bec1c2f",
+    "reviewedBoundaries": [
+      "Provider freezes bounded original host lineage; model receives plain deep copy, cannot supply typed host lineage through model/API JSON. Wrapper overwrites lineage field with trusted typed carrier after current-source/rights/expiry rechecks.",
+      "Same existing PREPARED stores source context/binding/config only for matching responding household scope/owner/original observation or batch-selected child; no historical repair or second store.",
+      "Working proof reads exact current scoped configuration/source/review/owner and full bounded retained chain, verifies exact offered receipt; current authority/source rechecked after potentially blocking reads. Missing/corrupt historical lineage stays unknown/None.",
+      "Current effect selection ranks unresolved/unknown then live claims before settled or unclaimed pending. All selection uses same exact owner/household/config/source/review filters; deterministic final thread ordering handles harmless ties.",
+      "Proposed registration with no clear verified proof keeps enrollment null and legacy path selected. Later explicit same-record completion installs lifecycle gate only with proof+clear; remains proposed/unadopted, no automatic activation. GET uses real verifier without constant false.",
+      "Existing last pre-POST source/window checks and provision final admission remain; no voice or permission expansion."
+    ],
+    "independentValidation": {
+      "newHostUnitCases": 4,
+      "unitPassed": 4,
+      "unitPytestSeconds": 1.75,
+      "unitProcessSeconds": 2.49623834999511,
+      "newPgOriginalLineageCases": 4,
+      "pgOriginalLineagePassed": 4,
+      "originalPgCoverage": "3 matching-owner/origin cases plus actual PREPARED→CLAIMED→OFFERED→dynamicproof→explicitregister→adopt→pause→resume→STOP; all synthetic household content in own PG16.13.",
+      "originalPgBatchPytestSecondsIncludingOneNonconclusiveReviewerCase": 10.29,
+      "originalPgBatchProcessAndStartSeconds": 15.130791086994577,
+      "originalPgBatchWallSeconds": 15.992341733013745,
+      "v3Counterexample": {
+        "testCriteriaSha256": "16e938a1bacbcb7621ba7b058342294404ec26342080c69cb992717ba84e6c12",
+        "cases": 1,
+        "expectedFailure": true,
+        "actualSelectedKind": "offered",
+        "expectedKind": "unresolved live claim",
+        "pytestSeconds": 5.15,
+        "processAndPgStartSeconds": 9.185842806007713,
+        "pgWallSeconds": 10.03931590798311,
+        "scope": "Real metadata selector query; no claim of physical effect or complete positive lineage from this fixture alone."
+      },
+      "v31SelectorRetest": {
+        "cases": 8,
+        "passed": 8,
+        "sameExactFixtureAndAssertionsAsBaseline": true,
+        "pytestSeconds": 6.22,
+        "processAndPgStartSeconds": 10.210917504038662,
+        "pgWallSeconds": 11.107938138011377,
+        "coverage": [
+          "older live claim/newer offer",
+          "same-second tie",
+          "newer live claim/older offer",
+          "older ambiguous/newer offer",
+          "expired claim/newer offer",
+          "foreign household excluded",
+          "foreign owner excluded",
+          "unclaimed pending is distinct from unresolved effect"
+        ]
+      },
+      "firstCanonicalBindingAttempt": {
+        "casesExecuted": 0,
+        "result": "Stopped before testing because canonical helper changed during builder fix; frozen snapshots used thereafter."
+      },
+      "nonconclusiveReviewerSetupAttempt": {
+        "cases": 1,
+        "result": "An in-memory multi-event scenario failed an intermediate assertion before intended final observation. Retained as nonconclusive; no product claim or GO derived from it.",
+        "preserved": true,
+        "separateFromProductCounterexample": true
+      },
+      "sourceImportBinding": "All five product modules were loaded from exact immutable V3/V3.1 snapshots through explicit in-memory import finder; canonical product/tests untouched.",
+      "v3ToV31OnlyProductMethodChanged": "HouseholdProvisionRuntime._reference; remainder of helper AST identical and four other product hashes identical.",
+      "all9SnapshotsExact0400AndPinsUnchanged": true,
+      "ownPostgresStartsThisReview": 3,
+      "ownPostgresAfter": "exited_retained",
+      "sourceDatabaseQueries": 0,
+      "modelCalls": 0,
+      "actualHouseholdEffects": 0,
+      "canonicalSourceOrTestWrites": 0,
+      "credentialValuesOrHashesEmitted": 0,
+      "old88AndOld17CallbackSuitesRepeated": false
+    },
+    "installationGo": false,
+    "wholeE112Go": false,
+    "remaining": [
+      "Final complete role-preserving image/overlay/config/profile binding and readiness review.",
+      "Actual installed natural source-context capture and genuine working household use; no source event forced.",
+      "E112-VERSION-001 and E112-ADOPTION-001 remain open original functional criteria.",
+      "Actual owner/household acceptance and full restore acceptance remain unproven."
+    ]
+  },
+  "finalProofHandoffOverlayInstallationReview": {
+    "checkedAtMachineUtc": "2026-10-24T01:43:15.739520+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_ONE_FRESH_GUARDED_PROOF_HANDOFF_INSTALL_ATTEMPT",
+    "boundedBundle": "/var/lib/eva2/e112-proof-handoff-20261024",
+    "artifactPins": {
+      "installation-handoff.private.json": "6064ef2fe031390443f064c5b7660c1d925bbdd774793f31aa71be47904ac1be",
+      "manifest.private.json": "ba8322f4deedf338342419580611315d10100d919cd6f15a3a18346dc8ec52f3",
+      "install.py": "db36c32bb4d4c9c02fa1818cfd3e932b9ea239127b2144faf7520dfd17d8812e",
+      "candidate-profiles.private.json": "41561c8f99fc3d13b3196901c7d4ecbc856b8b4948df78c538129be5ad76c195",
+      "readiness-probe.py": "1c662189d90f9e94cc79ac127d39c88fafc20aa60e7fd4200f0d3873a4807f7c"
+    },
+    "roles": {
+      "core": {
+        "base": "sha256:52309bc4e0b22630b52539ff47e7d62d36aaadd0cb89b96f26b6ae63c93a9f85",
+        "candidate": "sha256:f55b5f7cf714d8ad839e48f965530b71f0bb243920b9133814e32f734e1b8358",
+        "fileCount": 17
+      },
+      "delegated-work-worker": {
+        "base": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44",
+        "candidate": "sha256:32d634b3ebc2ab616ca627e4936538ebdf8778ce727d676e8bd0ea267c8d03c4",
+        "fileCount": 8
+      }
+    },
+    "independentReview": {
+      "all25StagedSourceCopiesAndRetainedBeforeHashesMatchManifest": true,
+      "actualImageSourceReadbackEvidenceMatchesAll25ManifestAfterHashes": true,
+      "coreImageReadbackSha256": "08df5c6281259cd6bd716f06a6ffa1ad6ddeddf21f56b390c7017dec619cfc56",
+      "workerImageReadbackSha256": "a08d13e7c09986177499aeace0168e75a8d1f276ce2dab6aa7b374ad49742512",
+      "actualDockerImageIdsInspected": true,
+      "candidateImageConfigsEqualRespectiveBaseImageConfigs": true,
+      "baseLayerPrefixesPreserved": true,
+      "candidateLayerDeltas": {
+        "core": 17,
+        "worker": 8
+      },
+      "dockerfilesOnlyExactFromBaseAndListedCopyOperations": true,
+      "imageSourceImportsAndUidGidModeEvidence": "Imports true and0:0:0644 in bound readback; reviewer did not repeat imports.",
+      "coreRuntimeForeignCodePreserved": "Whole installed-role AST equal after removing only four reviewed new controller methods, optional default-None parameter/assignment and reviewed runtime/context factory wiring.",
+      "workerSensoryForeignVariantPreserved": "Whole installed worker AST equal after removing exactly three reviewed lineage insertion nodes; no copying core sensory/runtime/loop/delivery/API over worker. Fuzz0 patch receipt retained.",
+      "frozenStoreBothImagesSha256": "9b1e5824d5fbba722439170fb2530c31da28c9b8e393da7c7f623ce51bec1c2f",
+      "uiSealedManifestSha256": "d977c0e08b6d9c4487cc7a8dfff7830f8eccb05b05396a553f583d04522e182c",
+      "onlyComposeChanges": "Two exact role image IDs and one core explicit managed-enrollment-file ENV setting. All storage/other runtime configuration retained.",
+      "credentialValuesOrHashesEmitted": 0,
+      "newModelDatabaseCallsOrServiceStartsByReviewer": 0,
+      "oldTestsOrImportsRepeated": false
+    },
+    "profileEvidence": {
+      "boundReportSha256": "41561c8f99fc3d13b3196901c7d4ecbc856b8b4948df78c538129be5ad76c195",
+      "exactCurrentCheckerProbeSha256": "18f0ede7b30faa8a1571ac1252d1140a25b3c772ee9f1cae369ef97e4c03eb88",
+      "imageExecutionAndPerRoleReportPinsVerified": true,
+      "environmentFileHashBindingsVerifiedInternallyNoValuesEmitted": true,
+      "readOnlyRootAndVolumesAndPgOptionsVerified": true,
+      "modelTaskAdmissionOrHouseholdEffectRequested": false,
+      "sharedProviderPublicResearchDigitalWorkEqual": true,
+      "compatibleAllProfiles": false,
+      "knownMismatch": [
+        "household_research"
+      ],
+      "householdResearchReadyOrClaimableClaim": false,
+      "profileExecutionReceiptPins": {
+        "core": "ff7335e45d87b0fc0f86cf244b28be99db8488a1d11d2a3a07749deb37460f34",
+        "delegated-work-worker": "be6dc30d9401b909ed7157da840fbcd75c059d486b5d047ab420ffa75885906c"
+      }
+    },
+    "operatorReview": {
+      "baselineSourceSha256": "fed2f000011709d3b369b68a85915e025b01285dbd3616a01570acf9f9687144",
+      "onlyNewChanges": "Bundle path plus exact candidate-profile image/execution/profile-file pin checks; pre/post storage/compose binding, generation checks, active/evaluation/native readiness and single-attempt receipt logic unchanged.",
+      "freshReadinessMandatory": true,
+      "currentReadinessPassNotClaimedByReviewer": true,
+      "reviewBindingMustUseThisExactReportHash": true,
+      "existingReceiptAbsentAtReview": true
+    },
+    "mandatoryDispatchConditions": [
+      "Coordinator creates only explicit-null protected managed file in existing RW work volume (uid/gid65532,0600), preserving actual existing non-null data rather than overwriting it. Installer exact-null check must pass.",
+      "Coordinator binds this exact report and manifest, then executes only this one reviewed installer with fresh actual process-generation conversation/model/work/native-operation/evaluation checks. Any active/unknown claim or changed source/config/generation defers dispatch.",
+      "Run actual installed core/worker profile comparison including digital work and compare installed role file/image/config readback after cutover. Known household_research mismatch remains explicit and nonclaimable.",
+      "No automatic real-household registration/adoption and no forced source event/physical test. Null pointer preserves currently authorized legacy behavior while new original lineage is captured naturally.",
+      "After installation validate authenticated read-only owner overview/assets and authorization denial, without claiming real useful household/adoption behavior from readiness or UI."
+    ],
+    "installationGo": true,
+    "installationExecutedByReviewer": false,
+    "wholeE112OrOwnerAcceptanceGo": false,
+    "remainingOriginalFunctionalGaps": [
+      "E112-VERSION-001",
+      "E112-ADOPTION-001"
+    ],
+    "realInstalledNaturalProofAndUse": "Still unproven; this bounded install prepares working proof capture rather than completing the household facility.",
+    "installedReadbackResolution": "installedProofHandoffReadbackReview"
+  },
+  "installedProofHandoffReadbackReview": {
+    "checkedAtMachineUtc": "2026-10-24T01:52:15.907287+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_ACTUALLY_INSTALLED_PROOF_HANDOFF_READBACK",
+    "installationReceiptSha256": "586f2f434774b8897e4b3939a8660ceb2190e13231f9212384d4e2f91ac13452",
+    "installedSourcesProfilesSha256": "ecfeb44949c12b39c99dee9a3df45b4f49cd0986ac350649ba1edbbb34494b8f",
+    "installedProfilesSha256": "71118129ba415de8c0deda46b0fde47c08c35c6bac8e12e9f4d12b931594c425",
+    "actualOwnerReadbackSha256": "de731f5ecc20b22b31ab736745716025f490e05aeaafc9b3075f6cfc4be26702",
+    "readbackScriptSha256": "d0c6207a03bb95fddf3d438a9cce1642c073eb1d2e76db2c5de0db508f986403",
+    "originalInstallGoReportSha256PreservedPrivatelyByCoordinator": "b5a65eb6f81e59c9d7e0546b9f40f7b3744cd2fee6d53d0e6167f31cf3d8b4f6",
+    "installedAtMachineUtc": "2026-10-24T01:45:16.474750+00:00",
+    "dispatchReceiptStatus": "running_exact_configuration",
+    "freshGuard": {
+      "checkedAtMachineUtc": "2026-10-24T01:44:27.879415+00:00",
+      "activeUnexpiredCheckpointLeases": 0,
+      "unknownNullCheckpoints": 0,
+      "activeWork": 0,
+      "nativeMemoryOperations": {
+        "pending": 0,
+        "processing": 0
+      },
+      "retainedDailyCounterOnly": 1,
+      "generationBound": true
+    },
+    "actualRoles": {
+      "core": {
+        "container": "3338322516f4e5122fe7faad168487889d200af1a615e90f5d1e19d92674e90d",
+        "image": "sha256:f55b5f7cf714d8ad839e48f965530b71f0bb243920b9133814e32f734e1b8358",
+        "startedAt": "2026-10-24T01:44:48.181141069Z",
+        "sourceReadbackFileCount": 17
+      },
+      "delegated-work-worker": {
+        "container": "fdab97b9314879bcd5647fdfb348fac7d7531ed4881fb7be08a006acd39a14ed",
+        "image": "sha256:32d634b3ebc2ab616ca627e4936538ebdf8778ce727d676e8bd0ea267c8d03c4",
+        "startedAt": "2026-10-24T01:45:00.212901279Z",
+        "sourceReadbackFileCount": 8
+      }
+    },
+    "independentLiveChecks": {
+      "actualCurrentContainerIdsImagesPidAndStartedAtMatchBoundReadback": true,
+      "actualStorageAndComposeBindingMatchCandidate": true,
+      "receiptBeforeAfterCanonicalConfigHashesVerified": true,
+      "all25RootInstalledSourceHashesCheckedAgainstManifest": true,
+      "criticalActualSourceFilesReadDirectlyByReviewer": {
+        "core": [
+          "bootstrap/household_provision_runtime.py",
+          "adapters/postgres/household_provisions.py",
+          "adapters/api/dashboard_initiatives.py",
+          "adapters/api/dashboard_static/eva-dashboard-assets.json"
+        ],
+        "worker": [
+          "adapters/postgres/sensory_events.py",
+          "adapters/postgres/household_provisions.py",
+          "application/free_will.py"
+        ]
+      },
+      "all7CriticalDirectHashesMatch": true,
+      "actualProtectedNullEnrollmentUidGid65532Mode0600": true,
+      "independentUnauthenticatedHttpGet": 401,
+      "reviewerAuthenticatedHttpCalls": 0,
+      "profilesExactlyMatchApprovedCandidate": true,
+      "knownHouseholdResearchMismatch": [
+        "household_research"
+      ],
+      "allProfilesCompatibleClaim": false
+    },
+    "boundAuthenticatedRootReadback": {
+      "authenticatedGet": 200,
+      "unauthorizedGet": 401,
+      "scopeOverrideDenied": 422,
+      "cacheControl": "no-store",
+      "threeActualHttpAssetsMatchApprovedV3": true,
+      "existingProvisionPresent": false,
+      "actualWorkingProofAvailable": false,
+      "noPermanentFalsePlaceholder": "Installed dynamic verifier exists; false here reflects missing actual original proof at readback.",
+      "productionPosts": 0,
+      "modelCalls": 0
+    },
+    "usableNow": "Installed source-bound original-lineage retention and dynamic verification plus read-only owner overview; explicit null preserves current authorized legacy route.",
+    "notYetDemonstrated": [
+      "Actual natural positive household source/working outcome or owner adoption.",
+      "Actual registered/enrolled adopted facility and household acceptance.",
+      "Original version/change/undo and prior-authorized trial/implicit adoption interfaces, both still being built within E1.12.",
+      "End-to-end restore of an actually adopted/paused installed facility including managed pointer."
+    ],
+    "fullE112OrProjectGo": false,
+    "reviewerProductWritesModelCallsOrRestarts": 0
   }
 }

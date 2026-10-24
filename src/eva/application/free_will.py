@@ -85,6 +85,36 @@ class PersonalInitiativeProposal:
 
 
 @dataclass(frozen=True, slots=True)
+class HouseholdProcedureLineage:
+    """Opaque host evidence; never a field in a model or owner request schema."""
+    encoded: bytes
+
+    def __post_init__(self):
+        from eva.contracts.canonical_json import require_canonical_bytes, canonical_sha256
+        value = require_canonical_bytes(self.encoded, maximum_bytes=8192)
+        if (set(value) != {'contract', 'context', 'source_binding', 'configuration'}
+                or value['contract'] != 'EvaHouseholdProcedureLineage/v1'):
+            raise ValueError('household procedure lineage fields differ')
+        context, binding, configuration = (value[key] for key in
+                                          ('context', 'source_binding', 'configuration'))
+        if (not all(isinstance(item, dict) for item in (context, binding, configuration))
+                or context.get('is_execution_permission') is not False
+                or context.get('source_binding_sha256') != canonical_sha256(binding)
+                or context.get('source_sha256') != configuration.get('config', {}).get('source_sha256')):
+            raise ValueError('household procedure lineage source differs')
+        selection = {key: context[key] for key in
+            ('parent_observation_sha256', 'selected_observation_sha256') if key in context}
+        expected = canonical_sha256({'configuration': canonical_sha256(configuration),
+                                    'source': canonical_sha256(binding), **selection})
+        if context.get('binding_sha256') != expected:
+            raise ValueError('household procedure lineage guard differs')
+
+    def payload(self):
+        from eva.contracts.canonical_json import require_canonical_bytes
+        return require_canonical_bytes(self.encoded, maximum_bytes=8192)
+
+
+@dataclass(frozen=True, slots=True)
 class FreeWillDecision:
     disposition: WillDisposition
     reason: str
@@ -99,8 +129,12 @@ class FreeWillDecision:
     feedback_application: dict | None = None
     expression_expires_at_epoch: int | None = None
     expression_guard_sha256: str | None = None
+    household_procedure_lineage: HouseholdProcedureLineage | None = None
 
     def __post_init__(self) -> None:
+        if self.household_procedure_lineage is not None and not isinstance(
+                self.household_procedure_lineage, HouseholdProcedureLineage):
+            raise ValueError("household lineage must be opaque host evidence")
         if self.expression_guard_sha256 is not None:
             import re
             if not isinstance(self.expression_guard_sha256, str) or re.fullmatch("[0-9a-f]{64}", self.expression_guard_sha256) is None:

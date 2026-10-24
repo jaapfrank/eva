@@ -16,11 +16,13 @@ from eva.contracts.canonical_json import canonical_sha256
 
 class HouseholdInitiativeLoop:
     def __init__(self, *, engine, voice, server, provider, model, memory, identity,
-                 budget, principal_id, authorize_initiative, source_store=None, can_decide=None):
+                 budget, principal_id, authorize_initiative, source_store=None, can_decide=None,
+                 provision_factory=None):
         self.engine, self.voice, self.server, self.provider = engine, voice, server, provider
         self.model, self.memory, self.identity, self.budget = model, memory, identity, budget
         self.principal_id, self.authorize_initiative = principal_id, authorize_initiative
         self.source_store = source_store
+        self.provision_factory = provision_factory
         self.can_decide = can_decide or (lambda: True)
         self._components = {}
         self._timezone = ZoneInfo("Europe/Amsterdam")
@@ -62,7 +64,13 @@ class HouseholdInitiativeLoop:
         if policy.devices.get(satellite) != device:
             raise ValueError("household initiative destination differs from current policy")
         policy_sha = canonical_sha256(policy.model_dump(mode="json"))
+        import os
+        procedure_path = os.environ.get("EVA_HOUSEHOLD_PROCEDURE_FILE")
+        enrollment_key = (None if self.provision_factory is None else
+                          self.provision_factory.cache_key(procedure_path))
         key = (satellite, device, policy_sha)
+        if self.provision_factory is not None:
+            key += (enrollment_key,)
         if key in self._components:
             return self._components[key]
         binding = HouseholdInitiativeBinding(tenant_id=policy.tenant_id,
@@ -82,23 +90,43 @@ class HouseholdInitiativeLoop:
             if _inside_quiet_hours(local.time(), time(22), time(8)):
                 return False
             self._authorize()
+            if self.provision_factory is not None and (
+                    os.environ.get("EVA_HOUSEHOLD_PROCEDURE_FILE") != procedure_path
+                    or self.provision_factory.cache_key(procedure_path) != enrollment_key):
+                return False
             return (self.voice.policy.devices.get(satellite) == device
                     and canonical_sha256(self.voice.policy.model_dump(mode="json")) == policy_sha
                     and self.can_decide())
 
         model, validate_expression = self.model, None
-        import os
-        procedure_path = os.environ.get("EVA_HOUSEHOLD_PROCEDURE_FILE")
+        admit_expression, settle_expression = None, None
         if procedure_path:
             from eva.providers.home_assistant_procedure import HomeAssistantProcedure
             from eva.application.household_procedure import HouseholdProcedureModel
+            provisions = (None if self.provision_factory is None else
+                          self.provision_factory(procedure_path, household_binding=binding.to_payload()))
+            def authorize_procedure():
+                self._authorize()
+                if self.provision_factory is not None and (
+                        os.environ.get("EVA_HOUSEHOLD_PROCEDURE_FILE") != procedure_path
+                        or self.provision_factory.cache_key(procedure_path) != enrollment_key):
+                    raise ValueError("household provision host configuration changed")
             proposal = HomeAssistantProcedure(procedure_path, settings=self.provider,
-                engine=self.engine, household=binding, authorize=self._authorize)
+                engine=self.engine, household=binding, authorize=authorize_procedure,
+                **({"provisions": provisions} if self.provision_factory is not None else {}))
             model = HouseholdProcedureModel(self.model, proposal, authorize=self._authorize)
             def validate_expression(claim):
                 prepared = store._prepared_expression(claim.thread_id)
-                proposal.validate_expression(store._event_from_thread(claim.thread_id),
-                                             prepared.get("expression_guard_sha256"))
+                return proposal.validate_expression(store._event_from_thread(claim.thread_id),
+                                                    prepared.get("expression_guard_sha256"))
+            if provisions is not None:
+                def admit_expression(claim):
+                    prepared = store._prepared_expression(claim.thread_id)
+                    return proposal.admit_expression(store._event_from_thread(claim.thread_id),
+                        prepared.get("expression_guard_sha256"), claim)
+                def settle_expression(admission, *, outcome, proof_sha256):
+                    return proposal.settle_expression(admission, outcome=outcome,
+                                                      proof_sha256=proof_sha256)
 
         worker = SensoryDecisionWorker(store, model, self.memory, self.identity,
             tenant_id=policy.tenant_id, installation_id=policy.installation_id,
@@ -110,7 +138,9 @@ class HouseholdInitiativeLoop:
             clock=lambda: datetime.now(UTC).replace(microsecond=0))
         delivery = HouseholdInitiativeDelivery(store, binding, self._authorize, self.provider,
             delivery_window=window, **({"validate_expression": validate_expression}
-                                     if validate_expression is not None else {}))
+                                     if validate_expression is not None else {}),
+            **({"admit_expression": admit_expression, "settle_expression": settle_expression}
+               if admit_expression is not None else {}))
         result = (store, worker, delivery, window)
         self._components[key] = result
         return result

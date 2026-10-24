@@ -1,6 +1,7 @@
 import React from 'react';
 import OwnerLearning from './owner-learning.jsx';
 import OwnerCurrentProjects from './owner-current-projects.jsx';
+import OwnerHouseholdProvisions from './owner-household-provisions.jsx';
 import { initiativeCardId } from './owner-current-projects.mjs';
 
 const endpoint = '/internal/v1/dashboard/initiatives';
@@ -109,6 +110,7 @@ export default function OwnerInitiatives() {
   return <section aria-label="Eigen initiatieven">
     <h2>Eigen initiatieven</h2>
     <p>Wat Eva zelf heeft opgepakt, waarom, en wat het oplevert.</p>
+    <OwnerHouseholdProvisions />
     <button disabled={busy} onClick={() => refresh().catch(e => setError(e.message))}>Vernieuwen</button>
     {error && <p role="alert">{error}</p>}
     {notice && <p role="status">{notice}</p>}

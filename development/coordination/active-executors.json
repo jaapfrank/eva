@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T01:13:47.290607+00:00",
+  "updatedAt": "2026-10-24T01:53:40.491739+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -640,6 +640,24 @@
           "scope": "One optional household_provision_factory: Callable | None = None field on existing frozen/slotted ProviderServiceContext; existing fields and callers unchanged.",
           "confirmedAt": "2026-10-24T00:42:10.610406+00:00",
           "confirmedBy": "central-project-coordinator"
+        },
+        "e112VersionAndTrialCompletion": {
+          "authorizedAt": "2026-10-24T01:25:57.099599+00:00",
+          "status": "authorized_after_current_effect_selector_fix",
+          "writePaths": [
+            "src/eva/adapters/postgres/household_provisions.py",
+            "src/eva/bootstrap/household_provision_host.py",
+            "src/eva/providers/home_assistant_procedure.py",
+            "src/eva/bootstrap/household_provision_runtime.py"
+          ],
+          "testPaths": [
+            "development/tests/postgres/test_household_provisions.py",
+            "development/tests/bootstrap/test_household_provision_host.py",
+            "development/tests/providers/test_household_provision_guard.py",
+            "development/tests/bootstrap/test_household_provision_runtime.py"
+          ],
+          "scope": "Original E112 version/change/rollback and prior-authorized evaluated-and-reported trial adoption only; reuse existing timeline/reference/review/delivery. Root owns API/UI and managed installation. Current reviewed candidate frozen during independent review; start disjoint store work after current fix handoff.",
+          "voiceScope": "Existing RO procedure source, speaker checks and voice services untouched; managed writable core procedure copy under existing work directory only."
         }
       },
       "extensionArtifactRequest": {
@@ -707,7 +725,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "completing_e112_original_proof_handoff",
+      "status": "completing_e112_version_and_authorized_trial_host",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1412,7 +1430,7 @@
     "e415-independent-review-newchat": {
       "task": "E1.12",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "reviewer_for_same_e112_proof_handoff",
+      "status": "reviewing_e112_actual_version_host_candidate",
       "coordinator": "windows-root",
       "allowedWritePaths": [
         "development/reviews/e112-household-artifact-lifecycle-review-20261024.json"
@@ -1724,12 +1742,12 @@
     "agents": {},
     "maxConcurrentExecutorsReviewers": 2,
     "installationCandidate": {
-      "path": "/var/lib/eva2/telegram-latency-20261023",
-      "scope": "Telegram provider continuation in core/worker plus separately reviewed exact four E2.9 assets",
-      "status": "installed_contact_and_projects_verified_following_query_overlay_installed",
-      "noQuestionResend": true,
-      "latestQueryOverlay": "/var/lib/eva2/contact-preparation-20261023",
-      "latestQueryStatus": "installed_targeted_live_improvement_speed_target_open"
+      "path": "/var/lib/eva2/e112-proof-handoff-20261024",
+      "scope": "Frozen E112 V3.1 original-lineage proof and owner controls; preserves role variants and legacy route",
+      "status": "installed_and_independently_read_back",
+      "core": "sha256:f55b5f7cf714d8ad839e48f965530b71f0bb243920b9133814e32f734e1b8358",
+      "worker": "sha256:32d634b3ebc2ab616ca627e4936538ebdf8778ce727d676e8bd0ea267c8d03c4",
+      "fullE112Completed": false
     },
     "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
     "e415Candidate": {
@@ -1750,7 +1768,7 @@
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
     "parallelBoundedWork": "E4.18 gesloten; één bouwer integreert E1.12, één onafhankelijke tester reviewt bestaande trusted callbacks en daarna hetzelfde resultaat.",
-    "currentBlocker": "Functionele proofhandoff ontbreekt; builder onderzoekt bestaande PREPARED-route. Installatie aangehouden tot bruikbare bewijs-overdracht, geen gebruikerstoestemming nodig.",
+    "currentBlocker": "Geen installatieblokkade voor opgeleverde bewijsroute. E1.12 vereist nog echte brongebonden gebruik/adoptie, versie/undo- en proef/evaluatie/meldingsbediening en herstelbewijs; dezelfde bouwer en reviewer werken verder.",
     "latestVerifiedOutcome": {
       "task": "E4.18",
       "status": "completed_installed_used_independently_reviewed",

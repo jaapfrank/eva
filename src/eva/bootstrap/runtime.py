@@ -196,6 +196,7 @@ class PostgresHindsightMemoryRuntime:
         memory_storage_budget: PostgresMemoryStorageBudget | None = None,
         conversation_maximum_requests: int = 32,
         background_work_enabled: bool = True,
+        household_provision_runtime=None,
     ) -> None:
         self._engine = engine
         self._memory = memory
@@ -240,6 +241,7 @@ class PostgresHindsightMemoryRuntime:
         self._dashboard_authority_scope = dashboard_authority_scope
         self._telegram_principal_bindings_loader = telegram_principal_bindings_loader
         self._memory_storage_budget = memory_storage_budget
+        self._household_provision_runtime = household_provision_runtime
         self._memory_writer = BudgetedConversationMemoryWriter(
             memory, memory_storage_budget
         )
@@ -553,6 +555,23 @@ class PostgresHindsightMemoryRuntime:
 
     def dashboard_initiatives(self):
         return self._owner_initiatives().page(now=datetime.now(tz=UTC).replace(microsecond=0))
+
+    def _household_provision_controls(self):
+        controls = getattr(self, "_household_provision_runtime", None)
+        if controls is None:
+            raise RuntimeError("household provision controls unavailable")
+        return controls
+
+    def dashboard_household_provisions(self):
+        return self._household_provision_controls().overview()
+
+    def dashboard_register_household_provision(self, request_id):
+        return self._household_provision_controls().register(request_id)
+
+    def dashboard_household_provision_command(self, provision_id, action,
+            expected_revision, binding_sha256, request_id):
+        return self._household_provision_controls().command(provision_id, action,
+            expected_revision, binding_sha256, request_id)
 
     def dashboard_initiative_artifact(self, intent_id: str):
         return self._owner_initiatives().artifact(intent_id,
@@ -1846,6 +1865,9 @@ def create_runtime_app() -> FastAPI:
         from eva.bootstrap.household_work_corrections import HouseholdScheduledWork
         household_schedules = HouseholdScheduledWork(household_work_server)
         service_tasks = (*service_tasks, household_schedules.run_once)
+    from eva.bootstrap.household_provision_runtime import configured_household_provision_runtime
+    household_provision_runtime = configured_household_provision_runtime(engine,
+        owner_loader=lambda: runtime._owner_initiatives())
     if settings.delegated_result_delivery_enabled and household_work_server is not None:
         from eva.providers.contracts import ProviderServiceContext
         provider_services = build_provider_services(settings.external_provider,
@@ -1856,7 +1878,9 @@ def create_runtime_app() -> FastAPI:
                 principal_id=settings.background_principal_id,
                 current_authority=lambda: runtime._initiative_authority().policy(),
                 source_store=sensory_store,
-                foreground_active=lambda: runtime._cold_path.foreground_active))
+                foreground_active=lambda: runtime._cold_path.foreground_active,
+                household_provision_factory=(None if household_provision_runtime is None
+                                             else household_provision_runtime.factory_for)))
         service_tasks = (*service_tasks, *provider_services.tasks)
         if provider_services.owns_sensory_decisions:
             idle_tasks = tuple(task for task in idle_tasks
@@ -1922,6 +1946,7 @@ def create_runtime_app() -> FastAPI:
             else lambda: load_principal_bindings(settings.telegram_principal_bindings_file)
         ),
         memory_storage_budget=storage_budget,
+        household_provision_runtime=household_provision_runtime,
     )
     if delegated_work_store is not None:
         delegated_work_store._initiative_authority_loader = runtime._initiative_authority

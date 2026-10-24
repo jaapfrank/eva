@@ -14,7 +14,8 @@ from eva.adapters.connectors.camera_observer import HomeAssistantCameraDiscovery
 from eva.adapters.connectors.procedure_execution import configured_procedure_executor
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
 from eva.adapters.postgres.household_provisions import procedure_provision_id
-from eva.application.household_procedure import HouseholdProvisionInactive
+from eva.application.household_procedure import HouseholdProvisionInactive, HouseholdProcedureContext
+from eva.application.free_will import HouseholdProcedureLineage
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 
 # Trusted interface glue, not the authored application's decision logic.
@@ -40,6 +41,10 @@ class HomeAssistantProcedure:
         self.discovery = HomeAssistantCameraDiscovery(base_url=settings.endpoint_url, token=settings.credential)
 
     def _current(self):
+        source, guard, _ = self._current_details()
+        return source, guard
+
+    def _current_details(self):
         self.authorize()
         config = json.loads(self.path.read_text())
         required = {'contract', 'enabled', 'household_binding', 'source_file', 'source_sha256',
@@ -93,7 +98,7 @@ class HomeAssistantProcedure:
         if lifecycle is not None:
             guarded['provision'] = {'id': lifecycle['provision_id'], 'revision': lifecycle['revision']}
         guard = canonical_sha256(guarded)
-        return source.decode('utf-8'), guard
+        return source.decode('utf-8'), guard, guarded
 
     def _lifecycle(self, config):
         if self.provisions is None:
@@ -259,7 +264,7 @@ class HomeAssistantProcedure:
         if observation is None:
             return None
         try:
-            source, guard = self._current()
+            source, guard, configuration = self._current_details()
         except HouseholdProvisionInactive:
             return None
         binding = self._binding(observation)
@@ -305,4 +310,7 @@ class HomeAssistantProcedure:
             self.validate_guard(guard)
             return None
         self.validate_current(context)
-        return context
+        lineage = HouseholdProcedureLineage(canonical_json_bytes({
+            'contract': 'EvaHouseholdProcedureLineage/v1', 'context': context,
+            'source_binding': binding, 'configuration': configuration}))
+        return HouseholdProcedureContext(context, lineage)

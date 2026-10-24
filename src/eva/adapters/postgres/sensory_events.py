@@ -1323,6 +1323,27 @@ class PostgresSensoryEventStore:
         from eva.adapters.postgres.initiative_attention import attention_fields
         attention = (attention_fields(decision.next_attention, now=now) if self._context_reviews_only
                      else {})
+        lineage = decision.household_procedure_lineage
+        if lineage is not None:
+            from eva.contracts.canonical_json import canonical_sha256
+            retained = lineage.payload()
+            context, configuration = retained['context'], retained['configuration']
+            if (self._household_binding is None or not self._matches_household_event(claim.event)
+                    or configuration['config'].get('household_binding') != self._household_binding.to_payload()
+                    or configuration['config'].get('source_principal_id') != self._initiative_principal_id
+                    or canonical_sha256(context) != decision.source_context_sha256
+                    or context['binding_sha256'] != decision.expression_guard_sha256
+                    or context['expires_at_epoch'] != decision.expression_expires_at_epoch):
+                raise ValueError('retained household procedure decision binding differs')
+            parent = claim.event.payload['observation']
+            observation = context['observation']
+            if parent['event_type'] == 'household_observation_batch':
+                if (context.get('parent_observation_sha256') != canonical_sha256(parent)
+                        or context.get('selected_observation_sha256') != canonical_sha256(observation)
+                        or observation not in parent['payload']['observations']):
+                    raise ValueError('retained household batch origin differs')
+            elif observation != parent:
+                raise ValueError('retained household origin differs')
         expression_pending = decision.disposition == "respond"
         transition = dict(
             thread_id=claim.thread_id,
@@ -1345,6 +1366,8 @@ class PostgresSensoryEventStore:
                 "provider": decision.provider,
                 "reason": decision.reason,
                 "shadow_mode": True,
+                **({"household_procedure_lineage": lineage.payload()}
+                   if lineage is not None and expression_pending else {}),
                 **({"feedback_application": decision.feedback_application}
                    if decision.feedback_application is not None else {}),
                 **({"private_contact": private_contact} if private_contact is not None else {}),

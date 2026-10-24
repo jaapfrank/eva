@@ -388,3 +388,32 @@ def test_oversized_optional_context_preserves_ordinary_assessment_without_error(
     out['text']='€'*600  # Valid character bound, larger UTF-8 model context.
     assert p(store_shaped_batch(p,[child]),now=now) is None
     assert len(inputs)==1
+
+
+def test_provider_retains_original_host_context_without_publishing_it_to_model(tmp_path, monkeypatch):
+    from eva.application.household_procedure import HouseholdProcedureContext, HouseholdProcedureModel
+    from eva.application.free_will import FreeWillDecision
+    p, event, now, inputs, output, path = configured(tmp_path, monkeypatch)
+    context = p(event, now=now)
+    assert isinstance(context, HouseholdProcedureContext)
+    lineage = context.lineage.payload()
+    assert lineage['context'] == dict(context)
+    assert canonical_sha256(lineage['source_binding']) == context['source_binding_sha256']
+    assert lineage['configuration']['config'] == json.loads(path.read_text())
+    assert 'host-only' not in str(lineage) and 'face-secret' not in str(lineage)
+    assert 'configuration' not in context and 'source_binding' not in context
+    seen = []
+    class Model:
+        def evaluate_sensory_event(self, *args, **kwargs):
+            seen.append(kwargs['household_proposal_context'])
+            assert 'configuration' not in kwargs['household_proposal_context']
+            return FreeWillDecision('respond', 'Ordinary household choice', 1, 'isolated-model', 'Welkom')
+    # Reuse the already-made result; never execute the isolated extension twice.
+    class Prepared:
+        def __call__(self, *args, **kwargs): return context
+        def validate_current(self, value): return p.validate_current(value)
+    result = HouseholdProcedureModel(Model(), Prepared(), authorize=lambda: None,
+        clock=lambda: now).evaluate_sensory_event(event)
+    assert result.household_procedure_lineage is context.lineage
+    assert result.source_context_sha256 == canonical_sha256(lineage['context'])
+    assert len(inputs) == 1 and len(seen) == 1

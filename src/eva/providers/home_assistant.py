@@ -116,6 +116,8 @@ class HomeAssistantProviderFactory:
         if (context.principal_id is not None and context.shared_output is not None
                 and context.budget is not None):
             from eva.bootstrap.household_initiative import HouseholdInitiativeLoop
+            factory_builder = getattr(context, "household_provision_factory", None)
+            provision_factory = None if factory_builder is None else factory_builder(settings, context)
             loop = HouseholdInitiativeLoop(
                 engine=context.engine, voice=context.shared_output,
                 server=context.work_server, provider=settings, model=context.model,
@@ -123,7 +125,8 @@ class HomeAssistantProviderFactory:
                 principal_id=context.principal_id,
                 authorize_initiative=context.current_authority,
                 source_store=context.source_store,
-                can_decide=lambda: not context.foreground_active())
+                can_decide=lambda: not context.foreground_active(),
+                provision_factory=provision_factory)
             tasks.append(loop.run_once)
             owns_sensory = context.source_store is not None
         return ProviderServices(tuple(tasks), owns_sensory)

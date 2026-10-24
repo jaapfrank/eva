@@ -41,3 +41,18 @@ def test_revoked_proposal_cannot_become_a_spoken_decision():
     wrapper=HouseholdProcedureModel(SimpleNamespace(evaluate_sensory_event=lambda *a,**kw:FreeWillDecision('respond','Choice',1,'model','No')),
         Proposal(),authorize=lambda:None,clock=lambda:now)
     with pytest.raises(ValueError,match='revoked'):wrapper.evaluate_sensory_event(object())
+
+
+def test_untrusted_plain_model_context_cannot_claim_host_lineage():
+    now = datetime.now(UTC).replace(microsecond=0)
+    context = {'expires_at_epoch': int(now.timestamp()) + 30, 'binding_sha256': 'a' * 64,
+               'lineage': {'fake': 'model supplied'}}
+    class Proposal:
+        def __call__(self, *args, **kwargs): return context
+        def validate_current(self, value): pass
+    result = HouseholdProcedureModel(SimpleNamespace(evaluate_sensory_event=lambda *a, **kw:
+        FreeWillDecision('respond', 'Normal answer', 1, 'model', 'Hoi')), Proposal(),
+        authorize=lambda: None, clock=lambda: now).evaluate_sensory_event(object())
+    assert result.household_procedure_lineage is None
+    with pytest.raises(ValueError, match='opaque host'):
+        FreeWillDecision('respond', 'Fake proof', 1, 'model', 'Hoi', household_procedure_lineage={})

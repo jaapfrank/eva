@@ -847,7 +847,7 @@
     "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
     "status": "in_progress",
     "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.",
-    "nextAction": "Maak de ontbrekende overdracht van werkelijk brongebonden uitvoeringsbewijs naar adoptie af in de bestaande PREPARED-/providerrroute; daarna één complete kandidaat onafhankelijk reviewen en installeren. Hardcoded ontbrekend bewijs is een functioneel gat, geen eigenaaracceptatie. Geen nieuwe brongebeurtenis forceren en huidige legacyvoorziening niet vooraf registreren.",
+    "nextAction": "Maak op dezelfde E1.12-kaart de oorspronkelijke versie-/terugdraai- en vooraf toegestane proef/adoptieroutes af. De brongebonden bewijs- en eigenaarbediening is geïnstalleerd en onafhankelijk live teruggelezen. Dezelfde bouwer voltooit de hostroutes, de tester reviewt; coördinator sluit API/UI en installatie aan. Natuurlijk werkelijk gebruik en herstelbewijs blijven nodig; geen volledige-kaartclaim of geforceerde huisgebeurtenis.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -6179,13 +6179,13 @@
                   "E4.17",
                   "E1.9"
                 ],
-                "nextAction": "Maak de ontbrekende overdracht van werkelijk brongebonden uitvoeringsbewijs naar adoptie af in de bestaande PREPARED-/providerrroute; daarna één complete kandidaat onafhankelijk reviewen en installeren. Hardcoded ontbrekend bewijs is een functioneel gat, geen eigenaaracceptatie. Geen nieuwe brongebeurtenis forceren en huidige legacyvoorziening niet vooraf registreren.",
+                "nextAction": "Maak op dezelfde E1.12-kaart de oorspronkelijke versie-/terugdraai- en vooraf toegestane proef/adoptieroutes af. De brongebonden bewijs- en eigenaarbediening is geïnstalleerd en onafhankelijk live teruggelezen. Dezelfde bouwer voltooit de hostroutes, de tester reviewt; coördinator sluit API/UI en installatie aan. Natuurlijk werkelijk gebruik en herstelbewijs blijven nodig; geen volledige-kaartclaim of geforceerde huisgebeurtenis.",
                 "continuityImplementationSteps": [
                   "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "Lifecycle, runtimeaansluiting en eigenaarbediening gericht onafhankelijk gecontroleerd; bron-/handofffouten hersteld. Productiecutover aangehouden: proof_reference=None en vaste false-weergave maken adoptie ook bij later werkelijk bewijs nog onmogelijk. Bouwer onderzoekt en sluit deze bestaande overdracht; reviewer controleert hetzelfde resultaat. E1.12 blijft open, huidige installatie en legacyroute behouden.",
-                "checkedAt": "2026-10-24T01:17:20.941571+00:00",
+                "progress": "Brongebonden bewijs- en eigenaarbediening V3.1 is op24oktober01:45UTC in bestaande WSL-kern/werker geïnstalleerd en onafhankelijk teruggelezen:25bronbestanden, echte ownerGET200, ongeautoriseerd401, scope422, drieHTTPassets en daadwerkelijke werkprofielen. Expliciete null-enrollment behoudt bestaande legacyroute; noggeen echt artifact/adoptie/werkingsbewijs geproduceerd. Dezelfde bouwer heeft versie-/terugdraaihostkandidaat gebouwd (nu review) en bouwt de oorspronkelijke proef/evaluatie/meldingsroute. E1.12 blijft open.",
+                "checkedAt": "2026-10-24T01:53:40.491739+00:00",
                 "fullTaskCompleted": false,
                 "implementationEvidence": {
                   "builderCandidateHandoffSha256": "84a2300d5a2b6c1e2f16b4d641c0923f00ad511d9bb03b73305bcf6de19c51d9",
@@ -6195,7 +6195,7 @@
                   "coordinatorCasesPassed": 22,
                   "coordinatorIndependentVerdict": "GO_SCOPED_COORDINATOR_EFFECT_ADMISSION_SEAM_V2",
                   "review": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
-                  "installed": false,
+                  "installed": true,
                   "fullTaskCompleted": false,
                   "builderV1IndependentCasesPassed": 62,
                   "builderV2ChangedCausePgCasesPassed": 2,
@@ -6215,17 +6215,28 @@
                   "privateHostWiringIndependentSeconds": 1.62,
                   "privateHostWiringFinding": "E112-WIRING-001/P2: recheck captured managed configuration after blocking proof/effect callbacks",
                   "privateHostWiringFindingOpen": false,
-                  "runtimeHelperSha256": "dfb3b58642f9c3b9aa2fee109a2d6802e28bc1c9fb925c62a53eef081d7f4681",
+                  "runtimeHelperSha256": "7dfc3db864304e487ae745538df5e71dcb59c258f6408aed269f78b31346032e",
                   "partialRegistrationFindingOpen": false,
                   "partialRegistrationIndependentVerdict": "GO_SCOPED_E112_HANDOFF_001_PARTIAL_REGISTRATION_RECOVERY",
-                  "ownerUiSha256": "668e86208b64e5dab1024ac8fcb8f8ad982d0d81da29ac411e03ec0870aca227",
+                  "ownerUiSha256": "7ea1e182a756dff8ae4382e7a2813f1f1faf7ec486377855265e57fed10c49ba",
                   "ownerUiIndependentChangedCausePassed": true,
                   "remainingOriginalFunctionalGaps": [
-                    "Original host lineage to actual realization proof and dynamic adoption readiness (assigned)",
-                    "Versioned actual change and rollback plus compact private version history",
-                    "Prior authorized trial evaluated and reported before implicit adoption"
+                    "Versioned actual change and rollback plus compact private version history (same builder implementing)",
+                    "Prior authorized trial evaluated and reported before implicit adoption (same builder assigned)"
                   ],
-                  "ownerAcceptanceIsNotTheOnlyGap": true
+                  "ownerAcceptanceIsNotTheOnlyGap": true,
+                  "originalProofHandoffCandidateSha256": "d49d8b88cfdb393a1145cc79a00a0ec319c8072d13132ad0724c096e2a2be397",
+                  "effectSelectorIndependentChangedCasesPassed": 8,
+                  "actualCandidateProfilesChecked": true,
+                  "actualCandidateProfileMismatches": [
+                    "household_research"
+                  ],
+                  "installedProofHandoffEvidence": "development/evidence/product/e112-household-provision-proof-handoff-20261024.json",
+                  "installedIndependentVerdict": "GO_SCOPED_ACTUALLY_INSTALLED_PROOF_HANDOFF_READBACK",
+                  "installedReviewSha256": "0785a4fd703c55c1221f0a5ac0fe5981e08dbbabc03945135ab919bdff3b6495",
+                  "actualOwnerRouteReadBack": true,
+                  "actualHouseholdProvisionRegistered": false,
+                  "actualWorkingProofAvailable": false
                 }
               },
               {
@@ -8801,7 +8812,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Maak de ontbrekende overdracht van werkelijk brongebonden uitvoeringsbewijs naar adoptie af in de bestaande PREPARED-/providerrroute; daarna één complete kandidaat onafhankelijk reviewen en installeren. Hardcoded ontbrekend bewijs is een functioneel gat, geen eigenaaracceptatie. Geen nieuwe brongebeurtenis forceren en huidige legacyvoorziening niet vooraf registreren.",
+        "nextAction": "Maak op dezelfde E1.12-kaart de oorspronkelijke versie-/terugdraai- en vooraf toegestane proef/adoptieroutes af. De brongebonden bewijs- en eigenaarbediening is geïnstalleerd en onafhankelijk live teruggelezen. Dezelfde bouwer voltooit de hostroutes, de tester reviewt; coördinator sluit API/UI en installatie aan. Natuurlijk werkelijk gebruik en herstelbewijs blijven nodig; geen volledige-kaartclaim of geforceerde huisgebeurtenis.",
         "finishOrder": [
           "E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -8812,7 +8823,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T01:12:49.086481+00:00",
+        "updatedAt": "2026-10-24T01:53:40.491739+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -12208,13 +12219,13 @@
                 "E4.17",
                 "E1.9"
               ],
-              "nextAction": "Maak de ontbrekende overdracht van werkelijk brongebonden uitvoeringsbewijs naar adoptie af in de bestaande PREPARED-/providerrroute; daarna één complete kandidaat onafhankelijk reviewen en installeren. Hardcoded ontbrekend bewijs is een functioneel gat, geen eigenaaracceptatie. Geen nieuwe brongebeurtenis forceren en huidige legacyvoorziening niet vooraf registreren.",
+              "nextAction": "Maak op dezelfde E1.12-kaart de oorspronkelijke versie-/terugdraai- en vooraf toegestane proef/adoptieroutes af. De brongebonden bewijs- en eigenaarbediening is geïnstalleerd en onafhankelijk live teruggelezen. Dezelfde bouwer voltooit de hostroutes, de tester reviewt; coördinator sluit API/UI en installatie aan. Natuurlijk werkelijk gebruik en herstelbewijs blijven nodig; geen volledige-kaartclaim of geforceerde huisgebeurtenis.",
               "continuityImplementationSteps": [
                 "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "Lifecycle, runtimeaansluiting en eigenaarbediening gericht onafhankelijk gecontroleerd; bron-/handofffouten hersteld. Productiecutover aangehouden: proof_reference=None en vaste false-weergave maken adoptie ook bij later werkelijk bewijs nog onmogelijk. Bouwer onderzoekt en sluit deze bestaande overdracht; reviewer controleert hetzelfde resultaat. E1.12 blijft open, huidige installatie en legacyroute behouden.",
-              "checkedAt": "2026-10-24T01:17:20.941571+00:00",
+              "progress": "Brongebonden bewijs- en eigenaarbediening V3.1 is op24oktober01:45UTC in bestaande WSL-kern/werker geïnstalleerd en onafhankelijk teruggelezen:25bronbestanden, echte ownerGET200, ongeautoriseerd401, scope422, drieHTTPassets en daadwerkelijke werkprofielen. Expliciete null-enrollment behoudt bestaande legacyroute; noggeen echt artifact/adoptie/werkingsbewijs geproduceerd. Dezelfde bouwer heeft versie-/terugdraaihostkandidaat gebouwd (nu review) en bouwt de oorspronkelijke proef/evaluatie/meldingsroute. E1.12 blijft open.",
+              "checkedAt": "2026-10-24T01:53:40.491739+00:00",
               "fullTaskCompleted": false,
               "implementationEvidence": {
                 "builderCandidateHandoffSha256": "84a2300d5a2b6c1e2f16b4d641c0923f00ad511d9bb03b73305bcf6de19c51d9",
@@ -12224,7 +12235,7 @@
                 "coordinatorCasesPassed": 22,
                 "coordinatorIndependentVerdict": "GO_SCOPED_COORDINATOR_EFFECT_ADMISSION_SEAM_V2",
                 "review": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
-                "installed": false,
+                "installed": true,
                 "fullTaskCompleted": false,
                 "builderV1IndependentCasesPassed": 62,
                 "builderV2ChangedCausePgCasesPassed": 2,
@@ -12244,17 +12255,28 @@
                 "privateHostWiringIndependentSeconds": 1.62,
                 "privateHostWiringFinding": "E112-WIRING-001/P2: recheck captured managed configuration after blocking proof/effect callbacks",
                 "privateHostWiringFindingOpen": false,
-                "runtimeHelperSha256": "dfb3b58642f9c3b9aa2fee109a2d6802e28bc1c9fb925c62a53eef081d7f4681",
+                "runtimeHelperSha256": "7dfc3db864304e487ae745538df5e71dcb59c258f6408aed269f78b31346032e",
                 "partialRegistrationFindingOpen": false,
                 "partialRegistrationIndependentVerdict": "GO_SCOPED_E112_HANDOFF_001_PARTIAL_REGISTRATION_RECOVERY",
-                "ownerUiSha256": "668e86208b64e5dab1024ac8fcb8f8ad982d0d81da29ac411e03ec0870aca227",
+                "ownerUiSha256": "7ea1e182a756dff8ae4382e7a2813f1f1faf7ec486377855265e57fed10c49ba",
                 "ownerUiIndependentChangedCausePassed": true,
                 "remainingOriginalFunctionalGaps": [
-                  "Original host lineage to actual realization proof and dynamic adoption readiness (assigned)",
-                  "Versioned actual change and rollback plus compact private version history",
-                  "Prior authorized trial evaluated and reported before implicit adoption"
+                  "Versioned actual change and rollback plus compact private version history (same builder implementing)",
+                  "Prior authorized trial evaluated and reported before implicit adoption (same builder assigned)"
                 ],
-                "ownerAcceptanceIsNotTheOnlyGap": true
+                "ownerAcceptanceIsNotTheOnlyGap": true,
+                "originalProofHandoffCandidateSha256": "d49d8b88cfdb393a1145cc79a00a0ec319c8072d13132ad0724c096e2a2be397",
+                "effectSelectorIndependentChangedCasesPassed": 8,
+                "actualCandidateProfilesChecked": true,
+                "actualCandidateProfileMismatches": [
+                  "household_research"
+                ],
+                "installedProofHandoffEvidence": "development/evidence/product/e112-household-provision-proof-handoff-20261024.json",
+                "installedIndependentVerdict": "GO_SCOPED_ACTUALLY_INSTALLED_PROOF_HANDOFF_READBACK",
+                "installedReviewSha256": "0785a4fd703c55c1221f0a5ac0fe5981e08dbbabc03945135ab919bdff3b6495",
+                "actualOwnerRouteReadBack": true,
+                "actualHouseholdProvisionRegistered": false,
+                "actualWorkingProofAvailable": false
               }
             },
             {
@@ -14830,7 +14852,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Maak de ontbrekende overdracht van werkelijk brongebonden uitvoeringsbewijs naar adoptie af in de bestaande PREPARED-/providerrroute; daarna één complete kandidaat onafhankelijk reviewen en installeren. Hardcoded ontbrekend bewijs is een functioneel gat, geen eigenaaracceptatie. Geen nieuwe brongebeurtenis forceren en huidige legacyvoorziening niet vooraf registreren.",
+      "nextAction": "Maak op dezelfde E1.12-kaart de oorspronkelijke versie-/terugdraai- en vooraf toegestane proef/adoptieroutes af. De brongebonden bewijs- en eigenaarbediening is geïnstalleerd en onafhankelijk live teruggelezen. Dezelfde bouwer voltooit de hostroutes, de tester reviewt; coördinator sluit API/UI en installatie aan. Natuurlijk werkelijk gebruik en herstelbewijs blijven nodig; geen volledige-kaartclaim of geforceerde huisgebeurtenis.",
       "finishOrder": [
         "E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14841,7 +14863,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T01:12:49.086481+00:00",
+      "updatedAt": "2026-10-24T01:53:40.491739+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17382,7 +17404,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T01:17:20.941571+00:00",
+  "updatedAt": "2026-10-24T01:53:40.491739+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

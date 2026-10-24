@@ -1,0 +1,87 @@
+{
+  "contract": "EvaHouseholdProvisionInstalledProofHandoff/v1",
+  "task": "E1.12",
+  "recordedAt": "2026-10-24T01:53:40.491739+00:00",
+  "scope": "Installed source-bound lifecycle and owner controls with original host lineage retained in the existing private operational timeline. Explicit registration may remain proposed and unenrolled until verified operation. This is a bounded delivery, not completion of E1.12.",
+  "fullTaskCompleted": false,
+  "ownerAcceptance": false,
+  "built": {
+    "runtimeHelperSha256": "7dfc3db864304e487ae745538df5e71dcb59c258f6408aed269f78b31346032e",
+    "lifecycleStoreSha256": "9b1e5824d5fbba722439170fb2530c31da28c9b8e393da7c7f623ce51bec1c2f",
+    "uiSourceSha256": "7ea1e182a756dff8ae4382e7a2813f1f1faf7ec486377855265e57fed10c49ba",
+    "uiManifestSha256": "d977c0e08b6d9c4487cc7a8dfff7830f8eccb05b05396a553f583d04522e182c",
+    "sourceCandidateHandoffSha256": "d49d8b88cfdb393a1145cc79a00a0ec319c8072d13132ad0724c096e2a2be397"
+  },
+  "independentReview": {
+    "path": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
+    "preInstallReportSha256": "b5a65eb6f81e59c9d7e0546b9f40f7b3744cd2fee6d53d0e6167f31cf3d8b4f6",
+    "originalFailedEffectSelectorCounterexampleRetained": true,
+    "effectFixSameEightPostgresCasesPassed": true,
+    "effectFixSeconds": 6.22,
+    "uiChangedCauseBrowserPassed": true,
+    "uiChangedCauseBrowserSeconds": 1.3556082870345563,
+    "postInstallReviewPending": false,
+    "postInstallReportSha256": "0785a4fd703c55c1221f0a5ac0fe5981e08dbbabc03945135ab919bdff3b6495",
+    "postInstallVerdict": "GO_SCOPED_ACTUALLY_INSTALLED_PROOF_HANDOFF_READBACK"
+  },
+  "installation": {
+    "installedAt": "2026-10-24T01:45:16.474750+00:00",
+    "attempts": 1,
+    "status": "running_exact_configuration",
+    "manifestSha256": "ba8322f4deedf338342419580611315d10100d919cd6f15a3a18346dc8ec52f3",
+    "operatorSha256": "db36c32bb4d4c9c02fa1818cfd3e932b9ea239127b2144faf7520dfd17d8812e",
+    "freshClaimAndNativeOperationGuard": true,
+    "currentProcessGenerationRechecked": true,
+    "storageAndConfigurationPreserved": true,
+    "explicitNullEnrollment": true,
+    "sourceFilesReadBack": 25,
+    "sourceAndProfileReadbackSha256": "ecfeb44949c12b39c99dee9a3df45b4f49cd0986ac350649ba1edbbb34494b8f",
+    "coreImage": "sha256:f55b5f7cf714d8ad839e48f965530b71f0bb243920b9133814e32f734e1b8358",
+    "workerImage": "sha256:32d634b3ebc2ab616ca627e4936538ebdf8778ce727d676e8bd0ea267c8d03c4",
+    "roleDifferencesPreserved": true,
+    "voiceServicesOrSpeakerConfigurationChanged": false
+  },
+  "actualUseCheck": {
+    "authenticatedOwnerGet": 200,
+    "unauthorizedGet": 401,
+    "callerScopeOverride": 422,
+    "cacheControl": "no-store",
+    "httpAssetHashesMatchInstalledPackage": true,
+    "workingProofAvailable": false,
+    "existingProvisionPresent": false,
+    "productionRegistrationOrAdoptionPerformed": false,
+    "originalLegacyRouteRetained": true,
+    "readbackSha256": "de731f5ecc20b22b31ab736745716025f490e05aeaafc9b3075f6cfc4be26702"
+  },
+  "profiles": {
+    "installedExactlyMatchCandidate": true,
+    "sharedProviderMatch": true,
+    "publicResearchMatch": true,
+    "digitalWorkMatch": true,
+    "compatible": false,
+    "preexistingMismatches": [
+      "household_research"
+    ],
+    "mismatchedWorkerProfileClaimable": false
+  },
+  "remainingOriginalRequirements": [
+    "A real household provision must be used and adopted with source-bound evidence; synthetic PostgreSQL cases are not family acceptance.",
+    "Versioned actual change/undo and compact private history: same builder is completing the existing route.",
+    "Prior authorized trial, concrete evaluation, owner notification and implicit adoption: same builder is completing the existing route.",
+    "Actual restore must preserve adopted/paused state and managed source/enrollment data without duplicate realization."
+  ],
+  "measurements": {
+    "developmentVerificationModelCalls": 0,
+    "productionEffectPosts": 0,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "metadataToolCalls": null,
+    "evaRuntimeModelUsage": null,
+    "evaRuntimeCredits": null,
+    "buildCoreSeconds": 21.786194888001774,
+    "buildWorkerSeconds": 8.964800007990561,
+    "candidateProfileCoreSeconds": 5.862082652980462,
+    "candidateProfileWorkerSeconds": 5.769636983983219,
+    "limits": "Measured verification only. Background Eva usage, unmetered metadata calls, development tokens and credits remain unknown."
+  }
+}

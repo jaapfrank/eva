@@ -3,10 +3,20 @@
 An extension supplies task data, never a decision or delivery authority.
 """
 from dataclasses import replace
+from copy import deepcopy
 from datetime import UTC, datetime
 
-from eva.application.free_will import FreeWillDecision
+from eva.application.free_will import FreeWillDecision, HouseholdProcedureLineage
 from eva.contracts.canonical_json import canonical_sha256
+
+
+class HouseholdProcedureContext(dict):
+    """Ordinary model context with separately retained host-only provenance."""
+    def __init__(self, context, lineage):
+        super().__init__(context)
+        if not isinstance(lineage, HouseholdProcedureLineage):
+            raise ValueError('household procedure context requires host lineage')
+        self.lineage = lineage
 
 
 class HouseholdProvisionInactive(RuntimeError):
@@ -32,7 +42,7 @@ class HouseholdProcedureModel:
                                     'eva:expired-procedure-proposal')
         self.authorize()
         result = self.model.evaluate_sensory_event(event, *args,
-            household_proposal_context=context, **kwargs)
+            household_proposal_context=deepcopy(dict(context)), **kwargs)
         try:
             self.authorize()
             # Recheck source/rights after the model; never execute the module twice.
@@ -50,4 +60,6 @@ class HouseholdProcedureModel:
                 'eva:expired-procedure-proposal', usage=result.usage)
         return replace(result, expression_expires_at_epoch=expires,
                        source_context_sha256=canonical_sha256(context),
-                       expression_guard_sha256=context["binding_sha256"])
+                       expression_guard_sha256=context["binding_sha256"],
+                       household_procedure_lineage=(context.lineage
+                           if isinstance(context, HouseholdProcedureContext) else None))

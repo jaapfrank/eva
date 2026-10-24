@@ -74,6 +74,7 @@ class ProviderServiceContext:
     current_authority: Callable[[], Any]
     source_store: Any
     foreground_active: Callable[[], bool]
+    household_provision_factory: Callable[..., Any] | None = None
 
 
 @dataclass(frozen=True, slots=True)
