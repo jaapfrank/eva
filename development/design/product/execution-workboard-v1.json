@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Herstel de concrete fout in research.public_sources van opvolger4a94cb08 en het stoppen zonder alternatief na die fout. Behoud echte eigenaarcorrectie en oorspronkelijke bron/grant/ontvanger; hervat daarna dezelfde schoolopdracht via bestaande route. Geen nieuwe loginvraag of afrondingsclaim: onderzoekstool leverde nog geen bruikbare bronnen en schoolhulp ontbreekt.",
+    "nextAction": "Herstel de bewezen vermenging van het korte gespreksbudget met taakonderzoek: gemeten1211 uitvoertokens werden op1200 afgewezen. Gebruik het resterende bestaande taakbudget, behoud de gewone gespreksgrens en hervat dezelfde schoolopdracht vanaf4a94 via normale work/resume. Onderzoek ook het stoppen zonder alternatief. Geen schoolresultaat of noodzakelijke eigenaarlogin bewezen.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -8323,7 +8323,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Herstel de concrete fout in research.public_sources van opvolger4a94cb08 en het stoppen zonder alternatief na die fout. Behoud echte eigenaarcorrectie en oorspronkelijke bron/grant/ontvanger; hervat daarna dezelfde schoolopdracht via bestaande route. Geen nieuwe loginvraag of afrondingsclaim: onderzoekstool leverde nog geen bruikbare bronnen en schoolhulp ontbreekt.",
+                "nextAction": "Herstel de bewezen vermenging van het korte gespreksbudget met taakonderzoek: gemeten1211 uitvoertokens werden op1200 afgewezen. Gebruik het resterende bestaande taakbudget, behoud de gewone gespreksgrens en hervat dezelfde schoolopdracht vanaf4a94 via normale work/resume. Onderzoek ook het stoppen zonder alternatief. Geen schoolresultaat of noodzakelijke eigenaarlogin bewezen.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8343,7 +8343,7 @@
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/owner-command-provider-fix-20261024.json",
-                "implementationStatus": "corrected_resume_used_research_tool_failed_alternatives_not_followed",
+                "implementationStatus": "research_phase_budget_failure_reproduced_targeted_fix_in_progress",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8352,7 +8352,7 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T13:20:38.837770+00:00",
+                "checkedAt": "2026-10-24T13:28:29.727971+00:00",
                 "progress": "Nieuwe eigenaarcorrectie correct toegelaten13:13:57UTC met oorspronkelijke bron/grant/voortgang. Onderzoekstool faalde vóór bruikbare bronuitkomst; taak stopte13:15:42UTC zonder resultaat of alternatievenvervolg. Onafhankelijk inhoudelijk NO-GO; fout gericht in herstel. Geen eigenaarloginblokkade aangetoond.",
                 "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
               },
@@ -9030,7 +9030,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Herstel de concrete fout in research.public_sources van opvolger4a94cb08 en het stoppen zonder alternatief na die fout. Behoud echte eigenaarcorrectie en oorspronkelijke bron/grant/ontvanger; hervat daarna dezelfde schoolopdracht via bestaande route. Geen nieuwe loginvraag of afrondingsclaim: onderzoekstool leverde nog geen bruikbare bronnen en schoolhulp ontbreekt.",
+        "nextAction": "Herstel de bewezen vermenging van het korte gespreksbudget met taakonderzoek: gemeten1211 uitvoertokens werden op1200 afgewezen. Gebruik het resterende bestaande taakbudget, behoud de gewone gespreksgrens en hervat dezelfde schoolopdracht vanaf4a94 via normale work/resume. Onderzoek ook het stoppen zonder alternatief. Geen schoolresultaat of noodzakelijke eigenaarlogin bewezen.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. De werkelijke schoolhervatting is intern gestopt op de onderzoekstool. Drie uitvoerders werken nu afzonderlijk aan die foutcorrectie, gerichte regressie en bestaande hervatting; tester beoordeelt onafhankelijk. Schoolopdracht en volledigeE4.16 blijven open.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9041,7 +9041,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T13:20:38.837770+00:00",
+        "updatedAt": "2026-10-24T13:28:29.727971+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -14500,7 +14500,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Herstel de concrete fout in research.public_sources van opvolger4a94cb08 en het stoppen zonder alternatief na die fout. Behoud echte eigenaarcorrectie en oorspronkelijke bron/grant/ontvanger; hervat daarna dezelfde schoolopdracht via bestaande route. Geen nieuwe loginvraag of afrondingsclaim: onderzoekstool leverde nog geen bruikbare bronnen en schoolhulp ontbreekt.",
+              "nextAction": "Herstel de bewezen vermenging van het korte gespreksbudget met taakonderzoek: gemeten1211 uitvoertokens werden op1200 afgewezen. Gebruik het resterende bestaande taakbudget, behoud de gewone gespreksgrens en hervat dezelfde schoolopdracht vanaf4a94 via normale work/resume. Onderzoek ook het stoppen zonder alternatief. Geen schoolresultaat of noodzakelijke eigenaarlogin bewezen.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14520,7 +14520,7 @@
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/owner-command-provider-fix-20261024.json",
-              "implementationStatus": "corrected_resume_used_research_tool_failed_alternatives_not_followed",
+              "implementationStatus": "research_phase_budget_failure_reproduced_targeted_fix_in_progress",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -14529,7 +14529,7 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T13:20:38.837770+00:00",
+              "checkedAt": "2026-10-24T13:28:29.727971+00:00",
               "progress": "Nieuwe eigenaarcorrectie correct toegelaten13:13:57UTC met oorspronkelijke bron/grant/voortgang. Onderzoekstool faalde vóór bruikbare bronuitkomst; taak stopte13:15:42UTC zonder resultaat of alternatievenvervolg. Onafhankelijk inhoudelijk NO-GO; fout gericht in herstel. Geen eigenaarloginblokkade aangetoond.",
               "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
             },
@@ -15207,7 +15207,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Herstel de concrete fout in research.public_sources van opvolger4a94cb08 en het stoppen zonder alternatief na die fout. Behoud echte eigenaarcorrectie en oorspronkelijke bron/grant/ontvanger; hervat daarna dezelfde schoolopdracht via bestaande route. Geen nieuwe loginvraag of afrondingsclaim: onderzoekstool leverde nog geen bruikbare bronnen en schoolhulp ontbreekt.",
+      "nextAction": "Herstel de bewezen vermenging van het korte gespreksbudget met taakonderzoek: gemeten1211 uitvoertokens werden op1200 afgewezen. Gebruik het resterende bestaande taakbudget, behoud de gewone gespreksgrens en hervat dezelfde schoolopdracht vanaf4a94 via normale work/resume. Onderzoek ook het stoppen zonder alternatief. Geen schoolresultaat of noodzakelijke eigenaarlogin bewezen.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. De werkelijke schoolhervatting is intern gestopt op de onderzoekstool. Drie uitvoerders werken nu afzonderlijk aan die foutcorrectie, gerichte regressie en bestaande hervatting; tester beoordeelt onafhankelijk. Schoolopdracht en volledigeE4.16 blijven open.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15218,7 +15218,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T13:20:38.837770+00:00",
+      "updatedAt": "2026-10-24T13:28:29.727971+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
