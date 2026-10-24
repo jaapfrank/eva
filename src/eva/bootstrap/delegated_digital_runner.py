@@ -40,6 +40,10 @@ class _UnfinishedWorkPlan(ConversationConflict):
     """Preserved progress exists, but this bounded attempt cannot finish it."""
 
 
+class _BlockedWorkPlan(_UnfinishedWorkPlan):
+    """A recorded task blocker needs resolution, not automatic code repair."""
+
+
 def _remaining_budget_context(grant, actual, *, calls, dispatches, response_output_tokens=None, response_input_tokens=None, remaining_wall_seconds=None, observed_at=None):
     """Report known counters; incomplete measurement cannot imply free capacity."""
     limits = {"model_runs": grant.maximum_model_runs, "input_tokens": grant.maximum_input_tokens,
@@ -277,13 +281,101 @@ class _TaskModel:
             "wanneer de bijbehorende toolresultaten dat bevestigen.", *self.repair_context), **kwargs)
 
 
+def _recorded_action_slots(engine, spec, source):
+    """Read existing execution journals once; retain sparse and colliding old slots."""
+    import sqlalchemy as sa
+    from eva.adapters.postgres.operational_timeline import (
+        PostgresOperationalTimeline, operational_events, operational_checkpoints,
+    )
+
+    if any(getattr(source, key) != getattr(spec.source, key) for key in (
+            "tenant_id", "installation_id", "principal_id", "conversation_id", "message_id")):
+        raise ConversationConflict("background recovery original source differs")
+    identity = {"execution_id": spec.execution_id,
+                "source": spec.source.model_dump(mode="json"),
+                "source_ingress_sha256": spec.source_ingress_sha256}
+    namespace = BackgroundExecutionScope(source, spec.execution_id).namespace
+    progress_thread = "work-progress:" + canonical_sha256(identity)
+    # Every admitted generation has the same preserved grant. Main action slots
+    # cannot outnumber those calls; tool-program subcalls use a disjoint range.
+    bound = (spec.generation + 1) * spec.grant.maximum_tool_calls
+    opaque = {}
+    for step in range(bound):
+        opaque["programming-action:" + canonical_sha256({
+            "workspace": canonical_sha256(identity), "step": step})] = step
+        opaque["component-draft:" + canonical_sha256({
+            "execution": spec.execution_id, "source": identity["source"], "step": step})] = step
+        opaque["tool-program:" + canonical_sha256({**identity, "step": step})] = step
+        opaque["procedure-action:" + canonical_sha256({
+            "principal_id": source.principal_id, "conversation_id": source.conversation_id,
+            "message_id": source.message_id, "step_index": step,
+            "execution_namespace": namespace})] = step
+    scope = external_timeline_scope(source.tenant_id, source.installation_id,
+                                    "background action recovery requires its original scope")
+    timeline = PostgresOperationalTimeline(engine, scope)
+    e, c = operational_events.c, operational_checkpoints.c
+    data = e.payload["data"]
+    with engine.connect() as connection:
+        connection.exec_driver_sql("SET TRANSACTION READ ONLY")
+        timeline._scope(connection)
+        rows = connection.execute(sa.select(
+            e.thread_id, e.sequence, e.event_type, e.payload, e.payload_sha256, e.occurred_at,
+            c.updated_at.label("terminal_at"),
+        ).join(operational_checkpoints, sa.and_(
+            c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
+            c.thread_id == e.thread_id,
+        )).where(
+            e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+            sa.or_(e.thread_id == progress_thread, sa.and_(e.sequence == 1, sa.or_(
+                e.thread_id.in_(tuple(opaque)),
+                sa.and_(e.event_type.in_(("TOOL_REQUEST_ADMITTED", "CONNECTOR_SELECTION_ADMITTED",
+                                        "PERSONAL_INTENT_ADOPTED")),
+                    data["execution_namespace"].astext == namespace,
+                    sa.or_(data["source_message_id"].astext == source.message_id,
+                           data["message_id"].astext == source.message_id)),
+            ))),
+        )).mappings().all()
+    slots = []
+    for row in rows:
+        payload = row["payload"]
+        if canonical_sha256(payload) != bytes(row["payload_sha256"]).hex():
+            raise ConversationConflict("background recovery journal hash differs")
+        value = payload["data"]
+        if row["thread_id"] == progress_thread:
+            if value.get("identity") != identity:
+                raise ConversationConflict("background recovery progress identity differs")
+            name, call_id = "save_work_progress", value.get("call_id")
+            step = value.get("step_index")
+            order = row["occurred_at"]
+        else:
+            # External action slot zero predates the optional step_index field.
+            step = opaque.get(row["thread_id"], value.get("step_index", 0))
+            # Nested tool-program calls are recovered by their parent provider.
+            if type(step) is int and step >= 2**40:
+                continue
+            name = value.get("action_name", value.get("name"))
+            if value.get("execution_mode") == "completed_contribution":
+                name = "register_own_contribution"
+            call_id = value.get("action_call_id", value.get("call_id"))
+            order = row["terminal_at"]
+        if (type(step) is not int or not 0 <= step < bound
+                or not isinstance(name, str) or not name
+                or not isinstance(call_id, str) or not call_id):
+            raise ConversationConflict("background recovery action binding differs")
+        slots.append((order, row["thread_id"], row["sequence"], step, name, call_id))
+    slots.sort()
+    return tuple((step, name, call_id) for _, _, _, step, name, call_id in slots)
+
+
 class BackgroundConnectorActions:
     """Route existing connector tools, without exposing recursive delegation."""
-    def __init__(self, tools, allowed_names, authorize, maximum_calls):
+    def __init__(self, tools, allowed_names, authorize, maximum_calls, *, recorded_action_slots=None):
         self._tools = tuple(tools)
         self._allowed = frozenset(allowed_names)
         self._authorize = authorize
         self._maximum_calls = maximum_calls
+        self.recorded_action_slots = recorded_action_slots
+        self._recovered_slots = None
         self.calls = 0
         self.dispatches = 0
         self.receipts = []
@@ -346,8 +438,33 @@ class BackgroundConnectorActions:
     def pending(self, turn):
         return self.pending_step(turn, step_index=0)
 
+    def _physical_step(self, step_index):
+        if type(step_index) is not int or step_index < 0:
+            raise ConversationConflict("background action index differs")
+        if self.recorded_action_slots is None or step_index >= 2**40:
+            return step_index, None
+        if self._recovered_slots is None:
+            self._recovered_slots = tuple(self.recorded_action_slots())
+        if step_index < len(self._recovered_slots):
+            binding = self._recovered_slots[step_index]
+            return binding[0], binding
+        high = max((slot[0] for slot in self._recovered_slots), default=-1)
+        return high + 1 + step_index - len(self._recovered_slots), None
+
     def pending_step(self, turn, *, step_index):
         self._authorize(turn)
+        step_index, binding = self._physical_step(step_index)
+        if binding is not None:
+            _, name, call_id = binding
+            provider = self._by_name.get(name)
+            if provider is None or name not in self._allowed:
+                raise ConversationConflict("recorded background action is no longer admitted")
+            receipt = provider.pending(turn, step_index=step_index)
+            if receipt is None or receipt.call.name != name or receipt.call.call_id != call_id:
+                raise ConversationConflict("recorded background action requires reconciliation")
+            found = self._receipt(receipt)
+            self.receipts.append(found)
+            return found
         found = None
         for tool in self._tools:
             if not self._allowed.intersection(tool.action_names):
@@ -368,6 +485,9 @@ class BackgroundConnectorActions:
 
     def execute_step(self, turn, call, *, step_index):
         self._authorize(turn)
+        step_index, binding = self._physical_step(step_index)
+        if binding is not None:
+            raise ConversationConflict("recorded background action must be recovered before new work")
         if call.name not in self.available_action_names(turn):
             raise ConversationConflict("background action was not admitted")
         if self.calls >= self._maximum_calls:
@@ -542,7 +662,9 @@ class DelegatedDigitalRunner:
             participating_tools = ((progress, improvements, programming) if is_repair else
                                    (*connector_tools, progress, improvements, programming, program))
             actions = BackgroundConnectorActions(participating_tools, spec.grant.capability_ids,
-                                                  authorize, spec.grant.maximum_tool_calls)
+                authorize, spec.grant.maximum_tool_calls,
+                recorded_action_slots=(lambda: _recorded_action_slots(self.store._engine, spec, source))
+                    if self.store._engine is not None else None)
             from eva.adapters.postgres.work_corrections import work_corrections
             corrections = tuple(work_corrections(self.store._engine, spec))
             stage_memory = self.memory
@@ -602,7 +724,7 @@ class DelegatedDigitalRunner:
                             return reply
                         if (progress_state and progress_state.get("work_id") == spec.work_id
                                 and any(step["state"] == "blocked" for step in remaining)):
-                            raise _UnfinishedWorkPlan("task plan contains a recorded blocker")
+                            raise _BlockedWorkPlan("task plan contains a recorded blocker")
                         actual = journal.model_usage(source)
                         checkpoint(source, actual)
                         state_key = (None if not progress_state else progress_state["revision"], actions.calls)
@@ -695,7 +817,8 @@ class DelegatedDigitalRunner:
                 else "invalid_usage" if isinstance(error, _ProviderUsageError)
                 else "internal_error")
             if (self.failure_observer is not None and native_guard is None and source is not None
-                    and status in {'internal_error','incomplete_work','budget_exceeded'}):
+                    and status in {'internal_error','incomplete_work','budget_exceeded'}
+                    and not isinstance(error, _BlockedWorkPlan)):
                 with suppress(Exception):
                     await asyncio.to_thread(self.failure_observer,source,spec,error)
             # Preserve only a complete returned reply, never streamed fragments or

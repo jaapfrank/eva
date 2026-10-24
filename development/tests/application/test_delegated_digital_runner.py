@@ -1713,3 +1713,213 @@ def test_no_plan_no_evidence_gets_one_bounded_completion_feedback(use_feedback):
             "Onbevestigde verklaring van de uitvoerder: No current source has been checked.")
     assert len(journal.usages) == model.responses
     _validate_usage(spec, outcome.usage, successful=use_feedback)
+
+
+@pytest.mark.parametrize("prior_effect", [False, True])
+def test_recorded_blocker_preserves_open_work_without_code_repair(monkeypatch, prior_effect):
+    import copy
+    import eva.bootstrap.delegated_digital_runner as module
+
+    source, spec, store, tools, journal, runner, identity = fixture()
+    progress = {"work_id": spec.work_id, "revision": 1,
+                "steps": [{"id": "read-source", "state": "blocked",
+                           "evidence": "Account login must be completed by its owner."}],
+                "handoff": "Open the existing account portal and complete its login."}
+    preserved = copy.deepcopy(progress)
+    monkeypatch.setattr(module, "load_work_progress", lambda *args: progress)
+    repair_calls = []
+    runner.failure_observer = lambda *args: repair_calls.append(args)
+    tools.release.set()
+
+    class BlockedAccount:
+        def generate(self, *args, **kwargs):
+            call = (ConversationActionCall("inspect-once", "use_connector_tool", {})
+                    if prior_effect and kwargs.get("completed_action") is None else None)
+            return ConversationModelResult(
+                None if call else "The account requires its owner's login; the work remains open.",
+                "controlled", call, usage=ConversationModelUsage.measured(
+                    input_tokens=30, output_tokens=10, tool_calls=int(call is not None)))
+
+    runner.model = BlockedAccount()
+    grant_before = spec.grant.to_payload()
+    outcome = asyncio.run(runner.run(spec, call_id="call:blocked-account"))
+    assert outcome.status == "incomplete_work" and outcome.result is None
+    assert outcome.retryable is False and repair_calls == []
+    assert outcome.usage.completed_model_responses == (2 if prior_effect else 1)
+    assert outcome.usage.tool_calls == len(tools.calls) == int(prior_effect)
+    assert "owner's login" in outcome.failure_report
+    assert progress == preserved and spec.grant.to_payload() == grant_before
+    assert outcome.error_fingerprint is not None
+
+
+@pytest.mark.parametrize("fault", ["internal", "unfinished_without_blocker"])
+def test_actual_faults_still_reach_existing_code_repair_observer(monkeypatch, fault):
+    import eva.bootstrap.delegated_digital_runner as module
+
+    source, spec, store, tools, journal, runner, identity = fixture()
+    if fault == "unfinished_without_blocker":
+        monkeypatch.setattr(module, "load_work_progress", lambda *args: {
+            "work_id": spec.work_id, "revision": 1,
+            "steps": [{"id": "unfinished", "state": "pending", "evidence": "Not executed yet"}],
+        })
+    repair_calls = []
+    runner.failure_observer = lambda *args: repair_calls.append(args)
+
+    class FaultyTask:
+        def generate(self, *args, **kwargs):
+            if fault == "internal":
+                raise RuntimeError("Controlled internal implementation failure")
+            return ConversationModelResult("No progress was made.", "controlled",
+                usage=ConversationModelUsage.measured(input_tokens=30, output_tokens=10, tool_calls=0))
+
+    runner.model = FaultyTask()
+    outcome = asyncio.run(runner.run(spec, call_id="call:actual-fault"))
+    assert outcome.status == ("internal_error" if fault == "internal" else "incomplete_work"), (outcome, [repr(call[2]) for call in repair_calls])
+    assert outcome.result is None and outcome.retryable is False
+    assert len(repair_calls) == 1
+    assert repair_calls[0][:2] == (source, spec)
+    assert type(repair_calls[0][2]).__name__ == (
+        "RuntimeError" if fault == "internal" else "_UnfinishedWorkPlan")
+    assert tools.calls == []
+
+
+@pytest.mark.parametrize("missing_or_changed", [None, "missing", "changed"])
+def test_sparse_background_history_advances_all_action_types_without_replay(missing_or_changed):
+    from eva.bootstrap.delegated_digital_runner import BackgroundConnectorActions
+
+    source, spec, store, _, _, _, _ = fixture()
+    saved = [
+        (0, "use_connector_tool", "old-external"),
+        (7, "list_reusable_procedures", "old-procedure"),
+        (13, "save_work_progress", "old-progress"),
+        # The old bug also allowed different providers to occupy the same slot.
+        (7, "use_connector_tool", "later-snapshot"),
+        (18, "programming_write_file", "old-programming"),
+    ]
+    executed, restored = [], []
+
+    class DurableActions:
+        def __init__(self, name):
+            self.action_names = (name,)
+        def available_for(self, turn):
+            return turn == source
+        def active_context(self, turn):
+            return ()
+        def pending(self, turn, *, step_index):
+            candidates = [item for item in saved
+                          if item[0] == step_index and item[1] in self.action_names]
+            if not candidates:
+                return None
+            index, name, call_id = candidates[0]
+            if name == "save_work_progress" and missing_or_changed == "missing":
+                return None
+            if name == "save_work_progress" and missing_or_changed == "changed":
+                call_id = "different-recorded-call"
+            restored.append((index, name, call_id))
+            return ConversationActionReceipt(ConversationActionCall(call_id, name, {}),
+                {"status": "verified", "result": "Existing receipt; not a new action"})
+        def execute(self, turn, call, *, step_index):
+            assert step_index > max(item[0] for item in saved)
+            executed.append((step_index, call.name))
+            return ConversationActionReceipt(call, {"status": "verified"})
+
+    providers = tuple(DurableActions(name) for name in dict.fromkeys(x[1] for x in saved))
+    router = BackgroundConnectorActions(providers, tuple(x.action_names[0] for x in providers),
+                                        lambda turn: None, 4)
+    # Also permits the exact old source to reproduce its contiguous-recovery gap.
+    router.recorded_action_slots = lambda: tuple(saved)
+    if missing_or_changed:
+        for index in range(2):
+            assert router.pending_step(source, step_index=index) is not None
+        with pytest.raises(ConversationConflict, match="requires reconciliation"):
+            router.pending_step(source, step_index=2)
+        assert executed == [] and router.calls == 0
+        return
+    recovered = [router.pending_step(source, step_index=i) for i in range(len(saved))]
+    assert [item.call.call_id for item in recovered if item is not None] == [x[2] for x in saved]
+    assert router.pending_step(source, step_index=len(saved)) is None
+    assert router.calls == router.dispatches == 0
+    call = ConversationActionCall("new-progress", "save_work_progress", {})
+    router.execute_step(source, call, step_index=len(saved))
+    assert executed == [(19, "save_work_progress")] and router.calls == 1
+    with pytest.raises(ConversationConflict, match="must be recovered"):
+        router.execute_step(source, call, step_index=0)
+    assert len(executed) == 1
+
+
+def test_background_recovery_does_not_translate_tool_program_substeps():
+    from eva.bootstrap.delegated_digital_runner import BackgroundConnectorActions
+    source, spec, store, _, _, _, _ = fixture()
+    router = BackgroundConnectorActions((), (), lambda turn: None, 4)
+    router.recorded_action_slots = lambda: ((13, "save_work_progress", "old-progress"),)
+    substep = 2**40 + (14 << 10) + 1
+    assert router._physical_step(substep) == (substep, None)
+
+
+def test_background_recovery_rejects_another_source_before_reading_any_journal():
+    from eva.bootstrap.delegated_digital_runner import _recorded_action_slots
+    source, spec, store, _, _, _, _ = fixture()
+    foreign = ConversationTurn.private(source.tenant_id, source.installation_id,
+        source.principal_id, source.conversation_id, "another-message", "Foreign request", source.occurred_at)
+    with pytest.raises(ConversationConflict, match="original source differs"):
+        _recorded_action_slots(None, spec, foreign)
+
+
+def test_sparse_resume_loop_keeps_old_receipts_and_saves_new_progress_after_them(monkeypatch):
+    import eva.bootstrap.delegated_digital_runner as module
+
+    source, spec, store, tools, journal, runner, identity = fixture()
+    saved = {
+        index: ConversationActionReceipt(ConversationActionCall(
+            "old-" + str(index), "use_connector_tool", {}),
+            {"status": "verified", "result": "Existing step " + str(index)})
+        for index in (0, 7, 13)
+    }
+    progress = {"work_id": "work:previous", "revision": 1,
+                "steps": [{"state": "blocked", "evidence": "Previous login check"}]}
+    monkeypatch.setattr(module, "load_work_progress", lambda *args: progress)
+    router_type = module.BackgroundConnectorActions
+
+    def configured_router(*args, **kwargs):
+        kwargs.pop("recorded_action_slots", None)
+        router = router_type(*args, **kwargs)
+        router.recorded_action_slots = lambda: tuple(
+            (index, receipt.call.name, receipt.call.call_id) for index, receipt in saved.items()
+            if index <= 13)
+        return router
+
+    monkeypatch.setattr(module, "BackgroundConnectorActions", configured_router)
+    tools.pending = lambda turn, step_index: saved.get(step_index)
+    executed = []
+
+    def save_new_progress(turn, call, *, step_index):
+        from eva.application.background_execution import authorize_background_dispatch
+        authorize_background_dispatch(turn)
+        # Reproduce the real progress ordering guard, without weakening it.
+        if step_index <= 13:
+            raise ConversationConflict("task progress cannot overwrite a later step")
+        executed.append(step_index)
+        receipt = ConversationActionReceipt(call, {"status": "verified", "result": "Current result read back"})
+        saved[step_index] = receipt
+        progress.update(work_id=spec.work_id, revision=2, steps=[{"state": "done"}])
+        return receipt
+
+    tools.execute = save_new_progress
+
+    class FinishAfterRecovery:
+        def generate(self, *args, **kwargs):
+            completed = kwargs.get("completed_action")
+            call = (None if completed is not None and completed.call.call_id == "new-current-read"
+                    else ConversationActionCall("new-current-read", "use_connector_tool", {}))
+            return ConversationModelResult(None if call else "The actual result is complete.", "controlled",
+                call, usage=ConversationModelUsage.measured(tool_calls=int(call is not None),
+                                                           input_tokens=30, output_tokens=10))
+
+    runner.model = FinishAfterRecovery()
+    original_receipts = tuple(saved.items())
+    outcome = asyncio.run(runner.run(spec, call_id="call:sparse-resume"))
+    assert outcome.status == "succeeded", outcome
+    assert executed == [14] and outcome.result.output == "The actual result is complete."
+    assert all(saved[index] is receipt for index, receipt in original_receipts)
+    assert outcome.usage.completed_model_responses == 2
+    assert outcome.usage.tool_calls == 1

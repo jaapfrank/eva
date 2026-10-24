@@ -330,7 +330,20 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         household_request_origin=None,
         _connection=None,
         _native_guard=None,
+        _owner_recovery_guard=None,
     ) -> DelegatedWorkAdmission:
+        if _owner_recovery_guard is not None:
+            from eva.adapters.postgres.scheduled_work import _OwnerRecoveryGuard
+            from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
+            if (type(_owner_recovery_guard) is not _OwnerRecoveryGuard
+                    or _connection is None or _native_guard is not None
+                    or type(spec) is not DelegatedDigitalWorkSpec
+                    or _owner_recovery_guard.scheduler.service.store is not self
+                    or _owner_recovery_guard.work_spec != spec
+                    or _owner_recovery_guard.previous_work_id != resumes_work_id):
+                raise DelegatedWorkConflict("private recovery requires its exact host admission guard")
+            _owner_recovery_guard.check_locked(_connection)
+            self._scope(_connection)
         if isinstance(spec, DelegatedInitiativeDigitalWorkSpec):
             if (_connection is None or _native_guard is None
                     or delivery_destination is not None
@@ -347,7 +360,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 raise DelegatedWorkConflict("native queue authority scope differs")
             _native_guard.check_locked(_connection)
             PostgresOperationalTimeline(self._engine, self.scope)._scope(_connection)
-        elif _native_guard is not None or (_connection is not None and not isinstance(spec, _HOUSEHOLD_WORK_TYPES)):
+        elif _native_guard is not None or (_connection is not None
+                and not isinstance(spec, _HOUSEHOLD_WORK_TYPES) and _owner_recovery_guard is None):
             raise DelegatedWorkConflict("owner admission cannot borrow a native transaction")
         # These three values are trusted operator-display labels, not task text.
         # The local cockpit remains unauthenticated until its own product gate.
@@ -985,6 +999,11 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             )
             return self._load_locked(connection, work_id)
 
+    @staticmethod
+    def _provider_recovery_stop_thread(spec):
+        return "private-work-recovery-stop:" + canonical_sha256({
+            "execution_id": spec.execution_id, "source_ingress_sha256": spec.source_ingress_sha256})
+
     def request_stop(
         self,
         work_id: str,
@@ -1061,6 +1080,49 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     raise DelegatedWorkConflict("delegated stop request raced")
                 return self._load_locked(connection, work_id)
             if loaded.state != "admitted" or loaded.call_id is not None:
+                from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
+                if (type(loaded.spec) is DelegatedDigitalWorkSpec
+                        and loaded.state == "ambiguous" and loaded.error_code == "provider_unavailable"):
+                    # Terminal payload/usage are immutable. Record the owner's new
+                    # stop intent separately, under the same parent admission lock.
+                    thread = self._provider_recovery_stop_thread(loaded.spec)
+                    e = operational_events.c
+                    present = connection.scalar(sa.select(sa.func.count()).select_from(operational_events).where(
+                        e.tenant_id == self.scope.tenant_id, e.installation_id == self.scope.installation_id,
+                        e.thread_id == thread))
+                    if not present:
+                        insert_initial_timeline_thread(connection, self.scope, thread_id=thread,
+                            checkpoint_id=thread + ":stopped", occurred_at=now,
+                            phase="stopped", status="completed", event_type="PRIVATE_WORK_RECOVERY_STOPPED",
+                            data={"execution_id": loaded.spec.execution_id,
+                                  "source_ingress_sha256": loaded.spec.source_ingress_sha256,
+                                  "work_id": work_id, "spec_sha256": loaded.spec.sha256})
+                    # If admission won the parent lock first, stop only its explicitly
+                    # policy-authorized child. Ordinary manual resumes stay unchanged.
+                    c = delegated_work_runs.c
+                    children = connection.execute(sa.select(delegated_work_runs).where(
+                        c.tenant_id == self.scope.tenant_id, c.installation_id == self.scope.installation_id,
+                        c.owner_principal_id == owner_principal_id, c.principal_binding_id == principal_binding_id,
+                        c.spec_payload["execution_id"].astext == loaded.spec.execution_id,
+                        c.state.in_(("admitted", "call_started")),
+                        sa.exists(sa.select(1).where(
+                            e.tenant_id == self.scope.tenant_id, e.installation_id == self.scope.installation_id,
+                            e.event_type == "SCHEDULED_WORK_ADMITTED",
+                            e.payload["data"]["work_id"].astext == c.work_id,
+                            e.payload["data"]["provider_recovery"]["previous_work_id"].astext == work_id)),
+                    ).with_for_update()).mappings().all()
+                    for child in children:
+                        values = {"lease_owner": None, "lease_expires_at": None,
+                                  "revision": child.revision + 1, "updated_at": now}
+                        if child.state == "admitted":
+                            values.update(state="stopped", completed_at=now)
+                        elif child.stop_requested_at is None:
+                            values["stop_requested_at"] = now
+                        else:
+                            continue
+                        connection.execute(sa.update(delegated_work_runs).where(
+                            c.tenant_id == self.scope.tenant_id, c.installation_id == self.scope.installation_id,
+                            c.work_id == child.work_id, c.revision == child.revision).values(**values))
                 return loaded
             work_update = connection.execute(
                 sa.update(delegated_work_runs)

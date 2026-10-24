@@ -1,5 +1,5 @@
 """Durable one-shot admission times for the existing owner work service."""
-from dataclasses import asdict
+from dataclasses import asdict, dataclass
 from datetime import timedelta
 import hashlib
 
@@ -13,6 +13,35 @@ from eva.adapters.postgres.operational_timeline import (
 )
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.timestamps import parse_utc_timestamp
+
+
+class _ProviderRecoveryDeferred(Exception):
+    """An owner correction is still committing; retry without a blocked record."""
+
+
+@dataclass(frozen=True)
+class _OwnerRecoveryGuard:
+    """Internal admission capability; never supplied by a tool or owner payload."""
+
+    scheduler: object
+    previous_work_id: str
+    evidence: dict
+    work_spec: object
+
+    def check_locked(self, connection):
+        if type(self.scheduler) is not ScheduledOwnerWork or self.scheduler.audience_adapter is not None:
+            raise ValueError("private recovery requires its existing owner scheduler")
+        previous, _, current = self.scheduler._provider_recovery_evidence(
+            self.previous_work_id, connection)
+        now = self.scheduler.service.now()
+        spec = self.work_spec
+        if (current != self.evidence or spec.parent_task_id != previous.spec.work_id
+                or spec.grant != previous.spec.grant
+                or parse_utc_timestamp(spec.created_at) > now
+                or parse_utc_timestamp(spec.deadline) <= now
+                or parse_utc_timestamp(spec.deadline) != parse_utc_timestamp(spec.created_at)
+                    + timedelta(seconds=previous.spec.grant.timeout_seconds)):
+            raise ValueError("private recovery authorization changed before admission")
 
 
 class ScheduledOwnerWork:
@@ -424,9 +453,251 @@ class ScheduledOwnerWork:
                 finished += 1
         return finished
 
+    def _provider_recovery_policy(self, connection=None):
+        from eva.application.conversation import ConversationConflict
+        loader = getattr(self.service.store, "_initiative_authority_loader", None)
+        if self.audience_adapter is not None or not callable(loader):
+            return None
+        try:
+            authority = loader()
+            if connection is None:
+                data, digest = authority.policy()
+            else:
+                # Do not call policy() here: its separate revoke transaction
+                # could wait on the checkpoint already held by this admission.
+                data = authority._read()
+                digest = canonical_sha256({k: v for k, v in data.items() if k != "enabled"})
+        except (ConversationConflict, ValueError, OSError, RuntimeError):
+            # Optional autonomous recovery must not disable ordinary owner schedules.
+            return None
+        policy = data.get("private_work_recovery")
+        if data.get("enabled") is not True or not policy or policy.get("enabled") is not True:
+            return None
+        if connection is not None:
+            authority.timeline._scope(connection)
+            c = operational_checkpoints.c
+            row = connection.execute(sa.select(operational_checkpoints).where(
+                c.tenant_id == authority.owner._scope.tenant_id,
+                c.installation_id == authority.owner._scope.installation_id,
+                c.thread_id == authority.thread).with_for_update()).one_or_none()
+            self._authorize(connection)
+            if row is None or row.phase == "initiative_mandate_revoked":
+                return None
+        events = authority.timeline.events(authority.thread)
+        if (not events or events[-1].payload.get("data", {}).get("mandate_sha256") != digest
+                or (connection is not None and row.revision != events[-1].sequence)):
+            return None
+        admission = {"thread_id": authority.thread, "revision": events[-1].sequence,
+                     "payload_sha256": canonical_sha256(events[-1].payload)}
+        return data, policy, digest, admission
+
+    def _provider_recovery_evidence(self, work_id, connection):
+        """Reconcile the retained source/read effects under the admission fences."""
+        from types import SimpleNamespace
+        from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
+        from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+        from eva.adapters.postgres.work_corrections import correction_lock_key, work_corrections
+        from eva.contracts.delegated_digital_work import DelegatedDigitalWorkSpec
+        from eva.providers.mcp_autonomy import _SourceTurnLoader
+
+        selected = self._provider_recovery_policy(connection)
+        if selected is None:
+            raise ValueError("private recovery policy is not enabled")
+        data, policy, policy_sha, policy_admission = selected
+        store, profile, now = self.service.store, self.service.digital_profile, self.service.now()
+        previous = store.load(work_id, **self.service._owner)
+        if type(previous.spec) is not DelegatedDigitalWorkSpec:
+            raise ValueError("private recovery accepts only ordinary private v4 work")
+        spec = previous.spec
+        if not connection.scalar(sa.text("SELECT pg_try_advisory_xact_lock(hashtextextended(:key, 0))"),
+                                 {"key": correction_lock_key(spec)}):
+            raise _ProviderRecoveryDeferred()
+        journal = PostgresConversationJournal(self.engine, self.service.conversation_scope)
+        source = spec.source
+        journal._stop_fence(connection, journal._stop_identity(
+            source.principal_id, source.conversation_id, source.message_id))
+        self._authorize(connection)
+        row = connection.execute(sa.select(runs).where(
+            runs.c.tenant_id == self.scope.tenant_id,
+            runs.c.installation_id == self.scope.installation_id,
+            runs.c.work_id == work_id).with_for_update()).mappings().one()
+        previous = store._validated(connection, row)
+        stopped = connection.scalar(sa.select(sa.func.count()).select_from(operational_events).where(
+            operational_events.c.tenant_id == self.scope.tenant_id,
+            operational_events.c.installation_id == self.scope.installation_id,
+            operational_events.c.thread_id == store._provider_recovery_stop_thread(spec)))
+        if (previous.spec != spec or spec.generation != 1 or spec.audience != "private"
+                or stopped
+                or parse_utc_timestamp(spec.created_at) < parse_utc_timestamp(policy["source_admitted_not_before"])
+                or previous.state != "ambiguous" or previous.error_code != "provider_unavailable"
+                or previous.call_id is None or previous.call_started_at is None
+                or previous.stop_requested_at is not None or previous.lease_owner is not None
+                or previous.lease_expires_at is not None
+                or previous.retention_until <= now or previous.result is not None
+                or profile is None or not profile.accepts_grant(spec.grant)
+                or profile.timeout_seconds != spec.grant.timeout_seconds):
+            raise ValueError("private recovery source is stopped, active or not a retained provider failure")
+        release = profile.release
+        if (spec.grant.maximum_cost_usd_micros is not None
+                or profile.maximum_cost_usd_micros is not None
+                or spec.model_profile_id != profile.model_profile_id
+                or spec.model_profile_release_sha256 != policy["model_profile_release_sha256"]
+                or release.model_profile_release_sha256 != spec.model_profile_release_sha256
+                or data.get("digital_work", {}).get("worker_profile_release_sha256")
+                    != release.worker_profile_release_sha256
+                or any(getattr(spec, name) != getattr(release, name) for name in (
+                    "worker_profile_release_sha256", "engine_release_sha256", "output_schema_sha256"))):
+            raise ValueError("private recovery requires its separately authorized existing subscription route")
+        children = connection.scalar(sa.select(sa.func.count()).select_from(runs).where(
+            runs.c.tenant_id == self.scope.tenant_id,
+            runs.c.installation_id == self.scope.installation_id,
+            runs.c.spec_payload["execution_id"].astext == spec.execution_id,
+            runs.c.spec_payload["generation"].as_integer() > 1))
+        if children or work_corrections(self.engine, spec):
+            raise ValueError("a manual successor or correction already consumes this recovery")
+        turn = _SourceTurnLoader(self.engine, SimpleNamespace(
+            scope=self.service.conversation_scope, authorize_turn=self.service.validate_authority))(
+                spec.source.model_dump(mode="json"))
+        if canonical_sha256(PostgresConversationJournal._ingress_data(turn)) != spec.source_ingress_sha256:
+            raise ValueError("private recovery original ingress changed")
+        journal.ensure_running(turn)
+        namespace = "background-work:" + hashlib.sha256(spec.execution_id.encode()).hexdigest()
+        timeline = PostgresOperationalTimeline(self.engine, self.service.conversation_scope)
+        e = operational_events.c
+        with self.engine.begin() as read:
+            timeline._scope(read)
+            threads = list(read.scalars(sa.select(e.thread_id).where(
+                e.tenant_id == self.service.conversation_scope.tenant_id,
+                e.installation_id == self.service.conversation_scope.installation_id,
+                e.event_type == "TOOL_REQUEST_ADMITTED",
+                e.payload["data"]["execution_namespace"].astext == namespace)))
+        if (previous.usage is None or type(previous.usage.tool_calls) is not int
+                or not threads or len(threads) != previous.usage.tool_calls):
+            raise ValueError("private recovery lacks complete durable effect coverage")
+        heads = []
+        for thread in sorted(threads):
+            events = timeline.events(thread)
+            admission = events[0].payload.get("data", {})
+            if (events[0].event_type != "TOOL_REQUEST_ADMITTED"
+                    or events[-1].event_type != "STATE_VERIFIED"
+                    or any(admission.get(key) != value for key, value in (
+                        ("principal_id", turn.principal_id), ("conversation_id", turn.conversation_id),
+                        ("source_message_id", turn.message_id), ("execution_namespace", namespace)))):
+                raise ValueError("private recovery has an unresolved or unrelated effect")
+            dispatches = [event.payload.get("data", {}).get("dispatch") for event in events
+                          if event.event_type == "TOOL_EXECUTED"]
+            dispatch = dispatches[0] if len(dispatches) == 1 else None
+            details = dispatch.get("details", {}) if isinstance(dispatch, dict) else {}
+            name, arguments = admission.get("request_tool_name"), admission.get("request_arguments", {})
+            if not isinstance(details, dict) or not isinstance(arguments, dict):
+                raise ValueError("private recovery read metadata is malformed")
+            deferred_read = (details.get("read_deferred") is True and (
+                name == "discover_connector_tools"
+                or (name == "manage_connected_services" and arguments.get("action") == "status")))
+            if (not isinstance(dispatch, dict) or dispatch.get("accepted") is not True
+                    or not (details.get("operation_kind") == "read" or deferred_read)):
+                raise ValueError("private recovery only reuses independently verified reads")
+            heads.append({"thread_id": thread, "revision": events[-1].sequence,
+                          "payload_sha256": canonical_sha256(events[-1].payload)})
+        self._authorize(connection)
+        return previous, turn, {
+            "contract": "EvaPrivateWorkRecoveryAuthorization/v1",
+            "accounting": "separately_authorized_new_bounded_attempt",
+            "policy_sha256": policy_sha,
+            "policy_admission": policy_admission,
+            "execution_id": spec.execution_id, "previous_work_id": work_id,
+            "previous_spec_sha256": spec.sha256, "previous_revision": previous.revision,
+            "previous_usage_sha256": canonical_sha256(previous.usage.to_payload()),
+            "source_ingress_sha256": spec.source_ingress_sha256,
+            "verified_read_heads": heads,
+            "maximum_additional_attempts": 1, "manual_successors_count": True,
+        }
+
+    def schedule_provider_recovery(self):
+        """One policy-authorized additional attempt; never renew an old allowance."""
+        from eva.adapters.postgres.current_catalog import delegated_work_runs as runs
+        from eva.application.conversation import ConversationConflict, ConversationStopped
+        selected = self._provider_recovery_policy()
+        if selected is None:
+            return "idle"
+        not_before = parse_utc_timestamp(selected[1]["source_admitted_not_before"])
+        c = operational_checkpoints.c
+        suffix = sa.func.encode(sa.func.sha256(sa.func.convert_to(
+            runs.c.spec_payload["execution_id"].astext, "UTF8")), "hex")
+        thread_expression = self.prefix + "provider-recovery:" + suffix
+        with self.engine.begin() as connection:
+            self._authorize(connection, lock=True)
+            row = connection.execute(sa.select(runs.c.work_id, runs.c.spec_payload).where(
+                runs.c.tenant_id == self.scope.tenant_id,
+                runs.c.installation_id == self.scope.installation_id,
+                runs.c.owner_principal_id == self.service.owner_principal_id,
+                runs.c.principal_binding_id == self.service.principal_binding_id,
+                runs.c.spec_payload["contract"].astext == "DelegatedDigitalWork/v4",
+                runs.c.spec_payload["generation"].as_integer() == 1,
+                runs.c.created_at >= not_before,
+                runs.c.state == "ambiguous", runs.c.error_code == "provider_unavailable",
+                runs.c.retention_until > self.service.now(),
+                ~sa.exists(sa.select(1).where(c.tenant_id == self.scope.tenant_id,
+                    c.installation_id == self.scope.installation_id, c.thread_id == thread_expression)),
+            ).order_by(runs.c.completed_at.desc(), runs.c.work_id).limit(1)).one_or_none()
+            if row is None:
+                return "idle"
+            thread = self.prefix + "provider-recovery:" + hashlib.sha256(
+                row.spec_payload["execution_id"].encode()).hexdigest()
+            now = self.service.now()
+            try:
+                previous, turn, evidence = self._provider_recovery_evidence(row.work_id, connection)
+                from eva.adapters.postgres.scheduled_work_failure import schedule_return_binding
+                request = {"source": asdict(turn), "operation": "resume", "work_id": row.work_id,
+                           "run_at": (now + timedelta(seconds=1)).isoformat().replace("+00:00", "Z"),
+                           "return_binding": schedule_return_binding(self.service, turn),
+                           "provider_recovery": evidence}
+            except _ProviderRecoveryDeferred:
+                return "provider_recovery_waiting"
+            except (ValueError, LookupError, ConversationConflict, ConversationStopped, DelegatedWorkStoreError) as error:
+                self._authorize(connection)
+                insert_initial_timeline_thread(connection, self.scope, thread_id=thread,
+                    checkpoint_id=thread + ":blocked", occurred_at=now,
+                    phase="blocked", status="needs_help", event_type="SCHEDULED_WORK_BLOCKED",
+                    data={"operation": "resume", "work_id": row.work_id, "run_at": now.isoformat(),
+                          "reason": "Automatisch herstel is niet veilig toegelaten.",
+                          "blocker_code": str(error)[:200], "automatic_retry": False})
+                return "provider_recovery_blocked"
+            insert_initial_timeline_thread(connection, self.scope, thread_id=thread,
+                checkpoint_id=thread + ":scheduled", occurred_at=now, deadline=now + timedelta(seconds=1),
+                phase="scheduled", status="active", event_type="WORK_START_SCHEDULED", data=request)
+            return "provider_recovery_scheduled"
+
+    def _admit_provider_recovery(self, connection, request, admission_time):
+        from uuid import uuid5
+        previous, turn, evidence = self._provider_recovery_evidence(request["work_id"], connection)
+        if evidence != request["provider_recovery"]:
+            raise ValueError("private recovery source, policy or receipts changed")
+        old = previous.spec
+        next_id = "work:eva-resume:" + str(uuid5(self.scope.installation_id,
+            f"{old.work_id}:{old.generation + 1}"))
+        spec = self.service.digital_profile.build_spec(
+            source=old.source.model_dump(mode="json"), source_ingress_sha256=old.source_ingress_sha256,
+            execution_id=old.execution_id, grant=old.grant, work_id=next_id, episode_id=old.episode_id,
+            generation=old.generation + 1, parent_task_id=old.work_id,
+            owner_principal_id=old.owner_principal_id, principal_binding_id=old.principal_binding_id,
+            task=old.task, created_at=admission_time,
+            deadline=admission_time + timedelta(seconds=old.grant.timeout_seconds))
+        if parse_utc_timestamp(spec.deadline) >= previous.retention_until:
+            raise ValueError("private recovery may not extend retained source authority")
+        guard = _OwnerRecoveryGuard(self, old.work_id, evidence, spec)
+        admission = self.service.store.admit(spec=spec, title=previous.title, summary=previous.summary,
+            worker_role=previous.worker_role, retention_policy_id=previous.retention_policy_id,
+            retention_until=previous.retention_until, occurred_at=admission_time,
+            resumes_work_id=old.work_id, _connection=connection, _owner_recovery_guard=guard,
+            **self.service._delivery_arguments(turn))
+        return {"work": {"work_id": admission.work.spec.work_id}}
+
     def run_once(self):
         if self._finish_stops():
             return "chain_stop_recorded"
+        if self.audience_adapter is None:
+            self.schedule_provider_recovery()
         now = self.service.now()
         c = operational_checkpoints.c
         with self.engine.begin() as conn:
@@ -485,12 +756,22 @@ class ScheduledOwnerWork:
                 task = reserved["data"].get("task", request.get("task"))
                 admission_time = parse_utc_timestamp(reserved["data"]["admission_time"])
                 turn = self._restore_turn(request)
-                result = (self.service._execute(request["operation"], turn,
-                    task=task, work_id=request.get("work_id"), request_key=thread_id,
-                    admission_time=admission_time) if self.audience_adapter is None else
-                    self.audience_adapter.dispatch(request, turn, task, thread_id, admission_time))
+                if "provider_recovery" in request:
+                    # Scope and timeline owners require the existing root transaction.
+                    result = self._admit_provider_recovery(conn, request, admission_time)
+                else:
+                    result = (self.service._execute(request["operation"], turn,
+                        task=task, work_id=request.get("work_id"), request_key=thread_id,
+                        admission_time=admission_time) if self.audience_adapter is None else
+                        self.audience_adapter.dispatch(request, turn, task, thread_id, admission_time))
                 work_id = result["work"]["work_id"]
+            except _ProviderRecoveryDeferred:
+                return "waiting"
             except Exception as error:
+                if "provider_recovery" in request and isinstance(error, sa.exc.SQLAlchemyError):
+                    # Roll back admission and schedule together. A broken transaction
+                    # cannot safely append a separate blocked checkpoint.
+                    raise
                 transition_timeline_thread(conn, self.scope, thread_id=thread_id,
                     expected_revision=row.revision, checkpoint_id=thread_id + ":blocked",
                     phase="blocked", status="needs_help", event_type="SCHEDULED_WORK_BLOCKED",
@@ -500,5 +781,7 @@ class ScheduledOwnerWork:
             transition_timeline_thread(conn, self.scope, thread_id=thread_id,
                 expected_revision=row.revision, checkpoint_id=thread_id + ":dispatched",
                 phase="dispatched", status="completed", event_type="SCHEDULED_WORK_ADMITTED",
-                operation_id=work_id, occurred_at=self.service.now(), data={"work_id": work_id})
+                operation_id=work_id, occurred_at=self.service.now(), data={"work_id": work_id,
+                    **({"provider_recovery": request["provider_recovery"]}
+                       if "provider_recovery" in request else {})})
             return "dispatched"

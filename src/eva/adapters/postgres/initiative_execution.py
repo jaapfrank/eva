@@ -108,7 +108,7 @@ class PostgresInitiativeAuthority:
         fields = {"contract", "mandate_id", "owner_principal_id", "enabled",
                   "authorization_source", "capabilities", "tenant_scope", "installation_scope"}
         if (not isinstance(data, dict) or not fields <= set(data)
-                or set(data) - fields - {"digital_work", "private_contact", "self_repair", "component_maintenance"}
+                or set(data) - fields - {"digital_work", "private_contact", "self_repair", "component_maintenance", "private_work_recovery"}
                 or data["contract"] != "EvaCostlessInitiativeMandate/v1"
                 or data["owner_principal_id"] != str(self.owner._owner)
                 or data["tenant_scope"] != str(self.owner._scope.tenant_id)
@@ -118,6 +118,39 @@ class PostgresInitiativeAuthority:
                            for k in ("mandate_id", "authorization_source"))
                 or not isinstance(data["capabilities"], list)):
             raise InitiativeMandateDenied("initiative mandate is invalid")
+        if "private_work_recovery" in data:
+            recovery = data["private_work_recovery"]
+            fixed = {
+                "source_contract": "DelegatedDigitalWork/v4",
+                "error_codes": ["provider_unavailable"],
+                "maximum_additional_attempts": 1,
+                "manual_successors_count": True,
+                "new_attempt_grant": "same_limits_as_original_attempt",
+                "new_attempt_clock": "current_admission_time_original_timeout",
+                "provider_route": "same_existing_subscription_only",
+                "require_no_finite_monetary_cap": True,
+                "prior_effects": "verified_reads_only",
+            }
+            if (not isinstance(recovery, dict)
+                    or set(recovery) != set(fixed) | {
+                        "enabled", "authorization_source", "model_profile_release_sha256",
+                        "source_admitted_not_before"}
+                    or type(recovery["enabled"]) is not bool
+                    or not isinstance(recovery["authorization_source"], str)
+                    or not 1 <= len(recovery["authorization_source"].strip()) <= 1000
+                    or not isinstance(recovery["model_profile_release_sha256"], str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", recovery["model_profile_release_sha256"])
+                    or any(type(recovery[key]) is not type(value) or recovery[key] != value
+                           for key, value in fixed.items())
+                    or (recovery["enabled"] and (
+                        not isinstance(data.get("self_repair"), dict)
+                        or data["self_repair"].get("enabled") is not True))):
+                raise InitiativeMandateDenied("explicit bounded private work recovery policy required")
+            try:
+                from eva.contracts.timestamps import parse_utc_timestamp
+                parse_utc_timestamp(recovery["source_admitted_not_before"])
+            except (TypeError, ValueError):
+                raise InitiativeMandateDenied("private work recovery activation time is invalid") from None
         if "component_maintenance" in data:
             maintenance=data['component_maintenance']
             if (not isinstance(maintenance,dict) or set(maintenance)!={'enabled','authorization_source','packages','target_version'}
