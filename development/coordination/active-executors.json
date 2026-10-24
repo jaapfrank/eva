@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T16:31:11.100464+00:00",
+  "updatedAt": "2026-10-24T16:40:44.803558+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -305,7 +305,7 @@
         "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
         "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
       ],
-      "updatedAt": "2026-10-24T16:31:11.100464+00:00",
+      "updatedAt": "2026-10-24T16:40:44.803558+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -520,7 +520,7 @@
           "allNamedInstalledMethodsValidated": true
         }
       },
-      "activeAssignment": "Completed handed-off deliverable; no repeated tests/research without concrete new finding.",
+      "activeAssignment": "Compare exact existing terminal transport with immediately preceding successes; no provider probe; minimal candidate only if local cause proven.",
       "extensionArtifactRequest": {
         "to": "wsl-e18",
         "requestedAt": "2026-10-23T14:52:17.507425+00:00",
@@ -586,7 +586,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "assigned_bounded_delivery_completed",
+      "status": "provider_failure_actual_cause",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1382,7 +1382,7 @@
     "e415-independent-review-newchat": {
       "task": "E4.16",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "actual_school_successor_followup",
+      "status": "terminal_school_evidence_review",
       "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
       "allowedWritePaths": [],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
@@ -1496,8 +1496,8 @@
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": false,
-      "updatedAt": "2026-10-24T16:31:11.100464+00:00",
-      "activeAssignment": "Observe only the actual current generation9; report terminal useful result or concrete failure, no model/POST/retry.",
+      "updatedAt": "2026-10-24T16:40:44.803558+00:00",
+      "activeAssignment": "Read-only reviewer/tester: preserve exact terminal evidence and limits; no product changes.",
       "writePaths": [],
       "role": "executor",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e415-positive-use-readback-20261024/coder2/natural-delta-1515/",
@@ -1516,7 +1516,7 @@
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "assigned_bounded_delivery_completed",
+      "status": "awaiting_concrete_provider_fix_review",
       "allowedWritePaths": [
         "development/reviews/e419-final-candidate-review-20261024.json",
         "development/reviews/owner-command-provider-fix-20261024.json"
@@ -1529,17 +1529,17 @@
       "activeCodeOrInstallClaim": false,
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024",
       "scope": "Independently assess actual five later Astra calls and limits of one possible existing owner resume. No product code or runtime mutation.",
-      "updatedAt": "2026-10-24T16:31:11.100464+00:00",
+      "updatedAt": "2026-10-24T16:40:44.803558+00:00",
       "currentWritePaths": [
         "/home/administrator/project/.eva2-artifacts/e416-durable-household-recovery-20261024/reviewer/contract-review.private.json"
       ],
-      "activeAssignment": "Completed handed-off deliverable; no repeated tests/research without concrete new finding."
+      "activeAssignment": "Independent review only upon concrete candidate; prior installation review remains complete."
     },
     "e419-recovery-executor": {
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
       "task": "E4.16",
       "role": "executor",
-      "status": "assigned_bounded_delivery_completed",
+      "status": "provider_failure_targeted_regression",
       "allowedWritePaths": [
         "development/tests/postgres/test_native_research_explicit_read_continuation.py"
       ],
@@ -1548,7 +1548,7 @@
       "currentWritePaths": [
         "/home/administrator/project/.eva2-artifacts/e416-durable-household-recovery-20261024/coder1/"
       ],
-      "updatedAt": "2026-10-24T16:31:11.100464+00:00",
+      "updatedAt": "2026-10-24T16:40:44.803558+00:00",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e16-natural-source-followthrough-20261024/coder1",
       "latestBoundedReadback": {
         "checkedThrough": "2026-10-24T11:56:03Z",
@@ -1558,7 +1558,7 @@
         "doNotRepeatWithoutNewEvidence": true
       },
       "activeIndependentReviewClaim": false,
-      "activeAssignment": "Completed handed-off deliverable; no repeated tests/research without concrete new finding."
+      "activeAssignment": "One concrete regression tied to proven cause, no product code or repeated unrelated suite."
     }
   },
   "protectedExistingWork": {
@@ -1774,8 +1774,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": null,
-    "parallelBoundedWork": "Source/test/package/install deliverable complete. Coder2 follows the actual new school attempt; no repeated matrices or work invented for idle chats.",
-    "currentBlocker": "No installation blocker. Genuine owner school correction saved once and existing generation9 now executing; school result not yet established.",
+    "parallelBoundedWork": "Main actual transport cause/minimal correction, coder1 concrete regression, coder2 existing outcome evidence only, independent reviewer assesses concrete fix when ready.",
+    "currentBlocker": "Generation9 failed with repeated provider_unavailable; no result/newprogress. No further retry until concrete cause/recovery is established.",
     "latestVerifiedOutcome": {
       "task": "E4.17",
       "status": "completed_original_restore_card_technical",
@@ -1784,9 +1784,10 @@
       "at": "2026-10-24T06:06:08.566732+00:00"
     },
     "nextBoundedAssignments": {
-      "coordinator": "Maintain original result and honest delivery status; no repeat installation.",
-      "deliveryExecutor": "Observe actual current school successor once terminal.",
-      "reviewer": "Review only a concrete new result/failure if assigned."
+      "codex-e418": "Compare exact existing terminal transport with immediately preceding successes; no provider probe; minimal candidate only if local cause proven.",
+      "e419-recovery-executor": "One concrete regression tied to proven cause, no product code or repeated unrelated suite.",
+      "e415-independent-review-newchat": "Read-only reviewer/tester: preserve exact terminal evidence and limits; no product changes.",
+      "independent-control": "Independent review only upon concrete candidate; prior installation review remains complete."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {
@@ -1827,13 +1828,13 @@
     },
     "currentOwnerContinuation": {
       "workId": "work:eva-resume:8768071e-0047-5438-8c17-d0d8990a71c9",
-      "status": "school_name_correction_saved_once_existing_successor_call_started",
+      "status": "school_name_successor_terminal_repeated_provider_unavailable",
       "ownerConfirmationReceived": false,
       "mustNotInferConfirmationFromElapsedTimeOrBrowserControlAlone": true,
       "existingApiHandoff": "/home/administrator/project/.eva2-artifacts/e416-owner-useful-completion-20261024/existing-owner-after-login-handoff-ebe7c702e0ca0624.private.json",
       "handoffSha256": "ebe7c702e0ca06240475eda7f9f0b42bbba4bf4ab6a1a8b477e75e9e2b373471",
       "installedApiSourcePinsSha256": "a4ccb6a2320db098baaf6933e909a79371c6be074b18c36baa2c30cd2ee0320f",
-      "instruction": "Eén echte schoolnaamcorrectie bewaard en één bestaande hervatting gestart. Volg de actuele uitkomst; geen herhaalde POST/retry, geen afgeronde schoolhulp uit admission afleiden. Eva verzorgt eigen noodzakelijke vragen via oorspronkelijke route.",
+      "instruction": "Geen nieuwe schoolherpoging. De nieuwe schoolnaam blijft bewaard; onderzoek de concrete herhaalde providerfout op bestaande gegevens. Geen nieuw resultaat/voortgang bewezen, eerdere opgeslagen voortgang blijft behouden.",
       "independentReviewSha256": "4ef253fc3d8d5ce89dfa4cf353b7e441368f987c602f4877f3ff25ced09df229",
       "supersededLoginRequirement": {
         "status": "waiting_explicit_owner_login_confirmation",
@@ -1850,7 +1851,7 @@
       "previousWorkId": "work:eva-resume:9b8fab63-4bb6-5658-b179-e04e6929b50f",
       "actualOwnerLoginClaimed": false,
       "lastExecutionReceiptSha256": "970c146c75c63b2e67ccd0f3f243b53593097e7d21f9f317dde983483b61b2e5",
-      "actualFailureEvidenceSha256": "64f24721fd47eabe9aad7d02c5eaa313c1697b661589b9a67439a183c6e4497a",
+      "actualFailureEvidenceSha256": "eec5bdf74225e1de1fd7751836c743dc6e8e40ccf1dd9cc56357b440e6632222",
       "independentActualReviewSha256": "c3816fdd928463992ab3a05518e9e9bb5b5f9a687425c8773ca80df7fd18c5be",
       "budgetRepair": {
         "commit": "ac86ab13",
@@ -1859,7 +1860,7 @@
         "installedProfilesSha256": "1f402f001564a8f07bf47c2092a72c0514df8c40aad7c3b9683933e349c06cdf",
         "ordinaryResumePerformed": false
       },
-      "latestActualReadbackSha256": "d9e0f4028870fa12e5d44a42ad80f84163098538c84a400839011aad7fa47744",
+      "latestActualReadbackSha256": "c80080e7e99c64971af7b166ec81b4d4e52c81d2916745cc56a4273b44cccb4f",
       "latestActualReviewSha256": "a6565fc11826d0801879aa713157466de050106f02573ac5a2aae8a107981f46",
       "nextOwnerResumeNotBefore": "2026-10-24T14:13:00Z",
       "maximumAdditionalAttemptBeforeReassessment": 0,

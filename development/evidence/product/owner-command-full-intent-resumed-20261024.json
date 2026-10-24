@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:56:37.055465+00:00",
-  "status": "real_school_name_correction_saved_existing_successor_running",
+  "status": "real_school_name_successor_terminal_repeated_provider_unavailable",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -115,7 +115,7 @@
     "historicalRepairStillBlocked": true,
     "originalCardsNewlyCompleted": 0
   },
-  "ownerAction": "Geen nieuwe eigenaarhandeling gevraagd; de echte schoolnaam is opgeslagen en dezelfde opdracht is hervat.",
+  "ownerAction": "Geen nieuwe eigenaarhandeling gevraagd; schoolnaam bewaard. Nieuwe poging eindigde met dezelfde providerfout; geen volgende herpoging zonder onderbouwd herstel.",
   "latestOwnerCorrection": {
     "receivedAt": "2026-10-24T13:11:01.504395+00:00",
     "text": "Nee eva moet zoeken online hoe ze in kan loggen. er is geen somtoday pagina waar je in kan loggen dat gaat normaliter via de app. Maar het kan ook anders.",
@@ -362,15 +362,24 @@
     "Historical pre-model selfrepair failure remains blocked and its unknown usage/error evidence remains unchanged.",
     "Full E4.16 autonomous repair and later reuse are not proved by manual fixes or installation."
   ],
-  "checkedAt": "2026-10-24T16:31:11.100464+00:00",
+  "checkedAt": "2026-10-24T16:40:44.803558+00:00",
   "latestSchoolIdentification": {
     "received": true,
     "savedOnceThroughExistingOwnerRevision": true,
     "newWorkId": "work:eva-resume:8768071e-0047-5438-8c17-d0d8990a71c9",
-    "state": "call_started",
+    "state": "ambiguous",
     "receiptSha256": "af3765c9dac9897b5f2c8a256f9b60c9d868b856a4031b30e7a67cd474d40608",
     "readbackSha256": "3268559e1e0e802bc421d2731e6b5033e2a69cb9f464fcc57032d67821727367",
     "schoolResultCompleted": false,
-    "ownerLoginClaimed": false
+    "ownerLoginClaimed": false,
+    "errorCode": "provider_unavailable",
+    "completedAt": "2026-10-24T16:30:13Z",
+    "measuredPartialInputTokens": 249675,
+    "measuredPartialOutputTokens": 650,
+    "measuredPartialTotalTokens": 250325,
+    "creditCost": null,
+    "newProgressSaved": false,
+    "resultAvailable": false,
+    "actualReadbackSha256": "c80080e7e99c64971af7b166ec81b4d4e52c81d2916745cc56a4273b44cccb4f"
   }
 }
