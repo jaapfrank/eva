@@ -847,8 +847,8 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Geïnstalleerde hervattingsreparatie gebruiken voor de oorspronkelijke opdracht, met behoud van portal en oude resultaten. De concrete fout vóór Eva’s eigen reparatiemodel wordt parallel gericht hersteld; volledige kaart blijft open.",
-    "ownerActionRequired": false
+    "nextAction": "Noodzakelijke accountstap is concreet voorbereid: in Verbindingen bij Eva’s taakbrowser overnemen, Somtoday aanmelden en teruggeven; daarna dezelfde opdracht hervatten. De geïnstalleerde hervattings- en planblokkadereparatie zijn werkelijk gebruikt. Parallel alleen nieuw gewoon gebruik voor bestaande E1.6/E4.15 controleren; geen oude proef herhalen.",
+    "ownerActionRequired": true
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -8312,7 +8312,7 @@
                 "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "owner": "Codex · kernuitvoerder; spraakuitvoerder behoudt implementatie-eigendom",
-                "ownerActionRequired": false,
+                "ownerActionRequired": true,
                 "requiredForCurrentDelivery": true,
                 "ownerAuthorization": "Eigenaar22oktober2026: echte problemen moeten automatisch tot blijvend herstel leiden, kort melden dat Eva zichzelf gaat repareren; maak Eva autonoom voortdurend verbeterend en reparerend.",
                 "scopeOrigin": "autonomous-repair-20261022",
@@ -8323,7 +8323,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Geïnstalleerde hervattingsreparatie gebruiken voor de oorspronkelijke opdracht, met behoud van portal en oude resultaten. De concrete fout vóór Eva’s eigen reparatiemodel wordt parallel gericht hersteld; volledige kaart blijft open.",
+                "nextAction": "Noodzakelijke accountstap is concreet voorbereid: in Verbindingen bij Eva’s taakbrowser overnemen, Somtoday aanmelden en teruggeven; daarna dezelfde opdracht hervatten. De geïnstalleerde hervattings- en planblokkadereparatie zijn werkelijk gebruikt. Parallel alleen nieuw gewoon gebruik voor bestaande E1.6/E4.15 controleren; geen oude proef herhalen.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8343,7 +8343,7 @@
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/owner-command-provider-fix-20261024.json",
-                "implementationStatus": "resume_and_bounded_provider_recovery_installed_original_outcome_open",
+                "implementationStatus": "installed_resume_used_real_login_gate_prepared_catalog_fix_installed_native_repair_open",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8352,8 +8352,8 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T11:47:21.096685+00:00",
-                "progress": "Hervattingsindex, onterecht codeherstel bij planblokkade en begrensd toekomstig providerherstel zijn gebouwd, onafhankelijk beoordeeld en op 24 oktober 13:46 lokaal geïnstalleerd. Alle vier kern-/workerprofielen gelijk. Oorspronkelijke schoolopdracht nog open; echte selfrepair faalde vóór model door catalogus/grantmismatch en wordt gericht gerepareerd.",
+                "checkedAt": "2026-10-24T11:56:37.055465+00:00",
+                "progress": "Hervatting is werkelijk gebruikt: bestaande portal gelezen en voortgang behouden; echte loginblokkade veroorzaakt geen onterechte codeherstelpoging. De afzonderlijke reparatiecatalogusfout is onafhankelijk beoordeeld en geïnstalleerd. Schoolgegevens en bruikbare schoolhulp ontbreken nog. Oude mislukte zelfreparatie blijft eerlijk geblokkeerd; volledige autonome herstelkaart niet afgerond.",
                 "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
               },
               {
@@ -9030,7 +9030,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Geïnstalleerde hervattingsreparatie gebruiken voor de oorspronkelijke opdracht, met behoud van portal en oude resultaten. De concrete fout vóór Eva’s eigen reparatiemodel wordt parallel gericht hersteld; volledige kaart blijft open.",
+        "nextAction": "Noodzakelijke accountstap is concreet voorbereid: in Verbindingen bij Eva’s taakbrowser overnemen, Somtoday aanmelden en teruggeven; daarna dezelfde opdracht hervatten. De geïnstalleerde hervattings- en planblokkadereparatie zijn werkelijk gebruikt. Parallel alleen nieuw gewoon gebruik voor bestaande E1.6/E4.15 controleren; geen oude proef herhalen.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van 24 gesloten. E4.16 en E4.19 geïnstalleerd; echte gebruiks-/herstelketens nog open. Drie uitvoerders werken afzonderlijk aan native E4.19, E1.14-continuïteit en E1.11; tester beoordeelt onafhankelijk.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9041,7 +9041,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T11:47:21.096685+00:00",
+        "updatedAt": "2026-10-24T11:56:37.055465+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9317,7 +9317,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-24T11:47:21.096685+00:00",
+        "checkedAt": "2026-10-24T11:56:37.055465+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -14489,7 +14489,7 @@
               "status": "in_progress",
               "kind": "owner_requested_followup",
               "owner": "Codex · kernuitvoerder; spraakuitvoerder behoudt implementatie-eigendom",
-              "ownerActionRequired": false,
+              "ownerActionRequired": true,
               "requiredForCurrentDelivery": true,
               "ownerAuthorization": "Eigenaar22oktober2026: echte problemen moeten automatisch tot blijvend herstel leiden, kort melden dat Eva zichzelf gaat repareren; maak Eva autonoom voortdurend verbeterend en reparerend.",
               "scopeOrigin": "autonomous-repair-20261022",
@@ -14500,7 +14500,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Geïnstalleerde hervattingsreparatie gebruiken voor de oorspronkelijke opdracht, met behoud van portal en oude resultaten. De concrete fout vóór Eva’s eigen reparatiemodel wordt parallel gericht hersteld; volledige kaart blijft open.",
+              "nextAction": "Noodzakelijke accountstap is concreet voorbereid: in Verbindingen bij Eva’s taakbrowser overnemen, Somtoday aanmelden en teruggeven; daarna dezelfde opdracht hervatten. De geïnstalleerde hervattings- en planblokkadereparatie zijn werkelijk gebruikt. Parallel alleen nieuw gewoon gebruik voor bestaande E1.6/E4.15 controleren; geen oude proef herhalen.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14520,7 +14520,7 @@
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/owner-command-provider-fix-20261024.json",
-              "implementationStatus": "resume_and_bounded_provider_recovery_installed_original_outcome_open",
+              "implementationStatus": "installed_resume_used_real_login_gate_prepared_catalog_fix_installed_native_repair_open",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -14529,8 +14529,8 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T11:47:21.096685+00:00",
-              "progress": "Hervattingsindex, onterecht codeherstel bij planblokkade en begrensd toekomstig providerherstel zijn gebouwd, onafhankelijk beoordeeld en op 24 oktober 13:46 lokaal geïnstalleerd. Alle vier kern-/workerprofielen gelijk. Oorspronkelijke schoolopdracht nog open; echte selfrepair faalde vóór model door catalogus/grantmismatch en wordt gericht gerepareerd.",
+              "checkedAt": "2026-10-24T11:56:37.055465+00:00",
+              "progress": "Hervatting is werkelijk gebruikt: bestaande portal gelezen en voortgang behouden; echte loginblokkade veroorzaakt geen onterechte codeherstelpoging. De afzonderlijke reparatiecatalogusfout is onafhankelijk beoordeeld en geïnstalleerd. Schoolgegevens en bruikbare schoolhulp ontbreken nog. Oude mislukte zelfreparatie blijft eerlijk geblokkeerd; volledige autonome herstelkaart niet afgerond.",
               "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
             },
             {
@@ -15207,7 +15207,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Geïnstalleerde hervattingsreparatie gebruiken voor de oorspronkelijke opdracht, met behoud van portal en oude resultaten. De concrete fout vóór Eva’s eigen reparatiemodel wordt parallel gericht hersteld; volledige kaart blijft open.",
+      "nextAction": "Noodzakelijke accountstap is concreet voorbereid: in Verbindingen bij Eva’s taakbrowser overnemen, Somtoday aanmelden en teruggeven; daarna dezelfde opdracht hervatten. De geïnstalleerde hervattings- en planblokkadereparatie zijn werkelijk gebruikt. Parallel alleen nieuw gewoon gebruik voor bestaande E1.6/E4.15 controleren; geen oude proef herhalen.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van 24 gesloten. E4.16 en E4.19 geïnstalleerd; echte gebruiks-/herstelketens nog open. Drie uitvoerders werken afzonderlijk aan native E4.19, E1.14-continuïteit en E1.11; tester beoordeelt onafhankelijk.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15218,7 +15218,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T11:47:21.096685+00:00",
+      "updatedAt": "2026-10-24T11:56:37.055465+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -15494,7 +15494,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-24T11:47:21.096685+00:00",
+      "checkedAt": "2026-10-24T11:56:37.055465+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [

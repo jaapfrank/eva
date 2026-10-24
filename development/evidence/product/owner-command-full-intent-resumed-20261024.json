@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
-  "recordedAt": "2026-10-24T11:15:03.895788+00:00",
-  "status": "continuation_repairs_installed_original_owner_outcome_open",
+  "recordedAt": "2026-10-24T11:56:37.055465+00:00",
+  "status": "installed_resume_actually_used_login_required_same_session_handoff_prepared",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -18,9 +18,9 @@
   "originalCardsNewlyCompleted": [],
   "productOrRuntimeSourceChanged": true,
   "remaining": [
-    "Original useful owner result and actual access still open.",
-    "True selfrepair stops before model due to catalog/grant mismatch; identified and being repaired.",
-    "Full E4.16 requires actual autonomous repair and later reuse, not manual installation alone."
+    "Owner login through the verified same-session interface and actual school data/help are still open.",
+    "Historical pre-model selfrepair failure remains blocked and its unknown usage/error evidence remains unchanged.",
+    "Full E4.16 autonomous repair and later reuse are not proved by manual fixes or installation."
   ],
   "actualOutcome": {
     "completedAt": "2026-10-24T11:14:19Z",
@@ -81,5 +81,47 @@
     "retainedActionBindings": 12,
     "originalOwnerOutcomeCompleted": false,
     "futureRecoveryProspectiveOnly": true
+  },
+  "actualInstalledContinuation": {
+    "workId": "work:eva-resume:5c85e2f2-d47e-5312-bc5e-b1c9e7b3354c",
+    "admittedAt": "2026-10-24T11:48:02Z",
+    "endedAt": "2026-10-24T11:49:16Z",
+    "state": "failed",
+    "errorCode": "incomplete_work",
+    "typedBlockedPlan": true,
+    "storedProgressRevisions": 2,
+    "newBrowserReadStep": 16,
+    "falseCodeRepairNotices": 0,
+    "runtimeUsage": {
+      "responses": 5,
+      "tools": 4,
+      "registeredTokens": 158210,
+      "measurement": "partial",
+      "cost": null
+    },
+    "dispatchSha256": "ff64ab4f689924029c62883ddd151ff1ef1f9f3aa5aa96909b1a417d64c53c71",
+    "actualEvidenceSha256": "f26c49434bd214811cf4759d7c2945b16fb3630885bd0a3c0a8607fd2152b8d8",
+    "reviewSha256": "a5a1f768570529ba33665ff860cdd0969751b10efecccda6742cff49beeb1ae9",
+    "deliveredNoticeIsNotTaskCompletion": true,
+    "schoolDataRead": false
+  },
+  "selfrepairCatalogInstalled": {
+    "status": "installed_source_and_profile_verified_native_selfrepair_use_not_proven",
+    "checkedAt": "2026-10-24T11:56:37.055465+00:00",
+    "installationSha256": "71f4f1da3de0a6f95499c9c6e16cf7522692656624ab04bdda9931ad5bdd334e",
+    "profilesSha256": "76d4e2cb31e57da514ef2099a3fc9ca3751dbc386079f4cbecc0c10937d353e9",
+    "reviewSha256": "ecc43693497263ce27888695e0476c5a8556a650c1ad682dfd572c08bdf7f839",
+    "sourceCommit": "91275370c61f46bb67b931b3184541449a13e363",
+    "historicalRepairStillBlocked": true,
+    "originalCardsNewlyCompleted": 0
+  },
+  "ownerAction": {
+    "required": true,
+    "interface": "Connections / Eva task browser: Take over, View and control browser, permitted school account login, Give back to Eva",
+    "sameSessionEvidenceSha256": "8331b1ff87b7e9dc91f05da8fa220464985bf59d39fd95bb8e0fc52b1c08da83",
+    "reviewSha256": "107e1f60ac29292a8f0dd9cea204b2e4bfecaaafc766963090787c4b2f530197",
+    "loginOrSchoolOutcomeProven": false,
+    "rootWillResumeSameWorkAfterExplicitOwnerConfirmation": true,
+    "otherExecutableWorkNotBlocked": true
   }
 }
