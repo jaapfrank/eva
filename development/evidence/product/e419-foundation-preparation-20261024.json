@@ -1,0 +1,56 @@
+{
+  "contract": "EvaE419FoundationPreparation/v1",
+  "recordedAt": "2026-10-24T08:40:14.091414+00:00",
+  "task": "E4.19",
+  "status": "targeted_attention_handoff_fix_before_installation",
+  "candidateSourceManifestSha256": "480192f7d75756ab6be33a8349e6b7e1397a17c2d2c19140652fa56d45b68ec7",
+  "completePackageManifestSha256": "2d43fd7e04854cf79d944ab1c68086e0a2441820e6bf5578d8ae07c605e92cec",
+  "roleSourceFiles": 18,
+  "hostSourceFiles": 64,
+  "builtImages": {
+    "core": {
+      "base": "sha256:8b63103d434068c8f9257608849385299c6f255266d25491220281a5169e37cb",
+      "image": "sha256:b85e9b5dee5367965e5f7075e5710cf33edccb315bbf6e82b3558a2259cbd63d",
+      "seconds": 12.227897610981017
+    },
+    "delegated-work-worker": {
+      "base": "sha256:fd942c6df0fc81213e9b1424b5f85cc51f08bd274bd348046c7c3fd73596a0d7",
+      "image": "sha256:daba7d5193520cf5fd11642d2410c5feb30c2135156b57569fb36d9da43d8cfd",
+      "seconds": 10.883268687990494
+    }
+  },
+  "profileCheck": {
+    "digitalProfileSha256": "0f845686c68043f8d890bcef44a2a285d734b0c989b1b1c5aaf5531697216bc5",
+    "matching": [
+      "digital_work",
+      "shared_provider",
+      "public_research"
+    ],
+    "preservedMismatch": [
+      "household_research"
+    ]
+  },
+  "ownerPreflight": {
+    "status": "passed",
+    "revision": 17,
+    "admissionPerformed": false
+  },
+  "blocker": {
+    "id": "E419_PRIVATE_ATTENTION_SOURCE_HANDOFF",
+    "finding": "Actual HA ownership disables standalone sensory evaluation; the existing private initiative context selects HA observations only, so the retained software observation is not yet routed to private model attention.",
+    "assignedFix": "One typed metadata handoff within existing private attention; preserve HA and voice ownership, current source authority, STOP and bounded scheduling.",
+    "extraPlannerOrManualAdoptionAllowed": false
+  },
+  "verification": {
+    "builderUnitAndSeamChecks": 89,
+    "realPg18NativeLifecycleCases": 3,
+    "realPg18MinimalGrantStopCases": 1,
+    "independentActivationReview": "in_progress"
+  },
+  "installed": false,
+  "actualNativeUpdateCompleted": false,
+  "fullOriginalCardCompleted": false,
+  "developmentCredits": null,
+  "evaRuntimeCredits": null,
+  "scope": "Implementation preparation and real blocker; no claim about family acceptance or the whole project."
+}

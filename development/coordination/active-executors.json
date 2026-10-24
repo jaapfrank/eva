@@ -1816,6 +1816,13 @@
       "activeExecutorsIncludingReviewer": 2,
       "subagents": 0,
       "oldCoordinatorAndControlNotLoaded": true
+    },
+    "e419Activation": {
+      "path": "/var/lib/eva2/e419-activation-20261024",
+      "status": "blocked_on_targeted_private_attention_handoff",
+      "core": "sha256:b85e9b5dee5367965e5f7075e5710cf33edccb315bbf6e82b3558a2259cbd63d",
+      "worker": "sha256:daba7d5193520cf5fd11642d2410c5feb30c2135156b57569fb36d9da43d8cfd",
+      "fullE419Completed": false
     }
   }
 }
