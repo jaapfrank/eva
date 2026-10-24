@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:56:37.055465+00:00",
-  "status": "research_budget_repair_installed_post_error_alternative_tools_fix_pending",
+  "status": "research_repairs_actually_used_upstream_stream_interrupted_no_school_result",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -181,11 +181,42 @@
     "originalTaskCompleted": false
   },
   "postResearchFailureContinuation": {
-    "status": "proven_defect_fix_in_progress",
+    "status": "installed_and_actually_used_for_browser_alternatives",
     "diagnosisSha256": "7dc00997f9ac61658e216356b51e27920d632dd1d035754cf2b8aa8605b4cde7",
     "cause": "Owner research inherits a recovery hook whose exact-type guard rejects it. Failed receipt has no continuation proof, so conversation removes every alternative tool; two toolless replies lead to incomplete_work.",
     "originalFailureReceiptsPreserved": true,
     "alternativesExhaustedProved": false,
-    "newResumeDispatched": false
+    "newResumeDispatched": true,
+    "commit": "cb45da62",
+    "sourcePackageReviewSha256": "aa19f969b4dd21c32595549e0bfbc369e05cf050a4de58fa666803d4dc240cde",
+    "targetedCasesPassed": 23,
+    "installedAt": "2026-10-24T13:47:34.065014+00:00",
+    "installationSha256": "bc41be3c54446ea54d3c07fa15f37a57be27ecc603546fca630be9d6c7c68f66",
+    "installedProfilesSha256": "7ecc614ef1f70f53ff57256d4917f5ad183e0d0ce1d49dd9f46c70ffefb01c4d"
+  },
+  "latestActualSchoolContinuation": {
+    "workId": "work:eva-resume:cce0dbf7-c8e4-5920-a5fc-870f92eb0872",
+    "createdAt": "2026-10-24T13:48:55Z",
+    "completedAt": "2026-10-24T13:50:44Z",
+    "state": "ambiguous",
+    "errorCode": "internal_error",
+    "cause": "RemoteProtocolError: upstream HTTP200 stream ended before a completed model response; no code defect proved.",
+    "oldHistoricalReceiptHashesPreserved": 31,
+    "actualUse": "Discovery and browser steps19-23; community README and source tree actually read. Authentication implementation and account access not yet verified.",
+    "readbackSha256": "31037657974bad1717d9f4789b275027ff768d0edd6fe338d18632d35fa27f4b",
+    "reviewSha256": "afe0be8cf0d9ea40c95d1587f069c7366c8d83bad493ca54ef4c22356fa0c38f",
+    "sourceContentReviewSha256": "95402bafe2d8a049a9aba1d71a1c96b935cb94ee3c3087af04dcd2f98e239cd8",
+    "runtimeUsage": {
+      "measurement": "partial",
+      "inputTokens": 237162,
+      "outputTokens": 976,
+      "totalMeasuredTokens": 238138,
+      "modelResponseRecords": 8,
+      "lastRequestUsage": "unmeasured",
+      "cost": null
+    },
+    "usableSchoolResult": false,
+    "newOwnerActionProvedNecessary": false,
+    "nextStep": "Existing ordinary owner resume contract check; no blind retry or accounting reset."
   }
 }
