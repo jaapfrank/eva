@@ -1,6 +1,6 @@
 # Eva2 — begrensd afrondingsplan
 
-Bijgesteld op 22 oktober 2026. Dit plan maakt [het volledige huisgenootgoal](PROJECTDOEL.md)
+Bijgesteld op 24 oktober 2026. Dit plan maakt [het volledige huisgenootgoal](PROJECTDOEL.md)
 uitvoerbaar zonder de ambitie te verkleinen of telkens een nieuwe bouwronde te openen.
 De [architectuur](ARCHITECTUUR.md) geeft de modulegrenzen. Het canonieke
 [werkbord](../design/product/execution-workboard-v1.json) bevat taakstatus, nu/hierna,
@@ -12,11 +12,11 @@ De [samengevoegde scope](../design/product/living-housemate-task-scope-20261022.
 behoudt Household Artifacts, tijdige hulp, ondersteuningskansen, Personality Deltas en
 Inner Life. De leidende richting is nu gerichte continuïteit: Eva onderhoudt echte
 verantwoordelijkheden en eigen projecten tussen gesprekken en gebruikt denkvermogen
-wanneer dat iets toevoegt. De actuele uitvoering is E1.13 volgens currentWork:
-twee bestaande natuurlijke initiatiefketens volledig duiden en alleen een bewezen
-overgang gericht verbeteren. E1.12 is technisch opgeleverd; werkelijk gebruik en
-adoptie blijven open terwijl de fysieke E4.15-proef is uitgesteld. De eigenaar vroeg op 23 oktober uitvoerbaar werk door te zetten zonder
-op zijn tests te wachten. Dit sluit E4.15 of haar overige criteria niet af.
+wanneer dat iets toevoegt. De actuele uitvoering, volgende handeling en resterende
+eindvoorwaarden staan uitsluitend in `currentWork` en `audit.deliveryPlan` van het
+canonieke werkbord. De eigenaar vroeg op 23 oktober uitvoerbaar werk door te zetten
+zonder op zijn tests te wachten. Een uitgestelde fysieke proef sluit de bijbehorende
+kaart of haar overige criteria niet af.
 De tabel bewaart de overige kaartvolgorde; spraak blijft bij de bestaande uitvoerder.
 
 | Volgorde | Taken | Concrete uitkomst |
@@ -34,9 +34,10 @@ Drie aanvullende kaarten: **E1.13** gericht denkvermogen, **E1.14** continuïtei
 uitval/herstart en **E4.19** zelfstandig updateonderhoud. De eerdere vier toevoegingen
 E4.17, E1.12, E2.9 en E4.18 blijven behouden. Bestaande kaarten krijgen gerichte
 bouwstappen; oorspronkelijke eindvoorwaarden en eerdere afrondingen blijven intact.
-De bordcontrole van 24 oktober telt na volledige afronding van E4.18 nog 23 open
-kaarten. De telling van 23 oktober was 24 open kaarten in deze volgorde.
-De eerdere telling was 25; oorspronkelijke criteria en technische afrondingen blijven
+Eerdere tellingen in dit plan waren 25 open kaarten, daarna 24 op 23 oktober en
+23 na de afronding van E4.18 op 24 oktober. Deze gedateerde tellingen zijn geen
+actuele werkopdracht. De actuele telling en kaartstatus staan uitsluitend op het
+canonieke werkbord; oorspronkelijke criteria en technische afrondingen blijven
 behouden. De telling is geen productpercentage.
 
 ### Kleine bouwstappen op de bestaande route
@@ -107,11 +108,12 @@ hebben onafhankelijke volledige GO. Werkbord, dashboard en Git volgen die opleve
 De E1.12-bewijsroute en eigenaarbediening zijn op 24 oktober geïnstalleerd en
 onafhankelijk live teruggelezen. De versie-/terugdraai- en
 proef/evaluatie/meldingsroutes zijn eveneens geïnstalleerd. De echte installatie en
-de gerepareerde bestaande herstelroute hebben onafhankelijke GO. Dezelfde bouwer
-en reviewer vervolgen E1.13 zonder nieuwe gezins- of modelproef.
-Werkelijk gebruik, adoptie en herstelbewijs blijven nodig; E1.12 is nog open.
-E4.15-begroeting, horen en later hergebruik en
-de volledige E4.17-acceptatie blijven open; de fysieke proef is uitgesteld.
+de gerepareerde bestaande herstelroute hebben onafhankelijke GO. Dit beschrijft
+gedateerde opleveringen, geen nieuwe uitvoeropdracht. Actuele kaartstatus, resterend
+gebruiks-, adoptie- en herstelbewijs en eventuele eigenaarhandelingen volgen
+uitsluitend uit `currentWork` en `audit.deliveryPlan` van het canonieke werkbord.
+De oorspronkelijke criteria voor begroeting, horen, later hergebruik en herstel
+blijven behouden; een fysieke proef volgt alleen uit de actuele kaartafspraak.
 Geen nieuwe bouwsporen, CPU-/importserie of algemene architectuurronde.
 
 ### Hergebruik en wat vervalt als bouwvoorstel
@@ -539,9 +541,11 @@ geen nieuwe productpijler of aparte bouwfase. De oorspronkelijke eindvoorwaarden
 blijven exact behouden. Het [opnamebesluit](../design/product/useful-upstream-adoption-scope-20261020.json)
 legt de eigenaarinstructie, brondekking en aanvullende scope vast.
 
-Maak eerst de bestaande overdracht compleet, daarna de vaardigheden en hun
-programmeer-/uitvoersteun: E1.4 → E1.5 → E1.6 → E4.12 → E4.13 → E4.14. Eén actieve
-uitkomst tegelijk; de huidige afgesproken uitvoering en spraakverantwoordelijkheid
+De opnameafspraak van 20 oktober begon bij de bestaande overdracht, daarna de
+vaardigheden en hun programmeer-/uitvoersteun:
+E1.4 → E1.5 → E1.6 → E4.12 → E4.13 → E4.14. De actuele uitvoerprioriteit volgt het
+canonieke werkbord. Eén actieve uitkomst tegelijk; de huidige afgesproken uitvoering
+en spraakverantwoordelijkheid
 worden niet stil overgenomen. Alleen reeds aanwezige bruikbare code hergebruiken;
 een bestaande capability wordt niet opnieuw gebouwd om een kaart te vullen.
 
@@ -590,8 +594,9 @@ De zes nieuwe eigenaaruitkomsten zijn verplicht gepland binnen dezelfde E1/E4-fa
 | E1.11 | Iemand kan een echte terugkerende zorg met afgesproken grenzen aan Eva overlaten. | Van een taak voortzetten naar duurzame verantwoordelijkheid en minder begeleiding. |
 | E4.15 | Eva ontdekt zelf een behoefte, maakt een bruikbare voorziening en verbetert die na echt gebruik. | Verbindt bestaande vaardigheden, toolprogramma's, codefeedback en beoordeelde toepassing tot eigen uitvinding. |
 
-De eerste nieuwe uitvoerprioriteit blijft E4.15. De samengevoegde werkvolgorde bovenaan
-dit document vervangt de eerdere volgorde uit deze studie; afhankelijkheden, werkelijk
+Bij deze uitbreiding van 21 oktober kreeg E4.15 als eerste prioriteit. De actuele
+uitvoering volgt uitsluitend `currentWork` en `audit.deliveryPlan` van het canonieke
+werkbord. De tabel bovenaan bewaart de volgordeafspraken; afhankelijkheden, werkelijk
 beschikbare bronnen en de oorspronkelijke criteria blijven behouden. De lopende
 uitvoerder en diens actuele kaart blijven behouden; er ontstaat geen tweede actieve
 hoofduitvoerder. Technische afronding, gewoon later gebruik en het werkelijke oordeel
@@ -657,7 +662,7 @@ De oorspronkelijke 18 concrete kaarten zijn geregistreerd als E1.1–E1.3,
 E2.1–E2.6, E3.1–E3.4, E4.1–E4.4 en E5.1. Het ontwerp van 17 oktober voegt alleen
 E2.7 (eigen geschiedenis) en E4.5 (zelfstandig softwareonderhoud) toe aan diezelfde
 fasen; de oorspronkelijke criteria en afrondingen veranderen niet. Ze staan onder dezelfde vijf fasen in
-**Taken per onderdeel**. De zeven bestaande open kaarten blijven behouden; HUE5/HUE6
+**Taken per onderdeel**. De toenmalige zeven open kaarten bleven daarbij behouden; HUE5/HUE6
 worden niet opnieuw aangemaakt. F2.1/F2.2 blijven de echte gezinsproef en acceptatie.
 De historische 45/52 wordt hierdoor 45/70 geregistreerde taken; het werk is zichtbaar
 gemaakt, geen bestaande afronding ingetrokken. De twee expliciete nieuwe uitkomsten
