@@ -1989,6 +1989,9 @@ def create_runtime_app() -> FastAPI:
     runtime._work_memory = None if delegated_work_service is None else work_memory
     from eva.bootstrap.self_repair import compose_self_repair
     runtime._self_repair = compose_self_repair(runtime)
+    from eva.bootstrap.component_maintenance import compose_component_maintenance
+    runtime._component_maintenance = compose_component_maintenance(
+        runtime, attention_store=locals().get("context_review_store"))
     if runtime._self_repair is not None:
         runtime._cold_path._service_tasks = (*runtime._cold_path._service_tasks,
                                             runtime._self_repair.run_once)

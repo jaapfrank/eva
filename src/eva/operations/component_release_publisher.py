@@ -33,6 +33,13 @@ class ComponentReleasePublisher:
                 raise ValueError("publisher behavior source is outside the existing class")
             _verified_behavior_source(probe)
 
+    def publish_dependency_update(self,job,directory,*,fixture_socket,image_recovery_interface,
+                                  helper_candidate,recovery_guard):
+        from eva.operations.runtime_dependency_update import publish_dependency_update
+        return publish_dependency_update(self,job,directory,fixture_socket=fixture_socket,
+            image_recovery_interface=image_recovery_interface,helper_candidate=helper_candidate,
+            recovery_guard=recovery_guard)
+
     def publish_repair(self, job, directory):
         from eva.operations.runtime_repair_publisher import publish_runtime_repair
         return publish_runtime_repair(self, job, directory)

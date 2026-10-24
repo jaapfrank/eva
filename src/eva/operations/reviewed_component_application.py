@@ -54,6 +54,12 @@ def _artifact(binding):
 
 def _verify_release(review_id, release):
     """Reuse importer attestations and the established overlay/updater formats."""
+    if isinstance(release,dict) and release.get("kind")=="dependency_update":
+        from eva.operations.runtime_dependency_update import validate_dependency_release
+        return validate_dependency_release(review_id,release)
+    if isinstance(release, dict) and release.get("kind") == "runtime_repair":
+        from eva.operations.runtime_repair_application import verify_runtime_repair_release
+        return verify_runtime_repair_release(review_id, release)
     if isinstance(release, dict) and release.get("kind") == "saved_artifact":
         from eva.operations.saved_artifact_application import verify_saved_release
         return verify_saved_release(review_id, release)

@@ -108,7 +108,7 @@ class PostgresInitiativeAuthority:
         fields = {"contract", "mandate_id", "owner_principal_id", "enabled",
                   "authorization_source", "capabilities", "tenant_scope", "installation_scope"}
         if (not isinstance(data, dict) or not fields <= set(data)
-                or set(data) - fields - {"digital_work", "private_contact", "self_repair"}
+                or set(data) - fields - {"digital_work", "private_contact", "self_repair", "component_maintenance"}
                 or data["contract"] != "EvaCostlessInitiativeMandate/v1"
                 or data["owner_principal_id"] != str(self.owner._owner)
                 or data["tenant_scope"] != str(self.owner._scope.tenant_id)
@@ -118,6 +118,13 @@ class PostgresInitiativeAuthority:
                            for k in ("mandate_id", "authorization_source"))
                 or not isinstance(data["capabilities"], list)):
             raise InitiativeMandateDenied("initiative mandate is invalid")
+        if "component_maintenance" in data:
+            maintenance=data['component_maintenance']
+            if (not isinstance(maintenance,dict) or set(maintenance)!={'enabled','authorization_source','packages','target_version'}
+                    or type(maintenance['enabled']) is not bool or not isinstance(maintenance['authorization_source'],str)
+                    or not 1<=len(maintenance['authorization_source'])<=1000
+                    or maintenance['packages']!=['psycopg','psycopg-binary'] or maintenance['target_version']!='3.3.6'):
+                raise InitiativeMandateDenied('explicit bounded component maintenance policy required')
         if "self_repair" in data:
             repair = data["self_repair"]
             if (not isinstance(repair, dict)
@@ -547,6 +554,10 @@ class PostgresInitiativeAuthority:
                 current_repair_binding(self, incident, now=now)
             except ValueError as error:
                 raise InitiativeMandateDenied('completed repair original source is no longer current') from error
+        maintenance=None if adopted is None else adopted.payload['data'].get('maintenance_origin')
+        if maintenance is not None:
+            from eva.bootstrap.component_maintenance import current_maintenance_origin
+            current_maintenance_origin(self,maintenance)
         return work, turn
 
     def bind_reviewed_saved_application(self, work_id, publication, candidate_content):
@@ -682,6 +693,8 @@ class NativeInitiativeGuard:
         self.resume_work = resume_work
         self._repair_incident_id = None
         self.repair_role = None
+        self.maintenance_origin = None
+        self.maintenance_role = None
 
     def check(self, turn):
         if turn != self.turn:
@@ -719,6 +732,13 @@ class NativeInitiativeGuard:
         repair = {} if adopted is None else adopted.adoption["data"]
         self._repair_incident_id = repair.get("repair_incident_id")
         self.repair_role = repair.get("repair_role")
+        self.maintenance_origin=repair.get('maintenance_origin')
+        self.maintenance_role=repair.get('maintenance_role')
+        if self.maintenance_origin is not None:
+            from eva.bootstrap.component_maintenance import current_maintenance_origin
+            if self._repair_incident_id is not None or self.maintenance_role not in {'original_behavior_oracle','independent_review'}:
+                raise InitiativeMandateDenied('maintenance and repair ancestry cannot be mixed')
+            current_maintenance_origin(self.authority,self.maintenance_origin,_connection=conn)
         if self._repair_incident_id is not None:
             from eva.adapters.postgres.self_repair import current_repair_binding
             try:
@@ -794,12 +814,12 @@ class NativeInitiativeGuard:
     def restrict_work_grant(self, grant):
         """Each repair stage gets only local code/work capabilities, no effects."""
         self.check(self.turn)
-        if self._repair_incident_id is None:
+        if self._repair_incident_id is None and self.maintenance_origin is None:
             return grant
         from eva.contracts.delegated_digital_work import INITIATIVE_LOCAL_CAPABILITIES
         allowed = INITIATIVE_LOCAL_CAPABILITIES - {"use_connector_tool", "run_tool_program"}
-        if self.repair_role is not None:
-            allowed &= {"manage_own_runtime_repair", "read_own_component_source", "write_programming_file",
+        if self.repair_role is not None or self.maintenance_origin is not None:
+            allowed &= {"manage_own_component_update" if self.maintenance_origin is not None else "manage_own_runtime_repair", "read_own_component_source", "write_programming_file",
                 "start_programming_process", "use_programming_tool",
                 "list_programming_tools", "save_work_progress"}
         payload = grant.to_payload()
@@ -812,7 +832,7 @@ class NativeInitiativeGuard:
         if self.resume_work is not None:
             return False  # Recovery admission is never tool execution authority.
         self.check(self.turn)
-        if self._repair_incident_id is not None and name == "use_connector_tool":
+        if (self._repair_incident_id is not None or self.maintenance_origin is not None) and name == "use_connector_tool":
             return False
         policy, _ = self.authority.policy()
         # Local work requires the separately admitted host profile; never infer
@@ -825,8 +845,8 @@ class NativeInitiativeGuard:
         if self.resume_work is not None:
             raise InitiativeMandateDenied("native recovery admission cannot dispatch tools")
         self.check(self.turn)
-        if self._repair_incident_id is not None:
-            raise InitiativeMandateDenied("repair work cannot repeat or dispatch connector effects")
+        if self._repair_incident_id is not None or self.maintenance_origin is not None:
+            raise InitiativeMandateDenied("assessment work cannot repeat or dispatch connector effects")
         policy, _ = self.authority.policy()
         caps = [c for c in policy["capabilities"]
                 if c["configuration_sha256"] == request.tool_configuration_sha256

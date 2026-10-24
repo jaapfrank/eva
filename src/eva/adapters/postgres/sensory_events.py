@@ -168,6 +168,8 @@ class PostgresSensoryEventStore:
             raise ValueError("failure context requires the private owner review store")
         self._initiative_failure_context_reader = initiative_failure_context_reader
         self._attention_source_resolver = attention_source_resolver
+        # Optional typed software source, attached only by maintenance composition.
+        self._private_maintenance_context_reader = None
         self._private_capability_context_reader = private_capability_context_reader
         self._private_review_profile = private_review_profile
         self._private_work_context_reader = private_work_context_reader
@@ -254,6 +256,29 @@ class PostgresSensoryEventStore:
                             continue  # Already used; a different retained source may still be pending.
                         completion_source = binding
                         break  # Select one never-reviewed source, retaining newest-first order.
+            maintenance_observations = ()
+            maintenance_source = None
+            maintenance_id = None
+            if self._household_binding is None and self._private_maintenance_context_reader is not None:
+                maintenance_observations = self._private_maintenance_context_reader(
+                    connection, scope, self._initiative_principal_id, now)
+                if maintenance_observations:
+                    offered = maintenance_observations[0]
+                    maintenance_source = {k: offered[k] for k in (
+                        "source_event_id", "source_sha256", "maintenance_configuration_sha256")}
+                    maintenance_id = str(int(canonical_sha256({
+                        "component_maintenance_source": maintenance_source}), 16))
+                    # Any earlier review that actually offered this exact source
+                    # consumes the occasion, including an already-due attention.
+                    if connection.execute(sa.select(e.thread_id).where(
+                            e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+                            e.thread_id.startswith(self._decision_prefix), e.sequence == 1,
+                            e.event_type == "SENSORY_EVENT_OBSERVED",
+                            e.payload["data"]["payload"]["maintenance_source"]["source_event_id"].astext == offered["source_event_id"],
+                            e.payload["data"]["payload"]["maintenance_source"]["source_sha256"].astext == offered["source_sha256"],
+                            e.payload["data"]["payload"]["maintenance_source"]["maintenance_configuration_sha256"].astext == offered["maintenance_configuration_sha256"]
+                    ).limit(1)).first() is not None:
+                        maintenance_source = None
             latest = connection.execute(sa.select(c.phase, c.status, c.updated_at, c.thread_id, c.revision, c.operation_id).where(
                 c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
                 c.thread_id.startswith(schedule_prefix)).order_by(c.updated_at.desc()).limit(1)).first()
@@ -299,7 +324,7 @@ class PostgresSensoryEventStore:
                 if pending is not None:
                     return "idle"
             if (latest is not None and completion_source is None and not attention_due
-                    and attention is not None and feedback_source is None):
+                    and attention is not None and feedback_source is None and maintenance_source is None):
                 return "idle"
             private_capability_context = None
             review_profile = self._private_review_profile
@@ -312,7 +337,8 @@ class PostgresSensoryEventStore:
                     "base_profile": self._private_review_profile,
                     "capability_configuration_sha256": private_capability_context["configuration_sha256"],
                 })
-            if latest is not None and completion_source is None and not attention_due and feedback_source is None:
+            if (latest is not None and completion_source is None and not attention_due
+                    and feedback_source is None and maintenance_source is None):
                 profile_changed = (review_profile is not None
                     and self._event_from_thread(latest.thread_id).payload.get("review_profile") != review_profile)
                 if not profile_changed and now - reviewed_at < timedelta(hours=1):
@@ -329,6 +355,7 @@ class PostgresSensoryEventStore:
                 attention_suffix(attention) if attention_due else
                 completion_id if completion_source is not None else
                 feedback_id if feedback_source is not None else
+                maintenance_id if maintenance_source is not None else
                 profile_source if profile_source is not None else str(window))
             thread_id = "sensory:" + source_id
             payload = {"review_window": window}
@@ -352,6 +379,10 @@ class PostgresSensoryEventStore:
                 payload["pending_attention"] = attention
             if completion_source is not None and not attention_due:
                 payload["native_completion_source"] = completion_source
+            maintenance_review = (maintenance_source is not None and not attention_due
+                and completion_source is None and feedback_source is None)
+            if maintenance_review:
+                payload["review_cause"] = "component_source_changed"
             if self._household_binding is None:
                 # Capture the bounded source view once in the existing immutable
                 # review. Retries and admission retain this original provenance;
@@ -369,10 +400,20 @@ class PostgresSensoryEventStore:
                             "reason": "private_work_context_unavailable"}
                 payload["life_context"] = read_private_initiative_context(
                     connection, scope, self._initiative_principal_id, now,
-                    ordinary_work=ordinary_work)
+                    ordinary_work=ordinary_work, maintenance_observations=maintenance_observations)
                 from eva.adapters.postgres.initiative_attention import annotate_attention_sources
                 annotate_attention_sources(connection, self, payload["life_context"],
-                    source_outcomes=source_outcomes, now=now)
+                    source_outcomes=() if maintenance_review else source_outcomes, now=now)
+                # Consume only a source that the final bounded model input really
+                # offers. Native read targets keep their existing priority on
+                # other occasions; a new software occasion has its own focus.
+                offered_maintenance = next((item for item in payload["life_context"]["observations"]
+                    if item.get("source") == "component_maintenance"), None)
+                if offered_maintenance is not None:
+                    payload["maintenance_source"] = {k: offered_maintenance[k] for k in (
+                        "source_event_id", "source_sha256", "maintenance_configuration_sha256")}
+                elif maintenance_review:
+                    raise RuntimeError("new maintenance source displaced from private model input")
             data = {"event_type": "private_opportunity_review", "source": "initiative-review",
                     "source_event_id": source_id, "payload": payload}
             if self._household_binding is not None:
@@ -646,7 +687,9 @@ class PostgresSensoryEventStore:
         """Cancel only an undispatched due event whose original choice was replaced/stopped."""
         reference = claim.event.payload.get("attention_origin")
         feedback_source = claim.event.payload.get("feedback_source")
-        if reference is None and feedback_source is None:
+        maintenance_source = (claim.event.payload.get("maintenance_source")
+            if claim.event.payload.get("review_cause") == "component_source_changed" else None)
+        if reference is None and feedback_source is None and maintenance_source is None:
             return False
         if not self._context_reviews_only or not claim.thread_id.startswith(self._decision_prefix):
             raise ValueError("attention claim audience differs")
@@ -659,7 +702,11 @@ class PostgresSensoryEventStore:
                                else self._decision_prefix)
             connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                 {"key": schedule_prefix})
-            if feedback_source is not None:
+            if maintenance_source is not None:
+                if self._maintenance_review_source_current(connection, maintenance_source, now=now):
+                    return False
+                cancellation_reason = "maintenance_source_or_policy_changed"
+            elif feedback_source is not None:
                 if self._latest_owner_feedback(connection, now=now) == feedback_source:
                     return False
                 cancellation_reason = "owner_feedback_replaced_or_expired"
@@ -682,10 +729,23 @@ class PostgresSensoryEventStore:
                     "provider_dispatched": False, "source_event_id": claim.event.source_event_id})
         return True
 
+    def _maintenance_review_source_current(self, connection, source, *, now):
+        if self._household_binding is not None or self._private_maintenance_context_reader is None:
+            return False
+        values = self._private_maintenance_context_reader(
+            connection, self._timeline._scope_value, self._initiative_principal_id, now)
+        return bool(values) and all(values[0].get(k) == v for k, v in source.items())
+
     def context_review_claim_is_current(self, claim, *, now: datetime) -> bool:
         if not self._context_reviews_only or not claim.thread_id.startswith(self._decision_prefix):
             return False
         state = self._timeline.load(claim.thread_id)
+        if claim.event.payload.get("review_cause") == "component_source_changed":
+            with self._timeline._engine.connect() as connection:
+                self._timeline._scope(connection)
+                if not self._maintenance_review_source_current(
+                        connection, claim.event.payload["maintenance_source"], now=now):
+                    return False
         source = claim.event.payload.get("feedback_source")
         if source is not None:
             with self._timeline._engine.connect() as connection:

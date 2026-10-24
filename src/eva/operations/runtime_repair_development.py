@@ -65,6 +65,7 @@ class RuntimeRepairDevelopment:
         self.lease=(self.root/'.controller.lock').open('a+b')
         fcntl.flock(self.lease,fcntl.LOCK_EX|fcntl.LOCK_NB)
         self.jobs={}
+        self.maintenance=None
         self._last_target=None
         from eva.operations.component_release_import import load_object
         for path in self.root.glob('*/handoff.json'):
@@ -78,6 +79,8 @@ class RuntimeRepairDevelopment:
             self.thread.start()
 
     def _call(self,job,action,**kwargs):
+        if job.get('contract')=='EvaDependencyMaintenanceHandoff/v1':
+            return self.maintenance.call(job,action,proof=kwargs) if action=='record_waiting' else self.maintenance.call(job,action,**kwargs)
         return self.runtime.repair_call(action,incident_id=job['incident_id'],**kwargs)
 
     def _current(self,job):
@@ -181,7 +184,16 @@ class RuntimeRepairDevelopment:
             return None
         return meta
 
+    def request_maintenance(self,request):
+        if self.maintenance is None:raise ValueError('component maintenance unavailable')
+        return self.maintenance.request(request)
+
     def run_once(self):
+        if self.maintenance is not None:
+            try:self.maintenance.observe_due()
+            except Exception:
+                # Source I/O failure must not starve a retained repair/application.
+                self.maintenance.last_observation_error=True
         with self.lock:
             pending=[j for j in self.jobs.values() if j['state'] not in _TERMINAL]
             if not pending:return 'idle'
@@ -221,6 +233,8 @@ class RuntimeRepairDevelopment:
                 self._save(job)
 
     def _advance(self,job):
+        if job.get('contract')=='EvaDependencyMaintenanceHandoff/v1':
+            return job['state'] if self.maintenance is None else self.maintenance.advance(job)
         state=job['state'];directory=self.root/job['target_id']
         if state=='waiting_for_builder':
             target=self.targets.resolve(job['incident_id'])

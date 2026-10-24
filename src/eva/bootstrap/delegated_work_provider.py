@@ -8,6 +8,7 @@ from dataclasses import replace
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime
 import hashlib
+from functools import lru_cache
 from importlib.metadata import PackageNotFoundError, version
 import json
 from pathlib import Path
@@ -131,6 +132,21 @@ ENGINE_RELEASE_SHA256 = canonical_sha256(
 )
 
 
+@lru_cache(maxsize=1)
+def effective_dependency_provenance() -> dict:
+    """Effective accepted wheel tree, distinct from historical SDK compatibility."""
+    path=Path('/opt/eva/effective-dependency.json')
+    if not path.exists():
+        return {'compatibility_lock_sha256':DEPENDENCY_LOCK_SHA256,'wheel_delta_sha256':None}
+    import sysconfig
+    from tools.runtime_dependency_overlay import regular, verify_effective_inventory
+    raw=regular(path,maximum=4*1024*1024)
+    receipt=json.loads(raw)
+    delta=verify_effective_inventory(Path(sysconfig.get_paths()['purelib']),receipt)
+    return {'compatibility_lock_sha256':DEPENDENCY_LOCK_SHA256,'wheel_delta_sha256':delta,
+            'receipt_sha256':hashlib.sha256(raw).hexdigest()}
+
+
 def verify_delegated_provider_dependencies() -> None:
     """Refuse an installed dependency version outside the sealed profile."""
 
@@ -144,6 +160,7 @@ def verify_delegated_provider_dependencies() -> None:
         raise RuntimeError("delegated provider dependency is unavailable") from error
     if installed != expected:
         raise RuntimeError("delegated provider dependency release differs")
+    effective_dependency_provenance()
 
 
 def build_unadmitted_delegated_work_spec(

@@ -28,9 +28,10 @@ class ComponentEvaluationClient:
     saved_artifact_suite_sha256: str | None = None
     work_execution_paths: tuple[str, ...] = ()
     runtime_repair_enabled: bool = False
+    component_maintenance_enabled: bool = False
 
     def __post_init__(self):
-        if type(self.runtime_repair_enabled) is not bool:
+        if type(self.runtime_repair_enabled) is not bool or type(self.component_maintenance_enabled) is not bool:
             raise ValueError("invalid runtime repair switch")
         if (not isinstance(self.work_execution_paths, tuple)
                 or any(not isinstance(p, str) for p in self.work_execution_paths)
@@ -53,6 +54,11 @@ class ComponentEvaluationClient:
         if not isinstance(value, dict):
             raise ValueError("component host response must be an object")
         return value
+
+    def maintenance(self, action, *, task_id, request_id, scope_sha256):
+        if not self.component_maintenance_enabled or action not in {'describe','submit','status'}:
+            raise ValueError('component maintenance not configured')
+        return self._post('/component-update',{'action':action,'task_id':task_id,'request_id':request_id,'scope_sha256':scope_sha256},limit=16384)
 
     def runtime_repair(self, action, *, incident_id, task_id, request_id, scope_sha256):
         if not self.runtime_repair_enabled or action not in {'describe', 'submit', 'status'}:
@@ -184,7 +190,7 @@ def configured_component_evaluator():
         return None
     data = json.loads(Path(config_path).read_text())
     required = {"url", "token_file", "allowed_paths", "suite_sha256", "timeout_seconds"}
-    if not required <= set(data) or set(data) - required - {"reviewed_releases", "suite_bindings", "final_assessment_scopes", "saved_artifact_suite_sha256", "work_execution_paths", "runtime_repair_enabled"}:
+    if not required <= set(data) or set(data) - required - {"reviewed_releases", "suite_bindings", "final_assessment_scopes", "saved_artifact_suite_sha256", "work_execution_paths", "runtime_repair_enabled", "component_maintenance_enabled"}:
         raise ValueError("component evaluator configuration fields differ")
     url = urlsplit(data["url"])
     if (url.scheme not in {"http", "https"} or not url.hostname or url.username or url.password

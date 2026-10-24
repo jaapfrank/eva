@@ -15,6 +15,7 @@ from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeli
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.timestamps import parse_utc_timestamp
 
+MAINTENANCE = "manage_own_component_update"
 REPAIR = "manage_own_runtime_repair"
 READ = "read_own_component_source"
 DRAFT = "draft_own_component_improvement"
@@ -24,6 +25,8 @@ COMPARE = "compare_own_component_improvements"
 APPLY = "apply_reviewed_component_improvement"
 APPLICATION_STATUS = "get_reviewed_component_application"
 _SCHEMAS = {
+    MAINTENANCE: {"type":"object","additionalProperties":False,"required":["action"],
+        "properties":{"action":{"type":"string","enum":["describe","submit","status"]}}},
     REPAIR: {"type":"object","additionalProperties":False,"required":["action"],
         "properties":{"action":{"type":"string","enum":["describe","submit","status"]}}},
     COMPARE: {"type": "object", "additionalProperties": False, "required": ["evaluation_steps"],
@@ -131,7 +134,15 @@ def component_descriptors():
             "Rond na accepted=true de programmeertaak af zodat de afzonderlijke controle kan starten. "
             "status leest de overdracht. Geen van deze acties bewijst geïnstalleerd herstel.",
             _SCHEMAS[REPAIR], "Een bewaarde kandidaat is nog geen toegepaste reparatie."),)
-    return (*repair, *evaluation, *comparison, *preparation, *application,
+    maintenance = () if evaluator is None or not getattr(evaluator,'component_maintenance_enabled',False) else (
+        ConversationToolDescriptor(MAINTENANCE,
+            "Onderzoek een werkelijk waargenomen beschikbare update. describe geeft jouw actuele "
+            "onderhoudsoverdracht; schrijf uitsluitend het beschreven candidate.json en draag met submit "
+            "één gemotiveerde update over. Rond daarna deze taak af: afzonderlijke controle en beheerde "
+            "installatie lopen via dezelfde host. Een onafhankelijke stage mag alleen describe gebruiken. "
+            "status leest de overdracht; geen eigen beoordeling of installatieclaim.",_SCHEMAS[MAINTENANCE],
+            "Een updatevoorstel is nog geen bewezen of geïnstalleerde verbetering."),)
+    return (*maintenance, *repair, *evaluation, *comparison, *preparation, *application,
         ConversationToolDescriptor(READ,
             "Lees de werkelijk geïnstalleerde Eva-broncode. Leeg path toont de mappen; "
             "een Python-pad geeft maximaal 160 regels en een bronhash. Gebruik next_line voor vervolg. "
@@ -167,6 +178,8 @@ class ComponentImprovementActions:
             self.action_names += (APPLICATION_STATUS,)
         if self.evaluator is not None and getattr(self.evaluator, "runtime_repair_enabled", False):
             self.action_names += (REPAIR,)
+        if self.evaluator is not None and getattr(self.evaluator,"component_maintenance_enabled",False):
+            self.action_names += (MAINTENANCE,)
         self.repair_guard = repair_guard
         self.spec, self.source = spec, source
         self.authorize, self.dispatch, self.clock = authorize, dispatch, clock
@@ -297,7 +310,17 @@ class ComponentImprovementActions:
                     "Maak eerst een codevoorstel met draft_own_component_improvement. "
                     "Gebruik daarna draft_step uit het opgeslagen voorstel voor de vergelijking.")
         self.dispatch(turn)
-        if call.name == REPAIR:
+        if call.name == MAINTENANCE:
+            guard=self.repair_guard
+            if guard is None:raise ConversationConflict('native maintenance authority required')
+            guard.check(turn)
+            if getattr(guard,'maintenance_role',None) is not None and call.arguments['action']!='describe':
+                raise ConversationConflict('independent maintenance stage may only describe its input')
+            request_id=canonical_sha256({'execution':self.spec.execution_id,'source':self.spec.source.model_dump(mode='json'),'step':step_index,'action':call.arguments['action']})
+            scope=canonical_sha256({key:getattr(turn,key) for key in ('tenant_id','installation_id','principal_id')})
+            value=self.evaluator.maintenance(call.arguments['action'],task_id=self.spec.work_id,request_id=request_id,scope_sha256=scope)
+            scope='component_maintenance_handoff_not_installed'
+        elif call.name == REPAIR:
             guard = self.repair_guard
             if guard is None:
                 raise ConversationConflict('automatic native repair context required')

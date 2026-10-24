@@ -40,7 +40,7 @@ def load_config(path):
     config = json.loads(raw, object_pairs_hook=_object)
     required = {"image", "command", "token_file", "bind_host", "port", "allowed_paths"}
     limits = {field.name for field in fields(EvaluationConfig)} - {"image", "command"}
-    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites", "final_component_assessments", "saved_artifact_suite", "work_execution_producers", "runtime_repairs"}:
+    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites", "final_component_assessments", "saved_artifact_suite", "work_execution_producers", "runtime_repairs", "component_maintenance"}:
         raise ValueError("invalid evaluation service configuration fields")
     if (not isinstance(config["command"], list)
             or not isinstance(config["token_file"], str)
@@ -348,7 +348,8 @@ class EvaluationHandler(BaseHTTPRequestHandler):
             if not 1<=length<=8192:raise ValueError('repair request exceeds bound')
             raw=self.rfile.read(length)
             if len(raw)!=length:raise ValueError('incomplete repair request')
-            result=self.server.runtime_repairs.request(json.loads(raw,object_pairs_hook=_object))
+            method=self.server.runtime_repairs.request_maintenance if self.path=='/component-update' else self.server.runtime_repairs.request
+            result=method(json.loads(raw,object_pairs_hook=_object))
         except (ValueError,TypeError,KeyError,UnicodeError,OSError,OverflowError,RecursionError):
             self._reply(400, {'error':'repair_handoff_not_admitted'});return
         except Exception:
@@ -356,7 +357,7 @@ class EvaluationHandler(BaseHTTPRequestHandler):
         self._reply(200,result)
 
     def do_POST(self):
-        if self.path == "/runtime-repair":
+        if self.path in {"/runtime-repair", "/component-update"}:
             self._runtime_repair()
             return
         if self.path == "/work-authority":
@@ -533,6 +534,9 @@ def main():
         runtime_repairs = configured_runtime_repairs(config['runtime_repairs'],settings=settings,
             programming=programming,applications=applications,
             runtime_config=config.get('reviewed_component_applications',{}).get('runtime',{}))
+    if 'component_maintenance' in config:
+        from eva.operations.runtime_dependency_update import configure_component_maintenance
+        configure_component_maintenance(config['component_maintenance'],controller=runtime_repairs,settings=settings)
     with EvaluationServer(address, evaluator=ComponentEvaluator(settings), token=token,
                           allowed_paths=allowed_paths, procedure_executor=executor,
                           programming_workspaces=programming, reviewed_applications=applications,

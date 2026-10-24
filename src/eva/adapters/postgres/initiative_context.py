@@ -179,7 +179,8 @@ def _own_orientation_history(connection, scope, principal_id, now):
 
 
 def read_private_initiative_context(connection, scope: TimelineScope,
-                                   principal_id: str, now: datetime, *, ordinary_work=None) -> dict:
+                                   principal_id: str, now: datetime, *, ordinary_work=None,
+                                   maintenance_observations=()) -> dict:
     """Snapshot admitted household history and exact-owner durable commitments.
 
     Ordinary delegated work has a separate current owner/source binding. A host
@@ -205,8 +206,16 @@ def read_private_initiative_context(connection, scope: TimelineScope,
     rows = connection.execute(sa.select(latest_entities).order_by(
         latest_entities.c.occurred_at.desc(), latest_entities.c.thread_id
     ).limit(_OBSERVATIONS + 1)).mappings().all()
-    observations = []
-    for row in rows[:_OBSERVATIONS]:
+    # Only the current host-bound reader may provide this non-HA source. Keep
+    # one bounded typed source ahead of household history; do not invent an entity.
+    if (not isinstance(maintenance_observations, tuple) or len(maintenance_observations) > 1
+            or any(not isinstance(item, dict) or item.get("source") != "component_maintenance"
+                   or item.get("is_current_proof") is not False
+                   or item.get("is_execution_permission") is not False
+                   or len(canonical_json_bytes(item)) > 2048 for item in maintenance_observations)):
+        raise ValueError("private maintenance context requires bounded host metadata")
+    observations = list(maintenance_observations)
+    for row in rows[:_OBSERVATIONS - len(observations)]:
         data = _verified_data(row["payload"], row["payload_sha256"])
         payload = data.get("payload")
         if not isinstance(payload, dict):
@@ -301,7 +310,7 @@ def read_private_initiative_context(connection, scope: TimelineScope,
             "own_orientation_history_source": "same-owner completed WILL_DECIDED with measured model usage; contacts use separate history",
             "household_observation_window_hours": 24,
             "observations_are_current_proof": False,
-            "observations_truncated": len(rows) > _OBSERVATIONS,
+            "observations_truncated": len(rows) + len(maintenance_observations) > _OBSERVATIONS,
             "commitments_truncated": len(goals) > _COMMITMENTS,
             "own_work_source": "same-scope exact-owner admitted durable commitments only",
             "commitment_selection": "unresolved first by deadline, then recent closed within 24h; older closed history retained",
@@ -322,8 +331,11 @@ def read_private_initiative_context(connection, scope: TimelineScope,
             missing.append("ordinary_delegated_work_current_status_unknown")
         else:
             result["coverage"]["ordinary_work_truncated"] = ordinary["truncated"]
-    while len(canonical_json_bytes(result)) > _MAX_BYTES:
-        if observations:
+    # Reserve the existing coverage annotation for the one newly offered source.
+    # Drop other history before displacing that source from its own review.
+    byte_budget = _MAX_BYTES - 512 if maintenance_observations else _MAX_BYTES
+    while len(canonical_json_bytes(result)) > byte_budget:
+        if observations and (not maintenance_observations or len(observations) > 1):
             observations.pop()
             result["coverage"]["observations_truncated"] = True
         elif orientation:
@@ -336,6 +348,8 @@ def read_private_initiative_context(connection, scope: TimelineScope,
             result["ordinary_work"]["jobs"].pop()
             result["ordinary_work"]["truncated"] = True
             result["coverage"]["ordinary_work_truncated"] = True
+        elif observations:
+            raise RuntimeError("maintenance source cannot fit its private context bound")
         else:
             raise RuntimeError("initiative context envelope exceeds its bound")
         result["coverage"]["byte_budget_truncated"] = True

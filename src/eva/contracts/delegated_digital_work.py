@@ -98,7 +98,7 @@ class DelegatedDigitalWorkGrant(DelegatedWorkGrant):
                    "register_own_contribution",
                    "list_telegram_contacts", "send_telegram_message",
                    "list_programming_tools", "use_programming_tool", "write_programming_file", "start_programming_process", "run_tool_program",
-                   "manage_own_runtime_repair", "read_own_component_source", "draft_own_component_improvement",
+                   "manage_own_runtime_repair", "manage_own_component_update", "read_own_component_source", "draft_own_component_improvement",
                    "evaluate_own_component_improvement", "compare_own_component_improvements",
                    "prepare_own_component_release",
                    "apply_reviewed_component_improvement", "get_reviewed_component_application", "run_reusable_procedure", "home_assistant_request", "read_home_assistant_inventory"}
@@ -173,7 +173,7 @@ INITIATIVE_LOCAL_CAPABILITIES = frozenset({
     "use_connector_tool",
     "save_work_progress", "list_programming_tools", "use_programming_tool",
     "write_programming_file", "start_programming_process", "run_tool_program",
-    "manage_own_runtime_repair", "read_own_component_source", "draft_own_component_improvement",
+    "manage_own_runtime_repair", "manage_own_component_update", "read_own_component_source", "draft_own_component_improvement",
     "evaluate_own_component_improvement", "compare_own_component_improvements",
     "prepare_own_component_release", "apply_reviewed_component_improvement",
     "get_reviewed_component_application",

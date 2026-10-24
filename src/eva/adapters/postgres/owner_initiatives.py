@@ -100,6 +100,13 @@ class PostgresOwnerInitiatives:
                         c.tenant_id==self._scope.tenant_id,c.installation_id==self._scope.installation_id,
                         c.thread_id==data['repair_incident_id'])).scalar_one_or_none()
                     if waiting=='SELF_REPAIR_REMAINS_OPEN':status='attention' 
+                maintenance=self._maintenance_outcome(conn,row)
+                if maintenance is not None and status!='stopped':
+                    if self._maintenance_stopped(conn,row):status='stopped'
+                    else:
+                        status={'COMPONENT_MAINTENANCE_SUBMITTED':'working',
+                            'COMPONENT_MAINTENANCE_WAITING':'attention',
+                            'COMPONENT_MAINTENANCE_INSTALLED':'done'}[maintenance.event_type]
                 artifact = self._artifact(conn, row.thread_id)
                 cards.append({"intent_id": data["intent_id"], "title": data["title"],
                     "motivation": data["motivation"], "question": data["next_exploration"],
@@ -465,6 +472,32 @@ class PostgresOwnerInitiatives:
         return {"status": "recorded", "intent_id": intent_id,
                 "execution_stopped": execution_stopped}
 
+    def _maintenance_outcome(self,conn,row):
+        e=operational_events.c
+        value=conn.execute(sa.select(e.event_type,e.payload,e.payload_sha256).where(
+            e.tenant_id==self._scope.tenant_id,e.installation_id==self._scope.installation_id,
+            e.thread_id==row.thread_id,e.event_type.in_(("COMPONENT_MAINTENANCE_SUBMITTED",
+                "COMPONENT_MAINTENANCE_WAITING","COMPONENT_MAINTENANCE_INSTALLED")))
+            .order_by(e.sequence.desc()).limit(1)).one_or_none()
+        if value is not None:
+            origin=value.payload['data']['origin']
+            if (canonical_sha256(value.payload)!=bytes(value.payload_sha256).hex()
+                    or origin.get('contract')!='EvaComponentMaintenanceOrigin/v1'
+                    or origin.get('original_intent_id')!=row.adoption['data']['intent_id']
+                    or origin.get('adoption_sha256')!=canonical_sha256(row.adoption)):
+                raise RuntimeError('maintenance original intent/evidence differs')
+        return value
+
+    def _maintenance_stopped(self,conn,row):
+        from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore
+        from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+        from eva.adapters.postgres.initiative_execution import execution_turn
+        timeline=PostgresOperationalTimeline(self._engine,self._scope)
+        claim=PostgresPersonalInterestStore._claim_from_events(self._tenant_id,self._installation_id,timeline.events(row.thread_id),0)
+        turn=execution_turn(claim);journal=PostgresConversationJournal(self._engine,self._scope)
+        identity=journal._stop_identity(turn.principal_id,turn.conversation_id,turn.message_id)
+        return journal._marker_exists(conn,journal._stop_thread_id(identity),'CONVERSATION_STOP_REQUESTED',identity)
+
     def _has_deferred_native_application(self, conn, row, now):
         # Development completion never completes a pending runtime repair.
         # Preserve that completed work, but let the owner stop its later
@@ -492,6 +525,8 @@ class PostgresOwnerInitiatives:
         from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
         from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
         e = operational_events.c
+        maintenance=self._maintenance_outcome(conn,row)
+        maintenance_pending=maintenance is not None and maintenance.event_type in {'COMPONENT_MAINTENANCE_SUBMITTED','COMPONENT_MAINTENANCE_WAITING'}
         completion = conn.execute(sa.select(e.payload, e.payload_sha256).where(
             e.tenant_id == self._scope.tenant_id, e.installation_id == self._scope.installation_id,
             e.thread_id == row.thread_id, e.event_type == "PERSONAL_INITIATIVE_COMPLETED")
@@ -516,7 +551,11 @@ class PostgresOwnerInitiatives:
                 and loaded.state in {"succeeded", "verified"} and loaded.result is not None
                 and canonical_sha256(loaded.result.to_payload()) == bound.get("result_sha256")
                 and loaded.retention_until > now
-                and "apply_reviewed_component_improvement" in spec.grant.capability_ids)
+                and ("apply_reviewed_component_improvement" in spec.grant.capability_ids
+                    or (maintenance_pending and "manage_own_component_update" in spec.grant.capability_ids
+                        and maintenance.payload['data']['origin']['original_work_id']==spec.work_id
+                        and maintenance.payload['data']['origin']['original_spec_sha256']==spec.sha256
+                        and maintenance.payload['data']['origin']['source_ingress_sha256']==spec.source_ingress_sha256)))
         finally:
             PostgresOperationalTimeline(self._engine, self._scope)._scope(conn)
 

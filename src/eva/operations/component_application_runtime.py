@@ -447,7 +447,7 @@ class ComponentApplicationRuntime:
 
     def __init__(self, config, *, run=subprocess.run):
         if (not isinstance(config, dict) or not {"core_container", "scope_sha256"} <= set(config)
-                or set(config) - {"core_container", "scope_sha256", "physical_usage_attestation", "behavior_verifiers", "runtime_repair_enabled"}
+                or set(config) - {"core_container", "scope_sha256", "physical_usage_attestation", "behavior_verifiers", "runtime_repair_enabled", "component_maintenance_enabled"}
                 or not isinstance(config["core_container"], str)
                 or not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}", config["core_container"])
                 or not isinstance(config["scope_sha256"], str)
@@ -464,7 +464,8 @@ class ComponentApplicationRuntime:
             if source_path not in ALLOWED_PATHS:
                 raise ValueError("runtime behavior source is outside the existing class")
             _verified_behavior_source(binding)
-        if type(config.get('runtime_repair_enabled', False)) is not bool:
+        if type(config.get('runtime_repair_enabled', False)) is not bool or type(config.get('component_maintenance_enabled',False)) is not bool:
+
             raise ValueError('invalid runtime repair application switch')
         self.config, self.run = dict(config), run
 
@@ -484,6 +485,19 @@ class ComponentApplicationRuntime:
         value = json.loads(result.stdout)
         if not isinstance(value, dict):
             raise ValueError("host repair response differs")
+        return value
+
+    def maintenance_call(self,action,**arguments):
+        if not self.config.get('component_maintenance_enabled',False):raise ValueError('maintenance not admitted')
+        payload={'action':action,'scope_sha256':self.config['scope_sha256'],**arguments}
+        raw=json.dumps(payload,ensure_ascii=True)
+        if len(raw.encode())>65536:raise ValueError('maintenance host payload exceeds bound')
+        script=('import json,sys; from eva.bootstrap.component_maintenance import handle_host_maintenance_request; '
+            'print(json.dumps(handle_host_maintenance_request(json.loads(sys.argv[1]))))')
+        result=self.run(['docker','exec',self.config['core_container'],'python','-c',script,raw],text=True,capture_output=True,timeout=45)
+        if result.returncode!=0 or len(result.stdout.encode())>65536:raise ValueError('maintenance source authority unavailable')
+        value=json.loads(result.stdout)
+        if not isinstance(value,dict):raise ValueError('maintenance callback response differs')
         return value
 
     def ready_to_apply(self, task_id):
@@ -589,6 +603,10 @@ class ComponentApplicationRuntime:
                     or result["stdout_truncated"] or result["stderr_truncated"]):
                 raise RuntimeError("reviewed update command did not complete")
             return result["stdout"]
+        if release.get('kind')=='dependency_update':
+            self.maintenance_call('current',origin=release['maintenance_target']['origin'])
+            meta=self.maintenance_call('work_metadata',origin=release['maintenance_target']['origin'],task_id=release['maintenance_review_work']['task_id'],require_running=False)
+            if meta!=release['maintenance_review_work']:raise ValueError('maintenance review changed before apply')
         if release.get('kind') == 'runtime_repair':
             binding = self.repair_call('binding', incident_id=release['repair_target']['failure']['incident_id'])
             if binding != release['repair_target']['failure']:
@@ -612,6 +630,13 @@ class ComponentApplicationRuntime:
                 before_recovery_dispatch=lambda: self.ready_to_apply(release["task_id"]) == "ready")
 
     def _behavior_verifier(self, release):
+        if release.get('kind')=='dependency_update':
+            if not self.config.get('component_maintenance_enabled',False):raise ValueError('dependency update not admitted')
+            from eva.operations.component_evaluation import EvaluationConfig
+            from eva.operations.runtime_dependency_update import installed_dependency_behavior
+            from eva.operations.runtime_image_update import _command
+            settings=EvaluationConfig(image=next(iter(release['candidate_images'].values())),command=('python',),deadline_seconds=60,output_bytes=32768,memory_mb=512)
+            return lambda observation:installed_dependency_behavior(observation,release=release,settings=settings,run=_command)
         if release.get('kind') == 'runtime_repair':
             if not self.config.get('runtime_repair_enabled', False):
                 raise ValueError('runtime repair application not admitted')
