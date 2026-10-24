@@ -13,9 +13,9 @@ import httpx2 as httpx
 from eva.adapters.connectors.camera_observer import HomeAssistantCameraDiscovery
 from eva.adapters.connectors.procedure_execution import configured_procedure_executor
 from eva.adapters.postgres.memory_outbox import PostgresMemoryOutbox
-from eva.adapters.postgres.household_provisions import procedure_provision_id
+from eva.adapters.postgres.household_provisions import procedure_provision_id, household_trial_dispatchable
 from eva.application.household_procedure import HouseholdProvisionInactive, HouseholdProcedureContext
-from eva.application.free_will import HouseholdProcedureLineage
+from eva.application.free_will import HouseholdProcedureLineage, ProactiveExpressionClaim
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 
 # Trusted interface glue, not the authored application's decision logic.
@@ -40,16 +40,21 @@ class HomeAssistantProcedure:
         self.executor = executor or configured_procedure_executor()
         self.discovery = HomeAssistantCameraDiscovery(base_url=settings.endpoint_url, token=settings.credential)
 
-    def _current(self):
-        source, guard, _ = self._current_details()
+    def _current(self, *, admission_claim=None):
+        source, guard, _ = self._current_details(admission_claim=admission_claim)
         return source, guard
 
-    def _current_details(self):
+    def _current_details(self, *, admission_claim=None):
         self.authorize()
         config = json.loads(self.path.read_text())
         required = {'contract', 'enabled', 'household_binding', 'source_file', 'source_sha256',
                     'reference_id', 'source_principal_id', 'review_sha256'}
-        if (set(config) != required or config['contract'] != 'EvaHouseholdProcedureBinding/v1'
+        contract = config.get('contract')
+        if contract == 'EvaHouseholdProcedureBinding/v2':
+            required = required | {'provision_id'}
+            procedure_provision_id(config)
+        if (set(config) != required or contract not in {
+                    'EvaHouseholdProcedureBinding/v1', 'EvaHouseholdProcedureBinding/v2'}
                 or config['enabled'] is not True or config['household_binding'] != self.household.to_payload()):
             raise ValueError('household procedure binding unavailable')
         import re
@@ -94,16 +99,23 @@ class HomeAssistantProcedure:
             'executor':executor_config}
         guarded = {'config':config, 'execution':execution,
                    'wrapper_sha256':hashlib.sha256(RUNNER.encode()).hexdigest()}
-        lifecycle = self._lifecycle(config)
+        lifecycle = self._lifecycle(config, execution_guard=canonical_sha256(guarded), admission_claim=admission_claim)
         if lifecycle is not None:
             guarded['provision'] = {'id': lifecycle['provision_id'], 'revision': lifecycle['revision']}
         guard = canonical_sha256(guarded)
         return source.decode('utf-8'), guard, guarded
 
-    def _lifecycle(self, config):
+    def _lifecycle(self, config, *, execution_guard=None, admission_claim=None):
         if self.provisions is None:
             return None
-        state = self.provisions.inspect(procedure_provision_id(config), now=datetime.now(UTC).replace(microsecond=0))
+        options = {}
+        if admission_claim is not None:
+            if not isinstance(admission_claim, ProactiveExpressionClaim):
+                raise ValueError('late procedure validation requires the actual host claim')
+            options['admission_claim'] = {key: getattr(admission_claim, key) for key in
+                ('thread_id', 'operation_id', 'revision', 'source_event_id')}
+        state = self.provisions.inspect(procedure_provision_id(config),
+            now=datetime.now(UTC).replace(microsecond=0), **options)
         if state is None:
             raise LookupError('enrolled household provision state is missing')
         evidence = state['evidence']
@@ -113,10 +125,12 @@ class HomeAssistantProcedure:
                 or any(evidence[key] != config[key] for key in
                        ('source_sha256', 'review_sha256', 'reference_id'))):
             raise ValueError('household provision source or audience changed')
-        if (state['status'] != 'active' or state['stopped']
-                or state['effect_status'] != 'clear'):
+        trial = household_trial_dispatchable(state, now=datetime.now(UTC).replace(microsecond=0),
+                                             execution_guard=execution_guard)
+        if ((state['status'] != 'active' and not trial) or state['stopped']
+                or state.get('pending_change') is not None or state['effect_status'] != 'clear'):
             raise HouseholdProvisionInactive('household provision is not dispatchable')
-        if not state['adoption'] or not state['verification_sha256']:
+        if not trial and (not state['adoption'] or not state['verification_sha256']):
             raise ValueError('active household provision lacks adoption or verified realization')
         return state
 
@@ -190,8 +204,8 @@ class HomeAssistantProcedure:
         return canonical_sha256({'configuration': configuration,
                                  'source': canonical_sha256(binding), **selection})
 
-    def validate_current(self, context):
-        _, guard = self._current()
+    def validate_current(self, context, *, admission_claim=None):
+        _, guard = self._current(admission_claim=admission_claim)
         observation = context['observation']
         selection = {key: context[key] for key in
                      ('parent_observation_sha256', 'selected_observation_sha256') if key in context}
@@ -207,7 +221,7 @@ class HomeAssistantProcedure:
         if self._proposal_guard(guard, binding, selection) != context['binding_sha256']:
             raise ValueError('camera proposal source or configuration changed')
 
-    def validate_expression(self, event, digest):
+    def validate_expression(self, event, digest, *, claim=None):
         if digest is not None:
             if not self.household.matches_event(event):
                 raise ValueError('procedure delivery source audience differs')
@@ -215,7 +229,8 @@ class HomeAssistantProcedure:
             if observation is None:
                 raise ValueError('camera proposal no longer has a current selected source')
             try:
-                self.validate_current({'observation': observation, 'binding_sha256': digest, **selection})
+                self.validate_current({'observation': observation, 'binding_sha256': digest, **selection},
+                                      admission_claim=claim)
             except HouseholdProvisionInactive:
                 return False
 
@@ -225,14 +240,16 @@ class HomeAssistantProcedure:
             return {'admitted_now': True, 'receipt': None}
         from eva.adapters.postgres.operational_timeline import CheckpointConflict
         try:
-            if self.validate_expression(event, digest) is False:
+            if self.validate_expression(event, digest, claim=claim) is False:
                 return {'admitted_now': False, 'receipt': None}
             config = json.loads(self.path.read_text())
-            state = self._lifecycle(config)
+            _, _, current_configuration = self._current_details(admission_claim=claim)
+            base_configuration = {key: value for key, value in current_configuration.items() if key != "provision"}
+            state = self._lifecycle(config, execution_guard=canonical_sha256(base_configuration), admission_claim=claim)
             # Bind this snapshot to the prepared guard too. A pause+resume
             # between the first guard read and snapshot must not renew an old
             # expression. The row-lock then compares this exact revision again.
-            if self.validate_expression(event, digest) is False:
+            if self.validate_expression(event, digest, claim=claim) is False:
                 return {'admitted_now': False, 'receipt': None}
             claim_binding = {key: getattr(claim, key) for key in
                              ('thread_id', 'operation_id', 'revision', 'source_event_id')}

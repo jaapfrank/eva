@@ -1,4 +1,6 @@
 import React from 'react';
+import OwnerHouseholdProvisionTrial from './owner-household-provision-trial.jsx';
+import OwnerHouseholdProvisionVersions from './owner-household-provision-versions';
 
 const endpoint = '/internal/v1/dashboard/household-provisions';
 const labels = { proposed: 'Voorgesteld', active: 'Actief', paused: 'Gepauzeerd', rejected: 'Afgewezen', retired: 'Beëindigd' };
@@ -10,6 +12,14 @@ function validatePage(value) {
   if (!value || value.contract !== 'EvaOwnerHouseholdProvisions/v1' || !identifier(value.provision_id)
     || typeof value.enrolled_record_missing !== 'boolean' || typeof value.actual_working_proof_available !== 'boolean') throw new Error('Het overzicht van huisvoorzieningen kon niet worden gelezen.');
   const enrollment = value.enrollment, state = value.provision;
+  const pending = value.change_pending;
+  if (pending !== undefined && pending !== null && (!state || !enrollment || !digest(pending.from_version)
+    || !digest(pending.to_version) || pending.from_version !== state.current_version
+    || pending.expected_revision !== state.revision || pending.binding_sha256 !== state.evidence?.binding_sha256
+    || pending.needs_completion !== true || typeof pending.undo !== 'boolean'
+    || pending.in_flight_effects_not_replayed !== true || state.status !== 'paused'
+    || state.pending_change?.from_version !== pending.from_version || state.pending_change?.to_version !== pending.to_version
+    || state.pending_change?.undo !== pending.undo || !digest(state.versions?.[pending.to_version]?.evidence?.binding_sha256))) throw new Error('De onvoltooide wijziging kon niet worden gelezen.');
   if (enrollment !== null && (!enrollment || enrollment.contract !== 'EvaHouseholdProvisionEnrollment/v1'
     || enrollment.provision_id !== value.provision_id || !digest(enrollment.binding_sha256))) throw new Error('De registratie kon niet worden gelezen.');
   if (state !== null && (!state || state.provision_id !== value.provision_id || !Object.hasOwn(labels, state.status)
@@ -17,7 +27,8 @@ function validatePage(value) {
     || typeof state.stopped !== 'boolean' || !['clear', 'unknown', 'in_flight', 'stopped'].includes(state.effect_status)
     || !(state.adoption === null || (state.adoption && typeof state.adoption === 'object' && !Array.isArray(state.adoption)))
     || !(state.verification_sha256 === null || digest(state.verification_sha256))
-    || (enrollment !== null && enrollment.binding_sha256 !== state.evidence.binding_sha256))) throw new Error('De actuele voorziening kon niet worden gelezen.');
+    || (enrollment !== null && enrollment.binding_sha256 !== state.evidence.binding_sha256
+      && !(pending && enrollment.binding_sha256 === state.versions[pending.to_version].evidence.binding_sha256)))) throw new Error('De actuele voorziening kon niet worden gelezen.');
   if (value.enrolled_record_missing !== (enrollment !== null && state === null)) throw new Error('De registratiestatus is onvolledig.');
   return value;
 }
@@ -49,28 +60,36 @@ export default function OwnerHouseholdProvisions() {
     return () => { ++sequence.current; controller?.abort(); window.removeEventListener('focus', load); document.removeEventListener('visibilitychange', visibility); };
   }, [refresh]);
 
-  async function submit(action) {
+  async function submit(action, selection) {
     if (busy || !page) return;
     const state = page.provision;
-    const payload = action === 'register' ? {} : { provision_id: state.provision_id, action,
+    const versionAction = action.startsWith('version_'), trialAction = action.startsWith('trial_');
+    const payload = action === 'register' ? {} : { provision_id: state.provision_id,
       expected_revision: state.revision, binding_sha256: state.evidence.binding_sha256 };
+    if (versionAction && action !== 'version_undo') payload[action === 'version_stage' ? 'choice_id' : 'version_id'] = selection;
+    if (trialAction) Object.assign(payload, selection);
+    if (action !== 'register' && !versionAction && !trialAction) payload.action = action;
     const key = action + ':' + page.provision_id + ':' + JSON.stringify(payload);
     if (!requests.current.has(key)) requests.current.set(key, crypto.randomUUID());
     payload.request_id = requests.current.get(key);
     setBusy(true); setNotice(''); setError('');
     try {
-      const response = await fetch(endpoint + (action === 'register' ? '/register' : '/command'), {
+      const response = await fetch(endpoint + (action === 'register' ? '/register' : versionAction ? '/versions/' + action.slice(8) : trialAction ? '/trial/' + action.slice(6) : '/command'), {
         method: 'POST', credentials: 'same-origin', cache: 'no-store', redirect: 'error',
         headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
       });
       if (!response.ok) throw new Error('De wijziging is niet bevestigd. Vernieuw het overzicht voordat je opnieuw probeert.');
       const result = await response.json();
-      const receipt = action === 'register' ? result.receipt : result;
+      const receipt = action === 'register' || versionAction ? result.receipt : result;
       if ((action === 'register' && result.contract !== 'EvaOwnerHouseholdProvisionRegistration/v1')
+        || (versionAction && result.contract !== 'EvaOwnerHouseholdProvisionVersion/v1')
         || receipt?.contract !== 'EvaHouseholdProvisionReceipt/v1' || receipt.provision_id !== page.provision_id
         || !Object.hasOwn(labels, receipt.status) || !Number.isSafeInteger(receipt.revision)) throw new Error('De bevestiging kon niet worden gelezen. Vernieuw het overzicht.');
       requests.current.delete(key);
-      setNotice((action === 'register' ? 'Het voorstel is geregistreerd.' : 'Vastgelegd: ' + labels[receipt.status].toLowerCase() + '.')
+      setNotice((action === 'register' ? 'Het voorstel is geregistreerd.' : versionAction
+        ? (action === 'version_stage' ? 'De wijziging is klaargezet.' : 'De versie is bijgewerkt.')
+        : trialAction ? ({ trial_authorize: 'De proef is toegestaan.', trial_evaluate: 'Je beoordeling is vastgelegd.', trial_acknowledge: 'De melding is bevestigd.' }[action])
+        : 'Vastgelegd: ' + labels[receipt.status].toLowerCase() + '.')
         + (receipt.in_flight_effect_may_complete ? ' Een al aangenomen handeling kan nog aflopen.' : ''));
       await refresh();
     } catch (failure) { setError(failure.message); setPage(null); }
@@ -80,7 +99,8 @@ export default function OwnerHouseholdProvisions() {
   const state = page?.provision;
   const terminal = state && ['rejected', 'retired'].includes(state.status);
   const canRun = page?.actual_working_proof_available === true && state?.effect_status === 'clear' && !state.stopped;
-  const available = state && page.enrollment !== null && !terminal ? [
+  const available = state && page.enrollment !== null && !terminal ? page.change_pending
+    ? (!state.stopped ? ['stop'] : []) : [
     ...(!state.adoption && canRun ? ['adopt'] : []),
     ...(state.status === 'paused' && state.adoption && canRun ? ['resume'] : []),
     ...(state.status !== 'paused' && !state.stopped ? ['pause'] : []),
@@ -113,6 +133,10 @@ export default function OwnerHouseholdProvisions() {
         </>}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>{available.map(action =>
           <button key={action} disabled={busy} onClick={() => submit(action)}>{actions[action]}</button>)}</div>
+        {page.enrollment !== null && <>
+          <OwnerHouseholdProvisionTrial page={page} busy={busy} submit={submit} />
+          <OwnerHouseholdProvisionVersions page={page} busy={busy} submit={submit} />
+        </>}
       </> : page.enrolled_record_missing ? <p role="alert">De gekoppelde registratie ontbreekt. Bediening is tijdelijk niet beschikbaar.</p> : <>
         <p>De bestaande huisvoorziening is nog niet als voorstel geregistreerd.</p>
         <p>Je kunt het voorstel alvast bewaren. Activeren kan pas nadat de werking is gecontroleerd en je de voorziening aanneemt.</p>

@@ -4,8 +4,8 @@
   "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
   "clientTaskDate": "2026-10-24",
   "checkedAtMachineUtc": "2026-10-24T00:05:14.877182+00:00",
-  "status": "proof_handoff_actually_installed_scoped_readback_passed_original_version_and_adoption_gaps_open",
-  "verdict": "GO_SCOPED_ACTUALLY_INSTALLED_PROOF_HANDOFF_READBACK",
+  "status": "complete_version_trial_code_ui_and_bounded_overlay_install_go_fresh_guard_and_live_readback_pending",
+  "verdict": "GO_SCOPED_ONE_FRESH_GUARDED_VERSION_TRIAL_INSTALL_ATTEMPT",
   "onlyWritePath": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
   "authority": {
     "boardPath": "development/design/product/execution-workboard-v1.json",
@@ -600,7 +600,7 @@
       "id": "E112-VERSION-001",
       "severity": "P2",
       "kind": "missing_original_donewhen_functional_interface",
-      "status": "open_reported_coordinator_same_card",
+      "status": "functional_candidate_built_and_independently_reviewed_actual_install_use_and_restore_pending",
       "title": "Actual facility change/undo, linked source versions and compact owner history are not wired",
       "source": "src/eva/adapters/postgres/household_provisions.py",
       "line": 176,
@@ -611,13 +611,20 @@
       "requiredBoundary": "Complete the original source-bound same-facility change/undo/version/compact-history handoff using existing source and lifecycle routes; no new criterion, store or parallel project.",
       "testsRepeated": 0,
       "reportedToCoordinator": true,
-      "checkedAtMachineUtc": "2026-10-24T01:17:38.555430+00:00"
+      "checkedAtMachineUtc": "2026-10-24T01:17:38.555430+00:00",
+      "candidateProgress": {
+        "versionHostResolution": "versionPostBlockingEndpointFixReview",
+        "ownerApiUiResolution": "versionOwnerApiUiReview",
+        "originalFullOutcomeClosed": false
+      },
+      "codeInterfaceResolution": "completeVersionTrialBackendCandidateReview",
+      "fullOriginalOutcomeClosed": false
     },
     {
       "id": "E112-ADOPTION-001",
       "severity": "P2",
       "kind": "missing_original_donewhen_functional_interface",
-      "status": "open_reported_coordinator_same_card",
+      "status": "functional_candidate_built_and_independently_reviewed_actual_install_use_and_restore_pending",
       "title": "Preauthorized trial to evaluated and notified implicit adoption has no connected route",
       "source": "src/eva/adapters/postgres/household_provisions.py",
       "line": 217,
@@ -628,7 +635,9 @@
       "requiredBoundary": "Do not claim preauthorized-trial/evaluation/notice/implicit-adoption functionality from explicit adoption/store tests. Any completion must use original permission boundary and original E1.12 outcome.",
       "testsRepeated": 0,
       "reportedToCoordinator": true,
-      "checkedAtMachineUtc": "2026-10-24T01:17:38.555430+00:00"
+      "checkedAtMachineUtc": "2026-10-24T01:17:38.555430+00:00",
+      "codeInterfaceResolution": "completeVersionTrialBackendCandidateReview",
+      "fullOriginalOutcomeClosed": false
     },
     {
       "id": "E112-EFFECT-002",
@@ -676,6 +685,75 @@
       },
       "criteriaSource": "Existing current effect/paused/unknown boundary applied to new selector; no new acceptance criterion.",
       "checkedAtMachineUtc": "2026-10-24T01:37:30.730452+00:00"
+    },
+    {
+      "id": "E112-VERSION-002",
+      "severity": "P2",
+      "kind": "reproduced_managed_review_overwrite_after_blocking_target_read",
+      "status": "fixed_original_independent_postread_overwrite_reproducer_passed",
+      "title": "Source version handoff overwrites outside review change after final blocking target verification",
+      "source": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/version-state-v1/host-candidate-v2/src/eva/bootstrap/household_provision_versions.py",
+      "line": 310,
+      "candidateSha256": "c90ceb8c515269c4c3f801576c400be02c370d841ce2b3a3fe002ae76771357c",
+      "cause": "change validates actual pending endpoint files before a potentially blocking target verification. After that verification, _anchor rechecks config/pointer but not actual review/source bytes; _write then replaces a newly changed review file and finish_change returns success.",
+      "reproduction": {
+        "kind": "One in-memory independent pytest case using original version_host fixture, actual scoped PostgreSQL16.13 and actual temporary POSIX files",
+        "change": "After staging, wrap _verify_target. Immediately after its second invocation inside change write unrelated review bytes; no config/pointer/owner changes or source/test patches.",
+        "actual": {
+          "targetVerificationCalls": 3,
+          "outsideReviewChangePreserved": false,
+          "successfulChangeReceiptReturned": true
+        },
+        "pytestBatchSecondsIncluding13NewPasses": 5.27,
+        "processAndOwnPgStartSeconds": 8.819811523950193,
+        "pgWallSeconds": 9.706518000981305,
+        "originalCriteriaUnchanged": true,
+        "prodEvaluatorModelOrHouseholdEffects": 0
+      },
+      "requiredBoundary": "Revalidate relevant actual source/review/config/pointer endpoint bytes after blocking target verification before replacement; refuse visible drift outside the retained endpoints and preserve others changes. Retain paused recoverable pending state and STOP.",
+      "criteriaSource": "Existing actual-source version guard and AGENTS preserve changes of others; no new criterion.",
+      "reportedToCoordinator": true,
+      "reviewerProductFixes": 0,
+      "checkedAtMachineUtc": "2026-10-24T01:59:47.016437+00:00",
+      "resolution": {
+        "checkedAtMachineUtc": "2026-10-24T02:10:42.463654+00:00",
+        "clientTaskDate": "2026-10-24",
+        "verdict": "GO_SCOPED_E112_VERSION_002_POSTBLOCKING_ENDPOINT_FIX",
+        "handoffSha256": "abd4e8a1a2dbecbaa52614f2f9a94b9a3f4fbe138bd3acb9796cbe494a4ed344",
+        "fixedSourceSha256": "bd4602aa849abefef51c2b1c900d41e4a967a3aac542d6da4b4e56163294c769",
+        "originalSourceSha256": "c90ceb8c515269c4c3f801576c400be02c370d841ce2b3a3fe002ae76771357c",
+        "fixedBuilderTestSha256": "7f51367ab8c14661bdf3e950bc9cd152c858f97befb38286db48a9e29da9b57b",
+        "change": "After blocking target verification reread actual config+pointer and validate all actual source/review/config/pointer endpoints before destructive writes.",
+        "independentRetest": {
+          "originalOwnOverwriteScenarioAndAssertionReused": true,
+          "originalFrozenV2FixtureRetained": true,
+          "cases": 1,
+          "passed": 1,
+          "pytestSeconds": 3.65,
+          "processAndPgStartSeconds": 7.325418551045004,
+          "ownPgWallSeconds": 8.229484173003584,
+          "targetVerificationCalls": 2,
+          "outsideReviewChangePreserved": true,
+          "successfulChangeReceiptReturned": false,
+          "pendingRemainsPaused": true,
+          "originalConfigAndPointerUnchanged": true,
+          "actualPosixFilesAndScopedPg16_13": true,
+          "fixedSourceBeforeAfterPinUnchanged": true,
+          "all9OriginalFrozenPinsUnchanged": true,
+          "old13And8And39Repeated": false,
+          "prodEvaluatorOrModelCalls": 0,
+          "canonicalSourceOrTestWrites": 0,
+          "credentialValuesOrHashesEmitted": 0,
+          "ownPgAfter": "exited_retained"
+        },
+        "staticScope": {
+          "originalAndFixedModuleActually0400": true,
+          "wholeModuleAstIdenticalAfterRemovingOnlyFixedPostreadCheck": true,
+          "oldFailAndOriginalCriteriaPreserved": true
+        },
+        "wholeE112VersionOutcomeOrInstallationGo": false,
+        "remaining": "Owner API/UI/Runtime wrapper integration independent review plus actual source/version trial/proof and installed use; existing E112-VERSION-001 and ADOPTION-001 original outcome criteria remain open."
+      }
     }
   ],
   "existingNoPostFixture": {
@@ -705,9 +783,9 @@
     "reviewerProductWrites": 0
   },
   "usage": {
-    "testsRun": 149,
+    "testsRun": 190,
     "newDatabaseQueries": null,
-    "newServiceStarts": 7,
+    "newServiceStarts": 11,
     "newModelCalls": 0,
     "newInferenceCalls": 0,
     "newCameraReads": 0,
@@ -763,7 +841,7 @@
     },
     "initialContractPreparationTestsRun": 0,
     "sourceRuntimeServiceStarts": 0,
-    "privateTestPostgresStarts": 7,
+    "privateTestPostgresStarts": 11,
     "databaseQueryMeasurement": "Only own disposable test PostgreSQL; SQL statement count not metered. No source/live database query.",
     "latestIndependentBuilderLifecycleReview": {
       "distinctCandidateCases": 62,
@@ -948,7 +1026,7 @@
       "sharedRuntimeOrInstallationChanges": 0,
       "canonicalSourceOrTestWrites": 0
     },
-    "isolatedUiHttpServersStarted": 2,
+    "isolatedUiHttpServersStarted": 4,
     "newServiceStartsScope": "Counts own disposable PostgreSQL starts only; source runtime starts remain zero. Isolated UI fixture HTTP server tracked separately.",
     "latestUiV3ChangedCauseBrowser": {
       "engine": "Actual built dist-v3 React in existing headless Chromium with isolated loopback synthetic API",
@@ -1042,6 +1120,149 @@
       "modelCalls": 0,
       "credentialValuesOrHashesEmitted": 0,
       "testsRepeated": 0
+    },
+    "latestVersionHostReview": {
+      "newPosixPgHostCases": 11,
+      "newActualProviderV2Cases": 2,
+      "passed": 13,
+      "separateReviewerCounterexampleFailed": 1,
+      "pytestSeconds": 5.27,
+      "processAndPgStartSeconds": 8.819811523950193,
+      "pgWallSeconds": 9.706518000981305,
+      "all9FrozenPinsBeforeAfterUnchanged": true,
+      "importsBoundTo5VersionSourcesAnd3PriorReviewedLineageDependencies": true,
+      "sourceReviewAndEvaluatorPorts": "Synthetic doubles; no actual component evaluation or new saved publication.",
+      "actualFileAndScopedPgChanges": "Own disposable PostgreSQL16.13 and temporary test files only.",
+      "oldStore8AndInterface39CasesRepeated": false,
+      "sourceDatabaseQueries": 0,
+      "credentialValuesOrHashesEmitted": 0,
+      "modelCalls": 0,
+      "prodChanges": 0,
+      "ownPgAfter": "exited_retained"
+    },
+    "latestVersionHostPostreadRetest": {
+      "originalOwnOverwriteScenarioAndAssertionReused": true,
+      "originalFrozenV2FixtureRetained": true,
+      "cases": 1,
+      "passed": 1,
+      "pytestSeconds": 3.65,
+      "processAndPgStartSeconds": 7.325418551045004,
+      "ownPgWallSeconds": 8.229484173003584,
+      "targetVerificationCalls": 2,
+      "outsideReviewChangePreserved": true,
+      "successfulChangeReceiptReturned": false,
+      "pendingRemainsPaused": true,
+      "originalConfigAndPointerUnchanged": true,
+      "actualPosixFilesAndScopedPg16_13": true,
+      "fixedSourceBeforeAfterPinUnchanged": true,
+      "all9OriginalFrozenPinsUnchanged": true,
+      "old13And8And39Repeated": false,
+      "prodEvaluatorOrModelCalls": 0,
+      "canonicalSourceOrTestWrites": 0,
+      "credentialValuesOrHashesEmitted": 0,
+      "ownPgAfter": "exited_retained"
+    },
+    "latestVersionOwnerApi": {
+      "cases": 2,
+      "passed": 2,
+      "oldCasesDeselected": 5,
+      "pytestSeconds": 1.93,
+      "processSeconds": 2.4929877129616216,
+      "frozenApiImportBindingExact": true,
+      "all12PinsBeforeAfterUnchanged": true,
+      "wholeRuntimeNotImported": true,
+      "realHttpDatabaseOrModelCalls": 0
+    },
+    "latestVersionOwnerUiBrowser": {
+      "engine": "Actual frozen compiled React bundle in headless Chromium; isolated loopback synthetic API",
+      "elapsedSeconds": 1.6323949050274678,
+      "serverChoicesOnly": true,
+      "privateIdentifiersNotRendered": true,
+      "partialPointerTargetAndOldPausedLedgerRecoverable": true,
+      "pendingUsesOldBindingCurrentRevisionAndExplicitRetry": true,
+      "unknownNewProofLeavesProposed": true,
+      "explicitUndoUsesCurrentBinding": true,
+      "staleHistoryAndUnknownPointerDisableVersionControls": true,
+      "mobileWidth": 390,
+      "syntheticPosts": 4,
+      "automaticPosts": 0,
+      "productionPosts": 0,
+      "externalRequests": 0,
+      "modelCalls": 0,
+      "allSourceHarnessBundlePinsUnchanged": true,
+      "oldBroadBrowserFlowRepeated": false
+    },
+    "latestTrialOwnerApi": {
+      "cases": 1,
+      "passed": 1,
+      "oldCasesDeselected": 7,
+      "pytestSeconds": 1.66,
+      "processSeconds": 2.2368726250133477,
+      "frozenApiImportBindingExact": true,
+      "wholeRuntimeAndClaimModulesNotImported": true,
+      "actualHttpDbOrModelCalls": 0,
+      "all14PinsBeforeAfterUnchanged": true
+    },
+    "latestTrialOwnerUiBrowser": {
+      "engine": "Actual frozen compiled UI, existing Chromium; isolated loopback synthetic API",
+      "elapsedSeconds": 2.123888123955112,
+      "explicitGrantBoundsOwnerChoicesOnly": true,
+      "bothActualOwnerEvaluationChoicesAndFeedbackRequired": true,
+      "positiveEvaluationDoesNotAdoptOrReplaceOldAdoption": true,
+      "exactServerNoticeRenderedBeforeExplicitAck": true,
+      "failedAckRequiresExplicitRefreshAndReusesIdempotencyRequestId": true,
+      "expiryAndStopDisableTrial": true,
+      "additionalIndependentNoticeBoundaryCases": 3,
+      "missingNonceDenied": true,
+      "wrongVersionNoticeDenied": true,
+      "alreadyAcknowledgedNoticeInAwaitingPhaseDenied": true,
+      "invalidNoticeReadsCauseNoPosts": true,
+      "mobileWidth": 390,
+      "syntheticPosts": 4,
+      "automaticPosts": 0,
+      "productionPosts": 0,
+      "externalRequests": 0,
+      "modelCalls": 0,
+      "originalFrozenHarnessFlowAndAssertionsUnchanged": true,
+      "additionalChecksInMemoryOnly": true,
+      "allSourceHarnessBundlePinsBeforeAfterUnchanged": true
+    },
+    "latestCompleteVersionTrialBackendReview": {
+      "distinctNewCasesPassed": 25,
+      "exactEvidenceProviderAndDynamicHostCasesPassed": 14,
+      "trialStoreCasesPassed": 11,
+      "newNegativeOwnerFeedbackCaseIncluded": true,
+      "dynamicCoverage": "Actual POSIX version file changes and real PostgreSQL16.13 from missing target proof→known-empty trial eligibility→owner grant→PREPARED/CLAIMED→original OFFERED+settlement→owner feedback→durable notice→nonce ACK active; matching other claim blocks, foreign household does not.",
+      "firstBatch": {
+        "pytestSeconds": 7.62,
+        "passed": 14,
+        "setupErrors": 10,
+        "processAndPgStartSeconds": 11.415499060996808,
+        "pgWallSeconds": 12.324858394975308,
+        "failureKind": "Runner combined directly imported session PG fixtures and global plugin fixture, causing second migration to reject nonempty own test DB. Those10test bodies did not run.",
+        "postprocessingFailure": "Strict fixture __file__ equality rejected Pytest assertion-rewritten helper fixtures loaded from canonical paths. Collection-only diagnosis confirmed exact same helper source bytes as frozen snapshots; all product module mappings used frozen sources.",
+        "preserved": true,
+        "productFailureClaim": false
+      },
+      "splitStoreBatch": {
+        "pytestSeconds": 4.24,
+        "passed": 11,
+        "processAndPgStartSeconds": 7.858581223001238,
+        "pgWallSeconds": 8.718082492996473,
+        "first14CasesNotRepeated": true,
+        "assertionCriteriaUnchanged": true,
+        "assertRewriteDisabledOnlyForFixtureImportBinding": true
+      },
+      "snapshotBinding": "Six final runtime modules plus three prior reviewed lineage dependencies imported through in-memory frozen source finder. Borrowed fixture path issue diagnosed without rerunning tests; helper content matched exact frozen bytes.",
+      "all13FrozenSourceTestPinsExact0400AndUnchanged": true,
+      "fixedVersionPostreadModuleBd460Retained": true,
+      "old39AndLegacy10SuitesRepeated": false,
+      "ownPgStarts": 2,
+      "ownPgAfter": "exited_retained",
+      "prodSourceDatabaseQueries": 0,
+      "actualModelEvaluatorOrHouseholdEffects": 0,
+      "canonicalProductOrTestWrites": 0,
+      "credentialValuesOrHashesEmitted": 0
     }
   },
   "handoff": "Concrete findings sent directly to coordinator during review. Waiting for exact frozen implementation and owner integration; no general test series, code edits, installs or extra agents.",
@@ -2194,5 +2415,420 @@
     ],
     "fullE112OrProjectGo": false,
     "reviewerProductWritesModelCallsOrRestarts": 0
+  },
+  "versionHostCandidateV2Review": {
+    "checkedAtMachineUtc": "2026-10-24T01:59:47.016437+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "NO_GO_PENDING_E112_VERSION_002_POSTREAD_REVIEW_DRIFT",
+    "handoffSha256": "5922fefb96ddfd55ed69bceed6d198826848e67b23aadbaf6db5b20a318224e0",
+    "files": [
+      {
+        "path": "src/eva/adapters/postgres/household_provisions.py",
+        "snapshot": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/version-state-v1/host-candidate-v2/src/eva/adapters/postgres/household_provisions.py",
+        "sha256": "e8027ad4441db86165b552169beb68e674e5de38f15d91cf8170d79c93b0983a",
+        "baselineSha256": "9b1e5824d5fbba722439170fb2530c31da28c9b8e393da7c7f623ce51bec1c2f"
+      },
+      {
+        "path": "src/eva/bootstrap/household_provision_host.py",
+        "snapshot": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/version-state-v1/host-candidate-v2/src/eva/bootstrap/household_provision_host.py",
+        "sha256": "8d5fbc2b14bf66c6c3ad4bf8856b6109ee8a322aeebca84ea10a18ab11c3b311",
+        "baselineSha256": "5922a19da238ff23eebe027ff506f8e7b602a261f5736e404e3b820f228a4f3e"
+      },
+      {
+        "path": "src/eva/providers/home_assistant_procedure.py",
+        "snapshot": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/version-state-v1/host-candidate-v2/src/eva/providers/home_assistant_procedure.py",
+        "sha256": "eb875a3d8f504e5619505374487aded659998c8ca9d819d867cfb61685257948",
+        "baselineSha256": "e3d968b664d07c866058a1e68eae6831a06c67e3ddc11ea0080014f2813da07d"
+      },
+      {
+        "path": "src/eva/bootstrap/household_provision_runtime.py",
+        "snapshot": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/version-state-v1/host-candidate-v2/src/eva/bootstrap/household_provision_runtime.py",
+        "sha256": "db6b3dd7bec734c28f79835943e6bceb163382d745cbdc55f5f7e94791202fd3",
+        "baselineSha256": "7dfc3db864304e487ae745538df5e71dcb59c258f6408aed269f78b31346032e"
+      },
+      {
+        "path": "src/eva/bootstrap/household_provision_versions.py",
+        "snapshot": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/version-state-v1/host-candidate-v2/src/eva/bootstrap/household_provision_versions.py",
+        "sha256": "c90ceb8c515269c4c3f801576c400be02c370d841ce2b3a3fe002ae76771357c",
+        "baselineSha256": null
+      },
+      {
+        "path": "development/tests/postgres/test_household_provisions.py",
+        "snapshot": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/version-state-v1/host-candidate-v2/development/tests/postgres/test_household_provisions.py",
+        "sha256": "3a3507ac046d081e3b74bbf72f17876cc82f942e37ea81ad48f64d1cebe69857",
+        "baselineSha256": "be399ed1ef1d700f504d740789fe80a1f56191b9b589af98338fcd3c555c9b8c"
+      },
+      {
+        "path": "development/tests/bootstrap/test_household_provision_runtime.py",
+        "snapshot": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/version-state-v1/host-candidate-v2/development/tests/bootstrap/test_household_provision_runtime.py",
+        "sha256": "e1ffff647dbf1fc82cc048d52a10a88a8b3fdc51c08d3c87c6ce4ff00f075f8e",
+        "baselineSha256": "f4e9728fb69c3ca824aabdc2044f5627b605ea59cc73ad252f54559821f2d436"
+      },
+      {
+        "path": "development/tests/providers/test_home_assistant_procedure.py",
+        "snapshot": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/version-state-v1/host-candidate-v2/development/tests/providers/test_home_assistant_procedure.py",
+        "sha256": "53da7ba4d268f09ddd4f9fb2fb4ef81422691c74659342f16d7e4cf4fcfb1083",
+        "baselineSha256": "f49dc30e00e67252bdcbb479e8f4b62337b68aee1350e28852cecd9c3daa9c53"
+      },
+      {
+        "path": "development/tests/bootstrap/test_household_provision_versions.py",
+        "snapshot": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/version-state-v1/host-candidate-v2/development/tests/bootstrap/test_household_provision_versions.py",
+        "sha256": "725efcb4ed19bc5491e88361822eddc3c8c45472dd0d24640df6e574a260dfb2",
+        "baselineSha256": null
+      }
+    ],
+    "reviewScope": "Complete frozen version-state plus actual file host resolver, same owner/source/version identity, source-change undo/private history and half-handoff controls. Root API/UI/main Runtime integration still pending.",
+    "alreadyBuilt": [
+      "Trusted choices resolve existing same-scope prepare_own_component_release handoffs, accepted applied independent assessment and current saved reference; no caller source/GO/proof.",
+      "Same identity has staged/current/previous source versions and private compact history; real source/review/config/pointer changes follow paused durable PG pending handoff.",
+      "Explicit retry handles before-config and before-pointer interruption; pending owner STOP survives completion.",
+      "V2 source-binding contract preserves artifact identity and invalidates previous source expression guard."
+    ],
+    "independentValidation": {
+      "newPosixPgHostCases": 11,
+      "newActualProviderV2Cases": 2,
+      "passed": 13,
+      "separateReviewerCounterexampleFailed": 1,
+      "pytestSeconds": 5.27,
+      "processAndPgStartSeconds": 8.819811523950193,
+      "pgWallSeconds": 9.706518000981305,
+      "all9FrozenPinsBeforeAfterUnchanged": true,
+      "importsBoundTo5VersionSourcesAnd3PriorReviewedLineageDependencies": true,
+      "sourceReviewAndEvaluatorPorts": "Synthetic doubles; no actual component evaluation or new saved publication.",
+      "actualFileAndScopedPgChanges": "Own disposable PostgreSQL16.13 and temporary test files only.",
+      "oldStore8AndInterface39CasesRepeated": false,
+      "sourceDatabaseQueries": 0,
+      "credentialValuesOrHashesEmitted": 0,
+      "modelCalls": 0,
+      "prodChanges": 0,
+      "ownPgAfter": "exited_retained"
+    },
+    "newFinding": "E112-VERSION-002",
+    "otherNecessaryIntegrationBoundary": "First newly changed source with no own OFFERED proof becomes proposed with retained old artifact adoption. Trial/proof realization must support this exact new version; file tests with constant proof callback do not demonstrate that transition. Coordinator notified under existing VERSION/ADOPTION original gaps.",
+    "wholeVersionFunctionalOutcomeOrInstallationGo": false,
+    "installedProofHandoffGoUnaffected": true,
+    "currentDispositionAfterRepair": "GO_SCOPED_E112_VERSION_002_POSTBLOCKING_ENDPOINT_FIX"
+  },
+  "versionPostBlockingEndpointFixReview": {
+    "checkedAtMachineUtc": "2026-10-24T02:10:42.463654+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_E112_VERSION_002_POSTBLOCKING_ENDPOINT_FIX",
+    "handoffSha256": "abd4e8a1a2dbecbaa52614f2f9a94b9a3f4fbe138bd3acb9796cbe494a4ed344",
+    "fixedSourceSha256": "bd4602aa849abefef51c2b1c900d41e4a967a3aac542d6da4b4e56163294c769",
+    "originalSourceSha256": "c90ceb8c515269c4c3f801576c400be02c370d841ce2b3a3fe002ae76771357c",
+    "fixedBuilderTestSha256": "7f51367ab8c14661bdf3e950bc9cd152c858f97befb38286db48a9e29da9b57b",
+    "change": "After blocking target verification reread actual config+pointer and validate all actual source/review/config/pointer endpoints before destructive writes.",
+    "independentRetest": {
+      "originalOwnOverwriteScenarioAndAssertionReused": true,
+      "originalFrozenV2FixtureRetained": true,
+      "cases": 1,
+      "passed": 1,
+      "pytestSeconds": 3.65,
+      "processAndPgStartSeconds": 7.325418551045004,
+      "ownPgWallSeconds": 8.229484173003584,
+      "targetVerificationCalls": 2,
+      "outsideReviewChangePreserved": true,
+      "successfulChangeReceiptReturned": false,
+      "pendingRemainsPaused": true,
+      "originalConfigAndPointerUnchanged": true,
+      "actualPosixFilesAndScopedPg16_13": true,
+      "fixedSourceBeforeAfterPinUnchanged": true,
+      "all9OriginalFrozenPinsUnchanged": true,
+      "old13And8And39Repeated": false,
+      "prodEvaluatorOrModelCalls": 0,
+      "canonicalSourceOrTestWrites": 0,
+      "credentialValuesOrHashesEmitted": 0,
+      "ownPgAfter": "exited_retained"
+    },
+    "staticScope": {
+      "originalAndFixedModuleActually0400": true,
+      "wholeModuleAstIdenticalAfterRemovingOnlyFixedPostreadCheck": true,
+      "oldFailAndOriginalCriteriaPreserved": true
+    },
+    "wholeE112VersionOutcomeOrInstallationGo": false,
+    "remaining": "Owner API/UI/Runtime wrapper integration independent review plus actual source/version trial/proof and installed use; existing E112-VERSION-001 and ADOPTION-001 original outcome criteria remain open."
+  },
+  "versionOwnerApiUiReview": {
+    "checkedAtMachineUtc": "2026-10-24T02:14:57.951078+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_VERSION_OWNER_API_UI_AND_RUNTIME_FORWARDER_PATCH",
+    "handoffSha256": "617fa8cfa5d01e22251442a1db212dec10b27cd685985a690798a6854426f5c3",
+    "apiSha256": "566c7d95f520f948301cea46956c964ce54ed2b7d3f56ecb1e80244782d87fff",
+    "apiTestSha256": "686d6cc682a6121d5692801fbb63d07cd356229a7f816f105bde5e274b84a722",
+    "parentUiSha256": "35b31d4dcf40fa32c190648adbec2aa19bd1230fbb42d1edb305d08b4daa2d40",
+    "versionsUiSha256": "b42e15a9fb3c074635b12e9a0f34aceb06a7756c5193bbe234ea805158bf375d",
+    "browserHarnessSha256": "4cd671c8391d4946b8d25612cf2117d54f9b15065c0985e4b35e5ea0141442ec",
+    "jsBundleSha256": "3014d7fdcbb0d480440fcb457da449cdc1df9316237a3e3dd71facdc4c7f215a",
+    "runtimeReviewScope": {
+      "onlyPatchSha256": "4a058af11c18d5a59ecc136f1aa359bc7c33a54abd46a2a5c53d2cc24ec708d0",
+      "fiveMethodsExactlyMatchCandidateDefinitions": true,
+      "fiveMethodsAndHostMethodSignaturesReviewed": true,
+      "wholeCandidateRuntimeSha256NotDeploymentApproved": "6b81534845288b642b668f489a4facdbcbf66758a9a3deb50e2683e90386b3d2",
+      "required": "Apply only reviewed five-method patch to actual installed role baseline; preserve foreign WIP and exclude whole runtime snapshot."
+    },
+    "contractReview": [
+      "Existing owner access.require runs before choices/history/invoke and all mutations. Caller scope/query/source/review/proof assertions rejected; exact current revision, binding and server-selected choice/version IDs forwarded.",
+      "Owner Runtime patch methods match actual reviewed host controller choices/stage/change/undo/history signatures; API request/response shapes match concrete host.",
+      "UI accepts only exact same-provision private history/current revision and bounded version choices; renders labels/history without private reference/owner identifiers.",
+      "Partial config/pointer source handoff accepts only old ledger binding or exact pending target binding. Retry is explicit, uses actual current revision and old ledger binding, no unsupported finish endpoint or automatic replay.",
+      "Unknown working proof keeps target proposed; undo uses current target binding and returns prior source through existing host route. No caller can certify working proof.",
+      "Malformed/foreign pointer clears main state and stale version history removes version actions. Mobile layout and same-origin no-store requests preserve existing UI behavior."
+    ],
+    "independentApi": {
+      "cases": 2,
+      "passed": 2,
+      "oldCasesDeselected": 5,
+      "pytestSeconds": 1.93,
+      "processSeconds": 2.4929877129616216,
+      "frozenApiImportBindingExact": true,
+      "all12PinsBeforeAfterUnchanged": true,
+      "wholeRuntimeNotImported": true,
+      "realHttpDatabaseOrModelCalls": 0
+    },
+    "independentBrowser": {
+      "engine": "Actual frozen compiled React bundle in headless Chromium; isolated loopback synthetic API",
+      "elapsedSeconds": 1.6323949050274678,
+      "serverChoicesOnly": true,
+      "privateIdentifiersNotRendered": true,
+      "partialPointerTargetAndOldPausedLedgerRecoverable": true,
+      "pendingUsesOldBindingCurrentRevisionAndExplicitRetry": true,
+      "unknownNewProofLeavesProposed": true,
+      "explicitUndoUsesCurrentBinding": true,
+      "staleHistoryAndUnknownPointerDisableVersionControls": true,
+      "mobileWidth": 390,
+      "syntheticPosts": 4,
+      "automaticPosts": 0,
+      "productionPosts": 0,
+      "externalRequests": 0,
+      "modelCalls": 0,
+      "allSourceHarnessBundlePinsUnchanged": true,
+      "oldBroadBrowserFlowRepeated": false
+    },
+    "newActionableFindings": [],
+    "installationOrWholeE112Go": false,
+    "remaining": [
+      "Bounded actual-role overlay with fixed bd460 version host and reviewed version sources; actual installation/readback still required.",
+      "First actual server-available reviewed saved version and genuine installed change/undo/use, not synthetic evaluator/proof callbacks.",
+      "Explicit trial/proof handoff for a new current source retaining artifact adoption, so it can obtain first real working proof without false activation.",
+      "Original trial/evaluation/notice/implicit adoption and adopted/paused portable restore acceptance remain open."
+    ]
+  },
+  "trialOwnerApiUiReview": {
+    "checkedAtMachineUtc": "2026-10-24T02:18:50.582292+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_TRIAL_OWNER_API_UI_BOUNDARY_BACKEND_REVIEW_PENDING",
+    "handoffSha256": "33fdf4fe687013f321225a0e232067514be3f61c4587baef8b5f17ab996f2f83",
+    "apiSha256": "4dda12c42449cd151570db2f66969c2323061ad6c797e336f22e9dd8d6ffd946",
+    "parentUiSha256": "b414b42cf3da87afcca82a3bcf70a393521c81fa2ea7b084aa91b0b8b293ff51",
+    "trialUiSha256": "034affd6c3b6ef0b4695128192a956b2293d431480857749ea69c411169ec805",
+    "harnessSha256": "5b50af45a11221d67ea3da8e38ba783d6345ce0e38a410483cbff38270cfde12",
+    "compiledJsSha256": "36b7f02d378ceca4e324f93405a48963f7225381c1976fe9ddf2ecdb393b136a",
+    "runtimeAndLoopScope": {
+      "onlyThreeRuntimeForwardersPatchSha256": "983dde5c8cd4dc5d10037f9a5835ef0377bd5c0863c2fe396a72fd6d10dd8751",
+      "methodsExactlyMatchFrozenDefinitions": true,
+      "wholeRuntimeSnapshotNotDeploymentApproved": "a29cbe35752d626ecc38f2a9c5928a4325d2ef23bfe5cc16d70920c1e7f7e949",
+      "claimForwardingPatchSha256": "92cc0c35679794d65b7fcd200cb6dc1c6f1e43de84d4470cd40f3421c6afab0a",
+      "claimPatchStaticScope": "Only passes existing claim=claim keyword into existing validate_expression; backend signature and dynamic claim semantics not approved from this UI review."
+    },
+    "independentApi": {
+      "cases": 1,
+      "passed": 1,
+      "oldCasesDeselected": 7,
+      "pytestSeconds": 1.66,
+      "processSeconds": 2.2368726250133477,
+      "frozenApiImportBindingExact": true,
+      "wholeRuntimeAndClaimModulesNotImported": true,
+      "actualHttpDbOrModelCalls": 0,
+      "all14PinsBeforeAfterUnchanged": true
+    },
+    "independentBrowser": {
+      "engine": "Actual frozen compiled UI, existing Chromium; isolated loopback synthetic API",
+      "elapsedSeconds": 2.123888123955112,
+      "explicitGrantBoundsOwnerChoicesOnly": true,
+      "bothActualOwnerEvaluationChoicesAndFeedbackRequired": true,
+      "positiveEvaluationDoesNotAdoptOrReplaceOldAdoption": true,
+      "exactServerNoticeRenderedBeforeExplicitAck": true,
+      "failedAckRequiresExplicitRefreshAndReusesIdempotencyRequestId": true,
+      "expiryAndStopDisableTrial": true,
+      "additionalIndependentNoticeBoundaryCases": 3,
+      "missingNonceDenied": true,
+      "wrongVersionNoticeDenied": true,
+      "alreadyAcknowledgedNoticeInAwaitingPhaseDenied": true,
+      "invalidNoticeReadsCauseNoPosts": true,
+      "mobileWidth": 390,
+      "syntheticPosts": 4,
+      "automaticPosts": 0,
+      "productionPosts": 0,
+      "externalRequests": 0,
+      "modelCalls": 0,
+      "originalFrozenHarnessFlowAndAssertionsUnchanged": true,
+      "additionalChecksInMemoryOnly": true,
+      "allSourceHarnessBundlePinsBeforeAfterUnchanged": true
+    },
+    "backendTrustedProofNoticeCurrentAuthorityEnforcementGo": true,
+    "actualAdoptionOrFullE112Go": false,
+    "remaining": "Review exact final backend/claim integration and receipt fields; UI simulations cannot prove actual original trial grant→working proof→evaluation→durable notice→owner ACK/adoption.",
+    "backendContractAndClaimResolution": "completeVersionTrialBackendCandidateReview"
+  },
+  "completeVersionTrialBackendCandidateReview": {
+    "checkedAtMachineUtc": "2026-10-24T02:33:28.111259+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_COMPLETE_VERSION_TRIAL_BACKEND_AND_OWNER_INTERFACE_CANDIDATE",
+    "handoffSha256": "0de29848e86e2ec6e201a3d071ae25a9b1dabae5c4a62cf5d508851410ff38ff",
+    "runtimeSourcePins": {
+      "src/eva/adapters/postgres/household_provisions.py": "615e67efdd98aee46134d98f2a0a3d35bc756267c8edc0d37f3e44c413e20d07",
+      "src/eva/bootstrap/household_provision_host.py": "d44e6c989bb790ed9d72f291c6ea1e01d74c7a01a54b487ec0b02a99ab3886bc",
+      "src/eva/bootstrap/household_provision_runtime.py": "750c63de33b67547fe235709e0dc5f06ac1c00661ed68421ad81745dde13867f",
+      "src/eva/bootstrap/household_provision_versions.py": "bd4602aa849abefef51c2b1c900d41e4a967a3aac542d6da4b4e56163294c769",
+      "src/eva/bootstrap/household_provision_trials.py": "983e133ae84c434046424700041fa3e4f24581f31f3b8bc7c1de237e9c57bc24",
+      "src/eva/providers/home_assistant_procedure.py": "178cc37cd7056c72376c17cef6ee1b06a2f70dfe27a53a5013c83fb1a86b6c73"
+    },
+    "reviewedBoundaries": [
+      "Existing PG lifecycle remains sole durable ledger; exact prior owner/version/source/execution/output scope and bounded future <=7day deadline plus1..16effects required. No wider rights, background daemon or second feedback store.",
+      "Known empty current V2 source requires exact enrolled identity and verified durable paused version handoff, no later admission and no matching PREPARED; it is clear eligibility only, never working proof. Legacy missing or invalid evidence remains unknown.",
+      "Only a live typed exact original current-lifecycle-guarded never-admitted CLAIMED chain is excluded from its own pending-effect check. Current owner/household/source and original configuration guards are rechecked; other matching live/unknown effects remain blocking; wrong household is excluded.",
+      "Source preparation and late validation accept bounded trial through same pure current grant, followed by durable final admission with max-effect count and non-replay claim ledger. Root claim keyword matches actual provider signature and production slotted claim dataclass.",
+      "Positive evaluation requires real authorized owner working/useful feedback plus exact post-grant same-trial CLAIMED→OFFERED receipt and successful settlement; global old proof or owner opinion alone is insufficient.",
+      "Server creates private durable notice and unpredictable nonce. Evaluation remains proposed with old adoption untouched; exact current owner/source/revision/notice/nonce acknowledgment plus fresh proof/clear checks required before active adoption. STOP/pause/expiry/authority loss/proof loss/execution drift deny.",
+      "Source change clears old trial/notice, preserves artifact identity/adoption history, keeps target proposed until its own proof; new-version trial now supplies the missing first-use handoff. Original bd460 postblocking review/source preservation fix remains exact.",
+      "Owner API/UI already independently reviewed; trial methods return direct receipt matching actual backend contract, with only explicit user actions and no caller proof/recipient/message assertions."
+    ],
+    "independentValidation": {
+      "distinctNewCasesPassed": 25,
+      "exactEvidenceProviderAndDynamicHostCasesPassed": 14,
+      "trialStoreCasesPassed": 11,
+      "newNegativeOwnerFeedbackCaseIncluded": true,
+      "dynamicCoverage": "Actual POSIX version file changes and real PostgreSQL16.13 from missing target proof→known-empty trial eligibility→owner grant→PREPARED/CLAIMED→original OFFERED+settlement→owner feedback→durable notice→nonce ACK active; matching other claim blocks, foreign household does not.",
+      "firstBatch": {
+        "pytestSeconds": 7.62,
+        "passed": 14,
+        "setupErrors": 10,
+        "processAndPgStartSeconds": 11.415499060996808,
+        "pgWallSeconds": 12.324858394975308,
+        "failureKind": "Runner combined directly imported session PG fixtures and global plugin fixture, causing second migration to reject nonempty own test DB. Those10test bodies did not run.",
+        "postprocessingFailure": "Strict fixture __file__ equality rejected Pytest assertion-rewritten helper fixtures loaded from canonical paths. Collection-only diagnosis confirmed exact same helper source bytes as frozen snapshots; all product module mappings used frozen sources.",
+        "preserved": true,
+        "productFailureClaim": false
+      },
+      "splitStoreBatch": {
+        "pytestSeconds": 4.24,
+        "passed": 11,
+        "processAndPgStartSeconds": 7.858581223001238,
+        "pgWallSeconds": 8.718082492996473,
+        "first14CasesNotRepeated": true,
+        "assertionCriteriaUnchanged": true,
+        "assertRewriteDisabledOnlyForFixtureImportBinding": true
+      },
+      "snapshotBinding": "Six final runtime modules plus three prior reviewed lineage dependencies imported through in-memory frozen source finder. Borrowed fixture path issue diagnosed without rerunning tests; helper content matched exact frozen bytes.",
+      "all13FrozenSourceTestPinsExact0400AndUnchanged": true,
+      "fixedVersionPostreadModuleBd460Retained": true,
+      "old39AndLegacy10SuitesRepeated": false,
+      "ownPgStarts": 2,
+      "ownPgAfter": "exited_retained",
+      "prodSourceDatabaseQueries": 0,
+      "actualModelEvaluatorOrHouseholdEffects": 0,
+      "canonicalProductOrTestWrites": 0,
+      "credentialValuesOrHashesEmitted": 0
+    },
+    "originalFunctionalGapProgress": {
+      "versionCodeInterface": "Candidate version/change/undo/history and owner API/UI now concretely built and reviewed; actual installation/use still pending.",
+      "trialAdoptionCodeInterface": "Candidate prior-trial→actual proof→owner feedback→notice→acknowledged adoption now concretely built and reviewed; no real household grant/feedback/adoption claimed."
+    },
+    "installationGo": false,
+    "fullE112OrOwnerAcceptanceGo": false,
+    "remaining": [
+      "Review exact current-role overlay/managed copy/profile/operator bundle; no new shared runtime install before that review.",
+      "Actual installed bounded source/version/trial owner interfaces readback and natural real household usefulness/adoption evidence.",
+      "Portable recovery of adopted/paused same-identity facility with managed files/source/review/pointer; original full outcome remains open."
+    ]
+  },
+  "versionTrialPreparedInstallationReview": {
+    "checkedAtMachineUtc": "2026-10-24T02:40:40.536837+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_ONE_FRESH_GUARDED_VERSION_TRIAL_INSTALL_ATTEMPT",
+    "bundle": "/var/lib/eva2/e112-version-trial-20261024",
+    "pins": {
+      "installation-handoff.private.json": "27b850c0bfcb3113fbbaf0669260f56b5cfae299d540856920369660c75cb737",
+      "manifest.private.json": "18cc8eb7ea896c3f06b6a9f6b7b649b071cb59da67c02fdacaddcd374178047b",
+      "install.py": "5cb5c840fb3f5870b569d24389b0ec00b41668633e0819380a118d3004512757",
+      "managed-copy.private.json": "f02fc3c983bc495b1dbaabb8b6b205054f966459c4fbd05be1aac165f6610e22",
+      "candidate.private.json": "6aeaf8b5fc4c918fedb4ccfe7a78ecc40b9ea2acdabd3a078c2165860f7c5a12",
+      "candidate-profiles.private.json": "1deda91c8562370a5f3df7ec22b5caebdd308e275a97e0167c0e289ab714641d",
+      "readiness-probe.py": "1c662189d90f9e94cc79ac127d39c88fafc20aa60e7fd4200f0d3873a4807f7c"
+    },
+    "roles": {
+      "core": {
+        "base": "sha256:f55b5f7cf714d8ad839e48f965530b71f0bb243920b9133814e32f734e1b8358",
+        "candidate": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+        "fileCount": 12
+      },
+      "delegated-work-worker": {
+        "base": "sha256:32d634b3ebc2ab616ca627e4936538ebdf8778ce727d676e8bd0ea267c8d03c4",
+        "candidate": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
+        "fileCount": 7
+      }
+    },
+    "backendPrerequisite": "completeVersionTrialBackendCandidateReview:25new cases passed; fixedbd460 and all6runtime sources match frozen finalcandidate.",
+    "sourceAndImageReview": {
+      "all19StagedAndImageReadbackHashesMatchManifest": true,
+      "allRetainedBeforeHashesVerified": true,
+      "actualDockerImageIdsInspected": true,
+      "candidateImageConfigsEqualRespectiveBaseImages": true,
+      "baseLayerPrefixesPreserved": true,
+      "exactAdditionalCopyLayers": {
+        "core": 12,
+        "worker": 7
+      },
+      "dockerfilesOnlyFromActualBaseAndReviewedFileCopies": true,
+      "coreRuntimeOnly8ReviewedForwarderMethodsAdded": true,
+      "bothActualRoleHouseholdLoopsOnlyOneClaimKeywordAdded": true,
+      "unrelatedWorkerVariantsPreserved": true,
+      "fullForeignWipRuntimeSnapshotExcluded": true,
+      "sourceVersionsAndTrialCodeMatchReviewedFrozen6Files": true,
+      "uiCompiledBundleSha256": "36b7f02d378ceca4e324f93405a48963f7225381c1976fe9ddf2ecdb393b136a",
+      "assetManifestSha256": "d204c4452bf6f9fc752940c939e9f6f55e807f32bede1f9bb1fb9e13e4ea269b"
+    },
+    "managedProcedureReview": {
+      "exact3SourceConfigReviewBytesAndOriginalFilenamesPreserved": true,
+      "sourceAndReviewDigestsMatchUnchangedCopiedConfiguration": true,
+      "originalReadOnlyVoiceProcedureAndSpeakerServicesUntouched": true,
+      "directoryUidGidMode": "65532:65532:0700",
+      "all3FilesUidGidMode": "65532:65532:0600",
+      "enrollmentPointerStillExactProtectedNull": true,
+      "onlyRuntimeConfigDelta": "Two exact role images and two core ENV paths to managed procedure/review. All storage, other configuration and enrollment unchanged.",
+      "originalCurrentSourceHashesRereadByOperatorBeforeDispatch": true
+    },
+    "profileAndOperatorReview": {
+      "actualCandidateImageProfileProbeReceiptsAndPerRolePayloadsBound": true,
+      "exactCurrentCheckerProbeUsed": true,
+      "environmentHashBindingsVerifiedWithoutEmittingValues": true,
+      "profileProbeSeconds": {
+        "core": 8.243989828974009,
+        "worker": 8.838027371035423
+      },
+      "readOnlyRootVolumesAndPgOptions": true,
+      "sharedProviderPublicResearchDigitalWorkEqual": true,
+      "knownMismatch": [
+        "household_research"
+      ],
+      "allProfilesCompatibleClaim": false,
+      "productionSchemaHeadUnchanged": "4e_0011_timeline_type_time",
+      "newMigrations": false,
+      "operatorDeltaFromPriorReviewedDb36": "Bundle path, exact2coreENVpath difference, managed private directory/file checks and original-source rehash; remaining one-attempt receipt/storage/compose/source/profile/generation/evaluation/native/claim logic retained.",
+      "sameReadiness1c662NoOldMatrixRepeated": true,
+      "currentFreshReadinessPassNotClaimedByReviewer": true,
+      "existingInstallationReceiptAbsentAtReview": true
+    },
+    "installationGo": true,
+    "mandatoryBeforeDispatch": [
+      "Bind this exact report and manifest; preserve pre-install GO bytes privately.",
+      "Run reviewed operator once with fresh actual current-generation conversation/model/work/native/evaluation/source/storage checks. Any active/unknown or changed source/config/process defers dispatch; never clear markers or retry automatically.",
+      "Do not auto-register, authorize trial, send an event, collect synthetic family feedback or adopt. Current explicit-null preserves authorized legacy behavior.",
+      "After cutover verify actual19source hashes, exact configuration and managedfile permissions/content, ownerGET/assets/auth denial and actual installed profile equality. No wholeE112 claim from installed controls."
+    ],
+    "productionActionByReviewer": false,
+    "newTestsImportsOrModelCallsForOverlayReview": 0,
+    "fullE112ProjectOrOwnerAcceptanceGo": false,
+    "remainingOriginalOutcome": "Real useful lasting household provision/use/feedback/adoption and actual same-identity adopted/paused managed-source restore remain open. Separate concrete restore activation repair is not reviewed here."
   }
 }

@@ -60,7 +60,7 @@ class TrustedHouseholdProvisionCallbacks:
     No lineage means no working proof and unknown legacy effect state.
     """
     def __init__(self, owner, legacy, *, household_binding, procedure_path,
-                 review_path, proof_reference=None, load_lineage=None, select_reference=None, clock=None, read_chain=read_exact_chain):
+                 review_path, proof_reference=None, load_lineage=None, select_reference=None, load_enrollment=None, clock=None, read_chain=read_exact_chain):
         self.owner, self.legacy = owner, legacy
         self.binding = dict(household_binding)
         self.path, self.review_path = Path(procedure_path), Path(review_path)
@@ -68,6 +68,7 @@ class TrustedHouseholdProvisionCallbacks:
         self.proof_reference = None if proof_reference is None else dict(proof_reference)
         self.load_lineage, self.read_chain = load_lineage, read_chain
         self.select_reference = select_reference
+        self.load_enrollment = load_enrollment
         self.scope = external_timeline_scope(self.binding['tenant_id'],
             self.binding['installation_id'], 'household provision scope absent')
         if (owner._scope != self.scope or owner._tenant_id != self.binding['tenant_id']
@@ -82,8 +83,16 @@ class TrustedHouseholdProvisionCallbacks:
             raise ValueError('trusted provision runtime scope or legacy route differs')
 
     def callbacks(self):
-        return {name: getattr(self, name) for name in
-                ('authorize', 'verify_current', 'verify_realization', 'effect_status')}
+        result = {name: getattr(self, name) for name in
+                  ('authorize', 'verify_current', 'verify_realization', 'effect_status')}
+        if self.load_enrollment is not None:
+            if not callable(self.load_enrollment):
+                raise ValueError('trusted enrollment loader is invalid')
+            from eva.bootstrap.household_provision_trials import HouseholdProvisionTrialEvidence
+            trial = HouseholdProvisionTrialEvidence(self, self.load_enrollment)
+            result.update({name: getattr(trial, name) for name in
+                ('current_guard', 'verify_empty_current', 'verify_trial_realization', 'effect_status_for_admission')})
+        return result
 
     def authorize(self, connection, now):
         self.owner._authorize(connection, now)
@@ -376,7 +385,7 @@ class HouseholdProvisionRuntime:
                 or binding['actor_id'] != 'household-device:' + binding['device_id']):
             raise ValueError('provision differs from current household authority')
 
-    def _reference(self, connection, binding, evidence, *, for_proof):
+    def _reference(self, connection, binding, evidence, *, for_proof, exclude_thread=None):
         """One bounded current-source lookup; historical missing lineage is not repaired."""
         scope = external_timeline_scope(binding['tenant_id'], binding['installation_id'],
                                         'household provision scope absent')
@@ -391,6 +400,8 @@ class HouseholdProvisionRuntime:
             config['source_principal_id'].astext == str(self.owner_loader()._owner)]
         filters += [config[key].astext == evidence[key] for key in
                     ('source_sha256', 'review_sha256', 'reference_id')]
+        if exclude_thread is not None:
+            filters.append(e.thread_id != exclude_thread)
         # The config hash is verified on the returned exact chain, not asserted
         # from caller data or a timestamp. Filter current source before LIMIT.
         query = sa.select(e.thread_id, e.payload, e.payload_sha256).join(
@@ -468,11 +479,12 @@ class HouseholdProvisionRuntime:
             household_binding=binding, procedure_path=procedure_path,
             review_path=self.review_path, proof_reference=None,
             select_reference=lambda connection, evidence, **kw: self._reference(
-                connection, binding, evidence, **kw), load_lineage=self._lineage).callbacks()
+                connection, binding, evidence, **kw), load_lineage=self._lineage,
+            load_enrollment=self._load_enrollment).callbacks()
 
     def _source(self):
         _, config = _read_json(self.procedure_path, 16384)
-        if (config.get('contract') != 'EvaHouseholdProcedureBinding/v1'
+        if (config.get('contract') not in {'EvaHouseholdProcedureBinding/v1', 'EvaHouseholdProcedureBinding/v2'}
                 or not isinstance(config.get('household_binding'), dict)):
             raise ValueError('household provision source configuration differs')
         return config
@@ -487,8 +499,53 @@ class HouseholdProvisionRuntime:
             household_binding=config['household_binding'],
             **self._callbacks(config['household_binding'], str(self.procedure_path), config, None))
 
+    def _trial_controls(self):
+        from eva.bootstrap.household_provision_trials import HouseholdProvisionTrials
+        return HouseholdProvisionTrials(self)
+
+    def authorize_trial(self, provision_id, expires_at_epoch, max_effects,
+                        expected_revision, binding_sha256, request_id):
+        return self._trial_controls().authorize(provision_id, expires_at_epoch, max_effects,
+                                                expected_revision, binding_sha256, request_id)
+
+    def evaluate_trial(self, provision_id, working, useful, feedback,
+                       expected_revision, binding_sha256, request_id):
+        return self._trial_controls().evaluate(provision_id, working, useful, feedback,
+                                               expected_revision, binding_sha256, request_id)
+
+    def acknowledge_trial_notice(self, provision_id, notice_id, nonce,
+                                 expected_revision, binding_sha256, request_id):
+        return self._trial_controls().acknowledge_notice(provision_id, notice_id, nonce,
+            expected_revision, binding_sha256, request_id)
+
+    def _version_controls(self):
+        from eva.bootstrap.household_provision_versions import HouseholdProvisionVersions
+        return HouseholdProvisionVersions(self)
+
+    def version_choices(self):
+        return self._version_controls().choices()
+
+    def stage_version_choice(self, provision_id, choice_id, expected_revision, binding_sha256, request_id):
+        return self._version_controls().stage_choice(provision_id, choice_id, expected_revision,
+                                                     binding_sha256, request_id)
+
+    def change_version(self, provision_id, version_id, expected_revision, binding_sha256, request_id):
+        return self._version_controls().change(provision_id, version_id, expected_revision,
+                                               binding_sha256, request_id)
+
+    def undo_version(self, provision_id, expected_revision, binding_sha256, request_id):
+        return self._version_controls().change(provision_id, None, expected_revision,
+                                               binding_sha256, request_id, undo=True)
+
+    def version_history(self, provision_id):
+        return self._version_controls().history(provision_id)
+
     def overview(self):
         config, enrollment = self._source(), self._load_enrollment()
+        if enrollment is not None:
+            pending = self._version_controls().pending_overview()
+            if pending is not None:
+                return pending
         provision_id = procedure_provision_id(config)
         state = self._store(config, enrollment).inspect(provision_id,
             now=datetime.now(UTC).replace(microsecond=0))
@@ -571,6 +628,11 @@ class HouseholdProvisionRuntime:
 
     def command(self, provision_id, action, expected_revision, binding_sha256, request_id):
         config = self._source()
+        if self._load_enrollment() is not None:
+            controls = self._version_controls()
+            if controls.pending_overview() is not None:
+                return controls.pending_command(provision_id, action, expected_revision,
+                                                binding_sha256, request_id)
         if provision_id != procedure_provision_id(config):
             raise LookupError('household provision is not the current host source')
         enrollment = self._load_enrollment()

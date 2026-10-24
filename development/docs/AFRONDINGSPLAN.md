@@ -12,9 +12,9 @@ De [samengevoegde scope](../design/product/living-housemate-task-scope-20261022.
 behoudt Household Artifacts, tijdige hulp, ondersteuningskansen, Personality Deltas en
 Inner Life. De leidende richting is nu gerichte continuïteit: Eva onderhoudt echte
 verantwoordelijkheden en eigen projecten tussen gesprekken en gebruikt denkvermogen
-wanneer dat iets toevoegt. De actuele uitvoering is E4.17 volgens currentWork:
-dezelfde uitbreiding herstelbaar en testklaar maken terwijl de fysieke E4.15-proef
-is uitgesteld. De eigenaar vroeg op 23 oktober uitvoerbaar werk door te zetten zonder
+wanneer dat iets toevoegt. De actuele uitvoering is E1.12 volgens currentWork:
+dezelfde huisvoorziening brongebonden beheren, terugdraaien en herstellen terwijl
+de fysieke E4.15-proef is uitgesteld. De eigenaar vroeg op 23 oktober uitvoerbaar werk door te zetten zonder
 op zijn tests te wachten. Dit sluit E4.15 of haar overige criteria niet af.
 De tabel bewaart de overige kaartvolgorde; spraak blijft bij de bestaande uitvoerder.
 
@@ -33,7 +33,8 @@ Drie aanvullende kaarten: **E1.13** gericht denkvermogen, **E1.14** continuïtei
 uitval/herstart en **E4.19** zelfstandig updateonderhoud. De eerdere vier toevoegingen
 E4.17, E1.12, E2.9 en E4.18 blijven behouden. Bestaande kaarten krijgen gerichte
 bouwstappen; oorspronkelijke eindvoorwaarden en eerdere afrondingen blijven intact.
-De actuele bordcontrole van 23 oktober telt 24 open kaarten in deze volgorde.
+De bordcontrole van 24 oktober telt na volledige afronding van E4.18 nog 23 open
+kaarten. De telling van 23 oktober was 24 open kaarten in deze volgorde.
 De eerdere telling was 25; oorspronkelijke criteria en technische afrondingen blijven
 behouden. De telling is geen productpercentage.
 
@@ -103,8 +104,9 @@ E4.18 is op 24 oktober volledig technisch afgerond: de drie onderhoudsuitkomsten
 zijn gebruikt in de huidige WSL-installatie en de actuele bron-/herstelbindingen
 hebben onafhankelijke volledige GO. Werkbord, dashboard en Git volgen die oplevering.
 De E1.12-bewijsroute en eigenaarbediening zijn op 24 oktober geïnstalleerd en
-onafhankelijk live teruggelezen. Dezelfde bouwer en reviewer maken nu de
-oorspronkelijke versie-/terugdraai- en proef/evaluatie/meldingsroutes af.
+onafhankelijk live teruggelezen. De versie-/terugdraai- en
+proef/evaluatie/meldingsroutes zijn eveneens geïnstalleerd. Dezelfde reviewer
+controleert de echte installatie en de gerepareerde bestaande herstelroute.
 Werkelijk gebruik, adoptie en herstelbewijs blijven nodig; E1.12 is nog open.
 E4.15-begroeting, horen en later hergebruik en
 de volledige E4.17-acceptatie blijven open; de fysieke proef is uitgesteld.

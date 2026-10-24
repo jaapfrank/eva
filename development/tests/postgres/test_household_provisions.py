@@ -200,3 +200,213 @@ def test_concurrent_pause_waits_for_an_already_committing_admission(provision):
         assert admitting.result(timeout=5)['admitted_now'] is True
         receipt = paused.result(timeout=5)
     assert receipt['status'] == 'paused' and receipt['effect_status'] == 'in_flight'
+
+
+@pytest.fixture
+def version_control(provision):
+    store, control, build = provision
+    active(provision)
+    target = {**EVIDENCE, 'binding_sha256': '1' * 64, 'source_sha256': '2' * 64,
+              'review_sha256': '3' * 64, 'reference_id': 'procedure-reference:next',
+              'realization_receipt_sha256': None}
+    installed = [EVIDENCE['binding_sha256']]
+    calls = []
+    def verify_current(conn, evidence):
+        calls.append(('current', evidence['binding_sha256']))
+        if evidence['binding_sha256'] != installed[0]:
+            raise ValueError('actual installed source differs')
+    def verify_version(conn, evidence):
+        calls.append(('reviewed_version', evidence['binding_sha256']))
+        if evidence['binding_sha256'] not in {EVIDENCE['binding_sha256'], target['binding_sha256']}:
+            raise ValueError('source/review resolver refuses unknown target')
+    store.verify_current, store.verify_version = verify_current, verify_version
+    return store, control, target, installed, calls
+
+
+def _stage_version(fixture):
+    store, control, target, installed, calls = fixture
+    result = store.stage_version('fixture-provision', target, expected_revision=2,
+        binding_sha256='a' * 64, request_id='stage-next', now=NOW)
+    return result, store._version_id(target)
+
+
+def test_source_version_change_and_undo_use_one_identity_and_real_target_check(version_control):
+    store, control, target, installed, calls = version_control
+    staged, version = _stage_version(version_control)
+    assert staged['status'] == 'active' and staged['evidence'] == EVIDENCE
+    assert len(staged['versions']) == 2 and staged['current_version'] != version
+    assert store.stage_version('fixture-provision', target, expected_revision=2,
+        binding_sha256='a' * 64, request_id='stage-next', now=NOW) == staged
+    pending = store.begin_change('fixture-provision', version, expected_revision=staged['revision'],
+        binding_sha256='a' * 64, request_id='begin-change', now=NOW)
+    assert pending['status'] == 'paused' and pending['pending_change']['to_version'] == version
+    with pytest.raises(CheckpointConflict):
+        admit(store, pending['revision'])
+    with pytest.raises(CheckpointConflict, match='change is incomplete'):
+        command(store, 'resume', pending['revision'], 'no-premature-resume')
+    with pytest.raises(ValueError, match='actual installed'):
+        store.finish_change('fixture-provision', expected_revision=pending['revision'],
+            binding_sha256='a' * 64, request_id='confirm-change', now=NOW)
+    installed[0] = target['binding_sha256']  # Host file-apply is separate from this store test.
+    changed = store.finish_change('fixture-provision', expected_revision=pending['revision'],
+        binding_sha256='a' * 64, request_id='confirm-change', now=NOW)
+    assert changed['status'] == 'active' and changed['current_version'] == version
+    assert changed['adoption'] == staged['adoption'] and changed['provision_id'] == staged['provision_id']
+    assert store.finish_change('fixture-provision', expected_revision=pending['revision'],
+        binding_sha256='a' * 64, request_id='confirm-change', now=NOW) == changed
+    undo = store.begin_change('fixture-provision', undo=True, expected_revision=changed['revision'],
+        binding_sha256=target['binding_sha256'], request_id='undo-change', now=NOW)
+    installed[0] = EVIDENCE['binding_sha256']
+    restored = store.finish_change('fixture-provision', expected_revision=undo['revision'],
+        binding_sha256=target['binding_sha256'], request_id='confirm-undo', now=NOW)
+    assert restored['status'] == 'active' and restored['evidence'] == EVIDENCE
+    assert restored['current_version'] == staged['current_version']
+    history = store.version_history('fixture-provision', now=NOW, limit=4)
+    assert len(history['entries']) == 4 and history['earlier_entries'] > 0
+    assert history['entries'][-1]['version_id'] == staged['current_version']
+    assert all('source' not in item and 'proof' not in item for item in history['entries'])
+
+
+@pytest.mark.parametrize('owner_action', ['pause', 'stop'])
+def test_version_handoff_preserves_owner_pause_or_stop_during_change(version_control, owner_action):
+    store, control, target, installed, calls = version_control
+    staged, version = _stage_version(version_control)
+    pending = store.begin_change('fixture-provision', version, expected_revision=staged['revision'],
+        binding_sha256='a' * 64, request_id='begin-for-owner-action', now=NOW)
+    owner_receipt = command(store, owner_action, pending['revision'], 'owner-during-change')
+    installed[0] = target['binding_sha256']
+    result = store.finish_change('fixture-provision', expected_revision=owner_receipt['revision'],
+        binding_sha256='a' * 64, request_id='finish-preserving-owner-action', now=NOW)
+    assert result['status'] == 'paused' and result['adoption'] == staged['adoption']
+    assert result['stopped'] is (owner_action == 'stop')
+    assert result['pending_change'] is None
+
+
+@pytest.mark.parametrize('reason', ['unknown_effect', 'in_flight', 'unreviewed', 'forged_proof'])
+def test_version_cannot_bypass_uncertainty_review_or_host_proof(version_control, reason):
+    store, control, target, installed, calls = version_control
+    if reason == 'unreviewed':
+        store.verify_version = None
+        with pytest.raises(RuntimeError, match='resolver is unavailable'):
+            _stage_version(version_control)
+    elif reason == 'forged_proof':
+        target['realization_receipt_sha256'] = 'f' * 64
+        with pytest.raises(ValueError, match='cannot supply realization proof'):
+            _stage_version(version_control)
+    else:
+        staged, version = _stage_version(version_control)
+        control['effect'] = 'unknown' if reason == 'unknown_effect' else 'in_flight'
+        with pytest.raises(CheckpointConflict, match='not confirmed clear'):
+            store.begin_change('fixture-provision', version, expected_revision=staged['revision'],
+                binding_sha256='a' * 64, request_id='cannot-change-with-effect', now=NOW)
+        assert store.inspect('fixture-provision', now=NOW)['pending_change'] is None
+    assert installed[0] == EVIDENCE['binding_sha256']
+
+
+def test_new_version_without_real_working_proof_does_not_become_active(version_control):
+    store, control, target, installed, calls = version_control
+    staged, version = _stage_version(version_control)
+    pending = store.begin_change('fixture-provision', version, expected_revision=staged['revision'],
+        binding_sha256='a' * 64, request_id='begin-unverified-target', now=NOW)
+    installed[0] = target['binding_sha256']; control['verified'] = None
+    result = store.finish_change('fixture-provision', expected_revision=pending['revision'],
+        binding_sha256='a' * 64, request_id='finish-unverified-target', now=NOW)
+    assert result['status'] == 'proposed' and result['verification_sha256'] is None
+    assert result['adoption'] == staged['adoption']
+
+
+@pytest.fixture
+def trial_control(provision):
+    store, control, build=provision
+    control.update(guard='9'*64,trial_proof=None)
+    store.current_guard=lambda conn,evidence:control['guard']
+    store.verify_trial_realization=lambda conn,evidence,trial:(control['trial_proof'] if any(
+        row['outcome']=='completed' for row in trial['claims'].values()) else None)
+    return store,control
+
+
+def _authorize_trial(fixture):
+    store,control=fixture
+    return store.authorize_trial('fixture-provision',expires_at_epoch=int(NOW.timestamp())+3600,
+        max_effects=1,expected_revision=1,binding_sha256='a'*64,request_id='owner-start-trial',now=NOW)
+
+
+def _evaluated_trial(fixture):
+    store,control=fixture; trial=_authorize_trial(fixture)
+    claim=admit(store,trial['revision'],'trial-effect')
+    settled=store.settle_effect('fixture-provision',admission_id=claim['receipt']['admission_id'],
+        outcome='completed',proof_sha256='4'*64,request_id='real-offer',now=NOW)
+    control['trial_proof']='5'*64
+    return store.evaluate_trial('fixture-provision',working=True,useful=True,
+        feedback='Deze bestaande voorziening werkt en helpt ons.',expected_revision=settled['revision'],
+        binding_sha256='a'*64,request_id='real-owner-feedback',now=NOW)
+
+
+def test_prior_trial_admission_evaluation_notice_and_ack_are_separate(trial_control):
+    store,control=trial_control
+    evaluated=_evaluated_trial(trial_control)
+    assert evaluated['status']=='proposed' and evaluated['adoption'] is None
+    assert evaluated['trial']['phase']=='evaluated_awaiting_notice'
+    assert evaluated['trial']['effect_count']==1
+    notice=evaluated['trial']['notice']
+    assert notice['owner_principal_id']=='owner' and notice['acknowledged_at'] is None
+    with pytest.raises(ValueError,match='server notice'):
+        store.acknowledge_trial_notice('fixture-provision',notice_id=notice['notice_id'],nonce='f'*64,
+            expected_revision=evaluated['revision'],binding_sha256='a'*64,request_id='forged-ack',now=NOW)
+    adopted=store.acknowledge_trial_notice('fixture-provision',notice_id=notice['notice_id'],nonce=notice['nonce'],
+        expected_revision=evaluated['revision'],binding_sha256='a'*64,request_id='actual-owner-render-ack',now=NOW)
+    assert adopted['status']=='active' and adopted['adoption']['method']=='prior_authorized_trial'
+    assert adopted['adoption']['trial_id']==evaluated['trial']['trial_id']
+    assert store.acknowledge_trial_notice('fixture-provision',notice_id=notice['notice_id'],nonce=notice['nonce'],
+        expected_revision=evaluated['revision'],binding_sha256='a'*64,request_id='actual-owner-render-ack',now=NOW)==adopted
+
+
+def test_trial_cannot_count_replayed_or_more_than_authorized_effect(trial_control):
+    store,control=trial_control; trial=_authorize_trial(trial_control)
+    first=admit(store,trial['revision'],'first-trial-admission')
+    assert first['admitted_now'] is True
+    assert admit(store,trial['revision'],'first-trial-admission')['admitted_now'] is False
+    settled=store.settle_effect('fixture-provision',admission_id=first['receipt']['admission_id'],
+        outcome='not_dispatched',proof_sha256='4'*64,request_id='no-effect-after-admission',now=NOW)
+    assert store.inspect('fixture-provision',now=NOW)['trial']['effect_count']==1
+    with pytest.raises(CheckpointConflict,match='not dispatchable'):
+        store.admit_effect('fixture-provision',{**CLAIM,'source_event_id':'another-source'},
+            expected_revision=settled['revision'],binding_sha256='a'*64,request_id='beyond-grant',now=NOW)
+
+
+def test_old_global_proof_and_owner_opinion_are_not_post_grant_working_evidence(trial_control):
+    store,control=trial_control; control['verified']='e'*64;trial=_authorize_trial(trial_control)
+    with pytest.raises(CheckpointConflict,match='exact completed trial'):
+        store.evaluate_trial('fixture-provision',working=True,useful=True,feedback='Lijkt goed',
+            expected_revision=trial['revision'],binding_sha256='a'*64,request_id='not-proof',now=NOW)
+    state=store.inspect('fixture-provision',now=NOW)
+    assert state['status']=='proposed' and state['trial']['notice'] is None and state['adoption'] is None
+
+
+def test_negative_real_owner_feedback_is_retained_without_implicit_adoption(trial_control):
+    store,control=trial_control;trial=_authorize_trial(trial_control)
+    result=store.evaluate_trial('fixture-provision',working=True,useful=False,
+        feedback='Werkt maar helpt ons niet.',expected_revision=trial['revision'],binding_sha256='a'*64,
+        request_id='owner-negative-feedback',now=NOW)
+    assert result['status']=='paused' and result['adoption'] is None
+    assert result['trial']['evaluation']['feedback']=='Werkt maar helpt ons niet.'
+    assert result['trial']['notice'] is None
+
+
+@pytest.mark.parametrize('fault',['guard','proof','unknown','pause','stop','expiry','owner'])
+def test_trial_notice_never_activates_after_authority_uncertainty_or_owner_pause(trial_control,fault):
+    from datetime import timedelta
+    store,control=trial_control; evaluated=_evaluated_trial(trial_control)
+    notice=evaluated['trial']['notice'];revision=evaluated['revision'];now=NOW
+    if fault=='guard':control['guard']='6'*64
+    elif fault=='proof':control['trial_proof']=None
+    elif fault=='unknown':control['effect']='unknown'
+    elif fault in {'pause','stop'}:revision=command(store,fault,revision,'owner-after-evaluation')['revision']
+    elif fault=='expiry':now=NOW+timedelta(seconds=3601)
+    else:control['allowed']=False
+    with pytest.raises((CheckpointConflict,PermissionError)):
+        store.acknowledge_trial_notice('fixture-provision',notice_id=notice['notice_id'],nonce=notice['nonce'],
+            expected_revision=revision,binding_sha256='a'*64,request_id='stale-notice',now=now)
+    control['allowed']=True
+    state=store.inspect('fixture-provision',now=NOW)
+    assert state['status']!='active' and state['adoption'] is None

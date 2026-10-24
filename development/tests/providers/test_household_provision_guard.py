@@ -1,3 +1,4 @@
+from eva.application.free_will import ProactiveExpressionClaim
 from copy import deepcopy
 from types import SimpleNamespace
 
@@ -73,14 +74,15 @@ def test_final_hook_passes_exact_claim_to_transactional_admission(tmp_path, monk
     p, event, now, calls, _, _, state = enrolled(tmp_path, monkeypatch)
     context = p(event, now=now)
     seen = []
-    claim = SimpleNamespace(thread_id='thread', operation_id='operation', revision=3, source_event_id='source')
+    claim = ProactiveExpressionClaim('thread', 'operation', 3, 0, 'source', 'Fixture', 1)
     receipt = {'provision_id': state['provision_id'], 'admission_id': 'a' * 64}
     def admit(*args, **kw):
         seen.append((args, kw))
         return {'admitted_now': True, 'receipt': receipt}
     p.provisions.admit_effect = admit
     admission = p.admit_expression(event, context['binding_sha256'], claim)
-    assert admission['admitted_now'] and seen[0][0][1] == vars(claim)
+    assert admission['admitted_now'] and seen[0][0][1] == {key: getattr(claim, key)
+        for key in ('thread_id', 'operation_id', 'revision', 'source_event_id')}
     assert seen[0][1]['expected_revision'] == 2
     p.provisions.admit_effect = lambda *a, **kw: (_ for _ in ()).throw(CheckpointConflict('pause won'))
     assert p.admit_expression(event, context['binding_sha256'], claim)['admitted_now'] is False
@@ -100,7 +102,7 @@ def test_pause_and_resume_during_final_hook_cannot_renew_old_expression(tmp_path
         return deepcopy(state)
     p.provisions.inspect = inspect
     p.provisions.admit_effect = lambda *a, **kw: pytest.fail('stale expression reached admission')
-    claim = SimpleNamespace(thread_id='thread', operation_id='operation', revision=3, source_event_id='source')
+    claim = ProactiveExpressionClaim('thread', 'operation', 3, 0, 'source', 'Fixture', 1)
     with pytest.raises(ValueError, match='source or configuration changed'):
         p.admit_expression(event, context['binding_sha256'], claim)
 

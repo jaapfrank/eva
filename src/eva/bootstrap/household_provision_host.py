@@ -44,7 +44,7 @@ class HouseholdProvisionHostFactory:
             raise ValueError('procedure configuration exceeds existing bound')
         config = json.loads(raw)
         if (not isinstance(config, dict)
-                or config.get('contract') != 'EvaHouseholdProcedureBinding/v1'
+                or config.get('contract') not in {'EvaHouseholdProcedureBinding/v1', 'EvaHouseholdProcedureBinding/v2'}
                 or enrollment['provision_id'] != procedure_provision_id(config)
                 or enrollment['owner_principal_id'] != config['source_principal_id']
                 or enrollment['binding_sha256'] != canonical_sha256(config)):
@@ -64,8 +64,11 @@ class HouseholdProvisionHostFactory:
             raise ValueError('enrolled provision household or output scope differs')
         callbacks = self.callbacks_for(household_binding, procedure_path, config, enrollment)
         names = {'authorize', 'verify_current', 'verify_realization', 'effect_status'}
-        if (not isinstance(callbacks, dict) or set(callbacks) != names
-                or not all(callable(callbacks[name]) for name in names)):
+        optional = {'current_guard', 'verify_empty_current', 'verify_trial_realization',
+                    'effect_status_for_admission'}
+        if (not isinstance(callbacks, dict) or not names <= set(callbacks)
+                or set(callbacks)-names-optional
+                or not all(callable(value) for value in callbacks.values())):
             raise ValueError('provision host callback composition differs')
 
         def current_host():
@@ -94,10 +97,19 @@ class HouseholdProvisionHostFactory:
             current_host()
             return value
 
+        trial_callbacks = {}
+        for name in optional & set(callbacks):
+            def bound(connection, evidence, *args, callback=callbacks[name]):
+                current_host()
+                value = callback(connection, evidence, *args)
+                current_host()
+                return value
+            trial_callbacks[name] = bound
+
         return PostgresHouseholdProvisions(self.engine,
             tenant_id=household_binding['tenant_id'],
             installation_id=household_binding['installation_id'],
             owner_principal_id=enrollment['owner_principal_id'],
             household_binding=household_binding, authorize=authorize,
             verify_current=verify_current, verify_realization=verify_realization,
-            effect_status=effect_status)
+            effect_status=effect_status, **trial_callbacks)

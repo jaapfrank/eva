@@ -417,3 +417,28 @@ def test_provider_retains_original_host_context_without_publishing_it_to_model(t
     assert result.household_procedure_lineage is context.lineage
     assert result.source_context_sha256 == canonical_sha256(lineage['context'])
     assert len(inputs) == 1 and len(seen) == 1
+
+
+def test_versioned_source_uses_stable_artifact_identity_and_invalidates_previous_expression(tmp_path,monkeypatch):
+    from eva.adapters.postgres.household_provisions import procedure_provision_id
+    p,event,now,inputs,out,path=configured(tmp_path,monkeypatch)
+    old_context=p(event,now=now); original=json.loads(path.read_text())
+    stable=procedure_provision_id(original)
+    changed={**original,'contract':'EvaHouseholdProcedureBinding/v2','provision_id':stable}
+    path.write_text(json.dumps(changed))
+    assert procedure_provision_id(changed)==stable
+    with pytest.raises(ValueError,match='changed'):
+        p.validate_expression(event,old_context['binding_sha256'])
+    current=p(event,now=now)
+    assert current.lineage.payload()['configuration']['config']==changed
+    assert current['binding_sha256'] != old_context['binding_sha256']
+
+
+def test_invalid_versioned_identity_stops_before_source_execution(tmp_path,monkeypatch):
+    p,event,now,inputs,out,path=configured(tmp_path,monkeypatch)
+    config=json.loads(path.read_text())
+    config.update(contract='EvaHouseholdProcedureBinding/v2',provision_id='unbound-id')
+    path.write_text(json.dumps(config))
+    with pytest.raises(ValueError,match='identity differs'):
+        p(event,now=now)
+    assert inputs==[]

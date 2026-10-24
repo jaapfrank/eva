@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 E1.12 · Bestaande huisvoorzieningenbediening afmaken
 
-Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.
+Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.
 
 Klaar wanneer: Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.
 

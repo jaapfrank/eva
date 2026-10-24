@@ -118,7 +118,7 @@ class HouseholdInitiativeLoop:
             def validate_expression(claim):
                 prepared = store._prepared_expression(claim.thread_id)
                 return proposal.validate_expression(store._event_from_thread(claim.thread_id),
-                                                    prepared.get("expression_guard_sha256"))
+                                                    prepared.get("expression_guard_sha256"), claim=claim)
             if provisions is not None:
                 def admit_expression(claim):
                     prepared = store._prepared_expression(claim.thread_id)

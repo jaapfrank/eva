@@ -91,8 +91,9 @@ def wiring(tmp_path, monkeypatch):
             self.authorize = kwargs['authorize']
             self.provisions = kwargs.get('provisions')
             captured.append(('proposal', self))
-        def validate_expression(self, event, digest):
-            captured.append(('validate', event, digest)); return False
+        def validate_expression(self, event, digest, *, claim=None):
+            captured.append(('validate', event, digest))
+            captured.append(('validate_claim', claim)); return False
         def admit_expression(self, event, digest, claim):
             captured.append(('admit', event, digest, claim)); return admission
         def settle_expression(self, value, **kwargs):
@@ -172,6 +173,7 @@ def test_final_hooks_forward_same_store_event_guard_claim_and_settlement(wiring)
     delivery.settle_expression(wiring.admission, outcome='not_dispatched', proof_sha256='e' * 64)
     assert reads == [('prepared', 'thread'), ('event', 'thread')] * 2
     assert ('validate', event, 'd' * 64) in wiring.captured
+    assert ('validate_claim', claim) in wiring.captured
     admit = next(row for row in wiring.captured if row[0] == 'admit')
     assert admit[1] is event and admit[2] == 'd' * 64 and admit[3] is claim
     settled = next(row for row in wiring.captured if row[0] == 'settle')

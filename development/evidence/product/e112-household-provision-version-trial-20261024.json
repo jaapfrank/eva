@@ -1,0 +1,119 @@
+{
+  "contract": "EvaE112VersionTrialDelivery/v1",
+  "task": "E1.12",
+  "checkedAt": "2026-10-24T02:44:32.979920+00:00",
+  "status": "installed_actual_sources_owner_route_and_profiles_read_back_independent_readback_pending",
+  "outcome": "Owner-controlled source version changes, recoverable paused handoff, undo and bounded prior trial with actual feedback plus server notice acknowledgment.",
+  "originalFullTaskCriteriaUnchanged": true,
+  "fullTaskCompleted": false,
+  "installed": true,
+  "actualHouseholdProvisionRegistered": false,
+  "actualHouseholdAdoptionOrUseProven": false,
+  "existingRoute": [
+    "same PostgreSQL operational timeline",
+    "same household source/provider/claim/delivery route",
+    "existing authenticated owner dashboard",
+    "existing managed WSL core and delegated worker"
+  ],
+  "sourceHandoffs": {
+    "backendSha256": "0de29848e86e2ec6e201a3d071ae25a9b1dabae5c4a62cf5d508851410ff38ff",
+    "versionUiSha256": "617fa8cfa5d01e22251442a1db212dec10b27cd685985a690798a6854426f5c3",
+    "trialUiSha256": "33fdf4fe687013f321225a0e232067514be3f61c4587baef8b5f17ab996f2f83"
+  },
+  "independentReview": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
+  "candidate": {
+    "privateOperatorDirectory": "/var/lib/eva2/e112-version-trial-20261024",
+    "images": {
+      "core": {
+        "base": "sha256:f55b5f7cf714d8ad839e48f965530b71f0bb243920b9133814e32f734e1b8358",
+        "candidate": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+        "changedFiles": 12
+      },
+      "delegated-work-worker": {
+        "base": "sha256:32d634b3ebc2ab616ca627e4936538ebdf8778ce727d676e8bd0ea267c8d03c4",
+        "candidate": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
+        "changedFiles": 7
+      }
+    },
+    "manifestSha256": "18cc8eb7ea896c3f06b6a9f6b7b649b071cb59da67c02fdacaddcd374178047b",
+    "configChanges": [
+      "core EVA_HOUSEHOLD_PROCEDURE_FILE points to exact protected managed copy",
+      "core EVA_HOUSEHOLD_PROVISION_REVIEW_FILE points to exact protected managed copy"
+    ],
+    "originalVoiceFilesChanged": false,
+    "enrollmentRemainsExplicitNull": true,
+    "actualDatabaseHead": "4e_0011_timeline_type_time"
+  },
+  "profiles": {
+    "sharedProviderMatch": true,
+    "publicResearchMatch": true,
+    "digitalWorkMatch": true,
+    "preExistingMismatch": [
+      "household_research"
+    ],
+    "fullCompatibilityClaimed": false,
+    "candidateProbeReadOnly": true
+  },
+  "measurements": {
+    "buildSeconds": {
+      "core": 16.38030824402813,
+      "delegated-work-worker": 8.575218811980449
+    },
+    "profileSeconds": {
+      "core": 8.243989828974009,
+      "delegated-work-worker": 8.838027371035423
+    },
+    "newOwnerApiFocusedTests": 3,
+    "versionBrowserSeconds": 1.983,
+    "trialBrowserSeconds": 1.986,
+    "oldBroadUiSeriesRepeated": false,
+    "verificationModelCalls": 0,
+    "productionPostsByThisDelivery": 0,
+    "developmentTokens": null,
+    "developmentCreditCost": null,
+    "backgroundEvaRuntimeUsage": "not measured by this verification"
+  },
+  "remaining": [
+    "Independent readback of actual installed source/interface/profile receipts",
+    "Review final existing-route managed restore hook with actual UID65532 paused/adoption/STOP checks",
+    "Natural actual household working proof, adoption and use; no synthetic event counts as household evidence"
+  ],
+  "independentCodeInterfaceVerdict": {
+    "reviewSha256": "2421cc0c29ee09c4b7dece7bf9f698296b8833cc11d4ca162e2143ea2953a7a9",
+    "status": "GO_SCOPED_CODE_AND_INTERFACE",
+    "newBackendCasesPassed": 25,
+    "originalFixtureSetupErrorsRetained": true,
+    "fullCardNotClosed": true
+  },
+  "gitSourceNormalization": {
+    "path": "src/eva/adapters/postgres/household_provisions.py",
+    "before": "615e67efdd98aee46134d98f2a0a3d35bc756267c8edc0d37f3e44c413e20d07",
+    "after": "d50bde95a198b17806141fae956f24d998316f148eb3846342a90aee6bb77c64",
+    "astIdentical": true,
+    "frozenCandidateAndWorkingSourceUntouched": true
+  },
+  "installedAt": "2026-10-24T02:42:04.068163+00:00",
+  "preInstallationReview": {
+    "sha256": "bf89023ff800bd05c4dae7ab2e8a4f85b423bffbc8be34dbc71426f7508b3d1f",
+    "status": "GO_SCOPED_PREINSTALL"
+  },
+  "installedReadback": {
+    "receipts": {
+      "installation.private.json": "0d19717235bea8431ade7fd612b8451c3ce3a7f4dd03faceeb140841f458f5a2",
+      "installed-sources.private.json": "f7e5d5f6427ec2a0ebaeba0a33e1a92092e06f8aecfe2576b74d92a15690b85f",
+      "installed-readback.stdout.private.json": "164cf3eec8aec1d3667679e605d595b8dca474391cd70f2f900b933d45f75960",
+      "installed-profiles.private.json": "71118129ba415de8c0deda46b0fde47c08c35c6bac8e12e9f4d12b931594c425"
+    },
+    "exactSources": 19,
+    "authenticatedGet": 200,
+    "unauthenticatedGet": 401,
+    "callerScopeRejected": 422,
+    "cacheControl": "no-store",
+    "exactCompiledAssets": 3,
+    "exactManagedFiles": 3,
+    "enrollmentExplicitNull": true,
+    "actualWorkingProofAvailable": false,
+    "productionPosts": 0,
+    "independentReadbackPending": true
+  }
+}

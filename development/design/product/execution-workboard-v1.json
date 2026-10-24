@@ -847,7 +847,7 @@
     "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
     "status": "in_progress",
     "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.",
-    "nextAction": "Maak op dezelfde E1.12-kaart de oorspronkelijke versie-/terugdraai- en vooraf toegestane proef/adoptieroutes af. De brongebonden bewijs- en eigenaarbediening is geïnstalleerd en onafhankelijk live teruggelezen. Dezelfde bouwer voltooit de hostroutes, de tester reviewt; coördinator sluit API/UI en installatie aan. Natuurlijk werkelijk gebruik en herstelbewijs blijven nodig; geen volledige-kaartclaim of geforceerde huisgebeurtenis.",
+    "nextAction": "Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3012,7 +3012,7 @@
         "now": {
           "taskId": "E1.12",
           "title": "E1.12 · Bestaande huisvoorzieningenbediening afmaken",
-          "summary": "Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.",
+          "summary": "Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.",
           "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact."
         },
         "next": {
@@ -6179,13 +6179,13 @@
                   "E4.17",
                   "E1.9"
                 ],
-                "nextAction": "Maak op dezelfde E1.12-kaart de oorspronkelijke versie-/terugdraai- en vooraf toegestane proef/adoptieroutes af. De brongebonden bewijs- en eigenaarbediening is geïnstalleerd en onafhankelijk live teruggelezen. Dezelfde bouwer voltooit de hostroutes, de tester reviewt; coördinator sluit API/UI en installatie aan. Natuurlijk werkelijk gebruik en herstelbewijs blijven nodig; geen volledige-kaartclaim of geforceerde huisgebeurtenis.",
+                "nextAction": "Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.",
                 "continuityImplementationSteps": [
                   "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
                 "progress": "Brongebonden bewijs- en eigenaarbediening V3.1 is op24oktober01:45UTC in bestaande WSL-kern/werker geïnstalleerd en onafhankelijk teruggelezen:25bronbestanden, echte ownerGET200, ongeautoriseerd401, scope422, drieHTTPassets en daadwerkelijke werkprofielen. Expliciete null-enrollment behoudt bestaande legacyroute; noggeen echt artifact/adoptie/werkingsbewijs geproduceerd. Dezelfde bouwer heeft versie-/terugdraaihostkandidaat gebouwd (nu review) en bouwt de oorspronkelijke proef/evaluatie/meldingsroute. E1.12 blijft open.",
-                "checkedAt": "2026-10-24T01:53:40.491739+00:00",
+                "checkedAt": "2026-10-24T02:44:32.979920+00:00",
                 "fullTaskCompleted": false,
                 "implementationEvidence": {
                   "builderCandidateHandoffSha256": "84a2300d5a2b6c1e2f16b4d641c0923f00ad511d9bb03b73305bcf6de19c51d9",
@@ -6236,7 +6236,12 @@
                   "installedReviewSha256": "0785a4fd703c55c1221f0a5ac0fe5981e08dbbabc03945135ab919bdff3b6495",
                   "actualOwnerRouteReadBack": true,
                   "actualHouseholdProvisionRegistered": false,
-                  "actualWorkingProofAvailable": false
+                  "actualWorkingProofAvailable": false,
+                  "versionOwnerInterfaceReview": "GO scoped version/trial backend and owner API/UI; exact bundle independently approved before installation",
+                  "trialOwnerInterface": "Installed: explicit bounded grant, actual feedback and server notice acknowledgment; no actual household grant/adoption claimed",
+                  "restoreNext": "Final existing-route managed materialization candidate frozen for independent review; isolated same-schema0011 actualUID65532 pause/adoption/STOP proven by builder.",
+                  "versionTrialInstalled": true,
+                  "versionTrialEvidence": "development/evidence/product/e112-household-provision-version-trial-20261024.json"
                 }
               },
               {
@@ -8812,7 +8817,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Maak op dezelfde E1.12-kaart de oorspronkelijke versie-/terugdraai- en vooraf toegestane proef/adoptieroutes af. De brongebonden bewijs- en eigenaarbediening is geïnstalleerd en onafhankelijk live teruggelezen. Dezelfde bouwer voltooit de hostroutes, de tester reviewt; coördinator sluit API/UI en installatie aan. Natuurlijk werkelijk gebruik en herstelbewijs blijven nodig; geen volledige-kaartclaim of geforceerde huisgebeurtenis.",
+        "nextAction": "Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.",
         "finishOrder": [
           "E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -8823,7 +8828,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T01:53:40.491739+00:00",
+        "updatedAt": "2026-10-24T02:44:32.979920+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -12219,13 +12224,13 @@
                 "E4.17",
                 "E1.9"
               ],
-              "nextAction": "Maak op dezelfde E1.12-kaart de oorspronkelijke versie-/terugdraai- en vooraf toegestane proef/adoptieroutes af. De brongebonden bewijs- en eigenaarbediening is geïnstalleerd en onafhankelijk live teruggelezen. Dezelfde bouwer voltooit de hostroutes, de tester reviewt; coördinator sluit API/UI en installatie aan. Natuurlijk werkelijk gebruik en herstelbewijs blijven nodig; geen volledige-kaartclaim of geforceerde huisgebeurtenis.",
+              "nextAction": "Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.",
               "continuityImplementationSteps": [
                 "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
               "progress": "Brongebonden bewijs- en eigenaarbediening V3.1 is op24oktober01:45UTC in bestaande WSL-kern/werker geïnstalleerd en onafhankelijk teruggelezen:25bronbestanden, echte ownerGET200, ongeautoriseerd401, scope422, drieHTTPassets en daadwerkelijke werkprofielen. Expliciete null-enrollment behoudt bestaande legacyroute; noggeen echt artifact/adoptie/werkingsbewijs geproduceerd. Dezelfde bouwer heeft versie-/terugdraaihostkandidaat gebouwd (nu review) en bouwt de oorspronkelijke proef/evaluatie/meldingsroute. E1.12 blijft open.",
-              "checkedAt": "2026-10-24T01:53:40.491739+00:00",
+              "checkedAt": "2026-10-24T02:44:32.979920+00:00",
               "fullTaskCompleted": false,
               "implementationEvidence": {
                 "builderCandidateHandoffSha256": "84a2300d5a2b6c1e2f16b4d641c0923f00ad511d9bb03b73305bcf6de19c51d9",
@@ -12276,7 +12281,12 @@
                 "installedReviewSha256": "0785a4fd703c55c1221f0a5ac0fe5981e08dbbabc03945135ab919bdff3b6495",
                 "actualOwnerRouteReadBack": true,
                 "actualHouseholdProvisionRegistered": false,
-                "actualWorkingProofAvailable": false
+                "actualWorkingProofAvailable": false,
+                "versionOwnerInterfaceReview": "GO scoped version/trial backend and owner API/UI; exact bundle independently approved before installation",
+                "trialOwnerInterface": "Installed: explicit bounded grant, actual feedback and server notice acknowledgment; no actual household grant/adoption claimed",
+                "restoreNext": "Final existing-route managed materialization candidate frozen for independent review; isolated same-schema0011 actualUID65532 pause/adoption/STOP proven by builder.",
+                "versionTrialInstalled": true,
+                "versionTrialEvidence": "development/evidence/product/e112-household-provision-version-trial-20261024.json"
               }
             },
             {
@@ -14852,7 +14862,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Maak op dezelfde E1.12-kaart de oorspronkelijke versie-/terugdraai- en vooraf toegestane proef/adoptieroutes af. De brongebonden bewijs- en eigenaarbediening is geïnstalleerd en onafhankelijk live teruggelezen. Dezelfde bouwer voltooit de hostroutes, de tester reviewt; coördinator sluit API/UI en installatie aan. Natuurlijk werkelijk gebruik en herstelbewijs blijven nodig; geen volledige-kaartclaim of geforceerde huisgebeurtenis.",
+      "nextAction": "Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.",
       "finishOrder": [
         "E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14863,7 +14873,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T01:53:40.491739+00:00",
+      "updatedAt": "2026-10-24T02:44:32.979920+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17404,7 +17414,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T01:53:40.491739+00:00",
+  "updatedAt": "2026-10-24T02:44:32.979920+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

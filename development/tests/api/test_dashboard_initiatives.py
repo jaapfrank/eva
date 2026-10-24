@@ -118,3 +118,97 @@ def test_household_provision_routes_fail_closed_when_runtime_control_is_absent()
     assert client.get(url, headers=auth).status_code == 503
     assert client.post(url + "/register", headers=auth,
                        json={"request_id": "fixture"}).status_code == 503
+
+
+def test_household_version_routes_use_server_choices_and_exact_revision_binding():
+    calls = []
+    class Runtime:
+        def dashboard_household_provision_version_choices(self):
+            calls.append(("choices",))
+            return {"contract": "EvaHouseholdProvisionChoices/v1", "choices": []}
+        def dashboard_household_provision_version_history(self, provision_id):
+            calls.append(("history", provision_id))
+            return {"contract": "EvaHouseholdProvisionHistory/v1", "entries": []}
+        def dashboard_stage_household_provision_version(self, *args):
+            calls.append(("stage", *args)); return {"contract": "EvaOwnerHouseholdProvisionVersion/v1"}
+        def dashboard_change_household_provision_version(self, *args):
+            calls.append(("change", *args)); return {"contract": "EvaOwnerHouseholdProvisionVersion/v1"}
+        def dashboard_undo_household_provision_version(self, *args):
+            calls.append(("undo", *args)); return {"contract": "EvaOwnerHouseholdProvisionVersion/v1"}
+    app = FastAPI()
+    install_dashboard_initiatives(app, access=DashboardAccess("t" * 32), runtime=Runtime())
+    client, auth = TestClient(app), {"authorization": "Bearer " + "t" * 32}
+    url = "/internal/v1/dashboard/household-provisions"
+    assert client.get(url + "/versions").status_code == 401
+    assert client.get(url + "/fixture/history").status_code == 401
+    assert client.get(url + "/versions?owner=other", headers=auth).status_code == 422
+    assert client.get(url + "/fixture/history?installation=other", headers=auth).status_code == 422
+    assert calls == []
+    assert client.get(url + "/versions", headers=auth).headers["cache-control"] == "no-store"
+    assert client.get(url + "/fixture/history", headers=auth).json()["entries"] == []
+    common = {"provision_id": "fixture", "expected_revision": 7,
+              "binding_sha256": "a" * 64, "request_id": "version-change"}
+    for action, selector in (("stage", "choice_id"), ("change", "version_id"), ("undo", None)):
+        body = {**common, **({selector: "b" * 64} if selector else {})}
+        assert client.post(url + "/versions/" + action, json=body).status_code == 401
+        reply = client.post(url + "/versions/" + action, json=body, headers=auth)
+        assert reply.status_code == 200 and reply.headers["cache-control"] == "no-store"
+        assert calls[-1] == (action, "fixture", *(("b" * 64,) if selector else ()), 7, "a" * 64, "version-change")
+
+
+def test_household_version_mutations_reject_caller_proof_scope_and_finish_actions():
+    calls = []
+    class Runtime:
+        def dashboard_stage_household_provision_version(self, *args): calls.append(args); return {}
+        def dashboard_change_household_provision_version(self, *args): calls.append(args); return {}
+        def dashboard_undo_household_provision_version(self, *args): calls.append(args); return {}
+    app = FastAPI()
+    install_dashboard_initiatives(app, access=DashboardAccess("t" * 32), runtime=Runtime())
+    client, auth = TestClient(app), {"authorization": "Bearer " + "t" * 32}
+    url = "/internal/v1/dashboard/household-provisions/versions/"
+    common = {"provision_id": "fixture", "expected_revision": 7,
+              "binding_sha256": "a" * 64, "request_id": "version-change"}
+    for action, selector in (("stage", "choice_id"), ("change", "version_id"), ("undo", None)):
+        body = {**common, **({selector: "b" * 64} if selector else {})}
+        for extra in ({"owner": "other"}, {"source": "caller code"}, {"proof": True},
+                      {"review_id": "caller-reviewed"}, {"expected_revision": True},
+                      {"expected_revision": 0}, {"binding_sha256": "A" * 64}, {"request_id": ""}):
+            assert client.post(url + action, json={**body, **extra}, headers=auth).status_code == 422
+        assert client.post(url + action + "?scope=other", json=body, headers=auth).status_code == 422
+        if selector:
+            assert client.post(url + action, json={**body, selector: {}}, headers=auth).status_code == 422
+    assert client.post(url + "finish", json=common, headers=auth).status_code == 404
+    assert calls == []
+
+
+def test_household_trial_routes_accept_only_typed_owner_choices_and_exact_notice_receipt():
+    calls = []
+    class Runtime:
+        def dashboard_authorize_household_provision_trial(self, *args): calls.append(("authorize", *args)); return {"contract": "EvaHouseholdProvisionReceipt/v1"}
+        def dashboard_evaluate_household_provision_trial(self, *args): calls.append(("evaluate", *args)); return {"contract": "EvaHouseholdProvisionReceipt/v1"}
+        def dashboard_acknowledge_household_provision_trial_notice(self, *args): calls.append(("acknowledge", *args)); return {"contract": "EvaHouseholdProvisionReceipt/v1"}
+    app = FastAPI()
+    install_dashboard_initiatives(app, access=DashboardAccess("t" * 32), runtime=Runtime())
+    client, auth = TestClient(app), {"authorization": "Bearer " + "t" * 32}
+    url = "/internal/v1/dashboard/household-provisions/trial/"
+    common = {"provision_id": "fixture", "expected_revision": 9,
+              "binding_sha256": "a" * 64, "request_id": "owner-trial"}
+    for action, extra, invalid in (
+        ("authorize", {"expires_at_epoch": 1792809000, "max_effects": 1},
+         ({"expires_at_epoch": True}, {"max_effects": True}, {"max_effects": 0}, {"max_effects": 17})),
+        ("evaluate", {"working": True, "useful": False, "feedback": "De melding kwam te laat."},
+         ({"working": "true"}, {"useful": 1}, {"feedback": " "}, {"feedback": "a" * 1001})),
+        ("acknowledge", {"notice_id": "b" * 64, "nonce": "c" * 64},
+         ({"notice_id": {}}, {"nonce": "C" * 64}, {"nonce": ""})),
+    ):
+        body = {**common, **extra}
+        before = len(calls)
+        assert client.post(url + action, json=body).status_code == 401
+        for bad in (*invalid, {"expected_revision": True}, {"proof": "caller-proof"},
+                    {"owner": "another-owner"}, {"message": "Caller-authored notice"}):
+            assert client.post(url + action, headers=auth, json={**body, **bad}).status_code == 422
+        assert client.post(url + action + "?scope=other", headers=auth, json=body).status_code == 422
+        assert len(calls) == before
+        result = client.post(url + action, headers=auth, json=body)
+        assert result.status_code == 200 and result.headers["cache-control"] == "no-store"
+        assert calls[-1] == (action, "fixture", *extra.values(), 9, "a" * 64, "owner-trial")

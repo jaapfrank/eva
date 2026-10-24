@@ -66,6 +66,7 @@ def host(tmp_path, monkeypatch):
     controller.factory_for(SimpleNamespace(), context)
     monkeypatch.setattr(controller, '_working_proof', lambda config: working_proof[0])
     monkeypatch.setattr(controller, '_reference', lambda *args, **kwargs: None)
+    monkeypatch.setattr(controller, '_version_controls', lambda: SimpleNamespace(pending_overview=lambda: None))
     class Legacy:
         def __init__(self, path, *, engine, household, authorize, provisions, **kwargs):
             self.path, self.engine, self.household = path, engine, household

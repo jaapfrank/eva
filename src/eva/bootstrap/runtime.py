@@ -573,6 +573,42 @@ class PostgresHindsightMemoryRuntime:
         return self._household_provision_controls().command(provision_id, action,
             expected_revision, binding_sha256, request_id)
 
+    def dashboard_household_provision_version_choices(self):
+        return self._household_provision_controls().version_choices()
+
+    def dashboard_household_provision_version_history(self, provision_id):
+        return self._household_provision_controls().version_history(provision_id)
+
+    def dashboard_stage_household_provision_version(self, provision_id, choice_id,
+            expected_revision, binding_sha256, request_id):
+        return self._household_provision_controls().stage_version_choice(provision_id, choice_id,
+            expected_revision, binding_sha256, request_id)
+
+    def dashboard_change_household_provision_version(self, provision_id, version_id,
+            expected_revision, binding_sha256, request_id):
+        return self._household_provision_controls().change_version(provision_id, version_id,
+            expected_revision, binding_sha256, request_id)
+
+    def dashboard_undo_household_provision_version(self, provision_id,
+            expected_revision, binding_sha256, request_id):
+        return self._household_provision_controls().undo_version(provision_id,
+            expected_revision, binding_sha256, request_id)
+
+    def dashboard_authorize_household_provision_trial(self, provision_id, expires_at_epoch,
+            max_effects, expected_revision, binding_sha256, request_id):
+        return self._household_provision_controls().authorize_trial(provision_id, expires_at_epoch,
+            max_effects, expected_revision, binding_sha256, request_id)
+
+    def dashboard_evaluate_household_provision_trial(self, provision_id, working, useful,
+            feedback, expected_revision, binding_sha256, request_id):
+        return self._household_provision_controls().evaluate_trial(provision_id, working, useful,
+            feedback, expected_revision, binding_sha256, request_id)
+
+    def dashboard_acknowledge_household_provision_trial_notice(self, provision_id, notice_id,
+            nonce, expected_revision, binding_sha256, request_id):
+        return self._household_provision_controls().acknowledge_trial_notice(provision_id,
+            notice_id, nonce, expected_revision, binding_sha256, request_id)
+
     def dashboard_initiative_artifact(self, intent_id: str):
         return self._owner_initiatives().artifact(intent_id,
             now=datetime.now(tz=UTC).replace(microsecond=0))
