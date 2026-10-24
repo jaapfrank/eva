@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T03:12:29.283781+00:00",
+  "updatedAt": "2026-10-24T04:31:10.799087+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -159,7 +159,7 @@
       "activeCodeOrInstallClaim": false
     },
     "codex-e418": {
-      "task": "E1.13",
+      "task": "E2.9",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "development/design/architecture/e418-*.json",
@@ -305,7 +305,7 @@
         "E4.15/E4.17 dependencies remain. Early bounded cleanup does not close E4.18.",
         "Use statusProposal for workboard/docs changes; WSL integrates shared files preserving foreign hunks."
       ],
-      "updatedAt": "2026-10-24T00:41:05.015970+00:00",
+      "updatedAt": "2026-10-24T04:31:10.799087+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -777,7 +777,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "mapping_retained_same_case_evidence_for_original_e113_closure",
+      "status": "finishing_original_e29_product_controls",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1482,7 +1482,7 @@
     "e415-independent-review-newchat": {
       "task": "E1.13",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "reviewing_original_e113_comparison_coverage",
+      "status": "final_delta_review_then_actual_bounded_comparison",
       "coordinator": "windows-root",
       "allowedWritePaths": [
         "development/reviews/e113-existing-natural-handoff-review-20261024.json"
@@ -1502,7 +1502,7 @@
       "completedAt": "2026-10-23T19:48:37.263117+00:00",
       "review": "development/reviews/e415-household-batch-binding-review-20261023.json",
       "verdict": "GO",
-      "nextAction": "Root receives bounded15-asset capture conditions; later choose a new private absent target and exact script/operation binding. No reviewer ONNX hash, inference, DB/profile, capture or runtime/restore claim.",
+      "nextAction": "Review alleen laatste constructorread/compositie-delta; voer daarna vaste rootgebonden modelmeting uit en beoordeel volledige oorspronkelijke E1.13. Geen oude suites of productcode.",
       "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
       "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
       "previousInstallationReview": "development/reviews/e415-coordinated-installation-review-20261023.json",
@@ -1598,7 +1598,7 @@
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": true,
-      "updatedAt": "2026-10-24T00:41:05.015970+00:00"
+      "updatedAt": "2026-10-24T04:31:10.799087+00:00"
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
@@ -1827,7 +1827,7 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
-    "parallelBoundedWork": "E1.12 technisch opgeleverd; één bouwer sluit de bestaande E1.13-bewijsmapping af, één onafhankelijke tester beoordeelt uitsluitend dat concrete resultaat.",
+    "parallelBoundedWork": "Bouwer maakt oorspronkelijke E2.9-bediening af; onafhankelijke tester sluit de concrete E1.13-meting en kaartbeoordeling af. Geen gedeelde installatie tijdens modelmeting.",
     "currentBlocker": "Full E1.13 requires the original same-case comparison and preserved functioning; natural handoff measurement is now independently covered. E1.12 actual use/adoption remains open.",
     "latestVerifiedOutcome": {
       "task": "E4.18",
@@ -1837,9 +1837,9 @@
       "at": "2026-10-24T00:40:10.374271+00:00"
     },
     "nextBoundedAssignments": {
-      "executor": "Map only existing accepted E4.9/E4.10/E5.2 same-case evidence and current installed source to original E1.13 criteria; no extra instrumentation or repeated model run.",
-      "reviewer": "Review concrete retained comparison mapping and timing handoff independently; no implementation.",
-      "coordinator": "Register verified delivered evidence without full-card closure; own Git, installation and next completable original task."
+      "executor": "E2.9 volledig bruikbare bestaande productbediening; actuele routes eerst, één complete kandidaat. Concrete E1.13-fout gaat voor.",
+      "reviewer": "Voer na laatste delta-GO en verse claims de vaste E1.13-paarmeting plus zes oorspronkelijke gevallen uit; onafhankelijk eindvonnis op oorspronkelijke kaart. Geen productcode.",
+      "coordinator": "Exacte uitvoercontext, verse claims, integratie, canonical board/dashboard/Git en installatie."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {

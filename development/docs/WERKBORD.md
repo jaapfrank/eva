@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 E1.13 · Gerichte afweging en echte initiatiefuitvoering afmaken
 
-Twee natuurlijke initiatiefketens onafhankelijk bevestigd tot bestaande werkstart en opgeslagen resultaat: adoptie→toelating105/0 geregistreerde seconden; werkstart→resultaat55/96 seconden. Bestaande callbackvolgorde blijft geïnstalleerd. Verschillende historische releases en gedeeltelijk verbruik bewijzen geen besparing; passende same-case-vergelijking en behouden werking blijven open. Bestaande voorbereidingstiming is gevonden, dus geen extra meetcode.
+Voer de onafhankelijk beoordeelde begrensde vergelijking op de huidige installatie uit: één echt gekwalificeerde cache-paarmeting en de zes ongewijzigde semantische gevallen. De actuele constructiestart is geslaagd; verse werk-/modelclaims blijven vereist. Tester voert uit en beoordeelt oorspronkelijke E1.13; bouwer werkt afzonderlijk E2.9 af, zonder gedeelde installatie tijdens de meting.
 
 Klaar wanneer: Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.
 

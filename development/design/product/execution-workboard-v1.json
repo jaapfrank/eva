@@ -847,7 +847,7 @@
     "title": "Denkvermogen gericht inzetten zonder initiatief te verliezen",
     "status": "in_progress",
     "doneWhen": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.",
-    "nextAction": "Laat de bestaande E4.9/E4.10/E5.2-metingen éénmaal op dezelfde gevallen en actuele bronbinding toetsen aan de oorspronkelijke E1.13-criteria. De twee natuurlijke initiatiefketens zijn onafhankelijk bevestigd; bestaande timing is aanwezig. Geen nieuwe meetcode, herhaalproef of onbewezen optimalisatie. Ontbreekt het bewaarde vergelijkingspaar, leg die bewijsgrens vast en ga door met ander uitvoerbaar werk.",
+    "nextAction": "Voer de onafhankelijk beoordeelde begrensde vergelijking op de huidige installatie uit: één echt gekwalificeerde cache-paarmeting en de zes ongewijzigde semantische gevallen. De actuele constructiestart is geslaagd; verse werk-/modelclaims blijven vereist. Tester voert uit en beoordeelt oorspronkelijke E1.13; bouwer werkt afzonderlijk E2.9 af, zonder gedeelde installatie tijdens de meting.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3011,7 +3011,7 @@
         "now": {
           "taskId": "E1.13",
           "title": "E1.13 · Gerichte afweging en echte initiatiefuitvoering afmaken",
-          "summary": "Twee natuurlijke initiatiefketens onafhankelijk bevestigd tot bestaande werkstart en opgeslagen resultaat: adoptie→toelating105/0 geregistreerde seconden; werkstart→resultaat55/96 seconden. Bestaande callbackvolgorde blijft geïnstalleerd. Verschillende historische releases en gedeeltelijk verbruik bewijzen geen besparing; passende same-case-vergelijking en behouden werking blijven open. Bestaande voorbereidingstiming is gevonden, dus geen extra meetcode.",
+          "summary": "Voer de onafhankelijk beoordeelde begrensde vergelijking op de huidige installatie uit: één echt gekwalificeerde cache-paarmeting en de zes ongewijzigde semantische gevallen. De actuele constructiestart is geslaagd; verse werk-/modelclaims blijven vereist. Tester voert uit en beoordeelt oorspronkelijke E1.13; bouwer werkt afzonderlijk E2.9 af, zonder gedeelde installatie tijdens de meting.",
           "doneWhen": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache."
         },
         "next": {
@@ -6264,7 +6264,7 @@
                 "dependsOn": [
                   "E1.6"
                 ],
-                "nextAction": "Laat de bestaande E4.9/E4.10/E5.2-metingen éénmaal op dezelfde gevallen en actuele bronbinding toetsen aan de oorspronkelijke E1.13-criteria. De twee natuurlijke initiatiefketens zijn onafhankelijk bevestigd; bestaande timing is aanwezig. Geen nieuwe meetcode, herhaalproef of onbewezen optimalisatie. Ontbreekt het bewaarde vergelijkingspaar, leg die bewijsgrens vast en ga door met ander uitvoerbaar werk.",
+                "nextAction": "Voer de onafhankelijk beoordeelde begrensde vergelijking op de huidige installatie uit: één echt gekwalificeerde cache-paarmeting en de zes ongewijzigde semantische gevallen. De actuele constructiestart is geslaagd; verse werk-/modelclaims blijven vereist. Tester voert uit en beoordeelt oorspronkelijke E1.13; bouwer werkt afzonderlijk E2.9 af, zonder gedeelde installatie tijdens de meting.",
                 "observedOptimizationInput": {
                   "evidence": "development/evidence/product/e16-model-access-continuity-20261022.json",
                   "backgroundHandoffSeconds": 303,
@@ -6723,12 +6723,19 @@
                   "E1.10",
                   "E1.9"
                 ],
-                "nextAction": "Behoud geïnstalleerde projectenweergave; werk resterende E2.9 Household Artifact/curiosity/trace/personality-gegevensroutes via bestaande bijbehorende kaarten af. Deze beperkte UI-uitkomst is klaar; geen herhaalde proef of volledige E2.9-acceptatieclaim.",
-                "checkedAt": "2026-10-23T17:55:42.287866+00:00",
+                "nextAction": "Maak resterende bestaande gegevens- en bedieningsroutes volledig bruikbaar: curiosity, optionele Shared Trace en actuele Personality Deltas naast reeds geïnstalleerde projecten en huisvoorzieningen. Behoud bestaande bevoegdheden, feedback, correctie en bronwissen; één reviewbare kaartkandidaat, geen nieuwe store of vaste demo.",
+                "checkedAt": "2026-10-24T04:31:10.799087+00:00",
                 "progress": "Nieuwe projectenweergave is door windows-root geïnstalleerd en op de echte Eva gecontroleerd. Maximaal twee werkelijk open projecten boven bestaande historie, met geregistreerde bijdrage en directe bestaande bediening. Live: 2 van 6 open projecten, drie geserveerde assethashes exact gelijk aan beoordeelde build, detailnavigatie en mobiel390px goed, nul mutaties/modelcalls/berichten/JS-fouten. Open status wordt niet als lopende uitvoering voorgesteld. Overige E2.9-lifecycles/gegevensroutes blijven open.",
                 "evidence": "development/evidence/product/e29-current-projects-20261023.json",
                 "boundedOutcomeCompleted": true,
-                "fullTaskCompleted": false
+                "fullTaskCompleted": false,
+                "assignment": {
+                  "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                  "activeWorkers": [
+                    "01a0c537-54d0-7080-9e4c-74db537877af"
+                  ],
+                  "scope": "Bestaande productbediening; geen voice, productieacties of gedeelde installatie tijdens E1.13-meting."
+                }
               }
             ],
             "gap": "Alle verplichte bedieningsuitkomsten geïnstalleerd; optioneel WhatsApp wacht op eigen Eva-nummer."
@@ -8836,7 +8843,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Laat de bestaande E4.9/E4.10/E5.2-metingen éénmaal op dezelfde gevallen en actuele bronbinding toetsen aan de oorspronkelijke E1.13-criteria. De twee natuurlijke initiatiefketens zijn onafhankelijk bevestigd; bestaande timing is aanwezig. Geen nieuwe meetcode, herhaalproef of onbewezen optimalisatie. Ontbreekt het bewaarde vergelijkingspaar, leg die bewijsgrens vast en ga door met ander uitvoerbaar werk.",
+        "nextAction": "Voer de onafhankelijk beoordeelde begrensde vergelijking op de huidige installatie uit: één echt gekwalificeerde cache-paarmeting en de zes ongewijzigde semantische gevallen. De actuele constructiestart is geslaagd; verse werk-/modelclaims blijven vereist. Tester voert uit en beoordeelt oorspronkelijke E1.13; bouwer werkt afzonderlijk E2.9 af, zonder gedeelde installatie tijdens de meting.",
         "finishOrder": [
           "E4.18 volledig afgerond (80/103). E1.12 technisch opgeleverd; werkelijk gebruik/adoptie blijft open. Nu E1.13 afsluiten met de oorspronkelijke vergelijkingscriteria en bestaand bewijs; één bouwer en één onafhankelijke tester, geen extra chats.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -12329,7 +12336,7 @@
               "dependsOn": [
                 "E1.6"
               ],
-              "nextAction": "Laat de bestaande E4.9/E4.10/E5.2-metingen éénmaal op dezelfde gevallen en actuele bronbinding toetsen aan de oorspronkelijke E1.13-criteria. De twee natuurlijke initiatiefketens zijn onafhankelijk bevestigd; bestaande timing is aanwezig. Geen nieuwe meetcode, herhaalproef of onbewezen optimalisatie. Ontbreekt het bewaarde vergelijkingspaar, leg die bewijsgrens vast en ga door met ander uitvoerbaar werk.",
+              "nextAction": "Voer de onafhankelijk beoordeelde begrensde vergelijking op de huidige installatie uit: één echt gekwalificeerde cache-paarmeting en de zes ongewijzigde semantische gevallen. De actuele constructiestart is geslaagd; verse werk-/modelclaims blijven vereist. Tester voert uit en beoordeelt oorspronkelijke E1.13; bouwer werkt afzonderlijk E2.9 af, zonder gedeelde installatie tijdens de meting.",
               "observedOptimizationInput": {
                 "evidence": "development/evidence/product/e16-model-access-continuity-20261022.json",
                 "backgroundHandoffSeconds": 303,
@@ -12788,12 +12795,19 @@
                 "E1.10",
                 "E1.9"
               ],
-              "nextAction": "Behoud geïnstalleerde projectenweergave; werk resterende E2.9 Household Artifact/curiosity/trace/personality-gegevensroutes via bestaande bijbehorende kaarten af. Deze beperkte UI-uitkomst is klaar; geen herhaalde proef of volledige E2.9-acceptatieclaim.",
-              "checkedAt": "2026-10-23T17:55:42.287866+00:00",
+              "nextAction": "Maak resterende bestaande gegevens- en bedieningsroutes volledig bruikbaar: curiosity, optionele Shared Trace en actuele Personality Deltas naast reeds geïnstalleerde projecten en huisvoorzieningen. Behoud bestaande bevoegdheden, feedback, correctie en bronwissen; één reviewbare kaartkandidaat, geen nieuwe store of vaste demo.",
+              "checkedAt": "2026-10-24T04:31:10.799087+00:00",
               "progress": "Nieuwe projectenweergave is door windows-root geïnstalleerd en op de echte Eva gecontroleerd. Maximaal twee werkelijk open projecten boven bestaande historie, met geregistreerde bijdrage en directe bestaande bediening. Live: 2 van 6 open projecten, drie geserveerde assethashes exact gelijk aan beoordeelde build, detailnavigatie en mobiel390px goed, nul mutaties/modelcalls/berichten/JS-fouten. Open status wordt niet als lopende uitvoering voorgesteld. Overige E2.9-lifecycles/gegevensroutes blijven open.",
               "evidence": "development/evidence/product/e29-current-projects-20261023.json",
               "boundedOutcomeCompleted": true,
-              "fullTaskCompleted": false
+              "fullTaskCompleted": false,
+              "assignment": {
+                "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                "activeWorkers": [
+                  "01a0c537-54d0-7080-9e4c-74db537877af"
+                ],
+                "scope": "Bestaande productbediening; geen voice, productieacties of gedeelde installatie tijdens E1.13-meting."
+              }
             }
           ],
           "gap": "Alle verplichte bedieningsuitkomsten geïnstalleerd; optioneel WhatsApp wacht op eigen Eva-nummer."
@@ -14901,7 +14915,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Laat de bestaande E4.9/E4.10/E5.2-metingen éénmaal op dezelfde gevallen en actuele bronbinding toetsen aan de oorspronkelijke E1.13-criteria. De twee natuurlijke initiatiefketens zijn onafhankelijk bevestigd; bestaande timing is aanwezig. Geen nieuwe meetcode, herhaalproef of onbewezen optimalisatie. Ontbreekt het bewaarde vergelijkingspaar, leg die bewijsgrens vast en ga door met ander uitvoerbaar werk.",
+      "nextAction": "Voer de onafhankelijk beoordeelde begrensde vergelijking op de huidige installatie uit: één echt gekwalificeerde cache-paarmeting en de zes ongewijzigde semantische gevallen. De actuele constructiestart is geslaagd; verse werk-/modelclaims blijven vereist. Tester voert uit en beoordeelt oorspronkelijke E1.13; bouwer werkt afzonderlijk E2.9 af, zonder gedeelde installatie tijdens de meting.",
       "finishOrder": [
         "E4.18 volledig afgerond (80/103). E1.12 technisch opgeleverd; werkelijk gebruik/adoptie blijft open. Nu E1.13 afsluiten met de oorspronkelijke vergelijkingscriteria en bestaand bewijs; één bouwer en één onafhankelijke tester, geen extra chats.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
