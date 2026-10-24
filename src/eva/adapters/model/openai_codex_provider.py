@@ -127,8 +127,10 @@ class CodexProviderError(RuntimeError):
                         code = fields.get("code") if code is None else code
                         kind = fields.get("type") if kind is None else kind
                 request_id = request_id or getattr(current, "request_id", None)
-                response = getattr(current, "response", None)
-                headers = getattr(response, "headers", None)
+                headers = getattr(current, "headers", None)
+                if headers is None:
+                    response = getattr(current, "response", None)
+                    headers = getattr(response, "headers", None)
                 if headers is not None:
                     request_id = request_id or headers.get("x-request-id")
                     retry_after = retry_after or headers.get("retry-after")
