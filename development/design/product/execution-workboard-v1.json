@@ -841,13 +841,13 @@
   "lastUpdated": "2026-10-23T16:59:07.773712+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.17",
+  "activeTaskId": "E1.12",
   "currentWork": {
-    "id": "E4.17",
-    "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
+    "id": "E1.12",
+    "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
     "status": "in_progress",
-    "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
-    "nextAction": "E4.17: volledig pakket en 18.067 inactieve hostbestanden onafhankelijk bewezen. Tester beoordeelt nu exact fase1-plan f565d2 voor private start, gezondheid, authenticatie en gecontroleerde STOP/cleanup zonder procedure/evaluate. Eén oorspronkelijke camera-event is read-only teruggevonden; fase2-aanroep blijft open wegens ontbrekende onafhankelijke discovery-inventory- en healthbinding, zonder synthese of geforceerde klok. Bouwer bereidt intussen alleen-lezen de bestaande E1.12-overdracht voor; geen tweede actieve implementatie. Na fase1-GO direct de echte startproef uitvoeren. Volledige E4.17 en gezinsacceptatie blijven open; geen huidige eigenaaractie.",
+    "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.",
+    "nextAction": "E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -2994,10 +2994,10 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.17",
-          "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
-          "summary": "E4.17: schema0011-export/reader/restore/installer gerepareerd;29gerichte+8echte0011PG+14legacyPGchecks onafhankelijk geslaagd. Echte core/geheugen/gateway/identity/trust onder15sbronhek bewaard en onafhankelijk gebonden. Bouwer zet nativecorekopie geïsoleerd om en maakt bestaande versleutelde package/materialisatie af; geenproductieservicesgestopt. Pakketfit envolledigzelfderestoregedrag nog open; fysiekeE4.15proef blijft later.",
-          "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd."
+          "taskId": "E1.12",
+          "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
+          "summary": "E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.",
+          "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact."
         },
         "next": {
           "taskId": "E1.12",
@@ -3191,7 +3191,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.17",
+        "currentStep": "E1.12",
         "steps": [
           {
             "number": 1,
@@ -6147,7 +6147,7 @@
               {
                 "id": "E1.12",
                 "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "scopeOrigin": "living-housemate-20261022",
                 "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
@@ -6163,11 +6163,14 @@
                   "E4.17",
                   "E1.9"
                 ],
-                "nextAction": "Verbind één werkelijke blijvende voorziening aan bestaande realisatie-/resultaatregistratie met adoptie, evaluatie en daadwerkelijk gecontroleerde pauze/herstel.",
+                "nextAction": "E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.",
                 "continuityImplementationSteps": [
                   "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
                 ],
-                "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection"
+                "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
+                "progress": "Echte geïnstalleerde procedure/current.json, bestaande timeline/resultaat/feedback/stoproute en11bronpinnen alleen-lezen nagevolgd. Adoptie/status en werkelijke blijvende pauze zijn nog niet gebouwd; minimale patchgrens wordt vastgesteld.",
+                "checkedAt": "2026-10-24T00:02:34.876868+00:00",
+                "fullTaskCompleted": false
               },
               {
                 "id": "E1.13",
@@ -8113,9 +8116,9 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "E4.17: volledig pakket en 18.067 inactieve hostbestanden onafhankelijk bewezen. Tester beoordeelt nu exact fase1-plan f565d2 voor private start, gezondheid, authenticatie en gecontroleerde STOP/cleanup zonder procedure/evaluate. Eén oorspronkelijke camera-event is read-only teruggevonden; fase2-aanroep blijft open wegens ontbrekende onafhankelijke discovery-inventory- en healthbinding, zonder synthese of geforceerde klok. Bouwer bereidt intussen alleen-lezen de bestaande E1.12-overdracht voor; geen tweede actieve implementatie. Na fase1-GO direct de echte startproef uitvoeren. Volledige E4.17 en gezinsacceptatie blijven open; geen huidige eigenaaractie.",
-                "progress": "Volledig versleuteld herstel en volledige inactieve hostprepare onafhankelijk op daadwerkelijke bestanden bewezen. Volgende eindvoorwaarde: dezelfde oorspronkelijke procedure werkt op het geïsoleerde hersteldoel met behouden stop/hold-grenzen.",
-                "checkedAt": "2026-10-23T23:55:01.874341+00:00",
+                "nextAction": "Pakket, volledige inactieve hostprepare en echte private start/health/auth401/STOP zijn onafhankelijk goedgekeurd. Behoud dit bewijs zonder nieuwe proefserie. Volledige oorspronkelijke procedureaanroep blijft open door ontbrekende onafhankelijke discovery-inventory- en healthbinding; geen synthetische invoer, historische klok of gezinsacceptatie. Vervolg bij echte geldige bronbinding; ander uitvoerbaar werk gaat door.",
+                "progress": "Werkelijke versleutelde restore,18.067bestanden en private dienstenstart/stop onafhankelijk bewezen. Geen succesvolle procedure-uitvoering of volledige kaartafsluiting geclaimd.",
+                "checkedAt": "2026-10-24T00:02:34.876868+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
                 "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -8740,7 +8743,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.17: volledig pakket en 18.067 inactieve hostbestanden onafhankelijk bewezen. Tester beoordeelt nu exact fase1-plan f565d2 voor private start, gezondheid, authenticatie en gecontroleerde STOP/cleanup zonder procedure/evaluate. Eén oorspronkelijke camera-event is read-only teruggevonden; fase2-aanroep blijft open wegens ontbrekende onafhankelijke discovery-inventory- en healthbinding, zonder synthese of geforceerde klok. Bouwer bereidt intussen alleen-lezen de bestaande E1.12-overdracht voor; geen tweede actieve implementatie. Na fase1-GO direct de echte startproef uitvoeren. Volledige E4.17 en gezinsacceptatie blijven open; geen huidige eigenaaractie.",
+        "nextAction": "E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.",
         "finishOrder": [
           "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9175,7 +9178,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.17",
+      "currentStep": "E1.12",
       "steps": [
         {
           "number": 1,
@@ -12131,7 +12134,7 @@
             {
               "id": "E1.12",
               "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "scopeOrigin": "living-housemate-20261022",
               "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
@@ -12147,11 +12150,14 @@
                 "E4.17",
                 "E1.9"
               ],
-              "nextAction": "Verbind één werkelijke blijvende voorziening aan bestaande realisatie-/resultaatregistratie met adoptie, evaluatie en daadwerkelijk gecontroleerde pauze/herstel.",
+              "nextAction": "E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.",
               "continuityImplementationSteps": [
                 "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
               ],
-              "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection"
+              "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
+              "progress": "Echte geïnstalleerde procedure/current.json, bestaande timeline/resultaat/feedback/stoproute en11bronpinnen alleen-lezen nagevolgd. Adoptie/status en werkelijke blijvende pauze zijn nog niet gebouwd; minimale patchgrens wordt vastgesteld.",
+              "checkedAt": "2026-10-24T00:02:34.876868+00:00",
+              "fullTaskCompleted": false
             },
             {
               "id": "E1.13",
@@ -14097,9 +14103,9 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "E4.17: volledig pakket en 18.067 inactieve hostbestanden onafhankelijk bewezen. Tester beoordeelt nu exact fase1-plan f565d2 voor private start, gezondheid, authenticatie en gecontroleerde STOP/cleanup zonder procedure/evaluate. Eén oorspronkelijke camera-event is read-only teruggevonden; fase2-aanroep blijft open wegens ontbrekende onafhankelijke discovery-inventory- en healthbinding, zonder synthese of geforceerde klok. Bouwer bereidt intussen alleen-lezen de bestaande E1.12-overdracht voor; geen tweede actieve implementatie. Na fase1-GO direct de echte startproef uitvoeren. Volledige E4.17 en gezinsacceptatie blijven open; geen huidige eigenaaractie.",
-              "progress": "Volledig versleuteld herstel en volledige inactieve hostprepare onafhankelijk op daadwerkelijke bestanden bewezen. Volgende eindvoorwaarde: dezelfde oorspronkelijke procedure werkt op het geïsoleerde hersteldoel met behouden stop/hold-grenzen.",
-              "checkedAt": "2026-10-23T23:55:01.874341+00:00",
+              "nextAction": "Pakket, volledige inactieve hostprepare en echte private start/health/auth401/STOP zijn onafhankelijk goedgekeurd. Behoud dit bewijs zonder nieuwe proefserie. Volledige oorspronkelijke procedureaanroep blijft open door ontbrekende onafhankelijke discovery-inventory- en healthbinding; geen synthetische invoer, historische klok of gezinsacceptatie. Vervolg bij echte geldige bronbinding; ander uitvoerbaar werk gaat door.",
+              "progress": "Werkelijke versleutelde restore,18.067bestanden en private dienstenstart/stop onafhankelijk bewezen. Geen succesvolle procedure-uitvoering of volledige kaartafsluiting geclaimd.",
+              "checkedAt": "2026-10-24T00:02:34.876868+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
               "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
               "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -14724,7 +14730,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.17: volledig pakket en 18.067 inactieve hostbestanden onafhankelijk bewezen. Tester beoordeelt nu exact fase1-plan f565d2 voor private start, gezondheid, authenticatie en gecontroleerde STOP/cleanup zonder procedure/evaluate. Eén oorspronkelijke camera-event is read-only teruggevonden; fase2-aanroep blijft open wegens ontbrekende onafhankelijke discovery-inventory- en healthbinding, zonder synthese of geforceerde klok. Bouwer bereidt intussen alleen-lezen de bestaande E1.12-overdracht voor; geen tweede actieve implementatie. Na fase1-GO direct de echte startproef uitvoeren. Volledige E4.17 en gezinsacceptatie blijven open; geen huidige eigenaaractie.",
+      "nextAction": "E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.",
       "finishOrder": [
         "Actueel E4.17: dezelfde uitbreiding herstelbaar/testklaar maken terwijl fysieke E4.15-gebruiksacceptatie is uitgesteld. Daarna bestaande overige kaartvolgorde; geen nieuwe hoofdroute.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -16980,7 +16986,7 @@
       "ownerReviewerCorrection": "Latest direct owner instruction: original chat01a169f2 is sole tester/reviewer; replacement01a16a55-1607 is standby with claims released."
     },
     "e417CurrentDelivery20261023": {
-      "stage": "exact_phase1_independently_approved_and_private_execution_authorized",
+      "stage": "independently_verified_encrypted_restore_and_private_coldstart_handed_off_full_procedure_acceptance_open",
       "profileAdapter": "src/tools/installation_face_profile_snapshot.py",
       "profileTestsPassed": 10,
       "actualProfileRows": 24,
@@ -17142,7 +17148,7 @@
       "configurationSpecificLibrarySupplementReceiptSha256": "e134d33c578f92f91ac844eb6cb6c82d8847cadcb9efe2762c50c8b6d9432d72",
       "fullHostAdapterPrepared": true,
       "effectiveHostLibraryAndAbiProven": false,
-      "hostRuntimeActivated": false,
+      "hostRuntimeActivated": true,
       "actualLargeOperatorRestoreIndependentVerdict": "GO_SCOPED_REAL_OPERATOR_NATIVE_CORE_RESTORE_HELD",
       "actualOperatorReceiptSha256": "6680db8f31190abe9b3b0055fff358c3681c2bbca972e03529549f40eea8988b",
       "actualOperatorSeconds": 3375.1706,
@@ -17243,9 +17249,9 @@
       "functionalStartConfigurationReviewPending": false,
       "functionalInputProvenanceReviewPending": true,
       "procedureOptionalSchemaIndependentReview": "GO_SCOPED_EXISTING_OPTIONAL_CONFIG_VIEW_FEASIBILITY_NOT_START",
-      "functionalPhase1IndependentVerdict": "GO_SCOPED_PHASE1_COLD_START_HEALTH_AUTH401_STOP",
+      "functionalPhase1IndependentVerdict": "GO_SCOPED_PHASE1_OBSERVED_HEALTH_AUTH401_STOP",
       "functionalPhase1ExecutionAuthorized": true,
-      "functionalPhase1ExecutionComplete": false,
+      "functionalPhase1ExecutionComplete": true,
       "functionalPhase1PreflightAttempt1": {
         "receiptSha256": "dd2217a79f8716752c82f8d821182778cbb9117bb5577923f2458020e5c9dd6a",
         "result": "raw_bind_46080_errno98_before_profile_activation_or_service_start",
@@ -17255,7 +17261,25 @@
         "causeUnproven": true,
         "oneRetryWithUnchangedPlanAndAllOriginalGuardsAuthorized": true,
         "furtherRetryLoopAuthorized": false
-      }
+      },
+      "functionalPhase1ReceiptSha256": "2426624cc869a765d8edaf7895d8801e60ea6bcb93cf5bb7c6fdb0ec31069004",
+      "functionalPhase1IndependentReadbackPending": false,
+      "functionalPhase1WallSeconds": 42.63414177595405,
+      "functionalPhase1HostHealthStatus": 200,
+      "functionalPhase1UnauthorizedProcedureStatus": 401,
+      "functionalPhase1BridgeHealthStatus": 200,
+      "functionalPhase1InferenceChecked": false,
+      "functionalPhase1ExactExitCodesKnown": false,
+      "functionalPhase1TotalAndCpuChildPeakRssKiB": null,
+      "functionalPhase1ParentHighWaterKiB": {
+        "host": 49888,
+        "bridge": 35952
+      },
+      "functionalPhase1ServicesStoppedReported": true,
+      "hostRuntimeActivationScope": "isolated_private_phase1_coldstart_only_now_stopped",
+      "sharedHostRuntimeActivated": false,
+      "functionalPhase1IndependentReportSha256": "4b2dc9f0c87c38a6ff51488933a2b15212246741858a93fe9eada877edde6948",
+      "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
   "updatedAt": "2026-10-23T20:27:52.074803+00:00",

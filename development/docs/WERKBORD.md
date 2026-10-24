@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen
+Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien
 
-E4.17: schema0011-export/reader/restore/installer gerepareerd;29gerichte+8echte0011PG+14legacyPGchecks onafhankelijk geslaagd. Echte core/geheugen/gateway/identity/trust onder15sbronhek bewaard en onafhankelijk gebonden. Bouwer zet nativecorekopie geïsoleerd om en maakt bestaande versleutelde package/materialisatie af; geenproductieservicesgestopt. Pakketfit envolledigzelfderestoregedrag nog open; fysiekeE4.15proef blijft later.
+E1.12: maak op dezelfde bestaande procedure en scoped timeline de ontbrekende overdracht voor adoptie, werkelijke pauze/herstel en versiehistorie af. E4.17-pakket en private start zijn technisch overgedragen; oorspronkelijke functionele acceptatie blijft apart open. Bouwer legt nu de minimale bestaande bron-/testgrens vast, daarna één smalle pauze/resume-route bouwen. Tester beoordeelt onafhankelijk dezelfde concrete route. Geen nieuw artifactplatform, geen active/adoptie afleiden uit enabled of taakgereed, geen spraak-/foreignWIP-overname.
 
-Klaar wanneer: Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.
+Klaar wanneer: Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.
 
 ## Afmaakvolgorde
 

@@ -2,8 +2,8 @@
   "contract": "EvaIndependentReview/v1",
   "task": "E4.17 same E4.15 extension recovery package",
   "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-  "status": "phase1_cold_start_admitted_actual_execution_pending_phase2_input_binding_open",
-  "verdict": "GO_SCOPED_OPERATOR_NATIVE_CORE_RESTORE_HOST_FUNCTION_PENDING",
+  "status": "phase1_actual_health_auth_and_shutdown_verified_phase2_and_full_E417_open",
+  "verdict": "GO_SCOPED_PHASE1_OBSERVED_HEALTH_AUTH401_STOP",
   "startedAt": "2026-10-23T20:27:36Z",
   "assetInput": {
     "verdict": "GO_TARGET_ONLY_ASSET_INPUT",
@@ -2059,6 +2059,252 @@
       "largerPackageElfDatabaseOrResourceTestsRepeated": false,
       "newBlockingDefects": [],
       "handoff": "Exact scoped GO sent directly to coordinator before report serialization so the builder can proceed."
+    },
+    "actualPhase1ColdStartHealthAuthStopReview": {
+      "verdict": "GO_SCOPED_PHASE1_OBSERVED_HEALTH_AUTH401_STOP",
+      "receiptPath": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/phase1-attempt2-execution-receipt.private.json",
+      "receiptSha256": "2426624cc869a765d8edaf7895d8801e60ea6bcb93cf5bb7c6fdb0ec31069004",
+      "actualBuilderTurn": "01a16b33-2437-76e0-8b09-7d03f2de2a21",
+      "executionToolIds": {
+        "start": "exec-4865a1d0-a9b4-4387-bfbb-16db3e87538e",
+        "health": "exec-bafc7503-7389-468f-82d2-47d9abf0d24b",
+        "stop": "exec-1462607f-67fe-4403-8177-c67c5eb76d62",
+        "finalize": "exec-980bf26c-4f31-4d0f-a59f-32cbf4527d57"
+      },
+      "independentReadback": {
+        "checkedAtMachineUtc": "2026-10-24T00:01:07.459666+00:00",
+        "elapsedSeconds": 5.0129115680465475,
+        "groupMembers": {
+          "bridge": [],
+          "host": []
+        },
+        "heldCoreWorkerActual": [
+          {
+            "id": "a9345707855631babb77a335c68457fba7d5e081392ee44642e099d6317681b8",
+            "matchesDeclaredId": true,
+            "networkMode": "none",
+            "pid": 0,
+            "status": "created"
+          },
+          {
+            "id": "4924f9878593c720bc08b329e3a0ff13f6310febc2cb0f49f9ce6a8e37c572f9",
+            "matchesDeclaredId": true,
+            "networkMode": "none",
+            "pid": 0,
+            "status": "created"
+          }
+        ],
+        "immutableAttempt1": {
+          "mode": "0o400",
+          "sha256": "dd2217a79f8716752c82f8d821182778cbb9117bb5577923f2458020e5c9dd6a"
+        },
+        "logs": {
+          "bridge": {
+            "bytes": 0,
+            "requestLineCount": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "tracebackPresent": false
+          },
+          "host": {
+            "bytes": 0,
+            "requestLineCount": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "tracebackPresent": false
+          }
+        },
+        "measurements": {
+          "completedAt": "2026-10-24T00:00:09.720802+00:00",
+          "creditCost": null,
+          "genericEvaluations": 0,
+          "healthWallSeconds": 1.1745054579805583,
+          "modelCalls": 0,
+          "monotonicStart": 364070.218990789,
+          "peakRssKiB": null,
+          "procedureExecutions": 0,
+          "processRssKiB": {
+            "bridge": {
+              "VmHWM": "35952 kB",
+              "VmRSS": "35952 kB"
+            },
+            "host": {
+              "VmHWM": "49888 kB",
+              "VmRSS": "49888 kB"
+            }
+          },
+          "rssMethod": "Per surviving parent /proc VmHWM sampled before STOP. No total/CPU-child peak observation; unknown remains null.",
+          "startedAt": "2026-10-23T23:59:27.086661+00:00",
+          "wallSeconds": 42.63414177595405
+        },
+        "pinChanges": [
+          {
+            "after": "afa9b92905c3b274215538a044e11521b91200d586884beb3026d6ef1bd11111",
+            "before": "072002e9c8671f5c1e61f888a2abe59f21de4cbc5d56b9ea7dac72565f0cd92b",
+            "path": "config/interpreter-profiles.private.json"
+          }
+        ],
+        "ports": {
+          "46080": {
+            "listeners": 0
+          },
+          "46081": {
+            "listeners": 0
+          }
+        },
+        "processes": {
+          "bridge": {
+            "existsNow": false,
+            "exitCodeKnown": false,
+            "originalStartTicks": "36407022",
+            "pgid": 1234818,
+            "pid": 1234818,
+            "recordedExitCode": null
+          },
+          "host": {
+            "existsNow": false,
+            "exitCodeKnown": false,
+            "originalStartTicks": "36407022",
+            "pgid": 1234817,
+            "pid": 1234817,
+            "recordedExitCode": null
+          }
+        },
+        "receiptSha256": "2426624cc869a765d8edaf7895d8801e60ea6bcb93cf5bb7c6fdb0ec31069004",
+        "receiptStatus": "phase1_health_auth_and_stop_observed_exact_exit_status_partly_unknown",
+        "remainingOwnTempMountContainers": [],
+        "responses": {
+          "bridgeAuthenticatedHealth": {
+            "bodyKeys": [
+              "automatic_enrollment",
+              "backend",
+              "backend_revision",
+              "enrolled_profiles",
+              "execution_provider",
+              "inference_checked",
+              "model_hashes",
+              "ok",
+              "profile_revision"
+            ],
+            "safeFields": {
+              "automatic_enrollment": false,
+              "backend": "arcface",
+              "backend_revision": "sha256:72f3f62c155fb5b9e5f30ff9b31a907ece97f9fd4f40a17f1af84e84bd9bbb61:cpu",
+              "enrolled_profiles": 24,
+              "execution_provider": "CPUExecutionProvider",
+              "inference_checked": false,
+              "ok": true
+            },
+            "sha256": "445cff91fe875420bd4fa33d796e0718791161962b87e85495f137b9903b27e6",
+            "status": 200
+          },
+          "hostHealth": {
+            "bodyKeys": [
+              "status"
+            ],
+            "safeFields": {
+              "status": "ready"
+            },
+            "sha256": "3e0583b1e4de801f7cc9e0903b641286e7f6c0dfdf078492539a07e14cff71a8",
+            "status": 200
+          },
+          "unauthorizedProcedurePost401": {
+            "bodyKeys": [
+              "error"
+            ],
+            "safeFields": {
+              "error": "unauthorized"
+            },
+            "sha256": "da89cb2775a53882c4033fbbbba21dbe642981d8a501c6f9b77d49035d2fcd2c",
+            "status": 401
+          }
+        },
+        "states": [
+          {
+            "filesOrLinks": 0,
+            "gid": 1000,
+            "mode": "0o700",
+            "path": "state/applications",
+            "uid": 1000
+          },
+          {
+            "filesOrLinks": 0,
+            "gid": 1000,
+            "mode": "0o700",
+            "path": "state/applications/accepted-releases",
+            "uid": 1000
+          },
+          {
+            "filesOrLinks": 0,
+            "gid": 1000,
+            "mode": "0o700",
+            "path": "state/final-assessments",
+            "uid": 1000
+          },
+          {
+            "filesOrLinks": 0,
+            "gid": 1000,
+            "mode": "0o700",
+            "path": "state/workspaces",
+            "uid": 1000
+          },
+          {
+            "filesOrLinks": 0,
+            "gid": 1000,
+            "mode": "0o700",
+            "path": "state/receipts",
+            "uid": 1000
+          },
+          {
+            "filesOrLinks": 0,
+            "gid": 1000,
+            "mode": "0o700",
+            "path": "tmp",
+            "uid": 1000
+          },
+          {
+            "filesOrLinks": 0,
+            "gid": 1000,
+            "mode": "0o700",
+            "path": "home",
+            "uid": 1000
+          },
+          {
+            "filesOrLinks": 0,
+            "gid": 1000,
+            "mode": "0o700",
+            "path": "replay-input",
+            "uid": 1000
+          }
+        ]
+      },
+      "firstAttemptPortFailure": {
+        "receiptSha256": "dd2217a79f8716752c82f8d821182778cbb9117bb5577923f2458020e5c9dd6a",
+        "status": "frozen_original_failure_preserved",
+        "error": "raw socket bind of 127.0.0.1:46080 returned errno98 before activation or any service start",
+        "cause": "unknown; no LISTEN socket observed; no owner or TIME_WAIT cause inferred",
+        "sourceSemanticDifference": "Raw preflight lacks SO_REUSEADDR; actual host ThreadingHTTPServer and bridge HTTPServer inherit HTTPServer.allow_reuse_address=1. No preflight or service change was applied.",
+        "laterAttempt": "Coordinator explicitly admitted one attempt after changed current socket state; identical raw preflight then passed. No original failure relabeling."
+      },
+      "actualUidGid": {
+        "startArguments": [
+          1000,
+          1000
+        ],
+        "stopLiveProcOwnerChecked": 1000
+      },
+      "actualStateConclusion": "Both exact PIDs absent, both recorded process groups empty, both ports without LISTEN, zero containers mounted under own tmp, eight actual state roots still empty and private; own held core/worker pins unchanged created/Pid0/network none.",
+      "actualFunctionalConclusion": "Original restored private host and bridge start; public host ready, unauthorized no-body procedure POST returns401, authenticated explicit CPU health returns200/ok/CPUExecutionProvider/inference_checked=false.",
+      "limits": [
+        "Exact process exit codes were lost by detached launch and remain null; disappearance does not establish exit0.",
+        "Parent VmHWM only; total and short CPU-child peak RSS unknown.",
+        "Private service logs are actually empty; they do not establish request counts. Counts follow the exact recorded executor calls.",
+        "No authorized procedure execution, evaluate, camera, inference, household action, core/worker start or full E417 acceptance.",
+        "Existing strict inert-import CPU failure remains frozen and unchanged; this separately admitted original runtime health result does not relabel it.",
+        "Phase2 remains NO_GO pending separate independently bound discovery inventory and authenticated original health input facts."
+      ],
+      "reviewerServicesStarted": 0,
+      "reviewerTargetImports": 0,
+      "reviewerModelOrInferenceCalls": 0,
+      "previousTopLevelVerdict": "GO_SCOPED_OPERATOR_NATIVE_CORE_RESTORE_HOST_FUNCTION_PENDING"
     }
   },
   "contractRequirements": {
@@ -2213,6 +2459,25 @@
       "developmentCredits": null,
       "wholeElapsedSeconds": null,
       "boundary": "Read-only exact launch-plan/config/source/metadata review. Prior data and ABI proof reused; no new execution evidence claimed."
+    },
+    "latestActualPhase1Review": {
+      "reviewSeconds": 5.0129115680465475,
+      "builderWallSeconds": 42.63414177595405,
+      "builderHostParentVmHwmKiB": 49888,
+      "builderBridgeParentVmHwmKiB": 35952,
+      "builderTotalOrCpuChildPeakRssKiB": null,
+      "builderModelCalls": 0,
+      "builderInferenceCalls": 0,
+      "reviewerServiceStarts": 0,
+      "reviewerTargetImports": 0,
+      "reviewerDatabaseQueries": 0,
+      "reviewerModelCalls": 0,
+      "exactChildExitCodes": [
+        null,
+        null
+      ],
+      "developmentTokens": null,
+      "developmentCredits": null
     }
   },
   "onlyWritePath": "development/reviews/e417-current-extension-package-review-20261023.json",
@@ -2579,6 +2844,21 @@
           "Full complete authenticated final package and full host adapter invocation, physically resolved base+overlays+supplements, ABI/tokens/target configs and actual original host function remain open."
         ]
       }
+    },
+    {
+      "id": "E417-TEST-003",
+      "severity": "P3",
+      "status": "open_measurement_gap_nonblocking_for_observed_shutdown",
+      "title": "Detached phase1 launcher loses exact child exit status before STOP observer can reap it",
+      "scope": "private test execution instrumentation; no Eva product runtime defect demonstrated",
+      "receiptSha256": "2426624cc869a765d8edaf7895d8801e60ea6bcb93cf5bb7c6fdb0ec31069004",
+      "cause": "Start tool creates start_new_session Popen children and exits without retaining a parent wait; later STOP tool sees process disappearance after SIGTERM but cannot recover native wait status.",
+      "reproduction": "Recorded start exec-4865a1d0 creates PIDs1234817/1234818; separate STOP exec-1462607f observes both /proc entries disappear; final receipt exact exitCode=null/exitCodeKnown=false for both.",
+      "impact": "Shutdown is independently observed through absent PIDs/groups and closed listeners, but exact success/failure exit codes required by the launch evidence are unavailable.",
+      "expected": "During a future already authorized execution, retain existing launcher parent through STOP and wait on its own child handles, then save actual native return statuses. Do not restart this completed phase solely to improve evidence.",
+      "repairOwner": "coordinator to assign if future runner work requires it; reviewer makes no code or service changes",
+      "blockingPhase2": false,
+      "recordedAt": "2026-10-24T00:01:50.632094+00:00"
     }
   ],
   "fullE417Accepted": false
