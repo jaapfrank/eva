@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Volg de werkelijk hervatte eigenaaropdracht en beoordeel bestaande toegang en concrete bruikbare uitkomst. Herstel daarnaast de bewezen ontbrekende voortzetting na provideruitval; geen onbekend verbruik als nul, geen afgeronde claim op bericht of rapport.",
+    "nextAction": "De hervatting stopte op een nog niet bewezen toegangsblokkade. Maak het nog uitvoerbare normale browser-/onderzoeksvervolg af; tester toetst bruikbaarheid. Parallel bouwen coder1/coder2 één begrensde bestaande hersteloverdracht na provideruitval met expliciete eigenaarpolicy, bewaard onbekend verbruik en gerichte regressieproeven.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3093,20 +3093,20 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "De volledige gecorrigeerde eigenaaropdracht is om 13:12 hervat en door de bestaande worker aangenomen. Bruikbare uitkomst nog niet bewezen. De onterechte afrondingsclaim blijft ingetrokken; oorspronkelijke kaarten niet extra gesloten.",
+          "summary": "De hervatte opdracht stopte om 13:14 zonder bruikbare schoolhulp; onbekende vindplaats en één browsertab bewijzen nog geen ontbrekende toegang. Oorspronkelijke uitkomst blijft open. Gerichte bestaande hersteloverdracht wordt gebouwd; geen nieuwe kaart afgerond.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid."
         },
         "next": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "detail": "Volg de werkelijk hervatte eigenaaropdracht en beoordeel bestaande toegang en concrete bruikbare uitkomst. Herstel daarnaast de bewezen ontbrekende voortzetting na provideruitval; geen onbekend verbruik als nul, geen afgeronde claim op bericht of rapport."
+          "detail": "De hervatting stopte op een nog niet bewezen toegangsblokkade. Maak het nog uitvoerbare normale browser-/onderzoeksvervolg af; tester toetst bruikbaarheid. Parallel bouwen coder1/coder2 één begrensde bestaande hersteloverdracht na provideruitval met expliciete eigenaarpolicy, bewaard onbekend verbruik en gerichte regressieproeven."
         },
         "ownerAction": {
           "required": false,
           "detail": "Nu geen eigenaarhandeling nodig. De lopende opdracht controleert bestaande toegang; alleen een werkelijk aangetoonde ontbrekende stap wordt concreet voorgelegd.",
           "steps": []
         },
-        "checkedAt": "2026-10-24T11:15:03.895788+00:00",
+        "checkedAt": "2026-10-24T11:19:33.342503+00:00",
         "reviewedAt": "2026-10-24T10:58:51.156682+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -8323,7 +8323,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Volg de werkelijk hervatte eigenaaropdracht en beoordeel bestaande toegang en concrete bruikbare uitkomst. Herstel daarnaast de bewezen ontbrekende voortzetting na provideruitval; geen onbekend verbruik als nul, geen afgeronde claim op bericht of rapport.",
+                "nextAction": "De hervatting stopte op een nog niet bewezen toegangsblokkade. Maak het nog uitvoerbare normale browser-/onderzoeksvervolg af; tester toetst bruikbaarheid. Parallel bouwen coder1/coder2 één begrensde bestaande hersteloverdracht na provideruitval met expliciete eigenaarpolicy, bewaard onbekend verbruik en gerichte regressieproeven.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8343,7 +8343,7 @@
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/owner-command-provider-fix-20261024.json",
-                "implementationStatus": "full_owner_task_resumed_useful_outcome_pending",
+                "implementationStatus": "resumed_owner_attempt_incomplete_useful_outcome_still_open",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8352,7 +8352,7 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T11:15:03.895788+00:00",
+                "checkedAt": "2026-10-24T11:19:33.342503+00:00",
                 "progress": "Eigenaar weerspreekt volledige afronding terecht. Providerreparatie en afleverACK blijven beperkte technische bewijzen. Coördinator had hervatting onterecht beperkt tot voorstel zonder nieuw onderzoek. Latere echte correctie vraagt bestaande niet-officiële koppeling terugzoeken; die poging strandde op provideruitval en leverde geen resultaat. Werkdoel blijft open.",
                 "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
               },
@@ -9030,7 +9030,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Volg de werkelijk hervatte eigenaaropdracht en beoordeel bestaande toegang en concrete bruikbare uitkomst. Herstel daarnaast de bewezen ontbrekende voortzetting na provideruitval; geen onbekend verbruik als nul, geen afgeronde claim op bericht of rapport.",
+        "nextAction": "De hervatting stopte op een nog niet bewezen toegangsblokkade. Maak het nog uitvoerbare normale browser-/onderzoeksvervolg af; tester toetst bruikbaarheid. Parallel bouwen coder1/coder2 één begrensde bestaande hersteloverdracht na provideruitval met expliciete eigenaarpolicy, bewaard onbekend verbruik en gerichte regressieproeven.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van 24 gesloten. E4.16 en E4.19 geïnstalleerd; echte gebruiks-/herstelketens nog open. Drie uitvoerders werken afzonderlijk aan native E4.19, E1.14-continuïteit en E1.11; tester beoordeelt onafhankelijk.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9041,7 +9041,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T11:15:03.895788+00:00",
+        "updatedAt": "2026-10-24T11:19:33.342503+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9317,7 +9317,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-24T11:15:03.895788+00:00",
+        "checkedAt": "2026-10-24T11:19:33.342503+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -14500,7 +14500,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Volg de werkelijk hervatte eigenaaropdracht en beoordeel bestaande toegang en concrete bruikbare uitkomst. Herstel daarnaast de bewezen ontbrekende voortzetting na provideruitval; geen onbekend verbruik als nul, geen afgeronde claim op bericht of rapport.",
+              "nextAction": "De hervatting stopte op een nog niet bewezen toegangsblokkade. Maak het nog uitvoerbare normale browser-/onderzoeksvervolg af; tester toetst bruikbaarheid. Parallel bouwen coder1/coder2 één begrensde bestaande hersteloverdracht na provideruitval met expliciete eigenaarpolicy, bewaard onbekend verbruik en gerichte regressieproeven.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14520,7 +14520,7 @@
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/owner-command-provider-fix-20261024.json",
-              "implementationStatus": "full_owner_task_resumed_useful_outcome_pending",
+              "implementationStatus": "resumed_owner_attempt_incomplete_useful_outcome_still_open",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -14529,7 +14529,7 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T11:15:03.895788+00:00",
+              "checkedAt": "2026-10-24T11:19:33.342503+00:00",
               "progress": "Eigenaar weerspreekt volledige afronding terecht. Providerreparatie en afleverACK blijven beperkte technische bewijzen. Coördinator had hervatting onterecht beperkt tot voorstel zonder nieuw onderzoek. Latere echte correctie vraagt bestaande niet-officiële koppeling terugzoeken; die poging strandde op provideruitval en leverde geen resultaat. Werkdoel blijft open.",
               "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
             },
@@ -15207,7 +15207,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Volg de werkelijk hervatte eigenaaropdracht en beoordeel bestaande toegang en concrete bruikbare uitkomst. Herstel daarnaast de bewezen ontbrekende voortzetting na provideruitval; geen onbekend verbruik als nul, geen afgeronde claim op bericht of rapport.",
+      "nextAction": "De hervatting stopte op een nog niet bewezen toegangsblokkade. Maak het nog uitvoerbare normale browser-/onderzoeksvervolg af; tester toetst bruikbaarheid. Parallel bouwen coder1/coder2 één begrensde bestaande hersteloverdracht na provideruitval met expliciete eigenaarpolicy, bewaard onbekend verbruik en gerichte regressieproeven.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van 24 gesloten. E4.16 en E4.19 geïnstalleerd; echte gebruiks-/herstelketens nog open. Drie uitvoerders werken afzonderlijk aan native E4.19, E1.14-continuïteit en E1.11; tester beoordeelt onafhankelijk.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15218,7 +15218,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T11:15:03.895788+00:00",
+      "updatedAt": "2026-10-24T11:19:33.342503+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -15494,7 +15494,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-24T11:15:03.895788+00:00",
+      "checkedAt": "2026-10-24T11:19:33.342503+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [

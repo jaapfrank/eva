@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:15:03.895788+00:00",
-  "status": "linked_attempt_running_useful_outcome_unproven",
+  "status": "attempt_ended_incomplete_actual_access_block_unproven",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -17,5 +17,21 @@
   "usefulOwnerOutcomeProven": false,
   "originalCardsNewlyCompleted": [],
   "productOrRuntimeSourceChanged": false,
-  "remaining": "Actual access and useful result must be checked. Bounded automatic continuation after the actual unknown-usage provider failure remains unresolved; do not count an easier unrelated case as its repair."
+  "remaining": "Actual access and useful result must be checked. Bounded automatic continuation after the actual unknown-usage provider failure remains unresolved; do not count an easier unrelated case as its repair.",
+  "actualOutcome": {
+    "completedAt": "2026-10-24T11:14:19Z",
+    "state": "failed",
+    "error": "incomplete_work",
+    "deliveryAcknowledgedAt": "2026-10-24T11:14:21Z",
+    "usefulOwnerResult": false,
+    "providerFailedAgain": false,
+    "observed": "Procedure lookup and browser tab list completed. No current school data or actual login/access check. Missing prior route location was reported as a blocker; remaining ordinary browser/public discovery route is being assessed.",
+    "models": 10,
+    "tools": 8,
+    "inputTokens": 273621,
+    "outputTokens": 1704,
+    "measurement": "partial",
+    "moneyCost": null,
+    "privateEvidenceSha256": "8e3c91ba040eabe145fe3e2c112375cc31af9b48692649d0ea562c59209ef49e"
+  }
 }
