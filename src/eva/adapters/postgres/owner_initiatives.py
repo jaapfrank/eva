@@ -90,6 +90,16 @@ class PostgresOwnerInitiatives:
                 status = ("stopped" if phase == "personal_stopped" else
                           "done" if phase in {"release_ready", "initiative_completed"} else
                           "attention" if row.status in ("failed", "needs_help") else "working")
+                if (status == "done" and data.get("repair_incident_id") is not None
+                        and self._has_deferred_native_application(conn, row, now)):
+                    status = "working"  # Programming is done; repair proof/application is pending.
+                    c,e=operational_checkpoints.c,operational_events.c
+                    waiting=conn.execute(sa.select(e.event_type).join(operational_checkpoints,
+                        sa.and_(e.tenant_id==c.tenant_id,e.installation_id==c.installation_id,
+                            e.thread_id==c.thread_id,e.sequence==c.revision)).where(
+                        c.tenant_id==self._scope.tenant_id,c.installation_id==self._scope.installation_id,
+                        c.thread_id==data['repair_incident_id'])).scalar_one_or_none()
+                    if waiting=='SELF_REPAIR_REMAINS_OPEN':status='attention' 
                 artifact = self._artifact(conn, row.thread_id)
                 cards.append({"intent_id": data["intent_id"], "title": data["title"],
                     "motivation": data["motivation"], "question": data["next_exploration"],

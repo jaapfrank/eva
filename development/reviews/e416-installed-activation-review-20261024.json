@@ -1,0 +1,137 @@
+{
+  "contract": "Eva2IndependentInstalledActivationReview/v1",
+  "task": "E4.16",
+  "checkedAt": "2026-10-24T07:21:41.695901+00:00",
+  "reviewerRole": "Independent product reviewer/tester; no installation, mandate admission, migration or production write by reviewer",
+  "verdict": "GO_EXACT_INSTALLED_E416_ACTIVATION",
+  "technicalActivationCompleted": true,
+  "fullOriginalTaskCompleted": false,
+  "originalDoneWhenSha256": "eb4c49f3c9233e3e3d0a1091d92a8d2ea6392d111dd15bc87e020ac3cbd72e3e",
+  "criteriaChanged": false,
+  "preDispatchApproval": {
+    "path": "development/reviews/e416-handoff-activation-review-20261024.json",
+    "sha256": "443d08fdab5e56787654f7420cc77665c8d535e3f7fa64137f911d1b82b407aa",
+    "preservedExactSnapshot": "/home/administrator/project/.eva2-artifacts/e416-independent-review-20261024/activation-pre-dispatch-go.private.json",
+    "unchanged": true
+  },
+  "independentActualTargetEvidence": {
+    "path": "/home/administrator/project/.eva2-artifacts/e416-independent-review-20261024/installed-target-readback.private.json",
+    "sha256": "4a2e7a62182a0cc2652c5442d44777daad942e84484c09c21c950e90cbfa52af",
+    "scriptPath": "/home/administrator/project/.eva2-artifacts/e416-independent-review-20261024/installed-target-readback.py",
+    "scriptSha256": "06d4eefb5f510a2fb692757d3c286fb36d907bc2fcfa1eab95b7f7e756c76091",
+    "checksPassed": 11,
+    "checks": [
+      "unchanged_exact_pre_dispatch_go_bound_to_one_completed_11_phase_installation",
+      "current_named_core_and_worker_are_exact_approved_installed_healthy_generation",
+      "three_current_host_configuration_files_equal_approved_installation_bytes",
+      "current_trusted_mandate_is_exact_enabled_self_repair_revision",
+      "actual_live_host_process_uses_exact_frozen_58_file_source_and_last_effective_dropin",
+      "existing_portable_recovery_tool_is_exact_reviewed_schema0012_fix",
+      "actual_official_installed_profiles_equal_both_reviewed_candidates_without_repeating_probe",
+      "preserved_current_pre_migration_database_backup_matches_recorded_hash_and_size",
+      "independent_readonly_bound_actual_pg_catalog_confirms0012_and_exact_function_body_owner_searchpath_acl_index",
+      "independent_readonly_scoped_latest_owner_cas_revision17_exact_event_hash_and_old_to_new_data",
+      "actual_core_mounted_client_bytes_and_authenticated_existing_host_health_ready"
+    ],
+    "successfulReadbackSeconds": 1.9416684089810587
+  },
+  "installedRoles": {
+    "core": {
+      "id": "43da9b4f9612e6ba7cc5eec6cad3433fec0cafa87871e00765c81af21316999a",
+      "image": "sha256:8b63103d434068c8f9257608849385299c6f255266d25491220281a5169e37cb",
+      "healthy": true,
+      "startedAt": "2026-10-24T07:13:22.66767922Z"
+    },
+    "delegated-work-worker": {
+      "id": "9c37848769ebf1ad34a629877511a88190c865e9577bd7adbe7ede1d2eba6cc2",
+      "image": "sha256:fd942c6df0fc81213e9b1424b5f85cc51f08bd274bd348046c7c3fd73596a0d7",
+      "healthy": true,
+      "startedAt": "2026-10-24T07:13:34.23890547Z"
+    }
+  },
+  "bindings": {
+    "installationReceipt": {
+      "path": "/var/lib/eva2/e416-activation-20261024/installation.private.json",
+      "sha256": "232211ca5220efde8f3d03406661128c9b19016b5c10b5a48503e65706681567",
+      "phasesCompletedOnce": 11
+    },
+    "operatorManifestSha256": "dc5e56ced52bd4024e4d508237dfa59a9f01fd3637e06ea6908856aa16feca63",
+    "operatorInstallerSha256": "139102494103b53918d73cdc20731dbf82b1bed434048beacd7ad55af762afe0",
+    "installedProfiles": {
+      "path": "/var/lib/eva2/e416-activation-20261024/installed-profiles.private.json",
+      "sha256": "afa0358be5402e6a113a09c3c3e63a5f81a3e8e9dafac0868ef964722ee22688",
+      "sameAsReviewedCandidates": true,
+      "sharedProviderPublicResearchDigitalWorkMatch": true,
+      "digitalRelease": "96ad9c537f1121beb20faef0f775352e885cfdf352bf9f12e534647ceaf13d34",
+      "historicalHouseholdResearchMismatchRetained": true
+    },
+    "host": {
+      "actualPid": "1802966",
+      "frozenPythonPathVerified": true,
+      "sourceFilesVerified": 58,
+      "lastOwnSystemdDropinVerified": true,
+      "actualMountedClientAndAuthenticatedHealthVerified": true
+    },
+    "database": {
+      "head": "4e_0012_conversation_source_lock",
+      "sameBoundProductionClusterVerifiedReadOnly": true,
+      "exactSourceLockBodyOwnerSearchPathAclAndIndexVerified": true,
+      "ownerGrantRevision": 17,
+      "exactLatestScopedEventDataAndHashMatchAdmissionReceipt": true,
+      "selfRepairEventCountInBoundScope": 0,
+      "preMigrationBackupBytes": 84034678,
+      "backupFileHashMatchesDispatchReceipt": true,
+      "existingPortableRecoverySourceSha256": "be25d35394a9a18123f41d7276024e047047a615c1bfc1da1bb45629f5490331"
+    }
+  },
+  "findings": {
+    "newOpenInstallationDefects": [],
+    "resolvedFindingIds": [
+      "E416-SCHEMA-RECOVERY-001"
+    ],
+    "observerErrorsRetained": [
+      "Coordinator initial observer selected Alembic ledger after _authorize correctly SET LOCAL ROLE eva_runtime; privileged catalog read must precede role switch or use existing bounded catalog access. No product privilege change.",
+      "Reviewer first observer used system Python without existing host-venv dependencies; corrected execution runtime only.",
+      "Reviewer compared entire profile envelopes although candidate includes metadata; corrected comparison to exact core/worker records.",
+      "Reviewer initially treated raw configured tenant aliases as UUIDs; used the admission receipt canonical UUID scope for the read-only event join. Actual binding checks remain coordinator-owned and unchanged."
+    ],
+    "observerFailureEvidence": "Tool transcript plus own private profile-envelope/owner-value failure logs and coordinator readback-first-attempt; no model requests or product mutations on failed observer paths."
+  },
+  "completionBoundary": {
+    "builtAndInstalled": true,
+    "actualAutonomousRepairUseEstablished": false,
+    "liveMainProcessSelfRepairObjectInspected": false,
+    "fullOriginalIncidentProof": false,
+    "laterIndependentFaultReuseEstablished": false,
+    "ownerAcceptance": "not established",
+    "remaining": "Original real internal failure -> durable idempotent goal/source -> native measured development -> separate current assessment -> managed proven improvement -> verification of original behavior on actual installation; later independent fault reuses same route. No synthetic production fault, model run or family acceptance claim performed in this activation readback."
+  },
+  "usage": {
+    "evaRuntimeModelRequestsByReviewer": 0,
+    "reviewerProductionWrites": 0,
+    "reviewerServiceChanges": 0,
+    "measuredSuccessfulReadbackSeconds": 1.9416684089810587,
+    "developmentTokens": null,
+    "developmentCredits": null
+  },
+  "ownFixtureCleanup": {
+    "path": "/home/administrator/project/.eva2-artifacts/e416-independent-review-20261024/fixture-cleanup.private.json",
+    "sha256": "b1d06097ada0112f0cdceb26d91db86f9fe1631fc939467ef3929cdf9f35878c",
+    "ownDatabaseRemoved": true,
+    "otherDatabasesAndFixtureContainerRetained": true
+  },
+  "changesByReviewer": [
+    "This separate post-install JSON review and private read-only observation evidence. Original pre-install approval bytes unchanged. No product, board, Git or installation changes."
+  ],
+  "coordinatorActualReadback": {
+    "path": "/var/lib/eva2/e416-activation-20261024/live-readback.private.json",
+    "sha256": "ef144da5529cc91314407b3e3774f629a6a4258d7559770f094a4d4456d3fbce",
+    "original36SourceAssertionsRetained": true,
+    "bothOfficialInstalledProfilesPassed": true,
+    "actualSchemaFunctionAclOwnerGrantHostReadyAndDashboardPassed": true,
+    "dashboardHttpStatus": 200,
+    "dashboardCacheControl": "no-store",
+    "selfRepairEventCount": 0,
+    "observerCorrections": "First restricted runtime role ledger query and later psycopg literal-percent LIKE observer errors retained in readback-first-attempt/readback-second-attempt; exact final v3 escapes literal percent. No product rights, install or model calls repeated."
+  }
+}

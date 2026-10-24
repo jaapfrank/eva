@@ -51,7 +51,7 @@ _FIELDS = {"contract", "schema_version", "archive_id", "source_tenant_id",
 
 
 # These legacy constants remain byte-identical for existing v3/0010 archives.
-# Only the current v3 route selects a second, explicitly supported profile.
+# The current v3 route selects only explicitly supported successor profiles.
 CURRENT_SCHEMA_HEAD = "4e_0011_timeline_type_time"
 _TYPE_TIME_INDEX = {
     "schema": "eva_core", "table": "operational_events",
@@ -76,27 +76,74 @@ _TYPE_TIME_INDEX_SQL = """
 """
 
 
+SOURCE_LOCK_SCHEMA_HEAD = "4e_0012_conversation_source_lock"
+_SOURCE_LOCK_FUNCTION = {
+    "schema": "eva_core", "name": "lock_conversation_source",
+    "identity_arguments": "p_event_id uuid, p_expected_payload_sha256 bytea",
+    "returns": "boolean", "language": "plpgsql", "owner": "eva_migrator",
+    "security_definer": True, "strict": False, "volatility": "volatile",
+    "parallel": "unsafe", "configuration": ["search_path=pg_catalog, eva_core"],
+    "source_sha256": "9bee44438e9810e396eba3f2d0f4143773401488b24be0dd1e526654c0a9445b",
+    "execute_grantees": ["eva_dbos", "eva_migrator", "eva_runtime"],
+    "public_execute": False, "grant_option": False,
+}
+# Pin the existing0012 migration, including its scoped ingress-only body. A head
+# label, function name or successful call alone cannot attest definer privileges.
+_SOURCE_LOCK_FUNCTION_SQL = """
+    SELECT p.prosrc
+    FROM pg_catalog.pg_proc p
+    JOIN pg_catalog.pg_language language ON language.oid = p.prolang
+    WHERE p.oid = pg_catalog.to_regprocedure('eva_core.lock_conversation_source(uuid,bytea)')
+      AND pg_catalog.pg_get_function_identity_arguments(p.oid)
+          = 'p_event_id uuid, p_expected_payload_sha256 bytea'
+      AND p.prorettype = 'boolean'::pg_catalog.regtype AND NOT p.proretset
+      AND language.lanname = 'plpgsql' AND p.proowner::pg_catalog.regrole::text = 'eva_migrator'
+      AND p.prosecdef AND NOT p.proisstrict AND NOT p.proleakproof
+      AND p.provolatile = 'v' AND p.proparallel = 'u' AND p.prosupport = 0
+      AND p.pronargdefaults = 0 AND p.provariadic = 0 AND p.proargmodes IS NULL
+      AND p.proconfig = ARRAY['search_path=pg_catalog, eva_core']::text[]
+      AND (SELECT count(*) = 3 AND bool_and(
+              a.grantor = p.proowner AND a.privilege_type = 'EXECUTE' AND NOT a.is_grantable)
+           FROM pg_catalog.aclexplode(COALESCE(p.proacl,
+                    pg_catalog.acldefault('f', p.proowner))) a)
+      AND ARRAY(SELECT role.rolname::text
+           FROM pg_catalog.aclexplode(COALESCE(p.proacl,
+                    pg_catalog.acldefault('f', p.proowner))) a
+           JOIN pg_catalog.pg_roles role ON role.oid = a.grantee
+           ORDER BY role.rolname)
+          = ARRAY['eva_dbos','eva_migrator','eva_runtime']::text[]
+"""
+
+
 def runtime_profile_for_head(schema_head):
-    """Pin exactly the old row contract or its index-only installed successor."""
-    if schema_head not in (SCHEMA_HEAD, CURRENT_SCHEMA_HEAD):
+    """Pin the old row contract, its index successor or the exact scoped-lock successor."""
+    if schema_head not in (SCHEMA_HEAD, CURRENT_SCHEMA_HEAD, SOURCE_LOCK_SCHEMA_HEAD):
         raise ValueError("runtime portable schema head is unsupported")
     result = json.loads(json.dumps(PROFILE))
     result["schema_head"] = schema_head
-    if schema_head == CURRENT_SCHEMA_HEAD:
+    if schema_head in (CURRENT_SCHEMA_HEAD, SOURCE_LOCK_SCHEMA_HEAD):
         result["required_indexes"] = [json.loads(json.dumps(_TYPE_TIME_INDEX))]
+    if schema_head == SOURCE_LOCK_SCHEMA_HEAD:
+        result["required_functions"] = [json.loads(json.dumps(_SOURCE_LOCK_FUNCTION))]
     return result
 
 
 def verify_runtime_database_head(connection, *, expected_head=None):
-    """Attest the real database head and, for0011, the exact usable index shape."""
+    """Attest the supported head and every index/function privilege pin it requires."""
     head = connection.exec_driver_sql(
         "SELECT version_num FROM public.eva_alembic_version").scalar_one()
-    runtime_profile_for_head(head)  # closed0/1 selection; never trust a label alone
+    runtime_profile_for_head(head)  # closed selection; never trust a label alone
     if expected_head is not None and head != expected_head:
         raise ValueError("runtime source and target schema heads differ")
-    if head == CURRENT_SCHEMA_HEAD:
+    if head in (CURRENT_SCHEMA_HEAD, SOURCE_LOCK_SCHEMA_HEAD):
         if connection.exec_driver_sql(_TYPE_TIME_INDEX_SQL).scalar_one_or_none() is not True:
             raise ValueError("runtime timeline type/time index differs from its pinned shape")
+    if head == SOURCE_LOCK_SCHEMA_HEAD:
+        source = connection.exec_driver_sql(_SOURCE_LOCK_FUNCTION_SQL).scalar_one_or_none()
+        if (not isinstance(source, str)
+                or hashlib.sha256(source.encode("utf-8")).hexdigest()
+                    != _SOURCE_LOCK_FUNCTION["source_sha256"]):
+            raise ValueError("runtime conversation source lock differs from its pinned definition or grants")
     return head
 
 

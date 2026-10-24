@@ -118,6 +118,7 @@ class StoredDelegatedWork:
     retention_policy_id: str
     retention_until: datetime
     failure_report: str | None = None
+    repair_notice: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -1746,6 +1747,10 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         if report is not None and self._failure_report_clock() < work.retention_until:
             from dataclasses import replace
             work = replace(work, failure_report=report)
+        if work.state in {'failed','needs_help','ambiguous'}:
+            from dataclasses import replace
+            from eva.adapters.postgres.self_repair import failed_work_repair_notice
+            work=replace(work,repair_notice=failed_work_repair_notice(connection,self,work.spec))
         return work
 
     @staticmethod

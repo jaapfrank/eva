@@ -44,7 +44,9 @@ _EXECUTION_SOURCES = (
     "contracts/tool_deadlines.py",
     "contracts/component_target.py",
     "adapters/postgres/initiative_execution.py", "application/initiative_execution.py",
-    "application/self_repair.py", "adapters/postgres/self_repair.py",
+    "application/self_repair.py", "application/work_failure_notice.py", "adapters/postgres/self_repair.py",
+    "application/repair_assessment.py", "bootstrap/runtime_repair_work.py",
+    "bootstrap/runtime_repair_host.py",
     "bootstrap/self_repair.py",
     "bootstrap/background_browser_context.py",
     "adapters/connectors/browser_session.py",
@@ -276,9 +278,12 @@ def build_digital_runner(settings, store, *, provider_bundle=None, household_aut
             def source_loader(source):
                 loader = shared_loader if source.get("audience", {}).get("kind") == "household" else private_loader
                 return loader(source)
+    from eva.bootstrap.self_repair import observe_failed_work
     return DelegatedDigitalRunner(store, profile, source_loader=source_loader,
         memory=memory, identity=identity, model=model, connector_tools=(*routes, DelegatedWorkResultReader(service)),
-        browser_context=BackgroundBrowserContext(configured_browser_client()))
+        browser_context=BackgroundBrowserContext(configured_browser_client()),
+        failure_observer=lambda source,spec,error: observe_failed_work(
+            store,service,source,spec,error,clock=service.now))
 
 
 class DigitalEnabledDelegatedRunner:

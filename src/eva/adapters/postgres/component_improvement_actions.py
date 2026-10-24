@@ -15,6 +15,7 @@ from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeli
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.timestamps import parse_utc_timestamp
 
+REPAIR = "manage_own_runtime_repair"
 READ = "read_own_component_source"
 DRAFT = "draft_own_component_improvement"
 EVALUATE = "evaluate_own_component_improvement"
@@ -23,6 +24,8 @@ COMPARE = "compare_own_component_improvements"
 APPLY = "apply_reviewed_component_improvement"
 APPLICATION_STATUS = "get_reviewed_component_application"
 _SCHEMAS = {
+    REPAIR: {"type":"object","additionalProperties":False,"required":["action"],
+        "properties":{"action":{"type":"string","enum":["describe","submit","status"]}}},
     COMPARE: {"type": "object", "additionalProperties": False, "required": ["evaluation_steps"],
         "properties": {"evaluation_steps": {"type": "array", "minItems": 1, "maxItems": 32,
             "items": {"type": "integer", "minimum": 0}}}},
@@ -119,7 +122,16 @@ def component_descriptors():
         "geen extra volledige voorstel- of meetrapportkopie nodig. Dit is geen onafhankelijke "
         "eindbeoordeling, bewezen gezinswinst of installatie.",
         _SCHEMAS[COMPARE], "Meld scores, fouten en werkelijke keuze; promoveer geen onbewezen kandidaat."),)
-    return (*evaluation, *comparison, *preparation, *application,
+    repair = () if evaluator is None or not getattr(evaluator, "runtime_repair_enabled", False) else (
+        ConversationToolDescriptor(REPAIR,
+            "Alleen binnen je automatisch aangenomen herstelopdracht: describe geeft de actuele "
+            "hostgebonden fout en toegestane bronhashes; submit draagt /workspace/repair/candidate.json "
+            "over voor afzonderlijke gedragsvergelijking, beoordeling en beheerde toepassing. "
+            "Je kiest geen incident, bronpad buiten de foutscope of beoordelingscriterium. "
+            "Rond na accepted=true de programmeertaak af zodat de afzonderlijke controle kan starten. "
+            "status leest de overdracht. Geen van deze acties bewijst geïnstalleerd herstel.",
+            _SCHEMAS[REPAIR], "Een bewaarde kandidaat is nog geen toegepaste reparatie."),)
+    return (*repair, *evaluation, *comparison, *preparation, *application,
         ConversationToolDescriptor(READ,
             "Lees de werkelijk geïnstalleerde Eva-broncode. Leeg path toont de mappen; "
             "een Python-pad geeft maximaal 160 regels en een bronhash. Gebruik next_line voor vervolg. "
@@ -146,13 +158,16 @@ class ComponentImprovementActions:
     action_names = (READ, DRAFT)
     supports_indexed_steps = True
 
-    def __init__(self, engine, spec, source, authorize, dispatch, clock, *, source_resolver=None):
+    def __init__(self, engine, spec, source, authorize, dispatch, clock, *, source_resolver=None, repair_guard=None):
         self.evaluator = configured_component_evaluator()
         self.action_names = (READ, DRAFT) + (() if self.evaluator is None else (EVALUATE, COMPARE, PREPARE))
         if self.evaluator is not None and self.evaluator.reviewed_releases:
             self.action_names += (APPLY, APPLICATION_STATUS)
         if self.evaluator is not None and getattr(self.evaluator, "final_assessment_scopes", ()) and APPLICATION_STATUS not in self.action_names:
             self.action_names += (APPLICATION_STATUS,)
+        if self.evaluator is not None and getattr(self.evaluator, "runtime_repair_enabled", False):
+            self.action_names += (REPAIR,)
+        self.repair_guard = repair_guard
         self.spec, self.source = spec, source
         self.authorize, self.dispatch, self.clock = authorize, dispatch, clock
         self.root = Path(__file__).resolve().parents[2]
@@ -282,7 +297,22 @@ class ComponentImprovementActions:
                     "Maak eerst een codevoorstel met draft_own_component_improvement. "
                     "Gebruik daarna draft_step uit het opgeslagen voorstel voor de vergelijking.")
         self.dispatch(turn)
-        if call.name in {APPLY, APPLICATION_STATUS}:
+        if call.name == REPAIR:
+            guard = self.repair_guard
+            if guard is None:
+                raise ConversationConflict('automatic native repair context required')
+            guard.check(turn)
+            incident_id = guard._repair_incident_id
+            if incident_id is None or (guard.repair_role is not None and call.arguments['action']!='describe'):
+                raise ConversationConflict('assessment can only read its own host-bound inputs')
+            scope = canonical_sha256({key:getattr(turn,key) for key in
+                ('tenant_id','installation_id','principal_id')})
+            request_id = canonical_sha256({'execution':self.spec.execution_id,
+                'source':self.spec.source.model_dump(mode='json'),'step':step_index,'action':call.arguments['action']})
+            value = self.evaluator.runtime_repair(call.arguments['action'],incident_id=incident_id,
+                task_id=self.spec.work_id,request_id=request_id,scope_sha256=scope)
+            scope = 'runtime_repair_handoff_not_installed'
+        elif call.name in {APPLY, APPLICATION_STATUS}:
             request_id = canonical_sha256({"execution": self.spec.execution_id,
                 "source": self.spec.source.model_dump(mode="json"), "step": step_index,
                 "review_id": call.arguments["review_id"]})

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T06:42:25.745112+00:00",
+  "updatedAt": "2026-10-24T07:24:58.810394+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -159,10 +159,31 @@
       "activeCodeOrInstallClaim": false
     },
     "codex-e418": {
-      "task": "E4.16",
+      "task": "E4.19",
       "writeScopeConfirmed": true,
       "allowedPaths": [
-        "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024"
+        "src/eva/bootstrap/component_maintenance.py",
+        "src/eva/operations/runtime_dependency_update.py",
+        "src/tools/runtime_dependency_overlay.py",
+        "src/tools/installation_runtime_image_restore.py",
+        "src/eva/operations/runtime_repair_development.py",
+        "src/eva/operations/component_evaluation_service.py",
+        "src/eva/adapters/connectors/component_evaluation.py",
+        "src/eva/adapters/postgres/component_improvement_actions.py",
+        "src/eva/bootstrap/runtime_repair_host.py",
+        "src/eva/bootstrap/runtime_repair_work.py",
+        "src/eva/adapters/postgres/initiative_execution.py",
+        "src/eva/operations/component_release_publisher.py",
+        "src/eva/operations/reviewed_component_application.py",
+        "src/eva/operations/component_application_runtime.py",
+        "src/eva/bootstrap/delegated_work_provider.py",
+        "src/eva/bootstrap/runtime.py",
+        "src/tools/installation_recovery_package.py",
+        "src/tools/installation_recovery_materializer.py",
+        "development/tests/operations/test_runtime_dependency_update.py",
+        "development/tests/bootstrap/test_component_maintenance.py",
+        "development/tests/portable/test_runtime_dependency_overlay.py",
+        "development/tests/portable/test_installation_runtime_image_restore.py"
       ],
       "excludedToolPatterns": [
         "*install*",
@@ -177,7 +198,28 @@
         "check_delegated_runtime_profiles.py"
       ],
       "chosenPaths": [
-        "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024"
+        "src/eva/bootstrap/component_maintenance.py",
+        "src/eva/operations/runtime_dependency_update.py",
+        "src/tools/runtime_dependency_overlay.py",
+        "src/tools/installation_runtime_image_restore.py",
+        "src/eva/operations/runtime_repair_development.py",
+        "src/eva/operations/component_evaluation_service.py",
+        "src/eva/adapters/connectors/component_evaluation.py",
+        "src/eva/adapters/postgres/component_improvement_actions.py",
+        "src/eva/bootstrap/runtime_repair_host.py",
+        "src/eva/bootstrap/runtime_repair_work.py",
+        "src/eva/adapters/postgres/initiative_execution.py",
+        "src/eva/operations/component_release_publisher.py",
+        "src/eva/operations/reviewed_component_application.py",
+        "src/eva/operations/component_application_runtime.py",
+        "src/eva/bootstrap/delegated_work_provider.py",
+        "src/eva/bootstrap/runtime.py",
+        "src/tools/installation_recovery_package.py",
+        "src/tools/installation_recovery_materializer.py",
+        "development/tests/operations/test_runtime_dependency_update.py",
+        "development/tests/bootstrap/test_component_maintenance.py",
+        "development/tests/portable/test_runtime_dependency_overlay.py",
+        "development/tests/portable/test_installation_runtime_image_restore.py"
       ],
       "requestedAdditionalPaths": [
         {
@@ -548,7 +590,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "preparing_exact_e416_activation_package",
+      "status": "E419_full_implementation_authorized_active",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1326,13 +1368,20 @@
         "modelOrProductionActions": 0,
         "fullTaskComplete": false,
         "nextTaskRequestedDirectly": true
+      },
+      "e419ImplementationAuthorization": {
+        "from": "01a16a55-7f38-76c2-9691-31421caafbe7",
+        "handoffSha256": "19e2fdbc1750167d9523a72bd379cb645dd33289c46640e19d402415c9c74ca1",
+        "sharedInstallation": "root_only",
+        "runtimePy": "private_hunk_only",
+        "preserveE416FrozenBlobs": true
       }
     },
     "e415-independent-review-newchat": {
-      "task": "E2.9",
+      "task": "E4.19",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "reviewing_e416_handoff_activation",
-      "coordinator": "windows-root",
+      "status": "reviewing_original_e419_acceptance",
+      "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
       "allowedWritePaths": [
         "development/reviews/e29-housemate-consumer-review-20261024.json"
       ],
@@ -1351,7 +1400,7 @@
       "completedAt": "2026-10-23T19:48:37.263117+00:00",
       "review": "development/reviews/e415-household-batch-binding-review-20261023.json",
       "verdict": "GO",
-      "nextAction": "Review exact frozen current-learning consumer, privacy/current source and correction/erasure transfer; no product code or full E2.9 claim. E113 and E112 final reviews stay frozen.",
+      "nextAction": "Freeze original E419 acceptance before candidate comparison; keep reference when gain unproven.",
       "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
       "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
       "previousInstallationReview": "development/reviews/e415-coordinated-installation-review-20261023.json",
@@ -1447,8 +1496,8 @@
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": true,
-      "updatedAt": "2026-10-24T05:04:43.982280+00:00",
-      "activeAssignment": "E4.16 concrete candidate handoff and exact activation interfaces",
+      "updatedAt": "2026-10-24T07:24:58.810394+00:00",
+      "activeAssignment": "Independent E419 original criteria and one actual driver/update/restore comparison; no product code.",
       "writePaths": [
         "development/reviews/e416-handoff-activation-review-20261024.json"
       ]
@@ -1642,40 +1691,50 @@
     "authority": "Direct owner instruction 2026-10-23: sole main coordinator; integration, GitHub and shared installation exclusively here.",
     "previousCoordinator": "windows-root",
     "preserveExistingReservations": true,
-    "activeOutcome": "E4.16",
+    "activeOutcome": "E4.19",
     "doNotRepeatSentLolaQuestion": true,
     "agents": {},
     "maxConcurrentExecutorsReviewers": 2,
     "installationCandidate": {
-      "path": "/var/lib/eva2/e110-housemate-development-20261024",
-      "scope": "E110 existing source development plus completed E29 owner operations",
+      "path": "/var/lib/eva2/e416-activation-20261024",
+      "scope": "Existing E416 self-repair activation",
       "status": "installed_and_independently_reviewed",
-      "core": "sha256:efff5dd51b993ff4bc833ecc1940f0f64ad336d30e20fb873a902cf371af7dcf",
-      "worker": "sha256:15327de84d6e70e353bd462f2a730250b273d1779d8cc79969d2729924d55a1d",
-      "fullE29Completed": true,
-      "fullE110Completed": false,
+      "core": "sha256:8b63103d434068c8f9257608849385299c6f255266d25491220281a5169e37cb",
+      "worker": "sha256:fd942c6df0fc81213e9b1424b5f85cc51f08bd274bd348046c7c3fd73596a0d7",
+      "fullE416Completed": false,
+      "review": "development/reviews/e416-installed-activation-review-20261024.json",
+      "evidence": "development/evidence/product/e416-installed-activation-20261024.json",
       "previousInstalled": {
-        "path": "/var/lib/eva2/e29-housemate-consumer-20261024",
-        "scope": "Current private learning sources in existing owner initiative screen with existing source correction/forget handoff",
-        "status": "installed_exact_live_source_readback",
-        "core": "sha256:aa0d48c4ea7b1c9569227a597bb9714cda5aff00a1992ccbe150ea9703c32996",
-        "worker": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
-        "fullE29Completed": false,
+        "path": "/var/lib/eva2/e110-housemate-development-20261024",
+        "scope": "E110 existing source development plus completed E29 owner operations",
+        "status": "installed_and_independently_reviewed",
+        "core": "sha256:efff5dd51b993ff4bc833ecc1940f0f64ad336d30e20fb873a902cf371af7dcf",
+        "worker": "sha256:15327de84d6e70e353bd462f2a730250b273d1779d8cc79969d2729924d55a1d",
+        "fullE29Completed": true,
+        "fullE110Completed": false,
         "previousInstalled": {
-          "path": "/var/lib/eva2/e112-version-trial-20261024",
-          "scope": "Exact source versions, bounded trial and owner UI with same-byte managed procedure copy",
-          "status": "installed_and_independently_read_back",
-          "core": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+          "path": "/var/lib/eva2/e29-housemate-consumer-20261024",
+          "scope": "Current private learning sources in existing owner initiative screen with existing source correction/forget handoff",
+          "status": "installed_exact_live_source_readback",
+          "core": "sha256:aa0d48c4ea7b1c9569227a597bb9714cda5aff00a1992ccbe150ea9703c32996",
           "worker": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
+          "fullE29Completed": false,
           "previousInstalled": {
-            "path": "/var/lib/eva2/e112-proof-handoff-20261024",
-            "scope": "Frozen E112 V3.1 original-lineage proof and owner controls; preserves role variants and legacy route",
+            "path": "/var/lib/eva2/e112-version-trial-20261024",
+            "scope": "Exact source versions, bounded trial and owner UI with same-byte managed procedure copy",
             "status": "installed_and_independently_read_back",
-            "core": "sha256:f55b5f7cf714d8ad839e48f965530b71f0bb243920b9133814e32f734e1b8358",
-            "worker": "sha256:32d634b3ebc2ab616ca627e4936538ebdf8778ce727d676e8bd0ea267c8d03c4",
+            "core": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+            "worker": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
+            "previousInstalled": {
+              "path": "/var/lib/eva2/e112-proof-handoff-20261024",
+              "scope": "Frozen E112 V3.1 original-lineage proof and owner controls; preserves role variants and legacy route",
+              "status": "installed_and_independently_read_back",
+              "core": "sha256:f55b5f7cf714d8ad839e48f965530b71f0bb243920b9133814e32f734e1b8358",
+              "worker": "sha256:32d634b3ebc2ab616ca627e4936538ebdf8778ce727d676e8bd0ea267c8d03c4",
+              "fullE112Completed": false
+            },
             "fullE112Completed": false
-          },
-          "fullE112Completed": false
+          }
         }
       }
     },
@@ -1697,8 +1756,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
-    "parallelBoundedWork": "E416 installatie en onafhankelijke review; bouwer maakt alleen bestaande E419-overdracht bouwklaar en verwerkt concrete E416-reviewbevindingen eerst.",
-    "currentBlocker": "Geen eigenaarblokkade. E416 exacte activering wacht op onafhankelijke migratie/herstel/operatorreview; nog geen productie-installatie.",
+    "parallelBoundedWork": "E4.19 complete update implementation plus independent reviewer criteria; E4.16 installed, original incident proof open.",
+    "currentBlocker": "Geen eigenaarblokkade. E4.19 wordt gebouwd; E4.16-praktijkbewijs wacht op een echte brongebonden aanleiding.",
     "latestVerifiedOutcome": {
       "task": "E4.17",
       "status": "completed_original_restore_card_technical",
@@ -1707,9 +1766,9 @@
       "at": "2026-10-24T06:06:08.566732+00:00"
     },
     "nextBoundedAssignments": {
-      "executor": "E419 gebruikte updates inventariseren en kleinste bestaande route/bestandsvoorstel opleveren; E416-reviewcorrecties hebben voorrang.",
-      "reviewer": "E416 bron/closure,0012sourcefence,herstelcompatibiliteit en concreteoperator onafhankelijk beoordelen; geen productbouw.",
-      "coordinator": "ExactE416pakket installeren zodra beoordeeld, werkelijkeconfig/compositie controleren, bord/dashboard/Git bijwerken."
+      "executor": "Implement complete assigned E419 update/use/restore chain; no inventory-only closure.",
+      "reviewer": "Independent original E419 criteria and bounded driver A/B, then exact candidate review; no product implementation.",
+      "coordinator": "Preserve E416 receipts and Git, integrate E419, coordinate shared installation and actual card closure."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {
@@ -1718,6 +1777,17 @@
       "transferConfirmed": false,
       "existingForeignWipProtected": true,
       "noVoiceCodeOrInstallationAssigned": true
+    },
+    "verifiedActiveTeam": {
+      "checkedAt": "2026-10-24T07:11:00+00:00",
+      "source": "Codex list_threads: root, builder and reviewer active; both older coordination chats notLoaded.",
+      "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+      "builder": "01a0c537-54d0-7080-9e4c-74db537877af",
+      "testerReviewer": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+      "activeChatsIncludingCoordinator": 3,
+      "activeExecutorsIncludingReviewer": 2,
+      "subagents": 0,
+      "oldCoordinatorAndControlNotLoaded": true
     }
   }
 }

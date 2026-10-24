@@ -155,6 +155,11 @@ class DelegatedDigitalProfile:
             profiles += [{**value, "capability_ids": [
                 name for name in value["capability_ids"] if name != "run_tool_program"]}
                 for value in tuple(profiles) if "run_tool_program" in value["capability_ids"]]
+            # This newly added repair handoff is unavailable to already admitted
+            # historical work. Retained reads preserve its exact earlier grant.
+            profiles += [{**value, "capability_ids": [
+                name for name in value["capability_ids"] if name != "manage_own_runtime_repair"]}
+                for value in tuple(profiles) if "manage_own_runtime_repair" in value["capability_ids"]]
             if any(profile_release == canonical_sha256({
                     "profile": DIGITAL_PROFILE_ID, "grant": value}) for value in profiles):
                 return True

@@ -1,0 +1,284 @@
+{
+  "contract": "EvaIndependentDeliveryReview/v1",
+  "task": "E4.16",
+  "revision": "frozen_e416_activation_pre_dispatch_go",
+  "checkedAt": "2026-10-24T07:07:17.440759+00:00",
+  "reviewerRole": "Independent reviewer/tester only",
+  "verdict": "GO_INSTALL_E416",
+  "installationGo": true,
+  "fullOriginalTaskCompleted": false,
+  "originalDoneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+  "originalDoneWhenSha256": "eb4c49f3c9233e3e3d0a1091d92a8d2ea6392d111dd15bc87e020ac3cbd72e3e",
+  "criteriaChanged": false,
+  "bindings": {
+    "handoff": {
+      "path": "/home/administrator/project/.eva2-artifacts/e416-completion-20261024/handoff.private.json",
+      "sha256": "d7e351b9ab48dbdbfc09de2eff4d3620b0a98b333ee6d2a14addce8bf6923fd9"
+    },
+    "manifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/e416-completion-20261024/manifest.private.json",
+      "sha256": "a0364a906d5057149bdbbdd48a59bb19cc7e7f350930aa645836b2fe237583a7"
+    },
+    "frozenFiles": [
+      {
+        "path": "src/eva/application/self_repair.py",
+        "before_sha256": "50773305a9780d774a024c15cee6227510881211db97c36b944c4f8cd0163097",
+        "sha256": "3752a5b93b7fed6d0de6c9dcd4e5dba5b74fbefbac46015fdc3c03a5709bae76",
+        "patch_sha256": "174aaea15700f657a07a03fc53c02b76a7e4c743a30bec86a81e5ea6f4ae4111"
+      },
+      {
+        "path": "src/eva/operations/runtime_repair_target.py",
+        "before_sha256": "b7583e03bf7cf1ce05aa739316350414458f76b328b424450ff924f4f3038075",
+        "sha256": "7cd55594245bdb1b4c546b6678de57df556fc37d2ede08216c80ce12d47260d3",
+        "patch_sha256": "28c3083328ab938ce78b99d12d9a3e62692155b91e782e73f4e2672b862eec98"
+      },
+      {
+        "path": "src/eva/operations/runtime_repair_artifacts.py",
+        "before_sha256": "81da7d1de4bc4d4178998349b17bc80800b8d6d9c5b74eb3d647c8943626990b",
+        "sha256": "84b90369214d69390e8f24e920c38a94b566c294aeb3d51fde47b21d839dc8ba",
+        "patch_sha256": "35c6e58edd635e88fecda9ab094eb2b02e09e80c76f94bf9a944e85cd8cabd18"
+      },
+      {
+        "path": "src/eva/operations/runtime_repair_development.py",
+        "before_sha256": "320d033d2a8034c0242706398203a112c5f48b4ba76092aebb76d2b502c49d4c",
+        "sha256": "19a3273812527fb6d1aa989e36494af84b5abfc32bc048157eb35a9cc93f957e",
+        "patch_sha256": "80d5624ac57703e60dc7b33e073cd86354bda7933ffca0b981dd19793cafe4f2"
+      },
+      {
+        "path": "development/tests/operations/test_runtime_repair_target.py",
+        "before_sha256": "ac034def7240e232b72a2667ffc1a4b2e46b9b41ce9821ce99ea0088291ee799",
+        "sha256": "4fcb6b1be181a893cfb4752f19d96dfaad5d16381d891252081b8088cd3fadf9",
+        "patch_sha256": "fd94efe497d675a7bb09e6a0ad7254ccfa78554a97bffbb1b04859fca5a7c7fa"
+      },
+      {
+        "path": "development/tests/operations/test_runtime_repair_artifacts.py",
+        "before_sha256": "8080027d3b5d8ddbe33247766df2501696fe8b0387e1a925d715096dc0f703ee",
+        "sha256": "36d0215d978e0abf146687823aa38d86fc1f63af00d23132fb7e7a4d5262dedf",
+        "patch_sha256": "dadf17471e4545bb13ef4fb204e990356f7eaf8948646b5d6b8c0f5313bf8235"
+      },
+      {
+        "path": "development/tests/operations/test_runtime_repair_development.py",
+        "before_sha256": "57043c989b994c192ed5fc14c6e22650524940a749e866eb0b9e8456c9cd65ba",
+        "sha256": "e6a5bd575d6af4eff2829078b6edc9c33572fc2e9cb07088f42d0470b70f3fe4",
+        "patch_sha256": "90bfa16d53c4f85d41b664c1ea801262b3fa9aeaece178083b3f34ff39829c3f"
+      }
+    ],
+    "existingFoundationReview": {
+      "path": "development/reviews/autonomous-repair-foundation-20261022.json",
+      "sha256": "f76169911c52c2987568fdd8984e4faf543940a29cd942306c32c56032f9eeb4"
+    }
+  },
+  "independentSourceReview": {
+    "status": "PASS_FOR_FOUR_NARROW_HUNKS",
+    "candidateAndBeforePinsVerified": 7,
+    "unrelatedFunctionAstsIndependentlyUnchanged": true,
+    "observations": [
+      "Candidate schema derives only verified current target/source paths/hashes; no fixed component list, candidate content, criteria or expected test outputs are supplied.",
+      "Readonly handoff seed is created only for original builder; describe returns that same source contract. Existing original behavior oracle receives source inputs without builder schema; independent role/candidate lineage checks are preserved.",
+      "Submit still uses existing candidate source/target validator and frozen idempotent handoff. accepted instructs finish_current_work so separate assessment can start only after actual builder completion. Incident remains open for independent approval, managed installation and original installed-behavior proof.",
+      "Prompt explicitly rejects blind repetition after uncertain submission and preserves original source/STOP/rights/criteria; no new provider or repair platform.",
+      "Host source seeder requires host ownership capability; actual captured host process was independently observed UID0, consistent with existing controlled fchown-based workspace seeding."
+    ]
+  },
+  "builderTargetedEvidenceNotReclassified": {
+    "passed": 6,
+    "seconds": 0.75,
+    "meaning": "Synthetic protocol/filesystem/interface checks, not real fault repair or independent acceptance; reviewer has not yet run against complete frozen activation closure.",
+    "modelCalls": 0,
+    "productionEffectsOrInstall": 0
+  },
+  "findings": [
+    {
+      "id": "E416-SCHEMA-RECOVERY-001",
+      "priority": 1,
+      "status": "RESOLVED_IN_EXACT_FROZEN_RECOVERY_FIX",
+      "scope": "Necessary existing backup/restore interface affected by proposed0012 activation migration",
+      "title": "The current recovery profile rejects the proposed new runtime schema head",
+      "file": "src/tools/portable_runtime_archive.py",
+      "line": 79,
+      "currentSourceSha256": "1a67aec29776eeafa4b0bf40630e484ba07e0389596cff8f7d17d3262bf5ecc2",
+      "observed": "Current selector permits only4e_0010_memory_compaction and4e_0011_timeline_type_time. Exact function run in an isolated own AST check rejects4e_0012_conversation_source_lock with ValueError(runtime portable schema head is unsupported). verify_runtime_database_head invokes the same selector; current export/reader/restore are head-bound.",
+      "impact": "After proposed production upgrade to0012, current backup/restore capability would regress. A backup made before upgrade does not repair post-upgrade source/target compatibility.",
+      "requiredResolution": "Explicit exact0012 source/profile/reader/restore compatibility with the source-lock function/privileges verified; preserve frozen legacy profile semantics/hashes and unknown-head rejection. No revision spoof or unconditional broad acceptance.",
+      "productionDbReadsOrWritesByReviewer": false,
+      "resolution": "Exact0012 profile preserves0010/0011, requires unchanged pinned index plus exact scoped source-lock body/owner/search_path/EXECUTE ACL, and rejects altered grants/body/unknown heads. Current exporter/reader/restore consume this same closed verifier.",
+      "fixManifest": {
+        "path": "/home/administrator/project/.eva2-artifacts/e416-schema-recovery-20261024/manifest.private.json",
+        "sha256": "b357de3a8603c2cff4f126cee3ce43193cb52157cd92958c0a146dde63379567"
+      },
+      "fixSourceSha256": "be25d35394a9a18123f41d7276024e047047a615c1bfc1da1bb45629f5490331",
+      "builderRealPg18Evidence": {
+        "path": "/home/administrator/project/.eva2-artifacts/e416-schema-recovery-20261024/postgres18-outcome.private.json",
+        "sha256": "b6cbd194c920f2159e6eb2177e7cac312ccf818d4d53608b84716e410796b6ca",
+        "passed": 15,
+        "meaning": "Actual isolated0012 export/reader/held restore and exact privilege/body negatives, source-reviewed rather than repeated."
+      }
+    }
+  ],
+  "knownIntegrationPrerequisites": [
+    "Coordinator executes only this exact reviewed phase-journaled operator with fresh current claims; no automatic repeat on uncertain phase.",
+    "After actual installation, read back exact source/profile/schema/function/authority/host/client configuration and retain activation-vs-real-incident distinction."
+  ],
+  "originalFullCompletionStillRequired": "A genuine observed error must autonomously reach one durable idempotent goal, native candidate, separate actual original-fault/regression assessment, approved managed installation and original behavior on the installed release. A later independent error/opportunity must reuse the same route without manual candidate or new host transfer. Current source and transport fixtures do not establish this.",
+  "nextReviewBoundary": "Only exact installed readback from this approved dispatch; no extra historicalsuite, oracle/case rewrite or broad matrix.",
+  "usage": {
+    "reviewRuntimeModelCalls": 0,
+    "reviewProductionWrites": 0,
+    "reviewServiceChanges": 0,
+    "developmentTokens": null,
+    "developmentCredits": null
+  },
+  "changesByReviewer": "Only this new report; no product/install/voice/config/board/Git changes.",
+  "activationPrerequisiteSourceReview": {
+    "migration": {
+      "path": "deploy/migrations/versions/4e_0012_conversation_source_lock.py",
+      "sha256": "924759ba9d504b478c7a3a6216909ec0c8e52848880e2025e3c131a2c5412e8d",
+      "purpose": "Existing security-definer scoped exact ingress/digest FOR SHARE lock, without granting operational_events UPDATE. PUBLIC revoked; execute only runtime/dbos.",
+      "necessaryChecks": "Real PG18 upgrade plus scope/type/digest/privilege/erasure-concurrency interfaces, and preserved future recovery compatibility. Coordinator owns private backup, fresh-claim production migration."
+    },
+    "ownerAdmission": {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "sha256": "bbc9764d0596436057205969242ab505f9622a5e1bb64329ad2b472b84335a7b",
+      "method": "PostgresInitiativeAuthority.admit_revision",
+      "verified": "Existing trusted owner-only transaction/CAS rejects initiative context, verifies enabled host-file canonical candidate excluding enabled, current admitted previous digest and nonrevoked source; appends original admitted authorization state.",
+      "requiredOrder": "Valid approved self_repair mandate before new core startup-only composition; no manual DB update or model-supplied mandate."
+    },
+    "freshClaimGuard": "New admitted active/NULL authorization must be recognized only by exact independently source/file/digest/scope-bound original authority semantics. All other unknown NULL markers stay blockers. Concrete frozen guard/operator still pending; no query change or production action approved."
+  },
+  "activationBindings": {
+    "packageManifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024/package-manifest.private.json",
+      "sha256": "87b51a04f0a3c9947b9b4683843139925eb0556b5153847c8f493e3e71318544"
+    },
+    "coreWorkerSubmanifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024/core-worker-frozen-submanifest.private.json",
+      "sha256": "2035a661597c61c4a229c559794965b875fac8d3adbe4c7a79bebdcf4ec2ad08",
+      "independentlyVerifiedEntries": 75
+    },
+    "hostSubmanifest": {
+      "path": "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024/host-frozen-submanifest.private.json",
+      "sha256": "ba544713a9fab04a8acb5a96d718a6f74378b3da3be9657fae1d1f21646cc777",
+      "independentlyVerifiedSourceFiles": 58
+    },
+    "operatorManifest": {
+      "path": "/var/lib/eva2/e416-activation-20261024/operator-manifest.private.json",
+      "sha256": "dc5e56ced52bd4024e4d508237dfa59a9f01fd3637e06ea6908856aa16feca63",
+      "files": {
+        "install.py": "139102494103b53918d73cdc20731dbf82b1bed434048beacd7ad55af762afe0",
+        "operator-actions.py": "def852b7eb718e3be7caf3aa7a65e3ad81e2bb2b6137821529137bef82331e51",
+        "operator-launcher.py": "1d87a50a2147632c54846f1e04aa9c18a5c9b61d08ade5698b3e6a2709d89e5f",
+        "readiness-probe-v2.py": "75d86e382a385e07c1015fc0e80df1e9d411098faf4a1cd1c2856d2f8a5c3e3b",
+        "role-manifest.private.json": "b3865690a3b6fb2b18770403d3cebb72848719d5440fa6d3a69c0b6138b7a077",
+        "migration-manifest.private.json": "84d63e883ba1c9635114affaf6fe2283728f9d905b522ee59045a353a5a8951b",
+        "previous.private.json": "80d715a149fe5b4d143b6fa0aec5e5099d29cbb36345813f03af64230f80b438",
+        "candidate.private.json": "e2a31489399326d30f9427dc329ac6fe1d774ff01dee4ae5947bab289e267af2",
+        "candidate-profiles.private.json": "6ef079d4bb3ae14bd5707d69ba7039d3584f364bde65bd4e13af4891552af2bd",
+        "operator-input/instance-binding.private.json": "4939bc8ad206eff72def4b08a88d57becb79a12b370172aa4832761c884a40e8",
+        "operator-input/schema-validation.private.json": "0e62c9405c8bf12fa6ca51c650cf29664db9afb6a90a4e7506eb7627dfcee0ab"
+      }
+    },
+    "roleManifest": {
+      "path": "/var/lib/eva2/e416-activation-20261024/role-manifest.private.json",
+      "sha256": "b3865690a3b6fb2b18770403d3cebb72848719d5440fa6d3a69c0b6138b7a077",
+      "images": {
+        "core": {
+          "base": "sha256:efff5dd51b993ff4bc833ecc1940f0f64ad336d30e20fb873a902cf371af7dcf",
+          "candidate": "sha256:8b63103d434068c8f9257608849385299c6f255266d25491220281a5169e37cb",
+          "sourceFiles": 18
+        },
+        "delegated-work-worker": {
+          "base": "sha256:15327de84d6e70e353bd462f2a730250b273d1779d8cc79969d2729924d55a1d",
+          "candidate": "sha256:fd942c6df0fc81213e9b1424b5f85cc51f08bd274bd348046c7c3fd73596a0d7",
+          "sourceFiles": 18
+        }
+      }
+    },
+    "candidateProfiles": {
+      "path": "/var/lib/eva2/e416-activation-20261024/candidate-profiles.private.json",
+      "sha256": "6ef079d4bb3ae14bd5707d69ba7039d3584f364bde65bd4e13af4891552af2bd",
+      "officialProbeSha256": "18f0ede7b30faa8a1571ac1252d1140a25b3c772ee9f1cae369ef97e4c03eb88",
+      "matching": [
+        "shared_provider",
+        "public_research",
+        "digital_work"
+      ],
+      "historicalMismatchRetained": [
+        "household_research"
+      ],
+      "digitalRelease": "96ad9c537f1121beb20faef0f775352e885cfdf352bf9f12e534647ceaf13d34"
+    },
+    "recoverySource": {
+      "path": "src/tools/portable_runtime_archive.py",
+      "sha256": "be25d35394a9a18123f41d7276024e047047a615c1bfc1da1bb45629f5490331"
+    }
+  },
+  "independentAffectedChecks": {
+    "handoff": {
+      "passed": 14,
+      "pytestSeconds": 0.64,
+      "processSeconds": 1.3120569339953363,
+      "source": "Exact frozen58file host tree and byte-exact targeted tests; no checkout fallback, host start, model or install.",
+      "cases": "Host contract, builder-only readonly seed, submit-to-finish-to-separate-assessment, target/path/foreign-authority boundaries and rejected baseline retained."
+    },
+    "pg18": {
+      "status": "PASS",
+      "passed": 17,
+      "cases": [
+        "own_empty_pg18_0011_database_and_cluster_bound_before_mutation",
+        "actual_frozen_online_alembic_0011_to_0012_transaction",
+        "new_recovery_function_body_owner_searchpath_acl_and_index_exact",
+        "new_recovery_guard_rejects_public_execute_grant",
+        "new_recovery_guard_rejects_changed_function_body",
+        "runtime_exact_scoped_ingress_digest_locks",
+        "source_lock_rejects_wrong_digest",
+        "source_lock_rejects_wrong_event_type",
+        "source_lock_rejects_missing_event",
+        "source_lock_rejects_foreign_scope",
+        "source_lock_denies_missing_event_input",
+        "source_lock_denies_missing_digest",
+        "source_lock_denies_short_digest",
+        "source_lock_denies_missing_scope",
+        "source_lock_denies_backup_role",
+        "runtime_receives_no_operational_event_update_privilege",
+        "runtime_share_fence_blocks_exclusive_source_lock_until_release"
+      ],
+      "seconds": 0.43749935302184895,
+      "schemaAfter": "4e_0012_conversation_source_lock",
+      "ownDatabase": "eva2_4b_disposable_e416_760552f986a9",
+      "clusterSystemIdentifierVerified": true,
+      "originalE113DataRead": false,
+      "productionDatabaseAccess": false,
+      "runtimeProviderCalls": 0,
+      "fixtureDatabaseRetainedForOwnerCasChecks": true
+    },
+    "actualOperatorRuntimeUidAccess": {
+      "uid": 65532,
+      "readAll22FrozenMigrationFiles": true,
+      "loadsExact0012AlembicRevision": true,
+      "operatorAndSchemaInstanceInputsReadable": true,
+      "network": "none",
+      "dbConnections": 0
+    },
+    "imageMetadata": {
+      "coreExactBasePrefix": true,
+      "workerExactBasePrefix": true,
+      "eachAdds18PinnedCopyLayers": true,
+      "imageConfigAndEnvironmentUnchanged": true,
+      "reviewerInitialAssumptionCorrected": "Initial metadata assertion expected one layer; exact Dockerfiles use18separateCOPY operations. Corrected read proves18expectedlayers and noConfigchange. Original tool failure retained; no product defect."
+    }
+  },
+  "operatorAssessment": {
+    "status": "PASS_EXACT_139102_INSTALLER_AND_DC5E56_MANIFEST",
+    "reviewedSequence": "Fresh global conversation/model/work/host queue guards -> stop idle roles -> independent post-stop guards -> stop idle host -> bound current PG custom dump+TOC -> exact online Alembic0011→0012 and in-transaction index/function/ACL attestation -> preserve-owner/mode exact config/client/mandate and effective systemd source binding -> existing owner-only CAS -> exact source/hash/scope-bound grant exclusion with every other unknown claim retained -> frozen host -> exact two role images once.",
+    "phaseJournal": "Unknown-result receipt before every effect; no automatic retry or rollback after an uncertain phase. Existing data/volumes and configuration-before copies retained; explicit inspected recovery required after any incomplete outcome.",
+    "ownerAdmission": "Exact canonicalOLD40cde52d… toNEW2750d0b9…, enabled trusted file and original owner binding; existing original CAS forbids initiative self-revision and stale previous digest. Actual preflight owner admission revision16 observed by coordinator in SELECT/FORSHARE transaction with rollback, no row mutation.",
+    "grantGuard": "Pinned original authority codebbc976…; exact latest scoped mandate thread/revision/time/event/payload hash/data and approved old/new digests checked. Only that one active/NULL authorization record is subtracted if included in current-generation unknown count. Other unknown/current work/native operations remain blockers.",
+    "schemaAndBackup": "Independent own PG18 exact online migration/sourcefence/rights checks pass. Backup target POSTGRES_DB matches independently bound instance database. Current PG dump uses same server and readable custom TOC before upgrade; source volumes unchanged. Recovery fixbe25 must be installed before dispatch.",
+    "systemdCorrection": "New ownzzzz-e416-frozen-host.conf comes after existingzzz-e45.conf; old dropins retained. Actual effective PYTHONPATH and ExecStart checked afterdaemonreload before service start. Earlier manifestkey/order prechecks were corrected before any production effect and their old code/evidence retained.",
+    "sourceProfilesAndRolePreservation": "Exact prior role images, all current source hashes/storage/compose configuration checked immediately before dispatch; compose differs only in two approved images, role variants retained, shared/public/digital profiles match.",
+    "newOpenBlockers": []
+  },
+  "activationCompletionBoundary": "This is installation approval for the existing repair route, exact migration/configuration/mandate and frozen core/worker/host composition. It is not a claim that a genuine incident has completed autonomous repair. Root must record actual phase receipts, installed source/profile/schema/grant/client/host-health readback; original first and later independent real-fault→candidate→separate assessment→managed apply→original live behavior conditions remain open.",
+  "ownTestDatabaseCleanup": "Own isolated fixture database will be dropped after these completed checks; no E113 source data read, and original tmpfsfixture cluster is retained.",
+  "preDispatchApprovalSnapshot": "/home/administrator/project/.eva2-artifacts/e416-independent-review-20261024/activation-pre-dispatch-go.private.json"
+}

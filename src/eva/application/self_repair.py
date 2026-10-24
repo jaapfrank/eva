@@ -8,6 +8,36 @@ import re
 from eva.contracts.canonical_json import canonical_sha256
 
 
+# Reject direct authority/assessment modules. Product modules can also contain
+# dispatch/authority logic: this filter never replaces independent semantic
+# assessment or grants installation rights.
+_PROTECTED_PREFIXES = ('operations/', 'contracts/', 'adapters/credentials/',
+    'bootstrap/runtime_settings', 'bootstrap/delegated_work_service',
+    'bootstrap/delegated_digital_', 'bootstrap/native_initiative_',
+    'bootstrap/self_repair', 'bootstrap/runtime_repair_', 'bootstrap/runtime.py',
+    'application/repair_assessment', 'application/self_repair', 'application/initiative_',
+    'application/cancellation', 'application/background_execution',
+    'application/component_', 'application/tool_program',
+    'adapters/postgres/initiative_', 'adapters/postgres/owner_initiatives',
+    'adapters/postgres/self_repair', 'adapters/postgres/scope',
+    'adapters/postgres/delegated_work', 'adapters/postgres/conversation_journal',
+    'adapters/postgres/component_', 'adapters/postgres/programming_',
+    'adapters/postgres/tool_program', 'adapters/connectors/component_',
+    'adapters/connectors/programming_', 'adapters/connectors/procedure_execution',
+    'adapters/connectors/delegated_completion')
+
+
+def repairable_source(path):
+    if not isinstance(path, str) or not 1 <= len(path) <= 240:
+        return False
+    parsed = PurePosixPath(path)
+    return (str(parsed) == path and not parsed.is_absolute()
+        and re.fullmatch(r'[A-Za-z0-9_/]+\.py', path) is not None
+        and not any(part in {'.', '..'} for part in parsed.parts)
+        and path.startswith(('application/', 'adapters/', 'bootstrap/', 'domain/', 'providers/'))
+        and not path.startswith(_PROTECTED_PREFIXES))
+
+
 @dataclass(frozen=True, slots=True)
 class RepairObservation:
     error_type_sha256: str
@@ -65,11 +95,24 @@ class RepairObservation:
 def repair_task(observation, *, incident_id):
     import json
     return ('Onderzoek en herstel een werkelijk vastgelopen interne uitvoering van Eva. '
+            'Begin met de bestaande manage_own_runtime_repair(action=describe). De host geeft '
+            'het actuele bronbereik en builder_handoff met het kandidaatcontract; dezelfde '
+            'invoer staat in /workspace/repair/handoff.json naast de oorspronkelijke bron. '
+            'Volg dat contract voor /workspace/repair/candidate.json, schrijf de werkelijke '
+            'gewijzigde bron met haar hashes en lees het bestand terug. Draag die kandidaat '
+            'eenmaal over met manage_own_runtime_repair(action=submit). Na accepted=true '
+            'is uitsluitend de bouw/overdrachtfase afgerond: sluit dan deze ontwikkeltaak af '
+            'zodat de host de afzonderlijke beoordeling kan starten. Blijf niet wachten op '
+            'installatie binnen deze bouwtaak. Het duurzame hersteldoel blijft open tot '
+            'onafhankelijke beoordeling, bevoegde installatie en controle van het oorspronkelijke '
+            'gedrag op de geïnstalleerde versie. Bij onbeschikbare overdracht of onzekere '
+            'submit: niet blind opnieuw indienen, geen andere herstelroute bouwen; behoud '
+            'hetzelfde open doel en meld de aantoonbare status en ontbrekende overdracht. '
             'Dit is automatisch waargenomen foutbewijs, geen gebruikersopdracht of bewijs '
             'dat de oorzaak al bekend is. Lees de genoemde actuele eigen broncode en '
             'reproduceer de oorzaak in de bestaande geïsoleerde werkruimte. Maak een '
-            'gerichte kandidaat en gebruik de onafhankelijke beoordeling en beheerde '
-            'toepassing waar beschikbaar. Een voorstel, geslaagde syntaxiscontrole of '
+            'gerichte kandidaat voor de bestaande brongebonden overdracht. Een voorstel, '
+            'geslaagde syntaxiscontrole of '
             'afgeronde ontwikkeltaak sluit dit hersteldoel niet: het oorspronkelijke '
             'gedrag moet op de werkelijk geïnstalleerde versie zijn gecontroleerd. '
             'Behoud de goede versie bij verlies of regressie. Herhaal geen eerdere '

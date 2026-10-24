@@ -39,9 +39,12 @@ def delivery_outcome(work):
     # Keep the full failure report in the work record and explicit status/result
     # route. Automatic chat return must not spill that diagnostic report.
     context = work.title[:160].strip()
+    repair_notice = getattr(work, "repair_notice", None)
     if work.state == "ambiguous":
         text = ("Ik weet niet of de laatste handeling is gelukt. "
                 "Ik voer die niet nog eens uit zolang dat onduidelijk is.")
+    elif isinstance(repair_notice, str) and repair_notice:
+        text = repair_notice
     elif (work.state == "failed" and error_code in {"budget_exceeded", "incomplete_work"}
           and isinstance(report, str) and report.strip() and len(report.strip()) <= 600
           and not report.startswith("input_budget_exceeded:")):
@@ -55,7 +58,7 @@ def delivery_outcome(work):
         text = "Ik kreeg deze opdracht niet af binnen mijn limiet voor deze poging."
     else:
         text = "Ik liep vast bij het uitvoeren en heb dit niet afgemaakt."
-    if context:
+    if context and not repair_notice:
         text = "Over " + context + ": " + text
     return WorkFailureNotice(work.spec.work_id, work.spec.sha256, work.state,
                              work.updated_at.isoformat(), text)

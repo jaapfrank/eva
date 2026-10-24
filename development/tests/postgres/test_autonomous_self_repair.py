@@ -172,6 +172,8 @@ def test_completed_development_can_still_stop_pending_repair_without_install_cap
     saved=f.store.record_success(call,result(call),now=NOW)
     before=f.auth.timeline.events(claim.thread_id)
     assert current_repair_binding(f.auth,incident,now=NOW)['intent_id']==claim.intent_id
+    card=next(c for c in f.control.page(now=NOW)['cards'] if c['intent_id']==claim.intent_id)
+    assert card['status']=='working' and card['can_stop'] is True
     assert f.control.stop(claim.intent_id,now=NOW)['status']=='stopped'
     assert f.store.load(admitted.work_id,**f.service._owner)==saved
     assert f.auth.timeline.events(claim.thread_id)==before

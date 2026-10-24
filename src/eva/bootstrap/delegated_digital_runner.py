@@ -122,7 +122,8 @@ class _TaskMemory:
 
 
 class _TaskModel:
-    def __init__(self, model, task, browser_context=None, corrections=(), budget_context=None, attempt_work_id=None):
+    def __init__(self, model, task, browser_context=None, corrections=(), budget_context=None, attempt_work_id=None, repair_context=()):
+        self.repair_context = tuple(repair_context)
         self.model, self.task = model, task
         # Keep the last occurrence: A, B, A must still present B before A.
         # Durable correction records remain unchanged; only repeated instruction
@@ -273,7 +274,7 @@ class _TaskModel:
             "resultaat via stdout. Geen netwerk of hostbestanden; controleer de uitvoer en bewaar "
             "het resultaat via de documenttool. Een exitcode is geen inhoudelijk bewijs. "
             "Meld alleen een bewaarde of toegepaste werkwijze "
-            "wanneer de bijbehorende toolresultaten dat bevestigen."), **kwargs)
+            "wanneer de bijbehorende toolresultaten dat bevestigen.", *self.repair_context), **kwargs)
 
 
 class BackgroundConnectorActions:
@@ -385,11 +386,12 @@ def _has_completed_tool_evidence(receipts):
 
 class DelegatedDigitalRunner:
     def __init__(self, store, profile, *, source_loader, memory, model, identity,
-                 connector_tools, journal_factory=None, clock=None, browser_context=None):
+                 connector_tools, journal_factory=None, clock=None, browser_context=None, failure_observer=None):
         self.store, self.profile = store, profile
         self.source_loader, self.memory, self.model, self.identity = source_loader, memory, model, identity
         self.connector_tools = tuple(connector_tools)
         self.browser_context = browser_context
+        self.failure_observer = failure_observer
         self.clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
         self.journal_factory = journal_factory or self._journal
 
@@ -497,6 +499,7 @@ class DelegatedDigitalRunner:
                 raise ConversationConflict("ambiguous saved component source route")
             improvements = ComponentImprovementActions(self.store._engine, spec, source, authorize,
                 dispatch_guard, self.clock,
+                **({"repair_guard":native_guard} if native_guard is not None else {}),
                 **({"source_resolver": artifact_sources[0]} if artifact_sources else {}))
             programming = ProgrammingActions(self.store._engine, spec, source, authorize,
                                              dispatch_guard, self.clock)
@@ -533,15 +536,39 @@ class DelegatedDigitalRunner:
                 dispatch_guard, self.clock, actions=lambda: actions,
                 allowed_names={name for tool in connector_tools for name in tool.action_names}
                     & set(spec.grant.capability_ids))
-            actions = BackgroundConnectorActions((*connector_tools, progress, improvements, programming, program), spec.grant.capability_ids,
+            is_repair = native_guard is not None and native_guard._repair_incident_id is not None
+            independent_repair = is_repair and native_guard.repair_role is not None
+            participating_tools = ((progress, improvements, programming) if is_repair else
+                                   (*connector_tools, progress, improvements, programming, program))
+            actions = BackgroundConnectorActions(participating_tools, spec.grant.capability_ids,
                                                   authorize, spec.grant.maximum_tool_calls)
             from eva.adapters.postgres.work_corrections import work_corrections
             corrections = tuple(work_corrections(self.store._engine, spec))
-            task_memory = _TaskMemory(self.memory, source, spec.task, corrections)
+            stage_memory = self.memory
+            if is_repair:
+                from eva.application.repair_assessment import RepairAssessmentMemory
+                stage_memory = RepairAssessmentMemory(source, authorize)
+            task_memory = _TaskMemory(stage_memory, source, spec.task, corrections)
             scoped_model = (self.model.with_context_archive(actions.archive_model_context)
                             if getattr(self.model, "supports_context_archive", False) else self.model)
-            task_model = _TaskModel(scoped_model, spec.task, self.browser_context,
+            task_model = _TaskModel(scoped_model, spec.task, None if is_repair else self.browser_context,
                                     corrections=corrections,
+                                    repair_context=(() if native_guard is None or native_guard._repair_incident_id is None else (
+                                        "Deze opdracht is één fase van automatisch herstel. Volg de specifieke "
+                                        "faseopdracht boven de algemene componentinstructies. Een beoordelingsfase "
+                                        "bewaart uitsluitend haar gevraagde oracle.json of review.json; geen eigen "
+                                        "goedkeuring of installatie. Als oorspronkelijke bouwer gebruik je eerst "
+                                        "manage_own_runtime_repair(action=describe). De actuele oorspronkelijke "
+                                        "bronbestanden staan daarna volledig onder /workspace/repair/source/eva; "
+                                        "controleer de hashes en maak daarvan werkkopieën. Stel candidate.json "
+                                        "met een programma samen uit de gewijzigde bestanden, zonder volledige "
+                                        "broncode opnieuw in je modelantwoord te schrijven. Maak exact de gebonden "
+                                        "EvaRuntimeRepairCandidate/v1 in /workspace/repair/candidate.json met "
+                                        "target_id, diagnosis en files[{path,baseline_sha256,candidate_sha256," 
+                                        "candidate_content}]. Gebruik alleen de aangeboden bronnen; lees echte code "
+                                        "en test de wijziging in je programmeeromgeving. Draag haar met action=submit "
+                                        "over en rond na accepted=true deze fase af. De herstelopdracht blijft dan "
+                                        "doorlopen bij de onafhankelijke beoordelaar. Claim geen toegepast herstel.",)),
                                     attempt_work_id=spec.work_id,
                                     budget_context=lambda: _remaining_budget_context(spec.grant, latest_usage,
                                         calls=actions.calls, dispatches=actions.dispatches,
@@ -663,6 +690,10 @@ class DelegatedDigitalRunner:
                 else "incomplete_work" if isinstance(error, (_UnfinishedWorkPlan, ResearchCitationError))
                 else "provider_unavailable" if type(error) is McpGatewayUnavailable
                 else "internal_error")
+            if (self.failure_observer is not None and native_guard is None and source is not None
+                    and status in {'internal_error','incomplete_work','budget_exceeded'}):
+                with suppress(Exception):
+                    await asyncio.to_thread(self.failure_observer,source,spec,error)
             # Preserve only a complete returned reply, never streamed fragments or
             # an extra model attempt. Failure and measured usage remain unchanged.
             report = (reply.text if reply is not None

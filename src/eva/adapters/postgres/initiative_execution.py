@@ -538,6 +538,15 @@ class PostgresInitiativeAuthority:
             raise InitiativeMandateDenied("completed native work mandate or grant changed")
         from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
         PostgresConversationJournal(self.owner._engine, self.owner._scope).ensure_running(turn)
+        adopted = next((event for event in self.timeline.events(spec.origin.thread_id)
+            if event.event_type == 'PERSONAL_INTENT_ADOPTED'), None)
+        incident = None if adopted is None else adopted.payload['data'].get('repair_incident_id')
+        if incident is not None:
+            from eva.adapters.postgres.self_repair import current_repair_binding
+            try:
+                current_repair_binding(self, incident, now=now)
+            except ValueError as error:
+                raise InitiativeMandateDenied('completed repair original source is no longer current') from error
         return work, turn
 
     def bind_reviewed_saved_application(self, work_id, publication, candidate_content):
@@ -672,6 +681,7 @@ class NativeInitiativeGuard:
         self.work_spec = work_spec
         self.resume_work = resume_work
         self._repair_incident_id = None
+        self.repair_role = None
 
     def check(self, turn):
         if turn != self.turn:
@@ -703,17 +713,24 @@ class NativeInitiativeGuard:
             owner._authorize(conn, datetime.now(UTC).replace(microsecond=0))
             bind_completed_followup(conn, owner._scope, self.claim.followup_source,
                 principal_id=str(owner._owner), now=datetime.now(UTC).replace(microsecond=0))
+        # Resolve repair ancestry before locking the current child. Every stage
+        # uses mandate -> original intent -> source -> current intent order.
+        adopted = conn.execute(owner._query().where(c.thread_id == self.claim.thread_id)).one_or_none()
+        repair = {} if adopted is None else adopted.adoption["data"]
+        self._repair_incident_id = repair.get("repair_incident_id")
+        self.repair_role = repair.get("repair_role")
+        if self._repair_incident_id is not None:
+            from eva.adapters.postgres.self_repair import current_repair_binding
+            try:
+                binding = current_repair_binding(self.authority, self._repair_incident_id,
+                    now=datetime.now(UTC).replace(microsecond=0), _connection=conn)
+            except (ValueError, InitiativeMandateDenied) as error:
+                raise InitiativeMandateDenied("automatic repair source or authorization is no longer current") from error
+            if (repair.get("repair_mandate_sha256") != binding["mandate_sha256"]
+                    or self.repair_role not in (None, "original_behavior_oracle", "independent_review")):
+                raise InitiativeMandateDenied("automatic repair stage binding differs")
         row = conn.execute(owner._query().where(c.thread_id == self.claim.thread_id)
             .with_for_update(of=operational_checkpoints)).one_or_none()
-        repair = {} if row is None else row.adoption["data"]
-        self._repair_incident_id = repair.get("repair_incident_id")
-        if repair.get("repair_incident_id") is not None:
-            from eva.adapters.postgres.self_repair import repair_source_current
-            if (policy.get("self_repair", {}).get("enabled") is not True
-                    or repair.get("repair_mandate_sha256") != self.mandate_sha
-                    or not isinstance(repair.get("repair_source"), dict)
-                    or not repair_source_current(conn, owner._scope, repair["repair_source"])):
-                raise InitiativeMandateDenied("automatic repair source or authorization is no longer current")
         if self.resume_work is not None:
             previous = self.resume_work
             events = self.authority.timeline.events(self.claim.thread_id)
@@ -773,6 +790,23 @@ class NativeInitiativeGuard:
             "source_ingress_sha256": spec.source_ingress_sha256,
             "execution_namespace": namespace,
             "recovery_ingress_sha256": data["recovery_ingress_sha256"]}
+
+    def restrict_work_grant(self, grant):
+        """Each repair stage gets only local code/work capabilities, no effects."""
+        self.check(self.turn)
+        if self._repair_incident_id is None:
+            return grant
+        from eva.contracts.delegated_digital_work import INITIATIVE_LOCAL_CAPABILITIES
+        allowed = INITIATIVE_LOCAL_CAPABILITIES - {"use_connector_tool", "run_tool_program"}
+        if self.repair_role is not None:
+            allowed &= {"manage_own_runtime_repair", "read_own_component_source", "write_programming_file",
+                "start_programming_process", "use_programming_tool",
+                "list_programming_tools", "save_work_progress"}
+        payload = grant.to_payload()
+        payload["capability_ids"] = [name for name in grant.capability_ids if name in allowed]
+        if not payload["capability_ids"]:
+            raise InitiativeMandateDenied("repair has no admitted local development capability")
+        return type(grant).model_validate(payload)
 
     def action_allowed(self, name):
         if self.resume_work is not None:

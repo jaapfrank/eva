@@ -40,7 +40,7 @@ def load_config(path):
     config = json.loads(raw, object_pairs_hook=_object)
     required = {"image", "command", "token_file", "bind_host", "port", "allowed_paths"}
     limits = {field.name for field in fields(EvaluationConfig)} - {"image", "command"}
-    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites", "final_component_assessments", "saved_artifact_suite", "work_execution_producers"}:
+    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites", "final_component_assessments", "saved_artifact_suite", "work_execution_producers", "runtime_repairs"}:
         raise ValueError("invalid evaluation service configuration fields")
     if (not isinstance(config["command"], list)
             or not isinstance(config["token_file"], str)
@@ -94,8 +94,9 @@ class EvaluationServer(ThreadingHTTPServer):
     daemon_threads = False
     request_queue_size = 8
 
-    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None, final_assessments=None, saved_artifact_suite=None, work_execution_producers=None):
+    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None, final_assessments=None, saved_artifact_suite=None, work_execution_producers=None, runtime_repairs=None):
         self.evaluator = evaluator
+        self.runtime_repairs = runtime_repairs
         self.component_suites = component_suites or {}
         for path, suite in self.component_suites.items():
             if getattr(suite, "source_target", None) is not None:
@@ -331,7 +332,33 @@ class EvaluationHandler(BaseHTTPRequestHandler):
             return
         self._reply(200, result)
 
+    def _runtime_repair(self):
+        if self.server.runtime_repairs is None:
+            self._reply(404, {'error':'not_found'});return
+        if not self._authenticated():
+            self._reply(401, {'error':'unauthorized'});return
+        try:
+            lengths=self.headers.get_all('Content-Length',[])
+            types=self.headers.get_all('Content-Type',[])
+            if (len(lengths)!=1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                    or self.headers.get_all('Transfer-Encoding') or len(types)!=1
+                    or types[0].split(';',1)[0].strip().lower()!='application/json'):
+                raise ValueError('exact repair request headers required')
+            length=int(lengths[0])
+            if not 1<=length<=8192:raise ValueError('repair request exceeds bound')
+            raw=self.rfile.read(length)
+            if len(raw)!=length:raise ValueError('incomplete repair request')
+            result=self.server.runtime_repairs.request(json.loads(raw,object_pairs_hook=_object))
+        except (ValueError,TypeError,KeyError,UnicodeError,OSError,OverflowError,RecursionError):
+            self._reply(400, {'error':'repair_handoff_not_admitted'});return
+        except Exception:
+            self._reply(500, {'error':'repair_handoff_unconfirmed'});return
+        self._reply(200,result)
+
     def do_POST(self):
+        if self.path == "/runtime-repair":
+            self._runtime_repair()
+            return
         if self.path == "/work-authority":
             self._work_authority()
             return
@@ -500,12 +527,18 @@ def main():
             path=path, suite_sha256=value["suite_sha256"])
         work_producers[path] = NativeComponentWorkProducer(value["producer"], runtime=runtime,
             assessment=suites[path]["assessment"])
+    runtime_repairs = None
+    if 'runtime_repairs' in config:
+        from eva.operations.runtime_repair_service import configured_runtime_repairs
+        runtime_repairs = configured_runtime_repairs(config['runtime_repairs'],settings=settings,
+            programming=programming,applications=applications,
+            runtime_config=config.get('reviewed_component_applications',{}).get('runtime',{}))
     with EvaluationServer(address, evaluator=ComponentEvaluator(settings), token=token,
                           allowed_paths=allowed_paths, procedure_executor=executor,
                           programming_workspaces=programming, reviewed_applications=applications,
                           component_suites=component_suites, final_assessments=final_assessments,
                           saved_artifact_suite=saved_artifact_suite,
-                          work_execution_producers=work_producers) as server:
+                          work_execution_producers=work_producers, runtime_repairs=runtime_repairs) as server:
         def stop(signum, frame):
             threading.Thread(target=server.shutdown, daemon=True).start()
         signal.signal(signal.SIGTERM, stop)
@@ -513,6 +546,8 @@ def main():
         try:
             server.serve_forever(poll_interval=0.5)
         finally:
+            if runtime_repairs is not None:
+                runtime_repairs.close()
             if final_assessments is not None:
                 final_assessments.close()
             if applications is not None:

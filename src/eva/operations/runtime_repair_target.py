@@ -8,42 +8,15 @@ from __future__ import annotations
 
 from copy import deepcopy
 import hashlib
-from pathlib import Path, PurePosixPath
+from pathlib import Path
 import re
 import stat
 import threading
 
-from eva.application.self_repair import RepairObservation
+from eva.application.self_repair import RepairObservation, repairable_source
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.reviewed_component_application import _save
 
-
-# Reject direct authority/assessment modules. Product modules can also contain
-# dispatch/authority logic: this filter never replaces independent semantic
-# assessment or grants installation rights.
-_PROTECTED_PREFIXES = ('operations/', 'contracts/', 'adapters/credentials/',
-    'bootstrap/runtime_settings', 'bootstrap/delegated_work_service',
-    'bootstrap/delegated_digital_', 'bootstrap/native_initiative_',
-    'bootstrap/self_repair', 'application/self_repair', 'application/initiative_',
-    'application/cancellation', 'application/background_execution',
-    'application/component_', 'application/tool_program',
-    'adapters/postgres/initiative_', 'adapters/postgres/owner_initiatives',
-    'adapters/postgres/self_repair', 'adapters/postgres/scope',
-    'adapters/postgres/delegated_work', 'adapters/postgres/conversation_journal',
-    'adapters/postgres/component_', 'adapters/postgres/programming_',
-    'adapters/postgres/tool_program', 'adapters/connectors/component_',
-    'adapters/connectors/programming_', 'adapters/connectors/procedure_execution')
-
-
-def repairable_source(path):
-    if not isinstance(path, str) or not 1 <= len(path) <= 240:
-        return False
-    parsed = PurePosixPath(path)
-    return (str(parsed) == path and not parsed.is_absolute()
-        and re.fullmatch(r'[A-Za-z0-9_/]+\.py', path) is not None
-        and not any(part in {'.', '..'} for part in parsed.parts)
-        and path.startswith(('application/', 'adapters/', 'bootstrap/', 'domain/', 'providers/'))
-        and not path.startswith(_PROTECTED_PREFIXES))
 
 
 def _sha(value):
@@ -116,7 +89,7 @@ class RuntimeRepairTargets:
         with self._lock:
             return self._prepare(incident_id)
 
-    def _prepare(self, incident_id):
+    def _resolve(self, incident_id):
         # The request supplies only an incident ID, not forged failure metadata.
         current = verified_failure_binding(self.binding(incident_id))
         if current['incident_id'] != incident_id:
@@ -152,13 +125,25 @@ class RuntimeRepairTargets:
                  'installation': installation, 'sources': dict(sorted(selected.items())),
                  'excluded_paths': sorted(excluded)}
         identity = canonical_sha256(scope)
-        directory = self.root / identity
-        if directory.exists():
-            return self.load(identity)
         # Recheck authority and all runtime pins after source acquisition.
         if (verified_failure_binding(self.binding(incident_id)) != current
                 or self._installation() != installation):
             raise ValueError('repair authority or installation changed during target resolution')
+        return {**scope, 'target_id':identity, 'installed':False}
+
+    def resolve(self, incident_id):
+        """Describe actual failure/source scope before independent criteria exist."""
+        with self._lock:
+            return self._resolve(incident_id)
+
+    def _prepare(self, incident_id):
+        resolved = self._resolve(incident_id)
+        identity = resolved['target_id']
+        scope = {k:v for k,v in resolved.items() if k not in {'target_id','installed'}}
+        current, installation = scope['failure'], scope['installation']
+        directory = self.root / identity
+        if directory.exists():
+            return self.load(identity)
         # The independent verifier chooses/fixes its protocol before receiving
         # any candidate. Its receipt is host-only, not a builder's test report.
         criteria = self.criteria(deepcopy(scope))
@@ -209,4 +194,47 @@ def public_repair_target(target):
     """No host criteria path or protected cases enter the developer's tool result."""
     return {'contract': target['contract'], 'target_id': target['target_id'],
             'incident_id': target['failure']['incident_id'], 'sources': deepcopy(target['sources']),
-            'criteria_sha256': target['criteria']['sha256'], 'installed': False}
+            'criteria_sha256': None if 'criteria' not in target else target['criteria']['sha256'], 'installed': False}
+
+
+def repair_builder_handoff(target):
+    """Describe the existing candidate contract for this actual failure scope.
+
+    This is metadata for the original developer, not a candidate, assessment or
+    new permission. Unknown component paths come only from the verified target;
+    no historical suite registration or model-supplied host path is required.
+    """
+    _sha(target["target_id"])
+    sources = target["sources"]
+    if (target.get("contract") != "EvaRuntimeRepairTarget/v1"
+            or not isinstance(sources, dict) or not 1 <= len(sources) <= 8):
+        raise ValueError("current repair source target required")
+    file_schemas = []
+    for path, digest in sorted(sources.items()):
+        if not repairable_source(path):
+            raise ValueError("repair handoff includes a protected source")
+        _sha(digest)
+        file_schemas.append({"type":"object", "additionalProperties":False,
+            "required":["path","baseline_sha256","candidate_sha256","candidate_content"],
+            "properties":{
+                "path":{"const":path}, "baseline_sha256":{"const":digest},
+                "candidate_sha256":{"type":"string","pattern":"^[0-9a-f]{64}$",
+                    "description":"SHA256 of the exact UTF-8 candidate_content bytes; must differ from baseline."},
+                "candidate_content":{"type":"string","minLength":1,"maxLength":262144,
+                    "description":"Complete changed Python module, at most262144 UTF-8 bytes. The host checks hashes and syntax."}}})
+    return {"contract":"EvaRuntimeRepairBuilderHandoff/v1", "target_id":target["target_id"],
+        "source_root":"/workspace/repair/source/eva", "candidate_file":"/workspace/repair/candidate.json",
+        "candidate_schema":{"type":"object", "additionalProperties":False,
+            "required":["contract","target_id","diagnosis","files"], "properties":{
+                "contract":{"const":"EvaRuntimeRepairCandidate/v1"},
+                "target_id":{"const":target["target_id"]},
+                "diagnosis":{"type":"string","minLength":1,"maxLength":4000},
+                "files":{"type":"array","minItems":1,"maxItems":len(sources),
+                    "items":{"anyOf":file_schemas},
+                    "description":"Unique selected paths only; combined UTF-8 source bytes at most524288."}}},
+        "handoff_steps":["Read the host-seeded source and diagnose the recorded failure.",
+            "Write the actual candidate matching this schema and read back its exact bytes.",
+            "Call manage_own_runtime_repair with action=submit once.",
+            "After accepted=true finish this developer work; the host can start separate assessment only after completion."],
+        "meaning":"Transfer for independent assessment, not accepted improvement, installation or repaired behavior.",
+        "installed":False, "is_execution_permission":False}

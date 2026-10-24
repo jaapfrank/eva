@@ -194,8 +194,9 @@ class SchemaResult:
 
 
 class SchemaConnection(Connection):
-    def __init__(self, head, *, index_valid=True):
+    def __init__(self, head, *, index_valid=True, function_source=True):
         self.head, self.index_valid, self.queries = head, index_valid, []
+        self.function_source = function_source
 
     def exec_driver_sql(self, sql, parameters=()):
         self.queries.append(sql)
@@ -203,6 +204,8 @@ class SchemaConnection(Connection):
             value = self.head
         elif "pg_catalog.pg_index" in sql:
             value = self.index_valid
+        elif "pg_catalog.pg_proc" in sql:
+            value = (_source_lock_body() if self.function_source is True else self.function_source)
         elif "SHOW transaction_isolation" in sql:
             value = "serializable"
         elif "pg_advisory_xact_lock" in sql:
@@ -233,7 +236,7 @@ def test_0011_export_and_reader_bind_real_head_and_index_profile(runtime_archive
 
 
 @pytest.mark.parametrize("head,index_valid,reason", [
-    ("4e_0012_conversation_source_lock", True, "unsupported"),
+    ("4e_0013_unknown_future_head", True, "unsupported"),
     (archive.CURRENT_SCHEMA_HEAD, False, "pinned shape"),
     (archive.CURRENT_SCHEMA_HEAD, None, "pinned shape"),
 ])
@@ -252,6 +255,64 @@ def test_0011_archive_cannot_substitute_legacy_or_different_index_pin(runtime_ar
     archive.export_runtime_archive(SchemaConnection(archive.CURRENT_SCHEMA_HEAD), **current)
     profile = json.loads((current["destination"] / "profile.json").read_bytes())
     profile["required_indexes"][0]["columns"][2:] = ["occurred_at", "event_type"]
+    _rewrite(current["destination"], "profile.json", canonical_json_bytes(profile))
+    manifest_path = current["destination"] / "archive.json"
+    manifest = json.loads(manifest_path.read_bytes())
+    manifest["profile_sha256"] = hashlib.sha256(canonical_json_bytes(profile)).hexdigest()
+    manifest_path.write_bytes(canonical_json_bytes(manifest))
+    with pytest.raises(ValueError, match="profile differs"):
+        archive.read_runtime_archive(current["destination"], identity_trust=args["identity_trust"])
+
+
+def _source_lock_body():
+    # Read the actual migration's immutable body; never manufacture a permissive
+    # fixture definition that can pass after the real source changed.
+    migration = ROOT / "deploy/migrations/versions/4e_0012_conversation_source_lock.py"
+    return migration.read_text().split("$function$")[1]
+
+
+def test_0012_export_reader_and_empty_restore_target_require_exact_function(runtime_archive, tmp_path):
+    import json
+    from tools.portable_runtime_restore import verify_runtime_restore_target
+    args, _ = runtime_archive
+    current = dict(args, destination=tmp_path / "source0012")
+    manifest = archive.export_runtime_archive(SchemaConnection(archive.SOURCE_LOCK_SCHEMA_HEAD), **current)
+    checked = archive.read_runtime_archive(current["destination"], identity_trust=args["identity_trust"])
+    profile = json.loads((current["destination"] / "profile.json").read_bytes())
+    assert checked["manifest"]["schema_head"] == manifest["schema_head"] == archive.SOURCE_LOCK_SCHEMA_HEAD
+    function = profile["required_functions"][0]
+    assert function["source_sha256"] == hashlib.sha256(_source_lock_body().encode()).hexdigest()
+    assert function["execute_grantees"] == ["eva_dbos", "eva_migrator", "eva_runtime"]
+    assert function["configuration"] == ["search_path=pg_catalog, eva_core"]
+    assert function["public_execute"] is function["grant_option"] is False
+    assert profile["required_indexes"] == archive.runtime_profile_for_head(archive.CURRENT_SCHEMA_HEAD)["required_indexes"]
+    target = SchemaConnection(archive.SOURCE_LOCK_SCHEMA_HEAD)
+    assert verify_runtime_restore_target(target, archive.SOURCE_LOCK_SCHEMA_HEAD) == {
+        "source_schema_head": archive.SOURCE_LOCK_SCHEMA_HEAD,
+        "target_schema_head": archive.SOURCE_LOCK_SCHEMA_HEAD,
+    }
+    assert any("pg_catalog.aclexplode" in sql for sql in target.queries)
+    with pytest.raises(ValueError, match="schema heads differ"):
+        verify_runtime_restore_target(SchemaConnection(archive.CURRENT_SCHEMA_HEAD), archive.SOURCE_LOCK_SCHEMA_HEAD)
+
+
+@pytest.mark.parametrize("source", [None, False, "BEGIN RETURN TRUE; END", _source_lock_body() + "\n"])
+def test_0012_export_rejects_missing_wrong_definition_or_grants(runtime_archive, tmp_path, source):
+    args, _ = runtime_archive
+    destination = tmp_path / "rejected0012"
+    with pytest.raises(ValueError, match="pinned definition or grants"):
+        archive.export_runtime_archive(SchemaConnection(archive.SOURCE_LOCK_SCHEMA_HEAD,
+            function_source=source), **dict(args, destination=destination))
+    assert not destination.exists()
+
+
+def test_0012_reader_rejects_rehashed_broader_function_profile(runtime_archive, tmp_path):
+    import json
+    args, _ = runtime_archive
+    current = dict(args, destination=tmp_path / "broader0012")
+    archive.export_runtime_archive(SchemaConnection(archive.SOURCE_LOCK_SCHEMA_HEAD), **current)
+    profile = json.loads((current["destination"] / "profile.json").read_bytes())
+    profile["required_functions"][0]["execute_grantees"].append("PUBLIC")
     _rewrite(current["destination"], "profile.json", canonical_json_bytes(profile))
     manifest_path = current["destination"] / "archive.json"
     manifest = json.loads(manifest_path.read_bytes())

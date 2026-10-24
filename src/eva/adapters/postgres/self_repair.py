@@ -1,5 +1,6 @@
 """Autonomous repair goals on Eva's existing operational and initiative journal."""
 from datetime import UTC, datetime
+from contextlib import nullcontext
 
 import sqlalchemy as sa
 
@@ -13,7 +14,7 @@ from eva.application.self_repair import repair_task
 from eva.contracts.canonical_json import canonical_sha256
 
 
-def current_repair_binding(authority, incident_id, *, now):
+def current_repair_binding(authority, incident_id, *, now, _connection=None):
     """Host-only incident evidence for assessment/application, even after work ends.
 
     A completed development job grants no installation authority. The original
@@ -24,10 +25,13 @@ def current_repair_binding(authority, incident_id, *, now):
     if not isinstance(incident_id, str) or not re.fullmatch(r'self-repair:[0-9a-f]{64}', incident_id):
         raise ValueError('invalid repair incident identity')
     owner = authority.owner
-    policy, digest = authority.policy()
+    policy = authority._read()
+    digest = canonical_sha256({k: v for k, v in policy.items() if k != 'enabled'})
     if policy.get('self_repair', {}).get('enabled') is not True:
         raise ValueError('automatic repair is disabled')
-    with owner._engine.begin() as connection:
+    if _connection is not None and (not _connection.in_transaction() or _connection.in_nested_transaction()):
+        raise ValueError('repair binding requires a root transaction')
+    with (owner._engine.begin() if _connection is None else nullcontext(_connection)) as connection:
         owner._authorize(connection, now)
         c, e = operational_checkpoints.c, operational_events.c
         row = connection.execute(sa.select(operational_checkpoints, e.payload.label('original'),
@@ -285,3 +289,48 @@ class PostgresSelfRepair:
                 event_type='SELF_REPAIR_INITIATIVE_ADMITTED', occurred_at=now,
                 data={'intent_id': data['intent_id']})
             return 'admitted'
+
+
+def record_failed_work_repair_notice(store,spec,repair,*,now):
+    """One verified notice sidecar; no result/state/usage/failure-report mutation."""
+    data={'work_id':spec.work_id,'spec_sha256':spec.sha256,
+        'source_ingress_sha256':spec.source_ingress_sha256,'incident_id':repair['incident_id'],
+        'admitted':repair['admitted']}
+    thread='self-repair-work-notice:'+canonical_sha256({'work_id':spec.work_id,'spec_sha256':spec.sha256})
+    timeline=PostgresOperationalTimeline(store._engine,store.scope)
+    with store._engine.begin() as connection:
+        timeline._scope(connection)
+        work=store._load_locked(connection,spec.work_id)
+        if work.spec!=spec or work.state!='call_started' or work.stop_requested_at is not None:
+            raise ValueError('repair notice work is not the current running attempt')
+        row=connection.execute(sa.select(operational_events.c.payload).where(
+            operational_events.c.tenant_id==store.scope.tenant_id,
+            operational_events.c.installation_id==store.scope.installation_id,
+            operational_events.c.thread_id==thread)).scalar_one_or_none()
+        if row is not None:
+            if row['data']!=data:raise ValueError('repair notice replay differs')
+            return
+        from eva.adapters.postgres.operational_timeline import insert_initial_timeline_thread
+        insert_initial_timeline_thread(connection,store.scope,thread_id=thread,
+            checkpoint_id=thread+':recorded',occurred_at=now,event_type='SELF_REPAIR_FAILED_WORK_NOTICE',
+            phase='recorded',status='completed',data=data)
+
+
+def failed_work_repair_notice(connection,store,spec):
+    """Read only a host-recorded exact-work sidecar in the current work scope."""
+    thread='self-repair-work-notice:'+canonical_sha256({'work_id':spec.work_id,'spec_sha256':spec.sha256})
+    e=operational_events.c
+    rows=connection.execute(sa.select(e.payload,e.payload_sha256,e.event_type).where(
+        e.tenant_id==store.scope.tenant_id,e.installation_id==store.scope.installation_id,
+        e.thread_id==thread)).all()
+    if not rows:return None
+    if len(rows)!=1 or rows[0].event_type!='SELF_REPAIR_FAILED_WORK_NOTICE':
+        raise ValueError('repair work notice evidence differs')
+    row=rows[0];data=row.payload['data']
+    if (canonical_sha256(row.payload)!=bytes(row.payload_sha256).hex()
+            or data.get('work_id')!=spec.work_id or data.get('spec_sha256')!=spec.sha256
+            or data.get('source_ingress_sha256')!=spec.source_ingress_sha256):
+        raise ValueError('repair work notice binding differs')
+    return ('Ik ben tegen een probleempje aangelopen. Ik heb het herstel voor mezelf opgepakt.'
+        if data['admitted'] else 'Ik ben tegen een probleempje aangelopen. Ik heb het herstel '
+        'voor mezelf vastgelegd en pak het op zodra mijn lopende werk klaar is.')

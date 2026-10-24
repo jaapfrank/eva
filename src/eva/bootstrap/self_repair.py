@@ -54,3 +54,26 @@ def repair_failed_turn(runtime, turn, error):
         # unavailable. Never recursively repair the intake itself or promise work.
         _LOG.debug('Automatic repair intake unavailable')
         return None
+
+
+def observe_failed_work(store, service, source, spec, error, *, clock):
+    """Capture the actual caught error before the existing worker returns failure.
+
+    This does not replay the original work, convert failure to success or start
+    another model. The same durable repair intake later claims the native lane.
+    """
+    from eva.contracts.delegated_digital_work import DelegatedInitiativeDigitalWorkSpec
+    if (isinstance(spec, DelegatedInitiativeDigitalWorkSpec) or source is None
+            or source.audience.kind != 'private_person' or source.project_id is not None):
+        return None
+    try:
+        authority=store._initiative_authority_loader()
+        from eva.adapters.postgres.self_repair import PostgresSelfRepair, record_failed_work_repair_notice
+        observation=RepairObservation.from_error(error,source_root=Path(__file__).resolve().parents[1])
+        result=PostgresSelfRepair(authority,service,clock=clock).observe(source,observation)
+        if result is not None and result['created']:
+            record_failed_work_repair_notice(store,spec,result,now=clock())
+        return result
+    except Exception:
+        _LOG.debug('Automatic work repair intake unavailable')
+        return None

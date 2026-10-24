@@ -447,7 +447,7 @@ class ComponentApplicationRuntime:
 
     def __init__(self, config, *, run=subprocess.run):
         if (not isinstance(config, dict) or not {"core_container", "scope_sha256"} <= set(config)
-                or set(config) - {"core_container", "scope_sha256", "physical_usage_attestation", "behavior_verifiers"}
+                or set(config) - {"core_container", "scope_sha256", "physical_usage_attestation", "behavior_verifiers", "runtime_repair_enabled"}
                 or not isinstance(config["core_container"], str)
                 or not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}", config["core_container"])
                 or not isinstance(config["scope_sha256"], str)
@@ -464,7 +464,27 @@ class ComponentApplicationRuntime:
             if source_path not in ALLOWED_PATHS:
                 raise ValueError("runtime behavior source is outside the existing class")
             _verified_behavior_source(binding)
+        if type(config.get('runtime_repair_enabled', False)) is not bool:
+            raise ValueError('invalid runtime repair application switch')
         self.config, self.run = dict(config), run
+
+    def repair_call(self, action, *, incident_id, **arguments):
+        """Fixed host RPC into the same owner/source authority; no candidate argv."""
+        payload = {"action": action, "incident_id": incident_id,
+                   "scope_sha256": self.config["scope_sha256"], **arguments}
+        raw = json.dumps(payload, ensure_ascii=True)
+        if len(raw.encode()) > 65536:
+            raise ValueError("host repair request exceeds bound")
+        script = ("import json,sys; from eva.bootstrap.runtime_repair_host import handle_host_repair_request; "
+                  "print(json.dumps(handle_host_repair_request(json.loads(sys.argv[1]))))")
+        result = self.run(["docker", "exec", self.config["core_container"], "python", "-c", script, raw],
+                          text=True, capture_output=True, timeout=45)
+        if result.returncode != 0 or len(result.stdout.encode()) > 65536:
+            raise ValueError("host repair authority unavailable")
+        value = json.loads(result.stdout)
+        if not isinstance(value, dict):
+            raise ValueError("host repair response differs")
+        return value
 
     def ready_to_apply(self, task_id):
         return self._state(task_id, require_idle=True)
@@ -569,6 +589,14 @@ class ComponentApplicationRuntime:
                     or result["stdout_truncated"] or result["stderr_truncated"]):
                 raise RuntimeError("reviewed update command did not complete")
             return result["stdout"]
+        if release.get('kind') == 'runtime_repair':
+            binding = self.repair_call('binding', incident_id=release['repair_target']['failure']['incident_id'])
+            if binding != release['repair_target']['failure']:
+                raise ValueError('runtime repair source changed before application')
+            review = self.repair_call('work_metadata', incident_id=binding['incident_id'],
+                task_id=release['repair_review_work']['task_id'], require_running=False)
+            if review != release['repair_review_work']:
+                raise ValueError('independent repair review changed before application')
         verifier = self._behavior_verifier(release)
         try:
             return update_runtime(project=release["project"], installed=release["installed"],
@@ -584,6 +612,19 @@ class ComponentApplicationRuntime:
                 before_recovery_dispatch=lambda: self.ready_to_apply(release["task_id"]) == "ready")
 
     def _behavior_verifier(self, release):
+        if release.get('kind') == 'runtime_repair':
+            if not self.config.get('runtime_repair_enabled', False):
+                raise ValueError('runtime repair application not admitted')
+            from eva.operations.component_evaluation import EvaluationConfig
+            from eva.operations.runtime_repair_application import verify_installed_repair
+            # Fixed host implementation and existing sandbox; no candidate code
+            # or model-selected verifier executes with live family credentials.
+            config = EvaluationConfig(image=next(iter(release['candidate_images'].values())),
+                command=('python',), deadline_seconds=60, output_bytes=32768, memory_mb=512)
+            def verify(observation):
+                from eva.operations.runtime_image_update import _command
+                return verify_installed_repair(observation, release=release, config=config, run=_command)
+            return verify
         binding = release.get("behavior_verifier")
         expected_binding = self.config.get("behavior_verifiers", {}).get(release.get("source_path"))
         if binding != expected_binding:

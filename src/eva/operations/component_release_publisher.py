@@ -33,6 +33,10 @@ class ComponentReleasePublisher:
                 raise ValueError("publisher behavior source is outside the existing class")
             _verified_behavior_source(probe)
 
+    def publish_repair(self, job, directory):
+        from eva.operations.runtime_repair_publisher import publish_runtime_repair
+        return publish_runtime_repair(self, job, directory)
+
     def _command(self, argv, directory):
         # No candidate commands run on the host. All argv come from this fixed code.
         result = self.run(argv, text=True, capture_output=True)

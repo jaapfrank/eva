@@ -88,3 +88,28 @@ def test_request_cannot_substitute_another_incident(target):
     with pytest.raises(ValueError,match='another repair incident'):
         registry.prepare('self-repair:'+'9'*64)
     assert calls==[]
+
+
+def test_unregistered_new_component_receives_only_its_actual_candidate_contract(target):
+    from eva.operations.runtime_repair_target import repair_builder_handoff
+    from eva.operations.runtime_repair_evaluation import validate_repair_candidate
+    registry,binding,_,source,calls,criteria=target
+    actual=registry.resolve(binding['incident_id'])
+    handoff=repair_builder_handoff(actual)
+    assert handoff['target_id']==actual['target_id']
+    assert handoff['candidate_file']=='/workspace/repair/candidate.json'
+    options=handoff['candidate_schema']['properties']['files']['items']['anyOf']
+    assert len(options)==1
+    fields=options[0]['properties'];path='application/new_component.py'
+    assert fields['path']['const']==path
+    assert fields['baseline_sha256']['const']==hashlib.sha256(source).hexdigest()
+    assert str(criteria) not in str(handoff) and 'fixed before candidate' not in str(handoff)
+    # This component had no suite registration; its real host-selected source is
+    # sufficient to describe a proposal. The original validator remains authority.
+    changed=source.replace(b'return 1',b'return 2')
+    candidate=dict(contract='EvaRuntimeRepairCandidate/v1',target_id=actual['target_id'],diagnosis='Fixture transport only',
+        files=[dict(path=path,baseline_sha256=hashlib.sha256(source).hexdigest(),
+            candidate_sha256=hashlib.sha256(changed).hexdigest(),candidate_content=changed.decode())])
+    assert validate_repair_candidate(actual,candidate)==candidate
+    assert not handoff['installed'] and not handoff['is_execution_permission']
+    assert calls==[]  # Describing a build contract does not create/use criteria.

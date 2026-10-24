@@ -1,0 +1,154 @@
+{
+  "contract": "EvaInstalledDeliveryEvidence/v1",
+  "task": "E4.16",
+  "checkedAt": "2026-10-24T07:24:28.185511+00:00",
+  "status": "technical_activation_installed_and_independently_verified_original_card_open",
+  "originalCriteriaChanged": false,
+  "fullOriginalTaskCompleted": false,
+  "technicalActivationCompleted": true,
+  "installedAt": "2026-10-24T07:13:50.564343+00:00",
+  "installationDispatches": 1,
+  "installationElapsedSeconds": 86.646115,
+  "independentReview": {
+    "path": "development/reviews/e416-installed-activation-review-20261024.json",
+    "sha256": "ec3189a132dd12c4ceaf07865b089fa668001b9e7d74889ec0fbf75188e65e3f",
+    "verdict": "GO_EXACT_INSTALLED_E416_ACTIVATION"
+  },
+  "preDispatchReview": {
+    "path": "development/reviews/e416-handoff-activation-review-20261024.json",
+    "sha256": "443d08fdab5e56787654f7420cc77665c8d535e3f7fa64137f911d1b82b407aa"
+  },
+  "privateReceipts": [
+    {
+      "path": "/var/lib/eva2/e416-activation-20261024/installation.private.json",
+      "sha256": "232211ca5220efde8f3d03406661128c9b19016b5c10b5a48503e65706681567"
+    },
+    {
+      "path": "/var/lib/eva2/e416-activation-20261024/live-readback.private.json",
+      "sha256": "ef144da5529cc91314407b3e3774f629a6a4258d7559770f094a4d4456d3fbce"
+    },
+    {
+      "path": "/var/lib/eva2/e416-activation-20261024/operator-manifest.private.json",
+      "sha256": "dc5e56ced52bd4024e4d508237dfa59a9f01fd3637e06ea6908856aa16feca63"
+    },
+    {
+      "path": "/var/lib/eva2/e416-activation-20261024/installed-profiles.private.json",
+      "sha256": "afa0358be5402e6a113a09c3c3e63a5f81a3e8e9dafac0868ef964722ee22688"
+    },
+    {
+      "path": "/var/lib/eva2/e416-activation-20261024/candidate-profiles.private.json",
+      "sha256": "6ef079d4bb3ae14bd5707d69ba7039d3584f364bde65bd4e13af4891552af2bd"
+    }
+  ],
+  "installedRoles": {
+    "core": {
+      "image": "sha256:8b63103d434068c8f9257608849385299c6f255266d25491220281a5169e37cb",
+      "containerId": "43da9b4f9612e6ba7cc5eec6cad3433fec0cafa87871e00765c81af21316999a",
+      "healthy": true,
+      "sourceFileCount": 18
+    },
+    "delegated-work-worker": {
+      "image": "sha256:fd942c6df0fc81213e9b1424b5f85cc51f08bd274bd348046c7c3fd73596a0d7",
+      "containerId": "9c37848769ebf1ad34a629877511a88190c865e9577bd7adbe7ede1d2eba6cc2",
+      "healthy": true,
+      "sourceFileCount": 18
+    }
+  },
+  "database": {
+    "head": "4e_0012_conversation_source_lock",
+    "backupRetainedBeforeMigration": true,
+    "backupBytes": 84034678,
+    "backupSha256": "8ab7fa55fab0fc587bd1dd73b18d0494e1c0d8ddae18319513c269e78eaec6f8",
+    "existingDataAndVolumesPreserved": true,
+    "catalogFunctionBodyAclIndexVerified": true,
+    "runtimeTablePrivilegesNotWidened": true
+  },
+  "authority": {
+    "existingOwnerCompareAndSet": true,
+    "admittedRevision": 17,
+    "exactSourceAndDigitalWorkProfileBound": true,
+    "activeClaimsCheckedImmediatelyBeforeMutation": true,
+    "allUnrelatedAndUnknownClaimsRemainBlocking": true
+  },
+  "readback": {
+    "actualSchemaAndFunctionPrivilegesVerified": true,
+    "exactOwnerGrantVerified": true,
+    "nativeRepairClientEnabled": true,
+    "actualHostAuthenticatedHealthReady": true,
+    "selfRepairEventCount": 0,
+    "dashboard": {
+      "status": 200,
+      "cacheControl": "no-store",
+      "contentType": "application/json"
+    },
+    "liveMainProcessSelfRepairObjectInspected": false,
+    "fullOriginalIncidentProof": false
+  },
+  "frozenHost": {
+    "fileCount": 58,
+    "actualProcessPythonPathVerified": true,
+    "effectiveLastDropinVerifiedByIndependentReviewer": true
+  },
+  "profiles": {
+    "actualCoreAndWorkerEqualReviewedCandidates": true,
+    "compatibleScopes": [
+      "digital_work",
+      "shared_provider",
+      "public_research"
+    ],
+    "preexistingMismatchPreserved": [
+      "household_research"
+    ],
+    "allProfilesCompatible": false
+  },
+  "observerFailures": {
+    "productFailures": false,
+    "preservedPrivateDirectories": [
+      "/var/lib/eva2/e416-activation-20261024/readback-first-attempt",
+      "/var/lib/eva2/e416-activation-20261024/readback-second-attempt"
+    ],
+    "causes": [
+      "Catalog read after setting restricted eva_runtime role; moved catalog verification before owner authorization without grant changes.",
+      "Unescaped percent literal in psycopg observer query; escaped percent without data or product changes."
+    ],
+    "finalObserver": {
+      "path": "/var/lib/eva2/e416-activation-20261024/authority-readback-v3.py",
+      "sha256": "72d2ace9d739c0dd565d3b3587d66b969260b703effd6702bf35340e60fb6d8d"
+    }
+  },
+  "gitCandidate": {
+    "handoff": {
+      "path": "/home/administrator/project/.eva2-artifacts/e416-git-handoff-20261024/handoff.private.json",
+      "sha256": "55a798b66d7cb9200ad13d499de8ad388c9262f97527b79955f406457abf68c6"
+    },
+    "stagedProductFiles": 27,
+    "stagedTargetedTestFiles": 13,
+    "foreignVoiceAndContinuityWorkPreserved": true,
+    "wholeGitTreeEqualsInstalledImage": false,
+    "reason": "Images retain actual installed role-specific foreign source overlays; Git contains only exact reviewed E416 deltas."
+  },
+  "remaining": [
+    "Real source-bound internal failure to durable repair goal and notice.",
+    "Native candidate, independent original-behavior assessment, authorized application and actual installed behavior.",
+    "Later independent fault or improvement reuses the same route without manual per-incident developer handoff."
+  ],
+  "nextPrimaryTask": "E4.19",
+  "usage": {
+    "evaModelRequestsRequestedByThisActivation": 0,
+    "backgroundEvaModelUsage": null,
+    "developmentModelTokens": null,
+    "developmentCredits": null
+  },
+  "ownerActionRequired": false,
+  "familyAcceptance": false,
+  "gitValidation": {
+    "exactCandidateBlobsVerified": 40,
+    "workboardValid": true,
+    "dashboardProjectionMatches": true,
+    "diffCheck": "two cosmetic trailing-whitespace findings in exact frozen candidate bytes retained",
+    "locations": [
+      "src/eva/adapters/postgres/owner_initiatives.py:102",
+      "src/eva/bootstrap/delegated_digital_runner.py:567"
+    ]
+  }
+}
