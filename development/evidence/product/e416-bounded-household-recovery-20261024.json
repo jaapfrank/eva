@@ -1,0 +1,18 @@
+{
+  "contract": "EvaBoundedHouseholdRecoveryDelivery/v1",
+  "status": "built_reviewed_source_tests_four_profiles_match_installation_pending",
+  "checkedAt": "2026-10-24T16:17:23.243163+00:00",
+  "gitCommit": "30eaf49d4f7f0bfef760a927d5beb47db995d647",
+  "sourceReviewSha256": "2a7fca64e474390d7c892dd0eba3d2e866927f7c8b1628de06f3792f1b9824b7",
+  "tests": {
+    "passed": 14,
+    "runtimeModels": 0,
+    "scope": "Isolated PostgreSQL; two independently reproduced boundary failures fixed."
+  },
+  "candidateProfilesEqual": true,
+  "change": "After a proven locally returned uncertain household call, one different current observation may proceed under unchanged existing authority, timing and budget. Original usage and source remain unknown/preserved. A second unmeasured failure cannot replenish the slot.",
+  "installed": false,
+  "actualUseProven": false,
+  "fullCardCompleted": false,
+  "familyAcceptance": false
+}

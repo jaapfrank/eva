@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Na twee echte verloren huishoudbeoordelingen: werk de bestaande E4.16-herstelroute duurzaam af voor aantoonbaar lokaal beëindigde aanroepen met onbekend gebruik. Bouw één begrensd prospectief vervolg onder bestaande expliciete autorisatie/budget/STOP/300sbeleid, zonder oud verzoek/effect te herhalen; tweede onzekerheid zonder tussentijds succes blijft geblokkeerd. Hoofdbouwer maakt minimaal contract/kandidaat, coder1 gerichte onafhankelijke regressies. Ontbrekende autorisatie niet verzinnen. Schoolnaamvraag blijft apart open en blokkeert dit uitvoerbare herstelwerk niet; geen volledigekaartclaim.",
+    "nextAction": "Bron en14gerichte regressies onafhankelijk goedgekeurd; minimale rolgescheiden kandidaat gebouwd en alle4profielen gelijk. Coördinator rondt pakketreview, actuele claimcontrole en installatie af. Schoolnaam is werkelijk ontvangen; bestaande taakcorrectie wordt voorbereid, geen nieuwe loginvraag. Volledige E4.16 blijft open.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3093,7 +3093,7 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "Eva nam de echte bijsturing aan, maar de onderzoekstool faalde en er volgde geen alternatief of bruikbaar schoolresultaat. Die concrete interne fout wordt nu hersteld; geen eigenaarhandeling vereist.",
+          "summary": "Bron en14gerichte regressies onafhankelijk goedgekeurd; minimale rolgescheiden kandidaat gebouwd en alle4profielen gelijk. Coördinator rondt pakketreview, actuele claimcontrole en installatie af. Schoolnaam is werkelijk ontvangen; bestaande taakcorrectie wordt voorbereid, geen nieuwe loginvraag. Volledige E4.16 blijft open.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid."
         },
         "next": {
@@ -3103,7 +3103,7 @@
         },
         "ownerAction": {
           "required": false,
-          "detail": "Geen eigenaarhandeling nu: eerst de nieuwe expliciete opdracht uitvoeren. Alleen een werkelijk ontbrekende toegang of interactieve stap kan later een concrete vraag vereisen.",
+          "detail": "Schoolnaam ontvangen; geen nieuwe eigenaarhandeling nodig voor de lopende reparatie en voorbereiding van dezelfde schoolopdracht.",
           "steps": []
         },
         "checkedAt": "2026-10-24T11:29:40.552939+00:00",
@@ -8323,7 +8323,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Na twee echte verloren huishoudbeoordelingen: werk de bestaande E4.16-herstelroute duurzaam af voor aantoonbaar lokaal beëindigde aanroepen met onbekend gebruik. Bouw één begrensd prospectief vervolg onder bestaande expliciete autorisatie/budget/STOP/300sbeleid, zonder oud verzoek/effect te herhalen; tweede onzekerheid zonder tussentijds succes blijft geblokkeerd. Hoofdbouwer maakt minimaal contract/kandidaat, coder1 gerichte onafhankelijke regressies. Ontbrekende autorisatie niet verzinnen. Schoolnaamvraag blijft apart open en blokkeert dit uitvoerbare herstelwerk niet; geen volledigekaartclaim.",
+                "nextAction": "Bron en14gerichte regressies onafhankelijk goedgekeurd; minimale rolgescheiden kandidaat gebouwd en alle4profielen gelijk. Coördinator rondt pakketreview, actuele claimcontrole en installatie af. Schoolnaam is werkelijk ontvangen; bestaande taakcorrectie wordt voorbereid, geen nieuwe loginvraag. Volledige E4.16 blijft open.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8341,7 +8341,7 @@
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/owner-command-provider-fix-20261024.json",
-                "implementationStatus": "durable_bounded_household_recovery_contract_and_candidate_in_progress",
+                "implementationStatus": "bounded_household_recovery_built_reviewed_installation_pending",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8350,9 +8350,9 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T15:47:17.179837+00:00",
+                "checkedAt": "2026-10-24T16:17:23.243163+00:00",
                 "progress": "Twee gerichte onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt. Eva las de appaanmeldbron en sloeg inspect-sources duurzaam op. De9b-poging eindigde14:17:47UTC met503; oudere onbekende kosten blijven behouden. Vijf gewone Astra-beslissingen tussen14:20en14:40UTC zijn nadien gemeten afgerond en onafhankelijk beoordeeld. Er is nog geen werkende schooltoegang/-hulp. De bestaande schoolnaamvraag is nodig voor bedoelde school/accountkeuze; generieke PKCE vereist geen schoolUUID en handmatig inloggen is nu niet gevraagd.",
-                "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
+                "latestEvidence": "development/evidence/product/e416-bounded-household-recovery-20261024.json"
               },
               {
                 "id": "E4.17",
@@ -9028,7 +9028,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Na twee echte verloren huishoudbeoordelingen: werk de bestaande E4.16-herstelroute duurzaam af voor aantoonbaar lokaal beëindigde aanroepen met onbekend gebruik. Bouw één begrensd prospectief vervolg onder bestaande expliciete autorisatie/budget/STOP/300sbeleid, zonder oud verzoek/effect te herhalen; tweede onzekerheid zonder tussentijds succes blijft geblokkeerd. Hoofdbouwer maakt minimaal contract/kandidaat, coder1 gerichte onafhankelijke regressies. Ontbrekende autorisatie niet verzinnen. Schoolnaamvraag blijft apart open en blokkeert dit uitvoerbare herstelwerk niet; geen volledigekaartclaim.",
+        "nextAction": "Bron en14gerichte regressies onafhankelijk goedgekeurd; minimale rolgescheiden kandidaat gebouwd en alle4profielen gelijk. Coördinator rondt pakketreview, actuele claimcontrole en installatie af. Schoolnaam is werkelijk ontvangen; bestaande taakcorrectie wordt voorbereid, geen nieuwe loginvraag. Volledige E4.16 blijft open.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt; appauthbrononderzoek is opgeslagen. Vijf latere Astra-responsen bevestigd, schooltoegang/-hulp ontbreekt. Bestaande schoolnaamvraag voor bedoelde school/accountkeuze blijft open; geen herhaalvraag of blind vervolg. Ander uitvoerbaar werk niet blokkeren.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9039,7 +9039,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T14:26:01.802717+00:00",
+        "updatedAt": "2026-10-24T16:17:23.243163+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -14498,7 +14498,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Na twee echte verloren huishoudbeoordelingen: werk de bestaande E4.16-herstelroute duurzaam af voor aantoonbaar lokaal beëindigde aanroepen met onbekend gebruik. Bouw één begrensd prospectief vervolg onder bestaande expliciete autorisatie/budget/STOP/300sbeleid, zonder oud verzoek/effect te herhalen; tweede onzekerheid zonder tussentijds succes blijft geblokkeerd. Hoofdbouwer maakt minimaal contract/kandidaat, coder1 gerichte onafhankelijke regressies. Ontbrekende autorisatie niet verzinnen. Schoolnaamvraag blijft apart open en blokkeert dit uitvoerbare herstelwerk niet; geen volledigekaartclaim.",
+              "nextAction": "Bron en14gerichte regressies onafhankelijk goedgekeurd; minimale rolgescheiden kandidaat gebouwd en alle4profielen gelijk. Coördinator rondt pakketreview, actuele claimcontrole en installatie af. Schoolnaam is werkelijk ontvangen; bestaande taakcorrectie wordt voorbereid, geen nieuwe loginvraag. Volledige E4.16 blijft open.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14516,7 +14516,7 @@
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/owner-command-provider-fix-20261024.json",
-              "implementationStatus": "durable_bounded_household_recovery_contract_and_candidate_in_progress",
+              "implementationStatus": "bounded_household_recovery_built_reviewed_installation_pending",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -14525,9 +14525,9 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T15:47:17.179837+00:00",
+              "checkedAt": "2026-10-24T16:17:23.243163+00:00",
               "progress": "Twee gerichte onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt. Eva las de appaanmeldbron en sloeg inspect-sources duurzaam op. De9b-poging eindigde14:17:47UTC met503; oudere onbekende kosten blijven behouden. Vijf gewone Astra-beslissingen tussen14:20en14:40UTC zijn nadien gemeten afgerond en onafhankelijk beoordeeld. Er is nog geen werkende schooltoegang/-hulp. De bestaande schoolnaamvraag is nodig voor bedoelde school/accountkeuze; generieke PKCE vereist geen schoolUUID en handmatig inloggen is nu niet gevraagd.",
-              "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
+              "latestEvidence": "development/evidence/product/e416-bounded-household-recovery-20261024.json"
             },
             {
               "id": "E4.17",
@@ -15203,7 +15203,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Na twee echte verloren huishoudbeoordelingen: werk de bestaande E4.16-herstelroute duurzaam af voor aantoonbaar lokaal beëindigde aanroepen met onbekend gebruik. Bouw één begrensd prospectief vervolg onder bestaande expliciete autorisatie/budget/STOP/300sbeleid, zonder oud verzoek/effect te herhalen; tweede onzekerheid zonder tussentijds succes blijft geblokkeerd. Hoofdbouwer maakt minimaal contract/kandidaat, coder1 gerichte onafhankelijke regressies. Ontbrekende autorisatie niet verzinnen. Schoolnaamvraag blijft apart open en blokkeert dit uitvoerbare herstelwerk niet; geen volledigekaartclaim.",
+      "nextAction": "Bron en14gerichte regressies onafhankelijk goedgekeurd; minimale rolgescheiden kandidaat gebouwd en alle4profielen gelijk. Coördinator rondt pakketreview, actuele claimcontrole en installatie af. Schoolnaam is werkelijk ontvangen; bestaande taakcorrectie wordt voorbereid, geen nieuwe loginvraag. Volledige E4.16 blijft open.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt; appauthbrononderzoek is opgeslagen. Vijf latere Astra-responsen bevestigd, schooltoegang/-hulp ontbreekt. Bestaande schoolnaamvraag voor bedoelde school/accountkeuze blijft open; geen herhaalvraag of blind vervolg. Ander uitvoerbaar werk niet blokkeren.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15214,7 +15214,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T14:26:01.802717+00:00",
+      "updatedAt": "2026-10-24T16:17:23.243163+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17754,7 +17754,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T11:02:18.567187+00:00",
+  "updatedAt": "2026-10-24T16:17:23.243163+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
