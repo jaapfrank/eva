@@ -841,13 +841,13 @@
   "lastUpdated": "2026-10-24T07:24:28.185511+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.16",
+  "activeTaskId": "E4.19",
   "currentWork": {
-    "id": "E4.16",
-    "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+    "id": "E4.19",
+    "title": "Relevante updates zelfstandig ontdekken en beheerd toepassen",
     "status": "in_progress",
-    "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
+    "doneWhen": "Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap.",
+    "nextAction": "Volg na de afgeronde eigenaaropdracht het eerstvolgende toegelaten gewone aandachtsmoment met de bestaande softwarebron. Controleer actuele toelating bij uitblijven; laat één gekozen relevante update via bestaande native beoordeling/toepassing/gebruik/herstel afmaken. Geen waarneming injecteren of nieuwe onderhoudsopdracht forceren.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3081,8 +3081,8 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.16",
-          "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+          "taskId": "E4.19",
+          "title": "Relevante updates zelfstandig ontdekken en beheerd toepassen",
           "summary": "Vier van de oorspronkelijke24 taken afgerond (83/103). E4.16 is geïnstalleerd; werkelijk automatisch herstel blijft open. E4.19: de tester heeft de huidige driverfout 4/4 bevestigd; bouwer maakt de complete onderhoudsroute en reviewcorrecties af. Kandidaatwinst, autonome update en volledig herstel nog te bewijzen.",
           "doneWhen": "Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap."
         },
@@ -3278,7 +3278,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.16",
+        "currentStep": "E4.19",
         "steps": [
           {
             "number": 1,
@@ -6329,7 +6329,22 @@
                   "versionTrialInstallationIndependentlyReviewed": true,
                   "managedRestore": "development/evidence/product/e112-managed-restore-20261024.json"
                 },
-                "technicalDeliveryComplete": true
+                "technicalDeliveryComplete": true,
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "De technische route is geinstalleerd. Werkelijk normaal gebruik, werkingsbewijs en adoptie ontbreken nog; er is nu geen handeling van de eigenaar gevraagd. De eerder uitgestelde fysieke proef blijft uitgesteld.",
+                  "steps": [
+                    "Open wanneer je later zelf beschikbaar bent Initiatief & leren op de eigenaarpagina. Bekijk Huisvoorzieningen; nu staat daar nog geen geregistreerde of aangenomen voorziening.",
+                    "Bij een latere gewone aankomst in beeld van de reeds gekoppelde deurbelcamera: let op of Eva eenmaal passend begroet. Geen nieuwe opdracht, accountkoppeling of herhaalde testreeks nodig. Onbekend blijft onbekend.",
+                    "Bekijk daarna op dezelfde pagina Gedeeld huisinitiatief en het opgeslagen resultaat. Horen en nuttigheid blijven jouw waarneming; een log of verzendontvangst bewijst dat niet.",
+                    "Alleen nadat de echte werking is bevestigd kun je bij Huisvoorzieningen het voorstel registreren of de registratie afronden en vervolgens Voorziening aannemen kiezen. Pauzeren en Stoppen horen bij die gekoppelde voorziening; ze zijn nu nog niet zichtbaar."
+                  ],
+                  "expected": "Een passende echte begroeting zonder dubbele externe actie, met herleidbaar resultaat. Na bewuste adoptie toont Huisvoorzieningen de status en bediening. Een onbewezen of onzeker effect wordt niet als succes of reden voor herhaling behandeld.",
+                  "reportBack": "Alleen wanneer je later beschikbaar bent: of de begroeting hoorbaar en passend was, of deze dubbel kwam en of de bediening duidelijk was. Er staat nu geen open eigenaarvraag.",
+                  "blocksIndependentWork": false,
+                  "url": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
+                  "linkLabel": "Open Initiatief & leren"
+                }
               },
               {
                 "id": "E1.13",
@@ -6403,15 +6418,32 @@
                   "E1.11",
                   "E1.13"
                 ],
-                "nextAction": "Coder1 voert de oorspronkelijke continuïteitsproef uit op de bestaande duurzame verantwoordelijkheid met modeluitval/herstart in isolatie; geen productie-uitval naast E4.19. Lever volledig toetsbaar resultaat aan onafhankelijke tester.",
-                "checkedAt": "2026-10-24T09:40:45.980241+00:00",
+                "nextAction": "Gebruik de voorbereide bestaande eigenaarbediening wanneer werkelijk gewoon gebruik beschikbaar is; geen nieuwe technische uitvalmatrix. Positieve werking, bewuste adoptie en meerdagengebruik blijven apart. Geen eigenaarhandeling nu.",
+                "checkedAt": "2026-10-24T10:17:52.011015+00:00",
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [
-                    "01a169e0-4ed1-75d1-9541-b5dae109b328"
-                  ],
+                  "activeWorkers": [],
                   "scope": "Original continuity outcome; existing isolated tests/evidence only, no E419 or voice edits."
-                }
+                },
+                "progress": "Bestaande voorzieningsroute gericht onder modeluitval, bronuitval, herstart, onbekend effect en STOP beproefd. Aanvullend twee gewone ticks vóór STOP met actieve voorziening/gezonde provider/open venster: geen herhaald effect. Beide ruwe bewijzen onafhankelijk beoordeeld; productie niet gewijzigd. Werkelijk gebruikte/adoptieve verantwoordelijkheid en meerdaags gezinsgebruik blijven open.",
+                "latestEvidence": "development/evidence/product/e114-continuity-outage-restart-20261024.json",
+                "ownerInstructions": {
+                  "availableNow": false,
+                  "readyWhen": "Technische uitval-/herstartproef inclusief de ontbrekende twee gewone ticks voor STOP onafhankelijk goedgekeurd. Werkelijk gedragen verantwoordelijkheid en continuiteit over meerdere dagen blijven onbewezen; geen storing of herstart door de eigenaar nodig. Er is nu geen eigenaarhandeling gevraagd.",
+                  "steps": [
+                    "Open wanneer je later zelf beschikbaar bent Initiatief & leren op de eigenaarpagina. Bekijk Huisvoorzieningen; nu staat daar nog geen geregistreerde of aangenomen voorziening.",
+                    "Bij een latere gewone aankomst in beeld van de reeds gekoppelde deurbelcamera: let op of Eva eenmaal passend begroet. Geen nieuwe opdracht, accountkoppeling of herhaalde testreeks nodig. Onbekend blijft onbekend.",
+                    "Bekijk daarna op dezelfde pagina Gedeeld huisinitiatief en het opgeslagen resultaat. Horen en nuttigheid blijven jouw waarneming; een log of verzendontvangst bewijst dat niet.",
+                    "Alleen nadat de echte werking is bevestigd kun je bij Huisvoorzieningen het voorstel registreren of de registratie afronden en vervolgens Voorziening aannemen kiezen. Pauzeren en Stoppen horen bij die gekoppelde voorziening; ze zijn nu nog niet zichtbaar.",
+                    "Gebruik bij latere normale dagen dezelfde aangenomen voorziening. Meld alleen concreet gemiste of dubbele werking; wek zelf geen provideruitval, bronuitval of herstart op."
+                  ],
+                  "expected": "Dezelfde later bewust aangenomen voorziening blijft in normaal gebruik herleidbaar werken en behoudt pauze/STOP. De technische storingen zijn geisoleerd beoordeeld; die worden niet in het gezinsgesprek opnieuw opgewekt. Meerdere echte dagen en gezinsnut blijven afzonderlijk bewijs.",
+                  "reportBack": "Alleen wanneer je later beschikbaar bent: of de begroeting hoorbaar en passend was, of deze dubbel kwam en of de bediening duidelijk was. Er staat nu geen open eigenaarvraag.",
+                  "blocksIndependentWork": false,
+                  "url": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
+                  "linkLabel": "Open Initiatief & leren"
+                },
+                "implementationStatus": "isolated_outage_restart_no_replay_verified_real_household_use_open"
               }
             ],
             "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -8276,7 +8308,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
+                "nextAction": "Behoud de afgeronde concrete eigenaaropdracht als beperkte reparatie. E4.19 vervolgt de echte autonome onderhoudsroute; sluit E4.16 pas met oorspronkelijke autonome herstel- en hergebruikcriteria.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8286,15 +8318,12 @@
                 ],
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [
-                    "01a0c537-54d0-7080-9e4c-74db537877af",
-                    "01a16a55-1607-7171-820e-a3918acaea3f"
-                  ],
-                  "scope": "Hoofdbouwer herstelt de concrete opdracht; tester beoordeelt onafhankelijk zonder productcode. Coördinator integreert en installeert."
+                  "activeWorkers": [],
+                  "scope": "Concrete owner-command fix and original delivery complete; primary builder/tester return to E4.19."
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
-                "review": "development/reviews/e416-installed-activation-review-20261024.json",
-                "implementationStatus": "installed_independently_verified_real_incident_proof_open",
+                "review": "development/reviews/owner-command-provider-fix-20261024.json",
+                "implementationStatus": "concrete_owner_command_repaired_and_delivered_full_autonomous_repair_open",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8303,9 +8332,9 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T09:57:30.604406+00:00",
-                "progress": "Een echte digitale opdracht eindigde met budget_exceeded zonder eindresultaat. Rond dezelfde afhandeling registreerde de modelroute HTTP503. De primaire oorzaak en hersteloverdracht worden onderzocht; oorspronkelijke kaart niet afgerond.",
-                "latestEvidence": "development/evidence/product/e416-installed-activation-20261024.json"
+                "checkedAt": "2026-10-24T10:17:52.011015+00:00",
+                "progress": "De echte providerfout is gericht gerepareerd, onafhankelijk beoordeeld en geïnstalleerd. Na gecorrigeerde operatorhervatting is het oorspronkelijke onderzoeksvoorstel daadwerkelijk afgerond en10:15:05UTC aan de oorspronkelijke ontvanger afgeleverd. Geen nieuwe tools of onderzoek, geen accountkoppeling. Eerdere fout/verbruiksregistratie behouden. Volledige autonome reparatie door Eva en later zelfstandig hergebruik blijven oorspronkelijke open criteria.",
+                "latestEvidence": "development/evidence/product/owner-command-provider-fix-installed-20261024.json"
               },
               {
                 "id": "E4.17",
@@ -8414,23 +8443,27 @@
                   "E4.16",
                   "E4.17"
                 ],
-                "nextAction": "Volg één echte door Eva gekozen update via bestaande host, onafhankelijke beoordeling, bevoegde toepassing, werkelijk gebruik en geïsoleerd herstel. De onderhoudsroute is geïnstalleerd; E1.14-continuïteit en E1.11-afronding lopen als afzonderlijk afgebakend werk door.",
-                "implementationStatus": "installed_independently_verified_native_update_proof_open",
-                "checkedAt": "2026-10-24T09:42:36.372006+00:00",
+                "nextAction": "Volg na de afgeronde eigenaaropdracht het eerstvolgende toegelaten gewone aandachtsmoment met de bestaande softwarebron. Controleer actuele toelating bij uitblijven; laat één gekozen relevante update via bestaande native beoordeling/toepassing/gebruik/herstel afmaken. Geen waarneming injecteren of nieuwe onderhoudsopdracht forceren.",
+                "implementationStatus": "installed_native_default_clock_publication_verified_update_choice_open",
+                "checkedAt": "2026-10-24T10:17:52.011015+00:00",
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [],
+                  "activeWorkers": [
+                    "01a0c537-54d0-7080-9e4c-74db537877af",
+                    "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+                    "01a16a55-1607-7171-820e-a3918acaea3f"
+                  ],
                   "roles": {
                     "01a0c537-54d0-7080-9e4c-74db537877af": "native maintenance integration",
                     "01a169e0-4ed1-75d1-9541-b5dae109b328": "retained-image loader and host compatibility",
                     "01a169f2-6ff6-7961-b16f-9fd0b836d3e3": "immutable delivery packaging",
                     "01a16a55-1607-7171-820e-a3918acaea3f": "independent tester/reviewer"
                   },
-                  "scope": "Beoordeelde timestampcorrectie en images gereed voor gebundelde installatie. Hoofdbouwer en tester nu E4.16; coder1 E1.14; coder2 exact runtimepakket."
+                  "scope": "One E4.19 outcome: builder native completion; packager actual admission gate/readback; independent reviewer. Coordinator integrates and installs; no new chats."
                 },
                 "review": "development/reviews/e419-final-candidate-review-20261024.json",
-                "progress": "V2 daadwerkelijk geïnstalleerd en onafhankelijk goedgekeurd. Kern, worker en host gebruiken de beoordeelde bronnen/configuratie; normale softwarewaarneming bestaat. Bouwer controleert de overdracht naar Eva en de eerste echte updateketen. Volledige kaart blijft open.",
-                "latestEvidence": "development/evidence/product/e419-v2-installed-20261024.json"
+                "progress": "De normale host-startup heeft op10:09:20UTC de werkelijke geïnstalleerde softwarebron naar onderhoudstijdlijn en sensory-overdracht gepubliceerd. Klokdefect daarmee werkelijk gecontroleerd en onafhankelijk goedgekeurd. Eén daadwerkelijke door Eva gekozen update, toepassing, gebruik en herstel blijven open.",
+                "latestEvidence": "development/evidence/product/e419-default-clock-publication-20261024.json"
               }
             ],
             "previousBoundedCompletion": {
@@ -9416,7 +9449,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.16",
+      "currentStep": "E4.19",
       "steps": [
         {
           "number": 1,
@@ -12467,7 +12500,22 @@
                 "versionTrialInstallationIndependentlyReviewed": true,
                 "managedRestore": "development/evidence/product/e112-managed-restore-20261024.json"
               },
-              "technicalDeliveryComplete": true
+              "technicalDeliveryComplete": true,
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "De technische route is geinstalleerd. Werkelijk normaal gebruik, werkingsbewijs en adoptie ontbreken nog; er is nu geen handeling van de eigenaar gevraagd. De eerder uitgestelde fysieke proef blijft uitgesteld.",
+                "steps": [
+                  "Open wanneer je later zelf beschikbaar bent Initiatief & leren op de eigenaarpagina. Bekijk Huisvoorzieningen; nu staat daar nog geen geregistreerde of aangenomen voorziening.",
+                  "Bij een latere gewone aankomst in beeld van de reeds gekoppelde deurbelcamera: let op of Eva eenmaal passend begroet. Geen nieuwe opdracht, accountkoppeling of herhaalde testreeks nodig. Onbekend blijft onbekend.",
+                  "Bekijk daarna op dezelfde pagina Gedeeld huisinitiatief en het opgeslagen resultaat. Horen en nuttigheid blijven jouw waarneming; een log of verzendontvangst bewijst dat niet.",
+                  "Alleen nadat de echte werking is bevestigd kun je bij Huisvoorzieningen het voorstel registreren of de registratie afronden en vervolgens Voorziening aannemen kiezen. Pauzeren en Stoppen horen bij die gekoppelde voorziening; ze zijn nu nog niet zichtbaar."
+                ],
+                "expected": "Een passende echte begroeting zonder dubbele externe actie, met herleidbaar resultaat. Na bewuste adoptie toont Huisvoorzieningen de status en bediening. Een onbewezen of onzeker effect wordt niet als succes of reden voor herhaling behandeld.",
+                "reportBack": "Alleen wanneer je later beschikbaar bent: of de begroeting hoorbaar en passend was, of deze dubbel kwam en of de bediening duidelijk was. Er staat nu geen open eigenaarvraag.",
+                "blocksIndependentWork": false,
+                "url": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
+                "linkLabel": "Open Initiatief & leren"
+              }
             },
             {
               "id": "E1.13",
@@ -12541,15 +12589,32 @@
                 "E1.11",
                 "E1.13"
               ],
-              "nextAction": "Coder1 voert de oorspronkelijke continuïteitsproef uit op de bestaande duurzame verantwoordelijkheid met modeluitval/herstart in isolatie; geen productie-uitval naast E4.19. Lever volledig toetsbaar resultaat aan onafhankelijke tester.",
-              "checkedAt": "2026-10-24T09:40:45.980241+00:00",
+              "nextAction": "Gebruik de voorbereide bestaande eigenaarbediening wanneer werkelijk gewoon gebruik beschikbaar is; geen nieuwe technische uitvalmatrix. Positieve werking, bewuste adoptie en meerdagengebruik blijven apart. Geen eigenaarhandeling nu.",
+              "checkedAt": "2026-10-24T10:17:52.011015+00:00",
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [
-                  "01a169e0-4ed1-75d1-9541-b5dae109b328"
-                ],
+                "activeWorkers": [],
                 "scope": "Original continuity outcome; existing isolated tests/evidence only, no E419 or voice edits."
-              }
+              },
+              "progress": "Bestaande voorzieningsroute gericht onder modeluitval, bronuitval, herstart, onbekend effect en STOP beproefd. Aanvullend twee gewone ticks vóór STOP met actieve voorziening/gezonde provider/open venster: geen herhaald effect. Beide ruwe bewijzen onafhankelijk beoordeeld; productie niet gewijzigd. Werkelijk gebruikte/adoptieve verantwoordelijkheid en meerdaags gezinsgebruik blijven open.",
+              "latestEvidence": "development/evidence/product/e114-continuity-outage-restart-20261024.json",
+              "ownerInstructions": {
+                "availableNow": false,
+                "readyWhen": "Technische uitval-/herstartproef inclusief de ontbrekende twee gewone ticks voor STOP onafhankelijk goedgekeurd. Werkelijk gedragen verantwoordelijkheid en continuiteit over meerdere dagen blijven onbewezen; geen storing of herstart door de eigenaar nodig. Er is nu geen eigenaarhandeling gevraagd.",
+                "steps": [
+                  "Open wanneer je later zelf beschikbaar bent Initiatief & leren op de eigenaarpagina. Bekijk Huisvoorzieningen; nu staat daar nog geen geregistreerde of aangenomen voorziening.",
+                  "Bij een latere gewone aankomst in beeld van de reeds gekoppelde deurbelcamera: let op of Eva eenmaal passend begroet. Geen nieuwe opdracht, accountkoppeling of herhaalde testreeks nodig. Onbekend blijft onbekend.",
+                  "Bekijk daarna op dezelfde pagina Gedeeld huisinitiatief en het opgeslagen resultaat. Horen en nuttigheid blijven jouw waarneming; een log of verzendontvangst bewijst dat niet.",
+                  "Alleen nadat de echte werking is bevestigd kun je bij Huisvoorzieningen het voorstel registreren of de registratie afronden en vervolgens Voorziening aannemen kiezen. Pauzeren en Stoppen horen bij die gekoppelde voorziening; ze zijn nu nog niet zichtbaar.",
+                  "Gebruik bij latere normale dagen dezelfde aangenomen voorziening. Meld alleen concreet gemiste of dubbele werking; wek zelf geen provideruitval, bronuitval of herstart op."
+                ],
+                "expected": "Dezelfde later bewust aangenomen voorziening blijft in normaal gebruik herleidbaar werken en behoudt pauze/STOP. De technische storingen zijn geisoleerd beoordeeld; die worden niet in het gezinsgesprek opnieuw opgewekt. Meerdere echte dagen en gezinsnut blijven afzonderlijk bewijs.",
+                "reportBack": "Alleen wanneer je later beschikbaar bent: of de begroeting hoorbaar en passend was, of deze dubbel kwam en of de bediening duidelijk was. Er staat nu geen open eigenaarvraag.",
+                "blocksIndependentWork": false,
+                "url": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
+                "linkLabel": "Open Initiatief & leren"
+              },
+              "implementationStatus": "isolated_outage_restart_no_replay_verified_real_household_use_open"
             }
           ],
           "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -14414,7 +14479,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
+              "nextAction": "Behoud de afgeronde concrete eigenaaropdracht als beperkte reparatie. E4.19 vervolgt de echte autonome onderhoudsroute; sluit E4.16 pas met oorspronkelijke autonome herstel- en hergebruikcriteria.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14424,15 +14489,12 @@
               ],
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [
-                  "01a0c537-54d0-7080-9e4c-74db537877af",
-                  "01a16a55-1607-7171-820e-a3918acaea3f"
-                ],
-                "scope": "Hoofdbouwer herstelt de concrete opdracht; tester beoordeelt onafhankelijk zonder productcode. Coördinator integreert en installeert."
+                "activeWorkers": [],
+                "scope": "Concrete owner-command fix and original delivery complete; primary builder/tester return to E4.19."
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
-              "review": "development/reviews/e416-installed-activation-review-20261024.json",
-              "implementationStatus": "installed_independently_verified_real_incident_proof_open",
+              "review": "development/reviews/owner-command-provider-fix-20261024.json",
+              "implementationStatus": "concrete_owner_command_repaired_and_delivered_full_autonomous_repair_open",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -14441,9 +14503,9 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T09:57:30.604406+00:00",
-              "progress": "Een echte digitale opdracht eindigde met budget_exceeded zonder eindresultaat. Rond dezelfde afhandeling registreerde de modelroute HTTP503. De primaire oorzaak en hersteloverdracht worden onderzocht; oorspronkelijke kaart niet afgerond.",
-              "latestEvidence": "development/evidence/product/e416-installed-activation-20261024.json"
+              "checkedAt": "2026-10-24T10:17:52.011015+00:00",
+              "progress": "De echte providerfout is gericht gerepareerd, onafhankelijk beoordeeld en geïnstalleerd. Na gecorrigeerde operatorhervatting is het oorspronkelijke onderzoeksvoorstel daadwerkelijk afgerond en10:15:05UTC aan de oorspronkelijke ontvanger afgeleverd. Geen nieuwe tools of onderzoek, geen accountkoppeling. Eerdere fout/verbruiksregistratie behouden. Volledige autonome reparatie door Eva en later zelfstandig hergebruik blijven oorspronkelijke open criteria.",
+              "latestEvidence": "development/evidence/product/owner-command-provider-fix-installed-20261024.json"
             },
             {
               "id": "E4.17",
@@ -14552,23 +14614,27 @@
                 "E4.16",
                 "E4.17"
               ],
-              "nextAction": "Volg één echte door Eva gekozen update via bestaande host, onafhankelijke beoordeling, bevoegde toepassing, werkelijk gebruik en geïsoleerd herstel. De onderhoudsroute is geïnstalleerd; E1.14-continuïteit en E1.11-afronding lopen als afzonderlijk afgebakend werk door.",
-              "implementationStatus": "installed_independently_verified_native_update_proof_open",
-              "checkedAt": "2026-10-24T09:42:36.372006+00:00",
+              "nextAction": "Volg na de afgeronde eigenaaropdracht het eerstvolgende toegelaten gewone aandachtsmoment met de bestaande softwarebron. Controleer actuele toelating bij uitblijven; laat één gekozen relevante update via bestaande native beoordeling/toepassing/gebruik/herstel afmaken. Geen waarneming injecteren of nieuwe onderhoudsopdracht forceren.",
+              "implementationStatus": "installed_native_default_clock_publication_verified_update_choice_open",
+              "checkedAt": "2026-10-24T10:17:52.011015+00:00",
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [],
+                "activeWorkers": [
+                  "01a0c537-54d0-7080-9e4c-74db537877af",
+                  "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+                  "01a16a55-1607-7171-820e-a3918acaea3f"
+                ],
                 "roles": {
                   "01a0c537-54d0-7080-9e4c-74db537877af": "native maintenance integration",
                   "01a169e0-4ed1-75d1-9541-b5dae109b328": "retained-image loader and host compatibility",
                   "01a169f2-6ff6-7961-b16f-9fd0b836d3e3": "immutable delivery packaging",
                   "01a16a55-1607-7171-820e-a3918acaea3f": "independent tester/reviewer"
                 },
-                "scope": "Beoordeelde timestampcorrectie en images gereed voor gebundelde installatie. Hoofdbouwer en tester nu E4.16; coder1 E1.14; coder2 exact runtimepakket."
+                "scope": "One E4.19 outcome: builder native completion; packager actual admission gate/readback; independent reviewer. Coordinator integrates and installs; no new chats."
               },
               "review": "development/reviews/e419-final-candidate-review-20261024.json",
-              "progress": "V2 daadwerkelijk geïnstalleerd en onafhankelijk goedgekeurd. Kern, worker en host gebruiken de beoordeelde bronnen/configuratie; normale softwarewaarneming bestaat. Bouwer controleert de overdracht naar Eva en de eerste echte updateketen. Volledige kaart blijft open.",
-              "latestEvidence": "development/evidence/product/e419-v2-installed-20261024.json"
+              "progress": "De normale host-startup heeft op10:09:20UTC de werkelijke geïnstalleerde softwarebron naar onderhoudstijdlijn en sensory-overdracht gepubliceerd. Klokdefect daarmee werkelijk gecontroleerd en onafhankelijk goedgekeurd. Eén daadwerkelijke door Eva gekozen update, toepassing, gebruik en herstel blijven open.",
+              "latestEvidence": "development/evidence/product/e419-default-clock-publication-20261024.json"
             }
           ],
           "previousBoundedCompletion": {
@@ -15557,22 +15623,22 @@
       "scopeClarification": "development/evidence/reassessment/continuous-development-coverage-20261017.json"
     },
     "currentRuntime": {
-      "recordedAt": "2026-10-24T09:39:07.291994+00:00",
-      "checkedAt": "2026-10-24T09:42:36.372006+00:00",
+      "recordedAt": "2026-10-24T10:09:01.534325+00:00",
+      "checkedAt": "2026-10-24T10:17:52.011015+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "coreImage": "sha256:3a73b6ceed08911e4f5567f43bc271fe5d18796eba20342b3dd5fb2424933940",
-      "workerImage": "sha256:b6bdd741d363c4d4a39acef1dc20d32f25e9a3760aef7783505fb9c9ce651096",
+      "coreImage": "sha256:5fdf12aaffecb0473c001d7c4871780644c3d60b9adca2ec893e0171c7eacf4f",
+      "workerImage": "sha256:3bb7d20978ea1ae3725bb65353164c56b0f579ab748c8564615ac561865404c0",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
       "ready": true,
       "healthy": true,
-      "readyStatus": "e419_maintenance_foundation_independently_verified",
-      "evidence": "development/evidence/product/e419-v2-installed-20261024.json",
-      "independentSourceReview": "development/reviews/e419-final-candidate-review-20261024.json",
+      "readyStatus": "provider_failure_and_maintenance_timestamp_fixes_installed",
+      "evidence": "development/evidence/product/owner-command-provider-fix-installed-20261024.json",
+      "independentSourceReview": "development/reviews/owner-command-provider-fix-20261024.json",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "Exacte onderhoudsroute geïnstalleerd en live gecontroleerd; native update/gebruik/herstel en gezinsacceptatie blijven open.",
+      "meaning": "Providerfout en onderhoudsklok geïnstalleerd en onafhankelijk gecontroleerd. Oorspronkelijk onderzoeksvoorstel daadwerkelijk afgeleverd; native softwarewaarneming gebruikt. Volledige autonome onderhouds-/herstelkaarten en gezinsacceptatie blijven open.",
       "runtimeProfiles": {
         "digital_work": "matching",
         "public_research": "matching",

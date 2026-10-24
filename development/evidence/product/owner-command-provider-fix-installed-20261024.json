@@ -1,0 +1,159 @@
+{
+  "contract": "EvaOwnerCommandProviderFailureInstalled/v1",
+  "installedAt": "2026-10-24T10:09:01.534325+00:00",
+  "checkedAt": "2026-10-24T10:09:21.017121+00:00",
+  "status": "installed_original_proposal_completed_and_delivered",
+  "failure": {
+    "observedProviderStatus": 503,
+    "before": "Unknown usage from the failed provider attempt was misclassified as exhausted budget during retry admission.",
+    "after": "Original provider failure remains provider_unavailable; unknown usage remains unknown; no retry dispatch, repeated tool effect or false code-repair admission.",
+    "independentReview": "Source, package and installed source/profile readback approved."
+  },
+  "installed": {
+    "core": {
+      "image": "sha256:5fdf12aaffecb0473c001d7c4871780644c3d60b9adca2ec893e0171c7eacf4f",
+      "container": "a97315c39d2aa48099952de4110eb2af9f9a11aed22187d26411b2455286ec45",
+      "sourceHashes": {
+        "src/eva/adapters/model/pydantic_conversation.py": "eda9905bd9214cb42724486fac1ec408a451a5b8eaf173d76d6994544fb5e524",
+        "src/eva/bootstrap/delegated_digital_runner.py": "18096956386a2858d2f9ce01d5e2245c4962b4370af1d8a691388fe9a7321a85",
+        "src/eva/bootstrap/component_maintenance.py": "539273f48fc0b5b877d8d817140e6b9618bced63c21ac248e3ec496774f41010"
+      },
+      "profiles": {
+        "digital_work": {
+          "worker_profile_release_sha256": "0f845686c68043f8d890bcef44a2a285d734b0c989b1b1c5aaf5531697216bc5",
+          "model_profile_release_sha256": "59c2fe380cc33ca4fb8371daf0743befd3a5fb412c7bf73dbf5c2b08a10c80c1",
+          "worker_program_sha256": "95798395cd3f1820c44836402aa7d3beb6aa4842d1ffc296a27a7e40fef99515",
+          "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+          "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+        },
+        "shared_provider": {
+          "worker_profile_release_sha256": "1495b2c255e7ab03620cae26167a364476c1b04b4ab30faae148093e89a55192",
+          "model_profile_release_sha256": "82686b1fd6d05eeab299bfa896f9d651c072d959e814b272bf2519c39c66222f",
+          "worker_program_sha256": "cb7bb39be70bd31603d1829c7536a1f656571f540e1f17dc843c30928e23af1a",
+          "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+          "output_schema_sha256": "d45b0589c23a3066b6c3dc49bafb0c04cc5d12f49d9717b430263fd69631de2e"
+        },
+        "public_research": {
+          "worker_profile_release_sha256": "4b71e8bffd1c4f68bac632d0f9c7506c494f0546c81be0b33b38dccb8fefd8d7",
+          "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+          "worker_program_sha256": "52961a86c4b40c65c35cf14aae62ad18a3aac92f7bf6c7c9ac50b2781732237d",
+          "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+          "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+        },
+        "household_research": {
+          "worker_profile_release_sha256": "e37be67b5da71b17163cf04f3026d77fa9ac4fc77c5150acd723904b75c23bc1",
+          "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+          "worker_program_sha256": "70df9648f4c281495c98883d688a0f93dd02ce31dff27e38ccdda8b1619b3505",
+          "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+          "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+        }
+      }
+    },
+    "worker": {
+      "image": "sha256:3bb7d20978ea1ae3725bb65353164c56b0f579ab748c8564615ac561865404c0",
+      "container": "1eb03059c5f17bee701c3a2f4232a35f0e17ba220a1e4953a9000b3a008b794f",
+      "sourceHashes": {
+        "src/eva/adapters/model/pydantic_conversation.py": "eda9905bd9214cb42724486fac1ec408a451a5b8eaf173d76d6994544fb5e524",
+        "src/eva/bootstrap/delegated_digital_runner.py": "18096956386a2858d2f9ce01d5e2245c4962b4370af1d8a691388fe9a7321a85",
+        "src/eva/bootstrap/component_maintenance.py": "539273f48fc0b5b877d8d817140e6b9618bced63c21ac248e3ec496774f41010"
+      },
+      "profiles": {
+        "digital_work": {
+          "worker_profile_release_sha256": "0f845686c68043f8d890bcef44a2a285d734b0c989b1b1c5aaf5531697216bc5",
+          "model_profile_release_sha256": "59c2fe380cc33ca4fb8371daf0743befd3a5fb412c7bf73dbf5c2b08a10c80c1",
+          "worker_program_sha256": "95798395cd3f1820c44836402aa7d3beb6aa4842d1ffc296a27a7e40fef99515",
+          "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+          "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+        },
+        "shared_provider": {
+          "worker_profile_release_sha256": "1495b2c255e7ab03620cae26167a364476c1b04b4ab30faae148093e89a55192",
+          "model_profile_release_sha256": "82686b1fd6d05eeab299bfa896f9d651c072d959e814b272bf2519c39c66222f",
+          "worker_program_sha256": "cb7bb39be70bd31603d1829c7536a1f656571f540e1f17dc843c30928e23af1a",
+          "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+          "output_schema_sha256": "d45b0589c23a3066b6c3dc49bafb0c04cc5d12f49d9717b430263fd69631de2e"
+        },
+        "public_research": {
+          "worker_profile_release_sha256": "4b71e8bffd1c4f68bac632d0f9c7506c494f0546c81be0b33b38dccb8fefd8d7",
+          "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+          "worker_program_sha256": "52961a86c4b40c65c35cf14aae62ad18a3aac92f7bf6c7c9ac50b2781732237d",
+          "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+          "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+        },
+        "household_research": {
+          "worker_profile_release_sha256": "e37be67b5da71b17163cf04f3026d77fa9ac4fc77c5150acd723904b75c23bc1",
+          "model_profile_release_sha256": "2cd5a1e4fe0ef987d1db56349ef44ceabff211df63a53083c05d437e8bd67985",
+          "worker_program_sha256": "0ccd63e4aae6451a8d14a50d5b81d6c00932a3e77b2076f4fdd0ba2327be99bd",
+          "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+          "output_schema_sha256": "255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef"
+        }
+      }
+    }
+  },
+  "actualCompleteProfilesMatchReviewedCandidates": true,
+  "priorHouseholdResearchMismatchPreserved": true,
+  "ownerMandateChanged": false,
+  "hostConfigurationChanged": false,
+  "dataAndMountsRetained": true,
+  "falseRepair": {
+    "stoppedThroughExistingOwnerService": true,
+    "originalEventsRetained": true,
+    "currentRepairAuthorityRejected": true,
+    "receiptSha256": "386f1927b345939fe5ff6c3ee549b5a858bc0d4e0dcbee3664e4a3ed5f0b5f01"
+  },
+  "verification": {
+    "targetedChecksPassed": 16,
+    "fullAffectedSuitesPassed": 231,
+    "preexistingFailures": 2,
+    "preexistingFailuresReproducedOnOriginalAdapter": true,
+    "liveSourceHashesMatched": 6,
+    "liveProfileReadbackSha256": "bdcb10a1837448c2fd1233256413323f42471279e5cb6ea34015232bbd48642f",
+    "sourceReviewSha256": "1df9a36fe1ded3087cd7eeb742c927b738967d6ed36c1b946588940f1f728487",
+    "completeProjectOrFamilyAcceptanceClaimed": false,
+    "actualCompletionIndependentlyReviewed": true,
+    "actualCompletionReviewSha256": "7aa61c8339f99c9681bcbf0af4f9e64de6321463fe9023e679c7afad629f5db1"
+  },
+  "sourceGitCommit": "f486319b23ee1d5c393e7aeb25d4ac82e85efe39",
+  "repositoryHeadFullyInstalled": false,
+  "originalCommand": {
+    "savedReadResultsAvailable": 3,
+    "continuationPreflightReady": true,
+    "resumed": true,
+    "completed": true,
+    "ownerActionRequired": false,
+    "originalPreserved": true,
+    "oldUsageStillPartial": true,
+    "actualAdmissionAt": "2026-10-24T10:14:39Z",
+    "actualDeadline": "2026-10-24T10:34:39Z",
+    "deliveredToOriginalRecipient": true,
+    "completedAt": "2026-10-24T10:15:01Z",
+    "deliveredAt": "2026-10-24T10:15:05Z",
+    "completionEvidenceSha256": "a6d5b8113f55d8a8eda452ebeff469c1583187b4e176024116c6528b63d09b95",
+    "scope": "Existing research proposal, not an established external account connection."
+  },
+  "usage": {
+    "modelCallsForBuildAndVerification": 0,
+    "developmentCredits": null,
+    "evaRuntimeOriginalUsageRemainsPartial": true,
+    "originalUsageNeverReset": true,
+    "completedContinuation": {
+      "modelResponses": 1,
+      "newTools": 0,
+      "recordedInputTokens": 16430,
+      "recordedOutputTokens": 192,
+      "measurement": "partial",
+      "credits": null,
+      "seconds": 22
+    }
+  },
+  "operatorContinuation": {
+    "firstAttempt": "Never started: operator passed historical ingress time without explicit admission time, producing an expired successor.",
+    "correction": "Existing explicit admission route starts a new bounded linked attempt at the actual admission time. Original and unstarted attempts remain unchanged.",
+    "initialReviewGapAcknowledged": true,
+    "oldResumeApprovalWithdrawn": true,
+    "revisedScriptIndependentlyReviewed": true,
+    "noProductReinstallRequired": true,
+    "actualFutureDeadlineVerified": true,
+    "dispatchReceiptSha256": "18871e5f1bc831f2ebf4612a9389a312f4d86d5e4a44a757480dc2dca4d09826"
+  },
+  "independentReview": "development/reviews/owner-command-provider-fix-20261024.json"
+}

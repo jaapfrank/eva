@@ -1,0 +1,158 @@
+{
+  "contract": "EvaE114ContinuityOutageRestartEvidence/v1",
+  "task": "E1.14",
+  "recordedAt": "2026-10-24T10:04:17.388173+00:00",
+  "status": "new_integrated_technical_proof_complete_independent_review_pending",
+  "fullTaskCompleted": false,
+  "ownerAcceptance": false,
+  "familyAcceptance": false,
+  "builtProductChange": false,
+  "installedProductChangeByThisTask": false,
+  "actualInstalledSourceUsed": true,
+  "existingRoute": [
+    "HouseholdInitiativeLoop",
+    "HomeAssistantProcedure / exact original pure module and RUNNER",
+    "TrustedHouseholdProvisionCallbacks",
+    "HouseholdProvisionRuntime / HouseholdProvisionHostFactory",
+    "PostgresHouseholdProvisions",
+    "PostgresSensoryEventStore / HouseholdInitiativeDelivery"
+  ],
+  "originalAssignment": "development/design/product/autonomous-repair-task-scope-20261022.json#/ownerPracticalAcceptance20261022",
+  "originalSourceSha256": "340eef5d94949a20ccb6aedaabcb90f2520de4db5f92d837d1dd7dc446c20773",
+  "originalBindingFileSha256": "732ff63fa5918410d9ecb94d44cb7b4b245a3aa3014736873f61af78b4f72428",
+  "originalReviewSha256": "7bedd1f16f92f1692d0cbd865f370146ba9eef99eab4d9520a473b830b86a369",
+  "originalReferenceId": "procedure-reference:5169d94612cace80a988f1bfebaacc37a946d8d6872864e59faa7d217e95e5ac",
+  "actualInstalledImage": "sha256:3a73b6ceed08911e4f5567f43bc271fe5d18796eba20342b3dd5fb2424933940",
+  "scopeSourceFilesReadBackMatching": 13,
+  "actualDriverVersions": {
+    "psycopg": "3.3.4",
+    "psycopg-binary": "3.3.4"
+  },
+  "proof": {
+    "privateDirectory": "/home/administrator/project/.eva2-artifacts/e114-continuity-20261024/final-freeze",
+    "manifestSha256": "c34068f25a6540e28317a790b96e0c659967d0d50d728219f64854c00e6100ce",
+    "completedProofSha256": "048841550e04bed545221980f7b459ffc7adc039335a79f779358661e9880846",
+    "retainedTimelineSha256": "232c47cee829fc639e174049c62e1dc1707f67c9b33ecbb4c11e9f68d22e92f2",
+    "verifiedTimelineEvents": 43,
+    "retainedCheckpoints": 14,
+    "realWorkerProcessContexts": 4,
+    "controlledProcessExits": 2,
+    "isolatedPostgresql": "18.6",
+    "schema": "4e_0012_conversation_source_lock",
+    "network": "none"
+  },
+  "results": [
+    {
+      "clause": "Modelprovider unavailable",
+      "proven": "Existing household loop returns waiting_for_model_access; no model or proposal execution; same provision is locally paused and pending source retained.",
+      "phaseReceiptSha256": "dd450a16166a6613f04876ba9ea85c7cb6d143aadf6cb936dcd62e6bd5aad5b2"
+    },
+    {
+      "clause": "Separate source outage",
+      "proven": "Provider is ready but source reader fails separately: unavailable/unknown, zero model requests; paused state survives new process and resume is refused without current source.",
+      "phaseReceiptSha256": "fc99f4b47509242136bd883d17ba9021cdf84c1a2183d4dd10e1cd707ace2157"
+    },
+    {
+      "clause": "Restart and stale occasion at recovery",
+      "proven": "A fresh process reconstructs the same DB provision/source, resumes only on current verified source, preserves old occurrence time and returns silence for the stale greeting.",
+      "phaseReceiptSha256": "53d8bd45ae49f2bf9a97456397f75cf8cec9744245be402c074432fd65b85adb"
+    },
+    {
+      "clause": "No notification storm",
+      "proven": "Existing five-minute model review minimum and thirty-minute same-source cooldown stay enabled; an earlier attempt was correctly silenced and retained. The fresh effect is tested only after those bounds.",
+      "phaseReceiptSha256": "61cf6fedab6c82eff8a0290a344b6d32aaff194d1ca72dec66f173f6d4dde0ee"
+    },
+    {
+      "clause": "One effect then acknowledgement uncertainty",
+      "proven": "Exact original module proposes generic greeting from explicit synthetic camera metadata. Existing guarded household delivery admits one fixture transport effect; deliberately lost ack remains unknown.",
+      "phaseReceiptSha256": "73158be27b6957575f833d370c046a255ca630bf2fe3c736cc8ac8591b7b8b8e"
+    },
+    {
+      "clause": "Restart after uncertain effect and STOP",
+      "proven": "Another new process reads the retained unknown pending effect, then accepts local STOP. Only after STOP, two normal loop ticks do not resend and resume after STOP is refused. Autonomous no-replay before STOP is not exercised by this phase.",
+      "phaseReceiptSha256": "b1b444570c6eb95657d4d9993429a398107f5b24a9b5dd46ff83bdc57ee93386"
+    },
+    {
+      "clause": "Autonomous no-replay before STOP — exact targeted supplement",
+      "proven": "Restore only the retained 42-event prefix immediately before the original STOP. Provision stays active with stopped=false, revision6 and unknown pending effect. With provider ready, source available and normal attention window open, two ordinary loop ticks at 1925s and 2223s produce idle and zero new transport/model calls; existing effect file stays byte-identical. No STOP or pause blocks these ticks.",
+      "phaseReceiptSha256": "ef34706fee158fdfb5ee2d1db4001c0e2cfed28b757a7f00d990732c2ef0214c"
+    }
+  ],
+  "withoutModelProvider": {
+    "supportedAndProven": [
+      "Read retained provision state and source binding",
+      "Local owner pause and STOP",
+      "Preserve pending source and effect uncertainty",
+      "Check current source/proof before allowing resume",
+      "Retain the observed effect admission and enforce existing coalescing/cooldown; post-STOP ticks do not resend",
+      "For the exact restored unknown-effect state, two normal autonomous ticks before STOP do not re-offer or re-admit the existing effect."
+    ],
+    "mustWaitOrStayUnknown": [
+      "Meaning interpretation and new household assessment wait for model access",
+      "Unavailable source cannot establish a current observation or authorize resume",
+      "Lost transport acknowledgement is not delivery proof and is not retried automatically"
+    ]
+  },
+  "onePreparedOwnerTrial": {
+    "title": "One ordinary arrival on the existing doorbell-camera route",
+    "status": "prepared_for_later_owner_availability_not_requested_now",
+    "instruction": "Wanneer je beschikbaar bent: laat de bestaande deurbelcamera één gewone binnenkomst waarnemen en controleer of Eva precies één passende begroeting aanbiedt en die hoorbaar is.",
+    "scope": "Gebruik uitsluitend de bestaande bron en voorzieningskaart. Een hoorbare begroeting is nog geen adoptie of bewijs van meerdere dagen ontzorging. Registreer/adopteer alleen via de bestaande bediening wanneer echte brongebonden werkingsproef beschikbaar is; technische fixturebewijzen geven daar geen toestemming voor.",
+    "currentOwnerActionRequired": false,
+    "earlierOwnerUnavailableRespected": true,
+    "physicalTrialNotRepeatedNow": true
+  },
+  "remainingOriginalCriteria": [
+    "Actual production managed enrollment is still explicit null; no genuinely adopted/used E111 household responsibility is claimed.",
+    "Actual positive natural household greeting, hearing and later ordinary use remain unproven in this E114 test.",
+    "Same genuinely used responsibility and multiple real days with owner/family confirmation remain separate from this technical fault/restart proof.",
+    "Independent tester must assess this exact new proof; no independent GO claimed by builder."
+  ],
+  "testBoundaries": [
+    "All household observations, faces, identities, owner authority rows, initial offered protocol receipt and adoption are explicit isolated fixtures, never production facts.",
+    "Exact authored source/review/reference is reused; fixture household/source-owner binding is isolated and is not the actual production binding.",
+    "External artifact registry/discovery/credential and HA transport are explicit isolated boundaries. Actual inherited application proposal/guard/admission/settlement, trusted callback proof reading and PG lifecycle run unchanged.",
+    "Original code runs through original RUNNER; model decisions are an explicit fixture and do not prove Eva independently chose new work.",
+    "Prior failed dev import, camera envelope, fixture-clock and timing expectations are retained; only changed-cause preparation or still-unproved tail was continued. No old successful matrix repeated.",
+    "Review-budget admission and shared external context are explicit bounded fixtures; current owner authorization, trusted lineage verification and durable provision/effect transitions still use actual application/PG code. No actual paid model grant is exercised.",
+    "The original reviewed phase checks unknown then STOP then normal ticks. A separate narrowly restored before-STOP prefix now exercises two normal ticks with active provision and stopped=false; these proofs are linked, not retrospectively merged into one original execution."
+  ],
+  "usage": {
+    "verificationModelProviderRequests": 0,
+    "verificationExternalHouseholdPosts": 0,
+    "verificationTelegramPosts": 0,
+    "verificationSpeakerEffects": 0,
+    "isolatedLocalTransportEffects": 1,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "productionBackgroundUsage": "not measured by this proof",
+    "successfulTailMs": 13023
+  },
+  "productionWrites": 0,
+  "newOwnerRequest": false,
+  "newProvisionOrPlannerInProduct": false,
+  "independentReview": {
+    "status": "original_bound_proof_GO_targeted_supplement_pending",
+    "reviewerThread": "01a16a55-1607-7171-820e-a3918acaea3f",
+    "originalPrivateReviewSha256": "3646b6cfbfb79296bfc2323812f7bd8c070d054c66af8bc459e5b458ec8bb59b",
+    "originalVerdict": "GO_BOUNDED_ISOLATED_TECHNICAL_EVIDENCE_ONLY"
+  },
+  "cleanup": {
+    "privateReceiptSha256": "cd7ff50de1402157147ac3f3fa24482819f168626aebf21b295e04f2e8329de0",
+    "ownDisposableDatabaseStopped": true,
+    "actualProductionEnrollmentStillExplicitNull": true,
+    "originalActualBindingSourceReviewUnchanged": true
+  },
+  "targetedBeforeStopSupplement": {
+    "status": "passed_exact_missing_tail_independent_review_pending",
+    "privateManifestSha256": "72d469cc98f371c422f545afe88293a74917c8f9c74d3a537d51b439c7a17a2b",
+    "originalEventPrefix": 42,
+    "checkpointHeads": 14,
+    "snapshotAfterNormalTicksSha256": "7529d1f81812f01132667d8c1de644b5aa4b63cd1fddbb5d088c3328b479ba69",
+    "originalFullFreezeUntouched": true,
+    "oldSuccessfulOutageMatrixRepeated": false,
+    "elapsedMs": 7877,
+    "cleanupSha256": "716acbc3ff54057dc8b567b1362e618980587c87996e5852eb225dac4e688b56",
+    "ownDatabaseStopped": true
+  }
+}

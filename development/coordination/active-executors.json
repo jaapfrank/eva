@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T09:57:30.604406+00:00",
+  "updatedAt": "2026-10-24T10:17:52.011015+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -159,7 +159,7 @@
       "activeCodeOrInstallClaim": false
     },
     "codex-e418": {
-      "task": "E4.16",
+      "task": "E4.19",
       "writeScopeConfirmed": true,
       "allowedPaths": [
         "src/eva/bootstrap/component_maintenance.py",
@@ -618,7 +618,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "active_actual_owner_command_repair",
+      "status": "active_native_update_from_observed_source",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1418,7 +1418,7 @@
     "e415-independent-review-newchat": {
       "task": "E4.19",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "active_exact_runtime_handoff_support",
+      "status": "active_actual_native_maintenance_publication_readback",
       "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
       "allowedWritePaths": [],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
@@ -1544,13 +1544,14 @@
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "active_actual_owner_command_independent_review",
+      "status": "active_independent_native_update_review",
       "allowedWritePaths": [
-        "development/reviews/e419-final-candidate-review-20261024.json"
+        "development/reviews/e419-final-candidate-review-20261024.json",
+        "development/reviews/owner-command-provider-fix-20261024.json"
       ],
       "activeIndependentReviewClaim": true,
       "review": "development/reviews/e415-central-alignment-readiness-review-20261023.json",
-      "task": "E4.16",
+      "task": "E4.19",
       "assignedAt": "2026-10-23T20:28:02.293070+00:00",
       "role": "independent_tester_reviewer",
       "activeCodeOrInstallClaim": false,
@@ -1561,12 +1562,12 @@
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
       "task": "E1.14",
       "role": "executor",
-      "status": "active_single_continuity_outage_restart_proof",
+      "status": "bounded_E114_proof_and_UI_handoff_complete",
       "allowedWritePaths": [
         "src/tools/installation_runtime_image_restore.py",
         "development/tests/portable/test_installation_runtime_image_restore.py"
       ],
-      "activeCodeOrInstallClaim": true,
+      "activeCodeOrInstallClaim": false,
       "scope": "E1.14: één geïsoleerde proef met bestaande huishoudroute, bronuitval, modeluitval en procesherstart. Geen productie-effecten of productcode.",
       "currentWritePaths": [
         "development/evidence/product/e114-continuity-outage-restart-20261024.json",
@@ -1756,52 +1757,19 @@
     "authority": "Direct owner instruction 2026-10-23: sole main coordinator; integration, GitHub and shared installation exclusively here.",
     "previousCoordinator": "windows-root",
     "preserveExistingReservations": true,
-    "activeOutcome": "E4.16",
+    "activeOutcome": "E4.19",
     "doNotRepeatSentLolaQuestion": true,
     "agents": {},
     "maxConcurrentExecutorsReviewers": 4,
     "installationCandidate": {
-      "path": "/var/lib/eva2/e416-activation-20261024",
-      "scope": "Existing E416 self-repair activation",
-      "status": "installed_and_independently_reviewed",
-      "core": "sha256:8b63103d434068c8f9257608849385299c6f255266d25491220281a5169e37cb",
-      "worker": "sha256:fd942c6df0fc81213e9b1424b5f85cc51f08bd274bd348046c7c3fd73596a0d7",
+      "path": "/var/lib/eva2/owner-command-provider-fix-20261024",
+      "scope": "Existing owner command provider failure and reviewed maintenance timestamp fix",
+      "status": "installed_independently_verified_original_proposal_delivered",
+      "core": "sha256:5fdf12aaffecb0473c001d7c4871780644c3d60b9adca2ec893e0171c7eacf4f",
+      "worker": "sha256:3bb7d20978ea1ae3725bb65353164c56b0f579ab748c8564615ac561865404c0",
       "fullE416Completed": false,
-      "review": "development/reviews/e416-installed-activation-review-20261024.json",
-      "evidence": "development/evidence/product/e416-installed-activation-20261024.json",
-      "previousInstalled": {
-        "path": "/var/lib/eva2/e110-housemate-development-20261024",
-        "scope": "E110 existing source development plus completed E29 owner operations",
-        "status": "installed_and_independently_reviewed",
-        "core": "sha256:efff5dd51b993ff4bc833ecc1940f0f64ad336d30e20fb873a902cf371af7dcf",
-        "worker": "sha256:15327de84d6e70e353bd462f2a730250b273d1779d8cc79969d2729924d55a1d",
-        "fullE29Completed": true,
-        "fullE110Completed": false,
-        "previousInstalled": {
-          "path": "/var/lib/eva2/e29-housemate-consumer-20261024",
-          "scope": "Current private learning sources in existing owner initiative screen with existing source correction/forget handoff",
-          "status": "installed_exact_live_source_readback",
-          "core": "sha256:aa0d48c4ea7b1c9569227a597bb9714cda5aff00a1992ccbe150ea9703c32996",
-          "worker": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
-          "fullE29Completed": false,
-          "previousInstalled": {
-            "path": "/var/lib/eva2/e112-version-trial-20261024",
-            "scope": "Exact source versions, bounded trial and owner UI with same-byte managed procedure copy",
-            "status": "installed_and_independently_read_back",
-            "core": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
-            "worker": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
-            "previousInstalled": {
-              "path": "/var/lib/eva2/e112-proof-handoff-20261024",
-              "scope": "Frozen E112 V3.1 original-lineage proof and owner controls; preserves role variants and legacy route",
-              "status": "installed_and_independently_read_back",
-              "core": "sha256:f55b5f7cf714d8ad839e48f965530b71f0bb243920b9133814e32f734e1b8358",
-              "worker": "sha256:32d634b3ebc2ab616ca627e4936538ebdf8778ce727d676e8bd0ea267c8d03c4",
-              "fullE112Completed": false
-            },
-            "fullE112Completed": false
-          }
-        }
-      }
+      "review": "development/reviews/owner-command-provider-fix-20261024.json",
+      "evidence": "development/evidence/product/owner-command-provider-fix-installed-20261024.json"
     },
     "newReviewerThread": "01a16a55-1607-7171-820e-a3918acaea3f",
     "e415Candidate": {
@@ -1821,8 +1789,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
-    "parallelBoundedWork": "Hoofdbouwer: echte opdrachtfout; tester: onafhankelijke review; coder1: E1.14 continuïteit; coder2: exact runtimepakket; coördinator: integratie en installatie.",
-    "currentBlocker": "Concrete eigenaaropdracht mislukte; oorspronkelijke fout en veilige voortzetting worden vastgesteld. Geen eigenaarhandeling nodig.",
+    "parallelBoundedWork": "Hoofdbouwer: E4.19 native update; coder2: huidige aandachtstoelating; tester: onafhankelijke concrete review; coder1: werkelijk bruikbare bestaande eigenaarbediening afgerond, integratiecontrole.",
+    "currentBlocker": "Geen eigenaarblokkade; oorspronkelijke voorstel afgeleverd. E4.19 vervolgt eerstvolgende gewone softwarebronafweging.",
     "latestVerifiedOutcome": {
       "task": "E4.17",
       "status": "completed_original_restore_card_technical",
@@ -1831,10 +1799,10 @@
       "at": "2026-10-24T06:06:08.566732+00:00"
     },
     "nextBoundedAssignments": {
-      "executor": "Repair actual owner command failure",
-      "recoveryExecutor": "Finish isolated E1.14 continuity proof",
-      "deliveryExecutor": "Exact runtime handoff and reviewed repair packaging",
-      "reviewer": "Independently verify actual command failure and concrete fix",
+      "executor": "Finish one actual native E4.19 update from the observed source",
+      "recoveryExecutor": "Verify integrated existing E1.12/E1.14 owner instructions only",
+      "deliveryExecutor": "Read actual post-command foreground/capacity admission gate",
+      "reviewer": "Review concrete native update and final owner-command delivery",
       "coordinator": "Integrate, verify live claims, install and close only original proven cards"
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",

@@ -4,7 +4,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen
+Relevante updates zelfstandig ontdekken en beheerd toepassen
 
 Vier van de oorspronkelijke24 taken afgerond (83/103). E4.16 is geïnstalleerd; werkelijk automatisch herstel blijft open. E4.19: de tester heeft de huidige driverfout 4/4 bevestigd; bouwer maakt de complete onderhoudsroute en reviewcorrecties af. Kandidaatwinst, autonome update en volledig herstel nog te bewijzen.
 

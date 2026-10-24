@@ -1,0 +1,119 @@
+{
+  "contract": "EvaOwnerCommandProviderFixIndependentReview/v1",
+  "reviewedAt": "2026-10-24T10:18:23.631386+00:00",
+  "reviewer": "tester",
+  "coordinator": "Coordinator",
+  "status": "installed_fix_and_actual_proposal_completion_delivery_independently_reviewed",
+  "sourceVerdict": "GO",
+  "packageVerdict": "GO",
+  "installedCodeVerdict": "GO",
+  "nativeResumeHandoffVerdict": "GO_V2_EXECUTED_WITH_VALID_ADMISSION_TIME",
+  "problem": "Een tijdelijke providerstoring zonder bevestigd gebruik werd ten onrechte als uitgeput budget gemeld en kon onnodige zelfreparatie starten.",
+  "result": "De bestaande route behoudt provideruitval als oorzaak. Onbekend gebruik blijft onbekend en kan geen nieuwe aanvraagruimte opleveren. Eerder opgeslagen toolresultaten en werk blijven behouden.",
+  "reviewedSources": {
+    "src/eva/adapters/model/pydantic_conversation.py": "eda9905bd9214cb42724486fac1ec408a451a5b8eaf173d76d6994544fb5e524",
+    "src/eva/bootstrap/delegated_digital_runner.py": "18096956386a2858d2f9ce01d5e2245c4962b4370af1d8a691388fe9a7321a85",
+    "src/eva/bootstrap/component_maintenance.py": "539273f48fc0b5b877d8d817140e6b9618bced63c21ac248e3ec496774f41010"
+  },
+  "sourceChecks": [
+    "Oorspronkelijke provideroorzaak blijft behouden wanneer onbekend verbruik de interne retry blokkeert.",
+    "Geen tweede aanvraag of herhaalde tooleffecten; geen fictief nulverbruik of nieuw mandaat.",
+    "Provideruitval start geen zelfreparatie; echte budgetgrenzen, stop, deadline en autorisatie blijven behouden.",
+    "Onbekend gebruik zonder voorafgaande providerfout wordt afzonderlijk als invalid_usage geclassificeerd.",
+    "Afzonderlijk beoordeelde UTC-secondencorrectie is expliciet aan dezelfde gecombineerde kandidaat gebonden."
+  ],
+  "validation": {
+    "baselineMisclassificationReproduced": true,
+    "targetedCasesPassed": 16,
+    "targetedCasesBeforePriorEffectExtension": true,
+    "affectedSuitesPassed": 231,
+    "affectedSuitesExistingFailures": 2,
+    "existingFailuresReproducedWithImmutableOriginalAdapter": true,
+    "fullSuitesEntirelyGreen": false,
+    "priorEffectVariantsIncludedInAffectedSuites": true,
+    "testsRepeatedByReviewer": 0,
+    "realModelRequestsByVerification": 0
+  },
+  "packageChecks": {
+    "inventoryPinsVerified": 17,
+    "completeOfficialRuntimeProfilesCompared": true,
+    "profileChanges": "Alleen zes programhashvelden over kern en worker; overige profielvelden blijven gelijk.",
+    "runtimeConfiguration": "Uitsluitend twee imagereferenties gewijzigd.",
+    "mandateBytesUnchanged": true,
+    "priorBaseLayersAndImageConfigurationPreserved": true,
+    "historicalHouseholdResearchMismatchPreserved": true
+  },
+  "installedReadback": {
+    "ownLiveContainersAndSixSourceHashesVerified": true,
+    "bothHealthy": true,
+    "readOnlyRootFilesystems": true,
+    "officialCompleteProfilesMatchReviewedCandidates": true,
+    "hostConfigurationAndMandateUnchanged": true,
+    "ordinaryMaintenanceSourcePublicationActuallyRetained": true
+  },
+  "nativeResumeHandoff": {
+    "scriptSha256": "50dabb9bb20b6eccea22af6edaf26cbeaca0f5ab68b96bf43cf2ea6f3f776a8b",
+    "defaultReadOnlyPreflight": true,
+    "onlyCoordinatorDispatches": true,
+    "oneDeterministicLinkedSuccessor": true,
+    "actualNewProgramAndExactOriginalGrantRequired": true,
+    "originalSourceExecutionAndVerifiedToolReceiptsPreserved": true,
+    "existingOwnerAuthorityAndDeliveryRoutesRequired": true,
+    "originalPartialUsageUnchanged": true,
+    "scope": "Alleen ontbrekend kort voorstel uit reeds bewaard onderzoek; geen nieuw onderzoek, accountkoppeling, bericht aan derden of bijlage.",
+    "instructionIsNotProofOfModelCompliance": true,
+    "reviewCorrection": "De eerste operatorhervatting gebruikte een historische bronturn zonder expliciete huidige admissiontijd. De nieuwe poging verliep vóór workerstart. Het eerdere handoff-GO miste deze tijdgrens en wordt voor die handoff ingetrokken; de bron- en installatiereviews blijven gelden.",
+    "requiredAdditionalChecks": [
+      "Gebruik de bestaande interne admissionroute met huidige tijd voor een nieuwe gekoppelde, begrensde poging; verander geen oude spec, bron of gebruik.",
+      "Bewijs vóór dispatch huidige created_at en toekomstige deadline; behoud bij replay de oorspronkelijke admissiontijd.",
+      "Bewaar de nooit gestarte verlopen opvolger en haar foutbewijs."
+    ],
+    "supersededScriptSha256": "8849900be5d57ee602f9c7b5ebf3ac4685ce6aed7adfcc16fdda11dbf788dfff",
+    "correctedExistingRoute": "Bestaande interne _execute met expliciete actuele admission_time. Nieuwe poging gekoppeld aan de nooit gestarte verlopen opvolger; oorspronkelijke specs en verbruik blijven bewaard.",
+    "currentCreatedAtAndFutureDeadlineRequiredBeforeAndAfterAdmission": true,
+    "exactUnchangedTimeoutSeconds": 1200,
+    "existingSuccessorDeadlineNeverRenewed": true
+  },
+  "privateEvidenceSha256": {
+    "diagnosis": "755e9b0fb9e8a8c1b7e2d0fa8d59f5b8a28b61e91573cde0481fb5ebfd17271c",
+    "sourceReview": "1df9a36fe1ded3087cd7eeb742c927b738967d6ed36c1b946588940f1f728487",
+    "packageReview": "fb89d1b4386e47560156876806599534aed62a6ffeb4cce26d2cb2bceb9327f1",
+    "installedAndResumeReview": "7bf0966efa806a233d783310f2f7528204bcc3b6b69b9f6e17072d0170388aa7",
+    "rootInstalledReadback": "bdcb10a1837448c2fd1233256413323f42471279e5cb6ea34015232bbd48642f",
+    "resumeAdmissionV2Review": "54551635d9a6c69f9baf8a73f7f64fb1f99e2aec4eae2c719025d36570c938e7",
+    "actualUtcPublicationReview": "b1fc0827dd68dbddd6b6b699ff973ad1ef7f5ee317947feb46fe936a675a0891",
+    "actualProposalCompletionReview": "7aa61c8339f99c9681bcbf0af4f9e64de6321463fe9023e679c7afad629f5db1",
+    "actualProposalCompletionAndDelivery": "a6d5b8113f55d8a8eda452ebeff469c1583187b4e176024116c6528b63d09b95"
+  },
+  "remaining": [
+    "Daadwerkelijke accountkoppeling en benodigde toegangsrechten zijn niet uitgevoerd of bewezen.",
+    "Twee bestaande catalogus-/broncontextasserties blijven als bestaand foutbewijs behouden.",
+    "Volledige E4.16/E4.19 en gezins-/eigenaaracceptatie blijven afzonderlijk open."
+  ],
+  "originalOwnerTaskCompleted": false,
+  "wholeE419Completed": false,
+  "projectCompleted": false,
+  "ownerAcceptance": false,
+  "productionWritesByReviewer": 0,
+  "developmentCredits": null,
+  "runtimeCosts": "Onbekend; gedeeltelijke metingen gelden niet als volledig verbruik.",
+  "actualProposalCompletionAndDeliveryVerdict": "GO_BOUNDED_PROPOSAL_ONLY",
+  "actualOutcome": {
+    "workSucceeded": true,
+    "originalPrivateRecipientDeliveryAcknowledged": true,
+    "ordinaryDeliveryRouteUsed": true,
+    "actualNewModelResponses": 1,
+    "newToolCalls": 0,
+    "registeredInputTokens": 16430,
+    "registeredOutputTokens": 192,
+    "measurement": "partial",
+    "costUsdMicros": null,
+    "originalFailedAndNeverStartedExpiredAttemptsPreserved": true,
+    "separateWorkspaceDocumentProven": false,
+    "researchTextDurablyRetainedInVerifiedReceipt": true,
+    "accountIntegrationCompleted": false,
+    "ownerReadOrAcceptanceProven": false
+  },
+  "deliveredResearchProposalCompleted": true,
+  "documentClaimBoundary": "De geleverde woorden over een bewaard onderzoeksdocument verwijzen uitsluitend naar duurzame Markdownonderzoektekst in de geverifieerde researchreceipt. Een zelfstandig werkbestand of download is niet aangetoond."
+}

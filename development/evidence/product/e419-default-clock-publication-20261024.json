@@ -1,0 +1,48 @@
+{
+  "contract": "EvaDefaultClockActualPublicationEvidence/v1",
+  "task": "E4.19",
+  "recordedAt": "2026-10-24T10:13:04.268063+00:00",
+  "status": "default_clock_actual_normal_publication_verified",
+  "rootInstalledAt": "2026-10-24T10:09:01.534325+00:00",
+  "ordinarySourceAndSensoryOccurredAt": "2026-10-24T10:09:20+00:00",
+  "clockSource": {
+    "beforeSha256": "9234fbaf34b5c5905b7d1c1d71d341b9b447c96ef7785fc4b44aef6614934140",
+    "afterSha256": "539273f48fc0b5b877d8d817140e6b9618bced63c21ac248e3ec496774f41010",
+    "change": "Omitted now uses UTC whole seconds; explicit supplied timestamps and policy are unchanged."
+  },
+  "actualImages": {
+    "core": "sha256:5fdf12aaffecb0473c001d7c4871780644c3d60b9adca2ec893e0171c7eacf4f",
+    "delegated-work-worker": "sha256:3bb7d20978ea1ae3725bb65353164c56b0f579ab748c8564615ac561865404c0"
+  },
+  "collectorObservationSourceSha256": "968a723b4771109fabf41e123f0eb0f7899785a9eae25375b8ed912e0223d574",
+  "collectorObservationBytesSha256": "738e6b8455d7abbbe30e2c244665f3c93325bf1f1613fb9ceda73239fa0338ec",
+  "observedTransfer": [
+    "Existing host collector created the first observation bound to both actually installed images.",
+    "Same compact source, inventory, official receipts and installed versions retained as COMPONENT_MAINTENANCE_OBSERVED.",
+    "Same source retained as SENSORY_EVENT_OBSERVED for existing maintenance attention.",
+    "Both original event hashes verified; both source checkpoints revision1/completed at the same whole second."
+  ],
+  "privateReadback": {
+    "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/package/native-input-readback/combined-install-startup-observation-20261024/actual-startup-publication.private.json",
+    "sha256": "2d0b9c77413c68e8e772eccf9f756549eeb6a6e321ac032db1e26f1faed7b172"
+  },
+  "clockFixActuallyUsed": true,
+  "fullE419Completed": false,
+  "projectCompleted": false,
+  "ownerOperationRestoredClaimed": false,
+  "remaining": "A relevant update must still be chosen through native attention, independently assessed, managed/applied with a measured decision, actually used and recoverable. Source publication is one necessary handoff.",
+  "readbackActions": {
+    "injectedObservations": 0,
+    "modelOrMaintenanceRequests": 0,
+    "networkFetches": 0,
+    "databaseProductOrServiceWrites": 0,
+    "oldTestMatrixRepeated": 0,
+    "elapsedMs": 4141,
+    "developmentCredits": null
+  },
+  "contentsPublished": {
+    "privateConversationMemoryOrCameraContent": false,
+    "closedTestInputs": false,
+    "credentials": false
+  }
+}
