@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:56:37.055465+00:00",
-  "status": "research_repairs_actually_used_upstream_stream_interrupted_no_school_result",
+  "status": "research_repairs_actually_used_latest_provider_503_school_outcome_open",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -218,5 +218,47 @@
     "usableSchoolResult": false,
     "newOwnerActionProvedNecessary": false,
     "nextStep": "Existing ordinary owner resume contract check; no blind retry or accounting reset."
+  },
+  "latest503Attempt": {
+    "workId": "work:eva-resume:7b641fa2-687f-513a-b101-b4f18853f5c1",
+    "createdAt": "2026-10-24T14:01:43Z",
+    "completedAt": "2026-10-24T14:02:58Z",
+    "state": "ambiguous",
+    "errorCode": "provider_unavailable",
+    "cause": "Actual HTTP503,98responsebytes,0SSEcompleted/text/toolargument events; latest model stream recorded closed with unknown usage.",
+    "oldHistoricalReceiptHashesPreserved": 41,
+    "readbackSha256": "1fc469f8da3d3b864a99490b844cd794839f22469096bc83feaf5bbc0af19fdc",
+    "reviewSha256": "3b088928f2ce6351c099952c69b1face8cfa3f33b8ffa571168abd351da542a0",
+    "contentReviewSha256": "b455462b113e238fbeef51f06f00d3c1d3b210550d34ffd984cb7898816d1bcd",
+    "runtimeUsage": {
+      "measurement": "partial",
+      "inputTokens": 168719,
+      "outputTokens": 664,
+      "totalMeasuredTokens": 169383,
+      "modelResponseRecords": 5,
+      "lastRequestUsage": "unmeasured",
+      "cost": null
+    },
+    "usableSchoolResult": false
+  },
+  "codexAppAuthPreparation": {
+    "sha256": "f6cf418889d30eb22a2b418ea2c0746dc339298b5d6a983e86cd25f19cd9a739",
+    "repository": "https://github.com/barzoj/somtoday-mcp",
+    "commit": "08366686317f3cbeb64fb4953a43fd666f9302c8",
+    "finding": "Reference source implements native-app OAuth code/PKCE route; school tenant optional. A stored compatible session may be reused; actual identity/access/store wiring still unverified.",
+    "preparedBy": "Codex executor",
+    "evaExecutedThisCodeReview": false,
+    "schoolLoginTested": false,
+    "schoolDataRead": false
+  },
+  "nextBoundedFollowup": {
+    "notBefore": "2026-10-24T14:13:00Z",
+    "maximumAdditionalAttempt": 1,
+    "existingOwnerResumeOnly": true,
+    "policy19AutomaticRecoveryApplies": false,
+    "why": "Existing automatic recovery is intentionally limited to generation1 without manual successors/corrections; latest task is generation7 with actual correction4.",
+    "existingHeartbeat": "eva2-taken-afronden",
+    "heartbeatVerifiedActive": true,
+    "newAutomationCreated": false
   }
 }
