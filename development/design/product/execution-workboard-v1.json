@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Herhaalde schoolfout is een HTTP503 vóór inhoud/stream, geen bewezen lokale parser- of budgetfout. De veilige concrete providerreden wordt nu weggegooid; herstel uitsluitend die foutdiagnostiek in de bestaande provider/logger, met gerichte geïsoleerde regressie en onafhankelijke review. Geen nieuwe school/modelpoging, retryroute of betaald alternatief. Oude resultaten, onbekend gebruik en geïnstalleerd huisherstel blijven behouden; volledige E4.16 en schooluitkomst blijven open.",
+    "nextAction": "Veilige HTTP-foutdiagnostiek is geïnstalleerd en onafhankelijk gecontroleerd. De bestaande foutcategorie, één-aanvraaggrens en onbekend verbruik blijven behouden. Geen nieuwe school/modelpoging: de eerdere upstream503-oorzaak is onbekend en de schooluitkomst blijft open. Volg alleen een concrete nieuwe fout of andere uitvoerbare oorspronkelijke eindvoorwaarde; herhaal geen geslaagde matrix.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1640,6 +1640,22 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.16 · Veilige foutinformatie bij provideruitval behouden",
+            "state": "installed",
+            "summary": "Bestaande provider bewaart veilige foutcode, fouttype, aanvraagkenmerk en eventuele wachttijd. Vier gerichte SDK-proeven geslaagd; onafhankelijk beoordeeld en geïnstalleerd.",
+            "remaining": "Oorzaak van eerdere503 en bruikbare schooluitkomst blijven onbekend/open. Geen extra volledige kaart gesloten.",
+            "source": "development/evidence/product/e416-provider-http-diagnostics-20261024.json",
+            "review": "development/reviews/e416-provider-http-diagnostics-20261024.json",
+            "checkedAt": "2026-10-24T16:54:04.181887+00:00",
+            "installedAt": "2026-10-24T16:52:49.022293+00:00",
+            "completedTaskIds": [],
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": true,
+            "newProductFunctionCompleted": false,
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E4.16 · Begrensd vervolg na afgebroken huisbeoordeling geïnstalleerd",
             "state": "installed",
@@ -3109,22 +3125,22 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "Herhaalde schoolfout is een HTTP503 vóór inhoud/stream, geen bewezen lokale parser- of budgetfout. De veilige concrete providerreden wordt nu weggegooid; herstel uitsluitend die foutdiagnostiek in de bestaande provider/logger, met gerichte geïsoleerde regressie en onafhankelijke review. Geen nieuwe school/modelpoging, retryroute of betaald alternatief. Oude resultaten, onbekend gebruik en geïnstalleerd huisherstel blijven behouden; volledige E4.16 en schooluitkomst blijven open.",
+          "summary": "Veilige HTTP-foutdiagnostiek is geïnstalleerd en onafhankelijk gecontroleerd. De bestaande foutcategorie, één-aanvraaggrens en onbekend verbruik blijven behouden. Geen nieuwe school/modelpoging: de eerdere upstream503-oorzaak is onbekend en de schooluitkomst blijft open. Volg alleen een concrete nieuwe fout of andere uitvoerbare oorspronkelijke eindvoorwaarde; herhaal geen geslaagde matrix.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "detail": "Herhaalde schoolfout is een HTTP503 vóór inhoud/stream, geen bewezen lokale parser- of budgetfout. De veilige concrete providerreden wordt nu weggegooid; herstel uitsluitend die foutdiagnostiek in de bestaande provider/logger, met gerichte geïsoleerde regressie en onafhankelijke review. Geen nieuwe school/modelpoging, retryroute of betaald alternatief. Oude resultaten, onbekend gebruik en geïnstalleerd huisherstel blijven behouden; volledige E4.16 en schooluitkomst blijven open.",
-          "state": "Concrete foutinformatie behouden; geen nieuwe schoolherpoging."
+          "detail": "Veilige HTTP-foutdiagnostiek is geïnstalleerd en onafhankelijk gecontroleerd. De bestaande foutcategorie, één-aanvraaggrens en onbekend verbruik blijven behouden. Geen nieuwe school/modelpoging: de eerdere upstream503-oorzaak is onbekend en de schooluitkomst blijft open. Volg alleen een concrete nieuwe fout of andere uitvoerbare oorspronkelijke eindvoorwaarde; herhaal geen geslaagde matrix.",
+          "state": "Veilige foutdiagnostiek geïnstalleerd; schooluitkomst open."
         },
         "next": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "detail": "Repareer de bewezen stapindexfout bij hervatten zonder opgeslagen voortgang te overschrijven. De normale portal is al geopend: behoud die browserlezing. Parallel worden onterecht codeherstel bij geblokkeerd plan en één begrensde providerherstelpoging gericht afgemaakt en onafhankelijk beoordeeld."
+          "detail": "Veilige HTTP-foutdiagnostiek is geïnstalleerd en onafhankelijk gecontroleerd. De bestaande foutcategorie, één-aanvraaggrens en onbekend verbruik blijven behouden. Geen nieuwe school/modelpoging: de eerdere upstream503-oorzaak is onbekend en de schooluitkomst blijft open. Volg alleen een concrete nieuwe fout of andere uitvoerbare oorspronkelijke eindvoorwaarde; herhaal geen geslaagde matrix."
         },
         "ownerAction": {
           "required": false,
-          "detail": "Geen nieuwe eigenaarhandeling gevraagd. Schoolnaam is verwerkt; dezelfde providerfout wordt onderzocht zonder nieuwe schoolherpoging.",
+          "detail": "Geen nieuwe eigenaarhandeling. Schoolnaam is verwerkt; geen nieuwe schoolpoging zonder concrete nieuwe aanleiding.",
           "steps": []
         },
-        "checkedAt": "2026-10-24T11:29:40.552939+00:00",
+        "checkedAt": "2026-10-24T16:54:04.181887+00:00",
         "reviewedAt": "2026-10-24T16:43:08.510440+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -3297,7 +3313,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-24T07:54:30.973301+00:00",
+      "updatedAt": "2026-10-24T16:54:04.181887+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -8341,25 +8357,23 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Herhaalde schoolfout is een HTTP503 vóór inhoud/stream, geen bewezen lokale parser- of budgetfout. De veilige concrete providerreden wordt nu weggegooid; herstel uitsluitend die foutdiagnostiek in de bestaande provider/logger, met gerichte geïsoleerde regressie en onafhankelijke review. Geen nieuwe school/modelpoging, retryroute of betaald alternatief. Oude resultaten, onbekend gebruik en geïnstalleerd huisherstel blijven behouden; volledige E4.16 en schooluitkomst blijven open.",
+                "nextAction": "Veilige HTTP-foutdiagnostiek is geïnstalleerd en onafhankelijk gecontroleerd. De bestaande foutcategorie, één-aanvraaggrens en onbekend verbruik blijven behouden. Geen nieuwe school/modelpoging: de eerdere upstream503-oorzaak is onbekend en de schooluitkomst blijft open. Volg alleen een concrete nieuwe fout of andere uitvoerbare oorspronkelijke eindvoorwaarde; herhaal geen geslaagde matrix.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
                   "src/eva/adapters/postgres/initiative_execution.py",
                   "src/eva/operations/component_final_assessment.py",
-                  "src/eva/operations/component_release_publisher.py"
+                  "src/eva/operations/component_release_publisher.py",
+                  "src/eva/adapters/model/openai_codex_provider.py"
                 ],
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [
-                    "01a0c537-54d0-7080-9e4c-74db537877af",
-                    "01a169e0-4ed1-75d1-9541-b5dae109b328"
-                  ],
-                  "scope": "Existing E4.16 durable recovery applied to twice-observed household-lane blockage; separate producer/candidate and meaningful isolated regression ownership. No new platform or fabricated authorization."
+                  "activeWorkers": [],
+                  "scope": "Bounded provider diagnostic repair and isolated SDK regression delivered; integration installed. Full autonomous repair and school user outcome remain open."
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
-                "review": "development/reviews/owner-command-provider-fix-20261024.json",
-                "implementationStatus": "bounded_household_recovery_installed_independently_verified_actual_failure_use_pending",
+                "review": "development/reviews/e416-provider-http-diagnostics-20261024.json",
+                "implementationStatus": "bounded_http_diagnostics_installed_independent_verified_full_selfrepair_open",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8368,9 +8382,9 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T16:43:08.510440+00:00",
-                "progress": "Twee gerichte onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt. Eva las de appaanmeldbron en sloeg inspect-sources duurzaam op. De9b-poging eindigde14:17:47UTC met503; oudere onbekende kosten blijven behouden. Vijf gewone Astra-beslissingen tussen14:20en14:40UTC zijn nadien gemeten afgerond en onafhankelijk beoordeeld. Er is nog geen werkende schooltoegang/-hulp. De bestaande schoolnaamvraag is nodig voor bedoelde school/accountkeuze; generieke PKCE vereist geen schoolUUID en handmatig inloggen is nu niet gevraagd.",
-                "latestEvidence": "development/evidence/product/e416-bounded-household-recovery-20261024.json"
+                "checkedAt": "2026-10-24T16:54:04.181887+00:00",
+                "progress": "Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt; de appaanmeldbron en eerdere voortgang blijven opgeslagen. De ontvangen schoolnaam is aan dezelfde opdracht doorgegeven. De opvolger eindigde16:30:13UTC opnieuw met HTTP503 vóór streaminhoud: zes gemeten responsen en één mislukte respons met onbekend verbruik, geen bruikbaar schoolresultaat. Het begrensde huishoudherstel is16:26:14UTC geïnstalleerd. Veilige HTTP-foutdiagnostiek is16:52:49UTC geïnstalleerd en onafhankelijk teruggelezen; vier gerichte SDK-proeven slagen. Dit reconstrueert de oude foutreden niet en sluit E4.16 niet.",
+                "latestEvidence": "development/evidence/product/e416-provider-http-diagnostics-20261024.json"
               },
               {
                 "id": "E4.17",
@@ -9046,9 +9060,9 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Herhaalde schoolfout is een HTTP503 vóór inhoud/stream, geen bewezen lokale parser- of budgetfout. De veilige concrete providerreden wordt nu weggegooid; herstel uitsluitend die foutdiagnostiek in de bestaande provider/logger, met gerichte geïsoleerde regressie en onafhankelijke review. Geen nieuwe school/modelpoging, retryroute of betaald alternatief. Oude resultaten, onbekend gebruik en geïnstalleerd huisherstel blijven behouden; volledige E4.16 en schooluitkomst blijven open.",
+        "nextAction": "Veilige HTTP-foutdiagnostiek is geïnstalleerd en onafhankelijk gecontroleerd. De bestaande foutcategorie, één-aanvraaggrens en onbekend verbruik blijven behouden. Geen nieuwe school/modelpoging: de eerdere upstream503-oorzaak is onbekend en de schooluitkomst blijft open. Volg alleen een concrete nieuwe fout of andere uitvoerbare oorspronkelijke eindvoorwaarde; herhaal geen geslaagde matrix.",
         "finishOrder": [
-          "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt; appauthbrononderzoek is opgeslagen. Vijf latere Astra-responsen bevestigd, schooltoegang/-hulp ontbreekt. Bestaande schoolnaamvraag voor bedoelde school/accountkeuze blijft open; geen herhaalvraag of blind vervolg. Ander uitvoerbaar werk niet blokkeren.",
+          "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
           "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
           "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -9057,7 +9071,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T16:43:08.510440+00:00",
+        "updatedAt": "2026-10-24T16:54:04.181887+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -14516,25 +14530,23 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Herhaalde schoolfout is een HTTP503 vóór inhoud/stream, geen bewezen lokale parser- of budgetfout. De veilige concrete providerreden wordt nu weggegooid; herstel uitsluitend die foutdiagnostiek in de bestaande provider/logger, met gerichte geïsoleerde regressie en onafhankelijke review. Geen nieuwe school/modelpoging, retryroute of betaald alternatief. Oude resultaten, onbekend gebruik en geïnstalleerd huisherstel blijven behouden; volledige E4.16 en schooluitkomst blijven open.",
+              "nextAction": "Veilige HTTP-foutdiagnostiek is geïnstalleerd en onafhankelijk gecontroleerd. De bestaande foutcategorie, één-aanvraaggrens en onbekend verbruik blijven behouden. Geen nieuwe school/modelpoging: de eerdere upstream503-oorzaak is onbekend en de schooluitkomst blijft open. Volg alleen een concrete nieuwe fout of andere uitvoerbare oorspronkelijke eindvoorwaarde; herhaal geen geslaagde matrix.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
                 "src/eva/adapters/postgres/initiative_execution.py",
                 "src/eva/operations/component_final_assessment.py",
-                "src/eva/operations/component_release_publisher.py"
+                "src/eva/operations/component_release_publisher.py",
+                "src/eva/adapters/model/openai_codex_provider.py"
               ],
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [
-                  "01a0c537-54d0-7080-9e4c-74db537877af",
-                  "01a169e0-4ed1-75d1-9541-b5dae109b328"
-                ],
-                "scope": "Existing E4.16 durable recovery applied to twice-observed household-lane blockage; separate producer/candidate and meaningful isolated regression ownership. No new platform or fabricated authorization."
+                "activeWorkers": [],
+                "scope": "Bounded provider diagnostic repair and isolated SDK regression delivered; integration installed. Full autonomous repair and school user outcome remain open."
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
-              "review": "development/reviews/owner-command-provider-fix-20261024.json",
-              "implementationStatus": "bounded_household_recovery_installed_independently_verified_actual_failure_use_pending",
+              "review": "development/reviews/e416-provider-http-diagnostics-20261024.json",
+              "implementationStatus": "bounded_http_diagnostics_installed_independent_verified_full_selfrepair_open",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -14543,9 +14555,9 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T16:43:08.510440+00:00",
-              "progress": "Twee gerichte onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt. Eva las de appaanmeldbron en sloeg inspect-sources duurzaam op. De9b-poging eindigde14:17:47UTC met503; oudere onbekende kosten blijven behouden. Vijf gewone Astra-beslissingen tussen14:20en14:40UTC zijn nadien gemeten afgerond en onafhankelijk beoordeeld. Er is nog geen werkende schooltoegang/-hulp. De bestaande schoolnaamvraag is nodig voor bedoelde school/accountkeuze; generieke PKCE vereist geen schoolUUID en handmatig inloggen is nu niet gevraagd.",
-              "latestEvidence": "development/evidence/product/e416-bounded-household-recovery-20261024.json"
+              "checkedAt": "2026-10-24T16:54:04.181887+00:00",
+              "progress": "Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt; de appaanmeldbron en eerdere voortgang blijven opgeslagen. De ontvangen schoolnaam is aan dezelfde opdracht doorgegeven. De opvolger eindigde16:30:13UTC opnieuw met HTTP503 vóór streaminhoud: zes gemeten responsen en één mislukte respons met onbekend verbruik, geen bruikbaar schoolresultaat. Het begrensde huishoudherstel is16:26:14UTC geïnstalleerd. Veilige HTTP-foutdiagnostiek is16:52:49UTC geïnstalleerd en onafhankelijk teruggelezen; vier gerichte SDK-proeven slagen. Dit reconstrueert de oude foutreden niet en sluit E4.16 niet.",
+              "latestEvidence": "development/evidence/product/e416-provider-http-diagnostics-20261024.json"
             },
             {
               "id": "E4.17",
@@ -15221,9 +15233,9 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Herhaalde schoolfout is een HTTP503 vóór inhoud/stream, geen bewezen lokale parser- of budgetfout. De veilige concrete providerreden wordt nu weggegooid; herstel uitsluitend die foutdiagnostiek in de bestaande provider/logger, met gerichte geïsoleerde regressie en onafhankelijke review. Geen nieuwe school/modelpoging, retryroute of betaald alternatief. Oude resultaten, onbekend gebruik en geïnstalleerd huisherstel blijven behouden; volledige E4.16 en schooluitkomst blijven open.",
+      "nextAction": "Veilige HTTP-foutdiagnostiek is geïnstalleerd en onafhankelijk gecontroleerd. De bestaande foutcategorie, één-aanvraaggrens en onbekend verbruik blijven behouden. Geen nieuwe school/modelpoging: de eerdere upstream503-oorzaak is onbekend en de schooluitkomst blijft open. Volg alleen een concrete nieuwe fout of andere uitvoerbare oorspronkelijke eindvoorwaarde; herhaal geen geslaagde matrix.",
       "finishOrder": [
-        "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt; appauthbrononderzoek is opgeslagen. Vijf latere Astra-responsen bevestigd, schooltoegang/-hulp ontbreekt. Bestaande schoolnaamvraag voor bedoelde school/accountkeuze blijft open; geen herhaalvraag of blind vervolg. Ander uitvoerbaar werk niet blokkeren.",
+        "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
         "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
         "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -15232,7 +15244,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T16:43:08.510440+00:00",
+      "updatedAt": "2026-10-24T16:54:04.181887+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17772,7 +17784,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T16:43:08.510440+00:00",
+  "updatedAt": "2026-10-24T16:54:04.181887+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

@@ -1,0 +1,57 @@
+{
+  "contract": "EvaProviderHttpDiagnosticDelivery/v1",
+  "status": "installed_independently_verified",
+  "checkedAt": "2026-10-24T16:54:04.181887+00:00",
+  "installedAt": "2026-10-24T16:52:49.022293+00:00",
+  "gitCommit": "de131f4b5efeb343ef8c4ac297e01ef12ecaa32d",
+  "change": "Existing provider now preserves safe structured HTTP error metadata in the existing logger; category, retry, dispatch and usage semantics remain unchanged.",
+  "productFiles": [
+    "src/eva/adapters/model/openai_codex_provider.py"
+  ],
+  "candidateSourceSha256": "ffd0f047c71f81e9dcbdb0ca8a0dd0c631682bc04a59353ec60a7027ee80a1d9",
+  "sourceReviewSha256": "ed6098ec54b66251efa67e369ee7c02c53764fdafc0c91ac8982a6f899dfbde4",
+  "actualInstallReviewSha256": "841493c402cf60443386ad43c76c48b992354c1065e2645adecab1c0e0d78425",
+  "installationSha256": "939676550634e987c8615f4f6dfda5e59123f1d5e417207e4d555eda70aa7adc",
+  "actualHandoffSha256": "7b1628354ad4a88c767ee2a37c0da7ddcac56df91f397f95abbb3151f9f15ec3",
+  "installedProfilesSha256": "af86812eb590f30988d62c4b495dfa45f4cab7111b8987e232a3cb9283dffca3",
+  "fourActualProfilesEqual": true,
+  "tests": {
+    "path": "development/tests/model/test_codex_provider_http_failure_metadata.py",
+    "sha256": "5205778771c46daa03ef0b6b6f0ee4a4bd2aa0390e72f426b7344d3a6542b01d",
+    "handoffSha256": "77138658d8d3ec0f82e1048924867feaeca640ed8cdb5485acad387c1f54f5bf",
+    "baselineFailed": 4,
+    "candidatePassed": 4,
+    "baselineSeconds": 2.078,
+    "candidateSeconds": 1.864,
+    "boundary": "Real installed SDK through controlled HTTP503 transport and existing logger; no external network.",
+    "preserved": [
+      "one request per case",
+      "closed local stream",
+      "no invented usage",
+      "private data excluded"
+    ]
+  },
+  "installed": {
+    "core": {
+      "image": "sha256:fc1f365323e1fdb4234bb7f2b9d2dab5b9bacb8923e12fc2d0460fd22b692353",
+      "startedAt": "2026-10-24T16:52:19.529190064Z"
+    },
+    "delegated-work-worker": {
+      "image": "sha256:ea09c8b626c73ad7db862d04991795d75a2b4d0598eabbb4bd9a48f5accba046",
+      "startedAt": "2026-10-24T16:52:31.05544288Z"
+    }
+  },
+  "actualNewHttpFailureUseObserved": false,
+  "historicalProviderCauseKnown": false,
+  "schoolOutcomeCompleted": false,
+  "fullCardCompleted": false,
+  "newProductFunctionCompleted": false,
+  "familyAcceptance": false,
+  "usage": {
+    "newEvaModelCalls": 0,
+    "newSchoolAttempts": 0,
+    "developmentTokens": null,
+    "developmentCredits": null
+  },
+  "remaining": "Past upstream503 reason cannot be reconstructed. School outcome and full autonomous E4.16 acceptance remain open. No unchanged provider or school retry authorized by this repair."
+}

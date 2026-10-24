@@ -6,13 +6,13 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen
 
-Herhaalde schoolfout is een HTTP503 vóór inhoud/stream, geen bewezen lokale parser- of budgetfout. De veilige concrete providerreden wordt nu weggegooid; herstel uitsluitend die foutdiagnostiek in de bestaande provider/logger, met gerichte geïsoleerde regressie en onafhankelijke review. Geen nieuwe school/modelpoging, retryroute of betaald alternatief. Oude resultaten, onbekend gebruik en geïnstalleerd huisherstel blijven behouden; volledige E4.16 en schooluitkomst blijven open.
+Veilige HTTP-foutdiagnostiek is geïnstalleerd en onafhankelijk gecontroleerd. De bestaande foutcategorie, één-aanvraaggrens en onbekend verbruik blijven behouden. Geen nieuwe school/modelpoging: de eerdere upstream503-oorzaak is onbekend en de schooluitkomst blijft open. Volg alleen een concrete nieuwe fout of andere uitvoerbare oorspronkelijke eindvoorwaarde; herhaal geen geslaagde matrix.
 
 Klaar wanneer: Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.
 
 ## Afmaakvolgorde
 
-1. E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt; appauthbrononderzoek is opgeslagen. Vijf latere Astra-responsen bevestigd, schooltoegang/-hulp ontbreekt. Bestaande schoolnaamvraag voor bedoelde school/accountkeuze blijft open; geen herhaalvraag of blind vervolg. Ander uitvoerbaar werk niet blokkeren.
+1. E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.
 2. E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.
 3. E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.
 4. E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.
@@ -145,7 +145,7 @@ Vier van de oorspronkelijke 24 taken afgerond (83/103). E4.16 is geïnstalleerd 
 
 ## Van jou
 
-Geen nieuwe eigenaarhandeling gevraagd. Schoolnaam is verwerkt; dezelfde providerfout wordt onderzocht zonder nieuwe schoolherpoging.
+Geen nieuwe eigenaarhandeling. Schoolnaam is verwerkt; geen nieuwe schoolpoging zonder concrete nieuwe aanleiding.
 
 ## Historie
 
