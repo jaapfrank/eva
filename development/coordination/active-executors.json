@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T04:31:10.799087+00:00",
+  "updatedAt": "2026-10-24T05:04:43.982280+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -159,15 +159,17 @@
       "activeCodeOrInstallClaim": false
     },
     "codex-e418": {
-      "task": "E2.9",
+      "task": "E1.10",
       "writeScopeConfirmed": true,
       "allowedPaths": [
-        "development/design/architecture/e418-*.json",
-        "development/evidence/reassessment/e418-*",
-        "development/reviews/e418-*",
-        "development/tests/tools/test_e418_*.py",
-        "src/tools/*.py: clean files only, with exclusions below",
-        "development/tests/tools/*.py: clean directly related tests only"
+        "src/eva/application/housemate_development.py",
+        "src/eva/application/human_understanding.py",
+        "src/eva/providers/human_understanding_actions.py",
+        "src/eva/bootstrap/private_conversation_resources.py",
+        "development/tests/application/test_housemate_development.py",
+        "development/tests/providers/test_e110_human_understanding_actions.py",
+        "development/tests/bootstrap/test_e110_housemate_development.py",
+        "src/eva/adapters/projection/hindsight.py"
       ],
       "excludedToolPatterns": [
         "*install*",
@@ -182,46 +184,14 @@
         "check_delegated_runtime_profiles.py"
       ],
       "chosenPaths": [
-        "src/tools/eva2_quiescent_cutover.py",
-        "src/tools/container_inspection.py",
-        "development/tests/tools/test_e418_container_inspection.py",
-        "development/design/architecture/e418-container-inspection-ownership.json",
-        "development/evidence/reassessment/e418-container-inspection-20261023.json",
-        "development/reviews/e418-container-inspection-20261023.json",
-        "src/tools/restore_runtime_guard.py",
-        "src/tools/installation_runtime_start.py",
-        "src/tools/installation_fresh_start.py",
-        "src/tools/installation_runtime_authorization.py",
-        "development/tests/portable/test_installation_runtime_authorization.py",
-        "src/tools/test_project_telegram_update.py",
-        "development/tests/tools/test_project_telegram_update.py",
-        "development/design/architecture/e418-project-update-test-location.json",
-        "development/evidence/reassessment/e418-project-update-test-location-20261023.json",
-        "development/reviews/e418-project-update-test-location-20261023.json",
-        "src/tools/file_inspection.py",
-        "src/tools/living_core_source_provenance.py",
-        "src/tools/repository_inventory.py",
-        "development/tests/tools/test_e418_file_inspection.py",
-        "development/design/architecture/e418-file-inspection-ownership.json",
-        "development/evidence/reassessment/e418-file-inspection-20261023.json",
-        "development/reviews/e418-file-inspection-20261023.json",
-        "development/design/architecture/e418-used-route-owners.json",
-        "development/evidence/reassessment/e418-used-route-owners-20261023.json",
-        "development/tests/portable/test_e417_extension_restore.py",
-        "development/design/architecture/e417-extension-restore-ownership-20261023.json",
-        "development/evidence/reassessment/e417-extension-restore-20261023.json",
-        "development/reviews/e417-extension-restore-20261023.json",
-        "src/tools/portable_runtime_archive.py",
-        "src/tools/postgres_portable_export.py",
-        "development/tools/project-dashboard/src/owner-initiatives.jsx",
-        "development/tools/project-dashboard/src/owner-current-projects.jsx",
-        "development/tools/project-dashboard/src/owner-current-projects.mjs",
-        "development/tools/project-dashboard/owner-current-projects.test.mjs",
-        "development/tools/project-dashboard/verify-owner-current-projects.cjs",
-        "development/evidence/product/e29-current-projects-20261023.json",
-        "src/eva/providers/home_assistant_procedure.py",
-        "development/tests/providers/test_home_assistant_procedure.py",
-        "src/eva/adapters/postgres/sensory_events.py"
+        "src/eva/application/housemate_development.py",
+        "src/eva/application/human_understanding.py",
+        "src/eva/providers/human_understanding_actions.py",
+        "src/eva/bootstrap/private_conversation_resources.py",
+        "development/tests/application/test_housemate_development.py",
+        "development/tests/providers/test_e110_human_understanding_actions.py",
+        "development/tests/bootstrap/test_e110_housemate_development.py",
+        "src/eva/adapters/projection/hindsight.py"
       ],
       "requestedAdditionalPaths": [
         {
@@ -297,15 +267,13 @@
         "sourceCommit": "0f5720869156e75759a5a1784bae7166df64445c"
       },
       "conditions": [
-        "Read E4.18 and existing E3/E4 inventories; select one concrete used route or proven-unused helper. No broad cleanup.",
-        "Record exact chosenPaths BEFORE edits; recheck current git status and all reservations. Clean status alone does not override ownership.",
-        "Any dirty/untracked file is protected. Do not edit voice, self-repair, model or delegated-work WIP.",
-        "Outside allowed paths: request exact files here and wait for explicit per-file confirmation; continue read-only work meanwhile.",
-        "Removal requires imports/dynamic-call/entrypoint/installed-use/recovery/release evidence; age and size do not suffice.",
-        "E4.15/E4.17 dependencies remain. Early bounded cleanup does not close E4.18.",
-        "Use statusProposal for workboard/docs changes; WSL integrates shared files preserving foreign hunks."
+        "Only E1.10 source-bound kind validation/projection, existing tool enum/description, existing source reader/composition and one existing successful dream/changed-source callback.",
+        "Preserve all foreign hunks and source/privacy/erase/STOP contracts; record exact before/after hashes and scoped patches.",
+        "No voice edits, production POST/model run/messages, Git, board changes or shared installation by executor.",
+        "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
+        "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
       ],
-      "updatedAt": "2026-10-24T04:31:10.799087+00:00",
+      "updatedAt": "2026-10-24T05:01:43.046218+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -402,7 +370,7 @@
         "request": "Next independent task with exact paths, existing route, end condition and shared-installation boundaries. Preserve coordinator-owned integration/Git/installation, voice and other reserved work.",
         "noOwnActiveModelOrInstall": true
       },
-      "assignmentStatus": "in_progress",
+      "assignmentStatus": "active",
       "assignmentCompletion": {
         "at": "2026-10-23T12:55:38.916212+00:00",
         "codeCommit": "2daf9b8d717ff193120d28e19f006386c3062d6f",
@@ -519,198 +487,30 @@
         }
       },
       "activeAssignment": {
-        "task": "E1.12",
-        "assignedAt": "2026-10-23T20:28:02.293070+00:00",
+        "task": "E1.10",
+        "assignedAt": "2026-10-24T05:00:57.068026+00:00",
+        "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+        "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
         "writePaths": [
-          "development/evidence/reassessment/e417-e415-binding-materialization-20261023.json",
-          "src/tools/installation_recovery_package.py",
-          "src/tools/installation_recovery_materializer.py",
-          "src/tools/installation_face_profile_snapshot.py",
-          "development/tests/portable/test_installation_face_profile_snapshot.py",
-          "src/tools/portable_runtime_archive.py",
-          "src/tools/portable_runtime_restore.py",
-          "src/tools/portable_v2_restore.py",
-          "development/tests/portable/test_portable_runtime_archive.py",
-          "src/tools/installer_portable_restore.py",
-          "development/tests/portable/test_installer_runtime_archive.py",
-          "src/tools/portable_runtime_profile.py",
-          "development/tests/portable/test_portable_v2_current_work.py",
-          "src/tools/portable_transport.py",
-          "src/tools/installer_restore_wizard.py",
-          "development/tests/portable/test_portable_transport.py",
-          "development/tests/portable/test_transport_header_bound.py",
-          "development/tests/portable/test_installation_recovery_package.py",
-          "development/tests/portable/test_installation_recovery_materializer.py",
-          "development/tests/portable/test_installation_transport_policy.py",
-          "development/tests/portable/test_installer_portable_restore.py",
-          "development/tests/portable/test_installer_restore_composition.py",
-          "src/tools/installation_host_extension_restore.py",
-          "src/tools/installer_document_components.py",
-          "development/tests/portable/test_installation_host_extension_restore.py"
+          "src/eva/application/housemate_development.py",
+          "src/eva/application/human_understanding.py",
+          "src/eva/providers/human_understanding_actions.py",
+          "src/eva/bootstrap/private_conversation_resources.py",
+          "development/tests/application/test_housemate_development.py",
+          "development/tests/providers/test_e110_human_understanding_actions.py",
+          "development/tests/bootstrap/test_e110_housemate_development.py",
+          "src/eva/adapters/projection/hindsight.py"
         ],
-        "privateOutput": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/",
-        "testWritePathsRequireExactConfirmation": true,
-        "noCpuRunOrSharedInstallOrVoiceChange": true,
-        "resultNow": "Maak oorspronkelijke host-lineage via bestaande PREPARED-keten duurzaam en verbind echt uitvoeringsbewijs aan adoptie; één complete kandidaat, dan review/installatie.",
-        "operatorFileIntake": "Use same InstallerPortableRestore via bounded private-owner single-link no-follow streamed prepare_file; same trusted configured workflow, preview/authority/one-use execute. Existing HTTP/base64/browser intake stays 64 MiB. No claim that large browser upload works.",
-        "isolatedOperatorProvisioning": {
-          "status": "authorized",
-          "neverStartCoreOrWorker": true,
-          "newPrivateSourceAndTargetPinsOnly": true,
-          "existingOwnPgClusterOnly": true,
-          "newTargetDatabaseOfficial0012To0011Downgrade": true,
-          "preserveActualErasureGeneration": 272,
-          "liveAuthorityMustRemainUnchanged": true,
-          "authoritySourceSha256": "e256881a839eb1c706dc48bc68e4e72e15a8a4bb2bbaca9785b89bbfaf4ec6e0",
-          "admitOnlyExactInnerAndOuterForIsolatedInactiveTrial": true,
-          "recheckLiveAuthorityBeforeEveryMutationBoundary": true,
-          "noProductionCredentialOrServiceChanges": true
-        },
-        "hostAdapterImplementation": {
-          "status": "authorized_inactive_preparation_only",
-          "proposalSha256": "edf473c08de78cbdbf910aa09e265528f4ebf8868da693a6c74da4e0a691a898",
-          "fullDisjointDocumentRoleCoverageRequired": 135,
-          "originalBindingsImmutable": 4,
-          "boundedGzipAndExactFileInventoryRequired": true,
-          "v3WizardAndWorkflowRemainFrozen": true,
-          "pinnedLibraryAndFullSdkClosureRequiredBeforeStart": true,
-          "cpuOrImportOrInferenceOrServiceStartAuthorized": false,
-          "sharedInstallationAuthorized": false
-        },
-        "hostIntegrationCandidate": {
-          "status": "private_v2_independent_code_GO_not_applied_while_real_operator_trial_runs",
-          "directory": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-workflow-integration-candidate-20261024",
-          "freezeSha256": "3c62b3eda8734db1e71f4c454f7b2091be0824ac411459449d5ae23de1a7cc04",
-          "testResult": "9 passed in 65.45s",
-          "actualV3Unchanged": true,
-          "hostFreezeUnchanged": true,
-          "noSharedStart": true,
-          "actualOperatorTrial": "running_session_32352_no_end_claim",
-          "targetedPathTests": "4 passed in 3.73s; reviewer confirmed constructor admission; old9PG proofs retained"
-        },
-        "hostTargetPreparation": {
-          "status": "concrete_inactive_target_prepared_exact_startup_resource_gaps_handed_off",
-          "directory": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024",
-          "handoffSha256": "7eaa5dc858a8d9cee431ad07b01066ed6ad440bd47c28dd7272a5e92c9c9e5fa",
-          "pinnedBaseFiles": 420,
-          "inputMapFiles": 566,
-          "original139Preserved": true,
-          "newTargetCredentialFiles": 2,
-          "secretsInArchiveOrReport": false,
-          "missingOriginalStartupCaseScorerInputs": 10,
-          "fullHostPrepareCalled": false,
-          "cpuImportsOrServiceStarts": false,
-          "followupRequestedDirectly": true
-        },
-        "actualOperatorRestore": {
-          "status": "actual_cli_completed_core_import_held_replay_rejected_no_activation",
-          "receiptSha256": "6680db8f31190abe9b3b0055fff358c3681c2bbca972e03529549f40eea8988b",
-          "insertedRecords": 345664,
-          "schema": "0011",
-          "runtimeActivated": false,
-          "fullE417Complete": false,
-          "reviewReadbackRequested": true
-        },
-        "current576DataPass": {
-          "status": "independently_verified_full_inactive_preparation",
-          "receiptSha256": "37dfcc4c1838a566de2dab464edc3d9816a9454002daff1174bd718cc3e4b739",
-          "fullHostPreparationReceiptSha256": "d8710121f4117aff9928b64bbad3c8d8274627d9d7010f2b107929ada1ae04c3",
-          "preparedFiles": 18067,
-          "preparedBytes": 2014796251,
-          "runtimeActivated": false,
-          "modelCalls": 0,
-          "independentVerdict": "GO_SCOPED_AUTHENTICATED576_PACKAGE_AND_FULL_INACTIVE_HOST_PREPARATION"
-        },
-        "canonicalHostIntegrationTests": {
-          "status": "promoted_and_13_cases_passed_canonical_no_git",
-          "path": "development/tests/portable/test_installer_host_recovery.py",
-          "sha256": "ae003001410bb688707a068eb66b7e5551399dd36e75352618a8f5a10d9f716e",
-          "freezeSha256": "6659fe5862e9831f8047a545aeebe055a58327950ea8e4c6c62e3d2fdb584ea7",
-          "functionAstsUnchanged": 10,
-          "assertionsUnchanged": 25,
-          "testResult": "13 passed in 56.76s",
-          "newCasesOrBroadSuite": false,
-          "independentVerdict": "GO_SCOPED_CANONICAL_TEST_BINDING_PROMOTION"
-        },
-        "actualReferenceConstructorCapture": {
-          "status": "four_exact_files_captured_for_independent_provenance_review_not_adopted",
-          "handoffSha256": "abb6074fb9df36f303b52f7f85708b9a3d6806d543942c888153c6a24528ccf3",
-          "files": 4,
-          "bytes": 75290,
-          "sourceWipMutated": false,
-          "sourcePhysicalEvidenceIsNotTargetProof": true,
-          "newImportsOrServices": false
-        },
-        "e112Implementation": {
-          "contractSha256": "6b139a17f52f3ef3342235a14851fae64151cb49e4bec0bd4b6b6907d66328d6",
-          "writePaths": [
-            "src/eva/adapters/postgres/household_provisions.py",
-            "src/eva/providers/home_assistant_procedure.py",
-            "src/eva/application/household_procedure.py",
-            "development/tests/postgres/test_household_provisions.py",
-            "development/tests/providers/test_household_provision_guard.py"
-          ],
-          "sharedRuntimeAndDeliveryOwnedByCoordinator": true,
-          "newSchemaStoreDaemonAllowed": false,
-          "speechCodeOrInstallationAssigned": false
-        },
-        "providerContractExtension": {
-          "path": "src/eva/providers/contracts.py",
-          "scope": "One optional household_provision_factory: Callable | None = None field on existing frozen/slotted ProviderServiceContext; existing fields and callers unchanged.",
-          "confirmedAt": "2026-10-24T00:42:10.610406+00:00",
-          "confirmedBy": "central-project-coordinator"
-        },
-        "e112ProofHandoff": {
-          "assignedAt": "2026-10-24T01:13:47.290607+00:00",
-          "status": "authorized_existing_route_interface_completion",
-          "writePaths": [
-            "src/eva/providers/home_assistant_procedure.py",
-            "src/eva/application/household_procedure.py",
-            "src/eva/application/free_will.py",
-            "src/eva/adapters/postgres/sensory_events.py",
-            "src/eva/bootstrap/household_provision_runtime.py"
-          ],
-          "scope": "Retain bounded original host-only source context/binding in same private PREPARED event; current source/owner/scoped proof linkage and dynamic owner overview. Existing claims handed off; no old event reconstruction or forced production event.",
-          "tests": "Only new targeted cases in affected existing tests; preserve original criteria. Builder reports exact paths.",
-          "sharedInstallationOwner": "central-project-coordinator",
-          "reviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
-        },
-        "e112VersionAndTrialCompletion": {
-          "authorizedAt": "2026-10-24T01:25:57.099599+00:00",
-          "status": "authorized_after_current_effect_selector_fix",
-          "writePaths": [
-            "src/eva/adapters/postgres/household_provisions.py",
-            "src/eva/bootstrap/household_provision_host.py",
-            "src/eva/providers/home_assistant_procedure.py",
-            "src/eva/bootstrap/household_provision_runtime.py"
-          ],
-          "testPaths": [
-            "development/tests/postgres/test_household_provisions.py",
-            "development/tests/bootstrap/test_household_provision_host.py",
-            "development/tests/providers/test_household_provision_guard.py",
-            "development/tests/bootstrap/test_household_provision_runtime.py"
-          ],
-          "scope": "Original E112 version/change/rollback and prior-authorized evaluated-and-reported trial adoption only; reuse existing timeline/reference/review/delivery. Root owns API/UI and managed installation. Current reviewed candidate frozen during independent review; start disjoint store work after current fix handoff.",
-          "voiceScope": "Existing RO procedure source, speaker checks and voice services untouched; managed writable core procedure copy under existing work directory only."
-        },
-        "e112ManagedRestoreCompletion": {
-          "authorizedAt": "2026-10-24T02:29:37.240904+00:00",
-          "writePaths": [
-            "src/tools/installation_host_extension_restore.py",
-            "development/tests/portable/test_e112_managed_household_restore.py",
-            "src/tools/installation_runtime_authorization.py",
-            "development/tests/portable/test_installation_runtime_authorization.py"
-          ],
-          "scope": "Same existing validated host-extension prepare/materialize route assembles exact managed sibling source/config/review/enrollment/versions for trusted installed role UID65532; absent target, no links/overwrite/startup/new rights. Real same-schema0011 restored PG adoption/pause/STOP and no duplicates, actual UID65532 controller readback.",
-          "noProductionRestore": true,
-          "reviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-          "originalRoundtripLimitation": "Actual encrypted package/native0011 roundtrip passed but private root copy did not prove installed role activation; preserve original evidence.",
-          "runtimeAuthorizationBoundary": "Only exact three fixed core household-provision state env/path pairs may use existing RW work mount; unique aliases, protected role-owned files and current operator approved hashes. All model/credential RO, profile/restorehold/current owner trust checks remain unchanged."
-        },
-        "e113ReadOnlyPreparation": {
-          "assignedAt": "2026-10-24T02:44:32.979920+00:00",
-          "scope": "Read existing E1.13 evidence and bounded real natural initiative metadata only; no new event/model/comparison or product source edits; E112 review fixes take precedence."
-        }
+        "resultNow": "Complete the typed source-bound development projection after successful existing reflection, plus current read-time source resolution; no runtime idle poll.",
+        "conditions": [
+          "Only E1.10 source-bound kind validation/projection, existing tool enum/description, existing source reader/composition and one existing successful dream/changed-source callback.",
+          "Preserve all foreign hunks and source/privacy/erase/STOP contracts; record exact before/after hashes and scoped patches.",
+          "No voice edits, production POST/model run/messages, Git, board changes or shared installation by executor.",
+          "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
+          "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
+        ],
+        "sharedInstallationAuthorized": false,
+        "productionModelsOrActionsAuthorized": false
       },
       "extensionArtifactRequest": {
         "to": "wsl-e18",
@@ -777,7 +577,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "finishing_original_e29_product_controls",
+      "status": "implementing_original_e110_source_route",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -920,33 +720,30 @@
         "resultReadyForCoordinator": true
       },
       "coordinatorAssignment": {
-        "id": "e415-household-procedure-candidate-review-20261023",
-        "status": "paused_after_current_read_for_urgent_telegram_review",
-        "coordinator": "windows-root",
-        "task": "E4.15",
-        "outcome": "Independent exact retained candidate review while coordinator completes Telegram latency",
-        "readPaths": [
-          "src/eva/application/household_procedure.py",
-          "src/eva/providers/home_assistant_procedure.py",
-          "src/eva/application/free_will.py:candidate hunks",
-          "src/eva/adapters/postgres/sensory_events.py:candidate hunks",
-          "src/eva/bootstrap/household_initiative.py:candidate hunks",
-          "src/eva/bootstrap/household_initiative_delivery.py:candidate hunks",
-          "src/eva/adapters/model/pydantic_conversation.py:proposal context hunk only"
-        ],
+        "task": "E1.10",
+        "assignedAt": "2026-10-24T05:00:57.068026+00:00",
+        "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+        "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
         "writePaths": [
-          "development/reviews/e415-household-procedure-candidate-20261023.json",
-          "development/coordination/active-executors.json:own section only"
+          "src/eva/application/housemate_development.py",
+          "src/eva/application/human_understanding.py",
+          "src/eva/providers/human_understanding_actions.py",
+          "src/eva/bootstrap/private_conversation_resources.py",
+          "development/tests/application/test_housemate_development.py",
+          "development/tests/providers/test_e110_human_understanding_actions.py",
+          "development/tests/bootstrap/test_e110_housemate_development.py",
+          "src/eva/adapters/projection/hindsight.py"
         ],
-        "endCondition": "Exact hashes and independent GO/NO_GO with source/freshness/STOP/attention and foreign-hunk boundaries; no product acceptance inferred",
-        "restrictions": [
-          "No product edits",
-          "No Git/staging",
-          "No shared installation",
-          "No model probes or external effects",
-          "Reuse prior successful evidence; only necessary missing targeted check"
+        "resultNow": "Complete the typed source-bound development projection after successful existing reflection, plus current read-time source resolution; no runtime idle poll.",
+        "conditions": [
+          "Only E1.10 source-bound kind validation/projection, existing tool enum/description, existing source reader/composition and one existing successful dream/changed-source callback.",
+          "Preserve all foreign hunks and source/privacy/erase/STOP contracts; record exact before/after hashes and scoped patches.",
+          "No voice edits, production POST/model run/messages, Git, board changes or shared installation by executor.",
+          "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
+          "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
         ],
-        "assignedAt": "2026-10-23T17:58:25.854268+00:00"
+        "sharedInstallationAuthorized": false,
+        "productionModelsOrActionsAuthorized": false
       },
       "previousE29StatusProposal": {
         "taskId": "E2.9",
@@ -1480,12 +1277,12 @@
       "activeCodeOrInstallClaim": false
     },
     "e415-independent-review-newchat": {
-      "task": "E1.13",
+      "task": "E2.9",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "final_delta_review_then_actual_bounded_comparison",
+      "status": "reviewing_frozen_e29_consumer_candidate",
       "coordinator": "windows-root",
       "allowedWritePaths": [
-        "development/reviews/e113-existing-natural-handoff-review-20261024.json"
+        "development/reviews/e29-housemate-consumer-review-20261024.json"
       ],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
       "endCondition": "Exact provider+test hashes, actual store batch shape,original childtime/newest camera/guards independent GO/NO_GO; no code/install/model/DB/external effects",
@@ -1502,7 +1299,7 @@
       "completedAt": "2026-10-23T19:48:37.263117+00:00",
       "review": "development/reviews/e415-household-batch-binding-review-20261023.json",
       "verdict": "GO",
-      "nextAction": "Review alleen laatste constructorread/compositie-delta; voer daarna vaste rootgebonden modelmeting uit en beoordeel volledige oorspronkelijke E1.13. Geen oude suites of productcode.",
+      "nextAction": "Review exact frozen current-learning consumer, privacy/current source and correction/erasure transfer; no product code or full E2.9 claim. E113 and E112 final reviews stay frozen.",
       "workerBootstrapReview": "development/reviews/e415-worker-rematerialization-review-20261023.json",
       "previousAdoptionReview": "development/reviews/e415-authored-procedure-adoption-review-20261023.json",
       "previousInstallationReview": "development/reviews/e415-coordinated-installation-review-20261023.json",
@@ -1598,7 +1395,7 @@
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": true,
-      "updatedAt": "2026-10-24T04:31:10.799087+00:00"
+      "updatedAt": "2026-10-24T05:04:43.982280+00:00"
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
@@ -1789,7 +1586,7 @@
     "authority": "Direct owner instruction 2026-10-23: sole main coordinator; integration, GitHub and shared installation exclusively here.",
     "previousCoordinator": "windows-root",
     "preserveExistingReservations": true,
-    "activeOutcome": "E1.13",
+    "activeOutcome": "E1.10",
     "doNotRepeatSentLolaQuestion": true,
     "agents": {},
     "maxConcurrentExecutorsReviewers": 2,
@@ -1827,19 +1624,19 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
-    "parallelBoundedWork": "Bouwer maakt oorspronkelijke E2.9-bediening af; onafhankelijke tester sluit de concrete E1.13-meting en kaartbeoordeling af. Geen gedeelde installatie tijdens modelmeting.",
-    "currentBlocker": "Full E1.13 requires the original same-case comparison and preserved functioning; natural handoff measurement is now independently covered. E1.12 actual use/adoption remains open.",
+    "parallelBoundedWork": "E1.13 volledig technisch afgerond. Eén bouwer E1.10-bronroute; één onafhankelijke tester E2.9-consumer. Root beheert Git, gerichte installatie en verse claims.",
+    "currentBlocker": "E2.9 full completion needs genuine typed E1.10 state/delta sources. Original multi-day family acceptance remains separate and does not block implementation.",
     "latestVerifiedOutcome": {
-      "task": "E4.18",
-      "status": "completed_installed_used_independently_reviewed",
-      "review": "development/reviews/e418-file-inspection-20261023.json",
-      "evidence": "development/evidence/reassessment/e418-maintenance-delivery-20261024.json",
-      "at": "2026-10-24T00:40:10.374271+00:00"
+      "task": "E1.13",
+      "status": "completed_original_technical_criteria_installed_compared_independently_reviewed",
+      "review": "development/reviews/e113-existing-natural-handoff-review-20261024.json",
+      "evidence": "development/evidence/product/e113-current-cache-comparison-20261024.json",
+      "at": "2026-10-24T05:04:43.982280+00:00"
     },
     "nextBoundedAssignments": {
-      "executor": "E2.9 volledig bruikbare bestaande productbediening; actuele routes eerst, één complete kandidaat. Concrete E1.13-fout gaat voor.",
-      "reviewer": "Voer na laatste delta-GO en verse claims de vaste E1.13-paarmeting plus zes oorspronkelijke gevallen uit; onafhankelijk eindvonnis op oorspronkelijke kaart. Geen productcode.",
-      "coordinator": "Exacte uitvoercontext, verse claims, integratie, canonical board/dashboard/Git en installatie."
+      "executor": "Finish the authorized E1.10 source route and narrow hindsight after-reflection/current-read composition; no runtime idle poll or second store.",
+      "reviewer": "Review exact frozen E2.9 consumer/overlay and needed existing tests; no product changes.",
+      "coordinator": "Integrate E1.13 full original-card completion; stage/review/install E2.9 exact overlay after fresh claims and preserve all foreign WIP."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {

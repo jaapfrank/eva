@@ -1,0 +1,209 @@
+{
+  "contract": "EvaCurrentSameCaseComparisonEvidence/v1",
+  "task": "E1.13",
+  "recordedAt": "2026-10-24T05:04:43.982280+00:00",
+  "status": "completed_original_e113_technical_criteria",
+  "fullTaskCompleted": true,
+  "actualRuntimeUnchangedBeforeAfter": {
+    "eva2-managed-b-slot3-core": {
+      "id": "cfb719951316909333d5c2ac1f0e050befa0a3e35939f8c125962ec6750884be",
+      "image": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+      "pid": 3455264,
+      "startedAt": "2026-10-24T02:41:35.979747435Z"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "id": "b7ad1cfebb61aab722d3bd0b03fd493aa58ad24d6444bbfcdd6e877f5b5eb08d",
+      "image": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
+      "pid": 3461314,
+      "startedAt": "2026-10-24T02:41:48.003539272Z"
+    }
+  },
+  "sourceEvidence": {
+    "sealed-bundle-final.private.json": "816d6a9305aca8edca3dfec3b24c141614595365fd1a56572f1fb80048c535c7",
+    "guard-final-receipt.private.json": "9eed87e80d7c20d1f43f531574c1975056a411f6ce9890bc9648ec9443b81116",
+    "operator/execution-approval.private.json": "ef2e17bb6df6b423ec90ce9d19e40a70d219036d96f4508da5d9ca164df790ac",
+    "output/pair-result.private.json": "bbbe66dd5d00e23ec2159741f43e86cbf03e5e1fd6db3e534d7117bfa290c3ae",
+    "output/six-result.private.json": "7f1fb2a2083c7be925c832bfb8b2ee2650452ae0450f5ec8ce5386363f8369e9",
+    "tester-pair-verdict.private.json": "244dfd6049aa92160b5cd864ee53c06a91a530220ecd3a9038d7cd34b96fe615",
+    "tester-six-verdict-corrected.private.json": "2c170550158f4e231fce70372e707d91babe145fa5b1b5748bdf64ecee319d4f"
+  },
+  "comparison": {
+    "reference": "Same current image/model/identity/guidance and cloned initial fixture state, with only optional verified-reuse offer omitted. Controlled counterfactual, not a historical image.",
+    "candidate": "Same current image/model/identity/guidance and cloned initial fixture state, using real current verified cache and ordinary authority/planner/effect/readback.",
+    "arms": {
+      "reference": {
+        "providerRequests": 1,
+        "elapsedMs": 1747.814413974993,
+        "usage": {
+          "input_tokens": 3099,
+          "measurement": "measured",
+          "model_attempts": 1,
+          "output_tokens": 39,
+          "tool_calls": 1
+        },
+        "provider": "eva:verified-action",
+        "newEffects": 1,
+        "freshReads": 1,
+        "newOperations": 1,
+        "idempotentReplay": true,
+        "replayExtraReadsDiagnostic": 0
+      },
+      "candidate": {
+        "providerRequests": 0,
+        "elapsedMs": 151.45266597392038,
+        "usage": {
+          "input_tokens": 0,
+          "measurement": "measured",
+          "model_attempts": 0,
+          "output_tokens": 0,
+          "tool_calls": 0
+        },
+        "provider": "eva:verified-reuse",
+        "newEffects": 1,
+        "freshReads": 1,
+        "newOperations": 1,
+        "idempotentReplay": true,
+        "replayExtraReadsDiagnostic": 0
+      }
+    },
+    "sameInputAndInitialSnapshot": true,
+    "seedUsageSeparate": {
+      "input_tokens": 3099,
+      "measurement": "measured",
+      "model_attempts": 1,
+      "output_tokens": 39,
+      "tool_calls": 1
+    },
+    "fourOriginalBoundaryChecksPassed": true,
+    "requestsDeduplicatedAcrossClones": {
+      "seed": 1,
+      "reference": 1,
+      "candidate": 0
+    }
+  },
+  "originalSix": {
+    "passed": 6,
+    "total": 6,
+    "cases": [
+      {
+        "id": "routine-first",
+        "passed": true,
+        "elapsedMs": 4439.298,
+        "nativeRequestUsage": {
+          "input_tokens": 5809,
+          "measurement": "measured",
+          "model_attempts": 2,
+          "output_tokens": 87,
+          "tool_calls": 2
+        },
+        "unresolvedProviderRequests": 0
+      },
+      {
+        "id": "corrected-reference",
+        "passed": true,
+        "elapsedMs": 4841.492,
+        "nativeRequestUsage": {
+          "input_tokens": 5816,
+          "measurement": "measured",
+          "model_attempts": 2,
+          "output_tokens": 87,
+          "tool_calls": 2
+        },
+        "unresolvedProviderRequests": 0
+      },
+      {
+        "id": "missing-reference",
+        "passed": true,
+        "elapsedMs": 4312.229,
+        "nativeRequestUsage": {
+          "input_tokens": 5754,
+          "measurement": "measured",
+          "model_attempts": 2,
+          "output_tokens": 60,
+          "tool_calls": 1
+        },
+        "unresolvedProviderRequests": 0
+      },
+      {
+        "id": "private-first",
+        "passed": true,
+        "elapsedMs": 4277.417,
+        "nativeRequestUsage": {
+          "input_tokens": 5805,
+          "measurement": "measured",
+          "model_attempts": 2,
+          "output_tokens": 60,
+          "tool_calls": 1
+        },
+        "unresolvedProviderRequests": 0
+      },
+      {
+        "id": "household-isolation",
+        "passed": true,
+        "elapsedMs": 3615.354,
+        "nativeRequestUsage": {
+          "input_tokens": 5881,
+          "measurement": "measured",
+          "model_attempts": 2,
+          "output_tokens": 66,
+          "tool_calls": 1
+        },
+        "unresolvedProviderRequests": 0
+      },
+      {
+        "id": "simple-current-control",
+        "passed": true,
+        "elapsedMs": 1550.516,
+        "nativeRequestUsage": {
+          "input_tokens": 2881,
+          "measurement": "measured",
+          "model_attempts": 1,
+          "output_tokens": 39,
+          "tool_calls": 1
+        },
+        "unresolvedProviderRequests": 0
+      }
+    ],
+    "inputsAndOriginal16AssertionsUnchanged": true,
+    "independentlyPassed": 6
+  },
+  "boundaries": [
+    "One ordered pair measures this known action, not general latency/reliability or household adoption.",
+    "Same real installed application sources and real current provider/model; synthetic scoped memory and isolated fixture effects, no actual household device action.",
+    "Per-arm duration excludes construction, schema setup and database cloning. Seed request and tokens are separate from the measured comparison.",
+    "Top-level raw actual_provider_calls remains null; request counts come separately from original native admission/terminal journal evidence. Unknown credits remain unknown.",
+    "Previously reviewed installed initiative ordering/guards and natural handoff evidence remain bounded by their own source/version/quality limits; no retrospective causal timing claim."
+  ],
+  "verificationActivity": {
+    "independentlyObservedNativeRequestsPair": 2,
+    "productionEffects": 0,
+    "newHouseholdMessages": 0,
+    "productionSourceOrInstallationWrites": 0,
+    "automaticReruns": 0,
+    "runtimeCredits": null,
+    "developmentTokens": null,
+    "developmentToolTotal": null,
+    "developmentCredits": null,
+    "backgroundRuntimeUsageNotMeasured": true,
+    "independentlyObservedNativeRequestsSix": 11,
+    "observedNativeRequestsTotal": 13,
+    "measuredInputTokens": 38144,
+    "measuredOutputTokens": 477,
+    "measuredProviderToolCalls": 10,
+    "pairProcessSeconds": 14.882395,
+    "sixProcessSeconds": 33.124558
+  },
+  "priorInstalledAndNaturalEvidence": [
+    "development/evidence/product/e113-initiative-handoff-20261023.json",
+    "development/evidence/product/e113-existing-natural-handoff-20261024.json"
+  ],
+  "independentReview": {
+    "path": "development/reviews/e113-existing-natural-handoff-review-20261024.json",
+    "sha256": "a7af62e90a8f1c4818e8605a876581eb6b83632bcf8a931d32a33155447f2045",
+    "verdict": "GO_E1_13_TECHNICAL_ORIGINAL_CRITERIA_WITHIN_DECLARED_EVIDENCE"
+  },
+  "ownerAcceptance": false,
+  "familyAcceptance": false,
+  "wholeProjectComplete": false,
+  "failureRetention": "The independent observer first compared the private audience with the wrong enum literal. Its first receipt is retained; corrected readback matches the original MemoryAudience enum. Test inputs, results and original assertions were not changed or rerun."
+}

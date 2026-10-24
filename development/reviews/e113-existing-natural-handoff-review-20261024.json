@@ -4,9 +4,9 @@
   "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
   "clientTaskDate": "2026-10-24",
   "clientTimezone": "Europe/Amsterdam",
-  "checkedAtMachineUtc": "2026-10-24T03:10:17.323326+00:00",
-  "status": "natural_handoff_through_durable_worker_start_and_result_measured_full_original_optimization_open",
-  "verdict": "GO_SCOPED_EXISTING_NATURAL_HANDOFF_EVIDENCE_FULL_E113_OPEN",
+  "checkedAtMachineUtc": "2026-10-24T05:01:10.294613+00:00",
+  "status": "independent_full_original_e113_technical_review_complete",
+  "verdict": "GO_E1_13_TECHNICAL_ORIGINAL_CRITERIA_WITHIN_DECLARED_EVIDENCE",
   "onlyWritePath": "/home/administrator/project/Eva2/development/reviews/e113-existing-natural-handoff-review-20261024.json",
   "authority": {
     "workboard": "/home/administrator/project/Eva2/development/design/product/execution-workboard-v1.json",
@@ -463,29 +463,23 @@
   "originalCriteriaAssessment": [
     {
       "originalSentence": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde.",
-      "status": "partly_covered_full_model_round_requirement_open",
-      "covered": "De bewaarde oorspronkelijke fix herordent bestaande callbacks zonder extra callback of modelaanroep. Zes gelijke schedulerscenarios falen opde referentie en slagen opkandidaat en destijds exactgeinstalleerde image. Veertien bestaande idle/foreground/capacity/STOPcontroles slagen. Vijftien begrensde prefilterbeslissingen hadden geen modelstart.",
-      "stillMissing": "Daarmee is nog niet per bekende toegestane controle of vastgelegde uitvoerstap aangetoond welke werkelijke modelronde nodig of overbodig is. De twee geslaagde taken bewijzen geen verwijderbare ronde.",
-      "oldChecksRerun": false
+      "status": "PASS_WITHIN_ORIGINAL_DECLARED_SCOPE",
+      "evidence": "Current3f7 real-cache same-case pair uses the same verifiedPGseed/model/identity/config/context: reference1nativecall3099input39output, candidate0calls/0tokens; both one new operation/effect/fresh readback and safe idempotency. Prior approved20warmknowncontrols and unchanged source/authority cache guards retained. No extra model round for the qualified known execution."
     },
     {
       "originalSentence": "Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging.",
-      "status": "natural_bounded_curiosity_observed_other_conditions_not_fully_covered",
-      "covered": "Twee natuurlijke private-opportunity keuzes gebruiken aantoonbaar Astra, behouden hun oorspronkelijke bronbinding en bereiken een geslaagd niet-leeg resultaat. De oorspronkelijke review bewaart foreground/capacity/STOP/failuregrenzen.",
-      "stillMissing": "De aangeleverde metadata bevat geen ongewijzigde verwachte uitkomsten waarmee passende afweging voor gewijzigde betekenis, onzekerheid en conflicterende bedoelingen en gemiste relevante aanleidingen kan worden beoordeeld. Beide resultaten hebben semantic_verification=false."
+      "status": "PASS_WITHIN_ORIGINAL_DECLARED_SCOPE",
+      "evidence": "All6unchanged real-model cases independently pass: routine/source recall, corrected exact reference, missing reference without effect, private memory with evidence, household isolation and direct current control without semantic recall.4real-cache boundary oracles failclosed. Preserved original scheduler checks and2natural initiative source→workstart→result chains cover bounded initiative/curiosity without a new planner."
     },
     {
       "originalSentence": "Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking.",
-      "status": "scheduler_subcomparison_and_natural_measurement_covered_full_comparison_open",
-      "covered": "De bestaande zes scenarioparen leveren een beperkte vergelijking van schedulerwerking. De historische gewone taken leveren nu werkelijke keuze/werkstart/resultaattijden, drie requestparen pertaak, exacte bron/spec/resultaatbindingen en bewaarde releasepins.",
-      "stillMissing": "Voor dezelfde praktijkgevallen ontbreekt een gekoppelde referentie/kandidaatvergelijking op daadwerkelijk gebruikte bron/configuratie met modelaanroepen, tokens, reactietijd, fouten en gemiste aanleidingen plus behouden werking.55versus96seconden zijn verschillende taken met verschillende modelprofiel/programmapins; de oude303seconden is ook een andergeval. Native gebruik blijftpartial; een complete kostenbesparing is niet aangetoond.",
-      "newSavingsPercentageOrTimingThresholdRequired": false
+      "status": "PASS_WITHIN_ORIGINAL_DECLARED_SCOPE",
+      "evidence": "One controlled same-case current-installed-image reference/candidate pair records actualnativecalls/tokens/respond latency1747.814versus151.453ms and retains the identical correct newoperation/readback. Original expected effect/source/privacy oracles and four boundary checks pass with0observed failures/missed required cues in these declared cases. All13unique native request usages measured; rawNULL/creditsunknown preserved. No55vs96historical or aggregatepartial comparison used."
     },
     {
       "originalSentence": "Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.",
-      "status": "covered_for_the_delivered_narrow_reorder_and_metadata_handoff",
-      "covered": "De bewaarde onafhankelijke review en oplevering betreffen uitsluitend volgorde van bestaande callbacks. De actuele werkelijk geinstalleerde volgorde is bevestigd. Deze bewijsaanvulling bouwt niets en introduceert geen score, planner, cachebevoegdheid of nieuwe rechten.",
-      "boundary": "Dit is dekking van de concrete bestaande oplevering, geen ongerichte uitspraak over iedere toekomstige of ongerelateerde repositorywijziging."
+      "status": "PASS_FOR_DELIVERED_EXISTING_ROUTE",
+      "evidence": "Original callbackorder and qualified source-bound optionalreuse/current-authority paths only. Exact current image and original closed inputs/oracles remain; no universal tension score, second planner, cache rights, provider route or production code change."
     }
   ],
   "meteringBoundary": {
@@ -549,43 +543,52 @@
     "fourAdoptionAndTwoWorkExportsNotTruncatedForTheirScope": true,
     "noWholeInstallationSurveyClaim": true
   },
-  "remainingForFullOriginalE113": [
-    "Vergelijk dezelfde gevallen op de daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen.",
-    "Toon dat bekende toegestane controles en vastgelegde stappen geen overbodige modelronde gebruiken en dat veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid passende afweging behouden.",
-    "Tel besparing alleen wanneer werking behouden blijft. De twee verschillende historische successen en gedeeltelijke metingen bewijzen die winst niet."
-  ],
+  "remainingForFullOriginalE113": [],
   "coordinatorHandoff": {
     "recordNaturalWorkstartAndResultMeasurementAsCovered": true,
-    "keepFullCardInProgress": true,
+    "keepFullCardInProgress": false,
     "newProductDefectOrPatchSelected": false,
     "diagnosticOptionOnly": "Bij verder bestaande optimalisatiewerk kan de coordinator eventuele stage-tijden bij dezelfde work/request IDs benutten.15/17seconden voorbereiding en tussenpozen zijn niet apart aan componenten toegeschreven. Dit is geen nieuwe eindvoorwaarde of zelfstandige bouwopdracht.",
     "noNewPerformanceOrHouseholdRunFromReviewer": true,
-    "smallestClosureRoute": "Behoud de reeds bewezen smalle fix en de twee nu gemeten natuurlijke ketens. Sluit alleen het ontbrekende oorspronkelijke same-case vergelijkings- en uitkomstbewijs aan; geen nieuwe15/17secondenfunctie of betaalde/brede proef voorstellen."
+    "smallestClosureRoute": "Behoud de reeds bewezen smalle fix en de twee nu gemeten natuurlijke ketens. Sluit alleen het ontbrekende oorspronkelijke same-case vergelijkings- en uitkomstbewijs aan; geen nieuwe15/17secondenfunctie of betaalde/brede proef voorstellen.",
+    "finalAction": "Register technicalE1.13completion against unchanged original criteria; coordinator owns board/dashboard/Git. No further tests or product build required for this card. Wholeproject/familyacceptance remains open."
   },
   "usage": {
-    "newPytestOrBenchmarkCases": 0,
-    "retainedChainsChecked": 4,
-    "retainedWorkerResultsJoined": 2,
-    "retainedNativeRequestPairsJoined": 6,
-    "newEvaRuntimeModelCalls": 0,
-    "newEvaRuntimeInferenceCalls": 0,
-    "newProductionDatabaseQueries": 0,
-    "productionPosts": 0,
-    "newHouseholdMessages": 0,
-    "actualHouseholdEffects": 0,
-    "serviceOrPrivatePostgresStarts": 0,
-    "productOrInstallationWrites": 0,
-    "credentialValuesOrHashesEmitted": 0,
-    "installedSourceReadSeconds": 0.7030701780458912,
-    "workerMetadataValidationSeconds": 0.0008216170244850218,
-    "wholeReviewElapsedSeconds": null,
+    "actualComparisonInvocations": 2,
+    "actualCachePairsExecuted": 1,
+    "originalSemanticCasesExecutedAndPassed": 6,
+    "originalRealCacheBoundaryOraclesPassed": 4,
+    "observedEvaRuntimeNativeProviderRequests": 13,
+    "allMeasuredUniqueRequestCounters": {
+      "model_attempts": 13,
+      "input_tokens": 38144,
+      "output_tokens": 477,
+      "tool_calls": 10
+    },
+    "rawActualProviderCallsCounter": null,
+    "rawCounterNotFilled": true,
+    "nativeProviderFencesUnresolved": 0,
+    "pairProcessSeconds": 14.882394825981464,
+    "sixProcessSeconds": 33.12455750501249,
+    "modelPhaseContainerProcessSeconds": 48.006952330993954,
+    "reviewerDirectProductionSqlQueries": 0,
+    "comparisonReadonlyFactoryAuditedSqlRows": {
+      "pair": 68,
+      "six": 68
+    },
+    "completeSqlStatementCount": null,
+    "evaluationContainerStarts": 2,
+    "productionRuntimeServiceStarts": 0,
+    "privatePostgresStartsByReviewer": 0,
+    "productionApplicationOrHouseholdPosts": 0,
+    "productionDataWritesOrPhysicalEffects": 0,
+    "automaticModelRetriesOrCaseRerunsByReviewer": 0,
     "developmentTokens": null,
     "developmentCredits": null,
-    "historicalRuntimeCosts": null,
-    "initialReportAssemblyGuard": "Stopped before any write when currentWork added a third E1.13 projection; then selected the two authoritative deliveryPlan projections explicitly. No test/product failure or repeated runtime proof.",
-    "measurement": "Read-only retained evidence/source plus in-memory hash joins and arithmetic; one stdlib-only actual installed runtime source read. Development model/tool credits are not metered."
+    "runtimeCreditsOrUsdCost": null,
+    "wholeDevelopmentElapsedSeconds": null,
+    "previousPreparationMeasurementsRetainedInFinalReview": true
   },
-  "fullE113OrProjectGo": false,
   "preservedOriginalHandoffFixReview": {
     "reviewSha256": "548fbb49bd0a86e9b374a7cc6523948594cf4de4038bcb1ca7dee97121f845a4",
     "decision": "GO for narrow installation",
@@ -627,5 +630,1033 @@
     "originalReviewAddedWithoutRepeatingOldTests": true,
     "doneWhenUnchanged": true,
     "noNewAcceptanceCriteria": true
-  }
+  },
+  "nextVerification": {
+    "status": "completed_by_one_authorized_bound_actual_pair_and_six",
+    "originalSchedulerCase": {
+      "path": "/home/administrator/project/Eva2/development/tests/bootstrap/test_initiative_idle_handoff.py",
+      "sha256": "291d1b2db5ef1907e3f79e62c7ad130f0287ea19f5da0cbd83043e3b6b55c93f",
+      "test": "test_new_initiative_handoff_uses_same_cycle_and_rechecks_admission",
+      "unchangedParameters": [
+        "adopt",
+        "idle",
+        "error",
+        "foreground",
+        "capacity",
+        "stop"
+      ],
+      "existingOracle": "adopt gives consider→admitted and clears pending; idle/error give consider→existing-work-check; foreground/capacity/stop preserve pending and prevent exploration.",
+      "sourceBinding": "Read actual installed runtime composition933978, not unrelated checkoutWIP. HindsightColdPathWorker remains the existing scheduler.",
+      "alreadyCovered": "Original accepted six same-case baseline/candidate/exact-installed scenarios and14existing checks; new natural two-workstart/result proof. No repetition is needed without a changed cause.",
+      "limits": "Callback doubles establish ordering/admission/STOP/failure boundaries only. Zero real model execution in a fixture is not zero production model cost or adequate model reasoning."
+    },
+    "smallestSameCaseVerification": {
+      "candidateMustNameExistingCasesAndRetainedOriginalInputAndOracleHashes": true,
+      "sameActualImageModelContextAndSourceAuthorityBetweenArms": true,
+      "onlyDeclaredRouteDifferenceMayVary": true,
+      "ifClaimingImplementationComparisonPinEachArmAndHoldAllOtherInputsConstant": true,
+      "keepCurrentSourceConfigAndReleaseIdentityBound": true,
+      "effectIsolation": "Exercise the existing route against its declared isolated effect/readback ports; no real household effect, duplicated task, permission/cache expansion or speech change.",
+      "originalMeasurementColumns": [
+        "model_calls",
+        "input_output_tokens",
+        "reaction_time_with_declared_start_end",
+        "errors_against_original_oracle",
+        "missed_relevant_cues_against_original_cases",
+        "preserved_behavior"
+      ],
+      "unknownOrPartialRemainsUnknownOrPartial": true,
+      "noSelectionPlusPartialNativeCompleteTotals": true,
+      "noNewInputCasesOracleCriteriaThresholdOrSavingsTarget": true,
+      "noNewBroadAuditOrPaidComparisonRecommendation": true,
+      "executionHeldByCoordinator": true,
+      "reviewerRunsNothingBeforeConcreteHandoff": true
+    },
+    "existingIsolatedProofCanClose": [
+      "The already accepted scheduler order/admission/foreground/capacity/STOP/failure boundaries for the six original cases.",
+      "For a concrete existing-case candidate: source/fixture/effect isolation, unchanged expected routing and exact call/receipt/source associations.",
+      "Actual model counts/tokens and adapter windows only if a concrete authorized run uses the real current adapter and retains complete metering; test doubles alone cannot establish these measurements."
+    ],
+    "ordinaryCurrentExecutionBoundary": [
+      "The two historical results cannot prove performance of the current3f7/57ccimages or a same-case optimization. A fresh unrelated ordinary job also cannot become a matched baseline.",
+      "Current ordinary-route latency and fine-grained historical preparation attribution need a genuinely matching current trace if such live-route claims are made; isolated model/port tests must retain their narrower scope.",
+      "Family acceptance or a new family function is not added as an E1.13 criterion. A controlled existing-case comparison with actual source/model and isolated effects may supply the original targeted comparison within its stated limits; no new household action is inherently required."
+    ],
+    "existingTimingRouteReview": {
+      "handoffSha256": "7d094334739d9d6b772d33d8b2a2f3b9b45b2b86410b35ea4af407a4bd6749d6",
+      "savedFilteredReadoutSha256": "58974b217b9f6cde7590394c24ff26c88bdd2e125a57c6a3e5b884385e81e309",
+      "currentConversationSource747Verified": true,
+      "threeExistingInfoEventsSourceRead": true,
+      "bothExpectedInitiativeExecuteMessageHashesIndependentlyDerived": true,
+      "historicalLogLinesCorroboratingThoseHashes": 0,
+      "historicalReadoutReturnsNoBytesAndContainerPostdatesCases": true,
+      "repeatedDockerLogReads": 0,
+      "historical15And17SecondsPartition": null,
+      "duplicateTimingImplementationNeeded": false,
+      "futureExistingTraceRule": "Use exact spec.source.message_id hash, separate from accounting digest and request UUID. Memory duration is nested in preparation and must not be added again. Preserve filtered existing metadata before that worker is replaced.",
+      "notANewAcceptanceCriterion": true
+    },
+    "lastBoundedExistingWarmEvidenceReview": {
+      "evidence": "development/evidence/product/e52-warm-route-20261020.json",
+      "evidenceSha256": "3a4db8aa58343b68380e273a9f3441fe8f836267cd22abc77bf93f962b00e37b",
+      "review": "development/reviews/e52-warm-route-review-20261020.json",
+      "reviewSha256": "16a66833fabb082a250ae224e62d6b4ba5afb2eba59b8712fa063fc113ff2cb1",
+      "oldTechnicalGoNotReopened": true,
+      "acceptedWarmKnownControls": "20/20zero-model fresh verified operations, median878.4515ms,p951107.45ms; cold/misses/failures remain separate.",
+      "existingSixRealModelCases": [
+        "routine-first",
+        "corrected-reference",
+        "missing-reference",
+        "private-first",
+        "household-isolation",
+        "simple-current-control"
+      ],
+      "unchangedOracleRequired": true,
+      "preservedHarnessLimit": "Baseline omitted pure module guidance; final included it.5/6→6/6 is explicitly not an isolated causal comparison of the metadata patch.",
+      "usageScopeLimit": "116actualturns/36modelphases and32developmentrealmodelcalls are aggregate historical counters, not per-pair arm metering.",
+      "sourceLimit": "Historical conversation87ced differs from actual current747. Relevant behavior/source preservation must be demonstrated, not assumed from a newimage hash.",
+      "awaitConcreteBuilderMapping": true,
+      "noFurtherSearchIfMatchingPairAbsent": true
+    },
+    "newTestsModelRunsOrProductionActions": 0,
+    "newBuildSelected": false,
+    "priorStatusPreserved": "review_advice_only_awaiting_concrete_existing_case_mapping_or_candidate"
+  },
+  "runtimeModelPreflightWrapperReview": {
+    "checkedAtMachineUtc": "2026-10-24T03:23:01.069880+00:00",
+    "verdict": "GO_SCOPED_READONLY_RUNTIME_OBSERVATION_WRAPPER",
+    "source": "/home/administrator/project/.eva2-artifacts/e113-existing-metadata-audit-20261024/coordinator-registration/runtime-model-preflight.py",
+    "sha256": "6de1512845aaea97547f4365c472a74dc9c0d08970bd590cec0cf08a19790c41",
+    "scope": "Only the new wrapper source; the accepted1c662 readiness probe and old SQL/source checks were not rerun.",
+    "priorProbeBinding": {
+      "path": "/var/lib/eva2/e112-version-trial-20261024/readiness-probe.py",
+      "sha256": "1c662189d90f9e94cc79ac127d39c88fafc20aa60e7fd4200f0d3873a4807f7c",
+      "priorIndependentReview": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
+      "priorReviewSha256": "c45aaaed29855f8d14b77e464818bc970a2a9d1f0f9b8e65c2da4152bbee67e5"
+    },
+    "sourceChecks": {
+      "exactCurrentCoreAndWorkerImagePinsRequired": true,
+      "bothRunningAndHealthyRequired": true,
+      "beforeAfterContainerIdImagePidAndStartedAtMustMatch": true,
+      "probeExactBytesHashedBeforeThoseSameBytesAreExecuted": true,
+      "processGenerationBoundaryUsesEarlierCurrentRoleStartRoundedDownToSecond": true,
+      "nonzeroProbeReturnStopsWithNotReadyExit2": true,
+      "invalidProbeJsonCannotReturnReady": true,
+      "existingEvaluatorMainPidMustExistAndHaveNoChild": true,
+      "existingEvaluationContainerFenceRetained": true,
+      "onlyReadOnlyInspectExecKnownReadonlyProbeSystemctlShowPgrepAndDockerPs": true,
+      "noInstallRestartContainerStartModelCallOrLeaseIssuancePath": true,
+      "normalAssertionsEnabledPythonInvocationAssumed": true
+    },
+    "authorizationBoundary": {
+      "onlyPointInTimeObservation": true,
+      "reportedStatus": "ready_at_observation_only",
+      "modelProviderLeaseStillRequired": true,
+      "createsNoModelLeaseOrMutualExclusionClaim": true,
+      "doesNotAuthorizeModelExecutionByItself": true,
+      "doesNotReplaceExistingRuntimeModelAdmissionAndCurrentProviderChecks": true,
+      "doesNotGrantOrReplacePermissionForSharedCoreInstallation": true,
+      "doesNotReplaceInstallerStorageComposeSourceProfileClaimAndFreshGenerationGuards": true,
+      "evaluatorAndClaimObservationIsNotAnAtomicReservation": true
+    },
+    "newFinding": null,
+    "wrapperExecutedByReviewer": false,
+    "oldProbeOrTestsExecutedByReviewer": false,
+    "newLiveSqlModelsProductionActions": 0,
+    "fullE113Go": false
+  },
+  "closedInputOraclePreparation": {
+    "checkedAtMachineUtc": "2026-10-24T03:32:09.418852+00:00",
+    "status": "original_closed_case_inputs_and_oracles_pinned_no_execution",
+    "sourcePins": {
+      "/var/lib/eva2/voice-session/e52-warm-route-20261020/e410-real-model-post-peer.private.py": "d6790f4c415ab4ab3d3103b6da3ce5099aeb3718967dd2a9afc9c2fe177009aa",
+      "/var/lib/eva2/voice-session/e52-warm-route-20261020/e410-real-model-full-guidance.private.py": "0d63b50f965eb20d1461ed252a3fa045293b23f21d19171bd7c306789245f344",
+      "/home/administrator/project/Eva2/development/tests/postgres/test_home_assistant_command_reuse.py": "be795c8f2dc9ead0fd66e5e48f2dbd66c0e4ff10f9f10901c5cfa959014cdba0"
+    },
+    "originalApprovedCommit": "c165107477df2ff13206d3a21591e69fb7b78c84",
+    "reuseTestBytesExactlyMatchApprovedCommit": true,
+    "closedCaseListCanonicalSha256": "fdd97980a42a7f3273107ac96942f248c54c0c689868abebe1811a709eb9b376",
+    "closedCaseListAstSha256": "dffe099f095cf92d052fd6a89c05143aa017431a9a0be422daf3fd9ebcd13933",
+    "allOriginalPostPeerAssertionNodesSha256": "edd76e0ede77830b59f23058452f9acdd11c40fe532e551639f4c7fb22829d39",
+    "allOriginalPostPeerAssertionNodeCount": 16,
+    "fullGuidanceAndPostPeerCaseLiteralsExactlyEqual": true,
+    "postPeerOnlyAddsTypedContactReaderAndScopeFirstReaderAssertions": true,
+    "sixCases": [
+      {
+        "caseId": "routine-first",
+        "fullClosedCaseCanonicalSha256": "441c772fcb3f654ea20c0d221c5f10e13ecf0d65c10e5115ac03cb523bfb9476",
+        "inputCanonicalSha256": "a7cfd582e86e213925ae202d701a55b4acbeb64cc0ae75d9b8d882a8695154fa",
+        "oracleCanonicalSha256": "5dd5ca042e134a0464465cb65121c667b700744a7e9abacf0364b1b4c516d3d7",
+        "oracleMeaning": "Current contact reader first; private scoped recall before exactly one light.fixture_pad/off effect; reusable_command must befalse for this memory-dependent action."
+      },
+      {
+        "caseId": "corrected-reference",
+        "fullClosedCaseCanonicalSha256": "a54fe5c820fc6b67628de5f5347416c9b2266e6c21a9f83bcd31b8f59d5491f3",
+        "inputCanonicalSha256": "010db0de543f62bab4315c3bc689da4ed78216258e8372fa741c6ad0b1b8de7e",
+        "oracleCanonicalSha256": "1c2577033d1b1e43bdad95c07579bee64e573b3ac81c494427595050d3793750",
+        "oracleMeaning": "Same private scoped source-before-effect guard; corrected exact light.fixture_pad/off rather than old alias/other entity; exactly one effect; not reusable."
+      },
+      {
+        "caseId": "missing-reference",
+        "fullClosedCaseCanonicalSha256": "2d29443c073713e71f2ab1fbaa48e842d8be181331383ceaad773503c8e3dc42",
+        "inputCanonicalSha256": "f4ae0fde3143069f1174ac02ad3efd172129ed5afe69115adc97f234caddabb7",
+        "oracleCanonicalSha256": "26080f85e8601734491d3e7f7f93f4a3c5bdca633b123bc6d03b961c0b01195d",
+        "oracleMeaning": "No effect; recall flagfalse does not forbid optional recall. No exact clarification sentence is required by the original oracle."
+      },
+      {
+        "caseId": "private-first",
+        "fullClosedCaseCanonicalSha256": "a776af888e393e4af517837907066a4d92b3a724b739e089b61998bf05c4b0cc",
+        "inputCanonicalSha256": "e2880bc630fce90ba5675d6298bb31d788f9e05bae2aaa2ed7b8a40155b95725",
+        "oracleCanonicalSha256": "7490b0ab1a670924964a5e52df7c0f11f3b88cf523ec9724fb2095b27d18c7cf",
+        "oracleMeaning": "Private component-owner scope; recall precedes answer; answer contains original synthetic codeword and nonempty evidence_memory_ids; no effect."
+      },
+      {
+        "caseId": "household-isolation",
+        "fullClosedCaseCanonicalSha256": "c2f583d6743c1aca21a655aa36a671fb47d63f5a1ac520406c9c2a240e5a628c",
+        "inputCanonicalSha256": "1dc777294c241631709d1609073add212b235733b1740234a8427344460b1262",
+        "oracleCanonicalSha256": "317d116f239e158b124db6be62dd50c64b18501fa4e4d25aacbaf5d0a16b5b39",
+        "oracleMeaning": "Household component-home/component-speaker scope; recall before answer, no effect, original private codeword absent. No invented exact answer is required."
+      },
+      {
+        "caseId": "simple-current-control",
+        "fullClosedCaseCanonicalSha256": "f88e847c762d9353d665dcf52d3b14dd0ea6c2d9483dd39e7680a231956f5586",
+        "inputCanonicalSha256": "143e2e624ec3ab9cae2653ec2a485eaf3a9efee6a0faf3718aa07a9ffbd8c019",
+        "oracleCanonicalSha256": "90a9298b151e88a8f2f997ebba0b1c757682744bbb244013b7da8b372dfb9cd6",
+        "oracleMeaning": "Current contact reader first; no semantic recall; exactly one exact light.fixture_pad/off effect. This first interpretation is not required to have zero modelcalls; zero-model belongs to a qualified repeat."
+      }
+    ],
+    "reuseTestFunctionAstPins": {
+      "rig": "8e676e81d9624d3ad09ace049ae6aaef0fc4b5df9f3f9a23fd82450f7f717634",
+      "test_repeat_has_zero_models_new_operation_and_fresh_readback": "f0797e7cdebcc6ec454293c9ad24e75e99cac1778b3db05db9d769fb30299186",
+      "test_changed_context_source_or_authority_is_a_miss_before_effect": "68680675ec725e2c27e7786b500aa842ba70e55fffff88786a7c63c0077a6279",
+      "test_revoked_authority_propagates_and_cannot_dispatch": "3c0e42b2efe41e8283c8a28cf5d0e7bd47097020e7851481f0b449222f67a8be",
+      "test_unrelated_cache_miss_does_not_require_a_home_assistant_grant": "e611f6901f50fb61daa88445445f3889cc3128721a02cf9829c16888927444e3",
+      "test_uncertain_reused_effect_is_not_silent_or_sent_twice": "48fb03a9f054d2ff22b48985c7092c136c323a89345392d4786d23be64239455",
+      "test_changes_during_prepare_cannot_dispatch_cached_effect": "9ac5c5df1c1591ec6b5b72e46a34cf78ad553546eba646c53f57f4454004fb5f"
+    },
+    "originalReuseOracles": {
+      "newRepeat": "First response and second response silent; cumulative contactmodelcalls1; second provider eva:verified-reuse/model_attempts0; cumulativeeffects2/readbacks2; two distinct TOOL_REQUEST_ADMITTED threadIDs.",
+      "idempotentRetry": "Calling respond onthe second identical request again returns its committed reply and keeps effects2. That retry is not a new zero-model operation.",
+      "sevenMissParameters": [
+        "binding",
+        "target",
+        "question",
+        "backdated",
+        "configuration",
+        "erasure",
+        "principal"
+      ],
+      "sevenMissOracle": "After the original qualified seed, reuse_verified_action(current) returnsNone and effects/readbacks remain1/1. The oracle does not mandate a model call or exact answer after every miss.",
+      "revokedGrant": "Matching cached request raises ConversationConflict containing grant revoked; no second effect.",
+      "unrelatedMiss": "Unrelated text returnsNone even if the HA grant was revoked; no effect and no unnecessary HA authorization requirement.",
+      "lateChangeParameters": [
+        "context",
+        "erasure",
+        "grant",
+        "stop"
+      ],
+      "lateChangeOracle": "Mutations during actual prepare cannot dispatch cached effects: context/erasure returnNone; grant raises ConversationConflict; STOP raises ConversationStopped; effects/readbacks stay1/1.",
+      "uncertainReuse": "An uncertain reused effect is not silent and is not dispatched twice: response_mode reply, cumulativeeffects2/modelcalls2."
+    },
+    "comparisonAssessment": {
+      "conceptuallySameCaseIfOnlyOptionalReuseOfferBypassed": true,
+      "concreteHarnessNotYetReviewedOrApprovedForExecution": true,
+      "reference": "Keep the same actual warmed PG/cache/source/current context/authority fixture. Only bypass the optional reuse offer; do not clear cache, weaken source/proof/admission or change available tools/guidance.",
+      "candidate": "Use the actual qualified cache lookup and existing preparation/dispatch/fresh readback path.",
+      "invariants": [
+        "Equivalent seeded truth, cache qualification, source/config/context/authority and device state at each arm start; one shared mutable fixture after the first arm is not automatically the same starting case.",
+        "Within each arm the qualifying seed and measured request must be distinct new requests, and no committed measured reply may already exist in either initial clone. Two independent real-PG clones of the same pre-arm seed may use the same logical measured request ID/input across arms; each must still perform a new journal admission, operation and fresh readback. Each arm then tests its own explicit idempotent replay without a third effect.",
+        "Both arms use the same actual current image/model/current guidance and corresponding fixture scope; all changes to model-visible context must be declared.",
+        "Every original input and expected outcome stays pinned to the closed case/source hashes. Do not alter the closed source or choose new favorable criteria.",
+        "Keep real PG/cache/current-authority/preparation/readback paths; isolate connector effects and count each admission/effect/readback; no live household effect.",
+        "Training or qualifying seed, reference and candidate usage stay separate and fully reported; record failures without replacing them or fillingNULL/partialusage."
+      ],
+      "invalidAssumptionsIdentifiedBeforeHarnessCompletion": [
+        "Reusing a measured message_id whose committed reply is already present in that arm or a shared mutable database can short-circuit before candidate lookup. The same logical measured ID across independent seed clones without that committed reply is valid.",
+        "Sequential arms on the same mutable PG/cache can inherit changed journal/source/cache/device state; samefixtureobject is not proof of identical beginning.",
+        "Clearing reference cache or removing authority/memory/context changes more than the optional shortcut and invalidates the pair.",
+        "Forcing recall or a fixed clarification sentence for missing-reference adds a nonoriginal oracle.",
+        "Requiring zero models on simple-current-control first interpretation adds a nonoriginal oracle.",
+        "A failclosed cache miss is not proof that a model must start, nor proof of appropriate changed-meaning interpretation."
+      ],
+      "referenceIsControlledCounterfactualNotHistoricalImage": true,
+      "noNewProductCriteriaOrScenarios": true,
+      "sameMeasuredLogicalIdAcrossIndependentSeedClonesAllowed": true,
+      "seedAndMeasuredRequestIdsDistinctWithinEachArm": true,
+      "noCommittedMeasuredReplyInEitherInitialClone": true,
+      "noStricterCrossCloneIdDifferenceCriterionAdded": true
+    },
+    "provenanceLimits": {
+      "privateHarnessFilesMode": "0644, content pinned by hash; no permission or content mutation performed by reviewer.",
+      "componentHarnessUsesActualInstalledModelsButSyntheticScopedMemoryAndBlockedEffects": true,
+      "reuseRigUsesOriginalRealPGAndControlledModelFixture": true,
+      "fixtureModelCountsAreNotActualProviderTokensOrLatency": true,
+      "noPrivateResultProseOrBroadInventoryRead": true
+    },
+    "newTestsModelsProductionActionsOrProductWrites": 0,
+    "delivery": "Oraclepins and concrete invalid-assumption notes sent to authorized coordinator for builder relay; no direct builder message without explicit human authorization for that chat.",
+    "comparisonIdScopeClarifiedFromCoordinator": true
+  },
+  "currentCachePairCandidateReview": {
+    "checkedAtMachineUtc": "2026-10-24T03:57:07.076572+00:00",
+    "verdict": "GO_SCOPED_FIXED_HARNESS_CODE_EXECUTION_CONTEXT_AND_FRESH_CLAIMS_PENDING",
+    "bundle": "/home/administrator/project/.eva2-artifacts/e113-current-cache-pair-20261024",
+    "reviewedInputs": {
+      "firstHandoffSha256": "8c2d510f4860fa7632c91ff3586febfb7adadec6bca30975c94b965046edde7c",
+      "originalPairSha256": "e39360cdbb32bb7de2421b745db110b3c3a14a95af9eb79a73252e1015cec0fa",
+      "originalManifestSha256": "ab1a15a312b97e7d7b59b32da86d3d76df96753a4e45f20ad1e6967091ab8b5d",
+      "guidedHandoffSha256": "e34c6dafd7763ac12722863f706b5de53a5c3f33671c776aa0d140bbc48ca91a",
+      "guidedPairSha256": "c532e4f38e03e36d0931eef9c5c5b916fd9b911452d99ff39853c4419feaf203",
+      "guidedManifestSha256": "b498e5fc3a65ecb1fd066f0e41ecb126fd36aecc28516627b9ef2318daad15f8",
+      "originalSixHandoffSha256": "a56c18cc8c44328ecd5e6036a7a1f72198fad2ea80b4b6a39481c698b749a655",
+      "originalSemanticSha256": "c2fc11bb3d1db8def50f8aec35bda08cc305831566a5d750484ebac124c925cc",
+      "reviewedSemanticUsageDeltaSha256": "8e2d1e851924ceff3277f4c79c550240ee32689e803e2a7b4eb08b62b7a09101"
+    },
+    "positiveSourceChecks": {
+      "actualTemplateClonesFromSameUnmeasuredSeed": true,
+      "distinctSeedAndMeasuredRequestWithinArmSameLogicalMeasurementAllowedAcrossIndependentClones": true,
+      "measuredReplyAbsentBeforeEachArm": true,
+      "actualOriginalPortPlannerCacheAndAuthorityPathsRetained": true,
+      "referenceHidesOnlyOptionalReuseOffer": true,
+      "guidedCandidateAddsIdenticalUnchangedHaPolicyToSeedAndBothArms": true,
+      "currentSourceHashPinsAndExternalApprovalGatesExist": true,
+      "privateOutputAndGeneratedDatabaseCleanupNamesBound": true,
+      "originalCacheOracleSourceBe795Exact": true,
+      "sixOriginalInputsMemoryActionsAnd16AssertionNodesIndependentlyExact": true
+    },
+    "independentStaticSemanticCheck": {
+      "sourceSha256": "8e2d1e851924ceff3277f4c79c550240ee32689e803e2a7b4eb08b62b7a09101",
+      "compiledWithoutExecutingCases": true,
+      "caseCanonicalHash": "fdd97980a42a7f3273107ac96942f248c54c0c689868abebe1811a709eb9b376",
+      "assertionHash": "edd76e0ede77830b59f23058452f9acdd11c40fe532e551639f4c7fb22829d39",
+      "assertions": 16,
+      "memoryAndActionsAstExact": true,
+      "modelSqlFixtureOrCaseExecutions": 0,
+      "elapsedSeconds": 0.03853499097749591
+    },
+    "existingRequestCapInterfaceReview": {
+      "journalSourceSha256": "d5f13a284fc6c394b0578e06dc44c33c519bb718ad422fee9e34e0fe4ad63dc6",
+      "actualAdapterSourceSha256": "d04d71a7360ab9097831bd837d8c96ee8c1f29d8c87dc4cb8c347fcd9decc884",
+      "providerJournalingForwarded": true,
+      "beginCurrentModelRequestBeforeEveryActualAttempt": true,
+      "durableJournalUsesMinimumOfMaximum3AndExistingLimitsBeforeAdmission": true,
+      "pairProposedMaximumProviderRequests": 9,
+      "sixProposedMaximumProviderRequests": 18,
+      "actualProviderRequestsStarted": 0
+    },
+    "findings": [
+      {
+        "id": "E113-HARNESS-ORACLE-001",
+        "priority": 2,
+        "status": "closed_in_final_fixed_harness_code",
+        "sourceSha256": "c532e4f38e03e36d0931eef9c5c5b916fd9b911452d99ff39853c4419feaf203",
+        "location": "cache_pair_candidate.py:196",
+        "problem": "The closed be795 repeat oracle requires exactly2effects and2readbacks before explicit replay. Pair code only checks reads>=before_reads+1, allowing a weaker result than the unchanged oracle.",
+        "requiredCorrection": "Require exactlyone new readback per measured arm, with original seedone/readtotal2, before explicit replay.",
+        "oracleScopeCorrection": "The original post-replay assertion requires equal reply and no third effect; an added no-extra-read check after replay is diagnostic and is not a new acceptance criterion.",
+        "actualModelRunBeforeCorrectionAllowed": false,
+        "previousStatusRetained": "open_in_reviewed_e393_and_c532",
+        "resolution": "fixedCandidateReview, final0422/d37/634d/4be0/de462; independent static/fence checks and bound original focused preparation evidence."
+      },
+      {
+        "id": "E113-HARNESS-EVIDENCE-001",
+        "priority": 2,
+        "status": "closed_in_final_fixed_harness_code",
+        "originalSourceSha256": "e39360cdbb32bb7de2421b745db110b3c3a14a95af9eb79a73252e1015cec0fa",
+        "problem": "An exception before successful arm assignment originally preserved only error type/hash while unconditional cleanup dropped the fixture request/usage/fence journals. Current Recordercalls and journal usage now survive by phase, but complete current request/status/stream/failure metadata and parent failure/unknown handling must be bound before cleanup.",
+        "partialFixReviewed": "c532 appends perphase model invocation usage/error immediately and captures current journal.model_usage onfailure; semantic8e2 adds percase actual journal usage to private emit.",
+        "requiredCorrection": "Preserve the current seed/arm/case request metadata and relevant status/usage/fences in the private receipt before dropping isolated databases. Parent must stop subsequent model phases on an unresolved provider outcome and retain the failed attempt.",
+        "partialMeteringAloneIsNotAnOpenCall": true,
+        "noPartialSuccessOrCostTotalMayBeInvented": true,
+        "actualModelRunBeforeCorrectionAllowed": false,
+        "previousStatusRetained": "partly_fixed_in_c532_full_current_request_status_failure_export_pending",
+        "resolution": "fixedCandidateReview, final0422/d37/634d/4be0/de462; independent static/fence checks and bound original focused preparation evidence."
+      }
+    ],
+    "externalExecutionBindingPending": [
+      "Concrete working current-image model factory/config binding; root reported its read-only constructor trial failed before models and is fixing that environment. This review does not call that trial successful.",
+      "Exact read-only application/credential/config/testdependency mounts, fixture-only writable mounts and approved provider/fixture network/evaluator binding.",
+      "Fresh active runtime/model/evaluation claims and existing provider lease/admission plus externally bound one-attempt receipt.",
+      "Root-owned sequential pair-result/fence check before optional six-case phase; no automatic rerun."
+    ],
+    "operatorPreparationScope": "Reported model-free realPG clone/pair and4original miss/revocation mechanics plus6constructorchecks are not counted as actual usage, latency or quality evidence.",
+    "newProductOrOracleChangesSelected": false,
+    "newModelStartsSqlOrProductionActionsByReviewer": 0,
+    "sameExistingReportOnly": true,
+    "fullE113Go": false,
+    "originalReviewedVerdictRetained": "NO_GO_ACTUAL_MODEL_EXECUTION_PENDING_BUNDLED_HARNESS_FIXES_AND_EXTERNAL_BINDING",
+    "fixedCandidateReview": {
+      "checkedAtMachineUtc": "2026-10-24T04:03:10.569779+00:00",
+      "handoffSha256": "0422eee18d11e2baa145b005f6a02e17512ebb292e209c0a38477fbdfe173967",
+      "filePins": {
+        "cache_pair_candidate.py": "d37d588f275b09af0e0818f8cbf93846d65c567aea30fe4f0e223d2d078562ff",
+        "manifest.private.json": "6a082197766e9cf2615f3ad6f7e0cd07c62f63459c3aced41d74d9aebe2cfd45",
+        "fixture_journal_evidence.py": "634d8244edc3cf33e4c58fdb04929afdd56c59caf0570276ac55155c37323f4e",
+        "semantic_cases_candidate.py": "4be0a5bca3e3e958eeb54e0f68f9cb8acb4440d9961d1c64c91835697642a60c",
+        "semantic_driver.py": "de462918b74d54a5044aeb7cfd8233ad39b280f156e6e6a3a20a7d14bd63a411",
+        "semantic-driver-manifest.private.json": "ced1dbc0751da2094b734c3f779db08e30ec1859b03eb6461d95af686ffa1402"
+      },
+      "allFinalFileSetsAndParentSemanticManifestBindingsExact": true,
+      "reviewedDelta": "Guidedc532 to finald37, journal helper634d, semantic4be0 and driverde462. Originale393/c532/c2fc and findings remain preserved.",
+      "originalReadbackOracleRestoredBeforeReplay": true,
+      "postReplayReadCountDiagnosticOnly": true,
+      "sameReplyAndNoThirdEffectOriginalOraclePreserved": true,
+      "perPhaseInvocationAndNativeRequestFencesFsyncedBeforeCleanup": true,
+      "failureBeforeArmSummaryPreservesCurrentCallsAndBothNativeDatabaseSnapshots": true,
+      "captureFailureRetainsAffectedDbPersistenceFailureRetainsAllDbs": true,
+      "semanticCurrentCaseCallsSequenceEffectsQueriesAndNativeFencesEmittedBeforeCleanup": true,
+      "unresolvedProviderOutcomeStopsBeforeNextArmOrCase": true,
+      "partialMeteringOrUnknownCreditsAloneNotAnActiveCall": true,
+      "sameExistingFactoryAstExtractedBySemanticDriver": true,
+      "existingRequestJournalsEnforceMaximum3PerSeedArmOrCase": true,
+      "pairMaximumProviderRequests": 9,
+      "sixMaximumProviderRequests": 18,
+      "independentModelFreeChecks": {
+        "allPinsAndClosedSixCases16AssertionsMemoryActionsExact": true,
+        "compiledWithoutCaseExecution": true,
+        "requestFenceStatesPassed": 4,
+        "states": [
+          "missing_record_stops",
+          "failed_unclosed_stops",
+          "partial_success_terminal",
+          "closed_failed_unknowncost_terminal"
+        ],
+        "elapsedSeconds": 0.021053848031442612,
+        "modelSqlFixtureOrCaseExecutions": 0
+      },
+      "boundOperatorPreparationReceipts": {
+        "readbackExactSha256": "bdc88a7961efcfb42f5d5e465d5a2746836b1580b910d21dd9b74213d4994aea",
+        "readbackStatus": "pair_completed",
+        "readbackFixtureMechanicsOnly": true,
+        "failureBeforeSummarySha256": "050e9449f4099e31dbbd8ce01d08cc0aff4dd273e7571fc7ad2f8792b6a9e11a",
+        "failureStatus": "stopped_or_failed",
+        "failurePhasesPreserved": [
+          "seed",
+          "reference"
+        ],
+        "failureNativeSnapshots": 2,
+        "cleanupErrors": [],
+        "actualProviderCalls": 0,
+        "notActualLatencyTokenOrQualityEvidence": true
+      },
+      "goScope": "Harness logic, original oracle preservation, actual-clone comparator design, journal request caps and failure/evidence handling only.",
+      "executionGo": false,
+      "remainingBeforeExecution": [
+        "Concrete working current-image model factory/config binding; root reported its read-only constructor trial failed before models and is fixing that environment. This review does not call that trial successful.",
+        "Exact read-only application/credential/config/testdependency mounts, fixture-only writable mounts and approved provider/fixture network/evaluator binding.",
+        "Fresh active runtime/model/evaluation claims and existing provider lease/admission plus externally bound one-attempt receipt.",
+        "Root-owned sequential pair-result/fence check before optional six-case phase; no automatic rerun."
+      ],
+      "noRuntimeProviderOrBootstrapFixSelectedByReviewer": true,
+      "newActualModelsOrProductionActions": 0,
+      "fullE113Go": false
+    }
+  },
+  "constructorSqlGuardReview": {
+    "checkedAtMachineUtc": "2026-10-24T04:20:45.799323+00:00",
+    "verdict": "GO_SCOPED_ORIGINAL_CONSTRUCTOR_GUARD_LOGIC_FACTORY_NEXT_READ_AND_EXECUTION_PENDING",
+    "handoffSha256": "2ab511dd2b3f8257b9108b769e8f0222f57d457291742b9eb08f88db64222585",
+    "sourceSha256": "9781f2b9ed066501241bbe83ac380dcc86276fb65fdf66e53461e8620105f345",
+    "guardManifestSha256": "8e4f9b6e2851b5b30f1319ff6a47cd22b219005e01b44cc0fe616e0978034fae",
+    "traceBindingSha256": "830bf2d6d8b4bc7f49826f96a5dae16ebc3e02eff366989f269ec6b33d4cfd73",
+    "originalTraceSha256": "7397b5f697cc12a7ba831aa9f0974a1decacaa07b5110173a4e72a89bdf980cc",
+    "pairSha256": "568b165722f3d8779b4c7dd7f386997c39549b88ee2a6ab64b154c9ef48d7af7",
+    "parentManifestSha256": "c619f387534bb40e3cbffec7e54669c701d1d3254fc4424556d54be17c0f4c5e",
+    "semanticDriverSha256": "03477ccbb2fc1931da997bf49afa8b235fa6b56214ce4fd3499aee2521c74726",
+    "semanticManifestSha256": "0f7fc9607b44069bb0571bee59e138d06aed4a465963e203f25bee33e050488d",
+    "factoryProbeSha256": "c3e9b6f2102e07be37329e2395029384ef2907a2cf3fbf9ae87b503d82cd6b94",
+    "scope": "Only the private constructor guard and narrow bootstrap/reporting deltas. Final0422harness/oracle review remains; no whole-harness or closed-case rerun.",
+    "canonicalOriginalMethods": {
+      "validate_admission_authority": "549f769a2ce4557be4f076d22c5493839d69ed42b994b73f6f43bebeec60d252",
+      "validate_owner_binding": "5feaad8ac1d4a34b657a627b64d8b9534485929ef61d2d024242dce0c41a4fd1",
+      "owner_service_init": "750006c88e898bd1ae1d2483f558f977b91358093749c696da7a42b4f784b23a",
+      "allThreeAstPinsIndependentlyMatchedAndBodiesRead": true,
+      "bothOriginalForShareQueriesOwnerBindingAndActivePrincipalChecksRetained": true,
+      "originalFinallyTransactionRollbackRetained": true,
+      "originalClassAndAuthorityMethodsNeverReplaced": true,
+      "onlyRuntimeCompositionNameTemporarilyWrappedToEnterScope": true
+    },
+    "sourceChecks": {
+      "canonicalScopeIsContextVarBoundToOneExactProtectedEngine": true,
+      "scopeResetOnSuccessAndException": true,
+      "exactFiveOriginalScopeOwnerStatementsAndExactCompiledParametersOnly": true,
+      "originalPinnedSelectExpressionsCompiledWithoutSqlRewriting": true,
+      "noPrefixWhitespaceNormalizationOrBroadSelectParser": true,
+      "batchDmlDdlNewSqlAndWrongParametersDenied": true,
+      "outsideScopeAndFutureTransactionsReadonly": true,
+      "rowLocksOutsideCanonicalScopeDenied": true,
+      "engineRouteAndCompositionHooksRestoredInFinally": true,
+      "constructorEnginesDisposedAndFutureReadOnlyPredicateRetained": true,
+      "fixtureEngineRemainsOutsidePrivateConstructorGuard": true,
+      "auditContainsSqlHashesAndNoParameterValues": true
+    },
+    "independentChecks": {
+      "passed": 17,
+      "checks": [
+        "exact_recorded_read",
+        "exact_five_compiled_original_statements",
+        "parameters_forwarded_without_mutation",
+        "changed_canonical_parameters",
+        "canonical_scope_dml",
+        "canonical_scope_newread",
+        "canonical_scope_wrong_engine",
+        "scope_restored_on_normal_exit",
+        "scope_restored_on_error",
+        "lock_outside_scope",
+        "new_read_outside_scope",
+        "dml_outside_scope",
+        "executemany",
+        "no_whitespace_normalization",
+        "no_multi_statement",
+        "dispose_and_future_readonly_predicate",
+        "later_reopened_write"
+      ],
+      "method": "Real original method AST/dialect compilation plus fake engine/event/cursor only; original methods were not replaced and no canonical database authority query was executed by reviewer.",
+      "subprocessSeconds": 1.8236491259885952,
+      "commandWallSeconds": 2.4531079,
+      "actualDatabaseQueriesModelsOrProductionActions": 0,
+      "parameterValuesEmitted": false
+    },
+    "operatorLocalChecks": {
+      "receiptSha256": "9ba59709099efe906c018b455fd48dfa8c18a9d6e7b9f2227c708bfba981d674",
+      "reportedPassed": 19,
+      "actualDatabaseQueriesModelsOrProductionActions": 0,
+      "notActualFactorySuccess": true
+    },
+    "rootActualLimitedProbeReadback": {
+      "contextSha256": "dca3ccc7d4271543f1a256c58f7398e067878ba4c1eb387eb245243c6512f673",
+      "stdoutSha256": "f680ee07e8eebfa64e47bbe4a93ce7aac04648a1497643c15442cf3576a85972",
+      "image": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+      "status": "factory_probe_stopped",
+      "errorType": "RuntimeError",
+      "actualProviderCalls": 0,
+      "bothOriginalForShareStatementHashesAdmittedInCanonicalScope": [
+        "622dbe610780273feee67ba9aff94ab191cf391fc0c3f3790eb0001ec3a12c79",
+        "a41535b16855c62d71bfcb7a2f89ecc2c1a79bbdb12a78d6149500b05fb91198"
+      ],
+      "subsequentNormalReadonlyBeginObserved": true,
+      "nextUnknownReadBlockedOutsideCanonicalScope": "a8137f8f3987e740a73b29dbf2b34e15778003211ca5dc199e807445bd958e1d",
+      "noFactoryReadinessOrModelSuccessClaim": true,
+      "reviewerDidNotRepeatProbe": true,
+      "stderrOrConnectionSecretsNotRead": true
+    },
+    "remaining": "The next source-bound constructor read/whitelist addition and full working execution binding require their concrete small delta and root readback. This approval binds the original978/8e4f/830 scope only, grants no model lease or production execution and does not approve a broader whitelist.",
+    "newCriteriaProductChangesOrOracleChanges": false,
+    "fullE113OrExecutionGo": false,
+    "householdConstructorSourceInspection": {
+      "checkedAtMachineUtc": "2026-10-24T04:25:21.835840+00:00",
+      "scope": "Original second canonical owner-validation callsite only, before the concrete combined private guard delta.",
+      "actualCoreContainer": "cfb719951316909333d5c2ac1f0e050befa0a3e35939f8c125962ec6750884be",
+      "source": "src/eva/bootstrap/household_work.py",
+      "actualInstalledSourceSha256": "48e566719bca0a4a66b891e0e03f975bf88267be194dc5bf0cb3dcec059f14bd",
+      "constructorAstSha256": "546e3a2c765550f05b38e841b7a9b283d58d0a54c8a86d45e9849f6a03bdbffa",
+      "checkoutConstructorMatchesActualInstalled": true,
+      "signature": "HouseholdWorkServer(engine, scope, authority)",
+      "originalSequence": [
+        "Require distinct HouseholdResearchProfile type.",
+        "Call unchanged authority.validate_current().",
+        "Bind conversation_scope separately from actual storage scope.",
+        "Construct actual PostgresDelegatedWorkStore using the supplied engine and storage scope, preserving household_authorizer=authority.validate_spec and household_clock=authority.clock.",
+        "Call original store.validate_admission_authority with policy.owner_principal_id and policy.principal_binding_id.",
+        "Construct HouseholdWorkSessions using that same store and authority."
+      ],
+      "privateGuardExtensionBoundary": "Temporary composition binding may scope only the same canonical owner SELECT validation on the exact supplied engine/storage scope. Keep the original constructor, release/type/current-authority checks, source authorizer/clock, sponsor validation and sessions intact. External conversation scope or voice consent cannot replace durable storage authority.",
+      "sameOriginalRollbackAndTwoForShareMethodsStillRequired": true,
+      "unwrittenGuardExtensionApproved": false,
+      "knownHouseholdResearchWorkerProfileMismatchNotResolvedOrReclassified": true,
+      "guardChecksOrClosedHarnessTestsRepeated": 0,
+      "databaseQueriesModelsOrProductActions": 0
+    }
+  },
+  "constructorCompleteReadAndExecutionContextReview": {
+    "checkedAtMachineUtc": "2026-10-24T04:37:34.446954+00:00",
+    "verdict": "GO_SCOPED_ONE_BOUND_PAIR_THEN_SIX_AFTER_FRESH_COORDINATOR_CLAIMS_AND_APPROVAL",
+    "handoffSha256": "624a20d7dff2b888f318e3f721d2bfc3d5846795e706fb1f5aafe923f2c2bd1c",
+    "parentManifestSha256": "0b3a92da6a763d07b76252926456c1eb62bce43ed4191ae2dd0af51d35a35f76",
+    "pairSha256": "7f8d5ce588369b64a82f13c7f625c1870911c832b96c75dade88e4f17f4ac5b7",
+    "guardSha256": "63e6e02079fc95fc3e87eee8c30d051277e777caba1c4f77d90c93fd64d8c9c1",
+    "guardManifestSha256": "4cd3dcac91507ff889d0d4b241db5920b320435a449875b8315fa929295586b8",
+    "traceBindingSha256": "0575efdad2fc28e3d4144b90ed96b8526d90a1ae447519d5cb710a150b03291c",
+    "semanticManifestSha256": "b1b3d1e5dbb5c47bc696ee119ba43d1628404bafbb7e69145fe295c3196fe108",
+    "scope": "Only five added exact source-bound readonly reads, original household-constructor context and actual final execution binding; no old17guardchecks or harness/oracle suite repeated.",
+    "addedReads": [
+      "a8137f8f3987e740a73b29dbf2b34e15778003211ca5dc199e807445bd958e1d",
+      "620c83ff2a25e9fac5f4e132d4f6f582558fdd57b13eb7c66c4400639861994e",
+      "810bf3b2b54bde230200686e631a7bd32ab544e8db8a80e7075d22f756599ca1",
+      "23410b77b4cbca27d1e3d615114844e82a5c071432e44516804be7f9eeeedb5e",
+      "7a332ce80101c9d6c202b85c2acab3ffef680656b7256b675804ef57e728ed06"
+    ],
+    "originalReadSourceBodiesAndAstPinsMatched": true,
+    "readonlyScope": "Original transaction-local GUCs, MVCCtimelinecheckpoint/events and current verifiedactiveunexpiredrecipientownerJOIN; no broad SQLprefix/parser or write allowance. Normal transactions stayREADONLY.",
+    "householdContext": "Captured original ownerstore must have the same engine identity and supplied real storage scope. The original pinned HouseholdWorkServer constructor and all release/current authority/sponsor/authorizer/clock/session checks run unchanged under the same exact five ownerquery/parameter scope; rollback and temporary hook restoration remain.",
+    "rootFactory": {
+      "receiptSha256": "9eed87e80d7c20d1f43f531574c1975056a411f6ce9890bc9648ec9443b81116",
+      "contextSha256": "6fbc56e486d112498709feb7b83d39556e050df99559f271c3d7aeb2f7023c66",
+      "stdoutSha256": "0ebc74256c0ee1a08b18df62732a86a600bf406306563b082e4a4ac522979102",
+      "status": "same_existing_factory_constructed",
+      "admittedAuditRows": 68,
+      "canonicalOwnerRows": 10,
+      "stderrBytes": 0,
+      "providerCalls": 0,
+      "productionDataWrites": 0
+    },
+    "executionBinding": {
+      "sealSha256": "816d6a9305aca8edca3dfec3b24c141614595365fd1a56572f1fb80048c535c7",
+      "all13SealedFilesAndNestedManifestPinsVerified": true,
+      "pairComposeSha256": "eefbd51cb3b56d42deef6fd9dcac34bbb8038958cf11534f3237138633a7365f",
+      "sixComposeSha256": "3c5591781ee89572e6d9f322b8078f9b984a6794efabb3542b02772e6fc32867",
+      "image": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+      "uidGid": "65532:65532",
+      "rootFilesystemReadonly": true,
+      "all26ProductionMountsSameActualSourceReadonly": true,
+      "onlyWritableBind": "/run/e113-output",
+      "tmpfs": "/tmp:rw,nosuid,nodev,mode=1777",
+      "capDropAllNoNewPrivileges": true,
+      "exactPairAndSixOriginalCommands": true,
+      "bothRecipeEnvironmentsEqual": true,
+      "declaredInfrastructureOnlyOverrides": {
+        "PYTHONPATH": "/run/e113-pair:/run/e113-test-deps:/opt/eva/src",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1"
+      },
+      "allOtherCoreEnvironmentUnchanged": true,
+      "composeEscapedDollarNormalizationRequired": true,
+      "testDependencyManifestSha256": "5257479126517934f22bdf31698f08688e10177b329a5762d7156e41985077b5",
+      "testDependencies": "Declared existing pinned pytest-only library copy,471files/0pip; no provider/model/identity/application dependency replacement. Actual-image import previously passed; no repeat by reviewer.",
+      "networks": [
+        "eva2-managed-b-slot3_default",
+        "eva2-workspace-connectors",
+        "eva2-e113-comparison-20261024"
+      ],
+      "fixturePgSystemIdentifier": "7700074341122310178",
+      "fixturePostgresVersion": 180006,
+      "serverIdentityCheckBeforeOwnDatabaseWrites": true
+    },
+    "environmentGuardCorrection": "Reviewer exact-environment/prefix assertions were too strict for the explicitly declared three test infrastructure overrides. Both stopped before actions; corrected scope is not a blocking product defect or a new criterion.",
+    "executionConditions": [
+      "Receive fresh root runtime/model/evaluator claims and external approval bound to this report and exact sealed context. Existing provider lease/admission remains required.",
+      "One pair max9; check real result and unresolved fences before original six max18. Preserve failures and unknown measurements; no automatic rerun."
+    ],
+    "noLeaseIssuedByReviewer": true,
+    "actualProviderCallsStarted": 0,
+    "fullE113OrQualitySavingsAcceptance": false
+  },
+  "actualOneShotModelComparisonReview": {
+    "checkedAtMachineUtc": "2026-10-24T05:01:10.294613+00:00",
+    "verdict": "GO_E1_13_TECHNICAL_ORIGINAL_CRITERIA_WITHIN_DECLARED_EVIDENCE",
+    "technicalCompletion": true,
+    "originalDoneWhenUnchanged": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.",
+    "executionRoot": "/home/administrator/project/.eva2-artifacts/e113-existing-metadata-audit-20261024/coordinator-registration/execution",
+    "pins": {
+      "operator/execution-approval.private.json": "ef2e17bb6df6b423ec90ce9d19e40a70d219036d96f4508da5d9ca164df790ac",
+      "fresh-runtime-preflight.private.json": "872a22f389274a7113d135658d807f9299187a850719321df96ab2460bf4cf47",
+      "sealed-bundle-final.private.json": "816d6a9305aca8edca3dfec3b24c141614595365fd1a56572f1fb80048c535c7",
+      "pair-compose.private.json": "eefbd51cb3b56d42deef6fd9dcac34bbb8038958cf11534f3237138633a7365f",
+      "six-compose.private.json": "3c5591781ee89572e6d9f322b8078f9b984a6794efabb3542b02772e6fc32867",
+      "tester-pre-execution-review.private.json": "0aa1f770981b3a4a71ee70ce44c4043bad9c12993d2bdd58fa1ae7414e6f59ff",
+      "tester-pair-dispatch.private.json": "2ec0cc10e8c6f26822132d63e2fd640467ba57d12ccbd4e45420638b895a0fff",
+      "tester-six-dispatch.private.json": "da5008bfc86ae2f98ce79cef28e6fc270c09a140a46b8bcc520bfdef0b71f553",
+      "tester-pair-verdict.private.json": "244dfd6049aa92160b5cd864ee53c06a91a530220ecd3a9038d7cd34b96fe615",
+      "tester-six-verdict.private.json": "619975adeed19ad7ff2cf3dd6f98aebaa6c4cf87de6cb5806c34a8ee28ce1806",
+      "tester-six-verdict-corrected.private.json": "2c170550158f4e231fce70372e707d91babe145fa5b1b5748bdf64ecee319d4f",
+      "tester-pair-create.stdout.private": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tester-pair-create.stderr.private": "c1d2a5fa09079a0aa2abf95a59866192ba9a8317ebf059c8f4190129cfbe4cbe",
+      "tester-pair-start.stdout.private": "90be4e007148fb697bb13a66f4df4210730af06fa80cdcd061fb9b725c320539",
+      "tester-pair-start.stderr.private": "88b0a345ca0fdc85f4c1914864698f8cf04fb0a0c4500469ff769d880b16e71a",
+      "tester-six-create.stdout.private": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tester-six-create.stderr.private": "94500c09c43e9a0a8cc2a93d22a2cc9d3db9561fe307a35c9794dbbe99d37fdb",
+      "tester-six-start.stdout.private": "b5034130651eba2a4ba84121c8f0ae65e249d22ee9750a0125edb32970a265ed",
+      "tester-six-start.stderr.private": "88b0a345ca0fdc85f4c1914864698f8cf04fb0a0c4500469ff769d880b16e71a",
+      "output/pair-result.private.json": "bbbe66dd5d00e23ec2159741f43e86cbf03e5e1fd6db3e534d7117bfa290c3ae",
+      "output/pair-result.private.json.jsonl": "df2b111b78a87f2e409de8f54f244968081454f77c714a65984fe565eff65161",
+      "output/six-result.private.json": "7f1fb2a2083c7be925c832bfb8b2ee2650452ae0450f5ec8ce5386363f8369e9",
+      "output/six-result.private.json.jsonl": "1b3786cf041600e6a256868be249e180fc6641e97445422d39e570137462c857"
+    },
+    "exactPreExecutionReviewPreserved": {
+      "path": "/home/administrator/project/.eva2-artifacts/e113-existing-metadata-audit-20261024/coordinator-registration/execution/tester-pre-execution-review.private.json",
+      "sha256": "0aa1f770981b3a4a71ee70ce44c4043bad9c12993d2bdd58fa1ae7414e6f59ff"
+    },
+    "execution": {
+      "oneTimeRootApprovalSha256": "ef2e17bb6df6b423ec90ce9d19e40a70d219036d96f4508da5d9ca164df790ac",
+      "image": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+      "pairContainer": "504613c737c8e1ccd98bd21201cb79c04e72fbe9228d500c03fdbc903b6aeb91",
+      "sixContainer": "558dfaaeac70356eb392914628d0aeb20bb245540b9a6eb3e609b3eeb52de99b",
+      "materializedImageUidMountsCommandEnvAndNetworksVerifiedBoth": true,
+      "pairReturnCode": 0,
+      "sixReturnCode": 0,
+      "pairProcessSeconds": 14.882394825981464,
+      "sixProcessSeconds": 33.12455750501249,
+      "sumProcessSeconds": 48.006952330993954,
+      "automaticRetries": 0,
+      "providerRequestsMaximum": {
+        "pair": 9,
+        "six": 18
+      },
+      "observedNativeRequestAdmissions": {
+        "qualifyingSeed": 1,
+        "reference": 1,
+        "candidate": 0,
+        "six": 11
+      },
+      "rawPairActualProviderCalls": null,
+      "noUnknownTopCounterFilled": true,
+      "credits": null
+    },
+    "sameCasePair": {
+      "independentPass": true,
+      "sameQualifiedPgSeedAndSemanticInput": true,
+      "arms": {
+        "reference": {
+          "providerRequests": 1,
+          "elapsedMs": 1747.814413974993,
+          "usage": {
+            "input_tokens": 3099,
+            "measurement": "measured",
+            "model_attempts": 1,
+            "output_tokens": 39,
+            "tool_calls": 1
+          },
+          "provider": "eva:verified-action",
+          "newEffects": 1,
+          "freshReads": 1,
+          "newOperations": 1,
+          "idempotentReplay": true,
+          "replayExtraReadsDiagnostic": 0
+        },
+        "candidate": {
+          "providerRequests": 0,
+          "elapsedMs": 151.45266597392038,
+          "usage": {
+            "input_tokens": 0,
+            "measurement": "measured",
+            "model_attempts": 0,
+            "output_tokens": 0,
+            "tool_calls": 0
+          },
+          "provider": "eva:verified-reuse",
+          "newEffects": 1,
+          "freshReads": 1,
+          "newOperations": 1,
+          "idempotentReplay": true,
+          "replayExtraReadsDiagnostic": 0
+        }
+      },
+      "seedUsageSeparate": {
+        "input_tokens": 3099,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 39,
+        "tool_calls": 1
+      },
+      "newOperationAndFreshReadbackEachArm": true,
+      "explicitIdempotentReplayNoThirdEffect": true,
+      "fourOriginalRealCacheContextSourcePrincipalRevokedOraclesPassed": true,
+      "fencesUnresolved": 0,
+      "fixtureMechanicsOnly": false
+    },
+    "originalSix": {
+      "independentPass": true,
+      "passed": 6,
+      "total": 6,
+      "cases": [
+        {
+          "case": "routine-first",
+          "reportedPassed": true,
+          "independentOriginalOraclePassed": true,
+          "providerRequests": 2,
+          "generateInvocations": 2,
+          "elapsedMs": 4439.298,
+          "replyUsage": {
+            "input_tokens": 5809,
+            "measurement": "measured",
+            "model_attempts": 2,
+            "output_tokens": 87,
+            "tool_calls": 2
+          },
+          "actualRequestJournalUsage": {
+            "input_tokens": 5809,
+            "measurement": "measured",
+            "model_attempts": 2,
+            "output_tokens": 87,
+            "tool_calls": 2
+          },
+          "memoryRecalls": 1,
+          "sourceBeforeAnswerOrEffect": true,
+          "effects": 1,
+          "unresolvedProviderRequests": 0
+        },
+        {
+          "case": "corrected-reference",
+          "reportedPassed": true,
+          "independentOriginalOraclePassed": true,
+          "providerRequests": 2,
+          "generateInvocations": 2,
+          "elapsedMs": 4841.492,
+          "replyUsage": {
+            "input_tokens": 5816,
+            "measurement": "measured",
+            "model_attempts": 2,
+            "output_tokens": 87,
+            "tool_calls": 2
+          },
+          "actualRequestJournalUsage": {
+            "input_tokens": 5816,
+            "measurement": "measured",
+            "model_attempts": 2,
+            "output_tokens": 87,
+            "tool_calls": 2
+          },
+          "memoryRecalls": 1,
+          "sourceBeforeAnswerOrEffect": true,
+          "effects": 1,
+          "unresolvedProviderRequests": 0
+        },
+        {
+          "case": "missing-reference",
+          "reportedPassed": true,
+          "independentOriginalOraclePassed": true,
+          "providerRequests": 2,
+          "generateInvocations": 2,
+          "elapsedMs": 4312.229,
+          "replyUsage": {
+            "input_tokens": 5754,
+            "measurement": "measured",
+            "model_attempts": 2,
+            "output_tokens": 60,
+            "tool_calls": 1
+          },
+          "actualRequestJournalUsage": {
+            "input_tokens": 5754,
+            "measurement": "measured",
+            "model_attempts": 2,
+            "output_tokens": 60,
+            "tool_calls": 1
+          },
+          "memoryRecalls": 1,
+          "sourceBeforeAnswerOrEffect": true,
+          "effects": 0,
+          "unresolvedProviderRequests": 0
+        },
+        {
+          "case": "private-first",
+          "reportedPassed": true,
+          "independentOriginalOraclePassed": true,
+          "providerRequests": 2,
+          "generateInvocations": 2,
+          "elapsedMs": 4277.417,
+          "replyUsage": {
+            "input_tokens": 5805,
+            "measurement": "measured",
+            "model_attempts": 2,
+            "output_tokens": 60,
+            "tool_calls": 1
+          },
+          "actualRequestJournalUsage": {
+            "input_tokens": 5805,
+            "measurement": "measured",
+            "model_attempts": 2,
+            "output_tokens": 60,
+            "tool_calls": 1
+          },
+          "memoryRecalls": 1,
+          "sourceBeforeAnswerOrEffect": true,
+          "effects": 0,
+          "unresolvedProviderRequests": 0
+        },
+        {
+          "case": "household-isolation",
+          "reportedPassed": true,
+          "independentOriginalOraclePassed": true,
+          "providerRequests": 2,
+          "generateInvocations": 2,
+          "elapsedMs": 3615.354,
+          "replyUsage": {
+            "input_tokens": 5881,
+            "measurement": "measured",
+            "model_attempts": 2,
+            "output_tokens": 66,
+            "tool_calls": 1
+          },
+          "actualRequestJournalUsage": {
+            "input_tokens": 5881,
+            "measurement": "measured",
+            "model_attempts": 2,
+            "output_tokens": 66,
+            "tool_calls": 1
+          },
+          "memoryRecalls": 1,
+          "sourceBeforeAnswerOrEffect": true,
+          "effects": 0,
+          "unresolvedProviderRequests": 0
+        },
+        {
+          "case": "simple-current-control",
+          "reportedPassed": true,
+          "independentOriginalOraclePassed": true,
+          "providerRequests": 1,
+          "generateInvocations": 1,
+          "elapsedMs": 1550.516,
+          "replyUsage": {
+            "input_tokens": 2881,
+            "measurement": "measured",
+            "model_attempts": 1,
+            "output_tokens": 39,
+            "tool_calls": 1
+          },
+          "actualRequestJournalUsage": {
+            "input_tokens": 2881,
+            "measurement": "measured",
+            "model_attempts": 1,
+            "output_tokens": 39,
+            "tool_calls": 1
+          },
+          "memoryRecalls": 0,
+          "sourceBeforeAnswerOrEffect": true,
+          "effects": 1,
+          "unresolvedProviderRequests": 0
+        }
+      ],
+      "originalCaseHash": "fdd97980a42a7f3273107ac96942f248c54c0c689868abebe1811a709eb9b376",
+      "original16AssertionHash": "edd76e0ede77830b59f23058452f9acdd11c40fe532e551639f4c7fb22829d39",
+      "originalInputsMemoryActionsAndOraclesUnchanged": true,
+      "nativeProviderAdmissions": 11,
+      "fencesUnresolved": 0,
+      "notAScriptedModelChoice": true,
+      "originalSyntheticMemoryAndBlockedEffectsBoundaryPreserved": true
+    },
+    "retainedOriginalHandoff": {
+      "oldReorderEvidenceSha256": "8ae731b5d0e11de54a4d30e2c4c80ffd4b8a308e90212b765613662d15c11df6",
+      "oldIndependentReviewSha256": "548fbb49bd0a86e9b374a7cc6523948594cf4de4038bcb1ca7dee97121f845a4",
+      "sixSameSchedulerCasesAndFourteenExistingGuardChecksAcceptedNotRepeated": true,
+      "twoNaturalPrivateInitiativeSourceAdoptionWorkerStartResultsObserved": true,
+      "recordedAdoptionToNativeStartSeconds": [
+        105,
+        0
+      ],
+      "recordedNativeStartToResultSeconds": [
+        55,
+        96
+      ],
+      "currentRuntime933978StillPreservesReviewedOrder": true,
+      "oldDifferentCasesNotUsedAsSameCaseSpeedComparison": true
+    },
+    "metering": {
+      "observedNativeRequestsDeduplicatedAcrossPgClones": 13,
+      "all13RecordedUsageMeasuredAndOutcomeSucceeded": true,
+      "sumKnownRequestCountersForThisBoundedExperiment": {
+        "model_attempts": 13,
+        "input_tokens": 38144,
+        "output_tokens": 477,
+        "tool_calls": 10
+      },
+      "seedAndReferenceAndSemanticSamplesSeparatelyRetained": true,
+      "rawNullCounterAndUnknownCreditsPreserved": true,
+      "developmentTokens": null,
+      "developmentCredits": null,
+      "runtimeCreditsOrUsdCost": null,
+      "notAccountWideUsageOrGeneralModelQualityComparison": true
+    },
+    "failureRetentionAndCleanup": {
+      "pairCleanupErrors": [],
+      "pairRetainedDatabases": [],
+      "sixCleanupErrors": [],
+      "sixRetainedDatabase": null,
+      "nativePendingOrUnclosedFailedProviderFences": 0,
+      "allStdoutStderrReceiptsAndProgressPreserved": true,
+      "originalHarnessFailuresAndFixedSourcePinsRetained": true,
+      "firstIndependentReaderArtifactRetained": true,
+      "readerCorrection": "Initial post-reader had hardcoded private instead of original MemoryAudience.private_person.kind=private_person, falsely flagging exactlyfourprivatecases. Corrected against unchanged original class/source and actual scoped query metadata only; old observer artifact retained, no model rerun, oracle edit or product fix.",
+      "correctedReaderSha256": "2c170550158f4e231fce70372e707d91babe145fa5b1b5748bdf64ecee319d4f"
+    },
+    "limits": [
+      "One controlled current-image cache pair; no general latency distribution or universal optimization claim.1747.814msversus151.453ms measures the fixture respond path, excludes appbootstrap/PGcloning and is not whole-householdHTTP/voice latency.",
+      "Six original real-model cases use declared synthetic scoped memory and blocked effects. They validate original source/uncertainty/privacy oracles, not new physical household effects or universal model reliability.",
+      "Existing natural initiative successes remain historical23Octobercases; current exact-source order is preserved. They are not claimed as newly generated current-image family events.",
+      "No family-week or owner acceptance condition is added toE1.13. Those broader project criteria remain separate and open.",
+      "No production source/install/voice changes or new provider routes were introduced by the reviewer; unknown development/runtime monetary cost stays unknown."
+    ],
+    "priorCriteriaAssessmentPreserved": [
+      {
+        "originalSentence": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde.",
+        "status": "partly_covered_full_model_round_requirement_open",
+        "covered": "De bewaarde oorspronkelijke fix herordent bestaande callbacks zonder extra callback of modelaanroep. Zes gelijke schedulerscenarios falen opde referentie en slagen opkandidaat en destijds exactgeinstalleerde image. Veertien bestaande idle/foreground/capacity/STOPcontroles slagen. Vijftien begrensde prefilterbeslissingen hadden geen modelstart.",
+        "stillMissing": "Daarmee is nog niet per bekende toegestane controle of vastgelegde uitvoerstap aangetoond welke werkelijke modelronde nodig of overbodig is. De twee geslaagde taken bewijzen geen verwijderbare ronde.",
+        "oldChecksRerun": false
+      },
+      {
+        "originalSentence": "Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging.",
+        "status": "natural_bounded_curiosity_observed_other_conditions_not_fully_covered",
+        "covered": "Twee natuurlijke private-opportunity keuzes gebruiken aantoonbaar Astra, behouden hun oorspronkelijke bronbinding en bereiken een geslaagd niet-leeg resultaat. De oorspronkelijke review bewaart foreground/capacity/STOP/failuregrenzen.",
+        "stillMissing": "De aangeleverde metadata bevat geen ongewijzigde verwachte uitkomsten waarmee passende afweging voor gewijzigde betekenis, onzekerheid en conflicterende bedoelingen en gemiste relevante aanleidingen kan worden beoordeeld. Beide resultaten hebben semantic_verification=false."
+      },
+      {
+        "originalSentence": "Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking.",
+        "status": "scheduler_subcomparison_and_natural_measurement_covered_full_comparison_open",
+        "covered": "De bestaande zes scenarioparen leveren een beperkte vergelijking van schedulerwerking. De historische gewone taken leveren nu werkelijke keuze/werkstart/resultaattijden, drie requestparen pertaak, exacte bron/spec/resultaatbindingen en bewaarde releasepins.",
+        "stillMissing": "Voor dezelfde praktijkgevallen ontbreekt een gekoppelde referentie/kandidaatvergelijking op daadwerkelijk gebruikte bron/configuratie met modelaanroepen, tokens, reactietijd, fouten en gemiste aanleidingen plus behouden werking.55versus96seconden zijn verschillende taken met verschillende modelprofiel/programmapins; de oude303seconden is ook een andergeval. Native gebruik blijftpartial; een complete kostenbesparing is niet aangetoond.",
+        "newSavingsPercentageOrTimingThresholdRequired": false
+      },
+      {
+        "originalSentence": "Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.",
+        "status": "covered_for_the_delivered_narrow_reorder_and_metadata_handoff",
+        "covered": "De bewaarde onafhankelijke review en oplevering betreffen uitsluitend volgorde van bestaande callbacks. De actuele werkelijk geinstalleerde volgorde is bevestigd. Deze bewijsaanvulling bouwt niets en introduceert geen score, planner, cachebevoegdheid of nieuwe rechten.",
+        "boundary": "Dit is dekking van de concrete bestaande oplevering, geen ongerichte uitspraak over iedere toekomstige of ongerelateerde repositorywijziging."
+      }
+    ],
+    "priorRemainingComparisonRequirementsPreserved": [
+      "Vergelijk dezelfde gevallen op de daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen.",
+      "Toon dat bekende toegestane controles en vastgelegde stappen geen overbodige modelronde gebruiken en dat veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid passende afweging behouden.",
+      "Tel besparing alleen wanneer werking behouden blijft. De twee verschillende historische successen en gedeeltelijke metingen bewijzen die winst niet."
+    ],
+    "priorPreExecutionUsagePreserved": {
+      "newPytestOrBenchmarkCases": 0,
+      "retainedChainsChecked": 4,
+      "retainedWorkerResultsJoined": 2,
+      "retainedNativeRequestPairsJoined": 6,
+      "newEvaRuntimeModelCalls": 0,
+      "newEvaRuntimeInferenceCalls": 0,
+      "newProductionDatabaseQueries": 0,
+      "productionPosts": 0,
+      "newHouseholdMessages": 0,
+      "actualHouseholdEffects": 0,
+      "serviceOrPrivatePostgresStarts": 0,
+      "productOrInstallationWrites": 0,
+      "credentialValuesOrHashesEmitted": 0,
+      "installedSourceReadSeconds": 0.7030701780458912,
+      "workerMetadataValidationSeconds": 0.0008216170244850218,
+      "wholeReviewElapsedSeconds": null,
+      "developmentTokens": null,
+      "developmentCredits": null,
+      "historicalRuntimeCosts": null,
+      "initialReportAssemblyGuard": "Stopped before any write when currentWork added a third E1.13 projection; then selected the two authoritative deliveryPlan projections explicitly. No test/product failure or repeated runtime proof.",
+      "measurement": "Read-only retained evidence/source plus in-memory hash joins and arithmetic; one stdlib-only actual installed runtime source read. Development model/tool credits are not metered.",
+      "latestHarnessIndependentStaticChecks": {
+        "initialSemanticCompileSeconds": 0.03853499097749591,
+        "fixedBundleStaticAndFourFenceStatesSeconds": 0.021053848031442612,
+        "nativeCaseExecutions": 0,
+        "actualModelRequests": 0,
+        "sourceOrProductionSql": 0,
+        "fourFenceStatesPassed": 4,
+        "privatePostgresStarts": 0
+      },
+      "latestConstructorGuardReview": {
+        "independentFakeEngineChecksPassed": 17,
+        "subprocessSeconds": 1.8236491259885952,
+        "commandWallSeconds": 2.4531079,
+        "actualModelRequests": 0,
+        "actualDatabaseQueries": 0,
+        "productionActions": 0,
+        "wholeHarnessRerun": false
+      }
+    },
+    "newAcceptanceCriteriaOrSuiteAdded": false,
+    "fullProjectGo": false,
+    "familyOrOwnerAcceptanceClaim": false
+  },
+  "technicalCompletion": true,
+  "fullE113Go": true,
+  "wholeProjectGo": false,
+  "ownerAcceptance": false,
+  "familyAcceptance": false,
+  "priorCombinedCompletionFlagPreserved": false
 }
