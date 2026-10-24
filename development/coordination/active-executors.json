@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T14:12:22.686196+00:00",
+  "updatedAt": "2026-10-24T14:17:43.866252+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1847,14 +1847,14 @@
       "status": "ACTIVE"
     },
     "currentOwnerContinuation": {
-      "workId": "work:eva-resume:7b641fa2-687f-513a-b101-b4f18853f5c1",
-      "status": "provider_503_bounded_followup_preparation",
+      "workId": "work:eva-resume:9b8fab63-4bb6-5658-b179-e04e6929b50f",
+      "status": "single_cooled_resume_admitted_observe_actual_result",
       "ownerConfirmationReceived": false,
       "mustNotInferConfirmationFromElapsedTimeOrBrowserControlAlone": true,
       "existingApiHandoff": "/home/administrator/project/.eva2-artifacts/e416-owner-useful-completion-20261024/existing-owner-after-login-handoff-ebe7c702e0ca0624.private.json",
       "handoffSha256": "ebe7c702e0ca06240475eda7f9f0b42bbba4bf4ab6a1a8b477e75e9e2b373471",
       "installedApiSourcePinsSha256": "a4ccb6a2320db098baaf6933e909a79371c6be074b18c36baa2c30cd2ee0320f",
-      "instruction": "Eva heeft online communitydocumentatie en de aanmeldbronmap gelezen. De laatste poging7b stopte op HTTP503 van de modelprovider; geen schoolresultaat. Lees intussen bestaande integratie/sessionmetadata en de reeds gevonden appauthbron gericht terug. Bereid binnen bestaande ownerresume hooguit één nieuwe poging na14:13UTC voor; behoud onbekend verbruik en eerdere resultaten. Geen onbegrensde retrylus, nieuwe policy/install of nieuwe loginvraag zonder werkelijk bewijs.",
+      "instruction": "De eenmalige afgekoelde hervatting9b8 is via bestaande ownerresume aangenomen met behoud van onbekend verbruik. Controleer nu daadwerkelijke toolresultaten en bruikbare schoolhulp; geen volgende providerhervatting zonder nieuwe informatie als dezelfde503 terugkomt. De oude-koppeling/sessioninventaris wordt beperkt afgerond. Appauthbronvoorbereiding vanCodex is geen Eva-uitvoer of bewezen schooltoegang.",
       "independentReviewSha256": "4ef253fc3d8d5ce89dfa4cf353b7e441368f987c602f4877f3ff25ced09df229",
       "supersededLoginRequirement": {
         "status": "waiting_explicit_owner_login_confirmation",
@@ -1867,9 +1867,9 @@
         "source": "direct human reply to login question",
         "loginConfirmed": false
       },
-      "previousWorkId": "work:eva-resume:cce0dbf7-c8e4-5920-a5fc-870f92eb0872",
+      "previousWorkId": "work:eva-resume:7b641fa2-687f-513a-b101-b4f18853f5c1",
       "actualOwnerLoginClaimed": false,
-      "lastExecutionReceiptSha256": "783a00b0865db3070eca7c9228bd747b5f6fefffbd2619670c2d80a64d0b30d0",
+      "lastExecutionReceiptSha256": "970c146c75c63b2e67ccd0f3f243b53593097e7d21f9f317dde983483b61b2e5",
       "actualFailureEvidenceSha256": "64f24721fd47eabe9aad7d02c5eaa313c1697b661589b9a67439a183c6e4497a",
       "independentActualReviewSha256": "c3816fdd928463992ab3a05518e9e9bb5b5f9a687425c8773ca80df7fd18c5be",
       "budgetRepair": {
@@ -1882,8 +1882,10 @@
       "latestActualReadbackSha256": "1fc469f8da3d3b864a99490b844cd794839f22469096bc83feaf5bbc0af19fdc",
       "latestActualReviewSha256": "3b088928f2ce6351c099952c69b1face8cfa3f33b8ffa571168abd351da542a0",
       "nextOwnerResumeNotBefore": "2026-10-24T14:13:00Z",
-      "maximumAdditionalAttemptBeforeReassessment": 1,
-      "automaticProviderRecoveryEligible": false
+      "maximumAdditionalAttemptBeforeReassessment": 0,
+      "automaticProviderRecoveryEligible": false,
+      "cooledAdditionalAttemptExecuted": true,
+      "noMoreSameProviderRetryWithoutNewEvidence": true
     }
   }
 }

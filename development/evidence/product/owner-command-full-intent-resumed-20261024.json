@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:56:37.055465+00:00",
-  "status": "research_repairs_actually_used_latest_provider_503_school_outcome_open",
+  "status": "single_cooled_school_resume_admitted_actual_result_pending",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -253,12 +253,23 @@
   },
   "nextBoundedFollowup": {
     "notBefore": "2026-10-24T14:13:00Z",
-    "maximumAdditionalAttempt": 1,
+    "maximumAdditionalAttempt": 0,
     "existingOwnerResumeOnly": true,
     "policy19AutomaticRecoveryApplies": false,
     "why": "Existing automatic recovery is intentionally limited to generation1 without manual successors/corrections; latest task is generation7 with actual correction4.",
     "existingHeartbeat": "eva2-taken-afronden",
     "heartbeatVerifiedActive": true,
-    "newAutomationCreated": false
+    "newAutomationCreated": false,
+    "additionalAttemptExecuted": true,
+    "noMoreSameProviderRetryWithoutNewEvidence": true
+  },
+  "singleCooledResumeAdmission": {
+    "workId": "work:eva-resume:9b8fab63-4bb6-5658-b179-e04e6929b50f",
+    "createdAt": "2026-10-24T14:15:28Z",
+    "deadline": "2026-10-24T14:35:28Z",
+    "status": "admitted_api_not_completion",
+    "effectSha256": "970c146c75c63b2e67ccd0f3f243b53593097e7d21f9f317dde983483b61b2e5",
+    "priorOutcomeUnknown": true,
+    "attempts": 1
   }
 }
