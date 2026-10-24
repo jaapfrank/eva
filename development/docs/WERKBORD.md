@@ -6,13 +6,13 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 E1.13 · Gerichte afweging en echte initiatiefuitvoering afmaken
 
-Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.
+Twee natuurlijke initiatiefketens onafhankelijk bevestigd tot bestaande werkstart en opgeslagen resultaat: adoptie→toelating105/0 geregistreerde seconden; werkstart→resultaat55/96 seconden. Bestaande callbackvolgorde blijft geïnstalleerd. Verschillende historische releases en gedeeltelijk verbruik bewijzen geen besparing; passende same-case-vergelijking en behouden werking blijven open. Bestaande voorbereidingstiming is gevonden, dus geen extra meetcode.
 
 Klaar wanneer: Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.
 
 ## Afmaakvolgorde
 
-1. E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.
+1. E4.18 volledig afgerond (80/103). E1.12 technisch opgeleverd; werkelijk gebruik/adoptie blijft open. Nu E1.13 afsluiten met de oorspronkelijke vergelijkingscriteria en bestaand bewijs; één bouwer en één onafhankelijke tester, geen extra chats.
 2. E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.
 3. E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.
 4. E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.

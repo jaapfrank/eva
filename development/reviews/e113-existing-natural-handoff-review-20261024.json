@@ -1,0 +1,631 @@
+{
+  "contract": "EvaIndependentReview/v1",
+  "task": "E1.13",
+  "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
+  "clientTaskDate": "2026-10-24",
+  "clientTimezone": "Europe/Amsterdam",
+  "checkedAtMachineUtc": "2026-10-24T03:10:17.323326+00:00",
+  "status": "natural_handoff_through_durable_worker_start_and_result_measured_full_original_optimization_open",
+  "verdict": "GO_SCOPED_EXISTING_NATURAL_HANDOFF_EVIDENCE_FULL_E113_OPEN",
+  "onlyWritePath": "/home/administrator/project/Eva2/development/reviews/e113-existing-natural-handoff-review-20261024.json",
+  "authority": {
+    "workboard": "/home/administrator/project/Eva2/development/design/product/execution-workboard-v1.json",
+    "workboardSha256AtReview": "51c6e77210e1aec47a137b2b284169efbae5f3008e75e092c4cc8279e46f8dc3",
+    "canonicalAndDashboardCardEqual": true,
+    "currentWorkDoneWhenEqual": true,
+    "title": "Denkvermogen gericht inzetten zonder initiatief te verliezen",
+    "originalDoneWhen": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.",
+    "originalNextActionAtReviewStart": "Meet een natuurlijke nieuwe initiatiefkeuze tot werkstart en resultaat; vergelijk daarna noodzakelijke modelrondes voor dezelfde toegestane controles en veranderde aanleidingen. Bewaak vertraging van nog niet toegelaten werk door de eerdere afweging.",
+    "currentNextAction": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
+    "newAcceptanceCriteriaAdded": false
+  },
+  "inputs": {
+    "privateBundle": "/home/administrator/project/.eva2-artifacts/e113-existing-metadata-audit-20261024",
+    "pins": {
+      "handoff.private.json": "d5bfb0a498c3c46c473f7f91d669dbf66daf48db3d5f89e20002eeeb73108622",
+      "two-case-closure-handoff.private.json": "8227bc545e74af4f021b05c63e921a4e7760717aa5e52fd0303543134fa5df56",
+      "metadata-v1.private.json": "c196cd949937a7c4683af9bc733a3254f60fab3766710a9b55e9eff8c526ba75",
+      "chain-metadata.private.json": "13406fd6ba211b6793189a52d2c7b39d090e28068f566edfc8db6ead1ef14582",
+      "two-worker-chains.private.json": "702c1ebc742ff03a8429924395dcde7a339429e7a99e9ed723ed8565146a29c8",
+      "query-metadata.private.py": "3f835a36f8183c52d21481603cbb2f831fc4fac5aa5d2e5f9b41cd341d65cb80",
+      "query-chain-metadata.private.py": "b0ee0bcf3ab94cbd40881f69cc16d44714db64af8448ef35b8963fc568bbe4dd",
+      "query-two-worker-chains.private.py": "1cf991a3ff7a25510b547a2590c9d0ee84359884dc90d56ad31b049c15759678",
+      "query-two-worker-chains-original.private.py": "9490f885d890ce1493dc95e354070294959ed72b16577bbb98e387637f4ef0a1",
+      "operator-two-worker-chains.private.stderr": "9e8dafc48ad0b4cfd8a4c21360be1b4f724e73d2ed95df166de3eef9781909ae",
+      "actual-worker-sources/adapters/postgres/delegated_work.py": "fe17a7dee58c60317b2dc26511bf3fc320c91ab828c84a4e85ddc3810ff9ef35",
+      "actual-worker-sources/bootstrap/delegated_digital_runner.py": "bf93dff45917adf36dabb8315fe3ac166538493d432ca9bfffc8ae26305cd91a"
+    },
+    "originalProjectEvidencePins": {
+      "development/evidence/product/e16-model-access-continuity-20261022.json": "aa0817de89a956430375bd6215994067a9ed87b97c9652410d8bfa24526d1146",
+      "development/evidence/product/e113-initiative-handoff-20261023.json": "8ae731b5d0e11de54a4d30e2c4c80ffd4b8a308e90212b765613662d15c11df6",
+      "development/reviews/e113-initiative-handoff-20261023.json": "548fbb49bd0a86e9b374a7cc6523948594cf4de4038bcb1ca7dee97121f845a4"
+    },
+    "e112ReviewPreservedSha256": "c45aaaed29855f8d14b77e464818bc970a2a9d1f0f9b8e65c2da4152bbee67e5"
+  },
+  "scope": {
+    "existingNaturalMetadataAndRelevantSourceOnly": true,
+    "sourceOrResultProseRead": false,
+    "credentialsOrIndividualCredentialHashesReadOrEmitted": false,
+    "newHouseholdModelOrPerformanceRun": false,
+    "codeChangesOrInstallationsAuthorizedByThisReview": false,
+    "extraHelpersOrChats": false
+  },
+  "originalHandoffMeasurement": {
+    "requirement": "Meet een natuurlijke nieuwe initiatiefkeuze tot werkstart en resultaat.",
+    "coveredNow": true,
+    "source": "Original E1.13 nextAction and existing e113-initiative-handoff evidence next. This is an existing measurement requirement, not a new acceptance criterion.",
+    "outcome": "Twee natuurlijke private-opportunity beoordelingen op23oktober zijn herleidbaar via oorspronkelijke waarneming en modelkeuze naar doorEva aangenomen persoonlijk initiatief, native toelating, duurzame child-call start en hetzelfde opgeslagen geslaagde niet-lege resultaat.",
+    "independentFourSourceAdoptionDecisionIdAndHashJoinsPassed": true,
+    "allFourAdoptionsMatchAcrossBothBoundedSnapshots": true,
+    "independentTwoWorkSpecCallResultOutputUsageJoinsPassed": true,
+    "independentSixNativeModelRequestPairsAndAllStageDurationsPassed": true,
+    "exactWorkerClaimTimestamp": null,
+    "durableCallStartBoundaryObserved": true,
+    "precision": "Whole-second records: zero recorded interval means the same stored second, not zero wall time.",
+    "personalIntentAdoptionByEva": true,
+    "householdArtifactOrOwnerAdoptionClaim": false,
+    "fullOriginalDoneWhenClosed": false
+  },
+  "successfulCases": [
+    {
+      "work_id": "work:eva-initiative:3e1308b20f8861c4d62fb225e3d4faa397cd9d5d763d75f13463654770eee49b",
+      "origin_thread_id": "intent:personal-interest:3e1308b20f8861c4d62fb225e3d4faa397cd9d5d763d75f13463654770eee49b",
+      "adopted_at": "2026-10-23 13:23:29+00:00",
+      "native_admitted_at": "2026-10-23 13:25:14+00:00",
+      "adopt_to_admit_seconds": 105.0,
+      "worker_claim_count": 1,
+      "exact_worker_claim_at": null,
+      "worker_call_started_at": "2026-10-23 13:25:14+00:00",
+      "admit_to_call_started_recorded_seconds": 0.0,
+      "first_model_request_preparation_seconds": 15.0,
+      "model_requests": [
+        {
+          "request_id": "40dfe050-1dad-4fbe-ad75-92000c4d59b2",
+          "admitted_at": "2026-10-23 13:25:29+00:00",
+          "recorded_at": "2026-10-23 13:25:35+00:00",
+          "adapter_window_seconds": 6.0,
+          "provider_queue_seconds": null,
+          "model_inference_seconds": null,
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 14230,
+            "output_tokens": 40,
+            "model_attempts": 1
+          },
+          "local_stream_closed": true,
+          "outcome": "succeeded",
+          "admission_payload_sha256": "222ade5b46eb70c543c51a51e13baac5839b9a9a5a8f7199c3bb84a99e8421cc",
+          "recorded_payload_sha256": "829ce6a858dc3236621c0109671f2804113dfb937fa4c7553ddc522da413a164"
+        },
+        {
+          "request_id": "2837e92b-9037-49bc-836b-f2b2d6d285b7",
+          "admitted_at": "2026-10-23 13:25:43+00:00",
+          "recorded_at": "2026-10-23 13:25:49+00:00",
+          "adapter_window_seconds": 6.0,
+          "provider_queue_seconds": null,
+          "model_inference_seconds": null,
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 16474,
+            "output_tokens": 63,
+            "model_attempts": 1
+          },
+          "local_stream_closed": true,
+          "outcome": "succeeded",
+          "admission_payload_sha256": "56fb617fe7a0c8503032d3c9607b82c4e168b0a2dab2cb18f5c00c194cdfed3c",
+          "recorded_payload_sha256": "9879d1eb3fd212c4fabc9eceb6aeff2e9246157e085c0a0f2ef43abfabf86f6f"
+        },
+        {
+          "request_id": "33f90a73-2807-4072-8ab5-f086bda7bc86",
+          "admitted_at": "2026-10-23 13:25:56+00:00",
+          "recorded_at": "2026-10-23 13:26:08+00:00",
+          "adapter_window_seconds": 12.0,
+          "provider_queue_seconds": null,
+          "model_inference_seconds": null,
+          "usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 18889,
+            "output_tokens": 109,
+            "model_attempts": 1
+          },
+          "local_stream_closed": true,
+          "outcome": "succeeded",
+          "admission_payload_sha256": "8dffec96ee62aa9abb51363cd5163aad4cd015b563ffca8f8f93e4d6e3a5c801",
+          "recorded_payload_sha256": "db47a6aea4a1c644e7d7c47f6c2b2ee49e423f893ab12f689e62918d99b9a2ed"
+        }
+      ],
+      "between_request_intervals": [
+        {
+          "from_request": "40dfe050-1dad-4fbe-ad75-92000c4d59b2",
+          "to_request": "2837e92b-9037-49bc-836b-f2b2d6d285b7",
+          "seconds": 8.0,
+          "meaning": "Combined tool/context/guard/continuation interval, not separately metered."
+        },
+        {
+          "from_request": "2837e92b-9037-49bc-836b-f2b2d6d285b7",
+          "to_request": "33f90a73-2807-4072-8ab5-f086bda7bc86",
+          "seconds": 7.0,
+          "meaning": "Combined tool/context/guard/continuation interval, not separately metered."
+        }
+      ],
+      "last_model_record_to_result_store_seconds": 1.0,
+      "native_call_start_to_result_store_seconds": 55.0,
+      "result_stored_at": "2026-10-23 13:26:09+00:00",
+      "parent_complete_at": "2026-10-23 13:26:09+00:00",
+      "result_binding_checks": {
+        "work_id": true,
+        "spec_sha256": true,
+        "call_id": true,
+        "result_sha256": true,
+        "output_sha256": true,
+        "result_stored_same_second": true
+      },
+      "historical_release": {
+        "worker_profile_release_sha256": "afc0f72c89e238abb7538103ea69dd86b237ddb16ca99d0c4cfbb96736fae310",
+        "model_profile_release_sha256": "14d4dc9b45bc224f680d74f95e3473cd8a8556f9f0884d57e163de7d81d6e210",
+        "worker_program_sha256": "affff0ca17d041a82caa03a75362016fde85cbbccf0d6b5b4e03657967c590d1",
+        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+      },
+      "raw_work_usage_remains_partial": {
+        "contract": "DelegatedWorkUsage/v1",
+        "tool_calls": 2,
+        "measurement": "partial",
+        "input_tokens": 49593,
+        "total_tokens": 49805,
+        "output_tokens": 212,
+        "schema_version": 1,
+        "cost_usd_micros": null,
+        "completed_model_responses": 3
+      },
+      "summed_partial_totals": null,
+      "selection_usage_separate": {
+        "tool_calls": 2,
+        "measurement": "measured",
+        "input_tokens": 38112,
+        "output_tokens": 584,
+        "model_attempts": 2
+      },
+      "semantic_verification": false,
+      "tool_count_scope": "Per-request usage.tool_calls measures model/provider tool activity; delegated usage.tool_calls measures admitted dispatched connector actions. Counts may legitimately differ.",
+      "sourceThreadId": "sensory:initiative-review:547262a5e00deb3ed2a6b3c5:112159265195345109615101871146882612035820975065191423974396834251514839620499",
+      "sourceObservationKind": "private_opportunity_review",
+      "sourceObservedAtMachineUtc": "2026-10-23 13:22:44+00:00",
+      "selectionModelStartedAtMachineUtc": "2026-10-23 13:22:45+00:00",
+      "sourcePayloadSha256": "ee026e5a60217585172de92a683d86ca869108723db826426f63f8d67ec8b1d7",
+      "personalIntentAdoptionPayloadSha256": "f1d7dc955057abae0c5a2af9c93a22d125e3913835240a4600461fc3994ad2b5",
+      "parentResultPayloadSha256": "430f3fa18cd3781fb613d4df5b4fcf57b922c862a787b7894526caf0ca0bee1d",
+      "workCallId": "child-call:216031c4-3055-42b0-a582-042d4e3af49e",
+      "workSpecSha256": "d369fcaaf2eebe2f072f8fa0b7136d18cf5328da7c49b5eca20632b1361cb4f3",
+      "resultSha256": "3ac5b69a1cfbca38408a90d436e260e0ffc1f6ad37cd7f69b5b09d2169402835",
+      "outputSha256": "85ebb3695a776bf905be44cba61eeacbcec9682feb6a4455d28ee98557f8a594",
+      "usageSha256": "ddcd006564f5ff16a25a21e4cc635609462b54bd097dd8b25c8310ecf3c07f5e",
+      "independentWorkSpecCallResultOutputUsageBindingsPassed": true,
+      "independentRequestPairsAndStageArithmeticPassed": true
+    },
+    {
+      "work_id": "work:eva-initiative:195ab00c54a4216141021cbe3889603ba122cc60de7e45ce258923db5e83df67",
+      "origin_thread_id": "intent:personal-interest:195ab00c54a4216141021cbe3889603ba122cc60de7e45ce258923db5e83df67",
+      "adopted_at": "2026-10-23 16:22:35+00:00",
+      "native_admitted_at": "2026-10-23 16:22:35+00:00",
+      "adopt_to_admit_seconds": 0.0,
+      "worker_claim_count": 1,
+      "exact_worker_claim_at": null,
+      "worker_call_started_at": "2026-10-23 16:22:35+00:00",
+      "admit_to_call_started_recorded_seconds": 0.0,
+      "first_model_request_preparation_seconds": 17.0,
+      "model_requests": [
+        {
+          "request_id": "647905dd-de1a-4018-b450-26b552b081db",
+          "admitted_at": "2026-10-23 16:22:52+00:00",
+          "recorded_at": "2026-10-23 16:23:07+00:00",
+          "adapter_window_seconds": 15.0,
+          "provider_queue_seconds": null,
+          "model_inference_seconds": null,
+          "usage": {
+            "tool_calls": 1,
+            "measurement": "measured",
+            "input_tokens": 14208,
+            "output_tokens": 265,
+            "model_attempts": 1
+          },
+          "local_stream_closed": true,
+          "outcome": "succeeded",
+          "admission_payload_sha256": "16ba2c3fff8f35af86eafacdc3febd2f88765dd29b0c25c987867e2f27b161d1",
+          "recorded_payload_sha256": "7876398ef37de255f70f5f2e902922b135db3aea89d810c12a6d38806cb8b15d"
+        },
+        {
+          "request_id": "74500013-7729-4ff1-aef2-80d92981d89f",
+          "admitted_at": "2026-10-23 16:23:12+00:00",
+          "recorded_at": "2026-10-23 16:23:51+00:00",
+          "adapter_window_seconds": 39.0,
+          "provider_queue_seconds": null,
+          "model_inference_seconds": null,
+          "usage": {
+            "tool_calls": 4,
+            "measurement": "measured",
+            "input_tokens": 26515,
+            "output_tokens": 750,
+            "model_attempts": 1
+          },
+          "local_stream_closed": null,
+          "outcome": "succeeded",
+          "admission_payload_sha256": "4570b9edd42b61184a7e56edaf5d0982ff817301759b2fe1fc8ebbf62f1c90e4",
+          "recorded_payload_sha256": "c8d55b8af2ba98705c473eb5b0b43c03e4a7d8eee80b62ab73438cd0b5a34791"
+        },
+        {
+          "request_id": "093e8fa6-ad64-48a6-8f80-6a779cd06610",
+          "admitted_at": "2026-10-23 16:23:56+00:00",
+          "recorded_at": "2026-10-23 16:24:10+00:00",
+          "adapter_window_seconds": 14.0,
+          "provider_queue_seconds": null,
+          "model_inference_seconds": null,
+          "usage": {
+            "tool_calls": 0,
+            "measurement": "measured",
+            "input_tokens": 16150,
+            "output_tokens": 308,
+            "model_attempts": 1
+          },
+          "local_stream_closed": true,
+          "outcome": "succeeded",
+          "admission_payload_sha256": "f76879e215386dcd2a1b2b67c924be7b3abbfb5c359f0b7385fced1d8a9f7e38",
+          "recorded_payload_sha256": "a7fb140241464aa366945bbc7f79940bb4ee7c2327d8d84695ba82776e30257c"
+        }
+      ],
+      "between_request_intervals": [
+        {
+          "from_request": "647905dd-de1a-4018-b450-26b552b081db",
+          "to_request": "74500013-7729-4ff1-aef2-80d92981d89f",
+          "seconds": 5.0,
+          "meaning": "Combined tool/context/guard/continuation interval, not separately metered."
+        },
+        {
+          "from_request": "74500013-7729-4ff1-aef2-80d92981d89f",
+          "to_request": "093e8fa6-ad64-48a6-8f80-6a779cd06610",
+          "seconds": 5.0,
+          "meaning": "Combined tool/context/guard/continuation interval, not separately metered."
+        }
+      ],
+      "last_model_record_to_result_store_seconds": 1.0,
+      "native_call_start_to_result_store_seconds": 96.0,
+      "result_stored_at": "2026-10-23 16:24:11+00:00",
+      "parent_complete_at": "2026-10-23 16:24:11+00:00",
+      "result_binding_checks": {
+        "work_id": true,
+        "spec_sha256": true,
+        "call_id": true,
+        "result_sha256": true,
+        "output_sha256": true,
+        "result_stored_same_second": true
+      },
+      "historical_release": {
+        "worker_profile_release_sha256": "afc0f72c89e238abb7538103ea69dd86b237ddb16ca99d0c4cfbb96736fae310",
+        "model_profile_release_sha256": "6cb06977e29ef814adb1a9f454a0313ebf09e8f7ddc363a12c6b0a2dc8288989",
+        "worker_program_sha256": "32fa16478f8358735e54b05e9e1c989d95d32aa6df434924a0138fc900a88bd1",
+        "engine_release_sha256": "46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839",
+        "output_schema_sha256": "d16bcdff77c652b535e52f3049438938d30307436ff591831a081d5fe09be8d7"
+      },
+      "raw_work_usage_remains_partial": {
+        "contract": "DelegatedWorkUsage/v1",
+        "tool_calls": 1,
+        "measurement": "partial",
+        "input_tokens": 56873,
+        "total_tokens": 58196,
+        "output_tokens": 1323,
+        "schema_version": 1,
+        "cost_usd_micros": null,
+        "completed_model_responses": 3
+      },
+      "summed_partial_totals": null,
+      "selection_usage_separate": {
+        "tool_calls": 2,
+        "measurement": "measured",
+        "input_tokens": 38702,
+        "output_tokens": 386,
+        "model_attempts": 2
+      },
+      "semantic_verification": false,
+      "tool_count_scope": "Per-request usage.tool_calls measures model/provider tool activity; delegated usage.tool_calls measures admitted dispatched connector actions. Counts may legitimately differ.",
+      "sourceThreadId": "sensory:initiative-review:547262a5e00deb3ed2a6b3c5:497992",
+      "sourceObservationKind": "private_opportunity_review",
+      "sourceObservedAtMachineUtc": "2026-10-23 16:21:49+00:00",
+      "selectionModelStartedAtMachineUtc": "2026-10-23 16:21:51+00:00",
+      "sourcePayloadSha256": "1c157d487787e160cffe2d430c51711c327777d2846257dc70ec52db6094e9b1",
+      "personalIntentAdoptionPayloadSha256": "cc988f6e2df1c1c18c4209a8cb0643835fb7ce68588b7386615e0b78945b752c",
+      "parentResultPayloadSha256": "671adf2c2df5eda35134b82c01d659375ebdb14da552ea49c062d325cbb31f90",
+      "workCallId": "child-call:3aa0bef2-2e07-401b-bb76-6a71f4c1042a",
+      "workSpecSha256": "f3c67fef73ba7cf6766775d4b602659401ec5a76f6aced51a33393df182fa5ea",
+      "resultSha256": "a030bed8e8a8adc655fd2c37b7aba5a9f79796d4d1d7b35bdf662ab42c9c84b3",
+      "outputSha256": "6b95a754d3ea2851f90af6b729708b5f0b1a93896f06fbff114fb93f298765df",
+      "usageSha256": "1f0dfc7d313a13740f0bb1774e7064fd19811b8cbc4630d02676f1943fece77e",
+      "independentWorkSpecCallResultOutputUsageBindingsPassed": true,
+      "independentRequestPairsAndStageArithmeticPassed": true
+    }
+  ],
+  "blockedCasesRetained": [
+    {
+      "thread_id": "intent:personal-interest:66bdc6d257fab3fd5406cbf38f5f1c57251893da12cb9bde3d5b52c2c55754c5",
+      "source_thread_id": "sensory:initiative-review:547262a5e00deb3ed2a6b3c5:75714717304151571438079199606284733760075070946994345180478323274017453133067",
+      "origin": "eva_initiative",
+      "execution_mode": "autonomous_task",
+      "source_observation_kind": "private_opportunity_review",
+      "source_observed_at": "2026-10-23 12:58:19+00:00",
+      "decision_started_at": "2026-10-23 12:58:20+00:00",
+      "adopted_at": "2026-10-23 12:58:58+00:00",
+      "exploration_claimed_at": "2026-10-23 13:02:06+00:00",
+      "native_admitted_at": "2026-10-23 13:02:07+00:00",
+      "completed_at": null,
+      "blocked_at": "2026-10-23 13:02:50+00:00",
+      "adoption_to_admission_seconds": 189.0,
+      "adoption_to_result_seconds": null,
+      "admission_to_result_seconds": null,
+      "selection_usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 18012,
+        "output_tokens": 442,
+        "model_attempts": 1
+      },
+      "native_usage": {
+        "tool_calls": 0,
+        "measurement": "partial",
+        "input_tokens": 0,
+        "total_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd_micros": null,
+        "completed_model_responses": 1
+      },
+      "nonempty_result": false,
+      "work_state": "ambiguous",
+      "result_sha256": null,
+      "content_sha256": null,
+      "original_adoption_payload_sha256": "808dc2291da544cab69f69972301f7deb5bb52b420b20d105c81c7ac64653391",
+      "source_payload_sha256": "96c7bb3f7cbe9b9df32bfa8f554b8e461b73ad2ca61472cdee6a31b7be4d8df1",
+      "result_payload_sha256": null,
+      "laterStoppedAtMachineUtc": "2026-10-23 17:59:21+00:00"
+    },
+    {
+      "thread_id": "intent:personal-interest:ef9dc7e2acac681492c1cc5c88aee809359b4a9d53549ccd351d775c06aedd82",
+      "source_thread_id": "sensory:household-initiative:cda032648a51d53cc2e2ae89aa1d96c76b94a922f3b6c765bbe5a145160ecf06:observation:139a78cceef57da81cfa0ff9894b068510afa9eb17723cffc2f8cfa253bb7c8a",
+      "origin": "eva_initiative",
+      "execution_mode": "autonomous_task",
+      "source_observation_kind": "household_observation_review",
+      "source_observed_at": "2026-10-23 19:11:08+00:00",
+      "decision_started_at": "2026-10-23 19:14:27+00:00",
+      "adopted_at": "2026-10-23 19:14:38+00:00",
+      "exploration_claimed_at": "2026-10-23 19:18:05+00:00",
+      "native_admitted_at": null,
+      "completed_at": null,
+      "blocked_at": "2026-10-23 19:18:05+00:00",
+      "adoption_to_admission_seconds": null,
+      "adoption_to_result_seconds": null,
+      "admission_to_result_seconds": null,
+      "selection_usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 8602,
+        "output_tokens": 238,
+        "model_attempts": 1
+      },
+      "native_usage": null,
+      "nonempty_result": false,
+      "work_state": null,
+      "result_sha256": null,
+      "content_sha256": null,
+      "original_adoption_payload_sha256": "6d022c307718004693ca1f9c89749b35b8611935fa1b8049da0b6ce470fb32e5",
+      "source_payload_sha256": "a8a5c0201016a855e4b5bf083598d42c09160879ca6282a48642186e8c5a34b7",
+      "result_payload_sha256": null
+    }
+  ],
+  "blockedCaseBoundary": "One ambiguous native result later stopped and one pre-admission block remain alongside the two successes. Partial zero token fields do not prove zero use. No replay or repair is claimed.",
+  "independentInstalledSourceReadback": {
+    "exitCode": 0,
+    "coreContainer": "cfb719951316909333d5c2ac1f0e050befa0a3e35939f8c125962ec6750884be",
+    "coreImage": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+    "runtimeSha256": "933978e0942901839c057e7e1983ec09245a230b0bc343dceba92449ad6115ed",
+    "idleOrder": [
+      "consider_one_private_opportunity",
+      "explore_one_interest",
+      "build_one_prototype",
+      "prepare_one_release",
+      "evaluate_one_sensory_event",
+      "deliver_one_proactive_expression"
+    ],
+    "currentGenerationStable": true,
+    "elapsedSeconds": 0.7030701780458912,
+    "runtimeImportsOrStarts": 0,
+    "checkoutNotAssumedInstalled": true,
+    "actualWorkerStoreFe17StartCallMethodRead": true,
+    "actualWorkerRunnerBf93FrozenHashVerified": true,
+    "otherThreeCurrentWorkerSourcesRemainOperatorHashMetadata": true,
+    "historicalSuccessesAreNotCurrentImageCausalProof": true
+  },
+  "historicalReleaseBoundary": {
+    "fiveOriginalSpecPinsBoundPerCase": true,
+    "sameBetweenCases": [
+      "worker_profile_release_sha256",
+      "engine_release_sha256",
+      "output_schema_sha256"
+    ],
+    "differentBetweenCases": [
+      "model_profile_release_sha256",
+      "worker_program_sha256"
+    ],
+    "exactHistoricalDockerImageIdsNotRecoveredByTheseWorkRows": true,
+    "old303SecondObservationIsAnotherCase": true,
+    "55Versus96SecondsNotControlledOptimizationComparison": true,
+    "noProvenRedundantRoundOrAvoidableCurrentDelay": true
+  },
+  "originalCriteriaAssessment": [
+    {
+      "originalSentence": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde.",
+      "status": "partly_covered_full_model_round_requirement_open",
+      "covered": "De bewaarde oorspronkelijke fix herordent bestaande callbacks zonder extra callback of modelaanroep. Zes gelijke schedulerscenarios falen opde referentie en slagen opkandidaat en destijds exactgeinstalleerde image. Veertien bestaande idle/foreground/capacity/STOPcontroles slagen. Vijftien begrensde prefilterbeslissingen hadden geen modelstart.",
+      "stillMissing": "Daarmee is nog niet per bekende toegestane controle of vastgelegde uitvoerstap aangetoond welke werkelijke modelronde nodig of overbodig is. De twee geslaagde taken bewijzen geen verwijderbare ronde.",
+      "oldChecksRerun": false
+    },
+    {
+      "originalSentence": "Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging.",
+      "status": "natural_bounded_curiosity_observed_other_conditions_not_fully_covered",
+      "covered": "Twee natuurlijke private-opportunity keuzes gebruiken aantoonbaar Astra, behouden hun oorspronkelijke bronbinding en bereiken een geslaagd niet-leeg resultaat. De oorspronkelijke review bewaart foreground/capacity/STOP/failuregrenzen.",
+      "stillMissing": "De aangeleverde metadata bevat geen ongewijzigde verwachte uitkomsten waarmee passende afweging voor gewijzigde betekenis, onzekerheid en conflicterende bedoelingen en gemiste relevante aanleidingen kan worden beoordeeld. Beide resultaten hebben semantic_verification=false."
+    },
+    {
+      "originalSentence": "Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking.",
+      "status": "scheduler_subcomparison_and_natural_measurement_covered_full_comparison_open",
+      "covered": "De bestaande zes scenarioparen leveren een beperkte vergelijking van schedulerwerking. De historische gewone taken leveren nu werkelijke keuze/werkstart/resultaattijden, drie requestparen pertaak, exacte bron/spec/resultaatbindingen en bewaarde releasepins.",
+      "stillMissing": "Voor dezelfde praktijkgevallen ontbreekt een gekoppelde referentie/kandidaatvergelijking op daadwerkelijk gebruikte bron/configuratie met modelaanroepen, tokens, reactietijd, fouten en gemiste aanleidingen plus behouden werking.55versus96seconden zijn verschillende taken met verschillende modelprofiel/programmapins; de oude303seconden is ook een andergeval. Native gebruik blijftpartial; een complete kostenbesparing is niet aangetoond.",
+      "newSavingsPercentageOrTimingThresholdRequired": false
+    },
+    {
+      "originalSentence": "Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.",
+      "status": "covered_for_the_delivered_narrow_reorder_and_metadata_handoff",
+      "covered": "De bewaarde onafhankelijke review en oplevering betreffen uitsluitend volgorde van bestaande callbacks. De actuele werkelijk geinstalleerde volgorde is bevestigd. Deze bewijsaanvulling bouwt niets en introduceert geen score, planner, cachebevoegdheid of nieuwe rechten.",
+      "boundary": "Dit is dekking van de concrete bestaande oplevering, geen ongerichte uitspraak over iedere toekomstige of ongerelateerde repositorywijziging."
+    }
+  ],
+  "meteringBoundary": {
+    "selectionUsageAndPartialNativeUsageKeptSeparate": true,
+    "threeNativeRequestAdmissionRecordedPairsEach": true,
+    "measuredRequestTokenSegmentsReconcileWithOriginalPartialNativeSnapshots": true,
+    "nativeMeasurementRemainsPartial": true,
+    "completedResponsesNotAssumedAllModelAttempts": true,
+    "noCombinedSelectionPlusNativeCompleteTotal": true,
+    "providerToolActivityAndNativeConnectorActionCountersDiffer": true,
+    "oneLocalStreamClosedNullPreserved": true,
+    "bothSemanticVerificationFalsePreserved": true,
+    "resultHashAndNonemptyTextNotQualityOrUsefulnessProof": true,
+    "providerQueueTransportInferenceAndAccountingNotSeparated": true,
+    "nullCostsAndCreditsRemainUnknown": true,
+    "decisionGroups": [
+      {
+        "lane": "household_review",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "disposition": "silence",
+        "measurement": "measured",
+        "model_started": true,
+        "decisions": 14,
+        "measured_model_attempts": "14",
+        "measured_input_tokens": "121245",
+        "measured_output_tokens": "1829"
+      },
+      {
+        "lane": "other_sensory",
+        "provider": "eva:bounded-prefilter",
+        "disposition": "silence",
+        "measurement": null,
+        "model_started": false,
+        "decisions": 15,
+        "measured_model_attempts": null,
+        "measured_input_tokens": null,
+        "measured_output_tokens": null
+      },
+      {
+        "lane": "private_review",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "disposition": "silence",
+        "measurement": "measured",
+        "model_started": true,
+        "decisions": 21,
+        "measured_model_attempts": "24",
+        "measured_input_tokens": "436695",
+        "measured_output_tokens": "4436"
+      }
+    ],
+    "silenceDispositionDoesNotMeanNoInitiativeOrUnnecessaryModelCall": true
+  },
+  "collectionBoundary": {
+    "reviewerLiveSqlQueries": 0,
+    "operatorSuccessfulCollectionPassesReviewed": 3,
+    "sqlStatementCount": null,
+    "metadataQueryCount2MeansCollectionPassesNotTwoSqlStatements": true,
+    "readOnlyTransactionAndNonlockingOwnerPredicateSourceReviewed": true,
+    "originalForShareInReadonlyFailurePreservedByPin": true,
+    "productAuthorizationCodeChanged": false,
+    "fourAdoptionAndTwoWorkExportsNotTruncatedForTheirScope": true,
+    "noWholeInstallationSurveyClaim": true
+  },
+  "remainingForFullOriginalE113": [
+    "Vergelijk dezelfde gevallen op de daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen.",
+    "Toon dat bekende toegestane controles en vastgelegde stappen geen overbodige modelronde gebruiken en dat veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid passende afweging behouden.",
+    "Tel besparing alleen wanneer werking behouden blijft. De twee verschillende historische successen en gedeeltelijke metingen bewijzen die winst niet."
+  ],
+  "coordinatorHandoff": {
+    "recordNaturalWorkstartAndResultMeasurementAsCovered": true,
+    "keepFullCardInProgress": true,
+    "newProductDefectOrPatchSelected": false,
+    "diagnosticOptionOnly": "Bij verder bestaande optimalisatiewerk kan de coordinator eventuele stage-tijden bij dezelfde work/request IDs benutten.15/17seconden voorbereiding en tussenpozen zijn niet apart aan componenten toegeschreven. Dit is geen nieuwe eindvoorwaarde of zelfstandige bouwopdracht.",
+    "noNewPerformanceOrHouseholdRunFromReviewer": true,
+    "smallestClosureRoute": "Behoud de reeds bewezen smalle fix en de twee nu gemeten natuurlijke ketens. Sluit alleen het ontbrekende oorspronkelijke same-case vergelijkings- en uitkomstbewijs aan; geen nieuwe15/17secondenfunctie of betaalde/brede proef voorstellen."
+  },
+  "usage": {
+    "newPytestOrBenchmarkCases": 0,
+    "retainedChainsChecked": 4,
+    "retainedWorkerResultsJoined": 2,
+    "retainedNativeRequestPairsJoined": 6,
+    "newEvaRuntimeModelCalls": 0,
+    "newEvaRuntimeInferenceCalls": 0,
+    "newProductionDatabaseQueries": 0,
+    "productionPosts": 0,
+    "newHouseholdMessages": 0,
+    "actualHouseholdEffects": 0,
+    "serviceOrPrivatePostgresStarts": 0,
+    "productOrInstallationWrites": 0,
+    "credentialValuesOrHashesEmitted": 0,
+    "installedSourceReadSeconds": 0.7030701780458912,
+    "workerMetadataValidationSeconds": 0.0008216170244850218,
+    "wholeReviewElapsedSeconds": null,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "historicalRuntimeCosts": null,
+    "initialReportAssemblyGuard": "Stopped before any write when currentWork added a third E1.13 projection; then selected the two authoritative deliveryPlan projections explicitly. No test/product failure or repeated runtime proof.",
+    "measurement": "Read-only retained evidence/source plus in-memory hash joins and arithmetic; one stdlib-only actual installed runtime source read. Development model/tool credits are not metered."
+  },
+  "fullE113OrProjectGo": false,
+  "preservedOriginalHandoffFixReview": {
+    "reviewSha256": "548fbb49bd0a86e9b374a7cc6523948594cf4de4038bcb1ca7dee97121f845a4",
+    "decision": "GO for narrow installation",
+    "scope": "Staged runtime reorder and six new scheduler scenarios.",
+    "findings": [
+      "Foreground, capacity, STOP and failure paths remain guarded.",
+      "Callback doubles prove scheduler behavior, not production model reasoning or task outcome.",
+      "Review before not-yet-admitted work can delay that work by review duration."
+    ],
+    "fullTaskComplete": false,
+    "oldTestsRepeated": false,
+    "retainedVerification": {
+      "sameSixNewScenariosFailOnBaselineAndPassOnCandidateAndExactInstalledImage": true,
+      "fourteenExistingIdleForegroundCapacityStopChecksPassed": true,
+      "sixPlusFourteenResultsArePreservedEvidenceNotNewRuns": true,
+      "onlyExistingCallbacksReorderedNoExtraCallbackModelCallServiceSchedulerOrAuthority": true
+    },
+    "newNaturalEvidenceClosesPriorMissingObservation": "The old report could not prove a naturally completed task. The two original23October chains now supply original selection/adoption→native call start→same stored result, within retained timestamp precision.",
+    "historicalSchedulerComparisonNotWholeModelEfficiencyComparison": true
+  },
+  "smallestExecutableClosureRoute": {
+    "existingWorkThatStaysClosed": [
+      "De oorspronkelijke begrensde callbackvolgordefix met zes scenarioparen, veertien bestaande grenscontroles en smalle installatieGO blijft beoordeeld.",
+      "De oorspronkelijke open meting natuurlijke initiatiefkeuze tot duurzame werkstart en hetzelfde resultaat is nu voor twee echte ketens gedekt."
+    ],
+    "remainingBoundedAction": "Koppel voor de reeds bestaande te vergelijken gevallen het al bewaarde referentie- en kandidaatbewijs aan dezelfde input/bronbinding en daadwerkelijk gebruikte bron/configuratie. Vul pergeval alleen de oorspronkelijke vergelijkingskolommen: modelaanroepen, tokens, reactietijd, fouten, gemiste relevante aanleidingen en behouden werking. Gebruik de bestaande ongewijzigde verwachte uitkomsten; voer vanuit deze review geen nieuwe modelproef uit.",
+    "minimumCoverage": "De koppeling moet de oorspronkelijke bekende toegestane controle/vastgelegde stap en de oorspronkelijke veranderde of onzekere aanleiding dekken. Geen nieuwe scenarioreeks of nieuwe acceptatiegevallen verzinnen.",
+    "ifMatchingRetainedEvidenceDoesNotExist": "Dan is de volle kaart met uitsluitend de aangeleverde bewaarde stukken niet af te sluiten. Leg precies die ontbrekende oorspronkelijke vergelijkingskolom of uitkomst vast; vervang die niet door een andere taak, een nieuwe stage-timingvoorwaarde of een fictieve besparing.",
+    "new15Or17SecondsOptimizationRequired": false,
+    "perStagePreparationProfilerRequiredForDoneWhen": false,
+    "newPaidComparisonRecommended": false,
+    "broadNewAuditRecommended": false,
+    "newPerformanceImprovementThresholdRequired": false,
+    "noSavingsClaimWithoutMeasuredPreservedFunction": true,
+    "reviewerSelectsNoNewBuild": true
+  },
+  "preservedReviewIntegration": {
+    "previousReportSha256": "8e6806d55739903cf9b75c1727afc24c380dfd066b9051cb799db6e6dfee06d3",
+    "originalReviewAddedWithoutRepeatingOldTests": true,
+    "doneWhenUnchanged": true,
+    "noNewAcceptanceCriteria": true
+  }
+}

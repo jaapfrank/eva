@@ -847,7 +847,7 @@
     "title": "Denkvermogen gericht inzetten zonder initiatief te verliezen",
     "status": "in_progress",
     "doneWhen": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.",
-    "nextAction": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
+    "nextAction": "Laat de bestaande E4.9/E4.10/E5.2-metingen éénmaal op dezelfde gevallen en actuele bronbinding toetsen aan de oorspronkelijke E1.13-criteria. De twee natuurlijke initiatiefketens zijn onafhankelijk bevestigd; bestaande timing is aanwezig. Geen nieuwe meetcode, herhaalproef of onbewezen optimalisatie. Ontbreekt het bewaarde vergelijkingspaar, leg die bewijsgrens vast en ga door met ander uitvoerbaar werk.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3011,7 +3011,7 @@
         "now": {
           "taskId": "E1.13",
           "title": "E1.13 · Gerichte afweging en echte initiatiefuitvoering afmaken",
-          "summary": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
+          "summary": "Twee natuurlijke initiatiefketens onafhankelijk bevestigd tot bestaande werkstart en opgeslagen resultaat: adoptie→toelating105/0 geregistreerde seconden; werkstart→resultaat55/96 seconden. Bestaande callbackvolgorde blijft geïnstalleerd. Verschillende historische releases en gedeeltelijk verbruik bewijzen geen besparing; passende same-case-vergelijking en behouden werking blijven open. Bestaande voorbereidingstiming is gevonden, dus geen extra meetcode.",
           "doneWhen": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache."
         },
         "next": {
@@ -6264,7 +6264,7 @@
                 "dependsOn": [
                   "E1.6"
                 ],
-                "nextAction": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
+                "nextAction": "Laat de bestaande E4.9/E4.10/E5.2-metingen éénmaal op dezelfde gevallen en actuele bronbinding toetsen aan de oorspronkelijke E1.13-criteria. De twee natuurlijke initiatiefketens zijn onafhankelijk bevestigd; bestaande timing is aanwezig. Geen nieuwe meetcode, herhaalproef of onbewezen optimalisatie. Ontbreekt het bewaarde vergelijkingspaar, leg die bewijsgrens vast en ga door met ander uitvoerbaar werk.",
                 "observedOptimizationInput": {
                   "evidence": "development/evidence/product/e16-model-access-continuity-20261022.json",
                   "backgroundHandoffSeconds": 303,
@@ -6272,18 +6272,25 @@
                   "usageMeasurement": "partial",
                   "nextAction": "Onderzoek gerichte contextselectie en overdracht tussen bestaande stappen; behoud taakresultaat en geen nieuwe scheduler."
                 },
-                "progress": "E1.13: callbackvolgorde hersteld en geïnstalleerd. Nieuwe initiatiefkeuze komt vóór bestaande uitvoering binnen dezelfde toegelaten idlecyclus; de verplichte extra 300 seconden door de oude volgorde vervallen. Zes gerichte scenarios slagen op de exacte geïnstalleerde image; veertien bestaande idle/foreground/capacity/stop-controles slagen. Werkelijke nieuwe initiatiefdoorlooptijd en modelbesparing zijn nog niet gemeten. E1.7 behoudt open bewijs van meerdaags gezinsgebruik.",
-                "checkedAt": "2026-10-24T02:57:30.999386+00:00",
+                "progress": "Twee natuurlijke initiatiefketens onafhankelijk bevestigd tot bestaande werkstart en opgeslagen resultaat: adoptie→toelating105/0 geregistreerde seconden; werkstart→resultaat55/96 seconden. Bestaande callbackvolgorde blijft geïnstalleerd. Verschillende historische releases en gedeeltelijk verbruik bewijzen geen besparing; passende same-case-vergelijking en behouden werking blijven open. Bestaande voorbereidingstiming is gevonden, dus geen extra meetcode.",
+                "checkedAt": "2026-10-24T03:12:29.283781+00:00",
                 "existingNaturalHandoffEvidence": {
                   "handoffSha256": "d5bfb0a498c3c46c473f7f91d669dbf66daf48db3d5f89e20002eeeb73108622",
+                  "twoCaseClosureSha256": "8227bc545e74af4f021b05c63e921a4e7760717aa5e52fd0303543134fa5df56",
                   "naturalAdoptions": 4,
                   "completedNonemptyResults": 2,
                   "otherBlockedOrAmbiguous": 2,
                   "actualReleaseAtTimeNotCurrentImage": true,
                   "meteringPartial": true,
                   "wholeTaskCompleted": false,
-                  "reviewPending": true
-                }
+                  "reviewPending": false,
+                  "independentReview": "development/reviews/e113-existing-natural-handoff-review-20261024.json",
+                  "reviewSha256": "fcb2c09ffee082fe310835391eca5f4ceec1a99a62ff09767a8dbae7a6368796",
+                  "measurementCompleteWithinRetainedPrecision": true
+                },
+                "latestEvidence": "development/evidence/product/e113-existing-natural-handoff-20261024.json",
+                "independentReview": "development/reviews/e113-existing-natural-handoff-review-20261024.json",
+                "fullTaskCompleted": false
               },
               {
                 "id": "E1.14",
@@ -8829,9 +8836,9 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
+        "nextAction": "Laat de bestaande E4.9/E4.10/E5.2-metingen éénmaal op dezelfde gevallen en actuele bronbinding toetsen aan de oorspronkelijke E1.13-criteria. De twee natuurlijke initiatiefketens zijn onafhankelijk bevestigd; bestaande timing is aanwezig. Geen nieuwe meetcode, herhaalproef of onbewezen optimalisatie. Ontbreekt het bewaarde vergelijkingspaar, leg die bewijsgrens vast en ga door met ander uitvoerbaar werk.",
         "finishOrder": [
-          "E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.",
+          "E4.18 volledig afgerond (80/103). E1.12 technisch opgeleverd; werkelijk gebruik/adoptie blijft open. Nu E1.13 afsluiten met de oorspronkelijke vergelijkingscriteria en bestaand bewijs; één bouwer en één onafhankelijke tester, geen extra chats.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
           "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
           "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -8840,7 +8847,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T02:57:30.999386+00:00",
+        "updatedAt": "2026-10-24T03:12:29.283781+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9116,7 +9123,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-23T19:28:18.184213+00:00",
+        "checkedAt": "2026-10-24T03:12:29.283781+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -12322,7 +12329,7 @@
               "dependsOn": [
                 "E1.6"
               ],
-              "nextAction": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
+              "nextAction": "Laat de bestaande E4.9/E4.10/E5.2-metingen éénmaal op dezelfde gevallen en actuele bronbinding toetsen aan de oorspronkelijke E1.13-criteria. De twee natuurlijke initiatiefketens zijn onafhankelijk bevestigd; bestaande timing is aanwezig. Geen nieuwe meetcode, herhaalproef of onbewezen optimalisatie. Ontbreekt het bewaarde vergelijkingspaar, leg die bewijsgrens vast en ga door met ander uitvoerbaar werk.",
               "observedOptimizationInput": {
                 "evidence": "development/evidence/product/e16-model-access-continuity-20261022.json",
                 "backgroundHandoffSeconds": 303,
@@ -12330,18 +12337,25 @@
                 "usageMeasurement": "partial",
                 "nextAction": "Onderzoek gerichte contextselectie en overdracht tussen bestaande stappen; behoud taakresultaat en geen nieuwe scheduler."
               },
-              "progress": "E1.13: callbackvolgorde hersteld en geïnstalleerd. Nieuwe initiatiefkeuze komt vóór bestaande uitvoering binnen dezelfde toegelaten idlecyclus; de verplichte extra 300 seconden door de oude volgorde vervallen. Zes gerichte scenarios slagen op de exacte geïnstalleerde image; veertien bestaande idle/foreground/capacity/stop-controles slagen. Werkelijke nieuwe initiatiefdoorlooptijd en modelbesparing zijn nog niet gemeten. E1.7 behoudt open bewijs van meerdaags gezinsgebruik.",
-              "checkedAt": "2026-10-24T02:57:30.999386+00:00",
+              "progress": "Twee natuurlijke initiatiefketens onafhankelijk bevestigd tot bestaande werkstart en opgeslagen resultaat: adoptie→toelating105/0 geregistreerde seconden; werkstart→resultaat55/96 seconden. Bestaande callbackvolgorde blijft geïnstalleerd. Verschillende historische releases en gedeeltelijk verbruik bewijzen geen besparing; passende same-case-vergelijking en behouden werking blijven open. Bestaande voorbereidingstiming is gevonden, dus geen extra meetcode.",
+              "checkedAt": "2026-10-24T03:12:29.283781+00:00",
               "existingNaturalHandoffEvidence": {
                 "handoffSha256": "d5bfb0a498c3c46c473f7f91d669dbf66daf48db3d5f89e20002eeeb73108622",
+                "twoCaseClosureSha256": "8227bc545e74af4f021b05c63e921a4e7760717aa5e52fd0303543134fa5df56",
                 "naturalAdoptions": 4,
                 "completedNonemptyResults": 2,
                 "otherBlockedOrAmbiguous": 2,
                 "actualReleaseAtTimeNotCurrentImage": true,
                 "meteringPartial": true,
                 "wholeTaskCompleted": false,
-                "reviewPending": true
-              }
+                "reviewPending": false,
+                "independentReview": "development/reviews/e113-existing-natural-handoff-review-20261024.json",
+                "reviewSha256": "fcb2c09ffee082fe310835391eca5f4ceec1a99a62ff09767a8dbae7a6368796",
+                "measurementCompleteWithinRetainedPrecision": true
+              },
+              "latestEvidence": "development/evidence/product/e113-existing-natural-handoff-20261024.json",
+              "independentReview": "development/reviews/e113-existing-natural-handoff-review-20261024.json",
+              "fullTaskCompleted": false
             },
             {
               "id": "E1.14",
@@ -14887,9 +14901,9 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
+      "nextAction": "Laat de bestaande E4.9/E4.10/E5.2-metingen éénmaal op dezelfde gevallen en actuele bronbinding toetsen aan de oorspronkelijke E1.13-criteria. De twee natuurlijke initiatiefketens zijn onafhankelijk bevestigd; bestaande timing is aanwezig. Geen nieuwe meetcode, herhaalproef of onbewezen optimalisatie. Ontbreekt het bewaarde vergelijkingspaar, leg die bewijsgrens vast en ga door met ander uitvoerbaar werk.",
       "finishOrder": [
-        "E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.",
+        "E4.18 volledig afgerond (80/103). E1.12 technisch opgeleverd; werkelijk gebruik/adoptie blijft open. Nu E1.13 afsluiten met de oorspronkelijke vergelijkingscriteria en bestaand bewijs; één bouwer en één onafhankelijke tester, geen extra chats.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
         "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
         "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -14898,7 +14912,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T02:57:30.999386+00:00",
+      "updatedAt": "2026-10-24T03:12:29.283781+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -15174,7 +15188,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-23T19:28:18.184213+00:00",
+      "checkedAt": "2026-10-24T03:12:29.283781+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -17439,7 +17453,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T02:57:30.999386+00:00",
+  "updatedAt": "2026-10-24T03:12:29.283781+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -17522,7 +17536,7 @@
     }
   ],
   "lastUpdatedAt": "2026-10-20T13:28:55.822181+00:00",
-  "checkedAt": "2026-10-20T13:28:55.822181+00:00",
+  "checkedAt": "2026-10-24T03:12:29.283781+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

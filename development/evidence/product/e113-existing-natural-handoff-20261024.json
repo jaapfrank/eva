@@ -1,0 +1,68 @@
+{
+  "contract": "EvaExistingNaturalHandoffEvidence/v1",
+  "task": "E1.13",
+  "recordedAt": "2026-10-24T03:12:29.283781+00:00",
+  "status": "natural_handoff_measurement_independently_reviewed",
+  "fullTaskCompleted": false,
+  "sourceHandoffs": {
+    "originalSha256": "d5bfb0a498c3c46c473f7f91d669dbf66daf48db3d5f89e20002eeeb73108622",
+    "twoCaseClosureSha256": "8227bc545e74af4f021b05c63e921a4e7760717aa5e52fd0303543134fa5df56",
+    "existingTimingSha256": "7d094334739d9d6b772d33d8b2a2f3b9b45b2b86410b35ea4af407a4bd6749d6"
+  },
+  "independentReview": {
+    "path": "development/reviews/e113-existing-natural-handoff-review-20261024.json",
+    "sha256": "fcb2c09ffee082fe310835391eca5f4ceec1a99a62ff09767a8dbae7a6368796",
+    "verdict": "GO_SCOPED_EXISTING_NATURAL_HANDOFF_EVIDENCE_FULL_E113_OPEN"
+  },
+  "outcome": {
+    "retainedNaturalAdoptions": 4,
+    "verifiedNonemptyNativeResults": 2,
+    "blockedOrAmbiguousRetained": 2,
+    "selectionToAdmissionSeconds": [
+      105,
+      0
+    ],
+    "selectionToResultSeconds": [
+      160,
+      96
+    ],
+    "nativeCallStartToResultSeconds": [
+      55,
+      96
+    ],
+    "admissionToCallStartRecordedSeconds": [
+      0,
+      0
+    ],
+    "recordedPreparationBeforeFirstProviderSeconds": [
+      15,
+      17
+    ]
+  },
+  "measurementBoundaries": [
+    "Zero seconds means equal stored seconds; exact first worker-claim timestamp is not retained.",
+    "Model and worker-program release pins differ between the two historical cases; neither these cases nor the old303second observation form a causal before/after pair.",
+    "Selection attempts and native completed responses are different scopes. Native usage remains partial; missing costs and credits stay unknown.",
+    "Result bindings and nonempty output do not prove semantic correctness, household usefulness or quality improvement.",
+    "The current ordinary worker already logs initial memory, preparation and model phases. Historical container logs are unavailable; no extra timing implementation is needed.",
+    "Initial memory is nested within preparation and must not be added to it.",
+    "No product defect or avoidable model round has been established by these two cases."
+  ],
+  "originalTaskStillRequires": [
+    "Vergelijk dezelfde gevallen op de daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen.",
+    "Toon dat bekende toegestane controles en vastgelegde stappen geen overbodige modelronde gebruiken en dat veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid passende afweging behouden.",
+    "Tel besparing alleen wanneer werking behouden blijft. De twee verschillende historische successen en gedeeltelijke metingen bewijzen die winst niet."
+  ],
+  "verificationActivity": {
+    "newEvaModelCalls": 0,
+    "newHouseholdMessages": 0,
+    "productionWrites": 0,
+    "productSourceEdits": 0,
+    "newBenchmarkOrTestSeries": 0,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "historicalRuntimeCredits": null,
+    "backgroundRuntimeUsageNotMeasuredByThisActivity": true
+  },
+  "nextAction": "Check only retained same-case evidence from the already accepted E4.9/E4.10/E5.2 route against original E1.13 criteria and current source binding; no new acceptance criterion or unproven optimization."
+}
