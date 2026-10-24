@@ -1,0 +1,73 @@
+{
+  "contract": "EvaE419CandidateDelivery/v2",
+  "createdAt": "2026-10-24T09:26:19.209998+00:00",
+  "task": "E4.19",
+  "status": "built_source_and_package_reviewed_pending_installation_review",
+  "candidateManifestSha256": "d15e4e0c5df27e00c366de612ff26466f5a38b82248607408a40531299d2d34b",
+  "packageManifestSha256": "ab9d90152672c02d77651e1e1d2d0f38b659bc996c389fbf0a0904e7cefc3716",
+  "operatorManifestSha256": "18100ac95578d699a9e636a4e42e3e375d51c06a86b6e601ed22eabdc66384e8",
+  "build": {
+    "contract": "E419ImplementationOverlayBuild/v1",
+    "submanifestSha256": "d15e4e0c5df27e00c366de612ff26466f5a38b82248607408a40531299d2d34b",
+    "roles": {
+      "core": {
+        "base": "sha256:8b63103d434068c8f9257608849385299c6f255266d25491220281a5169e37cb",
+        "buildBase": "sha256:b85e9b5dee5367965e5f7075e5710cf33edccb315bbf6e82b3558a2259cbd63d",
+        "image": "sha256:3a73b6ceed08911e4f5567f43bc271fe5d18796eba20342b3dd5fb2424933940",
+        "elapsedMs": 7878
+      },
+      "delegated-work-worker": {
+        "base": "sha256:fd942c6df0fc81213e9b1424b5f85cc51f08bd274bd348046c7c3fd73596a0d7",
+        "buildBase": "sha256:daba7d5193520cf5fd11642d2410c5feb30c2135156b57569fb36d9da43d8cfd",
+        "image": "sha256:b6bdd741d363c4d4a39acef1dc20d32f25e9a3760aef7783505fb9c9ce651096",
+        "elapsedMs": 9735
+      }
+    },
+    "dependencyUpgrade": false
+  },
+  "profileEvidence": {
+    "actualCandidateProfilesChecked": true,
+    "sha256": "37d7121dfda96c8771ff9fd1ed1254bf582eefaf9050b1b2da03231c57f53d99",
+    "equalProfiles": [
+      "digital_work",
+      "shared_provider",
+      "public_research"
+    ],
+    "preexistingMismatchPreserved": [
+      "household_research"
+    ],
+    "digitalWorkRelease": "0f845686c68043f8d890bcef44a2a285d734b0c989b1b1c5aaf5531697216bc5"
+  },
+  "sourceVerification": {
+    "actualProductionBeforeFilesPerRole": 11,
+    "changedFoundationFilesPerRole": 3,
+    "frozenHostSourceFiles": 64,
+    "hostImportsPassed": true,
+    "hostImportMilliseconds": 812,
+    "attentionCasesPassed": 12,
+    "closureCanonicalAndCoreCasesPassed": 18,
+    "closureCheckSecondsDecimal": "21.79",
+    "testsNotRepeatedByCoordinator": true
+  },
+  "independentReview": "development/reviews/e419-final-candidate-review-20261024.json",
+  "preflight": {
+    "currentOwnerAndOldMandateVerified": true,
+    "revision": 17,
+    "newMandateAdmitted": false
+  },
+  "fullE419Completed": false,
+  "productionInstalled": false,
+  "autonomousUpdateExecuted": false,
+  "isolatedHeldImageRecoveryExecuted": false,
+  "measuredUsage": {
+    "development": {
+      "imageBuildMilliseconds": 17613,
+      "modelCallsInTheseBuildAndProfileChecks": 0,
+      "credits": null
+    },
+    "evaRuntime": {
+      "newUpdateModelCallsRequestedByThisPreparation": 0,
+      "credits": null
+    }
+  }
+}

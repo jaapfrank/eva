@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T09:05:34.338013+00:00",
+  "updatedAt": "2026-10-24T09:26:19.209998+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1811,7 +1811,7 @@
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
     "parallelBoundedWork": "E419 native integration, loader/host readiness, immutable delivery packaging and independent product review",
-    "currentBlocker": "Geen eigenaarblokkade. E419 wacht op definitieve herstelbinding, pakketfreeze en onafhankelijke kandidaatacceptatie.",
+    "currentBlocker": "Geen eigenaarblokkade. V2 gebouwd, bron/pakketreview akkoord; gebundelde installatiebeoordeling en actuele claimcontrole volgen.",
     "latestVerifiedOutcome": {
       "task": "E4.17",
       "status": "completed_original_restore_card_technical",
@@ -1848,11 +1848,18 @@
     },
     "e419Activation": {
       "path": "/var/lib/eva2/e419-activation-v2-20261024",
-      "status": "final_native_recovery_binding_and_candidate_review",
-      "core": "sha256:b85e9b5dee5367965e5f7075e5710cf33edccb315bbf6e82b3558a2259cbd63d",
-      "worker": "sha256:daba7d5193520cf5fd11642d2410c5feb30c2135156b57569fb36d9da43d8cfd",
-      "fullE419Completed": false
+      "status": "v2_built_pending_independent_installation_go",
+      "core": "sha256:3a73b6ceed08911e4f5567f43bc271fe5d18796eba20342b3dd5fb2424933940",
+      "worker": "sha256:b6bdd741d363c4d4a39acef1dc20d32f25e9a3760aef7783505fb9c9ce651096",
+      "fullE419Completed": false,
+      "evidence": "development/evidence/product/e419-v2-candidate-ready-20261024.json"
     },
-    "teamAuthority": "Direct eigenaar24oktober2026 vraagt vijf actieve chats; vervangt eerdere limiet van één coördinator plus twee uitvoerders."
+    "teamAuthority": "Direct eigenaar24oktober2026 vraagt vijf actieve chats; vervangt eerdere limiet van één coördinator plus twee uitvoerders.",
+    "automaticFollowup": {
+      "id": "eva2-taken-afronden",
+      "kind": "heartbeat",
+      "intervalMinutes": 5,
+      "status": "ACTIVE"
+    }
   }
 }

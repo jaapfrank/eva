@@ -847,7 +847,7 @@
     "title": "Relevante updates zelfstandig ontdekken en beheerd toepassen",
     "status": "in_progress",
     "doneWhen": "Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap.",
-    "nextAction": "Rond de vaste herstelaanroep en V2-overdracht af, laat tester de concrete kandidaat onafhankelijk beoordelen en installeer met verse claims. Laat daarna Eva de echte update zelfstandig kiezen, beoordelen, toepassen en gebruiken; sluit alleen op oorspronkelijke criteria.",
+    "nextAction": "Installeer de bevroren V2 na onafhankelijk installatie-GO en verse gespreks-/model-/werkclaims; controleer de werkelijke installatie. Laat daarna Eva de update zelf kiezen, beoordelen, toepassen en gebruiken met het vereiste geïsoleerde herstelbewijs.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -8403,9 +8403,9 @@
                   "E4.16",
                   "E4.17"
                 ],
-                "nextAction": "Rond de vaste herstelaanroep en V2-overdracht af, laat tester de concrete kandidaat onafhankelijk beoordelen en installeer met verse claims. Laat daarna Eva de echte update zelfstandig kiezen, beoordelen, toepassen en gebruiken; sluit alleen op oorspronkelijke criteria.",
-                "implementationStatus": "final_native_recovery_binding_and_independent_candidate_review",
-                "checkedAt": "2026-10-24T09:05:34.338013+00:00",
+                "nextAction": "Installeer de bevroren V2 na onafhankelijk installatie-GO en verse gespreks-/model-/werkclaims; controleer de werkelijke installatie. Laat daarna Eva de update zelf kiezen, beoordelen, toepassen en gebruiken met het vereiste geïsoleerde herstelbewijs.",
+                "implementationStatus": "v2_built_source_package_reviewed_pending_installation",
+                "checkedAt": "2026-10-24T09:26:19.209998+00:00",
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                   "activeWorkers": [
@@ -8423,8 +8423,8 @@
                   "scope": "Five existing chats, separate files; coordinator owns shared installation/Git. One E419 outcome, no duplicate recovery route."
                 },
                 "review": "development/reviews/e419-baseline-preflight-review-20261024.json",
-                "progress": "V1-foundation gebouwd en bewaard. Gerichte V2-aandachtoverdracht en canonieke tijdcorrectie gereed voor review. Eén vaste geïsoleerde herstelharness wordt verplicht aan dezelfde native taak gekoppeld; de overbodige tweede herstelimplementatie vervalt. Vijf bestaande chats werken aan integratie, loader/hostvoorwaarden, pakketoplevering en onafhankelijke review. Nog geen E419-productie-installatie of autonome update.",
-                "latestEvidence": "development/evidence/product/e419-foundation-preparation-20261024.json"
+                "progress": "V2 compleet bevroren en beide kandidaatimages gebouwd; daadwerkelijke werkprofielen gecontroleerd en bestaande rolverschillen behouden. Onafhankelijke bron- en pakketreview akkoord, 64 hostimports gecontroleerd. Bevoegdheids-/bron-/herstelbindingen en gerichte installatiefouten hersteld. Nog geen V2-productie-installatie of echte autonome update/hersteluitvoering.",
+                "latestEvidence": "development/evidence/product/e419-v2-candidate-ready-20261024.json"
               }
             ],
             "previousBoundedCompletion": {
@@ -14535,9 +14535,9 @@
                 "E4.16",
                 "E4.17"
               ],
-              "nextAction": "Rond de vaste herstelaanroep en V2-overdracht af, laat tester de concrete kandidaat onafhankelijk beoordelen en installeer met verse claims. Laat daarna Eva de echte update zelfstandig kiezen, beoordelen, toepassen en gebruiken; sluit alleen op oorspronkelijke criteria.",
-              "implementationStatus": "final_native_recovery_binding_and_independent_candidate_review",
-              "checkedAt": "2026-10-24T09:05:34.338013+00:00",
+              "nextAction": "Installeer de bevroren V2 na onafhankelijk installatie-GO en verse gespreks-/model-/werkclaims; controleer de werkelijke installatie. Laat daarna Eva de update zelf kiezen, beoordelen, toepassen en gebruiken met het vereiste geïsoleerde herstelbewijs.",
+              "implementationStatus": "v2_built_source_package_reviewed_pending_installation",
+              "checkedAt": "2026-10-24T09:26:19.209998+00:00",
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                 "activeWorkers": [
@@ -14555,8 +14555,8 @@
                 "scope": "Five existing chats, separate files; coordinator owns shared installation/Git. One E419 outcome, no duplicate recovery route."
               },
               "review": "development/reviews/e419-baseline-preflight-review-20261024.json",
-              "progress": "V1-foundation gebouwd en bewaard. Gerichte V2-aandachtoverdracht en canonieke tijdcorrectie gereed voor review. Eén vaste geïsoleerde herstelharness wordt verplicht aan dezelfde native taak gekoppeld; de overbodige tweede herstelimplementatie vervalt. Vijf bestaande chats werken aan integratie, loader/hostvoorwaarden, pakketoplevering en onafhankelijke review. Nog geen E419-productie-installatie of autonome update.",
-              "latestEvidence": "development/evidence/product/e419-foundation-preparation-20261024.json"
+              "progress": "V2 compleet bevroren en beide kandidaatimages gebouwd; daadwerkelijke werkprofielen gecontroleerd en bestaande rolverschillen behouden. Onafhankelijke bron- en pakketreview akkoord, 64 hostimports gecontroleerd. Bevoegdheids-/bron-/herstelbindingen en gerichte installatiefouten hersteld. Nog geen V2-productie-installatie of echte autonome update/hersteluitvoering.",
+              "latestEvidence": "development/evidence/product/e419-v2-candidate-ready-20261024.json"
             }
           ],
           "previousBoundedCompletion": {
@@ -17659,7 +17659,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T09:05:34.338013+00:00",
+  "updatedAt": "2026-10-24T09:26:19.209998+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
