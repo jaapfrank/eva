@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-E1.12 · Bestaande huisvoorzieningenbediening afmaken
+E1.13 · Gerichte afweging en echte initiatiefuitvoering afmaken
 
-Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.
+Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.
 
-Klaar wanneer: Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.
+Klaar wanneer: Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.
 
 ## Afmaakvolgorde
 

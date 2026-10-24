@@ -12,9 +12,10 @@ De [samengevoegde scope](../design/product/living-housemate-task-scope-20261022.
 behoudt Household Artifacts, tijdige hulp, ondersteuningskansen, Personality Deltas en
 Inner Life. De leidende richting is nu gerichte continuïteit: Eva onderhoudt echte
 verantwoordelijkheden en eigen projecten tussen gesprekken en gebruikt denkvermogen
-wanneer dat iets toevoegt. De actuele uitvoering is E1.12 volgens currentWork:
-dezelfde huisvoorziening brongebonden beheren, terugdraaien en herstellen terwijl
-de fysieke E4.15-proef is uitgesteld. De eigenaar vroeg op 23 oktober uitvoerbaar werk door te zetten zonder
+wanneer dat iets toevoegt. De actuele uitvoering is E1.13 volgens currentWork:
+twee bestaande natuurlijke initiatiefketens volledig duiden en alleen een bewezen
+overgang gericht verbeteren. E1.12 is technisch opgeleverd; werkelijk gebruik en
+adoptie blijven open terwijl de fysieke E4.15-proef is uitgesteld. De eigenaar vroeg op 23 oktober uitvoerbaar werk door te zetten zonder
 op zijn tests te wachten. Dit sluit E4.15 of haar overige criteria niet af.
 De tabel bewaart de overige kaartvolgorde; spraak blijft bij de bestaande uitvoerder.
 
@@ -105,8 +106,9 @@ zijn gebruikt in de huidige WSL-installatie en de actuele bron-/herstelbindingen
 hebben onafhankelijke volledige GO. Werkbord, dashboard en Git volgen die oplevering.
 De E1.12-bewijsroute en eigenaarbediening zijn op 24 oktober geïnstalleerd en
 onafhankelijk live teruggelezen. De versie-/terugdraai- en
-proef/evaluatie/meldingsroutes zijn eveneens geïnstalleerd. Dezelfde reviewer
-controleert de echte installatie en de gerepareerde bestaande herstelroute.
+proef/evaluatie/meldingsroutes zijn eveneens geïnstalleerd. De echte installatie en
+de gerepareerde bestaande herstelroute hebben onafhankelijke GO. Dezelfde bouwer
+en reviewer vervolgen E1.13 zonder nieuwe gezins- of modelproef.
 Werkelijk gebruik, adoptie en herstelbewijs blijven nodig; E1.12 is nog open.
 E4.15-begroeting, horen en later hergebruik en
 de volledige E4.17-acceptatie blijven open; de fysieke proef is uitgesteld.

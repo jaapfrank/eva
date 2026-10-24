@@ -1,0 +1,80 @@
+{
+  "contract": "EvaE112ManagedRestoreDelivery/v1",
+  "task": "E1.12",
+  "checkedAt": "2026-10-24T02:57:30.999386+00:00",
+  "status": "technical_restore_handoff_reviewed_and_installed_as_existing_wsl_operator",
+  "fullTaskCompleted": false,
+  "originalFullTaskCriteriaUnchanged": true,
+  "existingHook": "tools.installation_host_extension_restore.prepare_host_extension(..., managed_household=trusted_operator_selection)",
+  "originalHandoffSha256": "4721440b75ebae82b00bce1617766500be41c248c0e6a15c7b5f24475d736077",
+  "targetedNullFixHandoffSha256": "20d1f32d46e65a076e6fa446680459b576ff477afbfc15009c691d26738918b2",
+  "sourceFiles": {
+    "src/tools/installation_host_extension_restore.py": "d0f781cd6d6d5e308c7523965a27efe7bcfc7d3dc3d58d77dc676624416b0d3b",
+    "development/tests/portable/test_e112_managed_household_restore.py": "9f4f0eae41f30ead6dcf733f9380a37b26c35ceb4583a7f2389eab75bfacad41",
+    "src/tools/installation_runtime_authorization.py": "fc7545f658fa572d047176e914a214ab71522ccf11febb90445c95e56ae52f24",
+    "development/tests/portable/test_installation_runtime_authorization.py": "2c85dab57ad8398ee12e625a866d48b5a6004cb09b3c231b5ab92934e737b856"
+  },
+  "originalNullFailureRetained": true,
+  "independentReview": {
+    "path": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
+    "sha256": "c45aaaed29855f8d14b77e464818bc970a2a9d1f0f9b8e65c2da4152bbee67e5",
+    "verdict": "GO_SCOPED_MANAGED_RESTORE_CODE_AND_ISOLATED_EVIDENCE",
+    "casesPassed": 72,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 19.74,
+    "scope": "Frozen exact source, private real filesystem/ownership and boundary checks; original authorization tests were also selected by the fixture path. No extra rerun."
+  },
+  "isolatedExistingPortableRoute": {
+    "schema": "4e_0011_timeline_type_time",
+    "nativeRows": 26,
+    "rebuiltCheckpoints": 3,
+    "managedFiles": 8,
+    "versions": 2,
+    "historyEntries": 11,
+    "runtimeUid": 65532,
+    "runtimeGid": 65532,
+    "adoptionAndPausePreserved": true,
+    "separateLatchedStopPreserved": true,
+    "resumeAfterStopRejected": true,
+    "currentOwnerRevocationRejectsRead": true,
+    "noDuplicateRowsOrEffectAdmission": true,
+    "pausedReceiptSha256": "2766b921f71be4fb4a408a3b057af9e025c6b89e2f1f3583503ccf92f30ddf97",
+    "stoppedReceiptSha256": "339b91164e70bcb90075ea26db7c2a2f6bb5d2b045313dfde8715eb5968bf79b",
+    "reviewerRepeatedNativeImport": false
+  },
+  "actualCurrentUnenrolledState": {
+    "bindingContract": "EvaHouseholdProcedureBinding/v1",
+    "enrollmentExplicitNullPreserved": true,
+    "automaticRegistrationAdoptionOrActivation": false,
+    "malformedAndWrongOwnerBindingsRejected": true
+  },
+  "installedHostSourceReceipt": {
+    "status": "actual_wsl_operator_sources_imported",
+    "modules": {
+      "tools.installation_host_extension_restore": {
+        "path": "/home/administrator/project/Eva2/src/tools/installation_host_extension_restore.py",
+        "sha256": "d0f781cd6d6d5e308c7523965a27efe7bcfc7d3dc3d58d77dc676624416b0d3b"
+      },
+      "tools.installation_runtime_authorization": {
+        "path": "/home/administrator/project/Eva2/src/tools/installation_runtime_authorization.py",
+        "sha256": "fc7545f658fa572d047176e914a214ab71522ccf11febb90445c95e56ae52f24"
+      }
+    },
+    "seconds": 2.5313726310268976,
+    "productionRestoreOrRestart": false
+  },
+  "authority": "Only exact three core managed-state env/path pairs may be writable. Existing owner approval, initial hashes, profile binding, model/credential read-only routes, fences and restore hold remain required.",
+  "usage": {
+    "verificationModelCalls": 0,
+    "productionPosts": 0,
+    "productionRestoreOrServiceRestart": false,
+    "developmentTokens": null,
+    "developmentCreditCost": null
+  },
+  "limits": [
+    "Isolated schema0011 restore with synthetic source/review/executor ports; no actual natural household adoption or effect proof.",
+    "23 older external-fixture cases remained unavailable and are not counted as passed.",
+    "No full gateway/memory or production restore claim; real household working proof, usefulness, adoption and owner acceptance remain open."
+  ]
+}

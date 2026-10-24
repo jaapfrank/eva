@@ -3,9 +3,9 @@
   "task": "E1.12 household artifact lifecycle",
   "reviewerThreadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
   "clientTaskDate": "2026-10-24",
-  "checkedAtMachineUtc": "2026-10-24T00:05:14.877182+00:00",
-  "status": "complete_version_trial_code_ui_and_bounded_overlay_install_go_fresh_guard_and_live_readback_pending",
-  "verdict": "GO_SCOPED_ONE_FRESH_GUARDED_VERSION_TRIAL_INSTALL_ATTEMPT",
+  "checkedAtMachineUtc": "2026-10-24T02:53:50.336794+00:00",
+  "status": "version_trial_controls_actually_installed_and_managed_restore_technical_review_passed_actual_household_outcome_pending",
+  "verdict": "GO_SCOPED_MANAGED_RESTORE_CODE_AND_ISOLATED_EVIDENCE",
   "onlyWritePath": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
   "authority": {
     "boardPath": "development/design/product/execution-workboard-v1.json",
@@ -783,7 +783,7 @@
     "reviewerProductWrites": 0
   },
   "usage": {
-    "testsRun": 190,
+    "testsRun": 262,
     "newDatabaseQueries": null,
     "newServiceStarts": 11,
     "newModelCalls": 0,
@@ -1263,6 +1263,36 @@
       "actualModelEvaluatorOrHouseholdEffects": 0,
       "canonicalProductOrTestWrites": 0,
       "credentialValuesOrHashesEmitted": 0
+    },
+    "latestInstalledVersionTrialReadback": {
+      "independentDirectActualSourceHashes": 10,
+      "root19SourceReadbackEvidenceChecked": true,
+      "independentUnauthorizedHttpGets": 1,
+      "authenticatedHttpGetsByReviewer": 0,
+      "commandWallSeconds": 3.5071601,
+      "productionPosts": 0,
+      "modelCalls": 0,
+      "credentialValuesOrHashesEmitted": 0,
+      "testsRepeated": 0
+    },
+    "latestManagedRestoreReview": {
+      "passed": 72,
+      "failed": 0,
+      "skipped": 0,
+      "pytestSeconds": 19.74,
+      "runnerSeconds": 19.989517898997292,
+      "processSeconds": 20.33620002202224,
+      "exitCode": 0,
+      "frozenProductBindingsExact": true,
+      "sourceAndTestPinsBeforeAfterUnchanged": true,
+      "sourceSqlOrProductionRestoreOrRuntimeStartOrModelCalls": 0,
+      "privatePostgresStartsThisReview": 0,
+      "actualHouseholdEffects": 0,
+      "credentialValuesOrHashesEmitted": 0,
+      "newModelCalls": 0,
+      "developmentTokens": null,
+      "developmentCredits": null,
+      "operatorPgStopReceiptsReviewedNotReexecuted": true
     }
   },
   "handoff": "Concrete findings sent directly to coordinator during review. Waiting for exact frozen implementation and owner integration; no general test series, code edits, installs or extra agents.",
@@ -2830,5 +2860,198 @@
     "newTestsImportsOrModelCallsForOverlayReview": 0,
     "fullE112ProjectOrOwnerAcceptanceGo": false,
     "remainingOriginalOutcome": "Real useful lasting household provision/use/feedback/adoption and actual same-identity adopted/paused managed-source restore remain open. Separate concrete restore activation repair is not reviewed here."
+  },
+  "installedVersionTrialReadbackReview": {
+    "checkedAtMachineUtc": "2026-10-24T02:48:46.843612+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_ACTUALLY_INSTALLED_VERSION_TRIAL_READBACK",
+    "bundle": "/var/lib/eva2/e112-version-trial-20261024",
+    "pins": {
+      "installation.private.json": "0d19717235bea8431ade7fd612b8451c3ce3a7f4dd03faceeb140841f458f5a2",
+      "installed-sources.private.json": "f7e5d5f6427ec2a0ebaeba0a33e1a92092e06f8aecfe2576b74d92a15690b85f",
+      "installed-readback.stdout.private.json": "164cf3eec8aec1d3667679e605d595b8dca474391cd70f2f900b933d45f75960",
+      "installed-profiles.private.json": "71118129ba415de8c0deda46b0fde47c08c35c6bac8e12e9f4d12b931594c425",
+      "readiness.private.json": "58b5dab49ae7ace3aee4b80a39c988cad18d70d51d5a9e320ee3a46428d8feff"
+    },
+    "installReviewBindingSha256": "bf89023ff800bd05c4dae7ab2e8a4f85b423bffbc8be34dbc71426f7508b3d1f",
+    "installedAtMachineUtc": "2026-10-24T02:42:04.068163+00:00",
+    "dispatchReceiptStatus": "running_exact_configuration",
+    "actualRoles": {
+      "core": {
+        "container": "cfb719951316909333d5c2ac1f0e050befa0a3e35939f8c125962ec6750884be",
+        "image": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+        "startedAt": "2026-10-24T02:41:35.979747435Z",
+        "sourceReadbackFileCount": 12
+      },
+      "delegated-work-worker": {
+        "container": "b7ad1cfebb61aab722d3bd0b03fd493aa58ad24d6444bbfcdd6e877f5b5eb08d",
+        "image": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
+        "startedAt": "2026-10-24T02:41:48.003539272Z",
+        "sourceReadbackFileCount": 7
+      }
+    },
+    "independentLiveChecks": {
+      "completedCommandExitCode": 0,
+      "commandWallSeconds": 3.5071601,
+      "actualCurrentContainerIdsImagesPidAndStartedAtMatchBoundReadback": true,
+      "actualStorageAndComposeBindingMatchCandidate": true,
+      "receiptBeforeAfterCanonicalConfigHashesVerified": true,
+      "all19RootInstalledSourceHashesCheckedAgainstManifest": true,
+      "criticalActualSourceFilesReadDirectlyByReviewer": {
+        "core": [
+          "adapters/postgres/household_provisions.py",
+          "bootstrap/household_provision_versions.py",
+          "bootstrap/household_provision_trials.py",
+          "bootstrap/household_provision_runtime.py",
+          "bootstrap/runtime.py",
+          "adapters/api/dashboard_initiatives.py",
+          "adapters/api/dashboard_static/eva-dashboard-assets.json"
+        ],
+        "worker": [
+          "adapters/postgres/household_provisions.py",
+          "providers/home_assistant_procedure.py",
+          "bootstrap/household_initiative.py"
+        ]
+      },
+      "all10CriticalDirectHashesMatch": true,
+      "actualProtectedNullEnrollmentUidGid65532Mode0600": true,
+      "actualManagedProcedure3BytesAndUidGid65532Mode0600Directory0700": true,
+      "independentUnauthenticatedVersionsHttpGet": 401,
+      "reviewerAuthenticatedHttpCalls": 0,
+      "profilesExactlyMatchApprovedCandidate": true,
+      "knownHouseholdResearchMismatch": [
+        "household_research"
+      ],
+      "allProfilesCompatibleClaim": false
+    },
+    "boundAuthenticatedRootReadback": {
+      "checkedAtMachineUtc": "2026-10-24T02:42:21.601053+00:00",
+      "authenticatedGet": 200,
+      "unauthorizedGet": 401,
+      "scopeOverrideDenied": 422,
+      "cacheControl": "no-store",
+      "versionsAuthorizedGetUnenrolled": 422,
+      "versionsUnauthorizedGet": 401,
+      "threeActualHttpAssetsMatchApprovedTrialUi": true,
+      "existingProvisionPresent": false,
+      "actualWorkingProofAvailable": false,
+      "dynamicVerifierInstalled": true,
+      "productionPosts": 0,
+      "modelCalls": 0
+    },
+    "usableNow": "Version/change/undo and prior-authorized bounded trial/evaluation/notice acknowledgement interfaces are technically installed with the independently reviewed backend and owner UI. Current unenrolled state remains explicit null; no actual provision or adoption is invented.",
+    "notYetDemonstrated": [
+      "Actual natural useful lasting household provision, original working outcome, owner feedback/adoption and household acceptance.",
+      "Actual same-identity installed managed-source restoration preserving owner, adoption, pause and STOP. Managed restore candidate is undergoing a targeted explicit-null compatibility correction; no production restore is authorized by this readback."
+    ],
+    "fullE112OrProjectGo": false,
+    "reviewerProductWritesModelCallsOrRestarts": 0,
+    "testsRepeated": 0
+  },
+  "managedRestoreCandidateReview": {
+    "checkedAtMachineUtc": "2026-10-24T02:53:50.336794+00:00",
+    "clientTaskDate": "2026-10-24",
+    "verdict": "GO_SCOPED_MANAGED_RESTORE_CODE_AND_ISOLATED_EVIDENCE",
+    "bundle": "/home/administrator/project/.eva2-artifacts/e112-household-artifact-lifecycle-20261024/managed-restore-v1",
+    "handoffPins": {
+      "handoff-final.private.json": "4721440b75ebae82b00bce1617766500be41c248c0e6a15c7b5f24475d736077",
+      "post-null-handoff.private.json": "20d1f32d46e65a076e6fa446680459b576ff477afbfc15009c691d26738918b2"
+    },
+    "sourceAndTestPins": {
+      "post-null-candidate/src/tools/installation_host_extension_restore.py": "d0f781cd6d6d5e308c7523965a27efe7bcfc7d3dc3d58d77dc676624416b0d3b",
+      "candidate/src/tools/installation_runtime_authorization.py": "fc7545f658fa572d047176e914a214ab71522ccf11febb90445c95e56ae52f24",
+      "post-null-candidate/development/tests/portable/test_e112_managed_household_restore.py": "9f4f0eae41f30ead6dcf733f9380a37b26c35ceb4583a7f2389eab75bfacad41",
+      "candidate/development/tests/portable/test_installation_runtime_authorization.py": "2c85dab57ad8398ee12e625a866d48b5a6004cb09b3c231b5ab92934e737b856"
+    },
+    "boundOperatorEvidencePins": {
+      "actual-uid65532-18bc9b1f69/result.private.json": "2766b921f71be4fb4a408a3b057af9e025c6b89e2f1f3583503ccf92f30ddf97",
+      "stop-retained-db3c93253b/result.private.json": "339b91164e70bcb90075ea26db7c2a2f6bb5d2b045313dfde8715eb5968bf79b",
+      "null-enrollment-original-failure.private.json": "7a2fa274a48b74749a2e59b91a4793353e74f6f0c436e5fee38ada2b5119c8e0",
+      "null-enrollment-focused.private.json": "541795bbdf1349a544453ccd8fe53da6e357f45aa46c97015793f1d443212b85",
+      "null-enrollment-existing-pointer-negatives.private.json": "891749420f02a33aa008e3cab65232a8f74b5e7d2bf06b82454d908395cc0f4a",
+      "existing-host-installer-compatibility.private.json": "673fd583249b1aaaa8ba00093f50f8c44a85e167c23526d6bbb09cc69cbb85e8"
+    },
+    "existingRoute": "Optional trusted managed_household selection on existing prepare_host_extension/read_host_preparation; existing runtime authorization exact core file routes. No separate restore service, storage or startup route.",
+    "sourceReview": {
+      "allFourPathsAndBaselineDeltasRead": true,
+      "exactOriginalAuthorizationTestBytesRemainPrefix": true,
+      "original86e2AndOriginalFailEvidencePreserved": true,
+      "onlyTwoNullFixReplacementFiles": true,
+      "currentCanonicalTwoToolHashesMatchFinalFrozen": true,
+      "operatorSelectedDestinationRuntimeOwnerAndInventoryNeverTakenAsArchiveAuthority": true,
+      "sourceReviewEnrollmentVersionIdentityAndCompleteRetainedInventoryBound": true,
+      "files0600AndDirectories0700OwnedByTrustedRuntimeUidGid": true,
+      "noSymlinkHardlinkOrExistingTargetReplacement": true,
+      "blockingGuardThenSourceStagedTreeAndParentRecheckedBeforeAbsentRename": true,
+      "materializationInactiveNoPgRecordAdoptionOrActivationCreated": true,
+      "nullFix": "Exact single-key explicit-null enrollment is preserved byte-for-byte for the actual V1 installation. Missing/malformed/extra-key enrollment and mismatched non-null owner/digest remain rejected.",
+      "authorizationScope": "Only three exact existing core managed-state envkeys/paths with65532:65532 actual private ownership; worker/alias/wrongpath/modellease/user/permission/link/filemount rejected. Existing current operator-approved filehash/profile/modellease routes remain required."
+    },
+    "independentTests": {
+      "passed": 72,
+      "failed": 0,
+      "skipped": 0,
+      "pytestSeconds": 19.74,
+      "runnerSeconds": 19.989517898997292,
+      "processSeconds": 20.33620002202224,
+      "exitCode": 0,
+      "scope": "Frozen managed-restore module plus runtime-authorization module. -k e112 also matched shared artifact parent path, so original authorization cases were included; all72 results are reported, no additional rerun performed.",
+      "frozenProductBindingsExact": true,
+      "sourceAndTestPinsBeforeAfterUnchanged": true,
+      "priorReviewedHouseholdStoreFrozen615eBound": true,
+      "actualUid65532PrivateTemporaryTreeReadbackIncluded": true,
+      "sourceSqlOrProductionRestoreOrRuntimeStartOrModelCalls": 0,
+      "onlyOwnTemporaryFixtureFilesChanged": true,
+      "oldExternalFixture23CasesNotRunOrClaimedPassed": true
+    },
+    "operatorIsolatedPgEvidence": {
+      "independentlyReexecutedHere": false,
+      "originalActualUid65532ReceiptBoundAndChecked": true,
+      "schemaHead": "4e_0011_timeline_type_time",
+      "pausedFixture": {
+        "insertedRecords": 26,
+        "rebuiltCheckpoints": 3,
+        "retainedManagedFiles": 8,
+        "retainedVersions": 2,
+        "versionHistoryEntries": 11,
+        "sameAdoptionAndTrial": true,
+        "sameStateSha256": "36d8907d4d702f52cf0130b12140ae91082eadce1eec9471ea8037117515b0d2",
+        "actualOwnerRevocationBlocks": true,
+        "noDuplicateOrDispatch": true
+      },
+      "separateStopFixture": {
+        "insertedRecords": 27,
+        "rebuiltCheckpoints": 3,
+        "retainedVersions": 2,
+        "stopped": true,
+        "sameAdoption": true,
+        "sameStateSha256": "ffa5a35eece8522755521988abe8f31db4ecdf18ec416b7ed337a69760aa21ae",
+        "resumeRefusedNoEventOrEffect": true
+      },
+      "targetActivation": "closed",
+      "gatewayMemoryFreshProviderAuthorizationAndModelLeaseRecoveryNotClaimed": true,
+      "syntheticOriginalSourceEvaluatorAndExecutionPorts": true,
+      "productionTouched": false
+    },
+    "coordinatorFoundNullRegression": {
+      "status": "fixed_and_independently_retested",
+      "oldModuleSha256": "86e2f0d67f2c747558ec7a51f7371588528b3e2894f6d174aff197bd5ec8bd76",
+      "originalPositiveNullCaseExitCode": 1,
+      "fixedModuleSha256": "d0f781cd6d6d5e308c7523965a27efe7bcfc7d3dc3d58d77dc676624416b0d3b",
+      "fixedPositiveNullAndSixNegativeCasesIncluded": true,
+      "independentOriginalFailureRerun": false
+    },
+    "olderCompatibilityEvidence": {
+      "reportedPassed": 9,
+      "skippedExternalFixtureUnavailable": 23,
+      "skipsRemainUnknownNotPassed": true,
+      "broadOlderHostOrFullRecoveryProofNotRepeated": true
+    },
+    "usableNow": "Existing host preparation can materialize the exact private managed procedure/enrollment/retained versions for trusted runtime ownership, including the current unregistered V1/null state; scoped authorization accepts only approved private core routes.",
+    "noRuntimeRestartRequiredForHostToolSourceHandoff": true,
+    "noNewIndependentFinding": true,
+    "fullE112OrProjectOrActualHouseholdAcceptanceGo": false,
+    "remainingOriginalOutcome": "A useful actual lasting provision with original working proof, actual household use/evaluation/adoption and owner acceptance. The isolated restore evidence does not manufacture that outcome or authorize a production restore/start.",
+    "reviewerProductionWritesOrRestartsOrModels": 0
   }
 }

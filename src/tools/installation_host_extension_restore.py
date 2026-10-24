@@ -365,12 +365,16 @@ def _validate_prepared(package, destination):
     return paths
 
 
-def read_host_preparation(package_root, destination, *, identity_trust=None):
+def read_host_preparation(package_root, destination, *, identity_trust=None, managed_household=None):
     package = read_installation_package(Path(package_root), identity_trust=identity_trust)
-    return _validate_prepared(package, Path(destination))
+    result = _validate_prepared(package, Path(destination))
+    if managed_household is not None:
+        _managed_household(Path(package_root), package, managed_household, materialize=False)
+    return result
 
 
-def prepare_host_extension(package_root, destination, *, configuration, verify_guard, identity_trust=None):
+def prepare_host_extension(package_root, destination, *, configuration, verify_guard, identity_trust=None,
+                           managed_household=None):
     if not callable(verify_guard):
         raise ValueError("host preparation requires a current trusted operator guard")
     destination = Path(destination)
@@ -432,7 +436,208 @@ def prepare_host_extension(package_root, destination, *, configuration, verify_g
         finally:
             if not published:
                 shutil.rmtree(staging)
-    return {"status": "prepared_inactive", "sourceArchiveSha256": package["archive_sha256"],
-            "retainedFileCount": len(paths), "preparedFileCount": len(expected),
-            "preparedBytes": payload_bytes, "receiptSha256": _sha(raw),
-            "runtimeActivated": False, "functionalHostRestoreProven": False}
+    result = {"status": "prepared_inactive", "sourceArchiveSha256": package["archive_sha256"],
+              "retainedFileCount": len(paths), "preparedFileCount": len(expected),
+              "preparedBytes": payload_bytes, "receiptSha256": _sha(raw),
+              "runtimeActivated": False, "functionalHostRestoreProven": False}
+    if managed_household is not None:
+        # Trusted operator destination/owner are deliberately NOT archive authority.
+        # Failure leaves the already prepared extension inactive, never started.
+        result["managedHousehold"] = _managed_household(Path(package_root), package,
+            managed_household, materialize=True, verify_guard=verify_guard)
+    return result
+
+
+
+def _managed_owner(value):
+    if (not isinstance(value, dict) or set(value) != {'uid', 'gid'}
+            or any(type(number) is not int or not 0 <= number < 4294967295 for number in value.values())
+            or (os.geteuid() != 0 and value != {'uid': os.geteuid(), 'gid': os.getegid()})):
+        raise ValueError('managed household requires a trusted numeric runtime owner')
+    return value
+
+
+def _managed_payload(package_root, package, configuration):
+    """Check exact original references; this does not grant source or PG adoption rights."""
+    from eva.adapters.postgres.household_provisions import PostgresHouseholdProvisions, procedure_provision_id
+    from eva.contracts.canonical_json import canonical_sha256
+    fields = {'destination', 'runtime_owner', 'files', 'configuration', 'review', 'enrollment'}
+    if not isinstance(configuration, dict) or set(configuration) != fields:
+        raise ValueError('managed household operator selection differs')
+    owner = _managed_owner(configuration['runtime_owner'])
+    target = Path(configuration['destination'])
+    if (not target.is_absolute() or target.resolve() != target
+            or target == package_root or package_root in target.parents or target in package_root.parents):
+        raise ValueError('managed household target must be an independent absent private path')
+    mapping = configuration['files']
+    if (not isinstance(mapping, dict) or not 4 <= len(mapping) <= MAX_ARCHIVE_FILES
+            or len(set(mapping.values())) != len(mapping)):
+        raise ValueError('managed household selected file inventory differs')
+    entries = package['manifest']['files']; payload = {}
+    with _root_descriptor(package_root) as source:
+        if _read_regular(source, 'archive.json') != package['manifest_raw']:
+            raise ValueError('managed household package manifest changed')
+        for relative, archived in mapping.items():
+            _safe_relative_path(relative); _safe_relative_path(archived)
+            if (not archived.startswith(('documents/household-procedure/', 'config/household-procedure/'))
+                    or archived not in entries or entries[archived]['role'] not in _ROLES):
+                raise ValueError('managed household source is outside the retained procedure')
+            raw = _read_regular(source, archived, maximum=65536)
+            if len(raw) != entries[archived]['size'] or _sha(raw) != entries[archived]['sha256']:
+                raise ValueError('managed household retained source changed')
+            payload[relative] = raw
+    names = [configuration[key] for key in ('configuration', 'review', 'enrollment')]
+    if len(set(names)) != 3 or any(name not in payload for name in names):
+        raise ValueError('managed household exact configuration, review and enrollment required')
+    config_path, review_path, enrollment_path = map(Path, names)
+    if (config_path.parent != review_path.parent or config_path.name != 'current.json'
+            or review_path.name != 'adoption-review.json'):
+        raise ValueError('managed household source and review must remain siblings')
+    for key, role in (('configuration', 'provider_binding'), ('review', 'document_marker'),
+                      ('enrollment', 'provider_binding')):
+        if entries[mapping[configuration[key]]]['role'] != role:
+            raise ValueError('managed household source role differs')
+    config, review, enrollment = (_json(payload[name]) for name in names)
+    def check_source(bound, code, review_raw):
+        if (not isinstance(bound, dict) or bound.get('contract') not in
+                {'EvaHouseholdProcedureBinding/v1', 'EvaHouseholdProcedureBinding/v2'}
+                or not isinstance(bound.get('household_binding'), dict)
+                or not isinstance(bound.get('source_principal_id'), str)
+                or not isinstance(bound.get('reference_id'), str)):
+            raise ValueError('managed household source binding differs')
+        name = bound.get('source_file')
+        if not isinstance(name, str) or Path(name).name != name or not name.endswith('.py'):
+            raise ValueError('managed household source must be a sibling Python file')
+        parsed = _json(review_raw)
+        if (not isinstance(parsed, dict) or parsed.get('contract') != 'EvaIndependentReview/v1'
+                or parsed.get('verdict') != 'GO' or parsed.get('source', {}).get('sha256') != bound.get('source_sha256')
+                or _sha(code) != bound.get('source_sha256') or _sha(review_raw) != bound.get('review_sha256')):
+            raise ValueError('managed household source or review hashes differ')
+        return name
+    if not isinstance(config, dict):
+        raise ValueError('managed household source configuration differs')
+    current_name = config.get('source_file')
+    current_path = str(config_path.parent / current_name) if isinstance(current_name, str) else ''
+    if current_path not in payload:
+        raise ValueError('managed household current source is missing')
+    check_source(config, payload[current_path], payload[names[1]])
+    if entries[mapping[current_path]]['role'] != 'document_artifact':
+        raise ValueError('managed household current source role differs')
+    provision_id = procedure_provision_id(config)
+    pointer = enrollment.get('household_provision_enrollment') if isinstance(enrollment, dict) else None
+    if (not isinstance(enrollment, dict) or set(enrollment) != {'household_provision_enrollment'}):
+        raise ValueError('managed household enrollment differs from the same source')
+    # An explicit null is the actual unregistered installation state. Preserve
+    # it byte-for-byte; materialization must never register/adopt on its behalf.
+    if pointer is not None and (not isinstance(pointer, dict) or set(pointer) != {
+                'contract', 'provision_id', 'owner_principal_id', 'binding_sha256'}
+            or pointer['contract'] != 'EvaHouseholdProvisionEnrollment/v1'
+            or pointer['provision_id'] != provision_id
+            or pointer['owner_principal_id'] != config['source_principal_id']
+            or pointer['binding_sha256'] != canonical_sha256(config)):
+        raise ValueError('managed household enrollment differs from the same source')
+    allowed = set(names) | {current_path}; version_count = 0
+    for relative, raw in payload.items():
+        path = Path(relative)
+        if path.parent != config_path.parent / 'versions':
+            continue
+        if (re.fullmatch(r'[a-f0-9]{64}\.json', path.name) is None
+                or entries[mapping[relative]]['role'] != 'document_marker'):
+            raise ValueError('managed household retained version name or role differs')
+        bundle = _json(raw)
+        if (not isinstance(bundle, dict) or set(bundle) != {'contract', 'configuration', 'source', 'review', 'origin'}
+                or bundle['contract'] != 'EvaHouseholdProvisionVersion/v1'
+                or not isinstance(bundle['source'], str) or not isinstance(bundle['review'], str)):
+            raise ValueError('managed household retained version differs')
+        bound = bundle['configuration']; code = bundle['source'].encode(); review_raw = bundle['review'].encode()
+        source_name = check_source(bound, code, review_raw)
+        if (procedure_provision_id(bound) != provision_id or bound['source_principal_id'] != config['source_principal_id']
+                or bound['household_binding'] != config['household_binding']):
+            raise ValueError('managed household version changes owner, household or provision')
+        evidence = {key: bound[key] for key in ('source_sha256', 'review_sha256', 'reference_id')}
+        evidence['binding_sha256'] = canonical_sha256(bound)
+        if PostgresHouseholdProvisions._version_id(evidence) != path.stem:
+            raise ValueError('managed household retained version identity differs')
+        source_path = str(config_path.parent / source_name)
+        if (payload.get(source_path) != code or entries[mapping[source_path]]['role'] != 'document_artifact'):
+            raise ValueError('managed household retained version source is missing or changed')
+        allowed.update((relative, source_path)); version_count += 1
+    lock = str(enrollment_path.with_name(enrollment_path.name + '.lock'))
+    if lock in payload and payload[lock] == b'' and entries[mapping[lock]]['role'] == 'document_journal':
+        allowed.add(lock)  # New inode only; an archived lock conveys no process ownership.
+    retained_versions = {name for name in entries if name.startswith(('documents/household-procedure/',
+        'config/household-procedure/')) and '/versions/' in name}
+    selected_versions = {mapping[name] for name in payload
+        if Path(name).parent == config_path.parent / 'versions'}
+    if retained_versions != selected_versions:
+        raise ValueError('managed household retained version inventory is incomplete')
+    if set(payload) != allowed:
+        raise ValueError('managed household inventory contains unrelated files')
+    return target, owner, payload, provision_id, version_count
+
+
+def _verify_managed_tree(target, owner, payload):
+    with _root_descriptor(target) as root:
+        if _scan_regular_files(root) != set(payload):
+            raise ValueError('managed household restored inventory differs')
+        for name, expected in payload.items():
+            info = os.stat(name, dir_fd=root, follow_symlinks=False)
+            if (not stat.S_ISREG(info.st_mode) or info.st_uid != owner['uid'] or info.st_gid != owner['gid']
+                    or info.st_nlink != 1 or stat.S_IMODE(info.st_mode) != 0o600
+                    or _read_regular(root, name, maximum=65536) != expected):
+                raise ValueError('managed household restored bytes or runtime ownership differ')
+        for directory in [target, *[p for p in target.rglob('*') if p.is_dir()]]:
+            info = directory.lstat()
+            if (not stat.S_ISDIR(info.st_mode) or info.st_uid != owner['uid'] or info.st_gid != owner['gid']
+                    or stat.S_IMODE(info.st_mode) != 0o700):
+                raise ValueError('managed household restored directory is not private to runtime')
+
+
+def _managed_household(package_root, package, configuration, *, materialize, verify_guard=None):
+    """Existing host preparation's optional operator-selected managed-state output.
+
+    Retained bytes never activate a provision or synthesize a PG row or review.
+    The caller reauthorizes the current restored owner/controller before release.
+    """
+    target, owner, payload, provision_id, versions = _managed_payload(package_root, package, configuration)
+    parent = target.parent
+    info = parent.lstat()
+    if (parent.resolve() != parent or not stat.S_ISDIR(info.st_mode)
+            or info.st_uid != owner['uid'] or info.st_gid != owner['gid'] or stat.S_IMODE(info.st_mode) != 0o700):
+        raise ValueError('managed household target parent must be private to the trusted runtime owner')
+    if materialize:
+        if target.exists() or target.is_symlink():
+            raise FileExistsError('managed household target already exists')
+        verify_guard()
+        staging = parent / ('.managed-household-' + uuid4().hex)
+        staging.mkdir(mode=0o700)
+        published = False
+        try:
+            for name, raw in payload.items():
+                _write_new(staging / name, raw, 0o600)
+            for item in [*staging.rglob('*'), staging]:
+                os.chown(item, owner['uid'], owner['gid'], follow_symlinks=False)
+                if item.is_dir(): item.chmod(0o700)
+                descriptor = os.open(item, os.O_RDONLY | os.O_NOFOLLOW)
+                try: os.fsync(descriptor)
+                finally: os.close(descriptor)
+            _verify_managed_tree(staging, owner, payload)
+            verify_guard()
+            # Recheck selected source bytes after the blocking guard, before publication.
+            if _managed_payload(package_root, package, configuration)[2] != payload:
+                raise ValueError('managed household source changed during preparation')
+            _verify_managed_tree(staging, owner, payload)
+            after = parent.lstat()
+            if ((after.st_dev, after.st_ino, after.st_uid, after.st_gid, stat.S_IMODE(after.st_mode))
+                    != (info.st_dev, info.st_ino, owner['uid'], owner['gid'], 0o700)):
+                raise ValueError('managed household destination parent changed during preparation')
+            with _root_descriptor(parent) as descriptor:
+                _rename_absent(descriptor, staging.name, target.name)
+                published = True
+                os.fsync(descriptor)
+        finally:
+            if not published: shutil.rmtree(staging)
+    _verify_managed_tree(target, owner, payload)
+    return {'status': 'materialized_inactive', 'provision_id': provision_id,
+            'runtime_owner': dict(owner), 'files': len(payload), 'retained_versions': versions,
+            'runtimeActivated': False, 'adoptionOrPauseChanged': False}

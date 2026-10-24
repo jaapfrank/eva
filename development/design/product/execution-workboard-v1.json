@@ -841,13 +841,13 @@
   "lastUpdated": "2026-10-23T16:59:07.773712+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E1.12",
+  "activeTaskId": "E1.13",
   "currentWork": {
-    "id": "E1.12",
-    "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
+    "id": "E1.13",
+    "title": "Denkvermogen gericht inzetten zonder initiatief te verliezen",
     "status": "in_progress",
-    "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.",
-    "nextAction": "Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.",
+    "doneWhen": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache.",
+    "nextAction": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1651,6 +1651,20 @@
             "familyAcceptance": false
           },
           {
+            "title": "E1.12 · Eigenaarbediening en herstel technisch opgeleverd",
+            "state": "installed",
+            "summary": "Technische oplevering klaar: bestaande eigenaarbediening voor registratie/adoptie/pauze/stop, versies/terugdraaien, vooraf toegestane proef/evaluatie/melding geïnstalleerd en onafhankelijk teruggelezen. Bestaande herstelroute bewaart adoptie/pauze/STOP/versies en expliciet lege inschrijving onder echte UID65532; onafhankelijke GO. Volledige kaart blijft open voor werkelijk nuttig huishoudelijk gebruik en adoptie.",
+            "remaining": "Werkelijk nuttige blijvende huisvoorziening, gebruik, feedback en adoptie; volledige E1.12 blijft open.",
+            "source": "development/evidence/product/e112-household-provision-version-trial-20261024.json",
+            "review": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
+            "checkedAt": "2026-10-24T02:57:30.999386+00:00",
+            "completedTaskIds": [],
+            "newProductFunctionCompleted": false,
+            "technicalDeliveryComplete": true,
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
             "title": "E1.6 · Eigen bronvervolg uitgevoerd en via Telegram teruggekoppeld",
             "state": "installed",
             "summary": "Eva koos zelf een relevante statuslezing vanuit een recente privévraag. De gewone uitvoerder rondde die om 09:42:02 UTC af; de gewone vervolgbeslissing gebruikte het resultaat en leverde om 09:42:19 via Telegram een juiste beperkte conclusie. Nog geen bronabonnement of werkelijke bronverandering→afweging bewezen.",
@@ -2108,7 +2122,7 @@
             "date": "2026-10-18T22:41:37.190405+00:00",
             "checkedAt": "2026-10-18T22:41:37.190405+00:00",
             "summary": "Eigen onderzoek/voortgang en berichttiming zijn in dezelfde functie afzonderlijke keuzes. Een echte contractwijziging krijgt één eigen bron; oude besluiten blijven bewaard. Gerichte controles en onafhankelijke bronreview geslaagd.",
-            "remaining": "Gewone zelfgekozen uitvoering en later vervolg nog niet waargenomen; E5.1 blijft open.",
+            "remaining": "De echte nieuwe afweging koos opnieuw geen werk. Ontbrekende terugvoer van eerdere eigen afwegingen is nu het gerichte herstel; E5.1 blijft open.",
             "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
             "review": "/home/administrator/project/Eva2/development/reviews/e51-private-orientation-review-20261019.json",
             "maintenanceRepair": true,
@@ -2160,21 +2174,6 @@
             ],
             "familyAcceptance": false,
             "completionScope": "Joint installed operational trial candidate; explicit operator assistance preserved, no long-term autonomy or superiority claim."
-          },
-          {
-            "title": "Algemene brongebonden hervatting van eigen initiatief geïnstalleerd",
-            "state": "installed",
-            "date": "2026-10-18T13:53:58.639505322Z",
-            "checkedAt": "2026-10-18T13:56:18.253972+00:00",
-            "summary": "Algemene hervatting met oorspronkelijke bron en oude fout behouden.39 gerichte databasetests en22 afzonderlijke leescontroles slagen. Het werk is daadwerkelijk hervat; eindresultaat wordt gevolgd.",
-            "remaining": "Werkelijke afronding, privéaflevering en vervolg nog niet vastgesteld.",
-            "source": "development/evidence/reassessment/e51-native-resume-installed-20261018.json",
-            "review": "development/reviews/e51-native-resume-review-20261018.json",
-            "maintenanceRepair": true,
-            "newProductFunctionCompleted": false,
-            "completedTaskIds": [],
-            "familyAcceptance": false,
-            "installed": true
           },
           {
             "title": "Te korte antwoordcontrole in huis- en onderzoeksroute hersteld",
@@ -3010,15 +3009,15 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E1.12",
-          "title": "E1.12 · Bestaande huisvoorzieningenbediening afmaken",
-          "summary": "Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.",
-          "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact."
+          "taskId": "E1.13",
+          "title": "E1.13 · Gerichte afweging en echte initiatiefuitvoering afmaken",
+          "summary": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
+          "doneWhen": "Bekende toegestane controles en reeds vastgelegde uitvoerstappen gebruiken de bestaande route zonder overbodige modelronde. Veranderde betekenis, onzekerheid, conflicterende bedoelingen en begrensde nieuwsgierigheid krijgen wel passende modelafweging. Vergelijk dezelfde gevallen en daadwerkelijk gebruikte installatie op modelaanroepen, tokens, reactietijd, fouten en gemiste relevante aanleidingen; besparing telt alleen bij behouden werking. Geen universele spanningsscore, tweede planner of nieuwe rechten uit een cache."
         },
         "next": {
-          "taskId": "E1.12",
-          "title": "Dezelfde voorziening beheren en pauzeren",
-          "detail": "Na noodzakelijke E4.17-overdracht; eigenaaracceptatie van E4.15 blijft apart open."
+          "taskId": "E1.8",
+          "title": "Bestaande afgesproken broncontrole volgen",
+          "detail": "Controleer op het al vastgelegde moment de eenmalige sensorcontrole; geen extra planning of herhaling. E1.12-gebruik en adoptie blijven open zonder deze uitvoering te blokkeren."
         },
         "ownerAction": {
           "required": false,
@@ -3207,7 +3206,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E1.12",
+        "currentStep": "E1.13",
         "steps": [
           {
             "number": 1,
@@ -6179,13 +6178,13 @@
                   "E4.17",
                   "E1.9"
                 ],
-                "nextAction": "Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.",
+                "nextAction": "Laat natuurlijk werkelijk gebruik het ontbrekende werkingsbewijs leveren en doorloop daarna de beschikbare eigenaarbediening voor adoptie en feedback. Geen extra technische bouw of herhaalproef zonder concrete bevinding; deze eigenaar-/gebruiksstap blokkeert E1.13 niet.",
                 "continuityImplementationSteps": [
                   "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "Brongebonden bewijs- en eigenaarbediening V3.1 is op24oktober01:45UTC in bestaande WSL-kern/werker geïnstalleerd en onafhankelijk teruggelezen:25bronbestanden, echte ownerGET200, ongeautoriseerd401, scope422, drieHTTPassets en daadwerkelijke werkprofielen. Expliciete null-enrollment behoudt bestaande legacyroute; noggeen echt artifact/adoptie/werkingsbewijs geproduceerd. Dezelfde bouwer heeft versie-/terugdraaihostkandidaat gebouwd (nu review) en bouwt de oorspronkelijke proef/evaluatie/meldingsroute. E1.12 blijft open.",
-                "checkedAt": "2026-10-24T02:44:32.979920+00:00",
+                "progress": "Technische oplevering klaar: bestaande eigenaarbediening voor registratie/adoptie/pauze/stop, versies/terugdraaien, vooraf toegestane proef/evaluatie/melding geïnstalleerd en onafhankelijk teruggelezen. Bestaande herstelroute bewaart adoptie/pauze/STOP/versies en expliciet lege inschrijving onder echte UID65532; onafhankelijke GO. Volledige kaart blijft open voor werkelijk nuttig huishoudelijk gebruik en adoptie.",
+                "checkedAt": "2026-10-24T02:57:30.999386+00:00",
                 "fullTaskCompleted": false,
                 "implementationEvidence": {
                   "builderCandidateHandoffSha256": "84a2300d5a2b6c1e2f16b4d641c0923f00ad511d9bb03b73305bcf6de19c51d9",
@@ -6239,10 +6238,13 @@
                   "actualWorkingProofAvailable": false,
                   "versionOwnerInterfaceReview": "GO scoped version/trial backend and owner API/UI; exact bundle independently approved before installation",
                   "trialOwnerInterface": "Installed: explicit bounded grant, actual feedback and server notice acknowledgment; no actual household grant/adoption claimed",
-                  "restoreNext": "Final existing-route managed materialization candidate frozen for independent review; isolated same-schema0011 actualUID65532 pause/adoption/STOP proven by builder.",
+                  "restoreNext": "Technical existing-route restore handoff independently reviewed; original full household-use outcome remains open.",
                   "versionTrialInstalled": true,
-                  "versionTrialEvidence": "development/evidence/product/e112-household-provision-version-trial-20261024.json"
-                }
+                  "versionTrialEvidence": "development/evidence/product/e112-household-provision-version-trial-20261024.json",
+                  "versionTrialInstallationIndependentlyReviewed": true,
+                  "managedRestore": "development/evidence/product/e112-managed-restore-20261024.json"
+                },
+                "technicalDeliveryComplete": true
               },
               {
                 "id": "E1.13",
@@ -6262,7 +6264,7 @@
                 "dependsOn": [
                   "E1.6"
                 ],
-                "nextAction": "Meet een natuurlijke nieuwe initiatiefkeuze tot werkstart en resultaat; vergelijk daarna noodzakelijke modelrondes voor dezelfde toegestane controles en veranderde aanleidingen. Bewaak vertraging van nog niet toegelaten werk door de eerdere afweging.",
+                "nextAction": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
                 "observedOptimizationInput": {
                   "evidence": "development/evidence/product/e16-model-access-continuity-20261022.json",
                   "backgroundHandoffSeconds": 303,
@@ -6271,7 +6273,17 @@
                   "nextAction": "Onderzoek gerichte contextselectie en overdracht tussen bestaande stappen; behoud taakresultaat en geen nieuwe scheduler."
                 },
                 "progress": "E1.13: callbackvolgorde hersteld en geïnstalleerd. Nieuwe initiatiefkeuze komt vóór bestaande uitvoering binnen dezelfde toegelaten idlecyclus; de verplichte extra 300 seconden door de oude volgorde vervallen. Zes gerichte scenarios slagen op de exacte geïnstalleerde image; veertien bestaande idle/foreground/capacity/stop-controles slagen. Werkelijke nieuwe initiatiefdoorlooptijd en modelbesparing zijn nog niet gemeten. E1.7 behoudt open bewijs van meerdaags gezinsgebruik.",
-                "checkedAt": "2026-10-22T23:43:17.832519+00:00"
+                "checkedAt": "2026-10-24T02:57:30.999386+00:00",
+                "existingNaturalHandoffEvidence": {
+                  "handoffSha256": "d5bfb0a498c3c46c473f7f91d669dbf66daf48db3d5f89e20002eeeb73108622",
+                  "naturalAdoptions": 4,
+                  "completedNonemptyResults": 2,
+                  "otherBlockedOrAmbiguous": 2,
+                  "actualReleaseAtTimeNotCurrentImage": true,
+                  "meteringPartial": true,
+                  "wholeTaskCompleted": false,
+                  "reviewPending": true
+                }
               },
               {
                 "id": "E1.14",
@@ -8817,7 +8829,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.",
+        "nextAction": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
         "finishOrder": [
           "E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -8828,7 +8840,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T02:44:32.979920+00:00",
+        "updatedAt": "2026-10-24T02:57:30.999386+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9252,7 +9264,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E1.12",
+      "currentStep": "E1.13",
       "steps": [
         {
           "number": 1,
@@ -12224,13 +12236,13 @@
                 "E4.17",
                 "E1.9"
               ],
-              "nextAction": "Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.",
+              "nextAction": "Laat natuurlijk werkelijk gebruik het ontbrekende werkingsbewijs leveren en doorloop daarna de beschikbare eigenaarbediening voor adoptie en feedback. Geen extra technische bouw of herhaalproef zonder concrete bevinding; deze eigenaar-/gebruiksstap blokkeert E1.13 niet.",
               "continuityImplementationSteps": [
                 "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "Brongebonden bewijs- en eigenaarbediening V3.1 is op24oktober01:45UTC in bestaande WSL-kern/werker geïnstalleerd en onafhankelijk teruggelezen:25bronbestanden, echte ownerGET200, ongeautoriseerd401, scope422, drieHTTPassets en daadwerkelijke werkprofielen. Expliciete null-enrollment behoudt bestaande legacyroute; noggeen echt artifact/adoptie/werkingsbewijs geproduceerd. Dezelfde bouwer heeft versie-/terugdraaihostkandidaat gebouwd (nu review) en bouwt de oorspronkelijke proef/evaluatie/meldingsroute. E1.12 blijft open.",
-              "checkedAt": "2026-10-24T02:44:32.979920+00:00",
+              "progress": "Technische oplevering klaar: bestaande eigenaarbediening voor registratie/adoptie/pauze/stop, versies/terugdraaien, vooraf toegestane proef/evaluatie/melding geïnstalleerd en onafhankelijk teruggelezen. Bestaande herstelroute bewaart adoptie/pauze/STOP/versies en expliciet lege inschrijving onder echte UID65532; onafhankelijke GO. Volledige kaart blijft open voor werkelijk nuttig huishoudelijk gebruik en adoptie.",
+              "checkedAt": "2026-10-24T02:57:30.999386+00:00",
               "fullTaskCompleted": false,
               "implementationEvidence": {
                 "builderCandidateHandoffSha256": "84a2300d5a2b6c1e2f16b4d641c0923f00ad511d9bb03b73305bcf6de19c51d9",
@@ -12284,10 +12296,13 @@
                 "actualWorkingProofAvailable": false,
                 "versionOwnerInterfaceReview": "GO scoped version/trial backend and owner API/UI; exact bundle independently approved before installation",
                 "trialOwnerInterface": "Installed: explicit bounded grant, actual feedback and server notice acknowledgment; no actual household grant/adoption claimed",
-                "restoreNext": "Final existing-route managed materialization candidate frozen for independent review; isolated same-schema0011 actualUID65532 pause/adoption/STOP proven by builder.",
+                "restoreNext": "Technical existing-route restore handoff independently reviewed; original full household-use outcome remains open.",
                 "versionTrialInstalled": true,
-                "versionTrialEvidence": "development/evidence/product/e112-household-provision-version-trial-20261024.json"
-              }
+                "versionTrialEvidence": "development/evidence/product/e112-household-provision-version-trial-20261024.json",
+                "versionTrialInstallationIndependentlyReviewed": true,
+                "managedRestore": "development/evidence/product/e112-managed-restore-20261024.json"
+              },
+              "technicalDeliveryComplete": true
             },
             {
               "id": "E1.13",
@@ -12307,7 +12322,7 @@
               "dependsOn": [
                 "E1.6"
               ],
-              "nextAction": "Meet een natuurlijke nieuwe initiatiefkeuze tot werkstart en resultaat; vergelijk daarna noodzakelijke modelrondes voor dezelfde toegestane controles en veranderde aanleidingen. Bewaak vertraging van nog niet toegelaten werk door de eerdere afweging.",
+              "nextAction": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
               "observedOptimizationInput": {
                 "evidence": "development/evidence/product/e16-model-access-continuity-20261022.json",
                 "backgroundHandoffSeconds": 303,
@@ -12316,7 +12331,17 @@
                 "nextAction": "Onderzoek gerichte contextselectie en overdracht tussen bestaande stappen; behoud taakresultaat en geen nieuwe scheduler."
               },
               "progress": "E1.13: callbackvolgorde hersteld en geïnstalleerd. Nieuwe initiatiefkeuze komt vóór bestaande uitvoering binnen dezelfde toegelaten idlecyclus; de verplichte extra 300 seconden door de oude volgorde vervallen. Zes gerichte scenarios slagen op de exacte geïnstalleerde image; veertien bestaande idle/foreground/capacity/stop-controles slagen. Werkelijke nieuwe initiatiefdoorlooptijd en modelbesparing zijn nog niet gemeten. E1.7 behoudt open bewijs van meerdaags gezinsgebruik.",
-              "checkedAt": "2026-10-22T23:43:17.832519+00:00"
+              "checkedAt": "2026-10-24T02:57:30.999386+00:00",
+              "existingNaturalHandoffEvidence": {
+                "handoffSha256": "d5bfb0a498c3c46c473f7f91d669dbf66daf48db3d5f89e20002eeeb73108622",
+                "naturalAdoptions": 4,
+                "completedNonemptyResults": 2,
+                "otherBlockedOrAmbiguous": 2,
+                "actualReleaseAtTimeNotCurrentImage": true,
+                "meteringPartial": true,
+                "wholeTaskCompleted": false,
+                "reviewPending": true
+              }
             },
             {
               "id": "E1.14",
@@ -14862,7 +14887,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Versie-/terugdraaibediening en vooraf toegestane proef/evaluatie/melding zijn op 24 oktober geïnstalleerd; echte eigenaarroute, 19 bronbestanden en werkprofielen zijn teruggelezen. Maak onafhankelijke installreadback en de gerepareerde bestaande herstelroute af. Natuurlijk werkelijk gebruik en adoptie blijven afzonderlijk vereist; geen geforceerde huisgebeurtenis of volledige-kaartclaim. De bouwer inventariseert intussen uitsluitend bestaand natuurlijk E1.13-bewijs.",
+      "nextAction": "Maak precies twee bestaande natuurlijke initiatiefketens compleet met workerclaimstart, gebruikte release en beschikbare metingen; review de oorspronkelijke E1.13-criteria. Selecteer alleen een aantoonbaar overbodige modelstap of vermijdbare vertraging voor de kleinste gerichte correctie. Geen nieuwe gezins-/modelproef of brede vergelijkingsserie; E1.12 is technisch opgeleverd en wacht op werkelijk gebruik/adoptie.",
       "finishOrder": [
         "E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14873,7 +14898,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T02:44:32.979920+00:00",
+      "updatedAt": "2026-10-24T02:57:30.999386+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17414,7 +17439,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T02:44:32.979920+00:00",
+  "updatedAt": "2026-10-24T02:57:30.999386+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

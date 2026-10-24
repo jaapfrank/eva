@@ -144,3 +144,79 @@ def test_only_core_restore_authority_can_use_approved_mutable_mount(tmp_path,cas
     else:
         with pytest.raises(ValueError):
             module._runtime_file_host(path,row,environment,is_core=case!='worker_authority',model_lease_path=lease)
+
+
+@pytest.mark.parametrize('key,path', list(module._MANAGED_HOUSEHOLD_FILES.items()))
+def test_e112_exact_core_managed_state_route_needs_private_actual_runtime_ownership(tmp_path, key, path):
+    import os
+    if os.geteuid() != 0:
+        pytest.skip('isolated actual uid65532 ownership probe requires root')
+    work = tmp_path / 'work'; work.mkdir(mode=0o700); os.chown(work,65532,65532)
+    target = work / path.removeprefix('/var/lib/eva/work/')
+    target.parent.mkdir(mode=0o700, parents=True, exist_ok=True); target.write_bytes(b'{}'); target.chmod(0o600)
+    for item in [target, target.parent, *target.parent.parents]:
+        if item != work and work not in item.parents: break
+        os.chown(item,65532,65532)
+        if item.is_dir():item.chmod(0o700)
+        if item == work: break
+    row = {'Config': {'User':'65532:65532'}, 'Mounts':[
+        {'Type':'bind','Source':str(work),'Destination':'/var/lib/eva/work','RW':True}]}
+    assert module._runtime_file_host(path,row,{key:path},is_core=True,model_lease_path='/run/model.json')==target
+
+
+@pytest.mark.parametrize('fault', ['worker','alias','wrong_path','lease','user','file_owner','file_mode',
+                                    'directory_mode','link','file_mount'])
+def test_e112_mutable_state_does_not_widen_other_runtime_or_credential_authority(tmp_path, fault):
+    import os
+    if os.geteuid() != 0:
+        pytest.skip('isolated actual uid65532 ownership probe requires root')
+    key='EVA_HOUSEHOLD_PROVISION_ENROLLMENT_FILE'; path=module._MANAGED_HOUSEHOLD_FILES[key]
+    work=tmp_path/'work';work.mkdir(mode=0o700);os.chown(work,65532,65532)
+    parent=work/'household-provisions';parent.mkdir(mode=0o700);os.chown(parent,65532,65532)
+    target=parent/'managed-enrollment.json';target.write_bytes(b'{}');target.chmod(0o600);os.chown(target,65532,65532)
+    row={'Config':{'User':'65532:65532'},'Mounts':[
+        {'Type':'bind','Source':str(work),'Destination':'/var/lib/eva/work','RW':True}]}
+    env={key:path};lease='/run/model.json'
+    if fault=='alias':env['EVA_HA_TOKEN_FILE']=path
+    elif fault=='wrong_path':path=path.replace('managed-enrollment.json','unapproved.json');env[key]=path
+    elif fault=='lease':lease=path
+    elif fault=='user':row['Config']['User']='0:0'
+    elif fault=='file_owner':os.chown(target,0,0)
+    elif fault=='file_mode':target.chmod(0o640)
+    elif fault=='directory_mode':parent.chmod(0o750)
+    elif fault=='link':
+        target.unlink();target.symlink_to(tmp_path/'unapproved')
+    elif fault=='file_mount':row['Mounts']=[{'Type':'bind','Source':str(target),'Destination':path,'RW':True}]
+    with pytest.raises(ValueError):
+        module._runtime_file_host(path,row,env,is_core=fault!='worker',model_lease_path=lease)
+
+
+@pytest.mark.parametrize('changed_approval',[False,True])
+def test_e112_existing_target_authorization_still_requires_current_operator_hash_and_profile(monkeypatch,tmp_path,changed_approval):
+    import os
+    if os.geteuid()!=0:
+        pytest.skip('isolated actual uid65532 ownership probe requires root')
+    work=tmp_path/'work';work.mkdir(mode=0o700);os.chown(work,65532,65532)
+    env={'EVA_CONVERSATION_AUTH_FILE':'/run/model.json'};approved=[]
+    for key,path in module._MANAGED_HOUSEHOLD_FILES.items():
+        target=work/path.removeprefix('/var/lib/eva/work/');target.parent.mkdir(mode=0o700,parents=True,exist_ok=True)
+        raw=(key+'-initial-operator-approved').encode();target.write_bytes(raw);target.chmod(0o600)
+        for item in [target,target.parent,*target.parent.parents]:
+            if item!=work and work not in item.parents:break
+            os.chown(item,65532,65532)
+            if item==work:break
+        env[key]=path;approved.append({'path':path,'sha256':hashlib.sha256(raw).hexdigest()})
+    row={'Id':'a'*64,'Config':{'User':'65532:65532','Env':[key+'='+value for key,value in env.items()]},
+         'Mounts':[{'Type':'bind','Source':str(work),'Destination':'/var/lib/eva/work','RW':True},
+                   {'Type':'bind','Source':str(tmp_path/'lease'),'Destination':'/run/model.json','RW':False}]}
+    profile=module.runtime_profile_sha256(row)
+    configuration={'writers':[{'id':'a'*64,'profile_sha256':profile,'model_lease_path':'/run/model.json','credential_files':approved}]}
+    runtime={'target':{'core_name':'core','workers':[{'id':'a'*64,'name':'core'}]}}
+    monkeypatch.setattr(module,'inspect_containers',lambda:[row])
+    monkeypatch.setattr(module,'read_shared_runtime_file_bytes',lambda *a,**kw:b'current-lease')
+    if changed_approval:approved[0]['sha256']='0'*64
+    if changed_approval:
+        with pytest.raises(ValueError,match='not currently authorized'):
+            module._verify_targets(configuration,runtime,tmp_path/'archive',tmp_path/'separate-owner-authority',b'current-lease')
+    else:
+        assert module._verify_targets(configuration,runtime,tmp_path/'archive',tmp_path/'separate-owner-authority',b'current-lease')=={'a'*64:profile}

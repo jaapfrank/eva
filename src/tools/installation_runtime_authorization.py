@@ -107,17 +107,53 @@ def _read_credential(path):
         os.close(fd)
 
 
-def _runtime_file_host(container_path, row, environment, *, is_core, model_lease_path):
-    """The core's erasure/restore authority is mutable state, not a secret.
+_MANAGED_HOUSEHOLD_FILES = {
+    'EVA_HOUSEHOLD_PROVISION_ENROLLMENT_FILE':
+        '/var/lib/eva/work/household-provisions/managed-enrollment.json',
+    'EVA_HOUSEHOLD_PROCEDURE_FILE':
+        '/var/lib/eva/work/household-provisions/managed-procedure/current.json',
+    'EVA_HOUSEHOLD_PROVISION_REVIEW_FILE':
+        '/var/lib/eva/work/household-provisions/managed-procedure/adoption-review.json',
+}
 
-    Its exact path, initial contents and mount remain operator approved. Other
-    credential routes, including the model lease, must stay read-only.
-    """
+
+def _managed_household_host(container_path, row, aliases, *, is_core, model_lease_path):
+    # Only these existing core state files are mutable. Model/secrets, aliases,
+    # arbitrary paths and workers acquire no new writable-file permission.
+    if (not is_core or container_path == model_lease_path or len(aliases) != 1
+            or _MANAGED_HOUSEHOLD_FILES.get(aliases[0]) != container_path
+            or row.get('Config', {}).get('User') != '65532:65532'):
+        raise ValueError('managed household runtime route differs')
+    host, mount = _host_file(container_path, row.get('Mounts', []), readonly=False)
+    root = Path(mount['Source'])
+    if not root.is_dir():
+        raise ValueError('managed household state requires its private directory mount')
+    info = host.lstat()
+    if (not stat.S_ISREG(info.st_mode) or info.st_uid != 65532 or info.st_gid != 65532
+            or info.st_nlink != 1 or stat.S_IMODE(info.st_mode) != 0o600):
+        raise ValueError('managed household state is not private runtime-owned data')
+    for directory in [host.parent, *host.parent.parents]:
+        if directory != root and root not in directory.parents:
+            break
+        info = directory.lstat()
+        if (not stat.S_ISDIR(info.st_mode) or info.st_uid != 65532 or info.st_gid != 65532
+                or stat.S_IMODE(info.st_mode) != 0o700):
+            raise ValueError('managed household runtime directory differs')
+        if directory == root:
+            break
+    return host
+
+
+def _runtime_file_host(container_path, row, environment, *, is_core, model_lease_path):
+    """Keep approved credentials RO; permit only exact private core state routes."""
     try:
         return _host_file(container_path, row.get('Mounts', []), readonly=True)[0]
     except ValueError:
         aliases = [key for key, value in environment.items()
                    if key.endswith('_FILE') and value == container_path]
+        if any(key in _MANAGED_HOUSEHOLD_FILES for key in aliases):
+            return _managed_household_host(container_path, row, aliases,
+                is_core=is_core, model_lease_path=model_lease_path)
         if (not is_core or container_path == model_lease_path
                 or aliases != ['EVA_PORTABLE_RESTORE_AUTHORITY_FILE']):
             raise

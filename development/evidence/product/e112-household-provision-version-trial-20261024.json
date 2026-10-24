@@ -1,8 +1,8 @@
 {
   "contract": "EvaE112VersionTrialDelivery/v1",
   "task": "E1.12",
-  "checkedAt": "2026-10-24T02:44:32.979920+00:00",
-  "status": "installed_actual_sources_owner_route_and_profiles_read_back_independent_readback_pending",
+  "checkedAt": "2026-10-24T02:50:24.607220+00:00",
+  "status": "technical_owner_controls_and_managed_restore_delivered_actual_household_use_pending",
   "outcome": "Owner-controlled source version changes, recoverable paused handoff, undo and bounded prior trial with actual feedback plus server notice acknowledgment.",
   "originalFullTaskCriteriaUnchanged": true,
   "fullTaskCompleted": false,
@@ -74,9 +74,7 @@
     "backgroundEvaRuntimeUsage": "not measured by this verification"
   },
   "remaining": [
-    "Independent readback of actual installed source/interface/profile receipts",
-    "Review final existing-route managed restore hook with actual UID65532 paused/adoption/STOP checks",
-    "Natural actual household working proof, adoption and use; no synthetic event counts as household evidence"
+    "Natural actual household working proof, usefulness, adoption and use; full E1.12 remains open."
   ],
   "independentCodeInterfaceVerdict": {
     "reviewSha256": "2421cc0c29ee09c4b7dece7bf9f698296b8833cc11d4ca162e2143ea2953a7a9",
@@ -114,6 +112,20 @@
     "enrollmentExplicitNull": true,
     "actualWorkingProofAvailable": false,
     "productionPosts": 0,
-    "independentReadbackPending": true
-  }
+    "independentReadbackPending": false,
+    "independentReviewSha256": "c2940523ff75bfcee362faa66376c9ea46791b82d9f2ec70f8032548b06ad460",
+    "independentVerdict": "GO_SCOPED_ACTUALLY_INSTALLED_VERSION_TRIAL_READBACK"
+  },
+  "restoreCurrentStateFinding": {
+    "id": "E112-RESTORE-NULL-001",
+    "status": "fixed_and_independently_reviewed",
+    "source": "src/tools/installation_host_extension_restore.py::_managed_payload",
+    "observed": "Candidate requires enrolled pointer object; actual current installed state is an explicit null enrollment.",
+    "required": "Preserve explicit null through the existing managed restore hook without creating registration, adoption, authority or PG rows; malformed/cross-owner pointers remain rejected.",
+    "originalCandidatePreserved": "4721440b75ebae82b00bce1617766500be41c248c0e6a15c7b5f24475d736077",
+    "fixedHandoffSha256": "20d1f32d46e65a076e6fa446680459b576ff477afbfc15009c691d26738918b2",
+    "independentReviewSha256": "c45aaaed29855f8d14b77e464818bc970a2a9d1f0f9b8e65c2da4152bbee67e5"
+  },
+  "technicalDeliveryComplete": true,
+  "managedRestoreEvidence": "development/evidence/product/e112-managed-restore-20261024.json"
 }
