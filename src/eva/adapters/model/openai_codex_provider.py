@@ -15,6 +15,7 @@ from dataclasses import dataclass
 import hashlib
 import json
 import math
+import re
 from time import monotonic
 from types import TracebackType
 from typing import Any, Literal, cast
@@ -56,14 +57,17 @@ def warm_codex_dependencies() -> None:
 class CodexProviderError(RuntimeError):
     """A provider failure whose message is safe to expose to product code."""
 
-    def __init__(self, category: FailureCategory, *, provider_event: dict[str, object] | None = None) -> None:
+    def __init__(self, category: FailureCategory, *, provider_event: dict[str, object] | None = None,
+                 http_error: BaseException | None = None) -> None:
         self.category = category
         self._diagnostic = self._safe_provider_failure(provider_event)
+        if self._diagnostic is None and http_error is not None:
+            self._diagnostic = self._safe_http_failure(http_error)
         super().__init__(f"Codex provider {category.replace('_', ' ')}")
 
     @property
-    def diagnostic(self) -> dict[str, str | None] | None:
-        """Fixed terminal labels only; never the upstream message or body."""
+    def diagnostic(self) -> dict[str, str | int | float | None] | None:
+        """Safe structured labels only; never the upstream message or body."""
         return dict(self._diagnostic) if self._diagnostic is not None else None
 
 
@@ -74,6 +78,105 @@ class CodexProviderError(RuntimeError):
     })
     _INCOMPLETE_REASONS = frozenset({"max_output_tokens", "content_filter", "steered"})
 
+
+    _HTTP_ERROR_CODES = _ERROR_CODES | frozenset({
+        "insufficient_quota", "context_length_exceeded", "model_not_found",
+        "invalid_api_key", "unsupported_parameter", "invalid_value",
+    })
+    _HTTP_ERROR_TYPES = frozenset({
+        "server_error", "internal_error", "api_error", "invalid_request_error",
+        "rate_limit_error", "authentication_error", "permission_error",
+        "not_found_error", "insufficient_quota", "overloaded_error",
+    })
+
+    @classmethod
+    def _safe_http_failure(cls, error: BaseException) -> dict[str, str | int | float | None] | None:
+        """Use already parsed SDK error fields; never read a response or retry."""
+        from datetime import timezone
+        from email.utils import parsedate_to_datetime
+
+        pending, seen = [error], set()
+        status = code = kind = request_id = retry_after = None
+        while pending and len(seen) < 8:
+            current = pending.pop(0)
+            if id(current) in seen:
+                continue
+            seen.add(id(current))
+            cause = current.__cause__ or current.__context__
+            if cause is not None:
+                pending.append(cause)
+            if isinstance(current, BaseExceptionGroup):
+                pending.extend(current.exceptions[:8])
+            try:
+                current_status = getattr(current, "status_code", None)
+                if type(current_status) is not int or not 100 <= current_status <= 599:
+                    continue
+                if status is None:
+                    status = current_status
+                if current_status != status:
+                    continue
+                body = getattr(current, "body", None)
+                if isinstance(body, str) and len(body.encode("utf-8", errors="replace")) <= 8192:
+                    try:
+                        body = json.loads(body)
+                    except (ValueError, TypeError):
+                        body = None
+                if isinstance(body, dict):
+                    fields = body.get("error", body)
+                    if isinstance(fields, dict):
+                        code = fields.get("code") if code is None else code
+                        kind = fields.get("type") if kind is None else kind
+                request_id = request_id or getattr(current, "request_id", None)
+                response = getattr(current, "response", None)
+                headers = getattr(response, "headers", None)
+                if headers is not None:
+                    request_id = request_id or headers.get("x-request-id")
+                    retry_after = retry_after or headers.get("retry-after")
+            except Exception:
+                # Diagnostics must not replace the original failure category.
+                continue
+        if status is None:
+            return None
+
+        def label(value, known):
+            if value is None:
+                return None, None
+            if isinstance(value, str) and value in known:
+                return value, None
+            return "unrecognized", (hashlib.sha256(value.encode(errors="surrogatepass")).hexdigest()
+                                    if isinstance(value, str) else None)
+
+        safe_code, code_hash = label(code, cls._HTTP_ERROR_CODES)
+        safe_type, type_hash = label(kind, cls._HTTP_ERROR_TYPES)
+        safe_id = None
+        id_hash = None
+        if isinstance(request_id, str):
+            if re.fullmatch(r"req_[A-Za-z0-9_-]{1,128}|[0-9a-fA-F]{32}|"
+                            r"[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}", request_id):
+                safe_id = request_id
+            else:
+                id_hash = hashlib.sha256(request_id.encode(errors="surrogatepass")).hexdigest()
+        seconds = at = retry_hash = None
+        if isinstance(retry_after, str):
+            if len(retry_after) <= 32 and re.fullmatch(r"[0-9]+(?:\.[0-9]+)?", retry_after):
+                number = float(retry_after)
+                if math.isfinite(number) and 0 <= number <= 604800:
+                    seconds = int(number) if number.is_integer() else number
+            elif len(retry_after) <= 128:
+                try:
+                    parsed = parsedate_to_datetime(retry_after)
+                    if parsed.tzinfo is not None:
+                        at = parsed.astimezone(timezone.utc).isoformat()
+                except (TypeError, ValueError, OverflowError):
+                    pass
+            if seconds is None and at is None:
+                retry_hash = hashlib.sha256(retry_after.encode(errors="surrogatepass")).hexdigest()
+        return {"event_kind": "http_error", "http_status": status,
+            "error_code": safe_code, "error_code_sha256": code_hash,
+            "error_type": safe_type, "error_type_sha256": type_hash,
+            "provider_request_id": safe_id, "provider_request_id_sha256": id_hash,
+            "retry_after_seconds": seconds, "retry_after_at": at,
+            "retry_after_sha256": retry_hash}
 
     @staticmethod
     def _safe_provider_failure(event: dict[str, object] | None) -> dict[str, str | None] | None:
@@ -932,28 +1035,28 @@ def _sanitized(error: BaseException) -> CodexProviderError:
             return current
         status_code = getattr(current, "status_code", None)
         if status_code in {401, 403}:
-            return CodexProviderError("credentials_rejected")
+            return CodexProviderError("credentials_rejected", http_error=current)
         if status_code == 429:
-            return CodexProviderError("rate_limited")
+            return CodexProviderError("rate_limited", http_error=current)
         if status_code == 408 or (
             type(status_code) is int and 500 <= status_code <= 599
         ):
-            return CodexProviderError("unavailable")
+            return CodexProviderError("unavailable", http_error=current)
         if type(status_code) is int:
-            return CodexProviderError("protocol")
+            return CodexProviderError("protocol", http_error=current)
         if isinstance(current, UnexpectedModelBehavior):
-            return CodexProviderError("protocol")
+            return CodexProviderError("protocol", http_error=current)
         if isinstance(current, httpx2.ProtocolError):
-            return CodexProviderError("protocol")
+            return CodexProviderError("protocol", http_error=current)
         if isinstance(
             current,
             (httpx2.TimeoutException, httpx2.TransportError, TimeoutError),
         ):
-            return CodexProviderError("unavailable")
+            return CodexProviderError("unavailable", http_error=current)
         if isinstance(current, ConnectionError):
-            return CodexProviderError("unavailable")
+            return CodexProviderError("unavailable", http_error=current)
         current = current.__cause__ or current.__context__
-    return CodexProviderError("protocol")
+    return CodexProviderError("protocol", http_error=error)
 
 
 __all__ = [
