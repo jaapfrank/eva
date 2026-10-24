@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Relevante updates zelfstandig ontdekken en beheerd toepassen
+Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen
 
-4 van24 oorspronkelijke kaarten gesloten;83/103totaal. Eigenaaropdracht12:15CEST afgeleverd. Huisonderzoek-profielblokkade en onderhoudscontext12:49CEST geïnstalleerd; daadwerkelijke geïsoleerde claim en gewone modelinvoer12:54CEST bewezen. Eva koos terecht geen update zonder aangetoonde lokale noodzaak; volledige E4.19 blijft open.
+Eigenaarsopdracht niet afgerond: afgeleverd voorstel was onvoldoende en ten onrechte als klaar gemeld. Bestaande koppeling terugzoeken en bruikbare uitkomst via huidige Eva-uitvoerder afmaken. Oorspronkelijke telling blijft4/24 gesloten.
 
-Klaar wanneer: Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap.
+Klaar wanneer: Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.
 
 ## Afmaakvolgorde
 
