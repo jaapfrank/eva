@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:56:37.055465+00:00",
-  "status": "actual_app_auth_research_saved_repeated_provider_503_full_school_outcome_open",
+  "status": "app_auth_progress_saved_later_astra_responses_verified_school_identification_pending",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -18,7 +18,7 @@
   "originalCardsNewlyCompleted": [],
   "productOrRuntimeSourceChanged": true,
   "remaining": [
-    "Owner login through the verified same-session interface and actual school data/help are still open.",
+    "Intended school/account identification or a usable existing integration/session, actual authorized school data and useful school help are still open. No owner-login requirement has been established.",
     "Historical pre-model selfrepair failure remains blocked and its unknown usage/error evidence remains unchanged.",
     "Full E4.16 autonomous repair and later reuse are not proved by manual fixes or installation."
   ],
@@ -117,12 +117,17 @@
   },
   "ownerAction": {
     "required": true,
-    "interface": "Connections / Eva task browser: Take over, View and control browser, permitted school account login, Give back to Eva",
-    "sameSessionEvidenceSha256": "8331b1ff87b7e9dc91f05da8fa220464985bf59d39fd95bb8e0fc52b1c08da83",
-    "reviewSha256": "107e1f60ac29292a8f0dd9cea204b2e4bfecaaafc766963090787c4b2f530197",
+    "questionAlreadyAsked": true,
+    "action": "Provide the intended school name in the existing unanswered question, or concrete information locating the existing school integration/session.",
+    "purpose": "Select and verify the intended school/account; a school UUID is not mandatory to construct generic PKCE.",
+    "manualLoginRequested": false,
+    "newQuestionSent": false,
+    "existingTaskContextHasExplicitSchoolName": false,
+    "wholeHouseholdAbsenceClaimed": false,
     "loginOrSchoolOutcomeProven": false,
-    "rootWillResumeSameWorkAfterExplicitOwnerConfirmation": true,
-    "otherExecutableWorkNotBlocked": true
+    "otherExecutableWorkNotBlocked": true,
+    "nextStepAssessmentSha256": "7e6fa00a84d85de66bdae7cb9977d023b87bbc811b8205f8955fd8617f2129b8",
+    "independentReviewSha256": "1162bd4c61d91a7b1f7d7d57baee2a6dca525cb4bd34ab5c45dfec82b4db641d"
   },
   "latestOwnerCorrection": {
     "receivedAt": "2026-10-24T13:11:01.504395+00:00",
@@ -263,7 +268,9 @@
     "additionalAttemptExecuted": true,
     "noMoreSameProviderRetryWithoutNewEvidence": true,
     "schoolNameQuestionPending": true,
-    "otherExecutableWorkBlockedByQuestion": false
+    "otherExecutableWorkBlockedByQuestion": false,
+    "reopenWhen": "Existing school-identification answer or materially new task-bound integration/session evidence; provider recovery alone supplies no useful unfinished step.",
+    "ordinaryOwnerResumeNowGo": false
   },
   "singleCooledResumeAdmission": {
     "workId": "work:eva-resume:9b8fab63-4bb6-5658-b179-e04e6929b50f",
@@ -318,7 +325,7 @@
     "newRuntimeModelCalls": 0
   },
   "passiveProviderRecovery": {
-    "status": "five_later_measured_astra_will_calls_observed_review_pending",
+    "status": "independently_verified_later_astra_will_calls_no_useful_school_resume_now",
     "handoffSha256": "553c55bab6cb60a16cadc190ce1d623dd71045606b8f3500d72ebb4c2ba7a32b",
     "fixedWindow": {
       "after_exclusive": "2026-10-24T14:17:47Z",
@@ -349,6 +356,23 @@
     },
     "limits": "Ordinary will-route recovery evidence only; digital school-worker route and useful school outcome not proven. Earlier unknown usage/cost and consumed cooled retry remain unchanged.",
     "newModelCalls": 0,
-    "resumePerformed": false
-  }
+    "resumePerformed": false,
+    "independentReviewSha256": "1162bd4c61d91a7b1f7d7d57baee2a6dca525cb4bd34ab5c45dfec82b4db641d",
+    "nextStepAssessmentSha256": "7e6fa00a84d85de66bdae7cb9977d023b87bbc811b8205f8955fd8617f2129b8",
+    "ordinaryOwnerResumeNowGo": false
+  },
+  "supersededOwnerLoginAction": {
+    "required": true,
+    "interface": "Connections / Eva task browser: Take over, View and control browser, permitted school account login, Give back to Eva",
+    "sameSessionEvidenceSha256": "8331b1ff87b7e9dc91f05da8fa220464985bf59d39fd95bb8e0fc52b1c08da83",
+    "reviewSha256": "107e1f60ac29292a8f0dd9cea204b2e4bfecaaafc766963090787c4b2f530197",
+    "loginOrSchoolOutcomeProven": false,
+    "rootWillResumeSameWorkAfterExplicitOwnerConfirmation": true,
+    "otherExecutableWorkNotBlocked": true
+  },
+  "supersededRemainingBeforeSchoolIdentificationReview": [
+    "Owner login through the verified same-session interface and actual school data/help are still open.",
+    "Historical pre-model selfrepair failure remains blocked and its unknown usage/error evidence remains unchanged.",
+    "Full E4.16 autonomous repair and later reuse are not proved by manual fixes or installation."
+  ]
 }
