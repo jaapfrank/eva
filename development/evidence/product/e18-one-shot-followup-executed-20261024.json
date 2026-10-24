@@ -1,0 +1,78 @@
+{
+  "contract": "EvaNaturalFollowupObservation/v1",
+  "task": "E1.8",
+  "checkedAt": "2026-10-24T08:05:38.155917+00:00",
+  "priorEvidence": "development/evidence/product/e18-live-discovery-followup-20261023.json",
+  "scheduledOneShotCompleted": true,
+  "fullOriginalTaskCompleted": false,
+  "trigger": "Existing one-shot scheduled on23October, actually dispatched by the ordinary scheduler. No new request, replay or time manipulation.",
+  "runAt": "2026-10-24T08:00:00Z",
+  "completedAt": "2026-10-24T08:00:24Z",
+  "workState": "succeeded",
+  "resultSha256": "7d518b2e3c9f5af36a2227b25e12ac57328056ea87792bf8e5ea0195cac9ba7c",
+  "sourceReadback": {
+    "exactWorkExecutionNamespaceAndOriginalSourceVerified": true,
+    "retainedActions": 2,
+    "terminalEvents": [
+      "STATE_VERIFIED",
+      "STATE_VERIFIED"
+    ],
+    "method": "GET",
+    "httpStatus": 200,
+    "retainedState": "unavailable",
+    "observedAt": "2026-10-24T08:00:20+00:00",
+    "responseSha256": "08852a8d4230ebdbfe3152c2a2e5ef8f12415367a35f1dcb789c3b403ad44b94",
+    "externalStateVerified": false,
+    "physicalBatteryConditionProven": false,
+    "finding": "Actual retained GET agrees with the output: value remains unavailable; no claim that a battery is empty or a physical cause was proved."
+  },
+  "ownerResultReadback": {
+    "httpStatus": 200,
+    "cacheControl": "no-store",
+    "resultAvailable": true,
+    "sameOutputSha256": true,
+    "deliveryState": "private_route_available",
+    "browserDisplayedOrDeliveryAcknowledged": false,
+    "deliveryClaimOrAcknowledgementRequested": false
+  },
+  "resultMeaning": "One later read completed; unavailable value retained as uncertainty, one physical-check suggestion, no new automatic retries.",
+  "privateReceipts": [
+    {
+      "path": "/var/lib/eva2/e18-natural-followup-20261024/before-due.private.json",
+      "sha256": "e644fc60a89eb733452e12d0ea98efbfc05900d5c8f4ee2c55345a0607d612d5"
+    },
+    {
+      "path": "/var/lib/eva2/e18-natural-followup-20261024/after-due-first.private.json",
+      "sha256": "5ca7a2094590b117240188b8b50b8f3018cbec49468effebbee2414c5da764c8"
+    },
+    {
+      "path": "/var/lib/eva2/e18-natural-followup-20261024/work-first.private.json",
+      "sha256": "6159315a4c379bd11962cfab11656c57ab959ce6fd7bb85abe13ea1f309bdcfe"
+    },
+    {
+      "path": "/var/lib/eva2/e18-natural-followup-20261024/source-receipts.private.json",
+      "sha256": "c5b2a517d5d41abef45e14dece5d3638a5ca6f21c32db0d885743f04fd24abfb"
+    },
+    {
+      "path": "/var/lib/eva2/e18-natural-followup-20261024/owner-result-readback.private.json",
+      "sha256": "da83f830faafd316aedc59c28e8d778581b49eb79db3e7e8253f92c5d69fa4ee"
+    }
+  ],
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "partial",
+    "completed_model_responses": 3,
+    "tool_calls": 2,
+    "input_tokens": 37419,
+    "output_tokens": 200,
+    "total_tokens": 37619,
+    "cost_usd_micros": null
+  },
+  "newModelRequestsByCoordinator": 0,
+  "productionMutationByCoordinator": false,
+  "codeChangedForThisObservation": false,
+  "remainingOriginalCriteria": "This later check alone does not prove all original anticipation/current-versus-alternative and later corrected-assumption criteria. FullE1.8 stays open; no extra owner test is requested.",
+  "familyAcceptance": false,
+  "developmentCredits": null
+}

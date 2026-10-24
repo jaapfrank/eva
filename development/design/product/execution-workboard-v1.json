@@ -6015,7 +6015,7 @@
                 "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
                 "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Controleer vanaf 24 oktober 10:00 Amsterdam de werkelijke uitvoering en terugmelding van de opgeslagen eenmalige sensorcontrole. Behoud oude bron als historie en verwerk echte correctie wanneer beschikbaar. Originele E1.8-eindvoorwaarden blijven open; geen extra planning, automatische herhaling of fictieve eigenaarafspraak toevoegen.",
+                "nextAction": "Behoud de werkelijk uitgevoerde controle als later-uitkomstbewijs. Toon de nog ontbrekende oorspronkelijke anticipatie/inhoudelijke vergelijking en verandering van een volgend voorstel door een echte gecorrigeerde aanname aan; geen nieuwe automatische herhaling of fictieve afspraak. Ander uitvoerbaar werk gaat door.",
                 "ownerInitiativeClarification20261021": {
                   "status": "required_not_yet_proven",
                   "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -6037,8 +6037,9 @@
                   "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "E1.8: echte privéchat/werker onderzocht zelf beschikbare huisbronnen en vond een ontbrekende sensorbatterijwaarde; actuele GET-bron onafhankelijk gecontroleerd. Na expliciet Codex-vervolgverzoek koos Eva zelf 24 oktober 10:00 Amsterdam voor één opgeslagen leescontrole; planning onafhankelijk teruggelezen. Geen bron-ID/uitkomst voorgezegd, geen apparaatwijziging of extern bericht. Bestaande geïnstalleerde route, geen nieuwe patch. Dit is begeleide praktijkuitvoering, geen spontaan initiatief of reeds uitgevoerde vervolgcontrole.",
-                "checkedAt": "2026-10-23T10:40:58.321742+00:00"
+                "progress": "De bestaande eenmalige controle is op24oktober08:00UTC vanzelf uitgevoerd en08:00:24 afgerond. Exacte huidige GET200 met nog steeds unavailable onafhankelijk uit opgeslagen bewijs gecontroleerd; geen fysieke oorzaak geclaimd. Resultaat met dezelfdehash via actuele eigenaar-API200/no-store beschikbaar; browseraflevering niet bevestigd. Gemeten gedeeltelijk3modelreacties/2tools/37.619tokens, credits onbekend. Volledige oorspronkelijke E1.8 blijft open.",
+                "checkedAt": "2026-10-24T08:05:38.155917+00:00",
+                "latestEvidence": "development/evidence/product/e18-one-shot-followup-executed-20261024.json"
               },
               {
                 "id": "E1.9",
@@ -9246,7 +9247,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-24T07:54:30.973301+00:00",
+        "checkedAt": "2026-10-24T08:05:38.155917+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -12137,7 +12138,7 @@
               "beyondExistingScope": "E1.6 levert een relevante aanleiding; deze uitkomst levert vooraf inhoudelijk afwegen van gevolgen over meerdere bronnen.",
               "assignment": "Geregistreerd op eigenaarsverzoek; nog niet gebouwd, geïnstalleerd of door het gezin geaccepteerd.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Controleer vanaf 24 oktober 10:00 Amsterdam de werkelijke uitvoering en terugmelding van de opgeslagen eenmalige sensorcontrole. Behoud oude bron als historie en verwerk echte correctie wanneer beschikbaar. Originele E1.8-eindvoorwaarden blijven open; geen extra planning, automatische herhaling of fictieve eigenaarafspraak toevoegen.",
+              "nextAction": "Behoud de werkelijk uitgevoerde controle als later-uitkomstbewijs. Toon de nog ontbrekende oorspronkelijke anticipatie/inhoudelijke vergelijking en verandering van een volgend voorstel door een echte gecorrigeerde aanname aan; geen nieuwe automatische herhaling of fictieve afspraak. Ander uitvoerbaar werk gaat door.",
               "ownerInitiativeClarification20261021": {
                 "status": "required_not_yet_proven",
                 "source": "Directe eigenaarverduidelijking21oktober2026",
@@ -12159,8 +12160,9 @@
                 "Gebruik concrete tijd, afwijking, ontbrekende informatie of botsende bedoeling; geen universele spanningsscore."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "E1.8: echte privéchat/werker onderzocht zelf beschikbare huisbronnen en vond een ontbrekende sensorbatterijwaarde; actuele GET-bron onafhankelijk gecontroleerd. Na expliciet Codex-vervolgverzoek koos Eva zelf 24 oktober 10:00 Amsterdam voor één opgeslagen leescontrole; planning onafhankelijk teruggelezen. Geen bron-ID/uitkomst voorgezegd, geen apparaatwijziging of extern bericht. Bestaande geïnstalleerde route, geen nieuwe patch. Dit is begeleide praktijkuitvoering, geen spontaan initiatief of reeds uitgevoerde vervolgcontrole.",
-              "checkedAt": "2026-10-23T10:40:58.321742+00:00"
+              "progress": "De bestaande eenmalige controle is op24oktober08:00UTC vanzelf uitgevoerd en08:00:24 afgerond. Exacte huidige GET200 met nog steeds unavailable onafhankelijk uit opgeslagen bewijs gecontroleerd; geen fysieke oorzaak geclaimd. Resultaat met dezelfdehash via actuele eigenaar-API200/no-store beschikbaar; browseraflevering niet bevestigd. Gemeten gedeeltelijk3modelreacties/2tools/37.619tokens, credits onbekend. Volledige oorspronkelijke E1.8 blijft open.",
+              "checkedAt": "2026-10-24T08:05:38.155917+00:00",
+              "latestEvidence": "development/evidence/product/e18-one-shot-followup-executed-20261024.json"
             },
             {
               "id": "E1.9",
@@ -15368,7 +15370,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-24T07:54:30.973301+00:00",
+      "checkedAt": "2026-10-24T08:05:38.155917+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -17716,7 +17718,7 @@
     }
   ],
   "lastUpdatedAt": "2026-10-24T07:54:30.973301+00:00",
-  "checkedAt": "2026-10-24T07:54:30.973301+00:00",
+  "checkedAt": "2026-10-24T08:05:38.155917+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
