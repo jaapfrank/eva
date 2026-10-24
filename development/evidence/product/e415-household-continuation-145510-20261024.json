@@ -1,0 +1,69 @@
+{
+  "contract": "EvaHouseholdContinuationIncident/v1",
+  "taskId": "E4.15",
+  "checkedAt": "2026-10-24T15:38:37.173860+00:00",
+  "status": "new_uncertain_review_abandoned_actual_natural_continuation_pending",
+  "incident": {
+    "observedAt": "2026-10-24T14:55:10Z",
+    "phase": "will_usage_uncertain",
+    "status": "needs_help",
+    "revision": 4,
+    "usage": null,
+    "failureFingerprint": "62e7a2a6ec5973233b236b063ec7db242f222f08e691db9b917917bd16defa24",
+    "sourcePayloadSha256": "eab0a184a5ee7065c5f120aa0c9b8e06d4fbf1f285267420112f2e5393efcbc1",
+    "uncertainEventSha256": "0e04292b08311e711fccf3291dde390861fd95077b19721da288a30267e4b967"
+  },
+  "actualBlocker": {
+    "snapshotAt": "2026-10-24T15:29:34.575168Z",
+    "onlyUnresolvedHouseholdReview": true,
+    "guardActive": true,
+    "guardActiveExcludingThisIncident": false,
+    "laterObservations": 68,
+    "laterHouseholdDecisions": 0,
+    "metadataSha256": "2e097a171b3ba81ff1d6ebbd982769674111ca68f74f3e40f5940362fd975bd0"
+  },
+  "newNaturalUseDelta": {
+    "windowStartExclusive": "2026-10-24T13:05:13Z",
+    "windowEndInclusive": "2026-10-24T15:15:44Z",
+    "measuredHouseholdDecisions": 21,
+    "allSilence": true,
+    "positiveOrFeedbackReuseEvidence": false,
+    "inputTokens": 186918,
+    "outputTokens": 2586,
+    "cost": null,
+    "metadataSha256": "993dc53ca2026782532f952d5d98d49d14c1ddc2cacc7cbe704dac5187c2d742",
+    "readonlyReads": 2,
+    "firstReadReportingFailure": "Decimal serialization; no result retained. One authorized identical-window reread with formatting fix."
+  },
+  "localUnwind": {
+    "provenByPinnedSynchronousControlFlow": true,
+    "newWireClosureTelemetryClaimed": false,
+    "providerRemoteCompletionCancellationAndCost": "unknown",
+    "mainSha256": "b2bc8289b3e121f0c6b5e8e50280188ae8c4b70df1c813d3b0c62866a7771ba5",
+    "independentPreflightSha256": "3507d169895f99f3f16d772371b81ff1f687e2735396d2ca43269ea448844cfd"
+  },
+  "actualRecovery": {
+    "operatorSha256": "93e4202a6c8c4fced332b32a9f0f1a7632f69c7dc04735478a00797e9feb254d",
+    "bindingSha256": "623fcfbc7eaa5b5de7144e5048bd2658e68baba42e06784e4a7e1597bbd2f7c3",
+    "independentOperatorReviewSha256": "98d681d6da8997cd4800b1410291c12dc1beb9cb37a52348cc8cc6790cb11fa2",
+    "executionSha256": "40d97dd1b3ef0cd374c31df4c99985e8d1bd44702e7da1a1fbbe9b4d723423fb",
+    "startedAt": "2026-10-24T15:37:03.261364Z",
+    "finishedAt": "2026-10-24T15:37:03.321302Z",
+    "attempts": 1,
+    "httpStatus": 200,
+    "disposition": "abandoned",
+    "usage": "unknown",
+    "replayed": false,
+    "actualPostReadbackPending": true
+  },
+  "constraints": {
+    "old0910IncidentOrActionRepeated": false,
+    "productCodeChanged": false,
+    "installationOrRestartPerformed": false,
+    "policySeconds": 300,
+    "ownerActionRequired": false,
+    "newOriginalCardsCompleted": 0,
+    "fullOriginalCardCompleted": false
+  },
+  "remaining": "Read back exact append and one genuinely new natural assessment; positive greeting/hearing, need discovery, later feedback/reuse and full original card remain open."
+}

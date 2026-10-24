@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T15:35:05.724935+00:00",
+  "updatedAt": "2026-10-24T15:38:37.173860+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -305,7 +305,7 @@
         "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
         "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
       ],
-      "updatedAt": "2026-10-24T15:35:05.724935+00:00",
+      "updatedAt": "2026-10-24T15:38:37.173860+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -586,7 +586,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "e415_new_uncertain_local_unwind_handoff",
+      "status": "e415_new_uncertain_local_unwind_handoff_complete",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1303,9 +1303,7 @@
         "coordinatorNotified": true,
         "nextTaskRequestedDirectly": true
       },
-      "currentWritePaths": [
-        "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/household-uncertain-145510-local-unwind-main.private.json"
-      ],
+      "currentWritePaths": [],
       "e110Progress": {
         "status": "frozen_candidate_handed_off",
         "manifest": "/home/administrator/project/.eva2-artifacts/e110-housemate-development-20261024/candidate-manifest.private.json",
@@ -1382,7 +1380,7 @@
     "e415-independent-review-newchat": {
       "task": "E4.16",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "e415_new_uncertain_incident_readback_complete",
+      "status": "e415_new_uncertain_actual_recovery_readback",
       "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
       "allowedWritePaths": [],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
@@ -1496,7 +1494,7 @@
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": false,
-      "updatedAt": "2026-10-24T15:35:05.724935+00:00",
+      "updatedAt": "2026-10-24T15:38:37.173860+00:00",
       "activeAssignment": "Bind new14:55:10uncertain incident and current genuine claim/stream status; no operator action.",
       "writePaths": [],
       "role": "executor",
@@ -1510,11 +1508,13 @@
         "checkedThrough": "2026-10-24T12:19:40+00:00",
         "doNotRepeatWithoutNewEvidence": true
       },
-      "currentWritePaths": []
+      "currentWritePaths": [
+        "/home/administrator/project/.eva2-artifacts/e415-positive-use-readback-20261024/coder2/uncertain-145510/post-recovery/"
+      ]
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "e415_new_uncertain_exact_operator_review",
+      "status": "e415_new_uncertain_actual_recovery_review",
       "allowedWritePaths": [
         "development/reviews/e419-final-candidate-review-20261024.json",
         "development/reviews/owner-command-provider-fix-20261024.json"
@@ -1527,10 +1527,9 @@
       "activeCodeOrInstallClaim": false,
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024",
       "scope": "Independently assess actual five later Astra calls and limits of one possible existing owner resume. No product code or runtime mutation.",
-      "updatedAt": "2026-10-24T15:35:05.724935+00:00",
+      "updatedAt": "2026-10-24T15:38:37.173860+00:00",
       "currentWritePaths": [
-        "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/household-uncertain-145510-preflight-review.private.json",
-        "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/household-uncertain-145510-operator-review.private.json"
+        "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/household-uncertain-145510-actual-review.private.json"
       ],
       "activeAssignment": "Review pinned root one-shot operator93e4202... and binding623fc... for newly proven locally ended14:55incident. No runtime queries/code/tests/effects."
     },
@@ -1906,6 +1905,13 @@
         "ordinaryOwnerResumeNowGo": false
       },
       "nextExecutableDependency": "Existing school-identification answer or genuinely new task-bound existing integration/session evidence. No current independent school step demonstrated."
+    },
+    "householdUncertaintyRecovery": {
+      "incidentAt": "2026-10-24T14:55:10Z",
+      "status": "abandoned_actual_readback_pending",
+      "evidence": "development/evidence/product/e415-household-continuation-145510-20261024.json",
+      "executionSha256": "40d97dd1b3ef0cd374c31df4c99985e8d1bd44702e7da1a1fbbe9b4d723423fb",
+      "doNotReplay": true
     }
   }
 }
