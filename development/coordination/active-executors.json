@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T14:26:01.802717+00:00",
+  "updatedAt": "2026-10-24T14:41:15.449342+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1412,7 +1412,7 @@
     "e415-independent-review-newchat": {
       "task": "E4.16",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "cooled_attempt_terminal_readback_complete",
+      "status": "passive_provider_recovery_observation_in_progress",
       "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
       "allowedWritePaths": [],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
@@ -1526,12 +1526,12 @@
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": false,
-      "updatedAt": "2026-10-24T14:26:01.802717+00:00",
-      "activeAssignment": "One affected PostgreSQL regression suite for actual unmeasured failure, STOP/effects/budget/max-one/manual successor; primary portal routing fact supplied to main.",
+      "updatedAt": "2026-10-24T14:41:15.449342+00:00",
+      "activeAssignment": "E4.16: one passive metadata snapshot of already occurred provider calls after 2026-10-24T14:17:47Z.",
       "writePaths": [],
       "role": "executor",
-      "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e16-household-release-alignment-20261024/package",
-      "scope": "9bterminalprovider_unavailable vastgelegd na wezenlijke bronwijziging; geen nieuwe helper/POST of ongewijzigde polling.",
+      "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/provider-recovery-observation-coder2/",
+      "scope": "No model request, resume, runtime mutation, private conversation content or repeated task lineage; distinguish actual completed same-route use from absence of evidence.",
       "nextTask": "E1.11",
       "latestBoundedReadback": {
         "path": "/home/administrator/project/.eva2-artifacts/e415-positive-use-readback-20261024/coder2/post-recovery/post-recovery-result.private.json",
@@ -1540,7 +1540,9 @@
         "checkedThrough": "2026-10-24T12:19:40+00:00",
         "doNotRepeatWithoutNewEvidence": true
       },
-      "currentWritePaths": []
+      "currentWritePaths": [
+        "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/provider-recovery-observation-coder2/"
+      ]
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
