@@ -12,7 +12,7 @@ Klaar wanneer: Een echte interne fout wordt zonder nieuwe eigenaaropdracht idemp
 
 ## Afmaakvolgorde
 
-1. E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. De werkelijke schoolhervatting is intern gestopt op de onderzoekstool. Drie uitvoerders werken nu afzonderlijk aan die foutcorrectie, gerichte regressie en bestaande hervatting; tester beoordeelt onafhankelijk. Schoolopdracht en volledigeE4.16 blijven open.
+1. E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. De schoolroute heeft een geïnstalleerde onderzoeksbudgetreparatie; de concrete blokkade van vervolgtools na de oude fout wordt nu hersteld. Schoolopdracht en volledigeE4.16 blijven open.
 2. E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.
 3. E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.
 4. E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.

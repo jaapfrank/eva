@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:56:37.055465+00:00",
-  "status": "corrected_resume_used_research_tool_failed_no_useful_school_result",
+  "status": "research_budget_repair_installed_post_error_alternative_tools_fix_pending",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -163,5 +163,29 @@
     },
     "developmentTokens": null,
     "developmentCost": null
+  },
+  "researchBudgetRepair": {
+    "commit": "ac86ab13",
+    "cause": "Measured public research response 1211 output tokens incorrectly rejected at foreground response limit1200, despite remaining task allowance.",
+    "baselineTests": {
+      "failed": 2,
+      "passed": 14
+    },
+    "candidateTests": {
+      "passed": 16
+    },
+    "sourcePackageReviewSha256": "53219bf97f3775bdb2767afef705069ac127d6ca88980a4d6b5f11fe0e376e00",
+    "installedAt": "2026-10-24T13:33:22.027885+00:00",
+    "installationSha256": "4f92c4441880eb9913edd17276cb98026c898bb96ebdf7fcc55d34913397994c",
+    "allFourInstalledProfilesMatch": true,
+    "originalTaskCompleted": false
+  },
+  "postResearchFailureContinuation": {
+    "status": "proven_defect_fix_in_progress",
+    "diagnosisSha256": "7dc00997f9ac61658e216356b51e27920d632dd1d035754cf2b8aa8605b4cde7",
+    "cause": "Owner research inherits a recovery hook whose exact-type guard rejects it. Failed receipt has no continuation proof, so conversation removes every alternative tool; two toolless replies lead to incomplete_work.",
+    "originalFailureReceiptsPreserved": true,
+    "alternativesExhaustedProved": false,
+    "newResumeDispatched": false
   }
 }
