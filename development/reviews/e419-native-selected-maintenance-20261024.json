@@ -1,0 +1,50 @@
+{
+  "contract": "EvaE419NativeSelectedMaintenanceReview/v1",
+  "reviewedAt": "2026-10-24T10:36:07.813016+00:00",
+  "verdict": "GO_SOURCE_BOUND_NATIVE_RESEARCH_AND_LATER_ATTENTION_ONLY",
+  "result": "Eva koos vanuit de gewone onderhoudswaarneming zelfstandig beperkt bronnenonderzoek, rondde dit af en gebruikte het resultaat in een latere gewone afweging.",
+  "checks": {
+    "normalObservationSourceBindingVerified": true,
+    "actualModelChoiceAndNativeAdmissionBound": true,
+    "actualResearchWorkSucceeded": true,
+    "retainedResearchArtifactAndNativeCompletionBound": true,
+    "laterAttentionUsesExactResultAndResearchEvidence": true,
+    "laterDecision": "silence",
+    "newResultToAttentionTransferDefectProven": false,
+    "userNotificationDeliveryClaimed": false,
+    "semanticLocalApplicabilityVerified": false
+  },
+  "scope": "Goedkeuring betreft de brongebonden onderzoeks- en vervolgketen. Het resultaat wordt door de bestaande privéafweging ontvangen; een onvoorwaardelijke gebruikersmelding wordt niet geclaimd.",
+  "notCompleted": [
+    "Geen update gekozen of geïnstalleerd.",
+    "Geen lokale noodzaak of onafhankelijke winst aangetoond.",
+    "Geen nieuw herstelbewijs, werkelijk updategebruik of volledige E4.19-afronding."
+  ],
+  "permissionClaimBoundary": "De latere afweging noemt ontbrekend kosteloos onderhoudsmandaat. De aangeboden capability is als per_task_grant_unknown_not_free geclassificeerd en vormt geen uitvoertoestemming. Een ingeschakelde onderhoudsdienst bewijst op zichzelf geen kosteloze uitvoerbevoegdheid; geen concrete fout in die overdracht is hier vastgesteld.",
+  "runtimeUsage": {
+    "nativeWorkCompletedModelResponses": 3,
+    "nativeWorkToolCalls": 1,
+    "registeredInputTokens": 58545,
+    "registeredOutputTokens": 1361,
+    "nativeWorkMeasurement": "partial",
+    "costUsdMicros": null,
+    "workCreatedToCompletionSeconds": 74,
+    "initialDecisionMeasuredTokens": {
+      "input": 19586,
+      "output": 359
+    },
+    "laterDecisionMeasuredTokens": {
+      "input": 22074,
+      "output": 156
+    }
+  },
+  "reviewerActions": {
+    "newModelCalls": 0,
+    "newTestsOrMatrixRuns": 0,
+    "productWrites": 0
+  },
+  "privateReviewSha256": "702c9ef1af4844d3c1b55e6c92724749ba5b9f796186ed764b030b0feb2a6fa2",
+  "e419Completed": false,
+  "projectCompleted": false,
+  "ownerAcceptance": false
+}

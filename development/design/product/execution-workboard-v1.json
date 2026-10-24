@@ -847,7 +847,7 @@
     "title": "Relevante updates zelfstandig ontdekken en beheerd toepassen",
     "status": "in_progress",
     "doneWhen": "Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap.",
-    "nextAction": "Volg na de afgeronde eigenaaropdracht het eerstvolgende toegelaten gewone aandachtsmoment met de bestaande softwarebron. Controleer actuele toelating bij uitblijven; laat één gekozen relevante update via bestaande native beoordeling/toepassing/gebruik/herstel afmaken. Geen waarneming injecteren of nieuwe onderhoudsopdracht forceren.",
+    "nextAction": "Rond onafhankelijke beoordeling van de echte bron-, onderzoeks- en vervolgketen af. Verifieer uitsluitend de concrete onderhoudsmandaatmetadata; wijzig alleen een aangetoonde fout, zonder update of nieuwe onderzoeksronde af te dwingen. Bestaande E1.6-profieloverdracht wordt afzonderlijk afgemaakt.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -5827,9 +5827,12 @@
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
                 "requiredForCurrentDelivery": true,
                 "assignment": {
-                  "coordinator": "/root",
-                  "activeWorkers": [],
-                  "scope": "Bronbinding aan bestaande aandacht; geen voice of nieuwe scheduler."
+                  "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                  "activeWorkers": [
+                    "01a169e0-4ed1-75d1-9541-b5dae109b328",
+                    "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+                  ],
+                  "scope": "Finish existing household_research installed release mismatch: coder1 exact intended source closure, coder2 minimal coherent image/profile package. Foreign voice work protected; root installs after independent review."
                 },
                 "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
                 "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
@@ -5864,8 +5867,8 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Gebruik echte reactie en volgende bronverandering voor passend vervolg; bewijs de modelgekozen bronbewaking zonder contactquotum of geforceerde huisgebeurtenis. E1.13 behoudt de gemeten context- en wachttijdverbetering.",
-                "checkedAt": "2026-10-22T23:10:12.746223+00:00",
+                "nextAction": "Maak de bestaande household_research-releaseoverdracht af: bedoelde huidige bronclosure vastleggen, minimale coherente verpakking beoordelen en installeren, daarna werkelijk aannemen via dezelfde bestaande route controleren. Volledige modelgekozen bronbewaking houdt haar oorspronkelijke criteria.",
+                "checkedAt": "2026-10-24T10:36:46.546885+00:00",
                 "progress": "Herstel geïnstalleerd: eigen onderzoeksbronnen bereiken de volgende afweging. Eva gebruikte die en koos zelf later contact. Met expliciete toestemming is diezelfde aandacht vervroegd: persoonlijk Telegrambericht op23oktober01:06CEST daadwerkelijk afgeleverd. Daarna twee echte eigenaarberichten verwerkt en beide antwoorden afgeleverd. Oorspronkelijk ochtendmoment verbruikt, geen dubbele afspraak; speakers niet gebruikt. Dit bewijst de geautoriseerde contactroute, niet dagelijks spontaan gezinsnut of volledige E1.6-bronbewaking.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
@@ -5900,15 +5903,16 @@
                   "originalCompletionPreserved": true
                 },
                 "householdResearchDeploymentHandoff20261021": {
-                  "status": "open_installed_release_mismatch",
+                  "status": "active_bounded_source_and_package_alignment",
                   "evidence": "development/evidence/product/gpu-telegram-repair-20261021.json",
                   "sourceFiles": [
                     "src/eva/adapters/postgres/household_work_sessions.py",
                     "src/eva/adapters/postgres/scoped_delegated_work_actions.py"
                   ],
-                  "nextAction": "Voice/shared-household owner must align the intended installed source versions with fresh idle/source/config guards, then verify the actual household research route. No foreign voice changes overwritten.",
-                  "ownership": "Existing voice/shared-household executor; preserve their WIP and original task acceptance.",
-                  "privateTelegramRepairAlreadyUsed": true
+                  "nextAction": "Maak de bestaande household_research-releaseoverdracht af: bedoelde huidige bronclosure vastleggen, minimale coherente verpakking beoordelen en installeren, daarna werkelijk aannemen via dezelfde bestaande route controleren. Volledige modelgekozen bronbewaking houdt haar oorspronkelijke criteria.",
+                  "ownership": "Coordinator assigned source closure to coder1 and packaging to coder2; no voice source changes or service installation delegated. Existing foreign WIP protected.",
+                  "privateTelegramRepairAlreadyUsed": true,
+                  "checkedAt": "2026-10-24T10:36:46.546885+00:00"
                 },
                 "implementationSteps": [
                   "Resterende actuele bron-/uitvoerprofieloverdracht afmaken.",
@@ -8443,14 +8447,13 @@
                   "E4.16",
                   "E4.17"
                 ],
-                "nextAction": "Volg na de afgeronde eigenaaropdracht het eerstvolgende toegelaten gewone aandachtsmoment met de bestaande softwarebron. Controleer actuele toelating bij uitblijven; laat één gekozen relevante update via bestaande native beoordeling/toepassing/gebruik/herstel afmaken. Geen waarneming injecteren of nieuwe onderhoudsopdracht forceren.",
-                "implementationStatus": "installed_native_default_clock_publication_verified_update_choice_open",
-                "checkedAt": "2026-10-24T10:17:52.011015+00:00",
+                "nextAction": "Rond onafhankelijke beoordeling van de echte bron-, onderzoeks- en vervolgketen af. Verifieer uitsluitend de concrete onderhoudsmandaatmetadata; wijzig alleen een aangetoonde fout, zonder update of nieuwe onderzoeksronde af te dwingen. Bestaande E1.6-profieloverdracht wordt afzonderlijk afgemaakt.",
+                "implementationStatus": "native_research_completed_result_reused_update_application_open",
+                "checkedAt": "2026-10-24T10:36:46.546885+00:00",
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                   "activeWorkers": [
                     "01a0c537-54d0-7080-9e4c-74db537877af",
-                    "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
                     "01a16a55-1607-7171-820e-a3918acaea3f"
                   ],
                   "roles": {
@@ -8459,10 +8462,10 @@
                     "01a169f2-6ff6-7961-b16f-9fd0b836d3e3": "immutable delivery packaging",
                     "01a16a55-1607-7171-820e-a3918acaea3f": "independent tester/reviewer"
                   },
-                  "scope": "One E4.19 outcome: builder native completion; packager actual admission gate/readback; independent reviewer. Coordinator integrates and installs; no new chats."
+                  "scope": "Builder verifies concrete maintenance mandate handoff; independent tester reviews actual native result and ordinary followup. Root integrates and installs."
                 },
                 "review": "development/reviews/e419-final-candidate-review-20261024.json",
-                "progress": "De normale host-startup heeft op10:09:20UTC de werkelijke geïnstalleerde softwarebron naar onderhoudstijdlijn en sensory-overdracht gepubliceerd. Klokdefect daarmee werkelijk gecontroleerd en onafhankelijk goedgekeurd. Eén daadwerkelijke door Eva gekozen update, toepassing, gebruik en herstel blijven open.",
+                "progress": "Werkelijke softwarebron heeft via gewone aandacht zelfstandig releaseonderzoek opgeleverd: gestart10:20:50UTC, geslaagd10:22:04UTC. Het exacte resultaat is10:27:24UTC teruggegeven aan gewone afweging; Eva koos10:27:34UTC stilte en geen update. Geen overdrachtsfout of noodzakelijke lokale update bewezen. Werkelijk toegepaste relevante update, gebruik en herstel blijven open.",
                 "latestEvidence": "development/evidence/product/e419-default-clock-publication-20261024.json"
               }
             ],
@@ -9014,7 +9017,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Volg één echte door Eva gekozen update via bestaande host, onafhankelijke beoordeling, bevoegde toepassing, werkelijk gebruik en geïsoleerd herstel. De onderhoudsroute is geïnstalleerd; E1.14-continuïteit en E1.11-afronding lopen als afzonderlijk afgebakend werk door.",
+        "nextAction": "Rond onafhankelijke beoordeling van de echte bron-, onderzoeks- en vervolgketen af. Verifieer uitsluitend de concrete onderhoudsmandaatmetadata; wijzig alleen een aangetoonde fout, zonder update of nieuwe onderzoeksronde af te dwingen. Bestaande E1.6-profieloverdracht wordt afzonderlijk afgemaakt.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van 24 gesloten. E4.16 en E4.19 geïnstalleerd; echte gebruiks-/herstelketens nog open. Drie uitvoerders werken afzonderlijk aan native E4.19, E1.14-continuïteit en E1.11; tester beoordeelt onafhankelijk.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9025,7 +9028,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T09:40:45.980241+00:00",
+        "updatedAt": "2026-10-24T10:36:46.546885+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9301,7 +9304,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-24T09:42:36.372006+00:00",
+        "checkedAt": "2026-10-24T10:36:46.546885+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -11998,9 +12001,12 @@
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
               "requiredForCurrentDelivery": true,
               "assignment": {
-                "coordinator": "/root",
-                "activeWorkers": [],
-                "scope": "Bronbinding aan bestaande aandacht; geen voice of nieuwe scheduler."
+                "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                "activeWorkers": [
+                  "01a169e0-4ed1-75d1-9541-b5dae109b328",
+                  "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+                ],
+                "scope": "Finish existing household_research installed release mismatch: coder1 exact intended source closure, coder2 minimal coherent image/profile package. Foreign voice work protected; root installs after independent review."
               },
               "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
               "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
@@ -12035,8 +12041,8 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Gebruik echte reactie en volgende bronverandering voor passend vervolg; bewijs de modelgekozen bronbewaking zonder contactquotum of geforceerde huisgebeurtenis. E1.13 behoudt de gemeten context- en wachttijdverbetering.",
-              "checkedAt": "2026-10-22T23:10:12.746223+00:00",
+              "nextAction": "Maak de bestaande household_research-releaseoverdracht af: bedoelde huidige bronclosure vastleggen, minimale coherente verpakking beoordelen en installeren, daarna werkelijk aannemen via dezelfde bestaande route controleren. Volledige modelgekozen bronbewaking houdt haar oorspronkelijke criteria.",
+              "checkedAt": "2026-10-24T10:36:46.546885+00:00",
               "progress": "Herstel geïnstalleerd: eigen onderzoeksbronnen bereiken de volgende afweging. Eva gebruikte die en koos zelf later contact. Met expliciete toestemming is diezelfde aandacht vervroegd: persoonlijk Telegrambericht op23oktober01:06CEST daadwerkelijk afgeleverd. Daarna twee echte eigenaarberichten verwerkt en beide antwoorden afgeleverd. Oorspronkelijk ochtendmoment verbruikt, geen dubbele afspraak; speakers niet gebruikt. Dit bewijst de geautoriseerde contactroute, niet dagelijks spontaan gezinsnut of volledige E1.6-bronbewaking.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
@@ -12071,15 +12077,16 @@
                 "originalCompletionPreserved": true
               },
               "householdResearchDeploymentHandoff20261021": {
-                "status": "open_installed_release_mismatch",
+                "status": "active_bounded_source_and_package_alignment",
                 "evidence": "development/evidence/product/gpu-telegram-repair-20261021.json",
                 "sourceFiles": [
                   "src/eva/adapters/postgres/household_work_sessions.py",
                   "src/eva/adapters/postgres/scoped_delegated_work_actions.py"
                 ],
-                "nextAction": "Voice/shared-household owner must align the intended installed source versions with fresh idle/source/config guards, then verify the actual household research route. No foreign voice changes overwritten.",
-                "ownership": "Existing voice/shared-household executor; preserve their WIP and original task acceptance.",
-                "privateTelegramRepairAlreadyUsed": true
+                "nextAction": "Maak de bestaande household_research-releaseoverdracht af: bedoelde huidige bronclosure vastleggen, minimale coherente verpakking beoordelen en installeren, daarna werkelijk aannemen via dezelfde bestaande route controleren. Volledige modelgekozen bronbewaking houdt haar oorspronkelijke criteria.",
+                "ownership": "Coordinator assigned source closure to coder1 and packaging to coder2; no voice source changes or service installation delegated. Existing foreign WIP protected.",
+                "privateTelegramRepairAlreadyUsed": true,
+                "checkedAt": "2026-10-24T10:36:46.546885+00:00"
               },
               "implementationSteps": [
                 "Resterende actuele bron-/uitvoerprofieloverdracht afmaken.",
@@ -14614,14 +14621,13 @@
                 "E4.16",
                 "E4.17"
               ],
-              "nextAction": "Volg na de afgeronde eigenaaropdracht het eerstvolgende toegelaten gewone aandachtsmoment met de bestaande softwarebron. Controleer actuele toelating bij uitblijven; laat één gekozen relevante update via bestaande native beoordeling/toepassing/gebruik/herstel afmaken. Geen waarneming injecteren of nieuwe onderhoudsopdracht forceren.",
-              "implementationStatus": "installed_native_default_clock_publication_verified_update_choice_open",
-              "checkedAt": "2026-10-24T10:17:52.011015+00:00",
+              "nextAction": "Rond onafhankelijke beoordeling van de echte bron-, onderzoeks- en vervolgketen af. Verifieer uitsluitend de concrete onderhoudsmandaatmetadata; wijzig alleen een aangetoonde fout, zonder update of nieuwe onderzoeksronde af te dwingen. Bestaande E1.6-profieloverdracht wordt afzonderlijk afgemaakt.",
+              "implementationStatus": "native_research_completed_result_reused_update_application_open",
+              "checkedAt": "2026-10-24T10:36:46.546885+00:00",
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                 "activeWorkers": [
                   "01a0c537-54d0-7080-9e4c-74db537877af",
-                  "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
                   "01a16a55-1607-7171-820e-a3918acaea3f"
                 ],
                 "roles": {
@@ -14630,10 +14636,10 @@
                   "01a169f2-6ff6-7961-b16f-9fd0b836d3e3": "immutable delivery packaging",
                   "01a16a55-1607-7171-820e-a3918acaea3f": "independent tester/reviewer"
                 },
-                "scope": "One E4.19 outcome: builder native completion; packager actual admission gate/readback; independent reviewer. Coordinator integrates and installs; no new chats."
+                "scope": "Builder verifies concrete maintenance mandate handoff; independent tester reviews actual native result and ordinary followup. Root integrates and installs."
               },
               "review": "development/reviews/e419-final-candidate-review-20261024.json",
-              "progress": "De normale host-startup heeft op10:09:20UTC de werkelijke geïnstalleerde softwarebron naar onderhoudstijdlijn en sensory-overdracht gepubliceerd. Klokdefect daarmee werkelijk gecontroleerd en onafhankelijk goedgekeurd. Eén daadwerkelijke door Eva gekozen update, toepassing, gebruik en herstel blijven open.",
+              "progress": "Werkelijke softwarebron heeft via gewone aandacht zelfstandig releaseonderzoek opgeleverd: gestart10:20:50UTC, geslaagd10:22:04UTC. Het exacte resultaat is10:27:24UTC teruggegeven aan gewone afweging; Eva koos10:27:34UTC stilte en geen update. Geen overdrachtsfout of noodzakelijke lokale update bewezen. Werkelijk toegepaste relevante update, gebruik en herstel blijven open.",
               "latestEvidence": "development/evidence/product/e419-default-clock-publication-20261024.json"
             }
           ],
@@ -15185,7 +15191,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Volg één echte door Eva gekozen update via bestaande host, onafhankelijke beoordeling, bevoegde toepassing, werkelijk gebruik en geïsoleerd herstel. De onderhoudsroute is geïnstalleerd; E1.14-continuïteit en E1.11-afronding lopen als afzonderlijk afgebakend werk door.",
+      "nextAction": "Rond onafhankelijke beoordeling van de echte bron-, onderzoeks- en vervolgketen af. Verifieer uitsluitend de concrete onderhoudsmandaatmetadata; wijzig alleen een aangetoonde fout, zonder update of nieuwe onderzoeksronde af te dwingen. Bestaande E1.6-profieloverdracht wordt afzonderlijk afgemaakt.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van 24 gesloten. E4.16 en E4.19 geïnstalleerd; echte gebruiks-/herstelketens nog open. Drie uitvoerders werken afzonderlijk aan native E4.19, E1.14-continuïteit en E1.11; tester beoordeelt onafhankelijk.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15196,7 +15202,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T09:40:45.980241+00:00",
+      "updatedAt": "2026-10-24T10:36:46.546885+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -15472,7 +15478,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-24T09:42:36.372006+00:00",
+      "checkedAt": "2026-10-24T10:36:46.546885+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -17735,7 +17741,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T09:42:36.372006+00:00",
+  "updatedAt": "2026-10-24T10:36:46.546885+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -17817,7 +17823,7 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-10-24T07:54:30.973301+00:00",
+  "lastUpdatedAt": "2026-10-24T10:36:46.546885+00:00",
   "checkedAt": "2026-10-24T08:05:38.155917+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
