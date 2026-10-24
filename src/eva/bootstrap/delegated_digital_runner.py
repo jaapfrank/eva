@@ -661,7 +661,16 @@ class DelegatedDigitalRunner:
             independent_repair = is_repair and native_guard.repair_role is not None
             participating_tools = ((progress, improvements, programming) if is_repair else
                                    (*connector_tools, progress, improvements, programming, program))
-            actions = BackgroundConnectorActions(participating_tools, spec.grant.capability_ids,
+            allowed_names = spec.grant.capability_ids
+            if is_repair:
+                # Repair deliberately excludes household/connector tools. Project
+                # its catalog from the original grant without changing that grant
+                # or weakening the normal catalog's completeness checks.
+                repair_names = {name for tool in participating_tools for name in tool.action_names}
+                allowed_names = tuple(name for name in allowed_names if name in repair_names)
+                if "manage_own_runtime_repair" not in allowed_names:
+                    raise ConversationConflict("admitted runtime repair action is unavailable")
+            actions = BackgroundConnectorActions(participating_tools, allowed_names,
                 authorize, spec.grant.maximum_tool_calls,
                 recorded_action_slots=(lambda: _recorded_action_slots(self.store._engine, spec, source))
                     if self.store._engine is not None else None)

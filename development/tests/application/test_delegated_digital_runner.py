@@ -1923,3 +1923,202 @@ def test_sparse_resume_loop_keeps_old_receipts_and_saves_new_progress_after_them
     assert all(saved[index] is receipt for index, receipt in original_receipts)
     assert outcome.usage.completed_model_responses == 2
     assert outcome.usage.tool_calls == 1
+
+
+def _repair_catalog_fixture(monkeypatch, *, repair=True, native=True, repair_role=None,
+                            omitted_grant=None, missing_manager=False,
+                            missing_connector=False, model_action=None):
+    """Use the existing loop ports with the broad failed repair's capability list."""
+    import importlib
+    from types import SimpleNamespace
+    from uuid import NAMESPACE_URL, uuid5
+    import eva.bootstrap.delegated_digital_runner as module
+    import eva.bootstrap.background_research as research
+
+    capabilities = (
+        "home_assistant_request", "read_home_assistant_inventory", "save_workspace_document",
+        "discover_connector_tools", "manage_connected_services", "use_connector_tool",
+        "save_work_progress", "manage_own_component_update", "manage_own_runtime_repair",
+        "evaluate_own_component_improvement", "compare_own_component_improvements",
+        "prepare_own_component_release", "apply_reviewed_component_improvement",
+        "get_reviewed_component_application", "read_own_component_source",
+        "draft_own_component_improvement", "write_programming_file", "start_programming_process",
+        "list_programming_tools", "use_programming_tool", "run_tool_program", "research_current_options",
+    )
+    capabilities = tuple(name for name in capabilities if name != omitted_grant)
+    key = "7" * 64
+    source = ConversationTurn.private("tenant", "install", "owner",
+        "initiative-task:" + key if native else "chat",
+        "initiative-execute:" + key if native else "message",
+        "Inspect the bound repair input without changing an installation.",
+        NOW.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    runner_path = Path(importlib.import_module(DelegatedDigitalRunner.__module__).__file__)
+    profile = DelegatedDigitalProfile("model:test-repair-catalog", "a" * 64, "b" * 64,
+        capabilities, (("bootstrap/delegated_digital_runner.py",
+                        hashlib.sha256(runner_path.read_bytes()).hexdigest()),))
+    origin = {"kind": "eva_initiative", "intent_id": "personal-interest:" + key,
+        "thread_id": "intent:personal-interest:" + key, "claim_revision": 2,
+        "mandate_sha256": "c" * 64}
+    spec = profile.build_spec(
+        source={field: getattr(source, field) for field in (
+            "tenant_id", "installation_id", "principal_id", "conversation_id", "message_id")} |
+            {"audience": {"kind": "private_person", "principal_id": source.principal_id}},
+        source_ingress_sha256=canonical_sha256(PostgresConversationJournal._ingress_data(source)),
+        work_id="work:eva-initiative:" + key if native else "work:repair-catalog-owner",
+        episode_id=str(uuid5(NAMESPACE_URL, "initiative-digital-work:" + canonical_sha256(origin)))
+            if native else "episode:repair-catalog-owner",
+        generation=1, parent_task_id=origin["intent_id"] if native else "task:repair-catalog-owner",
+        owner_principal_id="owner", principal_binding_id="binding:one", task=source.text,
+        created_at=NOW, deadline=NOW + timedelta(seconds=300),
+        **({"initiative_origin": origin} if native else {}))
+    store, journal = Store(), Journal()
+    executed, model_calls = [], []
+
+    class Guard:
+        turn = source
+        _repair_incident_id = "incident:controlled-catalog" if repair else None
+
+        def check(self, turn):
+            assert turn == source
+
+        def action_allowed(self, name):
+            return name in spec.grant.capability_ids
+
+        def instructions(self):
+            return "Inspect only this bound stage. No installation was authorized by this test."
+
+    guard = Guard()
+    guard.repair_role = repair_role
+    store._native_guard = lambda current: guard
+
+    class BoundTools:
+        def __init__(self, names, bound_source, authorize):
+            self.action_names, self.source, self.authorize = tuple(names), bound_source, authorize
+
+        def available_for(self, turn):
+            self.authorize(turn)
+            return turn == self.source
+
+        def active_context(self, turn):
+            self.authorize(turn)
+            return ()
+
+        def pending(self, turn, *, step_index):
+            self.authorize(turn)
+            return None
+
+        def execute(self, turn, call, *, step_index):
+            from eva.application.background_execution import authorize_background_dispatch
+            self.authorize(turn)
+            authorize_background_dispatch(turn)
+            executed.append(call.name)
+            return ConversationActionReceipt(call, {"status": "verified", "result": "controlled"})
+
+        def with_preparation_call_resolver(self, resolver):
+            return self
+
+        def resolve_document_call(self, turn, call, step_index):
+            return call
+
+        def verify_idle(self):
+            return True
+
+        def close(self):
+            pass
+
+    improvement_names = (
+        "manage_own_component_update", "manage_own_runtime_repair", "evaluate_own_component_improvement",
+        "compare_own_component_improvements", "prepare_own_component_release",
+        "apply_reviewed_component_improvement", "get_reviewed_component_application",
+        "read_own_component_source", "draft_own_component_improvement",
+    )
+    if missing_manager:
+        improvement_names = tuple(name for name in improvement_names if name != "manage_own_runtime_repair")
+    programming_names = ("write_programming_file", "start_programming_process",
+                         "list_programming_tools", "use_programming_tool")
+    connector_names = ("home_assistant_request", "read_home_assistant_inventory", "save_workspace_document",
+                       "discover_connector_tools", "manage_connected_services", "use_connector_tool")
+    if missing_connector:
+        connector_names = tuple(name for name in connector_names if name != "use_connector_tool")
+    for name, names in (("BackgroundWorkProgress", ("save_work_progress",)),
+                        ("ComponentImprovementActions", improvement_names),
+                        ("ProgrammingActions", programming_names),
+                        ("ToolProgramActions", ("run_tool_program",))):
+        monkeypatch.setattr(module, name, lambda *args, _names=names, **kwargs:
+                            BoundTools(_names, args[2], args[3]))
+    monkeypatch.setattr(research, "task_research_tools", lambda *args, **kwargs:
+                        BoundTools(("research_current_options",), kwargs["turn"], kwargs["authorize"]))
+
+    class FirstModel:
+        def generate(self, turn, identity, memory, recent_messages, **kwargs):
+            model_calls.append(tuple(kwargs["available_actions"]))
+            action = None if model_action is None else ConversationActionCall("controlled-call", model_action, {})
+            return ConversationModelResult("The bound model was reached; no repair was applied." if action is None else None,
+                "controlled", action, usage=ConversationModelUsage.measured(
+                    input_tokens=30, output_tokens=10, tool_calls=int(action is not None)))
+
+    runner = DelegatedDigitalRunner(store, profile, source_loader=lambda _: source,
+        memory=_Memory(), model=FirstModel(), identity=IdentityProfile("Eva", "Helpful", ("Be honest",)),
+        connector_tools=(BoundTools(connector_names, source, guard.check),),
+        journal_factory=lambda *_: journal, clock=lambda: NOW)
+    return SimpleNamespace(spec=spec, runner=runner, model_calls=model_calls, executed=executed,
+        selected_repair_names=("save_work_progress", *improvement_names, *programming_names))
+
+
+@pytest.mark.parametrize("repair_role", [None, "original_behavior_oracle"])
+def test_repair_broad_grant_reaches_first_model_with_only_repair_tools(monkeypatch, repair_role):
+    case = _repair_catalog_fixture(monkeypatch, repair_role=repair_role)
+    original = case.spec.to_payload()
+    outcome = asyncio.run(case.runner.run(case.spec, call_id="call:repair-catalog"))
+    assert case.model_calls, (outcome.status, outcome.error_fingerprint, outcome.usage)
+    assert len(case.model_calls) <= case.spec.grant.maximum_model_runs
+    assert all(set(names) == set(case.selected_repair_names) for names in case.model_calls)
+    assert case.executed == []
+    assert outcome.usage.completed_model_responses == len(case.model_calls)
+    assert case.spec.to_payload() == original
+    assert outcome.result is None  # Reaching a model is not a completed repair.
+
+
+def test_repair_catalog_cannot_expand_the_original_grant(monkeypatch):
+    case = _repair_catalog_fixture(monkeypatch, omitted_grant="read_own_component_source")
+    original = case.spec.to_payload()
+    asyncio.run(case.runner.run(case.spec, call_id="call:repair-grant-boundary"))
+    assert case.model_calls
+    assert all("read_own_component_source" not in names for names in case.model_calls)
+    assert all("manage_own_runtime_repair" in names for names in case.model_calls)
+    assert case.spec.to_payload() == original and case.executed == []
+
+
+def test_repair_rejects_connector_action_even_when_original_grant_contains_it(monkeypatch):
+    case = _repair_catalog_fixture(monkeypatch, model_action="home_assistant_request")
+    outcome = asyncio.run(case.runner.run(case.spec, call_id="call:repair-excluded-action"))
+    assert len(case.model_calls) == 1
+    assert "home_assistant_request" in case.spec.grant.capability_ids
+    assert "home_assistant_request" not in case.model_calls[0]
+    assert case.executed == [] and outcome.result is None
+
+
+@pytest.mark.parametrize("missing", ["configured_tool", "admitted_capability"])
+def test_repair_without_admitted_and_available_manager_stops_before_model(monkeypatch, missing):
+    case = _repair_catalog_fixture(monkeypatch, missing_manager=missing == "configured_tool",
+        omitted_grant="manage_own_runtime_repair" if missing == "admitted_capability" else None)
+    original = case.spec.to_payload()
+    outcome = asyncio.run(case.runner.run(case.spec, call_id="call:repair-manager-missing"))
+    assert case.model_calls == [] and case.executed == []
+    assert outcome.result is None and case.spec.to_payload() == original
+
+
+@pytest.mark.parametrize("native", [False, True])
+def test_normal_work_still_rejects_an_incomplete_admitted_catalog(monkeypatch, native):
+    case = _repair_catalog_fixture(monkeypatch, repair=False, native=native, missing_connector=True)
+    outcome = asyncio.run(case.runner.run(case.spec, call_id="call:normal-catalog-incomplete"))
+    assert case.model_calls == [] and case.executed == []
+    assert outcome.error_fingerprint == hashlib.sha256(
+        b"ValueError:background connector catalog differs from admitted capabilities").hexdigest()
+
+
+def test_normal_native_work_retains_its_complete_admitted_catalog(monkeypatch):
+    case = _repair_catalog_fixture(monkeypatch, repair=False)
+    asyncio.run(case.runner.run(case.spec, call_id="call:normal-native-catalog"))
+    assert case.model_calls
+    assert all(set(names) == set(case.spec.grant.capability_ids) for names in case.model_calls)
