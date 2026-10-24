@@ -12,7 +12,7 @@ Klaar wanneer: Eva inventariseert daadwerkelijk gebruikte modelselecties, biblio
 
 ## Afmaakvolgorde
 
-1. E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van de oorspronkelijke 24 open taken gesloten. E4.16 geïnstalleerd; echte foutketen en later hergebruik blijven open. Nu E4.19 volledig afmaken met één bouwer en één onafhankelijke tester; eigenaarproeven blokkeren ander werk niet.
+1. E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van 24 gesloten. E4.16 en E4.19 geïnstalleerd; echte gebruiks-/herstelketens nog open. Drie uitvoerders werken afzonderlijk aan native E4.19, E1.14-continuïteit en E1.11; tester beoordeelt onafhankelijk.
 2. E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.
 3. E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.
 4. E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.

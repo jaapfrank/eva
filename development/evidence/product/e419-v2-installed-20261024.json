@@ -1,0 +1,56 @@
+{
+  "contract": "EvaE419InstalledMaintenanceFoundation/v1",
+  "recordedAt": "2026-10-24T09:40:45.980241+00:00",
+  "installedAt": "2026-10-24T09:39:07.291994+00:00",
+  "status": "installed_live_verified_independent_review_pending",
+  "scope": "Existing maintenance route activated; genuine autonomous update/use/recovery still required for original E4.19 completion.",
+  "roles": {
+    "core": {
+      "image": "sha256:3a73b6ceed08911e4f5567f43bc271fe5d18796eba20342b3dd5fb2424933940",
+      "healthy": true,
+      "verifiedSourceCount": 11
+    },
+    "delegated-work-worker": {
+      "image": "sha256:b6bdd741d363c4d4a39acef1dc20d32f25e9a3760aef7783505fb9c9ce651096",
+      "healthy": true,
+      "verifiedSourceCount": 11
+    }
+  },
+  "actualRuntimeProfiles": {
+    "digital_work": "matching",
+    "public_research": "matching",
+    "shared_provider": "matching",
+    "household_research": "preexisting_mismatch_preserved"
+  },
+  "host": {
+    "frozenSourceCount": 64,
+    "processConfigurationAndSourceBindingVerified": true
+  },
+  "checks": {
+    "schema": "4e_0012_conversation_source_lock",
+    "exactOwnerGrant": true,
+    "hostAuthenticatedHealth": true,
+    "dashboard": true,
+    "noMarkersDeleted": true,
+    "exactCompletedHistoricalAuditExcluded": 1,
+    "otherLiveClaimsBlocked": true
+  },
+  "evidenceHashes": {
+    "installation.private.json": "e4ff65beafedfe1c62a5541f6164ec7f9b1a6dd190e9abb2a5b6a9313e0330ea",
+    "live-readback.private.json": "8da044b3670e784fa33f7d65e7465369f47541bfdaa642a92b3462772e32c9b2",
+    "operator-manifest.private.json": "ea68363f7bb197b3be9ce8d90a580bf8444f4ee2d40c910f280fc8ba1aa4df9b",
+    "completed-audit-classification.private.json": "2169341f7c4ff4aa610af096c38838d208897a2143cfd60904a701cc49413d3e"
+  },
+  "independentInstallationGo": "development/reviews/e419-final-candidate-review-20261024.json",
+  "sourceCommit": "0ceb8b4ed05f2ef523893489ef5d8837200e0282",
+  "preservedE416Commit": "abac823f",
+  "fullOriginalCardCompleted": false,
+  "ownerAcceptance": false,
+  "originalOpenTasksClosed": 4,
+  "development": {
+    "buildElapsedMs": 17613,
+    "modelCallsFromInstallAndReadback": 0,
+    "credits": null
+  },
+  "evaRuntimeUsage": "Not inferred from development/build/install; native runtime measurement pending"
+}

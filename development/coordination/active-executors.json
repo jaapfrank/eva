@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T09:26:19.209998+00:00",
+  "updatedAt": "2026-10-24T09:40:45.980241+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1732,7 +1732,12 @@
     "coordinator": "central-project-coordinator",
     "e418MayRestartOrReplaceNow": false,
     "request": null,
-    "confirmation": null,
+    "confirmation": {
+      "ownerInstruction": "Noodzakelijke installatie/herstart toegestaan op 24 oktober 2026; geen nieuwe eigenaarbevestiging nodig.",
+      "coordinatorOwnsSharedInstallation": true,
+      "preserveDurableState": true,
+      "at": "2026-10-24T09:40:45.980241+00:00"
+    },
     "rule": "Isolated candidates/tests allowed. Shared installation or restart requires exact candidate/base images, services, validation and rollback in request, followed by explicit coordinator confirmation. Recheck active conversation/model/work claims before applying; elapsed time is not approval.",
     "coordinatorThreadId": "01a16a55-7f38-76c2-9691-31421caafbe7"
   },
@@ -1810,8 +1815,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
-    "parallelBoundedWork": "E419 native integration, loader/host readiness, immutable delivery packaging and independent product review",
-    "currentBlocker": "Geen eigenaarblokkade. V2 gebouwd, bron/pakketreview akkoord; gebundelde installatiebeoordeling en actuele claimcontrole volgen.",
+    "parallelBoundedWork": "E419 native chain and independent installed review; coder1 E1.14 continuity; coder2 package observation then E1.11 existing responsibility.",
+    "currentBlocker": "Geen eigenaarblokkade; onderhoudsroute geïnstalleerd. Echte native update/use/recovery nog te leveren.",
     "latestVerifiedOutcome": {
       "task": "E4.17",
       "status": "completed_original_restore_card_technical",
@@ -1820,10 +1825,10 @@
       "at": "2026-10-24T06:06:08.566732+00:00"
     },
     "nextBoundedAssignments": {
-      "executor": "Finish one native update/use/recovery chain with one closed recovery harness",
-      "recoveryExecutor": "Preserve loader, verify actual host/API readiness, fix concrete loader findings only",
-      "deliveryExecutor": "Assemble immutable exact V2 role/host/config/Git package",
-      "reviewer": "Review concrete final sources and installation readback against unchanged original criteria",
+      "executor": "Observe and finish one actual native E419 update/use/recovery chain",
+      "recoveryExecutor": "Finish original E1.14 continuity on existing isolated route",
+      "deliveryExecutor": "Read first actual software observation/package binding, then E1.11 concrete existing responsibility",
+      "reviewer": "Independent E419 installed/native review, then E1.14 concrete result",
       "coordinator": "Integrate, verify live claims, install and close only original proven cards"
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
@@ -1848,11 +1853,12 @@
     },
     "e419Activation": {
       "path": "/var/lib/eva2/e419-activation-v2-20261024",
-      "status": "v2_built_pending_independent_installation_go",
+      "status": "installed_live_verified_independent_review_pending",
       "core": "sha256:3a73b6ceed08911e4f5567f43bc271fe5d18796eba20342b3dd5fb2424933940",
       "worker": "sha256:b6bdd741d363c4d4a39acef1dc20d32f25e9a3760aef7783505fb9c9ce651096",
       "fullE419Completed": false,
-      "evidence": "development/evidence/product/e419-v2-candidate-ready-20261024.json"
+      "evidence": "development/evidence/product/e419-v2-installed-20261024.json",
+      "installedAt": "2026-10-24T09:39:07.291994+00:00"
     },
     "teamAuthority": "Direct eigenaar24oktober2026 vraagt vijf actieve chats; vervangt eerdere limiet van één coördinator plus twee uitvoerders.",
     "automaticFollowup": {

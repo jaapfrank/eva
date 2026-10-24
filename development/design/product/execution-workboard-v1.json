@@ -847,7 +847,7 @@
     "title": "Relevante updates zelfstandig ontdekken en beheerd toepassen",
     "status": "in_progress",
     "doneWhen": "Eva inventariseert daadwerkelijk gebruikte modelselecties, bibliotheken, images, connectoren en eigen uitbreidingen en controleert officiële versie-, beveiligings- en uitfaseringsinformatie via bestaande geplande aandacht. Een relevante beschikbare update doorloopt zonder handmatige ontwikkelaarsoverdracht de bestaande gerichte beoordeling, bevoegde installatie en controle van werkelijk gebruikt gedrag, met herstelmogelijkheid. Eén echte update bewijst de keten; onbekende backendmodelversies blijven onbekend. Nieuwe kosten/rechten en niet-ondersteunde migraties vragen een concrete beslissing en blokkeren geen ander onderhoud. Geen tweede updater, onbeperkte updatepogingen of stilzwijgende abonnementsoverstap.",
-    "nextAction": "Installeer de bevroren V2 na onafhankelijk installatie-GO en verse gespreks-/model-/werkclaims; controleer de werkelijke installatie. Laat daarna Eva de update zelf kiezen, beoordelen, toepassen en gebruiken met het vereiste geïsoleerde herstelbewijs.",
+    "nextAction": "Volg één echte door Eva gekozen update via bestaande host, onafhankelijke beoordeling, bevoegde toepassing, werkelijk gebruik en geïsoleerd herstel. De onderhoudsroute is geïnstalleerd; E1.14-continuïteit en E1.11-afronding lopen als afzonderlijk afgebakend werk door.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -6387,7 +6387,7 @@
               {
                 "id": "E1.14",
                 "title": "Afgesproken continuïteit bij modeluitval en herstart aantonen",
-                "status": "planned",
+                "status": "in_progress",
                 "kind": "owner_requested_followup",
                 "scopeOrigin": "living-housemate-20261022",
                 "owner": "Codex · kernuitvoerder",
@@ -6403,7 +6403,15 @@
                   "E1.11",
                   "E1.13"
                 ],
-                "nextAction": "Volg de kleine bouwstappen in AFRONDINGSPLAN; stel eerst de werkelijk geïnstalleerde route vast."
+                "nextAction": "Coder1 voert de oorspronkelijke continuïteitsproef uit op de bestaande duurzame verantwoordelijkheid met modeluitval/herstart in isolatie; geen productie-uitval naast E4.19. Lever volledig toetsbaar resultaat aan onafhankelijke tester.",
+                "checkedAt": "2026-10-24T09:40:45.980241+00:00",
+                "assignment": {
+                  "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                  "activeWorkers": [
+                    "01a169e0-4ed1-75d1-9541-b5dae109b328"
+                  ],
+                  "scope": "Original continuity outcome; existing isolated tests/evidence only, no E419 or voice edits."
+                }
               }
             ],
             "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -8403,9 +8411,9 @@
                   "E4.16",
                   "E4.17"
                 ],
-                "nextAction": "Installeer de bevroren V2 na onafhankelijk installatie-GO en verse gespreks-/model-/werkclaims; controleer de werkelijke installatie. Laat daarna Eva de update zelf kiezen, beoordelen, toepassen en gebruiken met het vereiste geïsoleerde herstelbewijs.",
-                "implementationStatus": "v2_built_source_package_reviewed_pending_installation",
-                "checkedAt": "2026-10-24T09:26:19.209998+00:00",
+                "nextAction": "Volg één echte door Eva gekozen update via bestaande host, onafhankelijke beoordeling, bevoegde toepassing, werkelijk gebruik en geïsoleerd herstel. De onderhoudsroute is geïnstalleerd; E1.14-continuïteit en E1.11-afronding lopen als afzonderlijk afgebakend werk door.",
+                "implementationStatus": "installed_live_verified_independent_review_pending",
+                "checkedAt": "2026-10-24T09:40:45.980241+00:00",
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                   "activeWorkers": [
@@ -8423,8 +8431,8 @@
                   "scope": "Five existing chats, separate files; coordinator owns shared installation/Git. One E419 outcome, no duplicate recovery route."
                 },
                 "review": "development/reviews/e419-baseline-preflight-review-20261024.json",
-                "progress": "V2 compleet bevroren en beide kandidaatimages gebouwd; daadwerkelijke werkprofielen gecontroleerd en bestaande rolverschillen behouden. Onafhankelijke bron- en pakketreview akkoord, 64 hostimports gecontroleerd. Bevoegdheids-/bron-/herstelbindingen en gerichte installatiefouten hersteld. Nog geen V2-productie-installatie of echte autonome update/hersteluitvoering.",
-                "latestEvidence": "development/evidence/product/e419-v2-candidate-ready-20261024.json"
+                "progress": "V2 op 24 oktober 09:39 UTC werkelijk geïnstalleerd en herstart. Kern/worker gezond, actuele bron-/profiel-/mandaat-/schema-/hostbinding teruggelezen. Onafhankelijke livebeoordeling en echte autonome update/use/recovery volgen; volledige kaart blijft open.",
+                "latestEvidence": "development/evidence/product/e419-v2-installed-20261024.json"
               }
             ],
             "previousBoundedCompletion": {
@@ -8975,9 +8983,9 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Maak de complete bron-/hostoverdracht af inclusief de drie concrete reviewcorrecties, bundel onafhankelijke review en installeer de onderhoudsroute met verse claims. Laat daarna Eva één echte update kiezen, beoordelen, toepassen en teruglezen met herstelbewijs; behoud de referentie bij ontbrekende winst.",
+        "nextAction": "Volg één echte door Eva gekozen update via bestaande host, onafhankelijke beoordeling, bevoegde toepassing, werkelijk gebruik en geïsoleerd herstel. De onderhoudsroute is geïnstalleerd; E1.14-continuïteit en E1.11-afronding lopen als afzonderlijk afgebakend werk door.",
         "finishOrder": [
-          "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van de oorspronkelijke 24 open taken gesloten. E4.16 geïnstalleerd; echte foutketen en later hergebruik blijven open. Nu E4.19 volledig afmaken met één bouwer en één onafhankelijke tester; eigenaarproeven blokkeren ander werk niet.",
+          "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van 24 gesloten. E4.16 en E4.19 geïnstalleerd; echte gebruiks-/herstelketens nog open. Drie uitvoerders werken afzonderlijk aan native E4.19, E1.14-continuïteit en E1.11; tester beoordeelt onafhankelijk.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
           "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
           "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -8986,7 +8994,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T07:54:30.973301+00:00",
+        "updatedAt": "2026-10-24T09:40:45.980241+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9262,7 +9270,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-24T08:05:38.155917+00:00",
+        "checkedAt": "2026-10-24T09:40:45.980241+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -12519,7 +12527,7 @@
             {
               "id": "E1.14",
               "title": "Afgesproken continuïteit bij modeluitval en herstart aantonen",
-              "status": "planned",
+              "status": "in_progress",
               "kind": "owner_requested_followup",
               "scopeOrigin": "living-housemate-20261022",
               "owner": "Codex · kernuitvoerder",
@@ -12535,7 +12543,15 @@
                 "E1.11",
                 "E1.13"
               ],
-              "nextAction": "Volg de kleine bouwstappen in AFRONDINGSPLAN; stel eerst de werkelijk geïnstalleerde route vast."
+              "nextAction": "Coder1 voert de oorspronkelijke continuïteitsproef uit op de bestaande duurzame verantwoordelijkheid met modeluitval/herstart in isolatie; geen productie-uitval naast E4.19. Lever volledig toetsbaar resultaat aan onafhankelijke tester.",
+              "checkedAt": "2026-10-24T09:40:45.980241+00:00",
+              "assignment": {
+                "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                "activeWorkers": [
+                  "01a169e0-4ed1-75d1-9541-b5dae109b328"
+                ],
+                "scope": "Original continuity outcome; existing isolated tests/evidence only, no E419 or voice edits."
+              }
             }
           ],
           "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
@@ -14535,9 +14551,9 @@
                 "E4.16",
                 "E4.17"
               ],
-              "nextAction": "Installeer de bevroren V2 na onafhankelijk installatie-GO en verse gespreks-/model-/werkclaims; controleer de werkelijke installatie. Laat daarna Eva de update zelf kiezen, beoordelen, toepassen en gebruiken met het vereiste geïsoleerde herstelbewijs.",
-              "implementationStatus": "v2_built_source_package_reviewed_pending_installation",
-              "checkedAt": "2026-10-24T09:26:19.209998+00:00",
+              "nextAction": "Volg één echte door Eva gekozen update via bestaande host, onafhankelijke beoordeling, bevoegde toepassing, werkelijk gebruik en geïsoleerd herstel. De onderhoudsroute is geïnstalleerd; E1.14-continuïteit en E1.11-afronding lopen als afzonderlijk afgebakend werk door.",
+              "implementationStatus": "installed_live_verified_independent_review_pending",
+              "checkedAt": "2026-10-24T09:40:45.980241+00:00",
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                 "activeWorkers": [
@@ -14555,8 +14571,8 @@
                 "scope": "Five existing chats, separate files; coordinator owns shared installation/Git. One E419 outcome, no duplicate recovery route."
               },
               "review": "development/reviews/e419-baseline-preflight-review-20261024.json",
-              "progress": "V2 compleet bevroren en beide kandidaatimages gebouwd; daadwerkelijke werkprofielen gecontroleerd en bestaande rolverschillen behouden. Onafhankelijke bron- en pakketreview akkoord, 64 hostimports gecontroleerd. Bevoegdheids-/bron-/herstelbindingen en gerichte installatiefouten hersteld. Nog geen V2-productie-installatie of echte autonome update/hersteluitvoering.",
-              "latestEvidence": "development/evidence/product/e419-v2-candidate-ready-20261024.json"
+              "progress": "V2 op 24 oktober 09:39 UTC werkelijk geïnstalleerd en herstart. Kern/worker gezond, actuele bron-/profiel-/mandaat-/schema-/hostbinding teruggelezen. Onafhankelijke livebeoordeling en echte autonome update/use/recovery volgen; volledige kaart blijft open.",
+              "latestEvidence": "development/evidence/product/e419-v2-installed-20261024.json"
             }
           ],
           "previousBoundedCompletion": {
@@ -15107,9 +15123,9 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Maak de complete bron-/hostoverdracht af inclusief de drie concrete reviewcorrecties, bundel onafhankelijke review en installeer de onderhoudsroute met verse claims. Laat daarna Eva één echte update kiezen, beoordelen, toepassen en teruglezen met herstelbewijs; behoud de referentie bij ontbrekende winst.",
+      "nextAction": "Volg één echte door Eva gekozen update via bestaande host, onafhankelijke beoordeling, bevoegde toepassing, werkelijk gebruik en geïsoleerd herstel. De onderhoudsroute is geïnstalleerd; E1.14-continuïteit en E1.11-afronding lopen als afzonderlijk afgebakend werk door.",
       "finishOrder": [
-        "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van de oorspronkelijke 24 open taken gesloten. E4.16 geïnstalleerd; echte foutketen en later hergebruik blijven open. Nu E4.19 volledig afmaken met één bouwer en één onafhankelijke tester; eigenaarproeven blokkeren ander werk niet.",
+        "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond: 83/103, dus 4 van 24 gesloten. E4.16 en E4.19 geïnstalleerd; echte gebruiks-/herstelketens nog open. Drie uitvoerders werken afzonderlijk aan native E4.19, E1.14-continuïteit en E1.11; tester beoordeelt onafhankelijk.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
         "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
         "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -15118,7 +15134,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T07:54:30.973301+00:00",
+      "updatedAt": "2026-10-24T09:40:45.980241+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -15394,7 +15410,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-24T08:05:38.155917+00:00",
+      "checkedAt": "2026-10-24T09:40:45.980241+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -15545,30 +15561,28 @@
       "scopeClarification": "development/evidence/reassessment/continuous-development-coverage-20261017.json"
     },
     "currentRuntime": {
-      "recordedAt": "2026-10-18T13:56:18.253972+00:00",
-      "checkedAt": "2026-10-19T09:10:02.476266+00:00",
+      "recordedAt": "2026-10-24T09:39:07.291994+00:00",
+      "checkedAt": "2026-10-24T09:40:45.980241+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "image": "sha256:d8f0856fd0f065033919d8777bb16af852b3795afec04ad606148961d7d7962f",
-      "coreImage": "sha256:d8f0856fd0f065033919d8777bb16af852b3795afec04ad606148961d7d7962f",
-      "workerImage": "sha256:2ded8b001657e6b75114c6d629faf6296678943d42010a1f6e607c8eac8471f2",
+      "coreImage": "sha256:3a73b6ceed08911e4f5567f43bc271fe5d18796eba20342b3dd5fb2424933940",
+      "workerImage": "sha256:b6bdd741d363c4d4a39acef1dc20d32f25e9a3760aef7783505fb9c9ce651096",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
       "ready": true,
       "healthy": true,
-      "readyStatus": "installed_selective_memory_historical_cleanup_open",
-      "evidence": "development/evidence/reassessment/selective-memory-installed-20261019.json",
-      "evidencePath": "development/evidence/reassessment/selective-memory-installed-20261019.json",
-      "independentSourceReview": "development/reviews/selective-memory-installed-review-20261019.json",
+      "readyStatus": "e419_maintenance_foundation_installed",
+      "evidence": "development/evidence/product/e419-v2-installed-20261024.json",
+      "independentSourceReview": "development/reviews/e419-final-candidate-review-20261024.json",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "Historische inhoud nog niet opgeschoond:387bronnen/416native documenten en445.987brontekstbytes blijven behouden onder bestaande365dagen/2000documenten/20MiB per persoon. Geen gemeten fysieke opslag- of antwoordversnellingswinst. Interne modelpogingen/kosten blijven onbekend.",
-      "executionSourceCount": 77,
-      "executionSourceParity": true,
-      "ownedChangedSourceCount": 4,
-      "readinessScope": "Functioneel beoordeelde gezamenlijke kandidaat; geen gezinsacceptatie of bewijs van langdurig hulpvrij gebruik.",
-      "coreWorkerReleaseParity": true,
-      "workerExecutionSourceCount": 76
+      "meaning": "Exacte onderhoudsroute geïnstalleerd en live gecontroleerd; native update/gebruik/herstel en gezinsacceptatie blijven open.",
+      "runtimeProfiles": {
+        "digital_work": "matching",
+        "public_research": "matching",
+        "shared_provider": "matching",
+        "household_research": "preexisting_mismatch_preserved"
+      }
     },
     "memoryGoal20260910": {
       "status": "completed",
@@ -17659,7 +17673,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T09:26:19.209998+00:00",
+  "updatedAt": "2026-10-24T09:40:45.980241+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
