@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T15:24:27.322224+00:00",
+  "updatedAt": "2026-10-24T15:25:27.035754+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1516,12 +1516,12 @@
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "passive_recovery_evidence_independent_review_complete",
+      "status": "e415_new_uncertain_incident_independent_review",
       "allowedWritePaths": [
         "development/reviews/e419-final-candidate-review-20261024.json",
         "development/reviews/owner-command-provider-fix-20261024.json"
       ],
-      "activeIndependentReviewClaim": false,
+      "activeIndependentReviewClaim": true,
       "review": "development/reviews/e415-household-continuation-20261024.json",
       "task": "E4.16",
       "assignedAt": "2026-10-23T20:28:02.293070+00:00",
@@ -1529,9 +1529,11 @@
       "activeCodeOrInstallClaim": false,
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024",
       "scope": "Independently assess actual five later Astra calls and limits of one possible existing owner resume. No product code or runtime mutation.",
-      "updatedAt": "2026-10-24T14:54:36.804705+00:00",
-      "currentWritePaths": [],
-      "activeAssignment": "Independently assess actual five later Astra calls and limits of one possible existing owner resume. No product code or runtime mutation."
+      "updatedAt": "2026-10-24T15:25:27.035754+00:00",
+      "currentWritePaths": [
+        "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024/household-uncertain-145510-preflight-review.private.json"
+      ],
+      "activeAssignment": "Review only newly bound14:55:10household incident and existing recovery boundary; no runtime queries, code, old matrix or effects."
     },
     "e419-recovery-executor": {
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
