@@ -34,14 +34,19 @@ class HumanUnderstandingActions:
     @staticmethod
     def conversation_tools():
         return (ConversationToolDescriptor(name=ACTION,
-            description="Bewaar een voorlopige persoonsinterpretatie of verwachting op basis van dit echte privébericht. "
+            description="Bewaar een voorlopige persoonsinterpretatie, verwachting of eigen omgangsbijstelling op basis van dit echte privébericht. "
+                "Gebruik personality_delta uitsluitend voor een concrete bijstelling in Eva’s eigen manier van helpen of communiceren "
+                "uit expliciete feedback, maximaal 400 tekens, met de toepassingscontext en onzekerheid. "
+                "Dit is geen persoonsclassificatie, emotie, eigen belevenis of nieuwe bevoegdheid. "
+                "Pas feedback alleen toe voor degene die haar gaf; geen gezinsbrede voorkeur afleiden. "
+                "Een eenmalig verzoek is niet vanzelf een blijvende omgangsbijstelling. "
                 "Herzie bij nieuwe tegeninformatie een eerdere leerrecord met haar exacte source_ref en evidence_ref. "
                 "Gebruik uitsluitend echte gebruikerinformatie, geen eigen antwoord als uitkomst. Alle interpretaties blijven onbevestigd; "
                 "confirmed/refuted benoemt de beoordeling van de eerdere verwachting of interpretatie, geen feitelijke zekerheid. "
                 "Een open/onbesliste verwachting vereist een review_at. Een brongebonden bevestiging of weerlegging van "
                 "een eerdere verwachting mag review_at=null hebben: die vastgestelde uitkomst vraagt niet vanzelf een nieuwe toekomstige review.",
             input_schema={"type": "object", "properties": {
-                "kind": {"type": "string", "enum": ["person_hypothesis", "expectation"]},
+                "kind": {"type": "string", "enum": ["person_hypothesis", "expectation", "personality_delta"]},
                 "interpretation": {"type": "string", "minLength": 1, "maxLength": 1600},
                 "uncertainty_reason": {"type": "string", "minLength": 1, "maxLength": 600},
                 "review_at": {"type": ["string", "null"],

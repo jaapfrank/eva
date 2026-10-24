@@ -31,3 +31,25 @@ def test_overview_does_not_leak_partial_private_data_on_source_failure(monkeypat
     app = FastAPI(); install_dashboard_initiatives(app, access=DashboardAccess("t" * 32), runtime=object())
     response = TestClient(app).get("/internal/v1/dashboard/initiatives/state", headers={"authorization": "Bearer " + "t" * 32})
     assert response.status_code == 503 and "private source text" not in response.text
+
+
+# Reuse the actual typed-source/HousemateDevelopment composition from the focused
+# source test instead of replacing the API response with handwritten JSON.
+from tests.bootstrap.test_dashboard_housemate import rig, development_rig
+
+
+def test_actual_typed_development_response_survives_existing_get_contract(development_rig):
+    import json
+    import os
+    from pathlib import Path
+    runtime=development_rig.rig.runtime
+    app=FastAPI();install_dashboard_initiatives(app,access=DashboardAccess("t"*32),runtime=runtime)
+    response=TestClient(app).get("/internal/v1/dashboard/initiatives/state",headers={"authorization":"Bearer "+"t"*32})
+    assert response.status_code == 200 and response.headers["cache-control"] == "no-store"
+    payload=response.json()
+    assert payload["current_learning"] == [] and payload["personality_deltas"][0]["kind"] == "personality_delta"
+    assert payload["personality_deltas"][0]["processing_state"] == "processed"
+    assert payload["inner_state"]["open_threads"]
+    output=os.environ.get("EVA_E29_CONTRACT_OUTPUT")
+    if output:
+        path=Path(output);path.write_text(json.dumps(payload));path.chmod(0o600)

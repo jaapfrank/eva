@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T05:24:20.112922+00:00",
+  "updatedAt": "2026-10-24T05:45:11.301685+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -159,17 +159,10 @@
       "activeCodeOrInstallClaim": false
     },
     "codex-e418": {
-      "task": "E1.10",
+      "task": "E4.17",
       "writeScopeConfirmed": true,
       "allowedPaths": [
-        "src/eva/application/housemate_development.py",
-        "src/eva/application/human_understanding.py",
-        "src/eva/providers/human_understanding_actions.py",
-        "src/eva/bootstrap/private_conversation_resources.py",
-        "development/tests/application/test_housemate_development.py",
-        "development/tests/providers/test_e110_human_understanding_actions.py",
-        "development/tests/bootstrap/test_e110_housemate_development.py",
-        "src/eva/adapters/projection/hindsight.py"
+        "/home/administrator/project/.eva2-artifacts/e417-original-binding-20261024"
       ],
       "excludedToolPatterns": [
         "*install*",
@@ -184,14 +177,7 @@
         "check_delegated_runtime_profiles.py"
       ],
       "chosenPaths": [
-        "src/eva/application/housemate_development.py",
-        "src/eva/application/human_understanding.py",
-        "src/eva/providers/human_understanding_actions.py",
-        "src/eva/bootstrap/private_conversation_resources.py",
-        "development/tests/application/test_housemate_development.py",
-        "development/tests/providers/test_e110_human_understanding_actions.py",
-        "development/tests/bootstrap/test_e110_housemate_development.py",
-        "src/eva/adapters/projection/hindsight.py"
+        "/home/administrator/project/.eva2-artifacts/e417-original-binding-20261024"
       ],
       "requestedAdditionalPaths": [
         {
@@ -361,14 +347,16 @@
         "allNamedInstalledMethodsValidated": true
       },
       "nextTaskRequest": {
-        "requestedAt": "2026-10-23T19:10:40.012552+00:00",
-        "to": "windows-root",
-        "coordinatorThreadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
-        "status": "existing_instrument_ready_waiting_root_inputs_then_next_assignment",
-        "standingOwnerInstruction": "Na afronding rechtstreeks bij de coördinator om volgende taak blijven vragen; Jaap niet als tussenpersoon gebruiken.",
-        "completedOutcome": "Final same-second camera producer candidate sealed; 44 checks/1.86s metadata consistent; existing post-install read-only snapshot usage prepared without source changes or new runtime calls.",
-        "request": "Next independent task with exact paths, existing route, end condition and shared-installation boundaries. Preserve coordinator-owned integration/Git/installation, voice and other reserved work.",
-        "noOwnActiveModelOrInstall": true
+        "requestedAt": "2026-10-23T23:29:26.203218+00:00",
+        "to": "central-project-coordinator",
+        "coordinatorThreadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
+        "status": "canonical13_tests_and_constructor_capture_delivered_next_task_requested",
+        "standingOwnerInstruction": "Na iedere afgeronde opdracht rechtstreeks bij de coördinator om de volgende concrete taak blijven vragen; Jaap niet als tussenpersoon gebruiken.",
+        "coordinatorAcknowledged": true,
+        "currentTask": "E4.17",
+        "request": "Maak eerst de huidige concrete uitkomst af en draag bewijs rechtstreeks over. Vraag daarna de volgende opdracht met exacte paden en installatiegrenzen.",
+        "noOwnActiveModelOrInstall": true,
+        "completedOutcome": "Canonical13 cases passed, function/assertion AST unchanged. Four actual reference source files captured separately, not adopted. Single576data/fullprepare trial still running."
       },
       "assignmentStatus": "active",
       "assignmentCompletion": {
@@ -487,30 +475,13 @@
         }
       },
       "activeAssignment": {
-        "task": "E1.10",
-        "assignedAt": "2026-10-24T05:00:57.068026+00:00",
-        "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-        "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
+        "task": "E4.17",
         "writePaths": [
-          "src/eva/application/housemate_development.py",
-          "src/eva/application/human_understanding.py",
-          "src/eva/providers/human_understanding_actions.py",
-          "src/eva/bootstrap/private_conversation_resources.py",
-          "development/tests/application/test_housemate_development.py",
-          "development/tests/providers/test_e110_human_understanding_actions.py",
-          "development/tests/bootstrap/test_e110_housemate_development.py",
-          "src/eva/adapters/projection/hindsight.py"
+          "/home/administrator/project/.eva2-artifacts/e417-original-binding-20261024"
         ],
-        "resultNow": "Complete the typed source-bound development projection after successful existing reflection, plus current read-time source resolution; no runtime idle poll.",
-        "conditions": [
-          "Only E1.10 source-bound kind validation/projection, existing tool enum/description, existing source reader/composition and one existing successful dream/changed-source callback.",
-          "Preserve all foreign hunks and source/privacy/erase/STOP contracts; record exact before/after hashes and scoped patches.",
-          "No voice edits, production POST/model run/messages, Git, board changes or shared installation by executor.",
-          "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
-          "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
-        ],
-        "sharedInstallationAuthorized": false,
-        "productionModelsOrActionsAuthorized": false
+        "resultNow": "One real independently acquired source binding and one isolated original-call proposal; no execution/services/model/camera/config/Git",
+        "productionModelOrEffectsAuthorized": false,
+        "sharedInstallationAuthorized": false
       },
       "extensionArtifactRequest": {
         "to": "wsl-e18",
@@ -577,7 +548,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "implementing_original_e110_source_route",
+      "status": "preparing_original_independent_discovery_health_binding_readonly",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -732,7 +703,10 @@
           "development/tests/application/test_housemate_development.py",
           "development/tests/providers/test_e110_human_understanding_actions.py",
           "development/tests/bootstrap/test_e110_housemate_development.py",
-          "src/eva/adapters/projection/hindsight.py"
+          "src/eva/adapters/projection/hindsight.py",
+          "src/eva/adapters/postgres/housemate_development.py",
+          "src/eva/bootstrap/housemate_development.py",
+          "development/tests/postgres/test_housemate_development.py"
         ],
         "resultNow": "Complete the typed source-bound development projection after successful existing reflection, plus current read-time source resolution; no runtime idle poll.",
         "conditions": [
@@ -1274,12 +1248,62 @@
         "noRuntimeModelExecutorCameraMessageOrInstallation": true
       },
       "previousStatusBeforeCentralHandoff": "Canonical child conflicts and original32-row cutoff/singlepending cases finalized;44 focused checks passed, ready independent GO",
-      "activeCodeOrInstallClaim": false
+      "activeCodeOrInstallClaim": false,
+      "e417ColdStartHandoff": {
+        "updatedAt": "2026-10-23T23:53:39.681074+00:00",
+        "status": "phase1_exact_plan_pending_coordinator_tester_admission_not_started",
+        "phase1Plan": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/phase1-cold-start-plan.private.json",
+        "phase1PlanSha256": "f565d2cd0e7c0d3983ce2a7d8275ab092c3930dececdd0c56613e3b3016646e3",
+        "sourceFactsHandoff": "/home/administrator/project/.eva2-artifacts/e417-current-extension-package-20261023/host-functional-target-20261024/original-facts-input-handoff.private.json",
+        "sourceFactsHandoffSha256": "f4b04f5c0470e480623637c4372139d9ba09f8b3816d58680300213f3c9ff253",
+        "originalStoredEventMatchesBaseline": true,
+        "originalHttpRequestFound": false,
+        "phase2Missing": "Independent original discovery/health binding; old faces0 event alone is not a positive original executor request. No synthesis or historical-clock substitution.",
+        "sharedInstallationChanged": false,
+        "targetServicesStarted": false,
+        "wholeE417Complete": false,
+        "coordinatorNotified": true,
+        "nextTaskRequestedDirectly": true
+      },
+      "currentWritePaths": [
+        "/home/administrator/project/.eva2-artifacts/e417-original-binding-20261024"
+      ],
+      "e110Progress": {
+        "status": "frozen_candidate_handed_off",
+        "manifest": "/home/administrator/project/.eva2-artifacts/e110-housemate-development-20261024/candidate-manifest.private.json",
+        "manifestSha256": "3d6f70e5662c8fe442be635e17f8e9141b0f5f94d47545efcbab2d4dd36b81e4",
+        "handoff": "/home/administrator/project/.eva2-artifacts/e110-housemate-development-20261024/handoff.private.json",
+        "handoffSha256": "e8fe4e7c965a538daa750f6e43ae97fdb9b458795508736243639c8f89f2734c",
+        "postgres18Cases": 3,
+        "actualFamilyUseProven": false,
+        "independentReviewPending": true,
+        "sharedInstallationByExecutor": false,
+        "nextTaskRequestedDirectly": true
+      },
+      "e110ReviewFix": {
+        "finding": "E110-DEDUP-002",
+        "authorizedBy": "direct coordinator handoff",
+        "scope": [
+          "src/eva/application/housemate_development.py",
+          "development/tests/application/test_housemate_development.py"
+        ],
+        "frozenV1Preserved": true
+      },
+      "e29E110Connection": {
+        "status": "frozen_handed_off",
+        "manifest": "/home/administrator/project/.eva2-artifacts/e29-e110-connection-20261024/manifest.private.json",
+        "manifestSha256": "ba08bd4b9766c10878dd9735ce67b7080072437986b4f88bfdb1c9e654248a4d",
+        "handoff": "/home/administrator/project/.eva2-artifacts/e29-e110-connection-20261024/handoff.private.json",
+        "handoffSha256": "e26b97d28b669020adf89f5fe6e543968bf7ea3b429ecda3feb6a27a8ceb6c82",
+        "productionActionsByExecutor": 0,
+        "independentReviewAndInstall": "coordinator",
+        "nextTaskRequestedDirectly": true
+      }
     },
     "e415-independent-review-newchat": {
       "task": "E2.9",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "reviewing_frozen_e110_and_connection",
+      "status": "reviewing_e417_original_binding",
       "coordinator": "windows-root",
       "allowedWritePaths": [
         "development/reviews/e29-housemate-consumer-review-20261024.json"
@@ -1396,9 +1420,9 @@
       "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": true,
       "updatedAt": "2026-10-24T05:04:43.982280+00:00",
-      "activeAssignment": "Independent E1.10 source and E2.9 connection review",
+      "activeAssignment": "E4.17 original source binding and one restored procedure review",
       "writePaths": [
-        "development/reviews/e110-housemate-development-review-20261024.json"
+        "development/reviews/e417-original-binding-review-20261024.json"
       ]
     },
     "independent-control": {
@@ -1590,32 +1614,41 @@
     "authority": "Direct owner instruction 2026-10-23: sole main coordinator; integration, GitHub and shared installation exclusively here.",
     "previousCoordinator": "windows-root",
     "preserveExistingReservations": true,
-    "activeOutcome": "E1.10",
+    "activeOutcome": "E4.17",
     "doNotRepeatSentLolaQuestion": true,
     "agents": {},
     "maxConcurrentExecutorsReviewers": 2,
     "installationCandidate": {
-      "path": "/var/lib/eva2/e29-housemate-consumer-20261024",
-      "scope": "Current private learning sources in existing owner initiative screen with existing source correction/forget handoff",
-      "status": "installed_exact_live_source_readback",
-      "core": "sha256:aa0d48c4ea7b1c9569227a597bb9714cda5aff00a1992ccbe150ea9703c32996",
-      "worker": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
-      "fullE29Completed": false,
+      "path": "/var/lib/eva2/e110-housemate-development-20261024",
+      "scope": "E110 existing source development plus completed E29 owner operations",
+      "status": "installed_and_independently_reviewed",
+      "core": "sha256:efff5dd51b993ff4bc833ecc1940f0f64ad336d30e20fb873a902cf371af7dcf",
+      "worker": "sha256:15327de84d6e70e353bd462f2a730250b273d1779d8cc79969d2729924d55a1d",
+      "fullE29Completed": true,
+      "fullE110Completed": false,
       "previousInstalled": {
-        "path": "/var/lib/eva2/e112-version-trial-20261024",
-        "scope": "Exact source versions, bounded trial and owner UI with same-byte managed procedure copy",
-        "status": "installed_and_independently_read_back",
-        "core": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+        "path": "/var/lib/eva2/e29-housemate-consumer-20261024",
+        "scope": "Current private learning sources in existing owner initiative screen with existing source correction/forget handoff",
+        "status": "installed_exact_live_source_readback",
+        "core": "sha256:aa0d48c4ea7b1c9569227a597bb9714cda5aff00a1992ccbe150ea9703c32996",
         "worker": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
+        "fullE29Completed": false,
         "previousInstalled": {
-          "path": "/var/lib/eva2/e112-proof-handoff-20261024",
-          "scope": "Frozen E112 V3.1 original-lineage proof and owner controls; preserves role variants and legacy route",
+          "path": "/var/lib/eva2/e112-version-trial-20261024",
+          "scope": "Exact source versions, bounded trial and owner UI with same-byte managed procedure copy",
           "status": "installed_and_independently_read_back",
-          "core": "sha256:f55b5f7cf714d8ad839e48f965530b71f0bb243920b9133814e32f734e1b8358",
-          "worker": "sha256:32d634b3ebc2ab616ca627e4936538ebdf8778ce727d676e8bd0ea267c8d03c4",
+          "core": "sha256:3f7c459936d362fbd8b62be9b7680a8fdd3be2e721109b74a5e291f6fbd773cb",
+          "worker": "sha256:57cc3970b2077bcba6f8be1adaaff831c46d0690754cb08d3f878153a62ad4d2",
+          "previousInstalled": {
+            "path": "/var/lib/eva2/e112-proof-handoff-20261024",
+            "scope": "Frozen E112 V3.1 original-lineage proof and owner controls; preserves role variants and legacy route",
+            "status": "installed_and_independently_read_back",
+            "core": "sha256:f55b5f7cf714d8ad839e48f965530b71f0bb243920b9133814e32f734e1b8358",
+            "worker": "sha256:32d634b3ebc2ab616ca627e4936538ebdf8778ce727d676e8bd0ea267c8d03c4",
+            "fullE112Completed": false
+          },
           "fullE112Completed": false
-        },
-        "fullE112Completed": false
+        }
       }
     },
     "newReviewerThread": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
@@ -1636,19 +1669,19 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": "Owner unavailable for physical trial; previous premature request withdrawn, no current owner action.",
-    "parallelBoundedWork": "E1.10 door onafhankelijke reviewer; bouwer sluit exact E110→E29 aan. Root legt eerste E29-installatie vast en bereidt gezamenlijke overlay voor.",
-    "currentBlocker": "E2.9 full completion needs genuine typed E1.10 state/delta sources. Original multi-day family acceptance remains separate and does not block implementation.",
+    "parallelBoundedWork": "E4.17 laatste oorspronkelijke bronbinding/procedure voorbereiden en onafhankelijk beoordelen. E2.9 afgesloten; E110 technisch geleverd, meerdaagse praktijk blijft open.",
+    "currentBlocker": "No owner action blocks current E417 original binding/integration; E110 original later real use remains open.",
     "latestVerifiedOutcome": {
-      "task": "E1.13",
-      "status": "completed_original_technical_criteria_installed_compared_independently_reviewed",
-      "review": "development/reviews/e113-existing-natural-handoff-review-20261024.json",
-      "evidence": "development/evidence/product/e113-current-cache-comparison-20261024.json",
-      "at": "2026-10-24T05:04:43.982280+00:00"
+      "task": "E2.9",
+      "status": "completed_original_operation_card_technical",
+      "review": "development/reviews/e110-housemate-development-review-20261024.json",
+      "evidence": "development/evidence/product/e110-e29-current-development-installed-20261024.json",
+      "at": "2026-10-24T05:45:11.301685+00:00"
     },
     "nextBoundedAssignments": {
-      "executor": "Complete E110 current state and real personality_delta connection in existing E29 owner view.",
-      "reviewer": "Review frozen E110 source route and forthcoming exact connection/combined overlay; no product edits.",
-      "coordinator": "Record installed E29, prepare and install only reviewed combined E110/E29 overlay after fresh claims."
+      "executor": "Finish original E417 independent discovery/health binding and one isolated procedure invocation handoff.",
+      "reviewer": "Review exact E417 source binding and invocation; preserve frozen E110/E29/E113/E112 reviews.",
+      "coordinator": "Close completed E29 in Git/dashboard, execute only reviewed bounded E417 restored procedure and close original card if proven."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {

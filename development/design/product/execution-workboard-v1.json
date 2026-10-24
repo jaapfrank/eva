@@ -841,13 +841,13 @@
   "lastUpdated": "2026-10-23T16:59:07.773712+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E1.10",
+  "activeTaskId": "E4.17",
   "currentWork": {
-    "id": "E1.10",
-    "title": "Een herkenbare eigenheid uit echte ervaringen en creatieve projecten ontwikkelen",
+    "id": "E4.17",
+    "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
     "status": "in_progress",
-    "doneWhen": "Eva kiest zelf een passende creatieve of onderzoekende lijn, maakt een concreet resultaat en ontwikkelt die op een latere echte dag verder vanuit wat zij leerde of werkelijk met het gezin meemaakte. In een later gesprek gebruikt zij passende gedeelde geschiedenis en een onderbouwd eigen oordeel zonder standaardgrappen, verzonnen belevenissen of druk om aandacht. Betrokken gezinsleden beoordelen herkenbaarheid, plezier en timing afzonderlijk; een humorvoorkeur wordt niet voor anderen veralgemeniseerd. Privéervaringen blijven afgeschermd en correctie/vergeten werkt door.",
-    "nextAction": "E1.10-bronroute onafhankelijk beoordelen en samen met de aansluiting op de bestaande E2.9-bediening installeren. De eerste E2.9-bronweergave is geïnstalleerd en met echte actuele bronnen gecontroleerd. E1.13 is volledig technisch afgerond; meerdaags gebruik en gezinswaardering blijven open.",
+    "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd.",
+    "nextAction": "Rond de oorspronkelijke E4.17-herstelkaart af met de laatste echte onafhankelijke bronbinding en één gerichte oorspronkelijke procedureaanroep op de reeds herstelde geïsoleerde installatie. Bestaande restore/start/health/STOP-bewijzen blijven staan. E1.10 en E1.12 wachten op werkelijk gebruik en eigen gezinscriteria; dat blokkeert dit werk niet.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -1635,6 +1635,23 @@
       "deliveryOverview": {
         "deliveries": [
           {
+            "title": "E2.9 · Huisvoorzieningen, projecten en bijstellingen samen bedienen",
+            "state": "installed",
+            "summary": "Volledige oorspronkelijke bedieningskaart onafhankelijk technisch afgerond. Brongebonden huidige toestand via dezelfde autoriteit, bestaande lifecycle en correctie/vergeten; werkelijk lege optionele toestand blijft leeg. Exacte geïnstalleerde code/API/assets en core/workerprofielen gecontroleerd.",
+            "remaining": "Geen open oorspronkelijke technische E2.9-bedieningsclausule; E1.10-meerdaags gebruik, E1.12-adoptie en gezinsacceptatie blijven op eigen kaarten.",
+            "source": "development/evidence/product/e110-e29-current-development-installed-20261024.json",
+            "review": "development/reviews/e110-housemate-development-review-20261024.json",
+            "checkedAt": "2026-10-24T05:45:11.301685+00:00",
+            "completedAt": "2026-10-24T05:45:11.301685+00:00",
+            "completedTaskIds": [
+              "E2.9"
+            ],
+            "technicalDeliveryComplete": true,
+            "newProductFunctionCompleted": true,
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
+          {
             "title": "E1.13 · Denkvermogen gericht inzetten met behouden werking",
             "state": "installed",
             "summary": "Oorspronkelijke kaart onafhankelijk technisch afgerond: bestaande huidige hergebruikroute 0 in plaats van 1 modelverzoek bij dezelfde nieuwe uitvoering en verse controle; 6/6 oorspronkelijke modelgevallen geslaagd. Eén begrensde vergelijking, geen algemene snelheids- of gezinsclaim.",
@@ -1665,19 +1682,6 @@
             "newProductFunctionCompleted": false,
             "ownerAcceptance": false,
             "familyAcceptance": false
-          },
-          {
-            "title": "E2.9 · Actuele leerbronnen via bestaande bediening bekijken",
-            "state": "installed",
-            "summary": "Vier actuele bronnen via afgeschermde bronweergave gelezen; bestaande bron/correctie/vergeetbediening bereikbaar. Onafhankelijke review en exacte zesbestandenoverlay geïnstalleerd;worker/config/opslag behouden.",
-            "remaining": "Echte E1.10-toestand en Personality Deltas aansluiten; volledige kaart en gezinsacceptatie blijven open.",
-            "source": "development/evidence/product/e29-housemate-consumer-installed-20261024.json",
-            "review": "development/reviews/e29-housemate-consumer-review-20261024.json",
-            "checkedAt": "2026-10-24T05:24:20.112922+00:00",
-            "completedTaskIds": [],
-            "technicalDeliveryComplete": true,
-            "newProductFunctionCompleted": false,
-            "ownerAcceptance": false
           },
           {
             "title": "E1.12 · Eigenaarbediening en herstel technisch opgeleverd",
@@ -3038,27 +3042,27 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E1.10",
-          "title": "Een herkenbare eigenheid uit echte ervaringen en creatieve projecten ontwikkelen",
-          "summary": "E1.10-bronroute onafhankelijk beoordelen en samen met de aansluiting op de bestaande E2.9-bediening installeren. De eerste E2.9-bronweergave is geïnstalleerd en met echte actuele bronnen gecontroleerd. E1.13 is volledig technisch afgerond; meerdaags gebruik en gezinswaardering blijven open.",
-          "doneWhen": "Eva kiest zelf een passende creatieve of onderzoekende lijn, maakt een concreet resultaat en ontwikkelt die op een latere echte dag verder vanuit wat zij leerde of werkelijk met het gezin meemaakte. In een later gesprek gebruikt zij passende gedeelde geschiedenis en een onderbouwd eigen oordeel zonder standaardgrappen, verzonnen belevenissen of druk om aandacht. Betrokken gezinsleden beoordelen herkenbaarheid, plezier en timing afzonderlijk; een humorvoorkeur wordt niet voor anderen veralgemeniseerd. Privéervaringen blijven afgeschermd en correctie/vergeten werkt door."
+          "taskId": "E4.17",
+          "title": "Zelfgemaakte uitbreidingen buiten de kern bewaren en op een schone pc herstellen",
+          "summary": "Rond de oorspronkelijke E4.17-herstelkaart af met de laatste echte onafhankelijke bronbinding en één gerichte oorspronkelijke procedureaanroep op de reeds herstelde geïsoleerde installatie. Bestaande restore/start/health/STOP-bewijzen blijven staan. E1.10 en E1.12 wachten op werkelijk gebruik en eigen gezinscriteria; dat blokkeert dit werk niet.",
+          "doneWhen": "Een door Eva gemaakte werkende uitbreiding heeft een versieerbaar pakket met bron, afhankelijkheden, configuratieschema, benodigde rechten, eigen gegevens en laatst werkende versie. Bestaande module-/procedure- en back-upvoorzieningen nemen dit pakket mee. Een schone Eva-installatie zonder oude bronwerkmap herstelt de uitbreiding en toont hetzelfde gedrag aan. Privégeheimen blijven buiten Git en worden versleuteld hersteld of expliciet opnieuw gekoppeld; stoppen, pauzestatus en bestaande externe realisaties blijven behouden zonder dubbele effecten. Nieuwe toepassingscode staat buiten de kern; een algemene kerninterfacewijziging is afzonderlijk onderbouwd."
         },
         "next": {
-          "taskId": "E2.9",
-          "title": "Actuele eigen ontwikkeling samen bedienen",
-          "detail": "Eerste bronweergave geïnstalleerd. E1.10 en de gerichte bediening samen afronden; bestaande E1.8-broncontrole blijft op 24 oktober08:00UTC, zonder nieuwe planning."
+          "taskId": "E4.16",
+          "title": "Bestaand zelfherstel afronden",
+          "detail": "Na de oorspronkelijke hersteluitkomst de actuele zelfherstelroute afmaken; behoud buitenlandse wijzigingen en bestaand foutbewijs. E1.8 eenmalige broncontrole blijft24oktober08:00UTC."
         },
         "ownerAction": {
           "required": false,
           "detail": "Geen handeling nodig. Je kunt de fysieke proef nu niet doen; die blijft uitgesteld. De technische camera-/batchroute is geïnstalleerd en nieuwe waarnemingen zijn gezien. Spraak blijft bij de andere uitvoerder.",
           "steps": []
         },
-        "checkedAt": "2026-10-24T05:24:20.112922+00:00",
+        "checkedAt": "2026-10-24T05:45:11.301685+00:00",
         "reviewedAt": "2026-10-21T09:48:32.565185+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
-      "checkedAt": "2026-10-24T05:24:20.112922+00:00",
+      "checkedAt": "2026-10-24T05:45:11.301685+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -6117,7 +6121,7 @@
                   "scope": "Bestaande brongebonden ontwikkel-/droomcontext; geen tweede store/planner, voice of productieactie door bouwer."
                 },
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "E1.10-bronroute onafhankelijk beoordelen en samen met de aansluiting op de bestaande E2.9-bediening installeren. De eerste E2.9-bronweergave is geïnstalleerd en met echte actuele bronnen gecontroleerd. E1.13 is volledig technisch afgerond; meerdaags gebruik en gezinswaardering blijven open.",
+                "nextAction": "Gebruik de geïnstalleerde route in echte latere dagen en gesprekken; leg eigen resultaatvervolg en afzonderlijke herkenbaarheid/plezier/timing vast zonder gebeurtenissen of feedback te fabriceren. Ander uitvoerbaar werk gaat door.",
                 "livingHousemateAcceptance": {
                   "specification": "development/design/product/living-housemate-task-scope-20261022.json",
                   "scope": "Een herkenbare eigenheid uit echte ervaringen en creatieve projecten ontwikkelen"
@@ -6133,8 +6137,12 @@
                   "Laat onderzoek werkelijk doorlopen vóór een Inner State of Shared Trace te genereren; reserveer begrensde nieuwsgierigheid zonder huisprobleem als vereiste."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "checkedAt": "2026-10-24T05:24:20.112922+00:00",
-                "progress": "Bronroute bevroren voor onafhankelijke review: bestaande leeractie, geslaagde droomreflectie, compacte bronverwijzingen en verse privécontext. Gerichte regressie en PG18.6/schema0011-controles geslaagd; nog niet geïnstalleerd. Geen echte meerdaagse/gezinsacceptatie geclaimd."
+                "checkedAt": "2026-10-24T05:45:11.301685+00:00",
+                "progress": "Bestaande leeractie, geslaagde droomreflectie, compacte bronverwijzingen en verse contact-/initiatiefcontext plus bediening geïnstalleerd en onafhankelijk goedgekeurd. Geen tweede geheugen/planner/poll. Correctie/erase/STOP/privacy/contextbudget gecontroleerd. Werkelijk later eigen projectvervolg, gedeelde geschiedenis en afzonderlijke gezinswaardering blijven open.",
+                "technicalDeliveryCompleted": true,
+                "fullTaskCompleted": false,
+                "evidence": "development/evidence/product/e110-e29-current-development-installed-20261024.json",
+                "independentReview": "development/reviews/e110-housemate-development-review-20261024.json"
               },
               {
                 "id": "E1.11",
@@ -6750,7 +6758,7 @@
               {
                 "id": "E2.9",
                 "title": "Huisvoorzieningen, eigen projecten en bijstellingen samen bedienen",
-                "status": "in_progress",
+                "status": "completed",
                 "kind": "owner_requested_followup",
                 "scopeOrigin": "living-housemate-20261022",
                 "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
@@ -6767,20 +6775,23 @@
                   "E1.10",
                   "E1.9"
                 ],
-                "nextAction": "Maak de bevroren E1.10-bron en huidige eigenaarweergave samen contractveilig af; nieuwe personality_delta mag bestaande statusweergave niet blokkeren.",
-                "checkedAt": "2026-10-24T05:24:20.112922+00:00",
-                "progress": "Brongebonden leerweergave onafhankelijk goedgekeurd en geïnstalleerd. Live GET: zonder toegang401/met toegang200,4actuele person_hypothesis-bronnen,no-store/nosniff,6overlaybestanden exact;worker/config/opslag behouden. De bouwer sluit de echte E1.10-toestand en bijstellingen aan; bestaande hypotheses worden niet hernoemd.",
-                "evidence": "development/evidence/product/e29-housemate-consumer-installed-20261024.json",
+                "nextAction": "Oorspronkelijke bedieningskaart volledig technisch afgerond; werkelijk gebruik en gezinsacceptatie blijven op hun eigen kaarten.",
+                "checkedAt": "2026-10-24T05:45:11.301685+00:00",
+                "progress": "Oorspronkelijke negen bedieningsclausules onafhankelijk GO. Actuele eigen projecten, huisvoorzieningen en brongebonden leren/bijstellingen via bestaande autoriteit en bediening. Geïnstalleerde source/API/assets/profielen exact;4echte leerbronnen,0PD/geen verwerkte ontwikkeling/optionele trace eerlijk leeg, geen productiefixtures. Broncorrectie, wissen en STOP werken door. Geen meerdaagse gezinsacceptatie toegevoegd aan deze kaart.",
+                "evidence": "development/evidence/product/e110-e29-current-development-installed-20261024.json",
                 "boundedOutcomeCompleted": true,
-                "fullTaskCompleted": false,
+                "fullTaskCompleted": true,
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [
-                    "01a0c537-54d0-7080-9e4c-74db537877af"
-                  ],
-                  "scope": "Exact E110-to-E29 source connection; review by same sole tester, shared installation by root."
+                  "activeWorkers": [],
+                  "scope": "Completed original operation-card technical criteria; no remaining implementation claim."
                 },
-                "independentReview": "development/reviews/e29-housemate-consumer-review-20261024.json"
+                "independentReview": "development/reviews/e110-housemate-development-review-20261024.json",
+                "completedAt": "2026-10-24T05:45:11.301685+00:00",
+                "technicalDeliveryCompleted": true,
+                "completionEvidence": "development/evidence/product/e110-e29-current-development-installed-20261024.json",
+                "independentReviewSha256": "9afd76ebd3087cb62cfaed3bc033cc1f8ef95deebedad3980e8b1cae1fe73013",
+                "ownerAcceptance": false
               }
             ],
             "gap": "Alle verplichte bedieningsuitkomsten geïnstalleerd; optioneel WhatsApp wacht op eigen Eva-nummer."
@@ -8259,9 +8270,9 @@
                 "dependsOn": [
                   "E4.15"
                 ],
-                "nextAction": "Pakket, volledige inactieve hostprepare en echte private start/health/auth401/STOP zijn onafhankelijk goedgekeurd. Behoud dit bewijs zonder nieuwe proefserie. Volledige oorspronkelijke procedureaanroep blijft open door ontbrekende onafhankelijke discovery-inventory- en healthbinding; geen synthetische invoer, historische klok of gezinsacceptatie. Vervolg bij echte geldige bronbinding; ander uitvoerbaar werk gaat door.",
+                "nextAction": "Rond de oorspronkelijke E4.17-herstelkaart af met de laatste echte onafhankelijke bronbinding en één gerichte oorspronkelijke procedureaanroep op de reeds herstelde geïsoleerde installatie. Bestaande restore/start/health/STOP-bewijzen blijven staan. E1.10 en E1.12 wachten op werkelijk gebruik en eigen gezinscriteria; dat blokkeert dit werk niet.",
                 "progress": "Werkelijke versleutelde restore,18.067bestanden en private dienstenstart/stop onafhankelijk bewezen. Geen succesvolle procedure-uitvoering of volledige kaartafsluiting geclaimd.",
-                "checkedAt": "2026-10-24T00:02:34.876868+00:00",
+                "checkedAt": "2026-10-24T05:45:11.301685+00:00",
                 "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
                 "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -8285,6 +8296,14 @@
                   "progress": "Limited active profile snapshot adapter built, tested10/10, independently reviewed and used for actual24-row inactive export; not full recovery.",
                   "latestBoundedOutcome": "112 geselecteerde hostbestanden (885956bytes) lokaalprivé vastgelegd en onafhankelijkgecontroleerd; geenherstelpakket/overdracht/hostclosureclaim. Geïsoleerde CPUkandidaat uit28bestaande dependencies549600671bytes; met modelassets740908358bytes, maar inertimport nog nietgeslaagd doorharnessfout en gevangen socketpoging. Huidigeomgevingbehouden, geeninstallatie/modelinference.",
                   "checkedAt": "2026-10-23T19:49:14.921610+00:00"
+                },
+                "assignment": {
+                  "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                  "activeWorkers": [
+                    "01a0c537-54d0-7080-9e4c-74db537877af",
+                    "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+                  ],
+                  "scope": "Builder frozen original source/health binding and single isolated procedure plan; independent reviewer exact plan and result; coordinator integration."
                 }
               },
               {
@@ -8888,9 +8907,9 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E1.10-bronroute onafhankelijk beoordelen en samen met de aansluiting op de bestaande E2.9-bediening installeren. De eerste E2.9-bronweergave is geïnstalleerd en met echte actuele bronnen gecontroleerd. E1.13 is volledig technisch afgerond; meerdaags gebruik en gezinswaardering blijven open.",
+        "nextAction": "Rond de oorspronkelijke E4.17-herstelkaart af met de laatste echte onafhankelijke bronbinding en één gerichte oorspronkelijke procedureaanroep op de reeds herstelde geïsoleerde installatie. Bestaande restore/start/health/STOP-bewijzen blijven staan. E1.10 en E1.12 wachten op werkelijk gebruik en eigen gezinscriteria; dat blokkeert dit werk niet.",
         "finishOrder": [
-          "E4.18 en E1.13 volledig technisch afgerond: 81/103, dus 2 van de oorspronkelijke 24 open taken gesloten. Nu E1.10 → E2.9: echte bronroute en bruikbare bediening afmaken; één bouwer en één onafhankelijke tester. E1.12-gebruik/adoptie en gezinsacceptatie blijven afzonderlijk open.",
+          "E4.18, E1.13 en E2.9 volledig technisch afgerond: 82/103, dus 3 van de oorspronkelijke 24 open taken gesloten. Nu E4.17 oorspronkelijke hersteluitkomst afmaken; één bouwer en één onafhankelijke tester. E1.10-praktijk, E1.12-gebruik/adoptie en gezinsacceptatie blijven afzonderlijk open.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
           "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
           "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -8899,7 +8918,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T05:24:20.112922+00:00",
+        "updatedAt": "2026-10-24T05:45:11.301685+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9175,7 +9194,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-24T05:24:20.112922+00:00",
+        "checkedAt": "2026-10-24T05:45:11.301685+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -12205,7 +12224,7 @@
                 "scope": "Bestaande brongebonden ontwikkel-/droomcontext; geen tweede store/planner, voice of productieactie door bouwer."
               },
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "E1.10-bronroute onafhankelijk beoordelen en samen met de aansluiting op de bestaande E2.9-bediening installeren. De eerste E2.9-bronweergave is geïnstalleerd en met echte actuele bronnen gecontroleerd. E1.13 is volledig technisch afgerond; meerdaags gebruik en gezinswaardering blijven open.",
+              "nextAction": "Gebruik de geïnstalleerde route in echte latere dagen en gesprekken; leg eigen resultaatvervolg en afzonderlijke herkenbaarheid/plezier/timing vast zonder gebeurtenissen of feedback te fabriceren. Ander uitvoerbaar werk gaat door.",
               "livingHousemateAcceptance": {
                 "specification": "development/design/product/living-housemate-task-scope-20261022.json",
                 "scope": "Een herkenbare eigenheid uit echte ervaringen en creatieve projecten ontwikkelen"
@@ -12221,8 +12240,12 @@
                 "Laat onderzoek werkelijk doorlopen vóór een Inner State of Shared Trace te genereren; reserveer begrensde nieuwsgierigheid zonder huisprobleem als vereiste."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "checkedAt": "2026-10-24T05:24:20.112922+00:00",
-              "progress": "Bronroute bevroren voor onafhankelijke review: bestaande leeractie, geslaagde droomreflectie, compacte bronverwijzingen en verse privécontext. Gerichte regressie en PG18.6/schema0011-controles geslaagd; nog niet geïnstalleerd. Geen echte meerdaagse/gezinsacceptatie geclaimd."
+              "checkedAt": "2026-10-24T05:45:11.301685+00:00",
+              "progress": "Bestaande leeractie, geslaagde droomreflectie, compacte bronverwijzingen en verse contact-/initiatiefcontext plus bediening geïnstalleerd en onafhankelijk goedgekeurd. Geen tweede geheugen/planner/poll. Correctie/erase/STOP/privacy/contextbudget gecontroleerd. Werkelijk later eigen projectvervolg, gedeelde geschiedenis en afzonderlijke gezinswaardering blijven open.",
+              "technicalDeliveryCompleted": true,
+              "fullTaskCompleted": false,
+              "evidence": "development/evidence/product/e110-e29-current-development-installed-20261024.json",
+              "independentReview": "development/reviews/e110-housemate-development-review-20261024.json"
             },
             {
               "id": "E1.11",
@@ -12838,7 +12861,7 @@
             {
               "id": "E2.9",
               "title": "Huisvoorzieningen, eigen projecten en bijstellingen samen bedienen",
-              "status": "in_progress",
+              "status": "completed",
               "kind": "owner_requested_followup",
               "scopeOrigin": "living-housemate-20261022",
               "owner": "Codex · kernuitvoerder; bestaande spraakverantwoordelijkheid blijft behouden",
@@ -12855,20 +12878,23 @@
                 "E1.10",
                 "E1.9"
               ],
-              "nextAction": "Maak de bevroren E1.10-bron en huidige eigenaarweergave samen contractveilig af; nieuwe personality_delta mag bestaande statusweergave niet blokkeren.",
-              "checkedAt": "2026-10-24T05:24:20.112922+00:00",
-              "progress": "Brongebonden leerweergave onafhankelijk goedgekeurd en geïnstalleerd. Live GET: zonder toegang401/met toegang200,4actuele person_hypothesis-bronnen,no-store/nosniff,6overlaybestanden exact;worker/config/opslag behouden. De bouwer sluit de echte E1.10-toestand en bijstellingen aan; bestaande hypotheses worden niet hernoemd.",
-              "evidence": "development/evidence/product/e29-housemate-consumer-installed-20261024.json",
+              "nextAction": "Oorspronkelijke bedieningskaart volledig technisch afgerond; werkelijk gebruik en gezinsacceptatie blijven op hun eigen kaarten.",
+              "checkedAt": "2026-10-24T05:45:11.301685+00:00",
+              "progress": "Oorspronkelijke negen bedieningsclausules onafhankelijk GO. Actuele eigen projecten, huisvoorzieningen en brongebonden leren/bijstellingen via bestaande autoriteit en bediening. Geïnstalleerde source/API/assets/profielen exact;4echte leerbronnen,0PD/geen verwerkte ontwikkeling/optionele trace eerlijk leeg, geen productiefixtures. Broncorrectie, wissen en STOP werken door. Geen meerdaagse gezinsacceptatie toegevoegd aan deze kaart.",
+              "evidence": "development/evidence/product/e110-e29-current-development-installed-20261024.json",
               "boundedOutcomeCompleted": true,
-              "fullTaskCompleted": false,
+              "fullTaskCompleted": true,
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [
-                  "01a0c537-54d0-7080-9e4c-74db537877af"
-                ],
-                "scope": "Exact E110-to-E29 source connection; review by same sole tester, shared installation by root."
+                "activeWorkers": [],
+                "scope": "Completed original operation-card technical criteria; no remaining implementation claim."
               },
-              "independentReview": "development/reviews/e29-housemate-consumer-review-20261024.json"
+              "independentReview": "development/reviews/e110-housemate-development-review-20261024.json",
+              "completedAt": "2026-10-24T05:45:11.301685+00:00",
+              "technicalDeliveryCompleted": true,
+              "completionEvidence": "development/evidence/product/e110-e29-current-development-installed-20261024.json",
+              "independentReviewSha256": "9afd76ebd3087cb62cfaed3bc033cc1f8ef95deebedad3980e8b1cae1fe73013",
+              "ownerAcceptance": false
             }
           ],
           "gap": "Alle verplichte bedieningsuitkomsten geïnstalleerd; optioneel WhatsApp wacht op eigen Eva-nummer."
@@ -14347,9 +14373,9 @@
               "dependsOn": [
                 "E4.15"
               ],
-              "nextAction": "Pakket, volledige inactieve hostprepare en echte private start/health/auth401/STOP zijn onafhankelijk goedgekeurd. Behoud dit bewijs zonder nieuwe proefserie. Volledige oorspronkelijke procedureaanroep blijft open door ontbrekende onafhankelijke discovery-inventory- en healthbinding; geen synthetische invoer, historische klok of gezinsacceptatie. Vervolg bij echte geldige bronbinding; ander uitvoerbaar werk gaat door.",
+              "nextAction": "Rond de oorspronkelijke E4.17-herstelkaart af met de laatste echte onafhankelijke bronbinding en één gerichte oorspronkelijke procedureaanroep op de reeds herstelde geïsoleerde installatie. Bestaande restore/start/health/STOP-bewijzen blijven staan. E1.10 en E1.12 wachten op werkelijk gebruik en eigen gezinscriteria; dat blokkeert dit werk niet.",
               "progress": "Werkelijke versleutelde restore,18.067bestanden en private dienstenstart/stop onafhankelijk bewezen. Geen succesvolle procedure-uitvoering of volledige kaartafsluiting geclaimd.",
-              "checkedAt": "2026-10-24T00:02:34.876868+00:00",
+              "checkedAt": "2026-10-24T05:45:11.301685+00:00",
               "evidence": "development/evidence/reassessment/e417-extension-restore-20261023.json",
               "latestEvidence": "development/evidence/reassessment/e417-executor-host-selected-capture-20261023.json",
               "latestIndependentReview": "development/reviews/e417-executor-host-selected-capture-review-20261023.json",
@@ -14373,6 +14399,14 @@
                 "progress": "Limited active profile snapshot adapter built, tested10/10, independently reviewed and used for actual24-row inactive export; not full recovery.",
                 "latestBoundedOutcome": "112 geselecteerde hostbestanden (885956bytes) lokaalprivé vastgelegd en onafhankelijkgecontroleerd; geenherstelpakket/overdracht/hostclosureclaim. Geïsoleerde CPUkandidaat uit28bestaande dependencies549600671bytes; met modelassets740908358bytes, maar inertimport nog nietgeslaagd doorharnessfout en gevangen socketpoging. Huidigeomgevingbehouden, geeninstallatie/modelinference.",
                 "checkedAt": "2026-10-23T19:49:14.921610+00:00"
+              },
+              "assignment": {
+                "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                "activeWorkers": [
+                  "01a0c537-54d0-7080-9e4c-74db537877af",
+                  "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+                ],
+                "scope": "Builder frozen original source/health binding and single isolated procedure plan; independent reviewer exact plan and result; coordinator integration."
               }
             },
             {
@@ -14976,9 +15010,9 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E1.10-bronroute onafhankelijk beoordelen en samen met de aansluiting op de bestaande E2.9-bediening installeren. De eerste E2.9-bronweergave is geïnstalleerd en met echte actuele bronnen gecontroleerd. E1.13 is volledig technisch afgerond; meerdaags gebruik en gezinswaardering blijven open.",
+      "nextAction": "Rond de oorspronkelijke E4.17-herstelkaart af met de laatste echte onafhankelijke bronbinding en één gerichte oorspronkelijke procedureaanroep op de reeds herstelde geïsoleerde installatie. Bestaande restore/start/health/STOP-bewijzen blijven staan. E1.10 en E1.12 wachten op werkelijk gebruik en eigen gezinscriteria; dat blokkeert dit werk niet.",
       "finishOrder": [
-        "E4.18 en E1.13 volledig technisch afgerond: 81/103, dus 2 van de oorspronkelijke 24 open taken gesloten. Nu E1.10 → E2.9: echte bronroute en bruikbare bediening afmaken; één bouwer en één onafhankelijke tester. E1.12-gebruik/adoptie en gezinsacceptatie blijven afzonderlijk open.",
+        "E4.18, E1.13 en E2.9 volledig technisch afgerond: 82/103, dus 3 van de oorspronkelijke 24 open taken gesloten. Nu E4.17 oorspronkelijke hersteluitkomst afmaken; één bouwer en één onafhankelijke tester. E1.10-praktijk, E1.12-gebruik/adoptie en gezinsacceptatie blijven afzonderlijk open.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
         "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
         "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -14987,7 +15021,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T05:24:20.112922+00:00",
+      "updatedAt": "2026-10-24T05:45:11.301685+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -15263,7 +15297,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-24T05:24:20.112922+00:00",
+      "checkedAt": "2026-10-24T05:45:11.301685+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -17528,7 +17562,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T05:24:20.112922+00:00",
+  "updatedAt": "2026-10-24T05:45:11.301685+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -17611,7 +17645,7 @@
     }
   ],
   "lastUpdatedAt": "2026-10-20T13:28:55.822181+00:00",
-  "checkedAt": "2026-10-24T05:24:20.112922+00:00",
+  "checkedAt": "2026-10-24T05:45:11.301685+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

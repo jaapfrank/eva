@@ -1,0 +1,173 @@
+{
+  "contract": "EvaInstalledDeliveryEvidence/v1",
+  "tasks": [
+    "E1.10",
+    "E2.9"
+  ],
+  "checkedAt": "2026-10-24T05:45:11.301685+00:00",
+  "scope": "Existing source-bound human-understanding action supports Eva personality adjustments; successful existing reflection selects references; current private contact and owner view resolve authorized current sources and projects.",
+  "built": true,
+  "installed": true,
+  "technicalBoundedOutcomeCompleted": true,
+  "fullE110Completed": false,
+  "fullE29Completed": true,
+  "e29OriginalClauseReview": "GO_ORIGINAL_OPERATION_CARD_TECHNICAL; nine original clauses passed without adding E110/F2 family acceptance conditions.",
+  "ownerAcceptance": false,
+  "familyAcceptance": false,
+  "independentReview": "development/reviews/e110-housemate-development-review-20261024.json",
+  "originalDispatchApprovalSha256": "473b5026706b3d97de571dda555c4cbf9ea2844bfcbe1ec99e047127795164c3",
+  "installation": {
+    "status": "running_exact_configuration",
+    "installedAt": "2026-10-24T05:39:23.578339+00:00",
+    "dispatches": 1,
+    "manifestSha256": "bc6a7f2403008f54011dc03af8cdb02cc1a68e8216cbc90f887ee51fbb6ec909",
+    "installerSha256": "049d203737a95c08cfd5bef4bb78168bfbee0945e5641bc0b0142f9022d79dd5",
+    "generations": {
+      "core": {
+        "id": "1b69e27133e78d8a13bfd3379bc57978183d18dc85918fbcf199732994f4d728",
+        "image": "sha256:efff5dd51b993ff4bc833ecc1940f0f64ad336d30e20fb873a902cf371af7dcf",
+        "pid": 1132211,
+        "startedAt": "2026-10-24T05:38:54.212595966Z"
+      },
+      "delegated-work-worker": {
+        "id": "0983fd4a041d73dc7296bd53e9e66cae548c2929e8c64fa225aa4b543c91f7e9",
+        "image": "sha256:15327de84d6e70e353bd462f2a730250b273d1779d8cc79969d2729924d55a1d",
+        "pid": 1133036,
+        "startedAt": "2026-10-24T05:39:05.755233334Z"
+      }
+    },
+    "configurationStorageSchemaPreserved": true
+  },
+  "freshPreDispatchClaims": {
+    "checkedAt": "2026-10-24T05:38:33.338125+00:00",
+    "globalRlsReadCoverage": true,
+    "activeUnexpiredCheckpointLeases": 0,
+    "currentGenerationUnknownNullCheckpoints": 0,
+    "activeWork": 0,
+    "retainedDailyReflectionCounters": 0,
+    "nativeMemoryOperations": {
+      "pending": 0,
+      "processing": 0
+    },
+    "boundProcessGenerationAfter": "2026-10-24T02:41:48+00:00",
+    "sourceContractsPinned": {
+      "adapters/postgres/runtime_resource_usage.py": "e97ba5f22781dfb615bebc452dcb9113303d7d3f15e33f4c4e1e580e2ff87240",
+      "application/memory_background.py": "de244b8b77900802ab041c000fb51895aec79fe240c6ea4d572b96e588f4f7c6",
+      "adapters/postgres/memory_outbox.py": "fde890224cd33847b4071b8aabe9a29a65463b3a414af2b349967ea6a557cb46",
+      "adapters/projection/hindsight.py": "db18499e0f5f6ebf7ea61d19157220c942a83b1b28dcf4e778b8ff030c93b7ee"
+    }
+  },
+  "installedReadback": {
+    "files": {
+      "application/housemate_development.py": "c098782b5325b47679dfd695f071b2337e7c3c8f3386bf41c8014f052efb55b7",
+      "application/human_understanding.py": "5437a5f308eef3a23388016b4dcd83241838c17f8ab155e31756be99cc71e072",
+      "providers/human_understanding_actions.py": "39ceaa71ddf7a0cd00f08d30911ebf625fc18a0af6b271d3557a3ccccedfc127",
+      "adapters/postgres/housemate_development.py": "494b8108794795dc4e6dd8d0a4f14676bec1b18270ec3e5995f5c75fef3e835d",
+      "bootstrap/housemate_development.py": "fa59311ee1ea0ca123579a4e38b333930a0718007888da70c8f91ed566aeec42",
+      "bootstrap/private_conversation_resources.py": "00308baf75c2885bd78e4767334582bde1815ad1deb3fd32473481edee06db32",
+      "adapters/projection/hindsight.py": "df4c190691f56ee503696ecdaea0434e2558594c0edf9d9699d977f4da2e0737",
+      "bootstrap/dashboard_housemate.py": "71887e0819b0a12dea077f9dac5ff237c4410b5cd84d64ca4c7e52b9cc2931d7",
+      "adapters/api/dashboard_static/eva-dashboard-assets.json": "f141ca2edf7b6d76e964b19cf57a382d275b813473e96a3b03e9a8ffd50d4570",
+      "adapters/api/dashboard_static/index.html": "09bedf53bb2bf54705e866981e7e8fe324fd5b1392a568a8f298cf99b7d5cce1",
+      "adapters/api/dashboard_static/assets/index-DeJrCNcM.js": "39fa42157acb9c11c859aa8366c244b385cdc8d6f167e3ca004d5a86690585db",
+      "adapters/api/dashboard_static/assets/index-DANnjSm4.css": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e"
+    },
+    "unauthenticatedStatus": 401,
+    "authenticatedStatus": 200,
+    "noStore": true,
+    "nosniff": true,
+    "contract": "EvaOwnerHousemateState/v1",
+    "currentLearningCount": 4,
+    "currentLearningKinds": [
+      "person_hypothesis"
+    ],
+    "personalityDeltaCount": 0,
+    "personalityDeltaSourceState": "no_current_typed_sources",
+    "developmentState": "no_processed_current_sources",
+    "developmentAttention": false,
+    "innerStatePresent": false,
+    "sharedTraceAbsent": true,
+    "curiositySource": "current_open_project_questions",
+    "responseSha256": "4da6e82eacffd5e4fd280b1839c71721aeb115d52d70eee1a1b4cd53badce5b2",
+    "milliseconds": 455.852,
+    "providerCallsRequested": 0,
+    "productionPosts": 0,
+    "privateTextOrIdsPublished": false,
+    "installedGeneration": {
+      "core": {
+        "id": "1b69e27133e78d8a13bfd3379bc57978183d18dc85918fbcf199732994f4d728",
+        "image": "sha256:efff5dd51b993ff4bc833ecc1940f0f64ad336d30e20fb873a902cf371af7dcf",
+        "pid": 1132211,
+        "startedAt": "2026-10-24T05:38:54.212595966Z"
+      },
+      "delegated-work-worker": {
+        "id": "0983fd4a041d73dc7296bd53e9e66cae548c2929e8c64fa225aa4b543c91f7e9",
+        "image": "sha256:15327de84d6e70e353bd462f2a730250b273d1779d8cc79969d2729924d55a1d",
+        "pid": 1133036,
+        "startedAt": "2026-10-24T05:39:05.755233334Z"
+      }
+    }
+  },
+  "servedAssets": {
+    "assets/index-DANnjSm4.css": {
+      "sha256": "b5e3cd31c7da2c180cb718fe94f01894fc0178f8654aaab9d237febbed84857e",
+      "status": 200,
+      "bytes": 64865
+    },
+    "assets/index-DeJrCNcM.js": {
+      "sha256": "39fa42157acb9c11c859aa8366c244b385cdc8d6f167e3ca004d5a86690585db",
+      "status": 200,
+      "bytes": 909638
+    },
+    "index.html": {
+      "sha256": "09bedf53bb2bf54705e866981e7e8fe324fd5b1392a568a8f298cf99b7d5cce1",
+      "status": 200,
+      "bytes": 435
+    }
+  },
+  "installedWorkerSourceHashes": {
+    "application/housemate_development.py": "c098782b5325b47679dfd695f071b2337e7c3c8f3386bf41c8014f052efb55b7",
+    "application/human_understanding.py": "5437a5f308eef3a23388016b4dcd83241838c17f8ab155e31756be99cc71e072",
+    "providers/human_understanding_actions.py": "39ceaa71ddf7a0cd00f08d30911ebf625fc18a0af6b271d3557a3ccccedfc127",
+    "adapters/postgres/housemate_development.py": "494b8108794795dc4e6dd8d0a4f14676bec1b18270ec3e5995f5c75fef3e835d",
+    "bootstrap/housemate_development.py": "fa59311ee1ea0ca123579a4e38b333930a0718007888da70c8f91ed566aeec42",
+    "bootstrap/private_conversation_resources.py": "00308baf75c2885bd78e4767334582bde1815ad1deb3fd32473481edee06db32",
+    "adapters/projection/hindsight.py": "df4c190691f56ee503696ecdaea0434e2558594c0edf9d9699d977f4da2e0737"
+  },
+  "profileComparison": {
+    "matched": [
+      "shared_provider",
+      "public_research",
+      "digital_work"
+    ],
+    "retainedHistoricalMismatch": [
+      "household_research"
+    ],
+    "actualInstalledEqualsReviewedCandidate": true,
+    "installedReceiptSha256": "25ee7bed14067bab29bccb4fea3339a582b43d404aecd1f23a47d83cf907529a"
+  },
+  "verifiedBehavior": [
+    "Original authority/private aliases, current-head correction/erasure and STOP retained",
+    "Compact reference selection on successful existing reflection; no new model loop, table, store or daemon",
+    "Own proposed adjustment stays separate from person hypothesis and does not grant execution permission",
+    "Failed optional projection cannot repeat completed reflection; bounded current model context <=2048 bytes",
+    "Selected old source resolves current validated head without duplicate current adjustment text",
+    "Same authorized source displayed in owner view with existing source correction/forget controls; existing max-two projects and E112 controls retained"
+  ],
+  "realCurrentData": "4 current person hypotheses; zero real typed personality adjustments, no processed current development or authorized shared trace at readback. Absence shown honestly; no production fixture created.",
+  "remainingE110": "Self-chosen real result continued on a later actual day, later shared-history use and separate family recognition/enjoyment/timing remain open under unchanged original criteria.",
+  "usage": {
+    "runtimeModelRequestsFromImplementationReviewAndInstall": 0,
+    "productionPosts": 0,
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "runtimeCredits": null,
+    "measuredCandidateProfileSeconds": {
+      "core": 5.914625808014534,
+      "worker": 5.085328551009297
+    },
+    "measuredInstalledProfileSeconds": 8.98412072303472
+  },
+  "privacy": "No source prose, personal IDs, credentials, protected examples or images included.",
+  "independentReviewSha256": "9afd76ebd3087cb62cfaed3bc033cc1f8ef95deebedad3980e8b1cae1fe73013"
+}

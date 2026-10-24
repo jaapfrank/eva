@@ -255,10 +255,10 @@ function MemorySourceControl({ sourceId, generation, onClose, onChanged, onSelec
       <div className="memory-full-content">{detail.raw_state === 'compacted'
         ? 'De tijdelijke dagtekst is vervallen na droomverwerking. Geselecteerde kennis en de bronverwijzing blijven behouden; je kunt die kennis nog corrigeren of vergeten.'
         : detail.content}</div>
-      {detail.learning && <div className="memory-learning"><p>Soort: {detail.learning.kind === 'expectation' ? 'Verwachting' : 'Persoonsaanname'} · beoordeling: {({open:'Open',confirmed:'Bevestigd',refuted:'Weerlegd',unknown:'Onbekend'})[detail.learning.outcome]}</p>
+      {detail.learning && <div className="memory-learning"><p>Soort: {({expectation:'Verwachting',person_hypothesis:'Persoonsaanname',personality_delta:'Eva’s eigen omgangsbijstelling'})[detail.learning.kind] || 'Onbekende leerrecord'} · beoordeling: {({open:'Open',confirmed:'Bevestigd',refuted:'Weerlegd',unknown:'Onbekend'})[detail.learning.outcome]}</p>
         <p>Onzekerheid: {detail.learning.uncertainty_reason}</p>
         {detail.current_learning && <><h4>Actuele herziening</h4><p>{detail.current_learning.interpretation}</p>
-          <p>Een bevestigde beoordeling van een aanname maakt haar nog geen onafhankelijk vastgesteld feit.</p></>}
+          <p>{detail.learning.kind === 'personality_delta' ? 'Deze omgangsbijstelling blijft brongebonden en voorlopig; een bevestigde terugkoppeling bewijst geen persoonskenmerk.' : 'Een bevestigde beoordeling van een aanname maakt haar nog geen onafhankelijk vastgesteld feit.'}</p></>}
         {!detail.current_learning && <p>Een actuele herziening is nog niet beschikbaar; vernieuw na verwerking. Deze historische bron is niet automatisch actueel.</p>}
       </div>}
       {detail.current_source_id && detail.current_source_id !== sourceId && <button onClick={() => onSelectSource(detail.current_source_id)}>Open actuele herziening</button>}

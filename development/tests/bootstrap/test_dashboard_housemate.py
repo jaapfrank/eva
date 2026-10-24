@@ -10,9 +10,9 @@ OWNER = "owner"
 SOURCE_ID = "11111111-1111-4111-8111-111111111111"
 
 
-def source(message, at, *, previous=None):
+def source(message, at, *, previous=None, kind="person_hypothesis"):
     turn = ConversationTurn.private("tenant", "installation", OWNER, "conversation", message, "A real fixture correction", at)
-    args = {"kind": "person_hypothesis", "interpretation": message,
+    args = {"kind": kind, "interpretation": message,
             "uncertainty_reason": "Limited explicit feedback", "review_at": None,
             "outcome": "confirmed" if previous else "open",
             "previous_source_ref": None if previous is None else previous.source_ref,
@@ -65,7 +65,9 @@ def test_current_heads_deduplicate_and_preserve_meaning_without_models(rig):
     assert item["source_id"] == SOURCE_ID and item["kind"] == "person_hypothesis"
     assert item["is_execution_permission"] is False
     assert state["personality_deltas"] == []
-    assert state["personality_deltas_state"] == "no_separate_typed_delta_route"
+    assert state["personality_deltas_state"] == "no_current_typed_sources"
+    assert state["development_state"] == "not_configured"
+    assert state["inner_state"] is None
     assert state["shared_trace"] is None
     assert state["curiosity_source"] == "current_open_project_questions"
     assert rig.calls.count("existing_current_head_reader") == 1
@@ -87,3 +89,92 @@ def test_owner_alias_changed_while_reading_is_not_returned(rig):
     rig.reader.require_learning_query = lambda *a, **k: setattr(rig.service, "_private_bridge_principal_loader", lambda: "telegram:new")
     with pytest.raises(RuntimeError, match="alias changed"):
         module.housemate_state(rig.runtime)
+
+
+@pytest.fixture
+def development_rig(rig):
+    from datetime import UTC, datetime
+    from eva.bootstrap.housemate_development import HousemateDevelopment
+    from tests.bootstrap.test_e110_housemate_development import SelectionFixture
+    from tests.application.test_housemate_development import project
+    first,a=source("Give a short recommendation first", "2026-10-23T09:00:00Z",kind="personality_delta")
+    latest,b=source("Give reasoning for complex choices", "2026-10-23T10:00:00Z",previous=first,kind="personality_delta")
+    rows=[dict(principal_id=OWNER,source_ref=latest.source_ref,evidence_ref=latest.evidence_ref,
+        occurred_at=latest.occurred_at,learning_context={"contract":"EvaHumanUnderstandingContext/v1","records":[b,a]})]
+    state={"rows":rows,"document":latest,"source_id":SOURCE_ID,"context":[b,a]}
+    rig.reader._bindings=None
+    rig.reader.selected_private_sources=lambda *args,**kwargs:state["rows"]
+    rig.reader.document_reference=lambda *args,**kwargs:None if rig.reader.erased else (
+        state["source_id"],state["document"],"retained")
+    projects=[project()];store=SelectionFixture();store.projects=projects
+    owner=SimpleNamespace(page=lambda **kwargs:dict(cards=projects))
+    dev=HousemateDevelopment(owner=owner,source_reader=lambda:rig.reader,
+        clock=lambda:datetime(2026,10,24,12,tzinfo=UTC),selections=store)
+    assert dev.after_reflection("tenant","installation",OWNER,SimpleNamespace(observation_error_type=None))
+    rig.runtime._memory=SimpleNamespace(_development_projection=dev)
+    return SimpleNamespace(rig=rig,state=state,dev=dev,store=store,projects=projects)
+
+
+def test_actual_e110_reader_supplies_processed_state_and_distinct_delta(development_rig):
+    data=development_rig;result=module.housemate_state(data.rig.runtime)
+    assert result["current_learning"] == []  # Never renamed to a person's hypothesis.
+    assert result["development_state"] == "available"
+    assert result["inner_state"]["current_curiosity"] == data.projects[0]["question"]
+    assert len(result["inner_state"]["open_threads"]) == 1
+    delta=result["personality_deltas"][0]
+    assert delta["kind"] == "personality_delta" and delta["version"] == 2
+    assert delta["text"] == "Give reasoning for complex choices"
+    assert delta["source_id"] == SOURCE_ID and delta["processing_state"] == "processed"
+    assert delta["epistemic_status"] == "model_inference_unconfirmed" and not delta["is_execution_permission"]
+    assert result["shared_trace"] is None
+
+
+def test_stop_and_erasure_remove_actual_development_without_old_fallback(development_rig):
+    data=development_rig
+    data.store.projects=[{**data.projects[0],"status":"stopped","phase":"personal_stopped"}]
+    assert module.housemate_state(data.rig.runtime)["inner_state"]["open_threads"] == []
+    data.rig.reader.erased=True;data.state["rows"]=[]
+    result=module.housemate_state(data.rig.runtime)
+    assert result["inner_state"] is None and result["personality_deltas"] == []
+
+
+def test_current_correction_appears_as_pending_not_old_processed_personality(development_rig):
+    data=development_rig
+    current=data.state["document"]
+    doc,item=source("For this kind of research be more direct", "2026-10-24T11:00:00Z",previous=current,kind="personality_delta")
+    data.state["document"]=doc;data.state["source_id"]="22222222-2222-4222-8222-222222222222"
+    data.state["rows"]=[dict(principal_id=OWNER,source_ref=doc.source_ref,evidence_ref=doc.evidence_ref,
+        occurred_at=doc.occurred_at,learning_context={"contract":"EvaHumanUnderstandingContext/v1",
+            "records":[item,*data.state["context"]]})]
+    result=module.housemate_state(data.rig.runtime)
+    delta=result["personality_deltas"][0]
+    assert delta["source_id"] == data.state["source_id"] and delta["version"] == 3
+    assert delta["processing_state"] == "awaiting_dream" and delta["text"] == item["record"]["interpretation"]
+    assert "Give reasoning for complex choices" not in str(result)
+
+
+def test_optional_development_failure_does_not_hide_valid_personal_insights(rig):
+    rig.runtime._memory=SimpleNamespace(_development_projection=SimpleNamespace(
+        read_current=lambda query:(_ for _ in ()).throw(RuntimeError("private diagnostic must not leak"))))
+    result=module.housemate_state(rig.runtime)
+    assert result["current_learning"][0]["text"] == "corrected"
+    assert result["development_state"] == "unavailable" and result["inner_state"] is None
+    assert "private diagnostic" not in str(result)
+
+
+def test_development_cannot_switch_owner_even_if_other_shape_looks_valid(rig):
+    rig.runtime._memory=SimpleNamespace(_development_projection=SimpleNamespace(last_error=None,
+        read_current=lambda query:dict(contract="EvaHousemateDevelopment/v1",audience="own_private_context",
+            owner_id="daughter",is_execution_permission=False,shared_trace=None,inner_state={},personality_deltas=[])))
+    with pytest.raises(RuntimeError,match="owner"):
+        module.housemate_state(rig.runtime)
+
+
+def test_erasure_between_projection_and_source_lookup_clears_derived_state(development_rig):
+    data=development_rig
+    # Simulate an earlier projection snapshot still holding its references. The
+    # subsequent authoritative document lookup already knows the source is gone.
+    data.rig.reader.erased=True
+    result=module.housemate_state(data.rig.runtime)
+    assert result["inner_state"] is None and result["development_state"] == "source_changed"
+    assert result["personality_deltas"] == []

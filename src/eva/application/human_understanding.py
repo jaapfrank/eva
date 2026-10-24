@@ -72,12 +72,14 @@ def _record(payload: object) -> dict[str, Any]:
         raise ValueError("learning record fields differ")
     if type(payload["version"]) is not int or payload["version"] != 1:
         raise ValueError("learning record version differs")
-    if payload["kind"] not in ("person_hypothesis", "expectation"):
+    if payload["kind"] not in ("person_hypothesis", "expectation", "personality_delta"):
         raise ValueError("learning kind differs")
     for key, maximum in (("interpretation", 1600), ("uncertainty_reason", 600)):
         value = payload[key]
         if not isinstance(value, str) or not value.strip() or len(value) > maximum:
             raise ValueError("learning text is empty or too large")
+    if payload["kind"] == "personality_delta" and len(payload["interpretation"]) > 400:
+        raise ValueError("personality adjustment must remain compact")
     if payload["outcome"] not in ("open", "confirmed", "refuted", "unknown"):
         raise ValueError("learning outcome differs")
     _timestamp(payload["recorded_at"])
@@ -284,7 +286,7 @@ def person_context_fact_ids(memory, context: dict[str, Any]) -> set[str]:
     """Remove all representations of a projected head, even with distinct IDs."""
     ids = {entry["fact_id"] for entry in context["entries"]}
     heads = {(ref["principal_id"], ref["source_ref"], ref["evidence_ref"])
-        for entry in context["entries"] if entry["kind"] in ("person_hypothesis", "expectation")
+        for entry in context["entries"] if entry["kind"] in ("person_hypothesis", "expectation", "personality_delta")
         for ref in entry["source_refs"]}
     for fact in memory.confirmed_facts:
         learning = fact.value.get("learning_context") if isinstance(fact.value, dict) else None

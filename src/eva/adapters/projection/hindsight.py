@@ -267,7 +267,9 @@ class HindsightMemoryEngine:
         active_household_consent_resolver: ActiveHouseholdConsentResolver | None = None,
         private_alias_resolver: Callable[[RecallCurrentFacts], tuple[str, ...]] | None = None,
         private_source_resolver: Callable[[RecallCurrentFacts, tuple[tuple[str, str, str], ...]], tuple[dict[str, Any], ...]] | None = None,
+        development_projection: Any | None = None,
     ) -> None:
+        self._development_projection = development_projection
         self._private_alias_resolver = private_alias_resolver
         self._private_source_resolver = private_source_resolver
         self._config = config
@@ -629,9 +631,13 @@ class HindsightMemoryEngine:
             [item for item in memory.recall.selected if item.fact_id in ids] + added, start=1)]
         recall = memory.recall.model_copy(update={"selected":selected,"excluded_reasons":excluded,
             "admitted_fact_ids_sha256":canonical_sha256(sorted(ids))}) if added or len(enriched) != len(facts) else memory.recall
-        return replace(memory, recall=recall, confirmed_facts=tuple(enriched),
+        current = replace(memory, recall=recall, confirmed_facts=tuple(enriched),
             style_mirror=(None if self._private_source_resolver is not None
                 and query.audience.kind == "private_person" else memory.style_mirror))
+        if self._development_projection is not None:
+            from eva.application.housemate_development import with_current_development
+            return with_current_development(current, query, self._development_projection)
+        return current
 
     @staticmethod
     def _project_partition(installation_id: str, project_id: str) -> str:
@@ -1043,7 +1049,15 @@ class HindsightMemoryEngine:
         """Run one explicitly admitted reflection without an unmanaged scheduler."""
 
         with self._derivative_lock:
-            return self._maintain_person_scope(tenant_id, installation_id, principal_id)
+            receipt = self._maintain_person_scope(tenant_id, installation_id, principal_id)
+            if self._development_projection is not None:
+                # Local reference projection must never replay a successful native reflection.
+                try:
+                    self._development_projection.after_reflection(
+                        tenant_id, installation_id, principal_id, receipt)
+                except Exception as error:
+                    _LOGGER.warning("Development projection failed after reflection: %s", type(error).__name__)
+            return receipt
 
     def _maintain_person_scope(
         self, tenant_id: str, installation_id: str, principal_id: str

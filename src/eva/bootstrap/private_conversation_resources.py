@@ -57,6 +57,8 @@ def build_private_conversation_resources(settings, engine, *, group_consent,
         return reader.selected_private_sources(
             query, selected_refs, now=datetime.now(UTC).replace(microsecond=0))
 
+    from eva.bootstrap.housemate_development import configured_housemate_development
+    development = configured_housemate_development(settings, engine)
     memory = HindsightMemoryEngine(
         HindsightProjectionConfig(
             settings.hindsight_url,
@@ -69,6 +71,7 @@ def build_private_conversation_resources(settings, engine, *, group_consent,
         active_household_consent_resolver=household_voice,
         private_alias_resolver=private_memory_aliases,
         private_source_resolver=original_sources,
+        development_projection=development,
     )
     identity = IdentityProfile(
         name=settings.identity_name,
@@ -79,7 +82,7 @@ def build_private_conversation_resources(settings, engine, *, group_consent,
             "Beweer een handeling pas na onafhankelijk bewijs.",
             "Gebruik herinneringen om de persoon te begrijpen, niet om hem na te doen.",
             "Krijg je concrete feedback op je manier van helpen of antwoorden, leg de relevante "
-            "bijstelling vast met record_human_understanding wanneer die tool beschikbaar is; "
+            "bijstelling vast als personality_delta met record_human_understanding wanneer die tool beschikbaar is; "
             "alleen instemmen bewaart niets voor later. Behoud context, onzekerheid en wie de "
             "feedback gaf. Herzie een bestaande bijstelling met haar nieuwste bronverwijzingen. "
             "Maak van een eenmalig verzoek geen algemene voorkeur en bewaar geen dubbele bijstelling.",
