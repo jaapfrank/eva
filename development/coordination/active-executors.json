@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T19:38:07.383929+00:00",
+  "updatedAt": "2026-10-24T19:39:28.939620+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1535,14 +1535,14 @@
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
       "task": "E4.16",
       "role": "executor",
-      "status": "exact_install_ingress_readonly_review",
+      "status": "exact_install_ingress_readback_delivered",
       "allowedWritePaths": [
         "development/tests/postgres/test_native_research_explicit_read_continuation.py"
       ],
       "activeCodeOrInstallClaim": false,
-      "scope": "Read only the exact currently blocking admitted ingress and its source/terminal semantics; no retry, marker mutation or blanket exclusion.",
+      "scope": "Exact readback completed: no source/handler terminal receipt for the admitted ingress. Do not clear or exclude it based on age or NULL deadline.",
       "currentWritePaths": [],
-      "updatedAt": "2026-10-24T19:38:07.383929+00:00",
+      "updatedAt": "2026-10-24T19:39:28.939620+00:00",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/owner-school-name/coder1/new-503-1925/",
       "latestBoundedReadback": {
         "checkedThrough": "2026-10-24T11:56:03Z",
@@ -1748,7 +1748,9 @@
       "evidence": "development/evidence/product/e416-provider-native-headers-20261024.json",
       "review": "development/reviews/e416-provider-native-headers-20261024.json",
       "fullE416Completed": false,
-      "originalOwnerOutcomeCompleted": false
+      "originalOwnerOutcomeCompleted": false,
+      "claimReadbackSha256": "d3e995c7369c1a78ce9f07f3bec5358842be7db4be874283527cf1d9d5c2bc58",
+      "claimSnapshotPath": "/var/lib/eva2/e416-provider-native-headers-20261024/deferred-null-markers.private.json"
     },
     "newReviewerThread": "01a16a55-1607-7171-820e-a3918acaea3f",
     "e415Candidate": {
@@ -1779,9 +1781,9 @@
     },
     "nextBoundedAssignments": {
       "builder": "Exact provider candidate frozen; no current code claim.",
-      "regressionExecutor": "Read-only source and terminal binding of the exact admitted ingress blocking installation.",
+      "regressionExecutor": "Exact install-claim readback delivered; no further unchanged query or product claim.",
       "reviewer": "Source/tests/package and ordinary-turn outcome reviewed; actual installation review follows only after a safe real installation.",
-      "coordinator": "Preserve running runtime; integrate only when fresh existing claims permit. No repeated school/model attempt."
+      "coordinator": "Installation deferred pending concrete exact terminal binding or changed claim state; preserve runtime, data and existing guard."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {

@@ -1,7 +1,7 @@
 {
   "contract": "EvaProviderSdkNativeHeadersDelivery/v1",
   "status": "built_reviewed_installation_deferred",
-  "checkedAt": "2026-10-24T19:38:07.383929+00:00",
+  "checkedAt": "2026-10-24T19:39:28.939620+00:00",
   "gitCommit": "45dc51f3256a6530a79a0925079346ecd318d384",
   "change": "Preserve allowed HTTP metadata from the real SDK native headers field before the existing response.headers fallback; categories, sanitizers, retry and usage semantics unchanged.",
   "productFiles": [
@@ -46,7 +46,9 @@
     "reason": "Fresh installation guard found one admitted active ingress checkpoint with no deadline and no proven terminal receipt; preserve it. No active model/work leases or memory operations in the recorded guard snapshot.",
     "guardSnapshotSha256": "a6e085703f4cb364f5c2ec5897ad5f5e03c0c01b44d14ce19169eeac79e6298c",
     "markerSnapshotSha256": "a791fdc0170bdb5d951eae2cc2b2d4eaa51e41d68a9eb1805038ffd7099faad8",
-    "originalInstallationRetained": true
+    "originalInstallationRetained": true,
+    "exactClaimReadbackSha256": "d3e995c7369c1a78ce9f07f3bec5358842be7db4be874283527cf1d9d5c2bc58",
+    "claimReadbackConclusion": "Admission may be execution or management ingress; absence of model/work locks does not prove this exact ingress completed. No matching handler terminal receipt found. Installation remains deferred."
   },
   "fullCardCompleted": false,
   "familyAcceptance": false,

@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen
 
-De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. Een afzonderlijk bewezen SDK-headertekort is gerepareerd: acht gerichte tests en onafhankelijke bron-/pakketreview geslaagd. Installatie wacht op exacte duiding van een admitted/active gespreksregistratie; Eva is niet gestopt. Geen nieuwe school/modelpoging of verruiming van de claimcontrole.
+De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. De SDK-headerreparatie heeft acht gerichte tests en onafhankelijke bron-/pakketreview doorstaan. Installatie blijft uitgesteld: een specifieke admitted/active ingress heeft geen bewezen afsluitreceipt; Eva is niet gestopt. Hervat alleen bij concrete afsluitbinding of gewijzigde claimtoestand, zonder herhaalde matrix, schoolpoging of verruiming van de controle.
 
 Klaar wanneer: Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.
 
@@ -145,7 +145,7 @@ Vier van de oorspronkelijke 24 taken afgerond (83/103). E4.16 is geïnstalleerd 
 
 ## Van jou
 
-Geen nieuwe eigenaarhandeling; actuele gespreksregistratie wordt gecontroleerd.
+Geen nieuwe eigenaarhandeling gevraagd; installatie wacht op concrete afsluitbinding van de bestaande gespreksregistratie.
 
 ## Historie
 

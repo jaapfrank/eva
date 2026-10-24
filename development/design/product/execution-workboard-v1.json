@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. Een afzonderlijk bewezen SDK-headertekort is gerepareerd: acht gerichte tests en onafhankelijke bron-/pakketreview geslaagd. Installatie wacht op exacte duiding van een admitted/active gespreksregistratie; Eva is niet gestopt. Geen nieuwe school/modelpoging of verruiming van de claimcontrole.",
+    "nextAction": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. De SDK-headerreparatie heeft acht gerichte tests en onafhankelijke bron-/pakketreview doorstaan. Installatie blijft uitgesteld: een specifieke admitted/active ingress heeft geen bewezen afsluitreceipt; Eva is niet gestopt. Hervat alleen bij concrete afsluitbinding of gewijzigde claimtoestand, zonder herhaalde matrix, schoolpoging of verruiming van de controle.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3125,22 +3125,22 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. Een afzonderlijk bewezen SDK-headertekort is gerepareerd: acht gerichte tests en onafhankelijke bron-/pakketreview geslaagd. Installatie wacht op exacte duiding van een admitted/active gespreksregistratie; Eva is niet gestopt. Geen nieuwe school/modelpoging of verruiming van de claimcontrole.",
+          "summary": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. De SDK-headerreparatie heeft acht gerichte tests en onafhankelijke bron-/pakketreview doorstaan. Installatie blijft uitgesteld: een specifieke admitted/active ingress heeft geen bewezen afsluitreceipt; Eva is niet gestopt. Hervat alleen bij concrete afsluitbinding of gewijzigde claimtoestand, zonder herhaalde matrix, schoolpoging of verruiming van de controle.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "detail": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. Een afzonderlijk bewezen SDK-headertekort is gerepareerd: acht gerichte tests en onafhankelijke bron-/pakketreview geslaagd. Installatie wacht op exacte duiding van een admitted/active gespreksregistratie; Eva is niet gestopt. Geen nieuwe school/modelpoging of verruiming van de claimcontrole.",
-          "state": "SDK-headerreparatie getest; installatie wacht op gesprekscontrole."
+          "detail": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. De SDK-headerreparatie heeft acht gerichte tests en onafhankelijke bron-/pakketreview doorstaan. Installatie blijft uitgesteld: een specifieke admitted/active ingress heeft geen bewezen afsluitreceipt; Eva is niet gestopt. Hervat alleen bij concrete afsluitbinding of gewijzigde claimtoestand, zonder herhaalde matrix, schoolpoging of verruiming van de controle.",
+          "state": "SDK-headerreparatie getest; afsluitbewijs voor installatie ontbreekt."
         },
         "next": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "detail": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. Een afzonderlijk bewezen SDK-headertekort is gerepareerd: acht gerichte tests en onafhankelijke bron-/pakketreview geslaagd. Installatie wacht op exacte duiding van een admitted/active gespreksregistratie; Eva is niet gestopt. Geen nieuwe school/modelpoging of verruiming van de claimcontrole."
+          "detail": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. De SDK-headerreparatie heeft acht gerichte tests en onafhankelijke bron-/pakketreview doorstaan. Installatie blijft uitgesteld: een specifieke admitted/active ingress heeft geen bewezen afsluitreceipt; Eva is niet gestopt. Hervat alleen bij concrete afsluitbinding of gewijzigde claimtoestand, zonder herhaalde matrix, schoolpoging of verruiming van de controle."
         },
         "ownerAction": {
           "required": false,
-          "detail": "Geen nieuwe eigenaarhandeling; actuele gespreksregistratie wordt gecontroleerd.",
+          "detail": "Geen nieuwe eigenaarhandeling gevraagd; installatie wacht op concrete afsluitbinding van de bestaande gespreksregistratie.",
           "steps": []
         },
-        "checkedAt": "2026-10-24T19:38:07.383929+00:00",
+        "checkedAt": "2026-10-24T19:39:28.939620+00:00",
         "reviewedAt": "2026-10-24T16:43:08.510440+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -3313,7 +3313,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-24T19:38:07.383929+00:00",
+      "updatedAt": "2026-10-24T19:39:28.939620+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -8357,7 +8357,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. Een afzonderlijk bewezen SDK-headertekort is gerepareerd: acht gerichte tests en onafhankelijke bron-/pakketreview geslaagd. Installatie wacht op exacte duiding van een admitted/active gespreksregistratie; Eva is niet gestopt. Geen nieuwe school/modelpoging of verruiming van de claimcontrole.",
+                "nextAction": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. De SDK-headerreparatie heeft acht gerichte tests en onafhankelijke bron-/pakketreview doorstaan. Installatie blijft uitgesteld: een specifieke admitted/active ingress heeft geen bewezen afsluitreceipt; Eva is niet gestopt. Hervat alleen bij concrete afsluitbinding of gewijzigde claimtoestand, zonder herhaalde matrix, schoolpoging of verruiming van de controle.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8368,10 +8368,8 @@
                 ],
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [
-                    "01a169e0-4ed1-75d1-9541-b5dae109b328"
-                  ],
-                  "scope": "Exact read-only interpretation of the current admitted ingress installation gate; source, targeted tests and package completed. No live retries or shared installation until current claim proof permits it."
+                  "activeWorkers": [],
+                  "scope": "Source, targeted tests, package and exact install-claim readback delivered. Installation waits for concrete terminal binding or changed claim state; no claim exclusion based on age or missing deadline."
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/e416-provider-native-headers-20261024.json",
@@ -8384,7 +8382,7 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T19:38:07.383929+00:00",
+                "checkedAt": "2026-10-24T19:39:28.939620+00:00",
                 "progress": "Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt; de appaanmeldbron en eerdere voortgang blijven opgeslagen. De ontvangen schoolnaam is aan dezelfde opdracht doorgegeven. De opvolger eindigde16:30:13UTC opnieuw met HTTP503 vóór streaminhoud: zes gemeten responsen en één mislukte respons met onbekend verbruik, geen bruikbaar schoolresultaat. Het begrensde huishoudherstel is16:26:14UTC geïnstalleerd. Veilige HTTP-foutdiagnostiek is16:52:49UTC geïnstalleerd en onafhankelijk teruggelezen; vier gerichte SDK-proeven slagen. Dit reconstrueert de oude foutreden niet en sluit E4.16 niet.",
                 "latestEvidence": "development/evidence/product/e416-provider-native-headers-20261024.json"
               },
@@ -9062,7 +9060,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. Een afzonderlijk bewezen SDK-headertekort is gerepareerd: acht gerichte tests en onafhankelijke bron-/pakketreview geslaagd. Installatie wacht op exacte duiding van een admitted/active gespreksregistratie; Eva is niet gestopt. Geen nieuwe school/modelpoging of verruiming van de claimcontrole.",
+        "nextAction": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. De SDK-headerreparatie heeft acht gerichte tests en onafhankelijke bron-/pakketreview doorstaan. Installatie blijft uitgesteld: een specifieke admitted/active ingress heeft geen bewezen afsluitreceipt; Eva is niet gestopt. Hervat alleen bij concrete afsluitbinding of gewijzigde claimtoestand, zonder herhaalde matrix, schoolpoging of verruiming van de controle.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9073,7 +9071,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T19:38:07.383929+00:00",
+        "updatedAt": "2026-10-24T19:39:28.939620+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -14532,7 +14530,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. Een afzonderlijk bewezen SDK-headertekort is gerepareerd: acht gerichte tests en onafhankelijke bron-/pakketreview geslaagd. Installatie wacht op exacte duiding van een admitted/active gespreksregistratie; Eva is niet gestopt. Geen nieuwe school/modelpoging of verruiming van de claimcontrole.",
+              "nextAction": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. De SDK-headerreparatie heeft acht gerichte tests en onafhankelijke bron-/pakketreview doorstaan. Installatie blijft uitgesteld: een specifieke admitted/active ingress heeft geen bewezen afsluitreceipt; Eva is niet gestopt. Hervat alleen bij concrete afsluitbinding of gewijzigde claimtoestand, zonder herhaalde matrix, schoolpoging of verruiming van de controle.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14543,10 +14541,8 @@
               ],
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [
-                  "01a169e0-4ed1-75d1-9541-b5dae109b328"
-                ],
-                "scope": "Exact read-only interpretation of the current admitted ingress installation gate; source, targeted tests and package completed. No live retries or shared installation until current claim proof permits it."
+                "activeWorkers": [],
+                "scope": "Source, targeted tests, package and exact install-claim readback delivered. Installation waits for concrete terminal binding or changed claim state; no claim exclusion based on age or missing deadline."
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/e416-provider-native-headers-20261024.json",
@@ -14559,7 +14555,7 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T19:38:07.383929+00:00",
+              "checkedAt": "2026-10-24T19:39:28.939620+00:00",
               "progress": "Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt; de appaanmeldbron en eerdere voortgang blijven opgeslagen. De ontvangen schoolnaam is aan dezelfde opdracht doorgegeven. De opvolger eindigde16:30:13UTC opnieuw met HTTP503 vóór streaminhoud: zes gemeten responsen en één mislukte respons met onbekend verbruik, geen bruikbaar schoolresultaat. Het begrensde huishoudherstel is16:26:14UTC geïnstalleerd. Veilige HTTP-foutdiagnostiek is16:52:49UTC geïnstalleerd en onafhankelijk teruggelezen; vier gerichte SDK-proeven slagen. Dit reconstrueert de oude foutreden niet en sluit E4.16 niet.",
               "latestEvidence": "development/evidence/product/e416-provider-native-headers-20261024.json"
             },
@@ -15237,7 +15233,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. Een afzonderlijk bewezen SDK-headertekort is gerepareerd: acht gerichte tests en onafhankelijke bron-/pakketreview geslaagd. Installatie wacht op exacte duiding van een admitted/active gespreksregistratie; Eva is niet gestopt. Geen nieuwe school/modelpoging of verruiming van de claimcontrole.",
+      "nextAction": "De twee nieuwe503-gesprekken zijn via de bestaande route beantwoord en opgeslagen. De SDK-headerreparatie heeft acht gerichte tests en onafhankelijke bron-/pakketreview doorstaan. Installatie blijft uitgesteld: een specifieke admitted/active ingress heeft geen bewezen afsluitreceipt; Eva is niet gestopt. Hervat alleen bij concrete afsluitbinding of gewijzigde claimtoestand, zonder herhaalde matrix, schoolpoging of verruiming van de controle.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15248,7 +15244,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T19:38:07.383929+00:00",
+      "updatedAt": "2026-10-24T19:39:28.939620+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17788,7 +17784,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T19:38:07.383929+00:00",
+  "updatedAt": "2026-10-24T19:39:28.939620+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
