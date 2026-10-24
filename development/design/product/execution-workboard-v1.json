@@ -841,13 +841,13 @@
   "lastUpdated": "2026-10-23T16:59:07.773712+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.18",
+  "activeTaskId": "E1.12",
   "currentWork": {
-    "id": "E4.18",
-    "title": "Gebruikte uitvoering en onderhoud gericht vereenvoudigen",
-    "status": "completed",
-    "doneWhen": "Voor de daadwerkelijk gebruikte gesprek-/HA-/browser-/toolprogramma-/afleverroute zijn bron, toestemming, uitvoering, receipt, controle en resultaatbinding aan duidelijke bestaande eigenaren gekoppeld. Aangetoonde dubbele verantwoordelijkheden en actieve afhankelijkheden van historische operaties worden gericht vereenvoudigd met gedragsbehoud. Een begrensde lijst archief-/verwijderbesluiten controleert imports, dynamische aanroepen, entrypoints, geïnstalleerd gebruik, herstel en releasebindingen; noodzakelijke helpers blijven beschikbaar. Grote geraakte klassen worden alleen op concrete verantwoordelijkheden gesplitst. Geheugen, stoppen, geen dubbele externe effecten, huidige instellingen en schone-pc-herstel blijven werken. Voor/na-metingen tonen werkelijke vereenvoudiging; verplaatste regels tellen niet als bewezen runtimewinst.",
-    "nextAction": "Afgerond; behoud bestaande gedeelde helpers, historische noodzakelijke operatorfuncties en bewezen grenzen. Geen nieuwe E4.18-opschoonronde.",
+    "id": "E1.12",
+    "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
+    "status": "in_progress",
+    "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.",
+    "nextAction": "Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3010,10 +3010,10 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.18",
-          "title": "E4.18 · Volledig technisch afgerond",
-          "summary": "Drie onderhoudsuitkomsten volledig opgeleverd en in de huidige WSL-operatorroute gebruikt. Vijf route-eigenaren, 38 geïnstalleerde bronkoppelingen en herstel-/releasebindingen onafhankelijk gecontroleerd; definitieve GO op alle oorspronkelijke criteria. Geen appoverlay vereist voor hosttools. E4.15/E4.17 en eigenaaracceptatie blijven afzonderlijk open.",
-          "doneWhen": "Voor de daadwerkelijk gebruikte gesprek-/HA-/browser-/toolprogramma-/afleverroute zijn bron, toestemming, uitvoering, receipt, controle en resultaatbinding aan duidelijke bestaande eigenaren gekoppeld. Aangetoonde dubbele verantwoordelijkheden en actieve afhankelijkheden van historische operaties worden gericht vereenvoudigd met gedragsbehoud. Een begrensde lijst archief-/verwijderbesluiten controleert imports, dynamische aanroepen, entrypoints, geïnstalleerd gebruik, herstel en releasebindingen; noodzakelijke helpers blijven beschikbaar. Grote geraakte klassen worden alleen op concrete verantwoordelijkheden gesplitst. Geheugen, stoppen, geen dubbele externe effecten, huidige instellingen en schone-pc-herstel blijven werken. Voor/na-metingen tonen werkelijke vereenvoudiging; verplaatste regels tellen niet als bewezen runtimewinst."
+          "taskId": "E1.12",
+          "title": "E1.12 · Bestaande huisvoorzieningenbediening afmaken",
+          "summary": "Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.",
+          "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact."
         },
         "next": {
           "taskId": "E1.12",
@@ -3207,7 +3207,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.18",
+        "currentStep": "E1.12",
         "steps": [
           {
             "number": 1,
@@ -6179,7 +6179,7 @@
                   "E4.17",
                   "E1.9"
                 ],
-                "nextAction": "E1.12: bouwer heeft lifecycle/providerkandidaat met62gerichte groene cases incl9echtePG16.13 opgeleverd; tester beoordeelt exacte bron-/scope-/STOP-/replay-/proofgrenzen. Coördinator finale effectadmissie heeft22groene cases en onafhankelijke V2GO na gerichte aandachtracefix. Nu kleine bestaande bootstrap/runtime/ownerbediening aansluiten, expliciete enrollment onderscheiden van legacy en ontbrekend realisatiebewijs eerlijk onbekend laten. Geen liveadoptie/installatie of volledigekaartclaim vóór werkelijke integratie en verificatie.",
+                "nextAction": "Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.",
                 "continuityImplementationSteps": [
                   "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
                 ],
@@ -8790,9 +8790,9 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "E4.18 is volledig technisch afgerond met onafhankelijke GO en daadwerkelijk huidig WSL-gebruik. Integreer deze oplevering in Git/dashboard; kies vervolgens uitsluitend de bestaande volgende uitvoerbare kaart.",
+        "nextAction": "Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.",
         "finishOrder": [
-          "E4.18 technisch afgerond: bestaande drie onderhoudsuitkomsten, huidig WSL-gebruik, release-/herstelbinding en onafhankelijke volledige GO. Volgende uitvoerbare bestaande kaart afmaken; eigenaarproeven blokkeren ander werk niet.",
+          "E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
           "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
           "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -8801,7 +8801,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T00:40:10.374271+00:00",
+        "updatedAt": "2026-10-24T00:41:05.015970+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9225,7 +9225,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.18",
+      "currentStep": "E1.12",
       "steps": [
         {
           "number": 1,
@@ -12197,7 +12197,7 @@
                 "E4.17",
                 "E1.9"
               ],
-              "nextAction": "E1.12: bouwer heeft lifecycle/providerkandidaat met62gerichte groene cases incl9echtePG16.13 opgeleverd; tester beoordeelt exacte bron-/scope-/STOP-/replay-/proofgrenzen. Coördinator finale effectadmissie heeft22groene cases en onafhankelijke V2GO na gerichte aandachtracefix. Nu kleine bestaande bootstrap/runtime/ownerbediening aansluiten, expliciete enrollment onderscheiden van legacy en ontbrekend realisatiebewijs eerlijk onbekend laten. Geen liveadoptie/installatie of volledigekaartclaim vóór werkelijke integratie en verificatie.",
+              "nextAction": "Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.",
               "continuityImplementationSteps": [
                 "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
               ],
@@ -14808,9 +14808,9 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "E4.18 is volledig technisch afgerond met onafhankelijke GO en daadwerkelijk huidig WSL-gebruik. Integreer deze oplevering in Git/dashboard; kies vervolgens uitsluitend de bestaande volgende uitvoerbare kaart.",
+      "nextAction": "Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.",
       "finishOrder": [
-        "E4.18 technisch afgerond: bestaande drie onderhoudsuitkomsten, huidig WSL-gebruik, release-/herstelbinding en onafhankelijke volledige GO. Volgende uitvoerbare bestaande kaart afmaken; eigenaarproeven blokkeren ander werk niet.",
+        "E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
         "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
         "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -14819,7 +14819,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T00:40:10.374271+00:00",
+      "updatedAt": "2026-10-24T00:41:05.015970+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17360,7 +17360,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T00:40:10.374271+00:00",
+  "updatedAt": "2026-10-24T00:41:05.015970+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

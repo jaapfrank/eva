@@ -4,15 +4,15 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-E4.18 · Volledig technisch afgerond
+E1.12 · Bestaande huisvoorzieningenbediening afmaken
 
-Drie onderhoudsuitkomsten volledig opgeleverd en in de huidige WSL-operatorroute gebruikt. Vijf route-eigenaren, 38 geïnstalleerde bronkoppelingen en herstel-/releasebindingen onafhankelijk gecontroleerd; definitieve GO op alle oorspronkelijke criteria. Geen appoverlay vereist voor hosttools. E4.15/E4.17 en eigenaaracceptatie blijven afzonderlijk open.
+Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.
 
-Klaar wanneer: Voor de daadwerkelijk gebruikte gesprek-/HA-/browser-/toolprogramma-/afleverroute zijn bron, toestemming, uitvoering, receipt, controle en resultaatbinding aan duidelijke bestaande eigenaren gekoppeld. Aangetoonde dubbele verantwoordelijkheden en actieve afhankelijkheden van historische operaties worden gericht vereenvoudigd met gedragsbehoud. Een begrensde lijst archief-/verwijderbesluiten controleert imports, dynamische aanroepen, entrypoints, geïnstalleerd gebruik, herstel en releasebindingen; noodzakelijke helpers blijven beschikbaar. Grote geraakte klassen worden alleen op concrete verantwoordelijkheden gesplitst. Geheugen, stoppen, geen dubbele externe effecten, huidige instellingen en schone-pc-herstel blijven werken. Voor/na-metingen tonen werkelijke vereenvoudiging; verplaatste regels tellen niet als bewezen runtimewinst.
+Klaar wanneer: Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.
 
 ## Afmaakvolgorde
 
-1. E4.18 technisch afgerond: bestaande drie onderhoudsuitkomsten, huidig WSL-gebruik, release-/herstelbinding en onafhankelijke volledige GO. Volgende uitvoerbare bestaande kaart afmaken; eigenaarproeven blokkeren ander werk niet.
+1. E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.
 2. E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.
 3. E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.
 4. E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.

@@ -102,7 +102,8 @@ eindacceptatie. Herhaal een proef alleen bij gewijzigde oorzaak of ontbrekend be
 E4.18 is op 24 oktober volledig technisch afgerond: de drie onderhoudsuitkomsten
 zijn gebruikt in de huidige WSL-installatie en de actuele bron-/herstelbindingen
 hebben onafhankelijke volledige GO. Werkbord, dashboard en Git volgen die oplevering.
-E1.12 blijft gebouwd maar bevroren. E4.15-begroeting, horen en later hergebruik en
+De actuele uitvoering maakt de bestaande E1.12-integratie en eigenaarbediening af.
+E4.15-begroeting, horen en later hergebruik en
 de volledige E4.17-acceptatie blijven open; de fysieke proef is uitgesteld.
 Geen nieuwe bouwsporen, CPU-/importserie of algemene architectuurronde.
 
