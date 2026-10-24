@@ -1,7 +1,7 @@
 {
   "contract": "EvaOwnerFullIntentResume/v1",
   "recordedAt": "2026-10-24T11:56:37.055465+00:00",
-  "status": "single_cooled_school_resume_admitted_actual_result_pending",
+  "status": "actual_app_auth_research_saved_repeated_provider_503_full_school_outcome_open",
   "admittedAt": "2026-10-24T11:12:24Z",
   "deadline": "2026-10-24T11:32:24Z",
   "actualWorkerClaimCount": 1,
@@ -261,15 +261,60 @@
     "heartbeatVerifiedActive": true,
     "newAutomationCreated": false,
     "additionalAttemptExecuted": true,
-    "noMoreSameProviderRetryWithoutNewEvidence": true
+    "noMoreSameProviderRetryWithoutNewEvidence": true,
+    "schoolNameQuestionPending": true,
+    "otherExecutableWorkBlockedByQuestion": false
   },
   "singleCooledResumeAdmission": {
     "workId": "work:eva-resume:9b8fab63-4bb6-5658-b179-e04e6929b50f",
     "createdAt": "2026-10-24T14:15:28Z",
     "deadline": "2026-10-24T14:35:28Z",
-    "status": "admitted_api_not_completion",
+    "status": "actual_terminal_ambiguous_provider_unavailable",
     "effectSha256": "970c146c75c63b2e67ccd0f3f243b53593097e7d21f9f317dde983483b61b2e5",
     "priorOutcomeUnknown": true,
-    "attempts": 1
+    "attempts": 1,
+    "completedAt": "2026-10-24T14:17:47Z",
+    "actualStatusSha256": "d9e0f4028870fa12e5d44a42ad80f84163098538c84a400839011aad7fa47744",
+    "reviewSha256": "a6565fc11826d0801879aa713157466de050106f02573ac5a2aae8a107981f46",
+    "runtimeUsage": {
+      "measurement": "partial",
+      "inputTokens": 302609,
+      "outputTokens": 1773,
+      "totalMeasuredTokens": 304382,
+      "modelResponseRecords": 8,
+      "toolCalls": 7,
+      "lastRequestUsage": "unmeasured",
+      "cost": null
+    }
+  },
+  "durableActualSchoolResearch": {
+    "savedAt": "2026-10-24T14:17:42Z",
+    "event": "WORK_PROGRESS_SAVED",
+    "sequence": 3,
+    "stepIndex": 36,
+    "eventSha256": "1ddbf18cab188c989ad90bea13e5d82c995e8a37c55c8a074e8213dd93affe60",
+    "artifactSha256": "14050899f1c9a511b9dd7dac7e73226f6e049bde58718aa5dbe5a362c9e3e85b",
+    "boundedStep": "inspect-sources",
+    "boundedStepState": "done",
+    "finding": "Eva actually read the community README and pinned login.ts body: native app browser authorization with PKCE; no general partner requirement. This establishes a source-based route, not successful account access.",
+    "accountAccessVerified": false,
+    "schoolDataRead": false,
+    "originalSchoolTaskCompleted": false,
+    "otherSteps": [
+      "recover-route:blocked",
+      "check-access:blocked",
+      "school-help:blocked"
+    ],
+    "schoolNameRequested": true,
+    "genericPkceRequiresPriorSchoolName": false,
+    "independentReviewSha256": "a6565fc11826d0801879aa713157466de050106f02573ac5a2aae8a107981f46"
+  },
+  "boundedExistingIntegrationInventory": {
+    "artifactSha256": "78a5a75d72e7ac09d4954321e1bd3c1478866382488a37b5aab08b62100c6fe6",
+    "result": "No Somtoday package or session-store path located within inspected current and specifically referenced configuration, provider, catalog and package metadata.",
+    "globalAbsenceClaimed": false,
+    "credentialsRead": false,
+    "authOrRefreshCalls": 0,
+    "newRuntimeModelCalls": 0
   }
 }

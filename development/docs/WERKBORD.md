@@ -12,7 +12,7 @@ Klaar wanneer: Een echte interne fout wordt zonder nieuwe eigenaaropdracht idemp
 
 ## Afmaakvolgorde
 
-1. E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt. De schoolroute heeft nu een provider503; gerichte sessie-/appauthvoorbereiding en één begrensde gewone hervatting volgen. Schooluitkomst en volledigeE4.16 blijven open.
+1. E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt. Eva heeft appauthbrononderzoek duurzaam opgeslagen; schooltoegang/-hulp ontbreekt en de modelprovider gaf opnieuw503. Geen blind vervolg na verbruikte eenmalige afkoelpoging; schoolnaamvraag beperkt tot passende schoolkeuze, ander uitvoerbaar werk niet blokkeren.
 2. E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.
 3. E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.
 4. E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.

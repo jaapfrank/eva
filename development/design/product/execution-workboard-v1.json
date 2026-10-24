@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "De eenmalige afgekoelde hervatting9b8 is via bestaande ownerresume aangenomen met behoud van onbekend verbruik. Controleer nu daadwerkelijke toolresultaten en bruikbare schoolhulp; geen volgende providerhervatting zonder nieuwe informatie als dezelfde503 terugkomt. De oude-koppeling/sessioninventaris wordt beperkt afgerond. Appauthbronvoorbereiding vanCodex is geen Eva-uitvoer of bewezen schooltoegang.",
+    "nextAction": "De laatste poging9b heeft de echte appaanmeldbron gelezen en inspect-sources duurzaam als begrensd tussenresultaat opgeslagen. Vervolgens opnieuwHTTP503; de eenmalige afgekoelde vervolgtoelating is verbruikt. Geen volgende providerhervatting zonder wezenlijk nieuw bewijs/herstel of echte nieuwe eigenaarinformatie. Alleen de ontbrekende schoolnaam is gevraagd voor juiste schoolkeuze; algemene appauthvoorbereiding vereist die naam niet en ander uitvoerbaar werk blijft mogelijk. Geen werkende sessie, schoolgegevens of volledige taakafronding claimen.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -8323,7 +8323,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "De eenmalige afgekoelde hervatting9b8 is via bestaande ownerresume aangenomen met behoud van onbekend verbruik. Controleer nu daadwerkelijke toolresultaten en bruikbare schoolhulp; geen volgende providerhervatting zonder nieuwe informatie als dezelfde503 terugkomt. De oude-koppeling/sessioninventaris wordt beperkt afgerond. Appauthbronvoorbereiding vanCodex is geen Eva-uitvoer of bewezen schooltoegang.",
+                "nextAction": "De laatste poging9b heeft de echte appaanmeldbron gelezen en inspect-sources duurzaam als begrensd tussenresultaat opgeslagen. Vervolgens opnieuwHTTP503; de eenmalige afgekoelde vervolgtoelating is verbruikt. Geen volgende providerhervatting zonder wezenlijk nieuw bewijs/herstel of echte nieuwe eigenaarinformatie. Alleen de ontbrekende schoolnaam is gevraagd voor juiste schoolkeuze; algemene appauthvoorbereiding vereist die naam niet en ander uitvoerbaar werk blijft mogelijk. Geen werkende sessie, schoolgegevens of volledige taakafronding claimen.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8343,7 +8343,7 @@
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/owner-command-provider-fix-20261024.json",
-                "implementationStatus": "single_cooled_school_resume_admitted_actual_result_pending",
+                "implementationStatus": "app_auth_sources_read_progress_saved_provider_503_school_outcome_open",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8352,7 +8352,7 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T14:17:43.866252+00:00",
+                "checkedAt": "2026-10-24T14:26:01.802717+00:00",
                 "progress": "Nieuwe eigenaarcorrectie correct toegelaten13:13:57UTC met oorspronkelijke bron/grant/voortgang. Onderzoekstool faalde vóór bruikbare bronuitkomst; taak stopte13:15:42UTC zonder resultaat of alternatievenvervolg. Onafhankelijk inhoudelijk NO-GO; fout gericht in herstel. Geen eigenaarloginblokkade aangetoond.",
                 "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
               },
@@ -9030,9 +9030,9 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De eenmalige afgekoelde hervatting9b8 is via bestaande ownerresume aangenomen met behoud van onbekend verbruik. Controleer nu daadwerkelijke toolresultaten en bruikbare schoolhulp; geen volgende providerhervatting zonder nieuwe informatie als dezelfde503 terugkomt. De oude-koppeling/sessioninventaris wordt beperkt afgerond. Appauthbronvoorbereiding vanCodex is geen Eva-uitvoer of bewezen schooltoegang.",
+        "nextAction": "De laatste poging9b heeft de echte appaanmeldbron gelezen en inspect-sources duurzaam als begrensd tussenresultaat opgeslagen. Vervolgens opnieuwHTTP503; de eenmalige afgekoelde vervolgtoelating is verbruikt. Geen volgende providerhervatting zonder wezenlijk nieuw bewijs/herstel of echte nieuwe eigenaarinformatie. Alleen de ontbrekende schoolnaam is gevraagd voor juiste schoolkeuze; algemene appauthvoorbereiding vereist die naam niet en ander uitvoerbaar werk blijft mogelijk. Geen werkende sessie, schoolgegevens of volledige taakafronding claimen.",
         "finishOrder": [
-          "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt. De schoolroute heeft nu een provider503; gerichte sessie-/appauthvoorbereiding en één begrensde gewone hervatting volgen. Schooluitkomst en volledigeE4.16 blijven open.",
+          "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt. Eva heeft appauthbrononderzoek duurzaam opgeslagen; schooltoegang/-hulp ontbreekt en de modelprovider gaf opnieuw503. Geen blind vervolg na verbruikte eenmalige afkoelpoging; schoolnaamvraag beperkt tot passende schoolkeuze, ander uitvoerbaar werk niet blokkeren.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
           "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
           "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -9041,7 +9041,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T14:17:43.866252+00:00",
+        "updatedAt": "2026-10-24T14:26:01.802717+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -14500,7 +14500,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "De eenmalige afgekoelde hervatting9b8 is via bestaande ownerresume aangenomen met behoud van onbekend verbruik. Controleer nu daadwerkelijke toolresultaten en bruikbare schoolhulp; geen volgende providerhervatting zonder nieuwe informatie als dezelfde503 terugkomt. De oude-koppeling/sessioninventaris wordt beperkt afgerond. Appauthbronvoorbereiding vanCodex is geen Eva-uitvoer of bewezen schooltoegang.",
+              "nextAction": "De laatste poging9b heeft de echte appaanmeldbron gelezen en inspect-sources duurzaam als begrensd tussenresultaat opgeslagen. Vervolgens opnieuwHTTP503; de eenmalige afgekoelde vervolgtoelating is verbruikt. Geen volgende providerhervatting zonder wezenlijk nieuw bewijs/herstel of echte nieuwe eigenaarinformatie. Alleen de ontbrekende schoolnaam is gevraagd voor juiste schoolkeuze; algemene appauthvoorbereiding vereist die naam niet en ander uitvoerbaar werk blijft mogelijk. Geen werkende sessie, schoolgegevens of volledige taakafronding claimen.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14520,7 +14520,7 @@
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/owner-command-provider-fix-20261024.json",
-              "implementationStatus": "single_cooled_school_resume_admitted_actual_result_pending",
+              "implementationStatus": "app_auth_sources_read_progress_saved_provider_503_school_outcome_open",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -14529,7 +14529,7 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T14:17:43.866252+00:00",
+              "checkedAt": "2026-10-24T14:26:01.802717+00:00",
               "progress": "Nieuwe eigenaarcorrectie correct toegelaten13:13:57UTC met oorspronkelijke bron/grant/voortgang. Onderzoekstool faalde vóór bruikbare bronuitkomst; taak stopte13:15:42UTC zonder resultaat of alternatievenvervolg. Onafhankelijk inhoudelijk NO-GO; fout gericht in herstel. Geen eigenaarloginblokkade aangetoond.",
               "latestEvidence": "development/evidence/product/owner-command-full-intent-resumed-20261024.json"
             },
@@ -15207,9 +15207,9 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De eenmalige afgekoelde hervatting9b8 is via bestaande ownerresume aangenomen met behoud van onbekend verbruik. Controleer nu daadwerkelijke toolresultaten en bruikbare schoolhulp; geen volgende providerhervatting zonder nieuwe informatie als dezelfde503 terugkomt. De oude-koppeling/sessioninventaris wordt beperkt afgerond. Appauthbronvoorbereiding vanCodex is geen Eva-uitvoer of bewezen schooltoegang.",
+      "nextAction": "De laatste poging9b heeft de echte appaanmeldbron gelezen en inspect-sources duurzaam als begrensd tussenresultaat opgeslagen. Vervolgens opnieuwHTTP503; de eenmalige afgekoelde vervolgtoelating is verbruikt. Geen volgende providerhervatting zonder wezenlijk nieuw bewijs/herstel of echte nieuwe eigenaarinformatie. Alleen de ontbrekende schoolnaam is gevraagd voor juiste schoolkeuze; algemene appauthvoorbereiding vereist die naam niet en ander uitvoerbaar werk blijft mogelijk. Geen werkende sessie, schoolgegevens of volledige taakafronding claimen.",
       "finishOrder": [
-        "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt. De schoolroute heeft nu een provider503; gerichte sessie-/appauthvoorbereiding en één begrensde gewone hervatting volgen. Schooluitkomst en volledigeE4.16 blijven open.",
+        "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Twee onderzoeksreparaties zijn geïnstalleerd en werkelijk gebruikt. Eva heeft appauthbrononderzoek duurzaam opgeslagen; schooltoegang/-hulp ontbreekt en de modelprovider gaf opnieuw503. Geen blind vervolg na verbruikte eenmalige afkoelpoging; schoolnaamvraag beperkt tot passende schoolkeuze, ander uitvoerbaar werk niet blokkeren.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
         "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
         "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
@@ -15218,7 +15218,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T14:17:43.866252+00:00",
+      "updatedAt": "2026-10-24T14:26:01.802717+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
