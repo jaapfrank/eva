@@ -847,7 +847,7 @@
     "title": "Blijvende huisvoorzieningen samen adopteren, beheren en terugdraaien",
     "status": "in_progress",
     "doneWhen": "Een kleine werkelijke blijvende verandering is als Household Artifact brongebonden geregistreerd en zichtbaar met proposed, active, paused, rejected of retired. Gebruiksstatus en adoptie zijn onderscheiden; active vereist toegestane realisatie en gecontroleerde werking. Expliciete adoptie werkt; stilzwijgende adoptie bestendigt alleen een vooraf toegestane proef na concrete evaluatie met melding en vergroot geen rechten. Het huishouden kan de voorziening werkelijk wijzigen, pauzeren en terugdraaien; versies en afgeschermde compacte historie blijven herleidbaar. Herstel bewaart adoptie/pauze en maakt geen dubbele voorziening. Een eenmalige taak of alleen door Eva gebruikte skill telt niet als artifact.",
-    "nextAction": "Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.",
+    "nextAction": "Maak de ontbrekende overdracht van werkelijk brongebonden uitvoeringsbewijs naar adoptie af in de bestaande PREPARED-/providerrroute; daarna één complete kandidaat onafhankelijk reviewen en installeren. Hardcoded ontbrekend bewijs is een functioneel gat, geen eigenaaracceptatie. Geen nieuwe brongebeurtenis forceren en huidige legacyvoorziening niet vooraf registreren.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -6179,13 +6179,13 @@
                   "E4.17",
                   "E1.9"
                 ],
-                "nextAction": "Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.",
+                "nextAction": "Maak de ontbrekende overdracht van werkelijk brongebonden uitvoeringsbewijs naar adoptie af in de bestaande PREPARED-/providerrroute; daarna één complete kandidaat onafhankelijk reviewen en installeren. Hardcoded ontbrekend bewijs is een functioneel gat, geen eigenaaracceptatie. Geen nieuwe brongebeurtenis forceren en huidige legacyvoorziening niet vooraf registreren.",
                 "continuityImplementationSteps": [
                   "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "progress": "Lifecycle/providercode V2 onafhankelijk goedgekeurd: eerdere62gerichte cases en2gerichte echtePG16.13-herstelcases voor ontbrekend bewijs en reject/retire. Finale effectadmissie V2 onafhankelijk goedgekeurd,22huidige gerichte cases. Owner-APIroutes gebouwd met5groene cases, review en daadwerkelijke runtime/wiring nog open. Niet geïnstalleerd; geen active/adoptie/volledige-kaartclaim.",
-                "checkedAt": "2026-10-24T00:14:01.686633+00:00",
+                "progress": "Lifecycle, runtimeaansluiting en eigenaarbediening gericht onafhankelijk gecontroleerd; bron-/handofffouten hersteld. Productiecutover aangehouden: proof_reference=None en vaste false-weergave maken adoptie ook bij later werkelijk bewijs nog onmogelijk. Bouwer onderzoekt en sluit deze bestaande overdracht; reviewer controleert hetzelfde resultaat. E1.12 blijft open, huidige installatie en legacyroute behouden.",
+                "checkedAt": "2026-10-24T01:17:20.941571+00:00",
                 "fullTaskCompleted": false,
                 "implementationEvidence": {
                   "builderCandidateHandoffSha256": "84a2300d5a2b6c1e2f16b4d641c0923f00ad511d9bb03b73305bcf6de19c51d9",
@@ -6205,7 +6205,7 @@
                   "builderV2IndependentReportSha256": "d2f1bdcbfda96c1fbe42432dee15f5aaffe89f6edd3d197abdd15e37326fe64f",
                   "ownerApiCandidateSha256": "a072bd76609f40c70c7fc132e204314f16f298b3fdd1899f67963864ca363f3e",
                   "ownerApiCasesReportedPassed": 5,
-                  "ownerApiRuntimeConnected": false,
+                  "ownerApiRuntimeConnected": true,
                   "privateHostWiringHandoffSha256": "5c7980a6e237453a1aa6e3526a8f9fa4eec37f1bb08ffbaeaaa174550266a7e9",
                   "ownerApiIndependentVerdict": "GO_SCOPED_OWNER_API_ROUTES_CODE",
                   "ownerApiIndependentCasesPassed": 5,
@@ -6214,7 +6214,18 @@
                   "privateHostWiringIndependentCasesPassed": 10,
                   "privateHostWiringIndependentSeconds": 1.62,
                   "privateHostWiringFinding": "E112-WIRING-001/P2: recheck captured managed configuration after blocking proof/effect callbacks",
-                  "privateHostWiringFindingOpen": true
+                  "privateHostWiringFindingOpen": false,
+                  "runtimeHelperSha256": "dfb3b58642f9c3b9aa2fee109a2d6802e28bc1c9fb925c62a53eef081d7f4681",
+                  "partialRegistrationFindingOpen": false,
+                  "partialRegistrationIndependentVerdict": "GO_SCOPED_E112_HANDOFF_001_PARTIAL_REGISTRATION_RECOVERY",
+                  "ownerUiSha256": "668e86208b64e5dab1024ac8fcb8f8ad982d0d81da29ac411e03ec0870aca227",
+                  "ownerUiIndependentChangedCausePassed": true,
+                  "remainingOriginalFunctionalGaps": [
+                    "Original host lineage to actual realization proof and dynamic adoption readiness (assigned)",
+                    "Versioned actual change and rollback plus compact private version history",
+                    "Prior authorized trial evaluated and reported before implicit adoption"
+                  ],
+                  "ownerAcceptanceIsNotTheOnlyGap": true
                 }
               },
               {
@@ -8790,7 +8801,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.",
+        "nextAction": "Maak de ontbrekende overdracht van werkelijk brongebonden uitvoeringsbewijs naar adoptie af in de bestaande PREPARED-/providerrroute; daarna één complete kandidaat onafhankelijk reviewen en installeren. Hardcoded ontbrekend bewijs is een functioneel gat, geen eigenaaracceptatie. Geen nieuwe brongebeurtenis forceren en huidige legacyvoorziening niet vooraf registreren.",
         "finishOrder": [
           "E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -8801,7 +8812,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-24T00:41:05.015970+00:00",
+        "updatedAt": "2026-10-24T01:12:49.086481+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -12197,13 +12208,13 @@
                 "E4.17",
                 "E1.9"
               ],
-              "nextAction": "Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.",
+              "nextAction": "Maak de ontbrekende overdracht van werkelijk brongebonden uitvoeringsbewijs naar adoptie af in de bestaande PREPARED-/providerrroute; daarna één complete kandidaat onafhankelijk reviewen en installeren. Hardcoded ontbrekend bewijs is een functioneel gat, geen eigenaaracceptatie. Geen nieuwe brongebeurtenis forceren en huidige legacyvoorziening niet vooraf registreren.",
               "continuityImplementationSteps": [
                 "Een bewezen voorziening blijft zelfstandig werken binnen beschikbare afhankelijkheden; model alleen bij noodzakelijke heroverweging."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "progress": "Lifecycle/providercode V2 onafhankelijk goedgekeurd: eerdere62gerichte cases en2gerichte echtePG16.13-herstelcases voor ontbrekend bewijs en reject/retire. Finale effectadmissie V2 onafhankelijk goedgekeurd,22huidige gerichte cases. Owner-APIroutes gebouwd met5groene cases, review en daadwerkelijke runtime/wiring nog open. Niet geïnstalleerd; geen active/adoptie/volledige-kaartclaim.",
-              "checkedAt": "2026-10-24T00:14:01.686633+00:00",
+              "progress": "Lifecycle, runtimeaansluiting en eigenaarbediening gericht onafhankelijk gecontroleerd; bron-/handofffouten hersteld. Productiecutover aangehouden: proof_reference=None en vaste false-weergave maken adoptie ook bij later werkelijk bewijs nog onmogelijk. Bouwer onderzoekt en sluit deze bestaande overdracht; reviewer controleert hetzelfde resultaat. E1.12 blijft open, huidige installatie en legacyroute behouden.",
+              "checkedAt": "2026-10-24T01:17:20.941571+00:00",
               "fullTaskCompleted": false,
               "implementationEvidence": {
                 "builderCandidateHandoffSha256": "84a2300d5a2b6c1e2f16b4d641c0923f00ad511d9bb03b73305bcf6de19c51d9",
@@ -12223,7 +12234,7 @@
                 "builderV2IndependentReportSha256": "d2f1bdcbfda96c1fbe42432dee15f5aaffe89f6edd3d197abdd15e37326fe64f",
                 "ownerApiCandidateSha256": "a072bd76609f40c70c7fc132e204314f16f298b3fdd1899f67963864ca363f3e",
                 "ownerApiCasesReportedPassed": 5,
-                "ownerApiRuntimeConnected": false,
+                "ownerApiRuntimeConnected": true,
                 "privateHostWiringHandoffSha256": "5c7980a6e237453a1aa6e3526a8f9fa4eec37f1bb08ffbaeaaa174550266a7e9",
                 "ownerApiIndependentVerdict": "GO_SCOPED_OWNER_API_ROUTES_CODE",
                 "ownerApiIndependentCasesPassed": 5,
@@ -12232,7 +12243,18 @@
                 "privateHostWiringIndependentCasesPassed": 10,
                 "privateHostWiringIndependentSeconds": 1.62,
                 "privateHostWiringFinding": "E112-WIRING-001/P2: recheck captured managed configuration after blocking proof/effect callbacks",
-                "privateHostWiringFindingOpen": true
+                "privateHostWiringFindingOpen": false,
+                "runtimeHelperSha256": "dfb3b58642f9c3b9aa2fee109a2d6802e28bc1c9fb925c62a53eef081d7f4681",
+                "partialRegistrationFindingOpen": false,
+                "partialRegistrationIndependentVerdict": "GO_SCOPED_E112_HANDOFF_001_PARTIAL_REGISTRATION_RECOVERY",
+                "ownerUiSha256": "668e86208b64e5dab1024ac8fcb8f8ad982d0d81da29ac411e03ec0870aca227",
+                "ownerUiIndependentChangedCausePassed": true,
+                "remainingOriginalFunctionalGaps": [
+                  "Original host lineage to actual realization proof and dynamic adoption readiness (assigned)",
+                  "Versioned actual change and rollback plus compact private version history",
+                  "Prior authorized trial evaluated and reported before implicit adoption"
+                ],
+                "ownerAcceptanceIsNotTheOnlyGap": true
               }
             },
             {
@@ -14808,7 +14830,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Rond bestaande E1.12-integratie af: sluit goedgekeurde Household Artifact-opslag/factory aan op actuele Runtime, HA-provider en scoped eigenaarbediening met expliciete beheerde enrollment. Bouwer maakt de overdracht, tester controleert onafhankelijk, coördinator installeert en controleert werkelijk gebruik. Ontbrekend realisatiebewijs blijft onbekend; geen nieuwe bouwsporen of actieve-statusclaim zonder bewijs.",
+      "nextAction": "Maak de ontbrekende overdracht van werkelijk brongebonden uitvoeringsbewijs naar adoptie af in de bestaande PREPARED-/providerrroute; daarna één complete kandidaat onafhankelijk reviewen en installeren. Hardcoded ontbrekend bewijs is een functioneel gat, geen eigenaaracceptatie. Geen nieuwe brongebeurtenis forceren en huidige legacyvoorziening niet vooraf registreren.",
       "finishOrder": [
         "E4.18 volledig technisch afgerond (80/103). Nu de bestaande E1.12-integratie tot bruikbare eigenaarbediening en echte verificatie afmaken met dezelfde bouwer en tester; geen extra chats.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -14819,7 +14841,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-24T00:41:05.015970+00:00",
+      "updatedAt": "2026-10-24T01:12:49.086481+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -17360,7 +17382,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-24T00:41:05.015970+00:00",
+  "updatedAt": "2026-10-24T01:17:20.941571+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
