@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T15:49:06.488137+00:00",
+  "updatedAt": "2026-10-24T15:55:27.778197+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1382,7 +1382,7 @@
     "e415-independent-review-newchat": {
       "task": "E4.16",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "durable_household_recovery_authority_budget_boundary",
+      "status": "durable_household_recovery_overlay_preparation",
       "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
       "allowedWritePaths": [],
       "readCandidate": "/home/administrator/project/.eva2-artifacts/e415-worker-rematerialization-20261023/",
@@ -1496,8 +1496,8 @@
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
       "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": false,
-      "updatedAt": "2026-10-24T15:48:14.785400+00:00",
-      "activeAssignment": "Bound existing owner authorization and budget/accounting for at most one prospective household continuation; no invented grant or policy19 scope extension.",
+      "updatedAt": "2026-10-24T15:55:27.778197+00:00",
+      "activeAssignment": "Prepare exact two-module overlay/source-closure handoff from retained D4 bindings; no build/livequery/installation until reviewed candidate and root dispatch.",
       "writePaths": [],
       "role": "executor",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e415-positive-use-readback-20261024/coder2/natural-delta-1515/",
@@ -1511,7 +1511,7 @@
         "doNotRepeatWithoutNewEvidence": true
       },
       "currentWritePaths": [
-        "/home/administrator/project/.eva2-artifacts/e416-durable-household-recovery-20261024/coder2/authority-budget-boundary.private.json"
+        "/home/administrator/project/.eva2-artifacts/e416-durable-household-recovery-20261024/coder2/"
       ]
     },
     "independent-control": {
