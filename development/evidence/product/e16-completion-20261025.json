@@ -1,8 +1,8 @@
 {
   "contract": "EvaE16FullCardCompletionProgress/v1",
   "taskId": "E1.6",
-  "checkedAt": "2026-10-25T22:17:55.402788+00:00",
-  "status": "installed_independently_verified_actual_source_choice_pending",
+  "checkedAt": "2026-10-25T22:27:23.444890+00:00",
+  "status": "installed_and_ordinary_authenticated_continuation_verified_full_source_chain_open",
   "sourceCommit": "038f0f464960e9a2337028765f5882643719b36a",
   "installedAt": "2026-10-25T22:05:24.481035+00:00",
   "installedImages": {
@@ -50,7 +50,7 @@
     "refreshAuthorityInCore": false,
     "credentialSyncExecutionSha256": "3783823b1d916ae70db576da6c92556f1542432ac847211e0d617e172a8b0207",
     "credentialPublicationReadbackSha256": "c84cf54b99cbf83058d4a708dd49dae85074737c2eb81931a75448afc2728c3e",
-    "providerServerValidityProven": false,
+    "providerServerValidityProven": true,
     "newLoginAuthOrModelProbeCalls": 0,
     "exactFailedReviewRecovery": "abandoned_once_after_changed_source_independently_verified",
     "exactRecoveryActualReviewSha256": "ce079d06b484dcf91ac852fcf08e2e9013f9db7691dfc8d902f2b222e8990e03",
@@ -58,7 +58,8 @@
     "postReadbackSha256": "5b7c88441d014c4f62fba6647baa9e2c97714a4db9bc5e9044bebd9bd27b0fbd",
     "terminalRevision": 5,
     "oldFourHashesAndUnknownUsagePreserved": true,
-    "effectOrOldRequestReplay": false
+    "effectOrOldRequestReplay": false,
+    "validityScope": "One real ordinary measured model response after source update; not a general guarantee."
   },
   "installed": true,
   "fullCardCompleted": false,
@@ -71,5 +72,28 @@
     "developmentTokens": null,
     "developmentCredits": null,
     "unknownFailedRuntimeUsage": null
+  },
+  "ordinaryContinuation": {
+    "observedAt": "2026-10-25T22:15:42Z",
+    "decidedAt": "2026-10-25T22:15:57Z",
+    "decisionSha256": "03811c044c925a6b49f738230b143b7f1ca68aa3d04e37f182d2626968c7c2bc",
+    "independentReviewSha256": "67e9ff6791553c5adc516a5effb39c929b639ebdfb53f5f106984b21d5734bf1",
+    "modelAttempts": 1,
+    "inputTokens": 22421,
+    "outputTokens": 212,
+    "totalTokens": 22633,
+    "toolCalls": 1,
+    "disposition": "substantiated_nightly_silence",
+    "nextAttentionSelected": false,
+    "sourceWatchSelected": false,
+    "ordinaryProductionUseNotAProbe": true,
+    "cost": null,
+    "credits": null
+  },
+  "nextExistingOpportunity": {
+    "notBeforeWithoutOtherRealCauseUtc": "2026-10-25T23:15:57Z",
+    "existingPendingAttention": null,
+    "executionTimeGuaranteed": false,
+    "noArtificialSourceChangeOrModelCall": true
   }
 }

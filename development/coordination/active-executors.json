@@ -1527,9 +1527,9 @@
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "assigned_independent_delivery_testing",
+      "status": "actual_install_and_ordinary_continuation_review_delivered",
       "allowedWritePaths": [],
-      "activeIndependentReviewClaim": true,
+      "activeIndependentReviewClaim": false,
       "review": "development/reviews/e415-household-continuation-20261024.json",
       "task": "E4.16 / E1.6 / E1.7",
       "assignedAt": "2026-10-23T20:28:02.293070+00:00",
@@ -1537,7 +1537,7 @@
       "activeCodeOrInstallClaim": false,
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/task-completion-20261025/independent-review/",
       "scope": "Independent tests and review of delivered E4.16/E1.6/E1.7 work; do not fabricate missing use or owner acceptance.",
-      "updatedAt": "2026-10-25T11:48:56.703586+00:00",
+      "updatedAt": "2026-10-25T22:27:23.444890+00:00",
       "currentWritePaths": [],
       "activeAssignment": "Test concrete delivered candidates against unchanged full-card criteria; no product code or installation.",
       "currentExclusiveWritePaths": []
@@ -1788,7 +1788,7 @@
     },
     "ownerQuestion": null,
     "parallelBoundedWork": "Eén volledige E1.6-afronding: root live integratie en exacte herstelactie, coder1 volgt echte bronroute, tester beoordeelt concrete uitkomst. Beide codecorrecties en pakketbouw zijn opgeleverd.",
-    "currentBlocker": "Werkelijke gewone E1.6-bronkeuze/verandering/uitkomst nog open. Beide concrete fixes geïnstalleerd; nieuwe same-account credentialbron gepubliceerd; exact17:02-foutrecord éénmaal na oorzaakaanpak afgesloten en onafhankelijk bevestigd. Geen verdere operatorherhaling.",
+    "currentBlocker": "Geen aanmeldblokkade meer in de bewezen gewone22:15-afweging. E1.6 mist nog echte modelgekozen bronbewaking/plannedcheck, matchingchange en gecontroleerd vervolg; volgende normale gelegenheid onder bestaande klok, geen geforceerde proef.",
     "latestVerifiedOutcome": {
       "task": "E1.6",
       "status": "partial_installation_and_bounded_actual_source_read_verified",
@@ -1799,10 +1799,10 @@
     },
     "nextBoundedAssignments": {
       "builder": "Bron-, hostpakket en credentialbroncontrole opgeleverd; geen nieuwe bouw.",
-      "regressionExecutor": "Volg de volgende gewone modelgekozen bronroute na rootterugmelding; geen geforceerde keuze/probe.",
+      "regressionExecutor": "Volg dezelfde E1.6 bij volgende echte bron/klokgelegenheid; behoud22:15succes en ontbrekendeclauses zonder extra bouw.",
       "coder2": "Nativepakket en vierprofielen opgeleverd; geen herhaalde build.",
-      "reviewer": "ActualinstallatieGO gegeven; exacte latere credentials-rejected review toetsen en daarna werkelijk E1.6-bronbewijs.",
-      "coordinator": "Volg nu de bestaande gewone E1.6-route na installatie en daadwerkelijk gecontroleerd authenticatieherstel: Eva kiest zelf een relevante bron vanuit een echt doel, een echte verandering leidt tot afweging en gecontroleerd vervolg. De exact mislukte17:02-afweging is éénmaal afgesloten en onafhankelijk nagecontroleerd; geen herhaling daarvan. Als de normale cyclus niet loopt, bepaal uitsluitend de concrete bestaande gate en herstel een bewezen tekort. Geen geforceerde bronkeuze, extra kaart/chat of deelreparatie als volledige afronding."
+      "reviewer": "Bestaande reviews afgerond; toets volgende concrete echte gekozen-bronketen, geen nieuwe modellen of oude matrices.",
+      "coordinator": "Volg de volgende bestaande gewone E1.6-gelegenheid: Eva kiest vanuit een echt doel zelf bronbewaking of geplande controle, een echte passende bronverandering leidt tot afweging en gecontroleerd vervolg. Installatie, exact authenticatieherstel en eerste gewone afweging zijn onafhankelijk bevestigd. De22:15-afweging koos onderbouwde nachtelijke stilte zonder bronwatch. Zonder nieuwe toegelaten aanleiding volgt de gewone uurgelegenheid niet vóór25okt23:15:57UTC (26okt00:15:57Nederland); forceer geen bronkeuze, modelcall, nieuwe kaart of oude herstelactie. Volledige oorspronkelijke criteria blijven open."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {
