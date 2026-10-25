@@ -1,7 +1,7 @@
 {
   "contract": "EvaProviderSdkNativeHeadersDelivery/v1",
-  "status": "built_reviewed_installation_deferred",
-  "checkedAt": "2026-10-24T19:39:28.939620+00:00",
+  "status": "installed_independently_verified_actual_failure_use_open",
+  "checkedAt": "2026-10-25T07:25:12.499685+00:00",
   "gitCommit": "45dc51f3256a6530a79a0925079346ecd318d384",
   "change": "Preserve allowed HTTP metadata from the real SDK native headers field before the existing response.headers fallback; categories, sanitizers, retry and usage semantics unchanged.",
   "productFiles": [
@@ -41,14 +41,32 @@
     "upstreamCauseKnown": false
   },
   "installation": {
-    "performed": false,
-    "runtimeStopped": false,
-    "reason": "Fresh installation guard found one admitted active ingress checkpoint with no deadline and no proven terminal receipt; preserve it. No active model/work leases or memory operations in the recorded guard snapshot.",
-    "guardSnapshotSha256": "a6e085703f4cb364f5c2ec5897ad5f5e03c0c01b44d14ce19169eeac79e6298c",
-    "markerSnapshotSha256": "a791fdc0170bdb5d951eae2cc2b2d4eaa51e41d68a9eb1805038ffd7099faad8",
-    "originalInstallationRetained": true,
-    "exactClaimReadbackSha256": "d3e995c7369c1a78ce9f07f3bec5358842be7db4be874283527cf1d9d5c2bc58",
-    "claimReadbackConclusion": "Admission may be execution or management ingress; absence of model/work locks does not prove this exact ingress completed. No matching handler terminal receipt found. Installation remains deferred."
+    "performed": true,
+    "installedAt": "2026-10-25T07:21:42.449098+00:00",
+    "installedAtEuropeAmsterdam": "2026-10-25T08:21:42.449098+01:00",
+    "sixActivationPhasesCompleted": true,
+    "installedImages": {
+      "core": "sha256:bdda99c13b7c6a6e6353b83403544063b9729d667fc05c061ce32cb4f9f88686",
+      "delegated-work-worker": "sha256:5ff1788f6f443b66144d258e452228f5fcf85a56af9684e92a5662c002165539"
+    },
+    "installedProviderSha256": "f1627e09212de3ac6efa1698ef26511f6ca120e6e87c31cecae33321e6ef23a0",
+    "installedProfilesSha256": "a2e596348efe9773e04ad8d472232e9c562f9f02b70b4b0402225c645b41596e",
+    "allFourActualProfilesEqual": true,
+    "hostConfigurationPreserved": true,
+    "mountsPreserved": true,
+    "originalAdmissionPreserved": true,
+    "originalFailedRequestReplayed": false,
+    "activeClaimsBeforeStop": 0,
+    "activeClaimsAfterStop": 0,
+    "exactTerminalHandlerExclusions": 1,
+    "sourceClassificationReviewSha256": "e1328707d5219381378748e7ae31abba3a513a1cf2e3a9346bab9bcbfc76a3ec",
+    "guardReviewSha256": "98b53ff731287b05f9698a6ac8c8f7536bbffadf0a03ef0da32aa11b93155547",
+    "actualInstallReviewSha256": "6cbf1d977311a862b9ef8a8af1150f6e9a235a86d35f4ce28e2f4ec13c645e4a",
+    "actualHandoffSha256": "0ce51349de7c81ab6b3c99aa3ff8d1271c0fd3862f282ee6cac1f9b192f4fbdb",
+    "installationReceiptSha256": "d65e005e0f06edc74def819e40954211856f2f2b2986a92a7b463fd540406628",
+    "runtimeUpdateReceiptSha256": "84b284e92f3c190dba529cf31a83d02cdbc1ada0bd799a19e7643cd427294845",
+    "actualNewHttpFailureUseObserved": false,
+    "activationSeconds": 62.56426
   },
   "fullCardCompleted": false,
   "familyAcceptance": false,
@@ -58,7 +76,19 @@
     "newSchoolAttempts": 0,
     "developmentTokens": null,
     "developmentCredits": null,
-    "runtimeFailedUsageAndCosts": null
+    "runtimeFailedUsageAndCosts": null,
+    "independentActualReadbackSeconds": 9.169962604006287,
+    "newProductRegressionRunsThisFollowup": 0
   },
-  "remaining": "Install only after the existing claim gate is satisfied or the exact marker is independently proven to be completed non-execution metadata. No unchanged retry or broadened exclusion. Historical upstream503 cause, useful school outcome and full E4.16 remain open."
+  "remaining": "Observe the next genuine relevant failure through the installed route. Historical upstream503 cause, useful school outcome and full autonomous E4.16 repair/reuse remain open. No unchanged retry or fabricated acceptance.",
+  "previousInstallationDeferral": {
+    "performed": false,
+    "runtimeStopped": false,
+    "reason": "Fresh installation guard found one admitted active ingress checkpoint with no deadline and no proven terminal receipt; preserve it. No active model/work leases or memory operations in the recorded guard snapshot.",
+    "guardSnapshotSha256": "a6e085703f4cb364f5c2ec5897ad5f5e03c0c01b44d14ce19169eeac79e6298c",
+    "markerSnapshotSha256": "a791fdc0170bdb5d951eae2cc2b2d4eaa51e41d68a9eb1805038ffd7099faad8",
+    "originalInstallationRetained": true,
+    "exactClaimReadbackSha256": "d3e995c7369c1a78ce9f07f3bec5358842be7db4be874283527cf1d9d5c2bc58",
+    "claimReadbackConclusion": "Admission may be execution or management ingress; absence of model/work locks does not prove this exact ingress completed. No matching handler terminal receipt found. Installation remains deferred."
+  }
 }

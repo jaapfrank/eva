@@ -1513,7 +1513,7 @@
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "native_header_source_tests_or_review_delivered",
+      "status": "assigned_delivery_completed",
       "allowedWritePaths": [
         "development/reviews/e419-final-candidate-review-20261024.json",
         "development/reviews/owner-command-provider-fix-20261024.json"
@@ -1524,25 +1524,25 @@
       "assignedAt": "2026-10-23T20:28:02.293070+00:00",
       "role": "independent_tester_reviewer",
       "activeCodeOrInstallClaim": false,
-      "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e419-final-review-20261024",
+      "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/provider-failure-8768-reviewer/closed-session-20261025/",
       "scope": "Completed assigned bounded HTTP diagnostic source, regression or independent review. No new live school retry or extra work assigned merely to keep this chat active.",
-      "updatedAt": "2026-10-24T19:38:07.383929+00:00",
+      "updatedAt": "2026-10-25T07:25:12.499685+00:00",
       "currentWritePaths": [],
-      "activeAssignment": "Independent review only upon concrete candidate; prior installation review remains complete.",
+      "activeAssignment": "Afgebakende overdracht en onafhankelijke oplevering afgerond; geen actief vervolg zonder concrete bestaande kaartbevinding.",
       "currentExclusiveWritePaths": []
     },
     "e419-recovery-executor": {
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
       "task": "E4.16",
       "role": "executor",
-      "status": "exact_closed_session_provenance_in_progress",
+      "status": "assigned_delivery_completed",
       "allowedWritePaths": [
         "development/tests/postgres/test_native_research_explicit_read_continuation.py"
       ],
       "activeCodeOrInstallClaim": false,
       "scope": "Bind the exact admitted ingress to its already closed household session and prove original request disposition from preserved sources; no mutation, no age-only exclusion, no product code.",
       "currentWritePaths": [],
-      "updatedAt": "2026-10-25T07:05:40.286973+00:00",
+      "updatedAt": "2026-10-25T07:25:12.499685+00:00",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/e416-school-research-repair-20261024/owner-school-name/coder1/closed-session-20261025/",
       "latestBoundedReadback": {
         "checkedThrough": "2026-10-24T11:56:03Z",
@@ -1552,7 +1552,7 @@
         "doNotRepeatWithoutNewEvidence": true
       },
       "activeIndependentReviewClaim": false,
-      "activeAssignment": "Bounded exact closed-session provenance follow-up from new coordinator evidence.",
+      "activeAssignment": "Afgebakende overdracht en onafhankelijke oplevering afgerond; geen actief vervolg zonder concrete bestaande kaartbevinding.",
       "currentExclusiveWritePaths": []
     }
   },
@@ -1738,19 +1738,22 @@
     "authority": "Direct owner instruction 2026-10-23: sole main coordinator; integration, GitHub and shared installation exclusively here.",
     "previousCoordinator": "windows-root",
     "preserveExistingReservations": true,
-    "activeOutcome": "E4.16",
+    "activeOutcome": "Geïnstalleerde SDK-headercorrectie onafhankelijk op de werkelijke runtime gecontroleerd; volledige E4.16 en gezinsacceptatie blijven open.",
     "doNotRepeatSentLolaQuestion": true,
     "agents": {},
     "maxConcurrentExecutorsReviewers": 4,
     "installationCandidate": {
       "path": "/var/lib/eva2/e416-provider-native-headers-20261024",
-      "status": "built_reviewed_installation_deferred_unknown_ingress",
+      "status": "installed_independently_verified",
       "evidence": "development/evidence/product/e416-provider-native-headers-20261024.json",
       "review": "development/reviews/e416-provider-native-headers-20261024.json",
       "fullE416Completed": false,
       "originalOwnerOutcomeCompleted": false,
       "claimReadbackSha256": "d3e995c7369c1a78ce9f07f3bec5358842be7db4be874283527cf1d9d5c2bc58",
-      "claimSnapshotPath": "/var/lib/eva2/e416-provider-native-headers-20261024/deferred-null-markers.private.json"
+      "claimSnapshotPath": "/var/lib/eva2/e416-provider-native-headers-20261024/deferred-null-markers.private.json",
+      "installedAt": "2026-10-25T07:21:42.449098+00:00",
+      "actualHandoffSha256": "0ce51349de7c81ab6b3c99aa3ff8d1271c0fd3862f282ee6cac1f9b192f4fbdb",
+      "actualReviewSha256": "6cbf1d977311a862b9ef8a8af1150f6e9a235a86d35f4ce28e2f4ec13c645e4a"
     },
     "newReviewerThread": "01a16a55-1607-7171-820e-a3918acaea3f",
     "e415Candidate": {
@@ -1770,20 +1773,21 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": null,
-    "parallelBoundedWork": "Provider native-header repair built and independently reviewed; one exact active ingress claim is being assessed before installation.",
-    "currentBlocker": "Existing installation guard deferred before any mutation: one admitted active NULL-deadline conversation checkpoint, no proven terminal binding.",
+    "parallelBoundedWork": "Afgebakende bronclassificatie, guardreview en daadwerkelijke installatiecontrole afgerond; geen actieve bouw- of installatieclaim.",
+    "currentBlocker": "Geen resterende installatieblokkade voor de beoordeelde SDK-headercorrectie. Gewoon later fout-/gebruiksbewijs en volledige kaartacceptatie blijven open.",
     "latestVerifiedOutcome": {
-      "task": "E4.17",
-      "status": "completed_original_restore_card_technical",
-      "review": "development/reviews/e417-original-binding-review-20261024.json",
-      "evidence": "development/evidence/reassessment/e417-original-restored-procedure-20261024.json",
-      "at": "2026-10-24T06:06:08.566732+00:00"
+      "task": "E4.16",
+      "status": "partial_diagnostic_delivery_installed_independently_verified",
+      "evidence": "development/evidence/product/e416-provider-native-headers-20261024.json",
+      "review": "development/reviews/e416-provider-native-headers-20261024.json",
+      "at": "2026-10-25T07:21:42.449098+00:00",
+      "fullCardCompleted": false
     },
     "nextBoundedAssignments": {
-      "builder": "Exact provider candidate frozen; no current code claim.",
-      "regressionExecutor": "Exact closed-session provenance from newly observed matching conversation/session; retain hashes and current live claims.",
-      "reviewer": "Source/tests/package and ordinary-turn outcome reviewed; actual installation review follows only after a safe real installation.",
-      "coordinator": "Assess new exact closure binding, obtain independent review, then apply existing candidate only if existing installation guards are satisfied."
+      "builder": "Assigned candidate completed; no new build without concrete existing-card gap.",
+      "regressionExecutor": "Exact terminal-handler provenance delivered and independently accepted; no active assignment.",
+      "reviewer": "Source, package, exact guard and actual installation reviews completed.",
+      "coordinator": "Gebruik de geïnstalleerde route bij gewoon later gebruik. Vervolg E4.16 uitsluitend op nieuw concreet fout- of gebruiksbewijs; geen nieuwe schoolherpoging of herhaalproef zonder gewijzigde oorzaak. De nu uitvoerbare technische opvolging is afgerond en de vijfminutenautomatisering beëindigd. Resterende gezins-, adoptie- en fysieke proeven behouden hun bestaande kaarten; het volledige project blijft open."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {
@@ -1820,7 +1824,10 @@
       "id": "eva2-taken-afronden",
       "kind": "heartbeat",
       "intervalMinutes": 5,
-      "status": "ACTIVE"
+      "status": "DELETED",
+      "stoppedAt": "2026-10-25T07:25:12.499685+00:00",
+      "reason": "De beoordeelde kandidaat is geïnstalleerd en onafhankelijk teruggelezen; er resteert nu geen onderbouwde uitvoerbare opdracht binnen deze technische opvolging. Gewoon later gebruik, eigenaarafspraken en de afzonderlijke spraakroute blijven open volgens het werkbord.",
+      "projectCompleted": false
     },
     "currentOwnerContinuation": {
       "workId": "work:eva-resume:8768071e-0047-5438-8c17-d0d8990a71c9",
@@ -1932,9 +1939,11 @@
       "fullE416Completed": false,
       "schoolOutcomeCompleted": false,
       "nativeHeaderFollowup": {
-        "status": "built_reviewed_installation_deferred",
+        "status": "installed_independently_verified",
         "evidence": "development/evidence/product/e416-provider-native-headers-20261024.json",
-        "review": "development/reviews/e416-provider-native-headers-20261024.json"
+        "review": "development/reviews/e416-provider-native-headers-20261024.json",
+        "installedAt": "2026-10-25T07:21:42.449098+00:00",
+        "actualReviewSha256": "6cbf1d977311a862b9ef8a8af1150f6e9a235a86d35f4ce28e2f4ec13c645e4a"
       }
     }
   }

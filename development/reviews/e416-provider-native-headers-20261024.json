@@ -1,10 +1,13 @@
 {
   "contract": "EvaIndependentReviewSummary/v1",
-  "status": "GO_SOURCE_REGRESSION_PACKAGE_INSTALLATION_DEFERRED",
-  "checkedAt": "2026-10-24T19:38:07.383929+00:00",
+  "status": "GO_SOURCE_REGRESSION_PACKAGE_GUARD_AND_ACTUAL_INSTALL",
+  "checkedAt": "2026-10-25T07:25:12.499685+00:00",
   "evidence": "development/evidence/product/e416-provider-native-headers-20261024.json",
   "sourceAndRegressionReviewSha256": "4f9c16f254c93a49df295a63cbdbdbbc622ccaae8b1640f0f5c0242c2e996a56",
   "packageReviewSha256": "0d0e13e22c1250c5482293eacdd9198dfabcc5caeda3d58c026ddbf9323f4c68",
   "ordinaryOutcomeReviewSha256": "19c638d593f10aeabffd805811e87e90f86a1fca05d366a60265b0d900341b3e",
-  "scope": "Real SDK interface regression, exact minimal source/package and recorded recovery of two actual ordinary turns. No actual installation or physical hearing claimed."
+  "scope": "Exact native SDK header fix, existing successful regression evidence, reviewed unchanged candidate, narrowly bound terminal-handler guard and independent actual installed source/health/four profiles/host binding. No new actual HTTP-failure use, upstream503 cause, school completion or family acceptance.",
+  "sourceClassificationReviewSha256": "e1328707d5219381378748e7ae31abba3a513a1cf2e3a9346bab9bcbfc76a3ec",
+  "guardReviewSha256": "98b53ff731287b05f9698a6ac8c8f7536bbffadf0a03ef0da32aa11b93155547",
+  "actualInstallReviewSha256": "6cbf1d977311a862b9ef8a8af1150f6e9a235a86d35f4ce28e2f4ec13c645e4a"
 }
