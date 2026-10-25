@@ -305,7 +305,7 @@
         "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
         "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
       ],
-      "updatedAt": "2026-10-25T16:47:58.378985+00:00",
+      "updatedAt": "2026-10-25T22:11:19.598938+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -586,7 +586,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "same_card_resumed_after_usage_limit",
+      "status": "assigned_source_or_package_delivered",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1286,7 +1286,7 @@
         "noRuntimeModelExecutorCameraMessageOrInstallation": true
       },
       "previousStatusBeforeCentralHandoff": "Canonical child conflicts and original32-row cutoff/singlepending cases finalized;44 focused checks passed, ready independent GO",
-      "activeCodeOrInstallClaim": true,
+      "activeCodeOrInstallClaim": false,
       "e417ColdStartHandoff": {
         "updatedAt": "2026-10-23T23:53:39.681074+00:00",
         "status": "phase1_exact_plan_pending_coordinator_tester_admission_not_started",
@@ -1303,15 +1303,7 @@
         "coordinatorNotified": true,
         "nextTaskRequestedDirectly": true
       },
-      "currentWritePaths": [
-        "src/eva/application/self_repair.py",
-        "src/eva/application/repair_assessment.py",
-        "src/eva/adapters/postgres/self_repair.py",
-        "src/eva/bootstrap/self_repair.py",
-        "src/eva/bootstrap/runtime_repair_work.py",
-        "src/eva/bootstrap/runtime_repair_host.py",
-        "src/eva/operations/runtime_repair_*.py"
-      ],
+      "currentWritePaths": [],
       "e110Progress": {
         "status": "frozen_candidate_handed_off",
         "manifest": "/home/administrator/project/.eva2-artifacts/e110-housemate-development-20261024/candidate-manifest.private.json",
@@ -1379,15 +1371,7 @@
         "preserveE416FrozenBlobs": true
       },
       "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
-      "currentExclusiveWritePaths": [
-        "src/eva/application/self_repair.py",
-        "src/eva/application/repair_assessment.py",
-        "src/eva/adapters/postgres/self_repair.py",
-        "src/eva/bootstrap/self_repair.py",
-        "src/eva/bootstrap/runtime_repair_work.py",
-        "src/eva/bootstrap/runtime_repair_host.py",
-        "src/eva/operations/runtime_repair_*.py"
-      ],
+      "currentExclusiveWritePaths": [],
       "currentOutcome": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
       "scope": "Hoofdbouwer maakt de ontbrekende native zelfhersteloverdracht af: echte fout naar blijvend doel, Eva-kandidaat, onafhankelijk oordeel, beheerde toepassing, oorspronkelijke werking en later hergebruik. Gebruik actuele installatie en laatste overdracht; de SDK-headercorrectie is geen volledige kaartafronding.",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/task-completion-20261025/e416-builder/",
@@ -1406,7 +1390,7 @@
     "e415-independent-review-newchat": {
       "task": "E1.7",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "same_card_resumed_after_usage_limit",
+      "status": "assigned_source_or_package_delivered",
       "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
       "allowedWritePaths": [
         "src/eva/application/human_understanding.py",
@@ -1522,9 +1506,9 @@
       "faceBackendAssetProposalReviewSha256": "11def2fe291230ccdde4eea4db278763f0868d9293c6396d37297d238f5e638c",
       "faceBackendAssetProposalVerdict": "GO",
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
-      "activeCodeOrInstallClaim": true,
+      "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": false,
-      "updatedAt": "2026-10-25T16:47:58.378985+00:00",
+      "updatedAt": "2026-10-25T22:11:19.598938+00:00",
       "activeAssignment": "Coder2 rondt bestaande routine-/verwachtingsoverdracht af: echte herhaalde gebeurtenissen, voorwaarden, later tegenbewijs en bijgesteld gedrag. Geen gefabriceerde routine of nieuwe geheugenlaag; ontbrekende mens-/brondekking exact afbakenen nadat uitvoerbare werking is opgeleverd.",
       "writePaths": [],
       "role": "executor",
@@ -1538,16 +1522,8 @@
         "checkedThrough": "2026-10-24T12:19:40+00:00",
         "doNotRepeatWithoutNewEvidence": true
       },
-      "currentWritePaths": [
-        "src/eva/application/human_understanding.py",
-        "src/eva/adapters/postgres/initiative_context.py",
-        "src/eva/providers/human_understanding_actions.py"
-      ],
-      "currentExclusiveWritePaths": [
-        "src/eva/application/human_understanding.py",
-        "src/eva/adapters/postgres/initiative_context.py",
-        "src/eva/providers/human_understanding_actions.py"
-      ]
+      "currentWritePaths": [],
+      "currentExclusiveWritePaths": []
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
@@ -1570,7 +1546,7 @@
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
       "task": "E1.6",
       "role": "executor",
-      "status": "same_card_resumed_after_usage_limit",
+      "status": "reconnect_delivered_following_same_full_e16_route",
       "allowedWritePaths": [
         "src/eva/application/sensory.py",
         "src/eva/application/resident_attention.py",
@@ -1579,17 +1555,10 @@
         "src/eva/providers/mcp_discovery.py",
         "src/eva/providers/mcp_registration.py"
       ],
-      "activeCodeOrInstallClaim": true,
+      "activeCodeOrInstallClaim": false,
       "scope": "Coder1 rondt de bestaande volledige bronroute af: modelgekozen aansluiting vanuit echt doel, werkelijke bronverandering, aandacht en gecontroleerd passend vervolg of onderbouwde stilte. Hergebruik geldige bewijzen; maak concrete ontbrekende overdrachten en grenscontroles af.",
-      "currentWritePaths": [
-        "src/eva/application/sensory.py",
-        "src/eva/application/resident_attention.py",
-        "src/eva/adapters/postgres/initiative_attention.py",
-        "src/eva/bootstrap/household_initiative.py",
-        "src/eva/providers/mcp_discovery.py",
-        "src/eva/providers/mcp_registration.py"
-      ],
-      "updatedAt": "2026-10-25T16:47:58.378985+00:00",
+      "currentWritePaths": [],
+      "updatedAt": "2026-10-25T22:11:19.598938+00:00",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/task-completion-20261025/e16-coder1/",
       "latestBoundedReadback": {
         "checkedThrough": "2026-10-24T11:56:03Z",
@@ -1600,14 +1569,7 @@
       },
       "activeIndependentReviewClaim": false,
       "activeAssignment": "Coder1 rondt de bestaande volledige bronroute af: modelgekozen aansluiting vanuit echt doel, werkelijke bronverandering, aandacht en gecontroleerd passend vervolg of onderbouwde stilte. Hergebruik geldige bewijzen; maak concrete ontbrekende overdrachten en grenscontroles af.",
-      "currentExclusiveWritePaths": [
-        "src/eva/application/sensory.py",
-        "src/eva/application/resident_attention.py",
-        "src/eva/adapters/postgres/initiative_attention.py",
-        "src/eva/bootstrap/household_initiative.py",
-        "src/eva/providers/mcp_discovery.py",
-        "src/eva/providers/mcp_registration.py"
-      ]
+      "currentExclusiveWritePaths": []
     }
   },
   "protectedExistingWork": {
@@ -1792,22 +1754,20 @@
     "authority": "Direct owner instruction 2026-10-23: sole main coordinator; integration, GitHub and shared installation exclusively here.",
     "previousCoordinator": "windows-root",
     "preserveExistingReservations": true,
-    "activeOutcome": "E4.16",
+    "activeOutcome": "E1.6",
     "doNotRepeatSentLolaQuestion": true,
     "agents": {},
     "maxConcurrentExecutorsReviewers": 4,
     "installationCandidate": {
-      "path": "/var/lib/eva2/e416-provider-native-headers-20261024",
-      "status": "installed_independently_verified",
-      "evidence": "development/evidence/product/e416-provider-native-headers-20261024.json",
-      "review": "development/reviews/e416-provider-native-headers-20261024.json",
-      "fullE416Completed": false,
-      "originalOwnerOutcomeCompleted": false,
-      "claimReadbackSha256": "d3e995c7369c1a78ce9f07f3bec5358842be7db4be874283527cf1d9d5c2bc58",
-      "claimSnapshotPath": "/var/lib/eva2/e416-provider-native-headers-20261024/deferred-null-markers.private.json",
-      "installedAt": "2026-10-25T07:21:42.449098+00:00",
-      "actualHandoffSha256": "0ce51349de7c81ab6b3c99aa3ff8d1271c0fd3862f282ee6cac1f9b192f4fbdb",
-      "actualReviewSha256": "6cbf1d977311a862b9ef8a8af1150f6e9a235a86d35f4ce28e2f4ec13c645e4a"
+      "path": "/var/lib/eva2/e16-e416-completion-20261025",
+      "status": "installed_independently_verified_live_e16_open",
+      "evidence": "development/evidence/product/e16-completion-20261025.json",
+      "review": "development/reviews/e16-reconnect-20261025.json",
+      "installedAt": "2026-10-25T22:05:24.481035+00:00",
+      "actualHandoffSha256": "746674b5cef216347054ac4a3fefd558a44e2e23a8ae3fafbbbfbec034b516bd",
+      "actualReviewSha256": "9a9f36e1376b1f334eb2eed30f2dfb9b95a3ce1ce7a6731deec1363d1678037f",
+      "fullE16Completed": false,
+      "fullE416Completed": false
     },
     "newReviewerThread": "01a16a55-1607-7171-820e-a3918acaea3f",
     "e415Candidate": {
@@ -1827,22 +1787,22 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": null,
-    "parallelBoundedWork": "E4.16 hoofdbouwer; E1.6 coder1; E1.7 coder2; onafhankelijke tester controleert concrete opleveringen; coordinator integreert en installeert.",
-    "currentBlocker": "Geen algemene werkstop; drie afzonderlijke bestaande kaarten hervat op directe eigenaaropdracht.",
+    "parallelBoundedWork": "Eén volledige E1.6-afronding: root live integratie en exacte herstelactie, coder1 volgt echte bronroute, tester beoordeelt concrete uitkomst. Beide codecorrecties en pakketbouw zijn opgeleverd.",
+    "currentBlocker": "Live modelgekozen E1.6-bronkeuze nog open. Latere afweging faalde aantoonbaar op credentialrejection; same-account bron/lease bijgewerkt, exacte oude review-afhandeling in onafhankelijke controle.",
     "latestVerifiedOutcome": {
-      "task": "E4.16",
-      "status": "partial_diagnostic_delivery_installed_independently_verified",
-      "evidence": "development/evidence/product/e416-provider-native-headers-20261024.json",
-      "review": "development/reviews/e416-provider-native-headers-20261024.json",
-      "at": "2026-10-25T07:21:42.449098+00:00",
+      "task": "E1.6",
+      "status": "partial_installation_and_bounded_actual_source_read_verified",
+      "evidence": "development/evidence/product/e16-completion-20261025.json",
+      "review": "development/reviews/e16-reconnect-20261025.json",
+      "at": "2026-10-25T22:05:24.481035+00:00",
       "fullCardCompleted": false
     },
     "nextBoundedAssignments": {
-      "builder": "Hoofdbouwer maakt de ontbrekende native zelfhersteloverdracht af: echte fout naar blijvend doel, Eva-kandidaat, onafhankelijk oordeel, beheerde toepassing, oorspronkelijke werking en later hergebruik. Gebruik actuele installatie en laatste overdracht; de SDK-headercorrectie is geen volledige kaartafronding.",
-      "regressionExecutor": "Coder1 rondt de bestaande volledige bronroute af: modelgekozen aansluiting vanuit echt doel, werkelijke bronverandering, aandacht en gecontroleerd passend vervolg of onderbouwde stilte. Hergebruik geldige bewijzen; maak concrete ontbrekende overdrachten en grenscontroles af.",
-      "coder2": "Coder2 rondt bestaande routine-/verwachtingsoverdracht af: echte herhaalde gebeurtenissen, voorwaarden, later tegenbewijs en bijgesteld gedrag. Geen gefabriceerde routine of nieuwe geheugenlaag; ontbrekende mens-/brondekking exact afbakenen nadat uitvoerbare werking is opgeleverd.",
-      "reviewer": "Onafhankelijke gedragstoets op concrete E4.16/E1.6/E1.7-opleveringen en hun oorspronkelijke criteria; geen productcode.",
-      "coordinator": "Directe eigenaaropdracht 25 oktober: blijf de bestaande volledige taken afronden. Hoofdbouwer: E4.16 zelfherstel; coder1: E1.6 bronverandering naar zelfstandig vervolg; coder2: E1.7 routines en tegenbewijs. Tester controleert concrete opleveringen onafhankelijk. Coordinator integreert, installeert en registreert. Geen uitstapjes; een deelreparatie of wachtstap stopt de opvolging niet."
+      "builder": "Bron-, hostpakket en credentialbroncontrole opgeleverd; geen nieuwe bouw.",
+      "regressionExecutor": "Volg de volgende gewone modelgekozen bronroute na rootterugmelding; geen geforceerde keuze/probe.",
+      "coder2": "Nativepakket en vierprofielen opgeleverd; geen herhaalde build.",
+      "reviewer": "ActualinstallatieGO gegeven; exacte latere credentials-rejected review toetsen en daarna werkelijk E1.6-bronbewijs.",
+      "coordinator": "Rond E1.6 als één volledige werkbordtaak af. Reconnectcorrectie en noodzakelijke herstelbronoverdracht zijn geïnstalleerd en onafhankelijk gecontroleerd. Handel uitsluitend de exact afgebroken credentials-rejected afweging af na de inmiddels gewijzigde aanmeldbron; laat daarna de bestaande gewone route zelf een relevante bron kiezen en bewijs echte bronverandering → afweging → gecontroleerd vervolg. Geen nieuwe kaarten/chats/regieoverdracht, geforceerde bronkeuze of deelafronding als volledige kaart."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {
@@ -2011,10 +1971,10 @@
       }
     },
     "executionRecovery": {
-      "checkedAt": "2026-10-25T16:47:58.378985+00:00",
+      "checkedAt": "2026-10-25T22:11:19.598938+00:00",
       "cause": "All three executor turns stopped at shared Codex usage limit before delivering a candidate.",
       "ordinaryUsageAllowedNow": true,
-      "action": "Resumed the same three existing assignments from saved progress, once each.",
+      "action": "Resumed prepared package and unfinished review; combined installation now independently verified. Continue same full E1.6 live outcome.",
       "resetConsumed": false,
       "purchaseMade": false,
       "providerChanged": false,

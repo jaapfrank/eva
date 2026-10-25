@@ -1,0 +1,13 @@
+{
+  "contract": "EvaIndependentBoundedSourceAndInstallReviewSummary/v1",
+  "taskId": "E1.6",
+  "checkedAt": "2026-10-25T22:11:19.598938+00:00",
+  "verdict": "GO_RECONNECT_SOURCE_AND_COMBINED_NATIVE_HOST_INSTALL_ONLY",
+  "sourceReviewSha256": "a452a288798fb3fe3d7e49d897ded6b59806f70a7ad70b6ee1b2d644bf6ddfa4",
+  "transportReviewSha256": "f3b1775d3680cd2f32c136c21ae46d1b6cc91acc44498eb9e237d0b5a7eabe97",
+  "packageDeltaReviewSha256": "1d1f1f741a0f01fa2768b9b541a29f3d6be0ef918ceb05eed17f9ef6bd303dc2",
+  "actualInstallReviewSha256": "9a9f36e1376b1f334eb2eed30f2dfb9b95a3ce1ce7a6731deec1363d1678037f",
+  "installedGo": true,
+  "fullCardGo": false,
+  "evidence": "development/evidence/product/e16-completion-20261025.json"
+}

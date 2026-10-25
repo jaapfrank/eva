@@ -1,0 +1,70 @@
+{
+  "contract": "EvaE16FullCardCompletionProgress/v1",
+  "taskId": "E1.6",
+  "checkedAt": "2026-10-25T22:11:19.598938+00:00",
+  "status": "installed_independently_verified_actual_source_choice_pending",
+  "sourceCommit": "038f0f464960e9a2337028765f5882643719b36a",
+  "installedAt": "2026-10-25T22:05:24.481035+00:00",
+  "installedImages": {
+    "core": "sha256:e65b835a127befd2e18f7f1df96463c9acf918bedded1ddb96422504770cffff",
+    "delegated-work-worker": "sha256:9d25c5d3d37a25febc3ae2f57103780c9ed95a16747477bd6c21ec3c9f1e052d"
+  },
+  "nativeSourceFiles": 3,
+  "changedHostSources": 5,
+  "hostFilesRetained": 83,
+  "allFourActualProfilesCompatible": true,
+  "activeHostProducerPinsMatchActual": true,
+  "actualInstallHandoffSha256": "746674b5cef216347054ac4a3fefd558a44e2e23a8ae3fafbbbfbec034b516bd",
+  "actualInstallReviewSha256": "9a9f36e1376b1f334eb2eed30f2dfb9b95a3ce1ce7a6731deec1363d1678037f",
+  "sourceReviews": {
+    "reconnect": "a452a288798fb3fe3d7e49d897ded6b59806f70a7ad70b6ee1b2d644bf6ddfa4",
+    "sourceTransport": "f3b1775d3680cd2f32c136c21ae46d1b6cc91acc44498eb9e237d0b5a7eabe97"
+  },
+  "regression": {
+    "reconnectBaselineFailed": 1,
+    "reconnectCandidatePassed": 2,
+    "independentRealStopTimeoutSeconds": 5,
+    "independentRepeatedStarts": 10,
+    "sourceTransportTargetedCandidateChecks": 8,
+    "sourceTransportIndependentBoundaryChecks": 6
+  },
+  "sourceHandoff": {
+    "actualModuleBytes": 283749,
+    "previousPerFileLimit": 262144,
+    "currentPerFileLimit": 524288,
+    "unchangedAggregateLimit": 524288,
+    "independentActualInstalledImageRead": true,
+    "historicalBuilderErrorCauseProven": false
+  },
+  "exactEarlierPrivateRecovery": {
+    "actualReviewSha256": "26f7ad57bc609c847bcdf4af706c7361963900c52e1a7454590d15e0e9344955",
+    "oldFourHashesRetained": true,
+    "oldUsage": null,
+    "terminalRevision": 5,
+    "modelOrEffectReplay": false
+  },
+  "laterCredentialRejection": {
+    "failureFingerprintExactlyMatchesInstalledStaticException": true,
+    "sameAccountNewerCredentialSourceInstalled": true,
+    "accessOnlyPublishedToCore": true,
+    "refreshAuthorityInCore": false,
+    "credentialSyncExecutionSha256": "3783823b1d916ae70db576da6c92556f1542432ac847211e0d617e172a8b0207",
+    "credentialPublicationReadbackSha256": "c84cf54b99cbf83058d4a708dd49dae85074737c2eb81931a75448afc2728c3e",
+    "providerServerValidityProven": false,
+    "newLoginAuthOrModelProbeCalls": 0,
+    "exactFailedReviewRecovery": "prepared_pending_independent_review"
+  },
+  "installed": true,
+  "fullCardCompleted": false,
+  "familyAcceptance": false,
+  "remaining": [
+    "Appropriately close only the exact later locally ended private review after changed credential source.",
+    "Eva chooses a genuinely relevant source for an existing goal without a forced household case.",
+    "A real change of that selected source drives justified decision and controlled result with provenance."
+  ],
+  "usage": {
+    "developmentTokens": null,
+    "developmentCredits": null,
+    "unknownFailedRuntimeUsage": null
+  }
+}
