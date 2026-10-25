@@ -1,7 +1,7 @@
 {
   "contract": "EvaE16FullCardCompletionProgress/v1",
   "taskId": "E1.6",
-  "checkedAt": "2026-10-25T22:11:19.598938+00:00",
+  "checkedAt": "2026-10-25T22:17:55.402788+00:00",
   "status": "installed_independently_verified_actual_source_choice_pending",
   "sourceCommit": "038f0f464960e9a2337028765f5882643719b36a",
   "installedAt": "2026-10-25T22:05:24.481035+00:00",
@@ -52,13 +52,18 @@
     "credentialPublicationReadbackSha256": "c84cf54b99cbf83058d4a708dd49dae85074737c2eb81931a75448afc2728c3e",
     "providerServerValidityProven": false,
     "newLoginAuthOrModelProbeCalls": 0,
-    "exactFailedReviewRecovery": "prepared_pending_independent_review"
+    "exactFailedReviewRecovery": "abandoned_once_after_changed_source_independently_verified",
+    "exactRecoveryActualReviewSha256": "ce079d06b484dcf91ac852fcf08e2e9013f9db7691dfc8d902f2b222e8990e03",
+    "executionSha256": "8046bbfab65f1bc4db85f0405d66486007b99b54ecddacbef7f0f4499d608921",
+    "postReadbackSha256": "5b7c88441d014c4f62fba6647baa9e2c97714a4db9bc5e9044bebd9bd27b0fbd",
+    "terminalRevision": 5,
+    "oldFourHashesAndUnknownUsagePreserved": true,
+    "effectOrOldRequestReplay": false
   },
   "installed": true,
   "fullCardCompleted": false,
   "familyAcceptance": false,
   "remaining": [
-    "Appropriately close only the exact later locally ended private review after changed credential source.",
     "Eva chooses a genuinely relevant source for an existing goal without a forced household case.",
     "A real change of that selected source drives justified decision and controlled result with provenance."
   ],

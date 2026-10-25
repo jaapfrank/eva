@@ -1788,7 +1788,7 @@
     },
     "ownerQuestion": null,
     "parallelBoundedWork": "Eén volledige E1.6-afronding: root live integratie en exacte herstelactie, coder1 volgt echte bronroute, tester beoordeelt concrete uitkomst. Beide codecorrecties en pakketbouw zijn opgeleverd.",
-    "currentBlocker": "Live modelgekozen E1.6-bronkeuze nog open. Latere afweging faalde aantoonbaar op credentialrejection; same-account bron/lease bijgewerkt, exacte oude review-afhandeling in onafhankelijke controle.",
+    "currentBlocker": "Werkelijke gewone E1.6-bronkeuze/verandering/uitkomst nog open. Beide concrete fixes geïnstalleerd; nieuwe same-account credentialbron gepubliceerd; exact17:02-foutrecord éénmaal na oorzaakaanpak afgesloten en onafhankelijk bevestigd. Geen verdere operatorherhaling.",
     "latestVerifiedOutcome": {
       "task": "E1.6",
       "status": "partial_installation_and_bounded_actual_source_read_verified",
@@ -1802,7 +1802,7 @@
       "regressionExecutor": "Volg de volgende gewone modelgekozen bronroute na rootterugmelding; geen geforceerde keuze/probe.",
       "coder2": "Nativepakket en vierprofielen opgeleverd; geen herhaalde build.",
       "reviewer": "ActualinstallatieGO gegeven; exacte latere credentials-rejected review toetsen en daarna werkelijk E1.6-bronbewijs.",
-      "coordinator": "Rond E1.6 als één volledige werkbordtaak af. Reconnectcorrectie en noodzakelijke herstelbronoverdracht zijn geïnstalleerd en onafhankelijk gecontroleerd. Handel uitsluitend de exact afgebroken credentials-rejected afweging af na de inmiddels gewijzigde aanmeldbron; laat daarna de bestaande gewone route zelf een relevante bron kiezen en bewijs echte bronverandering → afweging → gecontroleerd vervolg. Geen nieuwe kaarten/chats/regieoverdracht, geforceerde bronkeuze of deelafronding als volledige kaart."
+      "coordinator": "Volg nu de bestaande gewone E1.6-route na installatie en daadwerkelijk gecontroleerd authenticatieherstel: Eva kiest zelf een relevante bron vanuit een echt doel, een echte verandering leidt tot afweging en gecontroleerd vervolg. De exact mislukte17:02-afweging is éénmaal afgesloten en onafhankelijk nagecontroleerd; geen herhaling daarvan. Als de normale cyclus niet loopt, bepaal uitsluitend de concrete bestaande gate en herstel een bewezen tekort. Geen geforceerde bronkeuze, extra kaart/chat of deelreparatie als volledige afronding."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {
@@ -1838,7 +1838,7 @@
     "automaticFollowup": {
       "id": "eva2-taken-afronden",
       "kind": "heartbeat",
-      "intervalMinutes": 5,
+      "intervalMinutes": 60,
       "status": "ACTIVE",
       "restartedAt": "2026-10-25T11:48:56.703586+00:00",
       "authority": "Directe eigenaaropdracht25oktober2026: opvolging aan, elke chat eigen afrondtaak, tester test opleveringen; geen uitstapjes.",
@@ -1851,7 +1851,9 @@
         "reason": "De beoordeelde kandidaat is geïnstalleerd en onafhankelijk teruggelezen; er resteert nu geen onderbouwde uitvoerbare opdracht binnen deze technische opvolging. Gewoon later gebruik, eigenaarafspraken en de afzonderlijke spraakroute blijven open volgens het werkbord.",
         "projectCompleted": false
       },
-      "stopCondition": "Afgesproken volledige afrondtaken werkelijk klaar of Jaap vraagt stoppen; geen stop op technische deeloplevering of wachtstap."
+      "stopCondition": "Afgesproken volledige afrondtaken werkelijk klaar of Jaap vraagt stoppen; geen stop op technische deeloplevering of wachtstap.",
+      "primaryTaskId": "E1.6",
+      "updatedAt": "2026-10-25T22:17:55.402788+00:00"
     },
     "currentOwnerContinuation": {
       "workId": "work:eva-resume:8768071e-0047-5438-8c17-d0d8990a71c9",

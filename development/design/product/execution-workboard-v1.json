@@ -847,7 +847,7 @@
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Rond E1.6 als één volledige werkbordtaak af. Reconnectcorrectie en noodzakelijke herstelbronoverdracht zijn geïnstalleerd en onafhankelijk gecontroleerd. Handel uitsluitend de exact afgebroken credentials-rejected afweging af na de inmiddels gewijzigde aanmeldbron; laat daarna de bestaande gewone route zelf een relevante bron kiezen en bewijs echte bronverandering → afweging → gecontroleerd vervolg. Geen nieuwe kaarten/chats/regieoverdracht, geforceerde bronkeuze of deelafronding als volledige kaart.",
+    "nextAction": "Volg nu de bestaande gewone E1.6-route na installatie en daadwerkelijk gecontroleerd authenticatieherstel: Eva kiest zelf een relevante bron vanuit een echt doel, een echte verandering leidt tot afweging en gecontroleerd vervolg. De exact mislukte17:02-afweging is éénmaal afgesloten en onafhankelijk nagecontroleerd; geen herhaling daarvan. Als de normale cyclus niet loopt, bepaal uitsluitend de concrete bestaande gate en herstel een bewezen tekort. Geen geforceerde bronkeuze, extra kaart/chat of deelreparatie als volledige afronding.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3165,14 +3165,14 @@
         "next": {
           "taskId": "E1.6",
           "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
-          "detail": "Rond E1.6 als één volledige werkbordtaak af. Reconnectcorrectie en noodzakelijke herstelbronoverdracht zijn geïnstalleerd en onafhankelijk gecontroleerd. Handel uitsluitend de exact afgebroken credentials-rejected afweging af na de inmiddels gewijzigde aanmeldbron; laat daarna de bestaande gewone route zelf een relevante bron kiezen en bewijs echte bronverandering → afweging → gecontroleerd vervolg. Geen nieuwe kaarten/chats/regieoverdracht, geforceerde bronkeuze of deelafronding als volledige kaart."
+          "detail": "Volg nu de bestaande gewone E1.6-route na installatie en daadwerkelijk gecontroleerd authenticatieherstel: Eva kiest zelf een relevante bron vanuit een echt doel, een echte verandering leidt tot afweging en gecontroleerd vervolg. De exact mislukte17:02-afweging is éénmaal afgesloten en onafhankelijk nagecontroleerd; geen herhaling daarvan. Als de normale cyclus niet loopt, bepaal uitsluitend de concrete bestaande gate en herstel een bewezen tekort. Geen geforceerde bronkeuze, extra kaart/chat of deelreparatie als volledige afronding."
         },
         "ownerAction": {
           "required": false,
           "detail": "Geen nieuwe eigenaarhandeling gevraagd; installatie wacht op concrete afsluitbinding van de bestaande gespreksregistratie.",
           "steps": []
         },
-        "checkedAt": "2026-10-25T22:11:19.598938+00:00",
+        "checkedAt": "2026-10-25T22:17:55.402788+00:00",
         "reviewedAt": "2026-10-25T22:09:03.184675+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -5953,8 +5953,8 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Rond E1.6 als één volledige werkbordtaak af. Reconnectcorrectie en noodzakelijke herstelbronoverdracht zijn geïnstalleerd en onafhankelijk gecontroleerd. Handel uitsluitend de exact afgebroken credentials-rejected afweging af na de inmiddels gewijzigde aanmeldbron; laat daarna de bestaande gewone route zelf een relevante bron kiezen en bewijs echte bronverandering → afweging → gecontroleerd vervolg. Geen nieuwe kaarten/chats/regieoverdracht, geforceerde bronkeuze of deelafronding als volledige kaart.",
-                "checkedAt": "2026-10-25T22:11:19.598938+00:00",
+                "nextAction": "Volg nu de bestaande gewone E1.6-route na installatie en daadwerkelijk gecontroleerd authenticatieherstel: Eva kiest zelf een relevante bron vanuit een echt doel, een echte verandering leidt tot afweging en gecontroleerd vervolg. De exact mislukte17:02-afweging is éénmaal afgesloten en onafhankelijk nagecontroleerd; geen herhaling daarvan. Als de normale cyclus niet loopt, bepaal uitsluitend de concrete bestaande gate en herstel een bewezen tekort. Geen geforceerde bronkeuze, extra kaart/chat of deelreparatie als volledige afronding.",
+                "checkedAt": "2026-10-25T22:17:55.402788+00:00",
                 "progress": "De reconnectcorrectie en begrensde herstelbronoverdracht draaien sinds25oktober22:05UTC op kern, worker en de behouden hostroute; onafhankelijke installatiecontrole is geslaagd. De huidige vijf actieve digitaleproducerpins zijn gelijk aan beide runtimes. Voor live E1.6 bleek de volgende gewone afweging op geweigerde toegangsgegevens te falen. De bestaande bron is met nieuwere credentials voor hetzelfde account bijgewerkt en access-only gepubliceerd; de exacte oude afweging en daarna werkelijk modelgekozen bronvervolg blijven nog te toetsen.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
@@ -9129,7 +9129,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Rond E1.6 als één volledige werkbordtaak af. Reconnectcorrectie en noodzakelijke herstelbronoverdracht zijn geïnstalleerd en onafhankelijk gecontroleerd. Handel uitsluitend de exact afgebroken credentials-rejected afweging af na de inmiddels gewijzigde aanmeldbron; laat daarna de bestaande gewone route zelf een relevante bron kiezen en bewijs echte bronverandering → afweging → gecontroleerd vervolg. Geen nieuwe kaarten/chats/regieoverdracht, geforceerde bronkeuze of deelafronding als volledige kaart.",
+        "nextAction": "Volg nu de bestaande gewone E1.6-route na installatie en daadwerkelijk gecontroleerd authenticatieherstel: Eva kiest zelf een relevante bron vanuit een echt doel, een echte verandering leidt tot afweging en gecontroleerd vervolg. De exact mislukte17:02-afweging is éénmaal afgesloten en onafhankelijk nagecontroleerd; geen herhaling daarvan. Als de normale cyclus niet loopt, bepaal uitsluitend de concrete bestaande gate en herstel een bewezen tekort. Geen geforceerde bronkeuze, extra kaart/chat of deelreparatie als volledige afronding.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9140,7 +9140,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-25T22:11:19.598938+00:00",
+        "updatedAt": "2026-10-25T22:17:55.402788+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9416,7 +9416,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-25T22:11:19.598938+00:00",
+        "checkedAt": "2026-10-25T22:17:55.402788+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -12163,8 +12163,8 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Rond E1.6 als één volledige werkbordtaak af. Reconnectcorrectie en noodzakelijke herstelbronoverdracht zijn geïnstalleerd en onafhankelijk gecontroleerd. Handel uitsluitend de exact afgebroken credentials-rejected afweging af na de inmiddels gewijzigde aanmeldbron; laat daarna de bestaande gewone route zelf een relevante bron kiezen en bewijs echte bronverandering → afweging → gecontroleerd vervolg. Geen nieuwe kaarten/chats/regieoverdracht, geforceerde bronkeuze of deelafronding als volledige kaart.",
-              "checkedAt": "2026-10-25T22:11:19.598938+00:00",
+              "nextAction": "Volg nu de bestaande gewone E1.6-route na installatie en daadwerkelijk gecontroleerd authenticatieherstel: Eva kiest zelf een relevante bron vanuit een echt doel, een echte verandering leidt tot afweging en gecontroleerd vervolg. De exact mislukte17:02-afweging is éénmaal afgesloten en onafhankelijk nagecontroleerd; geen herhaling daarvan. Als de normale cyclus niet loopt, bepaal uitsluitend de concrete bestaande gate en herstel een bewezen tekort. Geen geforceerde bronkeuze, extra kaart/chat of deelreparatie als volledige afronding.",
+              "checkedAt": "2026-10-25T22:17:55.402788+00:00",
               "progress": "De reconnectcorrectie en begrensde herstelbronoverdracht draaien sinds25oktober22:05UTC op kern, worker en de behouden hostroute; onafhankelijke installatiecontrole is geslaagd. De huidige vijf actieve digitaleproducerpins zijn gelijk aan beide runtimes. Voor live E1.6 bleek de volgende gewone afweging op geweigerde toegangsgegevens te falen. De bestaande bron is met nieuwere credentials voor hetzelfde account bijgewerkt en access-only gepubliceerd; de exacte oude afweging en daarna werkelijk modelgekozen bronvervolg blijven nog te toetsen.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
@@ -15339,7 +15339,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Rond E1.6 als één volledige werkbordtaak af. Reconnectcorrectie en noodzakelijke herstelbronoverdracht zijn geïnstalleerd en onafhankelijk gecontroleerd. Handel uitsluitend de exact afgebroken credentials-rejected afweging af na de inmiddels gewijzigde aanmeldbron; laat daarna de bestaande gewone route zelf een relevante bron kiezen en bewijs echte bronverandering → afweging → gecontroleerd vervolg. Geen nieuwe kaarten/chats/regieoverdracht, geforceerde bronkeuze of deelafronding als volledige kaart.",
+      "nextAction": "Volg nu de bestaande gewone E1.6-route na installatie en daadwerkelijk gecontroleerd authenticatieherstel: Eva kiest zelf een relevante bron vanuit een echt doel, een echte verandering leidt tot afweging en gecontroleerd vervolg. De exact mislukte17:02-afweging is éénmaal afgesloten en onafhankelijk nagecontroleerd; geen herhaling daarvan. Als de normale cyclus niet loopt, bepaal uitsluitend de concrete bestaande gate en herstel een bewezen tekort. Geen geforceerde bronkeuze, extra kaart/chat of deelreparatie als volledige afronding.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15350,7 +15350,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-25T22:11:19.598938+00:00",
+      "updatedAt": "2026-10-25T22:17:55.402788+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -15626,7 +15626,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-25T22:11:19.598938+00:00",
+      "checkedAt": "2026-10-25T22:17:55.402788+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
