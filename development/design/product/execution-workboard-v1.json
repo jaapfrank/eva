@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Gebruik de geïnstalleerde route bij gewoon later gebruik. Vervolg E4.16 uitsluitend op nieuw concreet fout- of gebruiksbewijs; geen nieuwe schoolherpoging of herhaalproef zonder gewijzigde oorzaak. De nu uitvoerbare technische opvolging is afgerond en de vijfminutenautomatisering beëindigd. Resterende gezins-, adoptie- en fysieke proeven behouden hun bestaande kaarten; het volledige project blijft open.",
+    "nextAction": "Directe eigenaaropdracht 25 oktober: blijf de bestaande volledige taken afronden. Hoofdbouwer: E4.16 zelfherstel; coder1: E1.6 bronverandering naar zelfstandig vervolg; coder2: E1.7 routines en tegenbewijs. Tester controleert concrete opleveringen onafhankelijk. Coordinator integreert, installeert en registreert. Geen uitstapjes; een deelreparatie of wachtstap stopt de opvolging niet.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -3141,22 +3141,22 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "SDK-headercorrectie op 25 oktober om 08:21 Nederlandse tijd geïnstalleerd en onafhankelijk werkelijk teruggelezen. Beide rollen zijn gezond; de providerbron en alle vier werkprofielen komen overeen. De oorspronkelijke installatieblokkade is met exact bron- en terminaal foutbewijs verklaard; registraties zijn behouden. Nieuwe echte HTTP-foutdiagnostiek, de schooluitkomst en volledige autonome herstel-/hergebruikcriteria blijven open.",
+          "summary": "De SDK-headercorrectie is geïnstalleerd en onafhankelijk gecontroleerd. Op Jaaps directe hervattingsopdracht werken drie uitvoerders nu aan afzonderlijke volledige kaarten: E4.16, E1.6 en E1.7. De tester beoordeelt hun concrete opleveringen; integratie en installatie blijven bij de coördinator. Volledige afronding volgt alleen uit de oorspronkelijke eindvoorwaarden.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "detail": "SDK-headercorrectie op 25 oktober om 08:21 Nederlandse tijd geïnstalleerd en onafhankelijk werkelijk teruggelezen. Beide rollen zijn gezond; de providerbron en alle vier werkprofielen komen overeen. De oorspronkelijke installatieblokkade is met exact bron- en terminaal foutbewijs verklaard; registraties zijn behouden. Nieuwe echte HTTP-foutdiagnostiek, de schooluitkomst en volledige autonome herstel-/hergebruikcriteria blijven open.",
-          "state": "SDK-headercorrectie geïnstalleerd en onafhankelijk gecontroleerd; volledige kaart blijft open."
+          "detail": "De SDK-headercorrectie is geïnstalleerd en onafhankelijk gecontroleerd. Op Jaaps directe hervattingsopdracht werken drie uitvoerders nu aan afzonderlijke volledige kaarten: E4.16, E1.6 en E1.7. De tester beoordeelt hun concrete opleveringen; integratie en installatie blijven bij de coördinator. Volledige afronding volgt alleen uit de oorspronkelijke eindvoorwaarden.",
+          "state": "Drie afgebakende afrondtaken actief; tester controleert concrete opleveringen."
         },
         "next": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "detail": "Gebruik de geïnstalleerde route bij gewoon later gebruik. Vervolg E4.16 uitsluitend op nieuw concreet fout- of gebruiksbewijs; geen nieuwe schoolherpoging of herhaalproef zonder gewijzigde oorzaak. De nu uitvoerbare technische opvolging is afgerond en de vijfminutenautomatisering beëindigd. Resterende gezins-, adoptie- en fysieke proeven behouden hun bestaande kaarten; het volledige project blijft open."
+          "detail": "Directe eigenaaropdracht 25 oktober: blijf de bestaande volledige taken afronden. Hoofdbouwer: E4.16 zelfherstel; coder1: E1.6 bronverandering naar zelfstandig vervolg; coder2: E1.7 routines en tegenbewijs. Tester controleert concrete opleveringen onafhankelijk. Coordinator integreert, installeert en registreert. Geen uitstapjes; een deelreparatie of wachtstap stopt de opvolging niet."
         },
         "ownerAction": {
           "required": false,
           "detail": "Geen nieuwe eigenaarhandeling gevraagd; installatie wacht op concrete afsluitbinding van de bestaande gespreksregistratie.",
           "steps": []
         },
-        "checkedAt": "2026-10-25T07:25:12.499685+00:00",
+        "checkedAt": "2026-10-25T11:48:56.703586+00:00",
         "reviewedAt": "2026-10-25T07:23:16.777449+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -5888,8 +5888,21 @@
                 "requiredForCurrentDelivery": true,
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [],
-                  "scope": "Finish existing household_research installed release mismatch: coder1 exact intended source closure, coder2 minimal coherent image/profile package. Foreign voice work protected; root installs after independent review."
+                  "activeWorkers": [
+                    "01a169e0-4ed1-75d1-9541-b5dae109b328"
+                  ],
+                  "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
+                  "scope": "Coder1 rondt de bestaande volledige bronroute af: modelgekozen aansluiting vanuit echt doel, werkelijke bronverandering, aandacht en gecontroleerd passend vervolg of onderbouwde stilte. Hergebruik geldige bewijzen; maak concrete ontbrekende overdrachten en grenscontroles af.",
+                  "exclusiveProductFiles": [
+                    "src/eva/application/sensory.py",
+                    "src/eva/application/resident_attention.py",
+                    "src/eva/adapters/postgres/initiative_attention.py",
+                    "src/eva/bootstrap/household_initiative.py",
+                    "src/eva/providers/mcp_discovery.py",
+                    "src/eva/providers/mcp_registration.py"
+                  ],
+                  "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                  "ownerInstructionDate": "2026-10-25"
                 },
                 "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
                 "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
@@ -5924,8 +5937,8 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "De bekende bronreleaseblokkade is geïnstalleerd verholpen en met de werkelijke worker in isolatie gecontroleerd. Volg alleen nog gewone bronkeuze en werkelijk vervolg voor de oorspronkelijke volledige kaartcriteria.",
-                "checkedAt": "2026-10-24T10:58:51.156682+00:00",
+                "nextAction": "Coder1 rondt de bestaande volledige bronroute af: modelgekozen aansluiting vanuit echt doel, werkelijke bronverandering, aandacht en gecontroleerd passend vervolg of onderbouwde stilte. Hergebruik geldige bewijzen; maak concrete ontbrekende overdrachten en grenscontroles af.",
+                "checkedAt": "2026-10-25T11:48:56.703586+00:00",
                 "progress": "Herstel geïnstalleerd: eigen onderzoeksbronnen bereiken de volgende afweging. Eva gebruikte die en koos zelf later contact. Met expliciete toestemming is diezelfde aandacht vervroegd: persoonlijk Telegrambericht op23oktober01:06CEST daadwerkelijk afgeleverd. Daarna twee echte eigenaarberichten verwerkt en beide antwoorden afgeleverd. Oorspronkelijk ochtendmoment verbruikt, geen dubbele afspraak; speakers niet gebruikt. Dit bewijst de geautoriseerde contactroute, niet dagelijks spontaan gezinsnut of volledige E1.6-bronbewaking.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
@@ -6025,16 +6038,30 @@
                   "hermes-goals"
                 ],
                 "beyondExistingScope": "E1.5 levert actuele synthese; deze nieuwe uitkomst levert aantoonbaar leren en weerleggen van een voorwaardelijke routine.",
-                "assignment": "Actieve kernuitvoerder; correctiebehoud gebouwd, beoordeeld en geïnstalleerd; echte routine-uitkomst nog te bewijzen.",
+                "assignment": {
+                  "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                  "activeWorkers": [
+                    "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+                  ],
+                  "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
+                  "scope": "Coder2 rondt bestaande routine-/verwachtingsoverdracht af: echte herhaalde gebeurtenissen, voorwaarden, later tegenbewijs en bijgesteld gedrag. Geen gefabriceerde routine of nieuwe geheugenlaag; ontbrekende mens-/brondekking exact afbakenen nadat uitvoerbare werking is opgeleverd.",
+                  "exclusiveProductFiles": [
+                    "src/eva/application/human_understanding.py",
+                    "src/eva/adapters/postgres/initiative_context.py",
+                    "src/eva/providers/human_understanding_actions.py"
+                  ],
+                  "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                  "ownerInstructionDate": "2026-10-25"
+                },
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Toets een voorwaardelijke verwachting en latere echte uitzondering via gewone gesprekken, droomconsolidatie en initiatief. Gebruik de nu volledige bronoverdracht; ontbrekende gezinsdekking blijft onbekend, zonder gefabriceerde routine.",
+                "nextAction": "Coder2 rondt bestaande routine-/verwachtingsoverdracht af: echte herhaalde gebeurtenissen, voorwaarden, later tegenbewijs en bijgesteld gedrag. Geen gefabriceerde routine of nieuwe geheugenlaag; ontbrekende mens-/brondekking exact afbakenen nadat uitvoerbare werking is opgeleverd.",
                 "implementationSteps": [
                   "Routines als toetsbare hypotheses met uitzonderingen en bron opslaan in bestaand geheugen.",
                   "Tegenbewijs en correctie verwerken in later gedrag; ontbrekende observatie onbekend houden."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
                 "progress": "E1.7: correctiebehoud en volledige bronoverdracht geïnstalleerd. Kern en achtergrondwerker halen nu de benodigde bronfeiten op voor bestaande afgeleide inzichten. Dezelfde echte geheugenvraag levert één samenhangend inzicht met drie oorspronkelijke bronnen op; voorheen ontbrak het door afgekapt bronbewijs. Live zoekmeting 0,516s, één aanvraag; geen algemene snelheidsclaim. 36 gerichte controles slagen. Werkelijk meerdaags gezinsroutineleren en latere gedragsbijstelling blijven te bewijzen.",
-                "checkedAt": "2026-10-22T23:35:51.878942+00:00",
+                "checkedAt": "2026-10-25T11:48:56.703586+00:00",
                 "implementationEvidence": "development/evidence/product/e17-learning-revision-admission-20261023.json",
                 "independentReview": "development/reviews/e17-learning-revision-admission-20261023.json",
                 "lastInstalledAt": "2026-10-22T23:35:51.878961+00:00",
@@ -8373,7 +8400,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Gebruik de geïnstalleerde route bij gewoon later gebruik. Vervolg E4.16 uitsluitend op nieuw concreet fout- of gebruiksbewijs; geen nieuwe schoolherpoging of herhaalproef zonder gewijzigde oorzaak. De nu uitvoerbare technische opvolging is afgerond en de vijfminutenautomatisering beëindigd. Resterende gezins-, adoptie- en fysieke proeven behouden hun bestaande kaarten; het volledige project blijft open.",
+                "nextAction": "Hoofdbouwer maakt de ontbrekende native zelfhersteloverdracht af: echte fout naar blijvend doel, Eva-kandidaat, onafhankelijk oordeel, beheerde toepassing, oorspronkelijke werking en later hergebruik. Gebruik actuele installatie en laatste overdracht; de SDK-headercorrectie is geen volledige kaartafronding.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8384,8 +8411,22 @@
                 ],
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [],
-                  "scope": "Assigned source, guard, integration and independent actual installation review completed. No active code/install claim; full E4.16 remains open for real fault/reuse evidence."
+                  "activeWorkers": [
+                    "01a0c537-54d0-7080-9e4c-74db537877af"
+                  ],
+                  "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
+                  "scope": "Hoofdbouwer maakt de ontbrekende native zelfhersteloverdracht af: echte fout naar blijvend doel, Eva-kandidaat, onafhankelijk oordeel, beheerde toepassing, oorspronkelijke werking en later hergebruik. Gebruik actuele installatie en laatste overdracht; de SDK-headercorrectie is geen volledige kaartafronding.",
+                  "exclusiveProductFiles": [
+                    "src/eva/application/self_repair.py",
+                    "src/eva/application/repair_assessment.py",
+                    "src/eva/adapters/postgres/self_repair.py",
+                    "src/eva/bootstrap/self_repair.py",
+                    "src/eva/bootstrap/runtime_repair_work.py",
+                    "src/eva/bootstrap/runtime_repair_host.py",
+                    "src/eva/operations/runtime_repair_*.py"
+                  ],
+                  "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                  "ownerInstructionDate": "2026-10-25"
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/e416-provider-native-headers-20261024.json",
@@ -8398,7 +8439,7 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-25T07:25:12.499685+00:00",
+                "checkedAt": "2026-10-25T11:48:56.703586+00:00",
                 "progress": "SDK-headercorrectie op 25 oktober om 08:21 Nederlandse tijd geïnstalleerd en onafhankelijk werkelijk teruggelezen. Beide rollen zijn gezond; de providerbron en alle vier werkprofielen komen overeen. De oorspronkelijke installatieblokkade is met exact bron- en terminaal foutbewijs verklaard; registraties zijn behouden. Nieuwe echte HTTP-foutdiagnostiek, de schooluitkomst en volledige autonome herstel-/hergebruikcriteria blijven open.",
                 "latestEvidence": "development/evidence/product/e416-provider-native-headers-20261024.json"
               },
@@ -9076,7 +9117,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Gebruik de geïnstalleerde route bij gewoon later gebruik. Vervolg E4.16 uitsluitend op nieuw concreet fout- of gebruiksbewijs; geen nieuwe schoolherpoging of herhaalproef zonder gewijzigde oorzaak. De nu uitvoerbare technische opvolging is afgerond en de vijfminutenautomatisering beëindigd. Resterende gezins-, adoptie- en fysieke proeven behouden hun bestaande kaarten; het volledige project blijft open.",
+        "nextAction": "Directe eigenaaropdracht 25 oktober: blijf de bestaande volledige taken afronden. Hoofdbouwer: E4.16 zelfherstel; coder1: E1.6 bronverandering naar zelfstandig vervolg; coder2: E1.7 routines en tegenbewijs. Tester controleert concrete opleveringen onafhankelijk. Coordinator integreert, installeert en registreert. Geen uitstapjes; een deelreparatie of wachtstap stopt de opvolging niet.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9087,7 +9128,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-25T07:25:12.499685+00:00",
+        "updatedAt": "2026-10-25T11:48:56.703586+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9363,7 +9404,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-25T07:25:12.499685+00:00",
+        "checkedAt": "2026-10-25T11:48:56.703586+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -12061,8 +12102,21 @@
               "requiredForCurrentDelivery": true,
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [],
-                "scope": "Finish existing household_research installed release mismatch: coder1 exact intended source closure, coder2 minimal coherent image/profile package. Foreign voice work protected; root installs after independent review."
+                "activeWorkers": [
+                  "01a169e0-4ed1-75d1-9541-b5dae109b328"
+                ],
+                "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
+                "scope": "Coder1 rondt de bestaande volledige bronroute af: modelgekozen aansluiting vanuit echt doel, werkelijke bronverandering, aandacht en gecontroleerd passend vervolg of onderbouwde stilte. Hergebruik geldige bewijzen; maak concrete ontbrekende overdrachten en grenscontroles af.",
+                "exclusiveProductFiles": [
+                  "src/eva/application/sensory.py",
+                  "src/eva/application/resident_attention.py",
+                  "src/eva/adapters/postgres/initiative_attention.py",
+                  "src/eva/bootstrap/household_initiative.py",
+                  "src/eva/providers/mcp_discovery.py",
+                  "src/eva/providers/mcp_registration.py"
+                ],
+                "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                "ownerInstructionDate": "2026-10-25"
               },
               "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
               "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
@@ -12097,8 +12151,8 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "De bekende bronreleaseblokkade is geïnstalleerd verholpen en met de werkelijke worker in isolatie gecontroleerd. Volg alleen nog gewone bronkeuze en werkelijk vervolg voor de oorspronkelijke volledige kaartcriteria.",
-              "checkedAt": "2026-10-24T10:58:51.156682+00:00",
+              "nextAction": "Coder1 rondt de bestaande volledige bronroute af: modelgekozen aansluiting vanuit echt doel, werkelijke bronverandering, aandacht en gecontroleerd passend vervolg of onderbouwde stilte. Hergebruik geldige bewijzen; maak concrete ontbrekende overdrachten en grenscontroles af.",
+              "checkedAt": "2026-10-25T11:48:56.703586+00:00",
               "progress": "Herstel geïnstalleerd: eigen onderzoeksbronnen bereiken de volgende afweging. Eva gebruikte die en koos zelf later contact. Met expliciete toestemming is diezelfde aandacht vervroegd: persoonlijk Telegrambericht op23oktober01:06CEST daadwerkelijk afgeleverd. Daarna twee echte eigenaarberichten verwerkt en beide antwoorden afgeleverd. Oorspronkelijk ochtendmoment verbruikt, geen dubbele afspraak; speakers niet gebruikt. Dit bewijst de geautoriseerde contactroute, niet dagelijks spontaan gezinsnut of volledige E1.6-bronbewaking.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
@@ -12198,16 +12252,30 @@
                 "hermes-goals"
               ],
               "beyondExistingScope": "E1.5 levert actuele synthese; deze nieuwe uitkomst levert aantoonbaar leren en weerleggen van een voorwaardelijke routine.",
-              "assignment": "Actieve kernuitvoerder; correctiebehoud gebouwd, beoordeeld en geïnstalleerd; echte routine-uitkomst nog te bewijzen.",
+              "assignment": {
+                "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                "activeWorkers": [
+                  "01a169f2-6ff6-7961-b16f-9fd0b836d3e3"
+                ],
+                "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
+                "scope": "Coder2 rondt bestaande routine-/verwachtingsoverdracht af: echte herhaalde gebeurtenissen, voorwaarden, later tegenbewijs en bijgesteld gedrag. Geen gefabriceerde routine of nieuwe geheugenlaag; ontbrekende mens-/brondekking exact afbakenen nadat uitvoerbare werking is opgeleverd.",
+                "exclusiveProductFiles": [
+                  "src/eva/application/human_understanding.py",
+                  "src/eva/adapters/postgres/initiative_context.py",
+                  "src/eva/providers/human_understanding_actions.py"
+                ],
+                "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                "ownerInstructionDate": "2026-10-25"
+              },
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Toets een voorwaardelijke verwachting en latere echte uitzondering via gewone gesprekken, droomconsolidatie en initiatief. Gebruik de nu volledige bronoverdracht; ontbrekende gezinsdekking blijft onbekend, zonder gefabriceerde routine.",
+              "nextAction": "Coder2 rondt bestaande routine-/verwachtingsoverdracht af: echte herhaalde gebeurtenissen, voorwaarden, later tegenbewijs en bijgesteld gedrag. Geen gefabriceerde routine of nieuwe geheugenlaag; ontbrekende mens-/brondekking exact afbakenen nadat uitvoerbare werking is opgeleverd.",
               "implementationSteps": [
                 "Routines als toetsbare hypotheses met uitzonderingen en bron opslaan in bestaand geheugen.",
                 "Tegenbewijs en correctie verwerken in later gedrag; ontbrekende observatie onbekend houden."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
               "progress": "E1.7: correctiebehoud en volledige bronoverdracht geïnstalleerd. Kern en achtergrondwerker halen nu de benodigde bronfeiten op voor bestaande afgeleide inzichten. Dezelfde echte geheugenvraag levert één samenhangend inzicht met drie oorspronkelijke bronnen op; voorheen ontbrak het door afgekapt bronbewijs. Live zoekmeting 0,516s, één aanvraag; geen algemene snelheidsclaim. 36 gerichte controles slagen. Werkelijk meerdaags gezinsroutineleren en latere gedragsbijstelling blijven te bewijzen.",
-              "checkedAt": "2026-10-22T23:35:51.878942+00:00",
+              "checkedAt": "2026-10-25T11:48:56.703586+00:00",
               "implementationEvidence": "development/evidence/product/e17-learning-revision-admission-20261023.json",
               "independentReview": "development/reviews/e17-learning-revision-admission-20261023.json",
               "lastInstalledAt": "2026-10-22T23:35:51.878961+00:00",
@@ -14546,7 +14614,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Gebruik de geïnstalleerde route bij gewoon later gebruik. Vervolg E4.16 uitsluitend op nieuw concreet fout- of gebruiksbewijs; geen nieuwe schoolherpoging of herhaalproef zonder gewijzigde oorzaak. De nu uitvoerbare technische opvolging is afgerond en de vijfminutenautomatisering beëindigd. Resterende gezins-, adoptie- en fysieke proeven behouden hun bestaande kaarten; het volledige project blijft open.",
+              "nextAction": "Hoofdbouwer maakt de ontbrekende native zelfhersteloverdracht af: echte fout naar blijvend doel, Eva-kandidaat, onafhankelijk oordeel, beheerde toepassing, oorspronkelijke werking en later hergebruik. Gebruik actuele installatie en laatste overdracht; de SDK-headercorrectie is geen volledige kaartafronding.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14557,8 +14625,22 @@
               ],
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [],
-                "scope": "Assigned source, guard, integration and independent actual installation review completed. No active code/install claim; full E4.16 remains open for real fault/reuse evidence."
+                "activeWorkers": [
+                  "01a0c537-54d0-7080-9e4c-74db537877af"
+                ],
+                "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
+                "scope": "Hoofdbouwer maakt de ontbrekende native zelfhersteloverdracht af: echte fout naar blijvend doel, Eva-kandidaat, onafhankelijk oordeel, beheerde toepassing, oorspronkelijke werking en later hergebruik. Gebruik actuele installatie en laatste overdracht; de SDK-headercorrectie is geen volledige kaartafronding.",
+                "exclusiveProductFiles": [
+                  "src/eva/application/self_repair.py",
+                  "src/eva/application/repair_assessment.py",
+                  "src/eva/adapters/postgres/self_repair.py",
+                  "src/eva/bootstrap/self_repair.py",
+                  "src/eva/bootstrap/runtime_repair_work.py",
+                  "src/eva/bootstrap/runtime_repair_host.py",
+                  "src/eva/operations/runtime_repair_*.py"
+                ],
+                "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                "ownerInstructionDate": "2026-10-25"
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/e416-provider-native-headers-20261024.json",
@@ -14571,7 +14653,7 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-25T07:25:12.499685+00:00",
+              "checkedAt": "2026-10-25T11:48:56.703586+00:00",
               "progress": "SDK-headercorrectie op 25 oktober om 08:21 Nederlandse tijd geïnstalleerd en onafhankelijk werkelijk teruggelezen. Beide rollen zijn gezond; de providerbron en alle vier werkprofielen komen overeen. De oorspronkelijke installatieblokkade is met exact bron- en terminaal foutbewijs verklaard; registraties zijn behouden. Nieuwe echte HTTP-foutdiagnostiek, de schooluitkomst en volledige autonome herstel-/hergebruikcriteria blijven open.",
               "latestEvidence": "development/evidence/product/e416-provider-native-headers-20261024.json"
             },
@@ -15249,7 +15331,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Gebruik de geïnstalleerde route bij gewoon later gebruik. Vervolg E4.16 uitsluitend op nieuw concreet fout- of gebruiksbewijs; geen nieuwe schoolherpoging of herhaalproef zonder gewijzigde oorzaak. De nu uitvoerbare technische opvolging is afgerond en de vijfminutenautomatisering beëindigd. Resterende gezins-, adoptie- en fysieke proeven behouden hun bestaande kaarten; het volledige project blijft open.",
+      "nextAction": "Directe eigenaaropdracht 25 oktober: blijf de bestaande volledige taken afronden. Hoofdbouwer: E4.16 zelfherstel; coder1: E1.6 bronverandering naar zelfstandig vervolg; coder2: E1.7 routines en tegenbewijs. Tester controleert concrete opleveringen onafhankelijk. Coordinator integreert, installeert en registreert. Geen uitstapjes; een deelreparatie of wachtstap stopt de opvolging niet.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15260,7 +15342,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-25T07:25:12.499685+00:00",
+      "updatedAt": "2026-10-25T11:48:56.703586+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -15536,7 +15618,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-25T07:25:12.499685+00:00",
+      "checkedAt": "2026-10-25T11:48:56.703586+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
