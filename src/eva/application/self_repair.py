@@ -8,6 +8,12 @@ import re
 from eva.contracts.canonical_json import canonical_sha256
 
 
+# A single observed module may use the existing 512 KiB total source budget.
+# Keep the same total bound; do not let per-file transport reject real modules.
+MAX_REPAIR_SOURCE_BYTES = 524288
+MAX_REPAIR_TOTAL_SOURCE_BYTES = 524288
+
+
 # Reject direct authority/assessment modules. Product modules can also contain
 # dispatch/authority logic: this filter never replaces independent semantic
 # assessment or grants installation rights.

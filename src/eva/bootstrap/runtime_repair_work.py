@@ -10,6 +10,7 @@ from eva.adapters.postgres.initiative_adoption import adopt_private_initiative
 from eva.adapters.postgres.operational_timeline import operational_events
 from eva.adapters.postgres.self_repair import current_repair_binding
 from eva.application.repair_assessment import repair_assessment_task
+from eva.application.self_repair import MAX_REPAIR_SOURCE_BYTES
 from eva.contracts.canonical_json import canonical_sha256
 
 
@@ -38,7 +39,7 @@ def admit_repair_assessment(authority, service, *, incident_id, role, target_id,
                 or not isinstance(digest, str) or not re.fullmatch(r'[0-9a-f]{64}', digest)):
             raise ValueError('repair assessment path is outside the observed host target')
         target = component_source(root, path)
-        if (not target.is_file() or target.stat().st_size > 262144
+        if (not target.is_file() or target.stat().st_size > MAX_REPAIR_SOURCE_BYTES
                 or hashlib.sha256(target.read_bytes()).hexdigest() != digest):
             raise ValueError('installed assessment source changed')
     # Validate existing model/worker admission before persisting another stage.

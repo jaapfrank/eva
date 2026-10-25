@@ -43,16 +43,16 @@ def current_repair_installation(publisher,directory):
 
 
 def read_image_source(publisher,image,path,directory):
-    from eva.application.self_repair import repairable_source
+    from eva.application.self_repair import MAX_REPAIR_SOURCE_BYTES, repairable_source
     if not repairable_source(path):raise ValueError('protected repair source')
     # Data stays bounded inside the immutable image; no candidate program runs.
     script=('import base64,pathlib,sys;p=pathlib.Path("/opt/eva/src/eva")/sys.argv[1];'
-        'assert p.resolve()==p and 1<=p.stat().st_size<=262144;print(base64.b64encode(p.read_bytes()).decode())')
+        f'assert p.resolve()==p and 1<=p.stat().st_size<={MAX_REPAIR_SOURCE_BYTES};print(base64.b64encode(p.read_bytes()).decode())')
     encoded=publisher._command(['docker','run','--rm','--network','none','--read-only',
         '--cap-drop','ALL','--security-opt','no-new-privileges','--user','10001:10001',
         '--entrypoint','python',image,'-I','-c',script,path],directory)
     raw=base64.b64decode(encoded,validate=True)
-    if not 1<=len(raw)<=262144:raise ValueError('bounded image source required')
+    if not 1<=len(raw)<=MAX_REPAIR_SOURCE_BYTES:raise ValueError('bounded image source required')
     raw.decode('utf-8')
     return raw
 

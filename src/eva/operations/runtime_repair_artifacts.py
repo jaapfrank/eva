@@ -11,6 +11,8 @@ from pathlib import Path
 import re
 import stat
 
+from eva.application.self_repair import MAX_REPAIR_SOURCE_BYTES
+
 
 def _key(value):
     if not isinstance(value,str) or not re.fullmatch(r'[0-9a-f]{64}',value):
@@ -105,7 +107,7 @@ class RuntimeRepairArtifacts:
         for path,digest in target['sources'].items():
             if not repairable_source(path):raise ValueError('protected source snapshot')
             raw=source(target['installation']['core']['image'],path)
-            if not isinstance(raw,bytes) or len(raw)>262144 or hashlib.sha256(raw).hexdigest()!=digest:
+            if not isinstance(raw,bytes) or len(raw)>MAX_REPAIR_SOURCE_BYTES or hashlib.sha256(raw).hexdigest()!=digest:
                 raise ValueError('exact installed repair source snapshot required')
             files['repair/source/eva/'+path]=raw
         if metadata.get('role') is None:

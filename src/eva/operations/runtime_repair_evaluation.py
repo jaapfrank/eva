@@ -13,6 +13,7 @@ import json
 from pathlib import Path
 import tempfile
 
+from eva.application.self_repair import MAX_REPAIR_SOURCE_BYTES, MAX_REPAIR_TOTAL_SOURCE_BYTES
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.operations.component_evaluation import ComponentEvaluator, EvaluationConfig
 from eva.operations.reviewed_component_application import _artifact
@@ -86,12 +87,12 @@ def validate_repair_candidate(target, value):
         if not repairable_source(entry['path']):
             raise ValueError('repair file affects a protected component')
         raw = entry['candidate_content'].encode('utf-8')
-        if (not 1 <= len(raw) <= 262144 or hashlib.sha256(raw).hexdigest() != entry['candidate_sha256']
+        if (not 1 <= len(raw) <= MAX_REPAIR_SOURCE_BYTES or hashlib.sha256(raw).hexdigest() != entry['candidate_sha256']
                 or entry['candidate_sha256'] == entry['baseline_sha256']):
             raise ValueError('repair candidate bytes differ or make no change')
         ast.parse(raw, filename=entry['path'])
         total += len(raw);seen.add(entry['path'])
-    if total > 524288:
+    if total > MAX_REPAIR_TOTAL_SOURCE_BYTES:
         raise ValueError('repair candidate exceeds source bound')
     return json.loads(canonical_json_bytes(value))
 

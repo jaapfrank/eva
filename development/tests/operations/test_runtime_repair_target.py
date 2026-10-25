@@ -113,3 +113,64 @@ def test_unregistered_new_component_receives_only_its_actual_candidate_contract(
     assert validate_repair_candidate(actual,candidate)==candidate
     assert not handoff['installed'] and not handoff['is_execution_permission']
     assert calls==[]  # Describing a build contract does not create/use criteria.
+
+
+@pytest.mark.parametrize("size", [283749, 524288])
+def test_observed_module_uses_existing_total_budget_through_source_and_candidate_handoff(target, tmp_path, size):
+    import json
+    from types import SimpleNamespace
+    from eva.operations.runtime_repair_target import repair_builder_handoff
+    from eva.operations.runtime_repair_artifacts import RuntimeRepairArtifacts
+    from eva.operations.runtime_repair_evaluation import validate_repair_candidate
+
+    registry, binding, _, _, _, _ = target
+    source = b"value = 1\n#" + b"x" * (size - 11)
+    assert len(source) == size
+    digest = hashlib.sha256(source).hexdigest()
+    binding["observation"]["frames"][0]["source_sha256"] = digest
+    registry.source = lambda *_: source
+    resolved = registry.resolve(binding["incident_id"])
+    handoff = repair_builder_handoff(resolved)
+    schema = handoff["candidate_schema"]["properties"]["files"]["items"]["anyOf"][0]
+    assert schema["properties"]["candidate_content"]["maxLength"] >= size
+    programming = SimpleNamespace(config=SimpleNamespace(workspace_root=tmp_path / "workspaces"))
+    artifacts = RuntimeRepairArtifacts(programming)
+    metadata = {"workspace_key": "a" * 64, "role": None, "state": "succeeded"}
+    artifacts.seed_sources(metadata, resolved, source=registry.source)
+    repair = programming.config.workspace_root / metadata["workspace_key"] / "repair"
+    assert (repair / "source/eva/application/new_component.py").read_bytes() == source
+    changed = source.replace(b"value = 1", b"value = 2", 1)
+    candidate = {"contract": "EvaRuntimeRepairCandidate/v1", "target_id": resolved["target_id"],
+        "diagnosis": "Synthetic source transport regression only; no autonomous repair claim.",
+        "files": [{"path": "application/new_component.py", "baseline_sha256": digest,
+            "candidate_sha256": hashlib.sha256(changed).hexdigest(), "candidate_content": changed.decode()}]}
+    (repair / "candidate.json").write_text(json.dumps(candidate))
+    assert validate_repair_candidate(resolved, artifacts.read(metadata, "candidate.json")) == candidate
+
+
+def test_per_module_and_combined_source_bytes_stay_within_original_total_budget(target):
+    from eva.operations.runtime_repair_evaluation import validate_repair_candidate
+    registry, binding, _, _, calls, _ = target
+    source = b"#" + b"x" * 524288
+    binding["observation"]["frames"][0]["source_sha256"] = hashlib.sha256(source).hexdigest()
+    registry.source = lambda *_: source
+    with pytest.raises(ValueError, match="bounded installed repair source"):
+        registry.resolve(binding["incident_id"])
+    assert calls == []
+    # Each file fits; their combined source must still fit the unchanged512KiB budget.
+    source = b"#" + b"x" * 283748
+    digest = hashlib.sha256(source).hexdigest()
+    binding["observation"]["frames"] = [{"path": "application/" + name + ".py",
+        "function": "example:1", "source_sha256": digest} for name in ("one", "two")]
+    registry.source = lambda *_: source
+    with pytest.raises(ValueError, match="scope exceeds bound"):
+        registry.resolve(binding["incident_id"])
+    target_info = {"target_id": "a" * 64, "sources": {f["path"]: digest for f in binding["observation"]["frames"]}}
+    changed = source + b"\n"
+    entries = [{"path": path, "baseline_sha256": digest,
+        "candidate_sha256": hashlib.sha256(changed).hexdigest(), "candidate_content": changed.decode()}
+        for path in target_info["sources"]]
+    candidate = {"contract": "EvaRuntimeRepairCandidate/v1", "target_id": "a" * 64,
+        "diagnosis": "Synthetic total-bound regression", "files": entries}
+    with pytest.raises(ValueError, match="candidate exceeds source bound"):
+        validate_repair_candidate(target_info, candidate)

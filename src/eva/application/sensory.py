@@ -97,7 +97,10 @@ class SensoryIngestionWorker:
         self._stop.set()
         if self._thread is not None:
             self._thread.join(timeout=5)
-        self._thread = None
+            # A connector may still be unwinding blocked I/O. Keep ownership so
+            # start() cannot clear its stop request and open a second listener.
+            if not self._thread.is_alive():
+                self._thread = None
 
     def _run(self) -> None:
         self._source.listen(self._stop, self._store.retain)

@@ -13,7 +13,10 @@ import re
 import stat
 import threading
 
-from eva.application.self_repair import RepairObservation, repairable_source
+from eva.application.self_repair import (
+    MAX_REPAIR_SOURCE_BYTES, MAX_REPAIR_TOTAL_SOURCE_BYTES,
+    RepairObservation, repairable_source,
+)
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.reviewed_component_application import _save
 
@@ -106,7 +109,7 @@ class RuntimeRepairTargets:
             versions = {}
             for service, runtime in installation.items():
                 raw = self.source(runtime['image'], path)
-                if not isinstance(raw, bytes) or not 1 <= len(raw) <= 262144:
+                if not isinstance(raw, bytes) or not 1 <= len(raw) <= MAX_REPAIR_SOURCE_BYTES:
                     raise ValueError('bounded installed repair source required')
                 raw.decode('utf-8')
                 versions[service] = hashlib.sha256(raw).hexdigest()
@@ -116,7 +119,7 @@ class RuntimeRepairTargets:
                 excluded.append(path)
                 continue
             total += len(raw)
-            if total > 524288:
+            if total > MAX_REPAIR_TOTAL_SOURCE_BYTES:
                 raise ValueError('repair source scope exceeds bound')
             selected[path] = frame['source_sha256']
         if not selected:
@@ -220,8 +223,8 @@ def repair_builder_handoff(target):
                 "path":{"const":path}, "baseline_sha256":{"const":digest},
                 "candidate_sha256":{"type":"string","pattern":"^[0-9a-f]{64}$",
                     "description":"SHA256 of the exact UTF-8 candidate_content bytes; must differ from baseline."},
-                "candidate_content":{"type":"string","minLength":1,"maxLength":262144,
-                    "description":"Complete changed Python module, at most262144 UTF-8 bytes. The host checks hashes and syntax."}}})
+                "candidate_content":{"type":"string","minLength":1,"maxLength":MAX_REPAIR_SOURCE_BYTES,
+                    "description":f"Complete changed Python module, at most {MAX_REPAIR_SOURCE_BYTES} UTF-8 bytes. The host checks hashes and syntax."}}})
     return {"contract":"EvaRuntimeRepairBuilderHandoff/v1", "target_id":target["target_id"],
         "source_root":"/workspace/repair/source/eva", "candidate_file":"/workspace/repair/candidate.json",
         "candidate_schema":{"type":"object", "additionalProperties":False,
@@ -231,7 +234,7 @@ def repair_builder_handoff(target):
                 "diagnosis":{"type":"string","minLength":1,"maxLength":4000},
                 "files":{"type":"array","minItems":1,"maxItems":len(sources),
                     "items":{"anyOf":file_schemas},
-                    "description":"Unique selected paths only; combined UTF-8 source bytes at most524288."}}},
+                    "description":f"Unique selected paths only; combined UTF-8 source bytes at most {MAX_REPAIR_TOTAL_SOURCE_BYTES}."}}},
         "handoff_steps":["Read the host-seeded source and diagnose the recorded failure.",
             "Write the actual candidate matching this schema and read back its exact bytes.",
             "Call manage_own_runtime_repair with action=submit once.",
