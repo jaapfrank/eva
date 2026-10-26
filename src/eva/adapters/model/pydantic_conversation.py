@@ -3881,9 +3881,12 @@ class PydanticConversationModel:
                             auth[0].encode()
                         ).hexdigest()
                 detail = error.read(1024).decode("utf-8", errors="replace")
-                raise ConversationModelError(
+                failure = ConversationModelError(
                     f"conversation provider returned HTTP {error.code}: {detail}"
-                ) from error
+                )
+                if type(error.code) is int and 100 <= error.code <= 599:
+                    failure.failure_http_status_code = error.code
+                raise failure from error
             except (TimeoutError, socket.timeout, urllib.error.URLError) as error:
                 raise ConversationModelError(
                     "conversation provider is unavailable"

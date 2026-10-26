@@ -2282,6 +2282,10 @@ class PostgresSensoryEventStore:
                         "source_event_id": claim.event.source_event_id, "operation_id": claim.operation_id,
                         "claim_revision": claim.revision, "error_fingerprint": hashlib.sha256(
                             f"{type(error).__name__}: {error}".encode()).hexdigest()}}
+            failure_metadata = {}
+            http_status = getattr(error, "failure_http_status_code", None)
+            if type(http_status) is int and 100 <= http_status <= 599:
+                failure_metadata["failure_http_status_code"] = http_status
             # A new request cannot recover the missing measurement of this one.
             # Keep the uncertainty durable instead of spending another attempt.
             self._timeline.transition(
@@ -2301,7 +2305,8 @@ class PostgresSensoryEventStore:
                       "failure_fingerprint": hashlib.sha256(
                           f"{type(error).__name__}: {error}".encode()
                       ).hexdigest(),
-                      "provider_usage_error": isinstance(error, AutonomousUsageUncertain), **local_proof},
+                      "provider_usage_error": isinstance(error, AutonomousUsageUncertain),
+                      **local_proof, **failure_metadata},
                 retry_count=claim.retry_count + 1,
                 last_error_fingerprint=hashlib.sha256(b"autonomous_provider_usage_unverified").hexdigest(),
             )
