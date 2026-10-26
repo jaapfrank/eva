@@ -104,9 +104,14 @@
     "failureFingerprint": "0a02d34b7093243edb25789a68590d33bffd5c135e69bc4f889272b850188996",
     "usage": null,
     "differentFromEarlierCredentialFailure": true,
-    "cause": "pending_exact_attribution",
+    "cause": "unknown",
     "readOnlyEvidenceSha256": "2f5e97a45776113d5114525408822404be44e144474272bb300368db2bcfdf4f",
     "mutatingRecoveryAttempted": false,
-    "fullCardCompleted": false
+    "fullCardCompleted": false,
+    "concreteExceptionBranch": null,
+    "httpStatus": null,
+    "diagnosisSha256": "46307754b392c96c15fdb3455da03823d881e93b42ac421aac6566b66c182f29",
+    "reviewSha256": "b47f425543275388196ad899a1f362958cc7d3a3e3615186fe81e5a4768d5266",
+    "recoveryAuthorizedByEvidence": false
   }
 }

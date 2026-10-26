@@ -847,7 +847,7 @@
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Herleid en herstel uitsluitend de nieuwe fout in de gewone E1.6-afweging van25okt23:26:23UTC (WILL_USAGE_UNCERTAIN; andere failurefingerprint dan de eerdere credentialrejection). Coder1 levert exacte oorzaak en veilige herstelvoorwaarde; onafhankelijke tester controleert dit. Geen oude abandon, credentialsync, modelprobe of installatie herhalen. Daarna blijft de oorspronkelijke echte bronkeuze/verandering/afweging/uitkomst vereist; volledige kaart blijft open.",
+    "nextAction": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -5905,6 +5905,7 @@
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                   "activeWorkers": [
+                    "01a0c537-54d0-7080-9e4c-74db537877af",
                     "01a169e0-4ed1-75d1-9541-b5dae109b328"
                   ],
                   "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
@@ -5953,8 +5954,8 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Herleid en herstel uitsluitend de nieuwe fout in de gewone E1.6-afweging van25okt23:26:23UTC (WILL_USAGE_UNCERTAIN; andere failurefingerprint dan de eerdere credentialrejection). Coder1 levert exacte oorzaak en veilige herstelvoorwaarde; onafhankelijke tester controleert dit. Geen oude abandon, credentialsync, modelprobe of installatie herhalen. Daarna blijft de oorspronkelijke echte bronkeuze/verandering/afweging/uitkomst vereist; volledige kaart blijft open.",
-                "checkedAt": "2026-10-26T07:08:14.647100+00:00",
+                "nextAction": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
+                "checkedAt": "2026-10-26T07:17:01.376870+00:00",
                 "progress": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
@@ -6022,10 +6023,13 @@
                   "failureFingerprint": "0a02d34b7093243edb25789a68590d33bffd5c135e69bc4f889272b850188996",
                   "usage": null,
                   "differentFromEarlierCredentialFailure": true,
-                  "cause": "pending_exact_attribution",
-                  "status": "independent_review_assigned",
+                  "cause": "unknown_no_exact_branch_status_or_provider_cause_retained",
+                  "status": "bounded_diagnosis_independently_verified_conditional_status_transfer_assigned",
                   "replayed": false,
-                  "fullCardCompleted": false
+                  "fullCardCompleted": false,
+                  "diagnosisSha256": "46307754b392c96c15fdb3455da03823d881e93b42ac421aac6566b66c182f29",
+                  "reviewSha256": "b47f425543275388196ad899a1f362958cc7d3a3e3615186fe81e5a4768d5266",
+                  "recoveryAuthorizedByEvidence": false
                 }
               },
               {
@@ -12129,6 +12133,7 @@
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                 "activeWorkers": [
+                  "01a0c537-54d0-7080-9e4c-74db537877af",
                   "01a169e0-4ed1-75d1-9541-b5dae109b328"
                 ],
                 "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
@@ -12177,8 +12182,8 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Herleid en herstel uitsluitend de nieuwe fout in de gewone E1.6-afweging van25okt23:26:23UTC (WILL_USAGE_UNCERTAIN; andere failurefingerprint dan de eerdere credentialrejection). Coder1 levert exacte oorzaak en veilige herstelvoorwaarde; onafhankelijke tester controleert dit. Geen oude abandon, credentialsync, modelprobe of installatie herhalen. Daarna blijft de oorspronkelijke echte bronkeuze/verandering/afweging/uitkomst vereist; volledige kaart blijft open.",
-              "checkedAt": "2026-10-26T07:08:14.647100+00:00",
+              "nextAction": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
+              "checkedAt": "2026-10-26T07:17:01.376870+00:00",
               "progress": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
@@ -12246,10 +12251,13 @@
                 "failureFingerprint": "0a02d34b7093243edb25789a68590d33bffd5c135e69bc4f889272b850188996",
                 "usage": null,
                 "differentFromEarlierCredentialFailure": true,
-                "cause": "pending_exact_attribution",
-                "status": "independent_review_assigned",
+                "cause": "unknown_no_exact_branch_status_or_provider_cause_retained",
+                "status": "bounded_diagnosis_independently_verified_conditional_status_transfer_assigned",
                 "replayed": false,
-                "fullCardCompleted": false
+                "fullCardCompleted": false,
+                "diagnosisSha256": "46307754b392c96c15fdb3455da03823d881e93b42ac421aac6566b66c182f29",
+                "reviewSha256": "b47f425543275388196ad899a1f362958cc7d3a3e3615186fe81e5a4768d5266",
+                "recoveryAuthorizedByEvidence": false
               }
             },
             {
