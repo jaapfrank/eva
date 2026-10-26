@@ -1,0 +1,32 @@
+{
+  "contract": "EvaE16HttpFailureStatusDelivery/v1",
+  "taskId": "E1.6",
+  "checkedAt": "2026-10-26T07:23:17.002983+00:00",
+  "status": "source_integrated_independently_verified_package_preparing",
+  "sourceCommit": "3d51c22b",
+  "source": {
+    "modelSha256": "9f03546a1c6d8b5bb37a49e7b0a50997690baad6e59ba910776fb5e69a537b89",
+    "coreStoreSha256": "a15d613959ed84879d9dd734b769b4f3d0ad3df251d8373e8afe48746b46a22d",
+    "reviewSha256": "3e58ae356f3987b51ec4f510ff4d5df67a3c077cf69b113d7a08ad048bb15e88"
+  },
+  "behavior": "Only a real caught HTTPError exact integer status100..599 is transferred to the existing immutable WILL_USAGE_UNCERTAIN record. No response body, header, token or inferred status is added. Existing error text, fingerprint, unknown usage, retry and claim behavior retained.",
+  "verification": {
+    "sourceOfflineChecks": 15,
+    "sinkOfflineChecks": 15,
+    "independentCombinedTransfer": "actual HTTPError503 to actual request handler to actual fail method with recording timeline; no live network, model or database"
+  },
+  "installed": false,
+  "historicalIncidentCauseProven": false,
+  "historicalExceptionBranch": null,
+  "historicalHttpStatus": null,
+  "historicalUsage": null,
+  "historicalBackfill": false,
+  "recoveryAttempted": false,
+  "fullCardCompleted": false,
+  "usage": {
+    "newEvaModelCalls": 0,
+    "newProviderProbes": 0,
+    "developmentTokens": null,
+    "developmentCredits": null
+  }
+}
