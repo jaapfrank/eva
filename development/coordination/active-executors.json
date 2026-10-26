@@ -1787,8 +1787,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": null,
-    "parallelBoundedWork": "Eén volledige E1.6-afronding: root live integratie en exacte herstelactie, coder1 volgt echte bronroute, tester beoordeelt concrete uitkomst. Beide codecorrecties en pakketbouw zijn opgeleverd.",
-    "currentBlocker": "Geen aanmeldblokkade meer in de bewezen gewone22:15-afweging. E1.6 mist nog echte modelgekozen bronbewaking/plannedcheck, matchingchange en gecontroleerd vervolg; volgende normale gelegenheid onder bestaande klok, geen geforceerde proef.",
+    "parallelBoundedWork": "E1.6 uitsluitend: coder1 onderzoekt nieuwe concrete498047-fout readonly; tester toetst concrete oorzaakoplevering onafhankelijk. Root beheert actuele registratie, Git en eventuele noodzakelijke herstelactie na bewijs. Overige uitvoerders hebben geen nieuwe productopdracht.",
+    "currentBlocker": "Nieuwe gewone afweging25okt23:26:23UTC eindigt will_usage_uncertain rev4 met andere ConversationModelError-fingerprint0a02d34b...; coder1 herleidt exact nieuwe oorzaak, onafhankelijke tester toetst. Geen recovery of credentialwijziging gestart. Volledige echte E1.6-bronketen blijft open.",
     "latestVerifiedOutcome": {
       "task": "E1.6",
       "status": "partial_installation_and_bounded_actual_source_read_verified",
