@@ -847,7 +847,7 @@
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Volg de volgende bestaande gewone E1.6-gelegenheid: Eva kiest vanuit een echt doel zelf bronbewaking of geplande controle, een echte passende bronverandering leidt tot afweging en gecontroleerd vervolg. Installatie, exact authenticatieherstel en eerste gewone afweging zijn onafhankelijk bevestigd. De22:15-afweging koos onderbouwde nachtelijke stilte zonder bronwatch. Zonder nieuwe toegelaten aanleiding volgt de gewone uurgelegenheid niet vóór25okt23:15:57UTC (26okt00:15:57Nederland); forceer geen bronkeuze, modelcall, nieuwe kaart of oude herstelactie. Volledige oorspronkelijke criteria blijven open.",
+    "nextAction": "Herleid en herstel uitsluitend de nieuwe fout in de gewone E1.6-afweging van25okt23:26:23UTC (WILL_USAGE_UNCERTAIN; andere failurefingerprint dan de eerdere credentialrejection). Coder1 levert exacte oorzaak en veilige herstelvoorwaarde; onafhankelijke tester controleert dit. Geen oude abandon, credentialsync, modelprobe of installatie herhalen. Daarna blijft de oorspronkelijke echte bronkeuze/verandering/afweging/uitkomst vereist; volledige kaart blijft open.",
     "ownerActionRequired": false
   },
   "historicalWorkboard": {
@@ -5953,8 +5953,8 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Volg de volgende bestaande gewone E1.6-gelegenheid: Eva kiest vanuit een echt doel zelf bronbewaking of geplande controle, een echte passende bronverandering leidt tot afweging en gecontroleerd vervolg. Installatie, exact authenticatieherstel en eerste gewone afweging zijn onafhankelijk bevestigd. De22:15-afweging koos onderbouwde nachtelijke stilte zonder bronwatch. Zonder nieuwe toegelaten aanleiding volgt de gewone uurgelegenheid niet vóór25okt23:15:57UTC (26okt00:15:57Nederland); forceer geen bronkeuze, modelcall, nieuwe kaart of oude herstelactie. Volledige oorspronkelijke criteria blijven open.",
-                "checkedAt": "2026-10-25T22:27:23.444890+00:00",
+                "nextAction": "Herleid en herstel uitsluitend de nieuwe fout in de gewone E1.6-afweging van25okt23:26:23UTC (WILL_USAGE_UNCERTAIN; andere failurefingerprint dan de eerdere credentialrejection). Coder1 levert exacte oorzaak en veilige herstelvoorwaarde; onafhankelijke tester controleert dit. Geen oude abandon, credentialsync, modelprobe of installatie herhalen. Daarna blijft de oorspronkelijke echte bronkeuze/verandering/afweging/uitkomst vereist; volledige kaart blijft open.",
+                "checkedAt": "2026-10-26T07:08:14.647100+00:00",
                 "progress": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
@@ -6012,7 +6012,21 @@
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
                 "latestEvidence": "development/evidence/product/e16-completion-20261025.json",
                 "review": "development/reviews/e16-reconnect-20261025.json",
-                "implementationStatus": "installed_ordinary_authenticated_continuation_verified_full_selected_source_chain_open"
+                "implementationStatus": "installed_ordinary_authenticated_continuation_verified_full_selected_source_chain_open",
+                "newOrdinaryFailure20261026": {
+                  "observedAt": "2026-10-26T07:08:14.647100+00:00",
+                  "failedAt": "2026-10-25T23:26:23Z",
+                  "phase": "will_usage_uncertain",
+                  "revision": 4,
+                  "failureType": "ConversationModelError",
+                  "failureFingerprint": "0a02d34b7093243edb25789a68590d33bffd5c135e69bc4f889272b850188996",
+                  "usage": null,
+                  "differentFromEarlierCredentialFailure": true,
+                  "cause": "pending_exact_attribution",
+                  "status": "independent_review_assigned",
+                  "replayed": false,
+                  "fullCardCompleted": false
+                }
               },
               {
                 "id": "E1.7",
@@ -12163,8 +12177,8 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Volg de volgende bestaande gewone E1.6-gelegenheid: Eva kiest vanuit een echt doel zelf bronbewaking of geplande controle, een echte passende bronverandering leidt tot afweging en gecontroleerd vervolg. Installatie, exact authenticatieherstel en eerste gewone afweging zijn onafhankelijk bevestigd. De22:15-afweging koos onderbouwde nachtelijke stilte zonder bronwatch. Zonder nieuwe toegelaten aanleiding volgt de gewone uurgelegenheid niet vóór25okt23:15:57UTC (26okt00:15:57Nederland); forceer geen bronkeuze, modelcall, nieuwe kaart of oude herstelactie. Volledige oorspronkelijke criteria blijven open.",
-              "checkedAt": "2026-10-25T22:27:23.444890+00:00",
+              "nextAction": "Herleid en herstel uitsluitend de nieuwe fout in de gewone E1.6-afweging van25okt23:26:23UTC (WILL_USAGE_UNCERTAIN; andere failurefingerprint dan de eerdere credentialrejection). Coder1 levert exacte oorzaak en veilige herstelvoorwaarde; onafhankelijke tester controleert dit. Geen oude abandon, credentialsync, modelprobe of installatie herhalen. Daarna blijft de oorspronkelijke echte bronkeuze/verandering/afweging/uitkomst vereist; volledige kaart blijft open.",
+              "checkedAt": "2026-10-26T07:08:14.647100+00:00",
               "progress": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
@@ -12222,7 +12236,21 @@
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
               "latestEvidence": "development/evidence/product/e16-completion-20261025.json",
               "review": "development/reviews/e16-reconnect-20261025.json",
-              "implementationStatus": "installed_ordinary_authenticated_continuation_verified_full_selected_source_chain_open"
+              "implementationStatus": "installed_ordinary_authenticated_continuation_verified_full_selected_source_chain_open",
+              "newOrdinaryFailure20261026": {
+                "observedAt": "2026-10-26T07:08:14.647100+00:00",
+                "failedAt": "2026-10-25T23:26:23Z",
+                "phase": "will_usage_uncertain",
+                "revision": 4,
+                "failureType": "ConversationModelError",
+                "failureFingerprint": "0a02d34b7093243edb25789a68590d33bffd5c135e69bc4f889272b850188996",
+                "usage": null,
+                "differentFromEarlierCredentialFailure": true,
+                "cause": "pending_exact_attribution",
+                "status": "independent_review_assigned",
+                "replayed": false,
+                "fullCardCompleted": false
+              }
             },
             {
               "id": "E1.7",

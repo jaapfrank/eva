@@ -95,5 +95,18 @@
     "existingPendingAttention": null,
     "executionTimeGuaranteed": false,
     "noArtificialSourceChangeOrModelCall": true
+  },
+  "newOrdinaryFailure20261026": {
+    "checkedAt": "2026-10-26T07:08:14.647100+00:00",
+    "occurredAt": "2026-10-25T23:26:23Z",
+    "canonicalEventSha256": "96857f8547ac20bc1899025f20e905941a59f0b114c9ddbe8d301517e1fb89d3",
+    "failureType": "ConversationModelError",
+    "failureFingerprint": "0a02d34b7093243edb25789a68590d33bffd5c135e69bc4f889272b850188996",
+    "usage": null,
+    "differentFromEarlierCredentialFailure": true,
+    "cause": "pending_exact_attribution",
+    "readOnlyEvidenceSha256": "2f5e97a45776113d5114525408822404be44e144474272bb300368db2bcfdf4f",
+    "mutatingRecoveryAttempted": false,
+    "fullCardCompleted": false
   }
 }
