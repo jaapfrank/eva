@@ -847,7 +847,7 @@
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Gepauzeerd op eigenaarverzoek; geen uitvoering starten. Diagnostiekcode en pakket zijn beoordeeld, installer is onvoltooid en niet beoordeeld; niets daarvan geïnstalleerd. Alleen na expliciete hervatting de installer afmaken, onafhankelijk beoordelen en actuele claims controleren. E1.6 blijft open op oorspronkelijke criteria. Overdracht: development/coordination/e16-pause-handoff-20261026.md",
+    "nextAction": "De nieuwste gecontroleerde diagnostiekcorrectie is26oktober geïnstalleerd in kern en worker en onafhankelijk teruggelezen; alle vier werkprofielen en actieve hostproducer sluiten aan. Deze beperkte installatie is klaar. Overige ontwikkeling en chats blijven gepauzeerd op eigenaarverzoek. E1.6 blijft open op oorspronkelijke echte bronkeuze/verandering/afweging/uitkomstcriteria; geen automatische hervatting, oude recovery of modelprobe.",
     "ownerActionRequired": false,
     "nextActionBeforeOwnerPause20261026": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
     "executionPaused": true,
@@ -857,6 +857,31 @@
       "resumeRequiresExplicitOwnerInstruction": true,
       "handoff": "development/coordination/e16-pause-handoff-20261026.md",
       "projectCompleted": false
+    },
+    "scopedInstallationAuthorization": {
+      "at": "2026-10-26T12:35:49.433678+00:00",
+      "instruction": "Rechttrekken zodat de meest recente gecontroleerde versie wordt gebruikt.",
+      "scope": "Only finish, independently review and install the existing e16-http-status-20261026 package, then verify actual installation. All other development remains paused.",
+      "newProductWork": false,
+      "historicalReviewRecoveryAuthorized": false,
+      "status": "completed",
+      "completedAt": "2026-10-26T12:42:46.770977+00:00"
+    },
+    "latestScopedInstallation": {
+      "status": "installed_independently_verified",
+      "installedAt": "2026-10-26T12:39:32.023925+00:00",
+      "verifiedAt": "2026-10-26T12:42:46.770977+00:00",
+      "sourceCommit": "3d51c22b",
+      "installationReceiptSha256": "f1833453ac6c0604749bbe80ec1ea1d71da24e19e41d53ed493b94f9aa29200c",
+      "actualReadbackSha256": "43ca915c888fdc8efba325bd24f7e567875e1a95b8da0ade0a9b0bd052a48eb7",
+      "actualReviewSha256": "a06dd2eb7e49a7e5233163dab093a476a8dae1446435fddbf9199dfd0f6f967d",
+      "actualCoreImage": "sha256:5fabc30e0ab32ab6d0b920aaf9c35179d69f3d273a4d6cd256414321f2d3e769",
+      "actualWorkerImage": "sha256:b5aea2f0e6bf89a6b0785c018cb589f276ab3e0accdb7293e2a7772bb5b8051b",
+      "allFourActualProfilesCompatible": true,
+      "activeHostProducerMatchesAllFiveReleaseFields": true,
+      "retainedHostFiles": 88,
+      "historicalDataPreserved": true,
+      "fullE16Completed": false
     }
   },
   "historicalWorkboard": {
@@ -5980,9 +6005,9 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Gepauzeerd op eigenaarverzoek; geen uitvoering starten. Diagnostiekcode en pakket zijn beoordeeld, installer is onvoltooid en niet beoordeeld; niets daarvan geïnstalleerd. Alleen na expliciete hervatting de installer afmaken, onafhankelijk beoordelen en actuele claims controleren. E1.6 blijft open op oorspronkelijke criteria. Overdracht: development/coordination/e16-pause-handoff-20261026.md",
+                "nextAction": "De nieuwste gecontroleerde diagnostiekcorrectie is26oktober geïnstalleerd in kern en worker en onafhankelijk teruggelezen; alle vier werkprofielen en actieve hostproducer sluiten aan. Deze beperkte installatie is klaar. Overige ontwikkeling en chats blijven gepauzeerd op eigenaarverzoek. E1.6 blijft open op oorspronkelijke echte bronkeuze/verandering/afweging/uitkomstcriteria; geen automatische hervatting, oude recovery of modelprobe.",
                 "checkedAt": "2026-10-26T07:17:01.376870+00:00",
-                "progress": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
+                "progress": "De eerdere correcties en nu ook de nieuwe statusdiagnostiek zijn geïnstalleerd en onafhankelijk gecontroleerd. De volledige E1.6-bronketen is nog niet bewezen. De beperkte installatieopdracht is klaar; andere ontwikkeling blijft gepauzeerd.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
                   "development/reviews/e16-source-attention-review-20261020.json",
@@ -6066,6 +6091,31 @@
                   "resumeRequiresExplicitOwnerInstruction": true,
                   "handoff": "development/coordination/e16-pause-handoff-20261026.md",
                   "projectCompleted": false
+                },
+                "scopedInstallationAuthorization": {
+                  "at": "2026-10-26T12:35:49.433678+00:00",
+                  "instruction": "Rechttrekken zodat de meest recente gecontroleerde versie wordt gebruikt.",
+                  "scope": "Only finish, independently review and install the existing e16-http-status-20261026 package, then verify actual installation. All other development remains paused.",
+                  "newProductWork": false,
+                  "historicalReviewRecoveryAuthorized": false,
+                  "status": "completed",
+                  "completedAt": "2026-10-26T12:42:46.770977+00:00"
+                },
+                "latestScopedInstallation": {
+                  "status": "installed_independently_verified",
+                  "installedAt": "2026-10-26T12:39:32.023925+00:00",
+                  "verifiedAt": "2026-10-26T12:42:46.770977+00:00",
+                  "sourceCommit": "3d51c22b",
+                  "installationReceiptSha256": "f1833453ac6c0604749bbe80ec1ea1d71da24e19e41d53ed493b94f9aa29200c",
+                  "actualReadbackSha256": "43ca915c888fdc8efba325bd24f7e567875e1a95b8da0ade0a9b0bd052a48eb7",
+                  "actualReviewSha256": "a06dd2eb7e49a7e5233163dab093a476a8dae1446435fddbf9199dfd0f6f967d",
+                  "actualCoreImage": "sha256:5fabc30e0ab32ab6d0b920aaf9c35179d69f3d273a4d6cd256414321f2d3e769",
+                  "actualWorkerImage": "sha256:b5aea2f0e6bf89a6b0785c018cb589f276ab3e0accdb7293e2a7772bb5b8051b",
+                  "allFourActualProfilesCompatible": true,
+                  "activeHostProducerMatchesAllFiveReleaseFields": true,
+                  "retainedHostFiles": 88,
+                  "historicalDataPreserved": true,
+                  "fullE16Completed": false
                 }
               },
               {
@@ -12235,9 +12285,9 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Gepauzeerd op eigenaarverzoek; geen uitvoering starten. Diagnostiekcode en pakket zijn beoordeeld, installer is onvoltooid en niet beoordeeld; niets daarvan geïnstalleerd. Alleen na expliciete hervatting de installer afmaken, onafhankelijk beoordelen en actuele claims controleren. E1.6 blijft open op oorspronkelijke criteria. Overdracht: development/coordination/e16-pause-handoff-20261026.md",
+              "nextAction": "De nieuwste gecontroleerde diagnostiekcorrectie is26oktober geïnstalleerd in kern en worker en onafhankelijk teruggelezen; alle vier werkprofielen en actieve hostproducer sluiten aan. Deze beperkte installatie is klaar. Overige ontwikkeling en chats blijven gepauzeerd op eigenaarverzoek. E1.6 blijft open op oorspronkelijke echte bronkeuze/verandering/afweging/uitkomstcriteria; geen automatische hervatting, oude recovery of modelprobe.",
               "checkedAt": "2026-10-26T07:17:01.376870+00:00",
-              "progress": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
+              "progress": "De eerdere correcties en nu ook de nieuwe statusdiagnostiek zijn geïnstalleerd en onafhankelijk gecontroleerd. De volledige E1.6-bronketen is nog niet bewezen. De beperkte installatieopdracht is klaar; andere ontwikkeling blijft gepauzeerd.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
                 "development/reviews/e16-source-attention-review-20261020.json",
@@ -12321,6 +12371,31 @@
                 "resumeRequiresExplicitOwnerInstruction": true,
                 "handoff": "development/coordination/e16-pause-handoff-20261026.md",
                 "projectCompleted": false
+              },
+              "scopedInstallationAuthorization": {
+                "at": "2026-10-26T12:35:49.433678+00:00",
+                "instruction": "Rechttrekken zodat de meest recente gecontroleerde versie wordt gebruikt.",
+                "scope": "Only finish, independently review and install the existing e16-http-status-20261026 package, then verify actual installation. All other development remains paused.",
+                "newProductWork": false,
+                "historicalReviewRecoveryAuthorized": false,
+                "status": "completed",
+                "completedAt": "2026-10-26T12:42:46.770977+00:00"
+              },
+              "latestScopedInstallation": {
+                "status": "installed_independently_verified",
+                "installedAt": "2026-10-26T12:39:32.023925+00:00",
+                "verifiedAt": "2026-10-26T12:42:46.770977+00:00",
+                "sourceCommit": "3d51c22b",
+                "installationReceiptSha256": "f1833453ac6c0604749bbe80ec1ea1d71da24e19e41d53ed493b94f9aa29200c",
+                "actualReadbackSha256": "43ca915c888fdc8efba325bd24f7e567875e1a95b8da0ade0a9b0bd052a48eb7",
+                "actualReviewSha256": "a06dd2eb7e49a7e5233163dab093a476a8dae1446435fddbf9199dfd0f6f967d",
+                "actualCoreImage": "sha256:5fabc30e0ab32ab6d0b920aaf9c35179d69f3d273a4d6cd256414321f2d3e769",
+                "actualWorkerImage": "sha256:b5aea2f0e6bf89a6b0785c018cb589f276ab3e0accdb7293e2a7772bb5b8051b",
+                "allFourActualProfilesCompatible": true,
+                "activeHostProducerMatchesAllFiveReleaseFields": true,
+                "retainedHostFiles": 88,
+                "historicalDataPreserved": true,
+                "fullE16Completed": false
               }
             },
             {

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T12:28:10.655029+00:00",
+  "updatedAt": "2026-10-26T12:42:46.770977+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -1543,7 +1543,7 @@
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "paused_by_owner_no_running_mutation",
+      "status": "paused_by_owner_actual_install_review_delivered",
       "allowedWritePaths": [],
       "activeIndependentReviewClaim": false,
       "review": "development/reviews/e415-household-continuation-20261024.json",
@@ -1564,6 +1564,13 @@
         "resumeRequiresExplicitOwnerInstruction": true,
         "handoff": "development/coordination/e16-pause-handoff-20261026.md",
         "projectCompleted": false
+      },
+      "scopedInstallationAuthorization": {
+        "at": "2026-10-26T12:35:49.433678+00:00",
+        "instruction": "Rechttrekken zodat de meest recente gecontroleerde versie wordt gebruikt.",
+        "scope": "Only finish, independently review and install the existing e16-http-status-20261026 package, then verify actual installation. All other development remains paused.",
+        "newProductWork": false,
+        "historicalReviewRecoveryAuthorized": false
       }
     },
     "e419-recovery-executor": {
@@ -1791,15 +1798,23 @@
     "agents": {},
     "maxConcurrentExecutorsReviewers": 4,
     "installationCandidate": {
-      "path": "/var/lib/eva2/e16-e416-completion-20261025",
-      "status": "installed_independently_verified_live_e16_open",
-      "evidence": "development/evidence/product/e16-completion-20261025.json",
-      "review": "development/reviews/e16-reconnect-20261025.json",
-      "installedAt": "2026-10-25T22:05:24.481035+00:00",
-      "actualHandoffSha256": "746674b5cef216347054ac4a3fefd558a44e2e23a8ae3fafbbbfbec034b516bd",
-      "actualReviewSha256": "9a9f36e1376b1f334eb2eed30f2dfb9b95a3ce1ce7a6731deec1363d1678037f",
-      "fullE16Completed": false,
-      "fullE416Completed": false
+      "path": "/var/lib/eva2/e16-http-status-20261026",
+      "status": "installed_independently_verified",
+      "evidence": "development/evidence/product/e16-http-status-20261026.json",
+      "review": "development/reviews/e16-http-status-installed-20261026.json",
+      "installedAt": "2026-10-26T12:39:32.023925+00:00",
+      "verifiedAt": "2026-10-26T12:42:46.770977+00:00",
+      "sourceCommit": "3d51c22b",
+      "installationReceiptSha256": "f1833453ac6c0604749bbe80ec1ea1d71da24e19e41d53ed493b94f9aa29200c",
+      "actualReadbackSha256": "43ca915c888fdc8efba325bd24f7e567875e1a95b8da0ade0a9b0bd052a48eb7",
+      "actualReviewSha256": "a06dd2eb7e49a7e5233163dab093a476a8dae1446435fddbf9199dfd0f6f967d",
+      "actualCoreImage": "sha256:5fabc30e0ab32ab6d0b920aaf9c35179d69f3d273a4d6cd256414321f2d3e769",
+      "actualWorkerImage": "sha256:b5aea2f0e6bf89a6b0785c018cb589f276ab3e0accdb7293e2a7772bb5b8051b",
+      "allFourActualProfilesCompatible": true,
+      "activeHostProducerMatchesAllFiveReleaseFields": true,
+      "retainedHostFiles": 88,
+      "historicalDataPreserved": true,
+      "fullE16Completed": false
     },
     "newReviewerThread": "01a16a55-1607-7171-820e-a3918acaea3f",
     "e415Candidate": {
@@ -1819,15 +1834,25 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": null,
-    "parallelBoundedWork": "Alle vijf chats gepauzeerd; geen actieve ontwikkelopdracht.",
-    "currentBlocker": "Gepauzeerd op eigenaarverzoek; geen uitvoering starten. Diagnostiekcode en pakket zijn beoordeeld, installer is onvoltooid en niet beoordeeld; niets daarvan geïnstalleerd. Alleen na expliciete hervatting de installer afmaken, onafhankelijk beoordelen en actuele claims controleren. E1.6 blijft open op oorspronkelijke criteria. Overdracht: development/coordination/e16-pause-handoff-20261026.md",
+    "parallelBoundedWork": "Beperkte installatieopdracht afgerond; alle vijf chats weer gepauzeerd. Geen actieve uitvoerders of tester.",
+    "currentBlocker": "De nieuwste gecontroleerde diagnostiekcorrectie is26oktober geïnstalleerd in kern en worker en onafhankelijk teruggelezen; alle vier werkprofielen en actieve hostproducer sluiten aan. Deze beperkte installatie is klaar. Overige ontwikkeling en chats blijven gepauzeerd op eigenaarverzoek. E1.6 blijft open op oorspronkelijke echte bronkeuze/verandering/afweging/uitkomstcriteria; geen automatische hervatting, oude recovery of modelprobe.",
     "latestVerifiedOutcome": {
       "task": "E1.6",
-      "status": "partial_installation_and_bounded_actual_source_read_verified",
-      "evidence": "development/evidence/product/e16-completion-20261025.json",
-      "review": "development/reviews/e16-reconnect-20261025.json",
-      "at": "2026-10-25T22:05:24.481035+00:00",
-      "fullCardCompleted": false
+      "scope": "Existing diagnostic installation only",
+      "status": "installed_independently_verified",
+      "installedAt": "2026-10-26T12:39:32.023925+00:00",
+      "verifiedAt": "2026-10-26T12:42:46.770977+00:00",
+      "sourceCommit": "3d51c22b",
+      "installationReceiptSha256": "f1833453ac6c0604749bbe80ec1ea1d71da24e19e41d53ed493b94f9aa29200c",
+      "actualReadbackSha256": "43ca915c888fdc8efba325bd24f7e567875e1a95b8da0ade0a9b0bd052a48eb7",
+      "actualReviewSha256": "a06dd2eb7e49a7e5233163dab093a476a8dae1446435fddbf9199dfd0f6f967d",
+      "actualCoreImage": "sha256:5fabc30e0ab32ab6d0b920aaf9c35179d69f3d273a4d6cd256414321f2d3e769",
+      "actualWorkerImage": "sha256:b5aea2f0e6bf89a6b0785c018cb589f276ab3e0accdb7293e2a7772bb5b8051b",
+      "allFourActualProfilesCompatible": true,
+      "activeHostProducerMatchesAllFiveReleaseFields": true,
+      "retainedHostFiles": 88,
+      "historicalDataPreserved": true,
+      "fullE16Completed": false
     },
     "nextBoundedAssignments": {
       "builder": "Gepauzeerd; alleen hervatten op expliciet eigenaarverzoek.",
@@ -2049,6 +2074,26 @@
       "coder2": "Nativepakket en vierprofielen opgeleverd; geen herhaalde build.",
       "reviewer": "Bestaande reviews afgerond; toets volgende concrete echte gekozen-bronketen, geen nieuwe modellen of oude matrices.",
       "coordinator": "Volg de volgende bestaande gewone E1.6-gelegenheid: Eva kiest vanuit een echt doel zelf bronbewaking of geplande controle, een echte passende bronverandering leidt tot afweging en gecontroleerd vervolg. Installatie, exact authenticatieherstel en eerste gewone afweging zijn onafhankelijk bevestigd. De22:15-afweging koos onderbouwde nachtelijke stilte zonder bronwatch. Zonder nieuwe toegelaten aanleiding volgt de gewone uurgelegenheid niet vóór25okt23:15:57UTC (26okt00:15:57Nederland); forceer geen bronkeuze, modelcall, nieuwe kaart of oude herstelactie. Volledige oorspronkelijke criteria blijven open."
+    },
+    "scopedInstallationAuthorization": {
+      "at": "2026-10-26T12:35:49.433678+00:00",
+      "instruction": "Rechttrekken zodat de meest recente gecontroleerde versie wordt gebruikt.",
+      "scope": "Only finish, independently review and install the existing e16-http-status-20261026 package, then verify actual installation. All other development remains paused.",
+      "newProductWork": false,
+      "historicalReviewRecoveryAuthorized": false,
+      "status": "completed",
+      "completedAt": "2026-10-26T12:42:46.770977+00:00"
+    },
+    "installationCandidateBeforeHttpStatus20261026": {
+      "path": "/var/lib/eva2/e16-e416-completion-20261025",
+      "status": "installed_independently_verified_live_e16_open",
+      "evidence": "development/evidence/product/e16-completion-20261025.json",
+      "review": "development/reviews/e16-reconnect-20261025.json",
+      "installedAt": "2026-10-25T22:05:24.481035+00:00",
+      "actualHandoffSha256": "746674b5cef216347054ac4a3fefd558a44e2e23a8ae3fafbbbfbec034b516bd",
+      "actualReviewSha256": "9a9f36e1376b1f334eb2eed30f2dfb9b95a3ce1ce7a6731deec1363d1678037f",
+      "fullE16Completed": false,
+      "fullE416Completed": false
     }
   }
 }

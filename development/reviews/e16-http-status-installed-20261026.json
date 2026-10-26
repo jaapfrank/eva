@@ -1,0 +1,26 @@
+{
+  "contract": "EvaE16HttpStatusInstalledIndependentReview/v1",
+  "taskId": "E1.6",
+  "checkedAt": "2026-10-26T12:42:46.770977+00:00",
+  "actualInstalledGo": true,
+  "installerReviewSha256": "dd3227d7c1ed0c3eb8e9d2262b9282899fac92b25b2a23c6986073f80ffbaf2b",
+  "status": "installed_independently_verified",
+  "installedAt": "2026-10-26T12:39:32.023925+00:00",
+  "verifiedAt": "2026-10-26T12:42:46.770977+00:00",
+  "sourceCommit": "3d51c22b",
+  "installationReceiptSha256": "f1833453ac6c0604749bbe80ec1ea1d71da24e19e41d53ed493b94f9aa29200c",
+  "actualReadbackSha256": "43ca915c888fdc8efba325bd24f7e567875e1a95b8da0ade0a9b0bd052a48eb7",
+  "actualReviewSha256": "a06dd2eb7e49a7e5233163dab093a476a8dae1446435fddbf9199dfd0f6f967d",
+  "actualCoreImage": "sha256:5fabc30e0ab32ab6d0b920aaf9c35179d69f3d273a4d6cd256414321f2d3e769",
+  "actualWorkerImage": "sha256:b5aea2f0e6bf89a6b0785c018cb589f276ab3e0accdb7293e2a7772bb5b8051b",
+  "allFourActualProfilesCompatible": true,
+  "activeHostProducerMatchesAllFiveReleaseFields": true,
+  "retainedHostFiles": 88,
+  "historicalDataPreserved": true,
+  "fullE16Completed": false,
+  "limits": [
+    "Only the previously reviewed diagnostic correction and its active host profile binding were installed.",
+    "No historical failure cause, HTTP status, usage or successful recovery is inferred.",
+    "Full E1.6 original criteria remain open; other development is paused."
+  ]
+}

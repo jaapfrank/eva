@@ -1,8 +1,8 @@
 {
   "contract": "EvaE16HttpFailureStatusDelivery/v1",
   "taskId": "E1.6",
-  "checkedAt": "2026-10-26T12:28:10.655029+00:00",
-  "status": "paused_by_owner_source_and_package_reviewed_installer_incomplete_not_installed",
+  "checkedAt": "2026-10-26T12:42:46.770977+00:00",
+  "status": "installed_independently_verified_other_development_paused",
   "sourceCommit": "3d51c22b",
   "source": {
     "modelSha256": "9f03546a1c6d8b5bb37a49e7b0a50997690baad6e59ba910776fb5e69a537b89",
@@ -15,7 +15,7 @@
     "sinkOfflineChecks": 15,
     "independentCombinedTransfer": "actual HTTPError503 to actual request handler to actual fail method with recording timeline; no live network, model or database"
   },
-  "installed": false,
+  "installed": true,
   "historicalIncidentCauseProven": false,
   "historicalExceptionBranch": null,
   "historicalHttpStatus": null,
@@ -27,7 +27,10 @@
     "newEvaModelCalls": 0,
     "newProviderProbes": 0,
     "developmentTokens": null,
-    "developmentCredits": null
+    "developmentCredits": null,
+    "deploymentInitiatedModelCalls": 0,
+    "deploymentInitiatedProviderProbes": 0,
+    "postInstallationOrdinaryRuntimeUsage": "not measured by this installation receipt"
   },
   "ownerPause": {
     "at": "2026-10-26T12:28:10.655029+00:00",
@@ -41,13 +44,39 @@
     "handoffSha256": "10df34db505c3118b7ed06b6e554af52502335830b1d102cf360d25cf187588b",
     "reviewSha256": "8455c4cf760d1ac527093e69ce5bdb8499817698c6194f555685d3ce06d6f682",
     "packageGo": true,
-    "installationGo": false,
+    "installationGo": true,
     "changedProgramProfiles": [
       "digital_work",
       "public_research",
       "household_research"
     ],
     "activeHostPinChanges": 1,
-    "installerStatus": "Draft incomplete: dictionary-valued frozen_manifest treated as a path. No installer binding, review GO or execution receipt."
+    "installerStatus": "Completed and independently reviewed; exact one-shot installation succeeded; independent actual readback passed."
+  },
+  "scopedInstallationAuthorization": {
+    "at": "2026-10-26T12:35:49.433678+00:00",
+    "instruction": "Rechttrekken zodat de meest recente gecontroleerde versie wordt gebruikt.",
+    "scope": "Only finish, independently review and install the existing e16-http-status-20261026 package, then verify actual installation. All other development remains paused.",
+    "newProductWork": false,
+    "historicalReviewRecoveryAuthorized": false,
+    "status": "completed",
+    "completedAt": "2026-10-26T12:42:46.770977+00:00"
+  },
+  "installedAt": "2026-10-26T12:39:32.023925+00:00",
+  "actualInstallation": {
+    "status": "installed_independently_verified",
+    "installedAt": "2026-10-26T12:39:32.023925+00:00",
+    "verifiedAt": "2026-10-26T12:42:46.770977+00:00",
+    "sourceCommit": "3d51c22b",
+    "installationReceiptSha256": "f1833453ac6c0604749bbe80ec1ea1d71da24e19e41d53ed493b94f9aa29200c",
+    "actualReadbackSha256": "43ca915c888fdc8efba325bd24f7e567875e1a95b8da0ade0a9b0bd052a48eb7",
+    "actualReviewSha256": "a06dd2eb7e49a7e5233163dab093a476a8dae1446435fddbf9199dfd0f6f967d",
+    "actualCoreImage": "sha256:5fabc30e0ab32ab6d0b920aaf9c35179d69f3d273a4d6cd256414321f2d3e769",
+    "actualWorkerImage": "sha256:b5aea2f0e6bf89a6b0785c018cb589f276ab3e0accdb7293e2a7772bb5b8051b",
+    "allFourActualProfilesCompatible": true,
+    "activeHostProducerMatchesAllFiveReleaseFields": true,
+    "retainedHostFiles": 88,
+    "historicalDataPreserved": true,
+    "fullE16Completed": false
   }
 }
