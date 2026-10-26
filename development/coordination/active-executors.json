@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-25T07:05:40.286973+00:00",
+  "updatedAt": "2026-10-26T12:28:10.655029+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -586,7 +586,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "assigned_source_or_package_delivered",
+      "status": "paused_by_owner_no_running_mutation",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1385,12 +1385,20 @@
         "src/eva/bootstrap/runtime_repair_work.py",
         "src/eva/bootstrap/runtime_repair_host.py",
         "src/eva/operations/runtime_repair_*.py"
-      ]
+      ],
+      "statusBeforeOwnerPause20261026": "assigned_source_or_package_delivered",
+      "ownerPause": {
+        "at": "2026-10-26T12:28:10.655029+00:00",
+        "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
+        "resumeRequiresExplicitOwnerInstruction": true,
+        "handoff": "development/coordination/e16-pause-handoff-20261026.md",
+        "projectCompleted": false
+      }
     },
     "e415-independent-review-newchat": {
       "task": "E1.7",
       "threadId": "01a169f2-6ff6-7961-b16f-9fd0b836d3e3",
-      "status": "assigned_source_or_package_delivered",
+      "status": "paused_by_owner_no_running_mutation",
       "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
       "allowedWritePaths": [
         "src/eva/application/human_understanding.py",
@@ -1523,11 +1531,19 @@
         "doNotRepeatWithoutNewEvidence": true
       },
       "currentWritePaths": [],
-      "currentExclusiveWritePaths": []
+      "currentExclusiveWritePaths": [],
+      "statusBeforeOwnerPause20261026": "assigned_source_or_package_delivered",
+      "ownerPause": {
+        "at": "2026-10-26T12:28:10.655029+00:00",
+        "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
+        "resumeRequiresExplicitOwnerInstruction": true,
+        "handoff": "development/coordination/e16-pause-handoff-20261026.md",
+        "projectCompleted": false
+      }
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "actual_install_and_ordinary_continuation_review_delivered",
+      "status": "paused_by_owner_no_running_mutation",
       "allowedWritePaths": [],
       "activeIndependentReviewClaim": false,
       "review": "development/reviews/e415-household-continuation-20261024.json",
@@ -1540,13 +1556,21 @@
       "updatedAt": "2026-10-25T22:27:23.444890+00:00",
       "currentWritePaths": [],
       "activeAssignment": "Test concrete delivered candidates against unchanged full-card criteria; no product code or installation.",
-      "currentExclusiveWritePaths": []
+      "currentExclusiveWritePaths": [],
+      "statusBeforeOwnerPause20261026": "actual_install_and_ordinary_continuation_review_delivered",
+      "ownerPause": {
+        "at": "2026-10-26T12:28:10.655029+00:00",
+        "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
+        "resumeRequiresExplicitOwnerInstruction": true,
+        "handoff": "development/coordination/e16-pause-handoff-20261026.md",
+        "projectCompleted": false
+      }
     },
     "e419-recovery-executor": {
       "threadId": "01a169e0-4ed1-75d1-9541-b5dae109b328",
       "task": "E1.6",
       "role": "executor",
-      "status": "reconnect_delivered_following_same_full_e16_route",
+      "status": "paused_by_owner_no_running_mutation",
       "allowedWritePaths": [
         "src/eva/application/sensory.py",
         "src/eva/application/resident_attention.py",
@@ -1569,7 +1593,15 @@
       },
       "activeIndependentReviewClaim": false,
       "activeAssignment": "Coder1 rondt de bestaande volledige bronroute af: modelgekozen aansluiting vanuit echt doel, werkelijke bronverandering, aandacht en gecontroleerd passend vervolg of onderbouwde stilte. Hergebruik geldige bewijzen; maak concrete ontbrekende overdrachten en grenscontroles af.",
-      "currentExclusiveWritePaths": []
+      "currentExclusiveWritePaths": [],
+      "statusBeforeOwnerPause20261026": "reconnect_delivered_following_same_full_e16_route",
+      "ownerPause": {
+        "at": "2026-10-26T12:28:10.655029+00:00",
+        "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
+        "resumeRequiresExplicitOwnerInstruction": true,
+        "handoff": "development/coordination/e16-pause-handoff-20261026.md",
+        "projectCompleted": false
+      }
     }
   },
   "protectedExistingWork": {
@@ -1787,8 +1819,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": null,
-    "parallelBoundedWork": "E1.6 uitsluitend: coder1 onderzoekt nieuwe concrete498047-fout readonly; tester toetst concrete oorzaakoplevering onafhankelijk. Root beheert actuele registratie, Git en eventuele noodzakelijke herstelactie na bewijs. Overige uitvoerders hebben geen nieuwe productopdracht.",
-    "currentBlocker": "Nieuwe gewone afweging25okt23:26:23UTC eindigt will_usage_uncertain rev4 met andere ConversationModelError-fingerprint0a02d34b...; coder1 herleidt exact nieuwe oorzaak, onafhankelijke tester toetst. Geen recovery of credentialwijziging gestart. Volledige echte E1.6-bronketen blijft open.",
+    "parallelBoundedWork": "Alle vijf chats gepauzeerd; geen actieve ontwikkelopdracht.",
+    "currentBlocker": "Gepauzeerd op eigenaarverzoek; geen uitvoering starten. Diagnostiekcode en pakket zijn beoordeeld, installer is onvoltooid en niet beoordeeld; niets daarvan geïnstalleerd. Alleen na expliciete hervatting de installer afmaken, onafhankelijk beoordelen en actuele claims controleren. E1.6 blijft open op oorspronkelijke criteria. Overdracht: development/coordination/e16-pause-handoff-20261026.md",
     "latestVerifiedOutcome": {
       "task": "E1.6",
       "status": "partial_installation_and_bounded_actual_source_read_verified",
@@ -1798,11 +1830,11 @@
       "fullCardCompleted": false
     },
     "nextBoundedAssignments": {
-      "builder": "Bron-, hostpakket en credentialbroncontrole opgeleverd; geen nieuwe bouw.",
-      "regressionExecutor": "Volg dezelfde E1.6 bij volgende echte bron/klokgelegenheid; behoud22:15succes en ontbrekendeclauses zonder extra bouw.",
-      "coder2": "Nativepakket en vierprofielen opgeleverd; geen herhaalde build.",
-      "reviewer": "Bestaande reviews afgerond; toets volgende concrete echte gekozen-bronketen, geen nieuwe modellen of oude matrices.",
-      "coordinator": "Volg de volgende bestaande gewone E1.6-gelegenheid: Eva kiest vanuit een echt doel zelf bronbewaking of geplande controle, een echte passende bronverandering leidt tot afweging en gecontroleerd vervolg. Installatie, exact authenticatieherstel en eerste gewone afweging zijn onafhankelijk bevestigd. De22:15-afweging koos onderbouwde nachtelijke stilte zonder bronwatch. Zonder nieuwe toegelaten aanleiding volgt de gewone uurgelegenheid niet vóór25okt23:15:57UTC (26okt00:15:57Nederland); forceer geen bronkeuze, modelcall, nieuwe kaart of oude herstelactie. Volledige oorspronkelijke criteria blijven open."
+      "builder": "Gepauzeerd; alleen hervatten op expliciet eigenaarverzoek.",
+      "regressionExecutor": "Gepauzeerd; alleen hervatten op expliciet eigenaarverzoek.",
+      "coder2": "Gepauzeerd; alleen hervatten op expliciet eigenaarverzoek.",
+      "reviewer": "Gepauzeerd; alleen hervatten op expliciet eigenaarverzoek.",
+      "coordinator": "Gepauzeerd; alleen hervatten op expliciet eigenaarverzoek."
     },
     "threadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
     "voiceBoundary": {
@@ -1839,9 +1871,9 @@
       "id": "eva2-taken-afronden",
       "kind": "heartbeat",
       "intervalMinutes": 60,
-      "status": "ACTIVE",
+      "status": "NOT_FOUND_IN_APP",
       "restartedAt": "2026-10-25T11:48:56.703586+00:00",
-      "authority": "Directe eigenaaropdracht25oktober2026: opvolging aan, elke chat eigen afrondtaak, tester test opleveringen; geen uitstapjes.",
+      "authority": "Directe eigenaarstop26oktober; app meldt dat automatisering niet bestaat. Niet opnieuw aanmaken.",
       "previousStop": {
         "id": "eva2-taken-afronden",
         "kind": "heartbeat",
@@ -1853,7 +1885,29 @@
       },
       "stopCondition": "Afgesproken volledige afrondtaken werkelijk klaar of Jaap vraagt stoppen; geen stop op technische deeloplevering of wachtstap.",
       "primaryTaskId": "E1.6",
-      "updatedAt": "2026-10-25T22:17:55.402788+00:00"
+      "updatedAt": "2026-10-25T22:17:55.402788+00:00",
+      "beforeOwnerPause20261026": {
+        "id": "eva2-taken-afronden",
+        "kind": "heartbeat",
+        "intervalMinutes": 60,
+        "status": "ACTIVE",
+        "restartedAt": "2026-10-25T11:48:56.703586+00:00",
+        "authority": "Directe eigenaaropdracht25oktober2026: opvolging aan, elke chat eigen afrondtaak, tester test opleveringen; geen uitstapjes.",
+        "previousStop": {
+          "id": "eva2-taken-afronden",
+          "kind": "heartbeat",
+          "intervalMinutes": 5,
+          "status": "DELETED",
+          "stoppedAt": "2026-10-25T07:25:12.499685+00:00",
+          "reason": "De beoordeelde kandidaat is geïnstalleerd en onafhankelijk teruggelezen; er resteert nu geen onderbouwde uitvoerbare opdracht binnen deze technische opvolging. Gewoon later gebruik, eigenaarafspraken en de afzonderlijke spraakroute blijven open volgens het werkbord.",
+          "projectCompleted": false
+        },
+        "stopCondition": "Afgesproken volledige afrondtaken werkelijk klaar of Jaap vraagt stoppen; geen stop op technische deeloplevering of wachtstap.",
+        "primaryTaskId": "E1.6",
+        "updatedAt": "2026-10-25T22:17:55.402788+00:00"
+      },
+      "checkedAt": "2026-10-26T12:28:10.655029+00:00",
+      "ownerRequestedState": "STOPPED"
     },
     "currentOwnerContinuation": {
       "workId": "work:eva-resume:8768071e-0047-5438-8c17-d0d8990a71c9",
@@ -1981,6 +2035,20 @@
       "purchaseMade": false,
       "providerChanged": false,
       "newTaskCompleted": false
+    },
+    "ownerPause": {
+      "at": "2026-10-26T12:28:10.655029+00:00",
+      "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
+      "resumeRequiresExplicitOwnerInstruction": true,
+      "handoff": "development/coordination/e16-pause-handoff-20261026.md",
+      "projectCompleted": false
+    },
+    "nextBoundedAssignmentsBeforeOwnerPause20261026": {
+      "builder": "Bron-, hostpakket en credentialbroncontrole opgeleverd; geen nieuwe bouw.",
+      "regressionExecutor": "Volg dezelfde E1.6 bij volgende echte bron/klokgelegenheid; behoud22:15succes en ontbrekendeclauses zonder extra bouw.",
+      "coder2": "Nativepakket en vierprofielen opgeleverd; geen herhaalde build.",
+      "reviewer": "Bestaande reviews afgerond; toets volgende concrete echte gekozen-bronketen, geen nieuwe modellen of oude matrices.",
+      "coordinator": "Volg de volgende bestaande gewone E1.6-gelegenheid: Eva kiest vanuit een echt doel zelf bronbewaking of geplande controle, een echte passende bronverandering leidt tot afweging en gecontroleerd vervolg. Installatie, exact authenticatieherstel en eerste gewone afweging zijn onafhankelijk bevestigd. De22:15-afweging koos onderbouwde nachtelijke stilte zonder bronwatch. Zonder nieuwe toegelaten aanleiding volgt de gewone uurgelegenheid niet vóór25okt23:15:57UTC (26okt00:15:57Nederland); forceer geen bronkeuze, modelcall, nieuwe kaart of oude herstelactie. Volledige oorspronkelijke criteria blijven open."
     }
   }
 }

@@ -847,8 +847,17 @@
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
     "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
-    "ownerActionRequired": false
+    "nextAction": "Gepauzeerd op eigenaarverzoek; geen uitvoering starten. Diagnostiekcode en pakket zijn beoordeeld, installer is onvoltooid en niet beoordeeld; niets daarvan geïnstalleerd. Alleen na expliciete hervatting de installer afmaken, onafhankelijk beoordelen en actuele claims controleren. E1.6 blijft open op oorspronkelijke criteria. Overdracht: development/coordination/e16-pause-handoff-20261026.md",
+    "ownerActionRequired": false,
+    "nextActionBeforeOwnerPause20261026": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
+    "executionPaused": true,
+    "ownerPause": {
+      "at": "2026-10-26T12:28:10.655029+00:00",
+      "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
+      "resumeRequiresExplicitOwnerInstruction": true,
+      "handoff": "development/coordination/e16-pause-handoff-20261026.md",
+      "projectCompleted": false
+    }
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -5904,10 +5913,7 @@
                 "requiredForCurrentDelivery": true,
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [
-                    "01a0c537-54d0-7080-9e4c-74db537877af",
-                    "01a169e0-4ed1-75d1-9541-b5dae109b328"
-                  ],
+                  "activeWorkers": [],
                   "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
                   "scope": "One full E1.6 outcome; root retains integration/install and exact recovery, coder1 follows ordinary actual source selection, tester judges concrete original clauses.",
                   "exclusiveProductFiles": [
@@ -5919,7 +5925,27 @@
                     "src/eva/providers/mcp_registration.py"
                   ],
                   "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "ownerInstructionDate": "2026-10-25"
+                  "ownerInstructionDate": "2026-10-25",
+                  "beforeOwnerPause20261026": {
+                    "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                    "activeWorkers": [
+                      "01a0c537-54d0-7080-9e4c-74db537877af",
+                      "01a169e0-4ed1-75d1-9541-b5dae109b328"
+                    ],
+                    "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
+                    "scope": "One full E1.6 outcome; root retains integration/install and exact recovery, coder1 follows ordinary actual source selection, tester judges concrete original clauses.",
+                    "exclusiveProductFiles": [
+                      "src/eva/application/sensory.py",
+                      "src/eva/application/resident_attention.py",
+                      "src/eva/adapters/postgres/initiative_attention.py",
+                      "src/eva/bootstrap/household_initiative.py",
+                      "src/eva/providers/mcp_discovery.py",
+                      "src/eva/providers/mcp_registration.py"
+                    ],
+                    "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                    "ownerInstructionDate": "2026-10-25"
+                  },
+                  "status": "paused_by_owner"
                 },
                 "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
                 "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
@@ -5954,7 +5980,7 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
+                "nextAction": "Gepauzeerd op eigenaarverzoek; geen uitvoering starten. Diagnostiekcode en pakket zijn beoordeeld, installer is onvoltooid en niet beoordeeld; niets daarvan geïnstalleerd. Alleen na expliciete hervatting de installer afmaken, onafhankelijk beoordelen en actuele claims controleren. E1.6 blijft open op oorspronkelijke criteria. Overdracht: development/coordination/e16-pause-handoff-20261026.md",
                 "checkedAt": "2026-10-26T07:17:01.376870+00:00",
                 "progress": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
                 "evidence": [
@@ -5972,7 +5998,8 @@
                   "development/evidence/product/e16-private-day-context-installed-20261021.json",
                   "development/reviews/e16-private-day-context-review-20261021.json",
                   "development/evidence/product/e16-model-access-continuity-20261022.json",
-                  "development/reviews/e16-model-access-continuity-20261022.json"
+                  "development/reviews/e16-model-access-continuity-20261022.json",
+                  "development/evidence/product/e16-http-status-20261026.json"
                 ],
                 "installedAt": "2026-10-20T16:11:46.841997+00:00",
                 "lastInstalledAt": "2026-10-22T17:27:39Z",
@@ -6030,6 +6057,15 @@
                   "diagnosisSha256": "46307754b392c96c15fdb3455da03823d881e93b42ac421aac6566b66c182f29",
                   "reviewSha256": "b47f425543275388196ad899a1f362958cc7d3a3e3615186fe81e5a4768d5266",
                   "recoveryAuthorizedByEvidence": false
+                },
+                "nextActionBeforeOwnerPause20261026": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
+                "executionPaused": true,
+                "ownerPause": {
+                  "at": "2026-10-26T12:28:10.655029+00:00",
+                  "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
+                  "resumeRequiresExplicitOwnerInstruction": true,
+                  "handoff": "development/coordination/e16-pause-handoff-20261026.md",
+                  "projectCompleted": false
                 }
               },
               {
@@ -12132,10 +12168,7 @@
               "requiredForCurrentDelivery": true,
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [
-                  "01a0c537-54d0-7080-9e4c-74db537877af",
-                  "01a169e0-4ed1-75d1-9541-b5dae109b328"
-                ],
+                "activeWorkers": [],
                 "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
                 "scope": "One full E1.6 outcome; root retains integration/install and exact recovery, coder1 follows ordinary actual source selection, tester judges concrete original clauses.",
                 "exclusiveProductFiles": [
@@ -12147,7 +12180,27 @@
                   "src/eva/providers/mcp_registration.py"
                 ],
                 "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "ownerInstructionDate": "2026-10-25"
+                "ownerInstructionDate": "2026-10-25",
+                "beforeOwnerPause20261026": {
+                  "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                  "activeWorkers": [
+                    "01a0c537-54d0-7080-9e4c-74db537877af",
+                    "01a169e0-4ed1-75d1-9541-b5dae109b328"
+                  ],
+                  "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
+                  "scope": "One full E1.6 outcome; root retains integration/install and exact recovery, coder1 follows ordinary actual source selection, tester judges concrete original clauses.",
+                  "exclusiveProductFiles": [
+                    "src/eva/application/sensory.py",
+                    "src/eva/application/resident_attention.py",
+                    "src/eva/adapters/postgres/initiative_attention.py",
+                    "src/eva/bootstrap/household_initiative.py",
+                    "src/eva/providers/mcp_discovery.py",
+                    "src/eva/providers/mcp_registration.py"
+                  ],
+                  "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
+                  "ownerInstructionDate": "2026-10-25"
+                },
+                "status": "paused_by_owner"
               },
               "researchEvidence": "development/evidence/reassessment/eva-living-capability-options-20261020.json",
               "effort": "Gericht bestaande kringloop aanvullen; werkelijke omvang en verbruik bij uitvoering rapporteren, geen credit- of tijdsbelofte.",
@@ -12182,7 +12235,7 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
+              "nextAction": "Gepauzeerd op eigenaarverzoek; geen uitvoering starten. Diagnostiekcode en pakket zijn beoordeeld, installer is onvoltooid en niet beoordeeld; niets daarvan geïnstalleerd. Alleen na expliciete hervatting de installer afmaken, onafhankelijk beoordelen en actuele claims controleren. E1.6 blijft open op oorspronkelijke criteria. Overdracht: development/coordination/e16-pause-handoff-20261026.md",
               "checkedAt": "2026-10-26T07:17:01.376870+00:00",
               "progress": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
               "evidence": [
@@ -12200,7 +12253,8 @@
                 "development/evidence/product/e16-private-day-context-installed-20261021.json",
                 "development/reviews/e16-private-day-context-review-20261021.json",
                 "development/evidence/product/e16-model-access-continuity-20261022.json",
-                "development/reviews/e16-model-access-continuity-20261022.json"
+                "development/reviews/e16-model-access-continuity-20261022.json",
+                "development/evidence/product/e16-http-status-20261026.json"
               ],
               "installedAt": "2026-10-20T16:11:46.841997+00:00",
               "lastInstalledAt": "2026-10-22T17:27:39Z",
@@ -12258,6 +12312,15 @@
                 "diagnosisSha256": "46307754b392c96c15fdb3455da03823d881e93b42ac421aac6566b66c182f29",
                 "reviewSha256": "b47f425543275388196ad899a1f362958cc7d3a3e3615186fe81e5a4768d5266",
                 "recoveryAuthorizedByEvidence": false
+              },
+              "nextActionBeforeOwnerPause20261026": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
+              "executionPaused": true,
+              "ownerPause": {
+                "at": "2026-10-26T12:28:10.655029+00:00",
+                "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
+                "resumeRequiresExplicitOwnerInstruction": true,
+                "handoff": "development/coordination/e16-pause-handoff-20261026.md",
+                "projectCompleted": false
               }
             },
             {

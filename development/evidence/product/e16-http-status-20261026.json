@@ -1,8 +1,8 @@
 {
   "contract": "EvaE16HttpFailureStatusDelivery/v1",
   "taskId": "E1.6",
-  "checkedAt": "2026-10-26T07:23:17.002983+00:00",
-  "status": "source_integrated_independently_verified_package_preparing",
+  "checkedAt": "2026-10-26T12:28:10.655029+00:00",
+  "status": "paused_by_owner_source_and_package_reviewed_installer_incomplete_not_installed",
   "sourceCommit": "3d51c22b",
   "source": {
     "modelSha256": "9f03546a1c6d8b5bb37a49e7b0a50997690baad6e59ba910776fb5e69a537b89",
@@ -28,5 +28,26 @@
     "newProviderProbes": 0,
     "developmentTokens": null,
     "developmentCredits": null
+  },
+  "ownerPause": {
+    "at": "2026-10-26T12:28:10.655029+00:00",
+    "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
+    "resumeRequiresExplicitOwnerInstruction": true,
+    "handoff": "development/coordination/e16-pause-handoff-20261026.md",
+    "projectCompleted": false
+  },
+  "package": {
+    "path": "/var/lib/eva2/e16-http-status-20261026",
+    "handoffSha256": "10df34db505c3118b7ed06b6e554af52502335830b1d102cf360d25cf187588b",
+    "reviewSha256": "8455c4cf760d1ac527093e69ce5bdb8499817698c6194f555685d3ce06d6f682",
+    "packageGo": true,
+    "installationGo": false,
+    "changedProgramProfiles": [
+      "digital_work",
+      "public_research",
+      "household_research"
+    ],
+    "activeHostPinChanges": 1,
+    "installerStatus": "Draft incomplete: dictionary-valued frozen_manifest treated as a path. No installer binding, review GO or execution receipt."
   }
 }
