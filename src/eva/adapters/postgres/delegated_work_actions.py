@@ -50,7 +50,7 @@ _DESCRIPTIONS = {
     "stop_related": "Stop op expliciet verzoek de hele samenhangende opdracht: oorspronkelijke taak, gekoppelde hervattingen en vervolgwerk, plus toegankelijke geplande vervolgstappen. Gebruik een echte work_id uit get_related_work. Alleen voor de bedoelde volledige reeks; gebruik stop_delegated_work voor één taak. Resultaten blijven bewaard. Begonnen acties kunnen nog afronden. Bij partial_stop is de volledige reeks niet bevestigd gestopt; rapporteer dat en de overgebleven status.",
     "related": "Bekijk de oorspronkelijke opdracht en de gekoppelde hervattingen en vervolgonderzoeken bij een work_id. Geeft maximaal 64 opgeslagen taken met status, resultatenbeschikbaarheid en open eindtaken. Truncated betekent onvolledig; aantallen zijn geen productpercentage. Open gewenste resultaten met get_delegated_work. Bij privéwerk staat gekoppelde planning in planning.schedules, met wachtstatus en eerdere stappen. Niet-gekoppelde planning staat in list_delegated_work.",
     "revise_digital": "Stuur een concrete digitale achtergrondopdracht bij op expliciet verzoek van de gebruiker binnen de aangeboden bevoegdheid. Geef work_id en instruction met de wijziging, maximaal 2000 tekens. Stopt de huidige poging, bewaart de correctie en plant één begrensde hervatting na het stoppen; oorspronkelijke taak, acties en voortgang blijven behouden. Gebruik bij newer_attempt_exists het teruggegeven work_id. Bij ander werk of een al afgeronde taak volg je de teruggegeven uitleg; beweer dan geen toegepaste correctie.",
-    "search": "Zoek een oudere eigen opdracht op een woord of zinsdeel in bewaarde titels, opdrachten en resultaten, ook buiten de recente twintig. Geef query; gebruik next_before_work_id als before_work_id om verder te zoeken. Neem een kenmerkend onderwerpwoord, geen lange hele vraag. Open het gevonden work_id via get_delegated_work. Alleen nog bewaarde taken zijn vindbaar; geen zoekhit betekent niet dat iets nooit is besproken.",
+    "search": "Zoek een oudere eigen opdracht op een woord of zinsdeel in bewaarde titels, opdrachten en resultaten, ook buiten de recente twintig. Geef query; laat before_work_id bij de eerste pagina weg. Gebruik alleen next_before_work_id als before_work_id om verder te zoeken. Neem een kenmerkend onderwerpwoord, geen lange hele vraag. Open het gevonden work_id via get_delegated_work. Alleen nog bewaarde taken zijn vindbaar; geen zoekhit betekent niet dat iets nooit is besproken.",
     "schedule_digital": "Plan op verzoek van de eigenaar één digitale opdracht voor een afgesproken toekomstig moment, maximaal 30 dagen vooruit. Geef task en run_at in UTC (YYYY-MM-DDTHH:MM:SSZ). Zet lokale tijden om naar UTC; vraag bij onduidelijkheid naar datum of tijdzone. Voor een vervolgstap mag je after_work_id of after_schedule_id opgeven uit een eerdere opgeslagen taak of afspraak: wacht dan op het resultaat en gebruik het in deze nieuwe opdracht. Zonder run_at start een afhankelijke stap zodra de vorige klaar is. Kies alleen door de eigenaar gevraagde stappen. Het werk is bewaard maar nog niet gestart. Geen terugkerende opdracht of budgetverhoging.",
     "schedule_resume": "Plan één hervatting van een gestopte of mislukte opdracht op een door de eigenaar gewenst moment, maximaal 30 dagen vooruit. Geef work_id en run_at in UTC. Bewaart bestaande uitvoering en werkplan; de nieuwe poging gebruikt de bestaande begrensde budgetten. Geen herhaalde automatische pogingen.",
     "schedule_list": "Bekijk opgeslagen startmomenten, status en gekoppelde werk-ID. Gebruik dit voor wat je later gaat doen; beweer niet dat gepland werk al loopt.",
@@ -64,7 +64,7 @@ _DESCRIPTIONS = {
     "research": "Start publiek bronnenonderzoek op de achtergrond. Geef uitsluitend een geanonimiseerde publieke vraag, titel en onderwerpen mee; geen privécontext, namen of geheugen. Geeft direct work_id terug. Blijf beschikbaar voor gesprek; gebruik bestaande get/stop/resume voor resultaat en bediening. Bij een gevraagde correctie op lopend onderzoek: leg eerst met stop_delegated_work een stopverzoek voor de juiste work_id vast. Start daarna de zelfstandige gecorrigeerde publieke vraag met prior_work_id. Wacht niet op het einde van de oude werker en beweer niet dat die al gestopt is. Dit wijzigt geen andere taken.",
     "start": "Besteed een concrete denk-, schrijf- of analysetaak uit aan een duurzame hulpagent. Geef alle benodigde context mee. De hulpagent heeft geen browser of tools. Geeft meteen een work_id terug; gebruik get om later het resultaat te lezen. Gebruik voor parallel hulpwerk op verzoek van de eigenaar.",
     "list": "Bekijk de duurzame hulpopdrachten van deze eigenaar, met hun work_id en actuele status.",
-    "get": "Lees de actuele status, gemeten verbruik en het opgeslagen resultaat van één hulpopdracht. Gebruik het echte resultaat in je antwoord; ingepland betekent nog niet klaar.",
+    "get": "Lees de actuele status, gemeten verbruik en het opgeslagen resultaat van één hulpopdracht. Gebruik het echte resultaat in je antwoord; ingepland betekent nog niet klaar. De taakstatus is actueel, maar de inhoud is een opgeslagen momentopname op completed_at. Een oude melding dat iemand nog niet antwoordde bewijst niet dat er later geen antwoord kwam. Neem nieuwe gebruikersinformatie mee en zoek relevante latere resultaten voordat je een actuele conclusie trekt.",
     "stop": "Stop de genoemde hulpopdracht op verzoek van de eigenaar. De ontvangstbevestiging kan aangeven dat een reeds begonnen modelcall nog niet is beëindigd.",
     "resume": "Hervat een gestopte of mislukte hulpopdracht alleen op expliciet verzoek van de eigenaar. Maakt één gekoppelde nieuwe poging; bewaart vorige onzekerheid en verbruik. Een nog actieve call kan niet direct opnieuw gestart worden.",
 }
@@ -475,7 +475,15 @@ class PostgresDelegatedWorkActions:
         thread_id = self._thread_id(turn, step_index)
         request = {"call_id": call.call_id, "name": call.name, "arguments": call.arguments}
         events = timeline.events(thread_id)
+        search_result = None
         if not events:
+            if operation == "search":
+                # Searching only reads owner-scoped state. Validate and finish
+                # that read before creating an immutable action identity, so the
+                # existing bounded input repair can correct a rejected cursor.
+                search_result = self._service.execute(
+                    operation, turn, request_key=thread_id, search=call.arguments["search"],
+                )
             try:
                 timeline.create_thread(
                     thread_id=thread_id, checkpoint_id=thread_id + ":prepared",
@@ -496,7 +504,7 @@ class PostgresDelegatedWorkActions:
             service_argument = {name: value for name, value in service_argument.items()
                                 if value is not None or name not in {
                                     "run_at", "after_work_id", "after_schedule_id"}}
-        result = self._service.execute(
+        result = search_result if search_result is not None else self._service.execute(
             operation, turn, request_key=thread_id,
             **({} if key is None else {key: service_argument}),
             **({"feedback": call.arguments["feedback"]} if operation == "initiative_feedback" else {}),

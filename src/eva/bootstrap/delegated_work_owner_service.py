@@ -18,7 +18,7 @@ from eva.adapters.postgres.delegated_work import (
 )
 from eva.adapters.postgres.operational_timeline import TimelineScope, external_timeline_scope
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
-from eva.application.conversation import ConversationTurn
+from eva.application.conversation import ConversationTurn, ConversationActionInputRejected
 from eva.bootstrap.delegated_work_provider import build_unadmitted_delegated_work_spec
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.delegated_work import DelegatedResearchSpec, PublicResearchRequest
@@ -218,8 +218,31 @@ class DelegatedWorkOwnerService:
             if (task is not None or work_id is not None or not isinstance(search, dict)
                     or not {"query"} <= set(search) <= {"query", "before_work_id"}):
                 raise ValueError("work search fields differ")
-            rows = self.store.list_owned(**self._owner, limit=21, query=search["query"],
-                                         before_work_id=search.get("before_work_id"))
+            # Reject malformed search values before calling storage. The conversation
+            # can repair input once without replaying an admitted side effect.
+            query = search["query"]
+            cursor = search.get("before_work_id")
+            invalid = []
+            if not isinstance(query, str) or not 1 <= len(query.strip()) <= 200:
+                invalid.append("search.query")
+            if cursor is not None and (
+                    not isinstance(cursor, str) or not 1 <= len(cursor) <= 240):
+                invalid.append("search.before_work_id")
+            if invalid:
+                raise ConversationActionInputRejected(tuple(invalid), prompt=
+                    "De zoekinvoer is ongeldig. Gebruik een zoekterm van 1 tot 200 tekens "
+                    "en laat before_work_id weg bij de eerste zoekpagina.")
+            try:
+                rows = self.store.list_owned(**self._owner, limit=21, query=query,
+                                             before_work_id=cursor)
+            except ValueError as error:
+                # Only the documented missing-cursor rejection is recoverable here.
+                # Never mask authority, storage integrity or unexpected failures.
+                if cursor is None or str(error) != "work search cursor is unavailable for this owner":
+                    raise
+                raise ConversationActionInputRejected(("search.before_work_id",), prompt=
+                    "De zoekcursor is niet beschikbaar. Zoek opnieuw zonder before_work_id; "
+                    "gebruik voor volgende pagina's alleen de teruggegeven next_before_work_id.") from None
             return {**response, "query": search["query"].strip(),
                     "jobs": [self._view(row, include_result=False, turn=turn) for row in rows[:20]],
                     "truncated": len(rows) > 20,

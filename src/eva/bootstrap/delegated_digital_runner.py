@@ -390,8 +390,14 @@ class BackgroundConnectorActions:
 
     def available_action_names(self, turn):
         self._authorize(turn)
-        return tuple(name for name in self.action_names
-                     if self._by_name[name].available_for(turn))
+        available = set()
+        for tool in self._tools:
+            if not tool.available_for(turn):
+                continue
+            current_names = getattr(tool, "available_action_names", None)
+            names = current_names(turn) if callable(current_names) else tool.action_names
+            available.update(name for name in names if name in tool.action_names)
+        return tuple(name for name in self.action_names if name in available)
 
     continuation_action_names = available_action_names
 

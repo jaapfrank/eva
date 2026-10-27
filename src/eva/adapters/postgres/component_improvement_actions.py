@@ -241,6 +241,18 @@ class ComponentImprovementActions:
         self.authorize(turn)
         return turn == self.source
 
+    def available_action_names(self, turn):
+        if not self.available_for(turn):
+            return ()
+        # Keep the complete admitted catalog for profile/grant comparison, but
+        # offer native repair/maintenance only in their existing bound context.
+        unavailable = set()
+        if getattr(self.repair_guard, "_repair_incident_id", None) is None:
+            unavailable.add(REPAIR)
+        if self.repair_guard is None:
+            unavailable.add(MAINTENANCE)
+        return tuple(name for name in self.action_names if name not in unavailable)
+
     def active_context(self, turn):
         self.authorize(turn)
         return ()
@@ -281,7 +293,7 @@ class ComponentImprovementActions:
         return ConversationActionCall(call.call_id, call.name, prepared)
 
     def execute(self, turn, call, *, step_index=0):
-        if not self.available_for(turn) or call.name not in self.action_names or type(step_index) is not int or step_index < 0:
+        if call.name not in self.available_action_names(turn) or type(step_index) is not int or step_index < 0:
             raise ConversationConflict("component action scope differs")
         arguments = call.arguments
         if call.name in {READ, DRAFT, PREPARE}:

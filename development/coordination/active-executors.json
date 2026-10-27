@@ -1793,7 +1793,7 @@
     "authority": "Direct owner instruction 2026-10-23: sole main coordinator; integration, GitHub and shared installation exclusively here.",
     "previousCoordinator": "windows-root",
     "preserveExistingReservations": true,
-    "activeOutcome": "E1.6",
+    "activeOutcome": "E4.16",
     "doNotRepeatSentLolaQuestion": true,
     "agents": {},
     "maxConcurrentExecutorsReviewers": 4,
@@ -1834,8 +1834,8 @@
       "currentWorker": "sha256:7441e8ea34647fbf0d59090d7e1010e68b2fe42c0705918e882b2a3e28990d44"
     },
     "ownerQuestion": null,
-    "parallelBoundedWork": "Beperkte installatieopdracht afgerond; alle vijf chats weer gepauzeerd. Geen actieve uitvoerders of tester.",
-    "currentBlocker": "De nieuwste gecontroleerde diagnostiekcorrectie is26oktober geïnstalleerd in kern en worker en onafhankelijk teruggelezen; alle vier werkprofielen en actieve hostproducer sluiten aan. Deze beperkte installatie is klaar. Overige ontwikkeling en chats blijven gepauzeerd op eigenaarverzoek. E1.6 blijft open op oorspronkelijke echte bronkeuze/verandering/afweging/uitkomstcriteria; geen automatische hervatting, oude recovery of modelprobe.",
+    "parallelBoundedWork": "Coördinator herstelt alleen de twee bewezen Telegramfouten; bestaande tester beoordeelt concrete oplevering. Andere chats gepauzeerd.",
+    "currentBlocker": "Lege zoekcursor onderbreekt gesprek; verkeerd aangeboden native hersteltool veroorzaakt internal_error bij gewone digitale taak.",
     "latestVerifiedOutcome": {
       "task": "E1.6",
       "scope": "Existing diagnostic installation only",
@@ -2094,6 +2094,26 @@
       "actualReviewSha256": "9a9f36e1376b1f334eb2eed30f2dfb9b95a3ce1ce7a6731deec1363d1678037f",
       "fullE16Completed": false,
       "fullE416Completed": false
+    },
+    "scopedTelegramRepairAuthorization": {
+      "at": "2026-10-27T07:47:07.435768+00:00",
+      "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
+      "outcome": "Een verkeerd gevormde zoekcursor breekt het gesprek niet af; taken krijgen alleen hersteltools waarvoor zij een actuele brongebonden bevoegdheid hebben. Bestaande resultaten en onzekerheid blijven behouden.",
+      "knownCauses": [
+        "search_delegated_work query with before_work_id empty string raises ValueError before connection",
+        "private digital task was offered manage_own_runtime_repair despite no native repair guard; exact error fingerprint matches rejected context"
+      ],
+      "exclusiveProductFiles": [
+        "src/eva/bootstrap/delegated_work_owner_service.py",
+        "src/eva/adapters/postgres/delegated_work_actions.py",
+        "src/eva/adapters/postgres/component_improvement_actions.py",
+        "src/eva/bootstrap/delegated_digital_runner.py"
+      ],
+      "coordinatorOnlyImplementation": true,
+      "independentTesterRequired": true,
+      "otherDevelopmentPaused": true,
+      "historicalEffectsReplayAuthorized": false,
+      "automations": false
     }
   }
 }

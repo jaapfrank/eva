@@ -1,0 +1,54 @@
+{
+  "contract": "EvaTelegramRecoveryDelivery/v1",
+  "taskId": "E4.16",
+  "checkedAt": "2026-10-27T08:12:27.313275+00:00",
+  "status": "source_reviewed_exact_package_built_installer_review_pending",
+  "sourceFiles": [
+    {
+      "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+      "beforeSha256": "ba4b83387c95b7452133bd40510c262ddb241b1d571508f50749e8bd59004b63",
+      "afterSha256": "83ebab1d846164d2a49dbf9addd8954383a127a08b188661ef28de9d4091ebc0"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_digital_runner.py",
+      "beforeSha256": "c57c8a667f941508b7e910298fa3621d6a0b50af64b1e8c8046f7252707e7684",
+      "afterSha256": "7b8ef60362ba5a4215530e88d4fcdf981e5692e438b3bfc11c3ffc8ab87d34ea"
+    },
+    {
+      "path": "src/eva/adapters/postgres/delegated_work_actions.py",
+      "beforeSha256": "63ef3ebc4e6f9955a19cde7b5de2676b71d44ef14e930391804f780bf6021ad2",
+      "afterSha256": "07bf0a23698c5cb2c1490524f67b960b62f6602ca0a9fa1008a8b1afa24a979c"
+    },
+    {
+      "path": "src/eva/adapters/postgres/component_improvement_actions.py",
+      "beforeSha256": "ed867349df92fff8ba19af926dd2aa9513a43083fe8e733dadeee758a93c86cb",
+      "afterSha256": "ba69a503d2af373ca4dc8d826612b22a5d08e3a6482428d449c63acdbcbc121c"
+    }
+  ],
+  "sourceReviewSha256": "776da24f3c3ebe347c5dd067c77231c360194466b4e5ca33aaac9666e04cd2ba",
+  "behavior": [
+    "Malformed or unavailable owner-search cursors use existing bounded input recovery before an immutable read-action identity is created.",
+    "Ordinary private digital tasks retain the complete original grant but are not offered native repair or maintenance without their existing current context; execution rechecks availability.",
+    "Saved work-result descriptions distinguish historical content from current task status and newer user information."
+  ],
+  "verification": {
+    "focusedOfflineCases": 13,
+    "candidate": "pass",
+    "independentChecks": [
+      "Cached owner result rejected after authority revocation",
+      "Native repair rejected before dispatch when its guard is withdrawn"
+    ],
+    "dbWrites": 0,
+    "newModelCalls": 0,
+    "privateOtherPersonConversationRead": false
+  },
+  "evaAuthoredCandidateReused": true,
+  "automatedRepairCompleted": false,
+  "historicalFailedWorkPreserved": true,
+  "historicalTasksReplayed": false,
+  "packageHandoffSha256": "85d558900fe1f1ea7f6ab0d33d8d53365b5823b22afe4d8cfdcf33726a49255c",
+  "installed": false,
+  "fullE416Completed": false,
+  "developmentTokens": null,
+  "developmentCredits": null
+}

@@ -841,47 +841,33 @@
   "lastUpdated": "2026-10-24T07:24:28.185511+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E1.6",
+  "activeTaskId": "E4.16",
   "currentWork": {
-    "id": "E1.6",
-    "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+    "id": "E4.16",
+    "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
-    "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "De nieuwste gecontroleerde diagnostiekcorrectie is26oktober geïnstalleerd in kern en worker en onafhankelijk teruggelezen; alle vier werkprofielen en actieve hostproducer sluiten aan. Deze beperkte installatie is klaar. Overige ontwikkeling en chats blijven gepauzeerd op eigenaarverzoek. E1.6 blijft open op oorspronkelijke echte bronkeuze/verandering/afweging/uitkomstcriteria; geen automatische hervatting, oude recovery of modelprobe.",
+    "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+    "nextAction": "Herstel de twee exact herleide Telegramfouten met behoud van Eva's eigen kandidaat en actuele bevoegdheden; toets de echte tool-/ontvangstbewijsroute offline, laat onafhankelijk beoordelen en installeer na verse claimcontrole. Overige ontwikkeling blijft gepauzeerd.",
     "ownerActionRequired": false,
-    "nextActionBeforeOwnerPause20261026": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
-    "executionPaused": true,
-    "ownerPause": {
-      "at": "2026-10-26T12:28:10.655029+00:00",
-      "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
-      "resumeRequiresExplicitOwnerInstruction": true,
-      "handoff": "development/coordination/e16-pause-handoff-20261026.md",
-      "projectCompleted": false
-    },
-    "scopedInstallationAuthorization": {
-      "at": "2026-10-26T12:35:49.433678+00:00",
-      "instruction": "Rechttrekken zodat de meest recente gecontroleerde versie wordt gebruikt.",
-      "scope": "Only finish, independently review and install the existing e16-http-status-20261026 package, then verify actual installation. All other development remains paused.",
-      "newProductWork": false,
-      "historicalReviewRecoveryAuthorized": false,
-      "status": "completed",
-      "completedAt": "2026-10-26T12:42:46.770977+00:00"
-    },
-    "latestScopedInstallation": {
-      "status": "installed_independently_verified",
-      "installedAt": "2026-10-26T12:39:32.023925+00:00",
-      "verifiedAt": "2026-10-26T12:42:46.770977+00:00",
-      "sourceCommit": "3d51c22b",
-      "installationReceiptSha256": "f1833453ac6c0604749bbe80ec1ea1d71da24e19e41d53ed493b94f9aa29200c",
-      "actualReadbackSha256": "43ca915c888fdc8efba325bd24f7e567875e1a95b8da0ade0a9b0bd052a48eb7",
-      "actualReviewSha256": "a06dd2eb7e49a7e5233163dab093a476a8dae1446435fddbf9199dfd0f6f967d",
-      "actualCoreImage": "sha256:5fabc30e0ab32ab6d0b920aaf9c35179d69f3d273a4d6cd256414321f2d3e769",
-      "actualWorkerImage": "sha256:b5aea2f0e6bf89a6b0785c018cb589f276ab3e0accdb7293e2a7772bb5b8051b",
-      "allFourActualProfilesCompatible": true,
-      "activeHostProducerMatchesAllFiveReleaseFields": true,
-      "retainedHostFiles": 88,
-      "historicalDataPreserved": true,
-      "fullE16Completed": false
+    "scopedTelegramRepairAuthorization": {
+      "at": "2026-10-27T07:47:07.435768+00:00",
+      "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
+      "outcome": "Een verkeerd gevormde zoekcursor breekt het gesprek niet af; taken krijgen alleen hersteltools waarvoor zij een actuele brongebonden bevoegdheid hebben. Bestaande resultaten en onzekerheid blijven behouden.",
+      "knownCauses": [
+        "search_delegated_work query with before_work_id empty string raises ValueError before connection",
+        "private digital task was offered manage_own_runtime_repair despite no native repair guard; exact error fingerprint matches rejected context"
+      ],
+      "exclusiveProductFiles": [
+        "src/eva/bootstrap/delegated_work_owner_service.py",
+        "src/eva/adapters/postgres/delegated_work_actions.py",
+        "src/eva/adapters/postgres/component_improvement_actions.py",
+        "src/eva/bootstrap/delegated_digital_runner.py"
+      ],
+      "coordinatorOnlyImplementation": true,
+      "independentTesterRequired": true,
+      "otherDevelopmentPaused": true,
+      "historicalEffectsReplayAuthorized": false,
+      "automations": false
     }
   },
   "historicalWorkboard": {
@@ -3189,8 +3175,8 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E1.6",
-          "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+          "taskId": "E4.16",
+          "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
           "summary": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
           "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
           "detail": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
@@ -8518,7 +8504,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "De concrete brontransportcorrectie is geïnstalleerd en onafhankelijk op de werkelijke host/images gebruikt. Dit ondersteunt huidige E1.6-afronding. Eva-gegenereerde oorspronkelijke reparatie, zelfstandig beheerd toepassen en later onafhankelijk hergebruik blijven volledige E4.16-eindvoorwaarden.",
+                "nextAction": "Herstel de twee exact herleide Telegramfouten met behoud van Eva's eigen kandidaat en actuele bevoegdheden; toets de echte tool-/ontvangstbewijsroute offline, laat onafhankelijk beoordelen en installeer na verse claimcontrole. Overige ontwikkeling blijft gepauzeerd.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8555,9 +8541,29 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-25T22:11:19.598938+00:00",
+                "checkedAt": "2026-10-27T07:47:07.435768+00:00",
                 "progress": "SDK-headercorrectie op 25 oktober om 08:21 Nederlandse tijd geïnstalleerd en onafhankelijk werkelijk teruggelezen. Beide rollen zijn gezond; de providerbron en alle vier werkprofielen komen overeen. De oorspronkelijke installatieblokkade is met exact bron- en terminaal foutbewijs verklaard; registraties zijn behouden. Nieuwe echte HTTP-foutdiagnostiek, de schooluitkomst en volledige autonome herstel-/hergebruikcriteria blijven open.",
-                "latestEvidence": "development/evidence/product/e16-completion-20261025.json"
+                "latestEvidence": "development/evidence/product/e16-completion-20261025.json",
+                "scopedTelegramRepairAuthorization": {
+                  "at": "2026-10-27T07:47:07.435768+00:00",
+                  "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
+                  "outcome": "Een verkeerd gevormde zoekcursor breekt het gesprek niet af; taken krijgen alleen hersteltools waarvoor zij een actuele brongebonden bevoegdheid hebben. Bestaande resultaten en onzekerheid blijven behouden.",
+                  "knownCauses": [
+                    "search_delegated_work query with before_work_id empty string raises ValueError before connection",
+                    "private digital task was offered manage_own_runtime_repair despite no native repair guard; exact error fingerprint matches rejected context"
+                  ],
+                  "exclusiveProductFiles": [
+                    "src/eva/bootstrap/delegated_work_owner_service.py",
+                    "src/eva/adapters/postgres/delegated_work_actions.py",
+                    "src/eva/adapters/postgres/component_improvement_actions.py",
+                    "src/eva/bootstrap/delegated_digital_runner.py"
+                  ],
+                  "coordinatorOnlyImplementation": true,
+                  "independentTesterRequired": true,
+                  "otherDevelopmentPaused": true,
+                  "historicalEffectsReplayAuthorized": false,
+                  "automations": false
+                }
               },
               {
                 "id": "E4.17",
@@ -9652,7 +9658,7 @@
             "E2.6",
             "C4.3"
           ],
-          "activeTask": "E1.6",
+          "activeTask": "E4.16",
           "rules": [
             "Eén primaire uitvoeruitkomst; de bestaande spraakuitvoerder behoudt zijn eigen route.",
             "E4.16 en E4.18 lossen eerder concrete blokkerende fouten/duplicatie op; hun volledige afronding volgt vóór de eindvergelijking.",
@@ -14798,7 +14804,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "De concrete brontransportcorrectie is geïnstalleerd en onafhankelijk op de werkelijke host/images gebruikt. Dit ondersteunt huidige E1.6-afronding. Eva-gegenereerde oorspronkelijke reparatie, zelfstandig beheerd toepassen en later onafhankelijk hergebruik blijven volledige E4.16-eindvoorwaarden.",
+              "nextAction": "Herstel de twee exact herleide Telegramfouten met behoud van Eva's eigen kandidaat en actuele bevoegdheden; toets de echte tool-/ontvangstbewijsroute offline, laat onafhankelijk beoordelen en installeer na verse claimcontrole. Overige ontwikkeling blijft gepauzeerd.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14835,9 +14841,29 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-25T22:11:19.598938+00:00",
+              "checkedAt": "2026-10-27T07:47:07.435768+00:00",
               "progress": "SDK-headercorrectie op 25 oktober om 08:21 Nederlandse tijd geïnstalleerd en onafhankelijk werkelijk teruggelezen. Beide rollen zijn gezond; de providerbron en alle vier werkprofielen komen overeen. De oorspronkelijke installatieblokkade is met exact bron- en terminaal foutbewijs verklaard; registraties zijn behouden. Nieuwe echte HTTP-foutdiagnostiek, de schooluitkomst en volledige autonome herstel-/hergebruikcriteria blijven open.",
-              "latestEvidence": "development/evidence/product/e16-completion-20261025.json"
+              "latestEvidence": "development/evidence/product/e16-completion-20261025.json",
+              "scopedTelegramRepairAuthorization": {
+                "at": "2026-10-27T07:47:07.435768+00:00",
+                "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
+                "outcome": "Een verkeerd gevormde zoekcursor breekt het gesprek niet af; taken krijgen alleen hersteltools waarvoor zij een actuele brongebonden bevoegdheid hebben. Bestaande resultaten en onzekerheid blijven behouden.",
+                "knownCauses": [
+                  "search_delegated_work query with before_work_id empty string raises ValueError before connection",
+                  "private digital task was offered manage_own_runtime_repair despite no native repair guard; exact error fingerprint matches rejected context"
+                ],
+                "exclusiveProductFiles": [
+                  "src/eva/bootstrap/delegated_work_owner_service.py",
+                  "src/eva/adapters/postgres/delegated_work_actions.py",
+                  "src/eva/adapters/postgres/component_improvement_actions.py",
+                  "src/eva/bootstrap/delegated_digital_runner.py"
+                ],
+                "coordinatorOnlyImplementation": true,
+                "independentTesterRequired": true,
+                "otherDevelopmentPaused": true,
+                "historicalEffectsReplayAuthorized": false,
+                "automations": false
+              }
             },
             {
               "id": "E4.17",
@@ -15932,7 +15958,7 @@
           "E2.6",
           "C4.3"
         ],
-        "activeTask": "E1.6",
+        "activeTask": "E4.16",
         "rules": [
           "Eén primaire uitvoeruitkomst; de bestaande spraakuitvoerder behoudt zijn eigen route.",
           "E4.16 en E4.18 lossen eerder concrete blokkerende fouten/duplicatie op; hun volledige afronding volgt vóór de eindvergelijking.",
@@ -18164,5 +18190,47 @@
     "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
     "nextAction": "Technische E4.15-keten met bestaand bewijs nagevolgd en onafhankelijk beoordeeld. Behoud huidige 300s-policy; een kans korter dan30s kan binnen dat venster verlopen, zonder bewezen echte misser. Eerstvolgende concrete oplevering: bij een natuurlijke geschikte bron buiten300s en toegelaten uren de bestaande positieve voorstel→Eva-afweging→actuele guard→eenmaal aangeboden-uiting aantonen. Geen geforceerde bron, herhaalproef, CPU/importserie of eigenaarvraag. Begroeting, horen, later feedback/hergebruik en eigen behoefteontdekking blijven open; fysieke proef uitgesteld. Daarna dezelfde uitbreiding onderE4.17 herstelbaar maken.",
     "ownerActionRequired": false
+  },
+  "previousCurrentWorkBeforeTelegramRepair20261027": {
+    "id": "E1.6",
+    "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+    "status": "in_progress",
+    "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
+    "nextAction": "De nieuwste gecontroleerde diagnostiekcorrectie is26oktober geïnstalleerd in kern en worker en onafhankelijk teruggelezen; alle vier werkprofielen en actieve hostproducer sluiten aan. Deze beperkte installatie is klaar. Overige ontwikkeling en chats blijven gepauzeerd op eigenaarverzoek. E1.6 blijft open op oorspronkelijke echte bronkeuze/verandering/afweging/uitkomstcriteria; geen automatische hervatting, oude recovery of modelprobe.",
+    "ownerActionRequired": false,
+    "nextActionBeforeOwnerPause20261026": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
+    "executionPaused": true,
+    "ownerPause": {
+      "at": "2026-10-26T12:28:10.655029+00:00",
+      "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
+      "resumeRequiresExplicitOwnerInstruction": true,
+      "handoff": "development/coordination/e16-pause-handoff-20261026.md",
+      "projectCompleted": false
+    },
+    "scopedInstallationAuthorization": {
+      "at": "2026-10-26T12:35:49.433678+00:00",
+      "instruction": "Rechttrekken zodat de meest recente gecontroleerde versie wordt gebruikt.",
+      "scope": "Only finish, independently review and install the existing e16-http-status-20261026 package, then verify actual installation. All other development remains paused.",
+      "newProductWork": false,
+      "historicalReviewRecoveryAuthorized": false,
+      "status": "completed",
+      "completedAt": "2026-10-26T12:42:46.770977+00:00"
+    },
+    "latestScopedInstallation": {
+      "status": "installed_independently_verified",
+      "installedAt": "2026-10-26T12:39:32.023925+00:00",
+      "verifiedAt": "2026-10-26T12:42:46.770977+00:00",
+      "sourceCommit": "3d51c22b",
+      "installationReceiptSha256": "f1833453ac6c0604749bbe80ec1ea1d71da24e19e41d53ed493b94f9aa29200c",
+      "actualReadbackSha256": "43ca915c888fdc8efba325bd24f7e567875e1a95b8da0ade0a9b0bd052a48eb7",
+      "actualReviewSha256": "a06dd2eb7e49a7e5233163dab093a476a8dae1446435fddbf9199dfd0f6f967d",
+      "actualCoreImage": "sha256:5fabc30e0ab32ab6d0b920aaf9c35179d69f3d273a4d6cd256414321f2d3e769",
+      "actualWorkerImage": "sha256:b5aea2f0e6bf89a6b0785c018cb589f276ab3e0accdb7293e2a7772bb5b8051b",
+      "allFourActualProfilesCompatible": true,
+      "activeHostProducerMatchesAllFiveReleaseFields": true,
+      "retainedHostFiles": 88,
+      "historicalDataPreserved": true,
+      "fullE16Completed": false
+    }
   }
 }
