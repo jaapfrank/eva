@@ -2114,6 +2114,18 @@
       "otherDevelopmentPaused": true,
       "historicalEffectsReplayAuthorized": false,
       "automations": false
+    },
+    "scopedTelegramRepairInstallation": {
+      "status": "installed_independently_verified",
+      "installedAt": "2026-10-28T08:48:26.577067+00:00",
+      "verifiedAt": "2026-10-28T08:49:13.096083+00:00",
+      "installationReceiptSha256": "c784d9de0376974b7e00fc73c891f71954a09c6d9096e7aa47286a37ed53954d",
+      "actualReadbackSha256": "63fbd9cd57347f1c03d880f07230b4cde0cb9377f2f5895c2f9f0a56d966f879",
+      "independentReviewSha256": "282620d440d075e6bb4c08ca7394be9af9f02e0ff830a523098ca90a6caee9ca",
+      "allFourProfilesCompatible": true,
+      "historicalDataPreserved": true,
+      "realTelegramUseProven": false,
+      "fullE416Completed": false
     }
   }
 }

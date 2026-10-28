@@ -1,0 +1,19 @@
+{
+  "contract": "EvaTelegramRepairInstalledReview/v1",
+  "reviewedAt": "2026-10-28T08:49:13.096083+00:00",
+  "installedGo": true,
+  "sourceReviewSha256": "776da24f3c3ebe347c5dd067c77231c360194466b4e5ca33aaac9666e04cd2ba",
+  "installationReceiptSha256": "c784d9de0376974b7e00fc73c891f71954a09c6d9096e7aa47286a37ed53954d",
+  "actualReadbackSha256": "63fbd9cd57347f1c03d880f07230b4cde0cb9377f2f5895c2f9f0a56d966f879",
+  "independentReviewSha256": "282620d440d075e6bb4c08ca7394be9af9f02e0ff830a523098ca90a6caee9ca",
+  "checks": [
+    "Both running roles match the four reviewed source hashes and are healthy.",
+    "All four installed core and worker profile pairs agree; the host matches all five digital-work release fields.",
+    "Historical receipts and data were retained; claims and STOP checks passed."
+  ],
+  "limitations": [
+    "Actual Telegram use after installation remains unproven.",
+    "Full autonomous E4.16 remains open."
+  ],
+  "newModelCalls": 0
+}

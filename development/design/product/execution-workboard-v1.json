@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Wacht tot Docker en de evaluatiehost operationeel zijn; bind de huidige containers, host en profielen opnieuw, controleer actuele claims en STOP en laat de installatiebinding onafhankelijk beoordelen vóór installatie.",
+    "nextAction": "Gebruik Eva normaal via Telegram en beoordeel bij een echte volgende interactie of het gesprek en passend taakgebruik goed verlopen; hervat overige ontwikkeling alleen op eigenaarverzoek.",
     "ownerActionRequired": false,
     "scopedTelegramRepairAuthorization": {
       "at": "2026-10-27T07:47:07.435768+00:00",
@@ -869,17 +869,18 @@
       "historicalEffectsReplayAuthorized": false,
       "automations": false,
       "deliveryStatus": {
-        "checkedAt": "2026-10-28T08:38:05.177112+00:00",
+        "checkedAt": "2026-10-28T08:49:42.733197+00:00",
         "built": true,
         "sourceReviewed": true,
-        "installed": false,
-        "status": "runtime_restart_docker_initialization_rebinding_required",
+        "installed": true,
+        "status": "installed_independently_verified_ordinary_use_unproven",
         "unknownNullMarkersInitially": 21,
         "historicalMarkersPreserved": true,
         "ownerActionRequired": false,
         "preliminaryActiveWork": 0,
         "preliminaryActiveLeases": 0,
-        "hostService": "startup_queued_after_docker"
+        "independentReviewSha256": "282620d440d075e6bb4c08ca7394be9af9f02e0ff830a523098ca90a6caee9ca",
+        "actualReadbackSha256": "63fbd9cd57347f1c03d880f07230b4cde0cb9377f2f5895c2f9f0a56d966f879"
       },
       "previousDashboardNowBeforeRepair": {
         "taskId": "E4.16",
@@ -3198,10 +3199,10 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "De Telegramreparaties zijn gebouwd en onafhankelijk op broncode beoordeeld. Na een systeemherstart verwerkt Docker zijn bouwcache nog; host en containers moeten opnieuw aan de installatie worden gebonden. De wijzigingen zijn nog niet geïnstalleerd.",
+          "summary": "De twee gerichte Telegramreparaties zijn op 28 oktober geïnstalleerd en onafhankelijk teruggelezen. Ongeldige zoekinvoer kan worden hersteld en privéwerk krijgt alleen beschikbare hersteltools. Normaal Telegramgebruik na installatie is nog niet beoordeeld; de volledige E4.16-criteria blijven open.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "detail": "De Telegramreparaties zijn gebouwd en onafhankelijk op broncode beoordeeld. Na een systeemherstart verwerkt Docker zijn bouwcache nog; host en containers moeten opnieuw aan de installatie worden gebonden. De wijzigingen zijn nog niet geïnstalleerd.",
-          "state": "Gebouwd en getest; installatie wacht op huidige Docker- en hostbinding."
+          "detail": "De twee gerichte Telegramreparaties zijn op 28 oktober geïnstalleerd en onafhankelijk teruggelezen. Ongeldige zoekinvoer kan worden hersteld en privéwerk krijgt alleen beschikbare hersteltools. Normaal Telegramgebruik na installatie is nog niet beoordeeld; de volledige E4.16-criteria blijven open.",
+          "state": "Gerichte reparatie geïnstalleerd en onafhankelijk gecontroleerd; normaal Telegramgebruik nog niet getoetst."
         },
         "next": {
           "taskId": "E1.6",
@@ -9260,7 +9261,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Wacht tot Docker en de evaluatiehost operationeel zijn; bind de huidige containers, host en profielen opnieuw, controleer actuele claims en STOP en laat de installatiebinding onafhankelijk beoordelen vóór installatie.",
+        "nextAction": "Gebruik Eva normaal via Telegram en beoordeel bij een echte volgende interactie of het gesprek en passend taakgebruik goed verlopen; hervat overige ontwikkeling alleen op eigenaarverzoek.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9547,7 +9548,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-28T08:38:05.177112+00:00",
+        "checkedAt": "2026-10-28T08:49:42.733197+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -15560,7 +15561,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Wacht tot Docker en de evaluatiehost operationeel zijn; bind de huidige containers, host en profielen opnieuw, controleer actuele claims en STOP en laat de installatiebinding onafhankelijk beoordelen vóór installatie.",
+      "nextAction": "Gebruik Eva normaal via Telegram en beoordeel bij een echte volgende interactie of het gesprek en passend taakgebruik goed verlopen; hervat overige ontwikkeling alleen op eigenaarverzoek.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15847,7 +15848,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-28T08:38:05.177112+00:00",
+      "checkedAt": "2026-10-28T08:49:42.733197+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
