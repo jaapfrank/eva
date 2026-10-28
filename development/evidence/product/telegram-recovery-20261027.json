@@ -1,8 +1,8 @@
 {
   "contract": "EvaTelegramRecoveryDelivery/v1",
   "taskId": "E4.16",
-  "checkedAt": "2026-10-28T08:49:42.733197+00:00",
-  "status": "installed_independently_verified",
+  "checkedAt": "2026-10-28T12:17:48.417075+00:00",
+  "status": "real_telegram_probe_exposed_resume_failure",
   "sourceFiles": [
     {
       "path": "src/eva/bootstrap/delegated_work_owner_service.py",
@@ -59,7 +59,7 @@
   "installedAt": "2026-10-28T08:48:26.577067+00:00",
   "actualReadbackSha256": "63fbd9cd57347f1c03d880f07230b4cde0cb9377f2f5895c2f9f0a56d966f879",
   "independentInstalledReviewSha256": "282620d440d075e6bb4c08ca7394be9af9f02e0ff830a523098ca90a6caee9ca",
-  "actualTelegramUseProven": false,
+  "actualTelegramUseProven": true,
   "installedRuntimeBoundaryTest": {
     "checkedAt": "2026-10-28T08:53:52.227201+00:00",
     "passed": 4,
@@ -72,5 +72,34 @@
     "independentWitnessedExecution": false,
     "realTelegramUseProven": false,
     "newModelCalls": 0
+  },
+  "realTelegramProbe": {
+    "at": "2026-10-28T12:13:47+00:00",
+    "ownerAskedForAssessment": true,
+    "previousTaskFound": true,
+    "tools": [
+      "list_delegated_work",
+      "get_delegated_work",
+      "get_delegated_work",
+      "resume_delegated_work"
+    ],
+    "priorOutcomeUnknown": true,
+    "newAttemptCreated": true,
+    "newAttemptState": "ambiguous",
+    "newAttemptError": "internal_error",
+    "newAttemptErrorFingerprint": "11117fda69f5b936fdf623474e98434e1fd1d29a66650e413ea4a81099692eea",
+    "newAttemptUsage": "unmeasured",
+    "installationConfirmedByAttempt": false,
+    "specificCursorAndNativeRepairBoundariesExercised": false,
+    "conversationUsage": {
+      "measurement": "measured",
+      "inputTokens": 111343,
+      "outputTokens": 407,
+      "modelAttempts": 5,
+      "toolCalls": 4,
+      "costUsdMicros": null
+    },
+    "independentReadOnlyReview": true,
+    "noRetryByCoordinator": true
   }
 }

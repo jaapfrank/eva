@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Gebruik Eva normaal via Telegram en beoordeel bij een echte volgende interactie of het gesprek en passend taakgebruik goed verlopen; hervat overige ontwikkeling alleen op eigenaarverzoek.",
+    "nextAction": "Onderzoek waarom de praktijkbeurt een onzekere eerdere taak hervatte en waarom de nieuwe poging direct internal_error gaf; herhaal geen onzekere handelingen. De zoekcursor- en hersteltoolgrenzen zijn in deze praktijkbeurt niet afzonderlijk uitgelokt.",
     "ownerActionRequired": false,
     "scopedTelegramRepairAuthorization": {
       "at": "2026-10-27T07:47:07.435768+00:00",
@@ -869,18 +869,20 @@
       "historicalEffectsReplayAuthorized": false,
       "automations": false,
       "deliveryStatus": {
-        "checkedAt": "2026-10-28T08:49:42.733197+00:00",
+        "checkedAt": "2026-10-28T12:17:48.417075+00:00",
         "built": true,
         "sourceReviewed": true,
         "installed": true,
-        "status": "installed_independently_verified_ordinary_use_unproven",
+        "status": "real_telegram_probe_exposed_resume_failure",
         "unknownNullMarkersInitially": 21,
         "historicalMarkersPreserved": true,
         "ownerActionRequired": false,
         "preliminaryActiveWork": 0,
         "preliminaryActiveLeases": 0,
         "independentReviewSha256": "282620d440d075e6bb4c08ca7394be9af9f02e0ff830a523098ca90a6caee9ca",
-        "actualReadbackSha256": "63fbd9cd57347f1c03d880f07230b4cde0cb9377f2f5895c2f9f0a56d966f879"
+        "actualReadbackSha256": "63fbd9cd57347f1c03d880f07230b4cde0cb9377f2f5895c2f9f0a56d966f879",
+        "realTelegramUseProven": true,
+        "requestedBehaviorProven": false
       },
       "previousDashboardNowBeforeRepair": {
         "taskId": "E4.16",
@@ -3199,10 +3201,10 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "De twee gerichte Telegramreparaties zijn op 28 oktober geïnstalleerd en onafhankelijk teruggelezen. Ongeldige zoekinvoer kan worden hersteld en privéwerk krijgt alleen beschikbare hersteltools. Normaal Telegramgebruik na installatie is nog niet beoordeeld; de volledige E4.16-criteria blijven open.",
+          "summary": "Een echte Telegrambeurt vond de eerdere taak terug, maar hervatte die ondanks een onzekere eerdere uitkomst. De nieuwe poging eindigde direct met internal_error; oorzaak nog onbekend. Dit praktijkresultaat sluit de fout niet af.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "detail": "De twee gerichte Telegramreparaties zijn op 28 oktober geïnstalleerd en onafhankelijk teruggelezen. Ongeldige zoekinvoer kan worden hersteld en privéwerk krijgt alleen beschikbare hersteltools. Normaal Telegramgebruik na installatie is nog niet beoordeeld; de volledige E4.16-criteria blijven open.",
-          "state": "Gerichte reparatie geïnstalleerd en onafhankelijk gecontroleerd; normaal Telegramgebruik nog niet getoetst."
+          "detail": "Een echte Telegrambeurt vond de eerdere taak terug, maar hervatte die ondanks een onzekere eerdere uitkomst. De nieuwe poging eindigde direct met internal_error; oorzaak nog onbekend. Dit praktijkresultaat sluit de fout niet af.",
+          "state": "Praktijkproef toont nieuwe fout; eerdere taak en uitkomst blijven bewaard."
         },
         "next": {
           "taskId": "E1.6",
@@ -9261,7 +9263,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Gebruik Eva normaal via Telegram en beoordeel bij een echte volgende interactie of het gesprek en passend taakgebruik goed verlopen; hervat overige ontwikkeling alleen op eigenaarverzoek.",
+        "nextAction": "Onderzoek waarom de praktijkbeurt een onzekere eerdere taak hervatte en waarom de nieuwe poging direct internal_error gaf; herhaal geen onzekere handelingen. De zoekcursor- en hersteltoolgrenzen zijn in deze praktijkbeurt niet afzonderlijk uitgelokt.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9548,7 +9550,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-28T08:49:42.733197+00:00",
+        "checkedAt": "2026-10-28T12:17:48.417075+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -15561,7 +15563,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Gebruik Eva normaal via Telegram en beoordeel bij een echte volgende interactie of het gesprek en passend taakgebruik goed verlopen; hervat overige ontwikkeling alleen op eigenaarverzoek.",
+      "nextAction": "Onderzoek waarom de praktijkbeurt een onzekere eerdere taak hervatte en waarom de nieuwe poging direct internal_error gaf; herhaal geen onzekere handelingen. De zoekcursor- en hersteltoolgrenzen zijn in deze praktijkbeurt niet afzonderlijk uitgelokt.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15848,7 +15850,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-28T08:49:42.733197+00:00",
+      "checkedAt": "2026-10-28T12:17:48.417075+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
