@@ -24,6 +24,41 @@ from eva.contracts.canonical_json import canonical_json_bytes
 from eva.application.research import RESEARCH_MODE_DESCRIPTION, RESEARCH_OPTIONS_DESCRIPTION
 
 
+def _model_work_overview(result):
+    """Compact a model-facing list; full owner-scoped details remain available."""
+    if not isinstance(result, dict) or not isinstance(result.get("jobs"), list):
+        return result
+    planning = result.get("planning")
+    if not isinstance(planning, dict) or not isinstance(planning.get("schedules"), list):
+        return result
+    if any(not isinstance(row, dict) for row in result["jobs"] + planning["schedules"]):
+        return result
+    job_fields = ("work_id", "state", "title", "task_preview", "created_at",
+                  "generation", "parent_work_id", "result_available", "error_code",
+                  "failure_description", "stop_requested", "scope")
+    schedule_fields = ("schedule_id", "state", "run_at", "work_id", "can_cancel",
+                       "after_work_id", "after_schedule_id", "resume_work_id", "dependency", "block_reason")
+    jobs = [{k: row[k] for k in job_fields if k in row and row[k] is not None}
+            for row in result["jobs"]]
+    schedules = []
+    for row in planning["schedules"]:
+        item = {k: row[k] for k in schedule_fields if k in row and row[k] is not None}
+        task = row.get("task")
+        if isinstance(task, str) and task:
+            item["task_preview"] = task[:160]
+            item["task_truncated"] = len(task) > 160
+        elif isinstance(row.get("task_preview"), str):
+            item["task_preview"] = row["task_preview"]
+            if isinstance(row.get("task_truncated"), bool):
+                item["task_truncated"] = row["task_truncated"]
+        schedules.append(item)
+    return {**result, "jobs": jobs,
+            "planning": {**planning, "schedules": schedules},
+            "summary_only": True,
+            "details_guidance": "Gebruik get_delegated_work voor volledige taakdetails en "
+                                "list_scheduled_work voor volledige planningsdetails."}
+
+
 _OPERATIONS = {
     "stop_related_work": ("stop_related", "work_id"),
     "get_related_work": ("related", "work_id"),
@@ -63,7 +98,7 @@ _DESCRIPTIONS = {
     "digital": "Neem een digitale opdracht met meerdere ontdek-, lees-, vergelijkings- of uitvoerstappen direct aan op de achtergrond met de bestaande toegestane connectoren. Kies dit zelf voordat je externe tools gaat ontdekken of configuraties analyseren; de gebruiker hoeft niet om achtergrondwerk te vragen. Dit omvat Home Assistant-configuraties onderzoeken en verbeteringen onderbouwen. Geef de concrete opdracht en beperkingen mee, bijvoorbeeld alleen lezen. Een simpele directe huisactie hoeft niet gedelegeerd te worden. Ook geschikt voor een voorstel ter verbetering van Eva’s eigen Python-componenten: de werker kan de geïnstalleerde bron lezen, een patch voorbereiden en die apart bewaren, zonder live installatie. Geeft direct een work_id terug; het gesprek blijft beschikbaar. Gebruik get, stop en resume voor resultaat en bediening. Bevestig alleen werkelijk opgeslagen werk.",
     "research": "Start publiek bronnenonderzoek op de achtergrond. Geef uitsluitend een geanonimiseerde publieke vraag, titel en onderwerpen mee; geen privécontext, namen of geheugen. Geeft direct work_id terug. Blijf beschikbaar voor gesprek; gebruik bestaande get/stop/resume voor resultaat en bediening. Bij een gevraagde correctie op lopend onderzoek: leg eerst met stop_delegated_work een stopverzoek voor de juiste work_id vast. Start daarna de zelfstandige gecorrigeerde publieke vraag met prior_work_id. Wacht niet op het einde van de oude werker en beweer niet dat die al gestopt is. Dit wijzigt geen andere taken.",
     "start": "Besteed een concrete denk-, schrijf- of analysetaak uit aan een duurzame hulpagent. Geef alle benodigde context mee. De hulpagent heeft geen browser of tools. Geeft meteen een work_id terug; gebruik get om later het resultaat te lezen. Gebruik voor parallel hulpwerk op verzoek van de eigenaar.",
-    "list": "Bekijk de duurzame hulpopdrachten van deze eigenaar, met hun work_id en actuele status.",
+    "list": "Bekijk een beknopt overzicht van duurzame hulpopdrachten met work_id en actuele status. Gebruik get_delegated_work voor volledige details en list_scheduled_work voor volledige planningsdetails.",
     "get": "Lees de actuele status, gemeten verbruik en het opgeslagen resultaat van één hulpopdracht. Gebruik het echte resultaat in je antwoord; ingepland betekent nog niet klaar. De taakstatus is actueel, maar de inhoud is een opgeslagen momentopname op completed_at. Een oude melding dat iemand nog niet antwoordde bewijst niet dat er later geen antwoord kwam. Neem nieuwe gebruikersinformatie mee en zoek relevante latere resultaten voordat je een actuele conclusie trekt.",
     "stop": "Stop de genoemde hulpopdracht op verzoek van de eigenaar. De ontvangstbevestiging kan aangeven dat een reeds begonnen modelcall nog niet is beëindigd.",
     "resume": "Hervat een gestopte of mislukte hulpopdracht alleen op expliciet verzoek van de eigenaar. Maakt één gekoppelde nieuwe poging; bewaart vorige onzekerheid en verbruik. Een nog actieve call kan niet direct opnieuw gestart worden.",
@@ -510,6 +545,8 @@ class PostgresDelegatedWorkActions:
             **({"feedback": call.arguments["feedback"]} if operation == "initiative_feedback" else {}),
             **({"prior_work_id": call.arguments["prior_work_id"]} if call.arguments.get("prior_work_id") is not None else {}),
         )
+        if operation == "list":
+            result = _model_work_overview(result)
         output = {"status": "verified", "operation_result": result}
         work = result.get("work")
         # Expose model-written contact only after durable, still-active admission.
