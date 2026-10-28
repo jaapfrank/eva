@@ -1,7 +1,7 @@
 {
   "contract": "EvaTelegramRecoveryDelivery/v1",
   "taskId": "E4.16",
-  "checkedAt": "2026-10-28T12:17:48.417075+00:00",
+  "checkedAt": "2026-10-28T17:46:05.368391+00:00",
   "status": "real_telegram_probe_exposed_resume_failure",
   "sourceFiles": [
     {
@@ -101,5 +101,25 @@
     },
     "independentReadOnlyReview": true,
     "noRetryByCoordinator": true
+  },
+  "compactOwnerOverview": {
+    "installed": true,
+    "independentInstalledReviewSha256": "a88ceddfc915124c9d2f5ae03cbb5fd35f7c93aa1ffe6da3838f8d96aa0d977e",
+    "readbackSha256": "71ad7534c5456b45d76059705cfa2f11f70450051e8eec6e02294ec1d224ea52",
+    "ownerSampleBeforeBytes": 39179,
+    "ownerSampleAfterBytes": 23855,
+    "jobAndScheduleIdsPreserved": true,
+    "offlineTestsPassed": 16,
+    "installedTestsPassed": 3,
+    "actualTokensMeasured": false,
+    "modelCallsForVerification": 0
+  },
+  "candidateWorkspaceBinding": {
+    "candidateIdentified": true,
+    "candidateSha256": "4e1aec8ffe095cd08403e46b133b5fb03eceb98c782ab651ed6b5ac1c6838ed1",
+    "automaticNativeIndependentReviewCompleted": false,
+    "newTaskWorkspaceBound": false,
+    "candidateCopied": false,
+    "safeReuseNotProven": true
   }
 }

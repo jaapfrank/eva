@@ -847,7 +847,7 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Maak het bestaande modeloverzicht aantoonbaar kleiner met behoud van volledige opvraagbare details; beoordeel veilig kandidaat-/werkruimtehergebruik en installeer alleen na onafhankelijke review en actuele claimcontrole.",
+    "nextAction": "Meet bij natuurlijk gebruik het tokenverschil en herstel de kandidaat-/werkruimtebinding alleen via de bestaande bevoegdheids- en beoordelingsroute; start de mislukte opdrachten niet opnieuw zonder concrete veilige bronbinding.",
     "ownerActionRequired": false,
     "scopedTelegramRepairAuthorization": {
       "at": "2026-10-27T07:47:07.435768+00:00",
@@ -869,11 +869,11 @@
       "historicalEffectsReplayAuthorized": false,
       "automations": false,
       "deliveryStatus": {
-        "checkedAt": "2026-10-28T17:32:36.097724+00:00",
+        "checkedAt": "2026-10-28T17:46:05.368391+00:00",
         "built": true,
         "sourceReviewed": true,
         "installed": true,
-        "status": "token_cost_and_missing_candidate_investigation",
+        "status": "compact_overview_installed_candidate_binding_open",
         "unknownNullMarkersInitially": 21,
         "historicalMarkersPreserved": true,
         "ownerActionRequired": false,
@@ -888,7 +888,11 @@
         "sourceReviewSha256": "cf22af51f636e6bd67cfdb50cf331166bd039af8d0fca55917ea7218575a3db4",
         "guardInstalledAt": "2026-10-28T12:31:08.663803+00:00",
         "guardActualReadbackSha256": "ca29862888cdc3d166f15fc0d9e17dab3b63904830e5a7c6a2a4ea6135405b77",
-        "candidateWorkspaceBindingUnproven": true
+        "candidateWorkspaceBindingUnproven": true,
+        "compactOverviewInstalled": true,
+        "compactOverviewRealPayloadBeforeBytes": 39179,
+        "compactOverviewRealPayloadAfterBytes": 23855,
+        "actualTokenSavingsMeasured": false
       },
       "previousDashboardNowBeforeRepair": {
         "taskId": "E4.16",
@@ -3207,10 +3211,10 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "De bescherming tegen onzekere hervattingen is geïnstalleerd. Jaap vraagt nu de ontbrekende kandidaat en het hoge tokenverbruik te herstellen; een omvangrijk taakoverzicht is als concrete verbruiksbron vastgesteld en wordt gericht verkleind. De kandidaat bestaat met hash, maar haar veilige werkruimtebinding en native review zijn nog niet bewezen.",
+          "summary": "Het modeloverzicht voor bestaande taken is compacter geïnstalleerd en onafhankelijk gecontroleerd: op de bewaarde praktijkrespons 39.179→23.855 bytes met alle taak- en planningidentiteiten behouden. Een werkelijk tokenverschil is nog niet gemeten. De eerder opgevraagde kandidaat is geïdentificeerd, maar een veilige automatische werkruimtebinding en native beoordeling zijn niet aangetoond.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "detail": "De bescherming tegen onzekere hervattingen is geïnstalleerd. Jaap vraagt nu de ontbrekende kandidaat en het hoge tokenverbruik te herstellen; een omvangrijk taakoverzicht is als concrete verbruiksbron vastgesteld en wordt gericht verkleind. De kandidaat bestaat met hash, maar haar veilige werkruimtebinding en native review zijn nog niet bewezen.",
-          "state": "Hervattingsguard geïnstalleerd; taakoverzicht en kandidaatbinding in behandeling."
+          "detail": "Het modeloverzicht voor bestaande taken is compacter geïnstalleerd en onafhankelijk gecontroleerd: op de bewaarde praktijkrespons 39.179→23.855 bytes met alle taak- en planningidentiteiten behouden. Een werkelijk tokenverschil is nog niet gemeten. De eerder opgevraagde kandidaat is geïdentificeerd, maar een veilige automatische werkruimtebinding en native beoordeling zijn niet aangetoond.",
+          "state": "Compact overzicht geïnstalleerd; kandidaatbinding en werkelijk tokenverschil blijven open."
         },
         "next": {
           "taskId": "E1.6",
@@ -9269,7 +9273,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Maak het bestaande modeloverzicht aantoonbaar kleiner met behoud van volledige opvraagbare details; beoordeel veilig kandidaat-/werkruimtehergebruik en installeer alleen na onafhankelijke review en actuele claimcontrole.",
+        "nextAction": "Meet bij natuurlijk gebruik het tokenverschil en herstel de kandidaat-/werkruimtebinding alleen via de bestaande bevoegdheids- en beoordelingsroute; start de mislukte opdrachten niet opnieuw zonder concrete veilige bronbinding.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9556,7 +9560,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-28T17:32:36.097724+00:00",
+        "checkedAt": "2026-10-28T17:46:05.368391+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -15569,7 +15573,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Maak het bestaande modeloverzicht aantoonbaar kleiner met behoud van volledige opvraagbare details; beoordeel veilig kandidaat-/werkruimtehergebruik en installeer alleen na onafhankelijke review en actuele claimcontrole.",
+      "nextAction": "Meet bij natuurlijk gebruik het tokenverschil en herstel de kandidaat-/werkruimtebinding alleen via de bestaande bevoegdheids- en beoordelingsroute; start de mislukte opdrachten niet opnieuw zonder concrete veilige bronbinding.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15856,7 +15860,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-28T17:32:36.097724+00:00",
+      "checkedAt": "2026-10-28T17:46:05.368391+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [

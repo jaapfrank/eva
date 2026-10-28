@@ -2126,6 +2126,14 @@
       "historicalDataPreserved": true,
       "realTelegramUseProven": false,
       "fullE416Completed": false
+    },
+    "compactOwnerOverviewInstallation": {
+      "status": "installed_independently_verified",
+      "installedAt": "2026-10-28T17:44:17.169870+00:00",
+      "actualReadbackSha256": "71ad7534c5456b45d76059705cfa2f11f70450051e8eec6e02294ec1d224ea52",
+      "independentReviewSha256": "a88ceddfc915124c9d2f5ae03cbb5fd35f7c93aa1ffe6da3838f8d96aa0d977e",
+      "actualTokensMeasured": false,
+      "candidateWorkspaceBindingResolved": false
     }
   }
 }
