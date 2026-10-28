@@ -1,8 +1,8 @@
 {
   "contract": "EvaTelegramRecoveryDelivery/v1",
   "taskId": "E4.16",
-  "checkedAt": "2026-10-27T08:12:27.313275+00:00",
-  "status": "source_reviewed_exact_package_built_installer_review_pending",
+  "checkedAt": "2026-10-28T08:38:05.177112+00:00",
+  "status": "runtime_restart_docker_initialization_rebinding_required",
   "sourceFiles": [
     {
       "path": "src/eva/bootstrap/delegated_work_owner_service.py",
@@ -50,5 +50,14 @@
   "installed": false,
   "fullE416Completed": false,
   "developmentTokens": null,
-  "developmentCredits": null
+  "developmentCredits": null,
+  "installationGate": {
+    "runtimeRestarted": true,
+    "docker": "activating",
+    "hostService": "queued_after_docker",
+    "preliminaryActiveWork": 0,
+    "preliminaryActiveLeases": 0,
+    "freshBindingAndIndependentReviewRequired": true,
+    "markerRowsChanged": 0
+  }
 }
