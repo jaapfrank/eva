@@ -59,5 +59,18 @@
   "installedAt": "2026-10-28T08:48:26.577067+00:00",
   "actualReadbackSha256": "63fbd9cd57347f1c03d880f07230b4cde0cb9377f2f5895c2f9f0a56d966f879",
   "independentInstalledReviewSha256": "282620d440d075e6bb4c08ca7394be9af9f02e0ff830a523098ca90a6caee9ca",
-  "actualTelegramUseProven": false
+  "actualTelegramUseProven": false,
+  "installedRuntimeBoundaryTest": {
+    "checkedAt": "2026-10-28T08:53:52.227201+00:00",
+    "passed": 4,
+    "failed": 0,
+    "onActualInstalledCoreSources": true,
+    "testDoublesForTimelineAndStore": true,
+    "existingStoreCursorValidationBeforeConnection": true,
+    "testLogSha256": "4881d2e5ee5157863d005d03ff19e03a93ccd44f14d5396cc0dedb34a1ff8573",
+    "independentLogAndInstalledSourceHashCheck": true,
+    "independentWitnessedExecution": false,
+    "realTelegramUseProven": false,
+    "newModelCalls": 0
+  }
 }
