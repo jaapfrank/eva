@@ -51,6 +51,16 @@ Dit schema laat de beoogde kringloop zien. De onderdelen zijn in verschillende m
 
 Gesprekken en achtergrondwerk delen dezelfde kern en persoonscontext. Bij een langere opdracht kan Eva werk apart uitvoeren, zodat het gesprek niet op het resultaat hoeft te wachten. Het ontwerp houdt rekening met privacy, toegangsrechten, herkomst van informatie en het onderscheid tussen een poging en een bevestigd resultaat.
 
+## AI-technieken in begrijpelijke taal
+
+- **RAG en semantisch geheugen:** Eva kan relevante herinneringen terugzoeken en als context gebruiken bij het formuleren van een antwoord. Hindsight verzorgt het semantisch terugzoeken; PostgreSQL bewaart de brongegevens. Dit is een persoonsgerichte geheugenroute, geen claim dat elke vraag een algemene documentzoekmachine gebruikt.
+- **Toolgebruik:** een taalmodel kan beschikbare hulpmiddelen aanroepen om bijvoorbeeld informatie op te zoeken of een toegestane taak uit te voeren. De toepassing controleert daarbij de benodigde toegang en bewaart wat er is gebeurd.
+- **Achtergrondwerk en taakstatus:** langer werk wordt apart bijgehouden, zodat gestart, afgerond en mislukt van elkaar te onderscheiden zijn en de uitkomst bij de oorspronkelijke gebruiker kan terugkomen.
+- **Evaluatie en zelfverbetering:** voor afgebakende verbeteringen worden kandidaten met een referentie vergeleken. Alleen een aangetoonde verbetering mag worden toegepast; later gebruik moet apart worden vastgesteld.
+- **Privacy en herkomst:** geheugen en taken zijn aan personen en bronnen gekoppeld. Correctie, vergeten en controle van bevoegdheden maken deel uit van het ontwerp en de bestaande routes.
+
+Deze technieken zijn in het project aanwezig, maar niet elke combinatie is al als volledig betrouwbaar dagelijks gebruik bewezen.
+
 ## Technieken
 
 | Techniek | Rol in het project |
