@@ -117,7 +117,6 @@ Oplevering vraagt dezelfde geïnstalleerde Eva die de vier uitkomsten in gewoon 
 laat zien, een ontbrekende mogelijkheid realiseert en later hergebruikt, én geheugen,
 configuratie en uitbreidingen op een schone installatie kan herstellen. De bestaande
 gezinsweek en eigenaaracceptatie blijven gelden. Een geslaagde test, documentatie-update
-of kleine reparatie sluit het project niet af. Eva1 blijft gestopt; de andere uitvoerder
-behoudt de bestaande spraakroute. Optionele accounts en apparaten zijn geen verplichting
+of kleine reparatie sluit het project niet af. Optionele accounts en apparaten zijn geen verplichting
 voor ieder huishouden. Eerdere technische afrondingen en hun grenzen staan in het
 werkbord en de bewaarde doeltekst; ze worden hier niet opnieuw als productwinst geteld.
