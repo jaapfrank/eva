@@ -159,3 +159,86 @@ class PostgresProcedureReferenceHost:
         if not isinstance(content, str):
             raise ProcedureReferenceRejected("readback content absent")
         return content.encode("utf-8")
+
+
+    def later_use(self, scope, reference, *, created_at, now):
+        """Project actual same-owner, same-version executions; never infer benefit.
+
+        No second counter/store, execution, model call or external file read.
+        Legacy background receipts without a bound namespace remain uncounted.
+        """
+        from eva.application.procedure_references import _instant, procedure_action_thread_id
+        from eva.contracts.canonical_json import canonical_sha256
+        self.require_scope(scope)
+        unknown = {"available": False, "observed_later_executions": None,
+                   "last_used_at": None, "evidence_refs": [], "truncated": False}
+        try:
+            created, until = _instant(created_at), _instant(now)
+            admitted, completed = operational_events.alias("use_admitted"), operational_events.alias("use_completed")
+            data = admitted.c.payload["data"]
+            with self.engine.connect() as connection:
+                self.timeline._scope(connection)
+                rows = connection.execute(sa.select(admitted.c.thread_id).join(completed,
+                    sa.and_(completed.c.tenant_id == admitted.c.tenant_id,
+                            completed.c.installation_id == admitted.c.installation_id,
+                            completed.c.thread_id == admitted.c.thread_id)).where(
+                    admitted.c.tenant_id == self.authority.scope.tenant_id,
+                    admitted.c.installation_id == self.authority.scope.installation_id,
+                    admitted.c.event_type == "PROCEDURE_ACTION_ADMITTED", admitted.c.sequence == 1,
+                    data["name"].astext == "run_reusable_procedure",
+                    data["principal_id"].astext.in_((scope.principal_id, self.turn.principal_id)),
+                    data["arguments"]["document_id"].astext == reference["document_id"],
+                    data["message_id"].astext != reference["source_message_id"],
+                    admitted.c.occurred_at > created, admitted.c.occurred_at <= until,
+                    completed.c.event_type == "PROCEDURE_ACTION_COMPLETED",
+                    completed.c.occurred_at <= until,
+                ).order_by(completed.c.occurred_at.desc(), admitted.c.thread_id).limit(9)).all()
+            evidence = []
+            for row in rows[:8]:
+                state = self.timeline.load(row.thread_id)
+                events = self.timeline.events(row.thread_id)
+                if (state.phase != "procedure_action_completed" or state.status != "completed"
+                        or [event.event_type for event in events] != ["PROCEDURE_ACTION_ADMITTED",
+                            "PROCEDURE_EXECUTION_STARTED", "PROCEDURE_ACTION_COMPLETED"]
+                        or any(canonical_sha256(event.payload) != event.payload_sha256 for event in events)):
+                    return unknown
+                source = events[0].payload["data"]
+                identity = {key: source[key] for key in
+                            ("principal_id", "conversation_id", "message_id", "step_index")}
+                if "execution_namespace" in source:
+                    identity["execution_namespace"] = source["execution_namespace"]
+                if procedure_action_thread_id(identity) != row.thread_id:
+                    continue  # An old background receipt cannot borrow a foreground identity.
+                if source["conversation_id"].startswith(("initiative-task:", "household:", "background-accounting:")):
+                    continue  # Eva's own testing/use is not later reuse by the original person.
+                original = self.load_turn({"tenant_id": scope.tenant_id,
+                    "installation_id": scope.installation_id, "principal_id": source["principal_id"],
+                    "conversation_id": source["conversation_id"], "message_id": source["message_id"],
+                    "audience": {"kind": "private_person", "principal_id": source["principal_id"]}})
+                if (original.project_id != scope.project_id
+                        or original.audience.kind != "private_person"
+                        or _instant(original.occurred_at) != events[0].occurred_at):
+                    return unknown
+                result = events[-1].payload["data"].get("result")
+                if (not isinstance(result, dict)
+                        or canonical_sha256(result) != events[-1].payload["data"].get("result_sha256")):
+                    return unknown
+                process = result.get("report", {}).get("result", {})
+                if (result.get("contract") != "ProcedureReferenceAction/v1"
+                        or result.get("status") != "execution_completed"
+                        or result.get("document_id") != reference["document_id"]
+                        or result.get("content_sha256") != reference["content_sha256"]
+                        or result.get("semantic_success_verified") is not False
+                        or process.get("exit_code") != 0
+                        or any(process.get(key) is not False for key in
+                               ("timed_out", "cancelled", "stdout_truncated", "stderr_truncated"))):
+                    continue
+                evidence.append({"used_at": events[-1].occurred_at.isoformat(),
+                                 "receipt_sha256": events[-1].payload_sha256})
+            self.require_scope(scope)
+            return {"available": True, "observed_later_executions": len(evidence),
+                    "last_used_at": evidence[0]["used_at"] if evidence else None,
+                    "evidence_refs": [item["receipt_sha256"] for item in evidence[:2]],
+                    "truncated": len(rows) > 8}
+        except (KeyError, TypeError, ValueError, RuntimeError, sa.exc.SQLAlchemyError):
+            return unknown

@@ -228,3 +228,21 @@ class ProcedureReferences:
                 raise ProcedureReferenceRejected("procedure is not UTF-8 text") from error
             resolved.append(ResolvedProcedure(reference, content, package, current if package is not None else None))
         return tuple(resolved)
+
+
+def procedure_action_thread_id(identity):
+    """One host action identity for execution and later evidence lookup."""
+    from eva.contracts.canonical_json import canonical_sha256
+    required = {"principal_id", "conversation_id", "message_id", "step_index"}
+    if (not isinstance(identity, dict) or not required <= identity.keys()
+            or set(identity) - required - {"execution_namespace"}
+            or type(identity["step_index"]) is not int or identity["step_index"] < 0
+            or any(not isinstance(identity[key], str) or not identity[key]
+                   for key in required - {"step_index"})):
+        raise ProcedureReferenceRejected("procedure action identity differs")
+    if "execution_namespace" in identity:
+        import re
+        if not isinstance(identity["execution_namespace"], str) or not re.fullmatch(
+                r"background-work:[0-9a-f]{64}", identity["execution_namespace"]):
+            raise ProcedureReferenceRejected("procedure execution namespace differs")
+    return "procedure-action:" + canonical_sha256(identity)

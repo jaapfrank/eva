@@ -1,0 +1,179 @@
+{
+  "contract": "EvaE415FoundationEvidence/v1",
+  "checkedAt": "2026-10-29T21:43:52.133135+00:00",
+  "status": "installed_source_profile_verified",
+  "scope": "E4.15 foundation only",
+  "changedProductSources": {
+    "application/procedure_references.py": "5872178fc58e6160c1e1421ec7488b5180639ef3664d440a08f77fa271741340",
+    "adapters/postgres/procedure_reference_host.py": "ef50afa686383fce966555dcffe3ad044ed52dc16496796630974bf3dbe3cd7b",
+    "providers/procedure_reference_actions.py": "25e55f04254f7e4efc94f65af7b77c07474f622667968ba00333a5ac37e5f90f"
+  },
+  "existingNeedRoute": [
+    "bootstrap/private_continuity.py:124",
+    "application/free_will.py:418",
+    "adapters/model/pydantic_conversation.py"
+  ],
+  "alternativeComparison": {
+    "tool": "list_reusable_procedures",
+    "readOnlyDiscovery": true,
+    "generationStartedByDiscovery": false,
+    "freshResolveRequired": true,
+    "newUniversalCodeGenerationGate": false,
+    "comparisonDecisionStillEvaResponsibility": true
+  },
+  "independentAssessment": {
+    "existingPipelineRetained": true,
+    "developmentSelectionIsFinalWin": false,
+    "registeredFrozenScopeRequired": true,
+    "waitsForOriginatingTask": true,
+    "unknownOutcomeNotRepeated": true,
+    "missingEvidenceRemainsPending": true
+  },
+  "laterReuse": {
+    "source": "existing durable procedure action receipts",
+    "boundTo": [
+      "private original principal or currently authorized same-owner alias",
+      "project",
+      "original allowed ingress",
+      "artifact document id",
+      "exact content hash",
+      "host execution namespace"
+    ],
+    "maximumInspectedReceipts": 8,
+    "truncationReported": true,
+    "failedUnknownOrNativeSelfExecutionsCountAsUserReuse": false,
+    "oldUnboundBackgroundReceiptsCounted": false,
+    "processSuccessIsQualityWin": false,
+    "feedbackUsesExistingQuoteBoundValidation": true
+  },
+  "tests": {
+    "targetedUnitAndIndependentGateCases": {
+      "passed": 82,
+      "failed": 0,
+      "errors": 0,
+      "seconds": 3.09,
+      "privateLogSha256": "9933063114005a2ab346da03e778e1d2f051389d09b2953b371965711d93f4df"
+    },
+    "actualPostgresAndNetworklessExecutor": {
+      "passed": 1,
+      "failed": 0,
+      "errors": 0,
+      "seconds": 11.63,
+      "observedExecutions": 2,
+      "replaysExecuteAgain": false,
+      "pendingRecoveryExecutesAgain": false,
+      "privateLogSha256": "9a2e08f240357725124889c785e9bdd961349af017a2d29a85aeed743994c668"
+    },
+    "existingPostgresCases": {
+      "passed": 5,
+      "rerunAfterUnrelatedTestFixtureCorrection": false
+    },
+    "baselineFeedbackTests": {
+      "failed": 3,
+      "sameFailureWithoutThreeProductChanges": true,
+      "failureNames": [
+        "test_worker_feedback_is_private_and_hashes_exact_context[False-False-initiative-review]",
+        "test_worker_feedback_is_private_and_hashes_exact_context[False-True-initiative-review]",
+        "test_model_includes_original_source_time_and_unconfirmed_report"
+      ],
+      "changedToMakeGreen": false
+    },
+    "initialFailuresRetained": [
+      "new test used forbidden step zero; test steps corrected",
+      "new background receipt namespace was not persisted at execute; corrected and real test passed"
+    ]
+  },
+  "preserved": {
+    "e16SourceHashes": {
+      "adapters/postgres/delegated_work.py": "5c18f6f1f44d087df11843414dd82542a06b99efcde5f657921b8a3c24bd4090",
+      "bootstrap/native_initiative_work.py": "8b78ac1ffa6aac3d7a360c36c7ed571ff23b061c1809ba82de06a09f1cb72a09",
+      "bootstrap/native_work_assets.py": "34813de438e528a6e04be6c0f96e6d1d6ef28c8ac74851907ea9b170d604f700",
+      "bootstrap/runtime.py": "168ab1dff0bf4ba11ebaa4ac388b1eb92fe4ef97eb028c6d632569b225a8e584",
+      "bootstrap/delegated_digital_composition.py": "25a20d6ee80fbb9ea7f1880399a0f4c4aedfb8c699cad4939a68541c66f5eae6",
+      "bootstrap/delegated_digital_profile.py": "1b8a0141db5062fa9bed0da83dd9722fd4d291eecc087bbd87937493d885146d",
+      "bootstrap/component_maintenance.py": "60071c0f44c05a2864ada13f4f148a569806d6b9c92ce55bfd1ae8dc805d488d",
+      "bootstrap/runtime_repair_host.py": "e351a061d22b01c7797c7937376c4b832d760fcd7bca61b6cb6902efaf010b77"
+    },
+    "personalityChanged": false,
+    "authorizationExpanded": false,
+    "schemaChanged": false,
+    "livekitOrTelegramFrontendChanged": false,
+    "taskOrToolIdentityChanged": false
+  },
+  "remainingProof": [
+    "Eva-selected substantiated actual need",
+    "Eva-selected alternative/design and realized provision",
+    "actual independent quality decision for that provision",
+    "availability for original user",
+    "later real use plus quote-backed user feedback and assessed retention/improvement"
+  ],
+  "fullE415Completed": false,
+  "actualUserReuseProven": false,
+  "independentQualityWinProven": false,
+  "measurement": {
+    "evaluationModelRequestsTriggeredByTheseChecks": 0,
+    "developmentTokenUsage": null,
+    "runtimeTokenUsage": null,
+    "credits": null,
+    "unknownMeasurementIsZero": false
+  },
+  "installation": {
+    "installedAt": "2026-10-29T21:43:00.518066+00:00",
+    "configurationChange": "two images only",
+    "roles": {
+      "core": {
+        "containerId": "e75b15217c77c4b64d5fe7b6aa84629e07aefe5eb36eefa3364e8482fe2dbfa7",
+        "image": "sha256:606f078b7515a75d5ffb8e82bb902cc682db8adfb4eea847ab5239ae115e25fa",
+        "healthy": true,
+        "exactSourcesVerified": true,
+        "environmentPreserved": true,
+        "e16ManifestResolverPreserved": true
+      },
+      "delegated-work-worker": {
+        "containerId": "c8c08799d8c4b0f3d38e7d657e7f0c391ee9927ab8b1214b5c0d17623f7739a3",
+        "image": "sha256:f73efe278429f96a2398cd0c2ba25ec1804ff748940a45e7158c8d09864a5c43",
+        "healthy": true,
+        "exactSourcesVerified": true,
+        "environmentPreserved": true,
+        "e16ManifestResolverPreserved": true
+      }
+    },
+    "profilesMatch": true,
+    "activeClaimsBeforeReplacement": {
+      "checkedAt": "2026-10-29T21:41:18.345966+00:00",
+      "globalRlsReadCoverage": true,
+      "activeUnexpiredCheckpointLeases": 0,
+      "currentGenerationUnknownNullCheckpoints": 0,
+      "exactReviewedOwnerGrantExcluded": 0,
+      "exactCompletedInitiativeAuditExcluded": 0,
+      "exactAdditionalCompletedNativeAuditExcluded": 0,
+      "activeWork": 0,
+      "retainedDailyReflectionCounters": 0,
+      "retainedCompletedReadAndProgressRecords": 0,
+      "nativeMemoryOperations": {
+        "pending": 0,
+        "processing": 0
+      },
+      "boundProcessGenerationAfter": "2026-10-29T21:08:03+00:00",
+      "sourceContractsPinned": {
+        "adapters/postgres/connector_results.py": "90a488952f6f3c185fe6368fab3e956c75ff1ab66d6b036ae0a8120c5065705a",
+        "adapters/postgres/background_work_progress.py": "d1a5b28811d835e0cc6fb49bfa48841a93b6aff647e7ddeff33cd605517a2684",
+        "adapters/postgres/runtime_resource_usage.py": "e97ba5f22781dfb615bebc452dcb9113303d7d3f15e33f4c4e1e580e2ff87240",
+        "application/memory_background.py": "de244b8b77900802ab041c000fb51895aec79fe240c6ea4d572b96e588f4f7c6",
+        "adapters/postgres/memory_outbox.py": "fde890224cd33847b4071b8aabe9a29a65463b3a414af2b349967ea6a557cb46",
+        "adapters/projection/hindsight.py": "df4c190691f56ee503696ecdaea0434e2558594c0edf9d9699d977f4da2e0737"
+      }
+    },
+    "hostEvaluationInterrupted": false,
+    "hostProducerReleaseAligned": true,
+    "retainedMountsVerified": true,
+    "hostFrozenEvaluationSourceChanged": false,
+    "historicalWorkRedispatched": false,
+    "activationReceiptSha256": "b9ec76f1c16dd894a36e5e6d613449068e186a8313687593b42b589e24652e7b",
+    "standardInstalledProfileCheck": {
+      "compatible": true,
+      "mismatchedProfiles": [],
+      "reportSha256": "e6bc0b1804bbcd230dec109c6a578999ec936a3b04afcd6be18ef40a8da64f2b"
+    }
+  }
+}

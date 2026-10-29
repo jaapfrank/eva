@@ -127,3 +127,15 @@ def test_general_connector_save_retains_receipt_binding(mutation):
         resolved = service.resolve_candidates(SCOPE, (reference.document_id,), now=NOW)
         assert resolved[0].untrusted_content == host.bytes.decode()
         assert admission["action_arguments"]["arguments_json"] == json.dumps(original)
+
+
+def test_action_identity_preserves_old_foreground_and_explicit_background_namespaces():
+    from eva.application.procedure_references import procedure_action_thread_id, ProcedureReferenceRejected
+    from eva.contracts.canonical_json import canonical_sha256
+    identity = {'principal_id': 'owner', 'conversation_id': 'chat', 'message_id': 'source', 'step_index': 2}
+    assert procedure_action_thread_id(identity) == 'procedure-action:' + canonical_sha256(identity)
+    bound = {**identity, 'execution_namespace': 'background-work:' + 'a'*64}
+    assert procedure_action_thread_id(bound) == 'procedure-action:' + canonical_sha256(bound)
+    assert procedure_action_thread_id(bound) != procedure_action_thread_id(identity)
+    with pytest.raises(ProcedureReferenceRejected):
+        procedure_action_thread_id({**identity, 'execution_namespace': 'model-chosen-job'})

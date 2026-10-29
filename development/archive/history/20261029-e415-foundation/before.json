@@ -1,0 +1,1699 @@
+{
+  "currentWork": {
+    "id": "E4.16",
+    "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+    "status": "in_progress",
+    "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+    "nextAction": "Eerst één gewone toegestane documentopdracht in de huidige installatie van vraag tot opgeslagen en teruggelezen resultaat en terugmelding afronden. Controleer bestaande document- en werkruimtebinding en herstel uitsluitend een aangetoonde blokkade; herhaal onzekere effecten niet. Meet tijd en verbruik waar beschikbaar. E4.16 blijft open op de oorspronkelijke zelfherstelcriteria.",
+    "ownerActionRequired": false,
+    "scopedTelegramRepairAuthorization": {
+      "at": "2026-10-27T07:47:07.435768+00:00",
+      "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
+      "outcome": "Een verkeerd gevormde zoekcursor breekt het gesprek niet af; taken krijgen alleen hersteltools waarvoor zij een actuele brongebonden bevoegdheid hebben. Bestaande resultaten en onzekerheid blijven behouden.",
+      "knownCauses": [
+        "search_delegated_work query with before_work_id empty string raises ValueError before connection",
+        "private digital task was offered manage_own_runtime_repair despite no native repair guard; exact error fingerprint matches rejected context"
+      ],
+      "exclusiveProductFiles": [
+        "src/eva/bootstrap/delegated_work_owner_service.py",
+        "src/eva/adapters/postgres/delegated_work_actions.py",
+        "src/eva/adapters/postgres/component_improvement_actions.py",
+        "src/eva/bootstrap/delegated_digital_runner.py"
+      ],
+      "coordinatorOnlyImplementation": true,
+      "independentTesterRequired": true,
+      "otherDevelopmentPaused": true,
+      "historicalEffectsReplayAuthorized": false,
+      "automations": false,
+      "deliveryStatus": {
+        "checkedAt": "2026-10-28T17:46:05.368391+00:00",
+        "built": true,
+        "sourceReviewed": true,
+        "installed": true,
+        "status": "compact_overview_installed_candidate_binding_open",
+        "unknownNullMarkersInitially": 21,
+        "historicalMarkersPreserved": true,
+        "ownerActionRequired": false,
+        "preliminaryActiveWork": 0,
+        "preliminaryActiveLeases": 0,
+        "independentReviewSha256": "282620d440d075e6bb4c08ca7394be9af9f02e0ff830a523098ca90a6caee9ca",
+        "actualReadbackSha256": "63fbd9cd57347f1c03d880f07230b4cde0cb9377f2f5895c2f9f0a56d966f879",
+        "realTelegramUseProven": true,
+        "requestedBehaviorProven": false,
+        "guardInstalled": true,
+        "rootCause": "original_ingress_compacted_not_selected",
+        "sourceReviewSha256": "cf22af51f636e6bd67cfdb50cf331166bd039af8d0fca55917ea7218575a3db4",
+        "guardInstalledAt": "2026-10-28T12:31:08.663803+00:00",
+        "guardActualReadbackSha256": "ca29862888cdc3d166f15fc0d9e17dab3b63904830e5a7c6a2a4ea6135405b77",
+        "candidateWorkspaceBindingUnproven": true,
+        "compactOverviewInstalled": true,
+        "compactOverviewRealPayloadBeforeBytes": 39179,
+        "compactOverviewRealPayloadAfterBytes": 23855,
+        "actualTokenSavingsMeasured": false
+      },
+      "previousDashboardNowBeforeRepair": {
+        "taskId": "E4.16",
+        "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+        "summary": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
+        "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
+        "detail": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
+        "state": "Geïnstalleerd; eerste gewone afweging onafhankelijk bevestigd; modelgekozen bronketen blijft open."
+      }
+    },
+    "nativeHandoffValidation": {
+      "checkedAt": "2026-10-29T21:13:03.430560+00:00",
+      "evidence": "development/evidence/reassessment/e16-native-handoff-validation-20261029.json",
+      "passed": 92,
+      "failed": 0,
+      "errors": 0,
+      "installed": true,
+      "status": "installed_healthy_manifest_delivery_verified",
+      "actualSourcePreflightPasses": true,
+      "protectedAdapterUnchanged": true,
+      "ownerActionRequired": false,
+      "fullE16Completed": false
+    }
+  },
+  "activeTaskId": "E4.16",
+  "deliveryOverview": {
+    "deliveries": [
+      {
+        "title": "E1.6 · Reconnectbehoud en benodigde herstelbronoverdracht geïnstalleerd",
+        "state": "installed",
+        "summary": "Eén gezamenlijke installatie: drie nativebestanden en vijf hostbestanden; juiste actieveproducerbinding, vier werkelijke profielen gelijk en onafhankelijke controle van actuele source-read.",
+        "remaining": "Werkelijke modelgekozen bronbewaking, echte bronverandering en gecontroleerd vervolg blijven nodig; geen volledige kaart gesloten.",
+        "source": "development/evidence/product/e16-completion-20261025.json",
+        "review": "development/reviews/e16-reconnect-20261025.json",
+        "checkedAt": "2026-10-25T22:11:19.598938+00:00",
+        "installedAt": "2026-10-25T22:05:24.481035+00:00",
+        "completedTaskIds": [],
+        "technicalDeliveryComplete": true,
+        "independentReviewComplete": true,
+        "newProductFunctionCompleted": false,
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.16 · Foutinformatie uit echte SDK-headers behouden",
+        "state": "installed",
+        "summary": "Minimale SDK-headercorrectie geïnstalleerd; acht eerder geslaagde gerichte tests, onafhankelijke bron-/pakket-/guardreview en daadwerkelijke installatiecontrole. Beide rollen gezond en alle vier werkprofielen gelijk.",
+        "remaining": "Nieuwe echte foutdiagnostiek, oorzaak van eerdere503, schooluitkomst en volledige E4.16 blijven open; geen extra volledige kaart gesloten.",
+        "source": "development/evidence/product/e416-provider-native-headers-20261024.json",
+        "review": "development/reviews/e416-provider-native-headers-20261024.json",
+        "checkedAt": "2026-10-25T07:25:12.499685+00:00",
+        "installedAt": "2026-10-25T07:21:42.449098+00:00",
+        "completedTaskIds": [],
+        "technicalDeliveryComplete": true,
+        "independentReviewComplete": true,
+        "newProductFunctionCompleted": false,
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.16 · Veilige foutinformatie bij provideruitval behouden",
+        "state": "installed",
+        "summary": "Bestaande provider bewaart veilige foutcode, fouttype, aanvraagkenmerk en eventuele wachttijd. Vier gerichte SDK-proeven geslaagd; onafhankelijk beoordeeld en geïnstalleerd.",
+        "remaining": "Oorzaak van eerdere503 en bruikbare schooluitkomst blijven onbekend/open. Geen extra volledige kaart gesloten.",
+        "source": "development/evidence/product/e416-provider-http-diagnostics-20261024.json",
+        "review": "development/reviews/e416-provider-http-diagnostics-20261024.json",
+        "checkedAt": "2026-10-24T16:54:04.181887+00:00",
+        "installedAt": "2026-10-24T16:52:49.022293+00:00",
+        "completedTaskIds": [],
+        "technicalDeliveryComplete": true,
+        "independentReviewComplete": true,
+        "newProductFunctionCompleted": false,
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.16 · Begrensd vervolg na afgebroken huisbeoordeling geïnstalleerd",
+        "state": "installed",
+        "summary": "Minimale reparatie geïnstalleerd en onafhankelijk gecontroleerd;14tests geslaagd, vier werkelijke profielen gelijk. Eén nieuw huisonderzoek kan onder bestaande grenzen verder na een aantoonbaar beëindigde onzekere aanroep.",
+        "remaining": "Nog geen nieuwe echte uitval met deze reparatie hersteld. Volledige E4.16 en schoolopdracht blijven open.",
+        "source": "development/evidence/product/e416-bounded-household-recovery-20261024.json",
+        "review": "development/reviews/e416-bounded-household-recovery-20261024.json",
+        "checkedAt": "2026-10-24T16:31:11.100464+00:00",
+        "installedAt": "2026-10-24T16:26:14.494466+00:00",
+        "completedTaskIds": [],
+        "technicalDeliveryComplete": true,
+        "independentReviewComplete": true,
+        "newProductFunctionCompleted": false,
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E1.6 / E4.19 · Huisonderzoek en onderhoudscontext hersteld",
+        "state": "installed",
+        "summary": "Eén gecombineerde installatie, alle4werkelijke runtimeprofielen gelijk, echte geïsoleerde householdclaim geslaagd. Eva gebruikte de verklaarde onderhoudstoestemming in haar gewone afweging en koos geen update zonder aangetoonde lokale noodzaak.",
+        "remaining": "Volledige modelgekozen bronbewaking en autonome relevante update/toepassing/gebruik/herstel blijven open; geen extra volledige kaart gesloten.",
+        "source": "development/evidence/product/e16-e419-alignment-installed-20261024.json",
+        "checkedAt": "2026-10-24T10:58:51.156682+00:00",
+        "installedAt": "2026-10-24T10:49:56.612535+00:00",
+        "completedTaskIds": [],
+        "technicalDeliveryComplete": true,
+        "ownerAcceptance": false,
+        "familyAcceptance": false,
+        "review": "development/reviews/e16-e419-alignment-20261024.json",
+        "independentReviewComplete": true
+      },
+      {
+        "title": "E4.16 · Bestaande zelfherstelroute geactiveerd",
+        "state": "installed",
+        "summary": "Exacte bestaande kern, werker, host en bevoegdheid geïnstalleerd en onafhankelijk gecontroleerd. Geen automatisch opgelost praktijkincident geclaimd.",
+        "remaining": "Oorspronkelijke volledige foutketen en later onafhankelijk hergebruik blijven open.",
+        "source": "development/evidence/product/e416-installed-activation-20261024.json",
+        "review": "development/reviews/e416-installed-activation-review-20261024.json",
+        "checkedAt": "2026-10-24T07:24:28.185511+00:00",
+        "installedAt": "2026-10-24T07:13:50.564343+00:00",
+        "completedTaskIds": [],
+        "technicalActivationComplete": true,
+        "technicalDeliveryComplete": false,
+        "newProductFunctionCompleted": false,
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.17 · Zelfgemaakte uitbreiding werkelijk hersteld en uitgevoerd",
+        "state": "installed",
+        "summary": "Alle oorspronkelijke herstelclausules onafhankelijk technisch afgerond. Behouden versleuteld pakket en18.067bestanden plus één werkelijke oorspronkelijke procedure op herstelde infrastructuur; juiste verouderingsafwijzing en schone STOP. Productie ongewijzigd.",
+        "remaining": "Geen open oorspronkelijke technische E4.17-clausule; positieve begroeting, later gezinsgebruik en eigenaaracceptatie blijven op eigen kaarten.",
+        "source": "development/evidence/reassessment/e417-original-restored-procedure-20261024.json",
+        "review": "development/reviews/e417-original-binding-review-20261024.json",
+        "checkedAt": "2026-10-24T06:06:08.566732+00:00",
+        "completedAt": "2026-10-24T06:06:08.566732+00:00",
+        "completedTaskIds": [
+          "E4.17"
+        ],
+        "technicalDeliveryComplete": true,
+        "newProductFunctionCompleted": false,
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E2.9 · Huisvoorzieningen, projecten en bijstellingen samen bedienen",
+        "state": "installed",
+        "summary": "Volledige oorspronkelijke bedieningskaart onafhankelijk technisch afgerond. Brongebonden huidige toestand via dezelfde autoriteit, bestaande lifecycle en correctie/vergeten; werkelijk lege optionele toestand blijft leeg. Exacte geïnstalleerde code/API/assets en core/workerprofielen gecontroleerd.",
+        "remaining": "Geen open oorspronkelijke technische E2.9-bedieningsclausule; E1.10-meerdaags gebruik, E1.12-adoptie en gezinsacceptatie blijven op eigen kaarten.",
+        "source": "development/evidence/product/e110-e29-current-development-installed-20261024.json",
+        "review": "development/reviews/e110-housemate-development-review-20261024.json",
+        "checkedAt": "2026-10-24T05:45:11.301685+00:00",
+        "completedAt": "2026-10-24T05:45:11.301685+00:00",
+        "completedTaskIds": [
+          "E2.9"
+        ],
+        "technicalDeliveryComplete": true,
+        "newProductFunctionCompleted": true,
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E1.13 · Denkvermogen gericht inzetten met behouden werking",
+        "state": "installed",
+        "summary": "Oorspronkelijke kaart onafhankelijk technisch afgerond: bestaande huidige hergebruikroute 0 in plaats van 1 modelverzoek bij dezelfde nieuwe uitvoering en verse controle; 6/6 oorspronkelijke modelgevallen geslaagd. Eén begrensde vergelijking, geen algemene snelheids- of gezinsclaim.",
+        "remaining": "Geen open technische E1.13-eindvoorwaarde; andere kaarten en gezinsacceptatie blijven open.",
+        "source": "development/evidence/product/e113-current-cache-comparison-20261024.json",
+        "review": "development/reviews/e113-existing-natural-handoff-review-20261024.json",
+        "checkedAt": "2026-10-24T05:04:43.982280+00:00",
+        "completedAt": "2026-10-24T05:04:43.982280+00:00",
+        "completedTaskIds": [
+          "E1.13"
+        ],
+        "newProductFunctionCompleted": false,
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.18 · Gebruikte uitvoering en onderhoud vereenvoudigd",
+        "state": "installed",
+        "summary": "Gedeelde containerinspectie en bestandshashing werkelijk gebruikt in de huidige WSL-operatorroute; ontwikkeltests op hun juiste plek. Volledige oorspronkelijke kaart onafhankelijk goedgekeurd.",
+        "remaining": "Geen technische E4.18-stap; andere kaarten en gezinsacceptatie blijven open.",
+        "source": "development/evidence/reassessment/e418-maintenance-delivery-20261024.json",
+        "review": "development/reviews/e418-file-inspection-20261023.json",
+        "checkedAt": "2026-10-24T00:40:10.374271+00:00",
+        "completedAt": "2026-10-24T00:40:10.374271+00:00",
+        "completedTaskIds": [
+          "E4.18"
+        ],
+        "newProductFunctionCompleted": false,
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E1.12 · Eigenaarbediening en herstel technisch opgeleverd",
+        "state": "installed",
+        "summary": "Technische oplevering klaar: bestaande eigenaarbediening voor registratie/adoptie/pauze/stop, versies/terugdraaien, vooraf toegestane proef/evaluatie/melding geïnstalleerd en onafhankelijk teruggelezen. Bestaande herstelroute bewaart adoptie/pauze/STOP/versies en expliciet lege inschrijving onder echte UID65532; onafhankelijke GO. Volledige kaart blijft open voor werkelijk nuttig huishoudelijk gebruik en adoptie.",
+        "remaining": "Werkelijk nuttige blijvende huisvoorziening, gebruik, feedback en adoptie; volledige E1.12 blijft open.",
+        "source": "development/evidence/product/e112-household-provision-version-trial-20261024.json",
+        "review": "development/reviews/e112-household-artifact-lifecycle-review-20261024.json",
+        "checkedAt": "2026-10-24T02:57:30.999386+00:00",
+        "completedTaskIds": [],
+        "newProductFunctionCompleted": false,
+        "technicalDeliveryComplete": true,
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E1.6 · Eigen bronvervolg uitgevoerd en via Telegram teruggekoppeld",
+        "state": "installed",
+        "summary": "Eva koos zelf een relevante statuslezing vanuit een recente privévraag. De gewone uitvoerder rondde die om 09:42:02 UTC af; de gewone vervolgbeslissing gebruikte het resultaat en leverde om 09:42:19 via Telegram een juiste beperkte conclusie. Nog geen bronabonnement of werkelijke bronverandering→afweging bewezen.",
+        "remaining": "Werkelijke bronverandering→afweging blijft open. Geselecteerde afwegingen en uitvoering samen 107.568 geregistreerde runtime-tokens, onvolledige meting; credits onbekend. Geen claim van volledige E1.6-afronding of gebruikersacceptatie.",
+        "source": "development/evidence/product/e16-private-day-context-installed-20261021.json",
+        "review": "development/reviews/e16-private-day-context-review-20261021.json",
+        "checkedAt": "2026-10-21T09:47:41.603560+00:00",
+        "installedAt": "2026-10-21T09:12:36.445972+00:00",
+        "completedTaskIds": [],
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "E1.6 · Contextselectie en open oriëntatie gecorrigeerd",
+        "state": "installed",
+        "summary": "Contextselectie geïnstalleerd. Echte afweging deed een gerichte geheugenzoeking, maar koos nog geen vervolg; 29.985 runtime-tokens, creditkosten onbekend. De ontbrekende privé-dagcontextoverdracht wordt nu hersteld.",
+        "remaining": "Echte autonome bronkeuze en passende afweging op bronverandering blijven open.",
+        "source": "development/evidence/product/e16-open-orientation-installed-20261021.json",
+        "review": "development/reviews/e16-open-orientation-review-20261021.json",
+        "checkedAt": "2026-10-21T08:52:18.838436+00:00",
+        "installedAt": "2026-10-21T08:52:18.838436+00:00",
+        "completedTaskIds": [],
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "E1.6 · Blokkade in mogelijkhedencontext hersteld; broncausaliteit nog open",
+        "status": "installed",
+        "date": "2026-10-20T20:51:29.634313+00:00",
+        "source": "development/evidence/product/e16-capability-context-boundary-installed-20261020.json",
+        "summary": "De contextomvangblokkade is geïnstalleerd verholpen. Om 20:55:54 UTC voerde de gewone scheduler zelf weer een Astra-afweging uit: bestaande onderzoeksconclusie gebruikt, geen herhaald werk of onnodig laat bericht. Eén gemeten runtime-modelpoging, 15.546 tokens, creditkosten onbekend. Echte bronkeuze → bronverandering → passende afweging blijft nog open.",
+        "completedTaskIds": [],
+        "newProductFunctionCompleted": false,
+        "remaining": "Werkelijke zelfstandige bronkeuze en passende afweging op bronverandering zijn nog niet aangetoond.",
+        "ordinaryRuntimeDecisionObserved": true
+      },
+      {
+        "title": "E1.6 · Gerichte bronoverdracht en latere teruglezing hersteld",
+        "state": "installed",
+        "summary": "Eva kan een gericht onderzochte bron buiten recente eventruis aangeboden krijgen; een gekozen bron blijft in volgende afwegingen leesbaar.",
+        "remaining": "Werkelijke autonome bronkeuze en natuurlijke bronverandering→afweging nog niet aangetoond; E1.6 blijft open. 82 gerichte controles, geen extra modelproef.",
+        "source": "development/evidence/product/e16-read-selected-source-handoff-installed-20261020.json",
+        "review": "development/reviews/e16-read-selected-source-handoff-review-20261020.json",
+        "checkedAt": "2026-10-20T20:40:29.879378+00:00",
+        "installedAt": "2026-10-20T20:40:29.879378+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.14 · Eén Eva-programma werkt over meerdere diensten",
+        "state": "installed",
+        "summary": "Eva hergebruikte een echt opgeslagen resultaat, las rechtstreeks Home Assistant en bewaarde vanuit hetzelfde programma een gecontroleerde vervolgnotitie.",
+        "remaining": "Technisch afgerond. Geen bewezen efficiëntie- of kwaliteitsvoorsprong; alle vijf uitvoeringen samen542.159 geregistreerde runtime-tokens (onvolledige meting), creditkosten onbekend. Dagelijks gezinsnut en eigenaaracceptatie blijven F2.",
+        "source": "development/evidence/reassessment/e414-task-program-installed-20261020.json",
+        "review": "development/reviews/e414-task-program-review-20261020.json",
+        "checkedAt": "2026-10-20T20:24:00.268364+00:00",
+        "completedAt": "2026-10-20T20:21:03Z",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E4.14"
+        ],
+        "completionScope": "Begrensde algemene programma-uitvoering; geen nieuwe voorbeeldfunctie of voltooiing van een geheel hoofdonderdeel.",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E1.4 · Eigen vervolg afgemaakt en later inhoudelijk gebruikt",
+        "state": "installed",
+        "summary": "Eva heeft haar eigen vervolg afgemaakt en het resultaat later inhoudelijk gebruikt.",
+        "remaining": "Geen resterende technische stap voor deze bestaande E1.4-uitkomst. Dagelijks gezinsnut en eigenaaracceptatie blijven F2. Herstelhulp is geen bewezen zelfstandig foutherstel; geen extra Telegrambericht geclaimd.",
+        "source": "development/evidence/reassessment/e14-verified-result-completion-installed-20261020.json",
+        "review": "development/reviews/e14-verified-result-completion-review-20261020.json",
+        "checkedAt": "2026-10-20T19:26:59.261526+00:00",
+        "completedAt": "2026-10-20T19:22:58Z",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [
+          "E1.4"
+        ],
+        "completionScope": "Actuele vervolgketen van de al historisch afgeronde kaart; oorspronkelijke criteria en telling behouden, geen extra nieuwe productfunctie geteld.",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E1.4 · Hervattingsinstructies gecorrigeerd en beoordeeld",
+        "state": "installed",
+        "summary": "Onderzoek en documentcontrole zijn gelukt. Een extra connectorstatus blokkeerde daarna de taakafronding.",
+        "remaining": "Taakafronding en later gebruik blijven open. Laatste poging:105.428 geregistreerde tokens, onvolledige meting; creditkosten onbekend.",
+        "source": "development/evidence/reassessment/e14-explicit-resume-handoff-20261020.json",
+        "review": "development/reviews/e14-explicit-resume-handoff-review-20261020.json",
+        "checkedAt": "2026-10-20T19:09:58.697092+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E1.4 · Expliciet hervat brononderzoek kan gecontroleerd verder",
+        "state": "installed",
+        "summary": "Oude openbare leesfout blijft als context behouden; een nieuwe geïndexeerde stap gebruikt de bestaande actuele controles. Geen automatische herhaling.",
+        "remaining": "De werkelijke uitvoering en latere toepassing lopen nog.",
+        "source": "development/evidence/reassessment/e14-explicit-public-read-continuation-20261020.json",
+        "review": "development/reviews/e14-explicit-public-read-continuation-review-20261020.json",
+        "date": "2026-10-20",
+        "checkedAt": "2026-10-20T18:41:17.042260+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": []
+      },
+      {
+        "title": "E1.4 · Foutcontext voor zelfstandig vervolg geïnstalleerd",
+        "state": "installed",
+        "summary": "Gewone afweging krijgt bij één geblokkeerd eigen initiatief de exacte foutstatus en meetonzekerheid. Geen automatische herhaling.",
+        "remaining": "Nieuwe gewone vervolgkeuze, uitvoering en later gebruik nog volgen. Historische meerdaagse keten blijft apart geldig.",
+        "source": "development/evidence/reassessment/e14-failure-context-handoff-installed-20261020.json",
+        "review": "development/reviews/e14-failure-context-handoff-review-20261020.json",
+        "date": "2026-10-20",
+        "checkedAt": "2026-10-20T18:26:07.721876+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": []
+      },
+      {
+        "title": "E4.13 · Semantische codefeedback geïnstalleerd en door Eva gebruikt",
+        "state": "installed",
+        "summary": "Echte Pythonfout op actuele bronversie gevonden, door Eva gericht opgelost en daarna onafhankelijk 6/6 gedragsgevallen geslaagd. Dezelfde geïsoleerde programmeerroute; geen nieuwe agent.",
+        "remaining": "Geen technische E4.13-stap. Python directe edits zijn de eerste scope; algemene codekwaliteit/gezinsnut niet hiermee bewezen.",
+        "source": "development/evidence/product/e413-programming-semantic-feedback-20261020.json",
+        "date": "2026-10-20",
+        "checkedAt": "2026-10-20T18:08:24.596249+00:00",
+        "completedTaskIds": [
+          "E4.13"
+        ],
+        "newProductFunctionCompleted": true
+      },
+      {
+        "title": "E4.12 · Open vaardigheid gebruikt, aantoonbaar verbeterd en opnieuw toegepast",
+        "state": "installed",
+        "summary": "Volledig pakket geïmporteerd. Echte correctie onafhankelijk 8/12→12/12, geen regressies; verbeterde versie later succesvol gebruikt. Operatorhulp blijft vermeld.",
+        "remaining": "Geen technische E4.12-stap. Zelfstandig kiezen in gewoon gezinsgebruik is hiermee niet bewezen.",
+        "source": "development/evidence/product/e412-skill-package-improvement-20261020.json",
+        "date": "2026-10-20",
+        "checkedAt": "2026-10-20T17:50:52.808889+00:00",
+        "completedTaskIds": [
+          "E4.12"
+        ],
+        "newProductFunctionCompleted": true
+      },
+      {
+        "title": "E4.12 · Open vaardigheidspakket geïnstalleerd; verbetercyclus nog open",
+        "state": "installed",
+        "summary": "Hermes grounded-citations is volledig geïmporteerd en via Eva uitgevoerd. Engelse broncontrole werkt; Nederlandse kop Bronnen levert een concrete correctie op. Geen volledige kaartafronding.",
+        "remaining": "Pakketgebonden AIDE-beoordeling, nieuwe versie en daadwerkelijk later gebruik.",
+        "source": "development/evidence/product/e412-open-skill-import-run-installed-20261020.json",
+        "date": "2026-10-20",
+        "checkedAt": "2026-10-20T17:18:27.895144+00:00",
+        "completedTaskIds": [],
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "E1.6 · Afweging koos geen bron; eindbewijs blijft open",
+        "state": "built",
+        "summary": "Eva koos op basis van haar werkelijke huidige context stilte, geen vervolginitiatief en geen bron om te volgen. Geen tweede afweging of natuurlijke veranderingsketen uitgevoerd. Dit bewijst geen algemene onmogelijkheid of E1.6-afronding.",
+        "remaining": "Echte modelgekozen bronveranderingsketen niet bewezen. Geïnstalleerde route behouden.",
+        "source": "development/evidence/product/e16-source-choice-observation-20261020.json",
+        "date": "2026-10-20",
+        "checkedAt": "2026-10-20T16:42:18.078240+00:00",
+        "completedTaskIds": [],
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "E1.6 · Bronverwijzingsfout werkend hersteld",
+        "state": "installed",
+        "summary": "Bronverwijzingsfout werkend hersteld en geïnstalleerd. Eén echte onderzoeksaanvraag geslaagd: dezelfde providerrespons wordt door de oude parser afgewezen en de nieuwe geaccepteerd, met ongewijzigde URL’s en gemeten verbruik. E1.6 is pas af na eigen bronkeuze en echte veranderingsafweging; dat bewijs ontbreekt nog.",
+        "remaining": "Eigen bronkeuze → echte verandering → passende afweging blijft open; geen brede E1.6- of gezinsafronding geclaimd.",
+        "source": "development/evidence/product/e16-research-source-recovery-installed-20261020.json",
+        "review": "development/reviews/e16-research-source-recovery-review-20261020.json",
+        "date": "2026-10-20",
+        "installedAt": "2026-10-20T16:34:23.042136+00:00",
+        "checkedAt": "2026-10-20T16:35:42.587772+00:00",
+        "completedTaskIds": [],
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "E1.6 · Brongebonden aandacht geïnstalleerd; gebruiksbewijs nog open",
+        "state": "installed",
+        "summary": "Geïnstalleerd. De gewone afweging koos zelfstandig vervolgonderzoek, maar geen bron om te volgen. Dat onderzoek eindigde met budget_exceeded, zonder bevestigd resultaat. Bronkeuze → echte verandering → afweging blijft onbewezen; E1.6 is niet afgerond.",
+        "remaining": "Echte modelgekozen bron en bronveranderingsafweging ontbreken; laatste vervolgonderzoek mislukte. Geen eigenaarhandeling nodig.",
+        "source": "development/evidence/product/e16-source-attention-installed-20261020.json",
+        "review": "development/reviews/e16-source-attention-review-20261020.json",
+        "date": "2026-10-20",
+        "installedAt": "2026-10-20T16:11:46.841997+00:00",
+        "checkedAt": "2026-10-20T16:25:20.365895+00:00",
+        "completedTaskIds": [],
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "E1.5 · Actuele persoonscorrecties in gesprek en initiatief",
+        "state": "installed",
+        "summary": "Geïnstalleerd: dezelfde huidige bron-/revisiecontext bij licht gesprek en privé-initiatief. Native observaties en getypeerde ketenkoppen compact en zonder dubbele geschiedenis; onbewezen stijlspiegel geen fallback. HUE5 echte correctie/later gedrag hergebruikt, nieuwe overdracht technisch gecontroleerd. F2 blijft open.",
+        "remaining": "Geen resterende technische stap binnen E1.5. Nieuwe live gedragsproef en meerdaags gezinsnut niet geclaimd; gezinsacceptatie blijft F2.",
+        "source": "development/evidence/product/e15-current-person-context-installed-20261020.json",
+        "review": "development/reviews/e15-current-person-context-review-20261020.json",
+        "date": "2026-10-20",
+        "installedAt": "2026-10-20T15:49:27.587345+00:00",
+        "completedAt": "2026-10-20T15:49:27.587345+00:00",
+        "checkedAt": "2026-10-20T15:49:27.587345+00:00",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E1.5"
+        ],
+        "completionScope": "Bestaand ongewijzigd E1.5-criterium: geïnstalleerde contextoverdracht met hergebruik van echt historisch correctie/later-gebruikbewijs. Geen volledig persoonsprofiel of gezinsacceptatie.",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E1.4 · Eigen vervolg over dagen afgerond en later gebruikt",
+        "state": "installed",
+        "summary": "Eva koos zelf vervolg op eerdere eigen metingen, voerde het onderzoek uit, bewaarde het resultaat en gebruikte de uitkomst bij een volgende gewone afweging. De gekozen terugkoppeling is via Telegram afgeleverd.",
+        "remaining": "Geen resterende technische stap binnen E1.4. Gezinsnut en eigenaaracceptatie blijven F2. Technische herstelhulp en hoog geregistreerd verbruik zijn geen efficiëntiewinst.",
+        "source": "development/evidence/reassessment/e14-model-chosen-continuation-installed-20261020.json",
+        "review": "development/reviews/e14-cross-day-final-completion-review-20261020.json",
+        "checkedAt": "2026-10-20T15:25:11.654850+00:00",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E1.4"
+        ],
+        "completionScope": "Ongewijzigd technisch criterium van bestaande E1.4; geen volledige Eva- of gezinsacceptatie.",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.7 · Gedeelde HA-catalogus en transportkeuze geïnstalleerd",
+        "state": "installed",
+        "summary": "Kern en uitvoerworker delen dezelfde HA-module. MCP-catalogus en service-schema worden hergebruikt; aan/uit via MCP werkelijk uitgevoerd en vers gecontroleerd. Chat-/spraaksnelheid is gemeten en voldoet nog niet aan de2s-grens.",
+        "remaining": "E4.8/E4.9/E4.10/E5.2, fysieke spraak en gezinsacceptatie blijven open. Geen benchmarkmediaan/p95 geclaimd.",
+        "source": "development/evidence/product/e47-ha-capability-profile-20261020.json",
+        "review": "development/reviews/e47-ha-capability-profile-review-20261020.json",
+        "checkedAt": "2026-10-20T11:31:22.747952+00:00",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E4.7"
+        ],
+        "completionScope": "Gedeeld MCP/API/WS-profiel op kern en uitvoerworker; live catalogushergebruik, MCP-effect en verse state-proof; geen algemene ≤2s- of volledige beheerwrite-claim.",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.6 · Home Assistant werkt als optionele module van dezelfde Eva",
+        "state": "installed",
+        "summary": "HA-regels en broninterpretatie komen uit de provider. Eva kan zonder HA starten en gewoon chatten; andere connectors blijven beschikbaar. Oude gegevens en resultaten behouden. Werkend op actuele kern en uitvoerworker.",
+        "remaining": "E4.7–E4.10/E5.2: bestaande kaarten voor capabilityprofiel, actuele context, gebundelde bediening en gemeten snelheid. Spraak en gezinsacceptatie blijven afzonderlijk.",
+        "source": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
+        "review": "development/reviews/e46-optional-home-provider-review-20261020.json",
+        "checkedAt": "2026-10-20T09:40:57.354545+00:00",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E4.6"
+        ],
+        "completionScope": "Technische eindvoorwaarde van bestaande E4.6-modulekaart; geen hele Eva- of gezinsacceptatie.",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.11 · Selectief geheugen, opschoning en status technisch afgerond",
+        "state": "installed",
+        "summary": "Gesprekken eerst als dagcontext; bestaande droomroute selecteert en actualiseert blijvende kennis. Automatische opruiming van bewezen dubbele uitvoertekst en correcte wis-/reflectiestatus zijn actief. Drie oude nulresultaten zonder herhaling afgehandeld.",
+        "remaining": "Historische fouten en onbewezen bron/payloadgegevens bewust behouden met afzonderlijke waarschuwing. Meerdaags nut en gezinsacceptatie blijven apart; fysieke database-, token- en snelheidswinst onbekend.",
+        "source": "development/evidence/product/e411-selective-memory-completed-20261019.json",
+        "review": "development/reviews/e411-selective-memory-final-review-20261019.json",
+        "checkedAt": "2026-10-19T14:24:28.236415+00:00",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E4.11"
+        ],
+        "completionScope": "Technische eindvoorwaarde van bestaande kleine kaart E4.11; geen volledige Eva- of gezinsacceptatie.",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "Geheugen · 1.592 dubbele taakteksten op actieve installatie opgeschoond",
+        "state": "installed",
+        "summary": "Afgesloten geheugenpayloads netto 258.346 JSON-bytes kleiner; 472 betrokken kennisregels en overige taakvelden exact behouden. Geen modelcall, herstart of spraakwijziging.",
+        "remaining": "Resterend: oude cohorten zonder volledig ontvangstbewijs, onvolledig gebonden native payloads en oude status-/wisproblemen onderbouwd afhandelen. Eenmalige historische payloadopruiming is geen automatische toekomstige opruiming. Meerdaags gebruik, fysieke databasegrootte en token-/snelheidswinst niet bewezen.",
+        "source": "development/evidence/product/completed-memory-payload-compaction-20261019.json",
+        "review": "development/reviews/completed-memory-payload-compaction-review-20261019.json",
+        "checkedAt": "2026-10-19T13:15:15.748652+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "completionScope": "Een bestaande historische opslagachterstand toegepast afgehandeld; E4.11 blijft open.",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "Telegram · lege optionele speakerbestemming blokkeert privéwerk niet meer",
+        "state": "installed",
+        "summary": "Gereproduceerde invoerafwijzing gericht hersteld; vastgelegde aanvraag wordt door geïnstalleerde code geaccepteerd. Kern en werkdienst gezond. Geen speakerrecht toegevoegd.",
+        "remaining": "Nieuwe echte Telegramreactie blijft te beoordelen; geen volledige gezinsacceptatie. Bestaande bescherming tegen onbevestigde taakstart blijft behouden.",
+        "source": "development/evidence/product/telegram-null-destination-installed-20261019.json",
+        "review": "development/reviews/telegram-null-destination-review-20261019.json",
+        "checkedAt": "2026-10-19T12:16:01.432912+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "completionScope": "Gerichte privéchatreparatie, geen afgeronde volledige gezinsproef",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.11 · Dagtekst na bevestigde droomverwerking laten vervallen",
+        "state": "installed",
+        "summary": "Tijdelijke tekst van erkende vorige-daggesprekken kan in de bestaande rustfase vervallen; relevante kennis, exacte herkomst, correcties en bewust vergeten blijven werken.",
+        "remaining": "Dag-/droomoverdracht, historische duplicaatopschoning en automatische bronlevenscyclus zijn geïnstalleerd. Nog open: oude cohorten zonder volledig ontvangstbewijs, native gesloten taakpayloads en irrelevante historische kennis onderbouwd opruimen; bewijsmetadata/opslag verder compact maken, oude statusfouten en meerdaags gebruik. Geen bewezen netto database-, token- of snelheidswinst.",
+        "source": "development/evidence/product/day-memory-source-lifecycle-installed-20261019.json",
+        "review": "development/reviews/day-memory-source-lifecycle-review-20261019.json",
+        "checkedAt": "2026-10-19T12:03:00.789605+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "completionScope": "Geïnstalleerde bronlevenscyclus; volledige E4.11 en meerdaags gebruik blijven open",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.11 · Historische dubbele geheugenopslag opgeruimd",
+        "state": "installed",
+        "summary": "1.592 exacte projectiekopieën opgeschoond: 556.769 bytes dubbele tekst weg. Alle opgeslagen kennis en oorspronkelijke bronnen bleven exact gelijk. Onafhankelijke review en verse uitlezing bevestigd; geen nieuwe modelaanvragen.",
+        "remaining": "Dag-/droomoverdracht en verwijdering van 556.769 bytes dubbele native brontekst zijn toegepast. De oorspronkelijke bronnen en 1.428 kennisregels zijn behouden. Nog open: tijdelijke broninhoud na bevestigde verwerking laten verlopen, historisch irrelevante kennis/proefgegevens onderbouwd opruimen, oude wis-/foutregistraties correct tonen en meerdaags gebruik. Geheugenstatus blijft onbeschikbaar door oude integriteitsproblemen; geen bewezen token-/snelheidswinst.",
+        "source": "development/evidence/product/historical-memory-text-compaction-20261019.json",
+        "review": "development/reviews/historical-memory-text-compaction-review-20261019.json",
+        "checkedAt": "2026-10-19T11:29:00.247359+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "completionScope": "Toegepaste historische duplicaatopschoning; volledige E4.11 nog open",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.11 · Historie-uitlezing geïnstalleerd; oude integriteitsfouten vastgesteld",
+        "state": "installed",
+        "summary": "13 gerichte databasecontroles geslaagd; 270 bronnen in vier uitleesvragen. De echte geheugenstatus blijft onbeschikbaar door twee behouden oude tijdsvolgordefouten. Geen nieuwe extractie- of vergelijkingsproef.",
+        "remaining": "Dag-/droomoverdracht en historie-uitlezing in pagina’s zijn geïnstalleerd. De geheugenstatus blijft onbeschikbaar door twee echte chronologiefouten uit augustus. Van 38 oude foutcursors hebben drie native bewijs van voltooiing zonder geselecteerde feiten; 34 zijn native mislukt en één heeft geen gevonden uitkomst. Nog af te maken: verzoenen, historische bron-/kennisopschoning, bewaartermijnen en aantoonbaar efficiënt dagelijks gebruik.",
+        "source": "development/evidence/product/memory-history-reader-installed-20261019.json",
+        "review": "development/reviews/memory-history-reader-review-20261019.json",
+        "checkedAt": "2026-10-19T11:08:44.171480+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "completionScope": "Geïnstalleerde historie-uitlezing; statusherstel en volledige E4.11 nog open",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.11 · Dagcontext en droomoverdracht geïnstalleerd",
+        "state": "installed",
+        "summary": "Gewone privégesprekken wachten op rust; geselecteerde kennis krijgt bevestiging per bron. Nieuwe native document-/chunkkopieën bevatten geen ruwe gesprekstekst. Publiek wissen werkt ook vóór verwerking en na een onderbreking. 65 gerichte overdrachtscontroles, onafhankelijke source-GO en één echte native batch bevestigd.",
+        "remaining": "Dagcontext→droomoverdracht en publiek wissen zijn geïnstalleerd. Oude bronnen en afgeleide kennis zijn nog niet volledig opgeschoond. De huidige statuslezer overschrijdt zijn 256-cursorgrens; de echte installatie bevat 1652 bevestigde en 38 vastgelopen geheugencursors. Model-/creditbesparing en meerdaags gezinsgebruik niet bewezen.",
+        "source": "development/evidence/product/dream-memory-handoff-installed-20261019.json",
+        "review": "development/reviews/dream-memory-handoff-review-20261019.json",
+        "checkedAt": "2026-10-19T10:53:31.449676+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "completionScope": "Geïnstalleerde overdracht; volledige E4.11 blijft open",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E2.8 · Camera’s automatisch ontdekken en lokaal personen waarnemen",
+        "state": "installed",
+        "summary": "Optionele cameramodule geïnstalleerd: automatische apparaat-/sensorkoppeling, CPU-waarneming met bestaande lokale referenties en overdracht aan dezelfde Eva. Drie echte broncontroles en één spontane geïnstalleerde intake bevestigd;54 gerichte checks en onafhankelijke review GO. Geen vaste camerakeuze, huisregel of begroetingsscript. Naamaccuratesse, daadwerkelijke reactie en gezinsacceptatie blijven afzonderlijk onbewezen.",
+        "remaining": "Naamaccuratesse en dagelijks passende reacties nog niet beoordeeld. Geen scèneanalyse in deze CPU-stand.",
+        "source": "development/evidence/product/camera-observer-installed-20261019.json",
+        "review": "development/reviews/camera-observer-review-20261019.json",
+        "checkedAt": "2026-10-19T10:02:07.750530+00:00",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E2.8"
+        ],
+        "completionScope": "Optional technical camera module only",
+        "ownerAcceptance": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E4.11 · Selectief geheugen en apart bronarchief geïnstalleerd",
+        "state": "installed",
+        "date": "2026-10-19T09:10:02.476266+00:00",
+        "checkedAt": "2026-10-19T09:10:02.476266+00:00",
+        "summary": "Begroeting en tijdelijke test worden geen blijvende feiten. Voorkeur en afspraak blijven behouden; correctie en herhaling werken dezelfde herinnering bij. Dit is de bestaande geheugenroute, zonder extra classificatiemodel.",
+        "remaining": "Historische inhoud nog niet opgeschoond:387bronnen/416native documenten en445.987brontekstbytes blijven behouden onder bestaande365dagen/2000documenten/20MiB per persoon. Geen gemeten fysieke opslag- of antwoordversnellingswinst. Interne modelpogingen/kosten blijven onbekend.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/selective-memory-installed-20261019.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/selective-memory-installed-review-20261019.json",
+        "maintenanceRepair": false,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "familyAcceptance": false,
+        "completionScope": "Bestaande kaart E4.11 blijft in uitvoering voor historische opschoning en werkelijke efficiëntiemeting."
+      },
+      {
+        "title": "E5.1 technisch afgerond · Zelf gekozen werk uitgevoerd en privé afgeleverd",
+        "state": "installed",
+        "date": "2026-10-19T08:01:59Z",
+        "checkedAt": "2026-10-19T08:31:12.581369+00:00",
+        "summary": "Eva onderzocht zonder proefopdracht een echte huismelding, bewaarde het resultaat en leverde dat om10:01privé af. De volgende gewone afweging gebruikte de bewaarde bron. Onafhankelijk gecontroleerd; geen claim van bewezen herhaald gezinsnut of blijvende eigen projecten.",
+        "remaining": "E4.6–E4.11/E5.2 en bestaande spraakafwerking blijven open; zeven dagen gezinsgebruik en jouw oordeel zijn F2.1/F2.2.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-native-unassisted-installed-20261019.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e51-native-unassisted-review-20261019.json",
+        "maintenanceRepair": false,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [
+          "E5.1"
+        ],
+        "familyAcceptance": false,
+        "completionScope": "Original technical joint delivery; later scope extensions and full goal remain open."
+      },
+      {
+        "title": "E5.1 · Autonome ontdekking van aangesloten diensten geïnstalleerd",
+        "state": "installed",
+        "date": "2026-10-19T08:05:40.990683+00:00",
+        "checkedAt": "2026-10-19T08:13:11.833314+00:00",
+        "summary": "Eva heeft via dezelfde uitvoerder nu ook toegang tot de bestaande lokale dienststatus en opgeslagen toolschema’s.25beschreven mogelijkheden; werkelijke uitvoergrant19, precies2uitleesfuncties erbij.43gerichte controles en onafhankelijke review geslaagd. Nieuw zelfstandig nuttig werk en later vervolg zijn hiermee nog niet bewezen.",
+        "remaining": "De echte afweging om10:10lokale tijd ontving25beschreven mogelijkheden en koos opnieuw stilte, zonder eigen werk of vervolgaandacht. De nieuwe uitleestoegang is geïnstalleerd, maar volledige nuttige autonomie is niet bewezen.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-native-catalog-discovery-20261019.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e51-native-catalog-discovery-review-20261019.json",
+        "maintenanceRepair": false,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "familyAcceptance": false,
+        "completionScope": "Installed bounded discovery access; not whole autonomous E5.1 outcome."
+      },
+      {
+        "title": "E5.1 · Kern en achtergrondwerker gelijkgetrokken",
+        "state": "installed",
+        "date": "2026-10-19T07:27:55.178568+00:00",
+        "checkedAt": "2026-10-19T07:39:45.442639+00:00",
+        "summary": "Echte releaseblokkade opgelost. De eigen afweging ziet23 beschreven mogelijkheden en gebruikt dezelfde bestaande werkuitvoerder. Gegevens en configuratie behouden.",
+        "remaining": "Gewone afweging om 09:32 koos opnieuw geen werk of vervolg, ondanks herstelde uitvoering. E5.1 is niet afgerond; dit is geen bewezen blokkade door ontbrekend antwoord van Jaap.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-execution-orientation-20261019.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e51-execution-orientation-review-20261019.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "familyAcceptance": false
+      },
+      {
+        "title": "E5.1 · Passende nieuwsgierigheid zonder opdracht toegestaan",
+        "state": "installed",
+        "date": "2026-10-18T23:11:49.709140+00:00",
+        "checkedAt": "2026-10-18T23:19:04.928959+00:00",
+        "summary": "Concrete tegenstrijdigheid in de privévraaggrens verduidelijkt. Gesigneerde identiteit, privacy en bevoegdheden blijven behouden; geen verplicht werk of gespreksonderwerp.",
+        "remaining": "De echte afweging van01:16 koos geen werk of bewaarde vervolgaandacht. Nuttige autonome uitvoering en voortbouw nog niet bewezen; E5.1 blijft open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-self-continuity-installed-20261019.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e51-self-continuity-review-20261019.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "familyAcceptance": false
+      },
+      {
+        "title": "E5.1 · Private oriëntatie krijgt het juiste besluitcontract",
+        "state": "installed",
+        "date": "2026-10-18T22:41:37.190405+00:00",
+        "checkedAt": "2026-10-18T22:41:37.190405+00:00",
+        "summary": "Eigen onderzoek/voortgang en berichttiming zijn in dezelfde functie afzonderlijke keuzes. Een echte contractwijziging krijgt één eigen bron; oude besluiten blijven bewaard. Gerichte controles en onafhankelijke bronreview geslaagd.",
+        "remaining": "De echte nieuwe afweging koos opnieuw geen werk. Ontbrekende terugvoer van eerdere eigen afwegingen is nu het gerichte herstel; E5.1 blijft open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e51-private-orientation-review-20261019.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "familyAcceptance": false
+      },
+      {
+        "title": "E5.1 · Zelf gericht persoonscontext zoeken tijdens eigen oriëntatie",
+        "state": "installed",
+        "date": "2026-10-18T22:09:44.333757+00:00",
+        "checkedAt": "2026-10-18T22:09:44.333757+00:00",
+        "summary": "Eén modelgekozen privézoekstap via bestaand geheugen, met bewaarde herkomst en gemeten verbruik van beide antwoorden. Geïnstalleerd en onafhankelijk beoordeeld.",
+        "remaining": "Werkelijke gewone afweging koos stilte; nog geen zelfgekozen uitvoering en later vervolg. E5.1 niet afgerond.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-private-context-search-installed-20261019.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e51-private-context-search-review-20261019.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "familyAcceptance": false
+      },
+      {
+        "title": "E5.1 · Eigen resultaten terug in gewone oriëntatie",
+        "state": "installed",
+        "date": "2026-10-18T21:19:30.157725+00:00",
+        "checkedAt": "2026-10-18T21:19:30.157725+00:00",
+        "summary": "Bewaarde eigen resultaatinhoud met bron en tijd komt nu terug in latere afwegingen. Oude afgesloten werkcontext wordt beperkt; onopgeloste afspraken blijven bewaard.",
+        "remaining": "Dagelijks zelfstandig passend vervolg na deze correctie nog niet waargenomen. E5.1 blijft actief; geen claim van volledig eigen leven.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-daily-life-context-installed-20261018.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e51-daily-life-context-review-20261018.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "familyAcceptance": false
+      },
+      {
+        "title": "E5.1 · Eigen initiatief van bron tot resultaat en juist vervolg opgeleverd",
+        "state": "installed",
+        "date": "2026-10-18T14:38:29+00:00",
+        "checkedAt": "2026-10-18T14:40:32.336548+00:00",
+        "summary": "Eva koos zelf onderzoek, rondde het na technische herstelhulp af, bezorgde het privé en gebruikte de oorspronkelijke brongegevens later correct. Huidige installatie en gebundelde review bevestigd; fouten en hulp blijven vermeld.",
+        "remaining": "Zeven dagen werkelijk gezinsgebruik en jouw oordeel blijven F2.1/F2.2. Spraak bij de andere uitvoerder; optioneel WhatsApp-nummer nog nodig.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-native-resume-installed-20261018.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e51-native-resume-review-20261018.json",
+        "maintenanceRepair": false,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [
+          "E5.1"
+        ],
+        "familyAcceptance": false,
+        "completionScope": "Joint installed operational trial candidate; explicit operator assistance preserved, no long-term autonomy or superiority claim."
+      },
+      {
+        "title": "Te korte antwoordcontrole in huis- en onderzoeksroute hersteld",
+        "state": "installed",
+        "date": "2026-10-18T13:16:25.858224+00:00",
+        "checkedAt": "2026-10-18T13:22:26.084578+00:00",
+        "summary": "Dezelfde verificatiefout in beide bestaande adapters hersteld.38gerichte controles groen; huidige kern/uitvoerder behouden alle bestaande gegevens en bevoegdheden.",
+        "remaining": "Echte zelfstandige afronding, terugkoppeling en vervolg volgen nog.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-read-verification-followthrough-20261018.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e51-read-verification-review-20261018.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "familyAcceptance": false
+      },
+      {
+        "title": "Privécontact en actuele taakcontext aangesloten; autonomie nog open",
+        "state": "installed",
+        "date": "2026-10-18T04:53:01.429522+00:00",
+        "checkedAt": "2026-10-18T05:30:53.459027+00:00",
+        "summary": "Bestaande Telegram-expressie en gespreksovername aangesloten. Eigen afweging gebruikt nu ook actuele brongebonden gewone werkstatus; gesloten werk is geen nieuwe opdracht.",
+        "remaining": "Geen nieuw eigen resultaat of later vervolg na herstel. Onbewezen promptvariant beëindigd; geen claim dat E5.1 af is.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-autonomy-repair-installed-20261018.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e51-autonomy-repair-review-20261018.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "familyAcceptance": false
+      },
+      {
+        "title": "Initiatiefroute hersteld; dagelijkse eigen bijdrage nog open",
+        "state": "installed",
+        "date": "2026-10-18T03:15:26+00:00",
+        "checkedAt": "2026-10-18T03:36:15.504570+00:00",
+        "summary": "De vastgelopen huisbeoordeling is veilig afgesloten. Privé- en huisbeoordelingen zijn afzonderlijk zichtbaar; de initiatiefroute gebruikt nu ook bestaande geleerde privécontext. Eén nieuwe beoordeling liep door, maar koos geen eigen werk.",
+        "result": "Geïnstalleerde routecorrecties, geen extra afgeronde huisgenootfunctie.",
+        "remaining": "E5.1 blijft open tot werkelijk zelfstandig werk, resultaat, aflevering en vervolg aantoonbaar zijn.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-autonomy-repair-installed-20261018.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e51-autonomy-repair-review-20261018.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "familyAcceptance": false
+      },
+      {
+        "title": "Autonomiecontrole · dagelijks zelfstandig resultaat ontbreekt",
+        "state": "incomplete",
+        "checkedAt": "2026-10-18T02:55:51.973301+00:00",
+        "summary": "48uur:17privébeoordelingen,allemaalstilte;0nieuw eigen werk/resultaat/aflevering. Gedeelde huisinitiatiefroute sinds16oktober geblokkeerd door geheugenfout.79geheugenreflecties bewijzen geen nuttig dagelijks vervolg.",
+        "remaining": "Codex herstelt de bestaande route en statusweergave, en maakt werkelijk eigen uitvoering/vervolg aantoonbaar. Geen nieuwe gezinsproef of spraakwerk nodig om deze bevinding te erkennen.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/actual-autonomy-observation-20261018.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/actual-autonomy-observation-review-20261018.json",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "familyAcceptance": false
+      },
+      {
+        "title": "E5.1 · Gezamenlijke geïnstalleerde kandidaat technisch opgeleverd",
+        "state": "incomplete",
+        "checkedAt": "2026-10-18T02:24:39.871399+00:00",
+        "summary": "Eén actuele installatie met E1–E4, gedeelde identiteit en bestaande spraakoverdracht. Bestaand bewijs gebundeld en onafhankelijk beoordeeld; bron-, configuratie-, schema- en dependencybinding gecontroleerd. Geen nieuwe build, herinstallatie of modelproef.",
+        "remaining": "Nieuwe autonomiecontrole heeft een concrete vastloper gevonden. E5.1 is heropend; eerdere technische bron/installbeoordeling blijft als begrensd bewijs behouden.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e51-joint-installed-candidate-20261018.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e51-joint-candidate-review-20261018.json",
+        "maintenanceRepair": false,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "familyAcceptance": false,
+        "completionScope": "Technical joint installed delivery only; no new product capability or fabricated owner acceptance.",
+        "originalCompletedTaskIds": [
+          "E5.1"
+        ],
+        "currentReadinessSupersededBy": "development/evidence/reassessment/actual-autonomy-observation-20261018.json"
+      },
+      {
+        "title": "E4.5 · Eigen softwareverbetering automatisch geïnstalleerd en later gebruikt",
+        "state": "installed",
+        "checkedAt": "2026-10-17T13:23:36.139042+00:00",
+        "summary": "Eva schreef één echte parserverbetering: ontwikkeling19/26→26/26, onafhankelijk51/106→106/106. Automatisch gepubliceerd/geïnstalleerd, gedrag op beide services bevestigd en later in een gewone native taak gebruikt.128 gerichte tests en onafhankelijke review GO; actuele gegevens en ander WSL-werk behouden.",
+        "remaining": "E5.1, gezamenlijk gezinsgebruik en afzonderlijke acceptatie blijven open. Eén vooraf toegelaten klasse bewezen; geen algemene autonomie- of concurrentieclaim.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e45-autonomous-software-improvement-installed-20261017.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e45-autonomous-software-improvement-review-20261017.json",
+        "maintenanceRepair": false,
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E4.5"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "familyAcceptance": false,
+        "completionScope": "One Eva-authored reversible code class through independent quality selection, actual installation, behavior verification and later native use; isolated recovery proof, no family acceptance."
+      },
+      {
+        "title": "E4.4 · Module- en installatiegaten afgewerkt",
+        "state": "installed",
+        "checkedAt": "2026-10-17T12:16:51.042915+00:00",
+        "summary": "Identiteit/schemabronnen compleet verpakt; export hersteld met oorspronkelijke pins. Eén buildbasis voor kern/worker, helper los van acceptatietest en actuele modeldefaults. Kern/worker gezond, bestaande hostoperator live gecontroleerd; gerichte tests en onafhankelijke review akkoord.",
+        "remaining": "E4.5 en gezamenlijke E5-/gezinsacceptatie blijven open. Fotoafhankelijkheid onderbouwd behouden; optioneel WhatsApp wacht op eigen nummer.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e44-module-maintenance-installed-20261017.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e44-module-maintenance-review-20261017.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [
+          "E4.4"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "familyAcceptance": false,
+        "completionScope": "Fixed C10–C12 maintenance and installed/operator boundaries; no new family ability, photo replacement, full optional installation or speech claim."
+      },
+      {
+        "title": "E4.3 · Verliesloze contextvoorbereiding versneld",
+        "state": "installed",
+        "checkedAt": "2026-10-17T11:45:59.861234+00:00",
+        "summary": "Gemeten voorbereiding878→21ms en31→18ms met bytegelijke modelinvoer. Korte context geen winst; geen token-/totale antwoordwinst bewezen. C09-headergrens vóór lezen. Kern/worker gezond geïnstalleerd,145 tests en onafhankelijke review geslaagd.",
+        "remaining": "E4.4/E4.5 en gezamenlijke gezinsacceptatie blijven open. Bestaand portable schemapadprobleem staat concreet bij E4.4.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e43-runtime-efficiency-review-20261017.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [
+          "E4.3"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "familyAcceptance": false,
+        "completionScope": "Measured deterministic preparation and header-read efficiency; no model quality lead, billed saving, whole-archive restore or physical speech claim."
+      },
+      {
+        "title": "E4.2 · Zeven vaste vereenvoudigingsclusters afgewerkt",
+        "state": "installed",
+        "checkedAt": "2026-10-17T11:16:40.392200+00:00",
+        "summary": "Kern en worker bijgewerkt met behoud van gegevens en ander WSL-werk. Type-/bron-/persoonsbewijs, gedeelde configuratie, providergrenzen en modelrollen aangescherpt. Gerichte tests en gebundelde review geslaagd.",
+        "remaining": "E4.3–E4.5 en de gezamenlijke gezinsacceptatie blijven open. Onderhoud is geen nieuwe gezinsfunctie.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e42-module-boundaries-installed-20261017.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e42-module-boundaries-review-20261017.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [
+          "E4.2"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "familyAcceptance": false,
+        "completionScope": "Fixed C02–C08 maintenance; runtime and idle browser bridge installed; host operator entrypoints updated; no fresh installation/restore or physical audio claim."
+      },
+      {
+        "title": "E4.1 · Vaste lijst met dode code afgewerkt",
+        "state": "installed",
+        "checkedAt": "2026-10-17T10:56:30.393935+00:00",
+        "summary": "Alleen bewezen onbereikbare PeopleOverview verwijderd:28 regels, geen volledige bestanden. Werkende personen-/geheugenbediening behouden. Eén build geslaagd; alle6 uitvoerbestanden bytegelijk en HTML/assets gelijk aan de draaiende installatie. Onafhankelijke review GO.",
+        "remaining": "E4.2–E4.5 en gezamenlijke gezinsacceptatie blijven open. Deze onderhoudstaak is geen nieuwe gezinsfunctie.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e41-proven-dead-code-cleanup-20261017.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e41-proven-dead-code-cleanup-review-20261017.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [
+          "E4.1"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "familyAcceptance": false,
+        "completionScope": "Fixed C01/UI-01 source cleanup only; running assets already byte-equivalent, no restart needed."
+      },
+      {
+        "title": "E2.7 · Eva vindt haar eigen geschiedenis samen terug",
+        "state": "installed",
+        "checkedAt": "2026-10-17T10:39:00.807444+00:00",
+        "summary": "Gewone privéchat leest bewaarde gesprekken/toolhandelingen, werk, planning, eigen initiatief/interesses en leerregistraties via dezelfde bestaande route. Tijd, bronherkomst, status, paginering en persoonsgrenzen behouden.42 gerichte routecontroles en echte opgeslagen chat geslaagd; onafhankelijke review GO.",
+        "remaining": "Antwoord duurde ongeveer25s met42.952 invoertokens; gerichte efficiëntie volgt binnen bestaande E4.3. Gezinsacceptatie blijft apart; optioneel WhatsApp wacht op eigen nummer.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/e27-own-activity-history-installed-20261017.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e27-own-activity-history-review-20261017.json",
+        "maintenanceRepair": false,
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E2.7"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "familyAcceptance": false,
+        "completionScope": "Installed private text history composition; not whole-project or family acceptance."
+      },
+      {
+        "title": "Initiatiefbeoordeling hervat; oude blokkade opgelost",
+        "state": "installed",
+        "checkedAt": "2026-10-17T10:08:30.732228+00:00",
+        "summary": "Oude vastgelopen beoordeling via bestaande herstelroute afgesloten; onbekend verbruik behouden, niets herhaald. Daarna heeft Eva zelf een nieuwe gewone afweging afgerond en bewust stilte gekozen. Geen spraak- of codewijziging.",
+        "remaining": "Dit bewijst hervatte afweging, geen nieuwe nuttige bijdrage of gezinsacceptatie. E2.7 en de bestaande E4-correcties blijven open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/initiative-review-recovery-20261017.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/initiative-review-recovery-20261017.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "smallTaskCountsUnchanged": true,
+        "familyAcceptance": false,
+        "completionScope": "Operational recovery of one failed review; ordinary autonomous evaluation resumed. No software installation was needed."
+      },
+      {
+        "title": "E3.4 · Tests, documenten en historie beoordeeld; E3 afgerond",
+        "state": "investigated",
+        "checkedAt": "2026-10-17T10:01:27.869694+00:00",
+        "summary": "E3.4 afgerond: alle3.733 overige paden hebben een gemotiveerde review-/referentiebeschikking; E3 totaal4.896. E3.2/E3.3 exact hergebruikt. Vier documentatieverwarringen opgelost, drie oorspronkelijke versies exact bewaard. Twaalf correctieclusters uit bestaande bevindingen; geen nieuwe producttaken of proeven. Beide reviewers GO.",
+        "remaining": "De twaalf bestaande correctieclusters zijn nog niet uitgevoerd. E2.7 is volgende; gezamenlijke gezinsacceptatie blijft open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e34-tests-docs-history-review-20261017.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e34-tests-docs-history-review-20261017.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [
+          "E3.4"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "familyAcceptance": false,
+        "completionScope": "Review/dispositions and documentation authority; no runtime repair or household acceptance."
+      },
+      {
+        "title": "E3.3 · Adapters en installatie beoordeeld",
+        "state": "investigated",
+        "checkedAt": "2026-10-17T09:32:44.849948+00:00",
+        "summary": "E3.3 afgerond: 1.027 paden met gecontroleerde lees-/consumerbeschikking;470 volledige lezingen,53+1hybride operatorclosure en expliciete dynamische helpergrens. E3.2 exact hergebruikt. Foto-provider tijdelijk onderbouwd behouden; Eva1-agent blijft gestopt. Beide onafhankelijke reviews GO. Geen product- of spraakcode gewijzigd.",
+        "remaining": "E3.4 volgt; de vastgelegde E4-correcties zijn nog niet uitgevoerd. Deze review is geen nieuwe gezinsfunctie of volledige productacceptatie.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e33-adapters-installation-review-20261017.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e33-adapters-installation-review-20261017.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [
+          "E3.3"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "familyAcceptance": false,
+        "completionScope": "Versioned adapter/operator/frontend/build/migration review; source implementation and family acceptance remain separate."
+      },
+      {
+        "title": "E3.2 · Actieve kerncode inhoudelijk beoordeeld",
+        "state": "investigated",
+        "checkedAt": "2026-10-16T23:26:42.505625+00:00",
+        "summary": "136 van 136 kernbestanden inhoudelijk beoordeeld met exacte hashes, rollen, echte consumers en behoud-/vereenvoudigingsbesluiten. Negen eindige besluiten binnen bestaande E4-kaarten; geen nieuwe productfunctie of codewijziging.",
+        "remaining": "De negen vastgelegde vereenvoudigingsbesluiten zijn nog niet uitgevoerd; ze horen bij de bestaande E4-kaarten. E3.3/E3.4 en gezinsacceptatie blijven open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e32-core-review-20261017.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/e32-core-review-20261017.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [
+          "E3.2"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "familyAcceptance": false,
+        "completionScope": "136-file semantic core review only; source quality and household behavior not automatically accepted."
+      },
+      {
+        "title": "E3.1 · Alle bestanden en hun rol geregistreerd",
+        "state": "investigated",
+        "checkedAt": "2026-10-16T23:06:04.003274+00:00",
+        "summary": "E3.1 afgerond:4.896 paden geregistreerd met bronstand, hash of expliciete uitsluiting, categorie, rol en lees-/reviewstatus. Alle4.789 tracked paden zijn aanwezig;447 exacte eerdere lezingen hergebruikt. Dit is registratie, geen inhoudelijke codekwaliteitsschouw.",
+        "remaining": "",
+        "source": "/home/administrator/project/Eva2/development/evidence/reassessment/e31-file-register-20261017.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [
+          "E3.1"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "familyAcceptance": false,
+        "completionScope": "File registration only; E3.2–E3.4 semantic review and cleanup remain separate."
+      },
+      {
+        "title": "E2.6 · WhatsApp-beltransport geïnstalleerd; eigen Eva-nummer nog nodig",
+        "state": "installed",
+        "checkedAt": "2026-10-16T21:04:23.438825+00:00",
+        "summary": "Livebeltransport geïnstalleerd: één apart WhatsApp-account voor Eva, tekst en bellen via haar bestaande kern/spraakdienst. Werkelijke spraakdienst is bereikbaar; geen eigen Eva-nummer of account gekoppeld, dus nog geen echte WhatsApp-oproep bewezen.",
+        "remaining": "Eigen Eva-nummer/account regelen; vervolgens koppelen via Verbindingen en één echte inkomende belproef plus oorspronkelijke tekstterugmelding controleren.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/e26-whatsapp-calling-installed-20261016.json",
+        "maintenanceRepair": false,
+        "newProductFunctionCompleted": false,
+        "smallTaskCountsUnchanged": true,
+        "familyAcceptance": false,
+        "completionScope": "Installed optional live-call transport and existing-voice interface. No actual WhatsApp account/call evidence."
+      },
+      {
+        "title": "Voice · Eigen activiteiten en hoorbare tussenreacties",
+        "state": "installed",
+        "checkedAt": "2026-10-16T17:37:04.612829+00:00",
+        "summary": "Kern-tussenreacties klinken tijdens verder werken; alleen spreken veroorzaakt geen modelescalatie. Eén opvraag combineert directe openbare handelingen met de bestaande taaklijst.173 controles en geïnstalleerde tweebeurtenspraakproef geslaagd.",
+        "remaining": "Dagvraag circa25s in één proef; geen volledige privé-/initiatiefdaghistorie. Fysieke natuurlijkheid door eigenaar beoordelen.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/activity-and-updates-20261016.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "smallTaskCountsUnchanged": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E2.6 · WhatsApp en spraakberichten geïnstalleerd; QR-koppeling open",
+        "state": "installed",
+        "checkedAt": "2026-10-16T17:36:14.550321+00:00",
+        "summary": "WhatsApp-adapter en bediening geïnstalleerd en gezond. QR-koppeling staat klaar; dezelfde Eva-kern, oorspronkelijke berichtbinding en optionele spraakberichten aangesloten. Echt WhatsApp-gebruik is nog niet bevestigd.",
+        "remaining": "Eigenaar verduidelijkt: live WhatsApp-bellen met eigen Eva-account is vereist. De geïnstalleerde berichtenadapter voldoet daar niet aan. Persoonlijke QR-aanmelding uitgezet; E2.6 blijft open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/e26-whatsapp-installed-20261016.json",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": false,
+        "familyAcceptance": false,
+        "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=connections"
+      },
+      {
+        "title": "Voice · Eén gesprekskern voor heel Eva",
+        "state": "installed",
+        "checkedAt": "2026-10-16T16:36:26.607754+00:00",
+        "summary": "Alle gesproken beurten via dezelfde Eva-kern; luisteraudio kan niet naar de speaker.93 tests; vierbeurtengesprek met correctie, onderbreken en afscheid geslaagd. Beide bestaande spraakingangen geïnstalleerd.",
+        "remaining": "Natuurlijkheid en fysieke audio door eigenaar beoordelen; kernwachttijd blijft merkbaar. Geen volledig daglogboek geclaimd.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/single-core-20261016.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "smallTaskCountsUnchanged": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E2.5 · Optionele modelproviders aangesloten en bedienbaar",
+        "state": "installed",
+        "checkedAt": "2026-10-16T16:23:00.574395+00:00",
+        "summary": "E2.5 geïnstalleerd: optioneel Claude/Anthropic of een OpenAI-compatibele API toevoegen, met eigen API-sleutel controleren, kiezen en uitschakelen. Privétekst op website/Telegram behoudt dezelfde Eva, geheugen en acties. De bestaande route blijft gekozen; externe accounts zijn nog niet verbonden.",
+        "remaining": "E2.5-adapter en bediening technisch afgerond. Werkelijke externe toegang vereist een eigen API-sleutel en expliciete controle; geen verplichte eigenaarhandeling of betaald gebruik gestart. Achtergrondwerk/initiatief en spraak behouden hun bestaande routes. E2.6 en eindacceptatie blijven open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/e25-optional-models-installed-20261016.json",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E2.5"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "maintenanceRepair": false,
+        "familyAcceptance": false,
+        "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=connections",
+        "completionScope": "E2.5 optional private-text model adapters/control; no external account access claimed"
+      },
+      {
+        "title": "Voice · Eén Eva en gedateerde taakcontext",
+        "state": "installed",
+        "checkedAt": "2026-10-16T14:12:01.640094+00:00",
+        "summary": "Eerste-persoon stem; interne overdracht niet uitspreken, geen vaste wachtreacties. Taaktijden behouden en taaklijst-uitleg hersteld.56 tests; geïnstalleerde bronnen gecontroleerd.",
+        "remaining": "Natuurlijkheid nog beoordelen. Begrensde geschiedenis is geen volledig daglogboek; oorspronkelijke uitvoering ontbreekt soms in gesprekscontext.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/persona-20261016.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "smallTaskCountsUnchanged": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E2.4 · Initiatief en leren zichtbaar; actuele werkvoorraad gescheiden",
+        "state": "installed",
+        "checkedAt": "2026-10-16T13:33:11.133399+00:00",
+        "summary": "E2.4 geïnstalleerd en onafhankelijk technisch afgerond: initiatiefreden, korte bijdrage, echte feedback, reflecties en verbeterstappen samen zichtbaar. Voorstel, beoordeling, referentiebehoud en bevestigde toepassing zijn afzonderlijk gelabeld. Werkpagina telt alle eigen opdrachten vóór de selectielimiet: nu 0 open en 182 afgesloten pogingen; fouten blijven fouten.",
+        "remaining": "E2.4-bediening afgerond; ontbrekend per-bijdrage later gedragsbewijs blijft expliciet onbekend. Extra providers E2.5, WhatsApp E2.6 en eindacceptatie blijven open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/e24-initiative-learning-installed-20261016.json",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E2.4"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "maintenanceRepair": false,
+        "familyAcceptance": false,
+        "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
+        "completionScope": "E2.4 presentation and actual open-work/history clarification"
+      },
+      {
+        "title": "Voice · Opstartstilte, afscheid en dagcontext",
+        "state": "installed",
+        "checkedAt": "2026-10-16T13:20:06.079193+00:00",
+        "summary": "100ms opstartstilte; dankje doei herkend; afscheid wacht niet op al voltooide audio. Oorspronkelijke berichttijden behouden zodat Eva vandaag kan onderscheiden.159 tests geslaagd.",
+        "remaining": "Hoorbare herproef nodig; dagcontext blijft een begrensde selectie.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/followup-20261016.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "smallTaskCountsUnchanged": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E2.3 · Gesprekken, opdrachten en resultaten verbonden",
+        "state": "installed",
+        "checkedAt": "2026-10-16T12:49:32.967702+00:00",
+        "summary": "E2.3 geïnstalleerd en onafhankelijk afgerond: het privégesprek toont zijn eigen opdrachten; een werklink opent echte voortgang, opgeslagen resultaat en beschikbare exacte gespreksbron. Stoppen/hervatten via bestaande bediening. Korte terugmelding; volledig resultaat alleen op verzoek.",
+        "remaining": "E2.3-bediening afgerond. Oude websiteopdrachten zonder exacte bronbinding blijven eerlijk onbekend; E2.4–E2.6 en finale gezinsacceptatie blijven open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/e23-conversation-work-installed-20261016.json",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E2.3"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "maintenanceRepair": false,
+        "familyAcceptance": false,
+        "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard/conversation",
+        "completionScope": "E2.3 conversation/work/result presentation only"
+      },
+      {
+        "title": "Voice · Overgang luisteren naar antwoorden gerepareerd",
+        "state": "installed",
+        "checkedAt": "2026-10-16T12:35:07.928035+00:00",
+        "summary": "Gesprekslogs tonen tot680ms weggegooide spraak vóór het vertraagde startbericht. Gewoon luisteren blokkeert die audio nu niet meer; onderbreken en STOP blijven behouden.41 tests geslaagd; beide bindings gereed.",
+        "remaining": "Eigenaar meldde eerdere reparatie onvoldoende. Nieuwe hoorbare gespreksproef nodig; niet als geaccepteerd gemarkeerd.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/turn-gate-20261016.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "smallTaskCountsUnchanged": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "Voice · Geheugen, snelheid en audiobegin hersteld",
+        "state": "installed",
+        "checkedAt": "2026-10-16T11:43:33.901391+00:00",
+        "summary": "GPU-afhankelijkheid geheugen verwijderd. Inventaris19,3s tegenover55,8s; korte vervolgvraag5,6s. Zacht audiobegin behouden;109 gerichte tests geslaagd. Beide speakeraansluitingen gereed.",
+        "remaining": "Hoorbare speakerproef eigenaar open. Gelijktijdige geheugenopvragen8,5–10,5s; geen algemene claim van directe respons.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/reliability-20261016.json",
+        "maintenanceRepair": true,
+        "newProductFunctionCompleted": false,
+        "smallTaskCountsUnchanged": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E2.2 · Personen en geheugen bedienen geïnstalleerd",
+        "state": "installed",
+        "checkedAt": "2026-10-16T11:28:21.773727+00:00",
+        "summary": "E2.2 geïnstalleerd en onafhankelijk afgerond: eigen namen/onderwerpen en herinneringen zoeken, exact bronbewijs zien, bron en afleiding onderscheiden, huidige herziening bekijken, corrigeren en gericht vergeten. Bestaande opslag; privégegevens blijven bij de juiste persoon.",
+        "remaining": "E2.2-bediening afgerond; namen zijn een relevante selectie, geen uitputtende personenlijst. E2.3–E2.6 en finale gezinsacceptatie blijven open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/e22-owner-memory-installed-20261016.json",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E2.2"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "maintenanceRepair": false,
+        "familyAcceptance": false,
+        "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=memory",
+        "completionScope": "E2.2 own people/memory controls only"
+      },
+      {
+        "title": "Voice · Opgeslagen gegevens lokaal uitlezen",
+        "state": "installed",
+        "checkedAt": "2026-10-16T11:04:34.933091+00:00",
+        "summary": "Gedeelde spraak leest nu eigen opgeslagen gegevens zonder extra connectorrechten. Drie bronpagina’s en vijf lokale leesstappen geverifieerd; geen dubbele bronaanvragen. Onnodige modelwissel verwijderd: 56 versus 87 seconden in afzonderlijke synthetische proeven. 129 tests geslaagd.",
+        "remaining": "56 seconden blijft te lang; geen algemene snelheidsclaim of fysieke spraakacceptatie. GPU-geheugenfout en soms ontbrekende eerste woorden blijven open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/local-reader-20261016.json",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "Voice · Vervolgpagina’s van huisinventaris hersteld",
+        "state": "installed",
+        "checkedAt": "2026-10-16T10:47:37.028678+00:00",
+        "summary": "Broncursor blijft behouden naast de opgeslagen preview. Pagina’s 50 en 100 werkelijk opgehaald; 60 gerichte tests geslaagd; kern/werker gezond en beide speakerbindings gereed.",
+        "remaining": "Geen snelheidswinst bewezen: kandidaatantwoord 54 seconden met herhaalstappen. Terugkerende CUDA-geheugenfout en ontbrekende eerste woorden blijven open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/inventory-cursor-20261016.json",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E2.1 · Eén Eva-beheeromgeving geïnstalleerd",
+        "state": "installed",
+        "checkedAt": "2026-10-16T10:44:14.870759+00:00",
+        "summary": "Geïnstalleerd en onafhankelijk afgerond: één Eva-beheeromgeving met zes secties en echte bestaande backenddata. Gesprek opent de bestaande privéroute; geheugen, opdrachten, initiatief en verbindingsstatus zijn afzonderlijk bereikbaar. Projectbord blijft apart. Geen extra provider of volledige leerhistorie geclaimd.",
+        "remaining": "E2.1-navigatie afgerond; uitgebreidere persoons-/geheugenbediening, samenhangende werkstroom, leerhistorie en extra verbindingen blijven E2.2–E2.6.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/e21-owner-navigation-installed-20261016.json",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E2.1"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "maintenanceRepair": false,
+        "familyAcceptance": false,
+        "userUrl": "http://127.0.0.1:44711/internal/v1/dashboard",
+        "completionScope": "E2.1 product navigation only"
+      },
+      {
+        "title": "I1.2 · Ongevraagde berichten wachten tijdens gesprek en nachtrust",
+        "state": "installed",
+        "checkedAt": "2026-10-15T22:10:53.727800+00:00",
+        "summary": "Geïnstalleerd en onafhankelijk afgerond: ongevraagde huisberichten wachten tijdens lopend voorgrondgesprek en nachtrust. Ook het gat na de laatste broncontrole is dicht. Echte eerdere timing-/hinderfeedback blijft behouden; inhoud was niet nuttig voor deze eigenaar. Geen werkelijk slapend/druk gezin of algemene gezinsacceptatie bewezen.",
+        "remaining": "Herhaald spontaan gezinsnut en volledige gezinsacceptatie blijven open. Volgende bouwtaak: één Eva-beheeromgeving E2.1. Geen handeling van Jaap nodig.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/i12-quiet-attention-installed-20261016.json",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "I1.2"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "maintenanceRepair": false,
+        "familyAcceptance": false,
+        "completionScope": "I1.2 technical with retained genuine owner feedback"
+      },
+      {
+        "title": "Voice na computerherstart weer verbonden",
+        "state": "installed",
+        "checkedAt": "2026-10-15T22:09:08.164117+00:00",
+        "summary": "Verouderde gateway- en browserpaden hersteld. Kern en werker gezond; beide speakerbindings bereikbaar. Twee synthetische zinnen gaven audio na 0,97 en 0,83 seconde. Geen fysieke luisterproef of totale antwoordtijdmeting.",
+        "remaining": "Totale gesprekslatency en soms ontbrekende eerste woorden blijven open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/subscription-voice-20261013/reboot-recovery-20261016.json",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E1.3 · Eigen bijdrage uitgevoerd en privé afgeleverd",
+        "state": "installed",
+        "checkedAt": "2026-10-15T15:07:43.006284+00:00",
+        "summary": "Afgerond en onafhankelijk goedgekeurd: Eva koos zelf nieuw werk, las echte huisgegevens, bewaarde het resultaat met aparte bewezen teruglezing en leverde het privé af. Gestimuleerde start, onbekend nut en twee onnauwkeurigheden in haar tekst blijven zichtbaar. Eerste mislukte poging blijft mislukt.",
+        "remaining": "I1.2: passendheid, stilte bij drukte/slapen en herhaald gezinsnut blijven open. Geen extra handeling van Jaap nodig. De onnauwkeurige lees-/tijdtekst staat expliciet bij de bestaande codebeoordeling.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/e13-native-initiative-result-20261015.json",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E1.3"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "maintenanceRepair": false,
+        "familyAcceptance": false,
+        "completionScope": "E1.3 only"
+      },
+      {
+        "title": "E1.2 · Zelf volgende aandacht kiezen, bewaren en hervatten",
+        "state": "installed",
+        "checkedAt": "2026-10-15T11:06:18.134166+00:00",
+        "summary": "Afgerond en onafhankelijk goedgekeurd. Eva koos zelf een later moment met reden, bewaarde dat en pakte dezelfde aandacht na onderbreking één keer op. Tijdens voorgrondgebruik geen extra modelaanvraag. Twee echte Astra-besluiten, 5.092 tokens; technische proef met logisch versnelde tijd in een tijdelijke database.",
+        "remaining": "Dagelijkse spontane gezinswaarde E1.3 en aandacht/stilte I1.2 blijven afzonderlijk open. Geen productiecrash- of echte gezinsproef geclaimd.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/e12-next-attention-outcome-20261015.json",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E1.2"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "E1.1 · Actuele bronnen zelfstandig raadplegen en inhoudelijk gebruiken",
+        "state": "installed",
+        "checkedAt": "2026-10-15T10:27:29.953637+00:00",
+        "summary": "Afgerond en onafhankelijk goedgekeurd. Eva koos zelf een informatiegat, las via de bestaande uitvoerder en gebruikte de bewaarde inhoud in haar volgende gewone afweging. Zij benoemde een concrete bevinding en waarom de afgekorte bron de vraag niet volledig beantwoordde. Geen herhaling van het onderzoek.",
+        "remaining": "Volgende aandacht E1.2, dagelijkse bijdrage E1.3 en gezinsacceptatie blijven aparte open voorwaarden. De eerdere volledige onderzoekstaak blijft mislukt/onzeker.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/e11-semantic-source-use-outcome-20261015.json",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "E1.1"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "Eigen bronlezingen terug in de juiste afweging; E1.1 inhoudelijk nog open",
+        "state": "installed",
+        "checkedAt": "2026-10-15T09:28:50.177255+00:00",
+        "summary": "Vier echte bronlezingen zijn privé en zonder herlezing teruggegeven aan exact de juiste vervolgafweging. Dat deel is geïnstalleerd en onafhankelijk goedgekeurd. De inhoudelijke bronvraag is in het besluit niet beantwoord; geen volledige E1.1-afronding.",
+        "remaining": "Use a verified substantive finding about the self-chosen source question in the next decision, or explicitly state why the retained pages cannot answer that question. The source-context hash alone does not prove substantive use.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/e1-current-source-initiative-outcome-20261015.json",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "Afrondingsplan zichtbaar als 18 concrete taakkaarten",
+        "state": "installed",
+        "checkedAt": "2026-10-15T08:04:45.907226+00:00",
+        "summary": "Taken per onderdeel toont de afgesproken E1–E5-kaarten met bestaande werking, tekort, eindvoorwaarde, volgorde en instructies. Nieuwe kaarten staan bovenaan; standaard alleen open werk. 45 bestaande afrondingen behouden, totaal 25 open taken (7 eerder + 18 planwerk). Browsercontrole geslaagd.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/finalization-task-visibility-20261015.json",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": false,
+        "maintenanceRepair": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "Algemene huiswaarneming naar Eva’s eigen afweging aangesloten",
+        "state": "installed",
+        "checkedAt": "2026-10-15T07:49:43.442557+00:00",
+        "summary": "Algemene gedeelde verbinding geïnstalleerd en werkelijk gebruikt: één Astra-afweging over twee behouden huiswaarnemingen koos stilte (5.312 tokens). Geen aparte voorbeeldfunctie; spreken/native werk via bestaande routes aangesloten. Nog geen nuttige/hoorbare nieuwe bijdrage of volledige I1.2-afronding. Goal en MD-aansturing geconsolideerd; eindfase voor volledige bestandsbeoordeling, vereenvoudiging, efficiëntie en onderhoud uitgewerkt.",
+        "remaining": "Actuele bronnen en modelgekozen vervolg-aandacht; hoorbare/nuttige dagelijkse bijdrage en I1.2 nog open. De vaste hostbundeling gebruikt nu 300 seconden; geen onmiddellijke deurbelgarantie.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/general-household-initiative-installed-20261015.json",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "Eigen initiatief gebruikt nu tijd, huiswaarnemingen en eigen verplichtingen",
+        "state": "installed",
+        "checkedAt": "2026-10-14T11:00:28.499282+00:00",
+        "summary": "Geïnstalleerd en gewoon gebruikt: rustige initiatiefafweging verbindt nu tijd, recente huiswaarnemingen en eigen opgeslagen verplichtingen met gericht geheugen. Op 14 oktober 12:53 besloot Eva zelf stil te blijven na acht waarnemingen en drie eigen verplichtingen; één Astra-aanvraag, 4.854 geregistreerde tokens. Geen nieuwe bijdrage, aflevering of I1.2-afronding. Actuele service-/agendagegevens zelfstandig raadplegen en passend tijdig opnieuw kijken blijven nodig; geen voorbeeldfuncties.",
+        "remaining": "Algemeen dagelijks meedenken verder afmaken: actuele bronnen zelf raadplegen en relevante situaties tijdig opnieuw beoordelen. De verbinding is geleverd; nuttig dagelijks handelen en I1.2 zijn nog niet volledig bewezen.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/daily-life-context-installed-20261014.json",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "Opleveringen tonen weer datum, resultaat en juiste afronding",
+        "state": "installed",
+        "checkedAt": "2026-10-14T10:13:59.960454+00:00",
+        "summary": "De resultatenlijst leest ook checkedAt en summary van recente opleveringen. Lege koppen Nog open worden weggelaten; afgeronde HUE-taken tonen Afgerond · geïnstalleerd en hun eigen taak-ID. Eventueel apart vervolgwerk blijft onderscheiden. Historische inhoud, taakstatus en aantallen zijn behouden. Projectbuild geslaagd; de lokale server levert de nieuwe bundel.",
+        "source": "/home/administrator/project/Eva2/development/tools/project-dashboard/src/project-dashboard.jsx",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "Eva2-autonomie hervat; Eva1 gestopt",
+        "state": "installed",
+        "summary": "Eva1 gestopt en uitgeschakeld voor herstart. Eva2 heeft zelfstandige Telegrambediening. De echte gewone initiatiefcyclus is hervat: op 14 oktober 11:49 besloot Eva zonder handmatige vraag bewust stil te blijven; één Astra-aanvraag, 4.599 geregistreerde tokens. Oude UNKNOWN behouden. Reflectieachterstand houdt initiatief niet meer op; kern en werker gebruiken weer hetzelfde toegelaten uitvoerprofiel. Nog geen nieuwe nuttige bijdrage of volledige aanwezigheid bewezen. Vervolg I1.2: aandacht/stilte bij echte drukte of slapen controleren; geen extra eigenaarvraag, spraakbouw of vergelijkingsserie.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/autonomous-household-availability-20261014.json",
+        "checkedAt": "2026-10-14T09:56:19.700892+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "HUE5 · Eigen bijdrage echt via Telegram afgeleverd",
+        "state": "installed",
+        "summary": "Bestaande zelfgekozen bijdrage gecontroleerd, geregistreerd en kort privé afgeleverd. Geen herhaalde creatie. Nut en later feedbackgebruik nog open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/hue5-completed-contribution-outcome-20261014.json",
+        "checkedAt": "2026-10-14T05:32:32.004913+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": false,
+        "familyAcceptance": false
+      },
+      {
+        "title": "HUE5 · Dezelfde identiteit bij eigen initiatief",
+        "state": "installed",
+        "summary": "Bestaande identiteit en principes aangesloten op de gewone initiatiefbeslissing. Gespreksgedrag behouden; nuttige aflevering en later feedbackgebruik blijven open. Geen nieuwe taak afgerond.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/hue5-identity-context-outcome-20261014.json",
+        "checkedAt": "2026-10-14T04:07:09.539839+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "HUE5 · Eigenaarsgeheugen in initiatiefroute hersteld",
+        "state": "installed",
+        "summary": "Gerichte herstelcorrectie geïnstalleerd. Zelfgekozen nuttige bijdrage en later feedbackgebruik nog open; geen nieuwe taak afgerond.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/hue5-owner-context-outcome-20261014.json",
+        "checkedAt": "2026-10-14T03:33:49.764137+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": true,
+        "familyAcceptance": false
+      },
+      {
+        "title": "HUE6.1 · Droomcyclus technisch afgerond",
+        "state": "installed",
+        "summary": "HUE6.1 technisch afgerond: gewone rustige reflectie maakte een gegronde stijlspiegel uit twee feiten; die werd gebruikt in een nieuw gesprek met een vriendelijk antwoord van 37 woorden zonder genummerde lijst. Agentvarianten eindigden gelijk: referentie terecht behouden en later gebruikt. Bestaande onafhankelijke codewinst/toepassing/later gebruik blijven bewezen. Geen algemene voorsprong of gezinsacceptatie geclaimd.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/hue6-quiet-learning-outcome-20261014.json",
+        "checkedAt": "2026-10-14T03:14:08.630849+00:00",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "HUE6.1"
+        ],
+        "smallTaskCountsUnchanged": false,
+        "maintenanceRepair": false,
+        "familyAcceptance": false,
+        "completionScope": "HUE6.1 only"
+      },
+      {
+        "title": "Initiatiefmandaat op draaiende uitvoering aangesloten",
+        "state": "installed",
+        "summary": "Bestaande toekomstige deadline 5→20 minuten toegelaten volgens eigenaarinstructie; overige grantvelden gelijk. Geen oude taak herhaald of nieuwe handmatige modelaanvraag. Nuttig initiatief blijft open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/initiative-runtime-binding-repaired-20261013.json",
+        "checkedAt": "2026-10-13T19:29:49.727924+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": true
+      },
+      {
+        "title": "Blokkade voor rustig eigen initiatief verwijderd",
+        "state": "installed",
+        "summary": "Achtergebleven AIDE-kindtaak eenmalig eerlijk afgesloten; nul nieuwe modelaanvragen. Nuttige aflevering en leren blijven open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/initiative-idle-blocker-repaired-20261013.json",
+        "checkedAt": "2026-10-13T19:16:18.637750+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "maintenanceRepair": true
+      },
+      {
+        "title": "Volledig opgeslagen resultaat werkelijk geleverd",
+        "state": "installed",
+        "summary": "Volledig bewaard voorstel geleverd bij de oorspronkelijke Telegramvraag; alle bestandbytes teruggelezen en gelijk. Korte samenvatting blijft standaard. Geen automatische bijlagen.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/full-saved-result-delivery-installed-20261013.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/full-saved-result-delivery-final-review-20261013.json",
+        "checkedAt": "2026-10-13T13:40:45.278382+00:00",
+        "newProductFunctionCompleted": false,
+        "completedTaskIds": [],
+        "smallTaskCountsUnchanged": true,
+        "documentDeliveryConfirmed": true,
+        "attachmentDefault": "none",
+        "ownerRead": "unknown"
+      },
+      {
+        "title": "Eva’s voorstelsamenvatting automatisch teruggestuurd",
+        "state": "installed",
+        "summary": "Telegram bevestigt de inhoudelijke samenvatting en akkoordvraag op het oorspronkelijke bericht. Volledig voorstel opgeslagen; bijlage of bruikbare documentlink nog niet aangetoond.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/original-proposal-telegram-return-installed-20261013.json",
+        "checkedAt": "2026-10-13T06:22:26.217280+00:00",
+        "newProductFunctionCompleted": false,
+        "maintenanceRepair": true,
+        "completedTaskIds": [],
+        "installationDispatches": 1
+      },
+      {
+        "title": "Eva gebruikt patronen én eerdere feedback bij een nieuw onderwerp",
+        "state": "installed",
+        "summary": "HUE2.1/HUE4.1 afgerond: meerdere ervaringen met tegenbewijs, herkenbare bronduiding en aangepaste hulp. Onafhankelijke PASS,15 complete aanvragen/56.164 tokens/2 acties.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/hue-pattern-social-later-use-installed-20261013.json",
+        "checkedAt": "2026-10-13T05:25:34.369802+00:00",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "HUE2.1",
+          "HUE4.1"
+        ],
+        "installationDispatches": 1
+      },
+      {
+        "title": "Eva past mensbegrip toe na tegenbewijs en een echte uitkomst",
+        "state": "installed",
+        "summary": "HUE1.1 en HUE3.1 afgerond: de geïnstalleerde leerroute gebruikt de bijgestelde ervaring in een nieuw gesprek. Onafhankelijke PASS;16 complete aanvragen,58.874 tokens,4 acties.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/hue-learning-later-use-result-20261013.json",
+        "checkedAt": "2026-10-13T04:45:29.187509+00:00",
+        "newProductFunctionCompleted": true,
+        "completedTaskIds": [
+          "HUE1.1",
+          "HUE3.1"
+        ],
+        "reinstalled": false
+      },
+      {
+        "title": "Eva levert haar eigen migratievoorstel op en sluit de opdracht af",
+        "state": "installed",
+        "summary": "Algemene afronding hersteld en echt gebruikt: voorstel inhoudelijk PASS, native opdracht succeeded, één aanvraag/53.042 tokens/0 nieuwe tools. Geen HA-wijziging; automatische Telegramlevering niet gebonden.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/same-execution-completion-ordinary-result-20261013.json",
+        "checkedAt": "2026-10-13T04:17:30.073932+00:00",
+        "newProductFunctionCompleted": false,
+        "nativeState": "succeeded",
+        "contentVerdict": "PASS",
+        "nativeVerified": false,
+        "deliveryState": "unbound"
+      },
+      {
+        "title": "Herstelcontext en actuele afronding in algemene uitvoerder gescheiden",
+        "state": "installed",
+        "summary": "Oude mislukte selecties blijven bewaard en modelzichtbaar; ze blokkeren het huidige geverifieerde resultaat niet meer. Gen25 afsluiting loopt.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/restored-context-evidence-installed-20261013.json",
+        "checkedAt": "2026-10-13T03:50:23.666386+00:00",
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "Gerichte eindcontrole in algemene taakroute geïnstalleerd",
+        "state": "installed",
+        "summary": "Eva krijgt bij ontbrekend actueel bewijs een gerichte controle-opdracht; bestaand resultaat blijft behouden. Gen24 eigen afronding loopt.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/current-result-verification-installed-20261013.json",
+        "checkedAt": "2026-10-13T03:31:19.336859+00:00",
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "Eigen voorstel werkelijk teruggelezen; vervolg nog onvoltooid",
+        "state": "incomplete",
+        "summary": "5 gemeten aanvragen/277.947 tokens. Opnieuw lokale invoerfout; geen nieuwe documentwrite of eindresultaat.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/post-write-context-ordinary-result-20261013.json",
+        "checkedAt": "2026-10-13T01:36:35.823386+00:00",
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "Gerichte contextcorrectie na documentwrite geïnstalleerd",
+        "state": "installed",
+        "summary": "Bestaande gegevens en kern behouden. Oorspronkelijk voorstel wordt door Eva zelf afgerond; geen groene hoofdfunctie geclaimd.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/post-write-context-installed-20261013.json",
+        "checkedAt": "2026-10-13T01:24:01.971919+00:00",
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "Eva heeft het oorspronkelijke voorstel zelf bijgewerkt",
+        "state": "incomplete",
+        "summary": "Nieuwe inhoud duurzaam opgeslagen. Contextfout vóór vervolgcall; onafhankelijke eindreview nog INCOMPLETE. Geen volledige functie afgerond.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/result-directed-work-ordinary-result-20261013.json",
+        "checkedAt": "2026-10-13T01:16:50.082462+00:00",
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "Algemene resultaatgerichte werkstrategie geïnstalleerd",
+        "state": "installed",
+        "summary": "Eva krijgt prioriteit om beschikbare bevindingen in het gevraagde document te verwerken. Werkelijke taakafronding nog open.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/result-directed-work-strategy-installed-20261013.json",
+        "checkedAt": "2026-10-13T01:03:23.746179+00:00",
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "Eigen voorstel opnieuw niet afgemaakt",
+        "state": "failed",
+        "summary": "27 aanvragen en 26 tools; beschikbare bevindingen niet in het document verwerkt. Geen functieafronding.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/working-source-sections-ordinary-result-20261013.json",
+        "review": "/home/administrator/project/Eva2/development/reviews/working-source-sections-ordinary-result-review-20261013.json",
+        "checkedAt": "2026-10-13T01:00:54.420608+00:00",
+        "newProductFunctionCompleted": false
+      },
+      {
+        "title": "Algemene bronselectiecorrectie geïnstalleerd",
+        "state": "installed",
+        "summary": "Recente passages worden afzonderlijk behouden. Voorstelafronding nog niet bevestigd.",
+        "source": "/home/administrator/project/Eva2/development/evidence/product/working-source-sections-installed-20261013.json",
+        "checkedAt": "2026-10-13T00:39:24.134017+00:00",
+        "newProductFunctionCompleted": false
+      }
+    ],
+    "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
+    "lastCompletedResult": {
+      "title": "Eerdere completionclaim ingetrokken: eigenaaropdracht blijft open",
+      "state": "reopened_owner_goal_not_completed",
+      "summary": "Het korte voorstel was afgeleverd, maar leverde volgens de eigenaar nog niets bruikbaars op.",
+      "remaining": "Zoek de eerder gemaakte koppeling en beschikbare toegang terug, controleer exacte laatste actie-/foutreceipts en hervat de volledige eigenaarbedoeling zonder onbekende effecten te herhalen. Tester beoordeelt bruikbare uitkomst, geen succes uit alleen afgeleverd bericht.",
+      "source": "development/evidence/product/owner-command-completion-correction-20261024.json",
+      "checkedAt": "2026-10-24T11:02:18.567187+00:00",
+      "completedTaskIds": [],
+      "newProductFunctionCompleted": false,
+      "ownerAcceptance": false,
+      "familyAcceptance": false
+    },
+    "now": {
+      "taskId": "E4.16",
+      "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+      "summary": "Het modeloverzicht voor bestaande taken is compacter geïnstalleerd en onafhankelijk gecontroleerd: op de bewaarde praktijkrespons 39.179→23.855 bytes met alle taak- en planningidentiteiten behouden. Een werkelijk tokenverschil is nog niet gemeten. De eerder opgevraagde kandidaat is geïdentificeerd, maar een veilige automatische werkruimtebinding en native beoordeling zijn niet aangetoond.",
+      "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+      "detail": "Het modeloverzicht voor bestaande taken is compacter geïnstalleerd en onafhankelijk gecontroleerd: op de bewaarde praktijkrespons 39.179→23.855 bytes met alle taak- en planningidentiteiten behouden. Een werkelijk tokenverschil is nog niet gemeten. De eerder opgevraagde kandidaat is geïdentificeerd, maar een veilige automatische werkruimtebinding en native beoordeling zijn niet aangetoond.",
+      "state": "Compact overzicht geïnstalleerd; kandidaatbinding en werkelijk tokenverschil blijven open."
+    },
+    "next": {
+      "taskId": "E1.6",
+      "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+      "detail": "Volg de volgende bestaande gewone E1.6-gelegenheid: Eva kiest vanuit een echt doel zelf bronbewaking of geplande controle, een echte passende bronverandering leidt tot afweging en gecontroleerd vervolg. Installatie, exact authenticatieherstel en eerste gewone afweging zijn onafhankelijk bevestigd. De22:15-afweging koos onderbouwde nachtelijke stilte zonder bronwatch. Zonder nieuwe toegelaten aanleiding volgt de gewone uurgelegenheid niet vóór25okt23:15:57UTC (26okt00:15:57Nederland); forceer geen bronkeuze, modelcall, nieuwe kaart of oude herstelactie. Volledige oorspronkelijke criteria blijven open."
+    },
+    "ownerAction": {
+      "required": false,
+      "detail": "Geen nieuwe eigenaarhandeling gevraagd; installatie wacht op concrete afsluitbinding van de bestaande gespreksregistratie.",
+      "steps": []
+    },
+    "checkedAt": "2026-10-25T22:27:23.444890+00:00",
+    "reviewedAt": "2026-10-25T22:09:03.184675+00:00",
+    "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
+  },
+  "card": {
+    "id": "E4.15",
+    "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
+    "status": "in_progress",
+    "kind": "owner_requested_followup",
+    "scopeOrigin": "entity-development-20261021",
+    "owner": "Codex · kernuitvoerder; spraak blijft bij bestaande uitvoerder",
+    "ownerActionRequired": false,
+    "ownerAuthorization": "Eigenaar21oktober2026: vergelijk OpenClaw, Hermes en OpenCode, maak ook taken voor het voorafgaande voorstel over zelfstandig mens-/huisbegrip, routines, voorkeuren, humor, initiatief en eigen leven, en werk een ambitieuzere onderscheidende Eva uit. Deze registratie plant uitvoering; een onderzoeksdocument is geen gebouwde functie.",
+    "requiredForCurrentDelivery": true,
+    "scopeDecision": "Nieuwe expliciete eigenaaruitkomst binnen bestaande E1/E4; eerdere gesloten criteria en acceptaties blijven exact behouden.",
+    "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
+    "researchEvidence": "development/evidence/reassessment/entity-development-upstream-20261021.json",
+    "existing": "E4.5 autonome beoordeelde verbetering, E4.12 vaardigheidspakketten, E4.13 codefeedback en E4.14 dienstoverstijgende toolprogramma’s zijn technisch afgerond.",
+    "gap": "De afzonderlijke bouwmogelijkheden bewijzen niet dat Eva zelf een echte behoefte ontdekt, een passende nieuwe voorziening ontwerpt en die na gewoon gebruik verbetert.",
+    "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
+    "implementation": [
+      "Laat Eva zelf de aanleiding en waarde formuleren vanuit aanwezige bronnen; controleer eerst de actuele catalogus en passende bestaande pakketten.",
+      "Gebruik E4.12 voor deskundigheid, E4.14 voor toolketens en E4.13 voor codefeedback binnen de bestaande E4.5-beoordeling/toepassing.",
+      "Onderzoek OpenCode SDK/headless API als afgebakende programmeeruitvoerder alleen bij een aangetoond resterend gat. Geef voorkeur aan bestaande uitvoerroute als die de uitkomst al goed levert; geïsoleerde codevoorstellen geven geen extra huisrechten of identiteit.",
+      "Bind aanleiding, gekozen ontwerp, artefact/configuratie, onafhankelijke controle, echte beschikbaarheid, feedback en opvolgversie aan dezelfde taak-/bronketen.",
+      "Meet resultaatkwaliteit, werkelijk gebruik, benodigde menselijke hulp, tijd en model/toolgebruik; pas alleen bewezen winst toe en behoud een goede versie bij regressie."
+    ],
+    "verification": [
+      "De aanleiding en inhoudelijke ontwerpkeuze komen van Eva; eindproduct wordt via de werkelijke toegelaten route gebruikt, niet alleen als bestand of sandboxpatch opgeleverd.",
+      "Een echte gebruikservaring werkt door naar beoordeelde latere versie of gemotiveerd behoud en hergebruik; werkende code is nog geen bewezen gezinswaarde.",
+      "Hergebruik, licenties/pinning, STOP, oorspronkelijke ontvanger, gegevensbehoud en huidige bevoegdheid blijven gelden. SDK-integratie is geen verplicht doel op zichzelf."
+    ],
+    "files": [
+      "src/eva/application/component_development.py",
+      "src/eva/application/component_improvements.py",
+      "src/eva/application/skill_packages.py",
+      "src/eva/application/tool_program.py",
+      "src/eva/operations/programming_workspace.py",
+      "src/eva/bootstrap/native_initiative_work.py"
+    ],
+    "dependsOn": [
+      "E1.5",
+      "E4.5",
+      "E4.12",
+      "E4.13",
+      "E4.14"
+    ],
+    "upstreamSourceIds": [
+      "hermes-skills",
+      "hermes-curator",
+      "hermes-code",
+      "opencode-sdk",
+      "opencode-server",
+      "opencode-lsp"
+    ],
+    "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
+    "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
+    "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
+    "nextAction": "Nieuwe14:55vastloper gericht gesloten15:37:03UTC; één echte nieuwe gewoneafweging15:37:05→15:37:16afgerond(stilte), onafhankelijkGO. Bewaar oudehashes/unknownusage en300sbeleid. Geen herhaalherstel/proef; positievebegroeting/horen, eigenbehoefteontdekking en feedback/hergebruik blijven open.",
+    "ownerAcceptance": {
+      "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
+      "extensionRestore": [
+        "Code en manifest/versionering buiten de kern",
+        "Afhankelijkheden en compatibiliteit met Eva",
+        "Configuratieschema en benodigde rechten",
+        "Eigen gegevens en laatst werkende versie",
+        "Versleutelde geheimen of expliciete herkoppeling van apparaatgebonden toegang",
+        "Herstel en gedragscontrole op een schone installatie zonder oude bronwerkmap"
+      ],
+      "selfDiscoveredNeedRemainsSeparate": true
+    },
+    "livingHousemateAcceptance": {
+      "specification": "development/design/product/living-housemate-task-scope-20261022.json",
+      "scope": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik"
+    },
+    "implementationSteps": [
+      "Gewone cameraopdracht via Eva laten onderzoeken; bestaande bronnen, herkenning en spreekuitgang daadwerkelijk vaststellen.",
+      "Ontbrekende mogelijkheid via de bestaande uitvoerder als losse uitbreiding laten maken en op de echte route controleren.",
+      "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
+    ],
+    "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
+    "checkedAt": "2026-10-24T15:44:15.830924+00:00",
+    "progress": "Tweede concrete huishoudelijke vastloper verholpen24oktober17:37CEST via bestaandeafhandeling, zonder productwijziging/herstart. Oude4events/fout/retry/NULLusage behouden; exactappend5will_abandoned. Een andere normale afweging liep daarna vanzelf en koos stilte. Dit bewijst specifiekherstel en hervattewerking, geen structureleoorzaakfix of volledigeE4.15.",
+    "evidence": "development/evidence/product/e415-installed-route-20261023.json",
+    "latestEvidence": "development/evidence/product/e415-household-continuation-145510-20261024.json",
+    "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json"
+  }
+}
