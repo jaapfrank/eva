@@ -1,0 +1,163 @@
+{
+  "contract": "EvaNativeHandoffValidation/v1",
+  "checkedAt": "2026-10-29T21:13:03.430560+00:00",
+  "scope": "Host delivery of a verified original native source into a task-bound file manifest; original E1.6 end criteria remain open.",
+  "previousEvidenceArchive": "development/archive/history/20261029-native-manifest-delivery/validation-before-input-delivery.json",
+  "previousEvidenceSha256": "235bb2dfb3339310f658eb0cf833599863a776136b29284dcb7d0bbadd41c081",
+  "protectedAdapter": {
+    "path": "src/eva/adapters/postgres/delegated_work.py",
+    "sha256": "5c18f6f1f44d087df11843414dd82542a06b99efcde5f657921b8a3c24bd4090",
+    "unchangedDuringManifestDeliveryWork": true
+  },
+  "implementation": {
+    "producer": "src/eva/bootstrap/native_initiative_work.py",
+    "manifest": "src/eva/bootstrap/native_work_assets.py",
+    "workerComposition": "src/eva/bootstrap/delegated_digital_composition.py",
+    "contract": "EvaNativeWorkInputs/v1",
+    "sourceContract": "EvaNativeTaskInput/v1",
+    "binding": [
+      "source",
+      "source_ingress_sha256",
+      "intent_id",
+      "execution_id",
+      "grant_sha256"
+    ],
+    "sourcePublishedBeforeQueueAdmission": true,
+    "filesImmutableAcrossDuplicateDelivery": true,
+    "workerCanProduceFiles": false,
+    "newAmbientFileAccessGranted": false
+  },
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "errors": 0,
+    "seconds": 144.679,
+    "fixture": "Production TaskBoundNativeWorkAssets with verified source serialization and real file manifest parser, not a dummy resolver.",
+    "newChecks": [
+      "separate worker receives original identity and completes task",
+      "modified source blocks before worker call",
+      "missing manifest blocks before worker call",
+      "concurrent delivery cannot overwrite input; changed source and reader publication rejected"
+    ],
+    "log": "/var/lib/eva2/e16-native-input-delivery-20261029/native-regression.log",
+    "logSha256": "29e9c62ec14e891c54d4cfc7d04f43e650fd374cf33604e8d829a29a5e1837ad",
+    "sourceHashes": {
+      "src/eva/adapters/postgres/delegated_work.py": "5c18f6f1f44d087df11843414dd82542a06b99efcde5f657921b8a3c24bd4090",
+      "src/eva/bootstrap/native_work_assets.py": "34813de438e528a6e04be6c0f96e6d1d6ef28c8ac74851907ea9b170d604f700",
+      "src/eva/bootstrap/native_initiative_work.py": "8b78ac1ffa6aac3d7a360c36c7ed571ff23b061c1809ba82de06a09f1cb72a09",
+      "src/eva/bootstrap/runtime.py": "168ab1dff0bf4ba11ebaa4ac388b1eb92fe4ef97eb028c6d632569b225a8e584",
+      "src/eva/bootstrap/delegated_digital_composition.py": "25a20d6ee80fbb9ea7f1880399a0f4c4aedfb8c699cad4939a68541c66f5eae6",
+      "src/eva/bootstrap/delegated_digital_profile.py": "1b8a0141db5062fa9bed0da83dd9722fd4d291eecc087bbd87937493d885146d",
+      "src/eva/bootstrap/component_maintenance.py": "60071c0f44c05a2864ada13f4f148a569806d6b9c92ce55bfd1ae8dc805d488d",
+      "src/eva/bootstrap/runtime_repair_host.py": "e351a061d22b01c7797c7937376c4b832d760fcd7bca61b6cb6902efaf010b77",
+      "development/tests/postgres/test_native_initiative_digital_work.py": "62a5e18ff00d85fc10a297548fc4d1f5b976b53f533354ab9062e4db4ab4fc66",
+      "development/tests/postgres/test_native_initiative_resume.py": "10c90f307923acae376ad997fd64fc59eaaacbefaf725434e6bcf9f8b74a80d7",
+      "development/tests/postgres/test_native_initiative_profile_refresh.py": "c9b7e906237a67c2523a81bd72983d7d64a6ea9e5ee4b2ec0d0cd579c2b6e50e",
+      "development/tests/postgres/test_certified_native_preparation_recovery.py": "6e7503f96e77ea581ef4cd9449b0065c7b226fe41bd88487d2d9c94215dde576"
+    }
+  },
+  "installation": {
+    "status": "installed_healthy_manifest_delivery_verified",
+    "installed": true,
+    "installedAt": "2026-10-29T21:08:36.431662+00:00",
+    "verifiedAt": "2026-10-29T21:10:45.596400+00:00",
+    "roles": {
+      "core": {
+        "containerId": "97194f65c4228f8fa83284bca11ed0b71faab6096efc7d274fe8defe0ef487e8",
+        "image": "sha256:8f1a788ba448805b592ed539a06142e36b88fed6e1a4882d568292052f40d42d",
+        "healthy": true,
+        "sourcesVerified": true,
+        "mountsVerified": true
+      },
+      "delegated-work-worker": {
+        "containerId": "ed1a99943bf0f0f349acdcf6fd84135575f4b583f6c89a799890f6d7d03a20a3",
+        "image": "sha256:3248768d017dc9eaa75f0b68abbceb436cd419770310e5d8856c2db2af3d043e",
+        "healthy": true,
+        "sourcesVerified": true,
+        "mountsVerified": true
+      }
+    },
+    "manifestRoot": "/var/lib/eva/work/native-task-inputs",
+    "coreWritesInputRoot": true,
+    "workerReadOnlyInputMount": true,
+    "releaseProfilesCompatible": true,
+    "mismatchedProfiles": [],
+    "hostProducerReleaseAligned": true,
+    "allPreexistingMountsRetained": true,
+    "otherContainersRetained": true,
+    "productionMigrationsChanged": false,
+    "liveKitChanged": false,
+    "telegramFrontendChanged": false,
+    "activationPhases": [
+      {
+        "name": "fresh_idle_claims",
+        "status": "completed",
+        "at": "2026-10-29T21:07:17.177175+00:00"
+      },
+      {
+        "name": "stop_idle_bound_roles",
+        "status": "completed",
+        "at": "2026-10-29T21:07:25.589783+00:00"
+      },
+      {
+        "name": "post_stop_claims",
+        "status": "completed",
+        "at": "2026-10-29T21:07:32.457998+00:00"
+      },
+      {
+        "name": "activate_images_and_scoped_mount",
+        "status": "completed",
+        "at": "2026-10-29T21:08:32.879305+00:00"
+      },
+      {
+        "name": "installed_sources_mounts_and_health",
+        "status": "completed",
+        "at": "2026-10-29T21:08:35.834006+00:00"
+      },
+      {
+        "name": "align_existing_host_producer_release",
+        "status": "completed",
+        "at": "2026-10-29T21:08:36.421366+00:00"
+      }
+    ]
+  },
+  "actualSourceReadback": {
+    "core": {
+      "role": "core",
+      "taskBindingSha256": "ca501521531284abce6fe2d728f25a7985a6dbeeb578a9637ac27a9b047d2c91",
+      "specSha256": "a36efa72090ea6b30b786b1ef0d20ec5167d8e3f75a96dfbeec01e72d8160f60",
+      "sourceIngressSha256": "cfe5921c783258a2d492743d61097ae4b43dd7984cac341a1613df73af9c4884",
+      "sourceFileSha256": "fc8263d60249a940ecabec27e3a74ee1227c8a5f1bb1bf8f3c192e37752c3bfb",
+      "grantSha256": "2a9243808838108b27d396f48b66abb2a9d210a35ce2b14c7bac4cbd4986f7bb",
+      "originalState": "succeeded",
+      "originalRevision": 4,
+      "preflightError": null,
+      "taskRowUnchanged": true
+    },
+    "delegated-work-worker": {
+      "role": "worker",
+      "taskBindingSha256": "ca501521531284abce6fe2d728f25a7985a6dbeeb578a9637ac27a9b047d2c91",
+      "specSha256": "a36efa72090ea6b30b786b1ef0d20ec5167d8e3f75a96dfbeec01e72d8160f60",
+      "sourceIngressSha256": "cfe5921c783258a2d492743d61097ae4b43dd7984cac341a1613df73af9c4884",
+      "sourceFileSha256": "fc8263d60249a940ecabec27e3a74ee1227c8a5f1bb1bf8f3c192e37752c3bfb",
+      "grantSha256": "2a9243808838108b27d396f48b66abb2a9d210a35ce2b14c7bac4cbd4986f7bb",
+      "originalState": "succeeded",
+      "originalRevision": 4,
+      "preflightError": null,
+      "taskRowUnchanged": true
+    }
+  },
+  "evidenceLimits": {
+    "newTaskCompletesWithProductionDeliveryInIsolatedPostgres": true,
+    "actualInstalledSourcePreflightPasses": true,
+    "actualHistoricalTaskRequeued": false,
+    "newLiveTaskCompletionClaimed": false,
+    "fullE16Completed": false,
+    "fullProjectCompleted": false
+  },
+  "consumption": {
+    "validationModelGenerationRequests": 0,
+    "runtimeModelUsageMeasured": false,
+    "creditsOrCostEstimated": false
+  }
+}

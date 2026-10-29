@@ -1,0 +1,13 @@
+{
+  "contract": "EvaDashboardStatusReadback/v1",
+  "updatedAt": "2026-10-29T21:46:55.659Z",
+  "revision": "9c41c10f0fa9801d6fc469a6fe4f84f3ebad63e48a7d4724e9cfac45deaafbf6",
+  "technicalStatus": "completed",
+  "fullCardStatus": "in_progress",
+  "visibleDeliveryTitle": "E1.6 · Technisch klaar en geïnstalleerd — 29 oktober",
+  "latestEvidence": "development/evidence/reassessment/e16-native-handoff-validation-20261029.json",
+  "currentStep": "E4.15",
+  "checkedAt": "2026-10-29T21:46:55.607681+00:00",
+  "humanBoardLabel": "Technisch klaar; praktijkbewijs open",
+  "otherChatsResumed": false
+}

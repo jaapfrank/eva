@@ -123,6 +123,8 @@ def render_human(board):
     lines += ["", project["housemateSummary"]["note"], "", "## Alle geregistreerde kleine taken", "", "| Taak | Status | Eindvoorwaarde |", "| --- | --- | --- |"]
     for task in small_tasks(board):
         state = "✓ Afgerond" if task["status"] == "completed" else ("Geparkeerd" if task.get("parked") else "● Open")
+        if task["status"] != "completed" and task.get("technicalStatus") == "completed":
+            state = "Technisch klaar; praktijkbewijs open"
         lines.append(f"| {task['id']} · {task['title']} | {state} | {task['doneWhen'].replace('|', '/')} |")
         for check in task.get("deviceChecks", []):
             lines.append(f"| ↳ Apparaatcontrole: {check['device']} | {check['status']} | {check['doneWhen'].replace('|', '/')} |")

@@ -838,70 +838,28 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-24T07:24:28.185511+00:00",
+  "lastUpdated": "2026-10-29",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.16",
+  "activeTaskId": "E4.15",
   "currentWork": {
-    "id": "E4.16",
-    "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+    "id": "E4.15",
+    "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
-    "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "Meet bij natuurlijk gebruik het tokenverschil en herstel de kandidaat-/werkruimtebinding alleen via de bestaande bevoegdheids- en beoordelingsroute; start de mislukte opdrachten niet opnieuw zonder concrete veilige bronbinding.",
+    "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
+    "nextAction": "Volg een echte, door Eva onderbouwde behoefte via de bestaande toegelaten route. Laat Eva een vers herbruikbaar alternatief en eigen idee vergelijken; bind gekozen voorziening aan passende onafhankelijke beoordeling en volg echte oorspronkelijke gebruikersfeedback en later gebruik. Geen demonstratie of winst verzinnen.",
     "ownerActionRequired": false,
-    "scopedTelegramRepairAuthorization": {
-      "at": "2026-10-27T07:47:07.435768+00:00",
-      "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
-      "outcome": "Een verkeerd gevormde zoekcursor breekt het gesprek niet af; taken krijgen alleen hersteltools waarvoor zij een actuele brongebonden bevoegdheid hebben. Bestaande resultaten en onzekerheid blijven behouden.",
-      "knownCauses": [
-        "search_delegated_work query with before_work_id empty string raises ValueError before connection",
-        "private digital task was offered manage_own_runtime_repair despite no native repair guard; exact error fingerprint matches rejected context"
-      ],
-      "exclusiveProductFiles": [
-        "src/eva/bootstrap/delegated_work_owner_service.py",
-        "src/eva/adapters/postgres/delegated_work_actions.py",
-        "src/eva/adapters/postgres/component_improvement_actions.py",
-        "src/eva/bootstrap/delegated_digital_runner.py"
-      ],
-      "coordinatorOnlyImplementation": true,
-      "independentTesterRequired": true,
-      "otherDevelopmentPaused": true,
-      "historicalEffectsReplayAuthorized": false,
-      "automations": false,
-      "deliveryStatus": {
-        "checkedAt": "2026-10-28T17:46:05.368391+00:00",
-        "built": true,
-        "sourceReviewed": true,
-        "installed": true,
-        "status": "compact_overview_installed_candidate_binding_open",
-        "unknownNullMarkersInitially": 21,
-        "historicalMarkersPreserved": true,
-        "ownerActionRequired": false,
-        "preliminaryActiveWork": 0,
-        "preliminaryActiveLeases": 0,
-        "independentReviewSha256": "282620d440d075e6bb4c08ca7394be9af9f02e0ff830a523098ca90a6caee9ca",
-        "actualReadbackSha256": "63fbd9cd57347f1c03d880f07230b4cde0cb9377f2f5895c2f9f0a56d966f879",
-        "realTelegramUseProven": true,
-        "requestedBehaviorProven": false,
-        "guardInstalled": true,
-        "rootCause": "original_ingress_compacted_not_selected",
-        "sourceReviewSha256": "cf22af51f636e6bd67cfdb50cf331166bd039af8d0fca55917ea7218575a3db4",
-        "guardInstalledAt": "2026-10-28T12:31:08.663803+00:00",
-        "guardActualReadbackSha256": "ca29862888cdc3d166f15fc0d9e17dab3b63904830e5a7c6a2a4ea6135405b77",
-        "candidateWorkspaceBindingUnproven": true,
-        "compactOverviewInstalled": true,
-        "compactOverviewRealPayloadBeforeBytes": 39179,
-        "compactOverviewRealPayloadAfterBytes": 23855,
-        "actualTokenSavingsMeasured": false
-      },
-      "previousDashboardNowBeforeRepair": {
-        "taskId": "E4.16",
-        "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-        "summary": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
-        "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-        "detail": "De codecorrecties zijn geïnstalleerd en onafhankelijk gecontroleerd. Na het gerichte authenticatieherstel heeft Eva op25okt22:15:42–22:15:57UTC zelfstandig één gewone afweging voltooid:1gemeten modelpoging,22.633tokens,1toolcall. Zij koos onderbouwde nachtelijke stilte; er is nog geen NextAttention of bronwatch gekozen. De echte modelgekozen bronketen blijft het resterende E1.6-bewijs; de opvolging blijft actief.",
-        "state": "Geïnstalleerd; eerste gewone afweging onafhankelijk bevestigd; modelgekozen bronketen blijft open."
-      }
+    "foundationDelivery": {
+      "checkedAt": "2026-10-29T21:43:52.133135+00:00",
+      "status": "installed_source_profile_verified",
+      "evidence": "development/evidence/reassessment/e415-foundation-20261029.json",
+      "built": true,
+      "installed": true,
+      "actualUserReuseProven": false,
+      "independentQualityWinProven": false,
+      "fullE415Completed": false,
+      "compatibleProfiles": true,
+      "reviewDocument": "development/docs/E415-FUNDAMENT-20261029.md"
     }
   },
   "historicalWorkboard": {
@@ -1009,7 +967,7 @@
           "keepVisible": true
         }
       ],
-      "priorityDecision": "E2.5 geïnstalleerd: optioneel Claude/Anthropic of een OpenAI-compatibele API toevoegen, met eigen API-sleutel controleren, kiezen en uitschakelen. Privétekst op website/Telegram behoudt dezelfde Eva, geheugen en acties. De bestaande route blijft gekozen; externe accounts zijn nog niet verbonden. E2.6: WhatsApp via toegelaten transport optioneel aan dezelfde Eva verbinden; geen tweede identiteit of taakroute.",
+      "priorityDecision": "Laatste eigenaaropdracht29oktober: E4.15-fundament via bestaande keten; E1.6-overdracht behouden. Geen persoonlijkheidswijziging, extra platform of verzonnen eindproduct.",
       "localAccess": {
         "checkedAt": "2026-10-06T16:26:18Z",
         "route": "http://127.0.0.1:44712/",
@@ -1023,7 +981,7 @@
       "nextOutcomes": [
         {
           "title": "Volledig resultaat geleverd",
-          "detail": "Bij oorspronkelijke vraag geleverd en exact teruggelezen. Standaard korte samenvatting; geen automatische bijlage."
+          "detail": "Eerst een gewone documentopdracht via de bestaande geïnstalleerde route uitvoeren, opslag teruglezen en bij de oorspronkelijke gebruiker melden. Tijd en verbruik meten waar beschikbaar."
         },
         {
           "title": "Zelfverbetering afmaken",
@@ -1695,20 +1653,36 @@
       "deliveryOverview": {
         "deliveries": [
           {
-            "title": "E1.6 · Reconnectbehoud en benodigde herstelbronoverdracht geïnstalleerd",
+            "title": "E4.15 · Fundament voor vergelijking en later gebruik geïnstalleerd",
             "state": "installed",
-            "summary": "Eén gezamenlijke installatie: drie nativebestanden en vijf hostbestanden; juiste actieveproducerbinding, vier werkelijke profielen gelijk en onafhankelijke controle van actuele source-read.",
-            "remaining": "Werkelijke modelgekozen bronbewaking, echte bronverandering en gecontroleerd vervolg blijven nodig; geen volledige kaart gesloten.",
-            "source": "development/evidence/product/e16-completion-20261025.json",
-            "review": "development/reviews/e16-reconnect-20261025.json",
-            "checkedAt": "2026-10-25T22:11:19.598938+00:00",
-            "installedAt": "2026-10-25T22:05:24.481035+00:00",
-            "completedTaskIds": [],
+            "summary": "Bestaande behoefteanalyse en afzonderlijke beoordeling hergebruikt; catalogus biedt vergelijking en bron-/versiegebonden later gebruik.82 gerichte tests en6 PostgreSQL-controles geslaagd;3 bestaande feedbacktestfouten blijven afzonderlijk zichtbaar.",
+            "remaining": "Echte Eva-gekozen behoefte, gerealiseerde voorziening, onafhankelijke kwaliteitsbeslissing en later gebruikersfeedback/hergebruik blijven nodig.",
+            "source": "development/evidence/reassessment/e415-foundation-20261029.json",
+            "checkedAt": "2026-10-29T21:46:55.607681+00:00",
+            "installedAt": "2026-10-29T21:43:00.518066+00:00",
             "technicalDeliveryComplete": true,
-            "independentReviewComplete": true,
+            "independentReviewComplete": false,
             "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
             "ownerAcceptance": false,
             "familyAcceptance": false
+          },
+          {
+            "title": "E1.6 · Technisch klaar en geïnstalleerd — 29 oktober",
+            "state": "installed",
+            "summary": "92 tests geslaagd; taakgebonden bronbestanden worden werkelijk tussen kern en worker overgedragen. Installatie en oorspronkelijke bron teruggelezen; taakidentiteit, opslag en uitvoerprofielen behouden.",
+            "remaining": "Volledige kaart: echte door Eva gekozen bronverandering met passende afweging en gecontroleerd vervolg of onderbouwde stilte nog live te bewijzen.",
+            "source": "development/evidence/reassessment/e16-native-handoff-validation-20261029.json",
+            "review": "development/reviews/e16-reconnect-20261025.json",
+            "checkedAt": "2026-10-29T21:46:55.607681+00:00",
+            "installedAt": "2026-10-29T21:08:36.431662+00:00",
+            "completedTaskIds": [],
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": false,
+            "newProductFunctionCompleted": false,
+            "ownerAcceptance": false,
+            "familyAcceptance": false,
+            "independentReviewScope": "Eerdere beoordeling25oktober blijft historisch geldig; nieuwe manifestoplevering29oktober heeft regressie- en installatieteruglezing, geen nieuwe onafhankelijke volledige kaartacceptatie."
           },
           {
             "title": "E4.16 · Foutinformatie uit echte SDK-headers behouden",
@@ -3197,41 +3171,44 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "Eerdere completionclaim ingetrokken: eigenaaropdracht blijft open",
-          "state": "reopened_owner_goal_not_completed",
-          "summary": "Het korte voorstel was afgeleverd, maar leverde volgens de eigenaar nog niets bruikbaars op.",
-          "remaining": "Zoek de eerder gemaakte koppeling en beschikbare toegang terug, controleer exacte laatste actie-/foutreceipts en hervat de volledige eigenaarbedoeling zonder onbekende effecten te herhalen. Tester beoordeelt bruikbare uitkomst, geen succes uit alleen afgeleverd bericht.",
-          "source": "development/evidence/product/owner-command-completion-correction-20261024.json",
-          "checkedAt": "2026-10-24T11:02:18.567187+00:00",
+          "title": "E4.15 · Fundament voor vergelijking en later gebruik geïnstalleerd",
+          "state": "installed",
+          "summary": "Bestaande behoefteanalyse en afzonderlijke beoordeling hergebruikt; catalogus biedt vergelijking en bron-/versiegebonden later gebruik.82 gerichte tests en6 PostgreSQL-controles geslaagd;3 bestaande feedbacktestfouten blijven afzonderlijk zichtbaar.",
+          "remaining": "Echte Eva-gekozen behoefte, gerealiseerde voorziening, onafhankelijke kwaliteitsbeslissing en later gebruikersfeedback/hergebruik blijven nodig.",
+          "source": "development/evidence/reassessment/e415-foundation-20261029.json",
+          "checkedAt": "2026-10-29T21:46:55.607681+00:00",
+          "installedAt": "2026-10-29T21:43:00.518066+00:00",
+          "technicalDeliveryComplete": true,
+          "independentReviewComplete": false,
           "newProductFunctionCompleted": false,
           "completedTaskIds": [],
           "ownerAcceptance": false,
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.16",
-          "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "Het modeloverzicht voor bestaande taken is compacter geïnstalleerd en onafhankelijk gecontroleerd: op de bewaarde praktijkrespons 39.179→23.855 bytes met alle taak- en planningidentiteiten behouden. Een werkelijk tokenverschil is nog niet gemeten. De eerder opgevraagde kandidaat is geïdentificeerd, maar een veilige automatische werkruimtebinding en native beoordeling zijn niet aangetoond.",
-          "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "detail": "Het modeloverzicht voor bestaande taken is compacter geïnstalleerd en onafhankelijk gecontroleerd: op de bewaarde praktijkrespons 39.179→23.855 bytes met alle taak- en planningidentiteiten behouden. Een werkelijk tokenverschil is nog niet gemeten. De eerder opgevraagde kandidaat is geïdentificeerd, maar een veilige automatische werkruimtebinding en native beoordeling zijn niet aangetoond.",
-          "state": "Compact overzicht geïnstalleerd; kandidaatbinding en werkelijk tokenverschil blijven open."
+          "taskId": "E4.15",
+          "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
+          "summary": "Fundament29oktober geïnstalleerd: bestaande behoefte-/feedbackketen hergebruikt, veilige catalogusvergelijking en hash-/persoon-/versiegebonden latere uitvoeringsbewijzen zichtbaar.82 gerichte unit-/beoordelingsgrenscontroles en6 PostgreSQL-controles slagen;3 bestaande feedbacktestfouten ook zonder deze wijziging. Kern/workerprofielen gelijk; E1.6-bronnen en manifestresolver behouden. Geen volledige E4.15 of echte onafhankelijke winst geclaimd.",
+          "detail": "Fundament29oktober geïnstalleerd: bestaande behoefte-/feedbackketen hergebruikt, veilige catalogusvergelijking en hash-/persoon-/versiegebonden latere uitvoeringsbewijzen zichtbaar.82 gerichte unit-/beoordelingsgrenscontroles en6 PostgreSQL-controles slagen;3 bestaande feedbacktestfouten ook zonder deze wijziging. Kern/workerprofielen gelijk; E1.6-bronnen en manifestresolver behouden. Geen volledige E4.15 of echte onafhankelijke winst geclaimd.",
+          "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
+          "state": "Fundament geïnstalleerd; echte Eva-gekozen uitkomst en gebruikersbewijs blijven open."
         },
         "next": {
           "taskId": "E1.6",
           "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
-          "detail": "Volg de volgende bestaande gewone E1.6-gelegenheid: Eva kiest vanuit een echt doel zelf bronbewaking of geplande controle, een echte passende bronverandering leidt tot afweging en gecontroleerd vervolg. Installatie, exact authenticatieherstel en eerste gewone afweging zijn onafhankelijk bevestigd. De22:15-afweging koos onderbouwde nachtelijke stilte zonder bronwatch. Zonder nieuwe toegelaten aanleiding volgt de gewone uurgelegenheid niet vóór25okt23:15:57UTC (26okt00:15:57Nederland); forceer geen bronkeuze, modelcall, nieuwe kaart of oude herstelactie. Volledige oorspronkelijke criteria blijven open."
+          "detail": "Geen herbouw, herinstallatie of herhaling van de geslaagde E1.6-regressierun. Behoud de technisch afgeronde overdracht. Alleen het ontbrekende gewone livebewijs volgen: Eva kiest vanuit een echte behoefte zelf een bron, en een echte verandering krijgt passend gecontroleerd vervolg of onderbouwde stilte. Geen geforceerde bronkeuze of extra modelproef."
         },
         "ownerAction": {
           "required": false,
-          "detail": "Geen nieuwe eigenaarhandeling gevraagd; installatie wacht op concrete afsluitbinding van de bestaande gespreksregistratie.",
+          "detail": "De technische E1.6- en E4.15-fundamentinstallaties zijn klaar. Geen nieuwe eigenaarhandeling of hervatting van andere chats gevraagd. Ontbrekend echt gebruik en bronvervolg blijven zichtbaar.",
           "steps": []
         },
-        "checkedAt": "2026-10-25T22:27:23.444890+00:00",
+        "checkedAt": "2026-10-29T21:46:55.607681+00:00",
         "reviewedAt": "2026-10-25T22:09:03.184675+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-20T09:40:57.354545+00:00",
-      "checkedAt": "2026-10-24T07:54:30.973301+00:00",
+      "reviewedAt": "2026-10-20T19:26:59.261526+00:00",
+      "checkedAt": "2026-10-29T21:46:55.607681+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3365,7 +3342,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-24T07:54:30.973301+00:00",
+      "lastUpdatedAt": "2026-10-29T21:46:55.607681+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3399,7 +3376,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-24T19:39:28.939620+00:00",
+      "updatedAt": "2026-10-29T21:46:55.607681+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -3408,7 +3385,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.16",
+        "currentStep": "E4.15",
         "steps": [
           {
             "number": 1,
@@ -6025,9 +6002,9 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "De nieuwste gecontroleerde diagnostiekcorrectie is26oktober geïnstalleerd in kern en worker en onafhankelijk teruggelezen; alle vier werkprofielen en actieve hostproducer sluiten aan. Deze beperkte installatie is klaar. Overige ontwikkeling en chats blijven gepauzeerd op eigenaarverzoek. E1.6 blijft open op oorspronkelijke echte bronkeuze/verandering/afweging/uitkomstcriteria; geen automatische hervatting, oude recovery of modelprobe.",
-                "checkedAt": "2026-10-26T07:17:01.376870+00:00",
-                "progress": "De eerdere correcties en nu ook de nieuwe statusdiagnostiek zijn geïnstalleerd en onafhankelijk gecontroleerd. De volledige E1.6-bronketen is nog niet bewezen. De beperkte installatieopdracht is klaar; andere ontwikkeling blijft gepauzeerd.",
+                "nextAction": "Geen herbouw, herinstallatie of herhaling van de geslaagde E1.6-regressierun. Behoud de technisch afgeronde overdracht. Alleen het ontbrekende gewone livebewijs volgen: Eva kiest vanuit een echte behoefte zelf een bron, en een echte verandering krijgt passend gecontroleerd vervolg of onderbouwde stilte. Geen geforceerde bronkeuze of extra modelproef.",
+                "checkedAt": "2026-10-29T21:46:55.607681+00:00",
+                "progress": "Technisch klaar en geïnstalleerd op29oktober:92 regressietests geslaagd, echte oorspronkelijke bron plus taakgebonden bestanden gecontroleerd in kern en worker, gelijke uitvoerprofielen en onveranderde taakidentiteit. Op de latere E4.15-installatie zijn alle E1.6-bronhashes en de resolver opnieuw behouden. De volledige modelgekozen bronverandering met echte afweging en vervolg blijft afzonderlijk open.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
                   "development/reviews/e16-source-attention-review-20261020.json",
@@ -6083,9 +6060,9 @@
                   "Verbind één bestaande relevante bronaanleiding met bestaande geplande aandacht en duurzaam vervolg; ongewijzigde callbacks bundelen zonder modelpolling."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "latestEvidence": "development/evidence/product/e16-completion-20261025.json",
+                "implementationStatus": "installed_native_manifest_delivery_verified_real_source_followup_open",
+                "latestEvidence": "development/evidence/reassessment/e16-native-handoff-validation-20261029.json",
                 "review": "development/reviews/e16-reconnect-20261025.json",
-                "implementationStatus": "installed_ordinary_authenticated_continuation_verified_full_selected_source_chain_open",
                 "newOrdinaryFailure20261026": {
                   "observedAt": "2026-10-26T07:08:14.647100+00:00",
                   "failedAt": "2026-10-25T23:26:23Z",
@@ -6104,14 +6081,7 @@
                   "recoveryAuthorizedByEvidence": false
                 },
                 "nextActionBeforeOwnerPause20261026": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
-                "executionPaused": true,
-                "ownerPause": {
-                  "at": "2026-10-26T12:28:10.655029+00:00",
-                  "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
-                  "resumeRequiresExplicitOwnerInstruction": true,
-                  "handoff": "development/coordination/e16-pause-handoff-20261026.md",
-                  "projectCompleted": false
-                },
+                "executionPaused": false,
                 "scopedInstallationAuthorization": {
                   "at": "2026-10-26T12:35:49.433678+00:00",
                   "instruction": "Rechttrekken zodat de meest recente gecontroleerde versie wordt gebruikt.",
@@ -6136,6 +6106,38 @@
                   "retainedHostFiles": 88,
                   "historicalDataPreserved": true,
                   "fullE16Completed": false
+                },
+                "nativeHandoffValidation": {
+                  "checkedAt": "2026-10-29T21:13:03.430560+00:00",
+                  "evidence": "development/evidence/reassessment/e16-native-handoff-validation-20261029.json",
+                  "passed": 92,
+                  "failed": 0,
+                  "errors": 0,
+                  "installed": true,
+                  "status": "installed_healthy_manifest_delivery_verified",
+                  "actualSourcePreflightPasses": true,
+                  "protectedAdapterUnchanged": true,
+                  "ownerActionRequired": false,
+                  "fullE16Completed": false
+                },
+                "technicalStatus": "completed",
+                "technicalDeliveryComplete": true,
+                "technicalCompletedAt": "2026-10-29T21:10:45.596400+00:00",
+                "statusLabel": "Technisch klaar en geïnstalleerd; praktijkbewijs open",
+                "historicalOwnerPause20261026": {
+                  "at": "2026-10-26T12:28:10.655029+00:00",
+                  "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
+                  "resumeRequiresExplicitOwnerInstruction": true,
+                  "handoff": "development/coordination/e16-pause-handoff-20261026.md",
+                  "projectCompleted": false
+                },
+                "statusSync": {
+                  "checkedAt": "2026-10-29T21:46:55.607681+00:00",
+                  "ownerInstruction": "Zet E1.6 ook op klaar in het dashboard en overige weergaven; zichtbare stand sinds25oktober verouderd.",
+                  "scope": "Technical delivery completed; original full card criteria not waived",
+                  "otherChatsResumed": false,
+                  "fullCardCompleted": false,
+                  "e16PreservedByLatestInstallation": "development/evidence/reassessment/e415-foundation-20261029.json"
                 }
               },
               {
@@ -6202,7 +6204,7 @@
                 "checkedAt": "2026-10-25T22:11:19.598938+00:00",
                 "implementationEvidence": "development/evidence/product/e17-learning-revision-admission-20261023.json",
                 "independentReview": "development/reviews/e17-learning-revision-admission-20261023.json",
-                "lastInstalledAt": "2026-10-22T23:35:51.878961+00:00",
+                "lastInstalledAt": "2026-10-22T23:35:51.831185+00:00",
                 "sourceCoverageEvidence": "development/evidence/product/e17-pattern-source-coverage-20261023.json",
                 "sourceCoverageReview": "development/reviews/e17-pattern-source-coverage-20261023.json"
               },
@@ -6655,8 +6657,6 @@
                   "activeWorkers": [],
                   "scope": "Original continuity outcome; existing isolated tests/evidence only, no E419 or voice edits."
                 },
-                "progress": "Bestaande voorzieningsroute gericht onder modeluitval, bronuitval, herstart, onbekend effect en STOP beproefd. Aanvullend twee gewone ticks vóór STOP met actieve voorziening/gezonde provider/open venster: geen herhaald effect. Beide ruwe bewijzen onafhankelijk beoordeeld; productie niet gewijzigd. Werkelijk gebruikte/adoptieve verantwoordelijkheid en meerdaags gezinsgebruik blijven open.",
-                "latestEvidence": "development/evidence/product/e114-continuity-outage-restart-20261024.json",
                 "ownerInstructions": {
                   "availableNow": false,
                   "readyWhen": "Technische uitval-/herstartproef inclusief de ontbrekende twee gewone ticks voor STOP onafhankelijk goedgekeurd. Werkelijk gedragen verantwoordelijkheid en continuiteit over meerdere dagen blijven onbewezen; geen storing of herstart door de eigenaar nodig. Er is nu geen eigenaarhandeling gevraagd.",
@@ -6673,14 +6673,16 @@
                   "url": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
                   "linkLabel": "Open Initiatief & leren"
                 },
-                "implementationStatus": "isolated_outage_restart_no_replay_verified_real_household_use_open"
+                "implementationStatus": "isolated_outage_restart_no_replay_verified_real_household_use_open",
+                "progress": "Bestaande voorzieningsroute gericht onder modeluitval, bronuitval, herstart, onbekend effect en STOP beproefd. Aanvullend twee gewone ticks vóór STOP met actieve voorziening/gezonde provider/open venster: geen herhaald effect. Beide ruwe bewijzen onafhankelijk beoordeeld; productie niet gewijzigd. Werkelijk gebruikte/adoptieve verantwoordelijkheid en meerdaags gezinsgebruik blijven open.",
+                "latestEvidence": "development/evidence/product/e114-continuity-outage-restart-20261024.json"
               }
             ],
-            "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
             "previousBoundedCompletion": {
               "status": "completed",
               "endCondition": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback."
             },
+            "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
             "ownerEntityDevelopmentScope": "development/design/product/entity-development-task-scope-20261021.json"
           },
           {
@@ -7591,6 +7593,9 @@
                   }
                 },
                 "runtimeIncident": {
+                  "reportedAt": "2026-10-17T10:04:13.364423+00:00",
+                  "issue": "Owner initiative/learning view shows15October private cycle needs_help autonomous_provider_usage_unverified; scheduler does not create a new cycle while old result uncertain.",
+                  "scope": "Recover exact effect-free old evaluation through existing owner-bound abandon route; preserve unknown usage/failure and do not replay old work. Verify ordinary autonomous cycle can advance. No speech changes.",
                   "beforePhase": "will_usage_uncertain",
                   "failureType": "ConversationModelError",
                   "providerUsageError": false,
@@ -7725,16 +7730,10 @@
                   "questionClientSeconds": 25.19,
                   "consequence": "Reduce existing catalog/context/provider overhead here; preserve quality, coverage and privacy. No new task or comparison series."
                 },
+                "completedAt": "2026-10-17T11:45:59.861234+00:00",
                 "result": "Bestaande contextvoorbereiding sneller met exact dezelfde volledige modelinvoer:878→21ms en31→18ms in gemeten taken; korte context geen winst. C09-headergrens vóór lezen; kern/worker geïnstalleerd, hosthelper bijgewerkt.145 tests en onafhankelijke review geslaagd. Geen token- of totale antwoordwinst geclaimd.",
-                "efficiencyLimits": [
-                  "Preparation CPU time only: no total answer/task latency or superior answer quality measured; input is exactly preserved, not compressed further.",
-                  "Short context has no demonstrated gain:370.044 to377.833 microseconds. Retained source and saved artifact workload medians improved in5 alternating paired samples each.",
-                  "Local o200k token estimates are unchanged and are not provider-reported or billed tokens. No token or credit saving claimed.",
-                  "The earlier E2.7 observation remains42,952 input tokens,246 output tokens,3 model attempts and25.19s. This bounded CPU improvement does not establish that this whole ordinary question now costs fewer tokens or has lower total latency."
-                ],
                 "completionEvidence": "development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json",
                 "independentReview": "development/reviews/e43-runtime-efficiency-review-20261017.json",
-                "completedAt": "2026-10-17T11:45:59.861234+00:00",
                 "cleanupExecution": {
                   "fixedListComplete": true,
                   "clusters": [
@@ -7749,7 +7748,13 @@
                   "hostOperatorUpdated": true,
                   "speechChanged": false,
                   "familyAcceptance": false
-                }
+                },
+                "efficiencyLimits": [
+                  "Preparation CPU time only: no total answer/task latency or superior answer quality measured; input is exactly preserved, not compressed further.",
+                  "Short context has no demonstrated gain:370.044 to377.833 microseconds. Retained source and saved artifact workload medians improved in5 alternating paired samples each.",
+                  "Local o200k token estimates are unchanged and are not provider-reported or billed tokens. No token or credit saving claimed.",
+                  "The earlier E2.7 observation remains42,952 input tokens,246 output tokens,3 model attempts and25.19s. This bounded CPU improvement does not establish that this whole ordinary question now costs fewer tokens or has lower total latency."
+                ]
               },
               {
                 "id": "E4.4",
@@ -7827,15 +7832,10 @@
                   "status": "resolved",
                   "resolution": "Default resources now belong to sealed eva.resources.portable_v1; original hash authority and schemas/ archive paths restored, existing whole-archive crypto tests pass. Current checkout deploy/schemas remains unchanged."
                 },
+                "completedAt": "2026-10-17T12:16:51.042915+00:00",
                 "result": "C10–C12 afgewerkt: identiteit en exacte schemabronnen verpakt, export/reader hersteld zonder repins, helper los van acceptatietest, één core/worker-buildbasis en actuele modeldefaults. Geïnstalleerde kern/worker gezond; hostoperator gebruikt echte gateway/werkmap. Module-/updatecontracten vastgelegd; tests en onafhankelijke review akkoord.",
                 "completionEvidence": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json",
                 "independentReview": "development/reviews/e44-module-maintenance-review-20261017.json",
-                "conditionalPhotoDependency": {
-                  "decision": "retained_with_existing_evidence",
-                  "reason": "No equivalent native replacement demonstrated; prevent photo regression, no second Eva agent.",
-                  "source": "development/evidence/reassessment/e33-photo-runtime-metadata-20261017.json"
-                },
-                "completedAt": "2026-10-17T12:16:51.042915+00:00",
                 "cleanupExecution": {
                   "fixedListComplete": true,
                   "clusters": [
@@ -7860,6 +7860,11 @@
                   "hostOperatorUpdated": true,
                   "speechChanged": false,
                   "familyAcceptance": false
+                },
+                "conditionalPhotoDependency": {
+                  "decision": "retained_with_existing_evidence",
+                  "reason": "No equivalent native replacement demonstrated; prevent photo regression, no second Eva agent.",
+                  "source": "development/evidence/reassessment/e33-photo-runtime-metadata-20261017.json"
                 }
               },
               {
@@ -7964,11 +7969,11 @@
                   "scope": "E4.6 technisch afgerond en geïnstalleerd; geen spraakcode of spraakcontainer gewijzigd."
                 },
                 "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
+                "checkedAt": "2026-10-20T09:40:57.354545+00:00",
                 "technicalCompletion": true,
                 "installed": true,
                 "ownerAcceptance": false,
                 "familyAcceptance": false,
-                "checkedAt": "2026-10-20T09:40:57.354545+00:00",
                 "completedAt": "2026-10-20T09:40:57.354545+00:00",
                 "completionEvidence": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
                 "latestEvidence": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
@@ -8019,7 +8024,7 @@
                 "nextAction": "E4.7 is geïnstalleerd en werkelijk gebruikt. Vervolg bestaande E4.8 voor actueel apparaatbeeld en E4.9/E4.10/E5.2 voor de gemeten totale wachttijd; geen herbouw van de catalogus.",
                 "status": "completed",
                 "kind": "owner_requested_followup",
-                "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+                "owner": "Codex · kernuitvoerder; spraak blijft bij andere uitvoerder",
                 "ownerActionRequired": false,
                 "scopeOrigin": "home-module-latency-20261019",
                 "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
@@ -8492,7 +8497,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Nieuwe14:55vastloper gericht gesloten15:37:03UTC; één echte nieuwe gewoneafweging15:37:05→15:37:16afgerond(stilte), onafhankelijkGO. Bewaar oudehashes/unknownusage en300sbeleid. Geen herhaalherstel/proef; positievebegroeting/horen, eigenbehoefteontdekking en feedback/hergebruik blijven open.",
+                "nextAction": "Volg een echte, door Eva onderbouwde behoefte via de bestaande toegelaten route. Laat Eva een vers herbruikbaar alternatief en eigen idee vergelijken; bind gekozen voorziening aan passende onafhankelijke beoordeling en volg echte oorspronkelijke gebruikersfeedback en later gebruik. Geen demonstratie of winst verzinnen.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -8516,10 +8521,22 @@
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
                 "checkedAt": "2026-10-24T15:44:15.830924+00:00",
-                "progress": "Tweede concrete huishoudelijke vastloper verholpen24oktober17:37CEST via bestaandeafhandeling, zonder productwijziging/herstart. Oude4events/fout/retry/NULLusage behouden; exactappend5will_abandoned. Een andere normale afweging liep daarna vanzelf en koos stilte. Dit bewijst specifiekherstel en hervattewerking, geen structureleoorzaakfix of volledigeE4.15.",
+                "progress": "Fundament29oktober geïnstalleerd: bestaande behoefte-/feedbackketen hergebruikt, veilige catalogusvergelijking en hash-/persoon-/versiegebonden latere uitvoeringsbewijzen zichtbaar.82 gerichte unit-/beoordelingsgrenscontroles en6 PostgreSQL-controles slagen;3 bestaande feedbacktestfouten ook zonder deze wijziging. Kern/workerprofielen gelijk; E1.6-bronnen en manifestresolver behouden. Geen volledige E4.15 of echte onafhankelijke winst geclaimd.",
                 "evidence": "development/evidence/product/e415-installed-route-20261023.json",
                 "latestEvidence": "development/evidence/product/e415-household-continuation-145510-20261024.json",
-                "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json"
+                "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json",
+                "foundationDelivery": {
+                  "checkedAt": "2026-10-29T21:43:52.133135+00:00",
+                  "status": "installed_source_profile_verified",
+                  "evidence": "development/evidence/reassessment/e415-foundation-20261029.json",
+                  "built": true,
+                  "installed": true,
+                  "actualUserReuseProven": false,
+                  "independentQualityWinProven": false,
+                  "fullE415Completed": false,
+                  "compatibleProfiles": true,
+                  "reviewDocument": "development/docs/E415-FUNDAMENT-20261029.md"
+                }
               },
               {
                 "id": "E4.16",
@@ -8538,7 +8555,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "Herstel de twee exact herleide Telegramfouten met behoud van Eva's eigen kandidaat en actuele bevoegdheden; toets de echte tool-/ontvangstbewijsroute offline, laat onafhankelijk beoordelen en installeer na verse claimcontrole. Overige ontwikkeling blijft gepauzeerd.",
+                "nextAction": "De Telegramcorrecties zijn geïnstalleerd; zelfstandig herstel en kandidaat-/werkruimtebinding blijven open. Geef eerst voorrang aan één gewone documentopdracht met opgeslagen en teruggelezen resultaat en terugmelding, herstel alleen een aangetoonde blokkade en behoud oorspronkelijke E4.16-eindvoorwaarden.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8637,13 +8654,13 @@
                   "captured": false,
                   "scope": "13 selected host diskfiles and33distributionmetadata sets; actual payload/import closure and face-only data still not preserved."
                 },
-                "fullTaskCompleted": true,
                 "previousBoundedOutcomeBeforeActualPackage20261023": {
                   "nextAction": "E4.17: schema0011-export/reader/restore/installer gerepareerd;29gerichte+8echte0011PG+14legacyPGchecks onafhankelijk geslaagd. Echte core/geheugen/gateway/identity/trust onder15sbronhek bewaard en onafhankelijk gebonden. Bouwer zet nativecorekopie geïsoleerd om en maakt bestaande versleutelde package/materialisatie af; geenproductieservicesgestopt. Pakketfit envolledigzelfderestoregedrag nog open; fysiekeE4.15proef blijft later.",
                   "progress": "Limited active profile snapshot adapter built, tested10/10, independently reviewed and used for actual24-row inactive export; not full recovery.",
                   "latestBoundedOutcome": "112 geselecteerde hostbestanden (885956bytes) lokaalprivé vastgelegd en onafhankelijkgecontroleerd; geenherstelpakket/overdracht/hostclosureclaim. Geïsoleerde CPUkandidaat uit28bestaande dependencies549600671bytes; met modelassets740908358bytes, maar inertimport nog nietgeslaagd doorharnessfout en gevangen socketpoging. Huidigeomgevingbehouden, geeninstallatie/modelinference.",
                   "checkedAt": "2026-10-23T19:49:14.921610+00:00"
                 },
+                "fullTaskCompleted": true,
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                   "activeWorkers": [],
@@ -9273,7 +9290,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Meet bij natuurlijk gebruik het tokenverschil en herstel de kandidaat-/werkruimtebinding alleen via de bestaande bevoegdheids- en beoordelingsroute; start de mislukte opdrachten niet opnieuw zonder concrete veilige bronbinding.",
+        "nextAction": "Volg een echte, door Eva onderbouwde behoefte via de bestaande toegelaten route. Laat Eva een vers herbruikbaar alternatief en eigen idee vergelijken; bind gekozen voorziening aan passende onafhankelijke beoordeling en volg echte oorspronkelijke gebruikersfeedback en later gebruik. Geen demonstratie of winst verzinnen.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9284,7 +9301,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-25T22:27:23.444890+00:00",
+        "updatedAt": "2026-10-29T21:46:55.607681+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9708,7 +9725,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.16",
+      "currentStep": "E4.15",
       "steps": [
         {
           "number": 1,
@@ -12325,9 +12342,9 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "De nieuwste gecontroleerde diagnostiekcorrectie is26oktober geïnstalleerd in kern en worker en onafhankelijk teruggelezen; alle vier werkprofielen en actieve hostproducer sluiten aan. Deze beperkte installatie is klaar. Overige ontwikkeling en chats blijven gepauzeerd op eigenaarverzoek. E1.6 blijft open op oorspronkelijke echte bronkeuze/verandering/afweging/uitkomstcriteria; geen automatische hervatting, oude recovery of modelprobe.",
-              "checkedAt": "2026-10-26T07:17:01.376870+00:00",
-              "progress": "De eerdere correcties en nu ook de nieuwe statusdiagnostiek zijn geïnstalleerd en onafhankelijk gecontroleerd. De volledige E1.6-bronketen is nog niet bewezen. De beperkte installatieopdracht is klaar; andere ontwikkeling blijft gepauzeerd.",
+              "nextAction": "Geen herbouw, herinstallatie of herhaling van de geslaagde E1.6-regressierun. Behoud de technisch afgeronde overdracht. Alleen het ontbrekende gewone livebewijs volgen: Eva kiest vanuit een echte behoefte zelf een bron, en een echte verandering krijgt passend gecontroleerd vervolg of onderbouwde stilte. Geen geforceerde bronkeuze of extra modelproef.",
+              "checkedAt": "2026-10-29T21:46:55.607681+00:00",
+              "progress": "Technisch klaar en geïnstalleerd op29oktober:92 regressietests geslaagd, echte oorspronkelijke bron plus taakgebonden bestanden gecontroleerd in kern en worker, gelijke uitvoerprofielen en onveranderde taakidentiteit. Op de latere E4.15-installatie zijn alle E1.6-bronhashes en de resolver opnieuw behouden. De volledige modelgekozen bronverandering met echte afweging en vervolg blijft afzonderlijk open.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
                 "development/reviews/e16-source-attention-review-20261020.json",
@@ -12383,9 +12400,9 @@
                 "Verbind één bestaande relevante bronaanleiding met bestaande geplande aandacht en duurzaam vervolg; ongewijzigde callbacks bundelen zonder modelpolling."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "latestEvidence": "development/evidence/product/e16-completion-20261025.json",
+              "implementationStatus": "installed_native_manifest_delivery_verified_real_source_followup_open",
+              "latestEvidence": "development/evidence/reassessment/e16-native-handoff-validation-20261029.json",
               "review": "development/reviews/e16-reconnect-20261025.json",
-              "implementationStatus": "installed_ordinary_authenticated_continuation_verified_full_selected_source_chain_open",
               "newOrdinaryFailure20261026": {
                 "observedAt": "2026-10-26T07:08:14.647100+00:00",
                 "failedAt": "2026-10-25T23:26:23Z",
@@ -12404,14 +12421,7 @@
                 "recoveryAuthorizedByEvidence": false
               },
               "nextActionBeforeOwnerPause20261026": "Maak de noodzakelijke veilige foutoverdracht voor E1.6 af: hoofdbouwer bewaart alleen werkelijk gevangen HTTPstatus als exceptionmetadata; coder1 sluit hetzelfde gevalideerde optionele veld aan op WILL_USAGE_UNCERTAIN; tester beoordeelt beide geïnstalleerde-basiskandidaten onafhankelijk. Root integreert en controleert actuele claims vóór eventuele installatie. Historische498047branch/status/oorzaak en verbruik blijven onbekend; geen oude recovery, credentialsync, modelprobe of backfill. Daarna blijft de oorspronkelijke echte bronketen vereist; volledige kaart blijft open.",
-              "executionPaused": true,
-              "ownerPause": {
-                "at": "2026-10-26T12:28:10.655029+00:00",
-                "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
-                "resumeRequiresExplicitOwnerInstruction": true,
-                "handoff": "development/coordination/e16-pause-handoff-20261026.md",
-                "projectCompleted": false
-              },
+              "executionPaused": false,
               "scopedInstallationAuthorization": {
                 "at": "2026-10-26T12:35:49.433678+00:00",
                 "instruction": "Rechttrekken zodat de meest recente gecontroleerde versie wordt gebruikt.",
@@ -12436,6 +12446,38 @@
                 "retainedHostFiles": 88,
                 "historicalDataPreserved": true,
                 "fullE16Completed": false
+              },
+              "nativeHandoffValidation": {
+                "checkedAt": "2026-10-29T21:13:03.430560+00:00",
+                "evidence": "development/evidence/reassessment/e16-native-handoff-validation-20261029.json",
+                "passed": 92,
+                "failed": 0,
+                "errors": 0,
+                "installed": true,
+                "status": "installed_healthy_manifest_delivery_verified",
+                "actualSourcePreflightPasses": true,
+                "protectedAdapterUnchanged": true,
+                "ownerActionRequired": false,
+                "fullE16Completed": false
+              },
+              "technicalStatus": "completed",
+              "technicalDeliveryComplete": true,
+              "technicalCompletedAt": "2026-10-29T21:10:45.596400+00:00",
+              "statusLabel": "Technisch klaar en geïnstalleerd; praktijkbewijs open",
+              "historicalOwnerPause20261026": {
+                "at": "2026-10-26T12:28:10.655029+00:00",
+                "reason": "Directe eigenaarstop26oktober2026 wegens gewijzigd abonnement en lager gewenst verbruik. Alleen overdracht en registratie afronden.",
+                "resumeRequiresExplicitOwnerInstruction": true,
+                "handoff": "development/coordination/e16-pause-handoff-20261026.md",
+                "projectCompleted": false
+              },
+              "statusSync": {
+                "checkedAt": "2026-10-29T21:46:55.607681+00:00",
+                "ownerInstruction": "Zet E1.6 ook op klaar in het dashboard en overige weergaven; zichtbare stand sinds25oktober verouderd.",
+                "scope": "Technical delivery completed; original full card criteria not waived",
+                "otherChatsResumed": false,
+                "fullCardCompleted": false,
+                "e16PreservedByLatestInstallation": "development/evidence/reassessment/e415-foundation-20261029.json"
               }
             },
             {
@@ -12502,7 +12544,7 @@
               "checkedAt": "2026-10-25T22:11:19.598938+00:00",
               "implementationEvidence": "development/evidence/product/e17-learning-revision-admission-20261023.json",
               "independentReview": "development/reviews/e17-learning-revision-admission-20261023.json",
-              "lastInstalledAt": "2026-10-22T23:35:51.878961+00:00",
+              "lastInstalledAt": "2026-10-22T23:35:51.831185+00:00",
               "sourceCoverageEvidence": "development/evidence/product/e17-pattern-source-coverage-20261023.json",
               "sourceCoverageReview": "development/reviews/e17-pattern-source-coverage-20261023.json"
             },
@@ -12955,8 +12997,6 @@
                 "activeWorkers": [],
                 "scope": "Original continuity outcome; existing isolated tests/evidence only, no E419 or voice edits."
               },
-              "progress": "Bestaande voorzieningsroute gericht onder modeluitval, bronuitval, herstart, onbekend effect en STOP beproefd. Aanvullend twee gewone ticks vóór STOP met actieve voorziening/gezonde provider/open venster: geen herhaald effect. Beide ruwe bewijzen onafhankelijk beoordeeld; productie niet gewijzigd. Werkelijk gebruikte/adoptieve verantwoordelijkheid en meerdaags gezinsgebruik blijven open.",
-              "latestEvidence": "development/evidence/product/e114-continuity-outage-restart-20261024.json",
               "ownerInstructions": {
                 "availableNow": false,
                 "readyWhen": "Technische uitval-/herstartproef inclusief de ontbrekende twee gewone ticks voor STOP onafhankelijk goedgekeurd. Werkelijk gedragen verantwoordelijkheid en continuiteit over meerdere dagen blijven onbewezen; geen storing of herstart door de eigenaar nodig. Er is nu geen eigenaarhandeling gevraagd.",
@@ -12973,14 +13013,16 @@
                 "url": "http://127.0.0.1:44711/internal/v1/dashboard#/?section=initiative",
                 "linkLabel": "Open Initiatief & leren"
               },
-              "implementationStatus": "isolated_outage_restart_no_replay_verified_real_household_use_open"
+              "implementationStatus": "isolated_outage_restart_no_replay_verified_real_household_use_open",
+              "progress": "Bestaande voorzieningsroute gericht onder modeluitval, bronuitval, herstart, onbekend effect en STOP beproefd. Aanvullend twee gewone ticks vóór STOP met actieve voorziening/gezonde provider/open venster: geen herhaald effect. Beide ruwe bewijzen onafhankelijk beoordeeld; productie niet gewijzigd. Werkelijk gebruikte/adoptieve verantwoordelijkheid en meerdaags gezinsgebruik blijven open.",
+              "latestEvidence": "development/evidence/product/e114-continuity-outage-restart-20261024.json"
             }
           ],
-          "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
           "previousBoundedCompletion": {
             "status": "completed",
             "endCondition": "Actuele context, eigen afweging en opvolging via bestaande uitvoering; passend spreken/handelen/stilte en feedback."
           },
+          "nextAction": "E1.1–E1.3 blijven afgerond. Nieuwe E1.4 sluit meerdaags eigen vervolg volgens het eigenaargevraagde hergebruikplan.",
           "ownerEntityDevelopmentScope": "development/design/product/entity-development-task-scope-20261021.json"
         },
         {
@@ -13891,6 +13933,9 @@
                 }
               },
               "runtimeIncident": {
+                "reportedAt": "2026-10-17T10:04:13.364423+00:00",
+                "issue": "Owner initiative/learning view shows15October private cycle needs_help autonomous_provider_usage_unverified; scheduler does not create a new cycle while old result uncertain.",
+                "scope": "Recover exact effect-free old evaluation through existing owner-bound abandon route; preserve unknown usage/failure and do not replay old work. Verify ordinary autonomous cycle can advance. No speech changes.",
                 "beforePhase": "will_usage_uncertain",
                 "failureType": "ConversationModelError",
                 "providerUsageError": false,
@@ -14025,16 +14070,10 @@
                 "questionClientSeconds": 25.19,
                 "consequence": "Reduce existing catalog/context/provider overhead here; preserve quality, coverage and privacy. No new task or comparison series."
               },
+              "completedAt": "2026-10-17T11:45:59.861234+00:00",
               "result": "Bestaande contextvoorbereiding sneller met exact dezelfde volledige modelinvoer:878→21ms en31→18ms in gemeten taken; korte context geen winst. C09-headergrens vóór lezen; kern/worker geïnstalleerd, hosthelper bijgewerkt.145 tests en onafhankelijke review geslaagd. Geen token- of totale antwoordwinst geclaimd.",
-              "efficiencyLimits": [
-                "Preparation CPU time only: no total answer/task latency or superior answer quality measured; input is exactly preserved, not compressed further.",
-                "Short context has no demonstrated gain:370.044 to377.833 microseconds. Retained source and saved artifact workload medians improved in5 alternating paired samples each.",
-                "Local o200k token estimates are unchanged and are not provider-reported or billed tokens. No token or credit saving claimed.",
-                "The earlier E2.7 observation remains42,952 input tokens,246 output tokens,3 model attempts and25.19s. This bounded CPU improvement does not establish that this whole ordinary question now costs fewer tokens or has lower total latency."
-              ],
               "completionEvidence": "development/evidence/reassessment/e43-runtime-efficiency-installed-20261017.json",
               "independentReview": "development/reviews/e43-runtime-efficiency-review-20261017.json",
-              "completedAt": "2026-10-17T11:45:59.861234+00:00",
               "cleanupExecution": {
                 "fixedListComplete": true,
                 "clusters": [
@@ -14049,7 +14088,13 @@
                 "hostOperatorUpdated": true,
                 "speechChanged": false,
                 "familyAcceptance": false
-              }
+              },
+              "efficiencyLimits": [
+                "Preparation CPU time only: no total answer/task latency or superior answer quality measured; input is exactly preserved, not compressed further.",
+                "Short context has no demonstrated gain:370.044 to377.833 microseconds. Retained source and saved artifact workload medians improved in5 alternating paired samples each.",
+                "Local o200k token estimates are unchanged and are not provider-reported or billed tokens. No token or credit saving claimed.",
+                "The earlier E2.7 observation remains42,952 input tokens,246 output tokens,3 model attempts and25.19s. This bounded CPU improvement does not establish that this whole ordinary question now costs fewer tokens or has lower total latency."
+              ]
             },
             {
               "id": "E4.4",
@@ -14127,15 +14172,10 @@
                 "status": "resolved",
                 "resolution": "Default resources now belong to sealed eva.resources.portable_v1; original hash authority and schemas/ archive paths restored, existing whole-archive crypto tests pass. Current checkout deploy/schemas remains unchanged."
               },
+              "completedAt": "2026-10-17T12:16:51.042915+00:00",
               "result": "C10–C12 afgewerkt: identiteit en exacte schemabronnen verpakt, export/reader hersteld zonder repins, helper los van acceptatietest, één core/worker-buildbasis en actuele modeldefaults. Geïnstalleerde kern/worker gezond; hostoperator gebruikt echte gateway/werkmap. Module-/updatecontracten vastgelegd; tests en onafhankelijke review akkoord.",
               "completionEvidence": "development/evidence/reassessment/e44-module-maintenance-installed-20261017.json",
               "independentReview": "development/reviews/e44-module-maintenance-review-20261017.json",
-              "conditionalPhotoDependency": {
-                "decision": "retained_with_existing_evidence",
-                "reason": "No equivalent native replacement demonstrated; prevent photo regression, no second Eva agent.",
-                "source": "development/evidence/reassessment/e33-photo-runtime-metadata-20261017.json"
-              },
-              "completedAt": "2026-10-17T12:16:51.042915+00:00",
               "cleanupExecution": {
                 "fixedListComplete": true,
                 "clusters": [
@@ -14160,6 +14200,11 @@
                 "hostOperatorUpdated": true,
                 "speechChanged": false,
                 "familyAcceptance": false
+              },
+              "conditionalPhotoDependency": {
+                "decision": "retained_with_existing_evidence",
+                "reason": "No equivalent native replacement demonstrated; prevent photo regression, no second Eva agent.",
+                "source": "development/evidence/reassessment/e33-photo-runtime-metadata-20261017.json"
               }
             },
             {
@@ -14264,11 +14309,11 @@
                 "scope": "E4.6 technisch afgerond en geïnstalleerd; geen spraakcode of spraakcontainer gewijzigd."
               },
               "effort": "Gericht bestaand pad wijzigen; omvang en werkelijke kosten bij uitvoering meten, geen credit- of tijdsbelofte.",
+              "checkedAt": "2026-10-20T09:40:57.354545+00:00",
               "technicalCompletion": true,
               "installed": true,
               "ownerAcceptance": false,
               "familyAcceptance": false,
-              "checkedAt": "2026-10-20T09:40:57.354545+00:00",
               "completedAt": "2026-10-20T09:40:57.354545+00:00",
               "completionEvidence": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
               "latestEvidence": "development/evidence/product/e46-optional-home-provider-installed-20261020.json",
@@ -14319,7 +14364,7 @@
               "nextAction": "E4.7 is geïnstalleerd en werkelijk gebruikt. Vervolg bestaande E4.8 voor actueel apparaatbeeld en E4.9/E4.10/E5.2 voor de gemeten totale wachttijd; geen herbouw van de catalogus.",
               "status": "completed",
               "kind": "owner_requested_followup",
-              "owner": "Codex: bestaande spraak-/connectorcoördinator, afgestemd met kernuitvoerder",
+              "owner": "Codex · kernuitvoerder; spraak blijft bij andere uitvoerder",
               "ownerActionRequired": false,
               "scopeOrigin": "home-module-latency-20261019",
               "sourceDocument": "development/docs/AFRONDINGSPLAN.md",
@@ -14792,7 +14837,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Nieuwe14:55vastloper gericht gesloten15:37:03UTC; één echte nieuwe gewoneafweging15:37:05→15:37:16afgerond(stilte), onafhankelijkGO. Bewaar oudehashes/unknownusage en300sbeleid. Geen herhaalherstel/proef; positievebegroeting/horen, eigenbehoefteontdekking en feedback/hergebruik blijven open.",
+              "nextAction": "Volg een echte, door Eva onderbouwde behoefte via de bestaande toegelaten route. Laat Eva een vers herbruikbaar alternatief en eigen idee vergelijken; bind gekozen voorziening aan passende onafhankelijke beoordeling en volg echte oorspronkelijke gebruikersfeedback en later gebruik. Geen demonstratie of winst verzinnen.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -14816,10 +14861,22 @@
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
               "checkedAt": "2026-10-24T15:44:15.830924+00:00",
-              "progress": "Tweede concrete huishoudelijke vastloper verholpen24oktober17:37CEST via bestaandeafhandeling, zonder productwijziging/herstart. Oude4events/fout/retry/NULLusage behouden; exactappend5will_abandoned. Een andere normale afweging liep daarna vanzelf en koos stilte. Dit bewijst specifiekherstel en hervattewerking, geen structureleoorzaakfix of volledigeE4.15.",
+              "progress": "Fundament29oktober geïnstalleerd: bestaande behoefte-/feedbackketen hergebruikt, veilige catalogusvergelijking en hash-/persoon-/versiegebonden latere uitvoeringsbewijzen zichtbaar.82 gerichte unit-/beoordelingsgrenscontroles en6 PostgreSQL-controles slagen;3 bestaande feedbacktestfouten ook zonder deze wijziging. Kern/workerprofielen gelijk; E1.6-bronnen en manifestresolver behouden. Geen volledige E4.15 of echte onafhankelijke winst geclaimd.",
               "evidence": "development/evidence/product/e415-installed-route-20261023.json",
               "latestEvidence": "development/evidence/product/e415-household-continuation-145510-20261024.json",
-              "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json"
+              "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json",
+              "foundationDelivery": {
+                "checkedAt": "2026-10-29T21:43:52.133135+00:00",
+                "status": "installed_source_profile_verified",
+                "evidence": "development/evidence/reassessment/e415-foundation-20261029.json",
+                "built": true,
+                "installed": true,
+                "actualUserReuseProven": false,
+                "independentQualityWinProven": false,
+                "fullE415Completed": false,
+                "compatibleProfiles": true,
+                "reviewDocument": "development/docs/E415-FUNDAMENT-20261029.md"
+              }
             },
             {
               "id": "E4.16",
@@ -14838,7 +14895,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "Herstel de twee exact herleide Telegramfouten met behoud van Eva's eigen kandidaat en actuele bevoegdheden; toets de echte tool-/ontvangstbewijsroute offline, laat onafhankelijk beoordelen en installeer na verse claimcontrole. Overige ontwikkeling blijft gepauzeerd.",
+              "nextAction": "De Telegramcorrecties zijn geïnstalleerd; zelfstandig herstel en kandidaat-/werkruimtebinding blijven open. Geef eerst voorrang aan één gewone documentopdracht met opgeslagen en teruggelezen resultaat en terugmelding, herstel alleen een aangetoonde blokkade en behoud oorspronkelijke E4.16-eindvoorwaarden.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -14937,13 +14994,13 @@
                 "captured": false,
                 "scope": "13 selected host diskfiles and33distributionmetadata sets; actual payload/import closure and face-only data still not preserved."
               },
-              "fullTaskCompleted": true,
               "previousBoundedOutcomeBeforeActualPackage20261023": {
                 "nextAction": "E4.17: schema0011-export/reader/restore/installer gerepareerd;29gerichte+8echte0011PG+14legacyPGchecks onafhankelijk geslaagd. Echte core/geheugen/gateway/identity/trust onder15sbronhek bewaard en onafhankelijk gebonden. Bouwer zet nativecorekopie geïsoleerd om en maakt bestaande versleutelde package/materialisatie af; geenproductieservicesgestopt. Pakketfit envolledigzelfderestoregedrag nog open; fysiekeE4.15proef blijft later.",
                 "progress": "Limited active profile snapshot adapter built, tested10/10, independently reviewed and used for actual24-row inactive export; not full recovery.",
                 "latestBoundedOutcome": "112 geselecteerde hostbestanden (885956bytes) lokaalprivé vastgelegd en onafhankelijkgecontroleerd; geenherstelpakket/overdracht/hostclosureclaim. Geïsoleerde CPUkandidaat uit28bestaande dependencies549600671bytes; met modelassets740908358bytes, maar inertimport nog nietgeslaagd doorharnessfout en gevangen socketpoging. Huidigeomgevingbehouden, geeninstallatie/modelinference.",
                 "checkedAt": "2026-10-23T19:49:14.921610+00:00"
               },
+              "fullTaskCompleted": true,
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
                 "activeWorkers": [],
@@ -15573,7 +15630,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Meet bij natuurlijk gebruik het tokenverschil en herstel de kandidaat-/werkruimtebinding alleen via de bestaande bevoegdheids- en beoordelingsroute; start de mislukte opdrachten niet opnieuw zonder concrete veilige bronbinding.",
+      "nextAction": "Volg een echte, door Eva onderbouwde behoefte via de bestaande toegelaten route. Laat Eva een vers herbruikbaar alternatief en eigen idee vergelijken; bind gekozen voorziening aan passende onafhankelijke beoordeling en volg echte oorspronkelijke gebruikersfeedback en later gebruik. Geen demonstratie of winst verzinnen.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15584,7 +15641,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-25T22:27:23.444890+00:00",
+      "updatedAt": "2026-10-29T21:46:55.607681+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -16260,6 +16317,294 @@
       }
     },
     "subscriptionVoice20261013": {
+      "status": "partial_latency_repairs_installed_not_accepted",
+      "ownerRequest": "Hey Eva opent stem via bestaande Codex-abonnementsverbinding; ook Telegram, later mogelijk WhatsApp.",
+      "websocket": "Rejected: realtime conversation requires API key auth",
+      "webrtc": "Codex session connected; 444 decoded frames, 108 above RMS 200; synthetic sample saved.",
+      "qualityAccepted": false,
+      "deploymentChanged": true,
+      "evidencePath": "development/evidence/product/subscription-voice-20261013.json",
+      "next": "V1/V2: exact context-read spans and existing Hindsight derivative contract map; then connect bounded shared context and authorized local reads before speculative audio optimizations.",
+      "ownerAcceptedSyntheticSample": true,
+      "ownerInstruction": "Netjes uitwerken en koppelen aan Eva; akkoord na beluisteren van de synthetische stem.",
+      "currentWork": "Low-hanging fruit in uitvoering: expliciet volledige openbare spraakantwoorden na geverifieerde lookup rechtstreeks teruggeven, met bestaande replyguard; extra formulering alleen overslaan als geen vervolgstap nodig is. Eerst regressie en gemeten vergelijking, daarna actuele installatie.",
+      "previousProductionBlocker": "Exact model and EVA backend handoff unverified. Experimental auth is documented for host apps but installed schema says internal-only. Direct desktop route denied voice access.",
+      "voiceModel": "gpt-live-1-codex",
+      "backendHandoff": "Verified: Codex local Responses provider -> existing EVA voice core; no second reasoning model",
+      "installationEvidence": "development/evidence/product/subscription-voice-20261013/installation.json",
+      "ownerFeedback": {
+        "delay_seconds_approx": 12,
+        "partial_answer": true,
+        "first_session_closed_without_answer": true
+      },
+      "repairEvidence": "development/evidence/product/subscription-voice-20261013/owner-test-repair.json",
+      "wakeGreetingEvidence": "development/evidence/product/subscription-voice-20261013/wake-greeting-repair.json",
+      "researchRepairEvidence": "development/evidence/product/subscription-voice-20261013/research-repair.json",
+      "latencyEvidence": "development/evidence/product/subscription-voice-20261013/latency-profile.json",
+      "componentAuditEvidence": "development/evidence/product/subscription-voice-20261013/component-audit.json",
+      "latestEvidence": "development/evidence/product/subscription-voice-20261013/household-continuity-and-audio-20261015.json",
+      "deepMeasurementEvidence": "development/evidence/product/subscription-voice-20261013/direct-deep-measurement.json",
+      "errorMonitoring": "Directe meetproef telt nu Codex-errors, realtime-errors, voice-errors en gefaalde backendbeurten zonder foutinhoud. Vier gerichte controles slagen. Bestaande meting: backend completed, geen vastgelegde errors; geen bewijs van herstel van de eerdere aparte onderzoeksfout.",
+      "generalPublicLookup": {
+        "status": "installed_and_sample_tested",
+        "evidence": "development/evidence/product/subscription-voice-20261013/general-public-lookup-20261014.json",
+        "latestVoiceSeconds": 21.928,
+        "unrelatedPublicQuestionBackendSeconds": 24.796,
+        "latencyTargetMet": false,
+        "instantReviewReceived": false,
+        "stageTimingEvidence": "development/evidence/product/subscription-voice-20261013/general-public-lookup-stage-timing-20261014.json",
+        "stageTimingResult": {
+          "voiceMs": 26974,
+          "otherTopicBackendMs": 19390,
+          "speedupProven": false,
+          "nextBottlenecks": [
+            "memory preparation",
+            "three serial model requests",
+            "native public search"
+          ]
+        }
+      },
+      "conversationLifecycle": {
+        "status": "installed_conversation_checks_pass_latency_target_unmet",
+        "changes": [
+          "Response-scoped speech completion and serialized offers",
+          "Native playback ACK required for successful offered delivery",
+          "Revocation stops only the active offer; independent queued offers survive",
+          "Provider busy state survives local interruption until its terminal event",
+          "Explicit final_answer handoff",
+          "Local provider configured before Codex process initialization",
+          "Topic-independent instruction to execute missing-evidence lookup on follow-ups"
+        ],
+        "checks": {
+          "voice": 49,
+          "contact": 52
+        },
+        "knownLimits": [
+          "No physical acoustic or human listening validation",
+          "Fresh lookup latency remains above the intended target",
+          "Prior follow-up lookup lacked native citations and was rejected; final passing run does not establish reliability",
+          "Three sequential model stages remain: action choice, public search, final phrasing",
+          "Shimmer was rejected by this realtime route; superseded by successful Juniper",
+          "ICE preparation occurs in standby before the reported startup interval"
+        ],
+        "evidence": "development/evidence/product/subscription-voice-20261013/conversation-lifecycle-and-juniper-20261014.json",
+        "voice": "juniper",
+        "liveChecks": {
+          "core_completed": 3,
+          "core_failed": 0,
+          "verified_lookups": 2,
+          "microphone_interruption_and_recovery": true,
+          "active_offer_revocation_and_recovery": true,
+          "native_playback_ack": true,
+          "software_device_ack_only": true
+        },
+        "latestTimingMs": {
+          "standby_prepared_startup": 1756,
+          "first_fresh_lookup_end_of_question_to_answer_audio": 23537,
+          "followup_fresh_lookup_end_of_question_to_answer_audio": 19508,
+          "repeat_answer_with_retained_evidence": 6255
+        }
+      },
+      "socialConversation": {
+        "status": "installed_verified_with_synthetic_conversation",
+        "evidence": "development/evidence/product/subscription-voice-20261013/social-conversation-20261014.json",
+        "checks": {
+          "voice_passed": 59,
+          "voice_context_passed": 8
+        },
+        "liveChecks": {
+          "candidate_social_greeting_no_backend": true,
+          "candidate_activity_used_list_delegated_work": true,
+          "candidate_farewell_closed": true,
+          "ordered_farewell_detected_to_close_ms": 1708,
+          "installed_social_greeting_no_backend": true,
+          "installed_activity_used_list_delegated_work": true,
+          "installed_farewell_playout_confirmed": true,
+          "installed_farewell_detected_to_close_ms": 1680,
+          "installed_full_dialogue_passed": true
+        },
+        "core_context_installed": true,
+        "media_installed": true,
+        "knownLimits": [
+          "Synthesized microphone and simulated speaker acknowledgements, not physical human listening",
+          "A limited authorized activity view is not a complete daily biography; no additional memory access granted",
+          "Standalone farewell controls only; no claim to recognize every possible indirect closing phrase"
+        ]
+      },
+      "telegramVoiceIdentity": {
+        "status": "installed_automated_verification_passed_human_confirmation_not_yet_observed",
+        "evidence": "development/evidence/product/subscription-voice-20261013/telegram-identity-20261014.json",
+        "scope": "Existing owner Telegram confirmation for one live voice session; compact speech instructions and truthful playback status.",
+        "humanAcceptance": "Not yet observed; no automatic or fabricated confirmation.",
+        "latency": "Last measured core response 6.569–10.714 s; one post-core assistant-turn delay 19.319 s remains unexplained. No new acoustic speed claim."
+      },
+      "ownerTest20261015": {
+        "status": "startup_fix_installed_latency_and_followup_disconnect_unresolved",
+        "evidence": "development/evidence/product/subscription-voice-20261013/owner-test-diagnosis-20261015.json",
+        "targetedChecks": 46,
+        "humanAcceptance": false
+      },
+      "contextCacheRequirements20261015": {
+        "ownerRequirement": "Compacte context over huishouden, personen en leven vooraf beschikbaar; elke nacht actief bijwerken, ontdubbelen en begrenzen; bestaande lokale bronnen gebruiken voordat onnodig openbaar gezocht wordt.",
+        "designConstraints": [
+          "Afgeleide context van bestaand geheugen; geen tweede gezaghebbende geheugenbank.",
+          "Correcties en verwijderingen maken betrokken context direct ongeldig, onafhankelijk van nachtelijke vernieuwing.",
+          "Nachtelijke herbouw vervangt de vorige versie atomair; verlopen/dubbele gegevens verdwijnen; harde omvanggrens en bronverwijzingen.",
+          "Gedeelde huishoudcontext en geverifieerde persoonscontext gescheiden.",
+          "Bestaande lokale mogelijkheden compact bekendmaken; alleen relevante actuele gegevens ophalen, geen volledige Home Assistant-inventaris in iedere prompt.",
+          "Bronkeuze algemeen, op relevantie/actualiteit/toegang; geen hardcoded weerroute."
+        ],
+        "localProbe": {
+          "stateReadMs": 86,
+          "availableWeatherEntities": 1,
+          "dailyForecastReadMs": 10,
+          "forecastEntries": 6,
+          "httpStatus": 200,
+          "forecastContentRetainedInEvidence": false,
+          "endToEndVoiceLatencyMeasured": false
+        },
+        "existingMaintenance": "SemanticMemoryColdPathWorker heeft idle maintenance en reflection; nachtelijke compacte gesprekscontext nog niet gebouwd of geïnstalleerd.",
+        "implementationStatus": "requirements_recorded_existing_routes_inspected_local_source_verified"
+      },
+      "improvementPlan20261015": {
+        "path": "development/design/product/voice-improvement-plan-20261015.json",
+        "status": "low_hanging_fruit_installed_remaining_phases_open",
+        "phases": [
+          {
+            "id": "V1",
+            "title": "Werkelijke keten en nulmeting vastleggen",
+            "status": "partially_implemented_and_measured"
+          },
+          {
+            "id": "V2",
+            "title": "Compacte context vooraf beschikbaar",
+            "status": "planned"
+          },
+          {
+            "id": "V3",
+            "title": "Nachtelijk en tussentijds geheugenonderhoud",
+            "status": "planned"
+          },
+          {
+            "id": "V4",
+            "title": "Lokale informatie via bestaande autorisatie gebruiken",
+            "status": "partially_implemented_and_measured"
+          },
+          {
+            "id": "V5",
+            "title": "Opeenvolgende modelverwerking verkorten",
+            "status": "partially_implemented_and_measured"
+          },
+          {
+            "id": "V6",
+            "title": "Audio en lokale modellen afzonderlijk vergelijken",
+            "status": "planned"
+          },
+          {
+            "id": "V7",
+            "title": "Gecombineerde regressie en installatie",
+            "status": "partially_implemented_and_measured"
+          }
+        ]
+      },
+      "lowHangingFruit20261015": {
+        "status": "installed_targeted_checks_and_synthetic_voice_passed_latency_target_unmet",
+        "evidence": "development/evidence/product/subscription-voice-20261013/low-hanging-fruit-20261015.json",
+        "installed": true,
+        "finalTargetedChecks": 42,
+        "backendPublicMs": {
+          "baseline": 33397,
+          "candidate": 22587
+        },
+        "backendLocalMs": {
+          "baseline": 58308,
+          "candidateVariants": [
+            28382,
+            54180,
+            34178
+          ]
+        },
+        "installedVoiceAnswerMs": 21912,
+        "ownerAcceptance": false,
+        "remaining": "Lokale API-ontdekking/herstelrondes; vooraf opgebouwde context en nachtelijk onderhoud; akoestische en vervolgbeurtacceptatie."
+      },
+      "componentWarmth20261015": {
+        "status": "measured_no_production_behavior_changed",
+        "evidence": "development/evidence/product/subscription-voice-20261013/repeated-components-20261015.json",
+        "finding": "Modelherhaling sneller; huishoudgeheugen blijft vier zoekvragen doen. HA-read 9–10 ms, inventaris 168–189 ms. Eén geheugenvraag ~1 s tegenover ~3 s, kwaliteit nog niet gelijkwaardig bewezen.",
+        "nextActions": [
+          "Prepare source-backed household context on existing memory authority, with correction/deletion invalidation.",
+          "Measure recall quality before replacing unconditional query expansion with bounded fallback.",
+          "Reduce repeated model/API discovery through existing authorized capability context; inspect failed inventory cursor separately.",
+          "Keep component repetitions in future comparisons; use full voice chain only for integration acceptance."
+        ]
+      },
+      "householdContinuityRequirement20261015": {
+        "ownerRequirement": "Alle toegelaten apparaten in hetzelfde huishouden zijn één gedeelde omgeving voor openbare taken. Taakstatus en overnemen over apparaten heen; expliciete andere antwoordlocatie mogelijk, bijvoorbeeld woonkamer naar overkapping. Telegram en WhatsApp zijn persoonsgebonden.",
+        "status": "installed_room_delivery_and_shared_public_conversation_context",
+        "constraints": [
+          "Geen toegang tot privétaken via gedeelde apparaten zonder persoonsverificatie.",
+          "Gedeelde toegang uitsluitend binnen dezelfde toegelaten tenant/installatie/huishouden en toestemming.",
+          "Oorspronkelijke taakherkomst blijft behouden; antwoordlocatie is een afzonderlijke gecontroleerde aflevering.",
+          "Microfoon-QueueFull en onderzoek naar wegvallende beginwoorden blijven onderdeel van lopende reparatie."
+        ],
+        "availableDestinations": [
+          "woonkamer",
+          "overkapping"
+        ],
+        "deliveryRoutingStatus": "Nog niet gebouwd: expliciet gekozen huisbestemming apart van onveranderlijke taakherkomst; geen automatische privékanaaloverdracht.",
+        "evidence": "development/evidence/product/subscription-voice-20261013/room-destination-and-prefix-20261015.json",
+        "installedChecks": {
+          "householdUniquePassingTests": 59,
+          "mediaAndBackendPassingTests": 43,
+          "knownBaselinePublicFailure": 1,
+          "actualPriorTaskReadableFromBothSpeakers": true,
+          "microphoneQueueCrashFixInstalled": true,
+          "missingInitialWords": "measurement_only_unresolved"
+        },
+        "currentOutcome": "Openbare taakaflevering naar gekozen huisspeaker werkelijk gebruikt; eerdere openbare vraag op andere microfoon in echte modelantwoordproef herkend. Audiobeginmeting en SDKstartupwarmup geïnstalleerd.",
+        "acceptance": "Bestemming atomair bewaard, originele taakherkomst intact, privé uitgesloten, stop/revocation respecteren; aflevering en gebruikte stem expliciet aantoonbaar.",
+        "nextAction": "Hindsight geheugenopvraag blijft circa2.5s ook warm; gerichte optimalisatie met geheugenkwaliteit behouden. Ontbrekend spraakbegin vereist akoestische verificatie; geen claim volledig opgelost.",
+        "memoryGcOptimization": {
+          "status": "installed_and_verified",
+          "issue": "Warm recall ~2.55 seconds; critical reranking including wait ~2.31 seconds. Full Python GC after every inference contributes repeated overhead.",
+          "change": "Pinned opt-in coalescing of explicit full GC, with serialized generation-0 collections between full collections; automatic GC, heap trim, GPU release unchanged.",
+          "acceptance": "Stable varied-load component test, unchanged scores/facts, faster full installed memory recall, preserved installed configuration and data.",
+          "next": "This memory optimization is complete. Remaining voice work: physical speaker-prefix verification and overall conversation latency; no full voice acceptance claim.",
+          "warm_recall_before_median_seconds": 4.7483,
+          "warm_recall_after_median_seconds": 1.51555,
+          "ordered_facts_equal": true,
+          "stability_calls": 1204,
+          "stability_seconds": 301.931,
+          "evidence": "development/evidence/product/subscription-voice-20261013/hindsight-gc-20261015.json",
+          "final_recall_median_seconds": 1.0784,
+          "first_recall_after_restart_before_seconds": 18.2893,
+          "first_recall_after_restart_after_seconds": 1.8669,
+          "focused_tests_passed": 11
+        }
+      },
+      "rebootRecovery20261016": {
+        "status": "installed_reboot_recovery_verified",
+        "checkedAt": "2026-10-15T22:09:08.164117+00:00",
+        "evidence": "development/evidence/product/subscription-voice-20261013/reboot-recovery-20261016.json",
+        "outcome": "Gateway en browserpaden hersteld na echte hostherstart; kern/werker gezond; beide speakerbindings bereikbaar; twee synthetische spraakzinnen geslaagd.",
+        "nextAction": "Totale gesprekslatency en fysiek ontbrekende eerste woorden verder onderzoeken; geen volledige spraakacceptatie.",
+        "voiceAcceptance": false
+      },
+      "latency20261016": {
+        "status": "local_reader_installed_latency_open",
+        "checkedAt": "2026-10-16T11:04:34.933091+00:00",
+        "existing": "Both speaker bindings and synthetic voice generation verified after reboot; memory optimization previously installed.",
+        "shortfall": "Geen dubbele bronaanvraag meer in laatste proef; 56 seconden voor drie bronpagina’s en vijf lokale leesstappen blijft te langzaam.",
+        "route": "Existing household voice -> conversation -> Hindsight -> contact model -> existing tools.",
+        "doneWhen": "Same-turn local reading and model continuation installed and verified; total voice latency not complete.",
+        "nextAction": "Reduce oversized read payload and model round trips without losing source coverage; investigate recurrent Hindsight CUDA failure. Physical missing speech prefix remains open.",
+        "ownerActionRequired": false,
+        "outcome": "Gedeelde spraak kan eigen opgeslagen resultaten lokaal uitlezen, zonder privéconnectorrechten. Onnodige modelwissel en doodlopende lokale veldcorrectie hersteld. 129 tests; beide speakerbindings gereed.",
+        "evidence": "development/evidence/product/subscription-voice-20261013/local-reader-20261016.json",
+        "candidateBackendMs": 55836,
+        "voiceAcceptance": false
+      },
       "reliability20261016": {
         "status": "installed_owner_retest_pending",
         "checkedAt": "2026-10-16T13:20:06.079193+00:00",
@@ -16295,6 +16640,45 @@
         "evidence": "development/evidence/product/subscription-voice-20261013/activity-and-updates-20261016.json",
         "summary": "Kern-tussenreacties klinken tijdens verder werken; alleen spreken veroorzaakt geen modelescalatie. Eén opvraag combineert directe openbare handelingen met de bestaande taaklijst.173 controles en geïnstalleerde tweebeurtenspraakproef geslaagd.",
         "remaining": "Dagvraag circa25s in één proef; geen volledige privé-/initiatiefdaghistorie. Fysieke natuurlijkheid door eigenaar beoordelen."
+      },
+      "playbackContinuity20261017": {
+        "status": "installed_targeted_regression_passed_owner_observation_pending",
+        "ownerAuthorization": "Owner explicitly requested continuing voice improvements, preserving one Eva and the continuous-development design.",
+        "existing": "Single-core voice, renderer speech handles, bounded idle/absolute lifetime and interruption/authority checks already exist.",
+        "gap": "Listener idle timer only accounts for pending core work; renderer playback after the final answer can consume the user idle period or expire the session mid-answer.",
+        "files": [
+          "src/eva/voice_service/codex_media.py",
+          "development/tests/voice_service/test_codex_media.py"
+        ],
+        "doneWhen": "Renderer speech is activity through its bounded lifecycle; completion gives a fresh user-response interval; cancelled/done handles do not keep the session alive; absolute lifetime, STOP and authority remain enforced; install exact reviewed module over actual current voice images.",
+        "runtimeChanged": true,
+        "ownerActionRequired": false,
+        "checkedAt": "2026-10-17T01:00:33.951919+00:00",
+        "deferredFindings": [
+          "Bounded actual receipt content is still omitted.",
+          "Activity nonterminal states collapse to admitted_only."
+        ],
+        "deferredScope": "Findings only; no extra platform, private-source exposure or implementation in this bounded audio lifecycle fix.",
+        "evidence": "development/evidence/product/subscription-voice-20261013/playback-activity-20261017.json",
+        "testsPassed": 98,
+        "independentReview": "No material blockers; audio lifetime, STOP, authority and absolute limit reviewed.",
+        "result": "Voice playback no longer consumes the inactivity interval; completion/cancel gives a fresh listener interval. Exact reviewed source installed in both existing voice services; physical experience not claimed."
+      },
+      "calendarActivity20261017": {
+        "status": "installed_targeted_checks_and_public_core_probe_passed",
+        "existing": "Bounded public activity reader with original source hashes, exact source actor, receipt status, paginated results and shared task list.",
+        "gap": "Rolling24h cannot represent yesterday or a25h local-calendar day; model cannot request exact calendar scope.",
+        "doneWhen": "Existing activity action accepts optional validated local date; host computes DST-aware UTC interval using configured conversation timezone; pages remain pinned, public scope and correction/erasure retained; existing current24h mode and ordinary continuity preserved; tested and installed over current images.",
+        "scope": "Public activity date selection only; no new memory, no private activity joining or receipt-content expansion.",
+        "ownerActionRequired": false,
+        "runtimeChanged": true,
+        "checkedAt": "2026-10-17T01:09:37.700535+00:00",
+        "evidence": "development/evidence/product/subscription-voice-20261013/calendar-activity-20261017.json",
+        "testsPassed": 28,
+        "result": "Requested calendar day and DST boundaries now available through existing activity action; ordinary public probe selected yesterday correctly and final answer scoped negative claims. Installed final exact modules on current core/worker images; original privacy and default continuity preserved.",
+        "liveValidationModelRequests": 4,
+        "knownRegisteredTokens": 36345,
+        "ownerAcceptance": false
       },
       "voiceCompletion20261017": {
         "status": "installed_technically_verified_owner_listening_pending",
@@ -18124,7 +18508,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-25T07:05:40.286973+00:00",
+  "updatedAt": "2026-10-29T21:46:55.607681+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -18206,8 +18590,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-10-24T11:02:18.567187+00:00",
-  "checkedAt": "2026-10-24T08:05:38.155917+00:00",
+  "lastUpdatedAt": "2026-10-29T21:46:55.607681+00:00",
+  "checkedAt": "2026-10-29T21:46:55.607681+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

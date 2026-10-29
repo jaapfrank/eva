@@ -1,0 +1,83 @@
+{
+  "contract": "EvaNativeHandoffValidation/v1",
+  "checkedAt": "2026-10-29T20:04:40.114663+00:00",
+  "scope": "Approved native handoff logic and host input resolver; no production execution claim.",
+  "tests": {
+    "passed": 88,
+    "failed": 0,
+    "errors": 0,
+    "seconds": 206.59,
+    "previousFailuresResolved": 6,
+    "previousPassesRetained": 82,
+    "log": "/tmp/eva-e16-final-native-pv0_ocmr/regression.log",
+    "logSha256": "ffa764b7f391945547a48d4f7ce50a96431787a258e3fb943ba2e0b7451c0bdb",
+    "run": {
+      "container": "eva-e16-final-7659a72b69",
+      "database": "eva2_4b_disposable_e16_final",
+      "modules": [
+        "development/tests/postgres/test_native_initiative_digital_work.py",
+        "development/tests/postgres/test_native_initiative_resume.py",
+        "development/tests/postgres/test_native_initiative_profile_refresh.py",
+        "development/tests/postgres/test_certified_native_preparation_recovery.py"
+      ],
+      "source_hashes_before": {
+        "src/eva/bootstrap/native_work_assets.py": "d6c5fc511e990aa1b678ff8474f7375852d7f9c1ed95d04625b70c08700c607f",
+        "src/eva/bootstrap/native_initiative_work.py": "61c14dfe12fda5b2a7533c4661c2652ee4d8c430bb9a1c2f74a7c5a3f8e2cbc4",
+        "src/eva/adapters/postgres/delegated_work.py": "5c18f6f1f44d087df11843414dd82542a06b99efcde5f657921b8a3c24bd4090",
+        "development/tests/postgres/test_native_initiative_digital_work.py": "d57f6ffb6d8c6d5a7f98ca4304769233e6144cbf1c85e490f949fd0d5f2bb6aa",
+        "development/tests/postgres/test_native_initiative_resume.py": "10c90f307923acae376ad997fd64fc59eaaacbefaf725434e6bcf9f8b74a80d7",
+        "development/tests/postgres/test_native_initiative_profile_refresh.py": "c9b7e906237a67c2523a81bd72983d7d64a6ea9e5ee4b2ec0d0cd579c2b6e50e",
+        "development/tests/postgres/test_certified_native_preparation_recovery.py": "6e7503f96e77ea581ef4cd9449b0065c7b226fe41bd88487d2d9c94215dde576"
+      },
+      "previous_run": "/tmp/eva-e16-certified-validation-qwh73rr4",
+      "command": [
+        "/home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python",
+        "-m",
+        "pytest",
+        "-vv",
+        "--tb=short",
+        "--junitxml=/tmp/eva-e16-final-native-pv0_ocmr/results.xml",
+        "development/tests/postgres/test_native_initiative_digital_work.py",
+        "development/tests/postgres/test_native_initiative_resume.py",
+        "development/tests/postgres/test_native_initiative_profile_refresh.py",
+        "development/tests/postgres/test_certified_native_preparation_recovery.py"
+      ],
+      "exit_code": 0,
+      "container_removed": true,
+      "elapsed_seconds": 222.72,
+      "source_hashes_after": {
+        "src/eva/bootstrap/native_work_assets.py": "d6c5fc511e990aa1b678ff8474f7375852d7f9c1ed95d04625b70c08700c607f",
+        "src/eva/bootstrap/native_initiative_work.py": "61c14dfe12fda5b2a7533c4661c2652ee4d8c430bb9a1c2f74a7c5a3f8e2cbc4",
+        "src/eva/adapters/postgres/delegated_work.py": "5c18f6f1f44d087df11843414dd82542a06b99efcde5f657921b8a3c24bd4090",
+        "development/tests/postgres/test_native_initiative_digital_work.py": "d57f6ffb6d8c6d5a7f98ca4304769233e6144cbf1c85e490f949fd0d5f2bb6aa",
+        "development/tests/postgres/test_native_initiative_resume.py": "10c90f307923acae376ad997fd64fc59eaaacbefaf725434e6bcf9f8b74a80d7",
+        "development/tests/postgres/test_native_initiative_profile_refresh.py": "c9b7e906237a67c2523a81bd72983d7d64a6ea9e5ee4b2ec0d0cd579c2b6e50e",
+        "development/tests/postgres/test_certified_native_preparation_recovery.py": "6e7503f96e77ea581ef4cd9449b0065c7b226fe41bd88487d2d9c94215dde576"
+      },
+      "sources_unchanged_during_run": true
+    }
+  },
+  "installation": {
+    "status": "blocked_missing_production_input_declaration_route",
+    "dispatched": false,
+    "ownerAuthorization": "Install immediately if native regression run succeeds; direct owner instruction in this chat.",
+    "observed": {
+      "eva2-managed-b-slot3-core": {
+        "container_id": "c95c45b5b9fa4af116d004ef1914ef730016b1c5608187f0cd0520d23b76b280",
+        "image": "sha256:8902e2f62936e178c04f5a9cd20867f5bb2a6556260ae63ff32a3eec686215a0",
+        "native_inputs_setting_present": false
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "container_id": "fcc5d3d1119ceed0b03ac934bf711b77454c213fa95d1e6b47770eabe50f0beb",
+        "image": "sha256:73f4fe4b28e87d187a0345cbff0549b5a2935161e4c59f80b97deb14939d6f04",
+        "native_inputs_setting_present": false
+      }
+    },
+    "reason": "Core and worker have no EVA_NATIVE_WORK_INPUTS_FILE configuration. New native admission requires an exact host task declaration and otherwise settles needs_help/blocked. Tests inject synthetic inputs; they do not configure production. Deploying now would block ordinary native work without its required declaration.",
+    "requiredNextAction": "Connect actual host-owned per-task input declarations and visible file/hash bindings in production composition, then validate the real composition before replacement. Do not fabricate empty declarations, infer permission from task text or bypass the defensive preflight.",
+    "productionMigrationsChanged": false,
+    "liveKitChanged": false,
+    "telegramChanged": false
+  },
+  "fullE16Completed": false
+}
