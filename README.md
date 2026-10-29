@@ -6,7 +6,7 @@ Eva is **in ontwikkeling**. Dit is een werkend project met echte onderdelen en e
 
 ## Wat Eva moet kunnen
 
-- **Natuurlijk contact:** gesprekken voeren via onder meer Telegram en een eigen webomgeving, met een herkenbare persoonlijkheid en aandacht voor de situatie.
+- **Natuurlijk contact:** praten met Eva via de bestaande tweerichtingsspraak, of berichten uitwisselen via Telegram en een eigen webomgeving, met een herkenbare persoonlijkheid en aandacht voor de situatie.
 - **Mensen en context onthouden:** relevante voorkeuren, afspraken en eerdere gesprekken gebruiken, met mogelijkheden om informatie te bekijken, corrigeren of vergeten.
 - **Initiatief nemen:** zelf afwegen of een signaal of afspraak aandacht verdient, en kiezen tussen een vraag, voorstel, actie of juist stilte.
 - **Werk uitvoeren:** opdrachten op de achtergrond oppakken, voortgang bewaren, resultaten controleren en terugkoppelen aan de oorspronkelijke gebruiker.
@@ -18,6 +18,7 @@ Dat zijn de doelen van het project, geen belofte dat elke mogelijkheid al volled
 
 Deze voorbeelden laten zien waar Eva naartoe groeit. Of een voorbeeld volledig werkt, hangt af van de aangesloten mogelijkheden en moet in de praktijk worden getest.
 
+- **Een gesprek voeren:** je kunt tegen Eva praten en zij kan met gesproken antwoorden reageren. Doorpraten werkt al; het natuurlijke ritme en onderbreken worden verder verbeterd.
 - **Een afspraak onthouden:** iemand vertelt Eva over een afspraak. Eva kan de context bewaren en die later gebruiken wanneer een passend vervolg aan de orde is.
 - **Een opdracht opvolgen:** iemand vraagt Eva om informatie uit te zoeken. Eva kan het werk op de achtergrond aanpakken en een resultaat teruggeven aan degene die de opdracht gaf.
 - **Zelf iets opmerken:** een toegestane bron verandert. Eva kan afwegen of dat nuttig is om te melden, of dat ze beter stil kan blijven.
@@ -25,7 +26,7 @@ Deze voorbeelden laten zien waar Eva naartoe groeit. Of een voorbeeld volledig w
 
 ## Wat er al staat
 
-Er is één gedeelde Eva-kern voor gesprekken, geheugen, initiatief en achtergrondwerk. De bestaande installatie ondersteunt contact via Telegram en een lokaal dashboard. Taken hebben een eigen status en er zijn voorzieningen om werk te stoppen, resultaten aan de juiste persoon te koppelen en onzekere handelingen niet blind te herhalen.
+Er is één gedeelde Eva-kern voor gesprekken, geheugen, initiatief en achtergrondwerk. De bestaande installatie ondersteunt contact via Telegram, een lokaal dashboard en tweerichtingsspraak: Eva kan luisteren en met haar stem antwoorden. Doorpraten werkt al in de bestaande spraakroute. Spreekritme, reactiesnelheid en het betrouwbaar onderbreken blijven aandachtspunten; volledige acceptatie is nog niet afgerond. Taken hebben een eigen status en er zijn voorzieningen om werk te stoppen, resultaten aan de juiste persoon te koppelen en onzekere handelingen niet blind te herhalen.
 
 Een beperkt voorbeeld van zelfverbetering is technisch getest: Eva maakte voor een vooraf afgebakende programmeertaak een kandidaat, die onafhankelijk werd vergeleken, toegepast en later gebruikt. Dat bewijst de werking van die specifieke route, niet dat Eva willekeurige software zelfstandig en veilig kan aanpassen.
 
@@ -60,7 +61,7 @@ Gesprekken en achtergrondwerk delen dezelfde kern en persoonscontext. Bij een la
 | **FastAPI** | Koppelingen tussen de kern, het dashboard en andere onderdelen. |
 | **Docker en WSL** | De huidige omgeving om onderdelen geïsoleerd te draaien en te installeren. |
 | **Telegram, API's en MCP** | Kanalen en koppelingen waarmee Eva met mensen en externe mogelijkheden kan werken. |
-| **LiveKit en spraakcomponenten** | De bestaande route voor spraak, die nog afzonderlijk wordt afgerond. |
+| **LiveKit en spraakcomponenten** | De bestaande tweerichtingsspraak: luisteren, gesproken antwoorden en gesprekken via de spraakroute. Natuurlijk ritme en onderbreken worden nog verbeterd. |
 | **Tests en onafhankelijke beoordeling** | Controleren of een wijziging werkt en of een resultaat aan de oorspronkelijke opdracht voldoet. |
 
 Niet elke koppeling is voor ieder huishouden aangesloten of volledig in de praktijk bewezen. De techniek is een middel: de waarde van het project zit uiteindelijk in nuttig, betrouwbaar en prettig dagelijks gebruik.
