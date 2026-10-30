@@ -106,7 +106,18 @@ class NativeResearchTool:
     async def prepare(self, turn, call):
         if require_initiative_context(turn) is None or call.name not in self.action_names:
             raise ConversationConflict("native research requires its initiative context")
-        arguments = self.validate_arguments(call.arguments)
+        try:
+            arguments = self.validate_arguments(call.arguments)
+        except ConversationConflict as error:
+            # This exact structural refusal happens before preparation/admission.
+            # Keep authority failures and uncertain executions outside input repair.
+            if str(error) != "current research options are invalid":
+                raise
+            raise ConversationActionInputRejected(("options",),
+                prompt="Deze onderzoeksaanvraag is niet gestart: de bronopties zijn ongeldig. "
+                    "Herschrijf alleen options als een lijst met 1 tot 5 niet-lege teksten "
+                    "van maximaal 120 tekens per optie. Houd de bestaande vraag, "
+                    "onderzoeksmodus en bevoegdheden aan.") from error
         if "options" not in arguments:
             raise ConversationConflict("native research requires admitted public sources")
         try:

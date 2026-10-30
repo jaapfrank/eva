@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Van zelfontdekte behoefte naar eigen uitvinding en later gebruik
+Zelf relevante bronveranderingen aansluiten op eigen aandacht
 
-Fundament29oktober geïnstalleerd: bestaande behoefte-/feedbackketen hergebruikt, veilige catalogusvergelijking en hash-/persoon-/versiegebonden latere uitvoeringsbewijzen zichtbaar.82 gerichte unit-/beoordelingsgrenscontroles en6 PostgreSQL-controles slagen;3 bestaande feedbacktestfouten ook zonder deze wijziging. Kern/workerprofielen gelijk; E1.6-bronnen en manifestresolver behouden. Geen volledige E4.15 of echte onafhankelijke winst geclaimd.
+Live privé-afwegingen zijn hervat na veilige afsluiting van de oude blokkade. Eva koos zelf onderzoek en later aandacht op30oktober12:00. Een concrete invoerfout in vervolgonderzoek is herleid en met79 gerichte controles gerepareerd/geïnstalleerd. Een verdwenen oude worker staat nu als onbekende uitkomst geregistreerd, met bron en onbekend verbruik behouden. Kern/workerprofielen gelijk; E1.6/E4.15 behouden. Volledige bronveranderingsketen blijft open.
 
-Klaar wanneer: Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.
+Klaar wanneer: Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.
 
 ## Afmaakvolgorde
 

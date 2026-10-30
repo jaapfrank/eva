@@ -1,0 +1,62 @@
+{
+  "contract": "EvaE16LiveContinuation/v1",
+  "checkedAt": "2026-10-30T03:29:52.906037+00:00",
+  "status": "ordinary_live_decisions_verified_research_input_failure_repaired",
+  "finding": "Private review lane blocked since2026-10-25T23:26:23Z while real sensory observations continue. No new private decision until administrative closure.",
+  "boundedAction": {
+    "checkedAt": "2026-10-29T22:08:44.963638+00:00",
+    "result": {
+      "contract": "EvaPrivateReviewRecovery/v1",
+      "disposition": "abandoned",
+      "usage": "unknown",
+      "replayed": false
+    },
+    "thread": "sensory:initiative-review:547262a5e00deb3ed2a6b3c5:498047",
+    "revision": 5,
+    "phase": "will_abandoned",
+    "status": "completed",
+    "eventHashesBefore": [
+      "03b9403e77c3717fa36a7f765d015ae47e5a00643634563883ad714ff49b39e0",
+      "249c1c319682a08146f2bc908bf5a838d5b2fc0c40cfca60c51e3cef97aa45f8",
+      "9286fc5c6d8bd2a702f67f968c20c6981c02aa72915a43899898a726cded097f",
+      "96857f8547ac20bc1899025f20e905941a59f0b114c9ddbe8d301517e1fb89d3"
+    ],
+    "eventHashesAfter": [
+      "03b9403e77c3717fa36a7f765d015ae47e5a00643634563883ad714ff49b39e0",
+      "249c1c319682a08146f2bc908bf5a838d5b2fc0c40cfca60c51e3cef97aa45f8",
+      "9286fc5c6d8bd2a702f67f968c20c6981c02aa72915a43899898a726cded097f",
+      "96857f8547ac20bc1899025f20e905941a59f0b114c9ddbe8d301517e1fb89d3",
+      "1befdc1a4261a1bf6c5f50d45ba75a4ba294744fb4ba150a4cb32d91d16413e3"
+    ],
+    "oldUsageUnchanged": true,
+    "oldModelRequestRepeated": false,
+    "oldEffectsRepeated": false
+  },
+  "causeOfOriginalFailure": "unknown",
+  "originalUsage": null,
+  "productionCodeChanged": false,
+  "servicesRestarted": false,
+  "modelRequestManuallyTriggered": false,
+  "syntheticSourceSelected": false,
+  "fullCardCompleted": false,
+  "privateReceiptSha256": "3d8f8b1fdeb444be8d47796862ad577be81f91d21c6eaa694769d5404cdad028",
+  "dispatchReceiptSha256": "3d8f8b1fdeb444be8d47796862ad577be81f91d21c6eaa694769d5404cdad028",
+  "verification": {
+    "originalFourHashesPreserved": true,
+    "onlyAddedEvent": "WILL_REVIEW_ABANDONED",
+    "originalUsageRemainsUnknown": true,
+    "currentOwnerBindingChecked": true,
+    "currentGenerationClaimsChecked": true,
+    "unresolvedOwnWorkBeforeContinuation": 0,
+    "computeCapacityAvailable": true,
+    "ordinaryIdleIntervalSeconds": 300,
+    "ordinaryReviewForced": false
+  },
+  "latestRepairEvidence": "development/evidence/reassessment/e16-native-research-input-repair-20261030.json",
+  "ordinaryContinuation": {
+    "selfChosenWorkObserved": true,
+    "followupDecisionObserved": true,
+    "nextAttentionAt": "2026-10-30T11:00:00Z",
+    "originalSourceWatchChangeChainProven": false
+  }
+}

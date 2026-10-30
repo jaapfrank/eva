@@ -838,28 +838,28 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-29",
+  "lastUpdated": "2026-10-30",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.15",
+  "activeTaskId": "E1.6",
   "currentWork": {
-    "id": "E4.15",
-    "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
+    "id": "E1.6",
+    "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
     "status": "in_progress",
-    "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "Volg een echte, door Eva onderbouwde behoefte via de bestaande toegelaten route. Laat Eva een vers herbruikbaar alternatief en eigen idee vergelijken; bind gekozen voorziening aan passende onafhankelijke beoordeling en volg echte oorspronkelijke gebruikersfeedback en later gebruik. Geen demonstratie of winst verzinnen.",
+    "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
+    "nextAction": "Volg het door Eva zelf gekozen bestaande vervolgmoment op30oktober12:00Nederlandse tijd en de normale toegelaten bronroute. Het onzekere onderzoek is niet hervat of als geslaagd aangemerkt. Controleer de oorspronkelijke echte bronkeuze/verandering/afweging/uitkomst; geen geforceerde bron, extra modelproef of herhaling van oude effecten.",
     "ownerActionRequired": false,
-    "foundationDelivery": {
-      "checkedAt": "2026-10-29T21:43:52.133135+00:00",
-      "status": "installed_source_profile_verified",
-      "evidence": "development/evidence/reassessment/e415-foundation-20261029.json",
-      "built": true,
-      "installed": true,
-      "actualUserReuseProven": false,
-      "independentQualityWinProven": false,
-      "fullE415Completed": false,
-      "compatibleProfiles": true,
-      "reviewDocument": "development/docs/E415-FUNDAMENT-20261029.md"
+    "liveContinuation": {
+      "checkedAt": "2026-10-30T03:29:52.906037+00:00",
+      "evidence": "development/evidence/reassessment/e16-native-research-input-repair-20261030.json",
+      "status": "installed_verified_pending_real_selected_followup",
+      "oldLostReviewClosed": true,
+      "ordinaryLiveDecisionVerified": true,
+      "selfChosenResearchObserved": true,
+      "researchInputFailureRepaired": true,
+      "staleWorkerRecordedAsUnknown": true,
+      "nextAttentionAt": "2026-10-30T11:00:00Z",
+      "fullCardCompleted": false
     }
   },
   "historicalWorkboard": {
@@ -1652,6 +1652,21 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E1.6 · Liveblokkades en onderzoeksinvoer hersteld — 30 oktober",
+            "state": "installed",
+            "summary": "Live privé-afwegingen zijn hervat na veilige afsluiting van de oude blokkade. Eva koos zelf onderzoek en later aandacht op30oktober12:00. Een concrete invoerfout in vervolgonderzoek is herleid en met79 gerichte controles gerepareerd/geïnstalleerd. Een verdwenen oude worker staat nu als onbekende uitkomst geregistreerd, met bron en onbekend verbruik behouden. Kern/workerprofielen gelijk; E1.6/E4.15 behouden. Volledige bronveranderingsketen blijft open.",
+            "remaining": "De oorspronkelijke echte bronveranderingsketen blijft te bewijzen; het bestaande door Eva gekozen vervolgmoment staat op30oktober12:00Nederlandse tijd.",
+            "source": "development/evidence/reassessment/e16-native-research-input-repair-20261030.json",
+            "checkedAt": "2026-10-30T03:29:52.906037+00:00",
+            "installedAt": "2026-10-30T03:25:37.385715+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": false,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E4.15 · Fundament voor vergelijking en later gebruik geïnstalleerd",
             "state": "installed",
@@ -3171,13 +3186,13 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E4.15 · Fundament voor vergelijking en later gebruik geïnstalleerd",
+          "title": "E1.6 · Liveblokkades en onderzoeksinvoer hersteld — 30 oktober",
           "state": "installed",
-          "summary": "Bestaande behoefteanalyse en afzonderlijke beoordeling hergebruikt; catalogus biedt vergelijking en bron-/versiegebonden later gebruik.82 gerichte tests en6 PostgreSQL-controles geslaagd;3 bestaande feedbacktestfouten blijven afzonderlijk zichtbaar.",
-          "remaining": "Echte Eva-gekozen behoefte, gerealiseerde voorziening, onafhankelijke kwaliteitsbeslissing en later gebruikersfeedback/hergebruik blijven nodig.",
-          "source": "development/evidence/reassessment/e415-foundation-20261029.json",
-          "checkedAt": "2026-10-29T21:46:55.607681+00:00",
-          "installedAt": "2026-10-29T21:43:00.518066+00:00",
+          "summary": "Live privé-afwegingen zijn hervat na veilige afsluiting van de oude blokkade. Eva koos zelf onderzoek en later aandacht op30oktober12:00. Een concrete invoerfout in vervolgonderzoek is herleid en met79 gerichte controles gerepareerd/geïnstalleerd. Een verdwenen oude worker staat nu als onbekende uitkomst geregistreerd, met bron en onbekend verbruik behouden. Kern/workerprofielen gelijk; E1.6/E4.15 behouden. Volledige bronveranderingsketen blijft open.",
+          "remaining": "De oorspronkelijke echte bronveranderingsketen blijft te bewijzen; het bestaande door Eva gekozen vervolgmoment staat op30oktober12:00Nederlandse tijd.",
+          "source": "development/evidence/reassessment/e16-native-research-input-repair-20261030.json",
+          "checkedAt": "2026-10-30T03:29:52.906037+00:00",
+          "installedAt": "2026-10-30T03:25:37.385715+00:00",
           "technicalDeliveryComplete": true,
           "independentReviewComplete": false,
           "newProductFunctionCompleted": false,
@@ -3186,29 +3201,29 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.15",
-          "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-          "summary": "Fundament29oktober geïnstalleerd: bestaande behoefte-/feedbackketen hergebruikt, veilige catalogusvergelijking en hash-/persoon-/versiegebonden latere uitvoeringsbewijzen zichtbaar.82 gerichte unit-/beoordelingsgrenscontroles en6 PostgreSQL-controles slagen;3 bestaande feedbacktestfouten ook zonder deze wijziging. Kern/workerprofielen gelijk; E1.6-bronnen en manifestresolver behouden. Geen volledige E4.15 of echte onafhankelijke winst geclaimd.",
-          "detail": "Fundament29oktober geïnstalleerd: bestaande behoefte-/feedbackketen hergebruikt, veilige catalogusvergelijking en hash-/persoon-/versiegebonden latere uitvoeringsbewijzen zichtbaar.82 gerichte unit-/beoordelingsgrenscontroles en6 PostgreSQL-controles slagen;3 bestaande feedbacktestfouten ook zonder deze wijziging. Kern/workerprofielen gelijk; E1.6-bronnen en manifestresolver behouden. Geen volledige E4.15 of echte onafhankelijke winst geclaimd.",
-          "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-          "state": "Fundament geïnstalleerd; echte Eva-gekozen uitkomst en gebruikersbewijs blijven open."
+          "taskId": "E1.6",
+          "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+          "summary": "Live privé-afwegingen zijn hervat na veilige afsluiting van de oude blokkade. Eva koos zelf onderzoek en later aandacht op30oktober12:00. Een concrete invoerfout in vervolgonderzoek is herleid en met79 gerichte controles gerepareerd/geïnstalleerd. Een verdwenen oude worker staat nu als onbekende uitkomst geregistreerd, met bron en onbekend verbruik behouden. Kern/workerprofielen gelijk; E1.6/E4.15 behouden. Volledige bronveranderingsketen blijft open.",
+          "detail": "Live privé-afwegingen zijn hervat na veilige afsluiting van de oude blokkade. Eva koos zelf onderzoek en later aandacht op30oktober12:00. Een concrete invoerfout in vervolgonderzoek is herleid en met79 gerichte controles gerepareerd/geïnstalleerd. Een verdwenen oude worker staat nu als onbekende uitkomst geregistreerd, met bron en onbekend verbruik behouden. Kern/workerprofielen gelijk; E1.6/E4.15 behouden. Volledige bronveranderingsketen blijft open.",
+          "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
+          "state": "Concrete liveblokkades hersteld; eigen vervolgmoment behouden; volledige bronketen open."
         },
         "next": {
           "taskId": "E1.6",
           "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
-          "detail": "Geen herbouw, herinstallatie of herhaling van de geslaagde E1.6-regressierun. Behoud de technisch afgeronde overdracht. Alleen het ontbrekende gewone livebewijs volgen: Eva kiest vanuit een echte behoefte zelf een bron, en een echte verandering krijgt passend gecontroleerd vervolg of onderbouwde stilte. Geen geforceerde bronkeuze of extra modelproef."
+          "detail": "Volg het door Eva zelf gekozen bestaande vervolgmoment op30oktober12:00Nederlandse tijd en de normale toegelaten bronroute. Het onzekere onderzoek is niet hervat of als geslaagd aangemerkt. Controleer de oorspronkelijke echte bronkeuze/verandering/afweging/uitkomst; geen geforceerde bron, extra modelproef of herhaling van oude effecten."
         },
         "ownerAction": {
           "required": false,
           "detail": "De technische E1.6- en E4.15-fundamentinstallaties zijn klaar. Geen nieuwe eigenaarhandeling of hervatting van andere chats gevraagd. Ontbrekend echt gebruik en bronvervolg blijven zichtbaar.",
           "steps": []
         },
-        "checkedAt": "2026-10-29T21:46:55.607681+00:00",
+        "checkedAt": "2026-10-30T03:29:52.906037+00:00",
         "reviewedAt": "2026-10-25T22:09:03.184675+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
       "reviewedAt": "2026-10-20T19:26:59.261526+00:00",
-      "checkedAt": "2026-10-29T21:46:55.607681+00:00",
+      "checkedAt": "2026-10-30T03:29:52.906037+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3342,7 +3357,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-29T21:46:55.607681+00:00",
+      "lastUpdatedAt": "2026-10-30T03:29:52.906037+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3376,7 +3391,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-29T21:46:55.607681+00:00",
+      "updatedAt": "2026-10-30T03:29:52.906037+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -3385,7 +3400,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.15",
+        "currentStep": "E1.6",
         "steps": [
           {
             "number": 1,
@@ -6002,9 +6017,9 @@
                 "dependsOn": [
                   "E1.4"
                 ],
-                "nextAction": "Geen herbouw, herinstallatie of herhaling van de geslaagde E1.6-regressierun. Behoud de technisch afgeronde overdracht. Alleen het ontbrekende gewone livebewijs volgen: Eva kiest vanuit een echte behoefte zelf een bron, en een echte verandering krijgt passend gecontroleerd vervolg of onderbouwde stilte. Geen geforceerde bronkeuze of extra modelproef.",
-                "checkedAt": "2026-10-29T21:46:55.607681+00:00",
-                "progress": "Technisch klaar en geïnstalleerd op29oktober:92 regressietests geslaagd, echte oorspronkelijke bron plus taakgebonden bestanden gecontroleerd in kern en worker, gelijke uitvoerprofielen en onveranderde taakidentiteit. Op de latere E4.15-installatie zijn alle E1.6-bronhashes en de resolver opnieuw behouden. De volledige modelgekozen bronverandering met echte afweging en vervolg blijft afzonderlijk open.",
+                "nextAction": "Volg het door Eva zelf gekozen bestaande vervolgmoment op30oktober12:00Nederlandse tijd en de normale toegelaten bronroute. Het onzekere onderzoek is niet hervat of als geslaagd aangemerkt. Controleer de oorspronkelijke echte bronkeuze/verandering/afweging/uitkomst; geen geforceerde bron, extra modelproef of herhaling van oude effecten.",
+                "checkedAt": "2026-10-30T03:29:52.906037+00:00",
+                "progress": "Live privé-afwegingen zijn hervat na veilige afsluiting van de oude blokkade. Eva koos zelf onderzoek en later aandacht op30oktober12:00. Een concrete invoerfout in vervolgonderzoek is herleid en met79 gerichte controles gerepareerd/geïnstalleerd. Een verdwenen oude worker staat nu als onbekende uitkomst geregistreerd, met bron en onbekend verbruik behouden. Kern/workerprofielen gelijk; E1.6/E4.15 behouden. Volledige bronveranderingsketen blijft open.",
                 "evidence": [
                   "development/evidence/product/e16-source-attention-installed-20261020.json",
                   "development/reviews/e16-source-attention-review-20261020.json",
@@ -6060,8 +6075,8 @@
                   "Verbind één bestaande relevante bronaanleiding met bestaande geplande aandacht en duurzaam vervolg; ongewijzigde callbacks bundelen zonder modelpolling."
                 ],
                 "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-                "implementationStatus": "installed_native_manifest_delivery_verified_real_source_followup_open",
-                "latestEvidence": "development/evidence/reassessment/e16-native-handoff-validation-20261029.json",
+                "implementationStatus": "installed_native_input_repair_verified_live_followup_selected_source_watch_open",
+                "latestEvidence": "development/evidence/reassessment/e16-native-research-input-repair-20261030.json",
                 "review": "development/reviews/e16-reconnect-20261025.json",
                 "newOrdinaryFailure20261026": {
                   "observedAt": "2026-10-26T07:08:14.647100+00:00",
@@ -6138,6 +6153,18 @@
                   "otherChatsResumed": false,
                   "fullCardCompleted": false,
                   "e16PreservedByLatestInstallation": "development/evidence/reassessment/e415-foundation-20261029.json"
+                },
+                "liveContinuation": {
+                  "checkedAt": "2026-10-30T03:29:52.906037+00:00",
+                  "evidence": "development/evidence/reassessment/e16-native-research-input-repair-20261030.json",
+                  "status": "installed_verified_pending_real_selected_followup",
+                  "oldLostReviewClosed": true,
+                  "ordinaryLiveDecisionVerified": true,
+                  "selfChosenResearchObserved": true,
+                  "researchInputFailureRepaired": true,
+                  "staleWorkerRecordedAsUnknown": true,
+                  "nextAttentionAt": "2026-10-30T11:00:00Z",
+                  "fullCardCompleted": false
                 }
               },
               {
@@ -9290,7 +9317,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Volg een echte, door Eva onderbouwde behoefte via de bestaande toegelaten route. Laat Eva een vers herbruikbaar alternatief en eigen idee vergelijken; bind gekozen voorziening aan passende onafhankelijke beoordeling en volg echte oorspronkelijke gebruikersfeedback en later gebruik. Geen demonstratie of winst verzinnen.",
+        "nextAction": "Volg het door Eva zelf gekozen bestaande vervolgmoment op30oktober12:00Nederlandse tijd en de normale toegelaten bronroute. Het onzekere onderzoek is niet hervat of als geslaagd aangemerkt. Controleer de oorspronkelijke echte bronkeuze/verandering/afweging/uitkomst; geen geforceerde bron, extra modelproef of herhaling van oude effecten.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9301,7 +9328,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-29T21:46:55.607681+00:00",
+        "updatedAt": "2026-10-30T03:29:52.906037+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9725,7 +9752,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.15",
+      "currentStep": "E1.6",
       "steps": [
         {
           "number": 1,
@@ -12342,9 +12369,9 @@
               "dependsOn": [
                 "E1.4"
               ],
-              "nextAction": "Geen herbouw, herinstallatie of herhaling van de geslaagde E1.6-regressierun. Behoud de technisch afgeronde overdracht. Alleen het ontbrekende gewone livebewijs volgen: Eva kiest vanuit een echte behoefte zelf een bron, en een echte verandering krijgt passend gecontroleerd vervolg of onderbouwde stilte. Geen geforceerde bronkeuze of extra modelproef.",
-              "checkedAt": "2026-10-29T21:46:55.607681+00:00",
-              "progress": "Technisch klaar en geïnstalleerd op29oktober:92 regressietests geslaagd, echte oorspronkelijke bron plus taakgebonden bestanden gecontroleerd in kern en worker, gelijke uitvoerprofielen en onveranderde taakidentiteit. Op de latere E4.15-installatie zijn alle E1.6-bronhashes en de resolver opnieuw behouden. De volledige modelgekozen bronverandering met echte afweging en vervolg blijft afzonderlijk open.",
+              "nextAction": "Volg het door Eva zelf gekozen bestaande vervolgmoment op30oktober12:00Nederlandse tijd en de normale toegelaten bronroute. Het onzekere onderzoek is niet hervat of als geslaagd aangemerkt. Controleer de oorspronkelijke echte bronkeuze/verandering/afweging/uitkomst; geen geforceerde bron, extra modelproef of herhaling van oude effecten.",
+              "checkedAt": "2026-10-30T03:29:52.906037+00:00",
+              "progress": "Live privé-afwegingen zijn hervat na veilige afsluiting van de oude blokkade. Eva koos zelf onderzoek en later aandacht op30oktober12:00. Een concrete invoerfout in vervolgonderzoek is herleid en met79 gerichte controles gerepareerd/geïnstalleerd. Een verdwenen oude worker staat nu als onbekende uitkomst geregistreerd, met bron en onbekend verbruik behouden. Kern/workerprofielen gelijk; E1.6/E4.15 behouden. Volledige bronveranderingsketen blijft open.",
               "evidence": [
                 "development/evidence/product/e16-source-attention-installed-20261020.json",
                 "development/reviews/e16-source-attention-review-20261020.json",
@@ -12400,8 +12427,8 @@
                 "Verbind één bestaande relevante bronaanleiding met bestaande geplande aandacht en duurzaam vervolg; ongewijzigde callbacks bundelen zonder modelpolling."
               ],
               "continuitySpecification": "development/design/product/living-housemate-task-scope-20261022.json#specification/continuityDirection",
-              "implementationStatus": "installed_native_manifest_delivery_verified_real_source_followup_open",
-              "latestEvidence": "development/evidence/reassessment/e16-native-handoff-validation-20261029.json",
+              "implementationStatus": "installed_native_input_repair_verified_live_followup_selected_source_watch_open",
+              "latestEvidence": "development/evidence/reassessment/e16-native-research-input-repair-20261030.json",
               "review": "development/reviews/e16-reconnect-20261025.json",
               "newOrdinaryFailure20261026": {
                 "observedAt": "2026-10-26T07:08:14.647100+00:00",
@@ -12478,6 +12505,18 @@
                 "otherChatsResumed": false,
                 "fullCardCompleted": false,
                 "e16PreservedByLatestInstallation": "development/evidence/reassessment/e415-foundation-20261029.json"
+              },
+              "liveContinuation": {
+                "checkedAt": "2026-10-30T03:29:52.906037+00:00",
+                "evidence": "development/evidence/reassessment/e16-native-research-input-repair-20261030.json",
+                "status": "installed_verified_pending_real_selected_followup",
+                "oldLostReviewClosed": true,
+                "ordinaryLiveDecisionVerified": true,
+                "selfChosenResearchObserved": true,
+                "researchInputFailureRepaired": true,
+                "staleWorkerRecordedAsUnknown": true,
+                "nextAttentionAt": "2026-10-30T11:00:00Z",
+                "fullCardCompleted": false
               }
             },
             {
@@ -15630,7 +15669,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Volg een echte, door Eva onderbouwde behoefte via de bestaande toegelaten route. Laat Eva een vers herbruikbaar alternatief en eigen idee vergelijken; bind gekozen voorziening aan passende onafhankelijke beoordeling en volg echte oorspronkelijke gebruikersfeedback en later gebruik. Geen demonstratie of winst verzinnen.",
+      "nextAction": "Volg het door Eva zelf gekozen bestaande vervolgmoment op30oktober12:00Nederlandse tijd en de normale toegelaten bronroute. Het onzekere onderzoek is niet hervat of als geslaagd aangemerkt. Controleer de oorspronkelijke echte bronkeuze/verandering/afweging/uitkomst; geen geforceerde bron, extra modelproef of herhaling van oude effecten.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15641,7 +15680,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-29T21:46:55.607681+00:00",
+      "updatedAt": "2026-10-30T03:29:52.906037+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -18508,7 +18547,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-29T21:46:55.607681+00:00",
+  "updatedAt": "2026-10-30T03:29:52.906037+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -18590,8 +18629,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-10-29T21:46:55.607681+00:00",
-  "checkedAt": "2026-10-29T21:46:55.607681+00:00",
+  "lastUpdatedAt": "2026-10-30T03:29:52.906037+00:00",
+  "checkedAt": "2026-10-30T03:29:52.906037+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

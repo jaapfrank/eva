@@ -1,0 +1,170 @@
+{
+  "contract": "EvaNativeResearchInputRepair/v1",
+  "checkedAt": "2026-10-30T03:29:52.906037+00:00",
+  "status": "installed_verified_pending_real_selected_followup",
+  "scope": "Repair only invalid native research options before preparation; no original-task replay or relaxed validation.",
+  "actualLiveChain": {
+    "oldReviewClosedOnce": true,
+    "newOrdinaryReviewSha256": "071df9ebdd24e21b93944b5ab9eb2a9e831579513d55dd589e0be43e392ba301",
+    "selfChosenWorkId": "work:eva-initiative:4d85831b125cef389ee77c3ebb4dff303a52cfab9695c6975a66504e1ce13528",
+    "workOutcome": "ambiguous",
+    "verifiedResearchStepObserved": true,
+    "failureFingerprint": "5bfe557bd46bd7a0c782e3262799ae67c903c9a5dd72e9d4a12d3600499b89c8",
+    "exactStaticFingerprintMatch": {
+      "type": "ConversationConflict",
+      "message": "current research options are invalid",
+      "path": "src/eva/adapters/postgres/conversation_actions.py",
+      "line": 2683
+    },
+    "exactMalformedOptionValueRetained": false,
+    "noAssumptionThatItWasAnEmptyList": true,
+    "followupDecisionSha256": "a7bcc842f661e763a90c3512a87853c0e69669a959437351d690ef66d08cd720",
+    "actualFollowupUsesRetainedResearch": true,
+    "oldUncertainResearchNotRepeated": true,
+    "modelSelectedNextAttention": {
+      "requestedAt": "2026-10-30T11:00:00Z",
+      "effectiveAt": "2026-10-30T11:00:00Z",
+      "localTime": "2026-10-30T12:00:00+01:00",
+      "retainedAfterInstallation": true
+    },
+    "fullOriginalSourceWatchChangeChainProven": false
+  },
+  "repair": {
+    "sources": {
+      "adapters/model/research_tools.py": "3c7b513be05d3eb7c8e4c8b107db272a8ac22f3b434dac998b51333db751e117"
+    },
+    "authorityCheckedBeforeInputRepair": true,
+    "onlyExactOptionsRefusalIsRepairable": true,
+    "invalidOptionsAccepted": false,
+    "validationBoundsUnchanged": true,
+    "ordinaryOwnerResearchChanged": false,
+    "originalTaskAndToolsPreserved": true,
+    "existingOneRepairLimitRetained": true,
+    "noPreparationAdmissionOrEffectOnInvalidRequest": true
+  },
+  "verification": {
+    "baselineNewCasesFailed": 7,
+    "unitAndTransportPassed": 31,
+    "existingPostgresBoundaryCasesPassed": 47,
+    "newRealPostgresBoundaryCasePassed": 1,
+    "totalPassingDistinctTargetedCases": 79,
+    "unitSeconds": 3.81,
+    "postgresExistingRunSeconds": 14.18,
+    "newPostgresCaseSeconds": 6.26,
+    "temporaryDatabaseOnly": true,
+    "paidModelRequestsFromTests": 0,
+    "newPostgresFixtureCorrections": "Synthetic grant was corrected to declare public research separately; production authorization was not changed.",
+    "privateLogHashes": {
+      "baseline-test.log": "fc8c60b01191884ace6621ff437b1b6b987f82a082a87d8b9c5a31050fd82d1d",
+      "candidate-unit-test.log": "4679e79aeec3696ef791418915cd80a4492ea536df589552ae9b292d90f1c33f",
+      "interface-regression-test.log": "cd4012d824713b710aad590987622ed62003f2b75008008cfb6dcf6335145f99",
+      "new-interface-test.log": "0ee3f8ac683c4b4bf9564a29fc2571cf44fd3ce87d81aaeccb37740869a19bc8"
+    }
+  },
+  "oldLostWorker": {
+    "workId": "work:eva-initiative:19530c1f780c93ce6228f2d9e0f13d95e38a69476ead783884fb04de67d971c8",
+    "oldDeadline": "2026-10-30T00:13:31+00:00",
+    "oldWorkerLeaseExpiresAt": "2026-10-29T23:54:01+00:00",
+    "currentProcessGeneration": {
+      "core": {
+        "id": "e75b15217c77c4b64d5fe7b6aa84629e07aefe5eb36eefa3364e8482fe2dbfa7",
+        "startedAt": "2026-10-30T02:51:07.03662069Z"
+      },
+      "worker": {
+        "id": "c8c08799d8c4b0f3d38e7d657e7f0c391ee9927ab8b1214b5c0d17623f7739a3",
+        "startedAt": "2026-10-30T02:51:05.428443777Z"
+      }
+    },
+    "newState": "ambiguous",
+    "errorCode": "worker_process_lost",
+    "usage": "unmeasured",
+    "oldCallAndSourcePreserved": true,
+    "modelOrEffectRepeated": false,
+    "receiptSha256": "a41c64c5c917c54593b478f86510a432da9744ed6f668281edf1d307c83263bb"
+  },
+  "installation": {
+    "installedAt": "2026-10-30T03:25:37.385715+00:00",
+    "roles": {
+      "core": {
+        "containerId": "baf9f6feaf6b3cb9e51a98b6199df24b950f4ba011d170fcd0dd13e6d4306d43",
+        "image": "sha256:325e279e34c104a7a8f5fe0150d6409892cdc942dfc7aa85e5c7a67629548a67",
+        "healthy": true,
+        "exactSourcesVerified": true,
+        "environmentPreserved": true,
+        "e16ManifestResolverPreserved": true
+      },
+      "delegated-work-worker": {
+        "containerId": "63f93b78af8d96c2faaa39f0358b54aab6c4e034ec1fa3feddbb02e7dca0e3c5",
+        "image": "sha256:8cb060cf12c0514501e94c12f03e6b97cf67549864cdda7bd07d777ae4ecb2cd",
+        "healthy": true,
+        "exactSourcesVerified": true,
+        "environmentPreserved": true,
+        "e16ManifestResolverPreserved": true
+      }
+    },
+    "existingMountsAndEnvironmentPreserved": true,
+    "preservedE16AndE415Sources": {
+      "adapters/postgres/delegated_work.py": "5c18f6f1f44d087df11843414dd82542a06b99efcde5f657921b8a3c24bd4090",
+      "bootstrap/native_initiative_work.py": "8b78ac1ffa6aac3d7a360c36c7ed571ff23b061c1809ba82de06a09f1cb72a09",
+      "bootstrap/native_work_assets.py": "34813de438e528a6e04be6c0f96e6d1d6ef28c8ac74851907ea9b170d604f700",
+      "bootstrap/runtime.py": "168ab1dff0bf4ba11ebaa4ac388b1eb92fe4ef97eb028c6d632569b225a8e584",
+      "bootstrap/delegated_digital_composition.py": "25a20d6ee80fbb9ea7f1880399a0f4c4aedfb8c699cad4939a68541c66f5eae6",
+      "bootstrap/delegated_digital_profile.py": "1b8a0141db5062fa9bed0da83dd9722fd4d291eecc087bbd87937493d885146d",
+      "bootstrap/component_maintenance.py": "60071c0f44c05a2864ada13f4f148a569806d6b9c92ce55bfd1ae8dc805d488d",
+      "bootstrap/runtime_repair_host.py": "e351a061d22b01c7797c7937376c4b832d760fcd7bca61b6cb6902efaf010b77",
+      "application/procedure_references.py": "5872178fc58e6160c1e1421ec7488b5180639ef3664d440a08f77fa271741340",
+      "adapters/postgres/procedure_reference_host.py": "ef50afa686383fce966555dcffe3ad044ed52dc16496796630974bf3dbe3cd7b",
+      "providers/procedure_reference_actions.py": "25e55f04254f7e4efc94f65af7b77c07474f622667968ba00333a5ac37e5f90f"
+    },
+    "actualCoreAndWorkerProfilesCompatible": true,
+    "compatibilitySha256": "94e11e5e953997f4424d72326670db501ff329bc3a9566e3da74cbb29b41732f",
+    "frozenHostEvaluatorSourceAndCriteriaChanged": false,
+    "hostProducerReleaseAligned": true,
+    "productionSchemaChanged": false,
+    "livekitOrTelegramChanged": false,
+    "staleWorkGuardBypassed": false,
+    "beforeReplacementClaims": {
+      "checkedAt": "2026-10-30T03:23:43.691859+00:00",
+      "globalRlsReadCoverage": true,
+      "activeUnexpiredCheckpointLeases": 0,
+      "currentGenerationUnknownNullCheckpoints": 0,
+      "exactReviewedOwnerGrantExcluded": 0,
+      "exactCompletedInitiativeAuditExcluded": 0,
+      "exactAdditionalCompletedNativeAuditExcluded": 0,
+      "activeWork": 0,
+      "retainedDailyReflectionCounters": 0,
+      "retainedCompletedReadAndProgressRecords": 0,
+      "nativeMemoryOperations": {
+        "pending": 0,
+        "processing": 0
+      },
+      "boundProcessGenerationAfter": "2026-10-30T02:51:07+00:00",
+      "sourceContractsPinned": {
+        "adapters/postgres/connector_results.py": "90a488952f6f3c185fe6368fab3e956c75ff1ab66d6b036ae0a8120c5065705a",
+        "adapters/postgres/background_work_progress.py": "d1a5b28811d835e0cc6fb49bfa48841a93b6aff647e7ddeff33cd605517a2684",
+        "adapters/postgres/runtime_resource_usage.py": "e97ba5f22781dfb615bebc452dcb9113303d7d3f15e33f4c4e1e580e2ff87240",
+        "application/memory_background.py": "de244b8b77900802ab041c000fb51895aec79fe240c6ea4d572b96e588f4f7c6",
+        "adapters/postgres/memory_outbox.py": "fde890224cd33847b4071b8aabe9a29a65463b3a414af2b349967ea6a557cb46",
+        "adapters/projection/hindsight.py": "df4c190691f56ee503696ecdaea0434e2558594c0edf9d9699d977f4da2e0737"
+      }
+    }
+  },
+  "evidenceLimits": {
+    "newLiveMalformedOptionsRecoveryObserved": false,
+    "fullE16Completed": false,
+    "originalSourceWatchChangeChainStillOpen": true,
+    "oldAmbiguousWorkReclassifiedAsSuccess": false,
+    "fullProjectCompleted": false
+  },
+  "consumption": {
+    "developmentModelTokens": null,
+    "testProviderModelRequests": 0,
+    "selectedLiveReviewsKnownTokens": 54091,
+    "selectedLiveFailedWorkKnownTokens": 58957,
+    "selectedLiveChainKnownTokens": 113048,
+    "totalLiveUsageCompleteness": "partial; other interrupted work remains unmeasured",
+    "costUsdMicros": null,
+    "credits": null,
+    "manualNewModelProbes": 0
+  }
+}

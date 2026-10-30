@@ -418,3 +418,55 @@ def test_owner_terminal_real_loop_offers_only_currently_permitted_alternatives(t
     assert fallback_calls == ([] if grant != "permitted" else [("fetch_source", 19)])
     assert calls.call_count == 0
     assert history[-1].event_type == "RECOVERY_FAILED"
+
+
+def test_invalid_native_research_options_never_admit_an_effect_and_stop_still_wins(native_digital):
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from eva.adapters.postgres.operational_timeline import operational_events
+    from eva.application.conversation import ConversationActionCall, ConversationActionInputRejected
+    from eva.adapters.postgres.initiative_execution import InitiativeMandateDenied
+    import sqlalchemy as sa
+
+    f = native_digital
+    import json
+    f.profile = replace(f.profile, capability_ids=(*f.profile.capability_ids, "research_current_options"))
+    f.service.digital_profile = f.profile
+    # Public research is separately admitted; it is never a local-code capability.
+    f.policy["digital_work"]["worker_profile_release_sha256"] = f.profile.release.worker_profile_release_sha256
+    schema = {"type": "object", "properties": {
+        "question": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "title": {"type": "string", "minLength": 1, "maxLength": 200},
+        "options": {"type": "array", "minItems": 1, "maxItems": 5,
+                    "items": {"type": "string", "minLength": 1, "maxLength": 120}},
+        "research_mode": {"type": "string", "enum": ["topic", "comparison"]},
+        "public_review": {"type": "string", "const": "public_unlinked"}},
+        "required": ["question", "title", "options", "research_mode", "public_review"],
+        "additionalProperties": False}
+    f.policy["capabilities"].append({**f.policy["capabilities"][0],
+        "action_name": "research_current_options", "configuration_sha256": "b" * 64,
+        "tool_name": "research.public_sources", "observation_tool_name": "research.public_sources",
+        "data_scope": "public_research_minimized", "execute_schema": schema, "observe_schema": schema})
+    f.path.write_text(json.dumps(f.policy))
+    _, work = admitted(f)
+    started(f, work)
+    guard, turn = f.auth.bind_work(work.spec)
+    adapter = NativeResearchTool(Mock(), PostgresConversationActions._validated_research_arguments)
+    route = PostgresExternalConversationTools(f.store._engine, adapter, adapter, authorize_turn=guard.check)
+    invalid = ConversationActionCall("bad-options", "research_current_options", {**ARGS, "options": []})
+    with background_execution(BackgroundExecutionScope(turn, work.spec.execution_id)), initiative_execution(guard):
+        with pytest.raises(ConversationActionInputRejected) as rejected:
+            route.execute(turn, invalid)
+        assert rejected.value.fields == ("options",)
+        # The actual PostgreSQL adapter has not admitted an external effect.
+        with f.store._engine.connect() as connection:
+            f.auth.timeline._scope(connection)
+            e = operational_events.c
+            assert connection.scalar(sa.select(sa.func.count()).select_from(operational_events).where(
+                e.tenant_id == f.control._scope.tenant_id,
+                e.installation_id == f.control._scope.installation_id,
+                e.event_type == "TOOL_REQUEST_ADMITTED",
+                e.payload["data"]["source_message_id"].astext == turn.message_id)) == 0
+        assert adapter.research.mock_calls == []
+        f.control.stop(f.claim.intent_id, now=NOW)
+        with pytest.raises((InitiativeMandateDenied, RuntimeError)):
+            route.execute(turn, invalid)

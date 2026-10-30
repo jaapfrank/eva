@@ -1,0 +1,31 @@
+{
+  "currentWork": {
+    "id": "E4.15",
+    "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
+    "status": "in_progress",
+    "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
+    "nextAction": "Volg een echte, door Eva onderbouwde behoefte via de bestaande toegelaten route. Laat Eva een vers herbruikbaar alternatief en eigen idee vergelijken; bind gekozen voorziening aan passende onafhankelijke beoordeling en volg echte oorspronkelijke gebruikersfeedback en later gebruik. Geen demonstratie of winst verzinnen.",
+    "ownerActionRequired": false,
+    "foundationDelivery": {
+      "checkedAt": "2026-10-29T21:43:52.133135+00:00",
+      "status": "installed_source_profile_verified",
+      "evidence": "development/evidence/reassessment/e415-foundation-20261029.json",
+      "built": true,
+      "installed": true,
+      "actualUserReuseProven": false,
+      "independentQualityWinProven": false,
+      "fullE415Completed": false,
+      "compatibleProfiles": true,
+      "reviewDocument": "development/docs/E415-FUNDAMENT-20261029.md"
+    }
+  },
+  "activeTaskId": "E4.15",
+  "now": {
+    "taskId": "E4.15",
+    "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
+    "summary": "Fundament29oktober geïnstalleerd: bestaande behoefte-/feedbackketen hergebruikt, veilige catalogusvergelijking en hash-/persoon-/versiegebonden latere uitvoeringsbewijzen zichtbaar.82 gerichte unit-/beoordelingsgrenscontroles en6 PostgreSQL-controles slagen;3 bestaande feedbacktestfouten ook zonder deze wijziging. Kern/workerprofielen gelijk; E1.6-bronnen en manifestresolver behouden. Geen volledige E4.15 of echte onafhankelijke winst geclaimd.",
+    "detail": "Fundament29oktober geïnstalleerd: bestaande behoefte-/feedbackketen hergebruikt, veilige catalogusvergelijking en hash-/persoon-/versiegebonden latere uitvoeringsbewijzen zichtbaar.82 gerichte unit-/beoordelingsgrenscontroles en6 PostgreSQL-controles slagen;3 bestaande feedbacktestfouten ook zonder deze wijziging. Kern/workerprofielen gelijk; E1.6-bronnen en manifestresolver behouden. Geen volledige E4.15 of echte onafhankelijke winst geclaimd.",
+    "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
+    "state": "Fundament geïnstalleerd; echte Eva-gekozen uitkomst en gebruikersbewijs blijven open."
+  }
+}
