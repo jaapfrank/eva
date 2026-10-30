@@ -2122,3 +2122,66 @@ def test_normal_native_work_retains_its_complete_admitted_catalog(monkeypatch):
     asyncio.run(case.runner.run(case.spec, call_id="call:normal-native-catalog"))
     assert case.model_calls
     assert all(set(names) == set(case.spec.grant.capability_ids) for names in case.model_calls)
+
+
+@pytest.mark.parametrize("after_tool", [False, True])
+def test_rate_limit_preserves_completed_steps_without_self_repair(after_tool):
+    from eva.adapters.model.contracts import ConversationModelRateLimited
+    source, spec, store, tools, journal, runner, identity = fixture()
+    tools.release.set()
+    failures = []
+    runner.failure_observer = lambda *args: failures.append(args)
+
+    class RateLimited:
+        def generate(self, *args, **kwargs):
+            if after_tool and kwargs.get("completed_action") is None:
+                return ConversationModelResult(None, "controlled", ConversationActionCall(
+                    "known-read", "use_connector_tool", {}),
+                    usage=ConversationModelUsage.measured(input_tokens=30, output_tokens=10, tool_calls=1))
+            raise ConversationModelRateLimited("conversation provider rate limited")
+
+    runner.model = RateLimited()
+    outcome = asyncio.run(runner.run(spec, call_id="call:rate-limit"))
+    assert outcome.status == "provider_transient" and outcome.provider_status_code == 429
+    assert outcome.result is None and outcome.retryable is False
+    assert outcome.error_fingerprint == hashlib.sha256(
+        b"ConversationModelRateLimited:conversation provider rate limited").hexdigest()
+    assert len(tools.calls) == int(after_tool)
+    assert outcome.usage.tool_calls == (1 if after_tool else None)
+    if not after_tool:
+        assert outcome.usage.measurement == "unmeasured"
+    assert failures == []  # A service limit is not a self-repair incident.
+
+
+@pytest.mark.parametrize("status,code,expected", [
+    ("provider_transient", 429, "failed"),
+    ("provider_transient", 503, "ambiguous"),
+    ("provider_unavailable", None, "ambiguous"),
+    ("timed_out", None, "ambiguous"),
+    ("internal_error", 429, "ambiguous"),
+])
+def test_worker_distinguishes_rejected_model_request_from_uncertain_execution(status, code, expected):
+    from types import SimpleNamespace
+    from eva.operations.delegated_work_worker import DelegatedWorkWorker
+    from eva.adapters.subagents.tool_free_child import ToolFreeChildOutcome
+    from eva.contracts.delegated_work import DelegatedWorkUsage
+    _, spec, _, _, _, runner, _ = fixture()
+    call = SimpleNamespace(spec=spec, call_id="call:classification")
+    recorded = []
+
+    class FailureStore:
+        def claim_next(self, **kwargs): return object()
+        def start_call(self, claim, **kwargs): return call
+        def stop_requested(self, call): return False
+        def record_failure(self, call, **kwargs): recorded.append(kwargs)
+
+    class FailedRunner:
+        async def run(self, *args, **kwargs):
+            return ToolFreeChildOutcome(status, None, DelegatedWorkUsage.unmeasured(),
+                False, "a" * 64, provider_status_code=code)
+
+    worker = DelegatedWorkWorker(FailureStore(), FailedRunner(), worker_id="worker:test",
+        release=runner.profile.release, clock=lambda: NOW)
+    assert asyncio.run(worker.run_once()) == expected
+    assert len(recorded) == 1 and recorded[0]["ambiguous"] is (expected == "ambiguous")
+    assert recorded[0]["error_code"] == status

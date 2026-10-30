@@ -49,6 +49,9 @@ def delivery_outcome(work):
           and isinstance(report, str) and report.strip() and len(report.strip()) <= 600
           and not report.startswith("input_budget_exceeded:")):
         text = "Het lukte me niet om dit af te maken. " + report.strip()
+    elif error_code == "provider_transient":
+        text = ("De modeldienst kon de volgende stap tijdelijk niet aannemen. "
+                "De eerdere stappen zijn bewaard; de opdracht is nog niet af.")
     elif error_code == "provider_unavailable":
         text = "De dienst die ik nodig had was niet bereikbaar."
     elif error_code == "timed_out":

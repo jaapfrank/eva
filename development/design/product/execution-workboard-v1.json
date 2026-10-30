@@ -841,39 +841,21 @@
   "lastUpdated": "2026-10-30",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E1.6",
+  "activeTaskId": "E4.15",
   "currentWork": {
-    "id": "E1.6",
-    "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
+    "id": "E4.15",
+    "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
-    "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-    "nextAction": "De directe eigenaarproef is geslaagd en teruggeleverd; geen herhaling nodig. Het gekozen12:00-contactmoment is al werkelijk heroverwogen en koos stilte, geen testvoorwaarde. Volg uitsluitend het ontbrekende echte bronkeuze/verandering/afweging/uitkomstbewijs. Behoud de gemeten model-/contexthoogte als concreet efficiëntiepunt bij bestaande E1.13, zonder nieuwe algemene onderzoeksronde.",
+    "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
+    "nextAction": "Maak de concrete resterende Gmail-pakket-/configuratieoverdracht en beoordeling af via de bestaande uitvoerder zodra veilig hervatten met actuele bron is toegelaten; geen herhaling van de bevestigde AgentMail-testmail. Behoud oude onzekere statussen en controleer hun concrete ontvangstbewijzen vóór nieuw extern effect. Gmail-autorisatie pas na bruikbare, beoordeelde voorbereiding; oorspronkelijke E4.15-eindvoorwaarden blijven open.",
     "ownerActionRequired": false,
-    "liveContinuation": {
-      "checkedAt": "2026-10-30T03:29:52.906037+00:00",
-      "evidence": "development/evidence/reassessment/e16-native-research-input-repair-20261030.json",
-      "status": "ordinary_background_live_test_passed_full_source_chain_open",
-      "oldLostReviewClosed": true,
-      "ordinaryLiveDecisionVerified": true,
-      "selfChosenResearchObserved": true,
-      "researchInputFailureRepaired": true,
-      "staleWorkerRecordedAsUnknown": true,
-      "nextAttentionAt": "2026-10-30T11:00:00Z",
-      "fullCardCompleted": false,
-      "nextAttentionPending": false,
-      "nextAttentionActuallyDecidedAt": "2026-10-30T11:02:30Z",
-      "nextAttentionDisposition": "silence"
-    },
-    "ownerLiveHandoffTest": {
-      "checkedAt": "2026-10-30T11:32:54.467337+00:00",
-      "evidence": "development/evidence/reassessment/e16-owner-sha-live-outcome-20261030.json",
-      "status": "passed",
-      "actualLocalExecution": true,
-      "independentHashMatches": true,
-      "telegramDeliveryAcknowledged": true,
-      "queueToDeliverySeconds": 54,
-      "workerTokens": 64079,
-      "fullE16Completed": false
+    "mailExecutionDelivery": {
+      "checkedAt": "2026-10-30T15:48:40.636226+00:00",
+      "evidence": "development/evidence/reassessment/mail-execution-boundary-repair-20261030.json",
+      "modelRefusalRepairInstalled": true,
+      "operatorAssistedMailVerified": true,
+      "gmailCandidateLocalOnly": true,
+      "fullCardCompleted": false
     }
   },
   "historicalWorkboard": {
@@ -3215,12 +3197,12 @@
         ],
         "maintenance": "Dezelfde werkbordbron wordt bijgewerkt bij taakstart, werkelijke blokkade en oplevering. De pagina haalt wijzigingen iedere vijf seconden op, ook in een achtergrondtab, en ververst bij terugkeer of verbindingherstel. Nu verversen haalt de huidige bron direct op. De inhoudelijke controletijd toont een echte standcontrole, geen automatische agentbewaking.",
         "lastCompletedResult": {
-          "title": "E1.6 · Echte achtergrondproef geslaagd — 30 oktober",
-          "state": "verified",
-          "summary": "Directe echte eigenaarproef30oktober geslaagd: één lokale SHA-256-berekening, exit0, onafhankelijk juiste hash en bevestigdeTelegramterugmelding54s na toelating. Worker registreert64.079tokens/5modelresponsen/4tools; dat efficiëntiepunt blijft zichtbaar. De12:00-gelegenheid is12:02werkelijk heroverwogen en koos stilte. Technische achtergrondafronding is bewezen; volledige E1.6-bronveranderingsketen blijft afzonderlijk open.",
-          "remaining": "Deze operatorproef bewijst gewone achtergrondafronding, geen volledige spontane bronbewaking. Model-/contextverbruik is hoog.",
-          "source": "development/evidence/reassessment/e16-owner-sha-live-outcome-20261030.json",
-          "checkedAt": "2026-10-30T11:32:54.467337+00:00",
+          "title": "Mailuitvoering · model-limiet correct verwerkt en echte testmail gecontroleerd",
+          "state": "verified_partial",
+          "summary": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
+          "remaining": "Gmail-activatie en volledige zelfstandige uitvind-/gebruiks-/feedbackcyclus blijven open.",
+          "source": "development/evidence/reassessment/mail-execution-boundary-repair-20261030.json",
+          "checkedAt": "2026-10-30T15:48:40.636226+00:00",
           "technicalDeliveryComplete": true,
           "functionalTestPassed": true,
           "independentReviewComplete": false,
@@ -3230,24 +3212,24 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E1.6",
-          "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
-          "summary": "Directe echte eigenaarproef30oktober geslaagd: één lokale SHA-256-berekening, exit0, onafhankelijk juiste hash en bevestigdeTelegramterugmelding54s na toelating. Worker registreert64.079tokens/5modelresponsen/4tools; dat efficiëntiepunt blijft zichtbaar. De12:00-gelegenheid is12:02werkelijk heroverwogen en koos stilte. Technische achtergrondafronding is bewezen; volledige E1.6-bronveranderingsketen blijft afzonderlijk open.",
-          "detail": "Directe echte eigenaarproef30oktober geslaagd: één lokale SHA-256-berekening, exit0, onafhankelijk juiste hash en bevestigdeTelegramterugmelding54s na toelating. Worker registreert64.079tokens/5modelresponsen/4tools; dat efficiëntiepunt blijft zichtbaar. De12:00-gelegenheid is12:02werkelijk heroverwogen en koos stilte. Technische achtergrondafronding is bewezen; volledige E1.6-bronveranderingsketen blijft afzonderlijk open.",
-          "doneWhen": "Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.",
-          "state": "Echte achtergrondproef geslaagd en teruggemeld; bronveranderingsbewijs en efficiëntiepunt apart."
+          "taskId": "E4.15",
+          "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
+          "summary": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
+          "detail": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
+          "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
+          "state": "Gerichte reparatie geïnstalleerd; echte testmail operator-geholpen; Gmail-prototype nog niet aangesloten."
         },
         "next": {
-          "taskId": "E1.6",
-          "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",
-          "detail": "De directe eigenaarproef is geslaagd en teruggeleverd; geen herhaling nodig. Het gekozen12:00-contactmoment is al werkelijk heroverwogen en koos stilte, geen testvoorwaarde. Volg uitsluitend het ontbrekende echte bronkeuze/verandering/afweging/uitkomstbewijs. Behoud de gemeten model-/contexthoogte als concreet efficiëntiepunt bij bestaande E1.13, zonder nieuwe algemene onderzoeksronde."
+          "taskId": "E4.15",
+          "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
+          "detail": "Maak de concrete resterende Gmail-pakket-/configuratieoverdracht en beoordeling af via de bestaande uitvoerder zodra veilig hervatten met actuele bron is toegelaten; geen herhaling van de bevestigde AgentMail-testmail. Behoud oude onzekere statussen en controleer hun concrete ontvangstbewijzen vóór nieuw extern effect. Gmail-autorisatie pas na bruikbare, beoordeelde voorbereiding; oorspronkelijke E4.15-eindvoorwaarden blijven open."
         },
         "ownerAction": {
           "required": false,
-          "detail": "De gevraagde directe proef is door de eigenaar gestart en door Eva succesvol uitgevoerd en teruggemeld. Geen nieuwe eigenaarhandeling gevraagd.",
+          "detail": "Bestaande AgentMail-inbox en testmail zijn gecontroleerd. Geen herhaling of nieuwe sleutel gevraagd. Eerst resterende bouwvoorbereiding afmaken.",
           "steps": []
         },
-        "checkedAt": "2026-10-30T11:32:54.467337+00:00",
+        "checkedAt": "2026-10-30T15:48:40.636226+00:00",
         "reviewedAt": "2026-10-25T22:09:03.184675+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -3429,7 +3411,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E1.6",
+        "currentStep": "E4.15",
         "steps": [
           {
             "number": 1,
@@ -8567,7 +8549,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Volg een echte, door Eva onderbouwde behoefte via de bestaande toegelaten route. Laat Eva een vers herbruikbaar alternatief en eigen idee vergelijken; bind gekozen voorziening aan passende onafhankelijke beoordeling en volg echte oorspronkelijke gebruikersfeedback en later gebruik. Geen demonstratie of winst verzinnen.",
+                "nextAction": "Maak de concrete resterende Gmail-pakket-/configuratieoverdracht en beoordeling af via de bestaande uitvoerder zodra veilig hervatten met actuele bron is toegelaten; geen herhaling van de bevestigde AgentMail-testmail. Behoud oude onzekere statussen en controleer hun concrete ontvangstbewijzen vóór nieuw extern effect. Gmail-autorisatie pas na bruikbare, beoordeelde voorbereiding; oorspronkelijke E4.15-eindvoorwaarden blijven open.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -8590,10 +8572,10 @@
                   "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-24T15:44:15.830924+00:00",
-                "progress": "Fundament29oktober geïnstalleerd: bestaande behoefte-/feedbackketen hergebruikt, veilige catalogusvergelijking en hash-/persoon-/versiegebonden latere uitvoeringsbewijzen zichtbaar.82 gerichte unit-/beoordelingsgrenscontroles en6 PostgreSQL-controles slagen;3 bestaande feedbacktestfouten ook zonder deze wijziging. Kern/workerprofielen gelijk; E1.6-bronnen en manifestresolver behouden. Geen volledige E4.15 of echte onafhankelijke winst geclaimd.",
+                "checkedAt": "2026-10-30T15:48:40.636226+00:00",
+                "progress": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
                 "evidence": "development/evidence/product/e415-installed-route-20261023.json",
-                "latestEvidence": "development/evidence/product/e415-household-continuation-145510-20261024.json",
+                "latestEvidence": "development/evidence/reassessment/mail-execution-boundary-repair-20261030.json",
                 "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json",
                 "foundationDelivery": {
                   "checkedAt": "2026-10-29T21:43:52.133135+00:00",
@@ -8606,6 +8588,14 @@
                   "fullE415Completed": false,
                   "compatibleProfiles": true,
                   "reviewDocument": "development/docs/E415-FUNDAMENT-20261029.md"
+                },
+                "mailExecutionDelivery": {
+                  "checkedAt": "2026-10-30T15:48:40.636226+00:00",
+                  "evidence": "development/evidence/reassessment/mail-execution-boundary-repair-20261030.json",
+                  "modelRefusalRepairInstalled": true,
+                  "operatorAssistedMailVerified": true,
+                  "gmailCandidateLocalOnly": true,
+                  "fullCardCompleted": false
                 }
               },
               {
@@ -9360,7 +9350,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De directe eigenaarproef is geslaagd en teruggeleverd; geen herhaling nodig. Het gekozen12:00-contactmoment is al werkelijk heroverwogen en koos stilte, geen testvoorwaarde. Volg uitsluitend het ontbrekende echte bronkeuze/verandering/afweging/uitkomstbewijs. Behoud de gemeten model-/contexthoogte als concreet efficiëntiepunt bij bestaande E1.13, zonder nieuwe algemene onderzoeksronde.",
+        "nextAction": "Maak de concrete resterende Gmail-pakket-/configuratieoverdracht en beoordeling af via de bestaande uitvoerder zodra veilig hervatten met actuele bron is toegelaten; geen herhaling van de bevestigde AgentMail-testmail. Behoud oude onzekere statussen en controleer hun concrete ontvangstbewijzen vóór nieuw extern effect. Gmail-autorisatie pas na bruikbare, beoordeelde voorbereiding; oorspronkelijke E4.15-eindvoorwaarden blijven open.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9371,7 +9361,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-30T11:32:54.467337+00:00",
+        "updatedAt": "2026-10-30T15:48:40.636226+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9647,7 +9637,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-28T17:46:05.368391+00:00",
+        "checkedAt": "2026-10-30T15:48:40.636226+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -9795,7 +9785,7 @@
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E1.6",
+      "currentStep": "E4.15",
       "steps": [
         {
           "number": 1,
@@ -14933,7 +14923,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Volg een echte, door Eva onderbouwde behoefte via de bestaande toegelaten route. Laat Eva een vers herbruikbaar alternatief en eigen idee vergelijken; bind gekozen voorziening aan passende onafhankelijke beoordeling en volg echte oorspronkelijke gebruikersfeedback en later gebruik. Geen demonstratie of winst verzinnen.",
+              "nextAction": "Maak de concrete resterende Gmail-pakket-/configuratieoverdracht en beoordeling af via de bestaande uitvoerder zodra veilig hervatten met actuele bron is toegelaten; geen herhaling van de bevestigde AgentMail-testmail. Behoud oude onzekere statussen en controleer hun concrete ontvangstbewijzen vóór nieuw extern effect. Gmail-autorisatie pas na bruikbare, beoordeelde voorbereiding; oorspronkelijke E4.15-eindvoorwaarden blijven open.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -14956,10 +14946,10 @@
                 "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-24T15:44:15.830924+00:00",
-              "progress": "Fundament29oktober geïnstalleerd: bestaande behoefte-/feedbackketen hergebruikt, veilige catalogusvergelijking en hash-/persoon-/versiegebonden latere uitvoeringsbewijzen zichtbaar.82 gerichte unit-/beoordelingsgrenscontroles en6 PostgreSQL-controles slagen;3 bestaande feedbacktestfouten ook zonder deze wijziging. Kern/workerprofielen gelijk; E1.6-bronnen en manifestresolver behouden. Geen volledige E4.15 of echte onafhankelijke winst geclaimd.",
+              "checkedAt": "2026-10-30T15:48:40.636226+00:00",
+              "progress": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
               "evidence": "development/evidence/product/e415-installed-route-20261023.json",
-              "latestEvidence": "development/evidence/product/e415-household-continuation-145510-20261024.json",
+              "latestEvidence": "development/evidence/reassessment/mail-execution-boundary-repair-20261030.json",
               "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json",
               "foundationDelivery": {
                 "checkedAt": "2026-10-29T21:43:52.133135+00:00",
@@ -14972,6 +14962,14 @@
                 "fullE415Completed": false,
                 "compatibleProfiles": true,
                 "reviewDocument": "development/docs/E415-FUNDAMENT-20261029.md"
+              },
+              "mailExecutionDelivery": {
+                "checkedAt": "2026-10-30T15:48:40.636226+00:00",
+                "evidence": "development/evidence/reassessment/mail-execution-boundary-repair-20261030.json",
+                "modelRefusalRepairInstalled": true,
+                "operatorAssistedMailVerified": true,
+                "gmailCandidateLocalOnly": true,
+                "fullCardCompleted": false
               }
             },
             {
@@ -15726,7 +15724,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De directe eigenaarproef is geslaagd en teruggeleverd; geen herhaling nodig. Het gekozen12:00-contactmoment is al werkelijk heroverwogen en koos stilte, geen testvoorwaarde. Volg uitsluitend het ontbrekende echte bronkeuze/verandering/afweging/uitkomstbewijs. Behoud de gemeten model-/contexthoogte als concreet efficiëntiepunt bij bestaande E1.13, zonder nieuwe algemene onderzoeksronde.",
+      "nextAction": "Maak de concrete resterende Gmail-pakket-/configuratieoverdracht en beoordeling af via de bestaande uitvoerder zodra veilig hervatten met actuele bron is toegelaten; geen herhaling van de bevestigde AgentMail-testmail. Behoud oude onzekere statussen en controleer hun concrete ontvangstbewijzen vóór nieuw extern effect. Gmail-autorisatie pas na bruikbare, beoordeelde voorbereiding; oorspronkelijke E4.15-eindvoorwaarden blijven open.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15737,7 +15735,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-30T11:32:54.467337+00:00",
+      "updatedAt": "2026-10-30T15:48:40.636226+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -16013,7 +16011,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-28T17:46:05.368391+00:00",
+      "checkedAt": "2026-10-30T15:48:40.636226+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [

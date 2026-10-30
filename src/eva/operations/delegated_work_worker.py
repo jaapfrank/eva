@@ -134,6 +134,11 @@ class DelegatedWorkWorker:
             "provider_unavailable",
             "internal_error",
         }
+        # A 429 rejects the next model request before it produces an action.
+        # Earlier tool receipts remain immutable and resume still reconciles them;
+        # other provider failures/timeouts retain the conservative unknown state.
+        if outcome.status == "provider_transient" and outcome.provider_status_code == 429:
+            ambiguous = False
         try:
             self._store.record_failure(
                 call,

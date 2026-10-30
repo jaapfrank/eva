@@ -1,0 +1,107 @@
+{
+  "contract": "EvaMailExecutionBoundaryRepair/v1",
+  "checkedAt": "2026-10-30T15:48:40.636226+00:00",
+  "status": "installed_targeted_repair_operator_assisted_mail_verified",
+  "scope": "Concrete mail-task handoff and model-refusal classification; original E1.6/E4.15 criteria unchanged.",
+  "cause": {
+    "modelRateLimitFingerprint": "f92175b7d9453e3fd18889629f3147bab3b3b09eb83be99b307d94e8ba167979",
+    "previousClassification": "internal_error -> ambiguous -> generic unknown-action notice",
+    "correctedClassification": "provider_transient / HTTP429 -> failed; earlier receipts retained",
+    "scopeLimit": "Other unavailable-provider failures, actual transport timeouts and unknown effects remain conservative; historical terminal states are not rewritten.",
+    "buildHandoff": "Available programming tools were not selected; bounded correction led Eva to create a candidate. General current-stage guidance now distinguishes local construction from later account activation."
+  },
+  "sources": {
+    "bootstrap/delegated_digital_runner.py": "6f5535f3827abeca223c9cadde4fbd15128797041418a8eee654bf69c46902fc",
+    "operations/delegated_work_worker.py": "ede9285a0f48e503a64c2f600ef7059cd0926a78b8313fc5aa01720e147d13cb",
+    "application/work_failure_notice.py": "1570f6c1b02feb27e32aaa880575506af697d11f4397e178488ecc83fb1102b2",
+    "application/work_result_presentation.py": "06de2819dded08a765b0e97c44adc8186623b74741f22b5e17384eadeeed0d6c"
+  },
+  "protectedDelegatedWorkSha256": "5c18f6f1f44d087df11843414dd82542a06b99efcde5f657921b8a3c24bd4090",
+  "tests": {
+    "focusedPassed": 170,
+    "focusedFailed": 0,
+    "focusedErrors": 0,
+    "installedClassificationCases": 3,
+    "productionTaskCreatedByClassificationCheck": false,
+    "realModelRequestsForClassificationCheck": 0,
+    "additionalHouseholdPresentationSuite": "Five pre-existing fixture-construction failures (missing parent_task_id / unconstructed household service); not changed or counted as passing."
+  },
+  "installation": {
+    "state": "installed_source_profile_verified",
+    "images": {
+      "core": "sha256:4ee7164665ff8d8737cf9340bb6e449a8d67c91221cd809b224628e390050d74",
+      "delegated-work-worker": "sha256:2a37eef0949cfd8ea5e9aaa5423900e86048f8d5c00b153460266fa221fb6b1c"
+    },
+    "allFourCoreWorkerProfilesMatch": true,
+    "dataAndMountsPreserved": true,
+    "oldReceiptMarkersRetained": true,
+    "exactTerminalReceiptMarkersAudited": 16,
+    "schemaChanged": false,
+    "voiceChanged": false,
+    "personalityChanged": false
+  },
+  "agentMail": {
+    "realCredentialScopeObserved": "existing inbox",
+    "organizationInboxInventory": "403; not required for scoped existing inbox",
+    "authenticatedPrivateGatewayPrepared": true,
+    "operatorAssisted": true,
+    "oneOriginalAuthorizedTestMailSent": true,
+    "providerMessageReadBack": true,
+    "providerLabels": [
+      "sent"
+    ],
+    "recipientDeliveryConfirmed": false,
+    "originalTaskAnnotationStoredAndReadBack": true,
+    "historicalTaskStatePreserved": true,
+    "newAutomaticAttemptScheduledForOperatorOutcome": false,
+    "secretsPublished": false
+  },
+  "gmailCandidate": {
+    "writtenBy": "Eva existing programming executor",
+    "codeAndReadmePreserved": true,
+    "localTestsPassed": 19,
+    "independentNetworkFreeRerunPassed": 19,
+    "sourceHashes": {
+      "gmail_adapter.py": "f5ddcba0d04112c82331d5d4dc9c228154696a5646c999b8421b9648d49799de",
+      "server.py": "9c87cb38ae194ac6e7f8eae26778e18fac824bff6d3913df84bfb87274b39d0b",
+      "test_gmail.py": "773250e9f806cc3e9fc60b7c475ff203635e2b0d0efbe33f56ac0ae908c5419c",
+      "README.md": "0f66fb97ae449a127751586a84f5ff4123da561105dd262ed7f03ca0127fb0a9"
+    },
+    "installed": false,
+    "activated": false,
+    "review": "Prototype only: packaging/configuration manifest incomplete; move policy must follow agreed criteria and actual authorization before activation. No live mailbox effect or autonomous invention win claimed."
+  },
+  "consumption": {
+    "evaGmailCandidateAttempt": {
+      "measurement": "partial",
+      "knownTotalTokens": 268385,
+      "completedModelResponses": 11,
+      "toolCalls": 10,
+      "costUsd": null
+    },
+    "evaEarlierAgentMailAttempt": {
+      "measurement": "partial",
+      "knownTotalTokens": 103485,
+      "completedModelResponses": 6,
+      "toolCalls": 5,
+      "costUsd": null
+    },
+    "codexDevelopmentTokens": null,
+    "developmentCostUsd": null,
+    "newEvaluatorModelSeries": false
+  },
+  "completion": {
+    "fullE16": false,
+    "fullE415": false,
+    "ownerAcceptance": false,
+    "familyAcceptance": false
+  },
+  "privateProofSha256": {
+    "mail-execution-boundary-20261030/activation.private.json": "a93b8e2903a2ee3933766c3e7f9155d18acfd61558ece80092560ddc34255d29",
+    "mail-execution-boundary-20261030/tests.log": "ba20c523ef38963169fcab8d51363939ae5fd88a167df52ab261093e8cf015d0",
+    "mail-execution-boundary-20261030/installed-classification.private.json": "75219ed37a1b7249db47ae8a4de6e0fae41d90e8218287e34f2eab0b9e8a4875",
+    "mail-execution-boundary-20261030/gmail-independent-local-tests.log": "0e57adb20e8c777a995127a13620b0d1801d8d2717ab1a454e0f04d5efd04604",
+    "telegram-followup-20261030/agentmail-test-mail.private.stdout": "8e74d76d7884c810c620aab6f44aa6a8648fab1eea8d743e9c8ed0a7ba51ea47",
+    "telegram-followup-20261030/agentmail-outcome-handoff.private.stdout": "f2fa1cc2a0b2318783849299aff4369bd318a7461f97d05ba994d5c89ddb3888"
+  }
+}

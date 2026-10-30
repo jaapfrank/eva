@@ -4,11 +4,11 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Zelf relevante bronveranderingen aansluiten op eigen aandacht
+Van zelfontdekte behoefte naar eigen uitvinding en later gebruik
 
-Directe echte eigenaarproef30oktober geslaagd: één lokale SHA-256-berekening, exit0, onafhankelijk juiste hash en bevestigdeTelegramterugmelding54s na toelating. Worker registreert64.079tokens/5modelresponsen/4tools; dat efficiëntiepunt blijft zichtbaar. De12:00-gelegenheid is12:02werkelijk heroverwogen en koos stilte. Technische achtergrondafronding is bewezen; volledige E1.6-bronveranderingsketen blijft afzonderlijk open.
+Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.
 
-Klaar wanneer: Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.
+Klaar wanneer: Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.
 
 ## Afmaakvolgorde
 
@@ -145,7 +145,7 @@ Vier van de oorspronkelijke 24 taken afgerond (83/103). E4.16 is geïnstalleerd 
 
 ## Van jou
 
-De gevraagde directe proef is door de eigenaar gestart en door Eva succesvol uitgevoerd en teruggemeld. Geen nieuwe eigenaarhandeling gevraagd.
+Bestaande AgentMail-inbox en testmail zijn gecontroleerd. Geen herhaling of nieuwe sleutel gevraagd. Eerst resterende bouwvoorbereiding afmaken.
 
 ## Historie
 

@@ -48,3 +48,17 @@ def test_automatic_failure_return_is_short_while_full_details_remain_saved(state
     else:
         assert "niet afgemaakt" in notice.output or "niet af" in notice.output
     assert work_failure_description("incomplete_work", report).endswith(report)
+
+
+@pytest.mark.parametrize("state", ["failed", "ambiguous"])
+def test_temporary_model_refusal_does_not_hide_real_execution_uncertainty(state):
+    work = SimpleNamespace(state=state, error_code="provider_transient", failure_report=None,
+        title="Example", stop_requested_at=None, result=None, updated_at=datetime(2026, 10, 30, tzinfo=UTC),
+        spec=SimpleNamespace(work_id="work:one", sha256="a" * 64))
+    notice = delivery_outcome(work)
+    if state == "failed":
+        assert "modeldienst" in notice.output and "nog niet af" in notice.output
+        assert "Ik weet niet" not in notice.output
+    else:
+        assert "niet nog eens" in notice.output
+    assert notice.state == state and work.result is None

@@ -13,7 +13,7 @@ from eva.adapters.connectors.delegated_completion import (
     completed_tool_evidence, recoverable_completion_context,
 )
 from eva.adapters.connectors.mcp_gateway import McpGatewayUnavailable
-from eva.adapters.model.contracts import ConversationModelDeadlineExceeded
+from eva.adapters.model.contracts import ConversationModelDeadlineExceeded, ConversationModelRateLimited
 from eva.adapters.postgres.background_model_journal import BackgroundModelJournal
 from eva.adapters.postgres.background_work_progress import BackgroundWorkProgress, load_work_progress
 from eva.adapters.postgres.component_improvement_actions import ComponentImprovementActions, DRAFT, EVALUATE, PREPARE, COMPARE
@@ -157,7 +157,12 @@ class _TaskModel:
             "wanneer haar vereiste onderzoek is gedaan en de latere voorwaarden onderbouwd "
             "zijn; behoud een oudere stap buiten de huidige opdracht als skipped met die "
             "reden. Gebruik blocked alleen voor een ontbrekend vereiste dat het huidige "
-            "gevraagde resultaat echt verhindert. Beschikbare maar ongelezen informatie "
+            "gevraagde resultaat echt verhindert. Is de huidige opdracht bouwen, maak en test dan "
+            "de toegestane lokale kandidaat met de programmeertools; een ontbrekende aanmelding "
+            "voor latere activatie verhindert op zichzelf geen code, configuratieschema of lokale "
+            "contractcontrole. Bewaar de exacte bestanden en meetresultaten voor afzonderlijke "
+            "beoordeling; een kandidaat is geen aangesloten dienst. Deze bouwstap geeft geen "
+            "extra toegang of installatiebevoegdheid. Beschikbare maar ongelezen informatie "
             "blijft ontbrekend onderzoek. Controleer vóór een vraag om gegevens de relevante "
             "aangeboden bronnen: het MCP-register dekt niet alle providers. Actuele integratie-, "
             "apparaat- en verbindingsgegevens kunnen het doel al dekken; een bronhash of link "
@@ -828,6 +833,7 @@ class DelegatedDigitalRunner:
                 else "timed_out" if isinstance(error, ConversationModelDeadlineExceeded) or self.clock() >= deadline
                 else "budget_exceeded" if isinstance(error, (_DigitalBudgetExceeded, ConversationExecutionLimitReached, _InputBudgetError))
                 else "incomplete_work" if isinstance(error, (_UnfinishedWorkPlan, ResearchCitationError))
+                else "provider_transient" if isinstance(error, ConversationModelRateLimited)
                 else "provider_unavailable" if isinstance(error, _ProviderUnavailable) or type(error) is McpGatewayUnavailable
                 else "invalid_usage" if isinstance(error, _ProviderUsageError)
                 else "internal_error")
@@ -859,6 +865,7 @@ class DelegatedDigitalRunner:
                           "onderzoek is niet automatisch herhaald.")
             outcome = ToolFreeChildOutcome(status, None, usage, False,
                 hashlib.sha256((type(error).__name__ + ":" + str(error)).encode()).hexdigest(),
+                provider_status_code=429 if isinstance(error, ConversationModelRateLimited) else None,
                 failure_report=report)
         finally:
             try:
