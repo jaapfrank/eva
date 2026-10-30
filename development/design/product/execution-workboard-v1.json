@@ -847,7 +847,7 @@
     "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
     "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "Maak de concrete resterende Gmail-pakket-/configuratieoverdracht en beoordeling af via de bestaande uitvoerder zodra veilig hervatten met actuele bron is toegelaten; geen herhaling van de bevestigde AgentMail-testmail. Behoud oude onzekere statussen en controleer hun concrete ontvangstbewijzen vóór nieuw extern effect. Gmail-autorisatie pas na bruikbare, beoordeelde voorbereiding; oorspronkelijke E4.15-eindvoorwaarden blijven open.",
+    "nextAction": "Eva maakt zelf de Gmail-voorziening af tot een werkende aansluiting met echte activatielink en controle na eigenaarstoestemming. Codex neemt bouw of Google-inrichting niet over. Eerst uitsluitend de concrete uitvoerblokkade bij de behouden poging veilig oplossen; die poging staat nog ambiguous na de oude model-limietfout en is niet opnieuw gestart. Prototype en operatorhulp gelden niet als geslaagde zelfstandigheidstest.",
     "ownerActionRequired": false,
     "mailExecutionDelivery": {
       "checkedAt": "2026-10-30T15:48:40.636226+00:00",
@@ -856,6 +856,17 @@
       "operatorAssistedMailVerified": true,
       "gmailCandidateLocalOnly": true,
       "fullCardCompleted": false
+    },
+    "executionAcceptancePolicy": {
+      "clarifiedAt": "2026-10-30T16:44:21.678412+00:00",
+      "builder": "Eva through the existing admitted executor",
+      "developerRole": "Execution infrastructure repair, integration and independent verification only",
+      "automaticPreparationAndActivationLinkRequired": true,
+      "ownerGoogleConsentRemainsOwnerAction": true,
+      "manualDeveloperCompletionCountsAsTestSuccess": false,
+      "testStatus": "not_passed",
+      "ownerCorrectionStoredInOriginalWork": true,
+      "newAttemptStarted": false
     }
   },
   "historicalWorkboard": {
@@ -3217,19 +3228,19 @@
           "summary": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
           "detail": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
           "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-          "state": "Gerichte reparatie geïnstalleerd; echte testmail operator-geholpen; Gmail-prototype nog niet aangesloten."
+          "state": "Zelfstandigheidstest niet geslaagd; Eva blijft de bouwer, Codex neemt de eindoplossing niet over."
         },
         "next": {
           "taskId": "E4.15",
           "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-          "detail": "Maak de concrete resterende Gmail-pakket-/configuratieoverdracht en beoordeling af via de bestaande uitvoerder zodra veilig hervatten met actuele bron is toegelaten; geen herhaling van de bevestigde AgentMail-testmail. Behoud oude onzekere statussen en controleer hun concrete ontvangstbewijzen vóór nieuw extern effect. Gmail-autorisatie pas na bruikbare, beoordeelde voorbereiding; oorspronkelijke E4.15-eindvoorwaarden blijven open."
+          "detail": "Eva maakt zelf de Gmail-voorziening af tot een werkende aansluiting met echte activatielink en controle na eigenaarstoestemming. Codex neemt bouw of Google-inrichting niet over. Eerst uitsluitend de concrete uitvoerblokkade bij de behouden poging veilig oplossen; die poging staat nog ambiguous na de oude model-limietfout en is niet opnieuw gestart. Prototype en operatorhulp gelden niet als geslaagde zelfstandigheidstest."
         },
         "ownerAction": {
           "required": false,
-          "detail": "Bestaande AgentMail-inbox en testmail zijn gecontroleerd. Geen herhaling of nieuwe sleutel gevraagd. Eerst resterende bouwvoorbereiding afmaken.",
+          "detail": "Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.",
           "steps": []
         },
-        "checkedAt": "2026-10-30T15:48:40.636226+00:00",
+        "checkedAt": "2026-10-30T16:44:21.678412+00:00",
         "reviewedAt": "2026-10-25T22:09:03.184675+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
@@ -8549,7 +8560,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Maak de concrete resterende Gmail-pakket-/configuratieoverdracht en beoordeling af via de bestaande uitvoerder zodra veilig hervatten met actuele bron is toegelaten; geen herhaling van de bevestigde AgentMail-testmail. Behoud oude onzekere statussen en controleer hun concrete ontvangstbewijzen vóór nieuw extern effect. Gmail-autorisatie pas na bruikbare, beoordeelde voorbereiding; oorspronkelijke E4.15-eindvoorwaarden blijven open.",
+                "nextAction": "Eva maakt zelf de Gmail-voorziening af tot een werkende aansluiting met echte activatielink en controle na eigenaarstoestemming. Codex neemt bouw of Google-inrichting niet over. Eerst uitsluitend de concrete uitvoerblokkade bij de behouden poging veilig oplossen; die poging staat nog ambiguous na de oude model-limietfout en is niet opnieuw gestart. Prototype en operatorhulp gelden niet als geslaagde zelfstandigheidstest.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -8572,7 +8583,7 @@
                   "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-30T15:48:40.636226+00:00",
+                "checkedAt": "2026-10-30T16:44:21.678412+00:00",
                 "progress": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
                 "evidence": "development/evidence/product/e415-installed-route-20261023.json",
                 "latestEvidence": "development/evidence/reassessment/mail-execution-boundary-repair-20261030.json",
@@ -8596,6 +8607,17 @@
                   "operatorAssistedMailVerified": true,
                   "gmailCandidateLocalOnly": true,
                   "fullCardCompleted": false
+                },
+                "executionAcceptancePolicy": {
+                  "clarifiedAt": "2026-10-30T16:44:21.678412+00:00",
+                  "builder": "Eva through the existing admitted executor",
+                  "developerRole": "Execution infrastructure repair, integration and independent verification only",
+                  "automaticPreparationAndActivationLinkRequired": true,
+                  "ownerGoogleConsentRemainsOwnerAction": true,
+                  "manualDeveloperCompletionCountsAsTestSuccess": false,
+                  "testStatus": "not_passed",
+                  "ownerCorrectionStoredInOriginalWork": true,
+                  "newAttemptStarted": false
                 }
               },
               {
@@ -9350,7 +9372,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Maak de concrete resterende Gmail-pakket-/configuratieoverdracht en beoordeling af via de bestaande uitvoerder zodra veilig hervatten met actuele bron is toegelaten; geen herhaling van de bevestigde AgentMail-testmail. Behoud oude onzekere statussen en controleer hun concrete ontvangstbewijzen vóór nieuw extern effect. Gmail-autorisatie pas na bruikbare, beoordeelde voorbereiding; oorspronkelijke E4.15-eindvoorwaarden blijven open.",
+        "nextAction": "Eva maakt zelf de Gmail-voorziening af tot een werkende aansluiting met echte activatielink en controle na eigenaarstoestemming. Codex neemt bouw of Google-inrichting niet over. Eerst uitsluitend de concrete uitvoerblokkade bij de behouden poging veilig oplossen; die poging staat nog ambiguous na de oude model-limietfout en is niet opnieuw gestart. Prototype en operatorhulp gelden niet als geslaagde zelfstandigheidstest.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9361,7 +9383,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-30T15:48:40.636226+00:00",
+        "updatedAt": "2026-10-30T16:44:21.678412+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9637,7 +9659,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-30T15:48:40.636226+00:00",
+        "checkedAt": "2026-10-30T16:44:21.678412+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -14923,7 +14945,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Maak de concrete resterende Gmail-pakket-/configuratieoverdracht en beoordeling af via de bestaande uitvoerder zodra veilig hervatten met actuele bron is toegelaten; geen herhaling van de bevestigde AgentMail-testmail. Behoud oude onzekere statussen en controleer hun concrete ontvangstbewijzen vóór nieuw extern effect. Gmail-autorisatie pas na bruikbare, beoordeelde voorbereiding; oorspronkelijke E4.15-eindvoorwaarden blijven open.",
+              "nextAction": "Eva maakt zelf de Gmail-voorziening af tot een werkende aansluiting met echte activatielink en controle na eigenaarstoestemming. Codex neemt bouw of Google-inrichting niet over. Eerst uitsluitend de concrete uitvoerblokkade bij de behouden poging veilig oplossen; die poging staat nog ambiguous na de oude model-limietfout en is niet opnieuw gestart. Prototype en operatorhulp gelden niet als geslaagde zelfstandigheidstest.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -14946,7 +14968,7 @@
                 "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-30T15:48:40.636226+00:00",
+              "checkedAt": "2026-10-30T16:44:21.678412+00:00",
               "progress": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
               "evidence": "development/evidence/product/e415-installed-route-20261023.json",
               "latestEvidence": "development/evidence/reassessment/mail-execution-boundary-repair-20261030.json",
@@ -14970,6 +14992,17 @@
                 "operatorAssistedMailVerified": true,
                 "gmailCandidateLocalOnly": true,
                 "fullCardCompleted": false
+              },
+              "executionAcceptancePolicy": {
+                "clarifiedAt": "2026-10-30T16:44:21.678412+00:00",
+                "builder": "Eva through the existing admitted executor",
+                "developerRole": "Execution infrastructure repair, integration and independent verification only",
+                "automaticPreparationAndActivationLinkRequired": true,
+                "ownerGoogleConsentRemainsOwnerAction": true,
+                "manualDeveloperCompletionCountsAsTestSuccess": false,
+                "testStatus": "not_passed",
+                "ownerCorrectionStoredInOriginalWork": true,
+                "newAttemptStarted": false
               }
             },
             {
@@ -15724,7 +15757,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Maak de concrete resterende Gmail-pakket-/configuratieoverdracht en beoordeling af via de bestaande uitvoerder zodra veilig hervatten met actuele bron is toegelaten; geen herhaling van de bevestigde AgentMail-testmail. Behoud oude onzekere statussen en controleer hun concrete ontvangstbewijzen vóór nieuw extern effect. Gmail-autorisatie pas na bruikbare, beoordeelde voorbereiding; oorspronkelijke E4.15-eindvoorwaarden blijven open.",
+      "nextAction": "Eva maakt zelf de Gmail-voorziening af tot een werkende aansluiting met echte activatielink en controle na eigenaarstoestemming. Codex neemt bouw of Google-inrichting niet over. Eerst uitsluitend de concrete uitvoerblokkade bij de behouden poging veilig oplossen; die poging staat nog ambiguous na de oude model-limietfout en is niet opnieuw gestart. Prototype en operatorhulp gelden niet als geslaagde zelfstandigheidstest.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15735,7 +15768,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-30T15:48:40.636226+00:00",
+      "updatedAt": "2026-10-30T16:44:21.678412+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -16011,7 +16044,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-30T15:48:40.636226+00:00",
+      "checkedAt": "2026-10-30T16:44:21.678412+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [

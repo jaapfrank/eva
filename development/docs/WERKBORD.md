@@ -145,7 +145,7 @@ Vier van de oorspronkelijke 24 taken afgerond (83/103). E4.16 is geïnstalleerd 
 
 ## Van jou
 
-Bestaande AgentMail-inbox en testmail zijn gecontroleerd. Geen herhaling of nieuwe sleutel gevraagd. Eerst resterende bouwvoorbereiding afmaken.
+Geen handmatige Google-inrichting door Codex. Eva moet eerst zelf de volledige aansluiting en geldige activatielink opleveren, of een echte ontbrekende voorwaarde aantonen.
 
 ## Historie
 
