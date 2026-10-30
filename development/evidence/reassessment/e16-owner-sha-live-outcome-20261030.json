@@ -1,0 +1,132 @@
+{
+  "contract": "EvaOwnerShaLiveTest/v1",
+  "checkedAt": "2026-10-30T11:32:54.467337+00:00",
+  "status": "passed",
+  "scope": "Owner-requested ordinary background execution, observed after real Telegram submission; no autonomous-need or source-watch completion claim.",
+  "workId": "work:eva-chat:eb62b8f0-949c-582a-8b5b-4cf054b1a7e6",
+  "specSha256": "e7be103400ec9b5978712dd3356964c79a9766b08480abbb5a83ceca364ba04a",
+  "sourceIngressSha256": "710c0a6e01e0e0c84cbceb8978066e7709763021706530c48d56b9c8d950341b",
+  "originalIngressHashVerified": true,
+  "sourceIdentityPreserved": true,
+  "state": "succeeded",
+  "sample": "Eva overdracht 2026-10-30",
+  "inputEncoding": "UTF-8 without trailing newline",
+  "expectedSha256": "7ca4ed94fe8644d832ff6588eec8163ff5efc10324cc8dbcfb26e042ff20408f",
+  "actualSha256": "7ca4ed94fe8644d832ff6588eec8163ff5efc10324cc8dbcfb26e042ff20408f",
+  "independentLocalHashMatches": true,
+  "execution": {
+    "command": "printf %s 'Eva overdracht 2026-10-30' | sha256sum",
+    "oneCalculationStarted": true,
+    "processId": 34,
+    "exitCode": 0,
+    "processDurationSeconds": 0.03,
+    "outputReadAfterCompletion": true,
+    "noWebResearchOrFileEditingToolsUsed": true,
+    "recordedActions": [
+      {
+        "step": 0,
+        "name": "start_programming_process",
+        "sha256": "ae4e76f5f295f7ba6726a96c9230e300dc482dda8515a43565198b3368709d4f"
+      },
+      {
+        "step": 1,
+        "name": "list_programming_tools",
+        "sha256": "3f4129695548524807a83a1089c5531d11dbc22201251bbfc3aba61ff229697c"
+      },
+      {
+        "step": 2,
+        "name": "list_programming_tools",
+        "sha256": "6946dca512e0811a89c9395110f41b9d1775d33575e2fe9a2a330c586bc69b8c"
+      },
+      {
+        "step": 3,
+        "name": "use_programming_tool",
+        "sha256": "35c0ff1188fbbf4a92a00fc76892f2dcc0433af67e8d5e81f50d26bac7ff6936"
+      }
+    ],
+    "queuedAt": "2026-10-30 11:25:20+00:00",
+    "completedAt": "2026-10-30 11:26:11+00:00",
+    "workerWallSeconds": 51.0
+  },
+  "delivery": {
+    "acknowledged": true,
+    "originalTelegramRecipientMatches": true,
+    "acknowledgedAt": "2026-10-30T11:26:14+00:00",
+    "ackEventSha256": "8788cdc1bd0313b868b3856b21000c2e56bca4e69e2301b217429a8f1d783411",
+    "queueToDeliverySeconds": 54.0,
+    "resultOutputSha256": "f1ccabe21f6ae4039b9f3602dcd193b41cca1c6af6af6732099ae7da52fc89dc"
+  },
+  "consumption": {
+    "workerUsage": {
+      "contract": "DelegatedWorkUsage/v1",
+      "tool_calls": 4,
+      "measurement": "partial",
+      "input_tokens": 63713,
+      "total_tokens": 64079,
+      "output_tokens": 366,
+      "schema_version": 1,
+      "cost_usd_micros": null,
+      "completed_model_responses": 5
+    },
+    "ownerAdmissionModelUsageIncluded": false,
+    "credits": null,
+    "developmentTokens": null,
+    "newModelRequestTriggeredByVerification": false
+  },
+  "efficiencyFinding": {
+    "observed": true,
+    "workerTokensForTinyCalculation": 64079,
+    "completedWorkerModelResponses": 5,
+    "toolCalls": 4,
+    "programRuntimeSeconds": 0.03,
+    "finding": "Functional completion is proven; model/context overhead is high for this small deterministic task. No unmeasured cost estimate.",
+    "existingRelatedTask": "E1.13",
+    "newTaskOrResearchRoundCreated": false
+  },
+  "plannedContactObservation": {
+    "latestPrivateDecisions": [
+      {
+        "at": "2026-10-30T11:02:30+00:00",
+        "sha256": "7385915f1874a834d82bec6a5134a6b8d22a3eaa34fe1de68353e2dfe21bb1e4",
+        "disposition": "silence",
+        "initiativeAdopted": false,
+        "nextAttentionAt": null,
+        "sourceWatchSelected": false,
+        "usage": {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 29488,
+          "output_tokens": 195,
+          "model_attempts": 1
+        }
+      },
+      {
+        "at": "2026-10-29T22:13:41+00:00",
+        "sha256": "a7bcc842f661e763a90c3512a87853c0e69669a959437351d690ef66d08cd720",
+        "disposition": "silence",
+        "initiativeAdopted": false,
+        "nextAttentionAt": "2026-10-30T11:00:00Z",
+        "sourceWatchSelected": false,
+        "usage": {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 27916,
+          "output_tokens": 246,
+          "model_attempts": 1
+        }
+      }
+    ],
+    "noonOpportunityActuallyDecided": true,
+    "noonDisposition": "silence",
+    "noonIsNotATechnicalTestPrerequisite": true
+  },
+  "evidenceLimits": {
+    "ordinaryBackgroundTestPassed": true,
+    "oldUncertainWorkReplayed": false,
+    "newProductCodeChanged": false,
+    "fullE16SourceChangeChainProven": false,
+    "fullE16Completed": false,
+    "ownerAcceptanceOfFullProject": false
+  },
+  "privateProofSha256": "2161736d8da2711fc6381bb3af494b42bbddfc9c4bf470cdfd6034e9c7738925"
+}

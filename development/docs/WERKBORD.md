@@ -6,7 +6,7 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 Zelf relevante bronveranderingen aansluiten op eigen aandacht
 
-Live privé-afwegingen zijn hervat na veilige afsluiting van de oude blokkade. Eva koos zelf onderzoek en later aandacht op30oktober12:00. Een concrete invoerfout in vervolgonderzoek is herleid en met79 gerichte controles gerepareerd/geïnstalleerd. Een verdwenen oude worker staat nu als onbekende uitkomst geregistreerd, met bron en onbekend verbruik behouden. Kern/workerprofielen gelijk; E1.6/E4.15 behouden. Volledige bronveranderingsketen blijft open.
+Directe echte eigenaarproef30oktober geslaagd: één lokale SHA-256-berekening, exit0, onafhankelijk juiste hash en bevestigdeTelegramterugmelding54s na toelating. Worker registreert64.079tokens/5modelresponsen/4tools; dat efficiëntiepunt blijft zichtbaar. De12:00-gelegenheid is12:02werkelijk heroverwogen en koos stilte. Technische achtergrondafronding is bewezen; volledige E1.6-bronveranderingsketen blijft afzonderlijk open.
 
 Klaar wanneer: Eva kan vanuit een echt doel of informatiegat de mogelijkheden en ontbrekende toegang van een bestaande optionele bron ontdekken en gericht een ondersteunde gebeurtenisaanleiding of geplande broncontrole aansluiten op dezelfde duurzame aandacht-/uitvoeringsroute. Een werkelijke bronverandering krijgt een passende modelafweging en gecontroleerd vervolg of onderbouwde stilte met herkomst. Ontbrekende toegang leidt tot een concrete uitleg van nut en benodigde koppeling; dubbele callbacks, reconnect en intrekking veroorzaken geen dubbele actie of bredere toegang. Geen vaste deurbel-/agenda-/merkregel, tweede scheduler, continue modelpolling of verplicht nieuwe externe account.
 
@@ -145,7 +145,7 @@ Vier van de oorspronkelijke 24 taken afgerond (83/103). E4.16 is geïnstalleerd 
 
 ## Van jou
 
-De technische E1.6- en E4.15-fundamentinstallaties zijn klaar. Geen nieuwe eigenaarhandeling of hervatting van andere chats gevraagd. Ontbrekend echt gebruik en bronvervolg blijven zichtbaar.
+De gevraagde directe proef is door de eigenaar gestart en door Eva succesvol uitgevoerd en teruggemeld. Geen nieuwe eigenaarhandeling gevraagd.
 
 ## Historie
 
