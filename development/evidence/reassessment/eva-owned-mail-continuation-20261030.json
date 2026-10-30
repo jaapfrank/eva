@@ -1,0 +1,76 @@
+{
+  "contract": "EvaExecutionInfrastructureReview/v1",
+  "checkedAt": "2026-10-30T22:04:48.636506+00:00",
+  "card": "E4.15",
+  "scope": "Explicit recovery of retained local-only work after sealed legacy model rejection; Eva owns the application implementation.",
+  "developerWroteGmailProductCode": false,
+  "acceptance": {
+    "fullCardCompleted": false,
+    "gmailConnected": false,
+    "activationLinkAvailable": false,
+    "actualMailboxUsed": false,
+    "laterReuseProven": false
+  },
+  "verification": {
+    "infrastructureTestsPassed": 187,
+    "postgresCases": 10,
+    "scheduledAdmissionAfterOriginalDeadlineVerified": true,
+    "realProgrammingCloseHttpBoundaryVerified": true,
+    "unknownExternalEffectsStillDenied": true,
+    "protectedDelegatedWorkSha256": "5c18f6f1f44d087df11843414dd82542a06b99efcde5f657921b8a3c24bd4090",
+    "independentCandidateTestExecutionsPassed": 32,
+    "independentCandidateUniqueTests": 24,
+    "candidateTestNetwork": "none",
+    "candidateTestUsesRealGoogle": false
+  },
+  "installation": {
+    "coreImage": "sha256:a829e0bbbfd038f72b4d8befbffcefb4822648707fa418287740a2c711407ae7",
+    "workerImage": "sha256:21c57431a1bfb53c805bd592b7e059dd3185f4715d2fac7beab3c4c30f6e4b80",
+    "workerProgramSha256": "044211cd655f4447e2ad5bccc26c9e9e4b5951375757659a0fe31d1d8f113246",
+    "allFourRuntimeProfilesCompatible": true,
+    "oldRecordsPreserved": true
+  },
+  "attempts": [
+    {
+      "generation": 3,
+      "state": "needs_help",
+      "reason": "Original source clock incorrectly reused by operator direct resume; no model or tool call. Corrected using existing scheduler admission clock."
+    },
+    {
+      "generation": 4,
+      "state": "failed",
+      "reason": "Incomplete OAuth/runtime connection; actual Eva packaging preserved; Telegram return acknowledged.",
+      "knownPartialTokens": 364174,
+      "modelResponses": 10,
+      "toolCalls": 9
+    },
+    {
+      "generation": 5,
+      "state": "failed",
+      "reason": "Temporary model refusal after Eva authored OAuth, HTTP bridge and tests.",
+      "knownPartialTokens": 586924,
+      "modelResponses": 13,
+      "toolCalls": 12
+    },
+    {
+      "generation": 6,
+      "state": "call_started",
+      "reason": "Explicit continuation after elapsed provider refusal, same source and workspace; no new account or broadened tool grant."
+    }
+  ],
+  "remainingGap": "Existing provider registration consumes a hosted endpoint, while reviewed application publishing admits fixed existing components and saved artifacts. A reviewed host handoff for a new external service is still absent; OAuth client and owner consent remain prerequisites.",
+  "developmentUsage": {
+    "tokens": null,
+    "cost": null
+  },
+  "runtimeUsage": {
+    "measurement": "partial",
+    "generation4and5KnownTokens": 951098,
+    "cost": null
+  },
+  "privateEvidenceHashes": {
+    "oauth-independent-tests.private.log": "1dcbe7cc137ed5f8fefe4419db504e14a161965dab97eacd259a1ca70b12b4e9",
+    "scheduled-http-postgres-regression.log": "bbc41f7dbe45107b6f6318534dbf5ab3d45549bb230b7a806070897a6fe9c7d5",
+    "installed-compatibility.private.json": "6aff0cc2ed2c78c8144cbb1e6cb0c86ccb9f9477af874cbf004edca4cf298858"
+  }
+}

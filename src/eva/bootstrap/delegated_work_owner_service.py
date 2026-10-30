@@ -373,6 +373,7 @@ class DelegatedWorkOwnerService:
             self.store.scope.installation_id,
             f"{previous.spec.work_id}:{previous.spec.generation + 1}",
         ))
+        reconciliation = None
         # A private digital call can have external effects even when model usage
         # was measured. Preserve uncertainty and report any existing generation.
         # Native initiative and household continuations retain their own contracts.
@@ -383,15 +384,31 @@ class DelegatedWorkOwnerService:
                 existing = self.store.load(next_id, **self._owner)
             except DelegatedWorkNotFound:
                 existing = None
-            return {**response, "status": "not_resumable", "created": False,
-                    "prior_outcome_unknown": True, "previous": self._view(previous, turn=turn),
-                    "work": None if existing is None else self._view(existing, turn=turn),
-                    "guidance": ("De eerdere uitvoering heeft een onzekere uitkomst. "
-                        "Controleer eerst wat werkelijk is gebeurd; dit verzoek start "
-                        "geen nieuwe poging. Een eerdere hervatting is beschikbaar in "
-                        "het werkoverzicht." if existing is not None else
-                        "De eerdere uitvoering heeft een onzekere uitkomst. Controleer "
-                        "eerst wat werkelijk is gebeurd; dit verzoek start geen nieuwe poging.")}
+            from eva.adapters.postgres.work_corrections import is_legacy_model_refusal
+            if existing is None and is_legacy_model_refusal(previous):
+                from types import SimpleNamespace
+                from eva.providers.mcp_autonomy import _SourceTurnLoader
+                from eva.adapters.postgres.work_corrections import reconcile_legacy_model_refusal
+                from eva.adapters.connectors.programming_workspace import configured_programming_workspace
+                original = _SourceTurnLoader(self.store._engine, SimpleNamespace(
+                    scope=self.conversation_scope, authorize_turn=self.validate_authority))(
+                        previous.spec.source.model_dump(mode="json"))
+                programming = configured_programming_workspace()
+                reconciliation = reconcile_legacy_model_refusal(self.store._engine, previous,
+                    original, now=self.now(), close_session=(programming.close if programming else lambda key: None))
+                self.validate_authority(turn)
+                if self.store.load(work_id, **self._owner) != previous:
+                    raise DelegatedWorkConflict("work changed during model refusal reconciliation")
+            if reconciliation is None:
+                return {**response, "status": "not_resumable", "created": False,
+                        "prior_outcome_unknown": True, "previous": self._view(previous, turn=turn),
+                        "work": None if existing is None else self._view(existing, turn=turn),
+                        "guidance": ("De eerdere uitvoering heeft een onzekere uitkomst. "
+                            "Controleer eerst wat werkelijk is gebeurd; dit verzoek start "
+                            "geen nieuwe poging. Een eerdere hervatting is beschikbaar in "
+                            "het werkoverzicht." if existing is not None else
+                            "De eerdere uitvoering heeft een onzekere uitkomst. Controleer "
+                            "eerst wat werkelijk is gebeurd; dit verzoek start geen nieuwe poging.")}
         from eva.bootstrap.scheduled_admission import scheduled_creation_time
         created = scheduled_creation_time(admission_time, turn.occurred_at, self.now,
             lambda: self.store.load(next_id, **self._owner))
@@ -439,10 +456,11 @@ class DelegatedWorkOwnerService:
         )
         return {**response, "created": admission.disposition == "inserted",
                 "previous": self._view(previous, turn=turn), "work": self._view(admission.work, turn=turn),
-                "prior_outcome_unknown": (previous.state in {"call_started", "ambiguous"}
+                **({"recovery": reconciliation} if reconciliation is not None else {}),
+                "prior_outcome_unknown": (reconciliation is None and (previous.state in {"call_started", "ambiguous"}
                     or (previous.state == "stopped" and previous.call_id is not None
                         and (previous.usage is None or previous.usage.measurement != "measured"
-                             or previous.usage.completed_model_responses != 1))),
+                             or previous.usage.completed_model_responses != 1)))),
                 "guidance": "Een nieuwe begrensde poging; de eerdere call en het eerdere verbruik blijven bewaard."}
 
     def _initiative_store(self, turn: ConversationTurn):
