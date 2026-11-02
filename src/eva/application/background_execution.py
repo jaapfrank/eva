@@ -19,6 +19,7 @@ class BackgroundExecutionScope:
     authorize_dispatch: Callable[[ConversationTurn], None] | None = None
     remaining_model_output_tokens: Callable[[ConversationTurn], int] | None = None
     remaining_model_time_seconds: Callable[[ConversationTurn], float] | None = None
+    validate_source: Callable[[ConversationTurn], None] | None = None
 
     def __post_init__(self) -> None:
         if self.source_turn.audience.kind not in {"private_person", "household"}:
@@ -103,3 +104,18 @@ def background_model_time_limit(turn: ConversationTurn) -> float | None:
 def has_background_execution() -> bool:
     """Whether the host has bound the current execution to a durable task."""
     return _current.get() is not None
+
+
+def retained_background_source(source: dict) -> ConversationTurn | None:
+    """Return only this task's host-validated source, never an arbitrary old message."""
+    scope = _current.get()
+    if scope is None or scope.validate_source is None:
+        return None
+    turn = scope.source_turn
+    reference = {key: getattr(turn, key) for key in
+                 ("tenant_id", "installation_id", "principal_id", "conversation_id", "message_id")}
+    reference["audience"] = {"kind": turn.audience.kind, "principal_id": turn.audience.principal_id}
+    if source != reference:
+        raise ConversationConflict("retained background source differs from its task")
+    scope.validate_source(turn)
+    return turn

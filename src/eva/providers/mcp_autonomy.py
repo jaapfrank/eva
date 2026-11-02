@@ -93,6 +93,12 @@ class _SourceTurnLoader:
                 or any(data.get(key) != source[key] for key in
                        ("principal_id", "conversation_id", "message_id"))):
             raise ConversationConflict("connector stored ingress differs")
+        if "content_compaction" in data and "content_erasure" not in data:
+            from eva.application.background_execution import retained_background_source
+            turn = retained_background_source(source)
+            if turn is not None:
+                self._authority.authorize_turn(turn)
+                return turn
         try:
             observation = data.get("observation_binding")
             binding = None

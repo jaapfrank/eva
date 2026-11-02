@@ -137,9 +137,12 @@ class PostgresMemoryOutbox(PostgresScopedRole):
 
     _role = "eva_runtime"
 
-    def __init__(self, engine: Engine, *, tenant_id: str, installation_id: str) -> None:
+    def __init__(self, engine: Engine, *, tenant_id: str, installation_id: str, work_source_retention=None) -> None:
         if not tenant_id.strip() or not installation_id.strip():
             raise ValueError("memory outbox scope is required")
+        if work_source_retention is not None and not callable(getattr(work_source_retention, "protected_sources", None)):
+            raise ValueError("work source retention must be a trusted source registry")
+        self._work_source_retention = work_source_retention
         self._engine = engine
         self._tenant_id = tenant_id
         self._installation_id = installation_id
@@ -706,6 +709,8 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             raise ValueError("private day compaction bounds are invalid")
         results = []
         with self.retention_guard():
+            protected_sources = (frozenset() if self._work_source_retention is None else
+                self._work_source_retention.protected_sources(self._tenant_id, self._installation_id, now))
             with self._engine.begin() as connection:
                 self._scope(connection)
                 c, e = operational_checkpoints.c, operational_events.c
@@ -726,6 +731,9 @@ class PostgresMemoryOutbox(PostgresScopedRole):
                     manifest_event.c.event_type == "MEMORY_DREAM_BATCH_ASSIGNED",
                     raw_event.c.sequence == 1, raw_event.c.event_type == "MEMORY_RETAIN_QUEUED",
                     raw_event.c.payload["data"].has_key("content"),
+                    sa.tuple_(raw_event.c.payload["data"]["principal_id"].astext,
+                              raw_event.c.payload["data"]["conversation_id"].astext,
+                              raw_event.c.payload["data"]["source_ref"].astext).not_in(tuple(protected_sources)),
                     ~raw_event.c.payload["data"].has_key("content_erasure"),
                     ~raw_event.c.payload["data"].has_key("content_compaction"),
                     raw_event.c.payload["data"]["occurred_at"].astext < (now - timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -775,6 +783,8 @@ class PostgresMemoryOutbox(PostgresScopedRole):
                         if isinstance(job.document, CompactedPrivateMemorySource):
                             continue
                         document = job.document
+                        if (document.principal_id, document.conversation_id, document.source_ref) in protected_sources:
+                            continue
                         receipt = records[document.document_id]
                         if (document.audience.kind != "private_person" or document.project_id is not None
                                 or document.trust != "direct_user" or document.retention_mode != "dream"

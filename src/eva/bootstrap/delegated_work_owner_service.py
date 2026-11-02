@@ -1,6 +1,8 @@
 """One private owner service shared by chat tools and legacy Telegram commands."""
 from __future__ import annotations
 
+from eva.adapters.postgres.work_source_retention import WorkSourceUnavailable
+
 from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
 from uuid import NAMESPACE_URL, UUID, uuid5
@@ -91,6 +93,12 @@ class DelegatedWorkOwnerService:
                 search: dict | None = None, revision: dict | None = None, prior_work_id: str | None = None) -> dict:
         try:
             return self._execute(operation, turn, task=task, work_id=work_id, request_key=request_key, research=research, intent_id=intent_id, feedback=feedback, schedule=schedule, schedule_id=schedule_id, search=search, revision=revision, prior_work_id=prior_work_id)
+        except WorkSourceUnavailable:
+            return {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": operation,
+                    "status": "source_unavailable", "source_unavailable": True, "created": False,
+                    "work": None, "guidance": "De oorspronkelijke bron van deze oude taak is niet meer beschikbaar. "
+                    "Er is geen nieuwe poging gestart. De bewaarde taakgegevens blijven ongewijzigd; "
+                    "voor verder werk is een nieuwe expliciete opdracht nodig."}
         except DelegatedWorkNotFound:
             return {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": operation,
                     "status": "not_found", "work": None,
@@ -351,15 +359,18 @@ class DelegatedWorkOwnerService:
                 # Preserve immutable presentation metadata on legacy replay.
                 # Admission still checks the full incoming specification.
                 title = previous.title
-            admission = self.store.admit(
-                spec=spec, title=title,
-                summary=("Eva voert de digitale opdracht uit met de toegestane hulpmiddelen."
-                         if operation == "digital" else "Een afgeschermde onderzoeker werkt aan de gegeven opdracht."),
-                worker_role="Digitale taak" if operation == "digital" else "Onderzoek",
-                retention_policy_id="retention:delegated-work:v1",
-                retention_until=created + timedelta(days=7), occurred_at=created,
-                **self._delivery_arguments(turn),
-            )
+            from contextlib import nullcontext
+            from eva.adapters.postgres.work_source_retention import retained_source_guard
+            with (retained_source_guard(self, spec, supplied_turn=turn) if operation == "digital" else nullcontext()):
+                admission = self.store.admit(
+                    spec=spec, title=title,
+                    summary=("Eva voert de digitale opdracht uit met de toegestane hulpmiddelen."
+                             if operation == "digital" else "Een afgeschermde onderzoeker werkt aan de gegeven opdracht."),
+                    worker_role="Digitale taak" if operation == "digital" else "Onderzoek",
+                    retention_policy_id="retention:delegated-work:v1",
+                    retention_until=created + timedelta(days=7), occurred_at=created,
+                    **self._delivery_arguments(turn),
+                )
             return {**response, "created": admission.disposition == "inserted", "work": self._view(admission.work, turn=turn)}
         if task is not None or not isinstance(work_id, str) or not work_id:
             raise ValueError("delegated work operation requires its work id")
@@ -386,13 +397,11 @@ class DelegatedWorkOwnerService:
                 existing = None
             from eva.adapters.postgres.work_corrections import is_legacy_model_refusal
             if existing is None and is_legacy_model_refusal(previous):
-                from types import SimpleNamespace
-                from eva.providers.mcp_autonomy import _SourceTurnLoader
                 from eva.adapters.postgres.work_corrections import reconcile_legacy_model_refusal
                 from eva.adapters.connectors.programming_workspace import configured_programming_workspace
-                original = _SourceTurnLoader(self.store._engine, SimpleNamespace(
-                    scope=self.conversation_scope, authorize_turn=self.validate_authority))(
-                        previous.spec.source.model_dump(mode="json"))
+                from eva.adapters.postgres.work_source_retention import retained_source_guard
+                with retained_source_guard(self, previous.spec) as original:
+                    pass
                 programming = configured_programming_workspace()
                 reconciliation = reconcile_legacy_model_refusal(self.store._engine, previous,
                     original, now=self.now(), close_session=(programming.close if programming else lambda key: None))
@@ -447,13 +456,16 @@ class DelegatedWorkOwnerService:
             created_at=created, deadline=created + timedelta(
                 seconds=self.digital_profile.timeout_seconds if is_digital else 300),
         )
-        admission = self.store.admit(
-            spec=spec, title=previous.title, summary=previous.summary,
-            worker_role=previous.worker_role, retention_policy_id=previous.retention_policy_id,
-            retention_until=max(previous.retention_until, created + timedelta(days=7)),
-            occurred_at=created, resumes_work_id=previous.spec.work_id,
-            **self._delivery_arguments(turn),
-        )
+        from contextlib import nullcontext
+        from eva.adapters.postgres.work_source_retention import retained_source_guard
+        with (retained_source_guard(self, spec) if type(spec) is DelegatedDigitalWorkSpec else nullcontext()):
+            admission = self.store.admit(
+                spec=spec, title=previous.title, summary=previous.summary,
+                worker_role=previous.worker_role, retention_policy_id=previous.retention_policy_id,
+                retention_until=max(previous.retention_until, created + timedelta(days=7)),
+                occurred_at=created, resumes_work_id=previous.spec.work_id,
+                **self._delivery_arguments(turn),
+            )
         return {**response, "created": admission.disposition == "inserted",
                 "previous": self._view(previous, turn=turn), "work": self._view(admission.work, turn=turn),
                 **({"recovery": reconciliation} if reconciliation is not None else {}),

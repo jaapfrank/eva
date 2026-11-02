@@ -1,0 +1,79 @@
+{
+  "contract": "EvaExecutionSourceContinuityRepair/v1",
+  "checkedAt": "2026-11-02T15:41:43.514329+00:00",
+  "card": "E4.15",
+  "purpose": "Repair general retained-task execution; Eva remains responsible for her own application implementation and operation.",
+  "state": "installed_source_profile_verified",
+  "applicationCodeWrittenForEva": false,
+  "newPlannerOrMemoryStore": false,
+  "schemaChanged": false,
+  "verification": {
+    "executionInterfaceTestsPassed": 182,
+    "privateMemoryLifecycleTestsPassed": 15,
+    "sourceLifecycleCasesPassed": 8,
+    "legacyExplicitResumeCasesPassed": 10,
+    "originalMessageAndGrantPreserved": true,
+    "genericExpiredConversationReplayStillDenied": true,
+    "taskSpecificRetainedInputUsable": true,
+    "explicitErasureAndCancellationVerified": true,
+    "unrelatedCompactionNotStarved": true,
+    "protectedDelegatedWorkSha256": "5c18f6f1f44d087df11843414dd82542a06b99efcde5f657921b8a3c24bd4090",
+    "newLiveTaskOrModelAdmittedByReadback": false
+  },
+  "installedReadback": {
+    "installedTaskSourceAdapter": "TaskSourceLoader",
+    "exactOriginalSourceHashMatches": true,
+    "genericExpiredConversationStillDenied": true,
+    "taskBoundOriginalSourceAvailable": true,
+    "originalConversationAndTaskUnchanged": true,
+    "originalGrantAcceptedByCurrentProfile": true,
+    "newTaskAdmitted": false,
+    "modelRequested": false,
+    "productCodeWrittenForEva": false
+  },
+  "installation": {
+    "images": {
+      "core": "sha256:d5da6ec389958be369a4fc9e28b4f7a92a3a53efd52fc5ec983987587da1b964",
+      "delegated-work-worker": "sha256:d3664a5606bf0d4a79be61024bf85154e469a2e61f83f86e8efdc416131db948"
+    },
+    "allFourRuntimeProfilesCompatible": true,
+    "freshConversationModelWorkAndMemoryClaimsChecked": true,
+    "queuedUndispatchedMemorySourcesPreserved": 2,
+    "hostProducerReleaseAligned": true,
+    "settingsAndMountsPreserved": true
+  },
+  "policy": {
+    "taskSource": "Use only an exact, previously admitted scheduled input under the retained task source/grant and current authority; never reconstruct from summaries or edit the old journal.",
+    "compaction": "Unfinished retained work and bounded owner appointments retain their original source until release. The ordinary 24-hour conversation view is unchanged.",
+    "forgetAndStop": "Explicit source erasure, source stop, current owner binding and existing queue dispatch checks remain authoritative.",
+    "publication": "This repair does not claim that Eva can already publish every new package or complete a full autonomous provision."
+  },
+  "knownBaselineLimitations": [
+    {
+      "test": "private digital stop/resume regression",
+      "result": "Still rejected as prior outcome unknown in both the installed baseline and candidate; protection was not weakened to force a pass."
+    },
+    {
+      "test": "frozen work-strategy source boundaries",
+      "result": "Three pre-existing failures documented in programming-history-handoff-20261102.json; no acceptance criterion was modified."
+    }
+  ],
+  "fullCardCompleted": false,
+  "developmentUsage": {
+    "tokens": null,
+    "cost": null
+  },
+  "diagnosticRuntimeUsage": {
+    "modelRequestsInInstalledSourceReadback": 0,
+    "otherRuntimeTraffic": "not measured by this repair"
+  },
+  "evidenceHashes": {
+    "execution-interface-tests.log": "c6b25a92c3e649cc9fad678cfe5c3487504d438fde2cb6e896035451265bff54",
+    "admission-source-final-regression.log": "441252a2d933d6ece2d3ac4f594212121df065a7a7b9d965ef4c19a146c91969",
+    "admission-legacy-final-regression.log": "6305a51e7616f2d02b43e8af1cb39b6d044873a78234dc4332eddc1962f740d0",
+    "admission-digital-baseline-regression.log": "9efbd394dc24db447c91ba5daf0888dac5f846b64948aca4cce3ff587c4ced26",
+    "installed-source-readback.private.stdout": "9aee6afd8248c27069e15e97e23ee73283771dd569a62b4888f2f13dcb71b42e",
+    "activation.private.json": "77d19760dececa2276d315e5a820a3d43a265b416370bdf65c03b580961505c9",
+    "installed-compatibility.private.json": "a01fb7dcf4455a8cadbeda796364e5b81ac96c78a96c7e6851acd07d7bcd947b"
+  }
+}

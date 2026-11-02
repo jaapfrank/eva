@@ -41,6 +41,7 @@ _EXECUTION_SOURCES = (
     "adapters/postgres/delegated_work_actions.py",
     "bootstrap/delegated_digital_runner.py", "bootstrap/native_initiative_work.py",
     "adapters/model/programming_history.py",
+    "adapters/postgres/work_source_retention.py",
     "adapters/connectors/delegated_completion.py",
     "contracts/tool_deadlines.py",
     "contracts/component_target.py",
@@ -280,6 +281,8 @@ def build_digital_runner(settings, store, *, provider_bundle=None, household_aut
                 loader = shared_loader if source.get("audience", {}).get("kind") == "household" else private_loader
                 return loader(source)
     from eva.bootstrap.self_repair import observe_failed_work
+    from eva.adapters.postgres.work_source_retention import TaskSourceLoader
+    source_loader = TaskSourceLoader(service, source_loader)
     return DelegatedDigitalRunner(store, profile, source_loader=source_loader,
         memory=memory, identity=identity, model=model, connector_tools=(*routes, DelegatedWorkResultReader(service)),
         browser_context=BackgroundBrowserContext(configured_browser_client()),

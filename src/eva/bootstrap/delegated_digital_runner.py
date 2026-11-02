@@ -555,6 +555,9 @@ class DelegatedDigitalRunner:
             if native_guard is not None:
                 native_guard.check(turn)
             self.store.authorize_tool_dispatch(call)
+            validator = getattr(self.source_loader, "validate_current", None)
+            if native_guard is None and callable(validator):
+                validator(spec, turn)
 
         def dispatch_guard(turn):
             authorize(turn)
@@ -619,7 +622,9 @@ class DelegatedDigitalRunner:
                 native_context = initiative_execution(native_guard)
                 native_context.__enter__()
             else:
-                source = self.source_loader(spec.source.model_dump(mode="json"))
+                task_loader = getattr(self.source_loader, "for_task", None)
+                source = (task_loader(spec) if callable(task_loader) else
+                          self.source_loader(spec.source.model_dump(mode="json")))
             if canonical_sha256(PostgresConversationJournal._ingress_data(source)) != spec.source_ingress_sha256:
                 raise ConversationConflict("background original ingress differs")
             if cancellation_event is not None and cancellation_event.is_set():
@@ -737,7 +742,10 @@ class DelegatedDigitalRunner:
                 prompted_states = set()
                 with cancellation_scope(signal), background_execution(BackgroundExecutionScope(
                     source, spec.execution_id, dispatch_guard, remaining_model_output,
-                    remaining_model_time)), (initiative_execution(native_guard)
+                    remaining_model_time, validate_source=(
+                        lambda current: self.source_loader.validate_current(spec, current))
+                        if callable(getattr(self.source_loader, "validate_current", None))
+                        and type(spec) is DelegatedDigitalWorkSpec else None)), (initiative_execution(native_guard)
                         if native_guard is not None else nullcontext()):
                     while True:
                         reply = conversation.respond(source, before_step=checkpoint, model_journal=journal)
@@ -845,9 +853,10 @@ class DelegatedDigitalRunner:
                 else "provider_unavailable" if isinstance(error, _ProviderUnavailable) or type(error) is McpGatewayUnavailable
                 else "invalid_usage" if isinstance(error, _ProviderUsageError)
                 else "internal_error")
+            from eva.adapters.postgres.work_source_retention import WorkSourceUnavailable
             if (self.failure_observer is not None and native_guard is None and source is not None
                     and status in {'internal_error','incomplete_work','budget_exceeded'}
-                    and not isinstance(error, _BlockedWorkPlan)):
+                    and not isinstance(error, (_BlockedWorkPlan, WorkSourceUnavailable))):
                 with suppress(Exception):
                     await asyncio.to_thread(self.failure_observer,source,spec,error)
             # Preserve only a complete returned reply, never streamed fragments or

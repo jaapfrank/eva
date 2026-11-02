@@ -1604,10 +1604,12 @@ def create_runtime_app() -> FastAPI:
     )
     idle_tasks = ()
     service_tasks = ()
+    from eva.adapters.postgres.work_source_retention import WorkSourceRetention
     memory_outbox = PostgresMemoryOutbox(
         engine,
         tenant_id=settings.background_tenant_id or "",
         installation_id=settings.background_installation_id or "",
+        work_source_retention=(None if delegated_work_store is None else WorkSourceRetention(delegated_work_store)),
     )
     reflection_budget = (
         None
