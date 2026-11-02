@@ -40,6 +40,7 @@ _EXECUTION_SOURCES = (
     "bootstrap/delegated_work_owner_service.py",
     "adapters/postgres/delegated_work_actions.py",
     "bootstrap/delegated_digital_runner.py", "bootstrap/native_initiative_work.py",
+    "adapters/model/programming_history.py",
     "adapters/connectors/delegated_completion.py",
     "contracts/tool_deadlines.py",
     "contracts/component_target.py",

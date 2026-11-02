@@ -1,0 +1,61 @@
+{
+  "contract": "EvaExecutionHandoffRepair/v1",
+  "checkedAt": "2026-11-02T14:22:29.778168+00:00",
+  "card": "E4.15",
+  "scope": "Model-input projection of acknowledged recovered local programming receipts only; no Gmail implementation or authorization changes.",
+  "state": "installed_source_profile_verified",
+  "verification": {
+    "focusedTestsPassed": 182,
+    "otherSourceBoundaryTests": {
+      "passed": 29,
+      "failed": 3,
+      "status": "Existing frozen work-strategy baseline failures; strategy class AST is identical to pre-change HEAD and acceptance criteria were not modified."
+    },
+    "taskModelAstUnchanged": true,
+    "originalReceiptsPreserved": true,
+    "latestReceiptPreserved": true,
+    "nonProgrammingAndUnknownReceiptsPreserved": true,
+    "taskIdentityAndToolCatalogPreserved": true,
+    "allFourInstalledProfilesCompatible": true,
+    "schemaChanges": false,
+    "protectedDelegatedWorkSha256": "5c18f6f1f44d087df11843414dd82542a06b99efcde5f657921b8a3c24bd4090"
+  },
+  "measurement": {
+    "receipts": 34,
+    "beforeHistoryBytes": 166621,
+    "afterHistoryAndNavigationBytes": 48119,
+    "reductionPercent": 71.1,
+    "fullOriginalArchiveBytes": 140376,
+    "originalReceiptsUnchanged": true,
+    "realModelCallMade": false,
+    "realTokenReductionMeasured": false
+  },
+  "installation": {
+    "images": {
+      "core": "sha256:3d9ae7ac7bfc76d8d9f78f18d4d519235c017cc8f49474462de362735f2f7a34",
+      "delegated-work-worker": "sha256:c2c7720cc3472ea4820fff1726696f90747aa47cfb82c2d1f6b071808339249e"
+    },
+    "freshClaimsChecked": true,
+    "activeWorkAtCheck": 0,
+    "hostAssessmentsAtCheck": 0,
+    "hostProducerReleaseAligned": true,
+    "settingsAndMountsPreserved": true
+  },
+  "remaining": {
+    "oldTaskState": "failed_input_budget_exceeded",
+    "originalSourceState": "compacted_no_plaintext_ingress",
+    "liveRetryStarted": false,
+    "sourceContinuityAcrossAdmittedRetention": "not_yet_repaired",
+    "generalNewNetworkModulePublication": "not_yet_available",
+    "gmailActivated": false,
+    "fullCardCompleted": false
+  },
+  "policy": "Do not fabricate the original source, broaden permissions, repeat a model attempt against the unchanged source blocker, or claim autonomous completion.",
+  "evidenceHashes": {
+    "context-focused-tests.log": "bfe00d68dbc94891fdf9ac96f61c1dfd9b879c3a2fc1ee039e42571ef19f14c8",
+    "composition-tests.log": "975b98b253896290b99191f6ff0ade38a9f35d9538170ad8e0c1f75636ba1867",
+    "context-real-measurement.json": "9beead30fcab68f695dc1f1b443a9f51673a9239c9151fcdf43534ac6e793657",
+    "activation.private.json": "04b4b3529b6e170694c6faf59e3874edd7d8d5d2c5d14c31aa216f54f6f674c5",
+    "installed-compatibility.private.json": "09ce542879a79f1083d7125398422179b7a64a605206c3084a03e3da31b5b7ff"
+  }
+}

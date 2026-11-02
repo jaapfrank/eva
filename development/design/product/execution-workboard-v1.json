@@ -847,7 +847,7 @@
     "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
     "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "Laat Eva de behouden Gmail-kandidaat afronden; onafhankelijke lokale OAuth/HTTP-overdracht is groen. Herstel de aantoonbaar ontbrekende algemene hostpublicatie-overdracht zonder Gmail-productcode of Google-inrichting over te nemen. Activatielink, echte aansluiting en later gebruik blijven onbewezen.",
+    "nextAction": "Contextoverdracht is geïnstalleerd en teruggelezen. Herstel nu eerst de broncontinuïteit over de toegestane taakduur, met behoud van expliciet wissen/stoppen en oorspronkelijke hashes. De oude bron is al gecompacteerd: niet reconstrueren en geen blinde modelhervatting. Maak daarna de bestaande beoordeelde publicatieroute geschikt voor Eva’s eigen netwerkpakket; aansluiting, activatielink en werkelijk later gebruik blijven open.",
     "ownerActionRequired": false,
     "mailExecutionDelivery": {
       "checkedAt": "2026-10-30T15:48:40.636226+00:00",
@@ -869,23 +869,37 @@
       "newAttemptStarted": true
     },
     "continuationRepair": {
-      "checkedAt": "2026-10-30T22:04:48.636506+00:00",
-      "status": "installed_eva_continuation_running",
+      "checkedAt": "2026-11-02T14:13:51.022263+00:00",
+      "status": "previous_attempt_failed_input_budget",
       "scope": "Only explicit, sealed legacy model refusal with complete isolated programming receipts; no Gmail end-solution changes.",
       "focusedTestsPassed": 187,
       "databaseCases": 10,
       "oldTaskAndReceiptsPreserved": true,
       "externalUnknownResumeAllowed": false,
-      "newEvaAttemptStarted": true,
+      "newEvaAttemptStarted": false,
       "currentWorkId": "work:eva-resume:fcc8b69a-f045-5030-a687-1ef0a24f5c33",
       "originalTelegramReturnBound": true,
       "fullCardCompleted": false,
       "evidence": "development/evidence/reassessment/eva-owned-mail-continuation-20261030.json",
       "generation": 6,
-      "previousAttemptOutcome": "Eva added OAuth/HTTP bridge; provider_transient interrupted final test/packaging",
+      "previousAttemptOutcome": "Retained attempt ended with input_budget_exceeded; no new attempt until the verified context fix is installed and the original source is usable.",
       "independentCandidateTestExecutionsPassed": 32,
       "independentCandidateUniqueTests": 24,
       "activationLinkAvailable": false
+    },
+    "contextHandoffRepair": {
+      "checkedAt": "2026-11-02T14:22:29.778168+00:00",
+      "status": "installed_source_profile_verified",
+      "testsPassed": 182,
+      "historyBytesBefore": 166621,
+      "historyBytesAfter": 48119,
+      "historyByteReductionPercent": 71.1,
+      "originalReceiptsPreserved": true,
+      "newLiveModelAttemptStarted": false,
+      "sourceCompactionBlocker": "Original conversation ingress has been compacted during its admitted task retention. No reconstruction, edited original source or blind resume is authorized by this finding.",
+      "fullCardCompleted": false,
+      "evidence": "development/evidence/reassessment/programming-history-handoff-20261102.json",
+      "allFourInstalledProfilesCompatible": true
     }
   },
   "historicalWorkboard": {
@@ -3398,7 +3412,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-10-30T22:04:48.636506+00:00",
+      "lastUpdatedAt": "2026-11-02T14:22:29.778168+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -9404,7 +9418,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "Laat Eva de behouden Gmail-kandidaat afronden; onafhankelijke lokale OAuth/HTTP-overdracht is groen. Herstel de aantoonbaar ontbrekende algemene hostpublicatie-overdracht zonder Gmail-productcode of Google-inrichting over te nemen. Activatielink, echte aansluiting en later gebruik blijven onbewezen.",
+        "nextAction": "Contextoverdracht is geïnstalleerd en teruggelezen. Herstel nu eerst de broncontinuïteit over de toegestane taakduur, met behoud van expliciet wissen/stoppen en oorspronkelijke hashes. De oude bron is al gecompacteerd: niet reconstrueren en geen blinde modelhervatting. Maak daarna de bestaande beoordeelde publicatieroute geschikt voor Eva’s eigen netwerkpakket; aansluiting, activatielink en werkelijk later gebruik blijven open.",
         "finishOrder": [
           "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
           "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -9415,7 +9429,7 @@
           "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-10-30T22:04:48.636506+00:00",
+        "updatedAt": "2026-11-02T14:22:29.778168+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9691,7 +9705,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-10-30T22:04:48.636506+00:00",
+        "checkedAt": "2026-11-02T14:22:29.778168+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -15802,7 +15816,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "Laat Eva de behouden Gmail-kandidaat afronden; onafhankelijke lokale OAuth/HTTP-overdracht is groen. Herstel de aantoonbaar ontbrekende algemene hostpublicatie-overdracht zonder Gmail-productcode of Google-inrichting over te nemen. Activatielink, echte aansluiting en later gebruik blijven onbewezen.",
+      "nextAction": "Contextoverdracht is geïnstalleerd en teruggelezen. Herstel nu eerst de broncontinuïteit over de toegestane taakduur, met behoud van expliciet wissen/stoppen en oorspronkelijke hashes. De oude bron is al gecompacteerd: niet reconstrueren en geen blinde modelhervatting. Maak daarna de bestaande beoordeelde publicatieroute geschikt voor Eva’s eigen netwerkpakket; aansluiting, activatielink en werkelijk later gebruik blijven open.",
       "finishOrder": [
         "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
         "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
@@ -15813,7 +15827,7 @@
         "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-10-30T22:04:48.636506+00:00",
+      "updatedAt": "2026-11-02T14:22:29.778168+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -16089,7 +16103,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-10-30T22:04:48.636506+00:00",
+      "checkedAt": "2026-11-02T14:22:29.778168+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -18680,7 +18694,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-10-30T22:04:48.636506+00:00",
+  "updatedAt": "2026-11-02T14:22:29.778168+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -18763,7 +18777,7 @@
     }
   ],
   "lastUpdatedAt": "2026-10-30T22:04:48.636506+00:00",
-  "checkedAt": "2026-10-30T22:04:48.636506+00:00",
+  "checkedAt": "2026-11-02T14:22:29.778168+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

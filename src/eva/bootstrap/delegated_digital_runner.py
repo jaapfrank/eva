@@ -381,6 +381,7 @@ class BackgroundConnectorActions:
         self._maximum_calls = maximum_calls
         self.recorded_action_slots = recorded_action_slots
         self._recovered_slots = None
+        self.recovered_call_ids = set()
         self.calls = 0
         self.dispatches = 0
         self.receipts = []
@@ -475,6 +476,7 @@ class BackgroundConnectorActions:
                 raise ConversationConflict("recorded background action requires reconciliation")
             found = self._receipt(receipt)
             self.receipts.append(found)
+            self.recovered_call_ids.add(found.call.call_id)
             return found
         found = None
         for tool in self._tools:
@@ -489,6 +491,7 @@ class BackgroundConnectorActions:
             # The admitted execution's recovered results remain usable without
             # replaying completed effects or consuming this attempt's call budget.
             self.receipts.append(found)
+            self.recovered_call_ids.add(found.call.call_id)
         return found
 
     def execute(self, turn, call):
@@ -694,6 +697,11 @@ class DelegatedDigitalRunner:
             task_memory = _TaskMemory(stage_memory, source, spec.task, corrections)
             scoped_model = (self.model.with_context_archive(actions.archive_model_context)
                             if getattr(self.model, "supports_context_archive", False) else self.model)
+            if (getattr(scoped_model, "supports_context_archive", False)
+                    and "use_connector_tool" in allowed_names):
+                from eva.adapters.model.programming_history import ProgrammingHistoryModel
+                scoped_model = ProgrammingHistoryModel(scoped_model, actions.archive_model_context,
+                    lambda: frozenset(actions.recovered_call_ids))
             task_model = _TaskModel(scoped_model, spec.task, None if is_repair else self.browser_context,
                                     corrections=corrections,
                                     repair_context=(() if native_guard is None or native_guard._repair_incident_id is None else (
