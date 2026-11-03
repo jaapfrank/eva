@@ -7,10 +7,13 @@ export function createLocalOwner({ token, port = 44711, upstreamPort = 44710 }) 
   function permitted(req) {
     if (!['127.0.0.1', '::ffff:127.0.0.1'].includes(req.socket.remoteAddress)) return false;
     if (!hosts.has(req.headers.host)) return false;
-    if (req.headers.origin && req.headers.origin !== `http://${req.headers.host}`) return false;
-    if (req.headers['sec-fetch-site'] === 'cross-site') return false;
     let path;
     try { path = new URL(req.url, `http://${req.headers.host}`).pathname; } catch { return false; }
+    // Only this GET returns an issued, one-time package authorization state.
+    // The package host validates that state before forwarding any callback.
+    const callback = req.method === 'GET' && /^\/internal\/v1\/dashboard\/owned-packages\/[0-9a-f]{64}\/callback$/.test(path);
+    if (req.headers.origin && req.headers.origin !== `http://${req.headers.host}` && !callback) return false;
+    if (req.headers['sec-fetch-site'] === 'cross-site' && !callback) return false;
     return path === '/' || path === '/internal/v1/dashboard' || path.startsWith('/internal/v1/dashboard/');
   }
   function options(req) {

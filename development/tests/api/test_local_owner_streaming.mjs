@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import http from 'node:http';
 import { once } from 'node:events';
 import test from 'node:test';
-import { createLocalOwner } from '../../deploy/dashboard/local-owner.mjs';
+import { createLocalOwner } from '../../../deploy/dashboard/local-owner.mjs';
 
 test('receipt headers reach the browser before any model response body', {timeout: 4000}, async () => {
   let upstreamResponse;
@@ -38,5 +38,29 @@ test('receipt headers reach the browser before any model response body', {timeou
   } finally {
     request?.destroy(); proxy.closeAllConnections(); upstream.closeAllConnections();
     await Promise.all([new Promise(resolve=>proxy.close(resolve)),new Promise(resolve=>upstream.close(resolve))]);
+  }
+});
+
+test('cross-site requests stay blocked except the exact one-time callback GET', {timeout:4000}, async()=>{
+  const seen=[];
+  const upstream=http.createServer((req,res)=>{seen.push(req.url);res.writeHead(200).end('fixture callback only');});
+  upstream.listen(0,'127.0.0.1');await once(upstream,'listening');
+  const proxy=createLocalOwner({token:'synthetic-test-authority',port:0,upstreamPort:upstream.address().port});
+  proxy.listen(0,'127.0.0.1');await once(proxy,'listening');
+  const call=(path,method='GET')=>new Promise((resolve,reject)=>{
+    const req=http.request({hostname:'127.0.0.1',port:proxy.address().port,path,method,
+      headers:{host:'localhost:0',origin:'https://foreign.invalid','sec-fetch-site':'cross-site'}},res=>{res.resume();res.on('end',()=>resolve(res.statusCode));});
+    req.on('error',reject);req.end();
+  });
+  try{
+    const path='/internal/v1/dashboard/owned-packages/'+'a'.repeat(64)+'/callback';
+    assert.equal(await call('/internal/v1/dashboard/model-providers'),403);
+    assert.equal(await call(path,'POST'),403);
+    assert.equal(await call(path.replace('/callback','/save')),403);
+    assert.equal(await call(path+'?state=fixture'),200);
+    assert.equal(seen.length,1);
+  }finally{
+    proxy.closeAllConnections();upstream.closeAllConnections();
+    await Promise.all([new Promise(r=>proxy.close(r)),new Promise(r=>upstream.close(r))]);
   }
 });

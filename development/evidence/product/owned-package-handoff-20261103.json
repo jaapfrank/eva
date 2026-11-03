@@ -1,0 +1,77 @@
+{
+  "contract": "EvaOwnedPackageHandoffDelivery/v1",
+  "checkedAt": "2026-11-03T17:33:30.129529+00:00",
+  "scope": "General task-bound package handoff; application code remains authored by Eva.",
+  "built": true,
+  "installed": true,
+  "installedContractReadbackVerified": true,
+  "actualApplicationUseVerified": false,
+  "fullE415Completed": false,
+  "validation": {
+    "focusedTests": {
+      "passed": 360,
+      "failed": 0,
+      "durationSeconds": 24.67
+    },
+    "freshDatabaseOriginalSourceCases": {
+      "cases": 6,
+      "passed": true,
+      "durationSeconds": 5.59
+    },
+    "freshDatabaseNativePeerReview": {
+      "passed": true,
+      "durationSeconds": 4.5
+    },
+    "browserBoundaryTests": {
+      "passed": 2,
+      "failed": 0
+    },
+    "realIsolatedContainer": {
+      "started": true,
+      "readOnly": true,
+      "network": "none",
+      "coreSecretsAvailable": false,
+      "loopbackRpcVerified": true,
+      "removedAfterTest": true
+    },
+    "independentVerificationContainer": {
+      "exitCode": 0,
+      "timedOut": false,
+      "truncated": false
+    },
+    "installedProfiles": {
+      "allFourCompatible": true
+    }
+  },
+  "preservation": {
+    "originalSourceAndRecipient": true,
+    "originalTaskGrant": true,
+    "independentCriteria": true,
+    "personality": true,
+    "databaseSchemaUnchanged": true,
+    "telegramAndVoiceUnchanged": true,
+    "protectedDelegatedStoreUnchanged": true
+  },
+  "execution": {
+    "originalTaskContinuationScheduled": true,
+    "originalTaskContinuationStarted": true,
+    "inventedOwnerMessage": false,
+    "applicationAuthoredByCodex": false,
+    "applicationInstalledByCodex": false,
+    "googleConfigurationChangedByCodex": false
+  },
+  "limits": [
+    "No application success or external service authorization is inferred from a catalog or container.",
+    "Automatic changed-fact continuation is implemented for the original private task route; original native-task continuation still requires current native admission.",
+    "Managed first installation is supported; replacing an active package version is conservatively blocked.",
+    "Full original E4.15 criteria, later reuse and extension restore remain open."
+  ],
+  "usage": {
+    "developmentModelUsage": "unknown",
+    "runtimeAttemptUsage": "not_yet_complete",
+    "newAccounts": 0,
+    "newCodexChats": 0,
+    "additionalAutomations": 0
+  },
+  "privateOperatorEvidence": "/var/lib/eva2/owned-package-handoff-20261103"
+}

@@ -500,6 +500,22 @@ class ComponentApplicationRuntime:
         if not isinstance(value,dict):raise ValueError('maintenance callback response differs')
         return value
 
+    def package_call(self, action, **arguments):
+        payload = {'action': action, 'scope_sha256': self.config['scope_sha256'], **arguments}
+        raw = json.dumps(payload, ensure_ascii=True)
+        if len(raw.encode()) > 65536:
+            raise ValueError('host package request exceeds bound')
+        script = ('import json,sys; from eva.bootstrap.owned_package_host import handle_package_request; '
+                  'print(json.dumps(handle_package_request(json.loads(sys.argv[1]))))')
+        result = self.run(['docker', 'exec', self.config['core_container'], 'python', '-c', script, raw],
+                          text=True, capture_output=True, timeout=45)
+        if result.returncode != 0 or len(result.stdout.encode()) > 65536:
+            raise ValueError('original package task authority unavailable')
+        value = json.loads(result.stdout)
+        if not isinstance(value, dict):
+            raise ValueError('package authority response differs')
+        return value
+
     def ready_to_apply(self, task_id):
         return self._state(task_id, require_idle=True)
 
@@ -593,6 +609,9 @@ class ComponentApplicationRuntime:
         return payload["state"]
 
     def apply_release(self, release):
+        if release.get('kind') == 'owned_package':
+            from eva.operations.owned_package_application import OwnedPackageRuntime
+            return OwnedPackageRuntime(run=self.run).apply(release)
         if release.get("kind") == "saved_artifact":
             return self._apply_saved_artifact(release)
         from eva.operations.runtime_image_update import update_runtime

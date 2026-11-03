@@ -29,8 +29,13 @@ class ComponentEvaluationClient:
     work_execution_paths: tuple[str, ...] = ()
     runtime_repair_enabled: bool = False
     component_maintenance_enabled: bool = False
+    owned_package_scopes: tuple[str, ...] = ()
 
     def __post_init__(self):
+        if (not isinstance(self.owned_package_scopes, tuple) or len(self.owned_package_scopes) > 8
+                or any(not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None
+                       for value in self.owned_package_scopes)):
+            raise ValueError("invalid owned package scope")
         if type(self.runtime_repair_enabled) is not bool or type(self.component_maintenance_enabled) is not bool:
             raise ValueError("invalid runtime repair switch")
         if (not isinstance(self.work_execution_paths, tuple)
@@ -78,6 +83,11 @@ class ComponentEvaluationClient:
         return result
 
     def application(self, action, *, review_id, request_id, task_id, scope_sha256=None):
+        if (self.owned_package_scopes
+                and scope_sha256 in self.owned_package_scopes
+                and review_id not in dict(self.reviewed_releases)):
+            return self._post("/reviewed-component", {"action": action, "review_id": review_id,
+                "request_id": request_id, "task_id": task_id, "scope_sha256": scope_sha256}, limit=16384)
         if review_id not in dict(self.reviewed_releases):
             if action != "status" or scope_sha256 not in dict(self.final_assessment_scopes).values():
                 raise ValueError("component review is not configured")
@@ -190,7 +200,7 @@ def configured_component_evaluator():
         return None
     data = json.loads(Path(config_path).read_text())
     required = {"url", "token_file", "allowed_paths", "suite_sha256", "timeout_seconds"}
-    if not required <= set(data) or set(data) - required - {"reviewed_releases", "suite_bindings", "final_assessment_scopes", "saved_artifact_suite_sha256", "work_execution_paths", "runtime_repair_enabled", "component_maintenance_enabled"}:
+    if not required <= set(data) or set(data) - required - {"reviewed_releases", "suite_bindings", "final_assessment_scopes", "saved_artifact_suite_sha256", "work_execution_paths", "runtime_repair_enabled", "component_maintenance_enabled", "owned_package_scopes"}:
         raise ValueError("component evaluator configuration fields differ")
     url = urlsplit(data["url"])
     if (url.scheme not in {"http", "https"} or not url.hostname or url.username or url.password
@@ -227,6 +237,23 @@ def configured_component_evaluator():
         raise ValueError("invalid independent final assessment scopes")
     return ComponentEvaluationClient(**{**data, "allowed_paths": tuple(data["allowed_paths"]),
                                         "work_execution_paths": tuple(work_paths),
+                                        "owned_package_scopes": tuple(data.get("owned_package_scopes", [])),
                                         "reviewed_releases": tuple(sorted(reviews.items())),
                                         "suite_bindings": tuple(sorted(suites.items())),
                                         "final_assessment_scopes": tuple(sorted(final.items()))})
+
+
+def owned_package_transport_auth(turn, endpoint):
+    """Supply host authentication directly to registration, never to the model."""
+    client = configured_component_evaluator()
+    if client is None or not client.owned_package_scopes or not endpoint.startswith(client.url + '/owned-package/'):
+        return None
+    scope = hashlib.sha256(json.dumps({key: getattr(turn, key) for key in
+        ('tenant_id', 'installation_id', 'principal_id')}, sort_keys=True, ensure_ascii=False,
+        separators=(',', ':')).encode()).hexdigest()
+    if scope not in client.owned_package_scopes:
+        raise ValueError('owned package registration is outside the owner scope')
+    value = client._post('/owned-package-auth', {'endpoint': endpoint, 'scope_sha256': scope}, limit=4096)
+    if set(value) != {'auth_type', 'auth_token'} or value.get('auth_type') != 'bearer':
+        raise ValueError('host package transport authentication is unavailable')
+    return value

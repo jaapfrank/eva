@@ -750,6 +750,14 @@ class DelegatedDigitalRunner:
                     while True:
                         reply = conversation.respond(source, before_step=checkpoint, model_journal=journal)
                         authorize(source)
+                        pending_packages = {}
+                        for receipt in actions.receipts:
+                            value = receipt.output.get('operation_result', {})
+                            if isinstance(value, dict) and value.get('contract') == 'EvaOwnedPackageHandoff/v1':
+                                pending_packages[value['review_id']] = value
+                        if any(value.get('state') in {'waiting_for_builder', 'awaiting_independent_review',
+                                'waiting_for_configuration', 'application_requested'} for value in pending_packages.values()):
+                            raise _BlockedWorkPlan('original task awaits its independently reviewed package handoff')
                         progress_state = load_work_progress(self.store._engine, spec)
                         if not progress_state and _has_completed_tool_evidence(actions.receipts):
                             return reply

@@ -40,7 +40,7 @@ def load_config(path):
     config = json.loads(raw, object_pairs_hook=_object)
     required = {"image", "command", "token_file", "bind_host", "port", "allowed_paths"}
     limits = {field.name for field in fields(EvaluationConfig)} - {"image", "command"}
-    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites", "final_component_assessments", "saved_artifact_suite", "work_execution_producers", "runtime_repairs", "component_maintenance"}:
+    if not isinstance(config, dict) or not required <= config.keys() or config.keys() - required - limits - {"procedure_execution_enabled", "programming_workspace", "reviewed_component_applications", "component_suites", "final_component_assessments", "saved_artifact_suite", "work_execution_producers", "runtime_repairs", "component_maintenance", "owned_packages"}:
         raise ValueError("invalid evaluation service configuration fields")
     if (not isinstance(config["command"], list)
             or not isinstance(config["token_file"], str)
@@ -94,7 +94,8 @@ class EvaluationServer(ThreadingHTTPServer):
     daemon_threads = False
     request_queue_size = 8
 
-    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None, final_assessments=None, saved_artifact_suite=None, work_execution_producers=None, runtime_repairs=None):
+    def __init__(self, address, *, evaluator, token, allowed_paths, procedure_executor=None, programming_workspaces=None, reviewed_applications=None, component_suites=None, final_assessments=None, saved_artifact_suite=None, work_execution_producers=None, runtime_repairs=None, owned_packages=None):
+        self.owned_packages = owned_packages
         self.evaluator = evaluator
         self.runtime_repairs = runtime_repairs
         self.component_suites = component_suites or {}
@@ -235,13 +236,35 @@ class EvaluationHandler(BaseHTTPRequestHandler):
             if len(raw) != length:
                 raise ValueError()
             value = json.loads(raw, object_pairs_hook=_object)
-            if not isinstance(value, dict) or set(value) != {"action", "review_id", "request_id", "task_id"}:
+            base = {"action", "review_id", "request_id", "task_id"}
+            if not isinstance(value, dict) or set(value) not in (base, base | {'scope_sha256'}):
                 raise ValueError()
+            package_scope = value.get('scope_sha256')
+            if package_scope is not None:
+                from eva.operations.owned_package import key
+                key(package_scope)
+                if self.server.owned_packages is None:
+                    raise ValueError('package route is not configured')
             if value["action"] == "request":
-                result = self.server.reviewed_applications.request(
-                    value["review_id"], value["request_id"], value["task_id"])
+                packages = self.server.owned_packages
+                if packages is not None and (packages.contains(value['review_id'])
+                        or value['review_id'] not in self.server.reviewed_applications.releases):
+                    if package_scope is None:
+                        raise ValueError('package source scope is required')
+                    result = packages.request(value['review_id'], value['request_id'], value['task_id'], scope_sha256=package_scope)
+                else:
+                    result = self.server.reviewed_applications.request(
+                        value["review_id"], value["request_id"], value["task_id"])
             elif value["action"] == "status":
-                result = self.server.reviewed_applications.review_status(value["review_id"])
+                if self.server.owned_packages is not None and self.server.owned_packages.contains(value['review_id']):
+                    if package_scope is None:
+                        raise ValueError('package source scope is required')
+                    result = self.server.owned_packages.status(value['review_id'], task_id=value['task_id'], scope_sha256=package_scope)
+                elif (package_scope is not None and self.server.final_assessments is not None
+                        and value['review_id'] not in self.server.reviewed_applications.releases):
+                    result = self.server.final_assessments.status(value['review_id'], scope_sha256=package_scope)
+                else:
+                    result = self.server.reviewed_applications.review_status(value["review_id"])
             else:
                 raise ValueError()
         except (ValueError, TypeError, UnicodeError, OSError, OverflowError, RecursionError):
@@ -356,7 +379,64 @@ class EvaluationHandler(BaseHTTPRequestHandler):
             self._reply(500, {'error':'repair_handoff_unconfirmed'});return
         self._reply(200,result)
 
+    def _owned_package(self):
+        packages = self.server.owned_packages
+        if packages is None:
+            self._reply(404, {'error': 'not_found'}); return
+        control = self.path in {'/owned-package-auth', '/owned-package-setup'}
+        if control and not self._authenticated():
+            self._reply(401, {'error': 'unauthorized'}); return
+        try:
+            lengths = self.headers.get_all('Content-Length', [])
+            types = self.headers.get_all('Content-Type', [])
+            if (len(lengths) != 1 or not lengths[0].isascii() or not lengths[0].isdigit()
+                    or self.headers.get_all('Transfer-Encoding') or len(types) != 1
+                    or types[0].split(';', 1)[0].strip().lower() != 'application/json'
+                    or self.headers.get_all('Origin')):
+                raise ValueError('exact non-browser package request required')
+            length = int(lengths[0])
+            if not 1 <= length <= 65536:
+                raise ValueError('package request exceeds bound')
+            raw = self.rfile.read(length)
+            if len(raw) != length:
+                raise ValueError('incomplete package request')
+            value = json.loads(raw, object_pairs_hook=_object)
+            if not isinstance(value, dict):
+                raise ValueError('package request must be an object')
+            if control:
+                if self.path == '/owned-package-auth':
+                    if set(value) != {'endpoint', 'scope_sha256'}:
+                        raise ValueError('package registration request differs')
+                    result = packages.transport_auth(value['endpoint'], value['scope_sha256'])
+                else:
+                    if not {'action', 'review_id', 'scope_sha256'} <= set(value) or set(value) - {
+                            'action', 'review_id', 'scope_sha256', 'environment', 'secret_values', 'query'}:
+                        raise ValueError('package owner setup request differs')
+                    result = packages.setup(**value)
+            else:
+                import re
+                match = re.fullmatch(r'/owned-package/([0-9a-f]{64})/mcp', self.path)
+                headers = self.headers.get_all('Authorization', [])
+                if match is None or len(headers) != 1:
+                    raise PermissionError('package transport authentication required')
+                result = packages.proxy(match[1], headers[0], value)
+        except PermissionError:
+            self._reply(401, {'error': 'unauthorized'}); return
+        except (ValueError, TypeError, KeyError, UnicodeError, OSError, OverflowError, RecursionError):
+            self._reply(400, {'error': 'package_request_not_admitted'}); return
+        except Exception:
+            # A lost tool response is unknown, never a successful effect or a retry.
+            self._reply(500, {'error': 'package_execution_unconfirmed'}); return
+        if result is None:
+            self.send_response(202); self.send_header('Content-Length', '0')
+            self.send_header('Cache-Control', 'no-store'); self.end_headers()
+        else:
+            self._reply(200, result)
+
     def do_POST(self):
+        if self.path in {'/owned-package-auth', '/owned-package-setup'} or self.path.startswith('/owned-package/'):
+            self._owned_package()
+            return
         if self.path in {"/runtime-repair", "/component-update"}:
             self._runtime_repair()
             return
@@ -537,12 +617,22 @@ def main():
     if 'component_maintenance' in config:
         from eva.operations.runtime_dependency_update import configure_component_maintenance
         configure_component_maintenance(config['component_maintenance'],controller=runtime_repairs,settings=settings)
+    owned_packages = None
+    if 'owned_packages' in config:
+        if applications is None or programming is None:
+            raise ValueError('owned packages require the existing programming/application routes')
+        from eva.operations.component_application_runtime import ComponentApplicationRuntime
+        from eva.operations.owned_package_handoff import OwnedPackageHandoff
+        owned_packages = OwnedPackageHandoff(config['owned_packages'], programming=programming,
+            applications=applications, runtime=ComponentApplicationRuntime(config['reviewed_component_applications']['runtime']))
+        applications.owned_package_readiness = owned_packages.ready_to_apply
     with EvaluationServer(address, evaluator=ComponentEvaluator(settings), token=token,
                           allowed_paths=allowed_paths, procedure_executor=executor,
                           programming_workspaces=programming, reviewed_applications=applications,
                           component_suites=component_suites, final_assessments=final_assessments,
                           saved_artifact_suite=saved_artifact_suite,
-                          work_execution_producers=work_producers, runtime_repairs=runtime_repairs) as server:
+                           work_execution_producers=work_producers, runtime_repairs=runtime_repairs,
+                           owned_packages=owned_packages) as server:
         def stop(signum, frame):
             threading.Thread(target=server.shutdown, daemon=True).start()
         signal.signal(signal.SIGTERM, stop)
@@ -550,6 +640,8 @@ def main():
         try:
             server.serve_forever(poll_interval=0.5)
         finally:
+            if owned_packages is not None:
+                owned_packages.close()
             if runtime_repairs is not None:
                 runtime_repairs.close()
             if final_assessments is not None:

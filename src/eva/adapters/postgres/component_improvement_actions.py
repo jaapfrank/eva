@@ -93,9 +93,16 @@ def component_descriptors():
         "en component_step uit dit resultaat, zonder content opnieuw uit te schrijven. "
         "Dit installeert niets: gemeten voordeel, onafhankelijke beoordeling en terugweg blijven nodig.",
         _prepare_provider_schema(), "Meld pakketvindplaats en resterende beoordeling; claim geen toepassing."),)
-    application = () if evaluator is None or not evaluator.reviewed_releases else (
+    package_scope = None if evaluator is None else getattr(evaluator, 'owned_package_scopes', None)
+    application = () if evaluator is None or not (evaluator.reviewed_releases or package_scope) else (
         ConversationToolDescriptor(APPLY,
             "Vraag toepassing aan van één al onafhankelijk goedgekeurde eigen verbetering. "
+            + ("Voor een eigen afzonderlijk pakket: lees eerst het hostcontract met "
+               "get_reviewed_component_application(review_id='" + '0' * 64 + "'). "
+               "Schrijf de beschreven /workspace/package/candidate.json en geef de exacte "
+               "archive_sha256 als review_id. De host bewaart de bron en laat een afzonderlijke "
+               "reviewer beoordelen vóór enige toepassing. Dit is geen toestemming om je eigen "
+               "werk goed te keuren. " if package_scope else "") +
             "Beschikbare review-ID's: " + ", ".join(key for key, _ in evaluator.reviewed_releases) + ". "
             "De host controleert het exacte pakket en voert de update pas uit nadat deze taak "
             "klaar is en lopend werk is vrijgegeven. Rond na de aanvraag deze taak af; wacht "
@@ -108,7 +115,7 @@ def component_descriptors():
             "Geef alleen bij installed=true aan dat de host de exacte images bevestigd heeft; "
             "een onzekere of onderbroken toepassing moet zichtbaar blijven.",
             _SCHEMAS[APPLICATION_STATUS], "Meld de actuele status; voer een onzekere toepassing niet opnieuw uit."),)
-    if evaluator is not None and getattr(evaluator, "final_assessment_scopes", ()) and not evaluator.reviewed_releases:
+    if evaluator is not None and getattr(evaluator, "final_assessment_scopes", ()) and not evaluator.reviewed_releases and not package_scope:
         application = (ConversationToolDescriptor(APPLICATION_STATUS,
             "Lees de bewaarde onafhankelijke eindbeoordeling en eventuele toepassing van de gekozen kandidaat. "
             "Gebruik review_id uit final_assessment_handoff. Dit start geen beoordeling of installatie. "
@@ -172,7 +179,7 @@ class ComponentImprovementActions:
     def __init__(self, engine, spec, source, authorize, dispatch, clock, *, source_resolver=None, repair_guard=None):
         self.evaluator = configured_component_evaluator()
         self.action_names = (READ, DRAFT) + (() if self.evaluator is None else (EVALUATE, COMPARE, PREPARE))
-        if self.evaluator is not None and self.evaluator.reviewed_releases:
+        if self.evaluator is not None and (self.evaluator.reviewed_releases or getattr(self.evaluator, 'owned_package_scopes', None)):
             self.action_names += (APPLY, APPLICATION_STATUS)
         if self.evaluator is not None and getattr(self.evaluator, "final_assessment_scopes", ()) and APPLICATION_STATUS not in self.action_names:
             self.action_names += (APPLICATION_STATUS,)
@@ -310,6 +317,7 @@ class ComponentImprovementActions:
             scope = canonical_sha256({key: getattr(turn, key) for key in
                                       ("tenant_id", "installation_id", "principal_id")})
             if (dict(self.evaluator.reviewed_releases).get(call.arguments["review_id"]) != scope
+                    and scope not in getattr(self.evaluator, 'owned_package_scopes', ())
                     and not (call.name == APPLICATION_STATUS and scope in dict(
                         getattr(self.evaluator, "final_assessment_scopes", ())).values())):
                 raise ConversationConflict("reviewed component is not approved for this source")
@@ -354,11 +362,13 @@ class ComponentImprovementActions:
             operation = "request" if call.name == APPLY else "status"
             value = self.evaluator.application(operation, review_id=call.arguments["review_id"],
                 request_id=request_id, task_id=self.spec.work_id,
-                **({"scope_sha256": scope} if call.name == APPLICATION_STATUS else {}))
-            admitted = {"queued", "waiting", "completed"} if call.name == APPLY else {
+                scope_sha256=scope)
+            admitted = {"queued", "waiting", "completed", "waiting_for_builder", "awaiting_independent_review",
+                "waiting_for_configuration", "application_requested"} if call.name == APPLY else {
                 "ready", "queued", "waiting", "completed", "interrupted_before_dispatch",
                 "cancelled", "dispatching", "unconfirmed", "rejected", "assessing",
-                "awaiting_independent_answer_assessment", "application_requested", "publishing", "answer_assessing"}
+                "awaiting_independent_answer_assessment", "application_requested", "publishing", "answer_assessing",
+                "waiting_for_builder", "awaiting_independent_review", "waiting_for_configuration", "blocked", "package_contract"}
             if value.get("state") not in admitted:
                 raise ConversationConflict("reviewed component application was not accepted")
             scope = "reviewed_application_requested" if call.name == APPLY else "reviewed_application_status"

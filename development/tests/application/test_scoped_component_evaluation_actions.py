@@ -31,6 +31,7 @@ class Timeline:
 def adapter(path=WORK_STRATEGY_EVALUATION_PATH, *, registered=True,
             clock_value=datetime(2026, 10, 12, 12, tzinfo=UTC)):
     component = ComponentImprovementActions.__new__(ComponentImprovementActions)
+    component.repair_guard = None  # Match the normal constructor's unbound guard.
     source = SimpleNamespace(tenant_id="tenant", installation_id="installation", principal_id="owner")
     origin = SimpleNamespace(model_dump=lambda **kw: {"tenant_id": "tenant", "installation_id": "installation",
         "principal_id": "owner", "conversation_id": "private-conversation", "message_id": "original"})

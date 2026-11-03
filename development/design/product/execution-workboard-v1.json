@@ -847,7 +847,7 @@
     "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
     "status": "in_progress",
     "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "De algemene context- en bronoverdracht zijn geïnstalleerd en teruggelezen op de echte taak. Beoordeel nu uitsluitend de ontbrekende algemene overdracht van een Eva-pakket naar onafhankelijke beoordeling en beheerd toepassen, zodat Eva haar eigen voorzieningen zelf kan aansluiten. Neem geen toepassingscode, accountinrichting of Gmail-oplevering over. Start geen modelpoging alleen om een ongewijzigde blokkade opnieuw vast te stellen; volledige zelfstandigheid en E4.15 blijven onbewezen.",
+    "nextAction": "Controleer Eva’s werkelijke vervolg op dezelfde oorspronkelijke opdracht via de geïnstalleerde pakketoverdracht. Zij schrijft de toepassing, krijgt afzonderlijke beoordeling en sluit haar toegelaten pakket aan; leg alleen echte uitkomsten en een concreet ontbrekende eigenaarhandeling vast.",
     "ownerActionRequired": false,
     "mailExecutionDelivery": {
       "checkedAt": "2026-10-30T15:48:40.636226+00:00",
@@ -919,6 +919,18 @@
       "evidence": "development/evidence/reassessment/work-source-continuity-20261102.json",
       "installedRealSourceReadbackVerified": true,
       "allFourInstalledProfilesCompatible": true
+    },
+    "packageHandoffRepair": {
+      "status": "installed_contract_verified_eva_continuing",
+      "scope": "General task-bound package snapshot, independent review and managed application through the existing host; Eva authors the application.",
+      "built": true,
+      "installed": true,
+      "realUseVerified": false,
+      "fullCardCompleted": false,
+      "startedAt": "2026-11-03T11:50:15.716852+00:00",
+      "checkedAt": "2026-11-03T17:33:30.129529+00:00",
+      "evidence": "development/evidence/product/owned-package-handoff-20261103.json",
+      "contractLiveReadbackVerified": true
     }
   },
   "historicalWorkboard": {
@@ -8612,7 +8624,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Eva voert de behouden Gmail-opdracht zelf verder uit. Controleer haar concrete bouw, aansluiting, geldige activatielink en Telegramterugmelding; herstel alleen een bewezen uitvoerfout. Neem productbouw of Google-inrichting niet over. De zelfstandigheidstest blijft open tot haar werkelijke uitkomst.",
+                "nextAction": "Controleer Eva’s werkelijke vervolg op dezelfde oorspronkelijke opdracht via de geïnstalleerde pakketoverdracht. Zij schrijft de toepassing, krijgt afzonderlijke beoordeling en sluit haar toegelaten pakket aan; leg alleen echte uitkomsten en een concreet ontbrekende eigenaarhandeling vast.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -8635,10 +8647,10 @@
                   "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-30T17:08:58.991639+00:00",
-                "progress": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
+                "checkedAt": "2026-11-03T17:33:30.129529+00:00",
+                "progress": "Algemene taakgebonden pakketoverdracht gebouwd en geïnstalleerd: exacte bronopname, afzonderlijke native beoordeling, beheerde pakketcontainer, bestaande connectorregistratie en beperkte eigenaarconfiguratie. 360 gerichte regressies, verse database-/stopproeven, echte geïsoleerde container en geïnstalleerde contractteruglezing slagen. De oorspronkelijke Eva-opdracht is éénmaal hervat; haar toepassing, activering, werkelijk gebruik en later hergebruik zijn nog niet als geslaagd bewezen.",
                 "evidence": "development/evidence/product/e415-installed-route-20261023.json",
-                "latestEvidence": "development/evidence/reassessment/mail-execution-boundary-repair-20261030.json",
+                "latestEvidence": "development/evidence/product/owned-package-handoff-20261103.json",
                 "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json",
                 "foundationDelivery": {
                   "checkedAt": "2026-10-29T21:43:52.133135+00:00",
@@ -8683,6 +8695,18 @@
                   "currentWorkId": "work:eva-resume:e725cda4-542d-5bbe-aec7-3946a55eb055",
                   "originalTelegramReturnBound": true,
                   "fullCardCompleted": false
+                },
+                "packageHandoffRepair": {
+                  "status": "installed_contract_verified_eva_continuing",
+                  "scope": "General task-bound package snapshot, independent review and managed application through the existing host; Eva authors the application.",
+                  "built": true,
+                  "installed": true,
+                  "realUseVerified": false,
+                  "fullCardCompleted": false,
+                  "startedAt": "2026-11-03T11:50:15.716852+00:00",
+                  "checkedAt": "2026-11-03T17:33:30.129529+00:00",
+                  "evidence": "development/evidence/product/owned-package-handoff-20261103.json",
+                  "contractLiveReadbackVerified": true
                 }
               },
               {
@@ -15010,7 +15034,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Eva voert de behouden Gmail-opdracht zelf verder uit. Controleer haar concrete bouw, aansluiting, geldige activatielink en Telegramterugmelding; herstel alleen een bewezen uitvoerfout. Neem productbouw of Google-inrichting niet over. De zelfstandigheidstest blijft open tot haar werkelijke uitkomst.",
+              "nextAction": "Controleer Eva’s werkelijke vervolg op dezelfde oorspronkelijke opdracht via de geïnstalleerde pakketoverdracht. Zij schrijft de toepassing, krijgt afzonderlijke beoordeling en sluit haar toegelaten pakket aan; leg alleen echte uitkomsten en een concreet ontbrekende eigenaarhandeling vast.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -15033,10 +15057,10 @@
                 "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-30T17:08:58.991639+00:00",
-              "progress": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
+              "checkedAt": "2026-11-03T17:33:30.129529+00:00",
+              "progress": "Algemene taakgebonden pakketoverdracht gebouwd en geïnstalleerd: exacte bronopname, afzonderlijke native beoordeling, beheerde pakketcontainer, bestaande connectorregistratie en beperkte eigenaarconfiguratie. 360 gerichte regressies, verse database-/stopproeven, echte geïsoleerde container en geïnstalleerde contractteruglezing slagen. De oorspronkelijke Eva-opdracht is éénmaal hervat; haar toepassing, activering, werkelijk gebruik en later hergebruik zijn nog niet als geslaagd bewezen.",
               "evidence": "development/evidence/product/e415-installed-route-20261023.json",
-              "latestEvidence": "development/evidence/reassessment/mail-execution-boundary-repair-20261030.json",
+              "latestEvidence": "development/evidence/product/owned-package-handoff-20261103.json",
               "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json",
               "foundationDelivery": {
                 "checkedAt": "2026-10-29T21:43:52.133135+00:00",
@@ -15081,6 +15105,18 @@
                 "currentWorkId": "work:eva-resume:e725cda4-542d-5bbe-aec7-3946a55eb055",
                 "originalTelegramReturnBound": true,
                 "fullCardCompleted": false
+              },
+              "packageHandoffRepair": {
+                "status": "installed_contract_verified_eva_continuing",
+                "scope": "General task-bound package snapshot, independent review and managed application through the existing host; Eva authors the application.",
+                "built": true,
+                "installed": true,
+                "realUseVerified": false,
+                "fullCardCompleted": false,
+                "startedAt": "2026-11-03T11:50:15.716852+00:00",
+                "checkedAt": "2026-11-03T17:33:30.129529+00:00",
+                "evidence": "development/evidence/product/owned-package-handoff-20261103.json",
+                "contractLiveReadbackVerified": true
               }
             },
             {

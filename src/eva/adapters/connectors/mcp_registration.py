@@ -131,17 +131,24 @@ class ContextForgeRegistrationClient:
             raise McpRegistrationError("MCP registration name is ambiguous")
         return None if not matches else self._validate_gateway(matches[0], name=name, endpoint=endpoint)
 
-    def register(self, *, owner_key: str, endpoint: str) -> dict:
+    def register(self, *, owner_key: str, endpoint: str, upstream_auth: dict | None = None) -> dict:
         """Register after caller authorization; reuse only an exact own binding."""
         endpoint = canonical_mcp_endpoint(endpoint)
         existing = self.find(owner_key=owner_key, endpoint=endpoint)
         if existing is not None:
             return existing
         name = registration_name(owner_key, endpoint)
+        if upstream_auth is not None and (
+                not isinstance(upstream_auth, dict) or set(upstream_auth) != {'auth_type', 'auth_token'}
+                or upstream_auth['auth_type'] != 'bearer' or not isinstance(upstream_auth['auth_token'], str)
+                or not 32 <= len(upstream_auth['auth_token']) <= 256
+                or any(c.isspace() for c in upstream_auth['auth_token'])):
+            raise McpRegistrationError('host-managed upstream authentication is invalid')
         try:
             value = self._request("POST", "/gateways", {
                 "name": name, "url": endpoint, "transport": "STREAMABLEHTTP",
                 "gateway_mode": "cache", "visibility": self.config.visibility,
+                **(upstream_auth or {}),
             })
         except McpRegistrationError:
             # The POST may have reached the server before its response was lost.

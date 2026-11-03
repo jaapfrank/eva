@@ -698,7 +698,11 @@ class McpGatewayToolAdapter:
                 "id": rpc_id,
                 "jsonrpc": "2.0",
                 "method": "tools/call",
-                "params": {"arguments": arguments, "name": tool_name},
+                # The standard MCP metadata survives ContextForge's internal
+                # request-ID changes. It binds a reconnect to the same durable
+                # operation without altering the registered tool arguments.
+                "params": {"arguments": arguments, "name": tool_name,
+                           "_meta": {"eva_effect_key": canonical_sha256({'rpc_id': rpc_id})}},
             },
         )
         if (

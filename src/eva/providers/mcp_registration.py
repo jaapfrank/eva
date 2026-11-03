@@ -305,8 +305,11 @@ class McpRegistrationToolAdapter:
                 if row is None:
                     raise McpRegistrationAbsent("registered gateway is unavailable for refresh")
             else:
+                from eva.adapters.connectors.component_evaluation import owned_package_transport_auth
+                auth = await asyncio.to_thread(owned_package_transport_auth, turn, command.arguments['endpoint'])
                 row = await asyncio.to_thread(self.client.register,
-                    owner_key=self.owner_key, endpoint=command.arguments["endpoint"])
+                    owner_key=self.owner_key, endpoint=command.arguments["endpoint"],
+                    **({'upstream_auth': auth} if auth is not None else {}))
             return ToolDispatchResult(True, row["id"], {"registration_requested": True})
         if command.tool_name == "manage_connected_services":
             if command.arguments["action"] == "stop":

@@ -54,6 +54,9 @@ def _artifact(binding):
 
 def _verify_release(review_id, release):
     """Reuse importer attestations and the established overlay/updater formats."""
+    if isinstance(release, dict) and release.get('kind') == 'owned_package':
+        from eva.operations.owned_package_application import verify_release
+        return verify_release(review_id, release)
     if isinstance(release,dict) and release.get("kind")=="dependency_update":
         from eva.operations.runtime_dependency_update import validate_dependency_release
         return validate_dependency_release(review_id,release)
@@ -381,6 +384,13 @@ class ReviewedComponentApplications:
                 update["task_id"] = job["task_id"]
                 self.inspect_release(update)
             receipt = load_object(_path(path))
+            if release.get('kind') == 'owned_package':
+                from eva.operations.owned_package_application import receipt_confirms
+                verified = _verify_release(job['review_id'], release)
+                if receipt_confirms(receipt, verified['package'], job['task_id']):
+                    job.update(state='completed', reason='package_catalog_verified_semantic_outcome_open')
+                    self._persist(job)
+                return
             if release.get("kind") == "saved_artifact":
                 from eva.operations.saved_artifact_application import receipt_confirms_application
                 verified = _verify_release(job["review_id"], release)
@@ -453,7 +463,14 @@ class ReviewedComponentApplications:
                     self.condition.wait()
                     continue
             try:
-                readiness = self.ready_to_apply(job["task_id"])
+                release = self.releases[job['review_id']]
+                if release.get('kind') == 'owned_package':
+                    if not callable(getattr(self, 'owned_package_readiness', None)):
+                        readiness = 'waiting'  # host composition is still starting
+                    else:
+                        readiness = self.owned_package_readiness(job['task_id'], _verify_release(job['review_id'], release))
+                else:
+                    readiness = self.ready_to_apply(job["task_id"])
                 if readiness not in {"waiting", "ready", "cancelled"}:
                     raise ValueError("readiness callback must return a known state")
                 error = None

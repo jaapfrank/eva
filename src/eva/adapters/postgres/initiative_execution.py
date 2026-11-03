@@ -728,6 +728,7 @@ class NativeInitiativeGuard:
         self.repair_role = None
         self.maintenance_origin = None
         self.maintenance_role = None
+        self.owned_package_origin = None
 
     def check(self, turn):
         if turn != self.turn:
@@ -767,6 +768,14 @@ class NativeInitiativeGuard:
         self.repair_role = repair.get("repair_role")
         self.maintenance_origin=repair.get('maintenance_origin')
         self.maintenance_role=repair.get('maintenance_role')
+        self.owned_package_origin = repair.get('owned_package_origin')
+        if self.owned_package_origin is not None:
+            from eva.bootstrap.owned_package_host import current_package_origin
+            from eva.operations.owned_package import key
+            if self._repair_incident_id is not None or self.maintenance_origin is not None:
+                raise InitiativeMandateDenied('package review ancestry cannot be mixed')
+            key(repair.get('owned_package_sha256'))
+            current_package_origin(self.authority, self.owned_package_origin, _connection=conn)
         if self.maintenance_origin is not None:
             from eva.bootstrap.component_maintenance import current_maintenance_origin
             if self._repair_incident_id is not None or self.maintenance_role not in {'original_behavior_oracle','independent_review'}:
@@ -847,6 +856,13 @@ class NativeInitiativeGuard:
     def restrict_work_grant(self, grant):
         """Each repair stage gets only local code/work capabilities, no effects."""
         self.check(self.turn)
+        if self.owned_package_origin is not None:
+            allowed = {'get_reviewed_component_application', 'write_programming_file',
+                'start_programming_process', 'use_programming_tool', 'list_programming_tools',
+                'save_work_progress'}
+            payload = grant.to_payload()
+            payload['capability_ids'] = [name for name in grant.capability_ids if name in allowed]
+            return type(grant).model_validate(payload)
         if self._repair_incident_id is None and self.maintenance_origin is None:
             return grant
         from eva.contracts.delegated_digital_work import INITIATIVE_LOCAL_CAPABILITIES
@@ -878,7 +894,7 @@ class NativeInitiativeGuard:
         if self.resume_work is not None:
             raise InitiativeMandateDenied("native recovery admission cannot dispatch tools")
         self.check(self.turn)
-        if self._repair_incident_id is not None or self.maintenance_origin is not None:
+        if self._repair_incident_id is not None or self.maintenance_origin is not None or self.owned_package_origin is not None:
             raise InitiativeMandateDenied("assessment work cannot repeat or dispatch connector effects")
         policy, _ = self.authority.policy()
         caps = [c for c in policy["capabilities"]
