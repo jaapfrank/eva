@@ -22,6 +22,21 @@ Controleer eerst de bewaarde tool- en hostontvangstbewijzen en de actuele
 werk- en pakketstatus. Bewaar de onzekere poging en gebruik die niet als
 aanleiding voor herhaling. Deze controle startte geen model of installer.
 
+De sessiesleutel uit de ongewijzigde taakspecificatie komt overeen met de
+programmeercontainer die vlak vóór de afwijzing startte. In die periode is
+geen nieuw programmeerontvangstbewijs vastgelegd. Een geïsoleerde reconstructie
+met de geïnstalleerde hostbron, het vastgelegde programmeerimage, een kopie van
+de kandidaat en gesimuleerde actieve taakmetadata bereikte
+`waiting_for_builder` in een tijdelijke map. De actuele hostroute is daarbij
+niet aangeroepen en onafhankelijke beoordeling is niet gestart. Dit bewijst
+dat het bewaarde pakket onder die omstandigheden de toelatingscontrole passeert.
+Het verklaart de oorspronkelijke afwijzing bij levende taakmetadata nog niet.
+
+De bestaande hervatcontrole verlangt minstens twee getelde toolstappen en een
+verzegelde contractlezing uit dezelfde poging. De actuele poging telt één
+toolstap en levert die contractlezing niet. Het live bewijs dat geen pakket
+werd overgedragen is op zichzelf dus onvoldoende voor die hervatcontrole.
+
 Eva's eigen Gmail-kandidaat is behouden. Werkelijk gebruik, onafhankelijke
 pakketbeoordeling, de bestaande eindcriteria en eigenaaracceptatie staan open.
 Laat Eva zelf de uitbreiding indienen en aansluiten met de bestaande
