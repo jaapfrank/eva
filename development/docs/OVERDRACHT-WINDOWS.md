@@ -41,8 +41,8 @@ De pakkethost gaf voor verschillende afwijzingen dezelfde HTTP 400 terug
 zonder de afgewezen route of codeplek te registreren. De lokale kandidaat
 registreert nu vaste routenamen, fouttypen en codeplekken. Een geauthenticeerde
 lokale transportproef bevestigde dezelfde HTTP 400 en een log zonder
-taakinhoud, uitzonderingsbericht of token. De diagnosewijziging is gebouwd en
-gericht getest. Onafhankelijke beoordeling en installatie staan open.
+taakinhoud, uitzonderingsbericht of token. De diagnosewijziging is gebouwd, gericht getest, onafhankelijk beoordeeld
+en geïnstalleerd.
 Dit levert geen bewijs over de precieze fout van de historische poging.
 
 De lokale hervatcontrole is ook gecorrigeerd voor een onderbroken
@@ -51,8 +51,15 @@ bewijs van afwezigheid, ook wanneer het pakket nog niet in het geheugen van
 de host is geregistreerd. De regressie faalde vóór de reparatie. Daarna
 slaagden alle 42 gerichte pakket- en transporttests. Bij de echte poging is
 geen gedeeltelijke opslag aangetroffen. Deze reparatie verklaart de
-historische HTTP 400 niet. Onafhankelijke beoordeling en installatie
-staan open.
+historische HTTP 400 niet. De tester wees de eerste versie af omdat
+toegangsfouten ook als afwezig konden gelden. Op de goedgekeurde versie
+geldt uitsluitend FileNotFoundError als afwezig. Alle 67 gerichte tests
+slagen. De twee exacte bestanden zijn gericht geïnstalleerd op de bestaande
+pakkethost na controles op lopende claims. Kern en werkuitvoerder bleven
+gezond. De live host gaf de verwachte HTTP 400-diagnose bij ongeldige
+invoer en bevestigde opnieuw geen pakketoverdracht voor de onzekere taak.
+De installatieregistratie staat privé onder
+`/var/lib/eva2/owned-package-handoff-20261103/host-review-20261104.qh5npn/activation.json`.
 
 Eva's eigen Gmail-kandidaat is behouden. Werkelijk gebruik, onafhankelijke
 pakketbeoordeling, de bestaande eindcriteria en eigenaaracceptatie staan open.
