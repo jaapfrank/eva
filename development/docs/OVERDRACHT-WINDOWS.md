@@ -45,6 +45,15 @@ taakinhoud, uitzonderingsbericht of token. De diagnosewijziging is gebouwd en
 gericht getest. Onafhankelijke beoordeling en installatie staan open.
 Dit levert geen bewijs over de precieze fout van de historische poging.
 
+De lokale hervatcontrole is ook gecorrigeerd voor een onderbroken
+pakketopslag. Een archiefmap of ontvangstbewijs op schijf blokkeert nu een
+bewijs van afwezigheid, ook wanneer het pakket nog niet in het geheugen van
+de host is geregistreerd. De regressie faalde vóór de reparatie. Daarna
+slaagden alle 42 gerichte pakket- en transporttests. Bij de echte poging is
+geen gedeeltelijke opslag aangetroffen. Deze reparatie verklaart de
+historische HTTP 400 niet. Onafhankelijke beoordeling en installatie
+staan open.
+
 Eva's eigen Gmail-kandidaat is behouden. Werkelijk gebruik, onafhankelijke
 pakketbeoordeling, de bestaande eindcriteria en eigenaaracceptatie staan open.
 Laat Eva zelf de uitbreiding indienen en aansluiten met de bestaande
