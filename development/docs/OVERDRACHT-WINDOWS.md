@@ -4,6 +4,27 @@ Deze overdracht is gemaakt op 23 oktober 2026. De actuele taken blijven uitsluit
 in `development/design/product/execution-workboard-v1.json`; dit document is de
 startinstructie en wegwijzer voor de nieuwe coördinator.
 
+## E4.15 op 4 november 2026
+
+Het bestaande pakketmechanisme is gebouwd, gericht getest en geïnstalleerd.
+Kern en werkuitvoerder komen volgens de lokale Docker-metadata overeen met de
+images in `/var/lib/eva2/owned-package-handoff-20261103/resume-proof`. Het
+beheercontact met Docker gaf geen antwoord tijdens de controle, dus deze
+teruglezing bevestigt de image-identiteit en levert geen actuele gezondheids-
+of claimcontrole op.
+
+De werkuitvoerder logde een modelrespons met HTTP 200 en één aangevraagde
+toolactie. De latere HTTP 400 liet de uitvoering in `ambiguous` achter, vóór
+pakketbeoordeling. Het bestaande bewijs toont nog niet welke stap de 400 gaf.
+Controleer eerst de bewaarde tool- en hostontvangstbewijzen en de actuele
+werk- en pakketstatus. Bewaar de onzekere poging en gebruik die niet als
+aanleiding voor herhaling. Deze controle startte geen model of installer.
+
+Eva's eigen Gmail-kandidaat is behouden. Werkelijk gebruik, onafhankelijke
+pakketbeoordeling, de bestaande eindcriteria en eigenaaracceptatie staan open.
+Laat Eva zelf de uitbreiding indienen en aansluiten met de bestaande
+toestemmings- en ontvangerbinding.
+
 ## Dezelfde installatie openen
 
 Gebruik de officiële ChatGPT Windows-app met de agentomgeving **WSL** en herstart de
