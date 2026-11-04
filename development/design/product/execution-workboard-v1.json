@@ -838,100 +838,22 @@
   ],
   "contract": "EvaExecutionWorkboard/v2",
   "schemaVersion": 2,
-  "lastUpdated": "2026-10-30T22:04:48.636506+00:00",
+  "lastUpdated": "2026-11-04T21:12:40.203434+00:00",
   "commandWorkingDirectory": ".",
   "humanBoardPath": "development/docs/WERKBORD.md",
-  "activeTaskId": "E4.15",
+  "activeTaskId": "E4.16",
   "currentWork": {
-    "id": "E4.15",
-    "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
+    "id": "E4.16",
+    "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
-    "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-    "nextAction": "Controleer Eva’s werkelijke vervolg op dezelfde oorspronkelijke opdracht via de geïnstalleerde pakketoverdracht. Zij schrijft de toepassing, krijgt afzonderlijke beoordeling en sluit haar toegelaten pakket aan; leg alleen echte uitkomsten en een concreet ontbrekende eigenaarhandeling vast.",
+    "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+    "nextAction": "De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.",
     "ownerActionRequired": false,
-    "mailExecutionDelivery": {
-      "checkedAt": "2026-10-30T15:48:40.636226+00:00",
-      "evidence": "development/evidence/reassessment/mail-execution-boundary-repair-20261030.json",
-      "modelRefusalRepairInstalled": true,
-      "operatorAssistedMailVerified": true,
-      "gmailCandidateLocalOnly": true,
-      "fullCardCompleted": false
-    },
-    "executionAcceptancePolicy": {
-      "clarifiedAt": "2026-10-30T16:44:21.678412+00:00",
-      "builder": "Eva through the existing admitted executor",
-      "developerRole": "Repair general execution infrastructure and independently verify Eva-authored work; do not deliver Gmail or another application on her behalf.",
-      "automaticPreparationAndActivationLinkRequired": true,
-      "ownerGoogleConsentRemainsOwnerAction": true,
-      "manualDeveloperCompletionCountsAsTestSuccess": false,
-      "testStatus": "not_passed",
-      "ownerCorrectionStoredInOriginalWork": true,
-      "newAttemptStarted": true,
-      "reaffirmedAt": "2026-11-02T15:34:41.762957+00:00",
-      "developerDeliversGmail": false,
-      "acceptanceQuestion": "Can Eva herself create, test, connect, verify and reuse her own provision?"
-    },
-    "continuationRepair": {
-      "checkedAt": "2026-11-02T15:41:43.514329+00:00",
-      "status": "installed_source_available_previous_attempt_remains_failed",
-      "scope": "Only explicit, sealed legacy model refusal with complete isolated programming receipts; no Gmail end-solution changes.",
-      "focusedTestsPassed": 187,
-      "databaseCases": 10,
-      "oldTaskAndReceiptsPreserved": true,
-      "externalUnknownResumeAllowed": false,
-      "newEvaAttemptStarted": false,
-      "currentWorkId": "work:eva-resume:fcc8b69a-f045-5030-a687-1ef0a24f5c33",
-      "originalTelegramReturnBound": true,
-      "fullCardCompleted": false,
-      "evidence": "development/evidence/reassessment/eva-owned-mail-continuation-20261030.json",
-      "generation": 6,
-      "previousAttemptOutcome": "Retained attempt ended with input_budget_exceeded; no new attempt until the verified context fix is installed and the original source is usable.",
-      "independentCandidateTestExecutionsPassed": 32,
-      "independentCandidateUniqueTests": 24,
-      "activationLinkAvailable": false
-    },
-    "contextHandoffRepair": {
-      "checkedAt": "2026-11-02T14:22:29.778168+00:00",
-      "status": "installed_source_profile_verified",
-      "testsPassed": 182,
-      "historyBytesBefore": 166621,
-      "historyBytesAfter": 48119,
-      "historyByteReductionPercent": 71.1,
-      "originalReceiptsPreserved": true,
-      "newLiveModelAttemptStarted": false,
-      "sourceCompactionBlocker": "Original conversation ingress has been compacted during its admitted task retention. No reconstruction, edited original source or blind resume is authorized by this finding.",
-      "fullCardCompleted": false,
-      "evidence": "development/evidence/reassessment/programming-history-handoff-20261102.json",
-      "allFourInstalledProfilesCompatible": true
-    },
-    "sourceHandoffRepair": {
-      "checkedAt": "2026-11-02T15:41:43.514329+00:00",
-      "status": "installed_source_profile_verified",
-      "exactScheduledSourceVerified": true,
-      "originalMessageAndGrantPreserved": true,
-      "conversationPlaintextRestored": false,
-      "sourceLifecycleCasesPassed": 8,
-      "legacyResumeCasesPassed": 10,
-      "executionInterfaceTestsPassed": 182,
-      "schemaChanged": false,
-      "newModelAttemptStarted": false,
-      "fullCardCompleted": false,
-      "evidence": "development/evidence/reassessment/work-source-continuity-20261102.json",
-      "installedRealSourceReadbackVerified": true,
-      "allFourInstalledProfilesCompatible": true
-    },
-    "packageHandoffRepair": {
-      "status": "installed_contract_verified_eva_continuing",
-      "scope": "General task-bound package snapshot, independent review and managed application through the existing host; Eva authors the application.",
-      "built": true,
-      "installed": true,
-      "realUseVerified": false,
-      "fullCardCompleted": false,
-      "startedAt": "2026-11-03T11:50:15.716852+00:00",
-      "checkedAt": "2026-11-03T17:33:30.129529+00:00",
-      "evidence": "development/evidence/product/owned-package-handoff-20261103.json",
-      "contractLiveReadbackVerified": true
-    }
+    "startedAt": "2026-11-04T14:00:19.123526+00:00",
+    "previousHandoff": "development/archive/history/20261104-delivery-order/snapshot.json",
+    "executionStep": "E4.16: diagnose bounded continuation after confirmed provider rate limit",
+    "originalCriteriaPreserved": true,
+    "fullCardCompleted": false
   },
   "historicalWorkboard": {
     "path": "development/archive/history/eva2/design/product/execution-workboard-v1.json",
@@ -1723,6 +1645,20 @@
       },
       "deliveryOverview": {
         "deliveries": [
+          {
+            "title": "E4.15 · Algemene pakketoverdracht geïnstalleerd — 3 november",
+            "state": "installed",
+            "summary": "Eva kan haar eigen pakket via dezelfde kern overdragen aan afzonderlijke beoordeling en beheerde toepassing. Zij maakte zelf versie0.3.0. Twee concrete hostfouten zijn hersteld en het oorspronkelijke werk is hervat. Er is nog geen bevestigde actieve Gmail-koppeling.",
+            "remaining": "Eva’s daadwerkelijke indiening, onafhankelijke beoordeling, toegelaten activering, echt gebruik en later hergebruik.",
+            "source": "development/evidence/product/owned-package-handoff-20261103.json",
+            "checkedAt": "2026-11-03T17:57:30.939767+00:00",
+            "technicalDeliveryComplete": true,
+            "independentReviewComplete": false,
+            "newProductFunctionCompleted": false,
+            "completedTaskIds": [],
+            "ownerAcceptance": false,
+            "familyAcceptance": false
+          },
           {
             "title": "E1.6 · Echte achtergrondproef geslaagd — 30 oktober",
             "state": "verified",
@@ -3287,17 +3223,18 @@
           "familyAcceptance": false
         },
         "now": {
-          "taskId": "E4.15",
-          "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-          "summary": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
-          "detail": "Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.",
-          "doneWhen": "Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.",
-          "state": "Hervatreparatie geïnstalleerd; Eva zet haar oorspronkelijke opdracht daadwerkelijk voort."
+          "taskId": "E4.16",
+          "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
+          "summary": "De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.",
+          "detail": "Eerst actuele images/configuratie en claims uitlezen na de lopende Docker-opstart. Daarna de werkelijke E4.16 fout- en kandidaat-/werkruimtebinding vaststellen vóór een nieuwe uitvoering. De E4.15 HTTP400 en ontbrekende toegang tot het bewaarde pakket blijven afzonderlijk onbewezen; geen blinde hervatting of overname van Eva’s toepassingscode.",
+          "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
+          "state": "Actuele diagnose; nog geen nieuwe reparatie of installatie",
+          "checkedAt": "2026-11-04T14:00:19.123526+00:00"
         },
         "next": {
           "taskId": "E4.15",
           "title": "Van zelfontdekte behoefte naar eigen uitvinding en later gebruik",
-          "detail": "Eva voert de behouden Gmail-opdracht zelf verder uit. Controleer haar concrete bouw, aansluiting, geldige activatielink en Telegramterugmelding; herstel alleen een bewezen uitvoerfout. Neem productbouw of Google-inrichting niet over. De zelfstandigheidstest blijft open tot haar werkelijke uitkomst."
+          "detail": "E4.15 blijft open. De werkregistratie blijft na HTTP 400 op onbekend staan. De pakkethost bevestigt voor deze poging dat er geen pakketoverdracht, aansluitverzoek of installatie is. De bewaarde kandidaat passeert de toelatingscontrole in een geïsoleerde reconstructie met gesimuleerde taakmetadata. De werkelijke afwijzingsreden is onbewezen en de huidige poging voldoet niet aan de bestaande hervatcontrole. Diagnose voor afwijzingen en de controle op gedeeltelijke of onleesbare pakketopslag zijn onafhankelijk beoordeeld, geïnstalleerd en live teruggelezen. Alle 67 gerichte tests slagen. De oorspronkelijke taakuitkomst blijft onbekend. Een nieuwe echte Telegram-opdracht eindigde met een duidelijke blokkade: Eva kon haar bewaarde pakket vanuit die taak niet openen. Er is geen pakket ingediend; de Gmail-voorziening is nog niet beoordeeld, aangesloten of gebruikt."
         },
         "ownerAction": {
           "required": false,
@@ -3308,8 +3245,8 @@
         "reviewedAt": "2026-10-25T22:09:03.184675+00:00",
         "historySource": "development/archive/history/eva2/design/product/execution-workboard-v1.json"
       },
-      "reviewedAt": "2026-10-20T19:26:59.261526+00:00",
-      "checkedAt": "2026-10-30T11:32:54.467337+00:00",
+      "reviewedAt": "2026-11-04T14:00:19.123526+00:00",
+      "checkedAt": "2026-11-04T21:12:40.203434+00:00",
       "beforeFurtherBuild": null,
       "comparisonResults": {
         "status": "partial_closed_observations_both_objectives_failed",
@@ -3443,7 +3380,7 @@
           }
         ]
       },
-      "lastUpdatedAt": "2026-11-02T15:41:43.514329+00:00",
+      "lastUpdatedAt": "2026-11-04T14:00:19.123526+00:00",
       "resultLabelVerification": {
         "checkedAt": "2026-10-09T11:50:46.902135+00:00",
         "sourceSha256": {
@@ -3477,7 +3414,7 @@
         "productFunctionCompleted": false,
         "newEvaModelCalls": 0
       },
-      "updatedAt": "2026-10-30T11:32:54.467337+00:00",
+      "updatedAt": "2026-11-04T21:12:40.203434+00:00",
       "auditUpdate": {
         "recordedAt": "2026-10-12T11:22:12.445290+02:00",
         "source": "development/evidence/product/dashboard-path-input-repair-current-20261012.json",
@@ -3486,7 +3423,7 @@
       },
       "deliveryPlan": {
         "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-        "currentStep": "E4.15",
+        "currentStep": "E4.16",
         "steps": [
           {
             "number": 1,
@@ -8624,7 +8561,7 @@
                 "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
                 "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
                 "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-                "nextAction": "Controleer Eva’s werkelijke vervolg op dezelfde oorspronkelijke opdracht via de geïnstalleerde pakketoverdracht. Zij schrijft de toepassing, krijgt afzonderlijke beoordeling en sluit haar toegelaten pakket aan; leg alleen echte uitkomsten en een concreet ontbrekende eigenaarhandeling vast.",
+                "nextAction": "E4.15 blijft open. De werkregistratie blijft na HTTP 400 op onbekend staan. De pakkethost bevestigt voor deze poging dat er geen pakketoverdracht, aansluitverzoek of installatie is. De bewaarde kandidaat passeert de toelatingscontrole in een geïsoleerde reconstructie met gesimuleerde taakmetadata. De werkelijke afwijzingsreden is onbewezen en de huidige poging voldoet niet aan de bestaande hervatcontrole. Diagnose voor afwijzingen en de controle op gedeeltelijke of onleesbare pakketopslag zijn onafhankelijk beoordeeld, geïnstalleerd en live teruggelezen. Alle 67 gerichte tests slagen. De oorspronkelijke taakuitkomst blijft onbekend. Een nieuwe echte Telegram-opdracht eindigde met een duidelijke blokkade: Eva kon haar bewaarde pakket vanuit die taak niet openen. Er is geen pakket ingediend; de Gmail-voorziening is nog niet beoordeeld, aangesloten of gebruikt.",
                 "ownerAcceptance": {
                   "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                   "extensionRestore": [
@@ -8647,8 +8584,8 @@
                   "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-11-03T17:33:30.129529+00:00",
-                "progress": "Algemene taakgebonden pakketoverdracht gebouwd en geïnstalleerd: exacte bronopname, afzonderlijke native beoordeling, beheerde pakketcontainer, bestaande connectorregistratie en beperkte eigenaarconfiguratie. 360 gerichte regressies, verse database-/stopproeven, echte geïsoleerde container en geïnstalleerde contractteruglezing slagen. De oorspronkelijke Eva-opdracht is éénmaal hervat; haar toepassing, activering, werkelijk gebruik en later hergebruik zijn nog niet als geslaagd bewezen.",
+                "checkedAt": "2026-11-03T17:57:30.939767+00:00",
+                "progress": "Pakketoverdracht geïnstalleerd en teruggelezen; 360 oorspronkelijke gerichte regressies en database-/containerproeven slagen. Eva bouwde zelf versie0.3.0 (13 bestanden), maar haar eerste vervolg eindigde op HTTP400 vóór pakketindiening. Normale archieftijdstempels en status vóór indiening gericht hersteld/geïnstalleerd (62 controles); hetzelfde werk hervat na gewijzigde oorzaak. Toepassing, onafhankelijke inhoudelijke beoordeling en later gebruik blijven onbewezen. Eerste poging:815.121 gedeeltelijk gemeten tokens,19 modelresponsen/19tools; kosten/cacheverdeling onbekend.",
                 "evidence": "development/evidence/product/e415-installed-route-20261023.json",
                 "latestEvidence": "development/evidence/product/owned-package-handoff-20261103.json",
                 "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json",
@@ -8697,16 +8634,20 @@
                   "fullCardCompleted": false
                 },
                 "packageHandoffRepair": {
-                  "status": "installed_contract_verified_eva_continuing",
+                  "status": "installed_continuation_ambiguous_before_review",
                   "scope": "General task-bound package snapshot, independent review and managed application through the existing host; Eva authors the application.",
                   "built": true,
                   "installed": true,
                   "realUseVerified": false,
                   "fullCardCompleted": false,
                   "startedAt": "2026-11-03T11:50:15.716852+00:00",
-                  "checkedAt": "2026-11-03T17:33:30.129529+00:00",
+                  "checkedAt": "2026-11-04T08:45:51.747267+00:00",
                   "evidence": "development/evidence/product/owned-package-handoff-20261103.json",
-                  "contractLiveReadbackVerified": true
+                  "contractLiveReadbackVerified": true,
+                  "compatibilityRepairInstalled": true,
+                  "focusedCompatibilityTestsPassed": 62,
+                  "continuationOutcome": "ambiguous_http_400_before_review",
+                  "ownerAcceptance": false
                 }
               },
               {
@@ -8726,7 +8667,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "De Telegramcorrecties zijn geïnstalleerd; zelfstandig herstel en kandidaat-/werkruimtebinding blijven open. Geef eerst voorrang aan één gewone documentopdracht met opgeslagen en teruggelezen resultaat en terugmelding, herstel alleen een aangetoonde blokkade en behoud oorspronkelijke E4.16-eindvoorwaarden.",
+                "nextAction": "De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8737,7 +8678,9 @@
                 ],
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [],
+                  "activeWorkers": [
+                    "01a0c537-54d0-7080-9e4c-74db537877af"
+                  ],
                   "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
                   "scope": "Hoofdbouwer maakt de ontbrekende native zelfhersteloverdracht af: echte fout naar blijvend doel, Eva-kandidaat, onafhankelijk oordeel, beheerde toepassing, oorspronkelijke werking en later hergebruik. Gebruik actuele installatie en laatste overdracht; de SDK-headercorrectie is geen volledige kaartafronding.",
                   "exclusiveProductFiles": [
@@ -8750,7 +8693,8 @@
                     "src/eva/operations/runtime_repair_*.py"
                   ],
                   "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "ownerInstructionDate": "2026-10-25"
+                  "ownerInstructionDate": "2026-10-25",
+                  "currentScope": "Read-only diagnosis of retained 429 repair failure and existing bounded continuation; no product mutation assigned."
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/e416-provider-native-headers-20261024.json",
@@ -8763,8 +8707,8 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-10-27T07:47:07.435768+00:00",
-                "progress": "SDK-headercorrectie op 25 oktober om 08:21 Nederlandse tijd geïnstalleerd en onafhankelijk werkelijk teruggelezen. Beide rollen zijn gezond; de providerbron en alle vier werkprofielen komen overeen. De oorspronkelijke installatieblokkade is met exact bron- en terminaal foutbewijs verklaard; registraties zijn behouden. Nieuwe echte HTTP-foutdiagnostiek, de schooluitkomst en volledige autonome herstel-/hergebruikcriteria blijven open.",
+                "checkedAt": "2026-11-04T21:12:40.203434+00:00",
+                "progress": "4 november: geïnstalleerde kern, worker en beoordelingshost actief; vier werkprofielen gelijk. Laatste twee hersteluitvoeringen hebben exact de foutafdruk van ConversationModelRateLimited. Nieuwste uitvoering is failed/provider_transient; huidige oorspronkelijke herstelbinding nog geldig. De volledige autonome herstel-/installatie-/hergebruikroute is niet bewezen.",
                 "latestEvidence": "development/evidence/product/e16-completion-20261025.json",
                 "scopedTelegramRepairAuthorization": {
                   "at": "2026-10-27T07:47:07.435768+00:00",
@@ -9461,18 +9405,21 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De algemene context- en bronoverdracht zijn geïnstalleerd en teruggelezen op de echte taak. Beoordeel nu uitsluitend de ontbrekende algemene overdracht van een Eva-pakket naar onafhankelijke beoordeling en beheerd toepassen, zodat Eva haar eigen voorzieningen zelf kan aansluiten. Neem geen toepassingscode, accountinrichting of Gmail-oplevering over. Start geen modelpoging alleen om een ongewijzigde blokkade opnieuw vast te stellen; volledige zelfstandigheid en E4.15 blijven onbewezen.",
+        "nextAction": "De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.",
         "finishOrder": [
-          "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
-          "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
-          "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
-          "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
-          "E4.16 → E4.19 → E4.18: zelfherstel, zelfstandig relevant onderhoud en gerichte consolidatie; blokkerende fouten eerder oplossen.",
-          "P2.1 → F2.1 → F2.2: dezelfde eindkandidaat vergelijken, echte gezinsweek en eigenaaracceptatie.",
-          "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
+          "Canonieke status, afhankelijkheden en geïnstalleerde versie consistent maken — bestaande kaarten: E5.1, E2.1, E4.4.",
+          "E4.16: huidige zelfherstelblokkade oplossen en volledige herstelroute bewijzen — bestaande kaarten: E4.16.",
+          "Gewone digitale opdrachten afronden, verifiëren en terugmelden — bestaande kaarten: E1.3, E4.14, E5.1.",
+          "Zelfstandige bronkeuze, echte bronverandering en passend vervolg — bestaande kaarten: E1.6.",
+          "Geheugen, routines, correcties en mensbegrip over meerdere echte dagen — bestaande kaarten: E1.5, E1.7, E1.8, E1.9.",
+          "Een blijvende verantwoordelijkheid dragen, ook bij uitval en herstart — bestaande kaarten: E1.11, E1.12, E1.14.",
+          "Eigen uitbreidingen realiseren, toepassen, herstellen en hergebruiken; eigen projectcontinuïteit — bestaande kaarten: E4.15, E4.17, E1.10, E2.9.",
+          "Bestaande spraakroute op beide speakers afronden — bestaande kaarten: C3.5, C3.1, C3.4, C4.1, C3.6.",
+          "Beheer, reproduceerbaarheid, performance, veiligheid en herstel afronden — bestaande kaarten: E3.1, E3.2, E3.3, E3.4, E4.3, E4.4, E4.18, E4.19, E5.1, E5.2.",
+          "Eindvergelijking, zeven dagen gezinsgebruik en afzonderlijke eigenaaracceptatie — bestaande kaarten: P2.1, F2.1, F2.2."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-02T15:41:43.514329+00:00",
+        "updatedAt": "2026-11-04T21:12:40.203434+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9748,7 +9695,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-02T15:41:43.514329+00:00",
+        "checkedAt": "2026-11-04T21:12:40.203434+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -9891,12 +9838,119 @@
             "Afmaakvolgorde is geen waterval: minimale benodigde verbindingen en stopbediening samen in één praktijkroute bouwen; volledige kaartacceptatie volgt haar bestaande afhankelijkheden.",
             "E1.9 levert eerst alleen benodigde brongebonden feedback; persoonlijkheidsverfijning volgt echte activiteit. Camera blijft bestaande E4.15-acceptatie, geen tweede parallelle hoofdopdracht."
           ]
+        },
+        "ownerDeliveryOrder": {
+          "authorizedAt": "2026-11-04T14:00:19.123526+00:00",
+          "authorization": "Directe eigenaaropdracht 4 november 2026: Eva2 definitief afronden in tien opleveringsstappen, zonder nieuwe taakreeksen.",
+          "previousOrder": "development/archive/history/20261104-delivery-order/snapshot.json",
+          "newTasksAdded": false,
+          "completedCardsReopened": false,
+          "steps": [
+            {
+              "number": 1,
+              "outcome": "Canonieke status, afhankelijkheden en geïnstalleerde versie consistent maken",
+              "existingTaskIds": [
+                "E5.1",
+                "E2.1",
+                "E4.4"
+              ]
+            },
+            {
+              "number": 2,
+              "outcome": "E4.16: huidige zelfherstelblokkade oplossen en volledige herstelroute bewijzen",
+              "existingTaskIds": [
+                "E4.16"
+              ]
+            },
+            {
+              "number": 3,
+              "outcome": "Gewone digitale opdrachten afronden, verifiëren en terugmelden",
+              "existingTaskIds": [
+                "E1.3",
+                "E4.14",
+                "E5.1"
+              ]
+            },
+            {
+              "number": 4,
+              "outcome": "Zelfstandige bronkeuze, echte bronverandering en passend vervolg",
+              "existingTaskIds": [
+                "E1.6"
+              ]
+            },
+            {
+              "number": 5,
+              "outcome": "Geheugen, routines, correcties en mensbegrip over meerdere echte dagen",
+              "existingTaskIds": [
+                "E1.5",
+                "E1.7",
+                "E1.8",
+                "E1.9"
+              ]
+            },
+            {
+              "number": 6,
+              "outcome": "Een blijvende verantwoordelijkheid dragen, ook bij uitval en herstart",
+              "existingTaskIds": [
+                "E1.11",
+                "E1.12",
+                "E1.14"
+              ]
+            },
+            {
+              "number": 7,
+              "outcome": "Eigen uitbreidingen realiseren, toepassen, herstellen en hergebruiken; eigen projectcontinuïteit",
+              "existingTaskIds": [
+                "E4.15",
+                "E4.17",
+                "E1.10",
+                "E2.9"
+              ]
+            },
+            {
+              "number": 8,
+              "outcome": "Bestaande spraakroute op beide speakers afronden",
+              "existingTaskIds": [
+                "C3.5",
+                "C3.1",
+                "C3.4",
+                "C4.1",
+                "C3.6"
+              ]
+            },
+            {
+              "number": 9,
+              "outcome": "Beheer, reproduceerbaarheid, performance, veiligheid en herstel afronden",
+              "existingTaskIds": [
+                "E3.1",
+                "E3.2",
+                "E3.3",
+                "E3.4",
+                "E4.3",
+                "E4.4",
+                "E4.18",
+                "E4.19",
+                "E5.1",
+                "E5.2"
+              ]
+            },
+            {
+              "number": 10,
+              "outcome": "Eindvergelijking, zeven dagen gezinsgebruik en afzonderlijke eigenaaracceptatie",
+              "existingTaskIds": [
+                "P2.1",
+                "F2.1",
+                "F2.2"
+              ]
+            }
+          ],
+          "evidencePolicy": "Behoud oorspronkelijke criteria en geldig bestaand bewijs; gerichte hercontrole alleen bij gewijzigde oorzaak of ontbrekend bewijs. Echte gebruiksdagen en eigenaaracceptatie niet simuleren."
         }
       }
     },
     "deliveryPlan": {
       "outcome": "Eva2 als volledige digitale huisgenoot: persoonlijkheid, geheugen en mensbegrip, eigen initiatief en zelfstandig werk, inclusief volledige leercyclus en AIDE² voor aansturing, code en uitbreidingen.",
-      "currentStep": "E4.15",
+      "currentStep": "E4.16",
       "steps": [
         {
           "number": 1,
@@ -15034,7 +15088,7 @@
               "beyondExistingScope": "Nieuwe geïntegreerde gebruikersuitkomst: zelfontdekte behoefte naar eigen gekozen, gebruikte en verbeterde voorziening. Bestaande code-/skill-/RPC-deelafrondingen worden hergebruikt, niet heropend.",
               "assignment": "Afgebakende herstelvoorbereiding, actuele uitvoering en onafhankelijke nacontrole opgeleverd. Coordinator volgt bestaande volledige kaart op uitsluitend nieuwe bruikbare bron-/uitings-/feedbackbewijzen; tester blijft onafhankelijk.",
               "effort": "Eén gebruikersuitkomst via bestaande keten; werkelijke tijd en model/toolgebruik apart meten, credits onbekend tot gemeten.",
-              "nextAction": "Controleer Eva’s werkelijke vervolg op dezelfde oorspronkelijke opdracht via de geïnstalleerde pakketoverdracht. Zij schrijft de toepassing, krijgt afzonderlijke beoordeling en sluit haar toegelaten pakket aan; leg alleen echte uitkomsten en een concreet ontbrekende eigenaarhandeling vast.",
+              "nextAction": "E4.15 blijft open. De werkregistratie blijft na HTTP 400 op onbekend staan. De pakkethost bevestigt voor deze poging dat er geen pakketoverdracht, aansluitverzoek of installatie is. De bewaarde kandidaat passeert de toelatingscontrole in een geïsoleerde reconstructie met gesimuleerde taakmetadata. De werkelijke afwijzingsreden is onbewezen en de huidige poging voldoet niet aan de bestaande hervatcontrole. Diagnose voor afwijzingen en de controle op gedeeltelijke of onleesbare pakketopslag zijn onafhankelijk beoordeeld, geïnstalleerd en live teruggelezen. Alle 67 gerichte tests slagen. De oorspronkelijke taakuitkomst blijft onbekend. Een nieuwe echte Telegram-opdracht eindigde met een duidelijke blokkade: Eva kon haar bewaarde pakket vanuit die taak niet openen. Er is geen pakket ingediend; de Gmail-voorziening is nog niet beoordeeld, aangesloten of gebruikt.",
               "ownerAcceptance": {
                 "scenario": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "extensionRestore": [
@@ -15057,8 +15111,8 @@
                 "Daarna een zelfontdekte behoefte en later hergebruik aantonen; de cameraopdracht alleen bewijst geen spontane behoefteontdekking."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-11-03T17:33:30.129529+00:00",
-              "progress": "Algemene taakgebonden pakketoverdracht gebouwd en geïnstalleerd: exacte bronopname, afzonderlijke native beoordeling, beheerde pakketcontainer, bestaande connectorregistratie en beperkte eigenaarconfiguratie. 360 gerichte regressies, verse database-/stopproeven, echte geïsoleerde container en geïnstalleerde contractteruglezing slagen. De oorspronkelijke Eva-opdracht is éénmaal hervat; haar toepassing, activering, werkelijk gebruik en later hergebruik zijn nog niet als geslaagd bewezen.",
+              "checkedAt": "2026-11-03T17:57:30.939767+00:00",
+              "progress": "Pakketoverdracht geïnstalleerd en teruggelezen; 360 oorspronkelijke gerichte regressies en database-/containerproeven slagen. Eva bouwde zelf versie0.3.0 (13 bestanden), maar haar eerste vervolg eindigde op HTTP400 vóór pakketindiening. Normale archieftijdstempels en status vóór indiening gericht hersteld/geïnstalleerd (62 controles); hetzelfde werk hervat na gewijzigde oorzaak. Toepassing, onafhankelijke inhoudelijke beoordeling en later gebruik blijven onbewezen. Eerste poging:815.121 gedeeltelijk gemeten tokens,19 modelresponsen/19tools; kosten/cacheverdeling onbekend.",
               "evidence": "development/evidence/product/e415-installed-route-20261023.json",
               "latestEvidence": "development/evidence/product/owned-package-handoff-20261103.json",
               "latestIndependentReview": "development/reviews/e415-household-continuation-20261024.json",
@@ -15107,16 +15161,20 @@
                 "fullCardCompleted": false
               },
               "packageHandoffRepair": {
-                "status": "installed_contract_verified_eva_continuing",
+                "status": "installed_continuation_ambiguous_before_review",
                 "scope": "General task-bound package snapshot, independent review and managed application through the existing host; Eva authors the application.",
                 "built": true,
                 "installed": true,
                 "realUseVerified": false,
                 "fullCardCompleted": false,
                 "startedAt": "2026-11-03T11:50:15.716852+00:00",
-                "checkedAt": "2026-11-03T17:33:30.129529+00:00",
+                "checkedAt": "2026-11-04T08:45:51.747267+00:00",
                 "evidence": "development/evidence/product/owned-package-handoff-20261103.json",
-                "contractLiveReadbackVerified": true
+                "contractLiveReadbackVerified": true,
+                "compatibilityRepairInstalled": true,
+                "focusedCompatibilityTestsPassed": 62,
+                "continuationOutcome": "ambiguous_http_400_before_review",
+                "ownerAcceptance": false
               }
             },
             {
@@ -15136,7 +15194,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "De Telegramcorrecties zijn geïnstalleerd; zelfstandig herstel en kandidaat-/werkruimtebinding blijven open. Geef eerst voorrang aan één gewone documentopdracht met opgeslagen en teruggelezen resultaat en terugmelding, herstel alleen een aangetoonde blokkade en behoud oorspronkelijke E4.16-eindvoorwaarden.",
+              "nextAction": "De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -15147,7 +15205,9 @@
               ],
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [],
+                "activeWorkers": [
+                  "01a0c537-54d0-7080-9e4c-74db537877af"
+                ],
                 "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
                 "scope": "Hoofdbouwer maakt de ontbrekende native zelfhersteloverdracht af: echte fout naar blijvend doel, Eva-kandidaat, onafhankelijk oordeel, beheerde toepassing, oorspronkelijke werking en later hergebruik. Gebruik actuele installatie en laatste overdracht; de SDK-headercorrectie is geen volledige kaartafronding.",
                 "exclusiveProductFiles": [
@@ -15160,7 +15220,8 @@
                   "src/eva/operations/runtime_repair_*.py"
                 ],
                 "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "ownerInstructionDate": "2026-10-25"
+                "ownerInstructionDate": "2026-10-25",
+                "currentScope": "Read-only diagnosis of retained 429 repair failure and existing bounded continuation; no product mutation assigned."
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/e416-provider-native-headers-20261024.json",
@@ -15173,8 +15234,8 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-10-27T07:47:07.435768+00:00",
-              "progress": "SDK-headercorrectie op 25 oktober om 08:21 Nederlandse tijd geïnstalleerd en onafhankelijk werkelijk teruggelezen. Beide rollen zijn gezond; de providerbron en alle vier werkprofielen komen overeen. De oorspronkelijke installatieblokkade is met exact bron- en terminaal foutbewijs verklaard; registraties zijn behouden. Nieuwe echte HTTP-foutdiagnostiek, de schooluitkomst en volledige autonome herstel-/hergebruikcriteria blijven open.",
+              "checkedAt": "2026-11-04T21:12:40.203434+00:00",
+              "progress": "4 november: geïnstalleerde kern, worker en beoordelingshost actief; vier werkprofielen gelijk. Laatste twee hersteluitvoeringen hebben exact de foutafdruk van ConversationModelRateLimited. Nieuwste uitvoering is failed/provider_transient; huidige oorspronkelijke herstelbinding nog geldig. De volledige autonome herstel-/installatie-/hergebruikroute is niet bewezen.",
               "latestEvidence": "development/evidence/product/e16-completion-20261025.json",
               "scopedTelegramRepairAuthorization": {
                 "at": "2026-10-27T07:47:07.435768+00:00",
@@ -15871,18 +15932,21 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De algemene context- en bronoverdracht zijn geïnstalleerd en teruggelezen op de echte taak. Beoordeel nu uitsluitend de ontbrekende algemene overdracht van een Eva-pakket naar onafhankelijke beoordeling en beheerd toepassen, zodat Eva haar eigen voorzieningen zelf kan aansluiten. Neem geen toepassingscode, accountinrichting of Gmail-oplevering over. Start geen modelpoging alleen om een ongewijzigde blokkade opnieuw vast te stellen; volledige zelfstandigheid en E4.15 blijven onbewezen.",
+      "nextAction": "De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.",
       "finishOrder": [
-        "E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.",
-        "E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.",
-        "E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.",
-        "E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.",
-        "E4.16 → E4.19 → E4.18: zelfherstel, zelfstandig relevant onderhoud en gerichte consolidatie; blokkerende fouten eerder oplossen.",
-        "P2.1 → F2.1 → F2.2: dezelfde eindkandidaat vergelijken, echte gezinsweek en eigenaaracceptatie.",
-        "Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3."
+        "Canonieke status, afhankelijkheden en geïnstalleerde versie consistent maken — bestaande kaarten: E5.1, E2.1, E4.4.",
+        "E4.16: huidige zelfherstelblokkade oplossen en volledige herstelroute bewijzen — bestaande kaarten: E4.16.",
+        "Gewone digitale opdrachten afronden, verifiëren en terugmelden — bestaande kaarten: E1.3, E4.14, E5.1.",
+        "Zelfstandige bronkeuze, echte bronverandering en passend vervolg — bestaande kaarten: E1.6.",
+        "Geheugen, routines, correcties en mensbegrip over meerdere echte dagen — bestaande kaarten: E1.5, E1.7, E1.8, E1.9.",
+        "Een blijvende verantwoordelijkheid dragen, ook bij uitval en herstart — bestaande kaarten: E1.11, E1.12, E1.14.",
+        "Eigen uitbreidingen realiseren, toepassen, herstellen en hergebruiken; eigen projectcontinuïteit — bestaande kaarten: E4.15, E4.17, E1.10, E2.9.",
+        "Bestaande spraakroute op beide speakers afronden — bestaande kaarten: C3.5, C3.1, C3.4, C4.1, C3.6.",
+        "Beheer, reproduceerbaarheid, performance, veiligheid en herstel afronden — bestaande kaarten: E3.1, E3.2, E3.3, E3.4, E4.3, E4.4, E4.18, E4.19, E5.1, E5.2.",
+        "Eindvergelijking, zeven dagen gezinsgebruik en afzonderlijke eigenaaracceptatie — bestaande kaarten: P2.1, F2.1, F2.2."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-02T15:41:43.514329+00:00",
+      "updatedAt": "2026-11-04T21:12:40.203434+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -16158,7 +16222,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-02T15:41:43.514329+00:00",
+      "checkedAt": "2026-11-04T21:12:40.203434+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -16301,6 +16365,113 @@
           "Afmaakvolgorde is geen waterval: minimale benodigde verbindingen en stopbediening samen in één praktijkroute bouwen; volledige kaartacceptatie volgt haar bestaande afhankelijkheden.",
           "E1.9 levert eerst alleen benodigde brongebonden feedback; persoonlijkheidsverfijning volgt echte activiteit. Camera blijft bestaande E4.15-acceptatie, geen tweede parallelle hoofdopdracht."
         ]
+      },
+      "ownerDeliveryOrder": {
+        "authorizedAt": "2026-11-04T14:00:19.123526+00:00",
+        "authorization": "Directe eigenaaropdracht 4 november 2026: Eva2 definitief afronden in tien opleveringsstappen, zonder nieuwe taakreeksen.",
+        "previousOrder": "development/archive/history/20261104-delivery-order/snapshot.json",
+        "newTasksAdded": false,
+        "completedCardsReopened": false,
+        "steps": [
+          {
+            "number": 1,
+            "outcome": "Canonieke status, afhankelijkheden en geïnstalleerde versie consistent maken",
+            "existingTaskIds": [
+              "E5.1",
+              "E2.1",
+              "E4.4"
+            ]
+          },
+          {
+            "number": 2,
+            "outcome": "E4.16: huidige zelfherstelblokkade oplossen en volledige herstelroute bewijzen",
+            "existingTaskIds": [
+              "E4.16"
+            ]
+          },
+          {
+            "number": 3,
+            "outcome": "Gewone digitale opdrachten afronden, verifiëren en terugmelden",
+            "existingTaskIds": [
+              "E1.3",
+              "E4.14",
+              "E5.1"
+            ]
+          },
+          {
+            "number": 4,
+            "outcome": "Zelfstandige bronkeuze, echte bronverandering en passend vervolg",
+            "existingTaskIds": [
+              "E1.6"
+            ]
+          },
+          {
+            "number": 5,
+            "outcome": "Geheugen, routines, correcties en mensbegrip over meerdere echte dagen",
+            "existingTaskIds": [
+              "E1.5",
+              "E1.7",
+              "E1.8",
+              "E1.9"
+            ]
+          },
+          {
+            "number": 6,
+            "outcome": "Een blijvende verantwoordelijkheid dragen, ook bij uitval en herstart",
+            "existingTaskIds": [
+              "E1.11",
+              "E1.12",
+              "E1.14"
+            ]
+          },
+          {
+            "number": 7,
+            "outcome": "Eigen uitbreidingen realiseren, toepassen, herstellen en hergebruiken; eigen projectcontinuïteit",
+            "existingTaskIds": [
+              "E4.15",
+              "E4.17",
+              "E1.10",
+              "E2.9"
+            ]
+          },
+          {
+            "number": 8,
+            "outcome": "Bestaande spraakroute op beide speakers afronden",
+            "existingTaskIds": [
+              "C3.5",
+              "C3.1",
+              "C3.4",
+              "C4.1",
+              "C3.6"
+            ]
+          },
+          {
+            "number": 9,
+            "outcome": "Beheer, reproduceerbaarheid, performance, veiligheid en herstel afronden",
+            "existingTaskIds": [
+              "E3.1",
+              "E3.2",
+              "E3.3",
+              "E3.4",
+              "E4.3",
+              "E4.4",
+              "E4.18",
+              "E4.19",
+              "E5.1",
+              "E5.2"
+            ]
+          },
+          {
+            "number": 10,
+            "outcome": "Eindvergelijking, zeven dagen gezinsgebruik en afzonderlijke eigenaaracceptatie",
+            "existingTaskIds": [
+              "P2.1",
+              "F2.1",
+              "F2.2"
+            ]
+          }
+        ],
+        "evidencePolicy": "Behoud oorspronkelijke criteria en geldig bestaand bewijs; gerichte hercontrole alleen bij gewijzigde oorzaak of ontbrekend bewijs. Echte gebruiksdagen en eigenaaracceptatie niet simuleren."
       }
     },
     "goalRevision": {
@@ -16309,29 +16480,34 @@
       "scopeClarification": "development/evidence/reassessment/continuous-development-coverage-20261017.json"
     },
     "currentRuntime": {
-      "recordedAt": "2026-10-24T10:49:56.612535+00:00",
-      "checkedAt": "2026-10-24T10:58:51.156682+00:00",
+      "recordedAt": "2026-11-04T21:12:40.203434+00:00",
+      "checkedAt": "2026-11-04T14:02:17.059113+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "coreImage": "sha256:c2b7e0ae3f3bfb4aa5fe30289a844fe4dbf6cc191cd5a158d21734f70ba9c972",
-      "workerImage": "sha256:8b7594f0da948207825c4e950dcb6da80e01bece31e55d31559e4711fbc72960",
+      "coreImage": "sha256:b9261a0b97473600fd75b053baa8761a717750ec773dd512e0c819de85647fe9",
+      "workerImage": "sha256:85fdda9be5afcda1d5041a0165d96924f69acc8cf276e9dee2d0c2a2b00d4b8d",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
       "ready": true,
       "healthy": true,
-      "readyStatus": "household_release_and_declared_maintenance_context_installed",
-      "evidence": "development/evidence/product/e16-e419-alignment-installed-20261024.json",
+      "readyStatus": "services_healthy_profiles_compatible_repair_not_completed",
+      "evidence": "development/evidence/product/autonomous-repair-20261022.json",
       "independentSourceReview": "development/reviews/e16-e419-alignment-20261024.json",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "Eén gecombineerde installatie, alle4werkelijke runtimeprofielen gelijk, echte geïsoleerde householdclaim geslaagd. Eva gebruikte de verklaarde onderhoudstoestemming in haar gewone afweging en koos geen update zonder aangetoonde lokale noodzaak.",
+      "meaning": "Werkelijke images en alle vier profielen teruggelezen op 4 november; host start na Docker correct met onafhankelijk beoordeelde overlay. Dit bewijst beschikbaarheid, geen voltooide herstel- of gezinsfunctie.",
       "runtimeProfiles": {
         "digital_work": "matching",
         "public_research": "matching",
         "shared_provider": "matching",
         "household_research": "matching"
       },
-      "profileReadbackSha256": "155a1c17582b94a5cc89ee89e36c98951fc11ac1ca1cd225c07df734a8105d1b"
+      "profileReadbackSha256": "f10a2e9bb5a388b7dd8f05b8b9ed8206dbd28714225db07ac31eca27956c344d",
+      "sourceCommitChecked": "95459fb0e6c9f649aadcf380a22546cc33e16663",
+      "hostOverlaySourceHashes": {
+        "component_evaluation_service.py": "548ee91254f214603cbaf4a7e0775f766db2bda06fda5b5153a5415eeba4ce6d",
+        "owned_package_handoff.py": "23f6e0995c0435ffbfc52a498ac8ad6ee3aba7e27537b13db0c6ed6cdfe7a38a"
+      }
     },
     "memoryGoal20260910": {
       "status": "completed",
@@ -18749,7 +18925,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-11-02T15:41:43.514329+00:00",
+  "updatedAt": "2026-11-04T21:12:40.203434+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",
@@ -18831,8 +19007,8 @@
       "sha256": "4e7843a49c1d60b837462c14549c152e77826c299755838e319a85f636394d42"
     }
   ],
-  "lastUpdatedAt": "2026-11-02T15:41:43.514329+00:00",
-  "checkedAt": "2026-11-02T15:41:43.514329+00:00",
+  "lastUpdatedAt": "2026-11-04T21:12:40.203434+00:00",
+  "checkedAt": "2026-11-04T21:12:40.203434+00:00",
   "previousCurrentWorkBeforeAutonomousRepair20261022": {
     "id": "E1.6",
     "title": "Zelf relevante bronveranderingen aansluiten op eigen aandacht",

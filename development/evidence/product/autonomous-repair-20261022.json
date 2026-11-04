@@ -91,5 +91,56 @@
     "Current comparison runs frozen oracle and candidate in one Python process; it is not a tamper-resistant independent execution attestation.",
     "Source file hash readback alone does not prove executed module bytes; import/bytecode execution binding needs strengthening.",
     "No real Eva-authored candidate, general independent acceptance, managed installation, original live behavior readback or later autonomous use has been demonstrated in E4.16."
-  ]
+  ],
+  "currentDiagnosis20261104": {
+    "checkedAt": "2026-11-04T21:12:40.203434+00:00",
+    "runtime": {
+      "recordedAt": "2026-11-04T21:12:40.203434+00:00",
+      "checkedAt": "2026-11-04T14:02:17.059113+00:00",
+      "core": "eva2-managed-b-slot3-core",
+      "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "coreImage": "sha256:b9261a0b97473600fd75b053baa8761a717750ec773dd512e0c819de85647fe9",
+      "workerImage": "sha256:85fdda9be5afcda1d5041a0165d96924f69acc8cf276e9dee2d0c2a2b00d4b8d",
+      "coreHealth": "healthy",
+      "workerHealth": "healthy",
+      "repositoryHeadFullyInstalled": false,
+      "ready": true,
+      "healthy": true,
+      "readyStatus": "services_healthy_profiles_compatible_repair_not_completed",
+      "evidence": "development/evidence/product/autonomous-repair-20261022.json",
+      "independentSourceReview": "development/reviews/e16-e419-alignment-20261024.json",
+      "configurationEnvironmentMountsRetained": true,
+      "meaning": "Werkelijke images en alle vier profielen teruggelezen op 4 november; host start na Docker correct met onafhankelijk beoordeelde overlay. Dit bewijst beschikbaarheid, geen voltooide herstel- of gezinsfunctie.",
+      "runtimeProfiles": {
+        "digital_work": "matching",
+        "public_research": "matching",
+        "shared_provider": "matching",
+        "household_research": "matching"
+      },
+      "profileReadbackSha256": "f10a2e9bb5a388b7dd8f05b8b9ed8206dbd28714225db07ac31eca27956c344d",
+      "sourceCommitChecked": "95459fb0e6c9f649aadcf380a22546cc33e16663",
+      "hostOverlaySourceHashes": {
+        "component_evaluation_service.py": "548ee91254f214603cbaf4a7e0775f766db2bda06fda5b5153a5415eeba4ce6d",
+        "owned_package_handoff.py": "23f6e0995c0435ffbfc52a498ac8ad6ee3aba7e27537b13db0c6ed6cdfe7a38a"
+      }
+    },
+    "retainedFailure": {
+      "errorClass": "ConversationModelRateLimited",
+      "fingerprint": "f92175b7d9453e3fd18889629f3147bab3b3b09eb83be99b307d94e8ba167979",
+      "latestWorkState": "failed",
+      "latestErrorCode": "provider_transient",
+      "latestCompletedAt": "2026-10-30T22:11:17Z",
+      "currentRepairBindingValid": true,
+      "providerLimitCurrentlyCleared": "unknown"
+    },
+    "privateEvidenceRoot": "/var/lib/eva2/finalization-20261104",
+    "newModelCalls": 0,
+    "newInstallations": 0,
+    "fullTaskCompleted": false,
+    "independentStatusReview": {
+      "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
+      "verdict": "GO",
+      "scope": "Original task criteria and ten-step mapping only; no installed repair proof"
+    }
+  }
 }

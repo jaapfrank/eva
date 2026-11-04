@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T12:42:46.770977+00:00",
+  "updatedAt": "2026-11-04T21:12:40.203434+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -305,7 +305,7 @@
         "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
         "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
       ],
-      "updatedAt": "2026-10-25T22:11:19.598938+00:00",
+      "updatedAt": "2026-11-04T21:12:40.203434+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -520,7 +520,7 @@
           "allNamedInstalledMethodsValidated": true
         }
       },
-      "activeAssignment": "Hoofdbouwer maakt de ontbrekende native zelfhersteloverdracht af: echte fout naar blijvend doel, Eva-kandidaat, onafhankelijk oordeel, beheerde toepassing, oorspronkelijke werking en later hergebruik. Gebruik actuele installatie en laatste overdracht; de SDK-headercorrectie is geen volledige kaartafronding.",
+      "activeAssignment": "Implement one bounded continuation after confirmed 429 in native self-repair; preserve receipts, source, mandate and STOP. No installation.",
       "extensionArtifactRequest": {
         "to": "wsl-e18",
         "requestedAt": "2026-10-23T14:52:17.507425+00:00",
@@ -586,7 +586,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "paused_by_owner_no_running_mutation",
+      "status": "implementing_bounded_429_continuation",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1286,7 +1286,7 @@
         "noRuntimeModelExecutorCameraMessageOrInstallation": true
       },
       "previousStatusBeforeCentralHandoff": "Canonical child conflicts and original32-row cutoff/singlepending cases finalized;44 focused checks passed, ready independent GO",
-      "activeCodeOrInstallClaim": false,
+      "activeCodeOrInstallClaim": true,
       "e417ColdStartHandoff": {
         "updatedAt": "2026-10-23T23:53:39.681074+00:00",
         "status": "phase1_exact_plan_pending_coordinator_tester_admission_not_started",
@@ -1363,6 +1363,106 @@
         "fullTaskComplete": false,
         "nextTaskRequestedDirectly": true
       },
+      "e416ActivationPackage": {
+        "status": "complete_final_profile_mandate_sealed_handed_off",
+        "task": "E4.16",
+        "root": "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024",
+        "coreWorker": {
+          "path": "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024/core-worker-frozen-submanifest.private.json",
+          "sha256": "2035a661597c61c4a229c559794965b875fac8d3adbe4c7a79bebdcf4ec2ad08"
+        },
+        "host": {
+          "path": "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024/host-frozen-submanifest.private.json",
+          "sha256": "ba544713a9fab04a8acb5a96d718a6f74378b3da3be9657fae1d1f21646cc777"
+        },
+        "checks": {
+          "path": "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024/package-verification.private.json",
+          "sha256": "bb3ac9f341b5118d965aedc6e2cd3ea4c9d076f771702eae175a9ed83845b88f"
+        },
+        "schema": {
+          "path": "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024/schema/prerequisite.private.json",
+          "sha256": "77f03f02bdf88d632a07230777ec412fee8a1803b09c438adaa8477c957c8671"
+        },
+        "activationOrder": {
+          "path": "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024/activation-order.private.json",
+          "sha256": "98e14d9ec888583d425a6d0432800bc72dec33bd426104ef6786f502dd2e0832"
+        },
+        "existingFault": {
+          "path": "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024/existing-internal-failure-handoff.private.json",
+          "sha256": "0eb06cf997b9e4396197aebe785e3cef6834771c9e6a308bf299a99a0bc73248"
+        },
+        "currentCompose": {
+          "path": "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024/current-root-compose-binding.private.json",
+          "sha256": "969cb854add75994ef814ef40aeef89a10828900375083874457dcff9c3d8c98"
+        },
+        "originalRuntimeDataUnchanged": true,
+        "models": 0,
+        "builtOrInstalledByExecutor": false,
+        "remaining": "Root independent review, fresh claims/migration/CAS, deployment and native original-behavior proof; all executor package work complete.",
+        "fullTaskComplete": false,
+        "nextTaskRequestedDirectly": false,
+        "finalManifest": {
+          "path": "/home/administrator/project/.eva2-artifacts/e416-activation-package-20261024/package-manifest.private.json",
+          "sha256": "87b51a04f0a3c9947b9b4683843139925eb0556b5153847c8f493e3e71318544"
+        }
+      },
+      "e416SchemaRecovery": {
+        "finding": "E416-SCHEMA-RECOVERY-001",
+        "authorizedBy": "coordinator direct task transfer 2026-10-24",
+        "baseline": "/home/administrator/project/.eva2-artifacts/e416-schema-recovery-20261024/baseline.private.json",
+        "paths": [
+          "src/tools/portable_runtime_archive.py",
+          "development/tests/portable/test_portable_runtime_archive.py"
+        ],
+        "status": "frozen_handed_off",
+        "noFrozenPackageChanges": true,
+        "noProductionChange": true,
+        "manifest": "/home/administrator/project/.eva2-artifacts/e416-schema-recovery-20261024/manifest.private.json",
+        "manifestSha256": "b357de3a8603c2cff4f126cee3ce43193cb52157cd92958c0a146dde63379567",
+        "unitCases": 21,
+        "postgres18Cases": 15,
+        "legacyProfilesIdentical": true,
+        "productionWrites": 0,
+        "models": 0,
+        "nextTaskRequestedDirectly": true
+      },
+      "e419Preparation": {
+        "assignedBy": "sole coordinator direct handoff 2026-10-24",
+        "root": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024",
+        "productWritesAllowed": false,
+        "scope": "Actual installed model/library/image/connector/extension inventory, official update source mapping, smallest existing repair-route handoff proposal; no daemon/updater/model/start/install. E416 reviewer fixes first.",
+        "status": "frozen_handed_off",
+        "handoff": {
+          "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/handoff.private.json",
+          "sha256": "7a531a021652256ea7ab628db5e3ab7558802f8d63a30217ebea6836b8c264f2"
+        },
+        "manifest": {
+          "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/manifest.private.json",
+          "sha256": "99a477233ebbac7191d92ae510bac998403549ffe632e29111a132baf9000d4b"
+        },
+        "noProductFeatureCompleted": true,
+        "nextTaskRequestedDirectly": true
+      },
+      "e416GitHandoff": {
+        "status": "private_exact_candidate_handed_off",
+        "manifest": "/home/administrator/project/.eva2-artifacts/e416-git-handoff-20261024/manifest.private.json",
+        "manifestSha256": "ba19db2fc4dea346fe267cb5348ec4c53e55a8add5434f01799e69a027d0d9f3",
+        "baseCommit": "d3e0f01cad3189d54e3cce1a4813c00520e4da4e",
+        "sourceOrIndexMutation": false,
+        "nextTaskPolicy": "Resume already assigned E419 preparation; no new product work without exact handoff."
+      },
+      "e419CompleteHandoff": {
+        "handoff": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/full-update/handoff.private.json",
+        "sha256": "19e2fdbc1750167d9523a72bd379cb645dd33289c46640e19d402415c9c74ca1",
+        "manifest": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/full-update/manifest.private.json",
+        "manifestSha256": "4c85e301cad5bc418725dc216fa46e3dd556dd2bbf952ca8b5c38a72eac7ef72",
+        "productFilesChanged": 0,
+        "downloads": 0,
+        "models": 0,
+        "installs": 0,
+        "taskCompleted": false,
+        "nextAction": "Coordinator assigns full E419 exact paths after E416; owner asks direct next-task coordination."
+      },
       "e419ImplementationAuthorization": {
         "from": "01a16a55-7f38-76c2-9691-31421caafbe7",
         "handoffSha256": "19e2fdbc1750167d9523a72bd379cb645dd33289c46640e19d402415c9c74ca1",
@@ -1370,8 +1470,45 @@
         "runtimePy": "private_hunk_only",
         "preserveE416FrozenBlobs": true
       },
+      "e419AdditionalScope": {
+        "path": "src/eva/contracts/delegated_digital_work.py",
+        "scope": "exact two allowlist additions only",
+        "confirmedBy": "01a16a55-7f38-76c2-9691-31421caafbe7"
+      },
+      "e419ImplementationHandoff": {
+        "handoff": {
+          "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v1/handoff.private.json",
+          "sha256": "1d794f0cbbf499676eb113faee45ca157c3fec0f43980eaeba625a87e3a82add"
+        },
+        "packageManifest": {
+          "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v1/package-manifest.private.json",
+          "sha256": "2d43fd7e04854cf79d944ab1c68086e0a2441820e6bf5578d8ae07c605e92cec"
+        },
+        "candidateManifest": {
+          "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v1/candidate-manifest.private.json",
+          "sha256": "480192f7d75756ab6be33a8349e6b7e1397a17c2d2c19140652fa56d45b68ec7"
+        },
+        "roleFiles": 9,
+        "hostFiles": 64,
+        "productChanges": 15,
+        "runtimeHunk": "root-owned separate16th Git file",
+        "realPgLifecycle": 3,
+        "realPgMinimalGrant": 1,
+        "installed": false,
+        "taskCompleted": false
+      },
       "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
-      "currentExclusiveWritePaths": [],
+      "currentExclusiveWritePaths": [
+        "src/eva/bootstrap/native_initiative_work.py",
+        "src/eva/adapters/postgres/initiative_execution.py",
+        "src/eva/bootstrap/runtime.py",
+        "development/tests/postgres/test_native_repair_rate_limit_recovery.py"
+      ],
+      "v2FinalHandoff": {
+        "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v2/controller-final/manifest.private.json",
+        "sha256": "a8bcc4e4b218d183bcc683f616a06993eeaec9fe1856f6625c9aaa4e66f45138"
+      },
+      "pendingNextTask": "Requested from coordinator after frozen review handoff; available for concrete findings, no shared install ownership",
       "currentOutcome": "Herstel de concrete mislukte eigenaaropdracht van 24 oktober via de bestaande digitale werkroute. Stel oorspronkelijke uitvoerfout en reeds verrichte effecten vast; corrigeer de bewezen oorzaak, laat onafhankelijk beoordelen en installeer. Controleer oorspronkelijk gedrag; geen blinde herhaling van externe effecten.",
       "scope": "Hoofdbouwer maakt de ontbrekende native zelfhersteloverdracht af: echte fout naar blijvend doel, Eva-kandidaat, onafhankelijk oordeel, beheerde toepassing, oorspronkelijke werking en later hergebruik. Gebruik actuele installatie en laatste overdracht; de SDK-headercorrectie is geen volledige kaartafronding.",
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/task-completion-20261025/e416-builder/",
@@ -1417,7 +1554,7 @@
         "doneWhen": "Exact hashes and bounded GO/NO_GO with necessary companion hunks; no installation.",
         "userUse": "Coordinator may integrate reviewed candidate after baseline recheck."
       },
-      "completedAt": "2026-10-23T19:48:37.263117+00:00",
+      "completedAt": "2026-10-23T19:58:20.546473+00:00",
       "review": "development/reviews/e415-household-batch-binding-review-20261023.json",
       "verdict": "GO",
       "nextAction": "Exact failed school outcome review complete. No new runtime query or product code assigned.",
@@ -1514,8 +1651,32 @@
       "faceBackendAssetProposalReviewSha256": "11def2fe291230ccdde4eea4db278763f0868d9293c6396d37297d238f5e638c",
       "faceBackendAssetProposalVerdict": "GO",
       "faceBackendAssetProposalScope": "Exact13diskfiles+2ONNX asset inventory only; current modelstat not new bytehash. Future15file opened-byte validation mandatory; no72distribution/8GBcapture or CPUcandidate work.",
+      "ipv6HarnessRefinementReviewStartedAt": "2026-10-23T19:50:55.891991+00:00",
+      "ipv6HarnessRefinementReviewVerdict": "Conditional GO for one pinned local probe; NO_GO for audit-only allowlist without method-level denial",
+      "ipv6HarnessRefinementReviewElapsedSeconds": 133.758,
+      "ipv6HarnessRefinementReviewCompletedAt": "2026-10-23T19:53:09.650482+00:00",
+      "projectAlignmentAuditStartedAt": "2026-10-23T19:53:09.650508+00:00",
       "activeCodeOrInstallClaim": false,
       "activeIndependentReviewClaim": false,
+      "handoffToCoordinatorThreadId": "01a16a55-7f38-76c2-9691-31421caafbe7",
+      "handoffToControlThreadId": "01a16a55-1607-7171-820e-a3918acaea3f",
+      "projectAlignmentReadout": {
+        "canonicalSource": "development/design/product/execution-workboard-v1.json currentWork + audit.deliveryPlan",
+        "currentWork": "E4.15",
+        "observedRemainingUserOutcome": "Ordinary useful authored extension: real known person appropriately greeted, original recipient, later real use/feedback and improvement/reuse; physical trial deferred and no fake evidence.",
+        "observedCoordinationIssues": [
+          "Top-level team still names old e33 subagents instead of current user-owned chats.",
+          "CurrentWork is E4.15 while much new activity is E4.17 preservation/dependency preparation; coordinator must bound necessities to one complete user outcome.",
+          "Multiple in_progress statuses and old executionTasks must not be confused with active implementations or current whole-outcome completion."
+        ],
+        "githubRemote": "https://github.com/jaapfrank/eva.git",
+        "observedBranch": "main",
+        "foreignWipPreserved": true,
+        "dashboardRootHttpStatus": 200,
+        "browserNavigation": "Timed out/abandoned; did not prove complete rendered dashboard/API equality. New coordinator owns remaining dashboard/GitHub/MD projection check.",
+        "handoff": "New coordinator started alignment audit and requested claims/WIP handoff; new control chat receives independent role."
+      },
+      "projectAlignmentAndChatHandoffElapsedSeconds": 310.896,
       "updatedAt": "2026-10-25T22:11:19.598938+00:00",
       "activeAssignment": "Coder2 rondt bestaande routine-/verwachtingsoverdracht af: echte herhaalde gebeurtenissen, voorwaarden, later tegenbewijs en bijgesteld gedrag. Geen gefabriceerde routine of nieuwe geheugenlaag; ontbrekende mens-/brondekking exact afbakenen nadat uitvoerbare werking is opgeleverd.",
       "writePaths": [],
@@ -1543,19 +1704,19 @@
     },
     "independent-control": {
       "threadId": "01a16a55-1607-7171-820e-a3918acaea3f",
-      "status": "paused_by_owner_actual_install_review_delivered",
+      "status": "bounded_status_review_delivered",
       "allowedWritePaths": [],
       "activeIndependentReviewClaim": false,
       "review": "development/reviews/e415-household-continuation-20261024.json",
-      "task": "E4.16 / E1.6 / E1.7",
+      "task": "E4.16",
       "assignedAt": "2026-10-23T20:28:02.293070+00:00",
       "role": "independent_tester_reviewer",
       "activeCodeOrInstallClaim": false,
       "currentPrivateWriteDirectory": "/home/administrator/project/.eva2-artifacts/task-completion-20261025/independent-review/",
       "scope": "Independent tests and review of delivered E4.16/E1.6/E1.7 work; do not fabricate missing use or owner acceptance.",
-      "updatedAt": "2026-10-25T22:27:23.444890+00:00",
+      "updatedAt": "2026-11-04T21:12:40.203434+00:00",
       "currentWritePaths": [],
-      "activeAssignment": "Test concrete delivered candidates against unchanged full-card criteria; no product code or installation.",
+      "activeAssignment": "Independent review of canonical mapping completed: GO, original criteria preserved. Await concrete repair candidate.",
       "currentExclusiveWritePaths": [],
       "statusBeforeOwnerPause20261026": "actual_install_and_ordinary_continuation_review_delivered",
       "ownerPause": {
@@ -2134,6 +2295,36 @@
       "independentReviewSha256": "a88ceddfc915124c9d2f5ae03cbb5fd35f7c93aa1ffe6da3838f8d96aa0d977e",
       "actualTokensMeasured": false,
       "candidateWorkspaceBindingResolved": false
+    },
+    "currentInstalledReadback": {
+      "recordedAt": "2026-11-04T21:12:40.203434+00:00",
+      "checkedAt": "2026-11-04T14:02:17.059113+00:00",
+      "core": "eva2-managed-b-slot3-core",
+      "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "coreImage": "sha256:b9261a0b97473600fd75b053baa8761a717750ec773dd512e0c819de85647fe9",
+      "workerImage": "sha256:85fdda9be5afcda1d5041a0165d96924f69acc8cf276e9dee2d0c2a2b00d4b8d",
+      "coreHealth": "healthy",
+      "workerHealth": "healthy",
+      "repositoryHeadFullyInstalled": false,
+      "ready": true,
+      "healthy": true,
+      "readyStatus": "services_healthy_profiles_compatible_repair_not_completed",
+      "evidence": "development/evidence/product/autonomous-repair-20261022.json",
+      "independentSourceReview": "development/reviews/e16-e419-alignment-20261024.json",
+      "configurationEnvironmentMountsRetained": true,
+      "meaning": "Werkelijke images en alle vier profielen teruggelezen op 4 november; host start na Docker correct met onafhankelijk beoordeelde overlay. Dit bewijst beschikbaarheid, geen voltooide herstel- of gezinsfunctie.",
+      "runtimeProfiles": {
+        "digital_work": "matching",
+        "public_research": "matching",
+        "shared_provider": "matching",
+        "household_research": "matching"
+      },
+      "profileReadbackSha256": "f10a2e9bb5a388b7dd8f05b8b9ed8206dbd28714225db07ac31eca27956c344d",
+      "sourceCommitChecked": "95459fb0e6c9f649aadcf380a22546cc33e16663",
+      "hostOverlaySourceHashes": {
+        "component_evaluation_service.py": "548ee91254f214603cbaf4a7e0775f766db2bda06fda5b5153a5415eeba4ce6d",
+        "owned_package_handoff.py": "23f6e0995c0435ffbfc52a498ac8ad6ee3aba7e27537b13db0c6ed6cdfe7a38a"
+      }
     }
   }
 }

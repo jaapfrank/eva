@@ -4,21 +4,24 @@ Bron: development/design/product/execution-workboard-v1.json. Geen aparte taakre
 
 ## Nu
 
-Van zelfontdekte behoefte naar eigen uitvinding en later gebruik
+Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen
 
-Model-limietfout werd onterecht interne/onzekere uitvoering. Gerichte reparatie geïnstalleerd, 170 regressies groen en dezelfde foutclassificatie op de installatie gecontroleerd. AgentMail met bestaande inbox en één echte testmail handmatig geholpen, verstuurd en als sent teruggelezen; die overdracht staat bij de oorspronkelijke taak. Eva schreef een Gmail-prototype met 19 lokaal geslaagde tests; dit is nog geen geactiveerde Gmail-koppeling of volledige zelfstandige bouwcyclus.
+De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.
 
-Klaar wanneer: Eva ontdekt vanuit echte toegelaten gesprekken, terugkerende wrijving of eigen onderzoek een onderbouwde behoefte die nog niet door een passende bestaande mogelijkheid wordt opgelost. Zij vergelijkt een bestaand herbruikbaar alternatief met een eigen oplossing, realiseert de gekozen kleine voorziening via dezelfde uitvoerder, laat kwaliteit onafhankelijk beoordelen en maakt de toegelaten uitkomst werkelijk bruikbaar voor de oorspronkelijke gebruiker. Gewoon later gebruik en echte feedback leiden tot een beoordeelde verbetering of onderbouwd behoud, met aantoonbaar later hergebruik. Een creatief hulpmiddel, kleine app, spel of verbinding is een mogelijke vorm, geen verplichte demo. Geen Codex-geschreven eindoplossing, zelfbeoordeelde winst of tweede Eva-platform.
+Klaar wanneer: Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.
 
 ## Afmaakvolgorde
 
-1. E4.18, E1.13, E2.9 en E4.17 volledig technisch afgerond:83/103, dus4van24 gesloten. Onderzoeks- en huishoudreparaties en veilige HTTP-foutdiagnostiek geïnstalleerd. Schoolnaam verwerkt; opvolger opnieuw provider503, bruikbare schoolhulp ontbreekt. Geen nieuwe identieke poging of herhaalvraag; ander concreet uitvoerbaar oorspronkelijk werk blijft doorgaan.
-2. E1.9 → E4.15 → E4.17 → E1.12 → E1.11: minimale feedbackbinding, losse herstelbare voorziening en echte terugkerende verantwoordelijkheid; cameraacceptatie behouden.
-3. E1.14: dezelfde verantwoordelijkheid tijdens modeluitval en na herstart behouden zonder dubbel effect.
-4. E1.10 → E2.9: werkelijk eigen projectvervolg, afgeleide Inner State en lichte bediening; stopbediening groeit vanaf de eerste stap mee.
-5. E4.16 → E4.19 → E4.18: zelfherstel, zelfstandig relevant onderhoud en gerichte consolidatie; blokkerende fouten eerder oplossen.
-6. P2.1 → F2.1 → F2.2: dezelfde eindkandidaat vergelijken, echte gezinsweek en eigenaaracceptatie.
-7. Parallel bestaande spraakuitvoerder: C3.5 → C3.1 → C3.4 → C4.1 → C3.6. Optioneel: E2.6 en C4.3.
+1. Canonieke status, afhankelijkheden en geïnstalleerde versie consistent maken — bestaande kaarten: E5.1, E2.1, E4.4.
+2. E4.16: huidige zelfherstelblokkade oplossen en volledige herstelroute bewijzen — bestaande kaarten: E4.16.
+3. Gewone digitale opdrachten afronden, verifiëren en terugmelden — bestaande kaarten: E1.3, E4.14, E5.1.
+4. Zelfstandige bronkeuze, echte bronverandering en passend vervolg — bestaande kaarten: E1.6.
+5. Geheugen, routines, correcties en mensbegrip over meerdere echte dagen — bestaande kaarten: E1.5, E1.7, E1.8, E1.9.
+6. Een blijvende verantwoordelijkheid dragen, ook bij uitval en herstart — bestaande kaarten: E1.11, E1.12, E1.14.
+7. Eigen uitbreidingen realiseren, toepassen, herstellen en hergebruiken; eigen projectcontinuïteit — bestaande kaarten: E4.15, E4.17, E1.10, E2.9.
+8. Bestaande spraakroute op beide speakers afronden — bestaande kaarten: C3.5, C3.1, C3.4, C4.1, C3.6.
+9. Beheer, reproduceerbaarheid, performance, veiligheid en herstel afronden — bestaande kaarten: E3.1, E3.2, E3.3, E3.4, E4.3, E4.4, E4.18, E4.19, E5.1, E5.2.
+10. Eindvergelijking, zeven dagen gezinsgebruik en afzonderlijke eigenaaracceptatie — bestaande kaarten: P2.1, F2.1, F2.2.
 
 ## Vier productuitkomsten
 
