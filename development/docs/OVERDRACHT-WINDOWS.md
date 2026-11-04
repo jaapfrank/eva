@@ -37,6 +37,14 @@ verzegelde contractlezing uit dezelfde poging. De actuele poging telt één
 toolstap en levert die contractlezing niet. Het live bewijs dat geen pakket
 werd overgedragen is op zichzelf dus onvoldoende voor die hervatcontrole.
 
+De pakkethost gaf voor verschillende afwijzingen dezelfde HTTP 400 terug
+zonder de afgewezen route of codeplek te registreren. De lokale kandidaat
+registreert nu vaste routenamen, fouttypen en codeplekken. Een geauthenticeerde
+lokale transportproef bevestigde dezelfde HTTP 400 en een log zonder
+taakinhoud, uitzonderingsbericht of token. De diagnosewijziging is gebouwd en
+gericht getest. Onafhankelijke beoordeling en installatie staan open.
+Dit levert geen bewijs over de precieze fout van de historische poging.
+
 Eva's eigen Gmail-kandidaat is behouden. Werkelijk gebruik, onafhankelijke
 pakketbeoordeling, de bestaande eindcriteria en eigenaaracceptatie staan open.
 Laat Eva zelf de uitbreiding indienen en aansluiten met de bestaande
