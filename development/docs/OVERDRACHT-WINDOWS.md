@@ -9,9 +9,11 @@ startinstructie en wegwijzer voor de nieuwe coördinator.
 Het bestaande pakketmechanisme is gebouwd, gericht getest en geïnstalleerd.
 Kern en werkuitvoerder komen volgens de lokale Docker-metadata overeen met de
 images in `/var/lib/eva2/owned-package-handoff-20261103/resume-proof`. Het
-beheercontact met Docker gaf geen antwoord tijdens de controle, dus deze
-teruglezing bevestigt de image-identiteit en levert geen actuele gezondheids-
-of claimcontrole op.
+beheercontact met Docker gaf eerst geen antwoord. Bij de vervolgcontrole
+waren beide containers gezond en kwamen de actieve images overeen. De
+werkregistratie bevestigde de onbekende uitkomst zonder actieve lease voor
+deze taak. De geïnstalleerde pakkethost gaf voor exact deze poging een
+leesbewijs dat pakketoverdracht, aansluitverzoek en installatie ontbreken.
 
 De werkuitvoerder logde een modelrespons met HTTP 200 en één aangevraagde
 toolactie. De latere HTTP 400 liet de uitvoering in `ambiguous` achter, vóór
