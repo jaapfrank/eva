@@ -61,6 +61,15 @@ invoer en bevestigde opnieuw geen pakketoverdracht voor de onzekere taak.
 De installatieregistratie staat privé onder
 `/var/lib/eva2/owned-package-handoff-20261103/host-review-20261104.qh5npn/activation.json`.
 
+Een nieuwe echte Telegram-opdracht eindigde met incomplete_work. Eva
+meldde dat haar privéwerkmap leeg was en zij de oude kandidaat niet kon
+vinden of indienen. Geen beoordeling of activatielink. De registratie telt
+16 modelresponsen en 14 toolcalls, met 368004 gedeeltelijk gemeten tokens
+en onbekende kosten. De oude en nieuwe taak hebben dezelfde eigenaar- en
+privégespreksbinding, geverifieerde specificatiehashes en geen actieve lease.
+Kopieer uitsluitend de exact bewaarde kandidaat en het manifest na
+eigenaarstoestemming; de oude onzekere poging blijft bewaard.
+
 Eva's eigen Gmail-kandidaat is behouden. Werkelijk gebruik, onafhankelijke
 pakketbeoordeling, de bestaande eindcriteria en eigenaaracceptatie staan open.
 Laat Eva zelf de uitbreiding indienen en aansluiten met de bestaande
