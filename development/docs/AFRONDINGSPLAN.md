@@ -29,6 +29,7 @@
 | **P1-03** | Importgrenzen, actuele architectuur | Voer `src/tools/check_architecture.py` opnieuw uit op werkelijke huidige bronstand. Sorteer bevindingen op risico en dynamisch gebruik; los actieve grensschendingen in de aangeraakte hotspots op. **Niet** de oude 110 als actuele telling gebruiken. |
 | **P1-04** | Adversarial gedrag en kinderen, vóór brede gezinsuitrol | Bestaande mandaatgrenzen tegen prompt-injectie behouden; voeg gerichte misbruikcases toe voor geïmporteerde tekst, bevoegdheidsverhoging, groepsgesprek, persoonsverwisseling, intrekking en gedeelde speakers. Leg kindbeleid vast (toestemming ouder, privédata, camera-/spraakidentiteit, zichtbare stop/wisbediening). |
 | **P1-05** | **F2.1** voorbereiden en direct waarnemen | Start de gewone gezinswaarnemingen **parallel** zodra de veilig bestaande route bruikbaar is. Noteer nuttige, gemiste en storende initiatieven en werkelijke onderbrekingen; gebruik eerst bestaande eventlogs. Een nieuwe permanente schaduwmodus is **niet nodig**. |
+| **P1-06** | Grote kern-/adapterbestanden gericht beoordelen | `pydantic_conversation.py` (~4.971 regels), `conversation_actions.py` (~3.581) en `sensory_events.py` (~2.456) dragen veel verantwoordelijkheden. Meet imports, echte foutpaden, testdekking en wijzigingsrisico; splits alleen aantoonbaar overlappende of foutgevoelige verantwoordelijkheden. Geen generieke totale herbouw. |
 
 ## P2 — het daadwerkelijke product afmaken
 
