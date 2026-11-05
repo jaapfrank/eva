@@ -847,11 +847,11 @@
     "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
     "status": "in_progress",
     "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-    "nextAction": "De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.",
+    "nextAction": "De begrensde 429-hervatting is geïnstalleerd en heeft één echte opvolger gestart. Die stopte op HTTP400. De verouderde hostinstallatieverwijzing en de afwijzing van een geldig hervatte bouwer zijn herleid; de vervolgcorrectie slaagt voor 13 gerichte tests en wacht op onafhankelijke review wegens de gebruikslimiet. Daarna actuele installatiecontrole en ontvangstbewijsreconciliatie vóór verder herstelwerk; E4.16 blijft open.",
     "ownerActionRequired": false,
     "startedAt": "2026-11-04T14:00:19.123526+00:00",
     "previousHandoff": "development/archive/history/20261104-delivery-order/snapshot.json",
-    "executionStep": "E4.16: diagnose bounded continuation after confirmed provider rate limit",
+    "executionStep": "E4.16: installed bounded continuation; tested host handoff correction awaits independent review",
     "originalCriteriaPreserved": true,
     "fullCardCompleted": false
   },
@@ -3225,11 +3225,11 @@
         "now": {
           "taskId": "E4.16",
           "title": "Zelf fouten ontdekken, duurzaam repareren en verbeteringen blijven toepassen",
-          "summary": "De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.",
-          "detail": "Eerst actuele images/configuratie en claims uitlezen na de lopende Docker-opstart. Daarna de werkelijke E4.16 fout- en kandidaat-/werkruimtebinding vaststellen vóór een nieuwe uitvoering. De E4.15 HTTP400 en ontbrekende toegang tot het bewaarde pakket blijven afzonderlijk onbewezen; geen blinde hervatting of overname van Eva’s toepassingscode.",
+          "summary": "De begrensde 429-hervatting is geïnstalleerd en heeft één echte opvolger gestart. Die stopte op HTTP400. De verouderde hostinstallatieverwijzing en de afwijzing van een geldig hervatte bouwer zijn herleid; de vervolgcorrectie slaagt voor 13 gerichte tests en wacht op onafhankelijke review wegens de gebruikslimiet. Daarna actuele installatiecontrole en ontvangstbewijsreconciliatie vóór verder herstelwerk; E4.16 blijft open.",
+          "detail": "De oorspronkelijke fout-/kandidaat-/beoordelings-/installatie-/hergebruikroute is nog niet voltooid. Geen kaart gesloten op tests of beschikbaarheid alleen.",
           "doneWhen": "Een echte interne fout wordt zonder nieuwe eigenaaropdracht idempotent aan een blijvend hersteldoel gekoppeld, met oorspronkelijke bron, huidige release, privacy en status. Na daadwerkelijke registratie/uitvoering volgt één korte passende melding; herhaling bundelt bewijs in hetzelfde doel. Eva onderzoekt de oorzaak en maakt via de bestaande ontwikkeluitvoerder een kandidaat voor het werkelijk getroffen onderdeel, ook als dat nog geen historische componentproef was. Een gescheiden actuele beoordeling controleert oorspronkelijke fout en regressies; alleen bewezen verbetering gaat via de bestaande beheerde installatie met controle van huidig werk/configuratie, STOP, gegevensbehoud en herstelmogelijkheid. Pas controle van het oorspronkelijke gedrag op de werkelijk geïnstalleerde versie sluit het hersteldoel. Onzekere huis- of andere externe effecten worden niet herhaald; ontbrekende toegang, onzekere toepassing en mislukte reparaties blijven zichtbaar en krijgen passend begrensd vervolg. Een latere onafhankelijke fout of concrete verbeterkans gebruikt dezelfde route zonder handmatige Codex-kandidaat of nieuwe hostoverdracht per fout. Oorspronkelijke criteria en eerdere afrondingen blijven intact; volledige betrouwbaarheid of gezinsacceptatie wordt niet uit een beperkte proef afgeleid.",
-          "state": "Actuele diagnose; nog geen nieuwe reparatie of installatie",
-          "checkedAt": "2026-11-04T14:00:19.123526+00:00"
+          "state": "Hervatting geïnstalleerd; nieuwe hostblokkade herleid, vervolg getest, review wacht",
+          "checkedAt": "2026-11-05T09:49:15.347089+00:00"
         },
         "next": {
           "taskId": "E4.15",
@@ -8667,7 +8667,7 @@
                 ],
                 "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
                 "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-                "nextAction": "De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.",
+                "nextAction": "De begrensde 429-hervatting is geïnstalleerd en heeft één echte opvolger gestart. Die stopte op HTTP400. De verouderde hostinstallatieverwijzing en de afwijzing van een geldig hervatte bouwer zijn herleid; de vervolgcorrectie slaagt voor 13 gerichte tests en wacht op onafhankelijke review wegens de gebruikslimiet. Daarna actuele installatiecontrole en ontvangstbewijsreconciliatie vóór verder herstelwerk; E4.16 blijft open.",
                 "files": [
                   "src/eva/adapters/api/dashboard_conversation.py",
                   "src/eva/bootstrap/runtime.py",
@@ -8678,9 +8678,7 @@
                 ],
                 "assignment": {
                   "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                  "activeWorkers": [
-                    "01a0c537-54d0-7080-9e4c-74db537877af"
-                  ],
+                  "activeWorkers": [],
                   "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
                   "scope": "Hoofdbouwer maakt de ontbrekende native zelfhersteloverdracht af: echte fout naar blijvend doel, Eva-kandidaat, onafhankelijk oordeel, beheerde toepassing, oorspronkelijke werking en later hergebruik. Gebruik actuele installatie en laatste overdracht; de SDK-headercorrectie is geen volledige kaartafronding.",
                   "exclusiveProductFiles": [
@@ -8694,11 +8692,11 @@
                   ],
                   "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
                   "ownerInstructionDate": "2026-10-25",
-                  "currentScope": "Read-only diagnosis of retained 429 repair failure and existing bounded continuation; no product mutation assigned."
+                  "currentScope": "Coordinator retains two-file host handoff candidate and exact installed-configuration rebind. Independent reviewer unavailable at usage limit; no new task execution authorized by that absence."
                 },
                 "evidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "review": "development/reviews/e416-provider-native-headers-20261024.json",
-                "implementationStatus": "bounded_source_transport_installed_and_actually_read_native_autonomous_chain_open",
+                "implementationStatus": "bounded_resume_installed_host_handoff_correction_tested_pending_review",
                 "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
                 "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
                 "implementationSteps": [
@@ -8707,9 +8705,9 @@
                   "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
                 ],
                 "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-                "checkedAt": "2026-11-04T21:12:40.203434+00:00",
-                "progress": "4 november: geïnstalleerde kern, worker en beoordelingshost actief; vier werkprofielen gelijk. Laatste twee hersteluitvoeringen hebben exact de foutafdruk van ConversationModelRateLimited. Nieuwste uitvoering is failed/provider_transient; huidige oorspronkelijke herstelbinding nog geldig. De volledige autonome herstel-/installatie-/hergebruikroute is niet bewezen.",
-                "latestEvidence": "development/evidence/product/e16-completion-20261025.json",
+                "checkedAt": "2026-11-05T09:49:15.347089+00:00",
+                "progress": "Eén natuurlijke generatie-2 herstelpoging gestart en behouden; provider antwoordde HTTP200, host/tool eindigde met HTTP400. Ontvangstbewijs ontbreekt voor die precieze operatie; geen herhaling. Verouderde installatiebinding concreet gereproduceerd, juiste binding read-only geslaagd. Taak-/pogingidentiteitsfout: 2 falingen vóór correctie, 13/13 geslaagd erna. Vervolgcorrectie niet geïnstalleerd.",
+                "latestEvidence": "development/evidence/product/autonomous-repair-20261022.json",
                 "scopedTelegramRepairAuthorization": {
                   "at": "2026-10-27T07:47:07.435768+00:00",
                   "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
@@ -9405,7 +9403,7 @@
           }
         ],
         "status": "in_progress",
-        "nextAction": "De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.",
+        "nextAction": "De begrensde 429-hervatting is geïnstalleerd en heeft één echte opvolger gestart. Die stopte op HTTP400. De verouderde hostinstallatieverwijzing en de afwijzing van een geldig hervatte bouwer zijn herleid; de vervolgcorrectie slaagt voor 13 gerichte tests en wacht op onafhankelijke review wegens de gebruikslimiet. Daarna actuele installatiecontrole en ontvangstbewijsreconciliatie vóór verder herstelwerk; E4.16 blijft open.",
         "finishOrder": [
           "Canonieke status, afhankelijkheden en geïnstalleerde versie consistent maken — bestaande kaarten: E5.1, E2.1, E4.4.",
           "E4.16: huidige zelfherstelblokkade oplossen en volledige herstelroute bewijzen — bestaande kaarten: E4.16.",
@@ -9419,7 +9417,7 @@
           "Eindvergelijking, zeven dagen gezinsgebruik en afzonderlijke eigenaaracceptatie — bestaande kaarten: P2.1, F2.1, F2.2."
         ],
         "comparisonExecution": "parked_no_new_series",
-        "updatedAt": "2026-11-04T21:12:40.203434+00:00",
+        "updatedAt": "2026-11-05T09:49:15.347089+00:00",
         "finalizationPlan": {
           "source": "development/docs/AFRONDINGSPLAN.md",
           "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -9695,7 +9693,7 @@
             "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
           }
         },
-        "checkedAt": "2026-11-04T21:12:40.203434+00:00",
+        "checkedAt": "2026-11-05T09:49:15.347089+00:00",
         "voiceFluencyExecution": {
           "scopeOrigin": "voice-fluency-20261019",
           "taskIds": [
@@ -15194,7 +15192,7 @@
               ],
               "existing": "Componentontwikkeling, onafhankelijke beoordeling, managed toepassing/herstel en eigen initiatief bestaan. Bestaande foutregistratie is logging; laatste echte zelfherstelverzoek startte geen herstelwerk.",
               "gap": "Automatische duurzame foutoverdracht, algemeen hersteldoel en toepassingsbereik voor nieuwe geraakte onderdelen ontbreken.",
-              "nextAction": "De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.",
+              "nextAction": "De begrensde 429-hervatting is geïnstalleerd en heeft één echte opvolger gestart. Die stopte op HTTP400. De verouderde hostinstallatieverwijzing en de afwijzing van een geldig hervatte bouwer zijn herleid; de vervolgcorrectie slaagt voor 13 gerichte tests en wacht op onafhankelijke review wegens de gebruikslimiet. Daarna actuele installatiecontrole en ontvangstbewijsreconciliatie vóór verder herstelwerk; E4.16 blijft open.",
               "files": [
                 "src/eva/adapters/api/dashboard_conversation.py",
                 "src/eva/bootstrap/runtime.py",
@@ -15205,9 +15203,7 @@
               ],
               "assignment": {
                 "coordinator": "01a16a55-7f38-76c2-9691-31421caafbe7",
-                "activeWorkers": [
-                  "01a0c537-54d0-7080-9e4c-74db537877af"
-                ],
+                "activeWorkers": [],
                 "independentTester": "01a16a55-1607-7171-820e-a3918acaea3f",
                 "scope": "Hoofdbouwer maakt de ontbrekende native zelfhersteloverdracht af: echte fout naar blijvend doel, Eva-kandidaat, onafhankelijk oordeel, beheerde toepassing, oorspronkelijke werking en later hergebruik. Gebruik actuele installatie en laatste overdracht; de SDK-headercorrectie is geen volledige kaartafronding.",
                 "exclusiveProductFiles": [
@@ -15221,11 +15217,11 @@
                 ],
                 "sharedIntegrationOwner": "01a16a55-7f38-76c2-9691-31421caafbe7",
                 "ownerInstructionDate": "2026-10-25",
-                "currentScope": "Read-only diagnosis of retained 429 repair failure and existing bounded continuation; no product mutation assigned."
+                "currentScope": "Coordinator retains two-file host handoff candidate and exact installed-configuration rebind. Independent reviewer unavailable at usage limit; no new task execution authorized by that absence."
               },
               "evidence": "development/evidence/product/autonomous-repair-20261022.json",
               "review": "development/reviews/e416-provider-native-headers-20261024.json",
-              "implementationStatus": "bounded_source_transport_installed_and_actually_read_native_autonomous_chain_open",
+              "implementationStatus": "bounded_resume_installed_host_handoff_correction_tested_pending_review",
               "designReassessment": "development/design/product/autonomous-repair-task-scope-20261022.json#designReassessment20261022",
               "practicalAcceptance": "development/design/product/autonomous-repair-task-scope-20261022.json#ownerPracticalAcceptance20261022",
               "implementationSteps": [
@@ -15234,9 +15230,9 @@
                 "Eva laat kandidaat onafhankelijk beoordelen, past beheerd toe en verifieert oorspronkelijke werking; bewijs tweede fout zonder handmatige overdracht."
               ],
               "ownerSpecification": "development/design/product/living-housemate-task-scope-20261022.json",
-              "checkedAt": "2026-11-04T21:12:40.203434+00:00",
-              "progress": "4 november: geïnstalleerde kern, worker en beoordelingshost actief; vier werkprofielen gelijk. Laatste twee hersteluitvoeringen hebben exact de foutafdruk van ConversationModelRateLimited. Nieuwste uitvoering is failed/provider_transient; huidige oorspronkelijke herstelbinding nog geldig. De volledige autonome herstel-/installatie-/hergebruikroute is niet bewezen.",
-              "latestEvidence": "development/evidence/product/e16-completion-20261025.json",
+              "checkedAt": "2026-11-05T09:49:15.347089+00:00",
+              "progress": "Eén natuurlijke generatie-2 herstelpoging gestart en behouden; provider antwoordde HTTP200, host/tool eindigde met HTTP400. Ontvangstbewijs ontbreekt voor die precieze operatie; geen herhaling. Verouderde installatiebinding concreet gereproduceerd, juiste binding read-only geslaagd. Taak-/pogingidentiteitsfout: 2 falingen vóór correctie, 13/13 geslaagd erna. Vervolgcorrectie niet geïnstalleerd.",
+              "latestEvidence": "development/evidence/product/autonomous-repair-20261022.json",
               "scopedTelegramRepairAuthorization": {
                 "at": "2026-10-27T07:47:07.435768+00:00",
                 "ownerInstruction": "Ga de gevonden Telegramfouten repareren.",
@@ -15932,7 +15928,7 @@
         }
       ],
       "status": "in_progress",
-      "nextAction": "De actuele kern, worker en beoordelingshost zijn gezond; alle vier werkprofielen passen bij elkaar. Herleid de blijvende E4.16 blokkade na de bevestigde providerlimiet (429) tot de bestaande hervatpoort. Huidige herstelbinding is geldig; behoud alle eerdere effecten en STOP-/broncontroles. Geen blinde herhaling of handmatige Eva-kandidaat.",
+      "nextAction": "De begrensde 429-hervatting is geïnstalleerd en heeft één echte opvolger gestart. Die stopte op HTTP400. De verouderde hostinstallatieverwijzing en de afwijzing van een geldig hervatte bouwer zijn herleid; de vervolgcorrectie slaagt voor 13 gerichte tests en wacht op onafhankelijke review wegens de gebruikslimiet. Daarna actuele installatiecontrole en ontvangstbewijsreconciliatie vóór verder herstelwerk; E4.16 blijft open.",
       "finishOrder": [
         "Canonieke status, afhankelijkheden en geïnstalleerde versie consistent maken — bestaande kaarten: E5.1, E2.1, E4.4.",
         "E4.16: huidige zelfherstelblokkade oplossen en volledige herstelroute bewijzen — bestaande kaarten: E4.16.",
@@ -15946,7 +15942,7 @@
         "Eindvergelijking, zeven dagen gezinsgebruik en afzonderlijke eigenaaracceptatie — bestaande kaarten: P2.1, F2.1, F2.2."
       ],
       "comparisonExecution": "parked_no_new_series",
-      "updatedAt": "2026-11-04T21:12:40.203434+00:00",
+      "updatedAt": "2026-11-05T09:49:15.347089+00:00",
       "finalizationPlan": {
         "source": "development/docs/AFRONDINGSPLAN.md",
         "updatedAt": "2026-10-18T02:24:39.871399+00:00",
@@ -16222,7 +16218,7 @@
           "activeOtherWorkPreserved": "E5.1 and currentWork remain owned by the ongoing core executor; no parallel primary task started."
         }
       },
-      "checkedAt": "2026-11-04T21:12:40.203434+00:00",
+      "checkedAt": "2026-11-05T09:49:15.347089+00:00",
       "voiceFluencyExecution": {
         "scopeOrigin": "voice-fluency-20261019",
         "taskIds": [
@@ -16480,30 +16476,30 @@
       "scopeClarification": "development/evidence/reassessment/continuous-development-coverage-20261017.json"
     },
     "currentRuntime": {
-      "recordedAt": "2026-11-04T21:12:40.203434+00:00",
-      "checkedAt": "2026-11-04T14:02:17.059113+00:00",
+      "recordedAt": "2026-11-05T09:49:15.347089+00:00",
+      "checkedAt": "2026-11-04T21:59:19.736135+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "coreImage": "sha256:b9261a0b97473600fd75b053baa8761a717750ec773dd512e0c819de85647fe9",
-      "workerImage": "sha256:85fdda9be5afcda1d5041a0165d96924f69acc8cf276e9dee2d0c2a2b00d4b8d",
+      "coreImage": "sha256:5fd8f607b7cdd2e549ac64b043cc5277b987e2c54b05685507b9d5879a6f9827",
+      "workerImage": "sha256:8c32edbe57192ca31420def5f6ab706b59015ee7ad97bf44d1ea297cc06dda39",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
       "ready": true,
       "healthy": true,
-      "readyStatus": "services_healthy_profiles_compatible_repair_not_completed",
+      "readyStatus": "bounded_recovery_installed_host_handoff_blocked",
       "evidence": "development/evidence/product/autonomous-repair-20261022.json",
-      "independentSourceReview": "development/reviews/e16-e419-alignment-20261024.json",
+      "independentSourceReview": "development/evidence/product/autonomous-repair-20261022.json#bounded429Recovery20261104",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "Werkelijke images en alle vier profielen teruggelezen op 4 november; host start na Docker correct met onafhankelijk beoordeelde overlay. Dit bewijst beschikbaarheid, geen voltooide herstel- of gezinsfunctie.",
+      "meaning": "Exacte geïnstalleerde bronhashes, images, configuratie, native manifestresolver en vier profielen teruggelezen door coördinator. Onafhankelijke installatiecontrole nog open wegens reviewerlimiet. Eén echte opvolger bewijst hervatting, geen volledige zelfreparatie.",
       "runtimeProfiles": {
         "digital_work": "matching",
         "public_research": "matching",
         "shared_provider": "matching",
         "household_research": "matching"
       },
-      "profileReadbackSha256": "f10a2e9bb5a388b7dd8f05b8b9ed8206dbd28714225db07ac31eca27956c344d",
-      "sourceCommitChecked": "95459fb0e6c9f649aadcf380a22546cc33e16663",
+      "profileReadbackSha256": "abe50b2850147ef9ff438b487d2bd47793470e10d951f5bb71540c7b348174d1",
+      "sourceCommitChecked": "8754a3453f11df5abdefbeaaa97809e94b06ce58",
       "hostOverlaySourceHashes": {
         "component_evaluation_service.py": "548ee91254f214603cbaf4a7e0775f766db2bda06fda5b5153a5415eeba4ce6d",
         "owned_package_handoff.py": "23f6e0995c0435ffbfc52a498ac8ad6ee3aba7e27537b13db0c6ed6cdfe7a38a"
@@ -18925,7 +18921,7 @@
       "functionalPhase1IndependentReadbackSeconds": 5.012911568
     }
   },
-  "updatedAt": "2026-11-04T21:12:40.203434+00:00",
+  "updatedAt": "2026-11-05T09:49:15.347089+00:00",
   "taskConsolidations": [
     {
       "primaryTaskId": "C3.1",

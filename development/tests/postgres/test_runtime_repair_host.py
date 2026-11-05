@@ -93,3 +93,21 @@ def test_completion_rechecks_review_stop_inside_closing_transaction(native_digit
     with pytest.raises(ValueError,match='review stopped before completion'):
         rpc(f,incident,'close_verified',proof=proof)
     assert rpc(f,incident,'status')['state']=='repair_investigating'
+
+
+def test_resumed_metadata_keeps_original_execution_and_current_attempt(native_digital):
+    from tests.postgres.test_native_repair_rate_limit_recovery import rejected
+    from eva.bootstrap.native_initiative_work import resume_one_rate_limited_repair
+    f,previous=rejected(native_digital)
+    assert resume_one_rate_limited_repair(f.service)=='repair_resumed'
+    event=f.auth.timeline.events(f.claim.thread_id)[-1]
+    work=f.store.load(event.payload['data']['work_id'],**f.service._owner)
+    now=f.service.now()
+    f.store.start_call(f.store.claim_next(worker_id='host-metadata-test',release=f.profile.release,now=now),now=now)
+    evidence=event.payload['data']['rate_limit_evidence']
+    meta=rpc(f,evidence['incident_id'],'work_metadata',task_id=work.spec.work_id,require_running=True)
+    assert meta['task_id']==work.spec.work_id
+    assert meta['execution_id']==previous.spec.execution_id
+    assert meta['execution_id']!=meta['task_id']
+    assert meta['source_ingress_sha256']==previous.spec.source_ingress_sha256
+    assert meta['role'] is None and not meta['work_succeeded']

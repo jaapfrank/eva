@@ -1,0 +1,77 @@
+{
+  "recordedAt": "2026-11-05T09:49:15.347089+00:00",
+  "taskId": "E4.16",
+  "repositoryHeadAtInstallation": "8754a3453f11df5abdefbeaaa97809e94b06ce58",
+  "recordingMode": "Exact deltas from installed immutable images; unrelated shared-checkout work is not staged or claimed as this change. This is not a complete clean-checkout release.",
+  "installed": {
+    "sources": {
+      "src/eva/bootstrap/native_initiative_work.py": {
+        "before": "8b78ac1ffa6aac3d7a360c36c7ed571ff23b061c1809ba82de06a09f1cb72a09",
+        "candidate": "52243ed2d05c882654179165b55ac007564f6fca9f8fc33e221752b71c676099"
+      },
+      "src/eva/adapters/postgres/initiative_execution.py": {
+        "before": "95fb7754160be1fb759521bd17f04b6ba86fb4332f825f6bb5ab8d08e50a2965",
+        "candidate": "d614e839f1ebb295f7af00981099aab1bd7562e81d6d62b22164d89c417f7227"
+      },
+      "src/eva/bootstrap/runtime.py": {
+        "before": "d6f00832c0190ed57cf56d2da81a99ebf39e4a896ce774b96b4fc022244c276c",
+        "candidate": "72d2e37b73fd694fa8d8110cae9da557610d06ffcba8e00604288bbead850b1e"
+      },
+      "src/eva/bootstrap/delegated_digital_runner.py": {
+        "before": "d95fdef41489537cf01f439a5c2adcc8fe7537174b48142e019fbe28de91e35b",
+        "candidate": "156496d419c6ef81a02f8bec424b42ec09ba25b36c32f3dfd8cc2622c93b03eb"
+      },
+      "development/tests/postgres/test_native_repair_rate_limit_recovery.py": {
+        "candidate": "0abc725d2d608ac83281900dc96bfbd7e4ca535a410c45201cc9f2a55e3f4289"
+      }
+    },
+    "patch": "auto429-installed.patch",
+    "patchSha256": "1faf49fa0a68ad05aaf90567978da4afccc9099422388de1de0edac04550c27d",
+    "images": {
+      "core": {
+        "before": "sha256:b9261a0b97473600fd75b053baa8761a717750ec773dd512e0c819de85647fe9",
+        "installed": "sha256:5fd8f607b7cdd2e549ac64b043cc5277b987e2c54b05685507b9d5879a6f9827"
+      },
+      "delegated-work-worker": {
+        "before": "sha256:85fdda9be5afcda1d5041a0165d96924f69acc8cf276e9dee2d0c2a2b00d4b8d",
+        "installed": "sha256:8c32edbe57192ca31420def5f6ab706b59015ee7ad97bf44d1ea297cc06dda39"
+      }
+    },
+    "activationReceiptSha256": "0369b1e86f58da91c29b04bfa33ee97dbe0117ef65727a88894a26f22cc61ebe",
+    "profilesSha256": "abe50b2850147ef9ff438b487d2bd47793470e10d951f5bb71540c7b348174d1",
+    "sourceReview": "GO; 01a1a88d-c4ff-7930-95da-6771200e1eac",
+    "independentInstalledReadback": "pending_reviewer_usage_limit"
+  },
+  "pending": {
+    "sources": {
+      "operations/runtime_repair_development.py": {
+        "baseline": "a6126c9ed81e89318b96683615211a14536832f0433d1332ef70bbb385d532ca",
+        "candidate": "bd41de382a1f820cd9c3af159806b43599ebfcc09ab516724ec86a4e462c6657"
+      },
+      "bootstrap/runtime_repair_host.py": {
+        "baseline": "e351a061d22b01c7797c7937376c4b832d760fcd7bca61b6cb6902efaf010b77",
+        "candidate": "99260e825e7dd5904826038a82584c429dd6f7d88970f43a7eeee789afc777d8"
+      }
+    },
+    "patch": "host-handoff-candidate.patch",
+    "patchSha256": "fc26762b7992582b0d22125ef0eb783fc8a76da75ed05e6ad277587184c67133",
+    "configurationChange": "Only runtime_repairs.publisher.installed is rebound from the obsolete retained Compose snapshot to the exact currently installed candidate configuration, with its byte hash. Existing storage and configuration guards remain active.",
+    "currentComposeSha256": "9a7f23b317b506ea011b4dd61085c46cb6b5bef15821519197a46252d1c7fd46",
+    "tests": {
+      "baseline": {
+        "failed": 2,
+        "passed": 11,
+        "sha256": "c042e10e64eb22f6b1c2b7299aa5d2893926a59e4815bdd74cf2b52704c77802"
+      },
+      "candidate": {
+        "failed": 0,
+        "passed": 13,
+        "sha256": "4bf8fe7f66cef56948dd9e9aec8d53b888b4466c6e50ffc82dec514e61c4801c"
+      }
+    },
+    "independentReview": "pending_usage_limit",
+    "installed": false
+  },
+  "fullCardCompleted": false,
+  "ownerAcceptance": false
+}

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T21:12:40.203434+00:00",
+  "updatedAt": "2026-11-04T21:53:19.956835+00:00",
   "workspace": "/home/administrator/project/Eva2",
   "confirmedBy": "Direct owner appointment; explicit safe handoffs from windows-root, codex-e418 and old reviewer on 23 October 2026.",
   "baselineCommit": "563a1d24698db6b83a2e92469ba337a46b88ccfc",
@@ -305,7 +305,7 @@
         "E2.9 and E1.13 delivered bundles remain frozen; reviewer remains independent.",
         "Original full E1.10 multiple-day and family acceptance criteria remain unchanged; complete technical route without fabricating use or acceptance."
       ],
-      "updatedAt": "2026-11-04T21:12:40.203434+00:00",
+      "updatedAt": "2026-11-04T21:53:19.956835+00:00",
       "reviewRequest": {
         "task": "E2.9",
         "status": "GO_SCOPED_CURRENT_PROJECTS_UI_CANDIDATE",
@@ -586,7 +586,7 @@
         "blocksE417": false,
         "status": "resolved_by_coordinator: separate family access and contact provider installed in 1def06c0; no duplicate implementation."
       },
-      "status": "implementing_bounded_429_continuation",
+      "status": "usage_limit_no_running_mutation",
       "actualExtensionBehaviorPreservation": {
         "status": "completed_scoped_behavior_reviewed",
         "startedAt": "2026-10-23T16:06:47.389862+00:00",
@@ -1286,7 +1286,7 @@
         "noRuntimeModelExecutorCameraMessageOrInstallation": true
       },
       "previousStatusBeforeCentralHandoff": "Canonical child conflicts and original32-row cutoff/singlepending cases finalized;44 focused checks passed, ready independent GO",
-      "activeCodeOrInstallClaim": true,
+      "activeCodeOrInstallClaim": false,
       "e417ColdStartHandoff": {
         "updatedAt": "2026-10-23T23:53:39.681074+00:00",
         "status": "phase1_exact_plan_pending_coordinator_tester_admission_not_started",
@@ -1498,12 +1498,7 @@
         "taskCompleted": false
       },
       "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
-      "currentExclusiveWritePaths": [
-        "src/eva/bootstrap/native_initiative_work.py",
-        "src/eva/adapters/postgres/initiative_execution.py",
-        "src/eva/bootstrap/runtime.py",
-        "development/tests/postgres/test_native_repair_rate_limit_recovery.py"
-      ],
+      "currentExclusiveWritePaths": [],
       "v2FinalHandoff": {
         "path": "/home/administrator/project/.eva2-artifacts/e419-installed-update-handoff-20261024/implementation/candidate-v2/controller-final/manifest.private.json",
         "sha256": "a8bcc4e4b218d183bcc683f616a06993eeaec9fe1856f6625c9aaa4e66f45138"
@@ -1530,7 +1525,9 @@
         "resumeRequiresExplicitOwnerInstruction": true,
         "handoff": "development/coordination/e16-pause-handoff-20261026.md",
         "projectCompleted": false
-      }
+      },
+      "additionalFunctionScope": "Only _recorded_action_slots: accept an existing transaction connection; preserve existing receipt validator.",
+      "handoff": "Coordinator took over the exact four-file scope after provider usage limit; executor made no product edits."
     },
     "e415-independent-review-newchat": {
       "task": "E1.7",
@@ -2297,34 +2294,56 @@
       "candidateWorkspaceBindingResolved": false
     },
     "currentInstalledReadback": {
-      "recordedAt": "2026-11-04T21:12:40.203434+00:00",
-      "checkedAt": "2026-11-04T14:02:17.059113+00:00",
+      "recordedAt": "2026-11-05T09:49:15.347089+00:00",
+      "checkedAt": "2026-11-04T21:59:19.736135+00:00",
       "core": "eva2-managed-b-slot3-core",
       "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
-      "coreImage": "sha256:b9261a0b97473600fd75b053baa8761a717750ec773dd512e0c819de85647fe9",
-      "workerImage": "sha256:85fdda9be5afcda1d5041a0165d96924f69acc8cf276e9dee2d0c2a2b00d4b8d",
+      "coreImage": "sha256:5fd8f607b7cdd2e549ac64b043cc5277b987e2c54b05685507b9d5879a6f9827",
+      "workerImage": "sha256:8c32edbe57192ca31420def5f6ab706b59015ee7ad97bf44d1ea297cc06dda39",
       "coreHealth": "healthy",
       "workerHealth": "healthy",
       "repositoryHeadFullyInstalled": false,
       "ready": true,
       "healthy": true,
-      "readyStatus": "services_healthy_profiles_compatible_repair_not_completed",
+      "readyStatus": "bounded_recovery_installed_host_handoff_blocked",
       "evidence": "development/evidence/product/autonomous-repair-20261022.json",
-      "independentSourceReview": "development/reviews/e16-e419-alignment-20261024.json",
+      "independentSourceReview": "development/evidence/product/autonomous-repair-20261022.json#bounded429Recovery20261104",
       "configurationEnvironmentMountsRetained": true,
-      "meaning": "Werkelijke images en alle vier profielen teruggelezen op 4 november; host start na Docker correct met onafhankelijk beoordeelde overlay. Dit bewijst beschikbaarheid, geen voltooide herstel- of gezinsfunctie.",
+      "meaning": "Exacte geïnstalleerde bronhashes, images, configuratie, native manifestresolver en vier profielen teruggelezen door coördinator. Onafhankelijke installatiecontrole nog open wegens reviewerlimiet. Eén echte opvolger bewijst hervatting, geen volledige zelfreparatie.",
       "runtimeProfiles": {
         "digital_work": "matching",
         "public_research": "matching",
         "shared_provider": "matching",
         "household_research": "matching"
       },
-      "profileReadbackSha256": "f10a2e9bb5a388b7dd8f05b8b9ed8206dbd28714225db07ac31eca27956c344d",
-      "sourceCommitChecked": "95459fb0e6c9f649aadcf380a22546cc33e16663",
+      "profileReadbackSha256": "abe50b2850147ef9ff438b487d2bd47793470e10d951f5bb71540c7b348174d1",
+      "sourceCommitChecked": "8754a3453f11df5abdefbeaaa97809e94b06ce58",
       "hostOverlaySourceHashes": {
         "component_evaluation_service.py": "548ee91254f214603cbaf4a7e0775f766db2bda06fda5b5153a5415eeba4ce6d",
         "owned_package_handoff.py": "23f6e0995c0435ffbfc52a498ac8ad6ee3aba7e27537b13db0c6ed6cdfe7a38a"
       }
+    },
+    "currentImplementation": {
+      "task": "E4.16",
+      "owner": "01a16a55-7f38-76c2-9691-31421caafbe7",
+      "files": [
+        "src/eva/bootstrap/native_initiative_work.py",
+        "src/eva/adapters/postgres/initiative_execution.py",
+        "src/eva/bootstrap/runtime.py",
+        "src/eva/bootstrap/delegated_digital_runner.py",
+        "development/tests/postgres/test_native_repair_rate_limit_recovery.py"
+      ],
+      "status": "host_handoff_candidate_tested_review_usage_limit",
+      "previousExecutorUnavailable": "usage_limit",
+      "productionChanged": true,
+      "installedPatch": "bounded429Recovery20261104",
+      "pendingFiles": [
+        "src/eva/bootstrap/runtime_repair_host.py",
+        "src/eva/operations/runtime_repair_development.py",
+        "development/tests/postgres/test_runtime_repair_host.py",
+        "development/tests/operations/test_runtime_repair_development.py"
+      ],
+      "noFurtherTaskReplay": true
     }
   }
 }

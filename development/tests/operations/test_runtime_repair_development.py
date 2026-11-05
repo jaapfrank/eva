@@ -166,3 +166,34 @@ def test_actual_source_workspace_handoff_ends_builder_before_separate_assessment
     admitted=next(arguments for action,arguments in f.calls if action=='admit_assessment')
     assert admitted['candidate_sha256'] is None and admitted['comparison_sha256'] is None
     assert not f.published
+
+
+def test_resumed_builder_keeps_original_execution_and_waits_for_its_own_result(flow):
+    f=flow;c=f.controller
+    task='work:eva-resume:synthetic-bounded-successor'
+    f.metadata[task]={**f.meta,'task_id':task,'execution_id':f.primary}
+    request={**f.request,'task_id':task}
+    accepted=c.request({**request,'action':'submit'})
+    assert accepted['accepted'] and not accepted['installed']
+    assert c.request({**request,'action':'submit'})==accepted
+    assert c.jobs[f.identity]['task_id']==task
+    # A completed earlier attempt cannot finish the current resumed builder.
+    f.meta.update(state='succeeded',work_succeeded=True,usage_measured=True)
+    assert c.run_once()=='waiting_for_builder'
+    f.metadata[task].update(state='succeeded',work_succeeded=True,usage_measured=True)
+    assert c.run_once()=='original_behavior_oracle'
+    assert not f.published
+
+
+@pytest.mark.parametrize('change',['execution','missing_execution','role','task'])
+def test_resumed_builder_cannot_replace_original_identity(flow,change):
+    f=flow;task='work:eva-resume:synthetic-bounded-successor'
+    meta={**f.meta,'task_id':task,'execution_id':f.primary}
+    if change=='execution':meta['execution_id']='work:eva-initiative:'+'0'*64
+    elif change=='missing_execution':meta.pop('execution_id')
+    elif change=='role':meta['role']='independent_review'
+    else:meta['task_id']='another-attempt'
+    f.metadata[task]=meta
+    with pytest.raises(ValueError):
+        f.controller.request({**f.request,'task_id':task,'action':'submit'})
+    assert not f.controller.jobs and not f.published

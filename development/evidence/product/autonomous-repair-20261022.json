@@ -15,7 +15,7 @@
     "independentGeneralRepairAssessment": "host_target_and_isolated_comparison_built_not_automatically_integrated",
     "managedInstallAndOriginalBehaviorReadback": "not_reached_no_automatic_acceptance_or_installation"
   },
-  "checkedAt": "2026-10-22T09:23:02.946161+00:00",
+  "checkedAt": "2026-11-05T09:49:15.347089+00:00",
   "installed": false,
   "activated": false,
   "verification": {
@@ -142,5 +142,136 @@
       "verdict": "GO",
       "scope": "Original task criteria and ten-step mapping only; no installed repair proof"
     }
+  },
+  "bounded429Recovery20261104": {
+    "status": "installed_source_profile_verified_live_successor_then_new_host_failure",
+    "recordedAt": "2026-11-05T09:49:15.347089+00:00",
+    "sources": {
+      "src/eva/bootstrap/native_initiative_work.py": {
+        "before": "8b78ac1ffa6aac3d7a360c36c7ed571ff23b061c1809ba82de06a09f1cb72a09",
+        "candidate": "52243ed2d05c882654179165b55ac007564f6fca9f8fc33e221752b71c676099"
+      },
+      "src/eva/adapters/postgres/initiative_execution.py": {
+        "before": "95fb7754160be1fb759521bd17f04b6ba86fb4332f825f6bb5ab8d08e50a2965",
+        "candidate": "d614e839f1ebb295f7af00981099aab1bd7562e81d6d62b22164d89c417f7227"
+      },
+      "src/eva/bootstrap/runtime.py": {
+        "before": "d6f00832c0190ed57cf56d2da81a99ebf39e4a896ce774b96b4fc022244c276c",
+        "candidate": "72d2e37b73fd694fa8d8110cae9da557610d06ffcba8e00604288bbead850b1e"
+      },
+      "src/eva/bootstrap/delegated_digital_runner.py": {
+        "before": "d95fdef41489537cf01f439a5c2adcc8fe7537174b48142e019fbe28de91e35b",
+        "candidate": "156496d419c6ef81a02f8bec424b42ec09ba25b36c32f3dfd8cc2622c93b03eb"
+      },
+      "development/tests/postgres/test_native_repair_rate_limit_recovery.py": {
+        "candidate": "0abc725d2d608ac83281900dc96bfbd7e4ca535a410c45201cc9f2a55e3f4289"
+      }
+    },
+    "tests": {
+      "combinedBeforeFinalSelectorFix": {
+        "passed": 48,
+        "logSha256": "26c7977c6e235b9a60b69682aa066cff16a9c28e25fe458c19baead21cdfbf5b"
+      },
+      "finalTargeted": {
+        "passed": 12,
+        "failed": 0,
+        "logSha256": "b539eb948f5db02fc029d900320c3c85d4064fdf1431d7a8008fd6e7b1247f28"
+      },
+      "productionDatabaseUsed": false,
+      "modelCalls": 0
+    },
+    "independentReview": {
+      "thread": "01a16a55-1607-7171-820e-a3918acaea3f",
+      "turn": "01a1a88d-c4ff-7930-95da-6771200e1eac",
+      "verdict": "GO",
+      "scope": "Exact source hashes, targeted evidence, bounded continuation and prepared host-before-worker readiness order. Not installation or end-to-end repair proof."
+    },
+    "candidateProfilesMatch": true,
+    "productionChanged": true,
+    "fullCardCompleted": false,
+    "privateEvidenceRoot": "/var/lib/eva2/finalization-20261104",
+    "installedAt": "2026-11-04T21:59:19.736135+00:00",
+    "activationReceiptSha256": "0369b1e86f58da91c29b04bfa33ee97dbe0117ef65727a88894a26f22cc61ebe",
+    "allFourInstalledProfilesMatch": true,
+    "independentInstalledReview": {
+      "status": "pending_usage_limit",
+      "thread": "01a16a55-1607-7171-820e-a3918acaea3f",
+      "attemptedTurn": "01a1a893-4aa1-7672-b05b-e379d74a61f8"
+    },
+    "reproducibleDeltaManifest": "development/archive/history/20261104-delivery-order/release-manifest.json",
+    "actualContinuation": {
+      "checkedAt": "2026-11-04T22:00:00.230387+00:00",
+      "originalStateRetained": true,
+      "successorGeneration": 2,
+      "successorClaimCount": 1,
+      "successorState": "ambiguous",
+      "nativeResumeEventObserved": true,
+      "operatorDispatch": false,
+      "newErrorFingerprint": "a3d700c4451baef8c743d917853a780d084dd25f4e36e8f1a4913e89c33b8e0a",
+      "newErrorExactMatch": "HTTPError:HTTP Error 400: Bad Request",
+      "evaRuntimeUsage": {
+        "contract": "DelegatedWorkUsage/v1",
+        "tool_calls": 1,
+        "measurement": "partial",
+        "input_tokens": 10603,
+        "total_tokens": 10678,
+        "output_tokens": 75,
+        "schema_version": 1,
+        "cost_usd_micros": null,
+        "completed_model_responses": 1
+      },
+      "developerUsageMeasured": false,
+      "readbackSha256": "9f71b2b3b57eddeb3ad6fcd98d1a6262736633bc29a75fe83bab52ae015fecf0",
+      "furtherRetryPerformed": false,
+      "fullRepairVerified": false
+    }
+  },
+  "hostHandoffCorrection20261104": {
+    "status": "targeted_tests_passed_independent_review_pending",
+    "recordedAt": "2026-11-05T09:49:15.347089+00:00",
+    "installed": false,
+    "cause": {
+      "configuration": "Repair publisher still pins the pre-E1.6 manifest snapshot; it lacks the worker native-task-inputs mount and both native input-root environment settings. Current-storage validation correctly rejects it.",
+      "identity": "Repair submission compares the current attempt ID with the original work ID, rejecting a legitimate resumed builder even with unchanged execution identity."
+    },
+    "configurationEvidence": {
+      "oldSourceRejected": "running storage differs from the installed configuration",
+      "currentSourceTargetResolved": true,
+      "proofSha256": "5203b9189e16cd05b539ffda4596c6ea6f8cfe9bc36117bd817401dbc088b1ca",
+      "productionConfigChanged": false
+    },
+    "patch": {
+      "sources": {
+        "operations/runtime_repair_development.py": {
+          "baseline": "a6126c9ed81e89318b96683615211a14536832f0433d1332ef70bbb385d532ca",
+          "candidate": "bd41de382a1f820cd9c3af159806b43599ebfcc09ab516724ec86a4e462c6657"
+        },
+        "bootstrap/runtime_repair_host.py": {
+          "baseline": "e351a061d22b01c7797c7937376c4b832d760fcd7bca61b6cb6902efaf010b77",
+          "candidate": "99260e825e7dd5904826038a82584c429dd6f7d88970f43a7eeee789afc777d8"
+        }
+      },
+      "patch": "host-handoff-candidate.patch",
+      "patchSha256": "fc26762b7992582b0d22125ef0eb783fc8a76da75ed05e6ad277587184c67133",
+      "configurationChange": "Only runtime_repairs.publisher.installed is rebound from the obsolete retained Compose snapshot to the exact currently installed candidate configuration, with its byte hash. Existing storage and configuration guards remain active.",
+      "currentComposeSha256": "9a7f23b317b506ea011b4dd61085c46cb6b5bef15821519197a46252d1c7fd46",
+      "tests": {
+        "baseline": {
+          "failed": 2,
+          "passed": 11,
+          "sha256": "c042e10e64eb22f6b1c2b7299aa5d2893926a59e4815bdd74cf2b52704c77802"
+        },
+        "candidate": {
+          "failed": 0,
+          "passed": 13,
+          "sha256": "4bf8fe7f66cef56948dd9e9aec8d53b888b4466c6e50ffc82dec514e61c4801c"
+        }
+      },
+      "independentReview": "pending_usage_limit",
+      "installed": false
+    },
+    "retainedOldUncertainty": "One actual host/tool request returned HTTP400. Its exact requested operation was not durably recorded. No automatic second attempt or no-effect certificate is invented; the old attempt remains ambiguous.",
+    "nextStep": "Obtain independent review of the exact configuration and two-file identity correction, install only with fresh claims and host/core/worker alignment, then reconcile the actual unknown host request through existing receipts before any resumed model call.",
+    "fullCardCompleted": false
   }
 }
