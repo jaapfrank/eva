@@ -1,4 +1,5 @@
 """Bounded recent continuity from the existing verified private memory sources."""
+from eva.adapters.postgres.telegram_delivery_authority import TelegramDeliveryAuthority
 from datetime import UTC, datetime, timedelta
 import logging
 from eva.application.conversation import ConversationTurn, RecentConversationMessage
@@ -46,7 +47,7 @@ def _with_delivered_work(runtime, turn, recent, *, now):
     try:
         service.validate_authority(turn)
         from eva.adapters.postgres.delegated_work_delivery import PostgresDelegatedWorkDeliveryStore
-        delivery = PostgresDelegatedWorkDeliveryStore(service.store, bindings_loader=bindings_loader,
+        delivery = PostgresDelegatedWorkDeliveryStore(service.store, destination_authority=TelegramDeliveryAuthority(service.store.engine, service.store.scope, bindings_loader),
                                                        clock=lambda: now)
         found = delivery.recent_acknowledged_context(**service._owner,
             conversation_id=turn.conversation_id,

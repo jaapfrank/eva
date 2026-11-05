@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-11-05T20:18:13.777019+00:00",
+  "liveDashboard": "http://127.0.0.1:44712/project-state",
+  "activeTaskId": "E4.16",
+  "canonicalFinishOrderMatchesLive": true,
+  "canonicalNowMatchesLive": true,
+  "canonicalPlanMatchesLive": true,
+  "runtimeReady": true,
+  "scope": "Read-only projection and readiness; no model, task admission or external effect."
+}

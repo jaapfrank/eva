@@ -1,0 +1,66 @@
+{
+  "contract": "EvaScopedTechnicalDelivery/v1",
+  "recordedAt": "2026-11-05T20:18:49.929317+00:00",
+  "scope": "P0-01 concrete handoff/request-loss corrections and P0-02 delivery claim consolidation",
+  "built": true,
+  "independentlyReviewed": true,
+  "installed": true,
+  "installedSourceAndProfilesReadBack": true,
+  "cleanIndexTests": {
+    "passed": 82,
+    "failed": 0,
+    "evidence": "development/evidence/reassessment/clean-staged-source-20261105/staged-source-behavior.json"
+  },
+  "installedTargetSourceTests": {
+    "passed": 82,
+    "failed": 0,
+    "evidence": "development/reviews/p0-delivery-independent-20261105/installed-behavior-review.json",
+    "testEnvironmentLimit": "Exact deployed target modules, pinned trusted dependencies, fake transports and isolated PostgreSQL16.13; explicitly hash-bound disposable migration helper for the additional current schema revision."
+  },
+  "providerAndEmptyResultGuardTests": {
+    "passed": 156,
+    "evidence": "development/evidence/reassessment/p0-runtime-readback-20261105.json",
+    "scope": "Existing guards verified; no general provider-outage continuity completion claimed."
+  },
+  "reviews": [
+    "development/reviews/p0-host-handoff-independent-20261105/review.json",
+    "development/reviews/p0-repair-journal-independent-20261105/review.json",
+    "development/reviews/p0-delivery-independent-20261105/review.json",
+    "development/reviews/p0-delivery-independent-20261105/installer-review.json",
+    "development/reviews/p0-delivery-independent-20261105/scoped-index-review.json"
+  ],
+  "installedReadback": "development/reviews/p0-delivery-independent-20261105/installed-readback.json",
+  "deployedSourceHashes": {
+    "adapters/postgres/component_improvement_actions.py": "078ece35ecd58c1d5a23c98f8d64c02a1c83a140df8d6af8c98f6ea1997c0a17",
+    "adapters/postgres/delegated_work.py": "c87b87221efe20a221fce7e6170f6162bafbd0ba5fbd66e33be8febd7a9662a5",
+    "adapters/postgres/delegated_work_delivery.py": "6d432af27a0e4df76e339ec68f6582874896f395e2374d1135c58d8533f074b6",
+    "adapters/postgres/telegram_delivery_authority.py": "2772f3505ba5abd3ca588a6b75e9ca94c1918aff4b3bafe38bfa97ed0f9bf3e4",
+    "bootstrap/delegated_work_delivery.py": "83d8ff604396212db29ebf7573549dd6477b6f9c94a0f9c268c29173e8958299",
+    "bootstrap/private_continuity.py": "0d9a19dc54b950eb058d808a9b29f79460a855a7f4465dca2cb61260367080ff"
+  },
+  "dashboardReadback": "development/evidence/reassessment/technical-finalization-20261105/dashboard-final-readback.json",
+  "canonicalTaskCount": 103,
+  "canonicalCompletedTaskCount": 83,
+  "originalTaskStatusesAndDoneWhenPreserved": true,
+  "wholeE416Completed": false,
+  "autonomousLaterReuseProven": false,
+  "familyAcceptanceGranted": false,
+  "gitBoundary": {
+    "branch": "codex/eva2-technical-finalization-20261105",
+    "baseCommit": "1fc3854f093e28c16fc6ac5e8bc9221764ed03ee",
+    "scopedCommitOnly": true,
+    "existingNativeHostAndOtherWorkRetainedOutsideCommit": true,
+    "wholeRepositoryHeadInstalled": false,
+    "remotePushPerformed": false
+  },
+  "knownOpen": [
+    "Historical HTTP400 lacks exact operation receipt and is not safe to replay.",
+    "Complete autonomous repair/application/original-behavior verification and later reuse remain open under E4.16.",
+    "P0-03 reviewer authority/provenance remains open;32 existing release safety regression tests pass.",
+    "Existing dashboard concurrent unacknowledged-result poll test also fails on exact old image; original behavior and criterion preserved.",
+    "177 architecture violations before and after, no new violation identities.",
+    "F2.1/F2.2 real family usage and acceptance remain open."
+  ],
+  "developmentCredits": "unknown",
+  "runtimeUsage": "No forced live model requests by this technical verification; ordinary background usage not measured."
+}

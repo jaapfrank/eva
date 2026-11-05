@@ -1,0 +1,61 @@
+{
+  "contract": "EvaIndependentInstalledReadback/v1",
+  "checkedAt": "2026-11-05T20:13:07.279004+00:00",
+  "reviewer": "/root/independent_review",
+  "decision": "GO",
+  "scope": "P0-01 durable request journal and P0-02 six-file installed overlay, source/profile/host verification",
+  "roles": {
+    "core": {
+      "containerId": "d9feb2322ade6e4357cef80784991a911c7212b584fe69a5a4ec982714613025",
+      "image": "sha256:5e78cbebedf89a593fe240e14323ef8c05ee566f6800747bb712cc0f492052e5",
+      "healthy": true,
+      "exactSourceCount": 450,
+      "reviewedSixHashesMatch": true,
+      "allOtherSourceHashesMatch": true,
+      "environmentPreserved": true,
+      "storageAndMountsPreserved": true
+    },
+    "delegated-work-worker": {
+      "containerId": "f08a184f2f14282db82be7b6388b684b74259bb36ff0e05c2af881bbdfde1087",
+      "image": "sha256:56fa6a99bc63ce6c7c6f675ccdd1d29bb7886d72d9b66cd5ac2a8ddae699ab68",
+      "healthy": true,
+      "exactSourceCount": 439,
+      "reviewedSixHashesMatch": true,
+      "allOtherSourceHashesMatch": true,
+      "environmentPreserved": true,
+      "storageAndMountsPreserved": true
+    }
+  },
+  "candidateSources": {
+    "adapters/postgres/component_improvement_actions.py": "078ece35ecd58c1d5a23c98f8d64c02a1c83a140df8d6af8c98f6ea1997c0a17",
+    "adapters/postgres/delegated_work.py": "c87b87221efe20a221fce7e6170f6162bafbd0ba5fbd66e33be8febd7a9662a5",
+    "adapters/postgres/delegated_work_delivery.py": "6d432af27a0e4df76e339ec68f6582874896f395e2374d1135c58d8533f074b6",
+    "adapters/postgres/telegram_delivery_authority.py": "2772f3505ba5abd3ca588a6b75e9ca94c1918aff4b3bafe38bfa97ed0f9bf3e4",
+    "bootstrap/delegated_work_delivery.py": "83d8ff604396212db29ebf7573549dd6477b6f9c94a0f9c268c29173e8958299",
+    "bootstrap/private_continuity.py": "0d9a19dc54b950eb058d808a9b29f79460a855a7f4465dca2cb61260367080ff"
+  },
+  "profilesCompatible": true,
+  "mismatchedProfiles": [],
+  "profileReport": "development/reviews/p0-delivery-independent-20261105/installed-runtime-profiles.json",
+  "host": {
+    "pid": "61242",
+    "active": true,
+    "healthReady": true,
+    "module": {
+      "module": "/var/lib/eva2/finalization-20261104/host-handoff/install/host-overlay/eva/operations/runtime_repair_development.py",
+      "sha256": "bd41de382a1f820cd9c3af159806b43599ebfcc09ab516724ec86a4e462c6657"
+    },
+    "configurationSha256": "25c64301d88dc4a6d14be54bc5c3d8b42d217be16c3499ed1ef9c95aea5e58f0",
+    "digitalProducerMatchesBothRoles": true,
+    "onlyReleaseAndInstalledSnapshotChanged": true
+  },
+  "activationReceiptSha256": "c77c0086e381e43c958cd32553877ad9f04282b0c725eebc641048e3d9f9d4b0",
+  "historicalWorkRedispatched": false,
+  "schemaChanged": false,
+  "personalityChanged": false,
+  "limits": [
+    "Exact installed source, profile, environment, mounts and host readiness verified independently.",
+    "Frozen installed-source behavior tests are recorded separately; no real external send or production repair dispatched.",
+    "E4.16 full autonomous repair and later reuse remain unaccepted; historical HTTP400 not replayed."
+  ]
+}

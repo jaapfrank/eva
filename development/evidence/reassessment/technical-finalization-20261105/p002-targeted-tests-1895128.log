@@ -1,0 +1,42 @@
+
+MODULE development/tests/postgres/test_delegated_delivery_protocol.py
+.......                                                                  [100%]
+7 passed in 4.60s
+
+MODULE development/tests/postgres/test_document_completion.py
+...............                                                          [100%]
+15 passed in 12.40s
+
+MODULE development/tests/postgres/test_private_work_return.py
+.F...............                                                        [100%]
+=================================== FAILURES ===================================
+___ test_late_result_preserves_bytes_claim_and_ack_without_duplicate[False] ____
+
+delegated_engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1895128_2?host=%2Ftmp%2Feva-delivery-p002-vwhl6lq3%2Fsocket)
+voice = False
+
+    @pytest.mark.parametrize('voice', [True, False])
+    def test_late_result_preserves_bytes_claim_and_ack_without_duplicate(delegated_engine, voice):
+        service, turn, at = setup(delegated_engine, 'return-late-'+str(voice), voice)
+        spec = start(service, turn)
+        assert service.private_return(turn, 'poll')['result'] is None
+        # The foreground admission has already returned; a second turn can read work.
+        assert service.execute('get', replace(turn, message_id='message:2'),
+            work_id=spec.work_id, request_key='next')['work']['state'] == 'admitted'
+        saved = succeed(service.store, spec)
+        at[0] += timedelta(seconds=4)
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            replies = list(executor.map(lambda _: service.private_return(turn, 'poll'), range(2)))
+        results = [r['result'] for r in replies if r.get('result')]
+>       assert len(results) == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = len([{'completed_at': '2026-08-26T12:00:03Z', 'generation': 1, 'operation_id': '3553cd39f3980879952cda482e1dcbb7070aca09ff...': 1, 'operation_id': '3553cd39f3980879952cda482e1dcbb7070aca09ff14fc1b8c40ae1074d219a6', 'outcome': 'completed', ...}])
+
+development/tests/postgres/test_private_work_return.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED development/tests/postgres/test_private_work_return.py::test_late_result_preserves_bytes_claim_and_ack_without_duplicate[False]
+1 failed, 16 passed in 5.75s
+
+MODULE development/tests/portable/test_portable_v2_current_work.py
+..............                                                           [100%]
+14 passed in 32.15s

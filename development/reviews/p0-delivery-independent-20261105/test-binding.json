@@ -1,0 +1,38 @@
+{
+  "before": {
+    "src/eva/adapters/postgres/delegated_work.py": "c87b87221efe20a221fce7e6170f6162bafbd0ba5fbd66e33be8febd7a9662a5",
+    "src/eva/adapters/postgres/delegated_work_delivery.py": "6d432af27a0e4df76e339ec68f6582874896f395e2374d1135c58d8533f074b6",
+    "src/eva/adapters/postgres/telegram_delivery_authority.py": "2772f3505ba5abd3ca588a6b75e9ca94c1918aff4b3bafe38bfa97ed0f9bf3e4",
+    "src/eva/bootstrap/delegated_work_delivery.py": "83d8ff604396212db29ebf7573549dd6477b6f9c94a0f9c268c29173e8958299",
+    "src/eva/bootstrap/private_continuity.py": "0d9a19dc54b950eb058d808a9b29f79460a855a7f4465dca2cb61260367080ff",
+    "development/tests/postgres/test_delegated_delivery_store.py": "56e4f94bdf398a5d539571c11112d7e3586a4496ee970ae52ead63f06bfdc62f",
+    "development/tests/postgres/test_delegated_delivery_protocol.py": "b4bceaf58e15db581cc0eb1bfa1d6e3952be18fd2d3b22dec863a1e128db8e7c",
+    "development/tests/postgres/test_saved_work_artifact_delivery.py": "92eaacea9377ee23fd9efb4a41fcca3acd7e44963d56ce22d9f916023dc528ad",
+    "development/tests/postgres/test_document_completion.py": "1e42abcb2b581809e40c57c8bb31ed7b136aad0d901d01cb540e83b6dcda4242",
+    "development/tests/postgres/test_delivered_work_conversation_context.py": "d14c89304803c277a0a94a2bb5c0a1215341d3ba9078a3166a648b2f04fdbbaf",
+    "development/tests/operations/test_delegated_work_delivery.py": "cf935020d3b04b23c1899d7f3ab758cb48197b6584bf4932c33723492c94beda"
+  },
+  "after": {
+    "src/eva/adapters/postgres/delegated_work.py": "c87b87221efe20a221fce7e6170f6162bafbd0ba5fbd66e33be8febd7a9662a5",
+    "src/eva/adapters/postgres/delegated_work_delivery.py": "6d432af27a0e4df76e339ec68f6582874896f395e2374d1135c58d8533f074b6",
+    "src/eva/adapters/postgres/telegram_delivery_authority.py": "2772f3505ba5abd3ca588a6b75e9ca94c1918aff4b3bafe38bfa97ed0f9bf3e4",
+    "src/eva/bootstrap/delegated_work_delivery.py": "83d8ff604396212db29ebf7573549dd6477b6f9c94a0f9c268c29173e8958299",
+    "src/eva/bootstrap/private_continuity.py": "0d9a19dc54b950eb058d808a9b29f79460a855a7f4465dca2cb61260367080ff",
+    "development/tests/postgres/test_delegated_delivery_store.py": "56e4f94bdf398a5d539571c11112d7e3586a4496ee970ae52ead63f06bfdc62f",
+    "development/tests/postgres/test_delegated_delivery_protocol.py": "b4bceaf58e15db581cc0eb1bfa1d6e3952be18fd2d3b22dec863a1e128db8e7c",
+    "development/tests/postgres/test_saved_work_artifact_delivery.py": "92eaacea9377ee23fd9efb4a41fcca3acd7e44963d56ce22d9f916023dc528ad",
+    "development/tests/postgres/test_document_completion.py": "1e42abcb2b581809e40c57c8bb31ed7b136aad0d901d01cb540e83b6dcda4242",
+    "development/tests/postgres/test_delivered_work_conversation_context.py": "d14c89304803c277a0a94a2bb5c0a1215341d3ba9078a3166a648b2f04fdbbaf",
+    "development/tests/operations/test_delegated_work_delivery.py": "cf935020d3b04b23c1899d7f3ab758cb48197b6584bf4932c33723492c94beda"
+  },
+  "sameCandidate": true,
+  "exitCode": 1,
+  "tests": [
+    "development/tests/postgres/test_delegated_delivery_store.py",
+    "development/tests/postgres/test_delegated_delivery_protocol.py",
+    "development/tests/postgres/test_saved_work_artifact_delivery.py",
+    "development/tests/postgres/test_document_completion.py",
+    "development/tests/postgres/test_delivered_work_conversation_context.py",
+    "development/tests/operations/test_delegated_work_delivery.py"
+  ]
+}

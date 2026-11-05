@@ -1,0 +1,23 @@
+{
+  "contract": "EvaInstalledSourceSchemaHarnessBridge/v1",
+  "pluginSource": "import importlib.util,sys\nname=\"eva.operations.install_schema\"\nspec=importlib.util.spec_from_file_location(name,'/tmp/eva-p0-installed-review-591nbkyh/current_migration_bootstrap.py')\nmodule=importlib.util.module_from_spec(spec)\nsys.modules[name]=module\nspec.loader.exec_module(module)\n",
+  "pluginSha256": "f9694d09a8c807289d00e48dcea5d3c3e05cc0b130cb3b7e65294657e6725c34",
+  "bootstrapHelperSha256": "d1c4a55409cd950237080d98de37fea678e7985d2368e34fa2e7b9a49333a3dd",
+  "bootstrapHelperSource": "src/eva/operations/install_schema.py",
+  "testWorkingDirectory": "/tmp/eva-p0-installed-review-591nbkyh",
+  "pythonPath": [
+    "/tmp/eva-p0-installed-review-591nbkyh",
+    "/tmp/eva-p0-installed-review-591nbkyh/src",
+    "/tmp/eva-p0-installed-review-591nbkyh/development"
+  ],
+  "pytestArguments": [
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "-p",
+    "installed_schema_bootstrap"
+  ],
+  "retainedSourceSnapshot": "/tmp/eva-p0-installed-review-591nbkyh/src/eva",
+  "workingTreeFallback": false,
+  "onlySchemaBootstrapRebound": true
+}

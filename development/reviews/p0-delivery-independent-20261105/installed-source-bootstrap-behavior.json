@@ -1,0 +1,115 @@
+{
+  "contract": "EvaIndependentInstalledSourceBehavior/v1",
+  "checkedAt": "2026-11-05T20:15:48.453352+00:00",
+  "reviewer": "/root/independent_review",
+  "installedImage": "sha256:5e78cbebedf89a593fe240e14323ef8c05ee566f6800747bb712cc0f492052e5",
+  "sourceSnapshot": "/tmp/eva-p0-installed-review-591nbkyh/src/eva",
+  "sourceCount": 450,
+  "targetSourceHashes": {
+    "adapters/postgres/component_improvement_actions.py": "078ece35ecd58c1d5a23c98f8d64c02a1c83a140df8d6af8c98f6ea1997c0a17",
+    "adapters/postgres/delegated_work.py": "c87b87221efe20a221fce7e6170f6162bafbd0ba5fbd66e33be8febd7a9662a5",
+    "adapters/postgres/delegated_work_delivery.py": "6d432af27a0e4df76e339ec68f6582874896f395e2374d1135c58d8533f074b6",
+    "adapters/postgres/telegram_delivery_authority.py": "2772f3505ba5abd3ca588a6b75e9ca94c1918aff4b3bafe38bfa97ed0f9bf3e4",
+    "bootstrap/delegated_work_delivery.py": "83d8ff604396212db29ebf7573549dd6477b6f9c94a0f9c268c29173e8958299",
+    "bootstrap/private_continuity.py": "0d9a19dc54b950eb058d808a9b29f79460a855a7f4465dca2cb61260367080ff"
+  },
+  "all450SourceFilesUnchanged": true,
+  "initialReport": "development/reviews/p0-delivery-independent-20261105/installed-source-behavior.json",
+  "bootstrapHelper": {
+    "path": "/tmp/eva-p0-installed-review-591nbkyh/current_migration_bootstrap.py",
+    "source": "src/eva/operations/install_schema.py",
+    "sha256": "d1c4a55409cd950237080d98de37fea678e7985d2368e34fa2e7b9a49333a3dd",
+    "reason": "Installed installer metadata stops at schema0011; current isolated fixtures assert schema0012. Only disposable schema construction imports the current installer helper. No installed target module or criterion is changed."
+  },
+  "results": [
+    {
+      "suite": "summary",
+      "nodes": [
+        "development/tests/postgres/test_delegated_delivery_store.py::test_atomic_binding_preserves_spec_and_rejects_backfill_or_retarget",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_delivery_authority_is_current_and_never_exposes_other_owner_result",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_one_claim_ack_is_durable_and_never_claimed_again",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_uncertain_delivery_never_retries_and_preserves_result[crash]",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_uncertain_delivery_never_retries_and_preserves_result[timeout]",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_uncertain_delivery_never_retries_and_preserves_result[late_ack]",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_expired_authority_or_result_is_not_returned[work]",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_expired_authority_or_result_is_not_returned[binding]",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_expired_authority_or_result_is_not_returned[person]",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_expired_authority_or_result_is_not_returned[future_verification]",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_dashboard_resume_inherits_original_private_return_and_claims_only_latest_once",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[source]",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[retention]",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[event]",
+        "development/tests/postgres/test_delegated_delivery_store.py::test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[recipient]"
+      ],
+      "exitCode": 0,
+      "log": "development/reviews/p0-delivery-independent-20261105/installed-bootstrap-summary-tests.log",
+      "logSha256": "b09d7555358899b741f7f43af43cf30d55d8f0f9367f9d25dc322524c21fea5d",
+      "summary": "...............                                                          [100%]\n15 passed in 7.14s\n"
+    },
+    {
+      "suite": "protocol",
+      "nodes": [
+        "development/tests/postgres/test_delegated_delivery_protocol.py::test_revoked_summary_is_not_claimed_and_error_log_contains_no_private_data",
+        "development/tests/postgres/test_delegated_delivery_protocol.py::test_interrupted_claim_rolls_back_insert_and_can_be_claimed_after_recovery",
+        "development/tests/postgres/test_delegated_delivery_protocol.py::test_destination_authority_is_injected_and_rechecked_before_claim",
+        "development/tests/postgres/test_delegated_delivery_protocol.py::test_changed_destination_authority_during_claim_does_not_create_a_send",
+        "development/tests/postgres/test_delegated_delivery_protocol.py::test_rejected_summary_does_not_starve_a_later_authorized_result",
+        "development/tests/postgres/test_delegated_delivery_protocol.py::test_concurrent_explicit_artifact_claim_and_restart_never_replay",
+        "development/tests/postgres/test_delegated_delivery_protocol.py::test_document_destination_cannot_substitute_another_owner"
+      ],
+      "exitCode": 0,
+      "log": "development/reviews/p0-delivery-independent-20261105/installed-bootstrap-protocol-tests.log",
+      "logSha256": "50283f37c37be13fbb9898a703d632c1eee5a1f76fb5c2cc541fea4dd1b4aba0",
+      "summary": ".......                                                                  [100%]\n7 passed in 5.63s\n"
+    },
+    {
+      "suite": "artifact",
+      "nodes": [
+        "development/tests/postgres/test_saved_work_artifact_delivery.py::test_complete_saved_document_uses_original_recipient_and_keeps_old_ack",
+        "development/tests/postgres/test_saved_work_artifact_delivery.py::test_unbound_or_unverified_document_is_not_sent[content]",
+        "development/tests/postgres/test_saved_work_artifact_delivery.py::test_unbound_or_unverified_document_is_not_sent[principal]",
+        "development/tests/postgres/test_saved_work_artifact_delivery.py::test_unbound_or_unverified_document_is_not_sent[namespace]",
+        "development/tests/postgres/test_saved_work_artifact_delivery.py::test_partial_or_uncertain_artifact_delivery_never_repeats[revoke]",
+        "development/tests/postgres/test_saved_work_artifact_delivery.py::test_partial_or_uncertain_artifact_delivery_never_repeats[timeout]",
+        "development/tests/postgres/test_saved_work_artifact_delivery.py::test_partial_or_uncertain_artifact_delivery_never_repeats[expired_claim]",
+        "development/tests/postgres/test_saved_work_artifact_delivery.py::test_closed_text_attempt_is_preserved_when_document_format_is_delivered"
+      ],
+      "exitCode": 0,
+      "log": "development/reviews/p0-delivery-independent-20261105/installed-bootstrap-artifact-tests.log",
+      "logSha256": "6c6ba900a6102325e39dab3625027c37ab6efbc37d6296da48fc6ead7c17bfdd",
+      "summary": "........                                                                 [100%]\n8 passed in 7.98s\n"
+    },
+    {
+      "suite": "context",
+      "nodes": [
+        "development/tests/postgres/test_delivered_work_conversation_context.py::test_only_acknowledged_result_in_exact_chat_and_time_is_context",
+        "development/tests/postgres/test_delivered_work_conversation_context.py::test_forgotten_source_is_not_passively_reintroduced",
+        "development/tests/postgres/test_delivered_work_conversation_context.py::test_forget_during_last_authorization_is_rechecked_before_return",
+        "development/tests/postgres/test_delivered_work_conversation_context.py::test_quote_binding_changes_replay_identity_and_never_stores_quoted_plaintext",
+        "development/tests/postgres/test_delivered_work_conversation_context.py::test_uncertain_delivery_is_not_context"
+      ],
+      "exitCode": 0,
+      "log": "development/reviews/p0-delivery-independent-20261105/installed-bootstrap-context-tests.log",
+      "logSha256": "23638876b728c16ec6753889a7abebaba8db69d7a74b70ca2a6ac6ea83413fc6",
+      "summary": ".....                                                                    [100%]\n5 passed in 5.48s\n"
+    },
+    {
+      "suite": "journal_pg",
+      "nodes": [
+        "development/tests/postgres/test_runtime_repair_request_fence_postgres.py::test_committed_request_survives_adapter_reconstruction_without_redispatch[False]",
+        "development/tests/postgres/test_runtime_repair_request_fence_postgres.py::test_committed_request_survives_adapter_reconstruction_without_redispatch[True]",
+        "development/tests/postgres/test_runtime_repair_request_fence_postgres.py::test_concurrent_requests_commit_one_fence_before_exactly_one_post"
+      ],
+      "exitCode": 0,
+      "log": "development/reviews/p0-delivery-independent-20261105/installed-bootstrap-journal_pg-tests.log",
+      "logSha256": "484bd6ca8ad58f9acdda395c496293fea65be6a1b0340d4295eaf2a7e5bf1dae",
+      "summary": "...                                                                      [100%]\n3 passed in 8.21s\n"
+    }
+  ],
+  "setupBlockedNodesRetested": 38,
+  "allRetestedPassed": true,
+  "limits": [
+    "Installed six target modules and other runtime source remain byte-exact; test bootstrap installer helper and pinned dependencies come from trusted current test environment.",
+    "Only isolated PostgreSQL16.13 plus fake transports; no real send, production task, historical replay or family acceptance."
+  ]
+}

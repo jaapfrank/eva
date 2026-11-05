@@ -1,0 +1,61 @@
+{
+  "contract": "EvaIndependentTechnicalReview/v1",
+  "recordedAt": "2026-11-05T15:00:44.537647+00:00",
+  "reviewer": {
+    "identity": "/root/independent_review",
+    "separateFromImplementer": true,
+    "implementedCandidate": false
+  },
+  "scope": "P0-01 exact repair-host request journaling fence; existing native input dependency source review",
+  "decision": "GO",
+  "candidateFiles": {
+    "src/eva/adapters/postgres/component_improvement_actions.py": "078ece35ecd58c1d5a23c98f8d64c02a1c83a140df8d6af8c98f6ea1997c0a17",
+    "src/eva/bootstrap/native_work_assets.py": "34813de438e528a6e04be6c0f96e6d1d6ef28c8ac74851907ea9b170d604f700",
+    "development/tests/application/test_runtime_repair_request_journal.py": "fe2223273b17f51cdefc47ab840a2bd3c621f57823be230f2eefa4b6d98f8551",
+    "development/tests/postgres/test_runtime_repair_request_fence_postgres.py": "cf03f9f57d370310b012f928883c0d0ffabfa250ef4cea62682cfbb98329e3bb",
+    "development/tests/postgres/test_native_initiative_digital_work.py": "62a5e18ff00d85fc10a297548fc4d1f5b976b53f533354ab9062e4db4ab4fc66"
+  },
+  "scopedPatch": {
+    "path": "development/evidence/reassessment/p0-request-journal-20261105/candidate.patch",
+    "sha256": "effa6cfd2991debd557a7ac60a44ac9bd11f76d978ef0a7e1f3306f1f0d88549",
+    "baselineSha256": "53a97ac0cf537260f954a4a95d0c88f2c1909619678419c68ae3073fd231274b",
+    "preservedOlderDirtyHunks": [
+      "candidate_invalid rejection",
+      "not_submitted status"
+    ]
+  },
+  "findings": [],
+  "checks": [
+    "Input schema validation and current repair-role authority precede durable journaling; model inputs cannot provide another incident/task/source/request.",
+    "Existing component action slot is committed before the host POST. Its unique thread key fences racing processes and adapter reconstruction.",
+    "Current source authority and STOP guard are checked again after admission and before host dispatch.",
+    "HTTP400, lost acknowledgement and process death leave an unresolved durable fence; pending/execute cannot resend.",
+    "Successful host output appends a result receipt to the same slot; replay returns the recorded call only if the call is unchanged.",
+    "Diagnostic contains request hash, exception type hash and integer HTTP400..599 only; no body/message/URL/raw private output.",
+    "Native work assets dependency inspected in full: host-owned source/execution/grant identity, private exact roots, immutable publication with locks and fsync, separate read-only worker role and explicit task assets preserved."
+  ],
+  "verification": {
+    "passed": 36,
+    "failed": 0,
+    "elapsedSeconds": 9.87,
+    "testCommandTests": [
+      "development/tests/application/test_runtime_repair_request_journal.py",
+      "development/tests/postgres/test_runtime_repair_request_fence_postgres.py",
+      "development/tests/application/test_scoped_component_evaluation_actions.py",
+      "development/tests/postgres/test_native_initiative_digital_work.py::test_task_bound_manifest_reaches_separate_worker_with_exact_identity",
+      "development/tests/postgres/test_native_initiative_digital_work.py::test_task_bound_input_damage_blocks_before_worker_call",
+      "development/tests/postgres/test_native_initiative_digital_work.py::test_task_bound_delivery_is_immutable_under_duplicate_producers"
+    ],
+    "postgres": "16.13 isolated disposable Docker --network none, tmpfs data; production DSN not used",
+    "sameCandidateBeforeAfter": true,
+    "testLog": "development/reviews/p0-repair-journal-independent-20261105/tests.log",
+    "testLogSha256": "970541cfdf3c4ad9d603c66aafa8e52886d51aee36542e6fbcaece59ba154125",
+    "disposableContainerStopped": true
+  },
+  "limits": [
+    "GO applies to the exact scoped patch and candidate bytes; installation must verify its actual baseline and current active claims.",
+    "The new journal prevents future loss of request identity. It cannot reconstruct the old HTTP400 operation or prove its effects absent.",
+    "Unconfirmed requests deliberately remain blocked for reconciliation; full autonomous recovery and later independent reuse remain open.",
+    "No new model call, production task, external message or family acceptance was performed."
+  ]
+}

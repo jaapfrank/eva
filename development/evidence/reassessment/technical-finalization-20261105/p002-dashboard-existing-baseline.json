@@ -1,0 +1,11 @@
+{
+  "image": "sha256:fce4a91e2edb6767ea31531dc8d73a4b8e7b695302aebbbf20398fbe5eee052a",
+  "baseline_private_work_return_sha256": "399823f0a32498ea5e3d42ac7f580e10e582d52b0e94f005604d861f82599a61",
+  "worktree_private_work_return_sha256": "399823f0a32498ea5e3d42ac7f580e10e582d52b0e94f005604d861f82599a61",
+  "equal": true,
+  "onlyAddedImportDependency": "eva/adapters/postgres/telegram_delivery_authority.py",
+  "dependencyInvokedByTest": false,
+  "sourceRoot": "/tmp/eva-p002-installed-baseline-lbulq1lf/src",
+  "schemaBootstrap": "current repository install_schema on isolated PostgreSQL16.13, runtime source remains exact installed snapshot",
+  "originalTestInvokedUnchanged": "test_late_result_preserves_bytes_claim_and_ack_without_duplicate(delegated_engine, False)"
+}

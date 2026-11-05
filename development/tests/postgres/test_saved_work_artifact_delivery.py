@@ -1,3 +1,4 @@
+from eva.adapters.postgres.telegram_delivery_authority import TelegramDeliveryAuthority
 from dataclasses import replace
 from datetime import timedelta
 import hashlib
@@ -90,7 +91,7 @@ def test_complete_saved_document_uses_original_recipient_and_keeps_old_ack(deleg
     assert DelegatedWorkDeliveryWorker(delivery, transport, clock=clock).run_once(saved_document_work_id=spec.work_id) == 'acknowledged'
     assert calls[0][1].decode('utf-8') == saved.output
     assert CONTENT in saved.output and len(calls) == 1
-    restarted = PostgresDelegatedWorkDeliveryStore(store, bindings_loader=lambda: bindings[0], clock=clock)
+    restarted = PostgresDelegatedWorkDeliveryStore(store, destination_authority=TelegramDeliveryAuthority(store.engine, store.scope, lambda: bindings[0]), clock=clock)
     assert DelegatedWorkDeliveryWorker(restarted, transport, clock=clock).run_once(saved_document_work_id=spec.work_id) == 'idle'
     assert restarted.status(spec.work_id, **auth) == 'delivery_acknowledged'
     with delegated_engine.connect() as connection:

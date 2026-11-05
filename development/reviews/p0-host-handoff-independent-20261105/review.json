@@ -1,0 +1,55 @@
+{
+  "contract": "EvaIndependentTechnicalReview/v1",
+  "recordedAt": "2026-11-05T14:46:07.833318+00:00",
+  "reviewer": {
+    "identity": "/root/independent_review",
+    "role": "independent reviewer",
+    "separateFromImplementer": true,
+    "implementedCandidate": false
+  },
+  "scope": "P0-01 existing bounded resumed-builder host handoff correction only",
+  "decision": "GO",
+  "candidateFiles": {
+    "src/eva/operations/runtime_repair_development.py": "bd41de382a1f820cd9c3af159806b43599ebfcc09ab516724ec86a4e462c6657",
+    "src/eva/bootstrap/runtime_repair_host.py": "99260e825e7dd5904826038a82584c429dd6f7d88970f43a7eeee789afc777d8",
+    "development/tests/postgres/test_runtime_repair_host.py": "1bcd68dde84ef8f76b4feacc1006adb7460f8ed8f958b54b603de1dd8c60c4af",
+    "development/tests/operations/test_runtime_repair_development.py": "fb21bc194a31dc71df3512f2a98925d92db2bb104c3e72a80c141af0ec15efc4",
+    "development/tests/postgres/test_runtime_repair_assessment.py": "e46ff158421d290f17f0d9cc9efd3f11b16bc59959344cbcde202ac470d35694",
+    "development/tests/postgres/test_native_repair_rate_limit_recovery.py": "0abc725d2d608ac83281900dc96bfbd7e4ca535a410c45201cc9f2a55e3f4289"
+  },
+  "findings": [],
+  "checks": [
+    "Current attempt task_id must equal request task_id before source seeding or candidate acceptance.",
+    "Host-verified immutable execution_id must equal original repair intent; resumed attempts without that identity are rejected.",
+    "Builder job retains the resumed task_id, so a completed earlier attempt cannot finish a current resumed builder.",
+    "Separate oracle and exact candidate/comparison review authority are preserved.",
+    "Native host metadata now uses the existing host-owned input manifest resolver; no new model, grant or arbitrary path is accepted.",
+    "The correction does not retry provider HTTP400 or uncertain external effects."
+  ],
+  "verification": {
+    "runner": "existing pinned pydantic-ai-2.37 gate environment, trusted UID for required workspace ownership",
+    "postgres": "16.13 isolated disposable Docker container, network none, tmpfs data, own Unix socket; production DSN never used",
+    "testSuites": [
+      "development/tests/postgres/test_runtime_repair_host.py",
+      "development/tests/operations/test_runtime_repair_development.py",
+      "development/tests/postgres/test_runtime_repair_assessment.py",
+      "development/tests/postgres/test_native_repair_rate_limit_recovery.py"
+    ],
+    "exitCode": 0,
+    "passed": 31,
+    "elapsedSeconds": 44.22,
+    "testLog": "development/reviews/p0-host-handoff-independent-20261105/tests.log",
+    "testLogSha256": "7675913c7a105437eae4b8958f2f641bcc9bfd112cf7c59be5b0c4d892604813",
+    "disposableContainerStopped": true,
+    "initialNonTrustedUserRun": {
+      "passed": 8,
+      "failed": 1,
+      "reason": "workspace must be chowned to UID10001; trusted host run resolves runner constraint"
+    }
+  },
+  "limitations": [
+    "GO applies to these exact candidate bytes only, subject to current runtime image/configuration/source dependency checks and active claim checks before installation.",
+    "No real Eva-authored repair, installed original behavior readback, later autonomous reuse or family acceptance was produced by this isolated test.",
+    "Historical HTTP400 remains ambiguous and must not be replayed without operation-specific evidence."
+  ]
+}

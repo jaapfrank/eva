@@ -1,3 +1,4 @@
+from eva.adapters.postgres.telegram_delivery_authority import TelegramDeliveryAuthority
 from datetime import timedelta
 
 import pytest
@@ -32,7 +33,7 @@ def test_saved_result_to_bound_transport_and_restart_without_resend(delegated_en
     assert calls[0]['chat_id'] == '42'
     assert saved.output in calls[0]['text']
     restarted = PostgresDelegatedWorkDeliveryStore(
-        work, bindings_loader=lambda:bindings[0], clock=clock,
+        work, destination_authority=TelegramDeliveryAuthority(work.engine, work.scope, lambda:bindings[0]), clock=clock,
     )
     assert DelegatedWorkDeliveryWorker(restarted, transport, clock=clock).run_once() == 'idle'
     assert len(calls) == 1

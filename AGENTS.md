@@ -1,6 +1,6 @@
 # Eva2 — actuele werkafspraken
 
-Bijgewerkt op 24 oktober 2026. Dit bestand bevat de geldende uitvoering; gedateerde
+Bijgewerkt op 5 november 2026. Dit bestand bevat de geldende uitvoering; gedateerde
 voortgang en oude opdrachten staan in het [exacte archief](development/archive/history/20261015-authority-consolidation/snapshot.json).
 
 ## Eén doel en één werkregistratie
@@ -25,11 +25,15 @@ HA, camera, browser of een bepaald gezinsvoorbeeld zijn geen verplichte aparte
 kernfuncties. De algemene kringloop is waarnemen → context → afwegen → communiceren
 of handelen → resultaat controleren → leren en later toepassen.
 
-Maak eerst het gewone dagelijkse gebruik operationeel en nuttig. Werk daarna de
-gebruiksbediening, gerichte codeopruiming, onderhoudbaarheid en gebundelde
-oplevering af volgens het afrondingsplan. Bestaande automatische reflectie/AIDE²
-blijft werken. Nieuwe verbeterbouw volgt uit concrete bevindingen en bestaande
-kaarten, niet uit de wens steeds meer te bouwen.
+De opdracht van 5 november geeft **prioriteit aan concrete fouten, dubbele en
+kwetsbare code en veilige taakaflevering**. Voer eerst de P0-stappen uit volgens
+`audit.deliveryPlan.finishOrder` van het canonieke werkbord en
+[AFRONDINGSPLAN](development/docs/AFRONDINGSPLAN.md). Start veilige observaties
+van gezinsgebruik zodra de bestaande route daarvoor geschikt is, zonder te wachten
+op optionele nieuwe features. Rond daarna dagelijkse zelfstandigheid, spraak en de
+bestaande gezinsacceptatie af. Dit wijzigt geen taakstatus of oorspronkelijke
+acceptatiecriteria. Bestaande automatische reflectie/AIDE² blijft werken;
+nieuwe verbeterbouw volgt uit concrete fouten, niet uit een nieuwe onderzoekscyclus.
 
 HUE5/HUE6 zijn met hun beperkte oorspronkelijke bewijs afgerond; begin die oude
 proeven niet opnieuw. Dagelijks passend initiatief en de volledige gezinsacceptatie
@@ -70,7 +74,7 @@ Eva-agent. Werk die afhankelijkheid gericht weg wanneer haar vervanging is bewez
 ## Samenwerken en kosten
 
 Eén coördinator, drie uitvoerders met afzonderlijke bestandsverantwoordelijkheid en één onafhankelijke tester/reviewer.
-Deze vijf chats werken op de directe eigenaaropdracht van 24 oktober 2026. Een open gebruikersvraag blokkeert ander
+Deze vijf chats houden rekening met de laatste directe eigenaaropdracht (5 november 2026). Een open gebruikersvraag blokkeert ander
 uitvoerbaar werk niet. Vraag alleen wat werkelijk ontbreekt en geef één concrete
 handeling wanneer die nodig is; reeds gegeven toestemming blijft gelden.
 

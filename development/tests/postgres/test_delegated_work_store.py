@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import json
+import logging
 import os
 import shutil
 import subprocess
@@ -105,8 +106,14 @@ def delegated_engine() -> Engine:
         assert not connection.scalar(
             sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
         )
-    receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
-    assert receipt.final_revision == "4e_0009_restore_hold"
+    logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                     if isinstance(logger, logging.Logger)}
+    try:
+        receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+    finally:
+        for name, disabled in logger_states.items():
+            logging.getLogger(name).disabled = disabled
+    assert receipt.final_revision == "4e_0012_conversation_source_lock"
     try:
         yield engine
     finally:

@@ -1,0 +1,172 @@
+EEE                                                                      [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_committed_request_survives_adapter_reconstruction_without_redispatch[False] _
+
+    @pytest.fixture(scope="module")
+    def database():
+        dsn = os.environ.get("EVA2_IN002_TEST_ADMIN_DSN")
+        if not dsn:
+            pytest.skip("isolated PostgreSQL admin DSN required")
+        url = make_url(dsn)
+        name = "eva2_4b_disposable_schedule_" + uuid4().hex
+        admin = sa.create_engine(url, isolation_level="AUTOCOMMIT", poolclass=NullPool)
+        engine = None
+        with admin.connect() as connection:
+            connection.exec_driver_sql('CREATE DATABASE "' + name + '"')
+        try:
+            target = url.set(database=name)
+>           install_schema(target.render_as_string(hide_password=False),
+                           alembic_ini=Path(__file__).resolve().parents[3] / "deploy/alembic.ini")
+
+development/tests/postgres/test_scheduled_failure_return.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_schedule_06b3d18213564024bbe1e4caf55b5743?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 4b_0000_core_namespace, Create the minimal Eva namespace and fail-closed database roles.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 4b_0000_core_namespace -> 4b_0001_tenant_scope, Create the tenant and installation authority anchors.
+INFO  [alembic.runtime.migration] Running upgrade 4b_0001_tenant_scope -> 4b_0002_episode_atomicity, Create the minimal episode head and immutable event log for tranche 4C.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 4b_0002_episode_atomicity -> 4d_0003_core_continuity, Admit an empty 4B catalog and expand the final eva_core authority.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0003_core_continuity -> 4d_0004_effect_authority, Create read, effect, delivery and circuit-breaker authority.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0004_effect_authority -> 4d_0005_evidence_objects, Create evidence envelopes, links and selected encrypted object refs.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0005_evidence_objects -> 4d_0006_memory, Create temporal memory authority and its scalar relationship edge.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0006_memory -> 4d_0007_projection_telemetry, Create the five rebuildable/discardable noncanonical tables last.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0007_projection_telemetry -> 4e_0001_operational_timeline, Add the append-only Living Core timeline and rebuildable checkpoint cursor.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0001_operational_timeline -> 4e_0002_delegated_work, Admit delegated work to the existing attention queue.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0002_delegated_work -> 4e_0003_delegated_work_runs, Add private durable authority for one bounded child-model run.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0003_delegated_work_runs -> 4e_0004_delegated_work_stop, Persist an owner stop request across an active delegated model call.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0004_delegated_work_stop -> 4e_0005_conversation_erasure, Allow exact, scope-bound redaction of raw conversation text only.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0005_conversation_erasure -> 4e_0006_memory_outbox_erasure, Extend exact conversation erasure to the durable memory outbox.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0006_memory_outbox_erasure -> 4e_0007_delegated_private, Bind delegated work directly to a verified private owner context.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0007_delegated_private -> 4e_0008_portable_current, Permit scope-bound backup of current authoritative task records.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0008_portable_current -> 4e_0009_restore_hold, Keep restored databases inert until separately verified operator activation.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0009_restore_hold -> 4e_0010_memory_compaction, Compact acknowledged private day text while keeping exact durable provenance.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0010_memory_compaction -> 4e_0011_timeline_type_time, Index existing scoped event-type/time reads without changing their authority.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0011_timeline_type_time -> 4e_0012_conversation_source_lock, Fence existing private ingress against erasure without granting UPDATE rights.
+_ ERROR at setup of test_committed_request_survives_adapter_reconstruction_without_redispatch[True] _
+
+    @pytest.fixture(scope="module")
+    def database():
+        dsn = os.environ.get("EVA2_IN002_TEST_ADMIN_DSN")
+        if not dsn:
+            pytest.skip("isolated PostgreSQL admin DSN required")
+        url = make_url(dsn)
+        name = "eva2_4b_disposable_schedule_" + uuid4().hex
+        admin = sa.create_engine(url, isolation_level="AUTOCOMMIT", poolclass=NullPool)
+        engine = None
+        with admin.connect() as connection:
+            connection.exec_driver_sql('CREATE DATABASE "' + name + '"')
+        try:
+            target = url.set(database=name)
+>           install_schema(target.render_as_string(hide_password=False),
+                           alembic_ini=Path(__file__).resolve().parents[3] / "deploy/alembic.ini")
+
+development/tests/postgres/test_scheduled_failure_return.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_schedule_06b3d18213564024bbe1e4caf55b5743?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+_ ERROR at setup of test_concurrent_requests_commit_one_fence_before_exactly_one_post _
+
+    @pytest.fixture(scope="module")
+    def database():
+        dsn = os.environ.get("EVA2_IN002_TEST_ADMIN_DSN")
+        if not dsn:
+            pytest.skip("isolated PostgreSQL admin DSN required")
+        url = make_url(dsn)
+        name = "eva2_4b_disposable_schedule_" + uuid4().hex
+        admin = sa.create_engine(url, isolation_level="AUTOCOMMIT", poolclass=NullPool)
+        engine = None
+        with admin.connect() as connection:
+            connection.exec_driver_sql('CREATE DATABASE "' + name + '"')
+        try:
+            target = url.set(database=name)
+>           install_schema(target.render_as_string(hide_password=False),
+                           alembic_ini=Path(__file__).resolve().parents[3] / "deploy/alembic.ini")
+
+development/tests/postgres/test_scheduled_failure_return.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_schedule_06b3d18213564024bbe1e4caf55b5743?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+=========================== short test summary info ============================
+ERROR development/tests/postgres/test_runtime_repair_request_fence_postgres.py::test_committed_request_survives_adapter_reconstruction_without_redispatch[False]
+ERROR development/tests/postgres/test_runtime_repair_request_fence_postgres.py::test_committed_request_survives_adapter_reconstruction_without_redispatch[True]
+ERROR development/tests/postgres/test_runtime_repair_request_fence_postgres.py::test_concurrent_requests_commit_one_fence_before_exactly_one_post
+3 errors in 4.76s

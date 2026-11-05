@@ -1,0 +1,26 @@
+{
+  "before": {
+    "src/eva/adapters/postgres/component_improvement_actions.py": "078ece35ecd58c1d5a23c98f8d64c02a1c83a140df8d6af8c98f6ea1997c0a17",
+    "src/eva/bootstrap/native_work_assets.py": "34813de438e528a6e04be6c0f96e6d1d6ef28c8ac74851907ea9b170d604f700",
+    "development/tests/application/test_runtime_repair_request_journal.py": "fe2223273b17f51cdefc47ab840a2bd3c621f57823be230f2eefa4b6d98f8551",
+    "development/tests/postgres/test_runtime_repair_request_fence_postgres.py": "cf03f9f57d370310b012f928883c0d0ffabfa250ef4cea62682cfbb98329e3bb",
+    "development/tests/postgres/test_native_initiative_digital_work.py": "62a5e18ff00d85fc10a297548fc4d1f5b976b53f533354ab9062e4db4ab4fc66"
+  },
+  "after": {
+    "src/eva/adapters/postgres/component_improvement_actions.py": "078ece35ecd58c1d5a23c98f8d64c02a1c83a140df8d6af8c98f6ea1997c0a17",
+    "src/eva/bootstrap/native_work_assets.py": "34813de438e528a6e04be6c0f96e6d1d6ef28c8ac74851907ea9b170d604f700",
+    "development/tests/application/test_runtime_repair_request_journal.py": "fe2223273b17f51cdefc47ab840a2bd3c621f57823be230f2eefa4b6d98f8551",
+    "development/tests/postgres/test_runtime_repair_request_fence_postgres.py": "cf03f9f57d370310b012f928883c0d0ffabfa250ef4cea62682cfbb98329e3bb",
+    "development/tests/postgres/test_native_initiative_digital_work.py": "62a5e18ff00d85fc10a297548fc4d1f5b976b53f533354ab9062e4db4ab4fc66"
+  },
+  "sameCandidate": true,
+  "exitCode": 0,
+  "tests": [
+    "development/tests/application/test_runtime_repair_request_journal.py",
+    "development/tests/postgres/test_runtime_repair_request_fence_postgres.py",
+    "development/tests/application/test_scoped_component_evaluation_actions.py",
+    "development/tests/postgres/test_native_initiative_digital_work.py::test_task_bound_manifest_reaches_separate_worker_with_exact_identity",
+    "development/tests/postgres/test_native_initiative_digital_work.py::test_task_bound_input_damage_blocks_before_worker_call",
+    "development/tests/postgres/test_native_initiative_digital_work.py::test_task_bound_delivery_is_immutable_under_duplicate_producers"
+  ]
+}

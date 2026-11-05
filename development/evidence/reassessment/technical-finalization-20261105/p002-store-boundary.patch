@@ -1,0 +1,45 @@
+--- a/src/eva/adapters/postgres/delegated_work.py
++++ b/src/eva/adapters/postgres/delegated_work.py
+@@ -3,7 +3,7 @@
+ from __future__ import annotations
+ from eva.contracts.timestamps import parse_utc_timestamp as _parse_timestamp
+ 
+-from contextlib import nullcontext
++from contextlib import contextmanager, nullcontext
+ import re
+ import hashlib
+ from dataclasses import dataclass
+@@ -425,6 +425,33 @@
+     @property
+     def scope(self) -> TimelineScope:
+         return self._scope_value
++
++    @property
++    def engine(self) -> Engine:
++        """Shared infrastructure handle for peer PostgreSQL adapters.
++
++        Delivery transactions must use ``delivery_transaction`` so the fixed
++        tenant, installation and role are applied before any work reads.
++        """
++        return self._engine
++
++    @contextmanager
++    def delivery_transaction(self):
++        """Open a delivery sidecar transaction in this store's fixed scope."""
++        with self._engine.begin() as connection:
++            self._scope(connection)
++            yield connection
++
++    def validate_delivery_authority(self, connection, *, owner_principal_id,
++                                    principal_binding_id):
++        """Keep delivery checks under the same principal/binding row locks."""
++        self._validate_owner_binding(connection,
++            owner_principal_id=owner_principal_id,
++            principal_binding_id=principal_binding_id)
++
++    def load_delivery_work(self, connection, work_id):
++        """Decode and verify work using an already scoped delivery transaction."""
++        return self._load_locked(connection, work_id)
+ 
+     def validate_admission_authority(
+         self,

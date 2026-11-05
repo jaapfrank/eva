@@ -1,0 +1,95 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________________________________ test_debug __________________________________
+
+delegated_engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1862885?host=%2Ftmp%2Feva-delivery-p002-mtt5vebp%2Fsocket)
+
+    def test_debug(delegated_engine):
+        store, spec, dest, delivery, current, auth = setup(delegated_engine, 'debug-shared-delivery')
+        admit(store, spec, dest)
+        succeed(store, spec)
+        with store.delivery_transaction() as c:
+            print('EVENTS', c.execute(sa.select(operational_events.c.event_type, operational_events.c.payload)).all())
+            print('RUNS', c.execute(sa.select(delegated_work_runs.c.work_id, delegated_work_runs.c.state)).all())
+            candidates = _destination_candidates(store.scope, NOW + timedelta(seconds=4))
+            print('CANDIDATES', c.execute(sa.select(candidates)).all())
+        print('CLAIM', delivery.claim_next(now=NOW + timedelta(seconds=4)))
+>       assert False
+E       assert False
+
+/mnt/c/Users/jaapf/Documents/Codex/2026-11-05/referenced-chatgpt-conversation-this-is-an/work/test_delivery_debug.py:19: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 4b_0000_core_namespace, Create the minimal Eva namespace and fail-closed database roles.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 4b_0000_core_namespace -> 4b_0001_tenant_scope, Create the tenant and installation authority anchors.
+INFO  [alembic.runtime.migration] Running upgrade 4b_0001_tenant_scope -> 4b_0002_episode_atomicity, Create the minimal episode head and immutable event log for tranche 4C.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 4b_0002_episode_atomicity -> 4d_0003_core_continuity, Admit an empty 4B catalog and expand the final eva_core authority.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0003_core_continuity -> 4d_0004_effect_authority, Create read, effect, delivery and circuit-breaker authority.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0004_effect_authority -> 4d_0005_evidence_objects, Create evidence envelopes, links and selected encrypted object refs.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0005_evidence_objects -> 4d_0006_memory, Create temporal memory authority and its scalar relationship edge.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0006_memory -> 4d_0007_projection_telemetry, Create the five rebuildable/discardable noncanonical tables last.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0007_projection_telemetry -> 4e_0001_operational_timeline, Add the append-only Living Core timeline and rebuildable checkpoint cursor.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0001_operational_timeline -> 4e_0002_delegated_work, Admit delegated work to the existing attention queue.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0002_delegated_work -> 4e_0003_delegated_work_runs, Add private durable authority for one bounded child-model run.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0003_delegated_work_runs -> 4e_0004_delegated_work_stop, Persist an owner stop request across an active delegated model call.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0004_delegated_work_stop -> 4e_0005_conversation_erasure, Allow exact, scope-bound redaction of raw conversation text only.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0005_conversation_erasure -> 4e_0006_memory_outbox_erasure, Extend exact conversation erasure to the durable memory outbox.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0006_memory_outbox_erasure -> 4e_0007_delegated_private, Bind delegated work directly to a verified private owner context.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0007_delegated_private -> 4e_0008_portable_current, Permit scope-bound backup of current authoritative task records.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0008_portable_current -> 4e_0009_restore_hold, Keep restored databases inert until separately verified operator activation.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0009_restore_hold -> 4e_0010_memory_compaction, Compact acknowledged private day text while keeping exact durable provenance.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0010_memory_compaction -> 4e_0011_timeline_type_time, Index existing scoped event-type/time reads without changing their authority.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0011_timeline_type_time -> 4e_0012_conversation_source_lock, Fence existing private ingress against erasure without granting UPDATE rights.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.checkconstraint_byname
+----------------------------- Captured stdout call -----------------------------
+EVENTS [('DELEGATED_PRIVATE_DESTINATION_BOUND', {'data': {'work_id': 'work:debug-shared-delivery:research', 'contract': 'EvaDelegatedWorkDestinationBinding/v1', 'destination': {'channel': 'telegram_ ... (726 characters truncated) ... 'checkpoint_id': 'checkpoint:delegated-destination:b60eae0c7512143d2723321ccfff02236e1d65c8d1ebbb486ff8ea2fd1ba19e6', 'last_error_fingerprint': None}})]
+RUNS [('work:debug-shared-delivery:research', 'succeeded')]
+CANDIDATES [(UUID('3950c856-2c46-50bd-b570-9cbf8f551ea6'), UUID('c7f3b3d2-c4f8-5e29-b863-caaa7d593406'), 'work:debug-shared-delivery:research', UUID('acf575e1-6ab3-57f2-b433-0b52d33ede23'), UUID('c00497b6-9480-532f-94b3-bb624a6e8fc8'), 1, UUID('af36ca16-72ff-50e8-ae48-8e4be03c7609'), UUID('23550f57-6d1e-5fe2-acd4-25bebbf78e62'), 'task:debug-shared-delivery:parent', 'Public research', 'Public research', 'onderzoeker', 'Research', 'succeeded', 1, None, None, 'child-call:3f3d8816-a2f6-40f5-8d7a-fb02595cec69', {'task': 'Vergelijk de onderhouden voice-dependencies en geef één advies.', 'grant': {'contract': 'DelegatedWorkGrant/v1', 'context_refs': [], 'worksp ... (1255 characters truncated) ... 66666666666666666666666666666666666666666666666', 'worker_profile_release_sha256': '5555555555555555555555555555555555555555555555555555555555555555'}, b'\xab\xe2\xd4{\xd5\x08\xd8i\xdbb\x0b\xe3\xbc\xdf\xaey\x83\xaes\x9d\x1fo\x7f\xb4\x0b\xdd\x00$\x8d\xb5X\xbe', {'usage': {'contract': 'DelegatedWorkUsage/v1', 'tool_calls': 0, 'measurement': 'measured', 'input_tokens': 20, 'total_tokens': 28, 'output_tokens': 8 ... (357 characters truncated) ... be', 'completed_at': '2026-08-26T12:00:03Z', 'output_sha256': 'a938a19731f01c1abfd00f9ab41ac3b04b3a338d969599e7ba73f9b28439f1c8', 'schema_version': 1}, b'73\r\x17\xc7\x97\x9f\xf4\xbcIQe\xa4htI\xaaZ\xb1wsVu\x8c\xe6\x10\xc2\xc2.g\x04\x0f', {'contract': 'DelegatedWorkUsage/v1', 'tool_calls': 0, 'measurement': 'measured', 'input_tokens': 20, 'total_tokens': 28, 'output_tokens': 8, 'schema_version': 1, 'cost_usd_micros': 14, 'completed_model_responses': 1}, b'\xd1y\xfc\xe2\xe4\xb9\xe9S!\xab\xee7\xf3\xea\x0f\xb8)7\xff\xc8 \xe3dN\xa9{ \xd4\xbc\xe9\x15\x85', None, None, 4, datetime.datetime(2026, 8, 26, 12, 10, tzinfo=zoneinfo.ZoneInfo(key='Etc/UTC')), datetime.datetime(2026, 8, 26, 12, 0, 2, tzinfo=zoneinfo.ZoneInfo(key='Etc/UTC')), None, datetime.datetime(2026, 8, 26, 12, 0, 3, tzinfo=zoneinfo.ZoneInfo(key='Etc/UTC')), 'retention:test', datetime.datetime(2026, 8, 27, 12, 0, tzinfo=zoneinfo.ZoneInfo(key='Etc/UTC')), datetime.datetime(2026, 8, 26, 12, 0, tzinfo=zoneinfo.ZoneInfo(key='Etc/UTC')), datetime.datetime(2026, 8, 26, 12, 0, 3, tzinfo=zoneinfo.ZoneInfo(key='Etc/UTC')), False)]
+CLAIM None
+--------------------------- Captured stderr teardown ---------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0012_conversation_source_lock -> 4e_0011_timeline_type_time, Fence existing private ingress against erasure without granting UPDATE rights.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0011_timeline_type_time -> 4e_0010_memory_compaction, Index existing scoped event-type/time reads without changing their authority.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0010_memory_compaction -> 4e_0009_restore_hold, Compact acknowledged private day text while keeping exact durable provenance.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0009_restore_hold -> 4e_0008_portable_current, Keep restored databases inert until separately verified operator activation.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0008_portable_current -> 4e_0007_delegated_private, Permit scope-bound backup of current authoritative task records.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0007_delegated_private -> 4e_0006_memory_outbox_erasure, Bind delegated work directly to a verified private owner context.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0012_conversation_source_lock -> 4e_0011_timeline_type_time, Fence existing private ingress against erasure without granting UPDATE rights.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0011_timeline_type_time -> 4e_0010_memory_compaction, Index existing scoped event-type/time reads without changing their authority.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0010_memory_compaction -> 4e_0009_restore_hold, Compact acknowledged private day text while keeping exact durable provenance.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0009_restore_hold -> 4e_0008_portable_current, Keep restored databases inert until separately verified operator activation.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0008_portable_current -> 4e_0007_delegated_private, Permit scope-bound backup of current authoritative task records.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0007_delegated_private -> 4e_0006_memory_outbox_erasure, Bind delegated work directly to a verified private owner context.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0006_memory_outbox_erasure -> 4e_0005_conversation_erasure, Extend exact conversation erasure to the durable memory outbox.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0005_conversation_erasure -> 4e_0004_delegated_work_stop, Allow exact, scope-bound redaction of raw conversation text only.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0004_delegated_work_stop -> 4e_0003_delegated_work_runs, Persist an owner stop request across an active delegated model call.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0003_delegated_work_runs -> 4e_0002_delegated_work, Add private durable authority for one bounded child-model run.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0002_delegated_work -> 4e_0001_operational_timeline, Admit delegated work to the existing attention queue.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0001_operational_timeline -> 4d_0007_projection_telemetry, Add the append-only Living Core timeline and rebuildable checkpoint cursor.
+INFO  [alembic.runtime.migration] Running downgrade 4d_0007_projection_telemetry -> 4d_0006_memory, Create the five rebuildable/discardable noncanonical tables last.
+INFO  [alembic.runtime.migration] Running downgrade 4d_0006_memory -> 4d_0005_evidence_objects, Create temporal memory authority and its scalar relationship edge.
+INFO  [alembic.runtime.migration] Running downgrade 4d_0005_evidence_objects -> 4d_0004_effect_authority, Create evidence envelopes, links and selected encrypted object refs.
+INFO  [alembic.runtime.migration] Running downgrade 4d_0004_effect_authority -> 4d_0003_core_continuity, Create read, effect, delivery and circuit-breaker authority.
+INFO  [alembic.runtime.migration] Running downgrade 4d_0003_core_continuity -> 4b_0002_episode_atomicity, Admit an empty 4B catalog and expand the final eva_core authority.
+INFO  [alembic.runtime.migration] Running downgrade 4b_0002_episode_atomicity -> 4b_0001_tenant_scope, Create the minimal episode head and immutable event log for tranche 4C.
+INFO  [alembic.runtime.migration] Running downgrade 4b_0001_tenant_scope -> 4b_0000_core_namespace, Create the tenant and installation authority anchors.
+INFO  [alembic.runtime.migration] Running downgrade 4b_0000_core_namespace -> , Create the minimal Eva namespace and fail-closed database roles.
+=========================== short test summary info ============================
+FAILED ../../../../mnt/c/Users/jaapf/Documents/Codex/2026-11-05/referenced-chatgpt-conversation-this-is-an/work/test_delivery_debug.py::test_debug
+1 failed in 4.84s

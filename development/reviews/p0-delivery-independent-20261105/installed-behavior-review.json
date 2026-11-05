@@ -1,0 +1,53 @@
+{
+  "contract": "EvaIndependentInstalledBehaviorReview/v1",
+  "recordedAt": "2026-11-05T20:16:22.032520+00:00",
+  "reviewer": "/root/independent_review",
+  "decision": "GO",
+  "scope": "Exact installed P0-02 delivery and P0-01 request-journal target source, isolated PostgreSQL/fake transport behavior",
+  "installedImage": "sha256:5e78cbebedf89a593fe240e14323ef8c05ee566f6800747bb712cc0f492052e5",
+  "targetSourceHashes": {
+    "adapters/postgres/component_improvement_actions.py": "078ece35ecd58c1d5a23c98f8d64c02a1c83a140df8d6af8c98f6ea1997c0a17",
+    "adapters/postgres/delegated_work.py": "c87b87221efe20a221fce7e6170f6162bafbd0ba5fbd66e33be8febd7a9662a5",
+    "adapters/postgres/delegated_work_delivery.py": "6d432af27a0e4df76e339ec68f6582874896f395e2374d1135c58d8533f074b6",
+    "adapters/postgres/telegram_delivery_authority.py": "2772f3505ba5abd3ca588a6b75e9ca94c1918aff4b3bafe38bfa97ed0f9bf3e4",
+    "bootstrap/delegated_work_delivery.py": "83d8ff604396212db29ebf7573549dd6477b6f9c94a0f9c268c29173e8958299",
+    "bootstrap/private_continuity.py": "0d9a19dc54b950eb058d808a9b29f79460a855a7f4465dca2cb61260367080ff"
+  },
+  "all450SourceFilesUnchanged": true,
+  "testResults": {
+    "totalPassed": 82,
+    "totalTargetFailures": 0,
+    "initiallyPassed": 44,
+    "initialSetupErrors": 38,
+    "setupBlockedNodesRetestedPassed": 38,
+    "originalCaseCountPreserved": true,
+    "sourceOrTestsChangedToObtainPass": false,
+    "schemaBootstrapBridgeOnly": true
+  },
+  "initialRun": "development/reviews/p0-delivery-independent-20261105/installed-source-behavior.json",
+  "followupRun": "development/reviews/p0-delivery-independent-20261105/installed-source-bootstrap-behavior.json",
+  "bootstrapHelper": {
+    "path": "/tmp/eva-p0-installed-review-591nbkyh/current_migration_bootstrap.py",
+    "source": "src/eva/operations/install_schema.py",
+    "sha256": "d1c4a55409cd950237080d98de37fea678e7985d2368e34fa2e7b9a49333a3dd",
+    "reason": "Installed installer metadata stops at schema0011; current isolated fixtures assert schema0012. Only disposable schema construction imports the current installer helper. No installed target module or criterion is changed."
+  },
+  "migrationBinding": {
+    "report": "development/reviews/p0-delivery-independent-20261105/installed-migration-binding.json",
+    "deployedMigrationTreeSha256": "e48c337854fbfce004caeed4523abc8822d509f3cbf37ef57ce96089519af4eb",
+    "disposableHarnessMigrationTreeSha256": "cca74b0633bfae66436fd21c4f009dbd5fd62e6830c906bb837ad087bf9969c8"
+  },
+  "covered": [
+    "Summary/document/explicit artifact claim fencing",
+    "Concurrent claims, interrupted transaction rollback, expiry/restart no replay",
+    "Current owner/destination authorization, STOP and original recipient",
+    "Private failure logs and acknowledged-result context",
+    "Repair-request durable admission before host POST, race, HTTP400/crash/lost acknowledgement no repost"
+  ],
+  "limitations": [
+    "The exact installed target source was executed in the pinned trusted Python test environment, not inside the production image process.",
+    "Current tracked schema installer helper was injected only for disposable schema0012 construction; installed target modules had no working-tree fallback and their bytes were unchanged. Installed image bootstrap metadata remains0011 and was not changed by this task.",
+    "No real Telegram delivery, production repair dispatch, historical retry, full autonomous E4.16, later independent reuse or family acceptance."
+  ],
+  "disposableContainersStopped": true
+}

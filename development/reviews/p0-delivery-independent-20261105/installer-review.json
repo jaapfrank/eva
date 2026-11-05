@@ -1,0 +1,53 @@
+{
+  "contract": "EvaIndependentInstallationCandidateReview/v1",
+  "recordedAt": "2026-11-05T15:08:57.850320+00:00",
+  "reviewer": "/root/independent_review",
+  "decision": "GO",
+  "scope": "P0-01 request journal plus P0-02 exact six-file image-only overlay installer",
+  "installerSha256": "321673ee48b94fb6fd9541d540e50881c6c05eb198de0e4153f56fc3a2a62ebb",
+  "prepareSha256": "5a6d0c5ec67feca206ed96edcf7c7f81ad84a1cbe6dda48ff5f744c8840da054",
+  "planSha256": "336eb16fd5ba32f12551293807293f08491871502bf334067b34c0a4c9fdd382",
+  "candidateSources": {
+    "adapters/postgres/component_improvement_actions.py": "078ece35ecd58c1d5a23c98f8d64c02a1c83a140df8d6af8c98f6ea1997c0a17",
+    "adapters/postgres/delegated_work.py": "c87b87221efe20a221fce7e6170f6162bafbd0ba5fbd66e33be8febd7a9662a5",
+    "adapters/postgres/delegated_work_delivery.py": "6d432af27a0e4df76e339ec68f6582874896f395e2374d1135c58d8533f074b6",
+    "adapters/postgres/telegram_delivery_authority.py": "2772f3505ba5abd3ca588a6b75e9ca94c1918aff4b3bafe38bfa97ed0f9bf3e4",
+    "bootstrap/delegated_work_delivery.py": "83d8ff604396212db29ebf7573549dd6477b6f9c94a0f9c268c29173e8958299",
+    "bootstrap/private_continuity.py": "0d9a19dc54b950eb058d808a9b29f79460a855a7f4465dca2cb61260367080ff"
+  },
+  "roles": {
+    "core": {
+      "baselineImage": "sha256:fce4a91e2edb6767ea31531dc8d73a4b8e7b695302aebbbf20398fbe5eee052a",
+      "candidateImage": "sha256:5e78cbebedf89a593fe240e14323ef8c05ee566f6800747bb712cc0f492052e5",
+      "sourceCount": 450,
+      "unchangedSourceCount": 444,
+      "onlyExpectedSixChangedOrAdded": true
+    },
+    "delegated-work-worker": {
+      "baselineImage": "sha256:6f6cb5d3e03ca076ef37a07c25296186af9040e413af20d5a6a6647822b5e8a8",
+      "candidateImage": "sha256:56fa6a99bc63ce6c7c6f675ccdd1d29bb7886d72d9b66cd5ac2a8ddae699ab68",
+      "sourceCount": 439,
+      "unchangedSourceCount": 433,
+      "onlyExpectedSixChangedOrAdded": true
+    }
+  },
+  "checks": [
+    "Independent immutable-image source traversal verifies every packaged source hash, with changes restricted to exactly six approved files.",
+    "Installed baseline delegated_work.py equals initial dirty snapshot; its overlay diff only adds the approved scoped delivery interface.",
+    "Installed baseline component_improvement_actions.py contains older dirty APPLY changes already; its overlay diff contains only the approved repair journal hunks.",
+    "Installer pins exact currently installed container generation, compose config hash, source hashes, host receipt hashes and client config.",
+    "Full fresh read-only claim gate repeats immediately before stop and after stop; active/unknown/evaluation work remains a gate.",
+    "Existing managed image updater owns image change, retained storage/configuration and recovery receipts; no new updater path.",
+    "Host configuration comparison allows only digital producer release and exact installed image snapshot pointer; host source files are unchanged.",
+    "Readiness probe exact previously reviewed pin-rebound hash; no new exclusion/claim rule introduced.",
+    "Durable exclusive activation receipt precedes mutation; unknown prior activation is rejected rather than replayed."
+  ],
+  "conditions": [
+    "Parent must rerun current preflight; this GO does not override any new live claim or source/configuration mismatch.",
+    "Complete installed source/profile/behavior readback after activation."
+  ],
+  "limits": [
+    "No installation performed by reviewer.",
+    "No production task or Telegram send; E4.16 full autonomous repair and later reuse remain open."
+  ]
+}

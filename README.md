@@ -1,90 +1,78 @@
-# Eva2 — een digitale huisgenoot in ontwikkeling
+# Eva2 — een zelfstandige digitale huisgenoot
 
-Eva is een persoonlijk AI-project: een digitale huisgenoot die mensen leert kennen, meedenkt en helpt met dagelijkse en digitale taken. Het doel is een assistent met een herkenbare persoonlijkheid die niet alleen antwoord geeft, maar een opdracht ook kan opvolgen, controleren en er later van kan leren.
+Eva is een persoonlijk AI-project voor één herkenbare digitale huisgenoot: ze praat met mensen, begrijpt context, onthoudt wat ertoe doet, neemt passend initiatief en probeert digitale opdrachten **daadwerkelijk af te ronden**. Ze moet op termijn ontbrekende mogelijkheden kunnen ontdekken, maken, veilig beoordelen en later hergebruiken.
 
-Eva is **in ontwikkeling**. Dit is een werkend project met echte onderdelen en een geïnstalleerde testomgeving, geen afgerond product. Sommige mogelijkheden zijn technisch aangetoond in een beperkte proef; zelfstandig taken betrouwbaar afronden en prettig dagelijks gebruik moeten nog verder worden bewezen.
+**Status:** een werkende Pythonbasis en geïnstalleerde proefomgeving, **geen afgerond consumentenproduct**. Een technisch geslaagde proef, een geïnstalleerd onderdeel en bewezen dagelijks gezinsgebruik zijn niet hetzelfde.
 
-## Wat Eva moet kunnen
+## Wat moet Eva kunnen?
 
-- **Natuurlijk contact:** praten met Eva via de bestaande tweerichtingsspraak, of berichten uitwisselen via Telegram en een eigen webomgeving, met een herkenbare persoonlijkheid en aandacht voor de situatie.
-- **Mensen en context onthouden:** relevante voorkeuren, afspraken en eerdere gesprekken gebruiken, met mogelijkheden om informatie te bekijken, corrigeren of vergeten.
-- **Initiatief nemen:** zelf afwegen of een signaal of afspraak aandacht verdient, en kiezen tussen een vraag, voorstel, actie of juist stilte.
-- **Werk uitvoeren:** opdrachten op de achtergrond oppakken, voortgang bewaren, resultaten controleren en terugkoppelen aan de oorspronkelijke gebruiker.
-- **Zich ontwikkelen:** waar nodig hulpmiddelen of uitbreidingen maken, beoordelen en later hergebruiken. De ambitie is dat Eva steeds zelfstandiger digitale werkzaamheden kan uitvoeren.
+| Productuitkomst | Bewezen basis | Nog open |
+| --- | --- | --- |
+| **Persoonlijkheid en gesprek** | Gedeelde Eva-identiteit, tekstkanalen en een tweerichtingsspraakroute | Natuurlijk ritme, betrouwbare onderbreking, samenhangend dagelijks gebruik |
+| **Geheugen en mensbegrip** | Persoonsgebonden geheugen, bronherkomst, correctie/vergeten, semantisch terugzoeken en gerichte droomverwerking | Meerdaagse relevantie en nut in de volledige gezinsproef |
+| **Eigen initiatief** | Begrensde aandacht-/feedbackroutes en technische deelproeven | Passende zelfstandige acties en opvolging over meerdere dagen |
+| **Zelfstandig werk en ontwikkeling** | Duurzame taakstatus, ontvangstbewijzen, geïsoleerde ontwikkel- en beoordeelroutes; begrensde E4.16-installatie/readback | Volledige autonome fout → herstel → latere hergebruikcyclus en betrouwbaar resultaat bij gewone opdrachten |
 
-Dat zijn de doelen van het project, geen belofte dat elke mogelijkheid al volledig betrouwbaar werkt. Verbindingen met bijvoorbeeld apparaten, camera's en spraak zijn uitbreidingen en kennen hun eigen voorwaarden en tests.
+De [103 geregistreerde deeltaken](development/docs/WERKBORD.md) zijn **geen 103 voltooide productfuncties**. In de onderzochte GitHub-status zijn er 83 afgerond, 20 open en slechts vier van 24 oorspronkelijke hoofduitkomsten gesloten. **F2.1 zeven dagen gezinsgebruik** en **F2.2 eigenaaracceptatie** zijn nog open. De daadwerkelijke WSL-installatie moet afzonderlijk worden teruggelezen.
 
-## Voorbeelden uit het dagelijks leven
+## Architectuur: één Eva, verschillende lagen
 
-Deze voorbeelden laten zien waar Eva naartoe groeit. Of een voorbeeld volledig werkt, hangt af van de aangesloten mogelijkheden en moet in de praktijk worden getest.
-
-- **Een gesprek voeren:** je kunt tegen Eva praten en zij kan met gesproken antwoorden reageren. Doorpraten werkt al; het natuurlijke ritme en onderbreken worden verder verbeterd.
-- **Een afspraak onthouden:** iemand vertelt Eva over een afspraak. Eva kan de context bewaren en die later gebruiken wanneer een passend vervolg aan de orde is.
-- **Een opdracht opvolgen:** iemand vraagt Eva om informatie uit te zoeken. Eva kan het werk op de achtergrond aanpakken en een resultaat teruggeven aan degene die de opdracht gaf.
-- **Zelf iets opmerken:** een toegestane bron verandert. Eva kan afwegen of dat nuttig is om te melden, of dat ze beter stil kan blijven.
-- **Een hulpmiddel verbeteren:** bij een afgebakende programmeertaak is een door Eva gemaakte kandidaat onafhankelijk vergeleken, toegepast en later gebruikt. Dat is een beperkte technische proef, geen bewijs dat alle zelfgemaakte uitbreidingen veilig werken.
-
-## Wat er al staat
-
-Er is één gedeelde Eva-kern voor gesprekken, geheugen, initiatief en achtergrondwerk. De bestaande installatie ondersteunt contact via Telegram, een lokaal dashboard en tweerichtingsspraak: Eva kan luisteren en met haar stem antwoorden. Doorpraten werkt al in de bestaande spraakroute. Spreekritme, reactiesnelheid en het betrouwbaar onderbreken blijven aandachtspunten; volledige acceptatie is nog niet afgerond. Taken hebben een eigen status en er zijn voorzieningen om werk te stoppen, resultaten aan de juiste persoon te koppelen en onzekere handelingen niet blind te herhalen.
-
-Een beperkt voorbeeld van zelfverbetering is technisch getest: Eva maakte voor een vooraf afgebakende programmeertaak een kandidaat, die onafhankelijk werd vergeleken, toegepast en later gebruikt. Dat bewijst de werking van die specifieke route, niet dat Eva willekeurige software zelfstandig en veilig kan aanpassen.
-
-Recente praktijktests lieten ook zien waar verbetering nodig is: achtergrondtaken kunnen vastlopen, bijvoorbeeld wanneer benodigde bestanden ontbreken. Een bevestiging dat werk is gestart betekent daarom niet dat het resultaat klaar is. De vervolgstap is de volledige route van opdracht tot gecontroleerd resultaat en terugmelding in gewoon gebruik aantonen.
-
-## Hoe het werkt
-
-Eva volgt een eenvoudige gedachtegang:
-
-```mermaid
-flowchart LR
-    A[Een vraag of signaal] --> B[Context en geheugen]
-    B --> C[Afwegen]
-    C --> D[Antwoorden of werk uitvoeren]
-    D --> E[Resultaat controleren]
-    E --> F[Terugkoppelen]
-    F --> G[Leren voor later]
-    G -.-> B
+```text
+Telegram / privéweb / spraak / toegestane gebeurtenissen
+                         ↓
+                 identiteit en mandaten
+                         ↓
+       lopend gesprek + persoonscontext en geheugen
+                         ↓
+        afweging: antwoorden, actie of bewust stilte
+                         ↓
+         duurzame taak → tools → controle/receipt
+                         ↓
+        feedback + herinnering + later hergebruik
 ```
 
-Dit schema laat de beoogde kringloop zien. De onderdelen zijn in verschillende mate gebouwd en getest; het schema is geen bewijs dat iedere stap al betrouwbaar werkt.
+**Geheugen is gelaagd in functie, niet in losse concurrerende databases:**
 
-Gesprekken en achtergrondwerk delen dezelfde kern en persoonscontext. Bij een langere opdracht kan Eva werk apart uitvoeren, zodat het gesprek niet op het resultaat hoeft te wachten. Het ontwerp houdt rekening met privacy, toegangsrechten, herkomst van informatie en het onderscheid tussen een poging en een bevestigd resultaat.
+- **Directe gespreks- en dagcontext:** lopende bedoeling, recente gesprekken en actuele afspraken.
+- **Duurzame brongebonden feiten en ervaringen:** PostgreSQL registreert gebeurtenissen, persoon, herkomst, correctie, rechten en verwijdering.
+- **Semantisch terugvinden:** Hindsight haalt relevante persoonsgebonden herinneringen op; het is een zoek-/geheugenprojectie, niet een zelfstandige bevoegdheidsbron.
+- **Droomfase en leren:** relevante daginformatie en feedback worden geselecteerd, samengevoegd of gecorrigeerd voor later gebruik. Niet iedere chat wordt een eeuwige herinnering.
 
-## AI-technieken in begrijpelijke taal
+Die lagen vormen een ontworpen en deels geïnstalleerde keten. Een episodisch wereldmodel of allesbegrijpende kennisgraaf is **geen bewezen volledig product**.
 
-- **RAG en semantisch geheugen:** Eva kan relevante herinneringen terugzoeken en als context gebruiken bij het formuleren van een antwoord. Hindsight verzorgt het semantisch terugzoeken; PostgreSQL bewaart de brongegevens. Dit is een persoonsgerichte geheugenroute, geen claim dat elke vraag een algemene documentzoekmachine gebruikt.
-- **Toolgebruik:** een taalmodel kan beschikbare hulpmiddelen aanroepen om bijvoorbeeld informatie op te zoeken of een toegestane taak uit te voeren. De toepassing controleert daarbij de benodigde toegang en bewaart wat er is gebeurd.
-- **Achtergrondwerk en taakstatus:** langer werk wordt apart bijgehouden, zodat gestart, afgerond en mislukt van elkaar te onderscheiden zijn en de uitkomst bij de oorspronkelijke gebruiker kan terugkomen.
-- **Evaluatie en zelfverbetering:** voor afgebakende verbeteringen worden kandidaten met een referentie vergeleken. Alleen een aangetoonde verbetering mag worden toegepast; later gebruik moet apart worden vastgesteld.
-- **Privacy en herkomst:** geheugen en taken zijn aan personen en bronnen gekoppeld. Correctie, vergeten en controle van bevoegdheden maken deel uit van het ontwerp en de bestaande routes.
+## Technische stack
 
-Deze technieken zijn in het project aanwezig, maar niet elke combinatie is al als volledig betrouwbaar dagelijks gebruik bewezen.
-
-## Technieken
-
-| Techniek | Rol in het project |
+| Onderdeel | Techniek en rol |
 | --- | --- |
-| **Python** | De programmeertaal van de kern, uitvoerders en integraties. |
-| **AI-taalmodellen en PydanticAI** | Gesprekken, het interpreteren van context en het aansturen van toegestane hulpmiddelen. |
-| **PostgreSQL en Hindsight** | Vastleggen van onder meer gesprekken en taken, en het terugvinden van persoonsgebonden herinneringen. |
-| **FastAPI** | Koppelingen tussen de kern, het dashboard en andere onderdelen. |
-| **Docker en WSL** | De huidige omgeving om onderdelen geïsoleerd te draaien en te installeren. |
-| **Telegram, API's en MCP** | Kanalen en koppelingen waarmee Eva met mensen en externe mogelijkheden kan werken. |
-| **LiveKit en spraakcomponenten** | De bestaande tweerichtingsspraak: luisteren, gesproken antwoorden en gesprekken via de spraakroute. Natuurlijk ritme en onderbreken worden nog verbeterd. |
-| **Tests en onafhankelijke beoordeling** | Controleren of een wijziging werkt en of een resultaat aan de oorspronkelijke opdracht voldoet. |
+| **Kern en contracten** | Python 3.12, Pydantic 2, PydanticAI (`pydantic-ai-slim`), getypeerde gegevens en expliciete tool-/bevoegdheidscontracten |
+| **Modellen** | OpenAI-compatibele modeladapters en configureerbare optionele providers; modeltoegang is gescheiden van persoons- en toolrechten |
+| **API en bediening** | FastAPI / Uvicorn, lokaal webdashboard en React-interfaces voor werk, geheugen en beheer |
+| **Geheugen** | PostgreSQL, SQLAlchemy, psycopg, Alembic en Hindsight; dagcontext, duurzame bronnen, semantische recall en selectieve droomconsolidatie |
+| **Agents en taakuitvoering** | PydanticAI, gescheiden achtergrondwerkers, duurzame PostgreSQL-status, claims, checkpoints, herstelaanleidingen en receipts |
+| **Leren en AIDE²** | Begrensde reflectie en **AIDE²-geïnspireerde** kandidaat-/variantvergelijking voor gedrag, code en uitbreidingen. Baseline behouden bij verlies of onvoldoende bewijs; latere echte toepassing apart aantonen |
+| **Tools en verbindingen** | MCP, versieerbare procedures/skills, Home Assistant, browser, Telegram; camera en WhatsApp zijn optionele integraties |
+| **Spraak** | LiveKit/WebRTC, audio- en spraakcomponenten, bestaande native speakers; turn-taking, barge-in en fysieke acceptatie blijven open |
+| **Uitvoering en updates** | Docker/OCI, WSL en beheerste images; hashes, gecontroleerde release, rollback, back-up en herstel |
+| **Kwaliteitsbewaking** | pytest, contract- en integratietests, geïsoleerde codeproeven, regressiemetingen en een organisatorisch gescheiden reviewer |
 
-Niet elke koppeling is voor ieder huishouden aangesloten of volledig in de praktijk bewezen. De techniek is een middel: de waarde van het project zit uiteindelijk in nuttig, betrouwbaar en prettig dagelijks gebruik.
+De vastgelegde `pyproject.toml` bevat onder andere **PydanticAI 2.37.0**, FastAPI, SQLAlchemy en Alembic. Historische versiecontracten blijven beschikbaar voor oudere releases. Niet iedere connector of provider staat standaard aan en de README zegt niets over live beschikbaarheid of ingeschakelde toestemmingen.
 
-## Waarom ik dit project bouw
+**Zelfverbetering is geen onbeperkte zelfbeschikking.** Eva mag niet vanuit een prompt nieuwe rechten krijgen. Codewijzigingen vragen een controleerbare kandidaat, gescheiden toets, veilige installatie en echt gedrag na installatie. De huidige reviewbinding en refactorbare afleverkant hebben nog aandachtspunten.
 
-Eva brengt meerdere onderdelen van AI samen in één praktijkproject: gesprekken, geheugen, taakuitvoering, initiatief, integraties en het beoordelen van resultaten. Het project laat zien hoe ik nadenk over de stap van een model dat antwoord geeft naar een assistent die met echte context en verantwoordelijkheden werkt — inclusief de fouten en grenzen die daarbij horen.
+## Belangrijkste open technische problemen
 
-## Verder kijken
+De uitvoering volgt [genummerde prioriteiten P0–P3](development/docs/AFRONDINGSPLAN.md), met detail in het [vereenvoudigingsplan](development/docs/VEREENVOUDIGING.md): betrouwbare levering, geen stille fouten, provideruitval, tokengebruik, reviewherkomst, veilig gezinsgebruik en daarna natuurlijke spraak en zelfstandig initiatief. De proef met één stille initiatiefafweging gebruikte bijvoorbeeld **22.633 tokens**; een werkende stiltebeslissing is dus niet automatisch efficiënt.
 
-- [Projectdoel](development/docs/PROJECTDOEL.md): de ambitie en voorwaarden voor oplevering.
-- [Architectuur](development/docs/ARCHITECTUUR.md): hoe de onderdelen samenwerken en waar hun grenzen liggen.
-- [Werkbord](development/docs/WERKBORD.md): de actuele uitvoering en resterende taken.
-- [Afrondingsplan](development/docs/AFRONDINGSPLAN.md): de volgorde en de praktische eindvoorwaarden.
+**Bestaande sterke basis behouden:** actuele mandaten in plaats van bevoegdheid uit tekst, geen herverzending van onzekere externe effecten, hash-/receiptgebonden installaties, bronherkomst in geheugen en stop-/herstelscheiding. Er is nog geen algemene claim dat Eva beter presteert dan OpenClaw, Hermes of andere assistenten.
 
-Voor ontwikkeling staan de Python-bronnen in `src/`, installatiebestanden in `deploy/` en documentatie en tests in `development/`. De installer begint bij `start-installer.py`. Bestaande runtimegegevens en geïnstalleerde containerimages staan los van deze broncode. De repository bevat geen algemene claim dat Eva beter presteert dan andere AI-assistenten.
+## Waar staat alles?
+
+- [Projectdoel](development/docs/PROJECTDOEL.md) — één pagina over de vier gewenste uitkomsten.
+- [Architectuur](development/docs/ARCHITECTUUR.md) — verantwoordelijkheden en veiligheidsgrenzen.
+- [Afrondingsplan met P0–P3-prioriteiten](development/docs/AFRONDINGSPLAN.md) — volgorde, acceptatie en open problemen.
+- [Technisch vereenvoudigingsplan](development/docs/VEREENVOUDIGING.md) — precies welke complexe code moet veranderen.
+- [Actueel, gegenereerd werkbord](development/docs/WERKBORD.md) — status uit de [enige JSON-bron](development/design/product/execution-workboard-v1.json).
+- [Documentatie-index en archiefregels](development/docs/README.md) — wat actief is en wat historisch blijft.
+- [AGENTS.md](AGENTS.md) — regels voor ontwikkelaars en AI-uitvoerders.
+
+De broncode staat in `src/`, tests en bewijs in `development/`, installatie in `deploy/`. `start-installer.py` is het installatie-entrypoint. De publieke repository bevat niet de volledige actuele toestand van een draaiende privé-Windows/WSL-installatie.

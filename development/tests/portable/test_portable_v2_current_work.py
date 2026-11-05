@@ -1,4 +1,5 @@
 """Real encrypted current-work round trips over isolated PostgreSQL databases."""
+from eva.adapters.postgres.telegram_delivery_authority import TelegramDeliveryAuthority
 from datetime import timedelta
 from pathlib import Path
 import json
@@ -91,7 +92,7 @@ def current_archive(tmp_path_factory):
         scope = TimelineScope(UUID(tenant), UUID(installation))
         store = PostgresDelegatedWorkStore(source, scope)
         pairings = TelegramPrincipalBindings((TelegramPrincipalBinding(42, str(owner), ("42",), str(binding)),))
-        delivery = PostgresDelegatedWorkDeliveryStore(store, bindings_loader=lambda:pairings,
+        delivery = PostgresDelegatedWorkDeliveryStore(store, destination_authority=TelegramDeliveryAuthority(store.engine, store.scope, lambda:pairings),
                                                       clock=lambda:NOW+timedelta(seconds=4))
         results = {}
         specs = {}
@@ -230,7 +231,7 @@ def test_encrypted_roundtrip_preserves_results_stop_and_delivery_fences(current_
     for name, expected in fixture["results"].items():
         assert store.load(fixture["specs"][name].work_id, **authority).result == expected
     assert store.load(fixture["specs"]["stopped"].work_id, **authority).state == "stopped"
-    delivery = PostgresDelegatedWorkDeliveryStore(store, bindings_loader=lambda:fixture["pairings"],
+    delivery = PostgresDelegatedWorkDeliveryStore(store, destination_authority=TelegramDeliveryAuthority(store.engine, store.scope, lambda:fixture["pairings"]),
                                                  clock=lambda:NOW+timedelta(seconds=6))
     for name in ("acknowledged", "ambiguous", "claimed"):
         assert delivery.status(fixture["specs"][name].work_id, **authority) == "delivery_" + name

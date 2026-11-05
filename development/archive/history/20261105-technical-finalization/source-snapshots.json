@@ -1,0 +1,12 @@
+{
+  "src/tools/check_current_workboard.py": {
+    "snapshot": "development/archive/history/20261105-technical-finalization/before/src/tools/check_current_workboard.py.snapshot",
+    "sha256": "68afc06d740f4c6422fd90a91664746d27b0630e4bc7f99793e9e91b074151c2",
+    "reason": "Exact source snapshot uses a non-executable suffix to avoid accidental import/test discovery."
+  },
+  "development/tests/operations/test_current_workboard.py": {
+    "snapshot": "development/archive/history/20261105-technical-finalization/before/development/tests/operations/test_current_workboard.py.snapshot",
+    "sha256": "f4a6d98197068efdbb4f82379d1ed78756a756d76d69618391b99774667d98b3",
+    "reason": "Exact source snapshot uses a non-executable suffix to avoid accidental import/test discovery."
+  }
+}

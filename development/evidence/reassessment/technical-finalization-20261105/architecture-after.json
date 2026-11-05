@@ -1,0 +1,1078 @@
+{
+  "at": "2026-11-05T15:08:45.678917+00:00",
+  "contract": "Eva2ArchitectureMeasurement/v1",
+  "policySha256": "5c67fef0b81382b1cdd31b3a4886c8a45482808a8b850a45e31620534a908d05",
+  "policyContainsPreexistingLocalChanges": true,
+  "pythonFilesChecked": 628,
+  "violationCount": 177,
+  "byCode": {
+    "external_import_boundary": 60,
+    "local_import_boundary": 103,
+    "provider_specific_core_debt_new_file": 12,
+    "unexpected_package": 2
+  },
+  "violations": [
+    {
+      "path": "src/eva/adapters/api/browser_session.py",
+      "line": 19,
+      "code": "external_import_boundary",
+      "detail": "websockets.asyncio.client"
+    },
+    {
+      "path": "src/eva/adapters/api/browser_session.py",
+      "line": 23,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.browser_session"
+    },
+    {
+      "path": "src/eva/adapters/api/browser_session.py",
+      "line": 27,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.credentials.runtime_files"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_conversation.py",
+      "line": 15,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.model.contracts"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_initiatives.py",
+      "line": 26,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_housemate"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_initiatives.py",
+      "line": 37,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_learning"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_memory.py",
+      "line": 92,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_memory"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_memory.py",
+      "line": 101,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_memory"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_memory.py",
+      "line": 109,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_memory"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_memory.py",
+      "line": 117,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_memory"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_model_providers.py",
+      "line": 8,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.optional_model_providers"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_model_providers.py",
+      "line": 13,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_work_context"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_packages.py",
+      "line": 12,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.component_evaluation"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_packages.py",
+      "line": 32,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_work_context"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_whatsapp.py",
+      "line": 9,
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_whatsapp.py",
+      "line": 54,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_work_context"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_whatsapp.py",
+      "line": 83,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_work_context"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_whatsapp.py",
+      "line": 175,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.whatsapp_context"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_work.py",
+      "line": 43,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_work_context"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_work.py",
+      "line": 55,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_work_context"
+    },
+    {
+      "path": "src/eva/adapters/api/household_voice_session.py",
+      "line": 4,
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/adapters/api/household_voice_session.py",
+      "line": 7,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.native_voice"
+    },
+    {
+      "path": "src/eva/adapters/api/household_work.py",
+      "line": 10,
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/adapters/api/installer_provider_api.py",
+      "line": 353,
+      "code": "local_import_boundary",
+      "detail": "eva.operations.installer_connector_selection"
+    },
+    {
+      "path": "src/eva/adapters/api/installer_provider_api.py",
+      "line": 365,
+      "code": "local_import_boundary",
+      "detail": "eva.operations.installer_voice_selection"
+    },
+    {
+      "path": "src/eva/adapters/api/installer_provider_api.py",
+      "line": 380,
+      "code": "local_import_boundary",
+      "detail": "eva.operations.installer_voice_selection"
+    },
+    {
+      "path": "src/eva/adapters/api/installer_runtime_proxy.py",
+      "line": 6,
+      "code": "external_import_boundary",
+      "detail": "starlette.responses"
+    },
+    {
+      "path": "src/eva/adapters/api/installer_runtime_proxy.py",
+      "line": 31,
+      "code": "external_import_boundary",
+      "detail": "starlette.concurrency"
+    },
+    {
+      "path": "src/eva/adapters/api/native_voice.py",
+      "line": 25,
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/adapters/api/voice_turns.py",
+      "line": 15,
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/adapters/connectors/component_evaluation.py",
+      "line": 138,
+      "code": "local_import_boundary",
+      "detail": "eva.operations.component_evaluation"
+    },
+    {
+      "path": "src/eva/adapters/connectors/delegated_completion.py",
+      "line": 10,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.component_improvement_actions"
+    },
+    {
+      "path": "src/eva/adapters/connectors/delegated_completion.py",
+      "line": 11,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.programming_actions"
+    },
+    {
+      "path": "src/eva/adapters/connectors/delegated_completion.py",
+      "line": 73,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.connector_results"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant.py",
+      "line": 214,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.home_assistant_policy"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant.py",
+      "line": 423,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.home_assistant_policy"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant.py",
+      "line": 428,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.home_assistant_policy"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_admin.py",
+      "line": 626,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.home_assistant_policy"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_admin.py",
+      "line": 631,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.home_assistant_policy"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_api.py",
+      "line": 16,
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_api.py",
+      "line": 41,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.home_assistant_policy"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_api.py",
+      "line": 46,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.home_assistant_policy"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_api.py",
+      "line": 201,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.connector_results"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_api.py",
+      "line": 269,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.connector_results"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_api.py",
+      "line": 315,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.connector_results"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_api.py",
+      "line": 331,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.connector_results"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_api.py",
+      "line": 347,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.connector_results"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_camera.py",
+      "line": 12,
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_mcp.py",
+      "line": 102,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.connector_results"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_voice.py",
+      "line": 17,
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/adapters/connectors/installer_configured_probe_factory.py",
+      "line": 18,
+      "code": "local_import_boundary",
+      "detail": "eva.operations.installer_provider_configuration"
+    },
+    {
+      "path": "src/eva/adapters/connectors/local_face_identity.py",
+      "line": 21,
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/adapters/connectors/local_vision.py",
+      "line": 13,
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/adapters/connectors/mcp_gateway.py",
+      "line": 498,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.connector_results"
+    },
+    {
+      "path": "src/eva/adapters/connectors/mcp_gateway.py",
+      "line": 544,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.connector_results"
+    },
+    {
+      "path": "src/eva/adapters/connectors/mcp_gateway.py",
+      "line": 572,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.connector_results"
+    },
+    {
+      "path": "src/eva/adapters/connectors/programming_workspace.py",
+      "line": 9,
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/adapters/model/optional_backends.py",
+      "line": 24,
+      "code": "external_import_boundary",
+      "detail": "anthropic"
+    },
+    {
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "line": 217,
+      "code": "external_import_boundary",
+      "detail": "tiktoken"
+    },
+    {
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "line": 962,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.receipt_policies"
+    },
+    {
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "line": 966,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.connector_results"
+    },
+    {
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "line": 976,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.receipt_policies"
+    },
+    {
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "line": 988,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.postgres.connector_results"
+    },
+    {
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "line": 1385,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.receipt_policies"
+    },
+    {
+      "path": "src/eva/adapters/model/tool_namespaces.py",
+      "line": 31,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.bundled"
+    },
+    {
+      "path": "src/eva/adapters/postgres/background_work_progress.py",
+      "line": 108,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.component_evaluation"
+    },
+    {
+      "path": "src/eva/adapters/postgres/component_improvement_actions.py",
+      "line": 5,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.component_evaluation"
+    },
+    {
+      "path": "src/eva/adapters/postgres/connector_results.py",
+      "line": 237,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_discovery"
+    },
+    {
+      "path": "src/eva/adapters/postgres/connector_results.py",
+      "line": 339,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.receipt_policies"
+    },
+    {
+      "path": "src/eva/adapters/postgres/connector_results.py",
+      "line": 379,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_discovery"
+    },
+    {
+      "path": "src/eva/adapters/postgres/connector_results.py",
+      "line": 386,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.receipt_policies"
+    },
+    {
+      "path": "src/eva/adapters/postgres/connector_results.py",
+      "line": 393,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_discovery"
+    },
+    {
+      "path": "src/eva/adapters/postgres/conversation_actions.py",
+      "line": 220,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.model.research_tools"
+    },
+    {
+      "path": "src/eva/adapters/postgres/delegated_work_actions.py",
+      "line": 1,
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "1 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/adapters/postgres/delegated_work_actions.py",
+      "line": 494,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.model.research_tools"
+    },
+    {
+      "path": "src/eva/adapters/postgres/delegated_work_actions.py",
+      "line": 495,
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+      "line": 301,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_discovery"
+    },
+    {
+      "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+      "line": 322,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_discovery"
+    },
+    {
+      "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+      "line": 544,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.receipt_policies"
+    },
+    {
+      "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+      "line": 664,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.receipt_policies"
+    },
+    {
+      "path": "src/eva/adapters/postgres/household_work_destination.py",
+      "line": 1,
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "1 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_context.py",
+      "line": 1,
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "1 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "line": 636,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.component_maintenance"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "line": 643,
+      "code": "local_import_boundary",
+      "detail": "eva.operations.component_evaluation"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "line": 644,
+      "code": "local_import_boundary",
+      "detail": "eva.operations.saved_artifact_application"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "line": 817,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.owned_package_host"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "line": 818,
+      "code": "local_import_boundary",
+      "detail": "eva.operations.owned_package"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "line": 824,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.component_maintenance"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_source_outcomes.py",
+      "line": 25,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.receipt_policies"
+    },
+    {
+      "path": "src/eva/adapters/postgres/mcp_connector_registry.py",
+      "line": 20,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.mcp_gateway"
+    },
+    {
+      "path": "src/eva/adapters/postgres/mcp_connector_registry.py",
+      "line": 32,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_discovery"
+    },
+    {
+      "path": "src/eva/adapters/postgres/mcp_connector_registry.py",
+      "line": 33,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_gateway"
+    },
+    {
+      "path": "src/eva/adapters/postgres/mcp_connector_registry.py",
+      "line": 168,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.mcp_registration"
+    },
+    {
+      "path": "src/eva/adapters/postgres/mcp_connector_registry.py",
+      "line": 461,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.mcp_registration"
+    },
+    {
+      "path": "src/eva/adapters/postgres/programming_actions.py",
+      "line": 4,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.programming_workspace"
+    },
+    {
+      "path": "src/eva/adapters/postgres/saved_work_artifacts.py",
+      "line": 62,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_autonomy"
+    },
+    {
+      "path": "src/eva/adapters/postgres/scheduled_work.py",
+      "line": 501,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_autonomy"
+    },
+    {
+      "path": "src/eva/adapters/postgres/scoped_connector_results.py",
+      "line": 5,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_discovery"
+    },
+    {
+      "path": "src/eva/adapters/postgres/scoped_delegated_work_actions.py",
+      "line": 6,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.household_work"
+    },
+    {
+      "path": "src/eva/adapters/postgres/sensory_events.py",
+      "line": 1,
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "3 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/adapters/postgres/tool_program_actions.py",
+      "line": 11,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.procedure_execution"
+    },
+    {
+      "path": "src/eva/adapters/postgres/tool_program_actions.py",
+      "line": 143,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.delegated_completion"
+    },
+    {
+      "path": "src/eva/adapters/postgres/tool_program_actions.py",
+      "line": 163,
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.delegated_completion"
+    },
+    {
+      "path": "src/eva/adapters/postgres/work_corrections.py",
+      "line": 270,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.owned_package_host"
+    },
+    {
+      "path": "src/eva/adapters/postgres/work_corrections.py",
+      "line": 277,
+      "code": "local_import_boundary",
+      "detail": "eva.operations.owned_package"
+    },
+    {
+      "path": "src/eva/adapters/postgres/work_source_retention.py",
+      "line": 139,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_autonomy"
+    },
+    {
+      "path": "src/eva/adapters/projection/hindsight.py",
+      "line": 61,
+      "code": "external_import_boundary",
+      "detail": "tiktoken"
+    },
+    {
+      "path": "src/eva/application/skill_packages.py",
+      "line": 16,
+      "code": "external_import_boundary",
+      "detail": "yaml"
+    },
+    {
+      "path": "src/eva/bootstrap/camera_observer.py",
+      "line": 1,
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "8 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/bootstrap/component_maintenance.py",
+      "line": 434,
+      "code": "external_import_boundary",
+      "detail": "psycopg"
+    },
+    {
+      "path": "src/eva/bootstrap/component_maintenance.py",
+      "line": 435,
+      "code": "external_import_boundary",
+      "detail": "psycopg"
+    },
+    {
+      "path": "src/eva/bootstrap/component_observations.py",
+      "line": 1,
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "9 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/bootstrap/dashboard_voice.py",
+      "line": 1,
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "9 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/bootstrap/dashboard_voice.py",
+      "line": 15,
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/bootstrap/delegated_work_provider.py",
+      "line": 142,
+      "code": "external_import_boundary",
+      "detail": "tools.runtime_dependency_overlay"
+    },
+    {
+      "path": "src/eva/bootstrap/household_digital_work.py",
+      "line": 1,
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "1 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/bootstrap/household_initiative.py",
+      "line": 1,
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "3 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/bootstrap/household_initiative_delivery.py",
+      "line": 12,
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/bootstrap/household_provision_runtime.py",
+      "line": 1,
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "7 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/bootstrap/household_research_policy.py",
+      "line": 10,
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/bootstrap/household_voice.py",
+      "line": 15,
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/bootstrap/household_work.py",
+      "line": 1,
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "3 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/bootstrap/native_work_delivery.py",
+      "line": 8,
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/bootstrap/optional_model_providers.py",
+      "line": 67,
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/contracts/delegated_digital_work.py",
+      "line": 1,
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "5 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/operations/browser_session.py",
+      "line": 329,
+      "code": "external_import_boundary",
+      "detail": "fastapi"
+    },
+    {
+      "path": "src/eva/operations/browser_session.py",
+      "line": 330,
+      "code": "external_import_boundary",
+      "detail": "uvicorn"
+    },
+    {
+      "path": "src/eva/operations/component_native_work_producer.py",
+      "line": 607,
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/operations/component_native_work_producer.py",
+      "line": 610,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.delegated_digital_runner"
+    },
+    {
+      "path": "src/eva/operations/component_native_work_producer.py",
+      "line": 1258,
+      "code": "local_import_boundary",
+      "detail": "eva"
+    },
+    {
+      "path": "src/eva/operations/component_native_work_producer.py",
+      "line": 1259,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.runtime"
+    },
+    {
+      "path": "src/eva/operations/component_native_work_producer.py",
+      "line": 1265,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.delegated_digital_composition"
+    },
+    {
+      "path": "src/eva/operations/component_native_work_producer.py",
+      "line": 1266,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.delegated_work_result_reader"
+    },
+    {
+      "path": "src/eva/operations/component_native_work_producer.py",
+      "line": 1267,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.delegated_digital_runner"
+    },
+    {
+      "path": "src/eva/operations/component_work_execution.py",
+      "line": 67,
+      "code": "local_import_boundary",
+      "detail": "eva"
+    },
+    {
+      "path": "src/eva/operations/component_work_execution.py",
+      "line": 68,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.runtime"
+    },
+    {
+      "path": "src/eva/operations/component_work_execution.py",
+      "line": 74,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.procedure_reference_actions"
+    },
+    {
+      "path": "src/eva/operations/component_work_execution.py",
+      "line": 75,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_autonomy"
+    },
+    {
+      "path": "src/eva/operations/installer_voice_selection.py",
+      "line": 47,
+      "code": "external_import_boundary",
+      "detail": "websockets.asyncio.client"
+    },
+    {
+      "path": "src/eva/operations/local_face_cpu.py",
+      "line": 44,
+      "code": "external_import_boundary",
+      "detail": "cv2"
+    },
+    {
+      "path": "src/eva/operations/local_face_cpu.py",
+      "line": 45,
+      "code": "external_import_boundary",
+      "detail": "numpy"
+    },
+    {
+      "path": "src/eva/operations/local_face_cpu.py",
+      "line": 46,
+      "code": "external_import_boundary",
+      "detail": "onnxruntime"
+    },
+    {
+      "path": "src/eva/operations/local_face_cpu.py",
+      "line": 47,
+      "code": "external_import_boundary",
+      "detail": "PIL"
+    },
+    {
+      "path": "src/eva/operations/local_face_cpu.py",
+      "line": 48,
+      "code": "external_import_boundary",
+      "detail": "insightface.app.common"
+    },
+    {
+      "path": "src/eva/operations/local_face_cpu.py",
+      "line": 49,
+      "code": "external_import_boundary",
+      "detail": "insightface.model_zoo.arcface_onnx"
+    },
+    {
+      "path": "src/eva/operations/local_face_cpu.py",
+      "line": 50,
+      "code": "external_import_boundary",
+      "detail": "insightface.model_zoo.scrfd"
+    },
+    {
+      "path": "src/eva/operations/local_face_cpu.py",
+      "line": 101,
+      "code": "external_import_boundary",
+      "detail": "onnxruntime"
+    },
+    {
+      "path": "src/eva/operations/local_face_identity_bridge.py",
+      "line": 22,
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/operations/owned_package_application.py",
+      "line": 131,
+      "code": "external_import_boundary",
+      "detail": "jsonschema"
+    },
+    {
+      "path": "src/eva/operations/programming_workspace.py",
+      "line": 221,
+      "code": "external_import_boundary",
+      "detail": "mcp"
+    },
+    {
+      "path": "src/eva/operations/programming_workspace.py",
+      "line": 222,
+      "code": "external_import_boundary",
+      "detail": "mcp.client.stdio"
+    },
+    {
+      "path": "src/eva/operations/runtime_dependency_update.py",
+      "line": 173,
+      "code": "external_import_boundary",
+      "detail": "tools.runtime_dependency_overlay"
+    },
+    {
+      "path": "src/eva/operations/runtime_dependency_update.py",
+      "line": 181,
+      "code": "external_import_boundary",
+      "detail": "tools.runtime_dependency_overlay"
+    },
+    {
+      "path": "src/eva/operations/runtime_dependency_update.py",
+      "line": 253,
+      "code": "external_import_boundary",
+      "detail": "tools.runtime_dependency_overlay"
+    },
+    {
+      "path": "src/eva/operations/runtime_dependency_update.py",
+      "line": 268,
+      "code": "external_import_boundary",
+      "detail": "tools.runtime_dependency_overlay"
+    },
+    {
+      "path": "src/eva/operations/runtime_dependency_update.py",
+      "line": 544,
+      "code": "external_import_boundary",
+      "detail": "tools.installation_runtime_image_restore"
+    },
+    {
+      "path": "src/eva/operations/runtime_dependency_update.py",
+      "line": 746,
+      "code": "external_import_boundary",
+      "detail": "tools.installation_runtime_image_restore"
+    },
+    {
+      "path": "src/eva/operations/saved_artifact_application.py",
+      "line": 254,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.runtime"
+    },
+    {
+      "path": "src/eva/operations/saved_artifact_application.py",
+      "line": 259,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.procedure_reference_actions"
+    },
+    {
+      "path": "src/eva/operations/saved_artifact_application.py",
+      "line": 260,
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_autonomy"
+    },
+    {
+      "path": "src/eva/providers/home_assistant.py",
+      "line": 105,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.dashboard_voice"
+    },
+    {
+      "path": "src/eva/providers/home_assistant.py",
+      "line": 113,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.native_work_delivery"
+    },
+    {
+      "path": "src/eva/providers/home_assistant.py",
+      "line": 118,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.household_initiative"
+    },
+    {
+      "path": "src/eva/providers/home_assistant_capabilities.py",
+      "line": 10,
+      "code": "external_import_boundary",
+      "detail": "websockets.exceptions"
+    },
+    {
+      "path": "src/eva/providers/home_assistant_procedure.py",
+      "line": 11,
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/providers/procedure_reference_actions.py",
+      "line": 660,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.runtime"
+    },
+    {
+      "path": "src/eva/providers/procedure_reference_actions.py",
+      "line": 663,
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.native_initiative_work"
+    },
+    {
+      "path": "src/eva/resources",
+      "line": 1,
+      "code": "unexpected_package",
+      "detail": "resources"
+    },
+    {
+      "path": "src/eva/resources/portable_v1",
+      "line": 1,
+      "code": "unexpected_package",
+      "detail": "resources/portable_v1"
+    },
+    {
+      "path": "src/tools/check_two_builder_reproducibility.py",
+      "line": 29,
+      "code": "external_import_boundary",
+      "detail": "managed_b_candidate.private_receipt"
+    },
+    {
+      "path": "src/tools/installer_gateway_target.py",
+      "line": 9,
+      "code": "external_import_boundary",
+      "detail": "yaml"
+    },
+    {
+      "path": "src/tools/verify_household_voice_ingress.py",
+      "line": 21,
+      "code": "external_import_boundary",
+      "detail": "render_household_voice_ingress"
+    },
+    {
+      "path": "src/tools/verify_owner_voice_ingress.py",
+      "line": 8,
+      "code": "external_import_boundary",
+      "detail": "aiohttp"
+    },
+    {
+      "path": "src/tools/verify_owner_voice_ingress.py",
+      "line": 9,
+      "code": "external_import_boundary",
+      "detail": "aiohttp"
+    },
+    {
+      "path": "src/tools/verify_owner_voice_ingress.py",
+      "line": 10,
+      "code": "external_import_boundary",
+      "detail": "render_household_voice_ingress"
+    },
+    {
+      "path": "src/tools/wakeword_capture/compare_session.py",
+      "line": 21,
+      "code": "external_import_boundary",
+      "detail": "numpy"
+    },
+    {
+      "path": "src/tools/wakeword_capture/compare_session.py",
+      "line": 22,
+      "code": "external_import_boundary",
+      "detail": "microwakeword.inference"
+    }
+  ]
+}

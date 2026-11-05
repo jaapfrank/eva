@@ -1,4 +1,5 @@
 """Document projections reuse real SQL delivery fences; transports are local fakes."""
+from eva.adapters.postgres.telegram_delivery_authority import TelegramDeliveryAuthority
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
 from datetime import timedelta
@@ -52,10 +53,10 @@ def completion(project, private_tmp_path, monkeypatch):
     service = DelegatedWorkOwnerService(work, owner_principal_id=owner, principal_binding_id=binding,
         conversation_scope=adapter.authority.scope, clock=lambda: at[0])
     service.document_completion_source = source
-    delivery = PostgresDelegatedWorkDeliveryStore(work, bindings_loader=lambda: bindings[0],
+    delivery = PostgresDelegatedWorkDeliveryStore(work, destination_authority=TelegramDeliveryAuthority(work.engine, work.scope, lambda: bindings[0]),
         document_source=source, clock=lambda: at[0])
     def start(channel='telegram', *, key=None, historical=False, content='Second private document'):
-        key = key or uuid4().hex
+        key = key or ("telegram:42:" + str(uuid4().int % 10**15 + 1) if channel == "telegram" else uuid4().hex)
         conversation = {'telegram': 'telegram:42', 'dashboard': 'dashboard:'+str(binding), 'voice': 'voice:fixed-session'}[channel]
         turn = p['turn'](key, principal_id='telegram:42' if channel=='telegram' else str(owner),
                          conversation_id=conversation, occurred_at=at[0].isoformat().replace('+00:00','Z'))
@@ -120,7 +121,7 @@ def test_telegram_documents_claim_once_restart_ack_and_no_fake_research(completi
     result = c['delivery'].authorize_delivery(goal_id, **c['service']._owner)
     assert 'First private document' in result.output and 'Second private document' in result.output
     assert claim.operation_id == result.operation_id
-    restarted = PostgresDelegatedWorkDeliveryStore(c['work'], bindings_loader=lambda:c['bindings'][0], document_source=c['source'], clock=lambda:c['at'][0])
+    restarted = PostgresDelegatedWorkDeliveryStore(c['work'], destination_authority=TelegramDeliveryAuthority(c['work'].engine, c['work'].scope, lambda:c['bindings'][0]), document_source=c['source'], clock=lambda:c['at'][0])
     assert restarted.acknowledge(claim, '42:7', now=c['at'][0]) == 'acknowledged'
     assert restarted.claim_next(now=c['at'][0]) is None
     with c['engine'].begin() as connection:
@@ -146,12 +147,14 @@ def test_current_authority_changes_block_before_claim_and_between_parts(completi
         else:
             c['mandate'].write_text(json.dumps({**c['p']['mandate'], 'owner_principal_id':str(c['owner']), 'enabled':False}))
     class Transport:
-        def deliver_text(self, message, *, expected_chat_id):
+        def deliver_text(self, message, *, expected_chat_id, reply_to_message_id):
             assert expected_chat_id == '42'
+            assert reply_to_message_id == int(turn.message_id.rsplit(':', 1)[1])
             sent.append(message); revoke(); return '42:1'
     worker = DelegatedWorkDeliveryWorker(c['delivery'], Transport(), clock=lambda:c['at'][0])
     assert worker.run_once() == 'ambiguous'
-    assert len(sent)==1 and sent[0].startswith('Documentproject afgerond')
+    assert len(sent)==1 and sent[0].startswith('Private documents\n\n')
+    assert 'First private document' in sent[0]
     assert c['delivery'].claim_next(now=c['at'][0]+timedelta(minutes=5)) is None
 
 

@@ -5,6 +5,7 @@ from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
 from uuid import UUID, uuid4, uuid5
 import re
+import logging
 
 import sqlalchemy as sa
 from eva.application.work_failure_notice import delivery_outcome, WorkFailureNotice
@@ -16,12 +17,13 @@ from eva.adapters.postgres.operational_timeline import (
 )
 from eva.application.delegated_work_delivery import AuthorizedWorkDelivery, PrivateWorkDestination
 from eva.adapters.postgres.current_catalog import delegated_work_runs
-from eva.adapters.postgres.telegram_pairing import PostgresPrivateTelegramRecipient
 from eva.application.delegated_work_delivery import PrivateWorkDeliveryClaim
 from eva.contracts.timestamps import require_utc_second
-from eva.application.telegram_ingress import TelegramPrincipalBindings
 from eva.contracts.canonical_json import canonical_sha256
 from eva.application.conversation import ConversationConflict
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 _EVENT = "DELEGATED_PRIVATE_DESTINATION_BOUND"
@@ -79,7 +81,7 @@ def _effective_destination(connection, store, work, now):
         return None
     current = work
     while current.spec.generation > 1:
-        parent = store._load_locked(connection, current.spec.parent_task_id)
+        parent = store.load_delivery_work(connection, current.spec.parent_task_id)
         child, prior = current.spec, parent.spec
         expected_id = "work:eva-resume:" + str(uuid5(
             store.scope.installation_id, f"{prior.work_id}:{prior.generation + 1}"))
@@ -158,45 +160,53 @@ def record_admission_destination(connection: sa.Connection, scope: TimelineScope
 
 
 class PostgresDelegatedWorkDeliveryStore:
-    def __init__(self, work_store, *, bindings_loader: Callable[[], TelegramPrincipalBindings],
+    def __init__(self, work_store, *, destination_authority,
                  clock: Callable[[], datetime] | None = None, document_source=None):
         self._work = work_store
         from eva.adapters.postgres.scheduled_work_failure import PrivateCompletionSources
         self._documents = PrivateCompletionSources(work_store, document_source)
-        self._bindings_loader = bindings_loader
+        self._destination_authority = destination_authority
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
         self._artifact_absent: set[str] = set()
+
+    @staticmethod
+    def _record_rejection(stage, work_id, error):
+        # Exception messages and tracebacks can contain private output, source
+        # paths, chat identifiers or credentials. Retain only a stable hash,
+        # the fixed stage and the exception type for operational correlation.
+        _LOGGER.warning("private_delivery_rejected stage=%s work_sha256=%s error_type=%s",
+            stage, canonical_sha256({"work_id": work_id}), type(error).__name__)
+
+    def _current_in_transaction(self, connection, work_id, *, owner_principal_id,
+                                principal_binding_id, now):
+        self._work.validate_delivery_authority(connection,
+            owner_principal_id=owner_principal_id, principal_binding_id=principal_binding_id)
+        work = self._work.load_delivery_work(connection, work_id)
+        if (work.spec.audience != "private" or work.spec.owner_principal_id != str(owner_principal_id)
+                or work.spec.principal_binding_id != str(principal_binding_id)):
+            from eva.adapters.postgres.delegated_work import DelegatedWorkNotFound
+            raise DelegatedWorkNotFound("delegated work is absent")
+        if work.retention_until <= now:
+            raise ValueError("private completion result retention has expired")
+        destination = _effective_destination(connection, self._work, work, now)
+        if destination is not None:
+            try:
+                self._destination_authority.validate(destination, now=now)
+            except (OSError, RuntimeError, ValueError) as error:
+                raise ValueError("private completion destination is unavailable") from error
+        return work, destination
 
     def _current(self, work_id: str, *, owner_principal_id: UUID, principal_binding_id: UUID):
         now = self._clock()
         require_utc_second(now, "destination authority time")
-        # Reuse the work store's scoped authority checks in this same transaction.
-        with self._work._engine.begin() as connection:
-            self._work._scope(connection)
-            self._work._validate_owner_binding(connection, owner_principal_id=owner_principal_id,
-                                              principal_binding_id=principal_binding_id)
-            work = self._work._load_locked(connection, work_id)
-            if (work.spec.audience != "private" or work.spec.owner_principal_id != str(owner_principal_id)
-                    or work.spec.principal_binding_id != str(principal_binding_id)):
-                from eva.adapters.postgres.delegated_work import DelegatedWorkNotFound
-                raise DelegatedWorkNotFound("delegated work is absent")
-            if work.retention_until <= now:
-                raise ValueError("private completion result retention has expired")
-            destination = _effective_destination(connection, self._work, work, now)
-            if destination is not None:
-                try:
-                    recipient = PostgresPrivateTelegramRecipient(self._work._engine, self._work.scope,
-                        owner=owner_principal_id, binding=principal_binding_id, bindings=self._bindings_loader)
-                    if recipient.current_chat_id(now=now) != destination.chat_id:
-                        raise ValueError("private completion recipient changed")
-                    destination.validate_current(self._bindings_loader())
-                except (OSError, RuntimeError, ValueError) as error:
-                    raise ValueError("private completion destination is unavailable") from error
-            return work, destination
+        with self._work.delivery_transaction() as connection:
+            return self._current_in_transaction(connection, work_id,
+                owner_principal_id=owner_principal_id,
+                principal_binding_id=principal_binding_id, now=now)
 
     def _context_source_available(self, destination):
         from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, external_timeline_scope
-        source = PostgresOperationalTimeline(self._work._engine, external_timeline_scope(
+        source = PostgresOperationalTimeline(self._work.engine, external_timeline_scope(
             destination.origin_tenant_id, destination.origin_installation_id,
             'delivered result requires its source scope')).events(
                 'conversation:' + destination.origin_message_id)
@@ -217,9 +227,8 @@ class PostgresDelegatedWorkDeliveryStore:
         transcript, delivery, memory copy, model call or execution permission.
         """
         before = min(before, now)
-        with self._work._engine.begin() as connection:
-            self._work._scope(connection)
-            self._work._validate_owner_binding(connection,
+        with self._work.delivery_transaction() as connection:
+            self._work.validate_delivery_authority(connection,
                 owner_principal_id=owner_principal_id, principal_binding_id=principal_binding_id)
             a, claim, runs = (operational_events.alias('delivered_ack'),
                               operational_events.alias('delivered_claim'), delegated_work_runs)
@@ -248,8 +257,7 @@ class PostgresDelegatedWorkDeliveryStore:
                     continue
                 result = self.authorize_delivery(work_id, owner_principal_id=owner_principal_id,
                     principal_binding_id=principal_binding_id)
-                with self._work._engine.begin() as connection:
-                    self._work._scope(connection)
+                with self._work.delivery_transaction() as connection:
                     events = connection.execute(sa.select(operational_events).where(
                         operational_events.c.tenant_id == self._work.scope.tenant_id,
                         operational_events.c.installation_id == self._work.scope.installation_id,
@@ -259,8 +267,8 @@ class PostgresDelegatedWorkDeliveryStore:
                         'DELEGATED_DELIVERY_CLAIMED', 'DELEGATED_DELIVERY_ACKNOWLEDGED']
                         or any(canonical_sha256(e['payload']) != bytes(e['payload_sha256']).hex() for e in events)
                         or events[0]['payload']['data'].get('operation_id') != result.operation_id
-                        or not events[1]['payload']['data'].get('receipt', '').startswith(
-                            'telegram:' + destination.chat_id + ':')):
+                        or not self._destination_authority.receipt_matches(
+                            events[1]['payload']['data'].get('receipt'), destination)):
                     continue
                 # Revalidate authority and retention after the source/proof reads.
                 if self.authorize_delivery(work_id, owner_principal_id=owner_principal_id,
@@ -270,7 +278,8 @@ class PostgresDelegatedWorkDeliveryStore:
                     continue
                 return {'work_id': work_id, 'title': work.title, 'text': result.output,
                         'occurred_at': delivered_at.astimezone(UTC).strftime('%Y-%m-%dT%H:%M:%SZ')}
-            except (ValueError, RuntimeError, OSError):
+            except (ValueError, RuntimeError, OSError) as error:
+                self._record_rejection("acknowledged_context", work_id, error)
                 continue
         return None
 
@@ -316,6 +325,52 @@ class PostgresDelegatedWorkDeliveryStore:
             identity['artifact_sha256'] = artifact_sha256
         return "delegated-delivery:" + canonical_sha256(identity)
 
+    def _claim_authorized(self, connection, authorized, *, owner, binding,
+                          now, lease_seconds, reauthorize):
+        """Fence one immutable send across every completion representation.
+
+        The scoped transaction lock serializes absent-checkpoint insertion as
+        well as expiry. A lease expiring after a possible send is terminally
+        ambiguous; it can never be reclaimed or replayed.
+        """
+        thread = self._delivery_thread(authorized.work_id, authorized.artifact_sha256)
+        lock_key = str(self._work.scope.tenant_id) + ":" + str(self._work.scope.installation_id) + ":" + thread
+        connection.execute(sa.text('SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))'),
+                           {'key': lock_key})
+        state = connection.execute(sa.select(operational_checkpoints).where(
+            operational_checkpoints.c.tenant_id == self._work.scope.tenant_id,
+            operational_checkpoints.c.installation_id == self._work.scope.installation_id,
+            operational_checkpoints.c.thread_id == thread,
+        ).with_for_update()).mappings().one_or_none()
+        if state is not None:
+            if state['phase'] == 'delivery_claimed' and state['deadline'] <= now:
+                transition_timeline_thread(connection, self._work.scope, thread_id=thread,
+                    expected_revision=state['revision'], checkpoint_id='checkpoint:'+thread+':ambiguous',
+                    phase='delivery_ambiguous', status='needs_help', event_type='DELEGATED_DELIVERY_AMBIGUOUS',
+                    occurred_at=now, data={'error_code': 'claim_expired'})
+            return None
+        if reauthorize(connection) != authorized:
+            raise ValueError('delivery authority changed before claim')
+        claim = PrivateWorkDeliveryClaim(authorized.work_id, owner, binding, str(uuid4()),
+            authorized.operation_id, now + timedelta(seconds=lease_seconds),
+            artifact_sha256=authorized.artifact_sha256)
+        insert_initial_timeline_thread(connection, self._work.scope, thread_id=thread,
+            checkpoint_id='checkpoint:'+thread+':claimed', occurred_at=now,
+            data=claim.to_payload(), event_type='DELEGATED_DELIVERY_CLAIMED',
+            phase='delivery_claimed', status='active', deadline=claim.deadline,
+            operation_id=claim.operation_id)
+        return claim
+
+    def _authorize_work_in_transaction(self, connection, work_id, *, owner, binding, now):
+        work, destination = self._current_in_transaction(connection, work_id,
+            owner_principal_id=owner, principal_binding_id=binding, now=now)
+        result = delivery_outcome(work)
+        if destination is None or result is None:
+            return None
+        return AuthorizedWorkDelivery(destination, work.spec.work_id, work.spec.sha256,
+            canonical_sha256(result.to_payload()), result.output,
+            result.state if isinstance(result, WorkFailureNotice) else "completed")
+
     def claim_next(self, *, now: datetime, lease_seconds: int = 120,
                    saved_document_work_id: str | None = None) -> PrivateWorkDeliveryClaim | None:
         """Fence one send. Expired claims become ambiguous, never available again."""
@@ -330,74 +385,63 @@ class PostgresDelegatedWorkDeliveryStore:
             return self._claim_artifact_next(now=now, lease_seconds=lease_seconds,
                                              requested_work_id=saved_document_work_id)
         events, checkpoints = operational_events, operational_checkpoints
+        rejected = set()
         for _ in range(16):
-            with self._work._engine.begin() as connection:
-                self._work._scope(connection)
-                cutoff = failure_notice_cutoff(connection, self._work, now)
-                destinations = _destination_candidates(self._work.scope, now)
-                successor = delegated_work_runs.alias("superseding_work")
-                claims = events.alias("current_delivery_claim")
-                joined = delegated_work_runs.outerjoin(claims, sa.and_(
-                    claims.c.tenant_id == delegated_work_runs.c.tenant_id,
-                    claims.c.installation_id == delegated_work_runs.c.installation_id,
-                    claims.c.payload["data"]["work_id"].astext == delegated_work_runs.c.work_id,
-                    claims.c.event_type == "DELEGATED_DELIVERY_CLAIMED",
-                    claims.c.payload['data']['artifact_sha256'].astext.is_(None),
-                )).outerjoin(checkpoints, sa.and_(
-                    checkpoints.c.tenant_id == delegated_work_runs.c.tenant_id,
-                    checkpoints.c.installation_id == delegated_work_runs.c.installation_id,
-                    checkpoints.c.thread_id == claims.c.thread_id,
-                ))
-                row = connection.execute(sa.select(delegated_work_runs).select_from(joined).where(
-                    delegated_work_runs.c.tenant_id == self._work.scope.tenant_id,
-                    delegated_work_runs.c.installation_id == self._work.scope.installation_id,
-                    delegated_work_runs.c.work_id.in_(sa.select(destinations.c.work_id)),
-                    ~sa.exists(sa.select(1).where(
-                        successor.c.tenant_id == delegated_work_runs.c.tenant_id,
-                        successor.c.installation_id == delegated_work_runs.c.installation_id,
-                        successor.c.parent_task_id == delegated_work_runs.c.work_id)),
-                    deliverable_states(delegated_work_runs, cutoff),
-                    delegated_work_runs.c.stop_requested_at.is_(None),
-                    delegated_work_runs.c.retention_until > now,
-                    sa.or_(checkpoints.c.thread_id.is_(None), sa.and_(
-                        checkpoints.c.phase == "delivery_claimed", checkpoints.c.deadline <= now)),
-                ).order_by(delegated_work_runs.c.created_at, delegated_work_runs.c.work_id)
-                  .limit(1).with_for_update(of=delegated_work_runs, skip_locked=True)).mappings().one_or_none()
-                if row is None:
-                    document = self._claim_document_next(now=now, lease_seconds=lease_seconds)
-                    return document
-                work = self._work._validated(connection, row)
-                destination = _effective_destination(connection, self._work, work, now)
-                result = delivery_outcome(work)
-                if destination is None or result is None:
-                    raise ValueError("completion destination or result disappeared")
-                thread = self._delivery_thread(work.spec.work_id)
-                state = connection.execute(sa.select(checkpoints).where(
-                    checkpoints.c.tenant_id == self._work.scope.tenant_id,
-                    checkpoints.c.installation_id == self._work.scope.installation_id,
-                    checkpoints.c.thread_id == thread,
-                )).mappings().one_or_none()
-                if state is not None:
-                    # A concurrent claimant may commit between selection and this read.
-                    if state["phase"] != "delivery_claimed" or state["deadline"] > now:
-                        continue
-                    transition_timeline_thread(connection, self._work.scope, thread_id=thread,
-                        expected_revision=state["revision"], checkpoint_id="checkpoint:"+thread+":ambiguous",
-                        phase="delivery_ambiguous", status="needs_help", event_type="DELEGATED_DELIVERY_AMBIGUOUS",
-                        occurred_at=now, data={"error_code": "claim_expired"})
-                    continue
-                authorized = AuthorizedWorkDelivery(destination, work.spec.work_id, work.spec.sha256,
-                    canonical_sha256(result.to_payload()), result.output,
-                    result.state if isinstance(result, WorkFailureNotice) else "completed")
-                claim = PrivateWorkDeliveryClaim(work.spec.work_id, UUID(work.spec.owner_principal_id),
-                    UUID(work.spec.principal_binding_id), str(uuid4()), authorized.operation_id,
-                    now + timedelta(seconds=lease_seconds))
-                insert_initial_timeline_thread(connection, self._work.scope, thread_id=thread,
-                    checkpoint_id="checkpoint:"+thread+":claimed", occurred_at=now,
-                    data=claim.to_payload(), event_type="DELEGATED_DELIVERY_CLAIMED",
-                    phase="delivery_claimed", status="active", deadline=claim.deadline,
-                    operation_id=claim.operation_id)
-                return claim
+            work_id = None
+            try:
+                with self._work.delivery_transaction() as connection:
+                    cutoff = failure_notice_cutoff(connection, self._work, now)
+                    destinations = _destination_candidates(self._work.scope, now)
+                    successor = delegated_work_runs.alias("superseding_work")
+                    claims = events.alias("current_delivery_claim")
+                    joined = delegated_work_runs.outerjoin(claims, sa.and_(
+                        claims.c.tenant_id == delegated_work_runs.c.tenant_id,
+                        claims.c.installation_id == delegated_work_runs.c.installation_id,
+                        claims.c.payload["data"]["work_id"].astext == delegated_work_runs.c.work_id,
+                        claims.c.event_type == "DELEGATED_DELIVERY_CLAIMED",
+                        claims.c.payload['data']['artifact_sha256'].astext.is_(None),
+                    )).outerjoin(checkpoints, sa.and_(
+                        checkpoints.c.tenant_id == delegated_work_runs.c.tenant_id,
+                        checkpoints.c.installation_id == delegated_work_runs.c.installation_id,
+                        checkpoints.c.thread_id == claims.c.thread_id,
+                    ))
+                    row = connection.execute(sa.select(delegated_work_runs).select_from(joined).where(
+                        delegated_work_runs.c.tenant_id == self._work.scope.tenant_id,
+                        delegated_work_runs.c.installation_id == self._work.scope.installation_id,
+                        delegated_work_runs.c.work_id.in_(sa.select(destinations.c.work_id)),
+                        delegated_work_runs.c.work_id.not_in(rejected),
+                        ~sa.exists(sa.select(1).where(
+                            successor.c.tenant_id == delegated_work_runs.c.tenant_id,
+                            successor.c.installation_id == delegated_work_runs.c.installation_id,
+                            successor.c.parent_task_id == delegated_work_runs.c.work_id)),
+                        deliverable_states(delegated_work_runs, cutoff),
+                        delegated_work_runs.c.stop_requested_at.is_(None),
+                        delegated_work_runs.c.retention_until > now,
+                        sa.or_(checkpoints.c.thread_id.is_(None), sa.and_(
+                            checkpoints.c.phase == "delivery_claimed", checkpoints.c.deadline <= now)),
+                    ).order_by(delegated_work_runs.c.created_at, delegated_work_runs.c.work_id)
+                      .limit(1).with_for_update(of=delegated_work_runs, skip_locked=True)).mappings().one_or_none()
+                    if row is None:
+                        document = self._claim_document_next(now=now, lease_seconds=lease_seconds)
+                        return document
+                    work_id = row['work_id']
+                    owner, binding = row['owner_principal_id'], row['principal_binding_id']
+                    def reauthorize(conn):
+                        return self._authorize_work_in_transaction(conn, work_id,
+                            owner=owner, binding=binding, now=now)
+                    authorized = reauthorize(connection)
+                    if authorized is None:
+                        raise ValueError("completion destination or result disappeared")
+                    claim = self._claim_authorized(connection, authorized, owner=owner, binding=binding,
+                        now=now, lease_seconds=lease_seconds, reauthorize=reauthorize)
+                    if claim is not None:
+                        return claim
+                    rejected.add(work_id)
+            except (ValueError, RuntimeError, OSError) as error:
+                if work_id is None:
+                    raise
+                self._record_rejection("summary_claim", work_id, error)
+                rejected.add(work_id)
         return None
 
     def _claim_artifact_next(self, *, now, lease_seconds, requested_work_id):
@@ -427,8 +471,7 @@ class PostgresDelegatedWorkDeliveryStore:
             state.c.tenant_id == artifact.c.tenant_id, state.c.installation_id == artifact.c.installation_id,
             state.c.thread_id == artifact.c.thread_id,
         ))
-        with self._work._engine.begin() as connection:
-            self._work._scope(connection)
+        with self._work.delivery_transaction() as connection:
             rows = connection.execute(sa.select(runs).select_from(join).where(
                 runs.c.tenant_id == self._work.scope.tenant_id,
                 runs.c.installation_id == self._work.scope.installation_id,
@@ -457,40 +500,27 @@ class PostgresDelegatedWorkDeliveryStore:
                     continue
                 authorized = self.authorize_delivery(work_id, owner_principal_id=owner,
                     principal_binding_id=binding, artifact_sha256=saved.sha256)
-            except (ValueError, RuntimeError, ConversationConflict):
+            except (ValueError, RuntimeError, OSError, ConversationConflict) as error:
+                self._record_rejection("artifact_authority", work_id, error)
                 continue
-            thread = self._delivery_thread(work_id, saved.sha256)
-            with self._work._engine.begin() as connection:
-                self._work._scope(connection)
-                connection.execute(sa.text('SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))'), {'key': thread})
-                checkpoint = connection.execute(sa.select(checkpoints).where(
-                    checkpoints.c.tenant_id == self._work.scope.tenant_id,
-                    checkpoints.c.installation_id == self._work.scope.installation_id,
-                    checkpoints.c.thread_id == thread,
-                ).with_for_update()).mappings().one_or_none()
-                if checkpoint is not None:
-                    if checkpoint['phase'] == 'delivery_claimed' and checkpoint['deadline'] <= now:
-                        transition_timeline_thread(connection, self._work.scope, thread_id=thread,
-                            expected_revision=checkpoint['revision'], checkpoint_id='checkpoint:'+thread+':ambiguous',
-                            phase='delivery_ambiguous', status='needs_help', event_type='DELEGATED_DELIVERY_AMBIGUOUS',
-                            occurred_at=now, data={'error_code': 'claim_expired'})
-                    continue
-                if self.authorize_delivery(work_id, owner_principal_id=owner,
-                        principal_binding_id=binding, artifact_sha256=saved.sha256) != authorized:
-                    raise ValueError('saved result authority changed before claim')
-                claim = PrivateWorkDeliveryClaim(work_id, owner, binding, str(uuid4()),
-                    authorized.operation_id, now + timedelta(seconds=lease_seconds), artifact_sha256=saved.sha256)
-                insert_initial_timeline_thread(connection, self._work.scope, thread_id=thread,
-                    checkpoint_id='checkpoint:'+thread+':claimed', occurred_at=now,
-                    data=claim.to_payload(), event_type='DELEGATED_DELIVERY_CLAIMED',
-                    phase='delivery_claimed', status='active', deadline=claim.deadline, operation_id=claim.operation_id)
-                return claim
+            if authorized is None:
+                continue
+            try:
+                with self._work.delivery_transaction() as connection:
+                    claim = self._claim_authorized(connection, authorized, owner=owner, binding=binding,
+                        now=now, lease_seconds=lease_seconds,
+                        reauthorize=lambda _connection: self.authorize_delivery(work_id,
+                            owner_principal_id=owner, principal_binding_id=binding,
+                            artifact_sha256=saved.sha256))
+                    if claim is not None:
+                        return claim
+            except (ValueError, RuntimeError, OSError) as error:
+                self._record_rejection("artifact_claim", work_id, error)
         return None
 
     def _document_authorized(self, work_id, owner, binding):
-        with self._work._engine.begin() as connection:
-            self._work._scope(connection)
-            self._work._validate_owner_binding(connection, owner_principal_id=owner,
+        with self._work.delivery_transaction() as connection:
+            self._work.validate_delivery_authority(connection, owner_principal_id=owner,
                                               principal_binding_id=binding)
         result = self._documents.load(work_id)
         if result is None:
@@ -499,14 +529,12 @@ class PostgresDelegatedWorkDeliveryStore:
         if (route['owner_principal_id'] != str(owner)
                 or route['principal_binding_id'] != str(binding)):
             raise ValueError('document completion owner differs')
-        if route['channel'] != 'telegram_private':
+        if not self._destination_authority.accepts_route(route):
             return None
         destination = PrivateWorkDestination.from_payload(route['destination'])
-        destination.validate_current(self._bindings_loader())
-        recipient = PostgresPrivateTelegramRecipient(self._work._engine, self._work.scope,
-            owner=owner, binding=binding, bindings=self._bindings_loader)
-        if recipient.current_chat_id(now=self._clock()) != destination.chat_id:
-            raise ValueError('document completion recipient changed')
+        if (destination.owner_principal_id != owner or destination.principal_binding_id != binding):
+            raise ValueError('document completion destination owner differs')
+        self._destination_authority.validate(destination, now=self._clock())
         return AuthorizedWorkDelivery(destination, work_id, result.definition_sha256,
                                       result.result_sha256, result.output, result.outcome)
 
@@ -517,42 +545,25 @@ class PostgresDelegatedWorkDeliveryStore:
             # A stopped/revoked document cannot suppress unrelated eligible work.
             try:
                 result = self._documents.load(work_id)
-                if result is None or result.binding['channel'] != 'telegram_private':
+                if result is None or not self._destination_authority.accepts_route(result.binding):
                     continue
                 owner = UUID(result.binding['owner_principal_id'])
                 binding = UUID(result.binding['principal_binding_id'])
                 authorized = self._document_authorized(work_id, owner, binding)
-            except (ValueError, RuntimeError):
+            except (ValueError, RuntimeError, OSError) as error:
+                self._record_rejection("document_authority", work_id, error)
                 continue
             if authorized is None:
                 continue
-            thread = self._delivery_thread(work_id)
-            with self._work._engine.begin() as connection:
-                self._work._scope(connection)
-                connection.execute(sa.text('SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))'),
-                                   {'key': thread})
-                state = connection.execute(sa.select(operational_checkpoints).where(
-                    operational_checkpoints.c.tenant_id == self._work.scope.tenant_id,
-                    operational_checkpoints.c.installation_id == self._work.scope.installation_id,
-                    operational_checkpoints.c.thread_id == thread,
-                ).with_for_update()).mappings().one_or_none()
-                if state is not None:
-                    if state['phase'] == 'delivery_claimed' and state['deadline'] <= now:
-                        transition_timeline_thread(connection, self._work.scope, thread_id=thread,
-                            expected_revision=state['revision'], checkpoint_id='checkpoint:'+thread+':ambiguous',
-                            phase='delivery_ambiguous', status='needs_help', event_type='DELEGATED_DELIVERY_AMBIGUOUS',
-                            occurred_at=now, data={'error_code': 'claim_expired'})
-                    continue
-                if self._document_authorized(work_id, owner, binding) != authorized:
-                    raise ValueError('document delivery authority changed before claim')
-                claim = PrivateWorkDeliveryClaim(work_id, owner, binding, str(uuid4()),
-                    authorized.operation_id, now + timedelta(seconds=lease_seconds))
-                insert_initial_timeline_thread(connection, self._work.scope, thread_id=thread,
-                    checkpoint_id='checkpoint:'+thread+':claimed', occurred_at=now,
-                    data=claim.to_payload(), event_type='DELEGATED_DELIVERY_CLAIMED',
-                    phase='delivery_claimed', status='active', deadline=claim.deadline,
-                    operation_id=claim.operation_id)
-                return claim
+            try:
+                with self._work.delivery_transaction() as connection:
+                    claim = self._claim_authorized(connection, authorized, owner=owner, binding=binding,
+                        now=now, lease_seconds=lease_seconds,
+                        reauthorize=lambda _connection: self._document_authorized(work_id, owner, binding))
+                    if claim is not None:
+                        return claim
+            except (ValueError, RuntimeError, OSError) as error:
+                self._record_rejection("document_claim", work_id, error)
         return None
 
     def _finish(self, claim: PrivateWorkDeliveryClaim, *, now: datetime,
@@ -566,8 +577,7 @@ class PostgresDelegatedWorkDeliveryStore:
         if (receipt is None) == (error_code is None):
             raise ValueError("delivery finish requires one disposition")
         thread = self._delivery_thread(claim.work_id, claim.artifact_sha256)
-        with self._work._engine.begin() as connection:
-            self._work._scope(connection)
+        with self._work.delivery_transaction() as connection:
             state = connection.execute(sa.select(operational_checkpoints).where(
                 operational_checkpoints.c.tenant_id == self._work.scope.tenant_id,
                 operational_checkpoints.c.installation_id == self._work.scope.installation_id,
@@ -612,8 +622,7 @@ class PostgresDelegatedWorkDeliveryStore:
                                           principal_binding_id=principal_binding_id)
         if destination is None:
             return "unbound"
-        with self._work._engine.begin() as connection:
-            self._work._scope(connection)
+        with self._work.delivery_transaction() as connection:
             phase = connection.scalar(sa.select(operational_checkpoints.c.phase).where(
                 operational_checkpoints.c.tenant_id == self._work.scope.tenant_id,
                 operational_checkpoints.c.installation_id == self._work.scope.installation_id,
@@ -622,11 +631,11 @@ class PostgresDelegatedWorkDeliveryStore:
             from eva.adapters.postgres.saved_work_artifacts import saved_work_artifacts
             try:
                 artifact = saved_work_artifacts(self._work, work)
-            except (ValueError, RuntimeError, ConversationConflict):
+            except (ValueError, RuntimeError, OSError, ConversationConflict) as error:
+                self._record_rejection("saved_result_status", work_id, error)
                 return 'saved_result_unavailable'
             if artifact is not None:
-                with self._work._engine.begin() as connection:
-                    self._work._scope(connection)
+                with self._work.delivery_transaction() as connection:
                     phase = connection.scalar(sa.select(operational_checkpoints.c.phase).where(
                         operational_checkpoints.c.tenant_id == self._work.scope.tenant_id,
                         operational_checkpoints.c.installation_id == self._work.scope.installation_id,

@@ -1,0 +1,20 @@
+[
+  {
+    "label": "protocol",
+    "test": "development/tests/postgres/test_delegated_delivery_protocol.py",
+    "exitCode": 0,
+    "output": ".......                                                                  [100%]\n7 passed in 6.03s\n"
+  },
+  {
+    "label": "artifact",
+    "test": "development/tests/postgres/test_saved_work_artifact_delivery.py",
+    "exitCode": 0,
+    "output": "........                                                                 [100%]\n8 passed in 8.16s\n"
+  },
+  {
+    "label": "document",
+    "test": "development/tests/postgres/test_document_completion.py",
+    "exitCode": 0,
+    "output": "...............                                                          [100%]\n15 passed in 12.28s\n"
+  }
+]

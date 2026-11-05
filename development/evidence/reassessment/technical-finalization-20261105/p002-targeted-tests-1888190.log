@@ -1,0 +1,154 @@
+
+MODULE development/tests/postgres/test_delegated_delivery_protocol.py
+......                                                                   [100%]
+6 passed in 4.54s
+
+MODULE development/tests/postgres/test_document_completion.py
+..FFFF.........                                                          [100%]
+=================================== FAILURES ===================================
+_ test_current_authority_changes_block_before_claim_and_between_parts[pairing] _
+
+completion = {'_': UUID('e50b3841-a260-5bf5-b8de-d6418f899a24'), 'adapter': <eva.providers.document_task_actions.DocumentTaskAction...etime(2026, 8, 26, 12, 0, tzinfo=datetime.timezone.utc)], 'binding': UUID('a939caa1-c432-58f4-aca8-94eb4a201074'), ...}
+change = 'pairing'
+
+    @pytest.mark.parametrize('change', ['pairing', 'binding', 'stop', 'mandate'])
+    def test_current_authority_changes_block_before_claim_and_between_parts(completion, change):
+        c = completion
+        turn, item = c['start'](content='x'*7000); c['finish'](item)
+        sent = []
+        def revoke():
+            if change == 'pairing':
+                c['bindings'][0] = TelegramPrincipalBindings((TelegramPrincipalBinding(99, str(c['owner']), ('99',), str(c['binding'])),))
+                assert c['bindings'][0].resolve(99, '99') == str(c['owner'])
+            elif change == 'binding':
+                with c['engine'].begin() as connection:
+                    connection.execute(sa.update(principal_bindings).where(principal_bindings.c.principal_binding_id==c['binding']).values(status='revoked'))
+            elif change == 'stop':
+                c['p']['journal'].request_turn_stop(turn)
+            else:
+                c['mandate'].write_text(json.dumps({**c['p']['mandate'], 'owner_principal_id':str(c['owner']), 'enabled':False}))
+        class Transport:
+            def deliver_text(self, message, *, expected_chat_id, reply_to_message_id):
+                assert expected_chat_id == '42'
+                assert reply_to_message_id == int(turn.message_id.rsplit(':', 1)[1])
+                sent.append(message); revoke(); return '42:1'
+        worker = DelegatedWorkDeliveryWorker(c['delivery'], Transport(), clock=lambda:c['at'][0])
+        assert worker.run_once() == 'ambiguous'
+>       assert len(sent)==1 and sent[0].startswith('Documentproject afgerond')
+E       AssertionError: assert (1 == 1 and False)
+E        +  where 1 = len(['Private documents\n\n/proof-state/09c8f13e87dc05e95305d715ed2a6f8a8516f8dfc85b8db948f3c4e4b56c0a37-first.txt\nFirst ...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'])
+E        +  and   False = <built-in method startswith of str object at 0x1e27bbd0>('Documentproject afgerond')
+E        +    where <built-in method startswith of str object at 0x1e27bbd0> = 'Private documents\n\n/proof-state/09c8f13e87dc05e95305d715ed2a6f8a8516f8dfc85b8db948f3c4e4b56c0a37-first.txt\nFirst p...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.startswith
+
+development/tests/postgres/test_document_completion.py:156: AssertionError
+_ test_current_authority_changes_block_before_claim_and_between_parts[binding] _
+
+completion = {'_': UUID('0197cc27-c2a1-58c8-b593-5b73d7b93c03'), 'adapter': <eva.providers.document_task_actions.DocumentTaskAction...etime(2026, 8, 26, 12, 0, tzinfo=datetime.timezone.utc)], 'binding': UUID('ba5da620-92fd-5c73-9cd2-6bb31728fc71'), ...}
+change = 'binding'
+
+    @pytest.mark.parametrize('change', ['pairing', 'binding', 'stop', 'mandate'])
+    def test_current_authority_changes_block_before_claim_and_between_parts(completion, change):
+        c = completion
+        turn, item = c['start'](content='x'*7000); c['finish'](item)
+        sent = []
+        def revoke():
+            if change == 'pairing':
+                c['bindings'][0] = TelegramPrincipalBindings((TelegramPrincipalBinding(99, str(c['owner']), ('99',), str(c['binding'])),))
+                assert c['bindings'][0].resolve(99, '99') == str(c['owner'])
+            elif change == 'binding':
+                with c['engine'].begin() as connection:
+                    connection.execute(sa.update(principal_bindings).where(principal_bindings.c.principal_binding_id==c['binding']).values(status='revoked'))
+            elif change == 'stop':
+                c['p']['journal'].request_turn_stop(turn)
+            else:
+                c['mandate'].write_text(json.dumps({**c['p']['mandate'], 'owner_principal_id':str(c['owner']), 'enabled':False}))
+        class Transport:
+            def deliver_text(self, message, *, expected_chat_id, reply_to_message_id):
+                assert expected_chat_id == '42'
+                assert reply_to_message_id == int(turn.message_id.rsplit(':', 1)[1])
+                sent.append(message); revoke(); return '42:1'
+        worker = DelegatedWorkDeliveryWorker(c['delivery'], Transport(), clock=lambda:c['at'][0])
+        assert worker.run_once() == 'ambiguous'
+>       assert len(sent)==1 and sent[0].startswith('Documentproject afgerond')
+E       AssertionError: assert (1 == 1 and False)
+E        +  where 1 = len(['Private documents\n\n/proof-state/757ed485ddbc5ac09cbc3fa0cb2fc7679d994957306b35b74164477fc98d65ab-first.txt\nFirst ...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'])
+E        +  and   False = <built-in method startswith of str object at 0x1e162940>('Documentproject afgerond')
+E        +    where <built-in method startswith of str object at 0x1e162940> = 'Private documents\n\n/proof-state/757ed485ddbc5ac09cbc3fa0cb2fc7679d994957306b35b74164477fc98d65ab-first.txt\nFirst p...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.startswith
+
+development/tests/postgres/test_document_completion.py:156: AssertionError
+__ test_current_authority_changes_block_before_claim_and_between_parts[stop] ___
+
+completion = {'_': UUID('a3c121d0-6939-53fb-9938-57172bd11ac0'), 'adapter': <eva.providers.document_task_actions.DocumentTaskAction...etime(2026, 8, 26, 12, 0, tzinfo=datetime.timezone.utc)], 'binding': UUID('0d2d1e47-5811-5e2f-b7b6-7e071bfbdc16'), ...}
+change = 'stop'
+
+    @pytest.mark.parametrize('change', ['pairing', 'binding', 'stop', 'mandate'])
+    def test_current_authority_changes_block_before_claim_and_between_parts(completion, change):
+        c = completion
+        turn, item = c['start'](content='x'*7000); c['finish'](item)
+        sent = []
+        def revoke():
+            if change == 'pairing':
+                c['bindings'][0] = TelegramPrincipalBindings((TelegramPrincipalBinding(99, str(c['owner']), ('99',), str(c['binding'])),))
+                assert c['bindings'][0].resolve(99, '99') == str(c['owner'])
+            elif change == 'binding':
+                with c['engine'].begin() as connection:
+                    connection.execute(sa.update(principal_bindings).where(principal_bindings.c.principal_binding_id==c['binding']).values(status='revoked'))
+            elif change == 'stop':
+                c['p']['journal'].request_turn_stop(turn)
+            else:
+                c['mandate'].write_text(json.dumps({**c['p']['mandate'], 'owner_principal_id':str(c['owner']), 'enabled':False}))
+        class Transport:
+            def deliver_text(self, message, *, expected_chat_id, reply_to_message_id):
+                assert expected_chat_id == '42'
+                assert reply_to_message_id == int(turn.message_id.rsplit(':', 1)[1])
+                sent.append(message); revoke(); return '42:1'
+        worker = DelegatedWorkDeliveryWorker(c['delivery'], Transport(), clock=lambda:c['at'][0])
+        assert worker.run_once() == 'ambiguous'
+>       assert len(sent)==1 and sent[0].startswith('Documentproject afgerond')
+E       AssertionError: assert (1 == 1 and False)
+E        +  where 1 = len(['Private documents\n\n/proof-state/7ab57e602b05e514ccfc853e7a8151bef01d3ab934fdebe5412e0200e59169f3-first.txt\nFirst ...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'])
+E        +  and   False = <built-in method startswith of str object at 0x1e267810>('Documentproject afgerond')
+E        +    where <built-in method startswith of str object at 0x1e267810> = 'Private documents\n\n/proof-state/7ab57e602b05e514ccfc853e7a8151bef01d3ab934fdebe5412e0200e59169f3-first.txt\nFirst p...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.startswith
+
+development/tests/postgres/test_document_completion.py:156: AssertionError
+_ test_current_authority_changes_block_before_claim_and_between_parts[mandate] _
+
+completion = {'_': UUID('0cb95140-791b-5aa5-9d53-1f429751985a'), 'adapter': <eva.providers.document_task_actions.DocumentTaskAction...etime(2026, 8, 26, 12, 0, tzinfo=datetime.timezone.utc)], 'binding': UUID('a1bc0adc-da02-520d-a779-afe39c566a5d'), ...}
+change = 'mandate'
+
+    @pytest.mark.parametrize('change', ['pairing', 'binding', 'stop', 'mandate'])
+    def test_current_authority_changes_block_before_claim_and_between_parts(completion, change):
+        c = completion
+        turn, item = c['start'](content='x'*7000); c['finish'](item)
+        sent = []
+        def revoke():
+            if change == 'pairing':
+                c['bindings'][0] = TelegramPrincipalBindings((TelegramPrincipalBinding(99, str(c['owner']), ('99',), str(c['binding'])),))
+                assert c['bindings'][0].resolve(99, '99') == str(c['owner'])
+            elif change == 'binding':
+                with c['engine'].begin() as connection:
+                    connection.execute(sa.update(principal_bindings).where(principal_bindings.c.principal_binding_id==c['binding']).values(status='revoked'))
+            elif change == 'stop':
+                c['p']['journal'].request_turn_stop(turn)
+            else:
+                c['mandate'].write_text(json.dumps({**c['p']['mandate'], 'owner_principal_id':str(c['owner']), 'enabled':False}))
+        class Transport:
+            def deliver_text(self, message, *, expected_chat_id, reply_to_message_id):
+                assert expected_chat_id == '42'
+                assert reply_to_message_id == int(turn.message_id.rsplit(':', 1)[1])
+                sent.append(message); revoke(); return '42:1'
+        worker = DelegatedWorkDeliveryWorker(c['delivery'], Transport(), clock=lambda:c['at'][0])
+        assert worker.run_once() == 'ambiguous'
+>       assert len(sent)==1 and sent[0].startswith('Documentproject afgerond')
+E       AssertionError: assert (1 == 1 and False)
+E        +  where 1 = len(['Private documents\n\n/proof-state/98a2f27e74b8661c315f4fc28293d677d29ff675e69b12715d007974eb5e6fae-first.txt\nFirst ...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'])
+E        +  and   False = <built-in method startswith of str object at 0x1e164ff0>('Documentproject afgerond')
+E        +    where <built-in method startswith of str object at 0x1e164ff0> = 'Private documents\n\n/proof-state/98a2f27e74b8661c315f4fc28293d677d29ff675e69b12715d007974eb5e6fae-first.txt\nFirst p...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.startswith
+
+development/tests/postgres/test_document_completion.py:156: AssertionError
+=========================== short test summary info ============================
+FAILED development/tests/postgres/test_document_completion.py::test_current_authority_changes_block_before_claim_and_between_parts[pairing]
+FAILED development/tests/postgres/test_document_completion.py::test_current_authority_changes_block_before_claim_and_between_parts[binding]
+FAILED development/tests/postgres/test_document_completion.py::test_current_authority_changes_block_before_claim_and_between_parts[stop]
+FAILED development/tests/postgres/test_document_completion.py::test_current_authority_changes_block_before_claim_and_between_parts[mandate]
+4 failed, 11 passed in 12.15s

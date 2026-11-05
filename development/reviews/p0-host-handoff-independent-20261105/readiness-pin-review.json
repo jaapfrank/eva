@@ -1,0 +1,29 @@
+{
+  "contract": "EvaIndependentTechnicalReview/v1",
+  "recordedAt": "2026-11-05T14:48:44.093201+00:00",
+  "reviewer": {
+    "identity": "/root/independent_review",
+    "separateFromImplementer": true
+  },
+  "scope": "One stale source hash in host-handoff readiness probe; not installation approval or claim-state override",
+  "decision": "GO",
+  "before": {
+    "path": "/var/lib/eva2/finalization-20261104/host-handoff/install/readiness-probe.before-pin-rebind.py",
+    "sha256": "076a714f20319c330e7d46890b2ba1118a3c0d9b0294f71f2cd05620eeebfe02"
+  },
+  "candidate": {
+    "path": "/var/lib/eva2/finalization-20261104/host-handoff/install/readiness-probe.candidate-pin-rebind.py",
+    "sha256": "f02eff8a47adadabf47d4c66928eb3324388411782736f604895320809d65a59"
+  },
+  "verification": [
+    "Independent byte comparison: before contains old hash exactly once; replacing only it yields the entire candidate byte-for-byte.",
+    "Independent docker-exec Python readback in current core and worker: runner hash=156496d419c6ef81a02f8bec424b42ec09ba25b36c32f3dfd8cc2622c93b03eb; both other programming pins unchanged.",
+    "Compared HEAD runner to local installed-source runner: change permits a caller-owned connection in recorded-action-slot reading, without changing cleanup/fingerprint semantics used by this readiness probe.",
+    "All authority, marker, hash, chain, lease and active-work checks remain identical."
+  ],
+  "limitations": [
+    "Activate only via parent-coordinated installation sequence; rerun full readiness probe against current state.",
+    "This review does not authorize ignoring any newly discovered stale pin, active lease or unknown marker.",
+    "No production state modified by reviewer."
+  ]
+}

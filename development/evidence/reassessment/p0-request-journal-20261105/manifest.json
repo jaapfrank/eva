@@ -1,0 +1,31 @@
+{
+  "contract": "EvaRuntimeRepairRequestJournalCandidate/v1",
+  "source": "src/eva/adapters/postgres/component_improvement_actions.py",
+  "baselineSha256": "53a97ac0cf537260f954a4a95d0c88f2c1909619678419c68ae3073fd231274b",
+  "candidateSha256": "078ece35ecd58c1d5a23c98f8d64c02a1c83a140df8d6af8c98f6ea1997c0a17",
+  "patchSha256": "effa6cfd2991debd557a7ac60a44ac9bd11f76d978ef0a7e1f3306f1f0d88549",
+  "preservedForeignDirtyHunks": [
+    "candidate_invalid rejection",
+    "not_submitted status"
+  ],
+  "tests": {
+    "passed": 32,
+    "failed": 0,
+    "seconds": 8.09,
+    "realDisposablePostgres": "16.13",
+    "modelCalls": 0,
+    "productionDatabaseUsed": false
+  },
+  "testFiles": {
+    "development/tests/application/test_runtime_repair_request_journal.py": "fe2223273b17f51cdefc47ab840a2bd3c621f57823be230f2eefa4b6d98f8551",
+    "development/tests/postgres/test_runtime_repair_request_fence_postgres.py": "cf03f9f57d370310b012f928883c0d0ffabfa250ef4cea62682cfbb98329e3bb"
+  },
+  "historicalHTTP400Reconciled": false,
+  "installed": false,
+  "independentReview": "development/reviews/p0-repair-journal-independent-20261105/review.json",
+  "independentValidation": {
+    "passed": 36,
+    "failed": 0,
+    "seconds": 9.87
+  }
+}

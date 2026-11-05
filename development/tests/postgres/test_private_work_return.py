@@ -1,3 +1,4 @@
+from eva.adapters.postgres.telegram_delivery_authority import TelegramDeliveryAuthority
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
 from datetime import timedelta
@@ -144,7 +145,7 @@ def test_voice_origin_never_becomes_a_dashboard_or_telegram_return(delegated_eng
     from eva.adapters.postgres.delegated_work_delivery import PostgresDelegatedWorkDeliveryStore
     from eva.application.telegram_ingress import TelegramPrincipalBindings
     telegram = PostgresDelegatedWorkDeliveryStore(service.store,
-        bindings_loader=lambda:TelegramPrincipalBindings(()), clock=lambda:at[0])
+        destination_authority=TelegramDeliveryAuthority(service.store.engine, service.store.scope, lambda:TelegramPrincipalBindings(())), clock=lambda:at[0])
     assert telegram.authorize_delivery(spec.work_id, **service._owner) is None
     assert service.private_return(turn, 'poll')['result']['output'] == saved.output
 

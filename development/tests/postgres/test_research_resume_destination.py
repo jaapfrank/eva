@@ -1,4 +1,5 @@
 """Owner controls resume research without losing its original private return route."""
+from eva.adapters.postgres.telegram_delivery_authority import TelegramDeliveryAuthority
 from datetime import timedelta
 
 import pytest
@@ -39,7 +40,7 @@ def test_dashboard_resume_preserves_only_existing_research_destination(database,
     clock[0] += timedelta(seconds=1)
     resumed = service.execute('resume', dashboard, work_id=first, request_key='resume-first')
     successor = resumed['work']['work_id']
-    delivery = PostgresDelegatedWorkDeliveryStore(store, bindings_loader=lambda: bindings, clock=lambda: clock[0])
+    delivery = PostgresDelegatedWorkDeliveryStore(store, destination_authority=TelegramDeliveryAuthority(store.engine, store.scope, lambda: bindings), clock=lambda: clock[0])
     assert delivery.load(successor, **service._owner) == (destination if original_return else None)
     assert service.execute('resume', dashboard, work_id=first, request_key='resume-first')['created'] is False
     assert store.load(first, **service._owner).spec == original_spec

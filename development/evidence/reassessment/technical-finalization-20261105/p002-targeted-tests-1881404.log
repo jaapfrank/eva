@@ -1,0 +1,185 @@
+
+MODULE development/tests/postgres/test_delegated_delivery_store.py
+.........................                                                [100%]
+25 passed in 6.17s
+
+MODULE development/tests/postgres/test_delegated_delivery_protocol.py
+....                                                                     [100%]
+4 passed in 3.71s
+
+MODULE development/tests/postgres/test_saved_work_artifact_delivery.py
+........                                                                 [100%]
+8 passed in 7.21s
+
+MODULE development/tests/postgres/test_document_completion.py
+..FFFF.......F.                                                          [100%]
+=================================== FAILURES ===================================
+_ test_current_authority_changes_block_before_claim_and_between_parts[pairing] _
+
+completion = {'_': UUID('21f9d057-7b54-5de0-8f19-e51a555ae14b'), 'adapter': <eva.providers.document_task_actions.DocumentTaskAction...etime(2026, 8, 26, 12, 0, tzinfo=datetime.timezone.utc)], 'binding': UUID('5f3b2553-fccf-5df6-b07c-365a90b16a69'), ...}
+change = 'pairing'
+
+    @pytest.mark.parametrize('change', ['pairing', 'binding', 'stop', 'mandate'])
+    def test_current_authority_changes_block_before_claim_and_between_parts(completion, change):
+        c = completion
+        turn, item = c['start'](content='x'*7000); c['finish'](item)
+        sent = []
+        def revoke():
+            if change == 'pairing':
+                c['bindings'][0] = TelegramPrincipalBindings((TelegramPrincipalBinding(99, str(c['owner']), ('99',), str(c['binding'])),))
+                assert c['bindings'][0].resolve(99, '99') == str(c['owner'])
+            elif change == 'binding':
+                with c['engine'].begin() as connection:
+                    connection.execute(sa.update(principal_bindings).where(principal_bindings.c.principal_binding_id==c['binding']).values(status='revoked'))
+            elif change == 'stop':
+                c['p']['journal'].request_turn_stop(turn)
+            else:
+                c['mandate'].write_text(json.dumps({**c['p']['mandate'], 'owner_principal_id':str(c['owner']), 'enabled':False}))
+        class Transport:
+            def deliver_text(self, message, *, expected_chat_id):
+                assert expected_chat_id == '42'
+                sent.append(message); revoke(); return '42:1'
+        worker = DelegatedWorkDeliveryWorker(c['delivery'], Transport(), clock=lambda:c['at'][0])
+        assert worker.run_once() == 'ambiguous'
+>       assert len(sent)==1 and sent[0].startswith('Documentproject afgerond')
+E       assert (0 == 1)
+E        +  where 0 = len([])
+
+development/tests/postgres/test_document_completion.py:155: AssertionError
+_ test_current_authority_changes_block_before_claim_and_between_parts[binding] _
+
+completion = {'_': UUID('5568f570-6f38-56dc-9349-3c72c65c763d'), 'adapter': <eva.providers.document_task_actions.DocumentTaskAction...etime(2026, 8, 26, 12, 0, tzinfo=datetime.timezone.utc)], 'binding': UUID('27e86ead-566a-5a02-ba49-4c169b583483'), ...}
+change = 'binding'
+
+    @pytest.mark.parametrize('change', ['pairing', 'binding', 'stop', 'mandate'])
+    def test_current_authority_changes_block_before_claim_and_between_parts(completion, change):
+        c = completion
+        turn, item = c['start'](content='x'*7000); c['finish'](item)
+        sent = []
+        def revoke():
+            if change == 'pairing':
+                c['bindings'][0] = TelegramPrincipalBindings((TelegramPrincipalBinding(99, str(c['owner']), ('99',), str(c['binding'])),))
+                assert c['bindings'][0].resolve(99, '99') == str(c['owner'])
+            elif change == 'binding':
+                with c['engine'].begin() as connection:
+                    connection.execute(sa.update(principal_bindings).where(principal_bindings.c.principal_binding_id==c['binding']).values(status='revoked'))
+            elif change == 'stop':
+                c['p']['journal'].request_turn_stop(turn)
+            else:
+                c['mandate'].write_text(json.dumps({**c['p']['mandate'], 'owner_principal_id':str(c['owner']), 'enabled':False}))
+        class Transport:
+            def deliver_text(self, message, *, expected_chat_id):
+                assert expected_chat_id == '42'
+                sent.append(message); revoke(); return '42:1'
+        worker = DelegatedWorkDeliveryWorker(c['delivery'], Transport(), clock=lambda:c['at'][0])
+        assert worker.run_once() == 'ambiguous'
+>       assert len(sent)==1 and sent[0].startswith('Documentproject afgerond')
+E       assert (0 == 1)
+E        +  where 0 = len([])
+
+development/tests/postgres/test_document_completion.py:155: AssertionError
+__ test_current_authority_changes_block_before_claim_and_between_parts[stop] ___
+
+completion = {'_': UUID('bed94351-1992-5494-930b-f3d0b13ae13c'), 'adapter': <eva.providers.document_task_actions.DocumentTaskAction...etime(2026, 8, 26, 12, 0, tzinfo=datetime.timezone.utc)], 'binding': UUID('516987c6-7f0f-5db2-9fea-bd0845fa6301'), ...}
+change = 'stop'
+
+    @pytest.mark.parametrize('change', ['pairing', 'binding', 'stop', 'mandate'])
+    def test_current_authority_changes_block_before_claim_and_between_parts(completion, change):
+        c = completion
+        turn, item = c['start'](content='x'*7000); c['finish'](item)
+        sent = []
+        def revoke():
+            if change == 'pairing':
+                c['bindings'][0] = TelegramPrincipalBindings((TelegramPrincipalBinding(99, str(c['owner']), ('99',), str(c['binding'])),))
+                assert c['bindings'][0].resolve(99, '99') == str(c['owner'])
+            elif change == 'binding':
+                with c['engine'].begin() as connection:
+                    connection.execute(sa.update(principal_bindings).where(principal_bindings.c.principal_binding_id==c['binding']).values(status='revoked'))
+            elif change == 'stop':
+                c['p']['journal'].request_turn_stop(turn)
+            else:
+                c['mandate'].write_text(json.dumps({**c['p']['mandate'], 'owner_principal_id':str(c['owner']), 'enabled':False}))
+        class Transport:
+            def deliver_text(self, message, *, expected_chat_id):
+                assert expected_chat_id == '42'
+                sent.append(message); revoke(); return '42:1'
+        worker = DelegatedWorkDeliveryWorker(c['delivery'], Transport(), clock=lambda:c['at'][0])
+        assert worker.run_once() == 'ambiguous'
+>       assert len(sent)==1 and sent[0].startswith('Documentproject afgerond')
+E       assert (0 == 1)
+E        +  where 0 = len([])
+
+development/tests/postgres/test_document_completion.py:155: AssertionError
+_ test_current_authority_changes_block_before_claim_and_between_parts[mandate] _
+
+completion = {'_': UUID('3ebbefd4-9952-5c62-af36-395aa7966a73'), 'adapter': <eva.providers.document_task_actions.DocumentTaskAction...etime(2026, 8, 26, 12, 0, tzinfo=datetime.timezone.utc)], 'binding': UUID('9c598b4d-11c4-5466-9768-a5bb9c6f5bc3'), ...}
+change = 'mandate'
+
+    @pytest.mark.parametrize('change', ['pairing', 'binding', 'stop', 'mandate'])
+    def test_current_authority_changes_block_before_claim_and_between_parts(completion, change):
+        c = completion
+        turn, item = c['start'](content='x'*7000); c['finish'](item)
+        sent = []
+        def revoke():
+            if change == 'pairing':
+                c['bindings'][0] = TelegramPrincipalBindings((TelegramPrincipalBinding(99, str(c['owner']), ('99',), str(c['binding'])),))
+                assert c['bindings'][0].resolve(99, '99') == str(c['owner'])
+            elif change == 'binding':
+                with c['engine'].begin() as connection:
+                    connection.execute(sa.update(principal_bindings).where(principal_bindings.c.principal_binding_id==c['binding']).values(status='revoked'))
+            elif change == 'stop':
+                c['p']['journal'].request_turn_stop(turn)
+            else:
+                c['mandate'].write_text(json.dumps({**c['p']['mandate'], 'owner_principal_id':str(c['owner']), 'enabled':False}))
+        class Transport:
+            def deliver_text(self, message, *, expected_chat_id):
+                assert expected_chat_id == '42'
+                sent.append(message); revoke(); return '42:1'
+        worker = DelegatedWorkDeliveryWorker(c['delivery'], Transport(), clock=lambda:c['at'][0])
+        assert worker.run_once() == 'ambiguous'
+>       assert len(sent)==1 and sent[0].startswith('Documentproject afgerond')
+E       assert (0 == 1)
+E        +  where 0 = len([])
+
+development/tests/postgres/test_document_completion.py:155: AssertionError
+_______ test_transport_uncertainty_preserves_local_result_without_retry ________
+
+completion = {'_': UUID('73e1a438-b177-5b03-8982-f242c5db777b'), 'adapter': <eva.providers.document_task_actions.DocumentTaskAction...etime(2026, 8, 26, 12, 0, tzinfo=datetime.timezone.utc)], 'binding': UUID('179c9d30-f8df-567f-b1c5-1a060f35ae05'), ...}
+
+    def test_transport_uncertainty_preserves_local_result_without_retry(completion):
+        c=completion
+        _,item=c['start']();c['finish'](item)
+        class Uncertain:
+            calls=0
+            def deliver_text(self,*args,**kwargs):
+                self.calls+=1
+                raise TimeoutError('synthetic transport uncertainty')
+        transport=Uncertain()
+        worker=DelegatedWorkDeliveryWorker(c['delivery'],transport,clock=lambda:c['at'][0])
+        assert worker.run_once()=='ambiguous'
+>       assert worker.run_once()=='idle' and transport.calls==1
+E       AssertionError: assert ('idle' == 'idle'
+E         
+E           idle and 0 == 1)
+E        +  where 0 = <test_document_completion.test_transport_uncertainty_preserves_local_result_without_retry.<locals>.Uncertain object at 0x713550f5f410>.calls
+
+development/tests/postgres/test_document_completion.py:236: AssertionError
+=========================== short test summary info ============================
+FAILED development/tests/postgres/test_document_completion.py::test_current_authority_changes_block_before_claim_and_between_parts[pairing]
+FAILED development/tests/postgres/test_document_completion.py::test_current_authority_changes_block_before_claim_and_between_parts[binding]
+FAILED development/tests/postgres/test_document_completion.py::test_current_authority_changes_block_before_claim_and_between_parts[stop]
+FAILED development/tests/postgres/test_document_completion.py::test_current_authority_changes_block_before_claim_and_between_parts[mandate]
+FAILED development/tests/postgres/test_document_completion.py::test_transport_uncertainty_preserves_local_result_without_retry
+5 failed, 10 passed in 12.30s
+
+MODULE development/tests/postgres/test_private_result_return_chain.py
+..                                                                       [100%]
+2 passed in 4.55s
+
+MODULE development/tests/postgres/test_research_resume_destination.py
+..                                                                       [100%]
+2 passed in 3.58s
+
+MODULE development/tests/operations/test_delegated_work_delivery.py
+........                                                                 [100%]
+8 passed in 0.11s

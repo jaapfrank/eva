@@ -1,0 +1,960 @@
+..FFFF....FFFFF..........EEEEEEEEEEEEEEEEEEEEEEEEEEEEE..........         [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_revoked_summary_is_not_claimed_and_error_log_contains_no_private_data _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x7970782e9310>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x79707d10cf20>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x7970782e9310> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+_ ERROR at setup of test_interrupted_claim_rolls_back_insert_and_can_be_claimed_after_recovery _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x7970782e9310>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x79707d10cf20>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x7970782e9310> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+_ ERROR at setup of test_destination_authority_is_injected_and_rechecked_before_claim _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x7970782e9310>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x79707d10cf20>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x7970782e9310> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+_ ERROR at setup of test_changed_destination_authority_during_claim_does_not_create_a_send _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x7970782e9310>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x79707d10cf20>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x7970782e9310> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+_ ERROR at setup of test_complete_saved_document_uses_original_recipient_and_keeps_old_ack _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x797078f30980>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x797078f33830>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x797078f30980> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+__ ERROR at setup of test_unbound_or_unverified_document_is_not_sent[content] __
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x797078f30980>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x797078f33830>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x797078f30980> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+_ ERROR at setup of test_unbound_or_unverified_document_is_not_sent[principal] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x797078f30980>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x797078f33830>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x797078f30980> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+_ ERROR at setup of test_unbound_or_unverified_document_is_not_sent[namespace] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x797078f30980>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x797078f33830>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x797078f30980> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+_ ERROR at setup of test_partial_or_uncertain_artifact_delivery_never_repeats[revoke] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x797078f30980>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x797078f33830>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x797078f30980> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+_ ERROR at setup of test_partial_or_uncertain_artifact_delivery_never_repeats[timeout] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x797078f30980>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x797078f33830>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x797078f30980> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+_ ERROR at setup of test_partial_or_uncertain_artifact_delivery_never_repeats[expired_claim] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x797078f30980>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x797078f33830>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x797078f30980> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+_ ERROR at setup of test_closed_text_attempt_is_preserved_when_document_format_is_delivered _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x797078f30980>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x797078f33830>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x797078f30980> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+_ ERROR at setup of test_new_binding_replay_and_historical_claim_never_backfills _
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+_ ERROR at setup of test_telegram_documents_claim_once_restart_ack_and_no_fake_research _
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+_ ERROR at setup of test_current_authority_changes_block_before_claim_and_between_parts[pairing] _
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+_ ERROR at setup of test_current_authority_changes_block_before_claim_and_between_parts[binding] _
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+_ ERROR at setup of test_current_authority_changes_block_before_claim_and_between_parts[stop] _
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+_ ERROR at setup of test_current_authority_changes_block_before_claim_and_between_parts[mandate] _
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+_____ ERROR at setup of test_crash_claim_expires_ambiguous_without_resend ______
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+_ ERROR at setup of test_original_session_only_document_return_and_ack[dashboard] _
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+_ ERROR at setup of test_original_session_only_document_return_and_ack[voice] __
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+___ ERROR at setup of test_document_voice_session_loss_never_replays[close] ____
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+___ ERROR at setup of test_document_voice_session_loss_never_replays[expiry] ___
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+___ ERROR at setup of test_document_voice_session_loss_never_replays[crash] ____
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+_ ERROR at setup of test_revoked_original_ingress_blocks_initial_claim_and_unknown_owner _
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+_ ERROR at setup of test_transport_uncertainty_preserves_local_result_without_retry _
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+_ ERROR at setup of test_terminal_state_without_exact_artifact_proof_is_not_delivered _
+
+    @pytest.fixture(scope="module")
+    def timeline_engine() -> Iterator[Engine]:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if (
+            url.get_backend_name() != "postgresql"
+            or not url.database
+            or not url.database.startswith("eva2_living_disposable_")
+        ):
+>           pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
+E           Failed: timeline gate requires an explicit disposable PostgreSQL DB
+
+development/tests/postgres/test_operational_timeline.py:216: Failed
+_ ERROR at setup of test_saved_result_to_bound_transport_and_restart_without_resend[False] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x79707815c080>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x79707815f8c0>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x79707815c080> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+_ ERROR at setup of test_saved_result_to_bound_transport_and_restart_without_resend[True] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+>           assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+E           assert not True
+E            +  where True = scalar(<sqlalchemy.sql.elements.TextClause object at 0x79707815c080>)
+E            +    where scalar = <sqlalchemy.engine.base.Connection object at 0x79707815f8c0>.scalar
+E            +    and   <sqlalchemy.sql.elements.TextClause object at 0x79707815c080> = <function text at 0x79707e62b6a0>("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+E            +      where <function text at 0x79707e62b6a0> = sa.text
+
+development/tests/postgres/test_delegated_work_store.py:105: AssertionError
+=================================== FAILURES ===================================
+____________ test_one_claim_ack_is_durable_and_never_claimed_again _____________
+
+delegated_engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+
+    def test_one_claim_ack_is_durable_and_never_claimed_again(delegated_engine):
+        store,spec,dest,delivery,current,auth = setup(delegated_engine,"destination-concurrent")
+        admit(store,spec,dest); result=succeed(store,spec)
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            claims=list(pool.map(lambda _:delivery.claim_next(now=NOW+timedelta(seconds=4)),range(2)))
+        actual=[c for c in claims if c is not None]
+>       assert len(actual)==1
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+development/tests/postgres/test_delegated_delivery_store.py:102: AssertionError
+______ test_uncertain_delivery_never_retries_and_preserves_result[crash] _______
+
+delegated_engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+finish = 'crash'
+
+    @pytest.mark.parametrize("finish",["crash","timeout","late_ack"])
+    def test_uncertain_delivery_never_retries_and_preserves_result(delegated_engine,finish):
+        store,spec,dest,delivery,current,auth = setup(delegated_engine,"destination-"+finish)
+        admit(store,spec,dest); result=succeed(store,spec)
+        claim=delivery.claim_next(now=NOW+timedelta(seconds=4),lease_seconds=2)
+        if finish=="timeout":
+            assert delivery.mark_ambiguous(claim,"TimeoutError",now=NOW+timedelta(seconds=5))=="ambiguous"
+        elif finish=="late_ack":
+            assert delivery.acknowledge(claim,"42:9",now=NOW+timedelta(seconds=6))=="ambiguous"
+        restarted=PostgresDelegatedWorkDeliveryStore(store,bindings_loader=lambda:current[0],clock=lambda:NOW+timedelta(seconds=4))
+        assert restarted.claim_next(now=NOW+timedelta(seconds=7)) is None
+>       assert restarted.status(spec.work_id,**auth)=="delivery_ambiguous"
+E       AssertionError: assert 'ready' == 'delivery_ambiguous'
+E         
+E         - delivery_ambiguous
+E         + ready
+
+development/tests/postgres/test_delegated_delivery_store.py:125: AssertionError
+_____ test_uncertain_delivery_never_retries_and_preserves_result[timeout] ______
+
+delegated_engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+finish = 'timeout'
+
+    @pytest.mark.parametrize("finish",["crash","timeout","late_ack"])
+    def test_uncertain_delivery_never_retries_and_preserves_result(delegated_engine,finish):
+        store,spec,dest,delivery,current,auth = setup(delegated_engine,"destination-"+finish)
+        admit(store,spec,dest); result=succeed(store,spec)
+        claim=delivery.claim_next(now=NOW+timedelta(seconds=4),lease_seconds=2)
+        if finish=="timeout":
+>           assert delivery.mark_ambiguous(claim,"TimeoutError",now=NOW+timedelta(seconds=5))=="ambiguous"
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_delivery_store.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/adapters/postgres/delegated_work_delivery.py:618: in mark_ambiguous
+    return self._finish(claim, now=now, receipt=None, error_code=error_code)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <eva.adapters.postgres.delegated_work_delivery.PostgresDelegatedWorkDeliveryStore object at 0x797076ec7620>
+claim = None
+
+    def _finish(self, claim: PrivateWorkDeliveryClaim, *, now: datetime,
+                receipt: str | None, error_code: str | None) -> str:
+        require_utc_second(now, "delivery finish time")
+        if receipt is not None and (not isinstance(receipt, str) or not receipt.strip() or len(receipt) > 256):
+            raise ValueError("delivery receipt is invalid")
+        if error_code is not None and (not isinstance(error_code, str)
+                or re.fullmatch(r"[A-Za-z0-9_:-]{1,80}", error_code) is None):
+            raise ValueError("delivery error code is invalid")
+        if (receipt is None) == (error_code is None):
+            raise ValueError("delivery finish requires one disposition")
+>       thread = self._delivery_thread(claim.work_id, claim.artifact_sha256)
+                                       ^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'work_id'
+
+src/eva/adapters/postgres/delegated_work_delivery.py:579: AttributeError
+_____ test_uncertain_delivery_never_retries_and_preserves_result[late_ack] _____
+
+delegated_engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+finish = 'late_ack'
+
+    @pytest.mark.parametrize("finish",["crash","timeout","late_ack"])
+    def test_uncertain_delivery_never_retries_and_preserves_result(delegated_engine,finish):
+        store,spec,dest,delivery,current,auth = setup(delegated_engine,"destination-"+finish)
+        admit(store,spec,dest); result=succeed(store,spec)
+        claim=delivery.claim_next(now=NOW+timedelta(seconds=4),lease_seconds=2)
+        if finish=="timeout":
+            assert delivery.mark_ambiguous(claim,"TimeoutError",now=NOW+timedelta(seconds=5))=="ambiguous"
+        elif finish=="late_ack":
+>           assert delivery.acknowledge(claim,"42:9",now=NOW+timedelta(seconds=6))=="ambiguous"
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_delivery_store.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/adapters/postgres/delegated_work_delivery.py:615: in acknowledge
+    return self._finish(claim, now=now, receipt=receipt, error_code=None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <eva.adapters.postgres.delegated_work_delivery.PostgresDelegatedWorkDeliveryStore object at 0x797076e8c260>
+claim = None
+
+    def _finish(self, claim: PrivateWorkDeliveryClaim, *, now: datetime,
+                receipt: str | None, error_code: str | None) -> str:
+        require_utc_second(now, "delivery finish time")
+        if receipt is not None and (not isinstance(receipt, str) or not receipt.strip() or len(receipt) > 256):
+            raise ValueError("delivery receipt is invalid")
+        if error_code is not None and (not isinstance(error_code, str)
+                or re.fullmatch(r"[A-Za-z0-9_:-]{1,80}", error_code) is None):
+            raise ValueError("delivery error code is invalid")
+        if (receipt is None) == (error_code is None):
+            raise ValueError("delivery finish requires one disposition")
+>       thread = self._delivery_thread(claim.work_id, claim.artifact_sha256)
+                                       ^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'work_id'
+
+src/eva/adapters/postgres/delegated_work_delivery.py:579: AttributeError
+_ test_dashboard_resume_inherits_original_private_return_and_claims_only_latest_once _
+
+delegated_engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+
+    def test_dashboard_resume_inherits_original_private_return_and_claims_only_latest_once(delegated_engine):
+>       store, specs, destination, delivery, current, auth, result = _digital_return_chain(
+            delegated_engine, "private-return-chain")
+
+development/tests/postgres/test_delegated_delivery_store.py:222: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+label = 'private-return-chain', output = None, native_source_scope = False
+
+    def _digital_return_chain(engine, label, output=None, native_source_scope=False):
+        from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
+        from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+        store, _, _, delivery, current, auth = setup(engine, label)
+        owner, binding = auth["owner_principal_id"], auth["principal_binding_id"]
+        source = ConversationTurn.private(
+            str(store.scope.tenant_id) if native_source_scope else "tenant:" + label,
+            str(store.scope.installation_id) if native_source_scope else "installation:" + label,
+            str(owner), "telegram:42", "telegram:42:1", "Prepare a private read-only proposal",
+            NOW.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        destination = PrivateWorkDestination.from_telegram_turn(source,
+            owner_principal_id=owner, principal_binding_id=binding,
+            telegram_user_id=42, chat_id="42", bindings=current[0])
+        now = [NOW]
+        from pathlib import Path
+        runner = Path(__file__).resolve().parents[3] / "src/eva/bootstrap/delegated_digital_runner.py"
+        profile = DelegatedDigitalProfile("model:controlled", "a" * 64, "b" * 64,
+            ("discover_connector_tools", "use_connector_tool"),
+            (("bootstrap/delegated_digital_runner.py", hashlib.sha256(runner.read_bytes()).hexdigest()),))
+        service = DelegatedWorkOwnerService(store, **auth, clock=lambda: now[0],
+            digital_profile=profile, delivery_destination_loader=lambda turn:
+                destination if turn.message_id == source.message_id else None,
+            conversation_scope=external_timeline_scope(source.tenant_id, source.installation_id, 'fixture source'))
+>       first_id = service.execute("digital", source, task=source.text,
+            request_key="digital:first")["work"]["work_id"]
+E       TypeError: 'NoneType' object is not subscriptable
+
+development/tests/postgres/test_delegated_delivery_store.py:177: TypeError
+_ test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[source] _
+
+delegated_engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79707818c740>
+damage = 'source'
+
+    @pytest.mark.parametrize("damage", ["source", "retention", "event", "recipient"])
+    def test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient(delegated_engine, monkeypatch, damage):
+>       store, specs, destination, delivery, current, auth, _ = _digital_return_chain(
+            delegated_engine, "private-return-" + damage)
+
+development/tests/postgres/test_delegated_delivery_store.py:264: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+label = 'private-return-source', output = None, native_source_scope = False
+
+    def _digital_return_chain(engine, label, output=None, native_source_scope=False):
+        from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
+        from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+        store, _, _, delivery, current, auth = setup(engine, label)
+        owner, binding = auth["owner_principal_id"], auth["principal_binding_id"]
+        source = ConversationTurn.private(
+            str(store.scope.tenant_id) if native_source_scope else "tenant:" + label,
+            str(store.scope.installation_id) if native_source_scope else "installation:" + label,
+            str(owner), "telegram:42", "telegram:42:1", "Prepare a private read-only proposal",
+            NOW.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        destination = PrivateWorkDestination.from_telegram_turn(source,
+            owner_principal_id=owner, principal_binding_id=binding,
+            telegram_user_id=42, chat_id="42", bindings=current[0])
+        now = [NOW]
+        from pathlib import Path
+        runner = Path(__file__).resolve().parents[3] / "src/eva/bootstrap/delegated_digital_runner.py"
+        profile = DelegatedDigitalProfile("model:controlled", "a" * 64, "b" * 64,
+            ("discover_connector_tools", "use_connector_tool"),
+            (("bootstrap/delegated_digital_runner.py", hashlib.sha256(runner.read_bytes()).hexdigest()),))
+        service = DelegatedWorkOwnerService(store, **auth, clock=lambda: now[0],
+            digital_profile=profile, delivery_destination_loader=lambda turn:
+                destination if turn.message_id == source.message_id else None,
+            conversation_scope=external_timeline_scope(source.tenant_id, source.installation_id, 'fixture source'))
+>       first_id = service.execute("digital", source, task=source.text,
+            request_key="digital:first")["work"]["work_id"]
+E       TypeError: 'NoneType' object is not subscriptable
+
+development/tests/postgres/test_delegated_delivery_store.py:177: TypeError
+_ test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[retention] _
+
+delegated_engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7970782aae70>
+damage = 'retention'
+
+    @pytest.mark.parametrize("damage", ["source", "retention", "event", "recipient"])
+    def test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient(delegated_engine, monkeypatch, damage):
+>       store, specs, destination, delivery, current, auth, _ = _digital_return_chain(
+            delegated_engine, "private-return-" + damage)
+
+development/tests/postgres/test_delegated_delivery_store.py:264: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+label = 'private-return-retention', output = None, native_source_scope = False
+
+    def _digital_return_chain(engine, label, output=None, native_source_scope=False):
+        from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
+        from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+        store, _, _, delivery, current, auth = setup(engine, label)
+        owner, binding = auth["owner_principal_id"], auth["principal_binding_id"]
+        source = ConversationTurn.private(
+            str(store.scope.tenant_id) if native_source_scope else "tenant:" + label,
+            str(store.scope.installation_id) if native_source_scope else "installation:" + label,
+            str(owner), "telegram:42", "telegram:42:1", "Prepare a private read-only proposal",
+            NOW.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        destination = PrivateWorkDestination.from_telegram_turn(source,
+            owner_principal_id=owner, principal_binding_id=binding,
+            telegram_user_id=42, chat_id="42", bindings=current[0])
+        now = [NOW]
+        from pathlib import Path
+        runner = Path(__file__).resolve().parents[3] / "src/eva/bootstrap/delegated_digital_runner.py"
+        profile = DelegatedDigitalProfile("model:controlled", "a" * 64, "b" * 64,
+            ("discover_connector_tools", "use_connector_tool"),
+            (("bootstrap/delegated_digital_runner.py", hashlib.sha256(runner.read_bytes()).hexdigest()),))
+        service = DelegatedWorkOwnerService(store, **auth, clock=lambda: now[0],
+            digital_profile=profile, delivery_destination_loader=lambda turn:
+                destination if turn.message_id == source.message_id else None,
+            conversation_scope=external_timeline_scope(source.tenant_id, source.installation_id, 'fixture source'))
+>       first_id = service.execute("digital", source, task=source.text,
+            request_key="digital:first")["work"]["work_id"]
+E       TypeError: 'NoneType' object is not subscriptable
+
+development/tests/postgres/test_delegated_delivery_store.py:177: TypeError
+_ test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[event] _
+
+delegated_engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7970782a83b0>
+damage = 'event'
+
+    @pytest.mark.parametrize("damage", ["source", "retention", "event", "recipient"])
+    def test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient(delegated_engine, monkeypatch, damage):
+>       store, specs, destination, delivery, current, auth, _ = _digital_return_chain(
+            delegated_engine, "private-return-" + damage)
+
+development/tests/postgres/test_delegated_delivery_store.py:264: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+label = 'private-return-event', output = None, native_source_scope = False
+
+    def _digital_return_chain(engine, label, output=None, native_source_scope=False):
+        from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
+        from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+        store, _, _, delivery, current, auth = setup(engine, label)
+        owner, binding = auth["owner_principal_id"], auth["principal_binding_id"]
+        source = ConversationTurn.private(
+            str(store.scope.tenant_id) if native_source_scope else "tenant:" + label,
+            str(store.scope.installation_id) if native_source_scope else "installation:" + label,
+            str(owner), "telegram:42", "telegram:42:1", "Prepare a private read-only proposal",
+            NOW.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        destination = PrivateWorkDestination.from_telegram_turn(source,
+            owner_principal_id=owner, principal_binding_id=binding,
+            telegram_user_id=42, chat_id="42", bindings=current[0])
+        now = [NOW]
+        from pathlib import Path
+        runner = Path(__file__).resolve().parents[3] / "src/eva/bootstrap/delegated_digital_runner.py"
+        profile = DelegatedDigitalProfile("model:controlled", "a" * 64, "b" * 64,
+            ("discover_connector_tools", "use_connector_tool"),
+            (("bootstrap/delegated_digital_runner.py", hashlib.sha256(runner.read_bytes()).hexdigest()),))
+        service = DelegatedWorkOwnerService(store, **auth, clock=lambda: now[0],
+            digital_profile=profile, delivery_destination_loader=lambda turn:
+                destination if turn.message_id == source.message_id else None,
+            conversation_scope=external_timeline_scope(source.tenant_id, source.installation_id, 'fixture source'))
+>       first_id = service.execute("digital", source, task=source.text,
+            request_key="digital:first")["work"]["work_id"]
+E       TypeError: 'NoneType' object is not subscriptable
+
+development/tests/postgres/test_delegated_delivery_store.py:177: TypeError
+_ test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[recipient] _
+
+delegated_engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7970782a8f80>
+damage = 'recipient'
+
+    @pytest.mark.parametrize("damage", ["source", "retention", "event", "recipient"])
+    def test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient(delegated_engine, monkeypatch, damage):
+>       store, specs, destination, delivery, current, auth, _ = _digital_return_chain(
+            delegated_engine, "private-return-" + damage)
+
+development/tests/postgres/test_delegated_delivery_store.py:264: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_p002_1854673?host=%2Ftmp%2Feva-delivery-p002-8vcivayw%2Fsocket)
+label = 'private-return-recipient', output = None, native_source_scope = False
+
+    def _digital_return_chain(engine, label, output=None, native_source_scope=False):
+        from eva.bootstrap.delegated_digital_profile import DelegatedDigitalProfile
+        from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+        store, _, _, delivery, current, auth = setup(engine, label)
+        owner, binding = auth["owner_principal_id"], auth["principal_binding_id"]
+        source = ConversationTurn.private(
+            str(store.scope.tenant_id) if native_source_scope else "tenant:" + label,
+            str(store.scope.installation_id) if native_source_scope else "installation:" + label,
+            str(owner), "telegram:42", "telegram:42:1", "Prepare a private read-only proposal",
+            NOW.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        destination = PrivateWorkDestination.from_telegram_turn(source,
+            owner_principal_id=owner, principal_binding_id=binding,
+            telegram_user_id=42, chat_id="42", bindings=current[0])
+        now = [NOW]
+        from pathlib import Path
+        runner = Path(__file__).resolve().parents[3] / "src/eva/bootstrap/delegated_digital_runner.py"
+        profile = DelegatedDigitalProfile("model:controlled", "a" * 64, "b" * 64,
+            ("discover_connector_tools", "use_connector_tool"),
+            (("bootstrap/delegated_digital_runner.py", hashlib.sha256(runner.read_bytes()).hexdigest()),))
+        service = DelegatedWorkOwnerService(store, **auth, clock=lambda: now[0],
+            digital_profile=profile, delivery_destination_loader=lambda turn:
+                destination if turn.message_id == source.message_id else None,
+            conversation_scope=external_timeline_scope(source.tenant_id, source.installation_id, 'fixture source'))
+>       first_id = service.execute("digital", source, task=source.text,
+            request_key="digital:first")["work"]["work_id"]
+E       TypeError: 'NoneType' object is not subscriptable
+
+development/tests/postgres/test_delegated_delivery_store.py:177: TypeError
+=========================== short test summary info ============================
+FAILED development/tests/postgres/test_delegated_delivery_store.py::test_one_claim_ack_is_durable_and_never_claimed_again
+FAILED development/tests/postgres/test_delegated_delivery_store.py::test_uncertain_delivery_never_retries_and_preserves_result[crash]
+FAILED development/tests/postgres/test_delegated_delivery_store.py::test_uncertain_delivery_never_retries_and_preserves_result[timeout]
+FAILED development/tests/postgres/test_delegated_delivery_store.py::test_uncertain_delivery_never_retries_and_preserves_result[late_ack]
+FAILED development/tests/postgres/test_delegated_delivery_store.py::test_dashboard_resume_inherits_original_private_return_and_claims_only_latest_once
+FAILED development/tests/postgres/test_delegated_delivery_store.py::test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[source]
+FAILED development/tests/postgres/test_delegated_delivery_store.py::test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[retention]
+FAILED development/tests/postgres/test_delegated_delivery_store.py::test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[event]
+FAILED development/tests/postgres/test_delegated_delivery_store.py::test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[recipient]
+ERROR development/tests/postgres/test_delegated_delivery_protocol.py::test_revoked_summary_is_not_claimed_and_error_log_contains_no_private_data
+ERROR development/tests/postgres/test_delegated_delivery_protocol.py::test_interrupted_claim_rolls_back_insert_and_can_be_claimed_after_recovery
+ERROR development/tests/postgres/test_delegated_delivery_protocol.py::test_destination_authority_is_injected_and_rechecked_before_claim
+ERROR development/tests/postgres/test_delegated_delivery_protocol.py::test_changed_destination_authority_during_claim_does_not_create_a_send
+ERROR development/tests/postgres/test_saved_work_artifact_delivery.py::test_complete_saved_document_uses_original_recipient_and_keeps_old_ack
+ERROR development/tests/postgres/test_saved_work_artifact_delivery.py::test_unbound_or_unverified_document_is_not_sent[content]
+ERROR development/tests/postgres/test_saved_work_artifact_delivery.py::test_unbound_or_unverified_document_is_not_sent[principal]
+ERROR development/tests/postgres/test_saved_work_artifact_delivery.py::test_unbound_or_unverified_document_is_not_sent[namespace]
+ERROR development/tests/postgres/test_saved_work_artifact_delivery.py::test_partial_or_uncertain_artifact_delivery_never_repeats[revoke]
+ERROR development/tests/postgres/test_saved_work_artifact_delivery.py::test_partial_or_uncertain_artifact_delivery_never_repeats[timeout]
+ERROR development/tests/postgres/test_saved_work_artifact_delivery.py::test_partial_or_uncertain_artifact_delivery_never_repeats[expired_claim]
+ERROR development/tests/postgres/test_saved_work_artifact_delivery.py::test_closed_text_attempt_is_preserved_when_document_format_is_delivered
+ERROR development/tests/postgres/test_document_completion.py::test_new_binding_replay_and_historical_claim_never_backfills
+ERROR development/tests/postgres/test_document_completion.py::test_telegram_documents_claim_once_restart_ack_and_no_fake_research
+ERROR development/tests/postgres/test_document_completion.py::test_current_authority_changes_block_before_claim_and_between_parts[pairing]
+ERROR development/tests/postgres/test_document_completion.py::test_current_authority_changes_block_before_claim_and_between_parts[binding]
+ERROR development/tests/postgres/test_document_completion.py::test_current_authority_changes_block_before_claim_and_between_parts[stop]
+ERROR development/tests/postgres/test_document_completion.py::test_current_authority_changes_block_before_claim_and_between_parts[mandate]
+ERROR development/tests/postgres/test_document_completion.py::test_crash_claim_expires_ambiguous_without_resend
+ERROR development/tests/postgres/test_document_completion.py::test_original_session_only_document_return_and_ack[dashboard]
+ERROR development/tests/postgres/test_document_completion.py::test_original_session_only_document_return_and_ack[voice]
+ERROR development/tests/postgres/test_document_completion.py::test_document_voice_session_loss_never_replays[close]
+ERROR development/tests/postgres/test_document_completion.py::test_document_voice_session_loss_never_replays[expiry]
+ERROR development/tests/postgres/test_document_completion.py::test_document_voice_session_loss_never_replays[crash]
+ERROR development/tests/postgres/test_document_completion.py::test_revoked_original_ingress_blocks_initial_claim_and_unknown_owner
+ERROR development/tests/postgres/test_document_completion.py::test_transport_uncertainty_preserves_local_result_without_retry
+ERROR development/tests/postgres/test_document_completion.py::test_terminal_state_without_exact_artifact_proof_is_not_delivered
+ERROR development/tests/postgres/test_private_result_return_chain.py::test_saved_result_to_bound_transport_and_restart_without_resend[False]
+ERROR development/tests/postgres/test_private_result_return_chain.py::test_saved_result_to_bound_transport_and_restart_without_resend[True]
+9 failed, 26 passed, 29 errors in 9.11s

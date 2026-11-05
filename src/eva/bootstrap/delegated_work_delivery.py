@@ -1,5 +1,6 @@
 """Compose private task return routes from the existing trusted channel binding."""
 from __future__ import annotations
+from eva.adapters.postgres.telegram_delivery_authority import TelegramDeliveryAuthority
 
 from collections.abc import Callable
 from uuid import UUID
@@ -35,7 +36,7 @@ def completion_worker(work_store, delivery, *, bindings_loader, document_source=
     from eva.operations.delegated_work_delivery import DelegatedWorkDeliveryWorker
 
     return DelegatedWorkDeliveryWorker(
-        PostgresDelegatedWorkDeliveryStore(work_store, bindings_loader=bindings_loader,
+        PostgresDelegatedWorkDeliveryStore(work_store, destination_authority=TelegramDeliveryAuthority(work_store.engine, work_store.scope, bindings_loader),
                                            document_source=document_source),
         delivery,
     )
@@ -46,7 +47,7 @@ def delivery_status_loader(work_store, *, owner_principal_id: UUID,
     """Read delivery status independently of the switch that permits new sends."""
     from eva.adapters.postgres.delegated_work_delivery import PostgresDelegatedWorkDeliveryStore
 
-    store = PostgresDelegatedWorkDeliveryStore(work_store, bindings_loader=bindings_loader)
+    store = PostgresDelegatedWorkDeliveryStore(work_store, destination_authority=TelegramDeliveryAuthority(work_store.engine, work_store.scope, bindings_loader))
     return lambda work_id: store.status(work_id, owner_principal_id=owner_principal_id,
                                        principal_binding_id=principal_binding_id)
 

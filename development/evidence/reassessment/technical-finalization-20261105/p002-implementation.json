@@ -1,0 +1,132 @@
+{
+  "contract": "EvaTechnicalFinalizationEvidence/v1",
+  "priority": "P0-02",
+  "recordedAt": "2026-11-05T15:08:03.686655+00:00",
+  "outcome": "implemented_targeted_tests_passed_independently_reviewed",
+  "installationPerformedByThisAgent": false,
+  "commitPerformedByThisAgent": false,
+  "before": {
+    "workingTree": "Preserved existing main dirty edits; no branch/reset/merge/stash was performed by this agent.",
+    "claimProtocol": "Three separate claim/checkpoint/expiry/insert paths and direct work-store private infrastructure access.",
+    "telegram": "Generic delivery adapter directly resolved Telegram recipients, bindings and receipts.",
+    "errorHandling": "Several authority/status/context exceptions were silently skipped."
+  },
+  "after": {
+    "claimProtocol": "One _claim_authorized protocol serializes scoped advisory lock + checkpoint FOR UPDATE + terminal expiry/ambiguity + current-authority equality + initial claim insert.",
+    "selection": "Existing summary/explicit artifact/document selection predicates retained; rejected summaries skipped per sweep rather than terminating unrelated selection.",
+    "transactionFailure": "Root transaction rollback before logging/skip. No savepoints: existing timeline and scope contracts explicitly require a root transaction.",
+    "authority": "Summary now checks current owner and channel authority before claiming and rechecks inside same root transaction; worker retains immediate pre-send and per-part checks.",
+    "storeBoundary": "delivery_transaction enforces fixed role/scope; validate_delivery_authority and load_delivery_work reuse existing owner locks and result decoding; public engine only composes trusted peer PostgreSQL adapters.",
+    "telegram": "TelegramDeliveryAuthority injected only by bootstrap composition and tests; generic adapter has no Telegram imports or recipient/binding/receipt logic.",
+    "privacy": "Rejected candidate log contains fixed stage, SHA256 of work identity and exception class; no exception message/traceback, owner/chat IDs, source content or credentials.",
+    "immutableEvidence": "Spec/source hashes, original routes, summary and explicit-artifact operation identities, acknowledgements and terminal uncertain claims are retained."
+  },
+  "productionFiles": {
+    "src/eva/adapters/postgres/delegated_work.py": "c87b87221efe20a221fce7e6170f6162bafbd0ba5fbd66e33be8febd7a9662a5",
+    "src/eva/adapters/postgres/delegated_work_delivery.py": "6d432af27a0e4df76e339ec68f6582874896f395e2374d1135c58d8533f074b6",
+    "src/eva/adapters/postgres/telegram_delivery_authority.py": "2772f3505ba5abd3ca588a6b75e9ca94c1918aff4b3bafe38bfa97ed0f9bf3e4",
+    "src/eva/bootstrap/delegated_work_delivery.py": "83d8ff604396212db29ebf7573549dd6477b6f9c94a0f9c268c29173e8958299",
+    "src/eva/bootstrap/private_continuity.py": "0d9a19dc54b950eb058d808a9b29f79460a855a7f4465dca2cb61260367080ff"
+  },
+  "testFilesModified": {
+    "development/tests/postgres/test_delegated_work_store.py": "19859953cbfee59a0e76686059502df462e6d079ebe147aaf1022c9e5f79acae",
+    "development/tests/postgres/test_delegated_delivery_store.py": "56e4f94bdf398a5d539571c11112d7e3586a4496ee970ae52ead63f06bfdc62f",
+    "development/tests/postgres/test_delegated_delivery_protocol.py": "b4bceaf58e15db581cc0eb1bfa1d6e3952be18fd2d3b22dec863a1e128db8e7c",
+    "development/tests/postgres/test_saved_work_artifact_delivery.py": "92eaacea9377ee23fd9efb4a41fcca3acd7e44963d56ce22d9f916023dc528ad",
+    "development/tests/postgres/test_document_completion.py": "1e42abcb2b581809e40c57c8bb31ed7b136aad0d901d01cb540e83b6dcda4242",
+    "development/tests/postgres/test_private_result_return_chain.py": "e46e4cfbd14b59a9f064e02f07fd7b94093a9673e8ab8b6e5d69863885e80e55",
+    "development/tests/postgres/test_research_resume_destination.py": "118d7e404a293efd6cfc6f93cb0cb458e41cf26d4ea503fe53de14c2c99d1abe",
+    "development/tests/postgres/test_private_work_return.py": "2284a7b7ea17a92a5005e3bebeb008b0a053984a12c780038fb5f6e6b0383e9e",
+    "development/tests/portable/test_portable_v2_current_work.py": "f358ee2da5b17cdff57c3b1e5efc9b21c8682d58143e4fe1b5c87106fa31bf7b"
+  },
+  "tests": {
+    "environment": "Pinned existing Python gate environment; isolated tmpfs PostgreSQL16.13 containers network=none; fresh disposable database for each module; no live DSN/models/provider calls.",
+    "focusedPassed": 86,
+    "results": [
+      {
+        "file": "development/tests/postgres/test_delegated_delivery_store.py",
+        "passed": 25,
+        "log": "p002-targeted-tests-1881404.log",
+        "logSha256": "1eb2449cfa5e8e4cb1025f4da23f226f8b417c353deb538f5da135b4b3cab138"
+      },
+      {
+        "file": "development/tests/postgres/test_delegated_delivery_protocol.py",
+        "passed": 7,
+        "log": "p002-targeted-tests-1895128.log",
+        "logSha256": "07796bc8fee4c095c7e0929907ec692a75554b2728eca3f6b39e0b04b4430811"
+      },
+      {
+        "file": "development/tests/postgres/test_saved_work_artifact_delivery.py",
+        "passed": 8,
+        "log": "p002-targeted-tests-1881404.log",
+        "logSha256": "1eb2449cfa5e8e4cb1025f4da23f226f8b417c353deb538f5da135b4b3cab138"
+      },
+      {
+        "file": "development/tests/postgres/test_document_completion.py",
+        "passed": 15,
+        "log": "p002-targeted-tests-1895128.log",
+        "logSha256": "07796bc8fee4c095c7e0929907ec692a75554b2728eca3f6b39e0b04b4430811"
+      },
+      {
+        "file": "development/tests/postgres/test_private_result_return_chain.py",
+        "passed": 2,
+        "log": "p002-targeted-tests-1881404.log",
+        "logSha256": "1eb2449cfa5e8e4cb1025f4da23f226f8b417c353deb538f5da135b4b3cab138"
+      },
+      {
+        "file": "development/tests/postgres/test_research_resume_destination.py",
+        "passed": 2,
+        "log": "p002-targeted-tests-1881404.log",
+        "logSha256": "1eb2449cfa5e8e4cb1025f4da23f226f8b417c353deb538f5da135b4b3cab138"
+      },
+      {
+        "file": "development/tests/operations/test_delegated_work_delivery.py",
+        "passed": 8,
+        "log": "p002-targeted-tests-1881404.log",
+        "logSha256": "1eb2449cfa5e8e4cb1025f4da23f226f8b417c353deb538f5da135b4b3cab138"
+      },
+      {
+        "file": "development/tests/portable/test_portable_v2_current_work.py",
+        "passed": 14,
+        "log": "p002-targeted-tests-1895128.log",
+        "logSha256": "07796bc8fee4c095c7e0929907ec692a75554b2728eca3f6b39e0b04b4430811"
+      },
+      {
+        "file": "development/tests/postgres/test_delivered_work_conversation_context.py",
+        "passed": 5,
+        "log": "p002-targeted-tests-1902957.log",
+        "logSha256": "7d925ce53a1a2988749b54a660cb7e8ab852d971c3940b0d042e6c203c225324"
+      }
+    ],
+    "fixtureCorrections": [
+      "Shared fixture expected current schema4e_0012_conversation_source_lock rather than obsolete4e_0009; logger state restored after Alembic fileConfig.",
+      "Ancestry test double now implements public load_delivery_work; digital-return fixture admits exact ingress required by existing retained_source_guard.",
+      "Document fixture uses real telegram:<chat>:<numeric-message> identity and current transport reply_to_message_id argument; asserts original saved title/content rather than obsolete report envelope.",
+      "Explicit TelegramAuthority composition replaces old bindings_loader construction in all known callsites/tests."
+    ],
+    "adjacentKnownFailure": {
+      "file": "development/tests/postgres/test_private_work_return.py",
+      "passed": 16,
+      "failed": 1,
+      "case": "test_late_result_preserves_bytes_claim_and_ack_without_duplicate[False]",
+      "reason": "Existing dashboard route intentionally returns the same unacknowledged result; older test expects exactly one concurrent poll result. Voice remains single claim. No production change or criterion weakening was made.",
+      "reproducedOnExactInstalledImage": "sha256:fce4a91e2edb6767ea31531dc8d73a4b8e7b695302aebbbf20398fbe5eee052a",
+      "proof": "p002-dashboard-existing-baseline.json",
+      "reproductionLog": "p002-targeted-tests-1912191.log"
+    }
+  },
+  "review": {
+    "status": "GO",
+    "independentTargetedPassed": 68,
+    "report": "development/reviews/p0-delivery-independent-20261105/review.json",
+    "sha256": "4b3576b40f27b4f0f936ca0eca92c13240dc156db6427abf32672e5914b072b8",
+    "installationVerifiedByThisAgent": false
+  },
+  "deploymentBoundary": "delegated_work.py participates in the digital execution source profile: parent must overlay exact reviewed changes on current installed images and match core+worker profiles before deployment. No full dirty-tree build.",
+  "reviewLimitations": [
+    "External Telegram acceptance cannot be made transactionally exactly-once: uncertain attempts stay permanently ambiguous and are never automatically replayed.",
+    "PostgreSQL deadlock/serialization failures propagate fail-closed; no external dispatch occurs before durable claim commit. No broader lock-order refactor was attempted without a concrete reproduction.",
+    "A 16-candidate per-call summary sweep remains bounded as before; this evidence proves skip of one rejected candidate and later eligible work, not unbounded scheduling fairness."
+  ],
+  "storeBoundaryPatch": "p002-store-boundary.patch"
+}

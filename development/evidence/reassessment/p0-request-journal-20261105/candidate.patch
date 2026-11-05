@@ -1,0 +1,86 @@
+diff --git a/src/eva/adapters/postgres/component_improvement_actions.py b/src/eva/adapters/postgres/component_improvement_actions.py
+index 947c3ec1..5fcb4126 100644
+--- a/src/eva/adapters/postgres/component_improvement_actions.py
++++ b/src/eva/adapters/postgres/component_improvement_actions.py
+@@ -269,7 +269,16 @@ class ComponentImprovementActions:
+         events = self.timeline.events(self._thread(step_index))
+         if not events:
+             return None
+-        data = events[0].payload["data"]
++        admission = events[0].payload["data"]
++        if events[0].event_type == "RUNTIME_REPAIR_REQUEST_ADMITTED":
++            if (admission["execution_id"] != self.spec.execution_id
++                    or admission["source_ingress_sha256"] != self.spec.source_ingress_sha256):
++                raise ConversationConflict("repair request source binding differs")
++            if events[-1].event_type != "COMPONENT_ACTION_RECORDED":
++                # Admission is a one-way dispatch fence, never an effect receipt.
++                # A lost response/crash requires inspection, not another POST.
++                raise ConversationConflict("runtime repair request requires reconciliation")
++        data = events[-1].payload["data"]
+         return ConversationActionReceipt(ConversationActionCall(data["call_id"], data["name"], data["arguments"]), data["output"])
+ 
+     def resolve_document_call(self, turn, call, step_index):
+@@ -352,8 +361,43 @@ class ComponentImprovementActions:
+                 ('tenant_id','installation_id','principal_id')})
+             request_id = canonical_sha256({'execution':self.spec.execution_id,
+                 'source':self.spec.source.model_dump(mode='json'),'step':step_index,'action':call.arguments['action']})
+-            value = self.evaluator.runtime_repair(call.arguments['action'],incident_id=incident_id,
+-                task_id=self.spec.work_id,request_id=request_id,scope_sha256=scope)
++            request = {"action": call.arguments["action"], "incident_id": incident_id,
++                "task_id": self.spec.work_id, "request_id": request_id, "scope_sha256": scope}
++            thread = self._thread(step_index)
++            admission = {"call_id": call.call_id, "name": call.name,
++                "arguments": call.arguments, "request": request,
++                "request_sha256": canonical_sha256(request),
++                "execution_id": self.spec.execution_id, "spec_sha256": self.spec.sha256,
++                "source_ingress_sha256": self.spec.source_ingress_sha256}
++            # Commit before crossing the host boundary. The unique existing
++            # action slot fences concurrent workers, including after a crash.
++            self.timeline.create_thread(thread_id=thread, checkpoint_id=thread + ":request",
++                occurred_at=self.clock(), phase="repair_handoff_unconfirmed",
++                status="active", event_type="RUNTIME_REPAIR_REQUEST_ADMITTED",
++                data=admission)
++            self.authorize(turn)
++            guard.check(turn)
++            try:
++                value = self.evaluator.runtime_repair(**request)
++            except Exception as error:
++                # Error bodies/URLs/messages may contain private inputs. Keep
++                # only safe diagnostic evidence; even HTTP400 cannot authorize
++                # retry of a host request whose effects were not attested.
++                code = getattr(error, "code", None)
++                diagnostic = {"request_sha256": admission["request_sha256"],
++                    "error_type_sha256": canonical_sha256({"type":
++                        type(error).__module__ + "." + type(error).__qualname__}),
++                    "http_status": code if type(code) is int and 400 <= code <= 599 else None}
++                try:
++                    self.timeline.transition(thread_id=thread, expected_revision=1,
++                        checkpoint_id=thread + ":unconfirmed", occurred_at=self.clock(),
++                        phase="repair_handoff_unconfirmed", status="active",
++                        event_type="RUNTIME_REPAIR_REQUEST_UNCONFIRMED", data=diagnostic)
++                except Exception:
++                    # The durable admission remains the conservative fence if
++                    # recording the diagnostic fails; preserve the first error.
++                    pass
++                raise
+             scope = 'runtime_repair_handoff_not_installed'
+         elif call.name in {APPLY, APPLICATION_STATUS}:
+             request_id = canonical_sha256({"execution": self.spec.execution_id,
+@@ -545,8 +595,13 @@ class ComponentImprovementActions:
+         output = {"status": "verified", "operation_result": value, "scope": scope,
+                   "component_step": step_index}
+         self.authorize(turn)
+-        self.timeline.create_thread(thread_id=self._thread(step_index),
+-            checkpoint_id=self._thread(step_index) + ":saved", occurred_at=self.clock(),
+-            phase="recorded", status="completed", event_type="COMPONENT_ACTION_RECORDED",
+-            data={"call_id": call.call_id, "name": call.name, "arguments": call.arguments, "output": output})
++        record = {"call_id": call.call_id, "name": call.name, "arguments": call.arguments, "output": output}
++        if call.name == REPAIR:
++            self.timeline.transition(thread_id=self._thread(step_index), expected_revision=1,
++                checkpoint_id=self._thread(step_index) + ":saved", occurred_at=self.clock(),
++                phase="recorded", status="completed", event_type="COMPONENT_ACTION_RECORDED", data=record)
++        else:
++            self.timeline.create_thread(thread_id=self._thread(step_index),
++                checkpoint_id=self._thread(step_index) + ":saved", occurred_at=self.clock(),
++                phase="recorded", status="completed", event_type="COMPONENT_ACTION_RECORDED", data=record)
+         return ConversationActionReceipt(call, output)

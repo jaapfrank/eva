@@ -1,0 +1,35 @@
+{
+  "contract": "EvaIndependentScopedIndexReview/v1",
+  "recordedAt": "2026-11-05T20:17:11.532572+00:00",
+  "reviewer": "/root/independent_review",
+  "decision": "GO",
+  "scope": "Six product source changes and touched regression-test staging only; documentation/status updated separately",
+  "stagedProductSources": {
+    "src/eva/adapters/postgres/component_improvement_actions.py": "78a67015d2c1d28b03c5d828d2676f2b0feb33e45b9e8a946d6237315b4a44aa",
+    "src/eva/adapters/postgres/delegated_work.py": "05efb2aa45dc0104757aebf3694d3c224ff50930c96e90fa53229f426f7c5d52",
+    "src/eva/adapters/postgres/delegated_work_delivery.py": "6d432af27a0e4df76e339ec68f6582874896f395e2374d1135c58d8533f074b6",
+    "src/eva/adapters/postgres/telegram_delivery_authority.py": "2772f3505ba5abd3ca588a6b75e9ca94c1918aff4b3bafe38bfa97ed0f9bf3e4",
+    "src/eva/bootstrap/delegated_work_delivery.py": "83d8ff604396212db29ebf7573549dd6477b6f9c94a0f9c268c29173e8958299",
+    "src/eva/bootstrap/private_continuity.py": "0d9a19dc54b950eb058d808a9b29f79460a855a7f4465dca2cb61260367080ff"
+  },
+  "checks": [
+    "Staged delegated_work diff contains only contextmanager import and four public delivery-boundary members; existing native input/effect/resume changes remain unstaged.",
+    "Staged component actions diff contains only durable repair-request admission/pending/result hunks; earlier APPLY changes remain unstaged.",
+    "Previously installed host2/nativeassets baseline files excluded from this scoped codecommit; installation provenance remains explicit evidence.",
+    "Private work return staged changes only adapter import/constructor; earlier ensure_open change remains unstaged.",
+    "No other initial dirty path enters staging beyond the two deliberately integrated docs and these three mixed-scope files.",
+    "All staged source hashes equal the actual read-only clean index snapshot tested by p001 agent. Independent evidence audit verified all eight log hashes and82passing cases."
+  ],
+  "cleanIndexEvidence": {
+    "snapshot": "development/evidence/reassessment/clean-staged-source-20261105/snapshot.json",
+    "snapshotFileCount": 1686,
+    "indexUnchangedDuringSnapshot": true,
+    "behavior": "development/evidence/reassessment/clean-staged-source-20261105/staged-source-behavior.json",
+    "passed": 82
+  },
+  "limits": [
+    "Source hashes differ from installed overlay in workstore and component-actions because pre-existing runtime-only changes are deliberately excluded; the commit is a scoped code change, not a reproduction of the entire installed release.",
+    "Final documentation/canonical status changes require their own final consistency review.",
+    "No new installation, external send or production task executed by this staged review."
+  ]
+}

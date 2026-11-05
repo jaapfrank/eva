@@ -1,0 +1,50 @@
+{
+  "contract": "EvaIndependentInstalledReadback/v1",
+  "checkedAt": "2026-11-05T14:54:32.948476+00:00",
+  "reviewer": "/root/independent_review",
+  "scope": "P0-01 resumed-builder host handoff source/profile installation",
+  "decision": "GO",
+  "roles": {
+    "eva2-managed-b-slot3-core": {
+      "image": "sha256:fce4a91e2edb6767ea31531dc8d73a4b8e7b695302aebbbf20398fbe5eee052a",
+      "healthy": true,
+      "sourceHashes": {
+        "bootstrap/runtime_repair_host.py": "99260e825e7dd5904826038a82584c429dd6f7d88970f43a7eeee789afc777d8",
+        "bootstrap/native_work_assets.py": "34813de438e528a6e04be6c0f96e6d1d6ef28c8ac74851907ea9b170d604f700"
+      }
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "sha256:6f6cb5d3e03ca076ef37a07c25296186af9040e413af20d5a6a6647822b5e8a8",
+      "healthy": true,
+      "sourceHashes": {
+        "bootstrap/runtime_repair_host.py": "99260e825e7dd5904826038a82584c429dd6f7d88970f43a7eeee789afc777d8",
+        "bootstrap/native_work_assets.py": "34813de438e528a6e04be6c0f96e6d1d6ef28c8ac74851907ea9b170d604f700"
+      }
+    }
+  },
+  "host": {
+    "pid": "1852092",
+    "systemdService": "eva-component-evaluation.service",
+    "active": true,
+    "healthReady": true,
+    "configurationSha256": "9d34e92ff1c69c0de17f7d82c931efea4207b847f9dc79f0712a7e978c419d9c",
+    "importedOverlayModule": {
+      "module": "/var/lib/eva2/finalization-20261104/host-handoff/install/host-overlay/eva/operations/runtime_repair_development.py",
+      "sha256": "bd41de382a1f820cd9c3af159806b43599ebfcc09ab516724ec86a4e462c6657"
+    },
+    "digitalProducerMatchesBothInstalledRoles": true
+  },
+  "profileCompatibility": {
+    "compatible": true,
+    "mismatchedProfiles": [],
+    "report": "development/reviews/p0-host-handoff-independent-20261105/installed-runtime-profiles.json"
+  },
+  "installationReceiptSha256": "2d872a7e3df4383d66f1496d5d5c5cd759a9d27138df57651d9b560450f5cd64",
+  "historicalWorkRedispatched": false,
+  "schemaChanged": false,
+  "limits": [
+    "Source/import-path/profile/readiness verification only; process behavior from an actual newly completed repair was not exercised.",
+    "No E4.16 full completion, autonomous later reuse or family acceptance claim.",
+    "Historical ambiguous HTTP400 not redispatched."
+  ]
+}

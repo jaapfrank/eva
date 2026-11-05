@@ -1,0 +1,796 @@
+EEEEEEEEEEEEEEE..........                                                [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_atomic_binding_preserves_spec_and_rejects_backfill_or_retarget _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 4b_0000_core_namespace, Create the minimal Eva namespace and fail-closed database roles.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 4b_0000_core_namespace -> 4b_0001_tenant_scope, Create the tenant and installation authority anchors.
+INFO  [alembic.runtime.migration] Running upgrade 4b_0001_tenant_scope -> 4b_0002_episode_atomicity, Create the minimal episode head and immutable event log for tranche 4C.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 4b_0002_episode_atomicity -> 4d_0003_core_continuity, Admit an empty 4B catalog and expand the final eva_core authority.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0003_core_continuity -> 4d_0004_effect_authority, Create read, effect, delivery and circuit-breaker authority.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0004_effect_authority -> 4d_0005_evidence_objects, Create evidence envelopes, links and selected encrypted object refs.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0005_evidence_objects -> 4d_0006_memory, Create temporal memory authority and its scalar relationship edge.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0006_memory -> 4d_0007_projection_telemetry, Create the five rebuildable/discardable noncanonical tables last.
+INFO  [alembic.runtime.migration] Running upgrade 4d_0007_projection_telemetry -> 4e_0001_operational_timeline, Add the append-only Living Core timeline and rebuildable checkpoint cursor.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0001_operational_timeline -> 4e_0002_delegated_work, Admit delegated work to the existing attention queue.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0002_delegated_work -> 4e_0003_delegated_work_runs, Add private durable authority for one bounded child-model run.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0003_delegated_work_runs -> 4e_0004_delegated_work_stop, Persist an owner stop request across an active delegated model call.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0004_delegated_work_stop -> 4e_0005_conversation_erasure, Allow exact, scope-bound redaction of raw conversation text only.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0005_conversation_erasure -> 4e_0006_memory_outbox_erasure, Extend exact conversation erasure to the durable memory outbox.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0006_memory_outbox_erasure -> 4e_0007_delegated_private, Bind delegated work directly to a verified private owner context.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0007_delegated_private -> 4e_0008_portable_current, Permit scope-bound backup of current authoritative task records.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0008_portable_current -> 4e_0009_restore_hold, Keep restored databases inert until separately verified operator activation.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0009_restore_hold -> 4e_0010_memory_compaction, Compact acknowledged private day text while keeping exact durable provenance.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0010_memory_compaction -> 4e_0011_timeline_type_time, Index existing scoped event-type/time reads without changing their authority.
+INFO  [alembic.runtime.migration] Running upgrade 4e_0011_timeline_type_time -> 4e_0012_conversation_source_lock, Fence existing private ingress against erasure without granting UPDATE rights.
+_ ERROR at setup of test_delivery_authority_is_current_and_never_exposes_other_owner_result _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+___ ERROR at setup of test_one_claim_ack_is_durable_and_never_claimed_again ____
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+_ ERROR at setup of test_uncertain_delivery_never_retries_and_preserves_result[crash] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+_ ERROR at setup of test_uncertain_delivery_never_retries_and_preserves_result[timeout] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+_ ERROR at setup of test_uncertain_delivery_never_retries_and_preserves_result[late_ack] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+___ ERROR at setup of test_expired_authority_or_result_is_not_returned[work] ___
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+_ ERROR at setup of test_expired_authority_or_result_is_not_returned[binding] __
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+__ ERROR at setup of test_expired_authority_or_result_is_not_returned[person] __
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+_ ERROR at setup of test_expired_authority_or_result_is_not_returned[future_verification] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+_ ERROR at setup of test_dashboard_resume_inherits_original_private_return_and_claims_only_latest_once _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+_ ERROR at setup of test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[source] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+_ ERROR at setup of test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[retention] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+_ ERROR at setup of test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[event] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+_ ERROR at setup of test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[recipient] _
+
+    @pytest.fixture(scope="module")
+    def delegated_engine() -> Engine:
+        dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
+        if not dsn:
+            pytest.fail("EVA2_TEST_POSTGRES_DSN is required")
+        url = make_url(dsn)
+        if not url.database or not url.database.startswith("eva2_4b_disposable_"):
+            pytest.fail("delegated work requires an explicit disposable database")
+        engine = sa.create_engine(url)
+        with engine.connect() as connection:
+            assert int(connection.scalar(sa.text("SHOW server_version_num"))) == 160013
+            assert not connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+            )
+        logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                         if isinstance(logger, logging.Logger)}
+        try:
+>           receipt = install_schema(dsn, alembic_ini=ROOT / "deploy/alembic.ini")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+development/tests/postgres/test_delegated_work_store.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/operations/install_schema.py:172: in install_schema
+    final_revision = _current_revision(engine)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+engine = Engine(postgresql+psycopg://postgres@/eva2_4b_disposable_installed_summary?host=%2Ftmp%2Feva-p0-installed-review-591nbkyh%2Fpgsocket)
+
+    def _current_revision(engine: sa.Engine) -> str | None:
+        with engine.connect() as connection:
+            ledger = bool(
+                connection.scalar(
+                    sa.text("SELECT to_regclass('public.eva_alembic_version') IS NOT NULL")
+                )
+            )
+            if not ledger:
+                return None
+            value = connection.scalar(
+                sa.text("SELECT version_num FROM public.eva_alembic_version")
+            )
+            if value is None:
+                return None
+            if not isinstance(value, str) or value not in _KNOWN_FORWARD_REVISIONS:
+>               raise RuntimeError("database has an unknown Eva schema revision")
+E               RuntimeError: database has an unknown Eva schema revision
+
+src/eva/operations/install_schema.py:113: RuntimeError
+=========================== short test summary info ============================
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_atomic_binding_preserves_spec_and_rejects_backfill_or_retarget
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_delivery_authority_is_current_and_never_exposes_other_owner_result
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_one_claim_ack_is_durable_and_never_claimed_again
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_uncertain_delivery_never_retries_and_preserves_result[crash]
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_uncertain_delivery_never_retries_and_preserves_result[timeout]
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_uncertain_delivery_never_retries_and_preserves_result[late_ack]
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_expired_authority_or_result_is_not_returned[work]
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_expired_authority_or_result_is_not_returned[binding]
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_expired_authority_or_result_is_not_returned[person]
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_expired_authority_or_result_is_not_returned[future_verification]
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_dashboard_resume_inherits_original_private_return_and_claims_only_latest_once
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[source]
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[retention]
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[event]
+ERROR development/tests/postgres/test_delegated_delivery_store.py::test_inherited_private_return_rejects_changed_source_expiry_event_and_recipient[recipient]
+10 passed, 15 errors in 4.51s

@@ -1,0 +1,757 @@
+{
+  "at": "2026-11-05T14:45:08.250728+00:00",
+  "head": "1fc3854f093e28c16fc6ac5e8bc9221764ed03ee",
+  "prHead": "dd9aeb0d5f365c65422a74469c95e4c70993fb3b",
+  "initialWorktree": [
+    {
+      "status": " M",
+      "path": "deploy/native-speaker/launch.py",
+      "sha256": "c8a4757d570cdeff93131c1c16bce13a0308639e5b1731e98af80bee92ad00b2"
+    },
+    {
+      "status": " M",
+      "path": "development/design/architecture/package-boundaries-v1.json",
+      "sha256": "5c67fef0b81382b1cdd31b3a4886c8a45482808a8b850a45e31620534a908d05"
+    },
+    {
+      "status": " M",
+      "path": "development/docs/AFRONDINGSPLAN.md",
+      "sha256": "2bf01f7a9e6c3654015b246774f3251db0fadbcb021c299f82672dc043eab2f1"
+    },
+    {
+      "status": " M",
+      "path": "development/docs/PROJECTDOEL.md",
+      "sha256": "ee53bc8ac7d821ac73d8b80a578a5d2ff1334fe41919e3a084e17e56d9286b3a"
+    },
+    {
+      "status": " M",
+      "path": "development/evidence/product/hue5-owner-context-outcome-20261014.json",
+      "sha256": "7662a15cdfcbab312def1b5baed08db3b60e7a32604f6251b22b949a0ef4cd58"
+    },
+    {
+      "status": " M",
+      "path": "development/evidence/product/owned-package-handoff-20261103.json",
+      "sha256": "c1dd85df6c52f2a58ee5789596e5d5da25d9f3a1934672de27b1aa9a95060f64"
+    },
+    {
+      "status": " M",
+      "path": "development/evidence/reassessment/e51-private-orientation-installed-20261019.json",
+      "sha256": "3b9a5dd33e3bce773e5eca2908b70b4257d222a4f1581942783b3cff47257aba"
+    },
+    {
+      "status": " M",
+      "path": "development/reviews/e419-final-candidate-review-20261024.json",
+      "sha256": "646e708c64cadcc2759c38efd4b34acd8f5a99f8c9de924babe3f4d8133efccb"
+    },
+    {
+      "status": " M",
+      "path": "development/reviews/e51-private-orientation-review-20261019.json",
+      "sha256": "d479f898da490ca3caa524ad1ac6d086e341ccb2e657766e9d916c49529c0d0e"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/api/test_voice_turns.py",
+      "sha256": "299c51f4ccc5739463140776b8fb431545e9fd6fd04b67a77c51dd2f4bb57cdf"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/application/test_contact_model.py",
+      "sha256": "4fc38825a7df9e9c906cb0216e8de90ccd5b92343c4d2d47942dae5fcd62495a"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/application/test_voice_context.py",
+      "sha256": "ad41a76c0e445592323c48c973a693cccf10502307310079c1baff21f66aff50"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/bootstrap/test_delegated_research_composition.py",
+      "sha256": "1b9bab85f4069a466833ce4ce138f935380037da54d92ddbefbdf6265dd1bae9"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/model/test_pydantic_conversation_model.py",
+      "sha256": "3473dd8e4aca5e408a5f4e2cf2d2ec38a18cbf3e9604e090cdedd8f449105f13"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/model/test_tool_namespaces.py",
+      "sha256": "ca3639be2101fec856f05be029ee505b8db8513e60811c0b5cb39ed054bfd79b"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/operations/test_owned_package_effects.py",
+      "sha256": "ca0f29de10ff6df9d129b7bda8cd3ecb1708a41df67d169cf1f435dcf61a7ac2"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/operations/test_owned_package_handoff.py",
+      "sha256": "bf457ccb715e70076f588f03269ef956be38f98b2f0c6d343945ea1c7d1ec117"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/operations/test_reviewed_component_transport.py",
+      "sha256": "dd43c69b841b574b6bfdb0f30c6eccd51aef2f9cae15d85cea0b1da11765731d"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/postgres/test_delegated_research.py",
+      "sha256": "94a273d8b870f83b41e52760c62ed55ccbfdcf5be7ed911d48099ed6d7b6420f"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/postgres/test_household_digital_work.py",
+      "sha256": "f96ec1c76fb1c7edaa14280e0b0640db4638a93c27c5a2d13cd89d9050daed8a"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/postgres/test_household_public_work.py",
+      "sha256": "9f3be9bcab9f776086ca155e69e782a688db6e5a48ee939c1abfba6b87223a2a"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/postgres/test_native_initiative_digital_work.py",
+      "sha256": "62a5e18ff00d85fc10a297548fc4d1f5b976b53f533354ab9062e4db4ab4fc66"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/postgres/test_native_task_continuity.py",
+      "sha256": "2237231411ba023d874cd879acbd4fd4606ee63f09e301fe996dec45e0969a43"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/postgres/test_owned_package_origin.py",
+      "sha256": "cfc8d446542d9315a0153cec92fcadeb09b4e6426f83b40d762fe5e9251973d3"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/postgres/test_private_work_return.py",
+      "sha256": "d8e685b01fe5da7da35e282b831ee2ee0cf631810a7d3f4a73795426015456ab"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/projection/test_hindsight.py",
+      "sha256": "00764b028eea5a58e43b6d6f73e576b3538b8fcb0ca07e4b27495b7fbb2190a7"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/voice_service/test_household_work_client.py",
+      "sha256": "887432d51710ba7af1128476eab9312de903e4ab3545ee1deb6f95e4a4a61efc"
+    },
+    {
+      "status": " M",
+      "path": "development/tests/voice_service/test_private_work_return.py",
+      "sha256": "8d926bc686c616c685af963b1577d893f815bb41a84419e1efcab16057f16724"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/api/household_voice_session.py",
+      "sha256": "44f238442f46c26e2863bdfc3457eb8af09dc7f67fae2b8311bf8dba51c057ca"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/api/household_work.py",
+      "sha256": "b0eac8497e046b6691e99c4d437872be4682becea88c367d4edfdd917eb1374e"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/api/voice_turns.py",
+      "sha256": "b9d06b33828a9f0eb25f26e5484245c94c949fb70a08b4f19e56855a8e138738"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/connectors/component_evaluation.py",
+      "sha256": "f74c1f36fb699bcffb9a3f82143d5ed0818de6de507c6bbbbd2894c9717e6d7b"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/connectors/delegated_completion.py",
+      "sha256": "62104929c92504546613151b682ce5ed88283769285375e3943e086d90773c88"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/model/contracts.py",
+      "sha256": "ad1364a65ab9a6f0f930f21ffa60777177cac9abb9e834a22bde5eab69421fb5"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/model/openai_codex_provider.py",
+      "sha256": "f1627e09212de3ac6efa1698ef26511f6ca120e6e87c31cecae33321e6ef23a0"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "sha256": "9f03546a1c6d8b5bb37a49e7b0a50997690baad6e59ba910776fb5e69a537b89"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/model/research_transport.py",
+      "sha256": "2e179d3361b4d38cf0c146c2f36c1e6738debeb9d44dd4f052c1da1805793fbe"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/model/tool_namespaces.py",
+      "sha256": "e1200b0359d605461334ab7c1b184e49011a3b0091e51a6ab6684ee026f8b71f"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/postgres/component_improvement_actions.py",
+      "sha256": "53a97ac0cf537260f954a4a95d0c88f2c1909619678419c68ae3073fd231274b"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/postgres/conversation_actions.py",
+      "sha256": "c07dafa20a560fb47efda7f09a227badf8964c3a08ba2905b42a8813b68faa4b"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/postgres/delegated_work.py",
+      "sha256": "5c18f6f1f44d087df11843414dd82542a06b99efcde5f657921b8a3c24bd4090"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/postgres/delegated_work_actions.py",
+      "sha256": "0c452d46d2412e6b2df94ec07ab9704dc775ee4a1b19507fa23f1760060c808a"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/postgres/external_conversation_tools.py",
+      "sha256": "a8ab4acda8ecfba22d6006f513edd2c314736d2718e54159e19508b2dc73de4e"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/postgres/household_provisions.py",
+      "sha256": "615e67efdd98aee46134d98f2a0a3d35bc756267c8edc0d37f3e44c413e20d07"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/postgres/household_work_sessions.py",
+      "sha256": "01c1145519bfc4595006a71061af3c5b2685bc8ae3d0bd8e768c5e8df335eb73"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "sha256": "d614e839f1ebb295f7af00981099aab1bd7562e81d6d62b22164d89c417f7227"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/postgres/private_work_return.py",
+      "sha256": "399823f0a32498ea5e3d42ac7f580e10e582d52b0e94f005604d861f82599a61"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/adapters/postgres/work_corrections.py",
+      "sha256": "6cc7deb53a78d726cb521162dd441a2cbfe1531a4a048fb58aeaf3cc69e01de3"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/application/conversation.py",
+      "sha256": "7471cdc3cd57e368ca65d775066e7bf45a8a1c4178a1508d7d0398800e8e9649"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/application/voice_context.py",
+      "sha256": "f24ad06f75f3d61948224339e8f47c7d35b9e62b6ebd2a2f105c415337498d86"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/component_maintenance.py",
+      "sha256": "60071c0f44c05a2864ada13f4f148a569806d6b9c92ce55bfd1ae8dc805d488d"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/delegated_digital_composition.py",
+      "sha256": "7678a22874b0c8161e21e0a9b59629598457a2ef35d289abfbb588f548018cc2"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/delegated_digital_profile.py",
+      "sha256": "1b8a0141db5062fa9bed0da83dd9722fd4d291eecc087bbd87937493d885146d"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/delegated_digital_runner.py",
+      "sha256": "156496d419c6ef81a02f8bec424b42ec09ba25b36c32f3dfd8cc2622c93b03eb"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/delegated_research.py",
+      "sha256": "dc322d11141873e602cf552c9fa16d3d15623fd7c3ae93dbf53c98c23744cdae"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/delegated_work_owner_service.py",
+      "sha256": "5d59d5af7cd24bd96055a32bbdc101ae0ea72a01a7554cb73415fc57a0196521"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/household_digital_work.py",
+      "sha256": "235084d968806cc0b27a9bdda54b5ff0873505985b2b869572350ad01655b555"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/household_work.py",
+      "sha256": "48e566719bca0a4a66b891e0e03f975bf88267be194dc5bf0cb3dcec059f14bd"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/household_work_corrections.py",
+      "sha256": "e9ec446fe36df07295a79d82a54ac985a93d819f699ae7aa66225e386b5b7078"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/native_initiative_work.py",
+      "sha256": "52243ed2d05c882654179165b55ac007564f6fca9f8fc33e221752b71c676099"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/native_work_delivery.py",
+      "sha256": "fd814928c357a4a51de128043543ef2deb7b6dd7af0a2123d7606ec7e7a89519"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/owned_package_host.py",
+      "sha256": "24497caca71dbd1664467f68e6c82b93198e0d910873b896dd9f92cd3f9bee27"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/runtime.py",
+      "sha256": "72d2e37b73fd694fa8d8110cae9da557610d06ffcba8e00604288bbead850b1e"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/bootstrap/runtime_repair_host.py",
+      "sha256": "99260e825e7dd5904826038a82584c429dd6f7d88970f43a7eeee789afc777d8"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/operations/component_evaluation_service.py",
+      "sha256": "548ee91254f214603cbaf4a7e0775f766db2bda06fda5b5153a5415eeba4ce6d"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/operations/owned_package.py",
+      "sha256": "6d58f9b3ef784e6da19a2ccfff88d5ceef10357853236a21b1845421700e958c"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/operations/owned_package_handoff.py",
+      "sha256": "e2ced0401450f686bef147d6640361048f21183a660a2abb3a835d6f444d8f91"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/operations/runtime_repair_development.py",
+      "sha256": "bd41de382a1f820cd9c3af159806b43599ebfcc09ab516724ec86a4e462c6657"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/providers/mcp_owner_authority.py",
+      "sha256": "f6fa4149e068e20c2a3459f1f5a7a4cfd117b87549e8fe96ce633fe2f7bb6d2f"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/voice_service/agent.py",
+      "sha256": "576fd379056b161a2bc6ab36b395ebed9cbe0a14b70e9b4375a337aa7a157bda"
+    },
+    {
+      "status": " M",
+      "path": "src/eva/voice_service/server.py",
+      "sha256": "43c9ee94275d21c2e080bf963fab1439c658beebabc123a50cd8ef3cabc0160e"
+    },
+    {
+      "status": "??",
+      "path": "deploy/voice-session/Dockerfile.codex",
+      "sha256": "187d21db2bd69f42623b1df62b68614c0c425b855a6f5540f0f0a0d0dafbe3dc"
+    },
+    {
+      "status": "??",
+      "path": "deploy/voice-session/requirements-codex.lock",
+      "sha256": "d7a3863259b993cfcb21f51c7668856a84652632763c44f1efafb5879a7078df"
+    },
+    {
+      "status": "??",
+      "path": "deploy/voice-session/warm_runtime.py",
+      "sha256": "2b87d277864eafaffd802fb8241b06bd0fcf4923309cb116167d90713ce41933"
+    },
+    {
+      "status": "??",
+      "path": "development/design/product/voice-improvement-plan-20261015.json",
+      "sha256": "f47d73cc4bbdac36d84935030770eae0e58e79bdda830423ce36b6e681a01805"
+    },
+    {
+      "status": "??",
+      "path": "development/docs/ARCHITECTURAL-REVIEW-20261029.md",
+      "sha256": "ceb45887e0a24de624a9cb19a652442d1ad7374a70342e9a37bb088eb5774b35"
+    },
+    {
+      "status": "??",
+      "path": "development/docs/technische-keuzes-20261029.md",
+      "sha256": "5dfb7f41421f991a6c22db92675127117d46a2d125ac5db063f390c0fa01e9af"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013.json",
+      "sha256": "ee7a270302c124df6dcdd39c0d6e18d2b8cda5459ec838b37e651eff3564ec71"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/adapter-audio.json",
+      "sha256": "fad106fa8cbbbbe1e70aec4a64eb9f26d5ece627e623d513e2b878b980785084"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/architecture-review-proposal-20261014.json",
+      "sha256": "3395813d41ac7c1c6844b8b6d4b9e09d993dc2f6971e5a2bb9071bb1db5ab3b8"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/component-audit.json",
+      "sha256": "6f3f16d4cf7a1abc67d6fc0c8b22b772bb3e328981e28ec7fedd6e73f5c145da"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/conversation-lifecycle-and-juniper-20261014.json",
+      "sha256": "f1b31729ee23973592b96bf19332bd564db3dc5005b4844fc23d66dd90c5c56d"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/detailed-stage-audit.json",
+      "sha256": "19693fe0e2dc43e22ef30057d0cb5ac7d5ca812751ac8e65f3690cd19e361834"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/direct-and-eva-followup-20261014.json",
+      "sha256": "a12289b0e1a56d372092acb566a74c7a780c995d99e35def8ba33ea93ac4fc75"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/direct-call.json",
+      "sha256": "255893e2737e55073ec3e52b53076a4988676085e473d786328e5386934b1ffb"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/direct-codex-weather-events.json",
+      "sha256": "aed84d3d59841bc7cbf4077fd370f480a846ea5288eeb121fb7115db3943ada6"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/direct-deep-events.json",
+      "sha256": "5a9afed7c370a6b6c24ead9875ee94e7037c02890b3566879017f663fd15f324"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/direct-deep-measurement.json",
+      "sha256": "100a294eb9812d5197595e68cfb88c81fe280d16d7c86b337b0d2935e25bdbd3"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/direct-focused-events.json",
+      "sha256": "0dc4c03b698bdd75a5f79cac9c3679b8352801d5877beaf5f7272f87519cab77"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/eva-deep-events.json",
+      "sha256": "d06c8afc106512133c28e7347b629a2032c4830e49eaa38355d241755acdaae1"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/eva-focused-events.json",
+      "sha256": "c14cb587adbc076da0f96a4eee12bca480bdc4f1cf6a96ef2c20b0403a555951"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/foreground-stage-events.json",
+      "sha256": "2ba93099592894791e8a0b47da7beb09e6c666345acba8caa7518f2412acc554"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/foreground-voice-events.json",
+      "sha256": "09986b4a03cad2e4f075a9697b2b5593ad976382568cf678ccf6ac12f20e5efc"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/general-public-lookup-20261014.json",
+      "sha256": "03f5c3a6164388df05cf5598e11cb3a1c5ebe66e8904a9d88f11746e50844040"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/general-public-lookup-stage-timing-20261014.json",
+      "sha256": "31076af605d82aba8c2908b3c5764f0e359ba79aab17d2f618969e2ca57c0e81"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/household-continuity-and-audio-20261015.json",
+      "sha256": "dc17200e33e1be96c642cee3371c36ce50db318418be9aca363c1403967242b6"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/installation.json",
+      "sha256": "3d536aee72bc4c344dd12d60db12141f71a8246196897a9fbcb30c69aefeac82"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/instant-review-access.json",
+      "sha256": "a025076cb0c20c440887f0b7f7dc11445e308e89209cd41ab2e6202a69d7cc0c"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/instant-review-request.yaml",
+      "sha256": "23adb938acf1c2b0e79c92ead10294f67f106df297895e9aab4afdbe1a59ec9d"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/latency-browser-settings-failed-events.json",
+      "sha256": "f2d9a336a3a919d34facb69f3efa6a08f2b7738da683aca5a9a2d8f4e3ee5c50"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/latency-connection-events.json",
+      "sha256": "afe0dc4b2264a2ba6c1cc9e7bdaa693fbcfd161c1a5644e4955a2eab0d800f48"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/latency-full-route-events.json",
+      "sha256": "854ba75877cc8d096eea005f8cc4e055837215cbb700ca52b0c017d3746f0c61"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/latency-improved-route-events.json",
+      "sha256": "5c6bc4dabee5026ffa8c27cbb0a8efad8df2ad0d882f3a58bb64480c82f2ae1c"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/latency-improvements-20261014.json",
+      "sha256": "7ecc3bdf2e6fe1a3d6857db23a9daa9bd7a2312f5ff7b31b83015e0d3df28a8c"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/latency-profile.json",
+      "sha256": "0dcb856f2f988af69c591b114a2c428c7448c7fd96386bef5afab5a17b25df02"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/latency-provider-failure-events.json",
+      "sha256": "cd1785d7d01f1d059c587e76d07a8583944cfd83fc3b50dd8303370448dd99c1"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/latency-rejected-handoff-events.json",
+      "sha256": "9b3c95e2bd950808b8944fbc5de2ac1a4c93e4c3cbfc90558c59d48d2b297349"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/latency-research-events.json",
+      "sha256": "79abe5fe2b6c8cde2cc1810de4a6cf7a124aac0fc1a52f690e877d0ae80a9237"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/low-hanging-fruit-20261015.json",
+      "sha256": "e516eb01e9f09a2a6b39a6494c4b07071ae514e24e6f8c91b0640706b610fd63"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/owner-test-diagnosis-20261015.json",
+      "sha256": "f161e643b952e7a98d2985554bcc280cab7f009613c88549c5415173ca580e3c"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/owner-test-repair.json",
+      "sha256": "2b6ccc7d0cf7e6a1995c4e3aff9849e20f27065bae061c1155785986bc66ff08"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/rea-static.json",
+      "sha256": "b676004270bf5c5296415c56f792056b0da565e0ce382d37f6394ca8bb65d425"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/repeated-components-20261015.json",
+      "sha256": "0d44c81612dc9ff765b2494fc9effa8b8d37cff4599b76f06685d6fab505fdd6"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/report.txt",
+      "sha256": "1c838e3596d8c524042be0c50dcb33f9d98cf4ea80fcc600d152eb48cfc5f531"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/research-repair.json",
+      "sha256": "c4023a8bb0aa168459373914517753e256c3383abc894d3d2cfdd9c5245a51b9"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/room-destination-and-prefix-20261015.json",
+      "sha256": "77d5d266b9bec35ca4607bcb153e443d5113602069e27a7ddcc847a55e6a4d2b"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/short-answer-events.json",
+      "sha256": "82d6161a96ffc194293a45354619ff4f3c3bdef66bd034fadfe292176b6afdc4"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/short-answer-repair.json",
+      "sha256": "2041f983b65d4a33efc54358245056609f5ea6a2fe3886a9830b43d4d0f350a2"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/social-conversation-20261014.json",
+      "sha256": "8426f2773ce4ef8e983fb2673eab7d8f7ff703e96ac57b85d0d6bbd18dba6c11"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/synthetic-eva.wav",
+      "sha256": "11a58e13bf7c712c9c1950c8b808a28a20934a7f58561834bf501617a01ff057"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/telegram-identity-20261014.json",
+      "sha256": "dff29398007485e18a9c91255fb28e24ae741a364877a1636c62572f236f2b8b"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/wake-greeting-repair.json",
+      "sha256": "cd6b2cebd7db796cead65bff3a29bd671f7c70743a6096145c1724b5d6eab618"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/webrtc-start.json",
+      "sha256": "bd382a3bd8d4e0a413f8e65ab745c4d0a0695dfed795ecfdfa71f5a16feebbd7"
+    },
+    {
+      "status": "??",
+      "path": "development/evidence/product/subscription-voice-20261013/websocket.json",
+      "sha256": "9d3b609238f784019a8690e3e19358c2757d565816e652716d651b12dc9c3305"
+    },
+    {
+      "status": "??",
+      "path": "development/reviews/e417-face-assets-proposal-review-20261023.json",
+      "sha256": "11def2fe291230ccdde4eea4db278763f0868d9293c6396d37297d238f5e638c"
+    },
+    {
+      "status": "??",
+      "path": "development/reviews/e419-normal-restore-execution-20261024.json",
+      "sha256": "fe4064526caeccc1b3016d0db3f3ec7aab08f2275f4680796e8e04be4f1fa359"
+    },
+    {
+      "status": "??",
+      "path": "development/tests/application/test_public_lookup_contact.py",
+      "sha256": "7039207e43fd3186ec2ca29389c5188f7d3e2350439490af61c899f61205eee7"
+    },
+    {
+      "status": "??",
+      "path": "development/tests/bootstrap/test_household_voice_deadline.py",
+      "sha256": "117cea71058a2b2e82c0ad7e43f18ba51936d7595c57cc166d303e1ccb89b4f0"
+    },
+    {
+      "status": "??",
+      "path": "development/tests/bootstrap/test_public_lookup.py",
+      "sha256": "b0eb5865c659a29c43166cb0669427f871ac742231b5d6ccd5548cee1476931c"
+    },
+    {
+      "status": "??",
+      "path": "development/tests/experiments/test_e16_task_handoff_simulation.py",
+      "sha256": "f11a0ff5c0988734b57604952d4e9ff2db29efcb7993aa000cfca1e534a55e7a"
+    },
+    {
+      "status": "??",
+      "path": "development/tests/model/test_research_timing.py",
+      "sha256": "b14f475e0982688b4bd904340b9c58a395c695ac83ff9ead42164a0b6020ffdb"
+    },
+    {
+      "status": "??",
+      "path": "development/tests/postgres/test_household_work_destination.py",
+      "sha256": "4a70903ed57ccfd06ae2fc1cc43bfe6578ae151e5f141c091b699d966249d9d8"
+    },
+    {
+      "status": "??",
+      "path": "development/tests/postgres/test_local_host_rejection_resume.py",
+      "sha256": "e4af5f7df6c887374cef34ccfb10a5ed93aac6233f707156bc54dd4149dfc709"
+    },
+    {
+      "status": "??",
+      "path": "development/tests/postgres/test_public_lookup.py",
+      "sha256": "f606c370818c375cb36395470d4e62edc04288fc0db5d8fe7ebfcd5ac7d9839c"
+    },
+    {
+      "status": "??",
+      "path": "development/tests/postgres/test_voice_identity.py",
+      "sha256": "171c83fa70ff3415c1828763f6f33f092e056a0ccc5eadd5ff6f21d4eb9f3ce8"
+    },
+    {
+      "status": "??",
+      "path": "development/tests/voice_service/test_codex_backend.py",
+      "sha256": "176b77feb8b0095b7937c056c32799b5068997f7484520afed2009c17146a50b"
+    },
+    {
+      "status": "??",
+      "path": "development/tests/voice_service/test_codex_endpoint.py",
+      "sha256": "54ea87ff0201a01dd1da59ea0bb3dac42ca628f8ddf0f1aa4280b6ac56840c1f"
+    },
+    {
+      "status": "??",
+      "path": "development/tests/voice_service/test_codex_session.py",
+      "sha256": "597ec075a768d5d303fd66013d4c883e77122f632eb745ec5101c1dbce8b51a4"
+    },
+    {
+      "status": "??",
+      "path": "development/tools/voice/README.md",
+      "sha256": "869a07e1a17ebc0f2d75354d2ab0beef65b776aa2ef0981c3339123d23d42bc2"
+    },
+    {
+      "status": "??",
+      "path": "development/tools/voice/codex_voice_session.py",
+      "sha256": "c0eb4de23d60e493af6db0b75cb3d1526b9e83587dee3f32e39daf0eae6593d8"
+    },
+    {
+      "status": "??",
+      "path": "development/tools/voice/probe.py",
+      "sha256": "6fee1f1cdf91993c5bb90bfd9e1e915d01704dd27c2f8858287f0ba027b1278d"
+    },
+    {
+      "status": "??",
+      "path": "development/tools/voice/profiling/",
+      "sha256": null
+    },
+    {
+      "status": "??",
+      "path": "development/tools/voice/test_codex_voice_session.py",
+      "sha256": "0c026f746e419f040e68b72d54ca55b1dc88b7123990c6a7cc5cf11076cd007a"
+    },
+    {
+      "status": "??",
+      "path": "development/tools/voice/weather_return_smoke.py",
+      "sha256": "4dfa70130193a3dc58f181fec9fc50691bee57a96899d39f0458b2c07ff022f9"
+    },
+    {
+      "status": "??",
+      "path": "src/eva/adapters/model/public_lookup.py",
+      "sha256": "696cf992df7ca7e8eaf3be832eacea46dba0855521829d42e214261a64add573"
+    },
+    {
+      "status": "??",
+      "path": "src/eva/adapters/model/research_timing.py",
+      "sha256": "8463fc4b4b871914deaad3eed22ed09d4244aac1012937df0384ba1f41054d14"
+    },
+    {
+      "status": "??",
+      "path": "src/eva/adapters/postgres/household_work_destination.py",
+      "sha256": "32455d18e72e4ca06ef069e566d59d58c02ab49da12ba5eaa268691de97785bf"
+    },
+    {
+      "status": "??",
+      "path": "src/eva/bootstrap/native_work_assets.py",
+      "sha256": "34813de438e528a6e04be6c0f96e6d1d6ef28c8ac74851907ea9b170d604f700"
+    },
+    {
+      "status": "??",
+      "path": "src/eva/bootstrap/public_lookup.py",
+      "sha256": "d6cdd3c37aca75ac3ce6442a8b21191782a3d4a00baf05474ed73599ea23f58d"
+    },
+    {
+      "status": "??",
+      "path": "src/eva/bootstrap/voice_identity.py",
+      "sha256": "55b56c549421998b1cc50e9b59e98ec897d7e8d5686aebf1f30bd8c8bd497761"
+    }
+  ]
+}

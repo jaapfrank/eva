@@ -1,3 +1,4 @@
+from eva.adapters.postgres.telegram_delivery_authority import TelegramDeliveryAuthority
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
 from datetime import UTC, datetime, timedelta
@@ -30,7 +31,7 @@ def setup(engine, label):
         "telegram:42","telegram:42:1","A public question","2026-08-26T12:00:00Z")
     destination = PrivateWorkDestination.from_telegram_turn(source,owner_principal_id=owner,
         principal_binding_id=binding,telegram_user_id=42,chat_id="42",bindings=current[0])
-    delivery = PostgresDelegatedWorkDeliveryStore(store,bindings_loader=lambda:current[0],clock=lambda:NOW+timedelta(seconds=4))
+    delivery = PostgresDelegatedWorkDeliveryStore(store,destination_authority=TelegramDeliveryAuthority(store.engine, store.scope, lambda:current[0]),clock=lambda:NOW+timedelta(seconds=4))
     authority = dict(owner_principal_id=owner,principal_binding_id=binding)
     return store,spec,destination,delivery,current,authority
 
@@ -120,7 +121,7 @@ def test_uncertain_delivery_never_retries_and_preserves_result(delegated_engine,
         assert delivery.mark_ambiguous(claim,"TimeoutError",now=NOW+timedelta(seconds=5))=="ambiguous"
     elif finish=="late_ack":
         assert delivery.acknowledge(claim,"42:9",now=NOW+timedelta(seconds=6))=="ambiguous"
-    restarted=PostgresDelegatedWorkDeliveryStore(store,bindings_loader=lambda:current[0],clock=lambda:NOW+timedelta(seconds=4))
+    restarted=PostgresDelegatedWorkDeliveryStore(store,destination_authority=TelegramDeliveryAuthority(store.engine, store.scope, lambda:current[0]),clock=lambda:NOW+timedelta(seconds=4))
     assert restarted.claim_next(now=NOW+timedelta(seconds=7)) is None
     assert restarted.status(spec.work_id,**auth)=="delivery_ambiguous"
     assert restarted.claim_next(now=NOW+timedelta(days=1)) is None
@@ -174,6 +175,9 @@ def _digital_return_chain(engine, label, output=None, native_source_scope=False)
         digital_profile=profile, delivery_destination_loader=lambda turn:
             destination if turn.message_id == source.message_id else None,
         conversation_scope=external_timeline_scope(source.tenant_id, source.installation_id, 'fixture source'))
+    # The real owner route requires an exact admitted ingress before digital work.
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    PostgresConversationJournal(engine, service.conversation_scope).admit(source)
     first_id = service.execute("digital", source, task=source.text,
         request_key="digital:first")["work"]["work_id"]
     specs = [store.load(first_id, **auth).spec]
@@ -318,7 +322,7 @@ def test_effective_return_requires_every_original_parent_identity(monkeypatch, k
     parent = SimpleNamespace(spec=SimpleNamespace(**parent_spec), state="failed", created_at=NOW,
                              retention_until=NOW + timedelta(days=1))
     store = SimpleNamespace(scope=SimpleNamespace(installation_id=installation),
-                             _load_locked=lambda connection, work_id: parent)
+                             load_delivery_work=lambda connection, work_id: parent)
     monkeypatch.setattr(delivery_module, "_read", lambda *args: None)
     with pytest.raises(ValueError, match="ancestry"):
         delivery_module._effective_destination(None, store, work, NOW + timedelta(seconds=12))

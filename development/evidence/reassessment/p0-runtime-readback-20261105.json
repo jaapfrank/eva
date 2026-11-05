@@ -1,0 +1,96 @@
+{
+  "contract": "EvaP0RuntimeReadback/v1",
+  "checkedAt": "2026-11-05T14:48:52.217810+00:00",
+  "taskId": "E4.16",
+  "priority": "P0-01",
+  "status": "existing_handoff_candidate_independently_reviewed_fresh_installation_preflight_passed",
+  "images": {
+    "eva2-managed-b-slot3-core": "sha256:5fd8f607b7cdd2e549ac64b043cc5277b987e2c54b05685507b9d5879a6f9827",
+    "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:8c32edbe57192ca31420def5f6ab706b59015ee7ad97bf44d1ea297cc06dda39"
+  },
+  "installedProfiles": {
+    "compatible": true,
+    "mismatched_profiles": [],
+    "command": "python3 src/tools/check_delegated_runtime_profiles.py",
+    "meaning": "Shared provider/digital/public/household release parity, no behavioral success claim"
+  },
+  "localTargetedValidation": {
+    "command": "PYTHONPATH=src:development:development/tests/application PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python -m pytest -q -p no:cacheprovider development/tests/model/test_codex_provider_http_failure_metadata.py development/tests/model/test_provider_failure_origin.py development/tests/application/test_delegated_digital_runner.py",
+    "passed": 156,
+    "failed": 0,
+    "durationSeconds": 11.35,
+    "sourceHashes": {
+      "development/tests/model/test_codex_provider_http_failure_metadata.py": "5205778771c46daa03ef0b6b6f0ee4a4bd2aa0390e72f426b7344d3a6542b01d",
+      "development/tests/model/test_provider_failure_origin.py": "ff6ffc2740f22f50ded2914615f4206784838c1935bb515290b63e2f0dc37b20",
+      "development/tests/application/test_delegated_digital_runner.py": "d75c1f162692b7250f0afe72b84bbf791783ddeb52db59ffda45c7193cc16a25",
+      "src/eva/bootstrap/delegated_digital_runner.py": "156496d419c6ef81a02f8bec424b42ec09ba25b36c32f3dfd8cc2622c93b03eb",
+      "src/eva/adapters/model/openai_codex_provider.py": "f1627e09212de3ac6efa1698ef26511f6ca120e6e87c31cecae33321e6ef23a0",
+      "src/eva/operations/runtime_repair_development.py": "bd41de382a1f820cd9c3af159806b43599ebfcc09ab516724ec86a4e462c6657",
+      "src/eva/bootstrap/runtime_repair_host.py": "99260e825e7dd5904826038a82584c429dd6f7d88970f43a7eeee789afc777d8"
+    },
+    "productionDatabaseUsed": false,
+    "externalModelCalls": 0,
+    "scope": "HTTP503 SDK safe metadata/privacy, model failure origin, incomplete work, unknown usage prevents internal retries, cancellation, budget, retained tool receipts and completion evidence"
+  },
+  "runtimeFailureLogAggregate": {
+    "lookbackHours": 48,
+    "core": {
+      "rate_limited_429": 1
+    },
+    "worker": {
+      "rate_limited_429": 2
+    },
+    "http503Observed": 0,
+    "limitation": "Only current core/worker container logs; absence in this window does not establish historical cause or external provider recovery"
+  },
+  "existingInstalledBounded429": {
+    "sourceVerifiedInBothRuntimes": true,
+    "runnerSha256": "156496d419c6ef81a02f8bec424b42ec09ba25b36c32f3dfd8cc2622c93b03eb",
+    "nativeInitiativeSha256": "52243ed2d05c882654179165b55ac007564f6fca9f8fc33e221752b71c676099",
+    "initiativeExecutionSha256": "d614e839f1ebb295f7af00981099aab1bd7562e81d6d62b22164d89c417f7227",
+    "runtimeSha256": "72d2e37b73fd694fa8d8110cae9da557610d06ffcba8e00604288bbead850b1e"
+  },
+  "handoffReview": "development/reviews/p0-host-handoff-independent-20261105/review.json",
+  "preflightFinding": {
+    "cause": "Retained programming guard in the prepared installer pins the pre-bounded429 runner source; the installed reviewed 429 runner has a new hash. Both other programming pins match the actual installed source.",
+    "beforeProbeSha256": "076a714f20319c330e7d46890b2ba1118a3c0d9b0294f71f2cd05620eeebfe02",
+    "candidateProbeSha256": "f02eff8a47adadabf47d4c66928eb3324388411782736f604895320809d65a59",
+    "change": "Exactly one existing source hash updated; no lease/marker/hash/terminal/unknown-state checks removed",
+    "candidateActivated": true,
+    "independentReview": "development/reviews/p0-host-handoff-independent-20261105/readiness-pin-review.json",
+    "preflightPassedAt": "2026-11-05T14:49:53.297449+00:00",
+    "activeWork": 0,
+    "activeUnexpiredCheckpointLeases": 0,
+    "currentGenerationUnknownNullCheckpoints": 0,
+    "activeHostAssessments": 0
+  },
+  "preserved": {
+    "historicalHTTP400Ambiguous": true,
+    "historicalEffectsReplayed": false,
+    "workboardChangedByThisAudit": false,
+    "runtimeChangedByThisAudit": false,
+    "voiceChanged": false,
+    "fullCardCompleted": false,
+    "ownerAcceptanceClaimed": false
+  },
+  "remaining": [
+    "Parent may install only after repeating fresh generation/claims/host guards; check-only success is not installation",
+    "Reconcile exact uncertain HTTP400 host request using durable receipts; never invent no-effect evidence",
+    "Autonomous candidate/review/application/original-behavior verification and later independent reuse are not established by unit tests or source hashes"
+  ],
+  "requestReconciliationFinding": {
+    "componentRoute": "src/eva/adapters/postgres/component_improvement_actions.py",
+    "mechanism": "REPAIR calls evaluator before recording COMPONENT_ACTION_RECORDED; HTTP400 leaves no action/arguments journal entry. BackgroundModelJournal stores only usage. Host controller writes a handoff receipt only after a valid submit. Missing handoff cannot establish whether describe, status or submit was requested.",
+    "historicalRequestSafelyReconciled": false,
+    "retryAuthorized": false
+  },
+  "retainedWorkAggregate": {
+    "privateScope": "configured dashboard tenant/installation only",
+    "succeeded": 130,
+    "successesWithoutOutput": 0,
+    "failedIncompleteWork": 65,
+    "failedBudgetExceeded": 28,
+    "ambiguousProviderUnavailable": 5,
+    "limitation": "Historical status inventory, no underlying private tasks or content published; no automatic retry or success conversion"
+  }
+}
